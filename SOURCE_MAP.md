@@ -523,6 +523,15 @@ records that this unbounded published family satisfies the Pontryagin conditions
 avoids forward alternation, so those necessary conditions alone do not bound word length.
 No statement classifies arbitrary asymmetric polygons by this standard family.
 
+Section 5 of the same note constructs the standard reverse `(6k−2)`-gon family
+directly, with `3k−1` equal positive factors and an explicit three-state margin cycle.
+A tangent matrix power and the terminal permutation verify both actual endpoints.
+The exact cost is the same scalar function at a negative angular argument; the bound
+`D″ ≤ −27` on the corresponding interval proves strict decrease to `π` from above.
+This extends the infinite-family comparison without using a conjectured multiplier
+sign or assuming that arbitrary reverse words have equal factors. Independent hand
+review checks the new construction, cost normalization, and every sign reversal.
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) develops the tangent/state products used
 in the four-link proof into a complete fixed-factor theorem for arbitrary finite words.
 The real two-dimensional centralizer gives the exact holonomy classification; explicit

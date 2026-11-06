@@ -31,6 +31,7 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Six-piece orbit `012012` | Full asymmetric strict comparison proved by hand: `C > A` | A compact family of actual admissible trajectories reaches two positive five-piece boundaries, and its interior has no cost minimum |
 | Remaining six-piece comparison | `012102` remains open | Of four raw cyclic orbits, `010102` fails the ordering test; the full `012012` and `010202` families are compared above |
 | Standard regular smoothed `(6k+2)`-gons | Costs strictly increase from the octagon to the circular limit `π` | Every positive integer `k`, with `3k+1` equal arcs and the standard initial shape; no asymmetric-family restriction is inferred |
+| Standard reverse smoothed `(6k−2)`-gons | Costs strictly decrease to `π` from above, hence are strictly above the octagon | Every `k≥2`, with `3k−1` equal reverse-cyclic arcs; full state/frame endpoints and strict-star feasibility are constructed |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
 | Unrestricted octagon inequality | Open | Trajectories leaving the excluded neighborhood, with arbitrary control history |
@@ -132,6 +133,11 @@ proves strict concavity after an angular change of variable. The continuously
 interpolated cost increases with the arc count, from the octagon to the limit `π`.
 This is a complete infinite-family comparison, with its equal-factor and initial-shape
 assumptions retained. It does not compare arbitrary words of those lengths.
+The reverse standard `(6k−2)`-gon family is also covered. An explicit cycling margin
+state and tangent matrix product give actual admissibility for every `k≥2`. The same
+strictly concave scalar function on a negative angular interval shows that these
+costs strictly decrease to `π` from above. Both complete infinite-family comparisons
+retain their equal-factor and standard initial-state assumptions.
 
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) supplies a complete fixed-factor endpoint
 test at arbitrary finite word length. Noncentral elliptic holonomy determines the only
@@ -604,6 +610,15 @@ the current research priority. No finite switching search is justified yet.
   domain. This shortens the earlier sharp lower-bound argument and removes its
   reverse-five-boundary dependency. The cost comparison is still open; monotonicity
   of this invariant is not monotonicity of the cost or the remaining rational slack.
+  Commit `8b1912f`.
+- **2026-11-06, complete standard reverse-family comparison:** construct the equal-factor
+  reverse cyclic state and verify full tangent and twisted state closure for every
+  `3k−1` arcs, `k≥2`. Exact integration reduces the cost to the same scalar function
+  at negative angular arguments. Its second derivative has a uniform negative sign,
+  proving strict decrease to `π` from above. Independent hand review checks all
+  endpoint matrices, state margins, signs, and the negative-argument quotient. This
+  compares both standard infinite families without claiming coverage of asymmetric
+  words at their larger lengths.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

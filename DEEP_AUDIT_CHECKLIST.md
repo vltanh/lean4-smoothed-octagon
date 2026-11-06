@@ -147,6 +147,11 @@ as mathematical closure of the unrestricted comparison.
   strict-concavity bound, strict quotient monotonicity, octagon value, and limit `π`.
   Retain equal-factor and initial-shape assumptions, and distinguish this infinite
   family from arbitrary asymmetric cyclic words.
+- [x] Independently audit the standard reverse-family extension: the explicit positive
+  margin cycle, determinant normalization, equal physical durations, twisted terminal
+  permutation, full tangent matrix power, actual frame endpoint, exact arc cost, and
+  the negative-argument concavity and quotient signs. Verify strict decrease to `π`
+  from above for every `k≥2`, without a costate-sign or asymmetric-family claim.
 - [ ] Prove inequality (34) in `docs/SIX_ARC_012102.md`, or another full comparison
   of that family. Its exact reduction and finite exploratory checks do not prove it.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.

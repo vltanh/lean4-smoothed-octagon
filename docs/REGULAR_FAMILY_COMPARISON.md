@@ -1,4 +1,4 @@
-# The octagon uniquely minimizes the standard regular smoothed-polygon family
+# The octagon uniquely minimizes both standard regular smoothed-polygon families
 
 ## Result and scope
 
@@ -18,10 +18,22 @@ this entire infinite family. The argument proves strict monotonicity of
 the natural continuous interpolation for all real \(N\ge4\), so it does
 not rest on checking finitely many integers.
 
-This family has equal factors and a specific initial shape. It does not
-include arbitrary asymmetric trajectories with the same cyclic word, or
-all smoothed polygons with \(6k+2\) sides. No restriction of an arbitrary
-minimizer to this family is assumed or proved.
+The reverse standard family, with \(N=3k-1\) arcs and \(k\ge2\), satisfies
+
+\[
+\boxed{C^-_5>C^-_8>C^-_{11}>\cdots>\pi,\qquad
+\lim_{k\to\infty}C^-_{3k-1}=\pi.}
+\tag{1-}
+\]
+
+Section 5 proves this using the same concave function on the other side
+of its circular endpoint. Thus both infinite standard families are
+compared, and their only octagon equality is the forward \(k=1\) member.
+
+These families have equal factors and specific initial shapes. They do
+not include arbitrary asymmetric trajectories with the same cyclic words,
+or all smoothed polygons with \(6k\pm2\) sides. No restriction of an
+arbitrary minimizer to these families is assumed or proved.
 
 The construction and endpoint condition are from Hales–Vajjha,
 [Lemma 7.5.5 and Theorem 7.5.6](https://arxiv.org/html/2405.04331v1#Ch7.S5).
@@ -232,10 +244,126 @@ Together with strict monotonicity, this proves that \(k=1\) is the
 unique minimizing member of the standard family. It does not classify
 equality for arbitrary asymmetric or measurable competitors.
 
+## 5. The reverse standard family lies strictly above the circle
+
+The reverse family is described in
+[Hales–Vajjha, Remark 7.6.2](https://arxiv.org/html/2405.04331v1#Ch7.S6).
+We give an explicit tangent and state verification here as well, so its
+cost comparison does not depend on a proposed costate multiplier sign.
+
+### Exact states, factors, and endpoints
+
+Let \(N=3k-1\), \(k\ge2\), and put
+
+\[
+\vartheta=\frac{\pi k}{N},\qquad
+r=2\cos\vartheta\in(0,1),\qquad q=\frac1r>1,\qquad
+a=\frac2{\sqrt{4q-1}}.
+\tag{18}
+\]
+
+Use the reverse cyclic word \(0,2,1,0,2,1,\ldots\), all with factor
+\(q\). In the positive margin coordinates of
+[VERTEX_WORD_REDUCTION.md](VERTEX_WORD_REDUCTION.md), start at
+\[
+(p_0,p_1,p_2)=(a,a,(2q-1)a).
+\]
+Its determinant normalization is exact:
+\[
+p_0p_1+p_1p_2+p_2p_0=a^2(4q-1)=4.
+\]
+The successive switching states cycle through
+\[
+(a,a,(2q-1)a),\quad
+(a,(2q-1)a,a),\quad
+((2q-1)a,a,a).
+\tag{19}
+\]
+This follows directly from the constant-control margin recurrence.
+Every endpoint margin is positive, so the full arcs are strict star.
+Each active margin is \(a\), and every duration is
+\(a\log q/2>0\).
+
+The state permutation after \(N\equiv2\pmod3\) is exactly the required
+twisted terminal permutation. For the frame endpoint, use the triangular
+tangent basis of [WORD_HOLONOMY.md](WORD_HOLONOMY.md), where
+\[
+T_0(q)=\begin{pmatrix}q&0\\0&q^{-1}\end{pmatrix},
+\qquad R'=\begin{pmatrix}0&1\\-1&1\end{pmatrix}.
+\]
+Successive reverse factors are \(R'^iT_0(q)R'^{-i}\), so their
+chronological product is
+\[
+(T_0(q)R')^N R'^{-N}.
+\tag{20}
+\]
+The matrix \(T_0(q)R'\) has determinant one and trace \(q^{-1}=r\),
+hence distinct eigenvalues \(e^{\pm i\vartheta}\).
+Since \(N\vartheta=\pi k\),
+\[
+(T_0(q)R')^N=(-I)^k=R'^{N+1}.
+\]
+Thus (20) equals \(R'\). Together with the verified state endpoint,
+the tangent-frame equivalence proves the actual frame endpoint as well.
+This constructs admissible trajectories with all stated factors and states.
+
+### Cost and monotonicity
+
+On each arc, the active, growing, and decreasing initial margins are
+\((a,a,(2q-1)a)\). The exact normalized vertex cost gives
+\[
+\frac{C_{\rm arc}^-}{\sqrt{12}}
+=\frac{a^2}{8}\bigl(4(q-1)-\log q\bigr)
+=\frac{4q-4-\log q}{2(4q-1)}.
+\]
+Consequently
+\[
+C_N^-=N\sqrt3\,\frac{4q-4-\log q}{4q-1}
+       =-N\sqrt3\,f(r).
+\tag{21}
+\]
+
+Set \(z=-\pi/(3N)\). Since
+\(\vartheta=\pi/3-z\), equation (7) again gives
+\(r=\cos z+\sqrt3\sin z\). The same function \(F(z)=f(r(z))\)
+therefore satisfies
+\[
+C_N^-=\frac{\pi}{\sqrt3}\frac{F(z)}z.
+\tag{22}
+\]
+For the relevant negative \(z\), one has \(0<r<1\).
+Formula (12) now has the elementary bound
+\[
+D''(r)
+=-7+\frac{4r^2+8r-32}{r^3}+2\log r
+\le-7-\frac{20}{r^3}\le-27<0.
+\tag{23}
+\]
+Together with \(D(1)=D'(1)=0\), this again gives \(D(r)<0\)
+for \(0<r<1\), hence \(F''(z)<0\) for negative \(z\).
+
+Identity (15) remains valid. For \(z<0\), its integrand
+\(tF''(t)\) is positive on \((z,0)\), but the integral is taken
+from \(0\) to \(z\). Thus \(zF'(z)-F(z)<0\) on this side as well,
+and \(F(z)/z\) is strictly decreasing.
+
+Increasing \(N\) makes \(z=-\pi/(3N)\) increase toward zero.
+Equation (22) proves that \(C_N^-\) strictly decreases. Its limit is
+again \(\pi\), because \(F'(0)=\sqrt3\).
+Strict concavity gives \(F(z)<zF'(0)\); dividing by negative \(z\)
+shows \(C_N^->\pi\). This proves every assertion in (1-).
+
+At \(N=5\), \(q=\varphi=(1+\sqrt5)/2\), so (21) recovers the exact
+symmetric reverse-five minimum in
+[REVERSE_FIVE_MINIMUM.md](REVERSE_FIVE_MINIMUM.md).
+The extension here compares the standard reverse family at every
+larger count as well. No claim of equal-factor optimality within those
+larger asymmetric reverse-word families is made.
+
 ## Why the first-order conditions do not bound word length
 
-The same primary source proves that every member of this family has a
-normal Pontryagin lift satisfying the Hamiltonian maximum and endpoint
+The same primary source proves that every member of the forward
+\((6k+2)\)-gon family has a normal Pontryagin lift satisfying the Hamiltonian maximum and endpoint
 transversality conditions. Its control labels follow the same cyclic
 direction at every switch, including the twisted seam. Consequently
 these words avoid the forbidden forward two-vertex alternation, while

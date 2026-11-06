@@ -83,7 +83,10 @@ regular smoothed `(6k+2)`-gon family**. Its costs satisfy
 and `C₄` is the octagon area. A strict concavity certificate proves the continuous
 interpolation is increasing, so no finite numerical search is involved. See
 [docs/REGULAR_FAMILY_COMPARISON.md](docs/REGULAR_FAMILY_COMPARISON.md).
-This equal-factor family does not exhaust asymmetric cyclic words or all smoothed polygons.
+The same proof extends to the standard reverse `(6k−2)`-gon family: its costs
+`C⁻₅ > C⁻₈ > C⁻₁₁ > ⋯ > π` strictly decrease to `π`. An explicit positive-margin
+construction verifies both endpoints for every member. These equal-factor families
+do not exhaust asymmetric cyclic words or all smoothed polygons.
 
 For an arbitrary admissible star state `X=[[a,b],[c,-a]]`, put
 `m=(c-b)/2` and `n=√(a²+((b+c)/2)²)`. The determinant identity gives `m²-n²=1`,
