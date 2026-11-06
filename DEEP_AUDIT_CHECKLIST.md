@@ -105,8 +105,20 @@ as mathematical closure of the unrestricted comparison.
 - [x] Check the actual positive family approaching the octagon, with full-arc star
   positivity and exactly two disappearing durations; no positive member attains equality.
 - [x] Check all six-piece cyclic increment patterns without a reflection assumption.
-  Distinguish the cost comparison for `010202`, the infeasible `010102` orbit, and
-  the local nonminimality result for `012012`; retain `012102` as the open pattern.
+  Distinguish the full cost comparisons for `010202` and `012012` from the infeasible
+  `010102` orbit; retain `012102` as the open comparison.
+- [x] Preserve and independently audit concurrent commit `421eeb1`: exhaustive tangent
+  parametrization, actual half-holonomy and orientation, all prefix margins including
+  the two-case strict sign certificate, complete positive feasibility, exact cost,
+  and strictly monotone deformation to an actual five-piece boundary. Do not describe
+  this varying-initial-state global deformation as a fixed local endpoint replacement.
+- [x] Independently audit the complete `012012` comparison: exhaustive coordinates,
+  compact parameter interval, exact initial state, all prefix and whole-arc strict-star
+  inequalities including the arc-vanishing endpoints, and both positive five-piece
+  boundary words. After rebasing, check both frame and state endpoints are fixed and
+  the tangent is nonzero in the exact one-dimensional fiber. Apply the reviewed
+  constrained Hessian only after proving those facts; use compactness to obtain the
+  strict global cost comparison for this family.
 - [x] Preserve and independently audit concurrent commit `1b23521`: smooth switch
   dependence, both tail-integral Hessian formulas, cancellation of the derivative of
   each jump coefficient, the rank-one term on the tangent line, the three strict

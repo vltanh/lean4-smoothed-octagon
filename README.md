@@ -56,13 +56,20 @@ A cheaper finite vertex-control competitor must therefore require at least six p
 Arbitrary longer words remain open; there is no bound on the number of pieces in an
 arbitrary minimizer.
 
-At six pieces, the entire asymmetric orbit `010202` is also strictly more expensive
-than the octagon. The bound is sharp as an unattained infimum: an explicit feasible
-family converges to the octagon as two durations vanish. Among the four cyclically
-reduced six-piece orbits, `010102` fails the cyclic ordering test and `012012` contains
-forbidden forward alternation after rebasing, leaving only `012102` as an open
-six-piece minimizer pattern. The complete proof and
-classification are in [docs/SIX_ARC_010202.md](docs/SIX_ARC_010202.md).
+At six pieces, the entire asymmetric orbits `010202` and `012012` also cost strictly
+more than the octagon. For `010202`, the bound is sharp as an unattained infimum: an
+explicit feasible family converges to the octagon as two durations vanish. The proof
+and complete six-piece word classification are in
+[docs/SIX_ARC_010202.md](docs/SIX_ARC_010202.md). A concurrent, independently reviewed
+proof gives a monotone deformation of every member of that orbit to the compared
+five-piece boundary; see [docs/SIX_ARC_REVERSE_BLOCK.md](docs/SIX_ARC_REVERSE_BLOCK.md).
+
+For `012012`, a compact family preserves the actual endpoints and the entire strict
+star domain. A negative constrained second variation forces its minimum to one of
+two genuine five-piece boundary trajectories; see
+[docs/SIX_ARC_012012.md](docs/SIX_ARC_012012.md). The other raw six-piece orbit `010102`
+is infeasible by cyclic ordering. Thus `012102` is the only remaining six-piece
+comparison, while arbitrary longer words remain open.
 
 For an arbitrary admissible star state `X=[[a,b],[c,-a]]`, put
 `m=(c-b)/2` and `n=√(a²+((b+c)/2)²)`. The determinant identity gives `m²-n²=1`,

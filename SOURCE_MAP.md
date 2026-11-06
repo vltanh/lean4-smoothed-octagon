@@ -475,8 +475,21 @@ and a short exact cost cancellation. A scalar parameter bound then invokes the p
 sharp envelope on its full domain. The actual family approaching the octagon verifies
 sharpness without asserting equality for a positive six-piece trajectory. Independent
 reviews check the entire hand argument and the four-orbit six-piece classification.
-With the cyclic ordering and concurrent forward-alternation results, only `012102`
-remains an open six-piece minimizer pattern. No computation is used.
+The concurrent proof [docs/SIX_ARC_REVERSE_BLOCK.md](docs/SIX_ARC_REVERSE_BLOCK.md),
+preserved from commit `421eeb1`, gives an independent monotone deformation of this
+entire orbit to the five-piece boundary, including complete positive feasibility.
+Its tangent elimination, half-holonomy, prefix table, cost identity, and strict
+derivative sign have also been independently reviewed. No computation is used.
+
+[docs/SIX_ARC_012012.md](docs/SIX_ARC_012012.md) proves the other full six-piece
+comparison by constructing a compact family with strict star membership even at
+the two vanishing-arc endpoints. Exact rebasing identifies the changing window with
+the one-dimensional forward-alternation endpoint fiber. The independently reviewed
+Hessian from concurrent commit `1b23521` excludes all interior minima, and both
+boundary trajectories belong to the completed five-piece class. The exhaustive
+coordinate change, state matrix, every margin bound, and nonzero tangent have been
+independently checked by hand. With cyclic ordering, only `012102` remains an open
+six-piece comparison. No bound on larger word lengths is inferred.
 
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) develops the tangent/state products used
 in the four-link proof into a complete fixed-factor theorem for arbitrary finite words.

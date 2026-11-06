@@ -28,7 +28,8 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Five-piece reverse cyclic orbit `02102` | Exact minimum at the symmetric golden-ratio tuple, with every asymmetric tuple strictly larger; also `C/√12 > 10/11 > π/√12` | The entire positive two-parameter tangent family; ellipticity, orientation, and full strict-star feasibility are proved |
 | At most five positive vertex pieces | Complete comparison `C ≥ A`, with octagon equality only | Every admissible trajectory with such a description; five-piece words that rebase and merge to four are included |
 | Six-piece orbit `010202` | Full asymmetric strict comparison proved by hand: `C > A`; the octagon is the unattained infimum | Every actual admissible member, with unequal factors and arbitrary initial shape; the two vanishing-arc octagon limit is constructed |
-| Remaining six-piece minimizer pattern | `012102` remains open | Of four raw cyclic orbits, `010102` fails the ordering test, `012012` has forbidden forward alternation after rebasing, and `010202` is compared above |
+| Six-piece orbit `012012` | Full asymmetric strict comparison proved by hand: `C > A` | A compact family of actual admissible trajectories reaches two positive five-piece boundaries, and its interior has no cost minimum |
+| Remaining six-piece comparison | `012102` remains open | Of four raw cyclic orbits, `010102` fails the ordering test; the full `012012` and `010202` families are compared above |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
 | Unrestricted octagon inequality | Open | Trajectories leaving the excluded neighborhood, with arbitrary control history |
@@ -101,8 +102,19 @@ endpoint family has the same scalar cost bound with a strictly smaller parameter
 than the octagon limit. Every positive member has strictly greater cost, while an
 explicit feasible family approaches the octagon as two pieces vanish. The note also
 classifies the four raw cyclically reduced six-piece orbits. The ordering test removes
-one, and the forward-alternation improvement removes `012012` from minimizers, leaving
-only `012102` as an open six-piece minimizer pattern.
+one. The concurrent proof in
+[docs/SIX_ARC_REVERSE_BLOCK.md](docs/SIX_ARC_REVERSE_BLOCK.md), preserved from commit
+`421eeb1`, independently compares the same `010202` orbit and proves every positive
+factor tuple is feasible. Its strictly cost-decreasing deformation reaches an actual
+five-piece boundary; the initial shape and duration vary during this global deformation.
+
+[docs/SIX_ARC_012012.md](docs/SIX_ARC_012012.md) proves a full cost comparison for the
+other excluded minimizer orbit, beyond the earlier local improvement. Its exhaustive
+factor parametrization supplies a compact one-dimensional family with strict star
+membership everywhere. After rebasing, this is the exact forward-edge endpoint fiber;
+the reviewed negative constrained Hessian forces its cost minimum to a five-piece
+boundary. Every interior six-piece trajectory therefore costs strictly more than the
+octagon. Only `012102` remains an open six-piece comparison.
 
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) supplies a complete fixed-factor endpoint
 test at arbitrary finite word length. Noncentral elliptic holonomy determines the only
@@ -503,12 +515,28 @@ the current research priority. No finite switching search is justified yet.
   Independent hand audits check every endpoint and cost identity. Six-piece cyclic
   word classification, the ordering test, and the concurrent forward-alternation
   exclusion leave only `012102` as an open six-piece minimizer pattern.
+  Commit `21d37bc`.
 - **2026-11-06, forward four-arc alternation:** preserve the concurrent hand proof
   in commit `1b23521` and independently audit its full constrained Hessian and exact
   endpoint splice. Every forward alternating four-arc window is strictly improvable,
   even when its first variation vanishes. The reverse orientation is not excluded.
   This rules out the `012012` six-piece orbit from global minimizers after rebasing;
-  it is not yet a cost lower bound for every trajectory in that orbit.
+  the local result alone is not a cost lower bound for every trajectory in that orbit.
+  The independent audit is committed as `21d37bc`.
+- **2026-11-06, reverse-block monotone deformation:** preserve the concurrent proof
+  in commit `421eeb1` and independently audit its complete positive factor domain,
+  half-holonomy, every switching-state margin, cost cancellation, and strict derivative
+  sign. The entire six-piece `010202` orbit is feasible and deforms monotonically to
+  an actual compared five-piece boundary. This is an independent strengthening of
+  the preceding comparison, with no numerical premise or fixed-initial-shape claim.
+- **2026-11-06, full six-piece `012012` comparison:** construct an exhaustive compact
+  endpoint family and prove strict star membership at every prefix and throughout
+  every arc, including both five-piece boundaries. After an exact twisted rebase,
+  the varying four-arc window has both frame and state endpoints fixed. Its nonzero
+  tangent spans the one-dimensional constraint fiber, so the reviewed negative
+  Hessian rules out every interior minimum. Compactness and the complete five-piece
+  comparison prove strict octagon comparison for every positive member. Independent
+  hand audits check the coordinate change, state matrix, signs, and Hessian use.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,
