@@ -117,6 +117,20 @@ The calculus inputs include mathlib's `hasDerivAt_iff_tendsto_slope`, order sque
 and `contDiff_one_iff_deriv`, inspected at the exact pinned revision. The hand proof is in
 [docs/RADIAL_REGULARITY.md](docs/RADIAL_REGULARITY.md).
 
+## Arclength: `SmoothedOctagon/ArcLength.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `euclideanSpeed`, `euclideanSpeed_pos`, `euclideanSpeed_sq` | Explicit Euclidean speed, its positivity, and squared-speed identity |
+| `continuous_euclideanSpeed`, `periodic_euclideanSpeed` | Continuity and inherited period of the speed |
+| `exists_inverse_integral_reparam` | Construct the global `C¹` inverse of the integral of a positive periodic function |
+| `exists_unitSpeed_reparam` | Construct an increasing global periodic arclength change of parameter fixing zero |
+
+The mathlib inputs are the fundamental theorem of calculus, positive periodic integral
+limits, `Continuous.surjective`, `StrictMono.orderIsoOfRightInverse`, and
+`HasDerivAt.of_local_left_inverse`. All are at the pinned revision. See
+[docs/ARC_LENGTH.md](docs/ARC_LENGTH.md) for the complete hand proof and exact source paths.
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

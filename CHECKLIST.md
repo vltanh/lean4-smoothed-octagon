@@ -23,6 +23,8 @@ These are source deliverables, not kernel-certified milestones.
   lines, with domination of the gauge and no assumed smooth boundary.
 - [x] Prove the radial boundary is a regular positive `C¹` curve from that supporting
   field, including the exact orientation formula `det(b,b') = 1 / gauge(dir)^2`.
+- [x] Construct a global increasing `C¹` arclength change of parameter with positive
+  derivative, exact period drift, and Euclidean unit speed.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -59,17 +61,17 @@ none has yet been checked by Lean. Substeps are not separate global conjecture c
 | G2a — Affine normalization | Starting with an actual worst disk, construct a normalized image, preserve its worst status and density, and identify density as area divided by `2 * √3`. | Source draft supplied in `Normalization.lean`. |
 | G2b — Continuous boundary trace | Construct six continuous contact curves, a common period, simple traversal, full boundary coverage, and the initial sixth-root values. | Source draft supplied in `BoundaryTrace.lean`; no curve is assumed as an input. |
 | G2c — Regular radial parametrization | Deduce a positive regular `C¹` polar boundary curve from the actual minimizer's unique supporting line at every boundary point. | Source proofs supplied in `SupportNormal.lean` and `RadialRegularity.lean`, including the bilateral slope squeeze and exact orientation formula. |
-| G2d — Common arclength parameter | Construct a global increasing periodic change of parameter with Euclidean unit speed for curve zero. | Open; the norm on `Fin 2 → ℝ` must not silently replace Euclidean speed. |
+| G2d — Common arclength parameter | Construct a global increasing periodic change of parameter with Euclidean unit speed for curve zero. | Source proof supplied in `ArcLength.lean`; the speed is the explicit Euclidean coordinate formula. |
 | G2e — Balanced assembly | Apply the upstream regularity, Lipschitz, star, and curvature lemmas; transport the period, simplicity, coverage, and initial values through the common change of parameter. | Open, dependent on G2b–G2d. |
 
 ## Next bounded mathematical task
 
-Continue **G2d–G2e** to produce the balanced circle representation of an actual worst disk.
+Complete **G2e** to produce the balanced circle representation of an actual worst disk.
 The source normalization constructs the map and preserves the correct density, and the
 continuous trace is now constructed from unique indexed critical hexagons. The remaining
-analytic input is a common global Euclidean arclength reparametrization; radial `C¹`
-regularity is now derived from the actual minimizer. The final assembly must still supply
-every balanced-pair field explicitly.
+analytic inputs are now supplied: radial `C¹` regularity is derived from the actual
+minimizer, and the global Euclidean arclength reparametrization is constructed. The final
+assembly must supply every balanced-pair field explicitly and preserve the area objective.
 
 ## Progress entries
 
@@ -82,7 +84,10 @@ every balanced-pair field explicitly.
 - **2026-11-06, G2c support field:** unique normalized supporting covectors constructed;
   a uniform compact box and uniqueness of cluster points prove continuity; commit `b01624d`.
 - **2026-11-06, G2c regularity:** bilateral supporting-slope squeeze differentiates the
-  angular gauge. The radial curve is `C¹`, nonvanishing, and positively oriented.
+  angular gauge. The radial curve is `C¹`, nonvanishing, and positively oriented;
+  commit `abe06e2`.
+- **2026-11-06, G2d:** integrate the positive periodic Euclidean speed, prove global
+  surjectivity, construct the inverse order isomorphism, and prove unit speed and period drift.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

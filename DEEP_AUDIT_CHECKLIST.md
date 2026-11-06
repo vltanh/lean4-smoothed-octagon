@@ -96,6 +96,17 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Independently review the proof and inspect the calculus APIs at the exact mathlib pin.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Global arclength construction
+
+- [x] Define speed by the square root of the sum of squared tangent coordinates.
+- [x] Prove positivity, continuity, and periodicity before integrating.
+- [x] Prove both limits of the accumulated-length function and its global surjectivity.
+- [x] Construct the inverse as an order isomorphism; prove its derivative and `C¹` regularity.
+- [x] Prove the inverse fixes zero and transports the full period by an exact drift identity.
+- [x] Verify Euclidean unit speed by the chain rule and positive-denominator cancellation.
+- [x] Independently review the argument and exact pinned integral/inverse-function APIs.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for
