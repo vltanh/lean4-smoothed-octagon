@@ -42,6 +42,8 @@ These are source deliverables, not kernel-certified milestones.
   to its normalized area and original packing density equal to cost divided by `√12`.
 - [x] For smooth global star arcs of cost below `π`, prove the reflected first row
   turns by exactly `π/3` on the terminal interval, excluding additional full turns.
+- [x] Derive closed-interval continuity, state Lipschitz bounds, frame `C¹` regularity,
+  actual a.e. dynamics, and all six curvature inequalities from arbitrary integral trajectories.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -111,7 +113,7 @@ These are constructions within G3d, not separate cases of the conjecture.
 
 | Step | Status |
 | --- | --- |
-| Derive regularity from integral admissibility | In progress: continuity, state Lipschitz bounds, frame regularity, and a.e. curvature must follow from the actual definition. |
+| Derive regularity from integral admissibility | Source proof supplied in `AdmissibleRegularity.lean`, including endpoint derivatives within the interval and all six a.e. contact curvatures. |
 | Construct a smooth cyclic extension | In progress: preserve the full closed segment and cost, and check all value and derivative seams. |
 | Exclude extra winding at low cost | Source proof for global smooth star arcs supplied in `LowCostWinding.lean`; application to all admissible segments still requires the extension. |
 | Construct the balanced convex competitor | Open: derive one-turn simplicity and the convex radial hull with every balanced-pair field. |
@@ -170,7 +172,11 @@ until this comparison is proved.
 - **2026-11-06, G3d low-cost winding:** construct a continuous logarithmic angle without
   simplicity assumptions. A positive quadratic form bounds reflected-row angular speed
   by the trace cost density. Cost below `π` forces the endpoint angle to be exactly `π/3`.
-  The theorem's global smooth-arc scope remains explicit.
+  The theorem's global smooth-arc scope remains explicit; commit `fdbc79c`.
+- **2026-11-06, G3d admissible regularity:** derive all needed interval regularity from
+  the integral-form state equations. Compactness of time times the entire control simplex
+  bounds the commutator without assuming continuity of the selected control. The Lebesgue
+  FTC and the simplex formula give a.e. nonnegative curvature for all six contacts.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

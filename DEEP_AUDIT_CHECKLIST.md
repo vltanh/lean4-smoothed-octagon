@@ -207,6 +207,21 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
   is constructed; this module alone does not prove reverse reconstruction.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Arbitrary integral-trajectory regularity
+
+- [x] Start with the actual `IsStateTrajectory` definition, retaining arbitrary measurable
+  simplex controls and making no piecewise-constant or smooth-control restriction.
+- [x] Prove joint continuity of the commutator on the compact time-times-simplex product,
+  excluding zero denominators before obtaining uniform entrywise bounds.
+- [x] Derive state Lipschitz regularity from the integral equations directly.
+- [x] Prove frame derivatives within the closed interval, including both endpoints;
+  do not differentiate unconstrained exterior values.
+- [x] Apply the Lebesgue FTC to derive the a.e. state equation and all six curvature signs.
+- [x] Inspect exact pinned FTC, integral norm, within-derivative, and Lipschitz APIs;
+  explicitly import the Lebesgue theorem because a transitive private import is insufficient.
+- [x] Independently review the compactness argument and the local curvature calculation.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

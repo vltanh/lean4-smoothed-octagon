@@ -264,6 +264,23 @@ The logarithmic proof adapts upstream `Basic/Analysis/Convex/StarCurve.lean`, re
 unused simplicity and periodicity premises. The trajectory hypotheses are explicitly
 global and smooth in this module. See [docs/LOW_COST_WINDING.md](docs/LOW_COST_WINDING.md).
 
+## Integral-trajectory regularity: `SmoothedOctagon/AdmissibleRegularity.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `controlCommutator`, `isCompact_controlSimplex`, `continuous_controlMatrix` | Actual state velocity and compact control parameter space |
+| `continuousOn_controlCommutator`, `controlCommutator_bounded` | Joint continuity and uniform bounds along a continuous star-state segment |
+| `integralCurve_lipschitz_of_bounded`, `integralCurve_ae_hasDerivAt` | Lipschitz and Lebesgue-FTC consequences of integral equations |
+| `stateTrajectory_continuous`, `stateTrajectory_state_lipschitz` | Derived continuity and state Lipschitz regularity on the full closed interval |
+| `stateTrajectory_frame_hasDerivWithinAt`, `stateTrajectory_frame_hasDerivAt`, `stateTrajectory_frame_contDiffOn` | Endpoint and interior frame equations and `C¹` entries |
+| `stateTrajectory_state_ae_hasDerivAt`, `stateTrajectory_stateCurvature_nonneg` | Actual a.e. state dynamics and nonnegative normalized curvature |
+| `sixthRoot_curvature_nonneg_of_stateCurvature`, `stateTrajectory_contactCurvature_nonneg` | All six geometric contact curvatures from the three state inequalities |
+| `stateTrajectory_regularity` | Consolidated output from an arbitrary integral-form state trajectory |
+
+The matrix FTC, upstream `oct_stateCurvature_eq`, and exact pinned mathlib Lebesgue
+differentiation theorem supply the main inputs. See
+[docs/ADMISSIBLE_REGULARITY.md](docs/ADMISSIBLE_REGULARITY.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |
