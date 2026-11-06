@@ -44,6 +44,8 @@ These are source deliverables, not kernel-certified milestones.
   turns by exactly `π/3` on the terminal interval, excluding additional full turns.
 - [x] Derive closed-interval continuity, state Lipschitz bounds, frame `C¹` regularity,
   actual a.e. dynamics, and all six curvature inequalities from arbitrary integral trajectories.
+- [x] Prove `3T ≤ cost` for every integral trajectory, bound an actual worst realization
+  by the octagon's area below `π`, and discharge the high-cost reverse-comparison case.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -117,7 +119,7 @@ These are constructions within G3d, not separate cases of the conjecture.
 | Construct a smooth cyclic extension | In progress: preserve the full closed segment and cost, and check all value and derivative seams. |
 | Exclude extra winding at low cost | Source proof for global smooth star arcs supplied in `LowCostWinding.lean`; application to all admissible segments still requires the extension. |
 | Construct the balanced convex competitor | Open: derive one-turn simplicity and the convex radial hull with every balanced-pair field. |
-| Handle high costs and close the comparison | Open: provide a concrete cheaper geometric competitor and assemble the two cost regimes. |
+| Handle high costs and close the comparison | The high-cost case is supplied by the concrete octagon in `ControlBounds.lean`; full comparison is equivalent to `LowCostBalancedComparison`, which remains open. |
 
 ## Next bounded mathematical task
 
@@ -176,7 +178,13 @@ until this comparison is proved.
 - **2026-11-06, G3d admissible regularity:** derive all needed interval regularity from
   the integral-form state equations. Compactness of time times the entire control simplex
   bounds the commutator without assuming continuity of the selected control. The Lebesgue
-  FTC and the simplex formula give a.e. nonnegative curvature for all six contacts.
+  FTC and the simplex formula give a.e. nonnegative curvature for all six contacts;
+  commit `f1c391c`.
+- **2026-11-06, G3d cost regimes:** prove `3T ≤ cost` for every state trajectory and
+  construct an actual worst realization with `cost ≤ area(octagon) < π` and `T < π/3`.
+  The octagon handles every cost at least `π`. The remaining reverse comparison and
+  low-cost global inequality are named explicitly; their conditional consequences retain
+  the corresponding inputs.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

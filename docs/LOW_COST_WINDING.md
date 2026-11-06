@@ -140,9 +140,9 @@ has such a global extension, that all six boundary arcs form a simple convex bal
 disk, or that its area is at most the trajectory's cost.
 
 Those remaining constructions must precede an assertion that the geometric minimizer
-is a minimizer over the entire control-admissible class. The high-cost competitors also
-need an explicit geometric comparison, such as the unit disk, with all required facts
-supplied. No such reverse theorem is assumed here.
+is a minimizer over the entire control-admissible class. The separate
+`ControlBounds.lean` module supplies the high-cost comparison using the concrete octagon,
+whose area is below `π`. No full reverse theorem is assumed here.
 
 ## Sources
 

@@ -185,6 +185,6 @@ translations.
 
 For cost below `π`, the winding estimate then has to establish a simple
 one-turn boundary and the balanced geometric competitor. For cost at least
-`π`, the unit disk supplies the required area comparison. Until that complete
+`π`, `ControlBounds.lean` supplies the octagon as the required competitor. Until that complete
 reverse comparator is assembled, the forward realization of a geometric
 minimizer is not an assertion of `IsReinhardtMinimizer`.

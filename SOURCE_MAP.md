@@ -281,6 +281,23 @@ The matrix FTC, upstream `oct_stateCurvature_eq`, and exact pinned mathlib Lebes
 differentiation theorem supply the main inputs. See
 [docs/ADMISSIBLE_REGULARITY.md](docs/ADMISSIBLE_REGULARITY.md).
 
+## Cost regimes and open control targets: `SmoothedOctagon/ControlBounds.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `star_costDensity_ge_three`, `stateTrajectory_cost_ge_three_mul`, `stateTrajectory_cost_pos` | Pointwise cost-density bound and positive cost at least `3T` for every integral trajectory |
+| `stateTrajectory_terminalTime_lt_pi_div_three` | Low cost implies `T < π/3` |
+| `octagon_area_lt_pi`, `worstDisk_realization_cost_le_octagon`, `exists_worstDisk_lowCost_realization` | Concrete area threshold and a constructed actual worst realization below it |
+| `AdmissibleBalancedComparison`, `LowCostBalancedComparison` | Named open reverse-comparison propositions |
+| `highCost_balanced_competitor`, `admissibleBalancedComparison_iff_lowCost` | The concrete octagon discharges high costs, leaving exactly the low-cost regime |
+| `controlMinimizer_of_worstDisk_realization` | Conditional full control minimality with the reverse comparison kept explicit |
+| `LowCostControlLowerBound`, `reinhardtConjecture_of_lowCostControlLowerBound` | Unrestricted low-cost inequality and its sufficient connection to geometric minimality |
+| `reinhardtConjecture_iff_lowCostControlLowerBound` | Conditional equivalence, explicitly assuming the reverse comparison |
+
+The integral estimate generalizes the bound in upstream `Ch4/TerminalTime.lean`; the
+strict octagon threshold is inherited from the existing exact candidate proof. See
+[docs/CONTROL_BOUNDS.md](docs/CONTROL_BOUNDS.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

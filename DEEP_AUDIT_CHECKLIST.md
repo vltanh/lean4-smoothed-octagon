@@ -222,6 +222,21 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Independently review the compactness argument and the local curvature calculation.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Cost bounds and explicit comparison boundary
+
+- [x] Derive the cost-density bound from determinant one and the positive trace sign;
+  integrate it for every integral trajectory, without assuming a minimizer.
+- [x] Use geometric minimality to bound an actual worst realization by the existing
+  octagon's area below `π`; do not assume control minimality to obtain this bound.
+- [x] Supply a concrete high-cost competitor and prove full reverse comparison is
+  equivalent to its low-cost restriction.
+- [x] Keep both reverse-comparison predicates and the universal low-cost inequality
+  as propositions, with explicit premises on every conditional minimizer/equivalence theorem.
+- [x] Verify that the sufficient control lower-bound criterion needs only the constructed
+  forward realization and therefore has no hidden reverse-comparison premise.
+- [x] Independently review the exact upstream candidate tuple and pinned integral APIs.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

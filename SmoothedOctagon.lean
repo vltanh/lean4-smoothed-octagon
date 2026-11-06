@@ -16,6 +16,7 @@ public import SmoothedOctagon.CyclicClock
 public import SmoothedOctagon.AdmissibleRealization
 public import SmoothedOctagon.LowCostWinding
 public import SmoothedOctagon.AdmissibleRegularity
+public import SmoothedOctagon.ControlBounds
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 
