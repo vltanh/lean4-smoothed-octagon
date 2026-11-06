@@ -298,6 +298,22 @@ The integral estimate generalizes the bound in upstream `Ch4/TerminalTime.lean`;
 strict octagon threshold is inherited from the existing exact candidate proof. See
 [docs/CONTROL_BOUNDS.md](docs/CONTROL_BOUNDS.md).
 
+## Constructed reverse geometry: `SmoothedOctagon/ReverseGeometry.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `frameContact`, `cyclicFrame_add_nat`, `cyclicFrame_periodic` | Actual contact curves and full cyclic frame period |
+| Contact regularity, star, cross, and shift lemmas | Derive positive regular contacts and all cyclic identities from the frame |
+| `angle_strictMono_of_cross_pos`, `continuous_angle_of_contDiff` | Angle properties without simplicity assumptions |
+| `reflectedFirstRow_shift`, `angle_add_of_rotated_period`, `lowCost_reflectedFirstRow_full_angle` | The reflected row makes exactly one full turn |
+| `firstContact_angle_ne_row_add_pi`, `lowCost_firstContact_full_angle` | Determinant obstruction and the resulting exact first-contact winding |
+| `curve_injOn_of_full_angle` | Simplicity from strict angular growth and one full turn |
+| `cyclicFrameDisk`, `lowCost_cyclicFrame_isBalancedPair` | Construct the convex centrally symmetric radial hull and every balanced-circle clause |
+
+The geometric closure uses upstream `PlaneCurve.IsStarCurve.convex_radialHull` and
+the radial-hull frontier, compactness, and interior results. All simplicity and curvature
+inputs are supplied. See [docs/REVERSE_GEOMETRY.md](docs/REVERSE_GEOMETRY.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

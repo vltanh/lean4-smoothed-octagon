@@ -46,6 +46,8 @@ These are source deliverables, not kernel-certified milestones.
   actual a.e. dynamics, and all six curvature inequalities from arbitrary integral trajectories.
 - [x] Prove `3T ≤ cost` for every integral trajectory, bound an actual worst realization
   by the octagon's area below `π`, and discharge the high-cost reverse-comparison case.
+- [x] Construct a balanced convex radial hull from a low-cost smooth cyclic frame,
+  deriving one-turn simplicity and all geometric fields without assuming a boundary disk.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -118,7 +120,7 @@ These are constructions within G3d, not separate cases of the conjecture.
 | Derive regularity from integral admissibility | Source proof supplied in `AdmissibleRegularity.lean`, including endpoint derivatives within the interval and all six a.e. contact curvatures. |
 | Construct a smooth cyclic extension | In progress: preserve the full closed segment and cost, and check all value and derivative seams. |
 | Exclude extra winding at low cost | Source proof for global smooth star arcs supplied in `LowCostWinding.lean`; application to all admissible segments still requires the extension. |
-| Construct the balanced convex competitor | Open: derive one-turn simplicity and the convex radial hull with every balanced-pair field. |
+| Construct the balanced convex competitor | Source proof supplied in `ReverseGeometry.lean` from the explicit smooth cyclic-extension interface; simplicity, convexity, symmetry, and coverage are conclusions. |
 | Handle high costs and close the comparison | The high-cost case is supplied by the concrete octagon in `ControlBounds.lean`; full comparison is equivalent to `LowCostBalancedComparison`, which remains open. |
 
 ## Next bounded mathematical task
@@ -184,7 +186,12 @@ until this comparison is proved.
   construct an actual worst realization with `cost ≤ area(octagon) < π` and `T < π/3`.
   The octagon handles every cost at least `π`. The remaining reverse comparison and
   low-cost global inequality are named explicitly; their conditional consequences retain
-  the corresponding inputs.
+  the corresponding inputs; commit `c6bfb14`.
+- **2026-11-06, G3d reverse geometry:** a determinant obstruction prevents the first
+  contact from being opposite to the reflected first row. The row's full turn therefore
+  forces exactly one contact turn, and positive angular speed yields simplicity. The
+  radial hull is then proved convex and balanced from actual a.e. curvature. The theorem
+  consumes the explicit global cyclic-extension interface, not an assumed geometric disk.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

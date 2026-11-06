@@ -237,6 +237,21 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Independently review the exact upstream candidate tuple and pinned integral APIs.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Reverse geometry from a smooth cyclic frame
+
+- [x] Derive reflected-row full-period winding from the exact rotation and low-cost turn.
+- [x] Use determinant one to exclude opposite first-column and reflected-row directions;
+  continuity bounds their lifted-angle difference without assuming simplicity.
+- [x] Derive exactly one first-column turn from the positive integer winding and upper bound.
+- [x] Deduce injectivity from strict angular growth and the exact full turn.
+- [x] Construct the disk as the actual radial hull and apply the upstream convexity theorem
+  only after supplying simplicity, global derivative Lipschitz bounds, and a.e. curvature.
+- [x] Derive central symmetry and all six boundary images from cyclic contact shifts.
+- [x] Independently review the winding obstruction, interval-integral periodicity,
+  complex phase APIs, and radial-hull assembly.
+- [x] Keep the global extension inputs explicit until they are constructed from admissibility.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

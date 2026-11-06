@@ -115,6 +115,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/LowCostWinding.lean](SmoothedOctagon/LowCostWinding.lean) | Cost bounds excluding extra reflected-row turns for smooth star arcs |
 | [SmoothedOctagon/AdmissibleRegularity.lean](SmoothedOctagon/AdmissibleRegularity.lean) | Interval regularity and a.e. curvature from arbitrary integral trajectories |
 | [SmoothedOctagon/ControlBounds.lean](SmoothedOctagon/ControlBounds.lean) | Actual cost/time bounds, high-cost competitor, and exact remaining control targets |
+| [SmoothedOctagon/ReverseGeometry.lean](SmoothedOctagon/ReverseGeometry.lean) | One-turn simplicity and a constructed balanced convex disk from cyclic frame data |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -134,6 +135,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/LOW_COST_WINDING.md](docs/LOW_COST_WINDING.md) | Logarithmic angle, positive quadratic form, and the exact low-cost turn |
 | [docs/ADMISSIBLE_REGULARITY.md](docs/ADMISSIBLE_REGULARITY.md) | Compact control bounds, interval FTC, endpoint regularity, and curvature |
 | [docs/CONTROL_BOUNDS.md](docs/CONTROL_BOUNDS.md) | Cost regimes and the explicit reverse-comparison boundary |
+| [docs/REVERSE_GEOMETRY.md](docs/REVERSE_GEOMETRY.md) | Determinant winding obstruction and convex radial-hull reconstruction |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |
