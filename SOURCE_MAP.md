@@ -358,6 +358,19 @@ This implements Hales–Vajjha Lemma 8.2.1 by direct matrix and weighted-gap alg
 using the pinned star-denominator and trace-square results. It supplies no lift-existence
 or finite-switch theorem. See [docs/SINGULAR_LOCUS.md](docs/SINGULAR_LOCUS.md).
 
+## Entire-circle exclusion: `SmoothedOctagon/CircleExclusion.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `reinhardtCost_eq_three_mul_of_circle` | Circle-state equality on the open interval gives exact cost `3T` |
+| `reflectedFirstRow_angularSpeed_eq_one`, `reflectedFirstRow_angle_eq_terminalTime_of_circle` | Unit angular speed and its integrated angle for the explicit smooth-frame interface |
+| `lowCost_admissible_not_circle`, `admissible_circle_cost_ge_pi` | Actual integral-admissible entirely circular trajectories cost at least `π` |
+| `controlMinimizer_cost_lt_pi`, `controlMinimizer_not_circle`, `controlMinimizer_exists_non_circle_state` | Every full minimizer has strict low cost and an interior noncircle state |
+
+The actual admissible extension supplies the analytic interface. This result does not
+require a Pontryagin lift and does not exclude proper circular subarcs. See
+[docs/CIRCLE_EXCLUSION.md](docs/CIRCLE_EXCLUSION.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

@@ -299,6 +299,19 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
   in `nonneg_of_mul_nonneg_right` against the exact pinned mathlib API.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Entire-circle exclusion
+
+- [x] Start from actual integral admissibility, using the constructed cyclic extension
+  to supply global frame regularity rather than assuming it of the input trajectory.
+- [x] Check that equality to `J` only on the open interval determines both cost and
+  lifted-angle increment; the exact integral congruence ignores endpoint values.
+- [x] Combine the strict low-cost winding theorem with unit angular speed to exclude
+  every entirely circular admissible trajectory of cost below `π`.
+- [x] Derive the strict bound for every full minimizer from a concrete admissible
+  competitor, with no Pontryagin-lift hypothesis or circular existence argument.
+- [x] Independently review the source and keep proper circular subarcs explicitly open.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for
@@ -314,7 +327,7 @@ All **64 upstream Lean files** at the pinned commit were fetched and searched fo
 The project imports implementation modules, not `Challenge` or `Solution`. The source import
 graph reaches **58 upstream implementation modules** in `Basic`, `External`, and
 `SmoothedPolygons`, then mathlib.
-All **24 local Lean modules**, including the umbrella, are in the current root closure.
+All **25 local Lean modules**, including the umbrella, are in the current root closure.
 The local graph has no missing imports or cycles; an independent source scan found no
 cross-file uses of private local declarations or local declaration collisions.
 The name `External` does not by itself denote an assumed theorem: the fetched files contain

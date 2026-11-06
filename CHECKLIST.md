@@ -56,6 +56,9 @@ These are source deliverables, not kernel-certified milestones.
 - [x] Prove the general pointwise singular-control test: full-simplex Hamiltonian
   independence is equivalent to zero reduced costate. A nonzero reduced costate confines
   every maximizing control to one proper simplex edge.
+- [x] Prove every entirely circular admissible trajectory has cost at least `π`, while
+  every full control minimizer has cost below `π`. Thus a minimizer has a noncircular
+  interior state; proper circular subintervals remain possible at this stage.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -226,7 +229,13 @@ alternative route to G4–G5. No finite switching search is justified yet.
   Hamiltonian gap identity and maximizing-support rule. Equal vertex Hamiltonians force
   zero reduced costate under the explicit star, tracelessness, and perpendicularity
   conditions; a nonzero reduced costate excludes one fixed vertex from every maximizer.
-  This pointwise result neither supplies a lift nor bounds switching along a trajectory.
+  This pointwise result neither supplies a lift nor bounds switching along a trajectory;
+  commit `46f7d59`.
+- **2026-11-06, G3e entire-circle exclusion:** derive exact cost `3T` and unit lifted
+  angular speed for a circular state. The actual admissible cyclic extension and primary
+  winding theorem force cost at least `π`; comparison with the constructed competitor
+  excludes an entirely circular full minimizer. No costate or assumed lift is required,
+  and no proper singular subarc is excluded.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

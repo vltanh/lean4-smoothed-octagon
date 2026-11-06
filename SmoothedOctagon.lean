@@ -21,6 +21,7 @@ public import SmoothedOctagon.ReverseGeometry
 public import SmoothedOctagon.CyclicExtension
 public import SmoothedOctagon.ReverseComparison
 public import SmoothedOctagon.SingularLocus
+public import SmoothedOctagon.CircleExclusion
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 

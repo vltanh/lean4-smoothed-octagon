@@ -96,6 +96,12 @@ ReinhardtConjecture ↔ ControlLowerBound
 The inequality covers all admissible controls. It remains open. The actual geometric/control
 bridge is supplied in source through G3d; the Pontryagin-lift and later reduction are G3e.
 
+`SingularLocus.lean` identifies the general pointwise control-independent Hamiltonian
+locus and confines maximizing controls to a proper simplex edge away from it.
+`CircleExclusion.lean` proves entirely circular admissible trajectories cost at least `π`,
+so every full minimizer has a noncircular interior state. Proper circular subarcs are
+not excluded by this whole-trajectory argument.
+
 The global lower bound and affine rigidity remain open. `ReinhardtConjecture` names minimality,
 `AffineRigidity` names uniqueness after centering, and `FullReinhardtConjecture` is their
 conjunction. None is asserted as an unconditional theorem.
@@ -136,6 +142,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/CyclicExtension.lean](SmoothedOctagon/CyclicExtension.lean) | Actual global cyclic extension of arbitrary integral-admissible segments |
 | [SmoothedOctagon/ReverseComparison.lean](SmoothedOctagon/ReverseComparison.lean) | Full reverse comparison, actual control minimizers, and unconditional target equivalence |
 | [SmoothedOctagon/SingularLocus.lean](SmoothedOctagon/SingularLocus.lean) | General singular-control test and maximizing-control support on a proper edge |
+| [SmoothedOctagon/CircleExclusion.lean](SmoothedOctagon/CircleExclusion.lean) | Entire-circle cost bound and an actual noncircle state in every full minimizer |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -159,6 +166,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/CYCLIC_EXTENSION.md](docs/CYCLIC_EXTENSION.md) | Seam regularity, global Lipschitz bounds, a.e. transport, and cost preservation |
 | [docs/REVERSE_COMPARISON.md](docs/REVERSE_COMPARISON.md) | Complete geometric/control correspondence and the remaining global inequality |
 | [docs/SINGULAR_LOCUS.md](docs/SINGULAR_LOCUS.md) | Weighted Hamiltonian identities and the exact control-independent locus |
+| [docs/CIRCLE_EXCLUSION.md](docs/CIRCLE_EXCLUSION.md) | Exact circular cost, unit angular speed, and whole-trajectory exclusion |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |
