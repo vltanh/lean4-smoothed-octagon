@@ -78,7 +78,22 @@ as mathematical closure of the unrestricted comparison.
 - [x] Independently review the three-to-two shortening obstruction: all shorter words,
   triangular centralizer and positive central sign, unique factor reconstruction,
   tangent-only mismatch, and exact full-arc feasible example.
-- [ ] Compare the remaining reverse cyclic five-piece orbit `02102`: **open**.
+- [x] Independently review the reverse five-piece tangent parameterization, all
+  positive denominators, half-holonomy product order, central exclusion, and the
+  independent-factor differentiation used to obtain the active margins.
+- [x] Check the complete short square-root factorization of each positive active
+  margin without assuming ellipticity; verify both independent adjacent-product
+  identities before deriving the normalization identity. The argument is not circular.
+- [x] Deduce all switching-state and full-arc strict-star inequalities on the entire
+  positive two-parameter domain, then reconstruct the actual endpoint trajectory.
+- [x] Check the exact cost telescoping, strict logarithm envelope, AM–GM and
+  Cauchy–Schwarz bounds, and the exact comparison `10/11 > π/√12 > δ_oct`.
+- [x] Combine both genuine five-piece orbits, the four-piece merger, and the
+  earlier four-piece equality theorem to cover every description with at most five
+  pieces. Keep arbitrary longer words and global affine rigidity open.
+- [x] Preserve both reverse-five numerical diagnostics with their versions, exact
+  finite input lists, seed, precision, domain, and limitations. Their outputs are not
+  premises of any hand certificate or global coverage claim.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility

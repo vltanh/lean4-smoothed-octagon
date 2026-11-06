@@ -24,22 +24,31 @@ The candidate density is
 
 ## Current hand-proof comparison
 
-The strongest restricted result is now a complete comparison for **every admissible
-trajectory with four positive-duration vertex-control pieces**, including asymmetric
-initial states and unequal durations. Endpoint algebra eliminates the other words and
-reduces the surviving family to a scalar parameter; a strict integral inequality proves
-its unique minimum is the smoothed octagon. No Pontryagin or symmetry assumption is
-used. See [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md).
+The strongest restricted result is a complete hand comparison for **every admissible
+trajectory representable with at most five positive-duration vertex-control pieces**,
+including asymmetric initial states and unequal durations. Its cost is at least the
+octagon's, with equality only in the octagon case under cyclic rebasing and the stated
+affine normalization. No Pontryagin or symmetry assumption is imposed on the competitor.
 
-This closes the four-piece class. At five pieces, cyclic rebasing leaves two genuine
-word orbits. A second complete hand argument proves **strictly greater cost for the
-entire asymmetric `01020` orbit**, using exact endpoint elimination and a sharp
-logarithmic envelope. Its octagon limit has a zero-duration middle piece; every genuine
-five-piece member costs more. See
-[docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md).
+The coverage has three parts. At four pieces, endpoint algebra leaves one family and
+a strict integral inequality selects the octagon; see
+[docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md). At five pieces, cyclic
+rebasing leaves a four-piece merger and two genuine word orbits. A sharp logarithmic
+envelope proves strict comparison for the whole asymmetric `01020` orbit in
+[docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md). The reverse cyclic orbit `02102`
+has a stronger uniform bound,
 
-The reverse cyclic five-piece orbit `02102` remains open, as do arbitrary longer
-trajectories. These results do not bound the number of pieces in an arbitrary minimizer.
+\[
+\frac{C}{\sqrt{12}}>\frac{10}{11}>\frac{\pi}{\sqrt{12}}>\delta_{\rm oct},
+\]
+
+proved by exact half-angle identities and an elementary logarithm envelope in
+[docs/REVERSE_FIVE_ARC.md](docs/REVERSE_FIVE_ARC.md). Its full positive parameter
+domain, initial state, and whole-arc star constraints are included.
+
+A cheaper finite vertex-control competitor must therefore require at least six pieces.
+Arbitrary longer words remain open; there is no bound on the number of pieces in an
+arbitrary minimizer.
 
 For an arbitrary admissible star state `X=[[a,b],[c,-a]]`, put
 `m=(c-b)/2` and `n=√(a²+((b+c)/2)²)`. The determinant identity gives `m²-n²=1`,
@@ -264,7 +273,8 @@ this is not a kernel-verification claim.
 | [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) | Exact endpoint obstruction for every control confined to a fixed simplex edge |
 | [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) | Complete hand construction of a lower-density competitor from a proper circle-state subarc |
 | [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md) | Complete asymmetric four-piece comparison and equality within that class |
-| [docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md) | Strict asymmetric comparison for the entire five-piece `01020` orbit; reverse cyclic case open |
+| [docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md) | Complete five-piece word coverage and strict asymmetric comparison for the `01020` orbit |
+| [docs/REVERSE_FIVE_ARC.md](docs/REVERSE_FIVE_ARC.md) | Complete asymmetric reverse-five comparison, with a uniform bound above the circle |
 | [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) | Cyclic word exclusions and exact arbitrary-word dynamics, feasibility, and cost |
 | [docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) | Exact failures of simpler global bounds and the remaining coupled certificate problem |
 | [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) | Complete arbitrary-word endpoint test, initial-state uniqueness, and central exceptions |

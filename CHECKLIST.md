@@ -24,7 +24,8 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Noncentral nonelliptic word holonomy | Infeasible when tangent closure holds | Any finite length and positive factors with `|tr(RH)|≥2` and `RH≠±I` |
 | Exactly four positive vertex pieces | Full asymmetric comparison proved by hand: `C ≥ A`, with octagon equality only | Every reduced four-letter word, arbitrary positive durations and initial state; no PMP or symmetry hypothesis |
 | Five-piece noncyclic orbit `01020` | Full asymmetric strict comparison proved by hand: `C > A` | All positive factors and initial states satisfying the actual endpoints, including all five cyclic rebases of this word |
-| Five-piece reverse cyclic orbit `02102` | Cost comparison open | The only genuine five-piece orbit left after the ordering test, rebasing, and the proved `01020` comparison |
+| Five-piece reverse cyclic orbit `02102` | Full asymmetric strict comparison proved by hand: `C/√12 > 10/11 > π/√12` | The entire positive two-parameter tangent family; ellipticity, orientation, and full strict-star feasibility are proved |
+| At most five positive vertex pieces | Complete comparison `C ≥ A`, with octagon equality only | Every admissible trajectory with such a description; five-piece words that rebase and merge to four are included |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
 | Unrestricted octagon inequality | Open | Trajectories leaving the excluded neighborhood, with arbitrary control history |
@@ -69,8 +70,13 @@ unrestricted comparison and affine equality classification remain open.
 to a four-piece degeneration and two genuine orbits. It proves strict comparison for
 the entire asymmetric `01020` orbit by endpoint elimination, exact cost integration,
 and a sharp logarithmic envelope. The middle duration can approach zero and the cost
-can approach the octagon; no uniform positive gap is asserted. The reverse cyclic
-orbit `02102` and arbitrary longer words remain open.
+can approach the octagon; no uniform positive gap is asserted for that orbit.
+[docs/REVERSE_FIVE_ARC.md](docs/REVERSE_FIVE_ARC.md) closes the reverse cyclic
+orbit `02102` with a uniform bound above the circle. Exact algebraic identities
+collapse the cost to a positive weighted logarithmic sum, and an elementary
+logarithm envelope with AM–GM and Cauchy–Schwarz completes the comparison.
+All trajectories representable with at most five vertex pieces are now covered.
+Arbitrary longer words and the unrestricted comparison remain open.
 
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) supplies a complete fixed-factor endpoint
 test at arbitrary finite word length. Noncentral elliptic holonomy determines the only
@@ -434,11 +440,22 @@ the current research priority. No finite switching search is justified yet.
   This excludes a pattern at every word length, without claiming a global arc bound.
   Combined explicitly with the published edge-extremality theorem, it also bounds
   every fixed-edge interval of a global minimizer by four pieces almost everywhere.
+  Commit `16fe51b`.
 - **2026-11-06, failed elementary shortening:** prove that a positive `010` segment
   has no replacement by at most two vertex arcs with the same frame and state endpoints.
   The two endpoint transition matrices reconstruct all three positive factors. An
   explicit feasible example and the misleading tangent-only replacement are retained
   to prevent this invalid shortcut from entering a longer-word proof.
+  Commit `16fe51b`.
+- **2026-11-06, complete reverse five-piece comparison:** derive short positive
+  half-angle identities for the entire `02102` family, prove its state normalization
+  and all strict-star signs, and collapse the exact cost to a scalar logarithmic sum.
+  A rational logarithm envelope and two elementary mean inequalities give
+  `C/√12 > 10/11 > π/√12`. Every algebraic certificate and sign is independently
+  checked by hand; finite diagnostics are retained only as a record of exploration.
+  Combined with the noncyclic orbit, rebasing, and the four-piece theorem, this closes
+  all trajectories representable with at most five vertex pieces. Longer words and
+  unrestricted affine rigidity remain open.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

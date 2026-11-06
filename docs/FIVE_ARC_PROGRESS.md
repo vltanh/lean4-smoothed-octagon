@@ -1,6 +1,6 @@
-# Five-arc comparison: the noncyclic orbit is strictly above the octagon
+# Five-arc comparison: complete coverage and the noncyclic proof
 
-## Established comparison and remaining case
+## Established comparison and complete coverage
 
 Every admissible trajectory with five positive-duration vertex-control pieces,
 after merging adjacent equal controls, falls into one of three classes under
@@ -16,8 +16,15 @@ state. Endpoint closure determines a two-parameter family; a global analytic
 inequality bounds its exact cost. No Pontryagin condition, equal-duration
 hypothesis, or symmetry of the competitor is assumed.
 
-The 02102 comparison remains a separate open case in this version. There is
-no conclusion about all longer words or all measurable controls.
+The separate hand proof in [REVERSE_FIVE_ARC.md](REVERSE_FIVE_ARC.md) now
+proves that every 02102 trajectory has normalized cost greater than `10/11`,
+which is greater than the circle's `π/√12` and the octagon's density.
+Together these results compare every admissible trajectory representable
+with at most five positive-duration vertex-control pieces. Equality can
+occur only in the four-arc octagon case, including a five-piece description
+that rebases and merges to that case.
+
+There is no conclusion about all longer words or all measurable controls.
 
 This is a hand proof. Exact symbolic calculations suggested and checked finite
 algebra, but are not premises of the inequalities below. No Lean source was
@@ -60,7 +67,9 @@ the four-arc word 1201. The five rebases of 01020 give the following orbit:
 | 4 | 01210 |
 
 The remaining word 02102 returns to itself under rebasing and relabeling.
-Thus only the two stated genuine five-arc orbits require new comparison.
+Thus the two genuine five-arc comparisons, supplied here and in the
+separate reverse-orbit proof, exhaust this arc count. This is a coverage
+argument for at most five pieces, not a uniform bound on every minimizer.
 
 ## 2. Tangent closure for 01020
 
