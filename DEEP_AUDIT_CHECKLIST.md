@@ -137,6 +137,23 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Review matrix/inverse APIs and the hand argument independently.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Forward measurable control and integral equations
+
+- [x] Repair the raw curvature control on its measurable exceptional set; simplex
+  membership holds at every time, as the upstream trajectory definition requires.
+- [x] Prove measurability of the derivative-based control and nonvanishing of its
+  dynamical denominator at every star state.
+- [x] Prove curvature directly at each twice-differentiable boundary point; do not
+  pull an arbitrary null set through a change of time.
+- [x] Derive local Lipschitz frame velocity, and the global bound when the frame is periodic.
+- [x] Use the absolutely-continuous FTC for the almost-everywhere state equation,
+  with endpoints removed as null sets and without a countability assumption.
+- [x] Supply the determinant-clock and balanced-boundary hypotheses from constructions.
+- [x] Independently review the integral APIs at the pinned mathlib revision.
+- [x] Keep terminal conditions, area cost, and comparison against all admissible controls
+  distinct from the state-trajectory conclusion.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

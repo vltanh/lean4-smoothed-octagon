@@ -180,6 +180,26 @@ The geometric inputs are upstream `corollary3_1_6`, `proposition3_1_9`, and matr
 derivative rules. The scalar clock is constructed by `ArcLength.lean`. See
 [docs/DETERMINANT_CLOCK.md](docs/DETERMINANT_CLOCK.md).
 
+## Forward control construction: `SmoothedOctagon/ControlTrajectory.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `UsableCurvatures`, `repairedCurvatureControl`, `controlVariables_mem_of_usable` | Normalize nonnegative nonzero curvature vectors and repair all other values |
+| `repairedCurvatureControl_mem`, `measurable_repairedCurvatureControl` | Simplex membership everywhere and Borel measurability |
+| `boundaryControl`, `measurable_stateCurvature`, `measurable_boundaryControl`, `boundaryControl_mem` | Explicit measurable control from the normalized state and its entrywise derivative |
+| `boundaryControl_denominator_neg` | Strict dynamical denominator sign, including exceptional times |
+| `positiveBoundary_curvature_nonneg`, `stateCurvature_nonneg_of_boundary` | Pointwise convex curvature and its almost-everywhere state version |
+| `frame_velocity_lipschitz`, `lipschitzOnEntrywise_univ_of_periodic`, `frame_velocity_lipschitz_periodic` | Local velocity regularity and its global periodic extension |
+| `integralCurve_of_lipschitz_ae`, `boundaryControl_eq_raw_ae` | Absolutely-continuous integral equations and agreement with raw curvature control |
+| `normalized_boundary_isStateTrajectory` | Full integral trajectory from normalized boundary geometry |
+| `positiveBoundaryParam_of_balanced`, `balanced_determinantClock_isStateTrajectory` | Supply actual positive boundary curves after the determinant clock |
+| `balanced_exists_stateTrajectory`, `normalized_worstDisk_exists_stateTrajectory` | Construct trajectories from balanced circle data and from an actual normalized worst disk |
+
+The dynamics inputs are upstream Lemma 3.3.1 and Theorem 3.4.2; matrix FTC and
+mathlib's absolutely-continuous FTC supply the integral formulation. The exact
+exceptional-set and comparison boundaries are in
+[docs/CONTROL_TRAJECTORY.md](docs/CONTROL_TRAJECTORY.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |
