@@ -50,6 +50,20 @@ integral inequality selects its symmetric octagon member. Equality is classified
 that class. No theorem restricts every global minimizer to four pieces, so the
 unrestricted comparison and affine equality classification remain open.
 
+## Failed global comparison shortcuts
+
+[docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) records three exact obstructions.
+A state-only endpoint potential has zero gap at the circle. A separable `kθ+V(X)`
+certificate on the full domain can supply at most `π/2`. A frame-only certificate
+cannot reach the octagon bound: an exact finite frame path has `C<31/10<A` after
+the state-evolution equation is removed. Its state jumps violate actual admissibility,
+so it is a failed relaxation, not a counterexample to Reinhardt.
+
+The note also derives three explicit vertex inequalities for a genuinely coupled
+phase/state calibration, along with the twisted endpoint and radius constraints.
+No function satisfying the required inequalities is supplied. Restricting to three
+control vertices still leaves a continuous, noncompact state domain.
+
 ## Earlier source construction ledger
 
 These are source deliverables, not kernel-certified milestones.
@@ -351,6 +365,12 @@ the current research priority. No finite switching search is justified yet.
   at most three arcs, and leaves only forward `0120` at four arcs. Exact margin flows
   give full continuous-arc star constraints and cost formulas. A retained symbolic
   exploration is reproducible but is not used by the hand proof.
+  Commit `febed18`.
+- **2026-11-06, global calibration obstructions:** construct an exact finite strict-star
+  frame path of cost below the octagon after dropping state dynamics. Prove that this
+  relaxed bound, a state-only endpoint potential, and a separable linear-phase potential
+  cannot give the desired global certificate on their stated domains. Retain the exact
+  coupled vertex residuals and additional frame-radius constraint as an open route.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

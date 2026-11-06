@@ -73,6 +73,13 @@ the known singular circular-subarc exclusion with explicit geometric checks. The
 can vanish as the support shrinks; it gives no uniform exclusion of all nearby or
 chattering trajectories.
 
+[docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) records why several direct
+bound strategies fail on their stated domains. In particular, dropping the state
+equation permits exact strict-star frame paths cheaper than the octagon. Those paths
+are inadmissible for Reinhardt because the state jumps. A successful sharp comparison
+must retain the cost of allowed state transitions. The note gives a concrete coupled
+calibration problem, with its missing certificate explicit.
+
 ## Initial mathematical contribution
 
 For the existing scalar switching expression `SmoothedPolygons.hmaxF`, the new proof gives
@@ -174,9 +181,10 @@ of polygon cases; see [CHECKLIST.md](CHECKLIST.md).
 
 **Source development. Compilation, typechecking, and CI have not been run.**
 
-The hand proofs and source bodies have been reviewed. No numerical search or external
-computation was used to establish the new inequalities. Source scans introduce no new
-proof holes or axioms; this is not a kernel-verification claim.
+The hand proofs and source bodies have been reviewed. Documented symbolic exploration
+helped find or check finite identities after the workflow change; the mathematical claims
+rest on the displayed hand arguments. Source scans introduce no new proof holes or axioms;
+this is not a kernel-verification claim.
 
 ## Files to read
 
@@ -236,6 +244,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) | Complete hand construction of a lower-density competitor from a proper circle-state subarc |
 | [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md) | Complete asymmetric four-piece comparison and equality within that class |
 | [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) | Cyclic word exclusions and exact arbitrary-word dynamics, feasibility, and cost |
+| [docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) | Exact failures of simpler global bounds and the remaining coupled certificate problem |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

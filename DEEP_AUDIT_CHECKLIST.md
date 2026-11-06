@@ -42,6 +42,12 @@ as mathematical closure of the unrestricted comparison.
 - [x] Preserve the earlier three-arc symbolic exploration with its domain, versions,
   reproduction command, and limitations. Its residuals are not the hand proof or a
   certificate for longer words; no Lean or CI command is involved.
+- [x] Independently check the exact finite relaxed frame endpoint, the positive quadratic
+  root, the limiting cost, the rational separation from the octagon, and primary winding.
+  State jumps are explicitly outside the actual integral control problem.
+- [x] Check the state-only and separable-potential obstructions and the weighted three-
+  vertex coupled residuals, with their full domain, endpoint, radius, and unsolved-
+  certificate qualifications. These are retained failed routes and exact open conditions.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility

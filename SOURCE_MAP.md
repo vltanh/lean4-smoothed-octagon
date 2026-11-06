@@ -418,6 +418,13 @@ The bridge uses `chi32_eq`, `chi31_eq_chi32`, `strongLift_unique`, `hmax_y_mem`,
 
 ## Validation
 
+[docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) derives exact obstructions to
+state-only, separable phase/state, and frame-only certificates. The strict-star frame
+relaxation has an exact finite endpoint and a rational cost separation below the octagon;
+its discontinuous state is explicitly outside actual admissibility. The three coupled
+vertex residuals use the same positive margins and pinned state equations, and remain
+an unsolved certificate problem. No numerical or symbolic output is used in these proofs.
+
 [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) derives the exact
 time-rebase permutation from the pinned `R` conjugation convention and applies the
 fixed-edge hand proof in every window. Its margin updates and cost follow by direct
@@ -455,6 +462,7 @@ The separate [Pontryagin-lift audit](docs/PONTRYAGIN_LIFT.md) maps the open arbi
 minimizer lift to the exact pinned extremal fields and distinguishes the available
 coordinate transformations and explicit polygon lifts from a general existence result.
 
-Every theorem above has a source proof body. The new Lean files have **not** been compiled.
+Every mapped Lean theorem has a source proof body; the later hand results are documented
+separately. The new Lean files have **not** been compiled.
 See [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) for source scans, dependency scope,
 and the checks that remain deferred.
