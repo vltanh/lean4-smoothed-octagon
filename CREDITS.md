@@ -18,5 +18,10 @@ within this assistant session. The analytic normalization and reduction argument
 known mathematical ideas and the pinned upstream geometric results; this is not a claim of
 new priority for those ideas or of kernel verification.
 
+The logarithmic-angle construction in `LowCostWinding.lean` adapts the proof in upstream
+`Basic/Analysis/Convex/StarCurve.lean` to nonvanishing `C¹` arcs without simplicity or
+periodicity hypotheses. The original implementation remains credited to that pinned
+dependency and is reused under its Apache-2.0 license.
+
 mathlib supplies the logarithm inequalities, real algebra, measure theory, and Lean proof
 infrastructure. Its exact revision is recorded in the package configuration and source map.

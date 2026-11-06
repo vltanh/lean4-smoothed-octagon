@@ -250,6 +250,20 @@ The exact cost is obtained from upstream `eqn_cost`; the density uses
 `greatestPackingDensity_of_isBalancedPair`. All geometry and timing inputs are constructed
 in the preceding modules. See [docs/ADMISSIBLE_REALIZATION.md](docs/ADMISSIBLE_REALIZATION.md).
 
+## Low-cost winding: `SmoothedOctagon/LowCostWinding.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `continuous_logDeriv_of_contDiff`, `hasDerivAt_log_of_contDiff`, `hasDerivAt_angle_of_contDiff`, `toComplex_eq_exp_log_of_contDiff` | Construct and differentiate a continuous angle for any nonvanishing `C¹` curve |
+| `starRowQuadratic`, `starRowQuadratic_pos`, `starRowQuadratic_le_trace` | Positive quadratic form and the exact trace bound for a star state |
+| `reflectedFirstRow` and its regularity, nonvanishing, derivative, and cross lemmas | The row adapted to right matrix dynamics |
+| `reflectedFirstRow_angularSpeed_bounds`, `reflectedFirstRow_angle_strictMono`, `reflectedFirstRow_angle_le_cost` | Positive angular speed and its integrated cost bound |
+| `lowCost_reflectedFirstRow_angle`, `lowCost_first_matrix_entry_pos` | Exact `π/3` endpoint angle and positive first coordinate below cost `π` |
+
+The logarithmic proof adapts upstream `Basic/Analysis/Convex/StarCurve.lean`, removing
+unused simplicity and periodicity premises. The trajectory hypotheses are explicitly
+global and smooth in this module. See [docs/LOW_COST_WINDING.md](docs/LOW_COST_WINDING.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

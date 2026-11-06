@@ -192,6 +192,21 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Keep global control minimality unasserted until the reverse comparison is supplied.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Low-cost smooth-arc winding
+
+- [x] Construct a continuous logarithmic angle from nonvanishing `C¹` data alone;
+  do not assume periodicity or simplicity in that construction.
+- [x] Use the reflected first row appropriate to the right equation `g'=gX`.
+- [x] Check the completed-square identity and its trace upper bound by exact algebra.
+- [x] Integrate the angular-speed bound with the cost normalization factor `3/2`.
+- [x] Derive the integer endpoint phase from exponential reconstruction and exclude
+  both negative and positive extra turns using strict positivity and cost below `π`.
+- [x] Derive the positive first matrix coordinate on the entire closed segment.
+- [x] Independently review the quadratic argument and pinned complex-periodicity APIs.
+- [x] Keep the global smooth-arc hypotheses visible until an actual admissible extension
+  is constructed; this module alone does not prove reverse reconstruction.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

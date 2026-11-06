@@ -112,6 +112,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/BalancedClock.lean](SmoothedOctagon/BalancedClock.lean) | Full balanced geometry and global derivative bounds after the clock |
 | [SmoothedOctagon/CyclicClock.lean](SmoothedOctagon/CyclicClock.lean) | Uniform cyclic time, frame and state shifts, and terminal conditions |
 | [SmoothedOctagon/AdmissibleRealization.lean](SmoothedOctagon/AdmissibleRealization.lean) | Actual worst-disk admissible realization with exact area and density cost |
+| [SmoothedOctagon/LowCostWinding.lean](SmoothedOctagon/LowCostWinding.lean) | Cost bounds excluding extra reflected-row turns for smooth star arcs |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -128,6 +129,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/BALANCED_CLOCK.md](docs/BALANCED_CLOCK.md) | Balanced-pair preservation in determinant time |
 | [docs/CYCLIC_CLOCK.md](docs/CYCLIC_CLOCK.md) | Uniform contact translation and the control endpoints |
 | [docs/ADMISSIBLE_REALIZATION.md](docs/ADMISSIBLE_REALIZATION.md) | Complete forward assembly and exact real area-cost conversion |
+| [docs/LOW_COST_WINDING.md](docs/LOW_COST_WINDING.md) | Logarithmic angle, positive quadratic form, and the exact low-cost turn |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

@@ -40,6 +40,8 @@ These are source deliverables, not kernel-certified milestones.
   cyclic contact shift, initial identity frame, and both control terminal conditions.
 - [x] Construct a full admissible realization of an actual worst disk with cost equal
   to its normalized area and original packing density equal to cost divided by `√12`.
+- [x] For smooth global star arcs of cost below `π`, prove the reflected first row
+  turns by exactly `π/3` on the terminal interval, excluding additional full turns.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -103,6 +105,18 @@ open propositions. Their equivalence to the original targets does not establish 
 | G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | The full forward admissible realization is constructed. Reverse comparison with every admissible control remains open; the forward construction alone does not establish `IsReinhardtMinimizer`. |
 | G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | Open in the pinned formalization. |
 
+### Reverse-comparison substeps
+
+These are constructions within G3d, not separate cases of the conjecture.
+
+| Step | Status |
+| --- | --- |
+| Derive regularity from integral admissibility | In progress: continuity, state Lipschitz bounds, frame regularity, and a.e. curvature must follow from the actual definition. |
+| Construct a smooth cyclic extension | In progress: preserve the full closed segment and cost, and check all value and derivative seams. |
+| Exclude extra winding at low cost | Source proof for global smooth star arcs supplied in `LowCostWinding.lean`; application to all admissible segments still requires the extension. |
+| Construct the balanced convex competitor | Open: derive one-turn simplicity and the convex radial hull with every balanced-pair field. |
+| Handle high costs and close the comparison | Open: provide a concrete cheaper geometric competitor and assemble the two cost regimes. |
+
 ## Next bounded mathematical task
 
 Continue **G3d** in the reverse direction. Derive interval regularity from the actual integral
@@ -151,7 +165,12 @@ until this comparison is proved.
 - **2026-11-06, G3c–G3d forward realization:** assemble the full admissible trajectory
   from an actual worst disk and prove `cost = normalized area` and `density = cost / √12`.
   Positive disk area is checked before converting the extended-real area formula. The
-  existence theorem supplies an actual witness, without an assumed normalized minimizer.
+  existence theorem supplies an actual witness, without an assumed normalized minimizer;
+  commit `60d1ee9`.
+- **2026-11-06, G3d low-cost winding:** construct a continuous logarithmic angle without
+  simplicity assumptions. A positive quadratic form bounds reflected-row angular speed
+  by the trace cost density. Cost below `π` forces the endpoint angle to be exactly `π/3`.
+  The theorem's global smooth-arc scope remains explicit.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,
