@@ -131,6 +131,37 @@ limits, `Continuous.surjective`, `StrictMono.orderIsoOfRightInverse`, and
 `HasDerivAt.of_local_left_inverse`. All are at the pinned revision. See
 [docs/ARC_LENGTH.md](docs/ARC_LENGTH.md) for the complete hand proof and exact source paths.
 
+## Balanced reduction: `SmoothedOctagon/BalancedReduction.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `positiveBoundaryParam_reparam` | Positive regular boundary curves survive an increasing regular global reparametrization |
+| `normalized_worstDisk_exists_balanced_circle` | Construct every balanced-pair field and circle representation from an actual normalized worst disk |
+| `isBalancedCircleMinimizer_of_isWorstDisk` | A balanced representative of a worst disk minimizes balanced circle area |
+| `worstDisk_balanced_normalization` | Construct a density-preserving normalized balanced circle minimizer from any actual worst disk |
+| `exists_balancedCircle_worst_disk` | Nonvacuous existence of a global packing minimizer in the balanced class |
+| `balancedCircleMinimizer_isWorstDisk` | Converse: every balanced circle minimizer is an actual worst disk |
+
+The assembly applies upstream Lemmas 2.4.2, 2.4.3, 2.4.5, and 2.4.6, with their
+parametrization, unit-speed, and Lipschitz inputs constructed in this project. The objective
+comparison uses `greatestPackingDensity_of_isBalancedPair` and finiteness of compact area.
+
+## Exact balanced targets: `SmoothedOctagon/BalancedTargets.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `BalancedAreaLowerBound`, `BalancedAffineRigidity` | Open unrestricted area and equality-classification propositions |
+| `octagon_isCircleRepresentation` | Existing candidate initial-value property |
+| `reinhardtConjecture_iff_balancedCircleMinimizer` | Minimality is equivalent to the concrete octagon minimizing balanced circle area |
+| `reinhardtConjecture_iff_balancedAreaLowerBound` | Equivalent universal area lower bound |
+| `reinhardtConjecture_iff_balancedMinimizer_area_lower_bound` | Equivalent lower bound restricted to actual balanced circle minimizers |
+| `affineRigidity_iff_balancedAffineRigidity` | Equality classification transfers through inverse normalization |
+| `fullReinhardtConjecture_iff_balancedTargets` | The two original targets are equivalent to the two open balanced targets |
+
+The full assembly and target-transfer argument is in
+[docs/BALANCED_REDUCTION.md](docs/BALANCED_REDUCTION.md). No theorem in these modules proves
+the remaining area inequality or classifies its equality cases.
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

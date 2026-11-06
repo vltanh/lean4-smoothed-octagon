@@ -25,6 +25,11 @@ These are source deliverables, not kernel-certified milestones.
   field, including the exact orientation formula `det(b,b') = 1 / gauge(dir)^2`.
 - [x] Construct a global increasing `C¹` arclength change of parameter with positive
   derivative, exact period drift, and Euclidean unit speed.
+- [x] Assemble all balanced-pair fields for a normalized actual worst disk and prove it
+  minimizes balanced circle area. Prove conversely that a balanced circle minimizer is
+  an actual worst disk.
+- [x] Transfer global minimality and affine rigidity to exact unrestricted balanced
+  targets, with no assumed minimizer-reduction theorem.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -40,8 +45,8 @@ list, that the tasks have comparable difficulty, or that they are all routine fo
 | Gate | Exact completion condition | Present status |
 | --- | --- | --- |
 | G1 — Fix the global target | Use the existing greatest packing density of congruent copies for every centrally symmetric convex disk; identify the concrete octagon and state affine rigidity separately. | Source draft supplied in `Problem.lean`; validation deferred. |
-| G2 — Normalize an actual minimizer | Construct a balanced circle representation of an actual worst disk, preserving the relevant density and supplying every boundary parametrization hypothesis. | In progress. Affine normalization, the continuous trace, and radial regularity have source proofs; arclength and the final assembly are being integrated. See G2a–G2e below. |
-| G3 — Justify the chosen reduction | If using the smoothed-polygon route, prove the needed optimal-control, extremal-lift, and Mahler First bridges for the minimizer from G2. | Open in the pinned formalization. The published mathematical reduction is a source, not an imported theorem for this entire step. |
+| G2 — Normalize an actual minimizer | Construct a balanced circle representation of an actual worst disk, preserving the relevant density and supplying every boundary parametrization hypothesis. | Source proof supplied through `worstDisk_balanced_normalization` in `BalancedReduction.lean`. Every parametrization hypothesis is constructed. Kernel validation remains deferred. |
+| G3 — Justify the chosen reduction | If using the smoothed-polygon route, prove the needed optimal-control, extremal-lift, and Mahler First bridges for the minimizer from G2. | In progress. The next constructions are the matrix frame, determinant clock, and cyclic contact parameter; the admissible-competitor correspondence and later reduction remain open. |
 | G4 — Make the global comparison exhaustive | Prove either a direct inequality covering all normalized competitors, or an explicit uniform switch/side bound plus coverage of all words, parameter ranges, limits, and degeneracies. | Open research obligation. No finite case list is available yet. |
 | G5 — Prove the octagon lower bound | Discharge `octagonDensity ≤ greatestPackingDensity K` for a genuine worst disk and apply `reinhardtConjecture_of_worst_disk`. | Open. Comparisons within the regular `(6k+2)` family cannot close this gate. |
 | G6 — Classify equality | Prove `AffineRigidity`: every worst disk is an invertible linear image of the centered octagon. | Open; not implied by G5. |
@@ -62,16 +67,38 @@ none has yet been checked by Lean. Substeps are not separate global conjecture c
 | G2b — Continuous boundary trace | Construct six continuous contact curves, a common period, simple traversal, full boundary coverage, and the initial sixth-root values. | Source draft supplied in `BoundaryTrace.lean`; no curve is assumed as an input. |
 | G2c — Regular radial parametrization | Deduce a positive regular `C¹` polar boundary curve from the actual minimizer's unique supporting line at every boundary point. | Source proofs supplied in `SupportNormal.lean` and `RadialRegularity.lean`, including the bilateral slope squeeze and exact orientation formula. |
 | G2d — Common arclength parameter | Construct a global increasing periodic change of parameter with Euclidean unit speed for curve zero. | Source proof supplied in `ArcLength.lean`; the speed is the explicit Euclidean coordinate formula. |
-| G2e — Balanced assembly | Apply the upstream regularity, Lipschitz, star, and curvature lemmas; transport the period, simplicity, coverage, and initial values through the common change of parameter. | Open, dependent on G2b–G2d. |
+| G2e — Balanced assembly | Apply the upstream regularity, Lipschitz, star, and curvature lemmas; transport the period, simplicity, coverage, and initial values through the common change of parameter. | Source proof supplied in `BalancedReduction.lean`, including the balanced-area minimizer property and its converse. |
+
+## Exact remaining comparison
+
+`BalancedTargets.lean` proves the source equivalences
+
+```lean
+ReinhardtConjecture ↔ BalancedAreaLowerBound
+AffineRigidity ↔ BalancedAffineRigidity
+FullReinhardtConjecture ↔ BalancedAreaLowerBound ∧ BalancedAffineRigidity
+```
+
+`BalancedAreaLowerBound` quantifies over **every** balanced disk in circle representation.
+`BalancedAffineRigidity` quantifies over **every** balanced circle minimizer. Both are still
+open propositions. Their equivalence to the original targets does not establish either one.
+
+## G3 construction ledger
+
+| Step | Required output | Status |
+| --- | --- | --- |
+| G3a — Matrix frame | Construct the `SL₂` frame of the actual contact curve and its positive-determinant logarithmic derivative. | In progress. |
+| G3b — Determinant clock | Construct a global positive time change making the logarithmic derivative determinant one, with the needed regularity. | In progress; upstream Proposition 3.1.9 assumes this clock and does not construct it. |
+| G3c — Cyclic boundary and cost | Prove the common cyclic shift `σ_j(t+tf)=σ_(j+1)(t)` and the exact area-cost identity in the new parameter. | In progress; a common full period alone is insufficient for upstream `eqn_cost`. |
+| G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | Open. An almost-everywhere ODE by itself does not supply this bridge. |
+| G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | Open in the pinned formalization. |
 
 ## Next bounded mathematical task
 
-Complete **G2e** to produce the balanced circle representation of an actual worst disk.
-The source normalization constructs the map and preserves the correct density, and the
-continuous trace is now constructed from unique indexed critical hexagons. The remaining
-analytic inputs are now supplied: radial `C¹` regularity is derived from the actual
-minimizer, and the global Euclidean arclength reparametrization is constructed. The final
-assembly must supply every balanced-pair field explicitly and preserve the area objective.
+Continue **G3a–G3c** with the actual balanced minimizer now constructed: build its matrix
+frame, the determinant-normalizing clock, and the cyclic shift needed by the area-cost
+theorem. Keep G3d's competitor correspondence explicit. A geometric area minimizer cannot
+be advertised as a minimizer over all control trajectories until that comparison is proved.
 
 ## Progress entries
 
@@ -87,7 +114,11 @@ assembly must supply every balanced-pair field explicitly and preserve the area 
   angular gauge. The radial curve is `C¹`, nonvanishing, and positively oriented;
   commit `abe06e2`.
 - **2026-11-06, G2d:** integrate the positive periodic Euclidean speed, prove global
-  surjectivity, construct the inverse order isomorphism, and prove unit speed and period drift.
+  surjectivity, construct the inverse order isomorphism, and prove unit speed and period drift;
+  commit `eb339a6`.
+- **2026-11-06, G2e and target transfer:** all balanced-pair fields assembled from an actual
+  worst disk, with density preserved. Balanced area minimizers and actual packing minimizers
+  are linked in both directions. The unrestricted area bound and rigidity remain open.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

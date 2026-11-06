@@ -107,6 +107,22 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Independently review the argument and exact pinned integral/inverse-function APIs.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Balanced assembly and global target transfer
+
+- [x] Supply every `IsBalancedPair` field from actual-minimizer inputs.
+- [x] Use one common arclength map for all six contact curves.
+- [x] Set `tf = P / 6` and prove the exact half-open period correspondence.
+- [x] Preserve the initial circle values by fixing zero.
+- [x] Apply upstream Lemmas 2.4.2, 2.4.3, 2.4.5, and 2.4.6 with all hypotheses supplied.
+- [x] Prove area minimality using the density formula for every balanced competitor.
+- [x] Prove the converse with the constructed global worst representative, avoiding a
+  circular or assumed existence argument.
+- [x] Transfer affine rigidity through the inverse normalization in the correct order.
+- [x] Independently review the assembly and target equivalences; correct the implicit
+  map argument in `rein_image_symm_image` found during source review.
+- [x] Keep the unrestricted area bound and equality classification as open propositions.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

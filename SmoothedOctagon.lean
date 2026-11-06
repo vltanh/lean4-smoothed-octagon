@@ -6,6 +6,8 @@ public import SmoothedOctagon.BoundaryTrace
 public import SmoothedOctagon.SupportNormal
 public import SmoothedOctagon.RadialRegularity
 public import SmoothedOctagon.ArcLength
+public import SmoothedOctagon.BalancedReduction
+public import SmoothedOctagon.BalancedTargets
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 
@@ -16,6 +18,7 @@ The conjecture is stated in `SmoothedOctagon.Problem`; it is not asserted as a t
 `SmoothedOctagon.SwitchingMargin` supplies a quantitative bound for one explicit scalar
 switching expression. See `CHECKLIST.md` for the remaining mathematical obligations.
 
-The actual-minimizer normalization and continuous boundary construction begin the G2
-reduction. This source development has not been compiled or kernel-checked.
+`BalancedReduction` constructs a balanced circle minimizer from an actual worst disk;
+`BalancedTargets` identifies the exact remaining area and rigidity targets. This source
+development has not been compiled or kernel-checked.
 -/

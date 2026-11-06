@@ -56,7 +56,20 @@ its greatest packing density. In that normal position, density is area divided b
 period `2π`, simple traversal, boundary coverage, and normalized initial values.
 `SupportNormal.lean` and `RadialRegularity.lean` derive a regular positive `C¹` radial
 curve from unique supporting lines. `ArcLength.lean` constructs the global Euclidean
-arclength parameter. The final balanced-pair assembly remains as G2e in the ledger.
+arclength parameter. `BalancedReduction.lean` assembles every balanced-pair field and
+constructs a balanced circle minimizer from an actual worst disk, preserving its density.
+It also proves that a balanced circle area minimizer is an actual packing minimizer.
+
+The resulting exact target transfer is
+
+```lean
+FullReinhardtConjecture ↔ BalancedAreaLowerBound ∧ BalancedAffineRigidity
+```
+
+The first remaining proposition is an area inequality over all balanced circle competitors;
+the second classifies all balanced circle minimizers up to affine equivalence. The matrix,
+cyclic-time, and admissible-control constructions needed for the optimal-control route are
+the next tasks, recorded as G3a–G3e in the ledger.
 
 The global lower bound and affine rigidity remain open. `ReinhardtConjecture` names minimality,
 `AffineRigidity` names uniqueness after centering, and `FullReinhardtConjecture` is their
@@ -83,6 +96,8 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/SupportNormal.lean](SmoothedOctagon/SupportNormal.lean) | Continuous supporting covectors without a smooth-boundary assumption |
 | [SmoothedOctagon/RadialRegularity.lean](SmoothedOctagon/RadialRegularity.lean) | Supporting-slope differentiation and the regular positive radial curve |
 | [SmoothedOctagon/ArcLength.lean](SmoothedOctagon/ArcLength.lean) | Constructed global Euclidean arclength parameter and its inverse |
+| [SmoothedOctagon/BalancedReduction.lean](SmoothedOctagon/BalancedReduction.lean) | Actual-minimizer balanced representation and area minimization in both directions |
+| [SmoothedOctagon/BalancedTargets.lean](SmoothedOctagon/BalancedTargets.lean) | Exact unrestricted area and rigidity targets equivalent to the original conjecture |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -92,6 +107,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/SUPPORT_NORMAL.md](docs/SUPPORT_NORMAL.md) | Support existence, uniqueness, compactness, continuity, and gauge domination |
 | [docs/RADIAL_REGULARITY.md](docs/RADIAL_REGULARITY.md) | Bilateral slope proof and exact orientation certificate |
 | [docs/ARC_LENGTH.md](docs/ARC_LENGTH.md) | Integrated speed, global inverse, and exact unit-speed proof |
+| [docs/BALANCED_REDUCTION.md](docs/BALANCED_REDUCTION.md) | Complete G2 assembly and the remaining global targets |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |
