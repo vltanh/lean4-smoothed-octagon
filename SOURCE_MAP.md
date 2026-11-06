@@ -86,6 +86,22 @@ The inputs `rein_mem_Θ`, `rein_continuous_V`, `rein_V_unique`, `rein_unique`,
 No regular boundary curve is assumed or asserted at this step. See
 [docs/BOUNDARY_TRACE.md](docs/BOUNDARY_TRACE.md) for the hand argument.
 
+## Continuous supports: `SmoothedOctagon/SupportNormal.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `planeDot`, `IsNormalizedSupport` | Coordinate pairing and level-one supporting covector predicate |
+| `exists_normalizedSupport`, `normalizedSupport_unique`, `existsUnique_normalizedSupport` | Pointwise construction and uniqueness from unique support lines |
+| `exists_support_coordinate_bound`, `continuous_normalizedSupport` | Uniform compact box and continuity along any continuous boundary curve |
+| `normalizedSupport_le_gauge` | Domination of the gauge on the entire plane |
+| `radialSupport`, `radialSupport_spec`, `radialSupport_continuous`, `radialSupport_periodic` | Concrete continuous periodic covector field along the radial boundary |
+| `exists_continuous_radial_support_of_unique_support`, `exists_continuous_radial_support` | Constructed field from explicit unique support or actual worst-disk hypotheses |
+
+The pointwise inputs are `irr_exists_normal` and `irr_eq_of_line_eq` in upstream
+`Ch2/Irreducible.lean`; compactness uses mathlib's
+`IsCompact.tendsto_nhds_of_unique_mapClusterPt`. The full hand proof is in
+[docs/SUPPORT_NORMAL.md](docs/SUPPORT_NORMAL.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

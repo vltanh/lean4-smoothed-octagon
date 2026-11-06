@@ -3,6 +3,7 @@ module
 public import SmoothedOctagon.Problem
 public import SmoothedOctagon.Normalization
 public import SmoothedOctagon.BoundaryTrace
+public import SmoothedOctagon.SupportNormal
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 

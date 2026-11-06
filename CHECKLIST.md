@@ -19,6 +19,8 @@ These are source deliverables, not kernel-certified milestones.
   objective and pointwise six-contact configurations.
 - [x] Construct the actual continuous six-contact boundary trace, with common period
   `2π`, simple traversal, full boundary coverage, and the prescribed initial values.
+- [x] Construct a continuous normalized supporting covector field from unique support
+  lines, with domination of the gauge and no assumed smooth boundary.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -54,7 +56,7 @@ none has yet been checked by Lean. Substeps are not separate global conjecture c
 | --- | --- | --- |
 | G2a — Affine normalization | Starting with an actual worst disk, construct a normalized image, preserve its worst status and density, and identify density as area divided by `2 * √3`. | Source draft supplied in `Normalization.lean`. |
 | G2b — Continuous boundary trace | Construct six continuous contact curves, a common period, simple traversal, full boundary coverage, and the initial sixth-root values. | Source draft supplied in `BoundaryTrace.lean`; no curve is assumed as an input. |
-| G2c — Regular radial parametrization | Deduce a positive regular `C¹` polar boundary curve from the actual minimizer's unique supporting line at every boundary point. | Open; no smooth parametrization may be assumed as an extra minimizer hypothesis. |
+| G2c — Regular radial parametrization | Deduce a positive regular `C¹` polar boundary curve from the actual minimizer's unique supporting line at every boundary point. | Continuous supporting field supplied in `SupportNormal.lean`; the radial derivative upgrade is being integrated. |
 | G2d — Common arclength parameter | Construct a global increasing periodic change of parameter with Euclidean unit speed for curve zero. | Open; the norm on `Fin 2 → ℝ` must not silently replace Euclidean speed. |
 | G2e — Balanced assembly | Apply the upstream regularity, Lipschitz, star, and curvature lemmas; transport the period, simplicity, coverage, and initial values through the common change of parameter. | Open, dependent on G2b–G2d. |
 
@@ -74,7 +76,10 @@ this task.
 - **2026-11-06, G2a:** actual-minimizer affine normalization and normalized area objective
   supplied; commit `2c7dd88`.
 - **2026-11-06, G2b:** actual continuous six-contact trace supplied, including common period,
-  simplicity, coverage, and circle representation. G2c–G2e remain open.
+  simplicity, coverage, and circle representation; commit `2ccfe60`.
+- **2026-11-06, G2c support field:** unique normalized supporting covectors constructed;
+  a uniform compact box and uniqueness of cluster points prove continuity. The derivative
+  and arclength steps are subsequent source commits.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

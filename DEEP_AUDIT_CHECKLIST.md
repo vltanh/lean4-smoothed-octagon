@@ -74,6 +74,18 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Keep differentiability and arclength as explicit remaining obligations.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Supporting covectors
+
+- [x] Obtain normalized support covectors from the actual separation theorem.
+- [x] Derive their uniqueness from equality of support lines, rather than assume a
+  stronger unique-normal hypothesis.
+- [x] Bound every supporting covector in one compact box using an interior ball.
+- [x] Pass the contact equality and all support inequalities to cluster points;
+  continuity follows from uniqueness, with no smooth-boundary input.
+- [x] Prove gauge domination separately for zero and nonzero vectors.
+- [x] Independently review the hand proof and inspect the pinned compactness APIs.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for
