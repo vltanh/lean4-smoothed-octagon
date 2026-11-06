@@ -2,6 +2,7 @@ module
 
 public import SmoothedOctagon.Problem
 public import SmoothedOctagon.SwitchingMargin
+public import SmoothedOctagon.StrongSwitching
 
 /-!
 # Research toward the Reinhardt conjecture

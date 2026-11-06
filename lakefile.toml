@@ -21,4 +21,3 @@ rev = "8ce732873a1aa054e98dac46cfaa8d7bb96ffa6f"
 
 [[lean_lib]]
 name = "SmoothedOctagon"
-

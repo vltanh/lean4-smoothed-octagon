@@ -1,0 +1,65 @@
+# Proof ledger and finite roadmap
+
+Status date: **2026-11-06**. This is an initial, uncompiled development.
+
+## What is established in this PR
+
+These are source deliverables, not kernel-certified milestones.
+
+- [x] Reuse the actual octagon, its admissibility, exact density, and a worst disk from the
+  pinned reference project. State global minimality and affine rigidity separately.
+- [x] Give equivalent global closure criteria, including a density lower bound on any
+  actual worst disk. The existence input is an upstream theorem, not an added hypothesis.
+- [x] Supply a complete hand proof and Lean proof bodies for the new rational switching
+  margin, including `(r-y)^3/8 ≤ hmaxF y r` throughout `2 ≤ y ≤ r ≤ 4`.
+- [x] Transport the margin to the actual switching functions of normalized strong lifts:
+  `χ₃₂(t) ≥ √3 t³/2` and `χ₃₁(t) ≥ √3 (t_sw-t)³/2` on the whole segment.
+- [x] Map every mathematical claim to source declarations and record the validation boundary.
+- [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
+
+The existing candidate construction and its qualitative switching signs are upstream work.
+They are not counted as newly closed conjecture cases. The new cubic margin strengthens one
+local estimate; it does not establish global optimality.
+
+## Global obligations
+
+This is a finite list of obligations, **not** a claim that the remaining bodies form a finite
+list, that the tasks have comparable difficulty, or that they are all routine formalization.
+
+| Gate | Exact completion condition | Present status |
+| --- | --- | --- |
+| G1 — Fix the global target | Use the existing greatest packing density of congruent copies for every centrally symmetric convex disk; identify the concrete octagon and state affine rigidity separately. | Source draft supplied in `Problem.lean`; validation deferred. |
+| G2 — Normalize an actual minimizer | Construct a balanced circle representation of an actual worst disk, preserving the relevant density and supplying every boundary parametrization hypothesis. | Open. The upstream worst-disk existence theorem alone does not supply this representation. |
+| G3 — Justify the chosen reduction | If using the smoothed-polygon route, prove the needed optimal-control, extremal-lift, and Mahler First bridges for the minimizer from G2. | Open in the pinned formalization. The published mathematical reduction is a source, not an imported theorem for this entire step. |
+| G4 — Make the global comparison exhaustive | Prove either a direct inequality covering all normalized competitors, or an explicit uniform switch/side bound plus coverage of all words, parameter ranges, limits, and degeneracies. | Open research obligation. No finite case list is available yet. |
+| G5 — Prove the octagon lower bound | Discharge `octagonDensity ≤ greatestPackingDensity K` for a genuine worst disk and apply `reinhardtConjecture_of_worst_disk`. | Open. Comparisons within the regular `(6k+2)` family cannot close this gate. |
+| G6 — Classify equality | Prove `AffineRigidity`: every worst disk is an invertible linear image of the centered octagon. | Open; not implied by G5. |
+| V — Validate the final theorem | Compile and audit `FullReinhardtConjecture`, its exact statement, and its complete dependency closure in the agreed kernel workflow. | Deferred; requires a change to the current no-compilation policy. |
+
+G4 has two possible routes. A direct global inequality can bypass a finite classification;
+otherwise the uniform bound and coverage proof must precede any claim of exhaustive case
+enumeration. Merely showing that each minimizer has finitely many switches is insufficient.
+
+## Next bounded mathematical task
+
+The next global task is **G2**: find or construct a theorem that produces the balanced circle
+representation of an actual worst disk with the required density normalization. Its inputs
+and output should be written explicitly before additional local lemmas are added. Existing
+boundary lemmas with a parametrization already supplied do not complete this task.
+
+The cubic switching margin is available for later quantitative control estimates. A new
+estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,
+this margin vanishes at the switching endpoint, so it is not a uniform dwell-time theorem.
+
+## Literature boundary
+
+Hales–Vajjha, *Packings of Smoothed Polygons* (2024), proves Mahler's First conjecture and
+leaves octagon selection open. Appendix B.4 explicitly does not provide a uniform edge bound.
+The abstract and research-problem section are the relevant source checks:
+
+- <https://arxiv.org/abs/2405.04331>
+- <https://arxiv.org/html/2405.04331v1>
+
+The pinned reference repository implements substantial Chapters 2–7 material; its report
+lists the later Mahler First machinery outside the completed formalization. Its name must
+not be read as evidence that every published smoothed-polygon reduction is already formalized.
