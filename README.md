@@ -24,6 +24,16 @@ The candidate density is
 
 ## Current hand-proof comparison
 
+The strongest restricted result is now a complete comparison for **every admissible
+trajectory with four positive-duration vertex-control pieces**, including asymmetric
+initial states and unequal durations. Endpoint algebra eliminates the other words and
+reduces the surviving family to a scalar parameter; a strict integral inequality proves
+its unique minimum is the smoothed octagon. No Pontryagin or symmetry assumption is
+used. See [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md).
+
+This closes the four-piece class. It does not bound the number of pieces in an arbitrary
+minimizer or compare all longer trajectories.
+
 For an arbitrary admissible star state `X=[[a,b],[c,-a]]`, put
 `m=(c-b)/2` and `n=√(a²+((b+c)/2)²)`. The determinant identity gives `m²-n²=1`,
 and the cost is `C=3∫m`. The new hand estimate for `C<π` is
@@ -218,6 +228,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/NEAR_CIRCLE_BOUND.md](docs/NEAR_CIRCLE_BOUND.md) | Hand comparison excluding trajectories confined to an explicit circle-state neighborhood |
 | [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) | Exact endpoint obstruction for every control confined to a fixed simplex edge |
 | [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) | Complete hand construction of a lower-density competitor from a proper circle-state subarc |
+| [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md) | Complete asymmetric four-piece comparison and equality within that class |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

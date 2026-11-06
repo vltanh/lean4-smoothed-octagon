@@ -418,6 +418,13 @@ The bridge uses `chi32_eq`, `chi31_eq_chi32`, `strongLift_unique`, `hmax_y_mem`,
 
 ## Validation
 
+[docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md), added in the concurrent
+commit `2ea4e93`, covers all reduced four-piece vertex trajectories. Its displayed
+tangent factors, shape identity, positive-margin sequence, exact cost formula, and
+integral monotonicity argument form the hand certificate. The published control equations
+are the input; a general link-reduction theorem is not assumed. Independent reviews
+checked each stage and the strict equality case. There is no new Lean implementation.
+
 [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) recovers Hales–Vajjha Theorem 8.2.7
 by an explicit hyperbolic deformation with exact area deficit. The hand proof supplies
 the periodic splice, compact positivity margins, winding, convexity, and the complete

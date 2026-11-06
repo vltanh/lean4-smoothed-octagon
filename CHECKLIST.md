@@ -19,6 +19,7 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Trajectories confined near `J` | Excluded if `n/m ≤ η₀ < π/A−1` throughout the interval | Arbitrary measurable controls; `m=(c−b)/2`, `n=√(a²+((b+c)/2)²)` |
 | Controls on a fixed simplex edge | Cannot satisfy `g(0)=I`, `g(T)=R` in the strict star domain | Arbitrary measurable controls, without a cost bound or terminal condition on `X` |
 | Vertex words omitting a letter | Infeasible by the fixed-edge exclusion | Every word length and unequal positive durations; one- and two-arc words are included |
+| Exactly four positive vertex pieces | Full asymmetric comparison proved by hand: `C ≥ A`, with octagon equality only | Every reduced four-letter word, arbitrary positive durations and initial state; no PMP or symmetry hypothesis |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
 | Unrestricted octagon inequality | Open | Trajectories leaving the excluded neighborhood, with arbitrary control history |
@@ -38,6 +39,12 @@ competitor whenever a nonempty interval has `X=J`, with exact area gain
 `3∫sinh²(εχ)`. It recovers a known local exclusion and does not handle arbitrary nearby
 or chattering trajectories. Improvements supported on an interval of length `ℓ` are
 less than `3ℓ`, so this local mechanism gives no positive uniform deficit as `ℓ→0`.
+
+[docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md) closes the entire four-piece
+comparison. Endpoint algebra leaves one word and a one-parameter family; a strict
+integral inequality selects its symmetric octagon member. Equality is classified within
+that class. No theorem restricts every global minimizer to four pieces, so the
+unrestricted comparison and affine equality classification remain open.
 
 ## Earlier source construction ledger
 
@@ -325,7 +332,14 @@ the current research priority. No finite switching search is justified yet.
   gain is `3∫sinh²(εχ)>0`, without normalizing the perturbed determinant clock. This
   recovers the published local exclusion, including proper subarcs. Quantitative
   bounds record the vanishing gain on shrinking supports and the separate curvature
-  requirement for nearby arcs. It is not new closure of the global octagon inequality.
+  requirement for nearby arcs. It is not new closure of the global octagon inequality;
+  commit `066cd53`.
+- **2026-11-06, full asymmetric four-piece comparison:** preserve the concurrent hand
+  proof added in commit `2ea4e93` and independently audit all endpoint, cost, and
+  logarithmic identities. Add a short state-holonomy certificate for the forced initial
+  shape and a positive-margin certificate for the per-piece costs. Every four-piece
+  competitor is now compared with the octagon without imposing symmetry or equal
+  durations, and equality is identified within this class. Longer trajectories remain open.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

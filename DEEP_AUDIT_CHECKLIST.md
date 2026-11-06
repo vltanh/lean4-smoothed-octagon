@@ -29,6 +29,12 @@ as mathematical closure of the unrestricted comparison.
   no unproved control-admissibility or determinant-clock premise remains in the hand proof.
 - [x] Distinguish the recovered known circle-subarc exclusion from new global comparison,
   and retain the shrinking-support and nearby-curvature limitations of its quantitative bounds.
+- [x] Independently check all stages of the asymmetric four-piece comparison: tangent
+  closure, eight reduced words, forced initial shape and sign, full positive margins,
+  exact per-piece cost, logarithmic derivative, convergent integral identity, and strict
+  decreasing-weight sign. The octagon equality data match the existing candidate.
+- [x] Include independent short shape and cost certificates so the four-piece conclusion
+  does not rely on reported numerical or symbolic output. Keep its restricted scope explicit.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility

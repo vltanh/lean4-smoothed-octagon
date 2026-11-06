@@ -152,6 +152,34 @@ Normalization det X0=1 and the sign X21>0 therefore force
 
 No unconstrained initial-shape parameter remains. Necessity suffices for the lower bound.
 
+### Independent short certificate for the forced shape
+
+There is also a direct check using the state evolution, independent of expanding (5).
+Set `Hj(q)=exp((log q)Dj/2)`. The four state transitions give
+
+    X(T)=H X0 H⁻¹,
+    H=H2(1/b) H1(1/a) H0(1/b) H2(1/a).
+
+The half-angle matrices are
+
+    H2(1/a)=a^(-1/2) [[1,1-a],[0,a]],
+    H0(1/b)=(2 sqrt(b))^(-1) [[1+b,b-1],[b-1,1+b]],
+    H1(1/a)=a^(-1/2) [[a,1-a],[0,1]],
+    H2(1/b)=b^(-1/2) [[1,1-b],[0,b]].
+
+Multiplying them, using a²+b²=1, gives the compact identity
+
+    R H=(2I+M)/(s+1).                                      (7a)
+
+The terminal state condition is equivalent to [RH,X0]=0 and hence [M,X0]=0.
+Writing X0=[[u,v],[h,-u]], the lower-left and diagonal commutator entries give
+u=(a-b)h and v=(1-2s)h. Thus X0=hM. Its determinant and positive lower-left entry
+give h=1/sqrt(N), recovering (7).
+
+Conversely, once tangent closure (1) and this state endpoint hold, the position endpoint
+follows directly: V(T)=X0R and X(T)=R⁻¹X0R imply g(T)=V(T)X(T)⁻¹=R. This explains
+why both endpoint conditions are retained, without imposing an extra per-piece relation.
+
 ## 4. Exact cost, without numerical integration
 
 For a piece starting at X, write D=Dj, c=tr(DX), ell=log q. Solving X_ell=[D,X]/2 gives
@@ -166,12 +194,37 @@ Since dt=(c/2)dell,
       +(c/4)(cosh(ell)-1)[D,X].                            (8)
 
 Use (7), apply (8) four times, and contract with (2). The following per-piece table
-records the contribution to N*delta and permits direct checking of the addition.
+records the contribution to N*delta **for each individual piece** and permits direct
+checking of the addition. Each of the two rows is used twice.
 
 | Pieces | Algebraic contribution | Logarithmic contribution |
 |---|---|---|
-| 1,3 | 8w²(1-w)/(1+w²)² | -2(1-w)² log(p)/(1+w²)² |
-| 2,4 | 4w(1-w)²(1+w)/(1+w²)² | -2w²(1+w)² log(q)/(1+w²)² |
+| Each of 1 and 3 | 8w²(1-w)/(1+w²)² | -2(1-w)² log(p)/(1+w²)² |
+| Each of 2 and 4 | 4w(1-w)²(1+w)/(1+w²)² | -2w²(1+w)² log(q)/(1+w²)² |
+
+A second hand check of this table uses positive margins. Put
+
+    A=2(s-1), B=2(1-a+b), C=2(1+a-b).
+
+The actual margins tr(Dj X) are the entries of the following triples divided by
+sqrt(N). Their successive values are
+
+    (A,B,C) -> (B,A,C) -> (B,C,A) -> (A,C,B) -> (C,A,B).
+
+On a vertex piece the active margin is constant; the next margin increases and the
+previous one decreases, with exact update b -> (c+b)q-c and d -> (c+d)/q-c when
+the active margin is c. The displayed sequence follows from C+A=4a, C+B=4,
+B+A=4b, and a²+b²=1. All endpoint margins are positive, so monotonicity also
+checks the full strict-star constraint throughout each piece for every a,b in (4).
+
+The active raw margins are C,B,C,B. Since the density integrand in (2) is one fourth
+of the sum of the three actual margins, direct integration gives
+
+    N*delta_i=C(1-a)-C² log(1/a)/8      (each of pieces 1 and 3),
+    N*delta_i=B(1-b)-B² log(1/b)/8      (each of pieces 2 and 4).
+
+These are exactly the two table rows after the rational substitution for a,b. This
+derivation verifies the cost without numerical quadrature or a symbolic premise.
 
 Adding and using log p=-log a, log q=-log b yields
 
@@ -250,3 +303,8 @@ Computer algebra suggested and cross-checked the finite identities, and floating
 optimization suggested the minimum. Neither is a premise of the displayed hand proof.
 The algebra, elementary integrals, and monotonicity argument above are the certificate.
 No Lean source was added or executed for this result.
+
+Independent hand review checked the tangent and position endpoints, the complete word
+classification, the alternative shape identity (7a), the positive margin sequence and
+cost table, the derivative formula, the integral numerator identity, and the strict
+decreasing-weight comparison. The table's per-piece normalization is now explicit.
