@@ -116,6 +116,14 @@ the reviewed negative constrained Hessian forces its cost minimum to a five-piec
 boundary. Every interior six-piece trajectory therefore costs strictly more than the
 octagon. Only `012102` remains an open six-piece comparison.
 
+[docs/SIX_ARC_012102.md](docs/SIX_ARC_012102.md) now gives its exact positive factor
+domain, unique admissible initial state, complete strict-star feasibility, and explicit
+logarithmic cost. A tangent bound for the logarithm reduces the desired comparison to
+one stated rational inequality. The supporting sharp normalization bound
+`N/ℓ² > 5+4√2` and the moment bound `W > 4ℓ²` are proved on the entire domain.
+The cost inequality is unproved, so this is a precise reduction of the remaining case,
+not an additional excluded competitor class.
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) supplies a complete fixed-factor endpoint
 test at arbitrary finite word length. Noncentral elliptic holonomy determines the only
 possible initial state; finitely many exact margin signs check each entire arc. The
@@ -537,6 +545,15 @@ the current research priority. No finite switching search is justified yet.
   Hessian rules out every interior minimum. Compactness and the complete five-piece
   comparison prove strict octagon comparison for every positive member. Independent
   hand audits check the coordinate change, state matrix, signs, and Hessian use.
+  Commit `8f89a98`.
+- **2026-11-06, exact remaining six-piece target:** determine the complete positive
+  `012102` factor domain, prove its unique admissible state and whole-arc feasibility,
+  and derive the exact cost by a short junction cancellation. A sharp tangent envelope
+  reduces the octagon comparison to an explicit rational inequality on that domain.
+  Prove the sharp normalization bound `N/ℓ² > 5+4√2` by endpoint minimization and
+  the moment bound `W > 4ℓ²` by an explicit rational factorization with positive signs.
+  Independent hand audits verify the reduction and supporting bounds. The cost
+  inequality remains open; this entry does not close another comparison class.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

@@ -491,6 +491,16 @@ coordinate change, state matrix, every margin bound, and nonzero tangent have be
 independently checked by hand. With cyclic ordering, only `012102` remains an open
 six-piece comparison. No bound on larger word lengths is inferred.
 
+[docs/SIX_ARC_012102.md](docs/SIX_ARC_012102.md) supplies the exhaustive endpoint
+reduction for that remaining case. Its three equivalent domains retain all unequal
+factors; the state holonomy, reverse-five boundary argument, and six junction checks
+prove complete strict-star feasibility. The exact cost follows from a signed junction
+sum. The logarithm tangent comes from the proved reverse-five concavity lemma.
+Endpoint minimization proves the sharp normalization bound `N/ℓ² > 5+4√2`; a short
+rational identity and the ordered algebraic domain prove `W > 4ℓ²`. Independent hand
+reviews check the reduction, these bounds, and the conditional implication of the
+rational cost target. That target inequality is unproved and is not used as a theorem.
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) develops the tangent/state products used
 in the four-link proof into a complete fixed-factor theorem for arbitrary finite words.
 The real two-dimensional centralizer gives the exact holonomy classification; explicit

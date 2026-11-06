@@ -124,6 +124,16 @@ as mathematical closure of the unrestricted comparison.
   each jump coefficient, the rank-one term on the tangent line, the three strict
   diagonal signs, and the exact free-time splice. Keep reverse alternation outside
   the exclusion and do not infer a universal cost lower bound from local descent.
+- [x] Independently audit the exact `012102` reduction: complete factor elimination,
+  all three parameter domains, short holonomy matrix, normalized active margins,
+  reverse-five boundary feasibility, all six junctions and continuous-arc signs,
+  signed algebraic cost cancellation, and the logarithm tangent constants.
+- [x] Check the strict normalization bound `N/ℓ² > 5+4√2`: the derivative numerator
+  is strictly decreasing, both endpoint ratios are positive, the reverse-five physical
+  margin identifies the normalization, and the octagon boundary proves sharpness.
+  Check `W > 4ℓ²` through the displayed rational factorization and its ordered-domain sign.
+- [ ] Prove inequality (34) in `docs/SIX_ARC_012102.md`, or another full comparison
+  of that family. Its exact reduction and finite exploratory checks do not prove it.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility

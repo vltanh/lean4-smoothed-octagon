@@ -71,6 +71,12 @@ two genuine five-piece boundary trajectories; see
 is infeasible by cyclic ordering. Thus `012102` is the only remaining six-piece
 comparison, while arbitrary longer words remain open.
 
+[docs/SIX_ARC_012102.md](docs/SIX_ARC_012102.md) gives the complete feasible
+three-parameter family and exact cost for that remaining case. It isolates a concrete
+rational inequality sufficient for comparison and proves the supporting bounds
+`N/ℓ² > 5+4√2` and `W > 4ℓ²`. The cost inequality itself is still unproved;
+the endpoint reduction and supporting bounds are not counted as an exclusion of the class.
+
 For an arbitrary admissible star state `X=[[a,b],[c,-a]]`, put
 `m=(c-b)/2` and `n=√(a²+((b+c)/2)²)`. The determinant identity gives `m²-n²=1`,
 and the cost is `C=3∫m`. The new hand estimate for `C<π` is
