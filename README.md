@@ -123,6 +123,13 @@ strengthens the local edge result to every forward four-arc alternation
 `i,i+1,i,i+1`. A strictly negative constrained second variation handles the stationary
 case. The reverse orientation is not excluded, and this still supplies no total arc bound.
 
+That orientation distinction is necessary. An explicit reverse word `2121` uniquely
+minimizes its fixed-endpoint problem over all measurable simplex controls, at arbitrarily
+small positive cost. A dual certificate proves the edge minimum; a tangent-winding
+barrier makes every nonedge competitor cost more than `3π`. These are local endpoint
+data, not the closed Reinhardt endpoints. The complete obstruction is in
+[docs/REVERSE_ALTERNATION_OBSTRUCTION.md](docs/REVERSE_ALTERNATION_OBSTRUCTION.md).
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) removes the initial-state ambiguity for
 every noncentral finite word-factor tuple. It excludes hyperbolic/parabolic endpoint
 holonomy, determines the unique possible elliptic state, and gives exact full-arc sign

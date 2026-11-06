@@ -154,6 +154,16 @@ preserving both endpoint pairs, even with free time and no cost restriction. Tan
 closure alone loses essential state information. A viable shortening argument must
 allow a larger window, more control choices, or changes to additional endpoint data.
 
+[docs/REVERSE_ALTERNATION_OBSTRUCTION.md](docs/REVERSE_ALTERNATION_OBSTRUCTION.md)
+proves that reverse four-arc alternation `2121` can uniquely minimize its complete
+fixed-endpoint problem at arbitrarily small cost. The edge formulation has linear
+constraints in a positive function, and an exact signed dual certificate proves the
+minimum and uniqueness over all measurable edge controls. For the same endpoint data,
+every nonedge competitor has positive tangent winding and cost above `3π`. Thus
+small cost and third-vertex perturbations cannot make the forward-alternation exclusion
+orientation-free. The result does not say that these local windows occur in a closed
+global Reinhardt minimizer, and it does not refute a six-to-five theorem.
+
 ## Earlier source construction ledger
 
 These are source deliverables, not kernel-certified milestones.
@@ -554,6 +564,15 @@ the current research priority. No finite switching search is justified yet.
   the moment bound `W > 4ℓ²` by an explicit rational factorization with positive signs.
   Independent hand audits verify the reduction and supporting bounds. The cost
   inequality remains open; this entry does not close another comparison class.
+  Commit `8632c9a`.
+- **2026-11-06, reverse-alternation obstruction:** construct an explicit strict-star
+  reverse four-arc window with arbitrarily small cost and fixed frame/state endpoint
+  pairs. A signed dual certificate proves its unique global minimum among measurable
+  edge controls. Exact contact-tangent winding and two angle comparisons force every
+  nonedge competitor with those same endpoints to cost more than `3π`. Independent
+  hand audits check the entire construction, absolute continuity, uniqueness, and all
+  angle branches. This rules out an orientation-free local four-arc exclusion; it is
+  a failed-route certificate, not a new exclusion of closed Reinhardt competitors.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

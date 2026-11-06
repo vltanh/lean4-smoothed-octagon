@@ -501,6 +501,17 @@ rational identity and the ordered algebraic domain prove `W > 4ℓ²`. Independe
 reviews check the reduction, these bounds, and the conditional implication of the
 rational cost target. That target inequality is unproved and is not used as a theorem.
 
+[docs/REVERSE_ALTERNATION_OBSTRUCTION.md](docs/REVERSE_ALTERNATION_OBSTRUCTION.md)
+constructs an explicit reverse four-arc family with arbitrarily small cost and proves
+unique optimality for its local endpoint problem over every measurable simplex
+control. The edge equations and physical coordinates come from the earlier hand edge
+analysis; the new signed dual certificate covers all measurable edge controls. The
+identity `(gX)' = -2(gX)Z_u / tr(Z_uX)` makes contact-tangent angle monotone.
+Exact endpoint vectors, two winding comparisons, and the row-angle cost bound give
+`C > 3π` for every nonedge competitor. Independent hand reviews cover the full proof,
+including absolute continuity, normalization, signs, and equality. No computation or
+global closed-minimizer claim is used.
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) develops the tangent/state products used
 in the four-link proof into a complete fixed-factor theorem for arbitrary finite words.
 The real two-dimensional centralizer gives the exact holonomy classification; explicit

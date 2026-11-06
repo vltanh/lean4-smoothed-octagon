@@ -132,6 +132,14 @@ as mathematical closure of the unrestricted comparison.
   is strictly decreasing, both endpoint ratios are positive, the reverse-five physical
   margin identifies the normalization, and the octagon boundary proves sharpness.
   Check `W > 4ℓ²` through the displayed rational factorization and its ordered-domain sign.
+- [x] Independently audit the reverse-alternation obstruction: actual measurable edge
+  dynamics and inverse control, explicit four positive arcs, uniform strict-star bounds,
+  exact endpoint frames/states, all dual signs, integration by parts, uniqueness, and
+  arbitrarily small physical cost.
+- [x] Check the obstruction against all measurable simplex controls: the exact tangent
+  evolution, nonnegative curvature, equal endpoint tangent vectors, absolutely continuous
+  angle lifts, both winding transfers, and the strict `3π` cost barrier. Keep these
+  local endpoint data distinct from the closed Reinhardt endpoint problem.
 - [ ] Prove inequality (34) in `docs/SIX_ARC_012102.md`, or another full comparison
   of that family. Its exact reduction and finite exploratory checks do not prove it.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
