@@ -49,6 +49,11 @@ exact density, proves the candidate upper bound on the minimax value, and gives 
 global lower-bound criteria. In particular, it is enough to prove the candidate lower bound
 for one actual worst disk; an upstream theorem supplies existence of such a disk.
 
+`Normalization.lean` now starts with an actual worst disk, constructs an orientation-preserving
+linear image with the six critical contact midpoints at the sixth roots of unity, and preserves
+its greatest packing density. In that normal position, density is area divided by `2 * √3`.
+The remaining boundary construction is tracked as G2b–G2e in the ledger.
+
 The global lower bound and affine rigidity remain open. `ReinhardtConjecture` names minimality,
 `AffineRigidity` names uniqueness after centering, and `FullReinhardtConjecture` is their
 conjunction. None is asserted as an unconditional theorem.
@@ -58,7 +63,7 @@ reduction and leaves octagon selection open. The pinned Lean reference does not 
 all of that later reduction. A finite roadmap also does not imply a uniform finite list
 of polygon cases; see [CHECKLIST.md](CHECKLIST.md).
 
-**Initial source draft. Compilation, typechecking, and CI have not been run.**
+**Source development. Compilation, typechecking, and CI have not been run.**
 
 The hand proofs and source bodies have been reviewed. No numerical search or external
 computation was used to establish the new inequalities. Source scans introduce no new
@@ -69,10 +74,12 @@ proof holes or axioms; this is not a kernel-verification claim.
 | File | Purpose |
 | --- | --- |
 | [SmoothedOctagon/Problem.lean](SmoothedOctagon/Problem.lean) | Concrete candidate, global targets, and equivalent closure criteria |
+| [SmoothedOctagon/Normalization.lean](SmoothedOctagon/Normalization.lean) | Actual-minimizer normalization, contact configurations, and area objective |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
 | [docs/STRONG_SWITCHING.md](docs/STRONG_SWITCHING.md) | Complete hand proof of the switching-function transport |
+| [docs/NORMALIZATION.md](docs/NORMALIZATION.md) | Construction and source dependencies for the normalized worst disk |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

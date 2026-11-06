@@ -54,6 +54,16 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Keep the result restricted to this family of strong lifts, not arbitrary extremals.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Actual-minimizer normalization
+
+- [x] Start with `IsWorstDisk K`, without assuming a normalized disk or boundary curve.
+- [x] Normalize the six contact midpoints, keeping the distinction from hexagon vertices.
+- [x] Preserve worst-disk status through the upstream lattice/congruent-density equivalence.
+- [x] Allow an arbitrary positive determinant factor, rather than assume area preservation.
+- [x] Use the critical-hexagon area formula to obtain the normalized density objective.
+- [x] Keep pointwise contact existence distinct from a continuous or smooth curve selection.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

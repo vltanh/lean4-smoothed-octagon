@@ -51,6 +51,23 @@ All new names belong to namespace `SmoothedOctagon`.
 These proofs use the already formalized candidate and existence facts. They do not prove
 the required new global lower bound.
 
+## Actual-minimizer normalization: `SmoothedOctagon/Normalization.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `worstDisk_normalization_at` | Normalizes an actual worst disk at a prescribed boundary contact, preserving density and worst status |
+| `worstDisk_normalization` | Chooses the initial contact automatically |
+| `exists_normalized_worst_disk` | Nonempty class of actual worst disks in `rein_Std` position |
+| `normalized_leastAreaHexagon_isMultiPoint` | Normalized determinant and midpoint identities for every critical hexagon |
+| `normalized_leastAreaHexagon_area` | Critical-hexagon area `2 * √3` |
+| `normalized_density_eq_area` | Greatest packing density equals area divided by `2 * √3` |
+| `normalized_worstDisk_boundary_contacts` | Pointwise existence of a normalized six-contact configuration through any boundary point |
+
+The geometric inputs are `bdy_exists_hexagon`, `rein_normalize`,
+`rein_isLeastAreaHexagon_comp`, and `bdy_isWorstLatticeDisk_image`. The objective uses
+`rein_glpd_eq` and `rein_volume_std`. These all come from the pinned Chapter 2 implementation.
+The hand proof and exact scope are in [docs/NORMALIZATION.md](docs/NORMALIZATION.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Problem
+public import SmoothedOctagon.Normalization
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 
