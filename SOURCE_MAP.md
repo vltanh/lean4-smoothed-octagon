@@ -418,6 +418,12 @@ The bridge uses `chi32_eq`, `chi31_eq_chi32`, `strongLift_unique`, `hmax_y_mem`,
 
 ## Validation
 
+[docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) integrates the fixed-edge equations
+in Hales–Vajjha §8.1 and the pinned half-plane conventions, including measurable-control
+regularity. The initial and terminal group matrices force a forbidden boundary state.
+The exact `R_conj_controlMatrix_vertex` permutation covers all three edges. This is a
+hand exclusion of arbitrary measurable controls, with no new Lean declaration.
+
 The current hand comparison in [docs/NEAR_CIRCLE_BOUND.md](docs/NEAR_CIRCLE_BOUND.md)
 uses the determinant identity, the actual reflected-row angle, ordinary and integral
 Cauchy–Schwarz, and the exact octagon upper bound. It proves an excluded class of

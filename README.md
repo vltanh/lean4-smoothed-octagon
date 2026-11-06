@@ -43,6 +43,13 @@ does not compare the remaining competitors. See
 [CHECKLIST.md](CHECKLIST.md) for the distinction between mathematical exclusions and
 earlier formalization substeps.
 
+There is also an endpoint obstruction covering arbitrary measurable controls: no
+trajectory confined to one fixed edge of the control simplex can reach `g(T)=R` from
+`g(0)=I` while staying in the strict star domain. Thus every admissible control satisfies
+`∫u_j>0` for all three coordinates, and every finite vertex word must use all three
+vertices. The proof requires neither optimality nor a finite switching description;
+see [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md).
+
 ## Initial mathematical contribution
 
 For the existing scalar switching expression `SmoothedPolygons.hmaxF`, the new proof gives
@@ -201,6 +208,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/SINGULAR_ARC.md](docs/SINGULAR_ARC.md) | Integral costate regularity, multiplier normality, and circle-state rigidity |
 | [docs/PONTRYAGIN_LIFT.md](docs/PONTRYAGIN_LIFT.md) | Exact open lift interface, free-time endpoints, and reduced nontriviality audit |
 | [docs/NEAR_CIRCLE_BOUND.md](docs/NEAR_CIRCLE_BOUND.md) | Hand comparison excluding trajectories confined to an explicit circle-state neighborhood |
+| [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) | Exact endpoint obstruction for every control confined to a fixed simplex edge |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

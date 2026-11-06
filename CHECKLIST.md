@@ -16,6 +16,8 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Costs at least `π` | Excluded from beating the octagon, since `A < π` | Every admissible trajectory in this cost range |
 | Entirely circular state | Costs at least `π`, hence cannot minimize | `X=J` on the entire open interval; proper subarcs are separate |
 | Trajectories confined near `J` | Excluded if `n/m ≤ η₀ < π/A−1` throughout the interval | Arbitrary measurable controls; `m=(c−b)/2`, `n=√(a²+((b+c)/2)²)` |
+| Controls on a fixed simplex edge | Cannot satisfy `g(0)=I`, `g(T)=R` in the strict star domain | Arbitrary measurable controls, without a cost bound or terminal condition on `X` |
+| Vertex words omitting a letter | Infeasible by the fixed-edge exclusion | Every word length and unequal positive durations; one- and two-arc words are included |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
 | Unrestricted octagon inequality | Open | Trajectories leaving the excluded neighborhood, with arbitrary control history |
@@ -25,6 +27,10 @@ The near-circle exclusion and its complete hand proof are in
 [docs/NEAR_CIRCLE_BOUND.md](docs/NEAR_CIRCLE_BOUND.md). For every global minimizer it gives
 `∫n ≥ (π−A)/3` and `max(n/m) ≥ π/A−1`. It does not keep a trajectory uniformly away
 from the singular locus or provide a finite switch bound.
+
+[docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) proves every admissible control must
+satisfy `∫u_j>0` for each of the three coordinates. This excludes a whole edge even with
+arbitrarily many switches, but gives no common positive lower bound on those integrals.
 
 ## Earlier source construction ledger
 
@@ -298,7 +304,14 @@ the current research priority. No finite switching search is justified yet.
   bounds `π−C ≤ 3∫n`, `C ≥ π/(1+max(n/m))`, and `C ≥ (π²+9T²)/(2π)` for arbitrary
   low-cost admissible trajectories. This excludes entire trajectories confined to the
   stated neighborhood of `J`, without a symmetry or finite-switch assumption. The hand
-  algebra and integral inequalities were independently reviewed; no new Lean was added.
+  algebra and integral inequalities were independently reviewed; no new Lean was added;
+  commit `4cbaaf8`.
+- **2026-11-06, hand fixed-edge exclusion:** integrate the exact measurable-control
+  equations when `u₀=0` a.e. The required group endpoint forces the initial half-plane
+  coordinate onto the forbidden star boundary. Exact rotation conjugation covers every
+  edge. Therefore every admissible trajectory uses each control coordinate on a set of
+  positive measure, excluding every finite vertex word that omits a letter. The proof
+  uses no costate, cost bound, terminal state equation, or switch-count assumption.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

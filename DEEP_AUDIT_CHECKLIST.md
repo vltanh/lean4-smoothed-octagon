@@ -17,6 +17,11 @@ as mathematical closure of the unrestricted comparison.
   and that costs at least `π` are separately handled by the actual octagon competitor.
 - [x] Keep the lost directional information, possible short excursions, and lack of a
   uniform switching bound explicit in `docs/NEAR_CIRCLE_BOUND.md`.
+- [x] Independently review the fixed-edge integration with absolutely continuous state
+  coordinates and an arbitrary measurable control. Check the denominator before division.
+- [x] Check the group endpoint contradiction, the exact rotation direction for every
+  omitted coordinate, and the positive-integral consequence. No terminal `X` equation,
+  cost bound, optimality premise, or finite-word assumption is used.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility
