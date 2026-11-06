@@ -1,5 +1,14 @@
 # Proof ledger: bounded reduction before further case comparisons
 
+**NEXT WORKER: [FIVE-TEMPLATE HANDOFF](docs/FIVE_TEMPLATE_HANDOFF.md).**
+Begin with **P0: validate the finiteness, twisted-seam, local-sector, and
+geometric-bridge premises**, then attack **L1 (012012)** as a *universal local
+endpoint-preserving improvement*; test for obstructions before extending to
+L2–L5. The proof acceptance criteria, exact eight-variable domain, local
+endpoint elimination, singular-rank obligations, and stop/failure rules are
+spelled out there. **No new whole-word enumeration. No claim that the five
+universal statements are true. L1–L5: 0/5 proved.**
+
 Status date: **2026-11-06**. New Lean infrastructure, compilation, Lake, and CI remain paused.
 
 The user requested a bounded set of cases before further enumeration. This ledger
