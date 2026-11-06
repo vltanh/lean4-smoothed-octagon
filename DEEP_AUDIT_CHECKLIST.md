@@ -179,6 +179,19 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Independently review the matrix cancellations, Lipschitz bounds, and full output tuple.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Full forward realization and real cost
+
+- [x] Assemble the measurable control, integral equations, initial frame, and both
+  terminal conditions into the exact upstream `IsReinhardtAdmissible` predicate.
+- [x] Supply the global one-contact shift required by `eqn_cost`, not just full periodicity.
+- [x] Derive positive volume from nonempty interior before removing `ENNReal.ofReal`.
+- [x] Prove exact real cost equals normalized area, and transfer the density identity
+  back to the original worst disk through the constructed linear normalization.
+- [x] Discharge the existence input with the actual worst-disk existence theorem.
+- [x] Independently review the endpoint assembly and extended-real conversion.
+- [x] Keep global control minimality unasserted until the reverse comparison is supplied.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

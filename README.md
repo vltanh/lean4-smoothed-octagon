@@ -69,8 +69,15 @@ FullReinhardtConjecture ↔ BalancedAreaLowerBound ∧ BalancedAffineRigidity
 The first remaining proposition is an area inequality over all balanced circle competitors;
 the second classifies all balanced circle minimizers up to affine equivalence.
 `DeterminantClock.lean` constructs the global matrix frame and a time change making its
-logarithmic derivative a determinant-one star state with Lipschitz entries. The cyclic-time,
-admissible-control, and competitor-comparison constructions remain in G3c–G3e of the ledger.
+logarithmic derivative a determinant-one star state with Lipschitz entries. `ContactLift.lean`,
+`BalancedClock.lean`, and `CyclicClock.lean` construct uniform cyclic contact time and the
+exact terminal conditions. `ControlTrajectory.lean` supplies the measurable control and
+integral equations. `AdmissibleRealization.lean` combines these into an actual admissible
+trajectory with `cost = normalized area` and `density = cost / √12`.
+
+The reverse comparison with every admissible control is still open. The forward realization
+alone does not make the constructed control a global control minimizer. This comparison,
+the extremal-lift bridge, and the later reduction are tracked in G3d–G3e of the ledger.
 
 The global lower bound and affine rigidity remain open. `ReinhardtConjecture` names minimality,
 `AffineRigidity` names uniqueness after centering, and `FullReinhardtConjecture` is their
@@ -104,6 +111,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/ContactLift.lean](SmoothedOctagon/ContactLift.lean) | Constructed smooth positive contact successor with an exact sixfold period |
 | [SmoothedOctagon/BalancedClock.lean](SmoothedOctagon/BalancedClock.lean) | Full balanced geometry and global derivative bounds after the clock |
 | [SmoothedOctagon/CyclicClock.lean](SmoothedOctagon/CyclicClock.lean) | Uniform cyclic time, frame and state shifts, and terminal conditions |
+| [SmoothedOctagon/AdmissibleRealization.lean](SmoothedOctagon/AdmissibleRealization.lean) | Actual worst-disk admissible realization with exact area and density cost |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -119,6 +127,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/CONTACT_LIFT.md](docs/CONTACT_LIFT.md) | Geometric successor, winding, and derived smoothness |
 | [docs/BALANCED_CLOCK.md](docs/BALANCED_CLOCK.md) | Balanced-pair preservation in determinant time |
 | [docs/CYCLIC_CLOCK.md](docs/CYCLIC_CLOCK.md) | Uniform contact translation and the control endpoints |
+| [docs/ADMISSIBLE_REALIZATION.md](docs/ADMISSIBLE_REALIZATION.md) | Complete forward assembly and exact real area-cost conversion |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

@@ -38,6 +38,8 @@ These are source deliverables, not kernel-certified milestones.
   that its sixth iterate advances by exactly one full period.
 - [x] Preserve all balanced-pair fields in determinant time and derive the uniform
   cyclic contact shift, initial identity frame, and both control terminal conditions.
+- [x] Construct a full admissible realization of an actual worst disk with cost equal
+  to its normalized area and original packing density equal to cost divided by `√12`.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -54,7 +56,7 @@ list, that the tasks have comparable difficulty, or that they are all routine fo
 | --- | --- | --- |
 | G1 — Fix the global target | Use the existing greatest packing density of congruent copies for every centrally symmetric convex disk; identify the concrete octagon and state affine rigidity separately. | Source draft supplied in `Problem.lean`; validation deferred. |
 | G2 — Normalize an actual minimizer | Construct a balanced circle representation of an actual worst disk, preserving the relevant density and supplying every boundary parametrization hypothesis. | Source proof supplied through `worstDisk_balanced_normalization` in `BalancedReduction.lean`. Every parametrization hypothesis is constructed. Kernel validation remains deferred. |
-| G3 — Justify the chosen reduction | If using the smoothed-polygon route, prove the needed optimal-control, extremal-lift, and Mahler First bridges for the minimizer from G2. | In progress. The matrix frame and determinant clock are constructed. Cyclic contact time, the admissible-competitor correspondence, and the later reduction remain to be integrated or proved. |
+| G3 — Justify the chosen reduction | If using the smoothed-polygon route, prove the needed optimal-control, extremal-lift, and Mahler First bridges for the minimizer from G2. | The forward admissible realization with exact area cost is constructed. Reverse comparison with arbitrary admissible controls, extremal lifts, and the later reduction remain open. |
 | G4 — Make the global comparison exhaustive | Prove either a direct inequality covering all normalized competitors, or an explicit uniform switch/side bound plus coverage of all words, parameter ranges, limits, and degeneracies. | Open research obligation. No finite case list is available yet. |
 | G5 — Prove the octagon lower bound | Discharge `octagonDensity ≤ greatestPackingDensity K` for a genuine worst disk and apply `reinhardtConjecture_of_worst_disk`. | Open. Comparisons within the regular `(6k+2)` family cannot close this gate. |
 | G6 — Classify equality | Prove `AffineRigidity`: every worst disk is an invertible linear image of the centered octagon. | Open; not implied by G5. |
@@ -97,16 +99,17 @@ open propositions. Their equivalence to the original targets does not establish 
 | --- | --- | --- |
 | G3a — Matrix frame | Construct the `SL₂` frame of the actual contact curve and its positive-determinant logarithmic derivative. | Source proof supplied in `DeterminantClock.lean`, with explicit frame, derivative, and star signs. |
 | G3b — Determinant clock | Construct a global positive time change making the logarithmic derivative determinant one, with the needed regularity. | Source proof supplied in `DeterminantClock.lean`; the clock assumed by upstream Proposition 3.1.9 is now constructed. |
-| G3c — Cyclic boundary and cost | Prove the common cyclic shift `σ_j(t+tf)=σ_(j+1)(t)` and the exact area-cost identity in the new parameter. | The actual successor, balanced determinant-time representation, and uniform shift are constructed through `CyclicClock.lean`. The exact area-cost assembly is next. |
-| G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | The measurable control, integral trajectory, and cyclic endpoint conditions are constructed. Reverse comparison with every admissible control remains open. |
+| G3c — Cyclic boundary and cost | Prove the common cyclic shift `σ_j(t+tf)=σ_(j+1)(t)` and the exact area-cost identity in the new parameter. | Source construction supplied through `AdmissibleRealization.lean`, with every hypothesis of `eqn_cost` discharged and a real-valued exact area identity. |
+| G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | The full forward admissible realization is constructed. Reverse comparison with every admissible control remains open; the forward construction alone does not establish `IsReinhardtMinimizer`. |
 | G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | Open in the pinned formalization. |
 
 ## Next bounded mathematical task
 
-Continue **G3c–G3d** with the actual balanced minimizer and determinant clock now constructed:
-build the cyclic shift and measurable integral control needed by the area-cost and admissibility
-theorems. Keep G3d's competitor correspondence explicit. A geometric area minimizer cannot
-be advertised as a minimizer over all control trajectories until that comparison is proved.
+Continue **G3d** in the reverse direction. Derive interval regularity from the actual integral
+trajectory definition, construct a smooth cyclic extension with every seam checked, exclude
+extra winding in the low-cost regime, and construct the balanced convex competitor. A
+geometric area minimizer cannot be advertised as a minimizer over all control trajectories
+until this comparison is proved.
 
 ## Progress entries
 
@@ -144,7 +147,11 @@ be advertised as a minimizer over all control trajectories until that comparison
 - **2026-11-06, G3c cyclic clock:** prove the new contact derivatives are globally
   Lipschitz, retain the full balanced pair, and conjugate the actual successor to the
   uniform shift `P / 6`. Derive `G(0)=I`, `G(T)=R`, and `X(T)=R⁻¹X(0)R` with the
-  same time parameter used by the integral dynamics.
+  same time parameter used by the integral dynamics; commit `b34e8e7`.
+- **2026-11-06, G3c–G3d forward realization:** assemble the full admissible trajectory
+  from an actual worst disk and prove `cost = normalized area` and `density = cost / √12`.
+  Positive disk area is checked before converting the extended-real area formula. The
+  existence theorem supplies an actual witness, without an assumed normalized minimizer.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

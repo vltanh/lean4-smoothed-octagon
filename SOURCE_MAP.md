@@ -237,6 +237,19 @@ balanced curvature and star lemmas. See [docs/BALANCED_CLOCK.md](docs/BALANCED_C
 This assembly applies the actual contact lift and determinant clock together; their
 existence is not an additional premise. See [docs/CYCLIC_CLOCK.md](docs/CYCLIC_CLOCK.md).
 
+## Exact forward realization: `SmoothedOctagon/AdmissibleRealization.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `cost_eq_area_of_balanced_cyclic` | Real cost equals area, using positivity before converting the upstream extended-real identity |
+| `normalized_worstDisk_admissible_realization` | Construct all balanced, cyclic, control, integral, and terminal witnesses for an actual normalized worst disk |
+| `worstDisk_admissible_realization` | Construct the density-preserving normalization and its complete admissible realization for an arbitrary worst disk |
+| `exists_worstDisk_admissible_realization` | Supply an actual worst-disk witness and exact area-cost realization from the existing existence theorem |
+
+The exact cost is obtained from upstream `eqn_cost`; the density uses
+`greatestPackingDensity_of_isBalancedPair`. All geometry and timing inputs are constructed
+in the preceding modules. See [docs/ADMISSIBLE_REALIZATION.md](docs/ADMISSIBLE_REALIZATION.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

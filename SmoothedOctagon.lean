@@ -13,6 +13,7 @@ public import SmoothedOctagon.ControlTrajectory
 public import SmoothedOctagon.ContactLift
 public import SmoothedOctagon.BalancedClock
 public import SmoothedOctagon.CyclicClock
+public import SmoothedOctagon.AdmissibleRealization
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 
@@ -24,6 +25,7 @@ The conjecture is stated in `SmoothedOctagon.Problem`; it is not asserted as a t
 switching expression. See `CHECKLIST.md` for the remaining mathematical obligations.
 
 `BalancedReduction` constructs a balanced circle minimizer from an actual worst disk;
-`BalancedTargets` identifies the exact remaining area and rigidity targets. This source
-development has not been compiled or kernel-checked.
+`BalancedTargets` identifies the exact remaining area and rigidity targets.
+`AdmissibleRealization` constructs the full forward control realization with exact area cost.
+This source development has not been compiled or kernel-checked.
 -/
