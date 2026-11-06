@@ -73,6 +73,14 @@ leaves only the forward order `0120`, whose full cost comparison is proved above
 [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) also gives exact
 continuous-arc feasibility conditions and logarithmic costs for arbitrary words.
 
+A separate local variation excludes **five consecutive arcs alternating between just
+two vertices from any global minimizer**, at any total word length. It preserves both
+endpoint frames and states exactly and strictly lowers cost by moving the switches;
+see [docs/EDGE_SWITCH_BOUND.md](docs/EDGE_SWITCH_BOUND.md). This does not bound the
+number of arcs using all three vertices. The shorter proposed `010`-to-two-arc deletion
+is actually impossible with both endpoint pairs fixed, as proved in
+[docs/LOCAL_SHORTENING_OBSTRUCTION.md](docs/LOCAL_SHORTENING_OBSTRUCTION.md).
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) removes the initial-state ambiguity for
 every noncentral finite word-factor tuple. It excludes hyperbolic/parabolic endpoint
 holonomy, determines the unique possible elliptic state, and gives exact full-arc sign
@@ -260,6 +268,8 @@ this is not a kernel-verification claim.
 | [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) | Cyclic word exclusions and exact arbitrary-word dynamics, feasibility, and cost |
 | [docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) | Exact failures of simpler global bounds and the remaining coupled certificate problem |
 | [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) | Complete arbitrary-word endpoint test, initial-state uniqueness, and central exceptions |
+| [docs/EDGE_SWITCH_BOUND.md](docs/EDGE_SWITCH_BOUND.md) | Strict local improvement excluding five alternating edge arcs from every minimizer |
+| [docs/LOCAL_SHORTENING_OBSTRUCTION.md](docs/LOCAL_SHORTENING_OBSTRUCTION.md) | Exact obstruction to deleting a positive three-arc backtrack while fixing both endpoint pairs |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

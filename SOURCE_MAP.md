@@ -418,6 +418,23 @@ The bridge uses `chi32_eq`, `chi31_eq_chi32`, `strongLift_unique`, `hmax_y_mem`,
 
 ## Validation
 
+[docs/EDGE_SWITCH_BOUND.md](docs/EDGE_SWITCH_BOUND.md) reparameterizes the published
+edge equations by their strictly increasing coordinate. The frame endpoints become
+the endpoint value and integral of `w=1/y²`; variable cost is its `x²` moment. A
+rank-two endpoint derivative and a quadratic root count yield an exact nearby strict
+improvement for every alternating five-arc window. Independent review checks the
+coordinate signs, cost factor, implicit-function construction, strict-star stability,
+free-time reconstruction, and global splice. This is a hand local exclusion at arbitrary
+word length, not a new Lean declaration. Its measurable-interval corollary uses
+Hales–Vajjha Proposition 8.1.3 and Theorem 8.1.4 explicitly to give at most four
+pieces on a fixed-edge interval of a minimizer; it supplies no total word-length bound.
+
+[docs/LOCAL_SHORTENING_OBSTRUCTION.md](docs/LOCAL_SHORTENING_OBSTRUCTION.md) uses
+the same exact tangent and state products to disprove a naive three-to-two shortening
+rule. It covers every shorter vertex word, excludes the central sign through positivity,
+and reconstructs the three original positive factors. Its strict-star example makes
+the obstruction nonvacuous. No computation is required by the proof.
+
 [docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md) exhausts the five-letter words
 using the proved occurrence-order condition and actual cyclic rebasing. Its complete
 `01020` comparison uses tangent closure, the exact state centralizer, an explicit

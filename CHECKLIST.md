@@ -19,6 +19,7 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Trajectories confined near `J` | Excluded if `n/m ≤ η₀ < π/A−1` throughout the interval | Arbitrary measurable controls; `m=(c−b)/2`, `n=√(a²+((b+c)/2)²)` |
 | Controls on a fixed simplex edge | Cannot satisfy `g(0)=I`, `g(T)=R` in the strict star domain | Arbitrary measurable controls, without a cost bound or terminal condition on `X` |
 | Vertex words omitting a letter | Infeasible by the fixed-edge exclusion | Every word length and unequal positive durations; one- and two-arc words are included |
+| Five consecutive arcs alternating between two vertices | Excluded from every global minimizer by a strict endpoint-preserving improvement | A local `ijiji` window at any total word length; both frame and state endpoints are preserved, with free elapsed time |
 | Words violating the cyclic ordering test | Infeasible after an actual cyclic time rebase | `last(j) > first(j−1)` is required for every letter; it excludes every word with at most three arcs |
 | Noncentral nonelliptic word holonomy | Infeasible when tangent closure holds | Any finite length and positive factors with `|tr(RH)|≥2` and `RH≠±I` |
 | Exactly four positive vertex pieces | Full asymmetric comparison proved by hand: `C ≥ A`, with octagon equality only | Every reduced four-letter word, arbitrary positive durations and initial state; no PMP or symmetry hypothesis |
@@ -40,6 +41,17 @@ arbitrarily many switches, but gives no common positive lower bound on those int
 [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) strengthens this through
 every cyclic rebase, proves the four-arc word classification without endpoint elimination,
 and records exact whole-arc feasibility inequalities and costs for arbitrary finite words.
+
+[docs/EDGE_SWITCH_BOUND.md](docs/EDGE_SWITCH_BOUND.md) excludes every five-arc window
+alternating between two vertices from a global minimizer. In the increasing edge
+coordinate, four switch variables obey two independent endpoint constraints. Cost
+stationarity would force a quadratic to have three distinct roots. A nearby exact
+constraint-preserving variation therefore strictly decreases the actual cost. Four
+alternating arcs are also excluded when all three switch coordinates lie on one side
+of zero. These local results do not bound the total number of arcs using all three labels.
+With the published edge-extremality and finite bang-bang theorems, every closed fixed-edge
+interval of a global minimizer consequently has at most four vertex pieces almost
+everywhere. This is a bound within one edge, not a bound on the full trajectory.
 
 [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) gives an actual balanced convex
 competitor whenever a nonempty interval has `X=J`, with exact area gain
@@ -83,6 +95,12 @@ control vertices still leaves a continuous, noncompact state domain.
 The five-piece proof also records a false global-concavity shortcut. The function
 `F(1−exp(−x))` becomes convex for large `x`; the successful argument instead proves
 strict concavity of a different scalar function to obtain an exact sharp envelope.
+
+[docs/LOCAL_SHORTENING_OBSTRUCTION.md](docs/LOCAL_SHORTENING_OBSTRUCTION.md) proves
+that a positive `010` window cannot be replaced by at most two vertex arcs while
+preserving both endpoint pairs, even with free time and no cost restriction. Tangent
+closure alone loses essential state information. A viable shortening argument must
+allow a larger window, more control choices, or changes to additional endpoint data.
 
 ## Earlier source construction ledger
 
@@ -406,6 +424,21 @@ the current research priority. No finite switching search is justified yet.
   a sharp global envelope. The independent hand audit checks every identity and sign.
   Preserve the failed concavity shortcut and reproducible exact algebra separately.
   The reverse cyclic `02102` orbit and all longer words remain open.
+  Commit `f3aeb98`.
+- **2026-11-06, local edge-switch improvement:** prove that no global minimizer can
+  contain five consecutive positive arcs alternating between two vertices. In an
+  increasing edge coordinate the exact endpoints impose two independent constraints
+  on four switching locations. Stationarity would force three distinct roots of a
+  quadratic; an exact implicit-function variation strictly lowers cost and preserves
+  the whole strict star domain. The complete retimed splice is checked independently.
+  This excludes a pattern at every word length, without claiming a global arc bound.
+  Combined explicitly with the published edge-extremality theorem, it also bounds
+  every fixed-edge interval of a global minimizer by four pieces almost everywhere.
+- **2026-11-06, failed elementary shortening:** prove that a positive `010` segment
+  has no replacement by at most two vertex arcs with the same frame and state endpoints.
+  The two endpoint transition matrices reconstruct all three positive factors. An
+  explicit feasible example and the misleading tangent-only replacement are retained
+  to prevent this invalid shortcut from entering a longer-word proof.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

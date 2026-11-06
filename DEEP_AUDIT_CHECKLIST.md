@@ -63,6 +63,21 @@ as mathematical closure of the unrestricted comparison.
   limiting value. No sampled inequality or unproved symmetry is used.
 - [x] Retain the false global-concavity shortcut with its differentiated convergent
   expansion, and document the exact-algebra archive's domain and limitations.
+- [x] Independently review the arbitrary-length local edge exclusion: increasing
+  coordinate, both logarithmic derivative signs, exact endpoint constraints and cost,
+  rank-two switch derivative, and the three-distinct-roots contradiction.
+- [x] Check that the implicit-function curve preserves endpoints exactly, retains
+  strict star membership on the entire compact segment, and reconstructs a genuine
+  free-time integral trajectory that can be spliced at matching `g,X` endpoints.
+- [x] Check the sharper one-sided four-arc obstruction and keep the lack of a total
+  switch bound explicit.
+- [x] Check the published-input measurable-edge corollary against Hales–Vajjha
+  Definition 8.1.1, Proposition 8.1.3, and Theorem 8.1.4. Their free-time endpoint
+  data match the local variation. Distinguish edge extremality from the anomalous
+  full-system lifts in Remark 8.1.6.
+- [x] Independently review the three-to-two shortening obstruction: all shorter words,
+  triangular centralizer and positive central sign, unique factor reconstruction,
+  tangent-only mismatch, and exact full-arc feasible example.
 - [ ] Compare the remaining reverse cyclic five-piece orbit `02102`: **open**.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
