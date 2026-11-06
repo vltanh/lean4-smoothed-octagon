@@ -31,8 +31,15 @@ reduces the surviving family to a scalar parameter; a strict integral inequality
 its unique minimum is the smoothed octagon. No Pontryagin or symmetry assumption is
 used. See [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md).
 
-This closes the four-piece class. It does not bound the number of pieces in an arbitrary
-minimizer or compare all longer trajectories.
+This closes the four-piece class. At five pieces, cyclic rebasing leaves two genuine
+word orbits. A second complete hand argument proves **strictly greater cost for the
+entire asymmetric `01020` orbit**, using exact endpoint elimination and a sharp
+logarithmic envelope. Its octagon limit has a zero-duration middle piece; every genuine
+five-piece member costs more. See
+[docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md).
+
+The reverse cyclic five-piece orbit `02102` remains open, as do arbitrary longer
+trajectories. These results do not bound the number of pieces in an arbitrary minimizer.
 
 For an arbitrary admissible star state `X=[[a,b],[c,-a]]`, put
 `m=(c-b)/2` and `n=√(a²+((b+c)/2)²)`. The determinant identity gives `m²-n²=1`,
@@ -249,6 +256,7 @@ this is not a kernel-verification claim.
 | [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) | Exact endpoint obstruction for every control confined to a fixed simplex edge |
 | [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) | Complete hand construction of a lower-density competitor from a proper circle-state subarc |
 | [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md) | Complete asymmetric four-piece comparison and equality within that class |
+| [docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md) | Strict asymmetric comparison for the entire five-piece `01020` orbit; reverse cyclic case open |
 | [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) | Cyclic word exclusions and exact arbitrary-word dynamics, feasibility, and cost |
 | [docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) | Exact failures of simpler global bounds and the remaining coupled certificate problem |
 | [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) | Complete arbitrary-word endpoint test, initial-state uniqueness, and central exceptions |

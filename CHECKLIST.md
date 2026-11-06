@@ -22,6 +22,8 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Words violating the cyclic ordering test | Infeasible after an actual cyclic time rebase | `last(j) > first(j−1)` is required for every letter; it excludes every word with at most three arcs |
 | Noncentral nonelliptic word holonomy | Infeasible when tangent closure holds | Any finite length and positive factors with `|tr(RH)|≥2` and `RH≠±I` |
 | Exactly four positive vertex pieces | Full asymmetric comparison proved by hand: `C ≥ A`, with octagon equality only | Every reduced four-letter word, arbitrary positive durations and initial state; no PMP or symmetry hypothesis |
+| Five-piece noncyclic orbit `01020` | Full asymmetric strict comparison proved by hand: `C > A` | All positive factors and initial states satisfying the actual endpoints, including all five cyclic rebases of this word |
+| Five-piece reverse cyclic orbit `02102` | Cost comparison open | The only genuine five-piece orbit left after the ordering test, rebasing, and the proved `01020` comparison |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
 | Unrestricted octagon inequality | Open | Trajectories leaving the excluded neighborhood, with arbitrary control history |
@@ -51,6 +53,13 @@ integral inequality selects its symmetric octagon member. Equality is classified
 that class. No theorem restricts every global minimizer to four pieces, so the
 unrestricted comparison and affine equality classification remain open.
 
+[docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md) reduces the five-piece words
+to a four-piece degeneration and two genuine orbits. It proves strict comparison for
+the entire asymmetric `01020` orbit by endpoint elimination, exact cost integration,
+and a sharp logarithmic envelope. The middle duration can approach zero and the cost
+can approach the octagon; no uniform positive gap is asserted. The reverse cyclic
+orbit `02102` and arbitrary longer words remain open.
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) supplies a complete fixed-factor endpoint
 test at arbitrary finite word length. Noncentral elliptic holonomy determines the only
 possible initial state; finitely many exact margin signs check each entire arc. The
@@ -70,6 +79,10 @@ The note also derives three explicit vertex inequalities for a genuinely coupled
 phase/state calibration, along with the twisted endpoint and radius constraints.
 No function satisfying the required inequalities is supplied. Restricting to three
 control vertices still leaves a continuous, noncompact state domain.
+
+The five-piece proof also records a false global-concavity shortcut. The function
+`F(1−exp(−x))` becomes convex for large `x`; the successful argument instead proves
+strict concavity of a different scalar function to obtain an exact sharp envelope.
 
 ## Earlier source construction ledger
 
@@ -385,6 +398,14 @@ the current research priority. No finite switching search is justified yet.
   hyperbolic/parabolic holonomy and determine the unique elliptic candidate, with full
   continuous-arc star checks. Retain central holonomies as an explicit cone and quadratic
   cost quotient, without an implicit nonsingularity assumption or a word-length bound.
+  Commit `c7f498b`.
+- **2026-11-06, asymmetric five-piece orbit:** enumerate all seven words surviving
+  cyclic ordering. One rebases to four pieces; the other six form two genuine orbits.
+  Prove every `01020` competitor costs strictly more than the octagon by deriving its
+  two-parameter endpoint family, forced initial shape, exact logarithmic cost, and
+  a sharp global envelope. The independent hand audit checks every identity and sign.
+  Preserve the failed concavity shortcut and reproducible exact algebra separately.
+  The reverse cyclic `02102` orbit and all longer words remain open.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

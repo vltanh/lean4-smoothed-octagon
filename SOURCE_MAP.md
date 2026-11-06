@@ -418,6 +418,15 @@ The bridge uses `chi32_eq`, `chi31_eq_chi32`, `strongLift_unique`, `hmax_y_mem`,
 
 ## Validation
 
+[docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md) exhausts the five-letter words
+using the proved occurrence-order condition and actual cyclic rebasing. Its complete
+`01020` comparison uses tangent closure, the exact state centralizer, an explicit
+raw-margin cost cancellation, and a sharp logarithmic envelope proved by strict
+concavity. The reverse cyclic `02102` case is not included in this result. The retained
+[exact-algebra exploration](explorations/five_arc_01020.py) records reproducible
+identities but is not a certificate for the inequality. Independent hand review checks
+the entire derivation; no Lean source was added.
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) develops the tangent/state products used
 in the four-link proof into a complete fixed-factor theorem for arbitrary finite words.
 The real two-dimensional centralizer gives the exact holonomy classification; explicit

@@ -53,6 +53,17 @@ as mathematical closure of the unrestricted comparison.
   full-arc monotonic margin tests, and the positive factors in rationalized sign checks.
 - [x] Retain both central holonomies with the complete strict linear cone and quadratic
   cost quotient. No invertibility of a shape-elimination system is assumed there.
+- [x] Independently enumerate all five-piece words surviving the cyclic ordering test;
+  check the four-piece merger and both genuine rebase orbits.
+- [x] Independently review the complete asymmetric `01020` comparison: tangent factors,
+  positive parameter domain, half-factor order, forced initial state and sign, raw-margin
+  table, exact algebraic cost cancellation, and all logarithmic coefficients.
+- [x] Check the sharp scalar envelope through strict concavity of `h(√x)`, its equality
+  case, the strict domain bound on `d`, the exact rational sign estimate, and the octagon
+  limiting value. No sampled inequality or unproved symmetry is used.
+- [x] Retain the false global-concavity shortcut with its differentiated convergent
+  expansion, and document the exact-algebra archive's domain and limitations.
+- [ ] Compare the remaining reverse cyclic five-piece orbit `02102`: **open**.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility
