@@ -24,7 +24,7 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Noncentral nonelliptic word holonomy | Infeasible when tangent closure holds | Any finite length and positive factors with `|tr(RH)|≥2` and `RH≠±I` |
 | Exactly four positive vertex pieces | Full asymmetric comparison proved by hand: `C ≥ A`, with octagon equality only | Every reduced four-letter word, arbitrary positive durations and initial state; no PMP or symmetry hypothesis |
 | Five-piece noncyclic orbit `01020` | Full asymmetric strict comparison proved by hand: `C > A` | All positive factors and initial states satisfying the actual endpoints, including all five cyclic rebases of this word |
-| Five-piece reverse cyclic orbit `02102` | Full asymmetric strict comparison proved by hand: `C/√12 > 10/11 > π/√12` | The entire positive two-parameter tangent family; ellipticity, orientation, and full strict-star feasibility are proved |
+| Five-piece reverse cyclic orbit `02102` | Exact minimum at the symmetric golden-ratio tuple, with every asymmetric tuple strictly larger; also `C/√12 > 10/11 > π/√12` | The entire positive two-parameter tangent family; ellipticity, orientation, and full strict-star feasibility are proved |
 | At most five positive vertex pieces | Complete comparison `C ≥ A`, with octagon equality only | Every admissible trajectory with such a description; five-piece words that rebase and merge to four are included |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
@@ -77,6 +77,13 @@ collapse the cost to a positive weighted logarithmic sum, and an elementary
 logarithm envelope with AM–GM and Cauchy–Schwarz completes the comparison.
 All trajectories representable with at most five vertex pieces are now covered.
 Arbitrary longer words and the unrestricted comparison remain open.
+
+[docs/REVERSE_FIVE_MINIMUM.md](docs/REVERSE_FIVE_MINIMUM.md) sharpens that reverse
+comparison to the exact unique minimum
+`5(2√5−2−log φ)/(2(1+2√5))`, where `φ=(1+√5)/2`. A strictly concave
+integral function of `Q+Q⁻¹`, Jensen's inequality, and a strictly decreasing scalar
+quotient force every factor to equal `φ` at equality. This is equality within the
+reverse five-piece family, not global affine rigidity.
 
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) supplies a complete fixed-factor endpoint
 test at arbitrary finite word length. Noncentral elliptic holonomy determines the only
@@ -187,8 +194,8 @@ list, that the tasks have comparable difficulty, or that they are all routine fo
 | G1 — Fix the global target | Use the existing greatest packing density of congruent copies for every centrally symmetric convex disk; identify the concrete octagon and state affine rigidity separately. | Source draft supplied in `Problem.lean`; validation deferred. |
 | G2 — Normalize an actual minimizer | Construct a balanced circle representation of an actual worst disk, preserving the relevant density and supplying every boundary parametrization hypothesis. | Source proof supplied through `worstDisk_balanced_normalization` in `BalancedReduction.lean`. Every parametrization hypothesis is constructed. Kernel validation remains deferred. |
 | G3 — Justify the chosen reduction | If using the smoothed-polygon route, prove the needed optimal-control, extremal-lift, and Mahler First bridges for the minimizer from G2. | The geometric/control comparison is constructed in both directions, including actual global control-minimizer existence. The Pontryagin-lift and later Mahler First bridges remain open. |
-| G4 — Make the global comparison exhaustive | Prove either a direct inequality covering all normalized competitors, or an explicit uniform switch/side bound plus coverage of all words, parameter ranges, limits, and degeneracies. | Open research obligation. No finite case list is available yet. |
-| G5 — Prove the octagon lower bound | Discharge `octagonDensity ≤ greatestPackingDensity K` for a genuine worst disk and apply `reinhardtConjecture_of_worst_disk`. | Open. Comparisons within the regular `(6k+2)` family cannot close this gate. |
+| G4 — Make the global comparison exhaustive | Prove either a direct inequality covering all normalized competitors, or a justified reduction to a bounded number of pieces plus full coverage of words, parameters, limits, and degeneracies. | Open beyond five vertex pieces. All descriptions with at most five pieces are covered, but no uniform bound on a global minimizer is proved. |
+| G5 — Prove the octagon lower bound | Discharge `octagonDensity ≤ greatestPackingDensity K` for a genuine worst disk and apply `reinhardtConjecture_of_worst_disk`. | Open. A cheaper finite vertex-control competitor must require at least six pieces; comparisons within the regular `(6k+2)` family alone cannot close this gate. |
 | G6 — Classify equality | Prove `AffineRigidity`: every worst disk is an invertible linear image of the centered octagon. | Open; not implied by G5. |
 | V — Validate the final theorem | Compile and audit `FullReinhardtConjecture`, its exact statement, and its complete dependency closure in the agreed kernel workflow. | Deferred; requires a change to the current no-compilation policy. |
 
@@ -264,16 +271,21 @@ The equivalence and existence of a minimizer do not establish this inequality.
 | Derive singular-interval rigidity | Source proof supplied in `SingularArc.lean` for an actual extremal with zero reduced costate on the stated nonempty interval. |
 | Exclude an entirely circular minimizer | Source proof supplied in `CircleExclusion.lean` from actual admissibility and minimality, without requiring a lift. |
 | Exclude proper circle-state subarcs | Complete hand argument in `docs/CIRCLE_VARIATION.md`, recovering the known variation result. For a zero-reduced-costate interval of an actual lift, the rigidity theorem supplies the circle state. No new Lean implementation is claimed. |
-| Complete the Mahler First reduction | Open. Edge extremality, switching accumulation, and the later singular analysis remain to be supplied. A uniform side bound would be a separate stronger requirement. |
+| Complete the Mahler First reduction | Open as a local formalization obligation. The published hand theorem is an available research input; the repository still lacks its extremal-lift, switching-accumulation, and singular-analysis implementation. A uniform side bound would be a separate stronger requirement. |
 
 ## Current hand-research tasks
 
-Attack **G4–G5** directly: seek an unrestricted cost inequality or a global calibration,
-and derive genuine exclusions from the exact endpoint and control equations. The local
-circle-subarc variation is now fully checked as a hand argument. Every finite-word
-investigation must retain arbitrary word
-length, unequal positive durations, and the complete star-domain constraints until a
-coverage theorem says otherwise.
+Attack **G4–G5** directly. The finite comparison through five pieces is complete;
+the main unresolved task is a bound for arbitrary longer words or a justified
+endpoint-preserving improvement that reduces them to the completed range. The
+three-to-two deletion is impossible, and the five-arc edge variation preserves the
+number of pieces, so neither result supplies that missing reduction.
+
+A direct coupled calibration remains an alternative to word reduction. Every
+investigation of a fixed word length must retain unequal positive durations, all
+initial shapes, and the complete star-domain constraints. A finite classification
+at six pieces, if obtained, would still leave arbitrary larger counts open. No
+finite numerical search can substitute for a proved global coverage theorem.
 
 [docs/PONTRYAGIN_LIFT.md](docs/PONTRYAGIN_LIFT.md) records every field required by the
 actual extremal predicate. The lift must preserve free terminal time, the coupled
@@ -456,6 +468,13 @@ the current research priority. No finite switching search is justified yet.
   Combined with the noncyclic orbit, rebasing, and the four-piece theorem, this closes
   all trajectories representable with at most five vertex pieces. Longer words and
   unrestricted affine rigidity remain open.
+  Commit `e68ffa9`.
+- **2026-11-06, sharp reverse five-piece minimum:** express the exact logarithmic
+  cost through a strictly concave function of `Q+Q⁻¹`. Jensen's inequality reduces
+  the complete asymmetric family to one scalar; a uniform derivative sign locates
+  its unique minimum at the golden-ratio factors. The equality state and equal
+  physical durations are fixed by the already-proved endpoint classification.
+  This strengthens the restricted comparison without a new numerical premise.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

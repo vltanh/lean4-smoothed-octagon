@@ -46,6 +46,12 @@ proved by exact half-angle identities and an elementary logarithm envelope in
 [docs/REVERSE_FIVE_ARC.md](docs/REVERSE_FIVE_ARC.md). Its full positive parameter
 domain, initial state, and whole-arc star constraints are included.
 
+A sharper follow-up also finds the unique minimum within that entire reverse family:
+all five factors equal the golden ratio. Its exact normalized cost is
+`5(2√5−2−log φ)/(2(1+2√5))`. The complete asymmetric comparison uses a strictly
+concave integral function and an explicit derivative sign; see
+[docs/REVERSE_FIVE_MINIMUM.md](docs/REVERSE_FIVE_MINIMUM.md).
+
 A cheaper finite vertex-control competitor must therefore require at least six pieces.
 Arbitrary longer words remain open; there is no bound on the number of pieces in an
 arbitrary minimizer.
@@ -275,6 +281,7 @@ this is not a kernel-verification claim.
 | [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md) | Complete asymmetric four-piece comparison and equality within that class |
 | [docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md) | Complete five-piece word coverage and strict asymmetric comparison for the `01020` orbit |
 | [docs/REVERSE_FIVE_ARC.md](docs/REVERSE_FIVE_ARC.md) | Complete asymmetric reverse-five comparison, with a uniform bound above the circle |
+| [docs/REVERSE_FIVE_MINIMUM.md](docs/REVERSE_FIVE_MINIMUM.md) | Exact global minimum within the reverse five-arc family and its unique symmetric equality case |
 | [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) | Cyclic word exclusions and exact arbitrary-word dynamics, feasibility, and cost |
 | [docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) | Exact failures of simpler global bounds and the remaining coupled certificate problem |
 | [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) | Complete arbitrary-word endpoint test, initial-state uniqueness, and central exceptions |

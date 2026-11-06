@@ -94,6 +94,10 @@ as mathematical closure of the unrestricted comparison.
 - [x] Preserve both reverse-five numerical diagnostics with their versions, exact
   finite input lists, seed, precision, domain, and limitations. Their outputs are not
   premises of any hand certificate or global coverage claim.
+- [x] Independently audit the sharp reverse-five minimum: integral representation,
+  strict concavity and increase, Jensen's inequality, positive numerator, denominator
+  direction, uniform quotient derivative sign, exact minimum, and the unique golden
+  factor tuple with its physical durations and normalized initial state.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility

@@ -454,6 +454,13 @@ Every finite algebraic certificate and inequality is supplied as a hand argument
 The retained numerical scripts are documented discovery diagnostics and are not
 premises. No build, typechecking, or Lean implementation is claimed.
 
+[docs/REVERSE_FIVE_MINIMUM.md](docs/REVERSE_FIVE_MINIMUM.md) sharpens the exact
+reverse-five objective to its unique symmetric minimum. It supplies the logarithmic
+integral representation, strict concavity, positive numerator, both denominator
+directions, a uniform strict derivative bound for the scalar quotient, and the
+complete equality argument. Independent hand review checks the entire chain. This
+follow-up uses no further numerical or symbolic computation.
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) develops the tangent/state products used
 in the four-link proof into a complete fixed-factor theorem for arbitrary finite words.
 The real two-dimensional centralizer gives the exact holonomy classification; explicit

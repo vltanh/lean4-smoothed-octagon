@@ -12,6 +12,8 @@ classification and the uniform bound
 Thus every admissible reverse cyclic five-arc trajectory costs strictly
 more than the circle and cannot improve the octagon. All unequal durations
 and initial shapes are covered. The bound is not asserted to be sharp.
+The companion [REVERSE_FIVE_MINIMUM.md](REVERSE_FIVE_MINIMUM.md) additionally
+proves the exact minimum and its unique symmetric equality case.
 Together with the other two word classes in
 [FIVE_ARC_PROGRESS.md](FIVE_ARC_PROGRESS.md), this closes the comparison for
 at most five positive vertex-control arcs. It supplies no bound on the
@@ -790,8 +792,10 @@ the finite parameter lists explicitly stated in the script.
 
 The completed comparison uses the exact algebraic identities and the
 analytic inequality (N), with the whole endpoint and star domain retained.
-It does not assert that the symmetric point is the unique minimizer of
-this class, or that `10/11` is its infimum. The unrestricted Reinhardt
+The bound `10/11` is not sharp. The separate complete comparison in
+[REVERSE_FIVE_MINIMUM.md](REVERSE_FIVE_MINIMUM.md) proves that the symmetric
+golden-ratio tuple uniquely minimizes this class and gives its exact cost.
+The unrestricted Reinhardt
 comparison still requires treatment of longer words or a proved global
 replacement theorem, together with any needed connection to general
 measurable controls. No uniform bound on word length is claimed here.
