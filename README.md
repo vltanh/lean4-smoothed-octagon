@@ -10,12 +10,38 @@ geometric worst-disk problem and the full integral-form control problem. It incl
 global control-minimizer existence. The universal octagon lower bound and affine equality
 classification remain open, and none of the new source has been kernel-validated.
 
+The current working agreement prioritizes **hand-proof research on the unrestricted
+comparison**. New Lean infrastructure is paused. Exploratory computation is permitted
+as a research aid, with its domain and limitations recorded; sampled or symbolic output
+does not certify an inequality.
+
 The candidate density is
 
 \[
 \delta_{\mathrm{oct}}=
 \frac{8-\sqrt{32}-\log 2}{\sqrt 8-1}.
 \]
+
+## Current hand-proof comparison
+
+For an arbitrary admissible star state `X=[[a,b],[c,-a]]`, put
+`m=(c-b)/2` and `n=√(a²+((b+c)/2)²)`. The determinant identity gives `m²-n²=1`,
+and the cost is `C=3∫m`. The new hand estimate for `C<π` is
+
+\[
+\pi-C\le3\int_0^T n(t)\,dt,
+\qquad
+C\ge\frac{\pi^2+9T^2}{2\pi}.
+\]
+
+In particular, if `n/m≤η₀` throughout the interval, then `C≥π/(1+η₀)`.
+Writing `A` for the concrete octagon area, every trajectory with
+`η₀<π/A−1` therefore costs strictly more than the octagon. This excludes a precise
+class of arbitrary nonsymmetric competitors. It supplies no uniform switch bound and
+does not compare the remaining competitors. See
+[docs/NEAR_CIRCLE_BOUND.md](docs/NEAR_CIRCLE_BOUND.md) for the complete hand proof and
+[CHECKLIST.md](CHECKLIST.md) for the distinction between mathematical exclusions and
+earlier formalization substeps.
 
 ## Initial mathematical contribution
 
@@ -173,6 +199,8 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/SINGULAR_LOCUS.md](docs/SINGULAR_LOCUS.md) | Weighted Hamiltonian identities and the exact control-independent locus |
 | [docs/CIRCLE_EXCLUSION.md](docs/CIRCLE_EXCLUSION.md) | Exact circular cost, unit angular speed, and whole-trajectory exclusion |
 | [docs/SINGULAR_ARC.md](docs/SINGULAR_ARC.md) | Integral costate regularity, multiplier normality, and circle-state rigidity |
+| [docs/PONTRYAGIN_LIFT.md](docs/PONTRYAGIN_LIFT.md) | Exact open lift interface, free-time endpoints, and reduced nontriviality audit |
+| [docs/NEAR_CIRCLE_BOUND.md](docs/NEAR_CIRCLE_BOUND.md) | Hand comparison excluding trajectories confined to an explicit circle-state neighborhood |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

@@ -1,10 +1,36 @@
-# Proof ledger and finite roadmap
+# Mathematical progress and proof ledger
 
-Status date: **2026-11-06**. This is an active, uncompiled development.
+Status date: **2026-11-06**. The current priority is a complete hand proof of the
+unrestricted comparison. Existing Lean files remain uncompiled drafts. The working
+agreement changed in commit `4ffe766`; new formalization infrastructure is paused.
 
-## What is established in this PR
+## Current mathematical frontier
+
+Write `A = area(octagon)` in circle representation and `C = reinhardtCost T X`.
+The central open statement is `A ≤ C` for every admissible trajectory. Known
+geometric/control reductions may be used in the hand research; their implementation
+substeps do not count as excluded competitors or progress on this inequality.
+
+| Result or class | Mathematical status | Exact scope |
+| --- | --- | --- |
+| Costs at least `π` | Excluded from beating the octagon, since `A < π` | Every admissible trajectory in this cost range |
+| Entirely circular state | Costs at least `π`, hence cannot minimize | `X=J` on the entire open interval; proper subarcs are separate |
+| Trajectories confined near `J` | Excluded if `n/m ≤ η₀ < π/A−1` throughout the interval | Arbitrary measurable controls; `m=(c−b)/2`, `n=√(a²+((b+c)/2)²)` |
+| Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
+| Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
+| Unrestricted octagon inequality | Open | Trajectories leaving the excluded neighborhood, with arbitrary control history |
+| Affine equality classification | Open | Every global minimizer, independently of the inequality |
+
+The near-circle exclusion and its complete hand proof are in
+[docs/NEAR_CIRCLE_BOUND.md](docs/NEAR_CIRCLE_BOUND.md). For every global minimizer it gives
+`∫n ≥ (π−A)/3` and `max(n/m) ≥ π/A−1`. It does not keep a trajectory uniformly away
+from the singular locus or provide a finite switch bound.
+
+## Earlier source construction ledger
 
 These are source deliverables, not kernel-certified milestones.
+They record the constructive implementation of reductions and analytic lemmas; they
+must not be counted as new cases of the unrestricted octagon comparison.
 
 - [x] Reuse the actual octagon, its admissibility, exact density, and a worst disk from the
   pinned reference project. State global minimality and affine rigidity separately.
@@ -158,13 +184,20 @@ The equivalence and existence of a minimizer do not establish this inequality.
 | Exclude proper singular subarcs | Open. The whole-trajectory cost comparison does not apply to a proper subinterval. |
 | Complete the Mahler First reduction | Open. Edge extremality, switching accumulation, and the later singular analysis remain to be supplied. A uniform side bound would be a separate stronger requirement. |
 
-## Next bounded mathematical task
+## Current hand-research tasks
 
-Continue **G3e** from the actual control minimizer now constructed. A Pontryagin lift must
-be produced for that minimizer before extremal classification can be used without an extra
-hypothesis. General singular-control lemmas can prepare that classification, but do not
-supply the lift or the universal cost inequality. A direct global inequality remains an
-alternative route to G4–G5. No finite switching search is justified yet.
+Attack **G4–G5** directly: seek an unrestricted cost inequality or a global calibration,
+and derive genuine exclusions from the exact endpoint and control equations. In parallel,
+complete the hand argument for the cost-decreasing circle-subarc variation, including
+its geometric feasibility. Every finite-word investigation must retain arbitrary word
+length, unequal positive durations, and the complete star-domain constraints until a
+coverage theorem says otherwise.
+
+[docs/PONTRYAGIN_LIFT.md](docs/PONTRYAGIN_LIFT.md) records every field required by the
+actual extremal predicate. The lift must preserve free terminal time, the coupled
+endpoints, and nontriviality in the reduced cotangent space; an ambient nonzero covector
+alone does not meet that last condition. This is a later formalization boundary, not
+the current research priority. No finite switching search is justified yet.
 
 ## Progress entries
 
@@ -256,6 +289,16 @@ alternative route to G4–G5. No finite switching search is justified yet.
   force `X = J` and uniform control a.e. on the specified interval. Full-simplex control
   independence implies the same rigidity. Together with entire-circle exclusion, an
   actual lifted minimizer cannot have zero reduced costate on its whole interval.
+  Commit `70b75f4`.
+- **2026-11-06, G3e lift-interface audit:** inspect every required extremal field and
+  the exact existing coordinate transformations. Record the free-time, coupled-endpoint,
+  and quotient-covector obligations, including why the known polygon lifts do not
+  construct a lift of the actual minimizer. This is an audit of an open gate, not its closure.
+- **2026-11-06, hand comparison after workflow change:** derive the exact anisotropy
+  bounds `π−C ≤ 3∫n`, `C ≥ π/(1+max(n/m))`, and `C ≥ (π²+9T²)/(2π)` for arbitrary
+  low-cost admissible trajectories. This excludes entire trajectories confined to the
+  stated neighborhood of `J`, without a symmetry or finite-switch assumption. The hand
+  algebra and integral inequalities were independently reviewed; no new Lean was added.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

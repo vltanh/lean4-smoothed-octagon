@@ -418,6 +418,15 @@ The bridge uses `chi32_eq`, `chi31_eq_chi32`, `strongLift_unique`, `hmax_y_mem`,
 
 ## Validation
 
+The current hand comparison in [docs/NEAR_CIRCLE_BOUND.md](docs/NEAR_CIRCLE_BOUND.md)
+uses the determinant identity, the actual reflected-row angle, ordinary and integral
+Cauchy–Schwarz, and the exact octagon upper bound. It proves an excluded class of
+arbitrary trajectories; it has no new Lean declaration under the updated workflow.
+
+The separate [Pontryagin-lift audit](docs/PONTRYAGIN_LIFT.md) maps the open arbitrary-
+minimizer lift to the exact pinned extremal fields and distinguishes the available
+coordinate transformations and explicit polygon lifts from a general existence result.
+
 Every theorem above has a source proof body. The new Lean files have **not** been compiled.
 See [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) for source scans, dependency scope,
 and the checks that remain deferred.

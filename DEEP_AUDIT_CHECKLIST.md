@@ -2,6 +2,23 @@
 
 Date: **2026-11-06**. All checks in this file are source-level unless explicitly stated.
 
+## Current hand-proof research
+
+The working agreement in commit `4ffe766` pauses new Lean infrastructure and permits
+exploratory computation with explicit limitations. Existing compilation, typechecking,
+and CI prohibitions remain in force. Source constructions and new notation do not count
+as mathematical closure of the unrestricted comparison.
+
+- [x] Independently review the near-circle hand estimate: determinant identity, reflected-
+  row angular signs, primary winding, and both Cauchy–Schwarz inequalities.
+- [x] Check the positive quantity before squaring in the time-dependent bound; it is
+  `π/3−C/3>0`, supplied by the explicit low-cost hypothesis.
+- [x] Check that the excluded neighborhood applies to arbitrary admissible trajectories,
+  and that costs at least `π` are separately handled by the actual octagon competitor.
+- [x] Keep the lost directional information, possible short excursions, and lack of a
+  uniform switching bound explicit in `docs/NEAR_CIRCLE_BOUND.md`.
+- [ ] Unrestricted octagon comparison and affine rigidity: **open**.
+
 ## Reproducibility
 
 - [x] Pin `SmoothedPolygons` to `8ce732873a1aa054e98dac46cfaa8d7bb96ffa6f`.
@@ -329,6 +346,10 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
 ## Upstream source scan
+
+The lift-interface audit in [docs/PONTRYAGIN_LIFT.md](docs/PONTRYAGIN_LIFT.md) also checks
+the exact reduced nontriviality and endpoint conditions. Existing coordinate-change
+and explicit polygon-lift theorems are not treated as an arbitrary-minimizer lift.
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for
 `axiom`, `sorry`, `admit`, `native_decide`, and `unsafe`. The raw matches were reviewed:
