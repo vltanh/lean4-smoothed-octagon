@@ -200,6 +200,21 @@ mathlib's absolutely-continuous FTC supply the integral formulation. The exact
 exceptional-set and comparison boundaries are in
 [docs/CONTROL_TRAJECTORY.md](docs/CONTROL_TRAJECTORY.md).
 
+## Actual contact successor: `SmoothedOctagon/ContactLift.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `successorAngle`, `successorAngle_continuous`, `successorAngle_strictMono`, `successorAngle_add_two_pi` | Actual increasing polar successor and its period drift |
+| `successorAngle_bounds`, `successorAngle_twice_lt_add_pi` | One and two contacts advance by less than a half turn |
+| `criticalBoundaryTrace_successor`, `criticalBoundaryTrace_successor_iterate` | The entire contact configuration shifts coherently |
+| `rein_bd_add_pi_of_isCCSDisk`, `successorAngle_iterate_three`, `successorAngle_iterate_six` | Antipodal and exact full-turn identities |
+| `contDiff_pos_of_positive_curve_comp` | Derive a positive `C¹` parameter change from its continuous action on positive regular curves |
+| `exists_positive_cyclic_contact_lift` | Construct the positive smooth successor in the actual balanced parameter, with all six contact equations and exact sixth iterate |
+
+The geometry uses the pinned Chapter 2 indexed uniqueness, polar-angle, and critical-hexagon
+results. Smoothness uses the pinned scalar inverse-composition derivative theorem. See
+[docs/CONTACT_LIFT.md](docs/CONTACT_LIFT.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

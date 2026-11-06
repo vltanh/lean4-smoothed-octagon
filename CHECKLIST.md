@@ -34,6 +34,8 @@ These are source deliverables, not kernel-certified milestones.
   making its logarithmic derivative a determinant-one star state with Lipschitz entries.
 - [x] Construct an everywhere-simplex measurable curvature control and prove both integral
   state equations, using pointwise convex curvature and the absolutely-continuous FTC.
+- [x] Construct the actual positive `C¹` successor of all six contact curves and prove
+  that its sixth iterate advances by exactly one full period.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -93,7 +95,7 @@ open propositions. Their equivalence to the original targets does not establish 
 | --- | --- | --- |
 | G3a — Matrix frame | Construct the `SL₂` frame of the actual contact curve and its positive-determinant logarithmic derivative. | Source proof supplied in `DeterminantClock.lean`, with explicit frame, derivative, and star signs. |
 | G3b — Determinant clock | Construct a global positive time change making the logarithmic derivative determinant one, with the needed regularity. | Source proof supplied in `DeterminantClock.lean`; the clock assumed by upstream Proposition 3.1.9 is now constructed. |
-| G3c — Cyclic boundary and cost | Prove the common cyclic shift `σ_j(t+tf)=σ_(j+1)(t)` and the exact area-cost identity in the new parameter. | In progress; a common full period alone is insufficient for upstream `eqn_cost`. |
+| G3c — Cyclic boundary and cost | Prove the common cyclic shift `σ_j(t+tf)=σ_(j+1)(t)` and the exact area-cost identity in the new parameter. | The positive sixfold contact successor is constructed in `ContactLift.lean`. Its determinant-time assembly and the exact area-cost formula are next. |
 | G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | The measurable control and integral trajectory are constructed in `ControlTrajectory.lean`. Cyclic endpoint conditions and the reverse comparison remain separate obligations. |
 | G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | Open in the pinned formalization. |
 
@@ -131,7 +133,11 @@ be advertised as a minimizer over all control trajectories until that comparison
 - **2026-11-06, G3d forward dynamics:** define the repaired measurable curvature control,
   prove simplex membership at every time, and obtain both integral equations from actual
   normalized boundary geometry. Global periodic frame-velocity Lipschitz regularity is
-  also supplied for the cyclic balanced assembly. Reverse comparison is still open.
+  also supplied for the cyclic balanced assembly; commit `a94ac12`. Reverse comparison is
+  still open.
+- **2026-11-06, G3c contact lift:** construct the contact successor from unique indexed
+  critical hexagons, prove its exact one-turn sixfold relation, and derive its positive
+  `C¹` regularity from the actual boundary curves. No contact map is assumed as an input.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

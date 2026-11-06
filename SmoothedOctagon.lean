@@ -10,6 +10,7 @@ public import SmoothedOctagon.BalancedReduction
 public import SmoothedOctagon.BalancedTargets
 public import SmoothedOctagon.DeterminantClock
 public import SmoothedOctagon.ControlTrajectory
+public import SmoothedOctagon.ContactLift
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 

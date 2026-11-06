@@ -154,6 +154,19 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
   distinct from the state-trajectory conclusion.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Geometric cyclic contact lift
+
+- [x] Construct the successor from the unique indexed critical hexagon at each polar angle.
+- [x] Prove strict angular bounds for one and two successor steps, excluding extra winding.
+- [x] Prove three steps advance by exactly `π` and six by exactly `2π`.
+- [x] Construct the actual parameter lift through the boundary's increasing angle isomorphism.
+- [x] Obtain regularity by a nonzero scalar tangent coordinate and inverse composition;
+  the determinant quotient proves positivity and continuity of the derivative.
+- [x] Check that all six contact identities, the full-period drift, and the sixth iterate
+  are conclusions, rather than added hypotheses.
+- [x] Independently review the geometry and pinned inverse-derivative APIs.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for
