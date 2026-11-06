@@ -1,0 +1,24 @@
+name = "SmoothedOctagon"
+version = "0.1.0"
+keywords = ["math", "reinhardt", "packing"]
+defaultTargets = ["SmoothedOctagon"]
+
+[leanOptions]
+pp.unicode.fun = true
+autoImplicit = false
+relaxedAutoImplicit = false
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+git = "https://github.com/leanprover-community/mathlib4"
+rev = "9d581dfff2e41de989072ea63abf3daf69311520"
+
+[[require]]
+name = "SmoothedPolygons"
+git = "https://github.com/vltanh/lean4-smoothed-polygon"
+rev = "8ce732873a1aa054e98dac46cfaa8d7bb96ffa6f"
+
+[[lean_lib]]
+name = "SmoothedOctagon"
+
