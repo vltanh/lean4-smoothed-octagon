@@ -418,6 +418,13 @@ The bridge uses `chi32_eq`, `chi31_eq_chi32`, `strongLift_unique`, `hmax_y_mem`,
 
 ## Validation
 
+[docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) develops the tangent/state products used
+in the four-link proof into a complete fixed-factor theorem for arbitrary finite words.
+The real two-dimensional centralizer gives the exact holonomy classification; explicit
+vertex flows turn prefix signs into full-arc feasibility. The central cases retain
+their initial-direction cone and exact quadratic cost quotient. No general cost
+comparison or word bound is inferred from this reduction.
+
 [docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) derives exact obstructions to
 state-only, separable phase/state, and frame-only certificates. The strict-star frame
 relaxation has an exact finite endpoint and a rational cost separation below the octagon;

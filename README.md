@@ -66,6 +66,12 @@ leaves only the forward order `0120`, whose full cost comparison is proved above
 [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) also gives exact
 continuous-arc feasibility conditions and logarithmic costs for arbitrary words.
 
+[docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) removes the initial-state ambiguity for
+every noncentral finite word-factor tuple. It excludes hyperbolic/parabolic endpoint
+holonomy, determines the unique possible elliptic state, and gives exact full-arc sign
+tests. Central holonomies remain explicitly covered by a cone of possible initial
+directions; their costs are not silently omitted from future comparison.
+
 The hand argument in [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) constructs a
 balanced convex competitor for any nonempty circle-state subarc. A smooth compactly
 supported perturbation decreases its area by exactly `3∫sinh²(εχ)>0`. This recovers
@@ -245,6 +251,7 @@ this is not a kernel-verification claim.
 | [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md) | Complete asymmetric four-piece comparison and equality within that class |
 | [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) | Cyclic word exclusions and exact arbitrary-word dynamics, feasibility, and cost |
 | [docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) | Exact failures of simpler global bounds and the remaining coupled certificate problem |
+| [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) | Complete arbitrary-word endpoint test, initial-state uniqueness, and central exceptions |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

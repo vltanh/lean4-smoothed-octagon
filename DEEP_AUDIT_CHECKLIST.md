@@ -48,6 +48,11 @@ as mathematical closure of the unrestricted comparison.
 - [x] Check the state-only and separable-potential obstructions and the weighted three-
   vertex coupled residuals, with their full domain, endpoint, radius, and unsolved-
   certificate qualifications. These are retained failed routes and exact open conditions.
+- [x] Independently review the generic word holonomy theorem: both product orders,
+  reconstruction of actual integral trajectories, the centralizer, the forced orientation,
+  full-arc monotonic margin tests, and the positive factors in rationalized sign checks.
+- [x] Retain both central holonomies with the complete strict linear cone and quadratic
+  cost quotient. No invertibility of a shape-elimination system is assumed there.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility

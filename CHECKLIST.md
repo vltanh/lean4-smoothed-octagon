@@ -20,6 +20,7 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Controls on a fixed simplex edge | Cannot satisfy `g(0)=I`, `g(T)=R` in the strict star domain | Arbitrary measurable controls, without a cost bound or terminal condition on `X` |
 | Vertex words omitting a letter | Infeasible by the fixed-edge exclusion | Every word length and unequal positive durations; one- and two-arc words are included |
 | Words violating the cyclic ordering test | Infeasible after an actual cyclic time rebase | `last(j) > first(j−1)` is required for every letter; it excludes every word with at most three arcs |
+| Noncentral nonelliptic word holonomy | Infeasible when tangent closure holds | Any finite length and positive factors with `|tr(RH)|≥2` and `RH≠±I` |
 | Exactly four positive vertex pieces | Full asymmetric comparison proved by hand: `C ≥ A`, with octagon equality only | Every reduced four-letter word, arbitrary positive durations and initial state; no PMP or symmetry hypothesis |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
@@ -49,6 +50,12 @@ comparison. Endpoint algebra leaves one word and a one-parameter family; a stric
 integral inequality selects its symmetric octagon member. Equality is classified within
 that class. No theorem restricts every global minimizer to four pieces, so the
 unrestricted comparison and affine equality classification remain open.
+
+[docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) supplies a complete fixed-factor endpoint
+test at arbitrary finite word length. Noncentral elliptic holonomy determines the only
+possible initial state; finitely many exact margin signs check each entire arc. The
+central cases `RH=±I` retain a cone of initial directions and are not discarded.
+This removes unspecified shape parameters but does not prove the remaining cost bound.
 
 ## Failed global comparison shortcuts
 
@@ -371,6 +378,13 @@ the current research priority. No finite switching search is justified yet.
   relaxed bound, a state-only endpoint potential, and a separable linear-phase potential
   cannot give the desired global certificate on their stated domains. Retain the exact
   coupled vertex residuals and additional frame-radius constraint as an open route.
+  Commit `da31f3c`.
+- **2026-11-06, arbitrary-word endpoint test:** separate the chronological tangent
+  product from the reversed state-conjugator product. Prove that full endpoints reduce
+  exactly to tangent closure and commutation with `RH`. Exclude every noncentral
+  hyperbolic/parabolic holonomy and determine the unique elliptic candidate, with full
+  continuous-arc star checks. Retain central holonomies as an explicit cone and quadratic
+  cost quotient, without an implicit nonsingularity assumption or a word-length bound.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,
