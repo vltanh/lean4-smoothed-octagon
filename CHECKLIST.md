@@ -15,6 +15,7 @@ substeps do not count as excluded competitors or progress on this inequality.
 | --- | --- | --- |
 | Costs at least `π` | Excluded from beating the octagon, since `A < π` | Every admissible trajectory in this cost range |
 | Entirely circular state | Costs at least `π`, hence cannot minimize | `X=J` on the entire open interval; proper subarcs are separate |
+| A proper circle-state interval | Excluded from a global minimizer by a constructed lower-density competitor | Known Hales–Vajjha exclusion, recovered with an exact area-deficit formula and full hand checks |
 | Trajectories confined near `J` | Excluded if `n/m ≤ η₀ < π/A−1` throughout the interval | Arbitrary measurable controls; `m=(c−b)/2`, `n=√(a²+((b+c)/2)²)` |
 | Controls on a fixed simplex edge | Cannot satisfy `g(0)=I`, `g(T)=R` in the strict star domain | Arbitrary measurable controls, without a cost bound or terminal condition on `X` |
 | Vertex words omitting a letter | Infeasible by the fixed-edge exclusion | Every word length and unequal positive durations; one- and two-arc words are included |
@@ -31,6 +32,12 @@ from the singular locus or provide a finite switch bound.
 [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) proves every admissible control must
 satisfy `∫u_j>0` for each of the three coordinates. This excludes a whole edge even with
 arbitrarily many switches, but gives no common positive lower bound on those integrals.
+
+[docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) gives an actual balanced convex
+competitor whenever a nonempty interval has `X=J`, with exact area gain
+`3∫sinh²(εχ)`. It recovers a known local exclusion and does not handle arbitrary nearby
+or chattering trajectories. Improvements supported on an interval of length `ℓ` are
+less than `3ℓ`, so this local mechanism gives no positive uniform deficit as `ℓ→0`.
 
 ## Earlier source construction ledger
 
@@ -155,7 +162,7 @@ open propositions. Their equivalence to the original targets does not establish 
 | G3b — Determinant clock | Construct a global positive time change making the logarithmic derivative determinant one, with the needed regularity. | Source proof supplied in `DeterminantClock.lean`; the clock assumed by upstream Proposition 3.1.9 is now constructed. |
 | G3c — Cyclic boundary and cost | Prove the common cyclic shift `σ_j(t+tf)=σ_(j+1)(t)` and the exact area-cost identity in the new parameter. | Source construction supplied through `AdmissibleRealization.lean`, with every hypothesis of `eqn_cost` discharged and a real-valued exact area identity. |
 | G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | Source proof supplied in `ReverseComparison.lean`. Every low-cost admissible trajectory constructs an equal-area balanced disk; high costs use the octagon. Actual worst disks produce full `IsReinhardtMinimizer` witnesses. |
-| G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | In progress: pointwise singular-control algebra, singular-interval rigidity, and entire-circle exclusion are supplied. Actual lift existence, proper singular-subarc exclusion, and the complete later reduction remain open. |
+| G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | Source work supplies pointwise singular-control algebra and singular-interval rigidity. A complete hand variation now excludes proper circle-state intervals. Actual lift existence and the later Mahler First machinery remain formalization gaps; new Lean infrastructure is paused. |
 
 ### Reverse-comparison substeps
 
@@ -187,15 +194,15 @@ The equivalence and existence of a minimizer do not establish this inequality.
 | Identify the control-independent locus | Source proof supplied in `SingularLocus.lean` for general star states and perpendicular traceless reduced costates. |
 | Derive singular-interval rigidity | Source proof supplied in `SingularArc.lean` for an actual extremal with zero reduced costate on the stated nonempty interval. |
 | Exclude an entirely circular minimizer | Source proof supplied in `CircleExclusion.lean` from actual admissibility and minimality, without requiring a lift. |
-| Exclude proper singular subarcs | Open. The whole-trajectory cost comparison does not apply to a proper subinterval. |
+| Exclude proper circle-state subarcs | Complete hand argument in `docs/CIRCLE_VARIATION.md`, recovering the known variation result. For a zero-reduced-costate interval of an actual lift, the rigidity theorem supplies the circle state. No new Lean implementation is claimed. |
 | Complete the Mahler First reduction | Open. Edge extremality, switching accumulation, and the later singular analysis remain to be supplied. A uniform side bound would be a separate stronger requirement. |
 
 ## Current hand-research tasks
 
 Attack **G4–G5** directly: seek an unrestricted cost inequality or a global calibration,
-and derive genuine exclusions from the exact endpoint and control equations. In parallel,
-complete the hand argument for the cost-decreasing circle-subarc variation, including
-its geometric feasibility. Every finite-word investigation must retain arbitrary word
+and derive genuine exclusions from the exact endpoint and control equations. The local
+circle-subarc variation is now fully checked as a hand argument. Every finite-word
+investigation must retain arbitrary word
 length, unequal positive durations, and the complete star-domain constraints until a
 coverage theorem says otherwise.
 
@@ -311,7 +318,14 @@ the current research priority. No finite switching search is justified yet.
   coordinate onto the forbidden star boundary. Exact rotation conjugation covers every
   edge. Therefore every admissible trajectory uses each control coordinate on a set of
   positive measure, excluding every finite vertex word that omits a letter. The proof
-  uses no costate, cost bound, terminal state equation, or switch-count assumption.
+  uses no costate, cost bound, terminal state equation, or switch-count assumption;
+  commit `2ece1fc`.
+- **2026-11-06, hand circle-subarc variation:** construct a smooth periodic perturbation
+  of an actual circular piece and check all balanced convex geometry. Its exact area
+  gain is `3∫sinh²(εχ)>0`, without normalizing the perturbed determinant clock. This
+  recovers the published local exclusion, including proper subarcs. Quantitative
+  bounds record the vanishing gain on shrinking supports and the separate curvature
+  requirement for nearby arcs. It is not new closure of the global octagon inequality.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

@@ -418,6 +418,14 @@ The bridge uses `chi32_eq`, `chi31_eq_chi32`, `strongLift_unique`, `hmax_y_mem`,
 
 ## Validation
 
+[docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) recovers Hales–Vajjha Theorem 8.2.7
+by an explicit hyperbolic deformation with exact area deficit. The hand proof supplies
+the periodic splice, compact positivity margins, winding, convexity, and the complete
+balanced competitor. The pinned `eqn_cost` and balanced-density identity do not require
+the raw perturbed logarithmic derivative to have determinant one. This is a known
+local exclusion with quantitative details, not a new global octagon comparison or a
+new Lean implementation.
+
 [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) integrates the fixed-edge equations
 in Hales–Vajjha §8.1 and the pinned half-plane conventions, including measurable-control
 regularity. The initial and terminal group matrices force a forbidden boundary state.

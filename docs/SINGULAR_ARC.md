@@ -135,6 +135,11 @@ locus, or infinitely many control switches accumulating there. Those statements
 require further arguments. It does not establish the remaining universal control
 lower bound or classify all minimizers.
 
+The separate current hand proof in [CIRCLE_VARIATION.md](CIRCLE_VARIATION.md) now supplies
+the proper circle-subarc exclusion by constructing a geometric competitor. Combining it
+with this module's interval rigidity gives the corresponding hand exclusion for a
+zero-reduced-costate interval of an actual lift. No new Lean implementation is asserted.
+
 The exact pinned `IsPontryaginExtremal`, matrix FTC, centralizer, trace-form, and
 Mathlib open-set almost-everywhere equality interfaces were inspected. There are
 no added proof placeholders or axioms. Compilation, Lean typechecking, Lake, and

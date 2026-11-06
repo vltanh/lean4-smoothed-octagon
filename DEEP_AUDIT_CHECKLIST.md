@@ -22,6 +22,13 @@ as mathematical closure of the unrestricted comparison.
 - [x] Check the group endpoint contradiction, the exact rotation direction for every
   omitted coordinate, and the positive-integral consequence. No terminal `X` equation,
   cost bound, optimality premise, or finite-word assumption is used.
+- [x] Independently review the exact hyperbolic circle variation, including the periodic
+  left multiplier and unchanged right cyclic shift, all six positive curvature and star
+  margins, winding and simplicity, convexity, and the real area/density calculation.
+- [x] Check the complete perturbed balanced geometry before using the area identity;
+  no unproved control-admissibility or determinant-clock premise remains in the hand proof.
+- [x] Distinguish the recovered known circle-subarc exclusion from new global comparison,
+  and retain the shrinking-support and nearby-curvature limitations of its quantitative bounds.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility

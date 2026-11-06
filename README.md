@@ -50,6 +50,13 @@ trajectory confined to one fixed edge of the control simplex can reach `g(T)=R` 
 vertices. The proof requires neither optimality nor a finite switching description;
 see [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md).
 
+The hand argument in [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) constructs a
+balanced convex competitor for any nonempty circle-state subarc. A smooth compactly
+supported perturbation decreases its area by exactly `3∫sinh²(εχ)>0`. This recovers
+the known singular circular-subarc exclusion with explicit geometric checks. The gain
+can vanish as the support shrinks; it gives no uniform exclusion of all nearby or
+chattering trajectories.
+
 ## Initial mathematical contribution
 
 For the existing scalar switching expression `SmoothedPolygons.hmaxF`, the new proof gives
@@ -133,11 +140,12 @@ bridge is supplied in source through G3d; the Pontryagin-lift and later reductio
 locus and confines maximizing controls to a proper simplex edge away from it.
 `CircleExclusion.lean` proves entirely circular admissible trajectories cost at least `π`,
 so every full minimizer has a noncircular interior state. Proper circular subarcs are
-not excluded by this whole-trajectory argument.
+handled separately by the current hand variation, not by this whole-trajectory module.
 `SingularArc.lean` proves that an actual Pontryagin extremal with zero reduced costate
 on a nonempty interval has `λ < 0`, circle state, and uniform control almost everywhere
-on that interval. The actual lift remains an explicit hypothesis; proper singular-subarc
-exclusion and the later Mahler First reduction are still open.
+on that interval. The actual lift remains an explicit hypothesis. Combining this rigidity
+with the hand variation excludes a full-control singular interval; the later Mahler First
+formalization remains open.
 
 The global lower bound and affine rigidity remain open. `ReinhardtConjecture` names minimality,
 `AffineRigidity` names uniqueness after centering, and `FullReinhardtConjecture` is their
@@ -209,6 +217,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/PONTRYAGIN_LIFT.md](docs/PONTRYAGIN_LIFT.md) | Exact open lift interface, free-time endpoints, and reduced nontriviality audit |
 | [docs/NEAR_CIRCLE_BOUND.md](docs/NEAR_CIRCLE_BOUND.md) | Hand comparison excluding trajectories confined to an explicit circle-state neighborhood |
 | [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) | Exact endpoint obstruction for every control confined to a fixed simplex edge |
+| [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) | Complete hand construction of a lower-density competitor from a proper circle-state subarc |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |
