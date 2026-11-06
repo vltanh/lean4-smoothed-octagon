@@ -167,6 +167,18 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Independently review the geometry and pinned inverse-derivative APIs.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Balanced cyclic clock assembly
+
+- [x] Derive global Lipschitz contact derivatives from the periodic frame velocity,
+  using the plane's sup norm and explicit coordinate bounds.
+- [x] Preserve every balanced-pair clause under the constructed clock, including
+  half-open period simplicity and exact boundary coverage.
+- [x] Apply clock conjugacy to the constructed actual successor, discharging all inputs.
+- [x] Prove global cyclic frame and state identities and both exact endpoint conditions.
+- [x] Keep the conjugation direction `R⁻¹ X R` consistent with upstream admissibility.
+- [x] Independently review the matrix cancellations, Lipschitz bounds, and full output tuple.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

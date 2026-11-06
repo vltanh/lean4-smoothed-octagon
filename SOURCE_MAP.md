@@ -215,6 +215,28 @@ The geometry uses the pinned Chapter 2 indexed uniqueness, polar-angle, and crit
 results. Smoothness uses the pinned scalar inverse-composition derivative theorem. See
 [docs/CONTACT_LIFT.md](docs/CONTACT_LIFT.md).
 
+## Balanced clock assembly: `SmoothedOctagon/BalancedClock.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `lipschitz_mulVec_of_entrywise` | A fixed vector converts entrywise matrix bounds into a global plane Lipschitz bound |
+| `contact_derivatives_lipschitz_of_frame_velocity` | All contact derivatives inherit the velocity bound |
+| `balancedPair_reparam_of_derivatives_lipschitz` | Preserve every balanced-pair clause under a positive global clock with exact period drift |
+| `balancedPair_determinantClock_reparam` | Supply the derivative bound from the actual constructed determinant clock |
+
+The proof uses periodic velocity regularity from `ControlTrajectory.lean` and the upstream
+balanced curvature and star lemmas. See [docs/BALANCED_CLOCK.md](docs/BALANCED_CLOCK.md).
+
+## Uniform cyclic time: `SmoothedOctagon/CyclicClock.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `state_cyclic_of_frame` | Differentiate a cyclic determinant-one frame and obtain `Y(t+T)=R⁻¹Y(t)R` |
+| `balanced_exists_cyclic_determinant_clock` | Construct the positive clock, balanced circle representation, uniform contact shift, global state dynamics, and both terminal conditions from an actual worst disk |
+
+This assembly applies the actual contact lift and determinant clock together; their
+existence is not an additional premise. See [docs/CYCLIC_CLOCK.md](docs/CYCLIC_CLOCK.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

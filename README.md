@@ -102,6 +102,8 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/DeterminantClock.lean](SmoothedOctagon/DeterminantClock.lean) | Global contact frame, determinant-normalizing clock, and successor covariance |
 | [SmoothedOctagon/ControlTrajectory.lean](SmoothedOctagon/ControlTrajectory.lean) | Measurable simplex control, curvature, and actual integral state equations |
 | [SmoothedOctagon/ContactLift.lean](SmoothedOctagon/ContactLift.lean) | Constructed smooth positive contact successor with an exact sixfold period |
+| [SmoothedOctagon/BalancedClock.lean](SmoothedOctagon/BalancedClock.lean) | Full balanced geometry and global derivative bounds after the clock |
+| [SmoothedOctagon/CyclicClock.lean](SmoothedOctagon/CyclicClock.lean) | Uniform cyclic time, frame and state shifts, and terminal conditions |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -115,6 +117,8 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/DETERMINANT_CLOCK.md](docs/DETERMINANT_CLOCK.md) | Matrix construction, determinant speed, and clock conjugacy |
 | [docs/CONTROL_TRAJECTORY.md](docs/CONTROL_TRAJECTORY.md) | Measurable repair, pointwise curvature, and absolutely-continuous FTC |
 | [docs/CONTACT_LIFT.md](docs/CONTACT_LIFT.md) | Geometric successor, winding, and derived smoothness |
+| [docs/BALANCED_CLOCK.md](docs/BALANCED_CLOCK.md) | Balanced-pair preservation in determinant time |
+| [docs/CYCLIC_CLOCK.md](docs/CYCLIC_CLOCK.md) | Uniform contact translation and the control endpoints |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |
