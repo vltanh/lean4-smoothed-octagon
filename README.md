@@ -77,6 +77,14 @@ rational inequality sufficient for comparison and proves the supporting bounds
 `N/ℓ² > 5+4√2` and `W > 4ℓ²`. The cost inequality itself is still unproved;
 the endpoint reduction and supporting bounds are not counted as an exclusion of the class.
 
+There is also a complete comparison at arbitrarily large counts for the **standard
+regular smoothed `(6k+2)`-gon family**. Its costs satisfy
+`C₄ < C₇ < C₁₀ < ⋯ < π`, with limit `π`, where the subscript counts control arcs
+and `C₄` is the octagon area. A strict concavity certificate proves the continuous
+interpolation is increasing, so no finite numerical search is involved. See
+[docs/REGULAR_FAMILY_COMPARISON.md](docs/REGULAR_FAMILY_COMPARISON.md).
+This equal-factor family does not exhaust asymmetric cyclic words or all smoothed polygons.
+
 For an arbitrary admissible star state `X=[[a,b],[c,-a]]`, put
 `m=(c-b)/2` and `n=√(a²+((b+c)/2)²)`. The determinant identity gives `m²-n²=1`,
 and the cost is `C=3∫m`. The new hand estimate for `C<π` is

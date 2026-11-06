@@ -512,6 +512,17 @@ Exact endpoint vectors, two winding comparisons, and the row-angle cost bound gi
 including absolute continuity, normalization, signs, and equality. No computation or
 global closed-minimizer claim is used.
 
+[docs/REGULAR_FAMILY_COMPARISON.md](docs/REGULAR_FAMILY_COMPARISON.md) proves the full
+cost ordering of the standard regular smoothed `(6k+2)`-gons, with `3k+1` equal cyclic
+arcs. Hales–Vajjha Lemma 7.5.5 and Theorem 7.5.6 supply the actual endpoint family;
+the reference's one-arc cost primitive is rederived directly from the displayed
+half-plane state. The new continuous comparison uses exact differentiation and the
+uniform rational bound `D″ ≤ −94/27`, yielding strict concavity, the octagon minimum,
+and the circular limit. Independent hand review checks every step. The note also
+records that this unbounded published family satisfies the Pontryagin conditions and
+avoids forward alternation, so those necessary conditions alone do not bound word length.
+No statement classifies arbitrary asymmetric polygons by this standard family.
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) develops the tangent/state products used
 in the four-link proof into a complete fixed-factor theorem for arbitrary finite words.
 The real two-dimensional centralizer gives the exact holonomy classification; explicit

@@ -30,6 +30,7 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Six-piece orbit `010202` | Full asymmetric strict comparison proved by hand: `C > A`; the octagon is the unattained infimum | Every actual admissible member, with unequal factors and arbitrary initial shape; the two vanishing-arc octagon limit is constructed |
 | Six-piece orbit `012012` | Full asymmetric strict comparison proved by hand: `C > A` | A compact family of actual admissible trajectories reaches two positive five-piece boundaries, and its interior has no cost minimum |
 | Remaining six-piece comparison | `012102` remains open | Of four raw cyclic orbits, `010102` fails the ordering test; the full `012012` and `010202` families are compared above |
+| Standard regular smoothed `(6k+2)`-gons | Costs strictly increase from the octagon to the circular limit `π` | Every positive integer `k`, with `3k+1` equal arcs and the standard initial shape; no asymmetric-family restriction is inferred |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
 | Unrestricted octagon inequality | Open | Trajectories leaving the excluded neighborhood, with arbitrary control history |
@@ -124,6 +125,14 @@ one stated rational inequality. The supporting sharp normalization bound
 The cost inequality is unproved, so this is a precise reduction of the remaining case,
 not an additional excluded competitor class.
 
+[docs/REGULAR_FAMILY_COMPARISON.md](docs/REGULAR_FAMILY_COMPARISON.md) proves strict
+cost comparison for every member of the standard regular smoothed `(6k+2)`-gon family.
+An exact one-arc integration gives the objective, and a rational sign certificate
+proves strict concavity after an angular change of variable. The continuously
+interpolated cost increases with the arc count, from the octagon to the limit `π`.
+This is a complete infinite-family comparison, with its equal-factor and initial-shape
+assumptions retained. It does not compare arbitrary words of those lengths.
+
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) supplies a complete fixed-factor endpoint
 test at arbitrary finite word length. Noncentral elliptic holonomy determines the only
 possible initial state; finitely many exact margin signs check each entire arc. The
@@ -163,6 +172,12 @@ every nonedge competitor has positive tangent winding and cost above `3π`. Thus
 small cost and third-vertex perturbations cannot make the forward-alternation exclusion
 orientation-free. The result does not say that these local windows occur in a closed
 global Reinhardt minimizer, and it does not refute a six-to-five theorem.
+
+The standard regular family also shows why the Pontryagin conditions and the current
+forbidden-pattern results cannot by themselves give a uniform word bound: the published
+normal extremals have all those properties and unbounded counts `3k+1`. Their strict
+cost comparison is now proved above, but a general reduction must use additional
+information. The exact source and scope are recorded in the regular-family note.
 
 ## Earlier source construction ledger
 
@@ -573,6 +588,15 @@ the current research priority. No finite switching search is justified yet.
   hand audits check the entire construction, absolute continuity, uniqueness, and all
   angle branches. This rules out an orientation-free local four-arc exclusion; it is
   a failed-route certificate, not a new exclusion of closed Reinhardt competitors.
+  Commit `650dadc`.
+- **2026-11-06, complete standard regular-family comparison:** integrate the exact
+  constant-control state and express the standard `(6k+2)`-gon cost using its actual
+  endpoint parameter. An angular change of variable gives a strictly concave scalar
+  function; an explicit bound on its second derivative proves monotonicity of the
+  cost for every real interpolated arc count at least four. Thus the entire infinite
+  family strictly increases from the octagon to `π`, with equality only at `k=1`.
+  Independent hand review checks the integral, every derivative and sign, endpoint
+  value, circular limit, and restriction to the standard equal-factor family.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

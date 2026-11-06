@@ -140,6 +140,12 @@ as mathematical closure of the unrestricted comparison.
   evolution, nonnegative curvature, equal endpoint tangent vectors, absolutely continuous
   angle lifts, both winding transfers, and the strict `3π` cost barrier. Keep these
   local endpoint data distinct from the closed Reinhardt endpoint problem.
+- [x] Independently audit the standard regular-family comparison at every positive
+  integer `k`: exact state, cost-density normalization and integration, the published
+  endpoint parameter, angular interpolation, both derivative chains, the rational
+  strict-concavity bound, strict quotient monotonicity, octagon value, and limit `π`.
+  Retain equal-factor and initial-shape assumptions, and distinguish this infinite
+  family from arbitrary asymmetric cyclic words.
 - [ ] Prove inequality (34) in `docs/SIX_ARC_012102.md`, or another full comparison
   of that family. Its exact reduction and finite exploratory checks do not prove it.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
