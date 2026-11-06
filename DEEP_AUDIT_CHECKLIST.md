@@ -35,6 +35,13 @@ as mathematical closure of the unrestricted comparison.
   decreasing-weight sign. The octagon equality data match the existing candidate.
 - [x] Include independent short shape and cost certificates so the four-piece conclusion
   does not rely on reported numerical or symbolic output. Keep its restricted scope explicit.
+- [x] Check the cyclic time rebase on actual integral trajectories, including the wrapped
+  `i→i+1` control permutation, both endpoints, and cost invariance.
+- [x] Check the strict occurrence-order test, all three- and four-arc cases, the scaled
+  margin surface, and the exact full-arc positivity condition before using any word formula.
+- [x] Preserve the earlier three-arc symbolic exploration with its domain, versions,
+  reproduction command, and limitations. Its residuals are not the hand proof or a
+  certificate for longer words; no Lean or CI command is involved.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility

@@ -418,6 +418,13 @@ The bridge uses `chi32_eq`, `chi31_eq_chi32`, `strongLift_unique`, `hmax_y_mem`,
 
 ## Validation
 
+[docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) derives the exact
+time-rebase permutation from the pinned `R` conjugation convention and applies the
+fixed-edge hand proof in every window. Its margin updates and cost follow by direct
+integration of the pinned constant-control equations. The accompanying
+[exploratory script](explorations/vertex_word_algebra.py) preserves an earlier symbolic
+three-arc calculation; its outputs are not premises of the hand exclusions.
+
 [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md), added in the concurrent
 commit `2ea4e93`, covers all reduced four-piece vertex trajectories. Its displayed
 tangent factors, shape identity, positive-margin sequence, exact cost formula, and

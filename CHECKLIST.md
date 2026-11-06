@@ -19,6 +19,7 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Trajectories confined near `J` | Excluded if `n/m ≤ η₀ < π/A−1` throughout the interval | Arbitrary measurable controls; `m=(c−b)/2`, `n=√(a²+((b+c)/2)²)` |
 | Controls on a fixed simplex edge | Cannot satisfy `g(0)=I`, `g(T)=R` in the strict star domain | Arbitrary measurable controls, without a cost bound or terminal condition on `X` |
 | Vertex words omitting a letter | Infeasible by the fixed-edge exclusion | Every word length and unequal positive durations; one- and two-arc words are included |
+| Words violating the cyclic ordering test | Infeasible after an actual cyclic time rebase | `last(j) > first(j−1)` is required for every letter; it excludes every word with at most three arcs |
 | Exactly four positive vertex pieces | Full asymmetric comparison proved by hand: `C ≥ A`, with octagon equality only | Every reduced four-letter word, arbitrary positive durations and initial state; no PMP or symmetry hypothesis |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
@@ -33,6 +34,9 @@ from the singular locus or provide a finite switch bound.
 [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) proves every admissible control must
 satisfy `∫u_j>0` for each of the three coordinates. This excludes a whole edge even with
 arbitrarily many switches, but gives no common positive lower bound on those integrals.
+[docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) strengthens this through
+every cyclic rebase, proves the four-arc word classification without endpoint elimination,
+and records exact whole-arc feasibility inequalities and costs for arbitrary finite words.
 
 [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) gives an actual balanced convex
 competitor whenever a nonempty interval has `X=J`, with exact area gain
@@ -340,6 +344,13 @@ the current research priority. No finite switching search is justified yet.
   shape and a positive-margin certificate for the per-piece costs. Every four-piece
   competitor is now compared with the octagon without imposing symmetry or equal
   durations, and equality is identified within this class. Longer trajectories remain open.
+  The independent audit and shorter certificates are committed as `fd80676`.
+- **2026-11-06, cyclic word exclusions:** prove that time rebasing preserves actual
+  integral admissibility and increases the wrapped control labels by one. Fixed-edge
+  exclusion in every rebased window gives `last(j)>first(j−1)`, rules out all words with
+  at most three arcs, and leaves only forward `0120` at four arcs. Exact margin flows
+  give full continuous-arc star constraints and cost formulas. A retained symbolic
+  exploration is reproducible but is not used by the hand proof.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

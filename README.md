@@ -60,6 +60,12 @@ trajectory confined to one fixed edge of the control simplex can reach `g(T)=R` 
 vertices. The proof requires neither optimality nor a finite switching description;
 see [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md).
 
+Applying that obstruction after every cyclic time rebase excludes all words with at
+most three arcs and all longer words violating `last(j)>first(j−1)`. At four arcs it
+leaves only the forward order `0120`, whose full cost comparison is proved above.
+[docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) also gives exact
+continuous-arc feasibility conditions and logarithmic costs for arbitrary words.
+
 The hand argument in [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) constructs a
 balanced convex competitor for any nonempty circle-state subarc. A smooth compactly
 supported perturbation decreases its area by exactly `3∫sinh²(εχ)>0`. This recovers
@@ -229,6 +235,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/SWITCHING_WORDS.md](docs/SWITCHING_WORDS.md) | Exact endpoint obstruction for every control confined to a fixed simplex edge |
 | [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) | Complete hand construction of a lower-density competitor from a proper circle-state subarc |
 | [docs/FOUR_LINK_HAND_PROOF.md](docs/FOUR_LINK_HAND_PROOF.md) | Complete asymmetric four-piece comparison and equality within that class |
+| [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) | Cyclic word exclusions and exact arbitrary-word dynamics, feasibility, and cost |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |
