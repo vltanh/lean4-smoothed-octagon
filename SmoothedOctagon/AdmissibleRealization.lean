@@ -11,9 +11,10 @@ determinant clock, its cyclic shift, and the repaired measurable curvature contr
 The area identity is an equality of real numbers, with positivity checked before
 removing `ENNReal.ofReal` from the upstream area theorem.
 
-This module does not assert control optimality. Comparing an arbitrary admissible
-control with a balanced geometric competitor remains a separate reverse-comparison
-obligation. Source draft only; compilation and kernel validation have not been run.
+This module supplies the forward direction. The separate `ReverseComparison` module
+constructs geometric competitors for arbitrary admissible controls and derives control
+optimality from both directions. Source draft only; compilation and kernel validation
+have not been run.
 -/
 
 @[expose] public section

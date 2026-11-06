@@ -18,7 +18,8 @@ needed for that analytic construction. No simplicity of a control trajectory is 
 
 The exported trajectory theorem has explicit global smooth-arc hypotheses. Extending an
 arbitrary integral-admissible segment to this interface and reconstructing a balanced disk
-remain separate obligations. This theorem does not assert the full reverse comparison.
+are supplied separately in `CyclicExtension` and `ReverseGeometry`; `ReverseComparison`
+assembles their consequences. This module supplies the smooth-arc winding ingredient.
 Source draft; Lean compilation and kernel validation have not been run.
 -/
 

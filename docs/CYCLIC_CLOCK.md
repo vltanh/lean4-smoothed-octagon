@@ -151,8 +151,9 @@ its cost.
 
 This is a forward construction from an actual worst disk. It does not prove that
 every admissible control trajectory comes from a convex balanced disk, and it does
-not assert global control minimality. That reverse comparison remains a separate
-part of the reduction.
+not alone assert global control minimality. The separate `ReverseComparison.lean`
+module supplies the full reverse construction and derives that conclusion from
+both directions.
 
 ## Sources and dependencies
 

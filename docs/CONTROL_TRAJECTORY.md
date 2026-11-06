@@ -170,12 +170,14 @@ Even an admissible realization with exact area cost does not by itself prove
 that a geometric minimizer minimizes cost over **all** upstream admissible
 controls. The missing reverse comparison has the form: for every admissible
 control, construct a balanced circle disk whose area is at most that control's
-cost. This is an open obligation, not an assertion of this module.
+cost. This is proved separately in `ReverseComparison.lean`; it is not an
+additional premise silently assumed by this forward construction.
 
-### Proposed low-cost winding argument for the reverse comparison
+### Low-cost winding route used by the reverse comparison
 
-The following is a hand-proof route for further work. It is **not** a completed
-reverse-reconstruction theorem.
+The following explains the winding issue addressed by `LowCostWinding.lean`,
+`CyclicExtension.lean`, and `ReverseGeometry.lean`. Their full assembly is in
+`ReverseComparison.lean` and [REVERSE_COMPARISON.md](REVERSE_COMPARISON.md).
 
 An admissible control can make extra turns. For example, the constant state
 `X = J` with uniform control and the rotating frame satisfies the same terminal
@@ -219,9 +221,8 @@ to extend the frame by `g(t + nT) = g(t) R^n`, use terminal conjugacy of `X` to
 match first derivatives, prove one full winding, and apply the existing
 star-curve convexity criterion.
 
-Before this can close the reverse comparison, the proof must obtain suitable
-regularity from an arbitrary integral-form admissible control, justify the
-global extension and all seam equations, establish simple one-turn boundary
-exhaustiveness, and construct the balanced circle witness with its area bound.
-Those are mathematical and formalization obligations; the forward construction
-does not assume them.
+The full construction obtains regularity from arbitrary integral admissibility,
+checks the global extension and every seam, derives one-turn simplicity, and
+constructs the balanced circle witness with exact area. The high-cost assembly
+uses the concrete octagon, whose area is strictly below `π`. The forward
+construction here does not assume any of those reverse conclusions.

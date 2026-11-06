@@ -288,7 +288,7 @@ differentiation theorem supply the main inputs. See
 | `star_costDensity_ge_three`, `stateTrajectory_cost_ge_three_mul`, `stateTrajectory_cost_pos` | Pointwise cost-density bound and positive cost at least `3T` for every integral trajectory |
 | `stateTrajectory_terminalTime_lt_pi_div_three` | Low cost implies `T < π/3` |
 | `octagon_area_lt_pi`, `worstDisk_realization_cost_le_octagon`, `exists_worstDisk_lowCost_realization` | Concrete area threshold and a constructed actual worst realization below it |
-| `AdmissibleBalancedComparison`, `LowCostBalancedComparison` | Named open reverse-comparison propositions |
+| `AdmissibleBalancedComparison`, `LowCostBalancedComparison` | Named reverse-comparison interfaces, discharged downstream in `ReverseComparison.lean` |
 | `highCost_balanced_competitor`, `admissibleBalancedComparison_iff_lowCost` | The concrete octagon discharges high costs, leaving exactly the low-cost regime |
 | `controlMinimizer_of_worstDisk_realization` | Conditional full control minimality with the reverse comparison kept explicit |
 | `LowCostControlLowerBound`, `reinhardtConjecture_of_lowCostControlLowerBound` | Unrestricted low-cost inequality and its sufficient connection to geometric minimality |
@@ -327,6 +327,21 @@ inputs are supplied. See [docs/REVERSE_GEOMETRY.md](docs/REVERSE_GEOMETRY.md).
 The construction reuses upstream `poly_pw` integral gluing and `oct_red`, together with
 the interval regularity proved in `AdmissibleRegularity.lean`. See
 [docs/CYCLIC_EXTENSION.md](docs/CYCLIC_EXTENSION.md).
+
+## Full comparison: `SmoothedOctagon/ReverseComparison.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `lowCost_admissible_balanced_realization` | Construct an equal-area balanced circle disk from any low-cost integral-admissible control |
+| `lowCostBalancedComparison`, `admissibleBalancedComparison` | Discharge the low-cost and full reverse-comparison interfaces |
+| `normalized_worstDisk_controlMinimizer` | The actual worst disk's constructed realization minimizes over every admissible control |
+| `exists_worstDisk_controlMinimizer` | Actual existence, with exact geometric cost, density, and strict cost/time bounds |
+| `controlMinimizer_density_eq_minimax`, `controlMinimizer_balanced_worstDisk` | Every control minimizer has the geometric minimax value and reconstructs a worst disk |
+| `ControlLowerBound`, `controlLowerBound_iff_lowCost` | The remaining unrestricted global inequality and its exact low-cost reduction |
+| `reinhardtConjecture_iff_controlLowerBound` | Unconditional equivalence to original geometric minimality, with both comparison directions constructed |
+
+This module supplies the previously separate comparison interface. It does not prove
+`ControlLowerBound` or affine rigidity. See [docs/REVERSE_COMPARISON.md](docs/REVERSE_COMPARISON.md).
 
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 

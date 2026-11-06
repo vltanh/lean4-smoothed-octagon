@@ -13,9 +13,10 @@ octagon's area, hence strictly below `π` and terminal time below `π / 3`. This
 uses geometric minimality and does not assume control minimality.
 
 For the reverse comparison, costs at least `π` already have the octagon as a
-geometric competitor. The named open comparison proposition is therefore
+geometric competitor. The named comparison proposition is therefore
 equivalent to its restriction to costs below `π`. The conditional minimizer and
-target-transfer results retain that unproved comparison as an explicit input.
+target-transfer results retain that comparison as an explicit input in this module;
+`ReverseComparison` supplies it from the constructed extension and geometry.
 
 Source draft only: compilation and kernel validation have not been run.
 -/
@@ -120,7 +121,7 @@ theorem exists_worstDisk_lowCost_realization :
   exact ⟨K, T, σ, g, X, hK, hbal, hcirc, hadm, hcost, hdensity, hle, hlt,
     stateTrajectory_terminalTime_lt_pi_div_three hadm.1 hlt⟩
 
-/-- The still-open reverse comparison, over the full upstream admissible class.
+/-- The reverse-comparison interface, over the full upstream admissible class.
 It allows a different geometric competitor with area no greater than the cost. -/
 def AdmissibleBalancedComparison : Prop :=
   ∀ (T : ℝ) (u : ℝ → Fin 3 → ℝ) (g X : ℝ → Mat2),
@@ -130,7 +131,7 @@ def AdmissibleBalancedComparison : Prop :=
         volume.real K ≤ reinhardtCost T X
 
 /-- Only the low-cost part of the reverse comparison needs reconstruction.
-This is an open proposition, not an asserted reconstruction theorem. -/
+The reconstruction proving it is supplied in `ReverseComparison`. -/
 def LowCostBalancedComparison : Prop :=
   ∀ (T : ℝ) (u : ℝ → Fin 3 → ℝ) (g X : ℝ → Mat2),
     IsReinhardtAdmissible T u g X → reinhardtCost T X < π →

@@ -5,6 +5,11 @@ This project starts from the concrete smoothed octagon in
 and targets its **global minimality among all centrally symmetric convex disks**, followed
 by uniqueness up to affine equivalence.
 
+The current source milestone is a constructive reduction in both directions between the
+geometric worst-disk problem and the full integral-form control problem. It includes actual
+global control-minimizer existence. The universal octagon lower bound and affine equality
+classification remain open, and none of the new source has been kernel-validated.
+
 The candidate density is
 
 \[
@@ -75,9 +80,21 @@ exact terminal conditions. `ControlTrajectory.lean` supplies the measurable cont
 integral equations. `AdmissibleRealization.lean` combines these into an actual admissible
 trajectory with `cost = normalized area` and `density = cost / √12`.
 
-The reverse comparison with every admissible control is still open. The forward realization
-alone does not make the constructed control a global control minimizer. This comparison,
-the extremal-lift bridge, and the later reduction are tracked in G3d–G3e of the ledger.
+`AdmissibleRegularity.lean` and `CyclicExtension.lean` derive the global analytic data from
+arbitrary integral-admissible controls. `LowCostWinding.lean` and `ReverseGeometry.lean`
+construct a simple balanced convex disk of equal area when cost is below `π`; the concrete
+octagon handles higher costs. `ReverseComparison.lean` assembles this full reverse comparison,
+constructs an actual global control minimizer, and proves every control minimizer reconstructs
+a geometric worst disk with `cost / √12 = minimaxDensity`.
+
+The resulting unconditional control target is
+
+```lean
+ReinhardtConjecture ↔ ControlLowerBound
+```
+
+The inequality covers all admissible controls. It remains open. The actual geometric/control
+bridge is supplied in source through G3d; the Pontryagin-lift and later reduction are G3e.
 
 The global lower bound and affine rigidity remain open. `ReinhardtConjecture` names minimality,
 `AffineRigidity` names uniqueness after centering, and `FullReinhardtConjecture` is their
@@ -117,6 +134,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/ControlBounds.lean](SmoothedOctagon/ControlBounds.lean) | Actual cost/time bounds, high-cost competitor, and exact remaining control targets |
 | [SmoothedOctagon/ReverseGeometry.lean](SmoothedOctagon/ReverseGeometry.lean) | One-turn simplicity and a constructed balanced convex disk from cyclic frame data |
 | [SmoothedOctagon/CyclicExtension.lean](SmoothedOctagon/CyclicExtension.lean) | Actual global cyclic extension of arbitrary integral-admissible segments |
+| [SmoothedOctagon/ReverseComparison.lean](SmoothedOctagon/ReverseComparison.lean) | Full reverse comparison, actual control minimizers, and unconditional target equivalence |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -138,6 +156,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/CONTROL_BOUNDS.md](docs/CONTROL_BOUNDS.md) | Cost regimes and the explicit reverse-comparison boundary |
 | [docs/REVERSE_GEOMETRY.md](docs/REVERSE_GEOMETRY.md) | Determinant winding obstruction and convex radial-hull reconstruction |
 | [docs/CYCLIC_EXTENSION.md](docs/CYCLIC_EXTENSION.md) | Seam regularity, global Lipschitz bounds, a.e. transport, and cost preservation |
+| [docs/REVERSE_COMPARISON.md](docs/REVERSE_COMPARISON.md) | Complete geometric/control correspondence and the remaining global inequality |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

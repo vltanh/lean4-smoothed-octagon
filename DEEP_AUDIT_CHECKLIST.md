@@ -268,6 +268,23 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
   translation and totalized-derivative APIs.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Completed geometric/control comparison
+
+- [x] Apply the actual admissible extension to the reverse geometric construction;
+  every regularity, star, curvature, cyclic, and winding input is supplied.
+- [x] Prove exact area equality at low cost and provide the concrete octagon for high costs.
+- [x] Discharge both comparison predicates defined in `ControlBounds.lean`, retaining
+  arbitrary measurable controls and the full upstream admissible class.
+- [x] Construct a global control minimizer from actual geometric worst-disk existence,
+  without assuming control-minimizer or extremal-lift existence.
+- [x] Prove all control minimizers have the geometric minimax value and reconstruct
+  actual worst disks; check that this argument has no circular existence step.
+- [x] Prove the unconditional target equivalence while leaving the control lower bound
+  and affine equality classification unasserted.
+- [x] Independently review the assembled witness tuples, real area identities,
+  minimizing comparisons, and exact original conjecture statement.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for
@@ -281,8 +298,11 @@ All **64 upstream Lean files** at the pinned commit were fetched and searched fo
 | New source files | No proof holes, new axioms, `native_decide`, or `unsafe` declarations introduced. |
 
 The project imports implementation modules, not `Challenge` or `Solution`. The source import
-graph reaches **56 upstream implementation modules** in `Basic`, `External`, and
+graph reaches **58 upstream implementation modules** in `Basic`, `External`, and
 `SmoothedPolygons`, then mathlib.
+All **23 local Lean modules**, including the umbrella, are in the current root closure.
+The local graph has no missing imports or cycles; an independent source scan found no
+cross-file uses of private local declarations or local declaration collisions.
 The name `External` does not by itself denote an assumed theorem: the fetched files contain
 proof implementations. This scan is evidence about source text, not a kernel axiom audit or
 an independent mathematical review of every upstream proof.

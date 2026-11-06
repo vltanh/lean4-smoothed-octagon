@@ -1,10 +1,10 @@
-# Cost bounds and the remaining reverse comparison
+# Cost bounds and the comparison interfaces
 
 `SmoothedOctagon/ControlBounds.lean` proves bounds that apply directly to the
 upstream integral-form trajectory definition. It also identifies precisely
-where reverse reconstruction is still required. All named comparison and
-lower-bound propositions in this file remain open unless explicitly supplied
-as hypotheses.
+where reverse reconstruction enters the argument. The named comparison
+propositions are proved downstream in `ReverseComparison.lean`. The universal
+octagon lower-bound proposition remains open.
 
 **Compilation, typechecking, Lake, and kernel validation have not been run.**
 The Lean source has proof bodies and the arguments below; this is not a claim
@@ -98,7 +98,7 @@ assume the very comparison the reverse construction is intended to justify.
 
 ## Why the reverse comparison only needs low costs
 
-`AdmissibleBalancedComparison` is the explicit remaining obligation:
+`AdmissibleBalancedComparison` is the explicit comparison interface:
 
 > For every upstream admissible control trajectory, construct a balanced disk
 > in circle representation with area at most the trajectory's cost.
@@ -119,9 +119,10 @@ competitor proves the exact equivalence
 AdmissibleBalancedComparison ↔ LowCostBalancedComparison
 ```
 
-The equivalence discharges the high-cost case. It does not construct the
-low-cost competitor. The latter requires the interval regularity, cyclic
-extension, winding, and convexity arguments tracked separately in the ledger.
+The equivalence discharges the high-cost case. The low-cost competitor is
+constructed separately from interval regularity, cyclic extension, winding,
+and convexity in `ReverseComparison.lean`. This separation makes the inputs
+to the conditional results below visible; the final assembly supplies them.
 
 ## Conditional control minimality and the global lower bound
 
@@ -162,8 +163,10 @@ LowCostBalancedComparison →
   (ReinhardtConjecture ↔ LowCostControlLowerBound)
 ```
 
-Neither this global inequality nor affine equality classification is proved
-by the cost and terminal-time bounds.
+`ReverseComparison.lean` discharges the comparison hypothesis and exports
+the unconditional equivalence with `ControlLowerBound`. Neither that global
+inequality nor affine equality classification is proved by the cost and
+terminal-time bounds.
 
 ## Sources
 

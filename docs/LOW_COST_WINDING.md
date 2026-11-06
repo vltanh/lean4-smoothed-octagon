@@ -11,9 +11,10 @@ first row has lifted angle exactly `π/3` at the endpoint, and `g₀₀(t)>0` th
 `[0,T]`.
 
 **Source draft. Lean compilation, typechecking, kernel validation, and CI have not been
-run.** The theorem is not yet stated for every `IsReinhardtAdmissible` trajectory. The
-passage from an arbitrary integral-admissible segment to the smooth-arc interface, and
-the full reconstruction of a balanced disk, remain open ledger items.
+run.** This module states the smooth-arc ingredient explicitly. `CyclicExtension.lean`
+constructs that interface from every `IsReinhardtAdmissible` segment;
+`ReverseGeometry.lean` constructs its balanced disk in the low-cost regime, and
+`ReverseComparison.lean` assembles the full comparison.
 
 ## A continuous angle without assuming a simple path
 
@@ -139,10 +140,10 @@ geometry construction. They do not yet prove that every admissible integral traj
 has such a global extension, that all six boundary arcs form a simple convex balanced
 disk, or that its area is at most the trajectory's cost.
 
-Those remaining constructions must precede an assertion that the geometric minimizer
-is a minimizer over the entire control-admissible class. The separate
-`ControlBounds.lean` module supplies the high-cost comparison using the concrete octagon,
-whose area is below `π`. No full reverse theorem is assumed here.
+Those constructions are supplied in `CyclicExtension.lean` and `ReverseGeometry.lean`.
+The separate `ControlBounds.lean` module supplies the high-cost comparison using the concrete
+octagon, whose area is below `π`. `ReverseComparison.lean` assembles the resulting full
+comparison and derives actual control-minimizer existence; no reverse theorem is assumed.
 
 ## Sources
 

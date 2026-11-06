@@ -113,7 +113,7 @@ The interval has unique derivatives within it because `T > 0`; the
 `C¹` regularity on the closed interval.
 
 This is the exact regularity needed for gluing adjacent rotated copies. The
-future cyclic extension can compare the right endpoint derivative of one
+cyclic extension in `CyclicExtension.lean` compares the right endpoint derivative of one
 piece with the left endpoint derivative of the next, using the frame and
 state terminal identities.
 
@@ -174,17 +174,15 @@ original frame outside the interval. This local formulation is suitable for
 transporting the curvature inequality to translated copies in a cyclic
 extension.
 
-## Remaining reverse-comparison work
+## Use in the full reverse comparison
 
-These results remove the extra smoothness assumption from the analytic input
-on the original trajectory interval. They do not yet construct a global
-closed boundary. The next construction must glue the frame and state using
-the admissible endpoint identities, prove global regularity across the seams,
-and transport the a.e. curvature inequalities through its countably many
-translations.
+These results remove the extra smoothness assumption on the original
+trajectory interval. `CyclicExtension.lean` then glues the frame and state
+using the admissible endpoint identities, proves regularity across every
+seam, and transports the actual null sets through countably many translations.
 
-For cost below `π`, the winding estimate then has to establish a simple
-one-turn boundary and the balanced geometric competitor. For cost at least
-`π`, `ControlBounds.lean` supplies the octagon as the required competitor. Until that complete
-reverse comparator is assembled, the forward realization of a geometric
-minimizer is not an assertion of `IsReinhardtMinimizer`.
+For cost below `π`, `ReverseGeometry.lean` derives a simple one-turn boundary
+and constructs the balanced convex disk. For higher costs, `ControlBounds.lean`
+supplies the octagon. `ReverseComparison.lean` assembles these results and
+derives actual global control minimizers from geometric worst disks. The
+universal octagon cost bound and affine rigidity remain separate open targets.

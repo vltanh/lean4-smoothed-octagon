@@ -95,24 +95,17 @@ strictly positive cost. Only after this step does it apply `toReal` and obtain
 the real area equality. The packing-density identity follows from the upstream
 balanced-disk density theorem, whose denominator is `√12`.
 
-## What remains open
+## Where the converse is supplied
 
-This establishes the forward geometric realization at the source level. It
-does not establish `IsReinhardtMinimizer` for the resulting control. A disk
-that minimizes area among balanced geometric competitors has not yet been
-compared with every object admitted by the upstream integral-form control
-definition.
+This module establishes the forward realization. The separate construction
+in [REVERSE_COMPARISON.md](REVERSE_COMPARISON.md) compares against every object
+admitted by the integral-form control definition. It derives interval
+regularity, glues a smooth cyclic extension, excludes extra winding at low
+cost, and constructs an equal-area balanced disk. The concrete octagon
+handles higher costs. Applying that comparison to this forward realization
+gives an actual `IsReinhardtMinimizer` witness.
 
-The remaining reverse comparison must show that every admissible control has
-a balanced circle competitor with area at most its cost. Extra winding is a
-real issue in that comparison: an admissible frame can make additional full
-rotations before reaching the same terminal matrix. The proposed low-cost
-winding argument is recorded in `CONTROL_TRAJECTORY.md`, with its unproved
-reconstruction obligations stated explicitly. `LowCostWinding.lean` supplies
-some supporting results for smooth arcs; it does not silently replace the
-general integral-form admissibility hypothesis.
-
-After the reverse comparison, the global control-optimality and switching
-classification arguments must still show that the smoothed octagon attains
-the minimum. Affine uniqueness is a separate target. None of the realization
-theorems assert either conclusion.
+The universal control inequality selecting the smoothed octagon remains
+open. The existence of a control minimizer does not identify its shape.
+Affine uniqueness is a separate target. None of the forward realization
+theorems alone asserts either conclusion.

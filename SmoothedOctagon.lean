@@ -19,6 +19,7 @@ public import SmoothedOctagon.AdmissibleRegularity
 public import SmoothedOctagon.ControlBounds
 public import SmoothedOctagon.ReverseGeometry
 public import SmoothedOctagon.CyclicExtension
+public import SmoothedOctagon.ReverseComparison
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 
@@ -32,5 +33,7 @@ switching expression. See `CHECKLIST.md` for the remaining mathematical obligati
 `BalancedReduction` constructs a balanced circle minimizer from an actual worst disk;
 `BalancedTargets` identifies the exact remaining area and rigidity targets.
 `AdmissibleRealization` constructs the full forward control realization with exact area cost.
+`ReverseComparison` constructs geometric competitors for all admissible controls and proves
+the exact global control-minimizer correspondence. The octagon lower bound remains open.
 This source development has not been compiled or kernel-checked.
 -/

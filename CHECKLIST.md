@@ -50,6 +50,9 @@ These are source deliverables, not kernel-certified milestones.
   deriving one-turn simplicity and all geometric fields without assuming a boundary disk.
 - [x] Extend every integral-admissible segment through its cyclic seams, deriving global
   `C¹` frame regularity, Lipschitz state, a.e. curvature, and exact cost preservation.
+- [x] Complete the reverse comparison for every admissible control and construct an actual
+  global control minimizer from a worst disk. Prove the exact minimax-value correspondence
+  and `ReinhardtConjecture ↔ ControlLowerBound` without an assumed reduction bridge.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -66,7 +69,7 @@ list, that the tasks have comparable difficulty, or that they are all routine fo
 | --- | --- | --- |
 | G1 — Fix the global target | Use the existing greatest packing density of congruent copies for every centrally symmetric convex disk; identify the concrete octagon and state affine rigidity separately. | Source draft supplied in `Problem.lean`; validation deferred. |
 | G2 — Normalize an actual minimizer | Construct a balanced circle representation of an actual worst disk, preserving the relevant density and supplying every boundary parametrization hypothesis. | Source proof supplied through `worstDisk_balanced_normalization` in `BalancedReduction.lean`. Every parametrization hypothesis is constructed. Kernel validation remains deferred. |
-| G3 — Justify the chosen reduction | If using the smoothed-polygon route, prove the needed optimal-control, extremal-lift, and Mahler First bridges for the minimizer from G2. | The forward admissible realization with exact area cost is constructed. Reverse comparison with arbitrary admissible controls, extremal lifts, and the later reduction remain open. |
+| G3 — Justify the chosen reduction | If using the smoothed-polygon route, prove the needed optimal-control, extremal-lift, and Mahler First bridges for the minimizer from G2. | The geometric/control comparison is constructed in both directions, including actual global control-minimizer existence. The Pontryagin-lift and later Mahler First bridges remain open. |
 | G4 — Make the global comparison exhaustive | Prove either a direct inequality covering all normalized competitors, or an explicit uniform switch/side bound plus coverage of all words, parameter ranges, limits, and degeneracies. | Open research obligation. No finite case list is available yet. |
 | G5 — Prove the octagon lower bound | Discharge `octagonDensity ≤ greatestPackingDensity K` for a genuine worst disk and apply `reinhardtConjecture_of_worst_disk`. | Open. Comparisons within the regular `(6k+2)` family cannot close this gate. |
 | G6 — Classify equality | Prove `AffineRigidity`: every worst disk is an invertible linear image of the centered octagon. | Open; not implied by G5. |
@@ -110,7 +113,7 @@ open propositions. Their equivalence to the original targets does not establish 
 | G3a — Matrix frame | Construct the `SL₂` frame of the actual contact curve and its positive-determinant logarithmic derivative. | Source proof supplied in `DeterminantClock.lean`, with explicit frame, derivative, and star signs. |
 | G3b — Determinant clock | Construct a global positive time change making the logarithmic derivative determinant one, with the needed regularity. | Source proof supplied in `DeterminantClock.lean`; the clock assumed by upstream Proposition 3.1.9 is now constructed. |
 | G3c — Cyclic boundary and cost | Prove the common cyclic shift `σ_j(t+tf)=σ_(j+1)(t)` and the exact area-cost identity in the new parameter. | Source construction supplied through `AdmissibleRealization.lean`, with every hypothesis of `eqn_cost` discharged and a real-valued exact area identity. |
-| G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | The full forward admissible realization is constructed. Reverse comparison with every admissible control remains open; the forward construction alone does not establish `IsReinhardtMinimizer`. |
+| G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | Source proof supplied in `ReverseComparison.lean`. Every low-cost admissible trajectory constructs an equal-area balanced disk; high costs use the octagon. Actual worst disks produce full `IsReinhardtMinimizer` witnesses. |
 | G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | Open in the pinned formalization. |
 
 ### Reverse-comparison substeps
@@ -121,17 +124,27 @@ These are constructions within G3d, not separate cases of the conjecture.
 | --- | --- |
 | Derive regularity from integral admissibility | Source proof supplied in `AdmissibleRegularity.lean`, including endpoint derivatives within the interval and all six a.e. contact curvatures. |
 | Construct a smooth cyclic extension | Source construction supplied in `CyclicExtension.lean` from actual admissibility, with closed-segment agreement, seam derivatives, global state bounds, a.e. curvature, and cost preservation. |
-| Exclude extra winding at low cost | Source proof for global smooth star arcs supplied in `LowCostWinding.lean`; application to all admissible segments still requires the extension. |
+| Exclude extra winding at low cost | Source proofs supplied in `LowCostWinding.lean` and `ReverseGeometry.lean`, applied to arbitrary admissible segments through the constructed extension. |
 | Construct the balanced convex competitor | Source proof supplied in `ReverseGeometry.lean` from the explicit smooth cyclic-extension interface; simplicity, convexity, symmetry, and coverage are conclusions. |
-| Handle high costs and close the comparison | The high-cost case is supplied by the concrete octagon in `ControlBounds.lean`; full comparison is equivalent to `LowCostBalancedComparison`, which remains open. |
+| Handle high costs and close the comparison | Source proof supplied in `ReverseComparison.lean`: both `LowCostBalancedComparison` and `AdmissibleBalancedComparison` are discharged. |
+
+The remaining global inequality is now stated equivalently as
+
+```lean
+ReinhardtConjecture ↔ ControlLowerBound
+```
+
+`ControlLowerBound` covers every admissible control and all terminal times. Its low-cost
+restriction is sufficient, since the concrete octagon already handles costs at least `π`.
+The equivalence and existence of a minimizer do not establish this inequality.
 
 ## Next bounded mathematical task
 
-Continue **G3d** in the reverse direction. Derive interval regularity from the actual integral
-trajectory definition, construct a smooth cyclic extension with every seam checked, exclude
-extra winding in the low-cost regime, and construct the balanced convex competitor. A
-geometric area minimizer cannot be advertised as a minimizer over all control trajectories
-until this comparison is proved.
+Continue **G3e** from the actual control minimizer now constructed. A Pontryagin lift must
+be produced for that minimizer before extremal classification can be used without an extra
+hypothesis. General singular-control lemmas can prepare that classification, but do not
+supply the lift or the universal cost inequality. A direct global inequality remains an
+alternative route to G4–G5. No finite switching search is justified yet.
 
 ## Progress entries
 
@@ -199,7 +212,12 @@ until this comparison is proved.
   arbitrary integral admissibility. Matching endpoint values and velocities give every
   seam derivative via integral gluing. Finite piece bounds and periodicity give global
   state Lipschitz regularity; measure-preserving translations transport the actual null
-  sets. The entire closed segment and its exact cost are preserved.
+  sets. The entire closed segment and its exact cost are preserved; commit `52b1824`.
+- **2026-11-06, G3d completed in source:** assemble equal-area reconstruction for every
+  low-cost admissible trajectory and the high-cost octagon comparator. Construct a full
+  global control minimizer from an actual worst disk; every control minimizer conversely
+  reconstructs a worst disk with `cost / √12 = minimaxDensity`. The exact unrestricted
+  control inequality is equivalent to Reinhardt minimality and remains unproved.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,
