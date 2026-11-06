@@ -56,6 +56,14 @@ A cheaper finite vertex-control competitor must therefore require at least six p
 Arbitrary longer words remain open; there is no bound on the number of pieces in an
 arbitrary minimizer.
 
+At six pieces, the entire asymmetric orbit `010202` is also strictly more expensive
+than the octagon. The bound is sharp as an unattained infimum: an explicit feasible
+family converges to the octagon as two durations vanish. Among the four cyclically
+reduced six-piece orbits, `010102` fails the cyclic ordering test and `012012` contains
+forbidden forward alternation after rebasing, leaving only `012102` as an open
+six-piece minimizer pattern. The complete proof and
+classification are in [docs/SIX_ARC_010202.md](docs/SIX_ARC_010202.md).
+
 For an arbitrary admissible star state `X=[[a,b],[c,-a]]`, put
 `m=(c-b)/2` and `n=√(a²+((b+c)/2)²)`. The determinant identity gives `m²-n²=1`,
 and the cost is `C=3∫m`. The new hand estimate for `C<π` is
@@ -95,6 +103,12 @@ see [docs/EDGE_SWITCH_BOUND.md](docs/EDGE_SWITCH_BOUND.md). This does not bound 
 number of arcs using all three vertices. The shorter proposed `010`-to-two-arc deletion
 is actually impossible with both endpoint pairs fixed, as proved in
 [docs/LOCAL_SHORTENING_OBSTRUCTION.md](docs/LOCAL_SHORTENING_OBSTRUCTION.md).
+
+The concurrent proof in
+[docs/FORWARD_ALTERNATION_EXCLUSION.md](docs/FORWARD_ALTERNATION_EXCLUSION.md)
+strengthens the local edge result to every forward four-arc alternation
+`i,i+1,i,i+1`. A strictly negative constrained second variation handles the stationary
+case. The reverse orientation is not excluded, and this still supplies no total arc bound.
 
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) removes the initial-state ambiguity for
 every noncentral finite word-factor tuple. It excludes hyperbolic/parabolic endpoint
@@ -282,10 +296,12 @@ this is not a kernel-verification claim.
 | [docs/FIVE_ARC_PROGRESS.md](docs/FIVE_ARC_PROGRESS.md) | Complete five-piece word coverage and strict asymmetric comparison for the `01020` orbit |
 | [docs/REVERSE_FIVE_ARC.md](docs/REVERSE_FIVE_ARC.md) | Complete asymmetric reverse-five comparison, with a uniform bound above the circle |
 | [docs/REVERSE_FIVE_MINIMUM.md](docs/REVERSE_FIVE_MINIMUM.md) | Exact global minimum within the reverse five-arc family and its unique symmetric equality case |
+| [docs/SIX_ARC_010202.md](docs/SIX_ARC_010202.md) | Full asymmetric six-arc `010202` comparison, sharp octagon limit, and remaining six-arc classes |
 | [docs/VERTEX_WORD_REDUCTION.md](docs/VERTEX_WORD_REDUCTION.md) | Cyclic word exclusions and exact arbitrary-word dynamics, feasibility, and cost |
 | [docs/GLOBAL_CALIBRATION.md](docs/GLOBAL_CALIBRATION.md) | Exact failures of simpler global bounds and the remaining coupled certificate problem |
 | [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) | Complete arbitrary-word endpoint test, initial-state uniqueness, and central exceptions |
 | [docs/EDGE_SWITCH_BOUND.md](docs/EDGE_SWITCH_BOUND.md) | Strict local improvement excluding five alternating edge arcs from every minimizer |
+| [docs/FORWARD_ALTERNATION_EXCLUSION.md](docs/FORWARD_ALTERNATION_EXCLUSION.md) | Strict improvement for every forward four-arc alternation, including stationary endpoint fibers |
 | [docs/LOCAL_SHORTENING_OBSTRUCTION.md](docs/LOCAL_SHORTENING_OBSTRUCTION.md) | Exact obstruction to deleting a positive three-arc backtrack while fixing both endpoint pairs |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |

@@ -429,6 +429,13 @@ word length, not a new Lean declaration. Its measurable-interval corollary uses
 Hales–Vajjha Proposition 8.1.3 and Theorem 8.1.4 explicitly to give at most four
 pieces on a fixed-edge interval of a minimizer; it supplies no total word-length bound.
 
+[docs/FORWARD_ALTERNATION_EXCLUSION.md](docs/FORWARD_ALTERNATION_EXCLUSION.md),
+added concurrently in commit `1b23521`, is preserved and independently audited. Its
+explicit second variation on the same endpoint fiber excludes forward four-arc
+alternation at every word length. The rank-one Hessian term vanishes on the tangent;
+all three remaining coefficients are strictly negative in the forward orientation.
+The reverse sign and the distinction from a universal cost lower bound remain explicit.
+
 [docs/LOCAL_SHORTENING_OBSTRUCTION.md](docs/LOCAL_SHORTENING_OBSTRUCTION.md) uses
 the same exact tangent and state products to disprove a naive three-to-two shortening
 rule. It covers every shorter vertex word, excludes the central sign through positivity,
@@ -460,6 +467,16 @@ integral representation, strict concavity, positive numerator, both denominator
 directions, a uniform strict derivative bound for the scalar quotient, and the
 complete equality argument. Independent hand review checks the entire chain. This
 follow-up uses no further numerical or symbolic computation.
+
+[docs/SIX_ARC_010202.md](docs/SIX_ARC_010202.md) extends the noncyclic five-piece
+envelope to a complete three-parameter six-piece family. The proof supplies triangular
+tangent elimination, half-holonomy, the forced initial shape, all seven raw state rows,
+and a short exact cost cancellation. A scalar parameter bound then invokes the proved
+sharp envelope on its full domain. The actual family approaching the octagon verifies
+sharpness without asserting equality for a positive six-piece trajectory. Independent
+reviews check the entire hand argument and the four-orbit six-piece classification.
+With the cyclic ordering and concurrent forward-alternation results, only `012102`
+remains an open six-piece minimizer pattern. No computation is used.
 
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) develops the tangent/state products used
 in the four-link proof into a complete fixed-factor theorem for arbitrary finite words.

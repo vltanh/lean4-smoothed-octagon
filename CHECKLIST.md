@@ -19,6 +19,7 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Trajectories confined near `J` | Excluded if `n/m ≤ η₀ < π/A−1` throughout the interval | Arbitrary measurable controls; `m=(c−b)/2`, `n=√(a²+((b+c)/2)²)` |
 | Controls on a fixed simplex edge | Cannot satisfy `g(0)=I`, `g(T)=R` in the strict star domain | Arbitrary measurable controls, without a cost bound or terminal condition on `X` |
 | Vertex words omitting a letter | Infeasible by the fixed-edge exclusion | Every word length and unequal positive durations; one- and two-arc words are included |
+| Forward four-arc alternation `i,i+1,i,i+1` | Excluded from every global minimizer by a strict endpoint-preserving improvement | Every reduced local window at arbitrary word length; the reverse orientation is explicitly not excluded |
 | Five consecutive arcs alternating between two vertices | Excluded from every global minimizer by a strict endpoint-preserving improvement | A local `ijiji` window at any total word length; both frame and state endpoints are preserved, with free elapsed time |
 | Words violating the cyclic ordering test | Infeasible after an actual cyclic time rebase | `last(j) > first(j−1)` is required for every letter; it excludes every word with at most three arcs |
 | Noncentral nonelliptic word holonomy | Infeasible when tangent closure holds | Any finite length and positive factors with `|tr(RH)|≥2` and `RH≠±I` |
@@ -26,6 +27,8 @@ substeps do not count as excluded competitors or progress on this inequality.
 | Five-piece noncyclic orbit `01020` | Full asymmetric strict comparison proved by hand: `C > A` | All positive factors and initial states satisfying the actual endpoints, including all five cyclic rebases of this word |
 | Five-piece reverse cyclic orbit `02102` | Exact minimum at the symmetric golden-ratio tuple, with every asymmetric tuple strictly larger; also `C/√12 > 10/11 > π/√12` | The entire positive two-parameter tangent family; ellipticity, orientation, and full strict-star feasibility are proved |
 | At most five positive vertex pieces | Complete comparison `C ≥ A`, with octagon equality only | Every admissible trajectory with such a description; five-piece words that rebase and merge to four are included |
+| Six-piece orbit `010202` | Full asymmetric strict comparison proved by hand: `C > A`; the octagon is the unattained infimum | Every actual admissible member, with unequal factors and arbitrary initial shape; the two vanishing-arc octagon limit is constructed |
+| Remaining six-piece minimizer pattern | `012102` remains open | Of four raw cyclic orbits, `010102` fails the ordering test, `012012` has forbidden forward alternation after rebasing, and `010202` is compared above |
 | Quantitative circle deficit | `π−C ≤ 3∫n` and `C ≥ (π²+9T²)/(2π)` | Every actual admissible trajectory with `C<π` |
 | Strong-lift switching margin | Cubic margin proved on the stated family | Does not compare arbitrary competitors or bound switching times uniformly |
 | Unrestricted octagon inequality | Open | Trajectories leaving the excluded neighborhood, with arbitrary control history |
@@ -53,6 +56,13 @@ of zero. These local results do not bound the total number of arcs using all thr
 With the published edge-extremality and finite bang-bang theorems, every closed fixed-edge
 interval of a global minimizer consequently has at most four vertex pieces almost
 everywhere. This is a bound within one edge, not a bound on the full trajectory.
+
+[docs/FORWARD_ALTERNATION_EXCLUSION.md](docs/FORWARD_ALTERNATION_EXCLUSION.md),
+preserved from concurrent commit `1b23521`, strengthens this: every forward four-arc
+alternation `i,i+1,i,i+1` admits a strict endpoint-preserving improvement. If the
+first variation vanishes, the constrained Hessian is strictly negative. The reverse
+orientation has the opposite Hessian sign and is not excluded by this proof. Thus a
+four-piece edge interval in a global minimizer must have the reverse orientation.
 
 [docs/CIRCLE_VARIATION.md](docs/CIRCLE_VARIATION.md) gives an actual balanced convex
 competitor whenever a nonempty interval has `X=J`, with exact area gain
@@ -84,6 +94,15 @@ comparison to the exact unique minimum
 integral function of `Q+Q⁻¹`, Jensen's inequality, and a strictly decreasing scalar
 quotient force every factor to equal `φ` at equality. This is equality within the
 reverse five-piece family, not global affine rigidity.
+
+[docs/SIX_ARC_010202.md](docs/SIX_ARC_010202.md) extends the sharp noncyclic
+envelope to the complete asymmetric six-piece orbit `010202`. Its three-parameter
+endpoint family has the same scalar cost bound with a strictly smaller parameter
+than the octagon limit. Every positive member has strictly greater cost, while an
+explicit feasible family approaches the octagon as two pieces vanish. The note also
+classifies the four raw cyclically reduced six-piece orbits. The ordering test removes
+one, and the forward-alternation improvement removes `012012` from minimizers, leaving
+only `012102` as an open six-piece minimizer pattern.
 
 [docs/WORD_HOLONOMY.md](docs/WORD_HOLONOMY.md) supplies a complete fixed-factor endpoint
 test at arbitrary finite word length. Noncentral elliptic holonomy determines the only
@@ -475,6 +494,21 @@ the current research priority. No finite switching search is justified yet.
   its unique minimum at the golden-ratio factors. The equality state and equal
   physical durations are fixed by the already-proved endpoint classification.
   This strengthens the restricted comparison without a new numerical premise.
+  Commit `6ee0bcf`.
+- **2026-11-06, asymmetric six-piece orbit `010202`:** derive the complete tangent
+  factor family, unique initial state, all raw state transitions, and exact cost.
+  The existing sharp logarithmic envelope gives strict octagon comparison on the
+  entire three-parameter domain. Construct an actual family approaching the octagon
+  as two durations vanish, so the strict lower bound is the unattained infimum.
+  Independent hand audits check every endpoint and cost identity. Six-piece cyclic
+  word classification, the ordering test, and the concurrent forward-alternation
+  exclusion leave only `012102` as an open six-piece minimizer pattern.
+- **2026-11-06, forward four-arc alternation:** preserve the concurrent hand proof
+  in commit `1b23521` and independently audit its full constrained Hessian and exact
+  endpoint splice. Every forward alternating four-arc window is strictly improvable,
+  even when its first variation vanishes. The reverse orientation is not excluded.
+  This rules out the `012012` six-piece orbit from global minimizers after rebasing;
+  it is not yet a cost lower bound for every trajectory in that orbit.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

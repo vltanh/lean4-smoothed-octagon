@@ -98,6 +98,20 @@ as mathematical closure of the unrestricted comparison.
   strict concavity and increase, Jensen's inequality, positive numerator, denominator
   direction, uniform quotient derivative sign, exact minimum, and the unique golden
   factor tuple with its physical durations and normalized initial state.
+- [x] Independently audit the full asymmetric six-piece `010202` comparison: tangent
+  and state endpoints, parameter positivity, unique initial shape and sign, all raw
+  state rows, exact cost cancellation and logarithmic grouping, strict scalar-domain
+  bound, and the previously proved sharp envelope on the entire needed domain.
+- [x] Check the actual positive family approaching the octagon, with full-arc star
+  positivity and exactly two disappearing durations; no positive member attains equality.
+- [x] Check all six-piece cyclic increment patterns without a reflection assumption.
+  Distinguish the cost comparison for `010202`, the infeasible `010102` orbit, and
+  the local nonminimality result for `012012`; retain `012102` as the open pattern.
+- [x] Preserve and independently audit concurrent commit `1b23521`: smooth switch
+  dependence, both tail-integral Hessian formulas, cancellation of the derivative of
+  each jump coefficient, the rank-one term on the tangent line, the three strict
+  diagonal signs, and the exact free-time splice. Keep reverse alternation outside
+  the exclusion and do not infer a universal cost lower bound from local descent.
 - [ ] Unrestricted octagon comparison and affine rigidity: **open**.
 
 ## Reproducibility
