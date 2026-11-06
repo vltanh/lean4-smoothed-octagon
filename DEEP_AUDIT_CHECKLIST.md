@@ -64,6 +64,16 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Keep pointwise contact existence distinct from a continuous or smooth curve selection.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Continuous boundary construction
+
+- [x] Select critical hexagons from the actual no-gap theorem `rein_mem_Θ`.
+- [x] Use indexed uniqueness to prove continuity and period consistency of that selection.
+- [x] Check every midpoint curve, rather than only curve zero, for injectivity and full
+  coverage on every half-open interval of length `2π`.
+- [x] Obtain the normalized initial values from uniqueness at angle zero.
+- [x] Keep differentiability and arclength as explicit remaining obligations.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

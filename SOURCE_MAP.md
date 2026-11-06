@@ -68,6 +68,24 @@ The geometric inputs are `bdy_exists_hexagon`, `rein_normalize`,
 `rein_glpd_eq` and `rein_volume_std`. These all come from the pinned Chapter 2 implementation.
 The hand proof and exact scope are in [docs/NORMALIZATION.md](docs/NORMALIZATION.md).
 
+## Continuous boundary trace: `SmoothedOctagon/BoundaryTrace.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `criticalHexagonAtAngle`, `criticalHexagonAtAngle_spec`, `criticalHexagonAtAngle_unique` | Construct the unique indexed critical hexagon whose first midpoint is the polar boundary point |
+| `criticalBoundaryTrace`, `criticalBoundaryTrace_zero` | Its six moving midpoints, with curve zero equal to `rein_bd K` |
+| `criticalBoundaryTrace_continuous`, `criticalBoundaryTrace_mem_frontier` | Six continuous boundary-valued curves |
+| `criticalBoundaryTrace_isMultiPoint` | Constant normalized contact determinant and midpoint relations |
+| `criticalBoundaryTrace_periodic` | Common full period `2π` |
+| `criticalBoundaryTrace_injOn`, `criticalBoundaryTrace_image_Ico`, `criticalBoundaryTrace_range` | Simplicity and exhaustive boundary traversal on every half-open full period |
+| `criticalBoundaryTrace_circleRepresentation` | Initial values equal the sixth roots of unity |
+| `exists_continuous_normalized_boundary_trace` | Assemble the construction starting only with `IsWorstDisk K` and `rein_Std K` |
+
+The inputs `rein_mem_Θ`, `rein_continuous_V`, `rein_V_unique`, `rein_unique`,
+`rein_bd_inj`, and `rein_exists_bd_Ico` are in the pinned `Ch2/Reinhardt.lean`.
+No regular boundary curve is assumed or asserted at this step. See
+[docs/BOUNDARY_TRACE.md](docs/BOUNDARY_TRACE.md) for the hand argument.
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

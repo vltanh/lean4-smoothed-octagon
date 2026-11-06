@@ -2,6 +2,7 @@ module
 
 public import SmoothedOctagon.Problem
 public import SmoothedOctagon.Normalization
+public import SmoothedOctagon.BoundaryTrace
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 
@@ -12,5 +13,6 @@ The conjecture is stated in `SmoothedOctagon.Problem`; it is not asserted as a t
 `SmoothedOctagon.SwitchingMargin` supplies a quantitative bound for one explicit scalar
 switching expression. See `CHECKLIST.md` for the remaining mathematical obligations.
 
-This initial source draft has not been compiled or kernel-checked.
+The actual-minimizer normalization and continuous boundary construction begin the G2
+reduction. This source development has not been compiled or kernel-checked.
 -/
