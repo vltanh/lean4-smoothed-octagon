@@ -23,5 +23,10 @@ The logarithmic-angle construction in `LowCostWinding.lean` adapts the proof in 
 periodicity hypotheses. The original implementation remains credited to that pinned
 dependency and is reused under its Apache-2.0 license.
 
+The singular-control developments implement the published pointwise and singular-interval
+arguments in Hales–Vajjha, Chapter 8. Their generality and remaining optimality obligations
+are stated in the corresponding hand proofs; they are not claimed as new mathematical
+priority or as a proof of the full Reinhardt conjecture.
+
 mathlib supplies the logarithm inequalities, real algebra, measure theory, and Lean proof
 infrastructure. Its exact revision is recorded in the package configuration and source map.

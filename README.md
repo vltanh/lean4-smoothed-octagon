@@ -135,6 +135,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/ReverseGeometry.lean](SmoothedOctagon/ReverseGeometry.lean) | One-turn simplicity and a constructed balanced convex disk from cyclic frame data |
 | [SmoothedOctagon/CyclicExtension.lean](SmoothedOctagon/CyclicExtension.lean) | Actual global cyclic extension of arbitrary integral-admissible segments |
 | [SmoothedOctagon/ReverseComparison.lean](SmoothedOctagon/ReverseComparison.lean) | Full reverse comparison, actual control minimizers, and unconditional target equivalence |
+| [SmoothedOctagon/SingularLocus.lean](SmoothedOctagon/SingularLocus.lean) | General singular-control test and maximizing-control support on a proper edge |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -157,6 +158,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/REVERSE_GEOMETRY.md](docs/REVERSE_GEOMETRY.md) | Determinant winding obstruction and convex radial-hull reconstruction |
 | [docs/CYCLIC_EXTENSION.md](docs/CYCLIC_EXTENSION.md) | Seam regularity, global Lipschitz bounds, a.e. transport, and cost preservation |
 | [docs/REVERSE_COMPARISON.md](docs/REVERSE_COMPARISON.md) | Complete geometric/control correspondence and the remaining global inequality |
+| [docs/SINGULAR_LOCUS.md](docs/SINGULAR_LOCUS.md) | Weighted Hamiltonian identities and the exact control-independent locus |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |

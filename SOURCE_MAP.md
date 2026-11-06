@@ -343,6 +343,21 @@ the interval regularity proved in `AdmissibleRegularity.lean`. See
 This module supplies the previously separate comparison interface. It does not prove
 `ControlLowerBound` or affine rigidity. See [docs/REVERSE_COMPARISON.md](docs/REVERSE_COMPARISON.md).
 
+## Pointwise singular-control locus: `SmoothedOctagon/SingularLocus.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `traceForm_controlMatrix_eq_vertex_sum`, `eq_zero_of_traceForm_control_vertices_eq_zero` | Vertex-coordinate linearity and separation of traceless matrices |
+| `hamiltonian_denominator_mul_eq_vertex_sum`, `hamiltonian_gap_eq_vertex_sum` | Exact weighted Hamiltonian and nonnegative-gap identities |
+| `hamiltonian_le_of_vertex_le`, `hamiltonian_isMax_iff_vertexwise` | Vertexwise upper bounds and the full maximum condition |
+| `maximizing_control_support` | Every positive coordinate of a maximizing control uses a maximizing vertex |
+| `hamiltonian_vertices_equal_iff_reducedCostate_eq_zero`, `hamiltonian_constant_on_simplex_iff_reducedCostate_eq_zero` | General pointwise control-independence test under explicit star/perpendicularity hypotheses |
+| `hamiltonian_maximizers_in_proper_edge` | A nonzero reduced costate excludes one fixed vertex from the support of every maximizer |
+
+This implements Hales–Vajjha Lemma 8.2.1 by direct matrix and weighted-gap algebra,
+using the pinned star-denominator and trace-square results. It supplies no lift-existence
+or finite-switch theorem. See [docs/SINGULAR_LOCUS.md](docs/SINGULAR_LOCUS.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

@@ -53,6 +53,9 @@ These are source deliverables, not kernel-certified milestones.
 - [x] Complete the reverse comparison for every admissible control and construct an actual
   global control minimizer from a worst disk. Prove the exact minimax-value correspondence
   and `ReinhardtConjecture ↔ ControlLowerBound` without an assumed reduction bridge.
+- [x] Prove the general pointwise singular-control test: full-simplex Hamiltonian
+  independence is equivalent to zero reduced costate. A nonzero reduced costate confines
+  every maximizing control to one proper simplex edge.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -114,7 +117,7 @@ open propositions. Their equivalence to the original targets does not establish 
 | G3b — Determinant clock | Construct a global positive time change making the logarithmic derivative determinant one, with the needed regularity. | Source proof supplied in `DeterminantClock.lean`; the clock assumed by upstream Proposition 3.1.9 is now constructed. |
 | G3c — Cyclic boundary and cost | Prove the common cyclic shift `σ_j(t+tf)=σ_(j+1)(t)` and the exact area-cost identity in the new parameter. | Source construction supplied through `AdmissibleRealization.lean`, with every hypothesis of `eqn_cost` discharged and a real-valued exact area identity. |
 | G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | Source proof supplied in `ReverseComparison.lean`. Every low-cost admissible trajectory constructs an equal-area balanced disk; high costs use the octagon. Actual worst disks produce full `IsReinhardtMinimizer` witnesses. |
-| G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | Open in the pinned formalization. |
+| G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | In progress: general singular-control algebra is supplied in `SingularLocus.lean`. A lift of the actual minimizer and the complete later reduction remain open. |
 
 ### Reverse-comparison substeps
 
@@ -217,7 +220,13 @@ alternative route to G4–G5. No finite switching search is justified yet.
   low-cost admissible trajectory and the high-cost octagon comparator. Construct a full
   global control minimizer from an actual worst disk; every control minimizer conversely
   reconstructs a worst disk with `cost / √12 = minimaxDensity`. The exact unrestricted
-  control inequality is equivalent to Reinhardt minimality and remains unproved.
+  control inequality is equivalent to Reinhardt minimality and remains unproved;
+  commit `f64f2bf`.
+- **2026-11-06, G3e pointwise singular locus:** prove the exact denominator-weighted
+  Hamiltonian gap identity and maximizing-support rule. Equal vertex Hamiltonians force
+  zero reduced costate under the explicit star, tracelessness, and perpendicularity
+  conditions; a nonzero reduced costate excludes one fixed vertex from every maximizer.
+  This pointwise result neither supplies a lift nor bounds switching along a trajectory.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,
