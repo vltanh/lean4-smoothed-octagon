@@ -314,6 +314,20 @@ The geometric closure uses upstream `PlaneCurve.IsStarCurve.convex_radialHull` a
 the radial-hull frontier, compactness, and interior results. All simplicity and curvature
 inputs are supplied. See [docs/REVERSE_GEOMETRY.md](docs/REVERSE_GEOMETRY.md).
 
+## Actual cyclic extension: `SmoothedOctagon/CyclicExtension.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `cyclicMatrixExtension` and its period, agreement, shift, continuity, derivative, and Lipschitz lemmas | Six twisted matrix copies and a global periodic extension with all seam regularity derived |
+| `ae_of_periodic_ae_on_Ioo` | Extend a periodic a.e. property by measure-preserving translations and exclusion of the countable seam grid |
+| `contactCurvature_ae_of_cyclic_shift` | All-contact curvature is periodic under the cyclic shift, including totalized derivatives |
+| `cyclicFrameExtension`, `cyclicStateExtension` | Concrete frame and state extensions with the correct conjugation direction |
+| `exists_cyclic_extension_of_isReinhardtAdmissible` | Supply every global analytic input from arbitrary integral admissibility and preserve the closed original segment and exact cost |
+
+The construction reuses upstream `poly_pw` integral gluing and `oct_red`, together with
+the interval regularity proved in `AdmissibleRegularity.lean`. See
+[docs/CYCLIC_EXTENSION.md](docs/CYCLIC_EXTENSION.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

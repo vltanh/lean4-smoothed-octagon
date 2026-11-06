@@ -48,6 +48,8 @@ These are source deliverables, not kernel-certified milestones.
   by the octagon's area below `π`, and discharge the high-cost reverse-comparison case.
 - [x] Construct a balanced convex radial hull from a low-cost smooth cyclic frame,
   deriving one-turn simplicity and all geometric fields without assuming a boundary disk.
+- [x] Extend every integral-admissible segment through its cyclic seams, deriving global
+  `C¹` frame regularity, Lipschitz state, a.e. curvature, and exact cost preservation.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -118,7 +120,7 @@ These are constructions within G3d, not separate cases of the conjecture.
 | Step | Status |
 | --- | --- |
 | Derive regularity from integral admissibility | Source proof supplied in `AdmissibleRegularity.lean`, including endpoint derivatives within the interval and all six a.e. contact curvatures. |
-| Construct a smooth cyclic extension | In progress: preserve the full closed segment and cost, and check all value and derivative seams. |
+| Construct a smooth cyclic extension | Source construction supplied in `CyclicExtension.lean` from actual admissibility, with closed-segment agreement, seam derivatives, global state bounds, a.e. curvature, and cost preservation. |
 | Exclude extra winding at low cost | Source proof for global smooth star arcs supplied in `LowCostWinding.lean`; application to all admissible segments still requires the extension. |
 | Construct the balanced convex competitor | Source proof supplied in `ReverseGeometry.lean` from the explicit smooth cyclic-extension interface; simplicity, convexity, symmetry, and coverage are conclusions. |
 | Handle high costs and close the comparison | The high-cost case is supplied by the concrete octagon in `ControlBounds.lean`; full comparison is equivalent to `LowCostBalancedComparison`, which remains open. |
@@ -191,7 +193,13 @@ until this comparison is proved.
   contact from being opposite to the reflected first row. The row's full turn therefore
   forces exactly one contact turn, and positive angular speed yields simplicity. The
   radial hull is then proved convex and balanced from actual a.e. curvature. The theorem
-  consumes the explicit global cyclic-extension interface, not an assumed geometric disk.
+  consumes the explicit global cyclic-extension interface, not an assumed geometric disk;
+  commit `758a6d1`.
+- **2026-11-06, G3d cyclic extension:** construct all global cyclic-frame inputs from
+  arbitrary integral admissibility. Matching endpoint values and velocities give every
+  seam derivative via integral gluing. Finite piece bounds and periodicity give global
+  state Lipschitz regularity; measure-preserving translations transport the actual null
+  sets. The entire closed segment and its exact cost are preserved.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

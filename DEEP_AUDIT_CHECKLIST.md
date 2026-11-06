@@ -252,6 +252,22 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Keep the global extension inputs explicit until they are constructed from admissibility.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Actual admissible cyclic extension
+
+- [x] Construct six twisted copies and then a global periodic extension from the actual
+  admissible segment, preserving both states at every point of the closed segment.
+- [x] Derive matching frame velocities from both endpoint conditions, and use integral
+  gluing to obtain classical derivatives at the joins.
+- [x] Avoid differentiating the discontinuous periodic-reduction map at seams; translate
+  to a positive neighborhood where the integral-glued representation applies.
+- [x] Prove finite-piece Lipschitz bounds and promote a two-period bound to a global one.
+- [x] Transfer a.e. curvature by countably many measure-preserving translations;
+  distinguish arbitrary derivative null sets from the separate countable seam grid.
+- [x] Verify exact cost preservation by equality throughout the original interval.
+- [x] Independently review all seams, matrix conjugation directions, and the pinned
+  translation and totalized-derivative APIs.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

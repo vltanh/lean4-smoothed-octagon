@@ -18,6 +18,7 @@ public import SmoothedOctagon.LowCostWinding
 public import SmoothedOctagon.AdmissibleRegularity
 public import SmoothedOctagon.ControlBounds
 public import SmoothedOctagon.ReverseGeometry
+public import SmoothedOctagon.CyclicExtension
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 
