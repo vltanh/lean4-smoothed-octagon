@@ -597,6 +597,13 @@ the current research priority. No finite switching search is justified yet.
   family strictly increases from the octagon to `π`, with equality only at `k=1`.
   Independent hand review checks the integral, every derivative and sign, endpoint
   value, circular limit, and restriction to the standard equal-factor family.
+  Commit `bf55b85`.
+- **2026-11-06, stronger six-piece normalization bound:** prove that `N/ℓ²`
+  strictly increases in each of the two shape coordinates at fixed third parameter.
+  Its derivative numerator is an explicit sum of two positive terms on the actual
+  domain. This shortens the earlier sharp lower-bound argument and removes its
+  reverse-five-boundary dependency. The cost comparison is still open; monotonicity
+  of this invariant is not monotonicity of the cost or the remaining rational slack.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

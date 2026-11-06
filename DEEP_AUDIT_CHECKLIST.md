@@ -128,9 +128,10 @@ as mathematical closure of the unrestricted comparison.
   all three parameter domains, short holonomy matrix, normalized active margins,
   reverse-five boundary feasibility, all six junctions and continuous-arc signs,
   signed algebraic cost cancellation, and the logarithm tangent constants.
-- [x] Check the strict normalization bound `N/ℓ² > 5+4√2`: the derivative numerator
-  is strictly decreasing, both endpoint ratios are positive, the reverse-five physical
-  margin identifies the normalization, and the octagon boundary proves sharpness.
+- [x] Check the strict normalization bound `N/ℓ² > 5+4√2` and its stronger coordinate
+  monotonicity: an explicit sum of two positive terms gives each derivative sign,
+  decreasing a coordinate to its lower boundary preserves the domain, and the exact
+  boundary ratio with Cauchy–Schwarz gives the sharp octagon limit.
   Check `W > 4ℓ²` through the displayed rational factorization and its ordered-domain sign.
 - [x] Independently audit the reverse-alternation obstruction: actual measurable edge
   dynamics and inverse control, explicit four positive arcs, uniform strict-star bounds,

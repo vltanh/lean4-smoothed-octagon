@@ -496,8 +496,8 @@ reduction for that remaining case. Its three equivalent domains retain all unequ
 factors; the state holonomy, reverse-five boundary argument, and six junction checks
 prove complete strict-star feasibility. The exact cost follows from a signed junction
 sum. The logarithm tangent comes from the proved reverse-five concavity lemma.
-Endpoint minimization proves the sharp normalization bound `N/ℓ² > 5+4√2`; a short
-rational identity and the ordered algebraic domain prove `W > 4ℓ²`. Independent hand
+Strict coordinate monotonicity proves the sharp normalization bound `N/ℓ² > 5+4√2`;
+a short rational identity and the ordered algebraic domain prove `W > 4ℓ²`. Independent hand
 reviews check the reduction, these bounds, and the conditional implication of the
 rational cost target. That target inequality is unproved and is not used as a theorem.
 
