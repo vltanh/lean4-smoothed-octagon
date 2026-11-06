@@ -102,6 +102,21 @@ The pointwise inputs are `irr_exists_normal` and `irr_eq_of_line_eq` in upstream
 `IsCompact.tendsto_nhds_of_unique_mapClusterPt`. The full hand proof is in
 [docs/SUPPORT_NORMAL.md](docs/SUPPORT_NORMAL.md).
 
+## Radial regularity: `SmoothedOctagon/RadialRegularity.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `hasDerivAt_of_continuous_supporting_family` | Bilateral slope-squeeze derivative theorem from continuous supports |
+| `radialDirectionDerivative`, `hasDerivAt_rein_dir`, `det2_rein_dir_radialDirectionDerivative` | Unit direction derivative and its determinant |
+| `radial_support_contact`, `hasDerivAt_radialGauge_of_support`, `radialGauge_contDiff_of_support` | Gauge contact, derivative, and `C¹` regularity |
+| `rein_bd_contDiff_of_support`, `hasDerivAt_rein_bd_of_support`, `rein_bd_det2_deriv_of_support` | Radial curve regularity and the exact determinant formula |
+| `rein_bd_isPositiveBoundaryParam_of_support`, `rein_bd_isPositiveBoundaryParam_of_unique_support`, `rein_bd_isPositiveBoundaryParam_of_isWorstDisk` | Positive regular parametrization, culminating in a theorem about an actual worst disk |
+| `rein_bd_det2_deriv_of_unique_support`, `rein_bd_det2_deriv_of_isWorstDisk` | Orientation identity with the support field hypotheses discharged |
+
+The calculus inputs include mathlib's `hasDerivAt_iff_tendsto_slope`, order squeeze,
+and `contDiff_one_iff_deriv`, inspected at the exact pinned revision. The hand proof is in
+[docs/RADIAL_REGULARITY.md](docs/RADIAL_REGULARITY.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

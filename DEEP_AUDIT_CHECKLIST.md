@@ -86,6 +86,16 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Independently review the hand proof and inspect the pinned compactness APIs.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Radial regularity
+
+- [x] Squeeze both positive and negative difference quotients using minimum and maximum.
+- [x] Differentiate the contact value without differentiating the continuous covectors.
+- [x] Use the gauge's strict positivity before inversion.
+- [x] Compute the exact radial determinant `1 / gauge(dir)^2` and deduce regularity.
+- [x] Obtain support uniqueness from the actual worst-disk theorem, not an added hypothesis.
+- [x] Independently review the proof and inspect the calculus APIs at the exact mathlib pin.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

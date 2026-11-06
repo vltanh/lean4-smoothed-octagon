@@ -53,10 +53,10 @@ for one actual worst disk; an upstream theorem supplies existence of such a disk
 linear image with the six critical contact midpoints at the sixth roots of unity, and preserves
 its greatest packing density. In that normal position, density is area divided by `2 * √3`.
 `BoundaryTrace.lean` then constructs the six continuous contact curves, their common full
-period `2π`, simple traversal, boundary coverage, and normalized initial values. Radial
-smoothness, arclength, and the balanced-pair assembly remain as G2c–G2e in the ledger.
-The continuous supporting covector field needed for that smoothness argument is now
-constructed in `SupportNormal.lean`, using compactness and unique supporting lines.
+period `2π`, simple traversal, boundary coverage, and normalized initial values.
+`SupportNormal.lean` and `RadialRegularity.lean` derive a regular positive `C¹` radial
+curve from unique supporting lines. The common arclength parameter and balanced-pair
+assembly remain as G2d–G2e in the ledger.
 
 The global lower bound and affine rigidity remain open. `ReinhardtConjecture` names minimality,
 `AffineRigidity` names uniqueness after centering, and `FullReinhardtConjecture` is their
@@ -81,6 +81,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/Normalization.lean](SmoothedOctagon/Normalization.lean) | Actual-minimizer normalization, contact configurations, and area objective |
 | [SmoothedOctagon/BoundaryTrace.lean](SmoothedOctagon/BoundaryTrace.lean) | Actual continuous six-contact trace and its global topology |
 | [SmoothedOctagon/SupportNormal.lean](SmoothedOctagon/SupportNormal.lean) | Continuous supporting covectors without a smooth-boundary assumption |
+| [SmoothedOctagon/RadialRegularity.lean](SmoothedOctagon/RadialRegularity.lean) | Supporting-slope differentiation and the regular positive radial curve |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -88,6 +89,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/NORMALIZATION.md](docs/NORMALIZATION.md) | Construction and source dependencies for the normalized worst disk |
 | [docs/BOUNDARY_TRACE.md](docs/BOUNDARY_TRACE.md) | Hand proof of the continuous contact-curve construction |
 | [docs/SUPPORT_NORMAL.md](docs/SUPPORT_NORMAL.md) | Support existence, uniqueness, compactness, continuity, and gauge domination |
+| [docs/RADIAL_REGULARITY.md](docs/RADIAL_REGULARITY.md) | Bilateral slope proof and exact orientation certificate |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |
