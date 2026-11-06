@@ -1,29 +1,41 @@
 # Working agreement
 
-## Current priority: mathematical closure before Lean
+## Current priority: a proved uniform reduction before more case comparisons
 
-The user changed the immediate workflow on 2026-11-06: stop building Lean infrastructure;
-attack the unrestricted Reinhardt comparison directly. Computer assistance is permitted
-for exploration and direction, but an eventual proof must have a complete hand argument.
-Numerical optimization, sampled inequalities, and symbolic output are not certificates.
+The user explicitly requested a bounded set of cases before proceeding further.
+Pause increasing-length whole-word enumeration. Do not make seven-, eight-, or
+higher-arc closed comparisons the next milestones. New Lean infrastructure is
+also paused: mathematical closure and a hand proof come first.
 
-Make small, mathematically coherent commits on the existing PR branch. Keep CHECKLIST.md
-focused on actual excluded competitors, proved inequalities, and exact remaining gaps.
-Preserve failed approaches when they prevent repetition. Do not count added notation,
-reformulations, or formalization substeps as mathematical closure.
+The current candidate finite route is docs/BOUNDED_REDUCTION.md. Its hand
+coverage argument reduces any minimizing word with at least six pieces to
+one of five local templates: 012012, 021021, 021210, 010201, 021012. The FIVE
+universal local improvement claims are all open. A conditional finite package
+is not an unconditional bound and is not five completed cases.
 
-Do not compile Lean, run Lake, typecheck, or add, modify, or run CI. Existing Lean files
-remain uncompiled drafts. No new Lean proof is required at this stage. A future numerical
-script must state its domain, constraints, reproducibility information, and limitations.
+Work should prove or refute one of those universal local statements on its
+entire explicit domain, or provide a different genuinely uniform bound and
+coverage theorem. Preserve both frame and state endpoints; keep initial-state
+variation, rank degeneracies, geometric eligibility, and boundary limits
+explicit. A global closed-word comparison is not a local window theorem.
+Do not turn a failed local target into an ever-increasing word-length cutoff.
 
-Keep the PR description, CHECKLIST.md, README.md, SOURCE_MAP.md, and
-DEEP_AUDIT_CHECKLIST.md consistent with the current mathematical status. Open mathematics
-must remain documented obligations, never assertions with a proof hole or a new axiom.
-Keep conditional hypotheses visible and do not import upstream Challenge stubs.
+Computer assistance is permitted for exploration and direction. Retained
+scripts must specify domains, constraints, versions, finite inputs or seeds,
+commands, failures, and limitations. Numerical optimization, sampled signs,
+and symbolic output are not the final hand proof.
 
-Use the pinned lean4-smoothed-polygon source for existing definitions and the published
-papers for known mathematical reductions. Distinguish arbitrary smoothed polygons from
-the symmetric (6k+2) family. A finite list of research obligations is not a finite list
-of candidate bodies. Do not advertise exhaustive search without a proved uniform bound
-and coverage theorem. Report global minimality, affine uniqueness, and kernel validation
-separately.
+Make small, mathematically coherent commits on the existing PR branch. Keep
+CHECKLIST.md, README.md, the PR description, SOURCE_MAP.md, and the audit
+boundary aligned. Separate proved coverage, open analytic inputs, completed
+comparisons, and deferred kernel validation. Do not count notation,
+reformulation, or formalization substeps as excluded global competitors.
+
+Do not compile Lean, run Lake, typecheck, or add, modify, or execute CI.
+Existing Lean files remain uncompiled drafts. Do not add proof holes, axioms,
+or imports of upstream Challenge stubs. Preserve earlier contributions and
+failed approaches. Use the pinned upstream definitions and published papers
+for known reductions; standard regular (6k+2) families are not all smoothed
+polygons. Report global minimality, affine uniqueness, and kernel validation
+separately. Earlier detailed status inventories remain available in Git history;
+the current ledger takes precedence over older suggested next tasks.
