@@ -10,7 +10,7 @@ supersedes earlier recommendations to continue by increasing whole-word length.
 
 | Statement | Exact source and status |
 | --- | --- |
-| Five-template coverage for every minimizing N>=6 | [BOUNDED_REDUCTION, Sections 1-2](docs/BOUNDED_REDUCTION.md): complete hand run argument, conditional on the already supplied forward-alternation exclusion. |
+| Five-template coverage for every minimizing N>=6 | [BOUNDED_REDUCTION, Sections 1-2](docs/BOUNDED_REDUCTION.md): complete independently reviewed hand run argument, conditional on the already supplied forward-alternation exclusion. |
 | Local strict improvements imply N<=5 and then global minimality/rigidity | Same note, Section 3: proved conditional implication; all five new analytic premises are open. |
 | Eight-coordinate input domains | Same note, Section 4: initial margins, exact factor updates, full-arc signs, cost, and geometric sector tests. |
 | Full local endpoint map | Same note, Section 5: preserve tangent product AND terminal state with initial state fixed; generally the tangent endpoint is not R. |
@@ -36,6 +36,13 @@ supersedes earlier recommendations to continue by increasing whole-word length.
   correspondence and exact cost conventions used in the program.
 
 ## Published sources and attribution
+
+The archived [SIX_ARC_012102_MOMENTS](docs/SIX_ARC_012102_MOMENTS.md)
+retains the previously completed cost implication and proofs of two sufficient
+moment inequalities on all finite arc-vanishing boundary faces. These hand
+arguments were independently reviewed. Both interior inequalities remain open;
+this is neither a closed six-piece comparison nor a local L1-L5 improvement.
+Further investigation is paused under the current priority.
 
 Hales, *On the Reinhardt Conjecture* (2011), Section 7.6, Conjecture 56 and
 Lemma 58, proposes local six-to-five link reduction and its role in reducing

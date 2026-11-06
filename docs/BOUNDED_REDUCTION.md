@@ -388,8 +388,10 @@ The run proof and endpoint inversion formulas are hand arguments. A finite
 transition-graph check can cross-check coverage without enumerating any
 maximum total length. Exploratory floating-point searches on endpoint
 fibers are not certificates, especially when a solver fails to converge.
-There is no claim of independent review, Lean compilation, or kernel
-validation for the new reduction.
+The coverage proof in Sections 1-2 has received an independent hand review of
+the exact sign catalogue, twisted seam, run argument, and one-period window
+condition. This review does not establish the analytic local claims. There is
+no claim of Lean compilation or kernel validation for the new reduction.
 
 ## Stop rule
 

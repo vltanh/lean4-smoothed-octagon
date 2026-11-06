@@ -2,9 +2,10 @@
 
 Date: 2026-11-06. New work is hand research and explicitly scoped exploration.
 No new Lean file was added; no compilation, Lake, typechecking, kernel audit,
-or CI was run. No independent reviewer checked the new coverage proof in this
-session; the mathematical check is the displayed hand argument plus a distinct
-finite-graph computational cross-check.
+or CI was run. The coverage proof received an independent hand review of its
+sign catalogue, twisted seam, run alternatives, and one-period window condition,
+in addition to the distinct finite-graph computational cross-check. The analytic
+local targets have not been proved or independently certified.
 
 The complete earlier audit is preserved at
 [798a7e1 / DEEP_AUDIT_CHECKLIST.md](https://github.com/vltanh/lean4-smoothed-octagon/blob/798a7e119e254c3ee23073de615288986fa61929/DEEP_AUDIT_CHECKLIST.md).
@@ -26,7 +27,9 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
 - [x] Cross-check with the standard-library graph script: 32 sign blocks,
   21 surviving the old exclusion, 5 target edges removed, 12 vertices and
   16 remaining edges in a directed acyclic graph.
-- [ ] Independent mathematical review of the new coverage and domain note.
+- [x] Independent mathematical review of the coverage argument in Sections 1-2.
+- [ ] Complete independent mathematical review of every domain and analytic
+  assertion in the new note; the coverage review alone does not establish this.
 
 ## Endpoint and domain checks
 
@@ -82,6 +85,12 @@ It was used only to inspect numerical conditioning and possible deformation
 directions. No statement in the hand coverage proof depends on it.
 
 ## Reproducibility and scope
+
+The archived `docs/SIX_ARC_012102_MOMENTS.md` was completed before the new
+priority. Its exact cost implication, logarithmic coefficient bounds, and both
+finite-boundary moment inequalities passed independent hand review. Neither
+interior inequality is proved. Preserving this work does not close a local
+target or continue increasing-length enumeration.
 
 - [x] Retain the exact finite graph checker and its finite input specification.
 - [x] Retain the numerical probe with fixed seed, versions, constraints, failed

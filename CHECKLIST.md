@@ -21,7 +21,7 @@ boundedness theorem.
 
 | Component | Exact completion condition | Status |
 | --- | --- | --- |
-| Coverage | Every cyclically reduced minimizing word with N>=6 contains one of the five specified six-arc windows, using the established forward-alternation exclusion. | Hand proof supplied, with an independent finite-graph computational cross-check. No new cost class excluded by this alone. |
+| Coverage | Every cyclically reduced minimizing word with N>=6 contains one of the five specified six-arc windows, using the established forward-alternation exclusion. | Hand proof independently reviewed, with a separate finite-graph computational cross-check. No new cost class excluded by this alone. |
 | L1: 012012 | Strictly cheaper endpoint-preserving replacement on the entire eligible local domain. | **Open.** The closed six-piece comparison does not prove this local claim. |
 | L2: 021021 | Same universal local improvement for five consecutive reverse switches. | **Open.** A regular-family comparison does not cover asymmetric local endpoints. |
 | L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Open.** |
@@ -82,7 +82,7 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | All descriptions with at most five positive vertex pieces | Full comparison and equality within that class: [four](docs/FOUR_LINK_HAND_PROOF.md), [five noncyclic](docs/FIVE_ARC_PROGRESS.md), [five reverse](docs/REVERSE_FIVE_ARC.md). |
 | Forward four-arc alternation | Arbitrary-length local strict improvement, used in the new coverage proof: [hand argument](docs/FORWARD_ALTERNATION_EXCLUSION.md). |
 | Two complete six-piece closed orbits | [010202](docs/SIX_ARC_010202.md), its [independent deformation](docs/SIX_ARC_REVERSE_BLOCK.md), and [012012](docs/SIX_ARC_012012.md). These are not the open local L1-L5 statements. |
-| Remaining closed six-piece orbit | [012102](docs/SIX_ARC_012102.md) has endpoint/cost reductions but no completed comparison; work is paused unless it directly proves a bounded-reduction input. |
+| Remaining closed six-piece orbit | [012102](docs/SIX_ARC_012102.md) has endpoint/cost reductions but no completed comparison. The archived [moment note](docs/SIX_ARC_012102_MOMENTS.md) proves two sufficient inequalities on every finite arc-vanishing boundary; both interior targets remain open. Work is paused unless it directly proves a bounded-reduction input. |
 | Both standard regular polygon families | [REGULAR_FAMILY_COMPARISON](docs/REGULAR_FAMILY_COMPARISON.md) handles equal-arc standard families of arbitrary size, not asymmetric words. |
 | Other length-independent restrictions | [fixed edges](docs/SWITCHING_WORDS.md), [cyclic ordering](docs/VERTEX_WORD_REDUCTION.md), [endpoint holonomy](docs/WORD_HOLONOMY.md), [circle intervals](docs/CIRCLE_VARIATION.md), and [near-circle bounds](docs/NEAR_CIRCLE_BOUND.md). None supplies a uniform word bound. |
 | Failed shortcuts | [GLOBAL_CALIBRATION](docs/GLOBAL_CALIBRATION.md) and [LOCAL_SHORTENING_OBSTRUCTION](docs/LOCAL_SHORTENING_OBSTRUCTION.md); preserve these to prevent repeated invalid reductions. |
@@ -100,6 +100,12 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 - Ledger reorientation: freeze increasing-length comparisons; separate the
   proved finite coverage theorem from the five open universal cost statements.
   Retain the exploratory local-fiber probe with its failures, not as a certificate.
+- Independent hand review passed for the five-template coverage: all sign/label
+  maps, the twisted seam, the run alternatives, and the one-period window
+  condition were checked. This does not review or close any analytic target.
+- Preserve the previously completed closed-012102 moment boundary arguments.
+  Their cost implication and finite boundary proofs were independently reviewed;
+  the two interior inequalities remain open and their investigation is paused.
 
 ## Literature and validation boundary
 

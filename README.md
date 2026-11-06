@@ -41,7 +41,8 @@ interval computation on a truncated parameter box is advertised as exhaustive.
 
 The complete domains, twisted-seam argument, exact endpoint map, positive-factor
 inverses, and singular-rank obligations are in the note. The independent hand
-coverage proof uses runs of forward/reverse switch signs. The retained
+coverage proof uses runs of forward/reverse switch signs and has received a
+separate hand review of the sign catalogue, twisted seam, and run argument. The retained
 [finite graph cross-check](explorations/finite_window_cover.py) examines only
 32 fixed-size sign blocks and verifies an acyclic graph; it does not enumerate
 trajectories up to an arbitrary maximum length.
@@ -67,7 +68,9 @@ results do not bound the complexity of every minimizer.
 
 The remaining closed six-piece orbit [012102](docs/SIX_ARC_012102.md) is still
 uncompared. Its investigation is paused unless it directly closes a uniform
-reduction input. In particular the completed CLOSED 012012 comparison does
+reduction input. Its archived [moment boundary arguments](docs/SIX_ARC_012102_MOMENTS.md)
+prove two sufficient inequalities on all finite arc-vanishing boundary faces;
+neither interior inequality is proved. In particular the completed CLOSED 012012 comparison does
 not close the LOCAL 012012 target: a local endpoint is generally not R, and
 its initial state cannot be varied when splicing into the surrounding path.
 
