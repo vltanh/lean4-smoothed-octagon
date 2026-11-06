@@ -1,21 +1,29 @@
 # Working agreement
 
-Develop this project on a dedicated branch and keep the PR description synchronized with
-the actual proof status. Make small, mathematically coherent commits.
+## Current priority: mathematical closure before Lean
 
-The current workflow is source-level Lean plus hand proofs. Do not compile Lean, run Lake,
-typecheck, or add, modify, or run CI unless the user changes that policy. Record validation
-as **not run**; source review is not kernel verification.
+The user changed the immediate workflow on 2026-11-06: stop building Lean infrastructure;
+attack the unrestricted Reinhardt comparison directly. Computer assistance is permitted
+for exploration and direction, but an eventual proof must have a complete hand argument.
+Numerical optimization, sampled inequalities, and symbolic output are not certificates.
 
-Keep `CHECKLIST.md`, `DEEP_AUDIT_CHECKLIST.md`, `SOURCE_MAP.md`, and `README.md` current.
-Represent open mathematics as named propositions or documented obligations, never as
-an asserted theorem with a proof hole or a new axiom. Keep every conditional result's
-hypotheses visible. Do not import the upstream `Challenge` module.
+Make small, mathematically coherent commits on the existing PR branch. Keep CHECKLIST.md
+focused on actual excluded competitors, proved inequalities, and exact remaining gaps.
+Preserve failed approaches when they prevent repetition. Do not count added notation,
+reformulations, or formalization substeps as mathematical closure.
 
-Reuse the pinned `lean4-smoothed-polygon` source modules for existing geometry and
-packing-density results. Distinguish a result for its symmetric `(6k+2)` family from a
-result about arbitrary smoothed polygons or arbitrary centrally symmetric convex disks.
+Do not compile Lean, run Lake, typecheck, or add, modify, or run CI. Existing Lean files
+remain uncompiled drafts. No new Lean proof is required at this stage. A future numerical
+script must state its domain, constraints, reproducibility information, and limitations.
 
-A finite list of roadmap obligations is not a finite classification of candidate bodies.
-Do not advertise a finite case search until its uniform bound and coverage theorem exist.
-Report global minimality, affine uniqueness, and kernel validation separately.
+Keep the PR description, CHECKLIST.md, README.md, SOURCE_MAP.md, and
+DEEP_AUDIT_CHECKLIST.md consistent with the current mathematical status. Open mathematics
+must remain documented obligations, never assertions with a proof hole or a new axiom.
+Keep conditional hypotheses visible and do not import upstream Challenge stubs.
+
+Use the pinned lean4-smoothed-polygon source for existing definitions and the published
+papers for known mathematical reductions. Distinguish arbitrary smoothed polygons from
+the symmetric (6k+2) family. A finite list of research obligations is not a finite list
+of candidate bodies. Do not advertise exhaustive search without a proved uniform bound
+and coverage theorem. Report global minimality, affine uniqueness, and kernel validation
+separately.
