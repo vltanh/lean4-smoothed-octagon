@@ -59,6 +59,9 @@ These are source deliverables, not kernel-certified milestones.
 - [x] Prove every entirely circular admissible trajectory has cost at least `π`, while
   every full control minimizer has cost below `π`. Thus a minimizer has a noncircular
   interior state; proper circular subintervals remain possible at this stage.
+- [x] For an actual Pontryagin extremal, prove that vanishing reduced costate on a
+  nonempty open interval forces a normal multiplier, circle state, and uniform control
+  almost everywhere there. The actual lift is an explicit input, not an existence result.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -120,7 +123,7 @@ open propositions. Their equivalence to the original targets does not establish 
 | G3b — Determinant clock | Construct a global positive time change making the logarithmic derivative determinant one, with the needed regularity. | Source proof supplied in `DeterminantClock.lean`; the clock assumed by upstream Proposition 3.1.9 is now constructed. |
 | G3c — Cyclic boundary and cost | Prove the common cyclic shift `σ_j(t+tf)=σ_(j+1)(t)` and the exact area-cost identity in the new parameter. | Source construction supplied through `AdmissibleRealization.lean`, with every hypothesis of `eqn_cost` discharged and a real-valued exact area identity. |
 | G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | Source proof supplied in `ReverseComparison.lean`. Every low-cost admissible trajectory constructs an equal-area balanced disk; high costs use the octagon. Actual worst disks produce full `IsReinhardtMinimizer` witnesses. |
-| G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | In progress: general singular-control algebra is supplied in `SingularLocus.lean`. A lift of the actual minimizer and the complete later reduction remain open. |
+| G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | In progress: pointwise singular-control algebra, singular-interval rigidity, and entire-circle exclusion are supplied. Actual lift existence, proper singular-subarc exclusion, and the complete later reduction remain open. |
 
 ### Reverse-comparison substeps
 
@@ -143,6 +146,17 @@ ReinhardtConjecture ↔ ControlLowerBound
 `ControlLowerBound` covers every admissible control and all terminal times. Its low-cost
 restriction is sufficient, since the concrete octagon already handles costs at least `π`.
 The equivalence and existence of a minimizer do not establish this inequality.
+
+### Extremal and singular-control substeps
+
+| Step | Status |
+| --- | --- |
+| Construct a lift of the actual global minimizer | Open. The source extremal predicate requires integral costate dynamics, reduced nontriviality, Hamiltonian maximization and zero value, and endpoint transversality. |
+| Identify the control-independent locus | Source proof supplied in `SingularLocus.lean` for general star states and perpendicular traceless reduced costates. |
+| Derive singular-interval rigidity | Source proof supplied in `SingularArc.lean` for an actual extremal with zero reduced costate on the stated nonempty interval. |
+| Exclude an entirely circular minimizer | Source proof supplied in `CircleExclusion.lean` from actual admissibility and minimality, without requiring a lift. |
+| Exclude proper singular subarcs | Open. The whole-trajectory cost comparison does not apply to a proper subinterval. |
+| Complete the Mahler First reduction | Open. Edge extremality, switching accumulation, and the later singular analysis remain to be supplied. A uniform side bound would be a separate stronger requirement. |
 
 ## Next bounded mathematical task
 
@@ -235,7 +249,13 @@ alternative route to G4–G5. No finite switching search is justified yet.
   angular speed for a circular state. The actual admissible cyclic extension and primary
   winding theorem force cost at least `π`; comparison with the constructed competitor
   excludes an entirely circular full minimizer. No costate or assumed lift is required,
-  and no proper singular subarc is excluded.
+  and no proper singular subarc is excluded; commit `387c6a7`.
+- **2026-11-06, G3e singular-interval rigidity:** starting with an actual integral-form
+  Pontryagin extremal, upgrade the a.e. costate equations and zero Hamiltonian to the
+  pointwise identity `Λ₁ = (3λ/2) J`. Nontriviality gives `λ < 0`; the remaining equations
+  force `X = J` and uniform control a.e. on the specified interval. Full-simplex control
+  independence implies the same rigidity. Together with entire-circle exclusion, an
+  actual lifted minimizer cannot have zero reduced costate on its whole interval.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

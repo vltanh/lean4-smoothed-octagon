@@ -312,6 +312,22 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Independently review the source and keep proper circular subarcs explicitly open.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Singular-interval rigidity
+
+- [x] Retain the actual `IsPontryaginExtremal` input and the nonempty open interval
+  on which the reduced costate is assumed to vanish; do not introduce a lift axiom.
+- [x] Use the integral costate equation and Lebesgue FTC only almost everywhere, then
+  upgrade the first-costate identity by continuity on the open interval.
+- [x] Use nontriviality at an actual interior point to obtain a strictly negative
+  multiplier before cancelling it in the first-costate differential equation.
+- [x] Identify the circle state from the star-component signs, and derive uniform
+  control only almost everywhere from the original state equation.
+- [x] Review both wrappers against the exact pinned extremal tuple, interval hypotheses,
+  and distinction between full control independence and a nonunique maximizing edge.
+- [x] Preserve the explicit lift hypothesis on the whole-interval reduced-costate
+  exclusion; proper singular subarcs and isolated singular contacts remain open.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for
@@ -327,7 +343,7 @@ All **64 upstream Lean files** at the pinned commit were fetched and searched fo
 The project imports implementation modules, not `Challenge` or `Solution`. The source import
 graph reaches **58 upstream implementation modules** in `Basic`, `External`, and
 `SmoothedPolygons`, then mathlib.
-All **25 local Lean modules**, including the umbrella, are in the current root closure.
+All **26 local Lean modules**, including the umbrella, are in the current root closure.
 The local graph has no missing imports or cycles; an independent source scan found no
 cross-file uses of private local declarations or local declaration collisions.
 The name `External` does not by itself denote an assumed theorem: the fetched files contain

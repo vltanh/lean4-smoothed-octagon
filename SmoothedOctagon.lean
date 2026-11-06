@@ -22,6 +22,7 @@ public import SmoothedOctagon.CyclicExtension
 public import SmoothedOctagon.ReverseComparison
 public import SmoothedOctagon.SingularLocus
 public import SmoothedOctagon.CircleExclusion
+public import SmoothedOctagon.SingularArc
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 
@@ -37,5 +38,7 @@ switching expression. See `CHECKLIST.md` for the remaining mathematical obligati
 `AdmissibleRealization` constructs the full forward control realization with exact area cost.
 `ReverseComparison` constructs geometric competitors for all admissible controls and proves
 the exact global control-minimizer correspondence. The octagon lower bound remains open.
+`SingularLocus` and `SingularArc` identify control independence and its interval rigidity;
+`CircleExclusion` rules out only an entirely circular full minimizer.
 This source development has not been compiled or kernel-checked.
 -/

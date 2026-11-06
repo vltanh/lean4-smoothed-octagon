@@ -13,7 +13,7 @@ That project is distributed under Apache-2.0; this project uses the same license
 
 The source contributions in this PR include the explicit global targets, the quantitative
 rational switching certificate, and constructions completing the actual-minimizer balanced
-reduction and starting its control realization. Hand proofs and source drafts are reviewed
+reduction and the geometric/control comparison in both directions. Hand proofs and source drafts are reviewed
 within this assistant session. The analytic normalization and reduction arguments implement
 known mathematical ideas and the pinned upstream geometric results; this is not a claim of
 new priority for those ideas or of kernel verification.

@@ -371,6 +371,21 @@ The actual admissible extension supplies the analytic interface. This result doe
 require a Pontryagin lift and does not exclude proper circular subarcs. See
 [docs/CIRCLE_EXCLUSION.md](docs/CIRCLE_EXCLUSION.md).
 
+## Singular-interval rigidity: `SmoothedOctagon/SingularArc.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `commuting_perpendicular_eq_zero`, `costate_eq_cost_of_zero_reduced_derivative` | Centralizer and trace-form algebra identify the first costate |
+| `starState_eq_J_of_commutator_zero`, `circle_control_unique` | Star signs select the circle state; its stationary control is uniform |
+| `pontryagin_costate_eq_on_zero_reducedCostate` | Upgrade integral/a.e. costate information to a pointwise first-costate identity on the open interval |
+| `pontryagin_zero_reducedCostate_rigidity` | An actual extremal with zero reduced costate on a nonempty interval is normal, circular, and uniformly controlled there |
+| `pontryagin_controlIndependent_interval_rigidity` | Full-simplex control independence implies the same local rigidity |
+| `controlMinimizer_reducedCostate_not_identically_zero` | A full minimizer with an actual lift cannot have zero reduced costate on its entire interval |
+
+This develops the interval argument of Hales–Vajjha Lemma 8.2.2 and Theorem 8.2.3 from
+the pinned integral extremal predicate. It supplies neither lift existence nor exclusion
+of proper singular subarcs. See [docs/SINGULAR_ARC.md](docs/SINGULAR_ARC.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

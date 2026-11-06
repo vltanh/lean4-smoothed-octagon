@@ -101,6 +101,10 @@ locus and confines maximizing controls to a proper simplex edge away from it.
 `CircleExclusion.lean` proves entirely circular admissible trajectories cost at least `π`,
 so every full minimizer has a noncircular interior state. Proper circular subarcs are
 not excluded by this whole-trajectory argument.
+`SingularArc.lean` proves that an actual Pontryagin extremal with zero reduced costate
+on a nonempty interval has `λ < 0`, circle state, and uniform control almost everywhere
+on that interval. The actual lift remains an explicit hypothesis; proper singular-subarc
+exclusion and the later Mahler First reduction are still open.
 
 The global lower bound and affine rigidity remain open. `ReinhardtConjecture` names minimality,
 `AffineRigidity` names uniqueness after centering, and `FullReinhardtConjecture` is their
@@ -143,6 +147,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/ReverseComparison.lean](SmoothedOctagon/ReverseComparison.lean) | Full reverse comparison, actual control minimizers, and unconditional target equivalence |
 | [SmoothedOctagon/SingularLocus.lean](SmoothedOctagon/SingularLocus.lean) | General singular-control test and maximizing-control support on a proper edge |
 | [SmoothedOctagon/CircleExclusion.lean](SmoothedOctagon/CircleExclusion.lean) | Entire-circle cost bound and an actual noncircle state in every full minimizer |
+| [SmoothedOctagon/SingularArc.lean](SmoothedOctagon/SingularArc.lean) | Normal circle-state rigidity on a specified zero-reduced-costate interval |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -167,6 +172,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/REVERSE_COMPARISON.md](docs/REVERSE_COMPARISON.md) | Complete geometric/control correspondence and the remaining global inequality |
 | [docs/SINGULAR_LOCUS.md](docs/SINGULAR_LOCUS.md) | Weighted Hamiltonian identities and the exact control-independent locus |
 | [docs/CIRCLE_EXCLUSION.md](docs/CIRCLE_EXCLUSION.md) | Exact circular cost, unit angular speed, and whole-trajectory exclusion |
+| [docs/SINGULAR_ARC.md](docs/SINGULAR_ARC.md) | Integral costate regularity, multiplier normality, and circle-state rigidity |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |
