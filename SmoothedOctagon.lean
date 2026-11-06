@@ -8,6 +8,7 @@ public import SmoothedOctagon.RadialRegularity
 public import SmoothedOctagon.ArcLength
 public import SmoothedOctagon.BalancedReduction
 public import SmoothedOctagon.BalancedTargets
+public import SmoothedOctagon.DeterminantClock
 public import SmoothedOctagon.SwitchingMargin
 public import SmoothedOctagon.StrongSwitching
 

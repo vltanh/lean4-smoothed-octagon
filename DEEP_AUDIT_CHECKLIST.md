@@ -123,6 +123,20 @@ revisions, rather than a moving `main` branch, are the intended dependency bound
 - [x] Keep the unrestricted area bound and equality classification as open propositions.
 - [ ] Check Lean elaboration and kernel dependencies: **not run**.
 
+## Matrix frame and determinant clock
+
+- [x] Construct one global contact frame from two adjacent contacts and prove its action
+  on all six points, determinant one, regularity, period, and initial identity.
+- [x] Derive positive raw determinant and strict star signs from the balanced geometry.
+- [x] Construct the inverse integral of `sqrt(det X)` and check the squared determinant
+  scaling law for two-dimensional matrices.
+- [x] Supply all hypotheses of upstream Proposition 3.1.9 for global state Lipschitz regularity.
+- [x] Derive speed covariance by differentiating the actual matrix contact-shift identity.
+- [x] Prove the generic clock conjugacy, retaining the successor's existence and sixfold
+  relation as explicit inputs until the separate geometric construction is integrated.
+- [x] Review matrix/inverse APIs and the hand argument independently.
+- [ ] Check Lean elaboration and kernel dependencies: **not run**.
+
 ## Upstream source scan
 
 All **64 upstream Lean files** at the pinned commit were fetched and searched for

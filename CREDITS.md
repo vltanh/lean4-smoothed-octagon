@@ -11,11 +11,12 @@ theorems are reused by dependency from
 in the [upstream credits](https://github.com/vltanh/lean4-smoothed-polygon/blob/8ce732873a1aa054e98dac46cfaa8d7bb96ffa6f/CREDITS.md).
 That project is distributed under Apache-2.0; this project uses the same license.
 
-The new work in this initial PR is the explicit global-target interface and the quantitative
-rational certificate for the upstream switching expression, with its hand proof and source
-draft. The certificate was derived algebraically and independently reviewed within this
-assistant session. This statement makes no claim of priority beyond the comparison with the
-pinned repository, and no claim of kernel verification.
+The source contributions in this PR include the explicit global targets, the quantitative
+rational switching certificate, and constructions completing the actual-minimizer balanced
+reduction and starting its control realization. Hand proofs and source drafts are reviewed
+within this assistant session. The analytic normalization and reduction arguments implement
+known mathematical ideas and the pinned upstream geometric results; this is not a claim of
+new priority for those ideas or of kernel verification.
 
 mathlib supplies the logarithm inequalities, real algebra, measure theory, and Lean proof
 infrastructure. Its exact revision is recorded in the package configuration and source map.

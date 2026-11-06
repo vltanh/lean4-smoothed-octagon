@@ -162,6 +162,24 @@ The full assembly and target-transfer argument is in
 [docs/BALANCED_REDUCTION.md](docs/BALANCED_REDUCTION.md). No theorem in these modules proves
 the remaining area inequality or classifies its equality cases.
 
+## Matrix and determinant clock: `SmoothedOctagon/DeterminantClock.lean`
+
+| Declaration | Mathematical content |
+| --- | --- |
+| `contactFrame`, `contactFrame_action`, `contactFrame_unique`, `contactFrame_det` | Explicit global frame, full contact action, uniqueness, and determinant one |
+| `contactFrame_initial`, `contactFrame_contDiff`, `contactFrame_hasDerivAt`, `contactFrame_periodic` | Circle initial value and global regularity/periodicity |
+| `contactLogDerivative`, `contactFrame_dynamics`, `contactLogDerivative_properties` | Raw logarithmic state, its frame equation, trace, and positive star/determinant conditions |
+| `continuous_contactLogDerivative`, `contactLogDerivative_periodic`, `contactLogDerivative_det` | Continuity, period, and determinant relation with the ordinary frame derivative |
+| `determinantSpeed` and its positivity, square, continuity, and period lemmas | The actual clock density `sqrt(det X)` |
+| `contactFrame_shift_of_contacts`, `determinantSpeed_contact_shift` | Frame and density covariance under a positive contact successor |
+| `inv_sqrt_smul_isStarState`, `normalizedContactState` | Exact determinant normalization and preserved star signs |
+| `balanced_exists_determinant_clock` | Construct the inverse clock, normalized star state, global Lipschitz state, and frame dynamics from a balanced pair |
+| `determinantClock_conjugates_successor` | A positive sixfold successor becomes a uniform shift by `P / 6` in the constructed time |
+
+The geometric inputs are upstream `corollary3_1_6`, `proposition3_1_9`, and matrix
+derivative rules. The scalar clock is constructed by `ArcLength.lean`. See
+[docs/DETERMINANT_CLOCK.md](docs/DETERMINANT_CLOCK.md).
+
 ## New quantitative inequality: `SmoothedOctagon/SwitchingMargin.lean`
 
 | Declaration | Mathematical content |

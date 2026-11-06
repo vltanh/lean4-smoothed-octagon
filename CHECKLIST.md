@@ -30,6 +30,8 @@ These are source deliverables, not kernel-certified milestones.
   an actual worst disk.
 - [x] Transfer global minimality and affine rigidity to exact unrestricted balanced
   targets, with no assumed minimizer-reduction theorem.
+- [x] Construct the global determinant-one contact frame and the positive periodic clock
+  making its logarithmic derivative a determinant-one star state with Lipschitz entries.
 - [x] Map every mathematical claim to source declarations and record the validation boundary.
 - [ ] Compile and inspect kernel dependencies. **Not run under the current workflow.**
 
@@ -46,7 +48,7 @@ list, that the tasks have comparable difficulty, or that they are all routine fo
 | --- | --- | --- |
 | G1 — Fix the global target | Use the existing greatest packing density of congruent copies for every centrally symmetric convex disk; identify the concrete octagon and state affine rigidity separately. | Source draft supplied in `Problem.lean`; validation deferred. |
 | G2 — Normalize an actual minimizer | Construct a balanced circle representation of an actual worst disk, preserving the relevant density and supplying every boundary parametrization hypothesis. | Source proof supplied through `worstDisk_balanced_normalization` in `BalancedReduction.lean`. Every parametrization hypothesis is constructed. Kernel validation remains deferred. |
-| G3 — Justify the chosen reduction | If using the smoothed-polygon route, prove the needed optimal-control, extremal-lift, and Mahler First bridges for the minimizer from G2. | In progress. The next constructions are the matrix frame, determinant clock, and cyclic contact parameter; the admissible-competitor correspondence and later reduction remain open. |
+| G3 — Justify the chosen reduction | If using the smoothed-polygon route, prove the needed optimal-control, extremal-lift, and Mahler First bridges for the minimizer from G2. | In progress. The matrix frame and determinant clock are constructed. Cyclic contact time, the admissible-competitor correspondence, and the later reduction remain to be integrated or proved. |
 | G4 — Make the global comparison exhaustive | Prove either a direct inequality covering all normalized competitors, or an explicit uniform switch/side bound plus coverage of all words, parameter ranges, limits, and degeneracies. | Open research obligation. No finite case list is available yet. |
 | G5 — Prove the octagon lower bound | Discharge `octagonDensity ≤ greatestPackingDensity K` for a genuine worst disk and apply `reinhardtConjecture_of_worst_disk`. | Open. Comparisons within the regular `(6k+2)` family cannot close this gate. |
 | G6 — Classify equality | Prove `AffineRigidity`: every worst disk is an invertible linear image of the centered octagon. | Open; not implied by G5. |
@@ -87,17 +89,17 @@ open propositions. Their equivalence to the original targets does not establish 
 
 | Step | Required output | Status |
 | --- | --- | --- |
-| G3a — Matrix frame | Construct the `SL₂` frame of the actual contact curve and its positive-determinant logarithmic derivative. | In progress. |
-| G3b — Determinant clock | Construct a global positive time change making the logarithmic derivative determinant one, with the needed regularity. | In progress; upstream Proposition 3.1.9 assumes this clock and does not construct it. |
+| G3a — Matrix frame | Construct the `SL₂` frame of the actual contact curve and its positive-determinant logarithmic derivative. | Source proof supplied in `DeterminantClock.lean`, with explicit frame, derivative, and star signs. |
+| G3b — Determinant clock | Construct a global positive time change making the logarithmic derivative determinant one, with the needed regularity. | Source proof supplied in `DeterminantClock.lean`; the clock assumed by upstream Proposition 3.1.9 is now constructed. |
 | G3c — Cyclic boundary and cost | Prove the common cyclic shift `σ_j(t+tf)=σ_(j+1)(t)` and the exact area-cost identity in the new parameter. | In progress; a common full period alone is insufficient for upstream `eqn_cost`. |
 | G3d — Admissible comparison | Supply measurable simplex controls and integral state trajectories, then justify comparison with every control-admissible competitor or a precisely restricted equivalent class. | Open. An almost-everywhere ODE by itself does not supply this bridge. |
 | G3e — Extremals and polygon reduction | Obtain the relevant Pontryagin lift and the complete Mahler First reduction for the actual minimizer. | Open in the pinned formalization. |
 
 ## Next bounded mathematical task
 
-Continue **G3a–G3c** with the actual balanced minimizer now constructed: build its matrix
-frame, the determinant-normalizing clock, and the cyclic shift needed by the area-cost
-theorem. Keep G3d's competitor correspondence explicit. A geometric area minimizer cannot
+Continue **G3c–G3d** with the actual balanced minimizer and determinant clock now constructed:
+build the cyclic shift and measurable integral control needed by the area-cost and admissibility
+theorems. Keep G3d's competitor correspondence explicit. A geometric area minimizer cannot
 be advertised as a minimizer over all control trajectories until that comparison is proved.
 
 ## Progress entries
@@ -118,7 +120,12 @@ be advertised as a minimizer over all control trajectories until that comparison
   commit `eb339a6`.
 - **2026-11-06, G2e and target transfer:** all balanced-pair fields assembled from an actual
   worst disk, with density preserved. Balanced area minimizers and actual packing minimizers
-  are linked in both directions. The unrestricted area bound and rigidity remain open.
+  are linked in both directions; commit `4ed2dda`. The unrestricted area bound and rigidity
+  remain open.
+- **2026-11-06, G3a–G3b:** construct the contact frame, raw logarithmic derivative,
+  positive determinant speed, and inverse clock. A proved covariance identity conjugates
+  a positive sixfold contact successor to translation by `P / 6`; the actual successor
+  construction is integrated separately.
 
 The cubic switching margin is available for later quantitative control estimates. A new
 estimate should be tied to one of G2–G6 before it is added to the progress ledger. In particular,

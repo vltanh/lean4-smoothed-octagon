@@ -67,9 +67,10 @@ FullReinhardtConjecture ↔ BalancedAreaLowerBound ∧ BalancedAffineRigidity
 ```
 
 The first remaining proposition is an area inequality over all balanced circle competitors;
-the second classifies all balanced circle minimizers up to affine equivalence. The matrix,
-cyclic-time, and admissible-control constructions needed for the optimal-control route are
-the next tasks, recorded as G3a–G3e in the ledger.
+the second classifies all balanced circle minimizers up to affine equivalence.
+`DeterminantClock.lean` constructs the global matrix frame and a time change making its
+logarithmic derivative a determinant-one star state with Lipschitz entries. The cyclic-time,
+admissible-control, and competitor-comparison constructions remain in G3c–G3e of the ledger.
 
 The global lower bound and affine rigidity remain open. `ReinhardtConjecture` names minimality,
 `AffineRigidity` names uniqueness after centering, and `FullReinhardtConjecture` is their
@@ -98,6 +99,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [SmoothedOctagon/ArcLength.lean](SmoothedOctagon/ArcLength.lean) | Constructed global Euclidean arclength parameter and its inverse |
 | [SmoothedOctagon/BalancedReduction.lean](SmoothedOctagon/BalancedReduction.lean) | Actual-minimizer balanced representation and area minimization in both directions |
 | [SmoothedOctagon/BalancedTargets.lean](SmoothedOctagon/BalancedTargets.lean) | Exact unrestricted area and rigidity targets equivalent to the original conjecture |
+| [SmoothedOctagon/DeterminantClock.lean](SmoothedOctagon/DeterminantClock.lean) | Global contact frame, determinant-normalizing clock, and successor covariance |
 | [SmoothedOctagon/SwitchingMargin.lean](SmoothedOctagon/SwitchingMargin.lean) | Exact scalar certificate and cubic margin |
 | [SmoothedOctagon/StrongSwitching.lean](SmoothedOctagon/StrongSwitching.lean) | Quantitative bounds for the actual normalized switching functions |
 | [docs/SWITCHING_MARGIN.md](docs/SWITCHING_MARGIN.md) | Complete hand proof of the scalar estimate |
@@ -108,6 +110,7 @@ proof holes or axioms; this is not a kernel-verification claim.
 | [docs/RADIAL_REGULARITY.md](docs/RADIAL_REGULARITY.md) | Bilateral slope proof and exact orientation certificate |
 | [docs/ARC_LENGTH.md](docs/ARC_LENGTH.md) | Integrated speed, global inverse, and exact unit-speed proof |
 | [docs/BALANCED_REDUCTION.md](docs/BALANCED_REDUCTION.md) | Complete G2 assembly and the remaining global targets |
+| [docs/DETERMINANT_CLOCK.md](docs/DETERMINANT_CLOCK.md) | Matrix construction, determinant speed, and clock conjugacy |
 | [CHECKLIST.md](CHECKLIST.md) | Finite list of global obligations and the next bounded task |
 | [SOURCE_MAP.md](SOURCE_MAP.md) | Sources, reused results, and declaration map |
 | [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md) | Dependency checks, source scans, and deferred kernel validation |
