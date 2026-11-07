@@ -87,7 +87,15 @@ coordinate of any window.
 
 ## Final assembly after M2
 
-**G4 (OPEN):** Use all five sufficient whole-period exclusions to reduce a global minimizer to \(N\le5\), then apply the retained asymmetric through-five cost-and-equality comparison; alternatively give a direct full-period sharp comparison. Prove **affine uniqueness**, not just a cost lower bound. Recheck the geometric correspondence, boundary controls and equality transport.
+**G4 (OPEN):** The [conditional assembly](GLOBAL_COST_EQUALITY_ASSEMBLY.md)
+uses all five sufficient whole-period exclusions to reach \(N\le5\).
+The [terminal comparison and equality audit](SMALL_PERIOD_COST_EQUALITY_AUDIT.md)
+is complete, with 72 exact checks independently replayed: arbitrary
+four-piece factors, strict mixed-five comparison, all terminal words,
+and equality transport for the original disk. The uniform R theorem
+excludes reverse-five minimizing periods directly. M2 must still close
+before this assembly proves the unrestricted cost inequality and affine
+uniqueness.
 
 **G5 (OPEN):** Perform an independent complete *mathematical* dependency audit. Keep external premises and internal hand checks explicit. Lean proof and CI remain deferred by the current instructions.
 

@@ -8,6 +8,8 @@ For **M2**, consult the mixed_global_short_bridge family of certificates and CSV
 
 For **closed-case regressions**, consult abnormal_normality, pure_reverse_minimum and mixed_global_short_run_angle certificates.
 
+The **terminal cost and equality** checker is `small_period_cost_equality_certificate.py`: 72 exact identities and terminal word-coverage checks, supporting the independently audited minimizer-only through-five argument. The global assembly remains conditional on M2.
+
 The completed **F** cover is `global_forward_completion_casimir_certificate.cpp`, with its source hash and result in `global_forward_completion_casimir_certificate_result.txt`. Its 20,999-node exact rational cover discharges the complementary domain of the hand circular-corner proof.
 
 The completed **smaller-short M2** caller is `mixed_smaller_short_interval_certificate.cpp`. Its full directed cover has 107,977 nodes and 53,989 excluded leaves, with zero unresolved boxes; hashes and reproduction commands are in `mixed_smaller_short_interval_certificate_result.txt`. The shared backend `certified_mpfr_interval.hpp`, regression checker and build instructions are documented in [INTERVAL_ARITHMETIC_ENGINE](../docs/INTERVAL_ARITHMETIC_ENGINE.md). The mathematical interface is separately audited; floating-point LP proposals never directly discharge a box.
