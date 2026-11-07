@@ -147,6 +147,13 @@ has a saturated incident ceiling. Their
 [independent review](MIXED_NONSHORT_SHAPE_REDUCTION_AUDIT.md) checks all
 domain and sign directions. Enlarged endpoint positivity remains open.
 
+The subsequent [rational reverse secant comparison](MIXED_NONSHORT_REVERSE_AFFINE_COMPARISON.md)
+makes the lower comparison gap affine and strictly decreasing in shape,
+leaving a single necessary upper endpoint. The retained symmetric
+central lower bound also decreases with shape, so its high-a cap
+condition can be used there with the exact incoming secant fixed.
+The final endpoint sign remains open.
+
 [The short-side root and angle reduction](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md)
 keeps an actual outer root while decreasing the Casimir, with an explicit
 positive determinant bound. A circle formula maximizes the polar angle
@@ -164,6 +171,19 @@ unchanged in the scalar boundary comparison. The
 removes the D<=0 part of a separate opposite-floor stopping face.
 Their [hand review](HAND_FURTHER_REFINEMENTS_AUDIT.md) does not claim
 the remaining positive-D face or the other short faces are excluded.
+
+[The shear/cost formulas](MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md)
+identify every possible scale minimum of the relaxed short cost: scale
+endpoints, the clipping point, and one explicit critical angle.
+For the separate positive-D opposite-floor remainder, a two-step Jensen
+argument removes the apparent root-interval endpoint. Completed squares
+and one short polynomial identity exclude the entire outer-scale
+endpoint. Only the central-duration endpoint remains for that floor
+face. These [reviewed reductions](HAND_ENDPOINT_REDUCTIONS_AUDIT.md)
+leave the remaining cost and floor signs explicit. Actual lower Casimir
+information, including a bound from the fixed incoming turn, is retained
+in the cost score without claiming a lower bound on the artificially
+deformed determinant.
 
 ## Acceptance rule
 

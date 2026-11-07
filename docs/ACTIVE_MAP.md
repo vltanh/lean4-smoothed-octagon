@@ -42,6 +42,14 @@ The neighbor input is now a complete hand theorem:
 [asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md), and
 [audit](HAND_FORWARD_NEIGHBOR_AUDIT.md).
 
+The current mixed endpoint sources are the
+[reverse affine comparison](MIXED_NONSHORT_REVERSE_AFFINE_COMPARISON.md),
+[short shear/cost reduction](MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md),
+and [short floor reductions](MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md),
+with [independent review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
+The last source excludes the root-interval and outer-scale endpoints;
+its separate floor face retains one central-duration inequality.
+
 ## Completed theorem and review path
 
 All sufficient whole-period cases and the final cost/equality assembly

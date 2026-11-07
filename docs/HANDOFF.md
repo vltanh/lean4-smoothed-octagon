@@ -41,6 +41,16 @@ prove both ratios below 4/3, with their
 [independent audit](HAND_FORWARD_NEIGHBOR_AUDIT.md). F still needs the
 stationary norm-sum or direct Casimir sign.
 
+For the mixed cases, the [affine reverse comparison](MIXED_NONSHORT_REVERSE_AFFINE_COMPARISON.md)
+leaves one upper shape endpoint, and the
+[short shear/cost formulas](MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md)
+list all possible scale minima. The
+[short floor analysis](MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md)
+removes both the root-interval and outer-scale endpoints, leaving one
+central-duration sign for the separate opposite-floor face. Their
+[review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md) does not close the remaining
+whole-case exclusions.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

@@ -429,6 +429,104 @@ secant expression: its geometry and its equal-secant u were fixed from
 the start. The angle test has intentionally been weakened by maximizing
 over all diagonal pairings at each retained kappa.
 
+One may retain the actual lower Casimir information in this *score*
+without pretending that it is preserved by the artificial determinant.
+The actual mixed-period bound is kappa_actual>9/8. Therefore
+
+\[
+\kappa_{\rm eff}:=\max\{\sqrt{12\Gamma},9/8\}
+\le\kappa_{\rm actual},\qquad
+\mathcal F(\kappa_{\rm eff})\le A_{\rm oct}.
+\tag{27}
+\]
+
+The inequality follows solely from the proved monotonicity of the score.
+More generally, a proved lower bound on actual kappa depending only on
+the fixed short geometry may replace 9/8 in this maximum. This supplies
+no additional stopping face and makes no lower-cap assertion about the
+deformed Gamma.
+
+The effective parameter and retained lower bound below are accepted in
+[HAND_ENDPOINT_REDUCTIONS_AUDIT](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
+
+### A retained lower bound from the fixed incoming norm
+
+Such a geometry-dependent bound follows directly from the actual two
+incident turns. Let
+
+\[
+m=\Phi(1-r),\qquad
+\Phi(\eta)=1-\eta^2-\frac{4\eta}{3}
+                  +\frac{2\eta}{3}\sqrt{12\eta-2}.
+\]
+
+The [explicit turn floor](EXPLICIT_TURN_NORM_FLOOR.md) gives
+actual v>Phi(1-t)>=m>3/4, since t<=r and Phi is increasing.
+Moreover
+
+\[
+U(r)-m=\frac{1-r}{6}
+       \bigl(\sqrt{10-12r}-2\bigr)^2>0,
+\]
+
+so m<U(r)<=U(t) throughout t in [rho/r,r]. Keep u fixed and
+lower only the actual opposite norm to m. On this norm segment the
+central estimate E<=3rho applies, and
+
+\[
+\frac{\partial\Gamma}{\partial v}
+=\frac{2u-E/t}{8(1-\rho)^2}
+\ge\frac{2u-3r}{8(1-\rho)^2}>0.
+\]
+
+Consequently the actual Gamma is strictly greater than the scalar
+value after this norm lowering. At that lowered norm put
+
+\[
+E_m(t)=\frac{u-1}{r}+\frac{m-1}{t}
+       +1+r+t-\rho+\log\frac{\rho}{rt}.
+\]
+
+Its derivative is \((U(t)-m)/t^2>0\). Thus its values lie
+between the two explicit endpoints
+
+\[
+E_0=\frac{u-1}{r}+\frac{(m-1)r}{\rho}
+                  +1+r+\frac\rho r-\rho,
+\qquad
+E_r=\frac{u+m-2}{r}+1+2r-\rho+\log\frac\rho{r^2}.
+\]
+
+The square of a real number in an interval is at most the larger
+endpoint square. With no sign assumption on E_m, this proves
+
+\[
+\boxed{\Gamma_{\rm actual}>
+G_{\rm ret}:=
+\frac{4um-\max\{E_0^2,E_r^2\}}{16(1-\rho)^2}.}
+\tag{28}
+\]
+
+Every quantity in G_ret depends only on the fixed incoming norm and
+fixed short geometry. Therefore this bound concerns the same actual
+period at every stage of the root comparison. It does not say that the
+artificial Gamma has this lower bound. In particular, the comparison
+may retain both necessary conditions
+
+\[
+G_{\rm ret}<\Gamma_{\rm cap},\qquad
+\mathcal F\left(\max\left\{
+ \sqrt{12\Gamma},\frac98,
+ \sqrt{12\max\{0,G_{\rm ret}\}}\right\}\right)
+\le A_{\rm oct}.
+\tag{29}
+\]
+
+The first follows from (28) and the actual upper cap. The second
+follows because each entry of its maximum is at most actual kappa,
+and the score is nondecreasing. The same proof with m=3/4 gives a
+weaker entirely rational norm floor if preferred.
+
 ## 6. What remains after this reduction
 
 Every actual smaller-short competitive period supplies a scalar point

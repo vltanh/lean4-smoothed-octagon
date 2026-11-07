@@ -198,3 +198,118 @@ G_i^{(3/4)}=
 These are weaker but shorter retained conditions. Both versions are
 hand inequalities on the unchanged actual data, not endpoint execution
 results or sampled lower bounds.
+
+
+## 5. The retained upper-ratio bound decreases with the shape parameter
+
+This additional comparison is accepted in the
+[endpoint review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
+
+Fix t, m and the exact incoming secant v, with
+
+\[
+0<t<1/2,\qquad 3/4\le m,v\le U(t).
+\]
+
+Write rho=t^2/k and consider the function in (9) as
+
+\[
+G(\rho)=\frac{4mv-E(\rho)^2}{16(1-\rho)^2},
+\quad
+E(\rho)=1+2t-\rho+\log\frac{\rho}{t^2}
+                        -\frac{2-m-v}{t},
+\quad 0<\rho\le t^2.
+\tag{15}
+\]
+
+Then G is strictly increasing in rho. Equivalently, the retained
+quantity Gt is strictly decreasing in k for k>=1. This is a scalar
+comparison of an explicit bound, with t, m and v fixed.
+
+To prove it, set
+
+\[
+C=\frac{(1-\rho)^2}{\rho},\qquad
+H=4mv-E^2-EC.
+\]
+
+Differentiation gives
+
+\[
+G'(\rho)=\frac{H}{8(1-\rho)^3}.
+\tag{16}
+\]
+
+We prove H>0 without assuming E has a fixed sign.
+
+If E<=0, observe that
+
+\[
+C+E=\rho^{-1}-1+2t+\log(\rho/t^2)-(2-m-v)/t.
+\]
+
+Its derivative in rho is (rho-1)/rho^2<0. Therefore its minimum
+on 0<rho<=t^2 is at rho=t^2, where
+
+\[
+C+E\ge t^{-2}-1+2t-\frac1{2t}>0.
+\]
+
+For the final strict sign, multiply by 2t^2: the numerator is
+2-t-2t^2+4t^3>2-1/2-1/2=1. It follows that
+
+\[
+H=4mv-E(E+C)\ge4mv>0.
+\tag{17}
+\]
+
+Suppose instead that E>0. Throughout an increase of either norm
+toward U(t), E remains positive, and
+
+\[
+\partial_m H=4v-\frac{2E+C}{t}<4-\frac Ct<0,
+\]
+
+with the same argument for the derivative in v. Here
+
+\[
+\frac Ct\ge\frac{(1-t^2)^2}{t^3}>\frac92,
+\]
+
+since rho<=t^2<1/4 and t<1/2. Raising both norms to U(t)
+therefore decreases H. At these two upper norms put
+
+\[
+E_U=-1+4t-\rho+\log(\rho/t^2),\qquad
+H_U=4U(t)^2-E_U^2-E_U C.
+\]
+
+One has E_U<1-rho, because log(rho/t^2)<=0 and 4t<2.
+Direct differentiation and evaluation at rho=t^2 give
+
+\[
+H_U'(\rho)=
+-\frac{(1-\rho)^2(1-\rho-E_U)}{\rho^2}<0,
+\]
+\[
+H_U(t^2)=\frac{(1-t^2)^2(1-2t)^2}{t^2}>0.
+\tag{18}
+\]
+
+Consequently H>=H_U(rho)>=H_U(t^2)>0 in this second case
+as well. Equations (16)--(18) prove the claimed monotonicity.
+
+In particular, when the original actual centre has a>=3/4,
+Section 3 supplies Gt(k)<9193/50000. For any larger shape value
+k'>=k, including a justified upper shape endpoint, this gives
+
+\[
+\boxed{G_t(k')\le G_t(k)<9193/50000.}
+\tag{19}
+\]
+
+The exact v and t stay fixed in this comparison. Formula (19)
+transports the explicit lower-bound inequality; it does not transport
+the original Casimir to an artificial root. Replacing v by an upper
+secant approximation inside Gt would require a separate comparison
+and is not asserted here.

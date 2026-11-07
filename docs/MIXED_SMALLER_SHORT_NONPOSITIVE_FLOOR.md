@@ -1,7 +1,10 @@
 # The opposite norm floor cannot occur alone when the short diagonal is nonpositive
 
 Date: 2026-11-07. Hand proof, accepted in independent internal review.
-See [HAND_FURTHER_REFINEMENTS_AUDIT](HAND_FURTHER_REFINEMENTS_AUDIT.md).
+The original nonpositive-diagonal lemma is reviewed in
+[HAND_FURTHER_REFINEMENTS_AUDIT](HAND_FURTHER_REFINEMENTS_AUDIT.md);
+the subsequent endpoint reductions and exclusions are reviewed in
+[HAND_ENDPOINT_REDUCTIONS_AUDIT](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
 
 This removes the nonpositive-diagonal part of one stopping face in
 [MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md).
@@ -195,7 +198,8 @@ remain when
 D>0,\qquad 0<\tau d<1.
 \]
 
-Writing
+Use \(f(s)=s-s^{-1}-\log s\) and
+\(h(s)=\log s-1+s^{-1}\), as in the reverse-root interface. Writing
 \(C_0=-f(\tau)+u/r_A-f(1/r_A)-h(1/\rho_A)\), the fixed-root
 equation gives
 
@@ -211,3 +215,448 @@ Thus a sufficient further face-collapse inequality would be
 
 It is not proved here on the remaining positive-diagonal domain. That
 case and the other stopping faces remain open.
+
+## 6. A simple localization of the remaining positive-diagonal face
+
+At a remaining v=3/4 endpoint, retain D>0, the fixed outer root and
+its norm ceilings, and the sharper reverse scale rho_A<1/7. The outer
+central-pairing bound gives E_L<=3rho_A. Consequently
+
+\[
+E=2\rho Du-E_L/\lambda
+\ge2\rho Du-3\alpha^2\rho> -\frac12,
+\]
+
+because \(\rho_A<1/7\) is equivalent to
+\(\rho<1/(6\alpha^2+1)\), and hence
+\(3\alpha^2\rho<1/2\).
+
+On the other hand, raising t to r and then rho to r^2 increases E
+when v=3/4. Applying (2) gives
+
+\[
+E\le(u-5/4)S+1+2/S-1/S^2
+\le-\frac{5S}{12}+\frac23+\frac7{3S}-\frac1{S^2}
+=:B(S).
+\]
+
+For S>2, the derivative
+\(B'(S)=-5/12+(6-7S)/(3S^3)\) is strictly negative. At S=41/10,
+
+\[
+B(41/10)+\frac12=-\frac{431}{13448}<0.
+\]
+
+Thus the remaining positive-diagonal v-floor face necessarily satisfies
+\(\boxed{x<31/10}\). This excludes its large-ratio tail by hand;
+it does not exclude the entire remaining face.
+
+## 7. A three-endpoint scalar target for the positive-diagonal remainder
+
+Retain D>0 and \(c=1-\tau d>0\), and put
+
+\[
+q=1/\rho,\quad \sigma=\alpha^2-1,\quad
+Q=\alpha(\alpha+\beta),\quad T_B=(\alpha+\beta)/\alpha.
+\]
+
+The root and w>=3/4 imply
+
+\[
+L_\tau:=\tfrac34(1-\lambda^2)+d^2u
+ -d[\varphi(\tau)+uT_B-f(T_B)-h(1/\rho_A)]
+=c(3/4-w)\le0,
+\]
+
+where \(\varphi(\tau)=3\tau/4-f(\tau)\). Its derivative is
+\(-(\tau-2)^2/(4\tau^2)\le0\), and \(\varphi(2)=\log2\).
+Since d>0 and tau>2, the expression L2 obtained by replacing tau by 2
+is strictly smaller than L_tau, hence L2<0.
+
+Multiplying L2 by the positive factor \((q+\sigma)^2\) gives the
+explicit expression
+
+\[
+\begin{aligned}
+\ell(q)={}&\tfrac34(2q\sigma+\sigma^2)+D^2u+D\alpha^2\\
+&-D(q+\sigma)\left[(u-1)T_B+T_B^{-1}+1
+                  +\log\frac{2Q}{q+\sigma}\right].
+\end{aligned}
+\tag{8}
+\]
+
+Thus ell(q)<0 is necessary at the floor face. But this scalar expression
+is strictly increasing whenever q+sigma>=2Q. Indeed
+
+\[
+\ell'(q)=\tfrac32\sigma-D\left[(u-1)T_B+T_B^{-1}
+                         +\log\frac{2Q}{q+\sigma}\right]>0.
+\tag{9}
+\]
+
+The actual incident ceiling \(u\le U(1/T_B)\) makes the first two
+terms inside brackets at most \(-1+2/T_B<0\); the logarithm is
+nonpositive on the stated interval. Thus the sign in (9) needs no
+secant approximation.
+
+The retained central duration, outer scale and root interval give
+
+\[
+q\ge q_{\min}:=\max\{S^2,\ 6\alpha^2+1,\ 2Q-\sigma\}.
+\]
+
+The whole comparison interval from q_min to q lies in the domain of
+(9). Consequently a remaining positive-diagonal floor point must satisfy
+
+\[
+\boxed{\ell(q_{\min})<0.}
+\tag{10}
+\]
+
+This removes both the opposite-turn variable and the descending-root
+parameter from the remaining floor question. At least one of the three
+displayed lower bounds is an equality at q_min. The same short shape,
+equal secants and x<31/10 are retained. No actual trajectory, root or
+Casimir cap is asserted at this artificial scale endpoint. A proof that
+the three correctly enlarged endpoint domains have ell>=0 would remove
+this last separate floor face; that sign is still open here.
+
+## 8. One easy region of the outer-scale endpoint
+
+Suppose the maximum in q_min is \(6\alpha^2+1\), and suppose
+\(\alpha\ge4/3\). This region is excluded by a short quadratic
+bound. Since q_min+sigma>=2Q, one has \(2<T_B\le7/2\).
+Also x<31/10 and (2) imply
+
+\[
+u\le\frac34+\frac{147}{6724}<\frac{31}{40}.
+\]
+
+At this endpoint q+sigma=7alpha^2. Write
+\(\delta=D/\alpha^2>0\) and
+
+\[
+B=(u-1)T_B+T_B^{-1}+1+\log(2T_B/7).
+\]
+
+The elementary inequality log z<=z-1 gives
+
+\[
+B\le(u-5/7)T_B+T_B^{-1}<\frac{87}{140}.
+\]
+
+Indeed the rational expression on the right is convex in T_B, so its
+maximum on [2,7/2] is at an endpoint. Using u<31/40, its endpoint
+values are at most 87/140 and 279/560, respectively.
+
+Dividing (8) by alpha^4 now gives
+
+\[
+\frac{\ell(6\alpha^2+1)}{\alpha^4}
+=\frac34(13-12\alpha^{-2}-\alpha^{-4})
+                       +u\delta^2+(1-7B)\delta.
+\]
+
+For delta>0, completion of one square gives
+
+\[
+u\delta^2+(1-7B)\delta
+>\frac34\delta^2-\frac{67}{20}\delta
+\ge-\frac{4489}{1200}.
+\]
+
+The first term increases with alpha. At alpha=4/3 it is 4557/1024.
+Consequently
+
+\[
+\boxed{\frac{\ell(6\alpha^2+1)}{\alpha^4}
+>\frac{4557}{1024}-\frac{4489}{1200}
+=\frac{54479}{76800}>0,}
+\]
+
+contrary to (10). Thus a surviving outer-scale endpoint must have
+alpha<4/3. The central-duration endpoint and the smaller-alpha part of
+the outer-scale endpoint remain open. The apparent T=2 endpoint is
+removed by the next hand lemma.
+
+## 9. The T=2 endpoint cannot dominate
+
+On the remaining positive-diagonal floor domain, the exact short
+secants force
+
+\[
+\boxed{T_B<\frac72.}
+\tag{11}
+\]
+
+Consequently
+\(2Q-\sigma=\alpha^2(2T_B-1)+1<6\alpha^2+1\): the third
+entry in q_min is redundant. This statement concerns the fixed short
+geometry. It does not assert that an artificial comparison endpoint is
+an actual reverse root.
+
+Here is a two-step convexity proof of (11). We use the slightly sharper
+elementary incoming-norm bound
+
+\[
+u\le V(x)\le\overline V(x)
+:=\frac34+\frac{R^2}{12+5R},\qquad R=\frac{x-1}{x+1}.
+\tag{12}
+\]
+
+For completeness, this is equivalent to
+
+\[
+\log(1+R)\ge\frac{R}{1+R}
+ \left(1+\frac R2-\frac{2R^2}{12+5R}\right).
+\]
+
+The difference vanishes at R=0 and has derivative
+\(R^3(16-5R)/[2(1+R)^2(12+5R)^2]>0\) for 0<R<1.
+Thus (12) has a short independent proof; the coefficient certificate
+later in the earlier short-upper-endpoint note is not used. Both R and
+\(R^2/(12+5R)\) increase with x.
+
+Suppose, to obtain a contradiction, that T_B>=7/2, equivalently
+beta>=5alpha/2. The order beta<=alpha*x implies x>=5/2.
+The other equal secant has the integral representation
+
+\[
+u=\frac1{x-\alpha}\int_\alpha^x
+       \left(1-\frac{\beta s}{(\beta+s)^2}\right)\,ds.
+\]
+
+The integrand has second derivative
+\(2\beta(2\beta-s)/(\beta+s)^4>0\) on
+\([\alpha,x]\), because x<=beta. Jensen's inequality and
+\(g(z)=1-z/(1+z)^2\) therefore give
+
+\[
+u\ge g\left(\frac{\alpha+x}{2\beta}\right)
+ =g\left(\frac{2\beta}{\alpha+x}\right),
+\tag{13}
+\]
+
+where g increases on [1,infinity), and 2beta/(alpha+x)>1.
+
+First use x<31/10 from Section 6. Formula (12) gives
+
+\[
+u<\frac34+\frac{441}{24477}<\frac{77}{100}
+ <\frac{151}{196}=g(9/5).
+\]
+
+By (13), beta<9(alpha+x)/10. Combining this with
+beta>=5alpha/2 gives alpha<9x/16. Since alpha<x, the coefficient
+of beta in D is negative, so
+
+\[
+D\le 6\alpha^2-5\alpha x+1+2x.
+\tag{14}
+\]
+
+For fixed x, the right side is a convex quadratic in alpha. On
+\([1,9x/16]\), its maximum is at an endpoint, with values
+
+\[
+7-3x,\qquad 1+2x-\frac{117x^2}{128}.
+\]
+
+If x>=8/3, the first is at most -1, and the second is at most its
+value -1/6 at x=8/3, since its derivative is negative for x>=8/3.
+That contradicts D>0. Hence x<8/3.
+
+Apply (12) once more at this improved endpoint:
+
+\[
+u<\frac34+\frac{25}{1727}<\frac34+\frac1{64}
+ =\frac{49}{64}=g(5/3),
+\]
+
+where the middle inequality is exactly 1600<1727. Formula (13)
+now gives beta<5(alpha+x)/6. Together with beta>=5alpha/2, this
+implies alpha<x/2. The maximum of the convex quadratic in (14)
+on \([1,x/2]\) is again at an endpoint, now with values
+
+\[
+7-3x,\qquad 1+2x-x^2.
+\]
+
+For x>=5/2, these are at most -1/2 and -1/4, respectively.
+Both decrease thereafter. This final contradiction with D>0 proves
+(11), and therefore removes the T=2 endpoint entirely.
+
+The positive-diagonal floor question is now reduced to
+\(q_{\min}=\max\{(1+x)^2,6\alpha^2+1\}\), with
+\(T_B<7/2\), and with alpha<4/3 whenever the outer-scale entry
+dominates. The next section excludes this last outer-scale region.
+
+## 10. The entire outer-scale endpoint is positive
+
+**Status:** accepted in independent internal review. The argument and the
+seven displayed polynomial coefficients were checked independently.
+
+We now prove
+
+\[
+\boxed{q_{\min}=6\alpha^2+1
+       \quad\Longrightarrow\quad\ell(q_{\min})>0.}
+\tag{15}
+\]
+
+Section 8 treats alpha>=4/3, so assume 1<=alpha<4/3. Scale
+dominance gives
+
+\[
+x\le\sqrt{6\alpha^2+1}-1<\sqrt{35/3}-1<5/2.
+\]
+
+By (12), as already used in Section 9, this implies u<49/64.
+Recall the notation
+
+\[
+\delta=D/\alpha^2>0,\qquad
+B=(u-1)T_B+T_B^{-1}+1+\log(2T_B/7),
+\]
+\[
+\frac{\ell(6\alpha^2+1)}{\alpha^4}
+=A(\alpha)+u\delta^2+(1-7B)\delta,
+\quad
+A(\alpha)=\frac34(13-12\alpha^{-2}-\alpha^{-4}).
+\tag{16}
+\]
+
+### A uniform bound on the logarithmic bracket
+
+Replace u by 49/64 in B. On T_B>2, the resulting function has
+derivative
+
+\[
+-\frac{15}{64}-T_B^{-2}+T_B^{-1}
+=-\frac{15(T_B-8/5)(T_B-8/3)}{64T_B^2}.
+\]
+
+Its maximum is therefore at T_B=8/3, with value
+3/4+log(16/21). The first two positive terms of the atanh series
+give
+
+\[
+\log\frac{21}{16}
+>\frac{10}{37}+\frac{250}{3\cdot37^3}
+=\frac{19}{70}+\frac{5179}{10637130}
+>\frac{19}{70}.
+\]
+
+Consequently B<67/140. With u>3/4 and delta>0, (16) yields
+
+\[
+\frac{\ell(6\alpha^2+1)}{\alpha^4}
+>A(\alpha)+\frac34\delta^2-\frac{47}{20}\delta.
+\tag{17}
+\]
+
+### The interval alpha>=10/9
+
+The quadratic in (17) is at least -2209/1200. Also A increases
+with alpha. Thus, for alpha>=10/9,
+
+\[
+\frac{\ell(6\alpha^2+1)}{\alpha^4}
+>A(10/9)-\frac{2209}{1200}
+=\frac{78717}{40000}-\frac{2209}{1200}
+=\frac{15251}{120000}>0.
+\]
+
+### The interval 1<=alpha<=10/9
+
+Here the short order supplies the needed positive lower bound on D.
+Since alpha<x and beta<=alpha*x,
+
+\[
+D\ge(\alpha^2+1)(1+2x)-2\alpha x^2.
+\]
+
+The right side decreases with x for x>=alpha, since its x derivative
+is at most 2(1-alpha^2)<=0. Insert the largest allowed x,
+namely sqrt(6alpha^2+1)-1. With S_*=sqrt(6alpha^2+1), this gives
+
+\[
+D\ge(\alpha+1)^2(2S_*-1)-2\alpha(6\alpha^2+1).
+\tag{18}
+\]
+
+The function sqrt(6alpha^2+1) is strictly convex in alpha. Its
+value and derivative at alpha=1 satisfy
+
+\[
+\sqrt7>\frac{37}{14},\qquad
+\frac6{\sqrt7}>\frac94;
+\]
+
+these follow by squaring, from 1372>1369 and 576>567. Its tangent
+line at 1 therefore implies
+
+\[
+S_*>\frac{37}{14}+\frac94(\alpha-1)
+     =\frac{63\alpha+11}{28}.
+\]
+
+Substitution into (18) yields
+
+\[
+\delta>\delta_0(\alpha)
+:=\frac{-105\alpha^3+123\alpha^2+29\alpha-3}
+          {14\alpha^2}.
+\tag{19}
+\]
+
+This lower bound decreases on alpha>=1: its derivative is
+\(-15/2-29/(14\alpha^2)+3/(7\alpha^3)<0\).
+Consequently, on the interval under consideration,
+
+\[
+\delta_0(\alpha)\ge\delta_0(10/9)
+=\frac{9001}{4200}>\frac{47}{30}.
+\]
+
+The quadratic \(3\delta^2/4-47\delta/20\) increases above
+47/30, so (17) may be bounded below by substituting delta_0.
+The remaining calculation is the following single polynomial identity.
+Put z=alpha-1>=0. Then
+
+\[
+\begin{aligned}
+3920\alpha^4
+ \left[A(\alpha)+\frac34\delta_0(\alpha)^2
+                   -\frac{47}{20}\delta_0(\alpha)\right]
+={}&165375z^6+673890z^5+981696z^4+592762z^3\\
+ &+114624z^2-2064z+88.
+\end{aligned}
+\tag{20}
+\]
+
+All terms of degree at least three are nonnegative. The remaining
+quadratic is explicitly positive:
+
+\[
+114624z^2-2064z+88
+=114624\left(z-\frac{43}{4776}\right)^2
+  +\frac{15663}{199}>0.
+\]
+
+Thus (17)--(20) give ell(6alpha^2+1)>0 on this final interval.
+Together with the preceding cases, this proves (15) by hand. There is
+no runtime sign check or unlisted coefficient assertion in this proof.
+
+Combining Sections 7--10, any still-possible positive-diagonal
+v=3/4 endpoint must have
+
+\[
+\boxed{q_{\min}=(1+x)^2>6\alpha^2+1,\qquad
+       \ell((1+x)^2)<0.}
+\tag{21}
+\]
+
+The central-duration scalar sign in (21) is the only remaining
+question for this separate floor face. The other root-comparison
+faces remain outside the scope of this note.

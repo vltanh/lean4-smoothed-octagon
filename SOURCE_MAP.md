@@ -42,6 +42,13 @@ The hand neighbor theorem consists of the
 [audit](docs/HAND_FORWARD_NEIGHBOR_AUDIT.md). The remaining F target is
 the stationary norm sum or a direct Casimir comparison.
 
+Further mixed reductions are the [single reverse shape endpoint](docs/MIXED_NONSHORT_REVERSE_AFFINE_COMPARISON.md),
+[short shear/cost candidates](docs/MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md),
+and [short floor endpoints](docs/MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md),
+accepted with their explicit remaining signs in the
+[endpoint review](docs/HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
+Only the central-duration endpoint remains for the separate opposite-floor face.
+
 | Scope | Active sources |
 | --- | --- |
 | Geometric/control correspondence, twisted PMP | [ADMISSIBLE_REALIZATION](docs/ADMISSIBLE_REALIZATION.md), [REVERSE_COMPARISON](docs/REVERSE_COMPARISON.md), [GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md), [final dependency review](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) |
