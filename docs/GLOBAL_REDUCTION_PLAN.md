@@ -100,8 +100,12 @@ is then the whole all-short family `(--+)^m`, `m=2 mod 3`.
 and its independent audit give one recurrence and normal cost identity
 for every multiplicity. The fixed two-centre base branch is excluded
 by `C>2*sqrt(6)-sqrt(3)>pi>A_oct`; all eight exact checks pass.
-The single uniform `m>=5` branch remains open, with no increasing-length
-catalogue proposed.
+The later [MIXED_REVERSE_CENTRE_PHASE_BOUND](MIXED_REVERSE_CENTRE_PHASE_BOUND.md)
+and its independent audit prove the uniform constrained-index estimate
+`index_-(Q_closed)>=(m-8)/3`, excluding every `m>=11` together. All
+13 exact identities pass. Only `m=5,8` remain in the sufficient M1
+domain. Seek a common strengthening that treats them together; this
+fixed-threshold theorem does not authorize a growing length catalogue.
 
 [MIXED_GLOBAL_PROJECTIVE_WINDING](MIXED_GLOBAL_PROJECTIVE_WINDING.md)
 and its independent audit use the actual geometric frame lift to prove
@@ -110,6 +114,20 @@ and its independent audit use the actual geometric frame lift to prove
 `(n-1,2,P-n-1)`. A full constrained cost-index theorem must additionally
 control the augmented Hessian and the frame-constraint curvature; it
 does not follow merely from this inertia. F, M1 and M2 remain open.
+The independent audits of MIXED_GLOBAL_AUGMENTED_INDEX and
+MIXED_GLOBAL_SHORT_RUN_VARIATION supply the actual rank-three and Schur
+interfaces used in the proved phase estimate. The audited scalar duals
+in MIXED_GLOBAL_SCALAR_DUAL and GLOBAL_STRUCTURE_FORWARD_DUAL_HESSIAN
+give exact alternative index transfers, with 19 and eight exact checks.
+Their required negative-subspace sign remains unproved.
+
+[MIXED_GLOBAL_PHASE_DENSITY](MIXED_GLOBAL_PHASE_DENSITY.md) and its
+independent audit use a direct phase graph to extend the bound to
+all competitive remaining periods: the constrained index is at least
+`(2m-P-8)/3`, so any minimizer satisfies `2m<=P+8`, or raw prefix
+winding `k>=-3`. This excludes one entire reverse-dense region with
+arbitrary forward-run lengths. It leaves low reverse density in M2,
+the two stated M1 branches, and F open.
 
 ## Closed global case R
 

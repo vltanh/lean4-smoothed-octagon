@@ -59,9 +59,25 @@ Triple ties and boundary limits still require their stated treatment.
   inertia `(n-1,2,P-n-1)`, `P=N-2m`, with the full endpoint lift retained;
   see [MIXED_GLOBAL_PROJECTIVE_WINDING](docs/MIXED_GLOBAL_PROJECTIVE_WINDING.md)
   and its independent audit.
-- [ ] Prove one uniform comparison or constrained-index theorem for the
-  remaining all-short `m>=5` family. Ordinary Jacobi inertia does not
-  supply the cost index. F and M2 also remain open.
+- [x] Prove and independently audit the reverse-centre scalar phase
+  inequality and its angular Schur consequence. The exact constrained
+  index is at least `(m-8)/3`, excluding every all-short `m>=11`
+  together; see [MIXED_REVERSE_CENTRE_PHASE_BOUND](docs/MIXED_REVERSE_CENTRE_PHASE_BOUND.md).
+  All 13 exact identities pass. The proof retains rank three, geometric
+  winding, full endpoint curvature, and all three constraint pairs.
+- [x] Independently audit the common augmented-index bridge, all-short
+  variation, and signed scalar dual. Their exact index transfers are
+  established; a full negative-subspace assertion is not.
+- [ ] Close the two remaining all-short multiplicities `m=5,8`, or
+  strengthen the same uniform estimate to cover them together.
+  F and M2 also remain open. No ordinary Jacobi count by itself is
+  treated as a constrained cost index.
+- [x] Extend the angular graph to arbitrary forward-run lengths:
+  [MIXED_GLOBAL_PHASE_DENSITY](docs/MIXED_GLOBAL_PHASE_DENSITY.md)
+  and its independent audit give `index_-(Q_closed)>=(2m-P-8)/3`.
+  Every remaining competitive minimizer satisfies `2m<=P+8`, or
+  equivalently actual raw prefix winding `k>=-3`. The whole violating
+  region is excluded; low reverse density and F remain open.
 
 ## Active global checkpoint
 

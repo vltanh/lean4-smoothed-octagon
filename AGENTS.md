@@ -73,13 +73,29 @@ the complete all-short family `(--+)^m`, `m=2 mod 3`. Read
 MIXED_GLOBAL_SHORT_RUN_PERIOD and its independent audit. Its common
 collapsed recurrence and normal Euler identity cover every multiplicity;
 the fixed two-centre base branch has C>2*sqrt(6)-sqrt(3)>pi and is
-excluded with arbitrary unequal factors. The single uniform m>=5
-obligation remains open; do not replace it by a growing catalogue.
+excluded with arbitrary unequal factors. The later
+MIXED_REVERSE_CENTRE_PHASE_BOUND and its independent audit prove the
+uniform constrained-index lower bound (m-8)/3, excluding every m>=11
+at once. The sufficient M1 obligation is now confined to m=5,8;
+these remain open. This is a fixed consequence of a uniform theorem,
+not permission to resume increasing-length enumeration.
 MIXED_GLOBAL_PROJECTIVE_WINDING and its independent audit use the
 actual geometric sector lift to fix n=(N-m-1)/3 on the collapsed
 P=N-2m switch-vector cycle. Its ordinary scalar Jacobi inertia is
 (n-1,2,P-n-1). This is not the constrained cost index: the augmented
-Hessian and full endpoint curvature still require a uniform sign proof.
+Hessian and full endpoint curvature still require their stated sign proof.
+Read MIXED_GLOBAL_AUGMENTED_INDEX, MIXED_GLOBAL_SHORT_RUN_VARIATION,
+and their audits for the exact rank-three and Schur-complement bridge
+used in the proved angular index bound. MIXED_GLOBAL_SCALAR_DUAL and
+GLOBAL_STRUCTURE_FORWARD_DUAL_HESSIAN, with their audits, also give
+a common scalar critical system and exact index subtraction; the
+required N-dimensional negative subspace there is still unproved.
+MIXED_GLOBAL_PHASE_DENSITY and its independent audit extend the angular
+graph directly to every remaining competitive period: index(Q_closed)
+is at least (2m-P-8)/3, where P=N-2m. Thus every such minimizer
+satisfies 2m<=P+8, equivalently its actual raw prefix winding k>=-3.
+This excludes the entire violating region without an enumeration;
+low reverse density in M2 and the remaining F/M1 signs stay open.
 
 
 Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.

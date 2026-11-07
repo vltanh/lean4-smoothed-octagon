@@ -111,8 +111,15 @@ derives one common recurrence and normal cost identity for all of them.
 Its two-centre base branch has the strict bound
 `C>2*sqrt(6)-sqrt(3)>pi>A_oct`, for arbitrary unequal positive factors.
 The [independent audit](docs/MIXED_GLOBAL_SHORT_RUN_PERIOD_AUDIT.md)
-and all eight exact identities pass. The uniform `m>=5` family remains
-open; no increasing-length catalogue is used.
+and all eight exact identities pass.
+
+The later [reverse-centre phase theorem](docs/MIXED_REVERSE_CENTRE_PHASE_BOUND.md)
+proves a uniform lower bound `(m-8)/3` for the actual constrained cost
+index. It excludes **every `m>=11` at once**, with arbitrary unequal
+factors. Its [independent audit](docs/MIXED_REVERSE_CENTRE_PHASE_BOUND_AUDIT.md)
+and 13 exact identities pass. Thus the sufficient M1 comparison has
+only `m=5,8` left. Those two branches remain open; this conclusion
+comes from a uniform inequality, not an increasing-length catalogue.
 
 [MIXED_GLOBAL_PROJECTIVE_WINDING](docs/MIXED_GLOBAL_PROJECTIVE_WINDING.md)
 and its [independent audit](docs/MIXED_GLOBAL_PROJECTIVE_WINDING_AUDIT.md)
@@ -123,6 +130,26 @@ reverse runs. The corresponding scalar Jacobi matrix has inertia
 the geometric sector lift and the full frame endpoint. The constrained
 cost Hessian has additional terms, so a cost-index theorem and the
 remaining F/M1/M2 comparisons are still required.
+
+[MIXED_GLOBAL_AUGMENTED_INDEX](docs/MIXED_GLOBAL_AUGMENTED_INDEX.md)
+proves the full frame rank and exact index transfer, including all three
+constraint pairs. The [all-short variation note](docs/MIXED_GLOBAL_SHORT_RUN_VARIATION.md)
+provides the positive margin block and explicit angular Schur complement
+used in the proved phase theorem. Both have independent internal audits.
+[MIXED_GLOBAL_SCALAR_DUAL](docs/MIXED_GLOBAL_SCALAR_DUAL.md) and its
+audited [forward specialization](docs/GLOBAL_STRUCTURE_FORWARD_DUAL_HESSIAN.md)
+give a second common formulation, with 19 and eight exact checks.
+The remaining negative-subspace sign is explicitly open in that formulation.
+
+The [general mixed phase theorem](docs/MIXED_GLOBAL_PHASE_DENSITY.md)
+and its [independent audit](docs/MIXED_GLOBAL_PHASE_DENSITY_AUDIT.md)
+extend the angular argument to arbitrary forward-run lengths. Every
+competitive minimizer must satisfy `2m<=P+8`, where `m` counts
+double reverse runs and `P=N-2m` counts forward switches. The proof
+constructs a negative graph directly in the full joint Hessian and
+then applies the exact constrained-index transfer. This excludes the
+whole region violating that inequality; it leaves the other mixed
+periods and the forward cost comparison open.
 
 ## Whole-forward costate theorem
 

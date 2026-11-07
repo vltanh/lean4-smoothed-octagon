@@ -93,15 +93,29 @@ This does not exclude local M1 windows inside periods assigned to M2.
 [MIXED_GLOBAL_SHORT_RUN_PERIOD](MIXED_GLOBAL_SHORT_RUN_PERIOD.md)
 and its independent audit derive common equations for every multiplicity
 and exclude the fixed two-centre base branch by a strict cost bound
-above pi. The uniform `m>=5` obligation remains one open problem;
-do not enumerate its lengths.
+above pi. The later [reverse-centre phase bound](MIXED_REVERSE_CENTRE_PHASE_BOUND.md)
+and its independent audit prove `index_-(Q_closed)>=(m-8)/3` and
+exclude every `m>=11` uniformly. The sufficient M1 domain therefore
+has `m=5,8` left. These remain open; seek a common strengthening,
+not a growing sequence of length comparisons.
 
 The [geometric winding theorem](MIXED_GLOBAL_PROJECTIVE_WINDING.md)
 and its independent audit fix `n=(N-m-1)/3` and the ordinary scalar
 Jacobi inertia `(n-1,2,P-n-1)`, with `P=N-2m`. Here `m` counts
 double reverse runs, and is zero for F. This supplies a topological
-input to a possible index argument. It does not count negative
-directions of the constrained cost or close another case-C row.
+input to the augmented-index argument. The actual angular estimate
+uses MIXED_GLOBAL_AUGMENTED_INDEX and MIXED_GLOBAL_SHORT_RUN_VARIATION,
+including all three frame-constraint pairs. The ordinary inertia alone
+does not count negative directions of the constrained cost. The audited
+MIXED_GLOBAL_SCALAR_DUAL gives another exact common system, whose
+N-dimensional negative-subspace target is still open. No further
+case-C row is closed by these reductions.
+
+The audited [general mixed phase theorem](MIXED_GLOBAL_PHASE_DENSITY.md)
+now gives the actual constrained-index lower bound `(2m-P-8)/3`.
+Every competitive minimizer therefore satisfies `2m<=P+8`, equivalently
+raw prefix winding `k>=-3`. This excludes the entire violating region
+for arbitrary forward-run lengths, without closing all M2 or F.
 
 ## 2. Small verifiable gates, repeated for each case
 
@@ -278,7 +292,7 @@ manufacture additional word lengths or count partial samples as closure.
 |---|---|---|---|
 | F | **First deterministic run** | Negative ellipticity and positive adjacent Gram pairings proved throughout the competitive domain; exact curvature-corrected Hessian available; uniform index/cost comparison OPEN | OPEN |
 | R | Superseded by direct hand proof | Global active-margin minimum contradicts the normal 0210 PMP principle; every sector covered | **CLOSED**, independently audited |
-| M1 | **First deterministic run** | Full symmetric equal-core family with outgoing factor >=h excluded by audited cost/escape dichotomy; asymmetric/short-pad complement OPEN | OPEN |
+| M1 | **First deterministic run** | Sufficient all-short family: m=2 excluded by cost; all m>=11 excluded by uniform constrained index; only m=5,8 remain | OPEN |
 | M2 | **First deterministic run** | OPEN | OPEN |
 | M3 | Superseded by direct hand proof | A bounded reverse-run minimum excludes every length at least three; only length two survives | **CLOSED**, independently audited |
 | T: ties/normality | Normality, exact outgoing-vertex rule and at-most-one passing germ proved | Negative ellipticity and incident-pair transversality for all finite normal closed periods; full-period fate OPEN | Structural rules CLOSED; remaining F/M1/M2 comparisons OPEN |

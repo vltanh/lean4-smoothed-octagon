@@ -30,13 +30,34 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
   [MIXED_GLOBAL_PROJECTIVE_WINDING_AUDIT](docs/MIXED_GLOBAL_PROJECTIVE_WINDING_AUDIT.md).
 - [x] Keep exactly two Jacobi kernel vectors along the regular-polygon
   deformation and count the ordinary inertia, including the two-node case.
-- [ ] Prove a uniform constrained cost-index or comparison theorem for
-  the remaining all-short `m>=5` domain and the other open F/M2 cases.
-  The winding and scalar inertia alone do not prove this step.
+- [x] Independently audit the full rank-three bridge, discrete Green
+  identity, and all three frame-constraint saddle pairs in
+  [MIXED_GLOBAL_AUGMENTED_INDEX](docs/MIXED_GLOBAL_AUGMENTED_INDEX.md).
+- [x] Audit the common bridge secants, exact K-scaling family, positive
+  margin block, and both Schur eliminations in
+  [MIXED_GLOBAL_SHORT_RUN_VARIATION](docs/MIXED_GLOBAL_SHORT_RUN_VARIATION.md).
+- [x] Independently prove the reverse-centre scalar derivative reserve,
+  corner monotonicity, exact normalization, and inverse-matrix order;
+  see [MIXED_REVERSE_CENTRE_PHASE_BOUND_AUDIT](docs/MIXED_REVERSE_CENTRE_PHASE_BOUND_AUDIT.md).
+  All 13 exact checks pass. Its true constrained-index bound `(m-8)/3`
+  excludes all `m>=11` uniformly, with an actual closed competitor.
+- [x] Audit the forward and mixed scalar duals, their actual multiplier
+  derivatives, signed kernel winding, and complete index subtraction.
+  Their eight and 19 exact checks pass; the remaining negative-subspace
+  claim is explicitly unproved.
+- [x] Independently audit the direct phase graph for arbitrary mixed
+  periods, localize the acute proof to `++` arcs, and retain every
+  reverse-centre normalization and constraint pair; see
+  [MIXED_GLOBAL_PHASE_DENSITY_AUDIT](docs/MIXED_GLOBAL_PHASE_DENSITY_AUDIT.md).
+  Its exact cost-index bound excludes `2m>P+8` uniformly. It does not
+  close all of M2 or the remaining M1 branches.
+- [ ] Prove a comparison or stronger uniform cost-index estimate for
+  the remaining all-short `m=5,8` branches and the other open F/M2 cases.
 
 These are independent internal hand audits, not external peer review
-or Lean kernel validation. The two-centre comparison closes one fixed
-base branch of a uniform family, not the entire sufficient M1 case.
+or Lean kernel validation. The two-centre comparison and uniform
+`m>=11` index theorem leave `m=5,8`; they do not close the entire
+sufficient M1 case.
 
 ## New case-atlas computation boundary
 

@@ -3,6 +3,15 @@
 Date: 2026-11-07 UTC. Hand identities for whole normal periods.
 No Lean, Lake, typechecking, or CI.
 
+**Later uniform progress:**
+[MIXED_REVERSE_CENTRE_PHASE_BOUND](MIXED_REVERSE_CENTRE_PHASE_BOUND.md)
+and its independent audit prove a constrained-index lower bound
+`(m-8)/3`, excluding every `m>=11` together. Combined with this
+note's `m=2` cost exclusion, only `m=5,8` remain in the sufficient
+M1 domain. The common equations and original base-branch proof below
+remain unchanged; references below to the remaining `m>=5` problem
+describe the domain before that later theorem.
+
 ## Scope and reduction
 
 After [MIXED_GLOBAL_MINIMUM_STRUCTURE](MIXED_GLOBAL_MINIMUM_STRUCTURE.md),
