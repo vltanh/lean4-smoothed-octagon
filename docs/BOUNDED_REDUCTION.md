@@ -432,7 +432,9 @@ full rank five throughout L3, using the rank-three edge endpoint map and
 two independent asymmetric normal columns. Rank zero and rank one points
 are also resolved throughout L5 by the five-prefix proof in
 [LOCAL_L5_ENDPOINT_RANK.md](LOCAL_L5_ENDPOINT_RANK.md). They MUST still be
-treated for L2. In particular,
+treated for L2. [LOCAL_L2_RANK_DROP.md](LOCAL_L2_RANK_DROP.md) gives an
+exact actual rank-four positive-star L2 input, but proves its cost exceeds
+pi, so it does not exhibit a degeneracy in the competitive domain. In particular,
 dimension counting alone proves neither a smooth fiber nor a decreasing
 direction. Stationary points cannot be discarded in any template. Failure of
 this same-word local method alone does not settle different-word replacement.

@@ -237,7 +237,10 @@ method. A theorem for *globally closed* `012012` does not count.
 ### P2 — Repeat against the fixed remaining list
 
 - [ ] L2: `021021` (reverse-cyclic; do not infer from L1 by an unproved
-  time-reversal/reflection symmetry).
+  time-reversal/reflection symmetry). LOCAL_L2_RANK_DROP refutes rank five
+  on its entire positive-star domain with an exact rank-four input, but
+  that input has C>pi. Competitive-domain rank and its singular cases
+  remain unresolved; do not call the example an eligible degeneracy.
 - [x] Diagnose L3: `021210` is refuted on the stated domain for arbitrary
   measurable replacements by LOCAL_REVERSE_SIX_GLOBAL_MINIMUM; the
   self-contained at-most-six foundation is LOCAL_REVERSE_SIX_OBSTRUCTION. This is a refuted

@@ -231,7 +231,15 @@ four determinant identities and signs, and constrained Hessian correction.
   positive two-column residual minor, and strict-star transversality to the
   actual state-stabilizer line. Independent hand review passed.
 - [x] Deduce normality and normalized-adjoint uniqueness throughout L5.
-- [ ] Classify interior endpoint ranks for L2.
+- [x] Exhibit an exact actual rank-four L2 point in LOCAL_L2_RANK_DROP:
+  fixed initial state, six positive factors, whole-arc strict star, paired
+  rank five, and exact inclusion of the state-stabilizer line.
+- [x] Prove its cost exceeds pi; retain the distinction between unrestricted
+  positive-star rank failure and competitive-domain degeneracy.
+- [x] Independently review the assembled certificate and distinct active-margin
+  cross-check without asserting a smooth singular endpoint fiber.
+- [ ] Resolve rank on the competitive L2 domain or handle any singular inputs
+  there directly.
 
 `docs/LOCAL_FORWARD_PMP_LIMIT.md` derives normality on the reduced state
 manifold and proves a limitation of first-order PMP. Independent review

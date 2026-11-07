@@ -86,7 +86,7 @@ the filter does not force equal factors or a globally competitive extension.
 | P0: minimizer eligibility and splice | Prove every selected window meets the entire stated domain and every cheaper finite strict-star splice gives a geometric competitor. | **Hand proof complete**, using the named published reduction and retained through-five comparison certificates. Does not exclude a new cost class. |
 | Coverage | Every cyclically reduced minimizing word with N>=6 contains one of the five specified six-arc windows, using the established forward-alternation exclusion. | Hand proof independently reviewed, with a separate finite-graph computational cross-check. No new cost class excluded by this alone. |
 | L1: 012012 | Strictly cheaper endpoint-preserving replacement on the entire eligible local domain. | **Open.** An exact eligible stationary minimum disproves universal nearby same-word descent; different-word or nonlocal improvements remain possible. See [LOCAL_FORWARD_SIX](docs/LOCAL_FORWARD_SIX.md). |
-| L2: 021021 | Same universal local improvement for five consecutive reverse switches. | **Open.** A regular-family comparison does not cover asymmetric local endpoints. |
+| L2: 021021 | Same universal local improvement for five consecutive reverse switches. | **Open.** An exact rank-four positive-star input exists, but its cost exceeds pi; rank on the competitive sublevel remains unresolved. See LOCAL_L2_RANK_DROP. The existing regular subfamily does not cover asymmetric local endpoints. |
 | L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Refuted even with arbitrary measurable replacements.** Eligible arbitrarily cheap windows are global minima for their fixed endpoints, with free terminal time. See [LOCAL_REVERSE_SIX_GLOBAL_MINIMUM](docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md). No closed-minimizer embedding is asserted. |
 | L4: 010201 | Same universal local improvement at a reverse run of length two followed by at least two forward switches. | **Open.** Full-domain endpoint rank five is proved. An exact eligible stationary family has all five compensated missing-control switch needles positive; that switch-only shortcut is false. See [LOCAL_SIX_VARIATION](docs/LOCAL_SIX_VARIATION.md). |
 | L5: 021012 | Same universal local improvement at a reverse run of at least three followed by at least two forward switches. | **Open.** Full endpoint rank five is proved throughout the positive strict-star domain; its first five factor columns already suffice. See LOCAL_L5_ENDPOINT_RANK. |
@@ -259,6 +259,13 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Certify actual endpoint rank four at one full positive strict-star L2
+  input in LOCAL_L2_RANK_DROP. The paired image has rank five and contains
+  its state-stabilizer line; all six factors and all seven states are exact.
+  Prove separately that its cost exceeds pi. Independent matrix and active-
+  margin reviews passed. This refutes unrestricted positive-domain rank five,
+  not rank five on the competitive sublevel or any local improvement target.
 
 - Prove that completing the outer control-0 arcs of the padded L3
   counterexample does not yield a complete PMP candidate when the core is

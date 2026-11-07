@@ -244,7 +244,10 @@ L3, L4, and L5, respectively, in
 [LOCAL_L5_ENDPOINT_RANK.md](LOCAL_L5_ENDPOINT_RANK.md). No uniform lower bound
 on their minors at degenerating boundaries follows. Rank-degenerate L2 inputs
 and possible abnormal lifts there must still be retained until separately
-resolved.
+resolved. [LOCAL_L2_RANK_DROP.md](LOCAL_L2_RANK_DROP.md) proves that actual
+rank four does occur on the broader positive-star L2 domain, but its exact
+example has cost greater than pi and is outside D_2. That certificate does
+not settle the competitive-domain rank question.
 
 For L1, [LOCAL_FORWARD_ENDPOINT_FILTER.md](LOCAL_FORWARD_ENDPOINT_FILTER.md)
 expresses the four inactive external gaps using active margins and one
