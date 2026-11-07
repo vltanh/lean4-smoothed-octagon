@@ -58,6 +58,12 @@ is strictly greater than `1/200` on the displayed nonzero tangent. Hence it
 is a strict local minimum on the same-word endpoint fiber. This refutes the
 universal nearby same-word approach, not L1's broader replacement claim.
 
+For that exact input, [a different-word hand certificate](docs/LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md)
+now constructs a strictly cheaper six-piece `012021` replacement. A rational
+contraction ball proves exact endpoint equality, and rational logarithm
+bounds prove a normalized cost decrease greater than `1/100000`. This is
+one resolved explicit test input, not a full-domain L1 exclusion.
+
 [LOCAL_FORWARD_RANK](docs/LOCAL_FORWARD_RANK.md) proves that the full L1
 endpoint map has rank five on its entire positive strict-star domain,
 for every initial state and all six unequal factors. Active-margin
@@ -157,6 +163,11 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 ## Current-session entries
 
+- Resolved the broader replacement question at the explicit stationary L1
+  input by an exact six-piece `012021` construction. Independently checked
+  the rational contraction data, analytic derivative bounds, positivity,
+  and logarithm cost certificate. Universal L1 remains open.
+
 - Derive L1 normality and a unique normalized adjoint from full endpoint rank.
   Prove that local PMP plus unrestricted twisted periodic extendibility is
   insufficient, using already known standard polygons with arbitrarily cheap
@@ -179,7 +190,6 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
   small determinant sign identities. The action and constrained-variation
   formulas passed two independent hand reviews. This closes the interior
   rank-classification subtask only; no universal local input is closed.
-
 - Proved and independently reproduced the exact eligible L1 same-word local
   minimum. The hand certificate includes rational state/sector tables, rank,
   stationarity, and the positive constrained Hessian; the finite exact checker
@@ -221,3 +231,4 @@ finite sufficient package, not a claim that link reduction has been proved.
 See [SOURCE_MAP.md](SOURCE_MAP.md) and
 [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md). No new Lean theorem,
 compilation, typechecking, Lake command, kernel audit, or CI run was performed.
+

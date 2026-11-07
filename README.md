@@ -71,6 +71,10 @@ eligibility tests but is a strict minimum on its nearby same-word endpoint
 fiber. Thus universal nearby same-word descent is false even in the
 competitive geometric domain. This does not refute a different-word or
 nonlocal L1 replacement, and it is not a counterexample to Reinhardt.
+An [exact different-word certificate](docs/LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md)
+now resolves that particular input with a six-piece `012021` replacement
+whose normalized cost is lower by more than `1/100000`. It does not prove
+the universal L1 claim.
 
 The [full-domain L1 rank theorem](docs/LOCAL_FORWARD_RANK.md) independently
 resolves the singular-fiber question: all five frame-and-state endpoint
@@ -172,3 +176,4 @@ CI, and kernel validation were not run. See [CREDITS.md](CREDITS.md).
 The complete pre-reorientation narrative remains in
 [the earlier README](https://github.com/vltanh/lean4-smoothed-octagon/blob/798a7e119e254c3ee23073de615288986fa61929/README.md).
 Its mathematical results are retained; its suggested next tasks are superseded.
+

@@ -8,6 +8,13 @@ fiber has a negative second variation. A different-word or nonlocal
 replacement may still be cheaper. This is not a counterexample to Reinhardt,
 nor a claim that this window occurs in a global minimizer.
 
+**Follow-up:** [LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md](LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md)
+constructs a strictly cheaper `012021` replacement for this exact input,
+with all endpoints preserved and normalized cost decrease greater than
+`1/100000`. This resolves the broader replacement question for this input;
+the same-word local-minimum obstruction and the open universal L1 scope
+are unchanged.
+
 The distinction matters because the proposed endpoint-fiber program in
 [FIVE_TEMPLATE_HANDOFF.md](FIVE_TEMPLATE_HANDOFF.md) explicitly includes
 stationary points and allows a different replacement word when same-word

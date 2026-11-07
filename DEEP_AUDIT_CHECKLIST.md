@@ -110,6 +110,24 @@ used Python 3.12.14 and SymPy 1.14.0; the finite input and command are in
 - [x] Distinguish strict same-word local minimality from arbitrary-control
   optimality, a full L1 counterexample, or an actual global minimizer.
 
+## Exact nonlocal replacement for the L1 test input
+
+`docs/LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md` supplies an actual six-piece
+`012021` replacement at the stationary input, not a numerical equality.
+The full L1 domain remains open.
+
+- [x] Keep the initial state fixed and impose all five actual endpoint
+  coordinates on a valid chart.
+- [x] Use exact rational center and inverse data; verify a contraction on
+  a ball of radius `10^-15` by uniform analytic derivative bounds.
+- [x] Deduce exact endpoint equality at the fixed point and strict-star
+  positivity on all complete arcs.
+- [x] Bound logarithms by a finite rational series plus a positive tail;
+  control the change from the center to the exact root by the mean-value theorem.
+- [x] Prove normalized cost decrease greater than `1/100000`.
+- [x] Independently run the supplementary exact checker under Python
+  3.12.14 / SymPy 1.14.0, without Lean, Lake, or CI.
+
 ## Uniform reverse-six subfamily: exact hand certificate
 
 `docs/LOCAL_REVERSE_SIX.md` treats every q>1 with six equal factors and the
@@ -203,3 +221,4 @@ target or continue increasing-length enumeration.
   these documentation and exploration changes.
 - [ ] Lean elaboration, kernel dependency inspection, and independent-kernel
   verification. Deferred.
+

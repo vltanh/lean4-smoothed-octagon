@@ -98,6 +98,12 @@ Do not try to prove a universal negative-Hessian assertion. The broader L1
 claim remains open: test different-word or nonlocal replacements, or prove
 additional necessary conditions for windows in actual global minimizers.
 
+The explicit obstruction has now been resolved by a different word:
+[LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md](LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md)
+proves an exact six-piece `012021` replacement with cost decrease greater
+than `1/100000`. Do not repeat that one-input search; the missing task is
+a proof over the full L1 domain, including other stationary inputs.
+
 **Interior rank classification is complete for L1:**
 [LOCAL_FORWARD_RANK.md](LOCAL_FORWARD_RANK.md) proves full rank five on
 the entire positive strict-star domain, hence rank two after suffix
@@ -285,4 +291,5 @@ exploration. Do not compile Lean or run CI under the current agreement.
 This handoff changes **research priorities**, not mathematical status:
 the five local analytic claims remain OPEN, and no Lean compilation,
 typechecking, Lake, CI, or kernel validation was run.
+
 

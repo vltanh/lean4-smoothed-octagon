@@ -10,6 +10,8 @@ supersedes earlier recommendations to continue by increasing whole-word length.
 
 | Statement | Exact source and status |
 | --- | --- |
+| Nonlocal replacement at the explicit stationary L1 input | [LOCAL_FORWARD_NONLOCAL_REPLACEMENT](docs/LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md): exact six-piece `012021` solution with the same endpoints and cost decrease greater than `1/100000`; rational contraction and logarithm certificates. One input only. |
+
 | L1 normality and the limit of a first-order periodic-extension criterion | [LOCAL_FORWARD_PMP_LIMIT](docs/LOCAL_FORWARD_PMP_LIMIT.md): full rank implies normality and a unique normalized adjoint. Existing standard forward polygons give eligible full-PMP windows of arbitrarily small local cost, with noncompetitive whole periodic extensions. Independent primary-source/hand review passed; no new closed-family comparison or local exclusion. |
 | Exact strong local minimum within the eligible L3 domain | [LOCAL_L3_STRONG_MINIMUM](docs/LOCAL_L3_STRONG_MINIMUM.md): exact endpoint, sector and cost certificates, positive constrained Hessian, all-arc Hamiltonian signs, and a checked free-time application of ASZ Theorem 2.6. Rules out universal nearby improvement, including arbitrary nearby controls; distant replacement and full L3 remain open. The [exact reproducer](explorations/local_l3_exact_certificate.py) is supplementary. |
 | Full-domain endpoint rank for L1 | [LOCAL_FORWARD_RANK](docs/LOCAL_FORWARD_RANK.md): active-margin coordinates, exact cost action, and a hand determinant sign proof of rank five everywhere on the positive strict-star domain. Two independent hand reviews passed. No cost exclusion or boundary conditioning estimate. |
@@ -64,3 +66,4 @@ The five-template hand coverage and the precise weaker strict-improvement
 package are the present contribution. They do not establish the five
 universal local statements. Historical constructive Lean dependencies remain
 pinned at the same revisions recorded in README and the historical source map.
+
