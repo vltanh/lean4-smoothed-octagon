@@ -59,6 +59,14 @@ from any closed twisted-periodic PMP extremal by a finite escape test.
 Their fixed-endpoint global optimality remains true; the full L3 parameter
 domain is not excluded.
 
+[VERTEX_INSERTION_OBSTRUCTION](docs/VERTEX_INSERTION_OBSTRUCTION.md)
+refutes one proposed G4 shortcut: the all-reverse admissible class has
+trajectories approaching the octagon cost. The proof is a general
+endpoint-rank insertion theorem and an exact rank-five check at the
+octagon, not a longer-word enumeration. It refutes C>=pi and any uniform
+positive gap above A_oct on that class, without producing a PMP trajectory
+or a cost below A_oct. G4 retains optimality and boundary constraints.
+
 No completed unrestricted cost comparison, affine uniqueness theorem, or
 kernel validation is claimed.
 
@@ -324,6 +332,14 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 Newest entries come first. Earlier entries record the scope at their own
 checkpoint; the active gate table above controls current status.
+
+- Test the next proposed all-reverse comparison and refute its unconditional
+  C>=pi target. VERTEX_INSERTION_OBSTRUCTION proves a general rank-five
+  insertion lemma, checks the actual octagon endpoint rank with both initial
+  state variables free, and preserves the full twisted seam. Positive
+  all-reverse refinements approach A_oct. A uniform positive gap cannot
+  be supplied by the word and endpoint constraints alone. The result makes
+  no cheaper-than-octagon or PMP claim; G4 remains open.
 
 - Complete the sharpness audit of GLOBAL_COST_CASIMIR. The exact defect
   identity separates winding, frame nonorthogonality, and stationary-control

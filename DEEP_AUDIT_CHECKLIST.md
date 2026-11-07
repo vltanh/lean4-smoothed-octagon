@@ -122,6 +122,25 @@ read in full and checked by the root and independent internal reviewers.
 These are internal hand reviews, not external peer review or kernel
 validation. The final cost comparison and affine equality theorem are open.
 
+## General insertion obstruction and revised comparison boundary
+
+[VERTEX_INSERTION_OBSTRUCTION](docs/VERTEX_INSERTION_OBSTRUCTION.md)
+received independent full internal hand reviews.
+
+- [x] Apply the parameterized implicit function theorem to the actual five
+  closed endpoint residuals, using only an invertible old-parameter minor.
+- [x] Check the smooth extension at zero inserted durations, positive
+  inserted factors, persistence of old positive factors and strict star,
+  and continuity of the full physical cost.
+- [x] Prove full rank five at the octagon: the six-margin coordinate change
+  is invertible, the two state residuals have rank two, and the frame
+  residual restricted to their kernel has rank three.
+- [x] Check the reverse refinement at every transition, including the
+  twisted seam. Do not replace the frame matrix equation by its trace.
+- [x] Refute only the unconditional C>=pi and uniform-positive-gap targets.
+  No PMP lift, cheaper-than-octagon cost, or new excluded minimizer class
+  follows. A strict comparison at every positive point may still hold.
+
 ## Numerical small-multiplier count
 
 [GLOBAL_SMALL_MULTIPLIER_BOUND](docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md)

@@ -64,6 +64,15 @@ through-five comparison applicable. Exact frame and state closure, free
 initial state, boundary limits, and equality cases remain part of that task.
 The integer bound supplies none of those cost inequalities.
 
+A further [insertion obstruction](docs/VERTEX_INSERTION_OBSTRUCTION.md)
+checks a proposed next shortcut: at a closed trajectory with endpoint rank
+five, arbitrarily short prescribed vertex insertions can be compensated
+while preserving both endpoints. Refining the octagon this way produces
+all-reverse closed trajectories with costs approaching A_oct<pi. Thus
+an unconditional all-reverse lower bound by pi, or by A_oct plus a fixed
+positive gap, is false. No cheaper-than-octagon or PMP trajectory is claimed;
+any strict comparison must handle these boundary limits.
+
 The [sharpness audit](docs/GLOBAL_COST_CASIMIR.md#6-exact-defect-and-equality-in-the-cost--casimir-bound)
 gives an exact sum of three nonnegative defects. Equality in that bound
 forces the centroid-controlled circle, with cost pi; this is separate from

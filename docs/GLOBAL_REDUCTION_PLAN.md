@@ -408,6 +408,27 @@ The remaining bridge is a new inequality controlling the defects using
 complete-period information, or another uniform structural/variation result.
 The explicit integer does not remove that mathematical obligation.
 
+### 3.12 Boundary-density obstruction to a proposed reverse-word shortcut
+
+[VERTEX_INSERTION_OBSTRUCTION](VERTEX_INSERTION_OBSTRUCTION.md) proves
+that at any finite closed trajectory with full endpoint rank five,
+sufficiently small prescribed vertex insertions can be compensated by
+varying the old parameters. Both actual endpoints remain exact, all arcs
+stay positive and strict-star, and the cost approaches the old value.
+The octagon's rank five follows from its six active-chain coordinates:
+twisted state closure gives two independent residuals, and its cyclic-four
+frame map has rank three on that state-closed fiber.
+
+Inserting the missing vertex at each forward transition turns a word
+into an all-reverse refinement. Applying this general lemma to the
+octagon yields all-reverse admissible closed trajectories with cost
+approaching A_oct<pi. Therefore the proposed unconditional reverse-word
+bound C>=pi is false, as is any uniform positive cost gap above A_oct.
+The construction neither proves a cost below A_oct nor supplies a PMP
+lift. A strict pointwise comparison allowing a vanishing boundary gap
+is still possible. This is a structural obstruction to an invalid
+uniform target, not a new length-by-length comparison programme.
+
 ## 4. Immediate continuation and stopping rules
 
 1. **Completed:** the measurable-control uniform local switch theorem,
@@ -426,6 +447,10 @@ The explicit integer does not remove that mathematical obligation.
    class. The enormous bound does not make literal enumeration practical;
    do not resume an open-ended sequence of seven-, eight-, or higher-piece
    comparisons or advertise an uncomputed catalogue as a completed proof.
+   The insertion theorem in Section 3.12 forbids the unconditional
+   all-reverse C>=pi shortcut. Retain the PMP/second-order conditions or
+   prove a strict octagon comparison with the required vanishing boundary
+   limits; orientation and endpoint equations do not give a uniform gap.
 
 The parallel variation check is also complete for the standard forward
 family: [GLOBAL_FORWARD_INDEX](GLOBAL_FORWARD_INDEX.md) proves at least

@@ -39,6 +39,14 @@ seven-, eight-, or higher-piece comparisons. A smaller proposed bound must
 hold for every actual global minimizer, with abnormal/rank-degenerate and
 boundary alternatives treated.
 
+Read docs/VERTEX_INSERTION_OBSTRUCTION.md before attempting a reverse-word
+comparison. A general endpoint-rank insertion lemma gives all-reverse
+admissible closed trajectories approaching the octagon cost. Consequently
+an unconditional C>=pi bound, or a uniform positive gap above A_oct, is
+false for that word class. No cheaper-than-octagon or PMP example is claimed.
+Retain actual optimality constraints, or prove a strict comparison allowing
+the gap to vanish at boundary degenerations.
+
 Read docs/GLOBAL_PERIODIC_PMP.md and docs/GLOBAL_PERIOD_BUDGET.md for the
 actual twisted endpoints, free-initial-state transversality, and the finite
 escape test excluding the small L3 counterexample family from any closed
