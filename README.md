@@ -1,13 +1,19 @@
 # The Reinhardt conjecture, in Lean 4
 
-Which centrally symmetric convex shape packs the plane worst? Copies of a disk, packed as tightly
-as possible, cover `π/√12 = 90.69…%` of the plane. In 1934 Karl Reinhardt conjectured that the
-worst shape is the *smoothed octagon*, a regular octagon with its corners rounded off by arcs of
-hyperbolas, which covers only
+Which centrally symmetric convex shape packs the plane worst? Pack copies of a disk as tightly as
+possible and they cover `π/√12 = 90.69…%` of the plane; a regular octagon does a little worse. In
+1934 Karl Reinhardt conjectured that the worst of all is the *smoothed octagon*, a regular octagon
+whose corners are cut off by arcs of hyperbolas, with greatest packing density
 
-  `δ_oct = (8 − 4√2 − log 2)/(2√2 − 1) = 90.24…%`.
+  `δ_oct = (8 − 4√2 − log 2)/(2√2 − 1) = 0.902414…`,
+
+and that it is the only worst shape up to affine maps. Kurt Mahler reached the same octagon
+independently in 1947. The conjecture has been open since.
 
 ![The smoothed octagon in its densest packing, the copies sliding through the continuum of densest packings while staying in contact](docs/figures/worst-packer.gif)
+
+The smoothed octagon packs most densely as a lattice packing, and it can do so in a continuum of
+ways: the copies slide while always touching their six neighbours.
 
 ## The smoothed octagon
 
