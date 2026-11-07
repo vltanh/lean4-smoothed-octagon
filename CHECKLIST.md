@@ -44,8 +44,13 @@ closed computer-assisted gates below do not close these new obligations.
 - [x] The [unit-shape hand theorem](docs/MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md)
   excludes the reverse k_min=1 face and the common low-scale d<=c part,
   with a [dedicated independent audit](docs/MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md).
-- [ ] Full short-side exclusion, both nonshort successors, and the final
-  hand-only assembly still need proofs.
+- [x] The [complete nonshort reverse hand theorem](docs/MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md)
+  excludes all three lower-shape cases, with an
+  [independent audit](docs/MIXED_NONSHORT_REVERSE_HAND_AUDIT.md).
+  Its common-order corollary gives a<=r<c<=b*<d and q<(1+x)/(2t+x)
+  without a successor-sign assumption.
+- [ ] Full short-side exclusion, the nonshort forward successor, and the
+  final hand-only assembly still need proofs.
 
 ## Baseline proof checkpoints
 

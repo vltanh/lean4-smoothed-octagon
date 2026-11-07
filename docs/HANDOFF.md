@@ -21,8 +21,9 @@ Further accepted hand work reduces the nonshort residual by
 successor by [weighted secant concavity](MIXED_NONSHORT_REVERSE_SHAPE_REDUCTION.md).
 The [short-side root and angle reduction](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md)
 preserves a relaxed necessary cost test on four boundary faces. Their
-endpoint exclusions remain open; their audits do not certify those
-unproved signs.
+short endpoint exclusions remain open; their audits do not certify those
+unproved signs. The reverse successor is closed by the later lower-face
+hand proof below.
 
 The [nonshort high-ratio exclusion](MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION.md)
 now proves t<2/5 by hand; combined with the
@@ -45,8 +46,9 @@ now also have complete proofs: the [sum argument](HAND_FORWARD_SYMMETRIC_SUM_RED
 [larger-norm argument](HAND_FORWARD_LARGER_NORM_HAND_PROOF.md).
 Their [scalar audit](HAND_FORWARD_NORM_AUDIT.md) and
 [actual-period assembly](HAND_FORWARD_PERIOD_EXCLUSION.md) close H-F.
-The remaining hand-only tasks are the mixed short and nonshort exclusions
-and the final global dependency audit.
+The remaining hand-only tasks are the mixed short exclusion, the nonshort
+forward successor, and the final global dependency audit. The nonshort
+reverse successor is now closed by the hand theorem linked below.
 
 For the mixed cases, the [affine reverse comparison](MIXED_NONSHORT_REVERSE_AFFINE_COMPARISON.md)
 leaves one upper shape endpoint, now improved by the
@@ -68,8 +70,12 @@ is now excluded by a complete hand proof, including ties. The
 [unit-shape face](MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md)
 is also excluded, with its
 [independent audit](MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md).
-Only the scale lower face remains in that reverse partition. The same
-unit theorem closes the d<=c part of the common low-scale problem. The
+The [complete reverse hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md)
+now closes the remaining scale face and the whole reverse successor,
+with its [independent audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md).
+It also proves the common order a<=r<c<=b*<d and q<(1+x)/(2t+x),
+so d<=c is excluded for every common nonshort window. The forward
+successor remains open. The
 [fixed outer-norm comparison](MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
 reduces the nonnegative-pairing part of the short w=3/4 face to further
 endpoints, retaining the actual outgoing norm floor in its cost score.

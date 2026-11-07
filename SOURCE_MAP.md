@@ -63,8 +63,12 @@ is now excluded by a complete hand proof, including ties. The
 [unit-shape face](docs/MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md)
 is also excluded, with its
 [independent audit](docs/MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md).
-Only the scale lower face remains in that reverse partition. The same
-unit theorem closes the d<=c part of the common low-scale problem. The
+The [complete reverse hand theorem](docs/MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md)
+now closes the remaining scale face and the whole reverse successor,
+with its [independent audit](docs/MIXED_NONSHORT_REVERSE_HAND_AUDIT.md).
+It also proves the common order a<=r<c<=b*<d and q<(1+x)/(2t+x),
+so d<=c is excluded for every common nonshort window. The forward
+successor remains open. The
 [fixed outer-norm comparison](docs/MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
 reduces the nonnegative-pairing part of the short w=3/4 face to further
 endpoints, retaining the actual outgoing norm floor in its cost score.

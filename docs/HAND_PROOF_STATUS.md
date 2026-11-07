@@ -28,7 +28,7 @@ in force.
 | --- | --- | --- |
 | H-F | Uniform exclusion of all-forward periods through stationary norm bounds and a Casimir inequality | Closed by the [complete hand theorem](HAND_FORWARD_PERIOD_EXCLUSION.md) and [scalar audit](HAND_FORWARD_NORM_AUDIT.md). Both former forward covers are replaced. |
 | H-S | Exclusion when the smaller turn at a minimum reverse centre has a short forward run | Open. The separate opposite-norm floor face is now excluded by hand. Three remaining root/cost boundary faces still need analytic exclusions. |
-| H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Open. Retain the scalar boundary comparison and concavity reduction; replace the reverse, low-a and forward endpoint exclusions. The old small-parameter coefficient argument is now bypassed by the proved strict duration-ratio gap. |
+| H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Reverse successor closed by the [complete hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md) and [audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md). Forward successor remains open, including its common low-a and endpoint signs. The old small-parameter coefficient argument is bypassed by the strict duration-ratio gap. |
 | H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Open. In particular, distinguish supplementary identity checks from indispensable executable sign checks. |
 
 These are uniform period classes. They are not a plan to enumerate more
@@ -152,7 +152,9 @@ then gives a two-endpoint alternative for the reverse successor. Its
 lower endpoint retains the positive reverse turn; the upper endpoint
 has a saturated incident ceiling. Their
 [independent review](MIXED_NONSHORT_SHAPE_REDUCTION_AUDIT.md) checks all
-domain and sign directions. Enlarged endpoint positivity remains open.
+domain and sign directions. This older upper-endpoint route is now
+optional: the complete lower-face hand argument below closes the reverse
+successor without it.
 
 The subsequent [rational reverse secant comparison](MIXED_NONSHORT_REVERSE_AFFINE_COMPARISON.md)
 makes the lower comparison gap affine and strictly decreasing in shape,
@@ -167,8 +169,16 @@ also proves d<b*, adding k>=2t+x to the shape lower bound. The
 now excludes that lower face, including ties, by first-event concavity
 and two explicit endpoint signs. The [unit-shape theorem](MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md),
 with [independent audit](MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md), now
-also excludes k=1. Only k=(29/4)t^2 remains in this lower-face route;
-the alternative upper-shape-endpoint sign remains open.
+also excludes k=1. The [complete reverse theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md)
+now proves the remaining scale face by an explicit derivative comparison
+and combines all three cases exhaustively. Its
+[independent audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md) closes the entire
+reverse-successor branch. No alternative upper-shape sign is needed.
+
+The same scalar theorem gives the common necessary order
+`a <= r < c <= b* < d` and `q < (1+x)/(2t+x)`, independently of the
+successor sign. In particular, the common d<=c region is excluded
+without a low-a restriction. The forward successor remains open.
 
 [The short-side root and angle reduction](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md)
 keeps an actual outer root while decreasing the Casimir, with an explicit

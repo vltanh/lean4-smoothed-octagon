@@ -7,7 +7,8 @@ This note gives an elementary, explicit sign proof on the lower face
 \(k=1\). It does not use an interval cover, a numerical minimum, or a
 runtime certificate. It applies both to the reverse-next reduction and
 to the part of the common low-\(a\) problem where \(d\le c\).
-The reverse scale face \(k=29t^2/4\) remains a separate problem.
+The reverse scale face \(k=29t^2/4\) is now closed separately in the
+[complete reverse hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md).
 
 The normalized residual and its shape monotonicity are defined in
 [MIXED_NONSHORT_SHAPE_MONOTONICITY.md](MIXED_NONSHORT_SHAPE_MONOTONICITY.md).

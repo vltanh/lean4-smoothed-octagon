@@ -146,3 +146,9 @@ theorem. This application uses no reverse-next hypothesis.
 
 The part with d>c remains open; the present low-scale domain bounds
 continue to apply there.
+
+The later [complete reverse hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md),
+Section 5, strengthens this conclusion without any low-scale assumption:
+every common nonshort window has a<=r<c<=b*<d and
+q<(1+x)/(2t+x). Its scalar proof uses the successor sign only to contradict
+the opposite order. The low-scale d>c residual signs remain separate.

@@ -324,7 +324,7 @@ the two face signs remain open.
 The complete [unit-shape proof](MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md)
 is accepted in its [dedicated audit](MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md).
 It closes k_min=1 in the reverse lower-shape partition, including ties.
-The only still-open lower face in that partition is the scale face.
+The subsequent complete reverse theorem below also closes the scale face.
 
 The same theorem excludes the d<=c part of the common a<=1/2
 domain. The previously proved t<7/20 lies strictly below 13/35,
@@ -333,3 +333,23 @@ incoming missing-control floor all meet the theorem's unchanged-coordinate
 hypotheses. Shape monotonicity then lowers to k=1 in the correct
 direction. No outgoing norm or artificial Casimir condition is used.
 The common d>c region and the forward endpoint signs remain open.
+
+
+## 11. Complete reverse successor and common strict order
+
+The [complete reverse hand exclusion](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md)
+is accepted in its [dedicated audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md).
+The strengthened order-face scope is justified without the old extra scale
+hypothesis. The displayed derivative polynomials increase the corrected
+residual through the remaining scale strip, and the polynomial comparison
+at its bottom does not transport an incoming norm floor to changed data.
+The three cases cover every actual reverse successor, including overlaps
+and weak lower-face ties. The alternative reverse upper-shape endpoint is
+therefore no longer required by the active hand route.
+
+The same audit accepts the common-order consequence: the scalar theorem
+excludes k>=2t+x independently of the successor sign; the strict swapped
+secant and original incoming floor then give q<(1+x)/(2t+x). The actual
+next margin satisfies r<c, so the physical order is a<=r<c<=b*<d.
+This excludes the common d<=c region at every allowed scale. It does not
+exclude the remaining forward successor.

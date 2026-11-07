@@ -140,5 +140,7 @@ Consequently \(P>0\) for every \(q>1\), with no upper bound on \(q\)
 and no subdivision of its range.
 
 Combining this with the actual-data implication proves the unit-shape
-exclusion. It supplies no claim about the still-unproved scale face
-or the remaining short-case and forward-successor hand obligations.
+exclusion. This review is scoped to the unit face. The scale face is now closed by
+the separate [complete reverse hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md)
+and [audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md). The short-case and
+forward-successor hand obligations remain open.
