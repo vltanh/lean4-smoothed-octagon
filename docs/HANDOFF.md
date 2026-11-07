@@ -108,6 +108,17 @@ proves the competitive Casimir is exceeded when 1/3<=t<=2/5 and
 accepts this conditional endpoint sign. Establishing those restrictions
 at every required forward endpoint remains open.
 
+
+The [complete common low-scale hand theorem](MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
+now proves a>1/2 independently of the successor sign. Its six quartic
+coefficient inequalities follow from explicit derivatives, endpoint
+values and short term bounds; the
+[high-ratio lemma](MIXED_NONSHORT_LOW_SCALE_HIGH_RATIO_DERIVATIVE.md)
+and [independent audit](MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md)
+complete the argument. The former common low-a interval cover is no
+longer a premise. The forward-successor Casimir endpoint problem remains
+open.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

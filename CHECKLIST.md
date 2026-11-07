@@ -52,6 +52,9 @@ closed computer-assisted gates below do not close these new obligations.
 - [x] Conditional [incident-ceiling Casimir sign](docs/MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
   is proved on 1/3<=t<=2/5 and 1<=k<=51/50, with an independent
   endpoint audit. Applicability to every required endpoint is still open.
+- [x] The [common low-scale hand theorem](docs/MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
+  proves a>1/2 uniformly, with its [independent audit](docs/MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md).
+  Both lower shape faces are excluded by the explicit quartic sign proof.
 - [ ] Full short-side exclusion, the nonshort forward successor, and the
   final hand-only assembly still need proofs.
 

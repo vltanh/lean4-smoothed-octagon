@@ -133,3 +133,13 @@ proves the competitive Casimir is exceeded when 1/3<=t<=2/5 and
 1<=k<=51/50. Its [independent review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md)
 accepts this conditional endpoint sign. Establishing those restrictions
 at every required forward endpoint remains open.
+
+The [complete common low-scale hand theorem](MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
+now proves a>1/2 independently of the successor sign. Its six quartic
+coefficient inequalities follow from explicit derivatives, endpoint
+values and short term bounds; the
+[high-ratio lemma](MIXED_NONSHORT_LOW_SCALE_HIGH_RATIO_DERIVATIVE.md)
+and [independent audit](MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md)
+complete the argument. The former common low-a interval cover is no
+longer a premise. The forward-successor Casimir endpoint problem remains
+open.

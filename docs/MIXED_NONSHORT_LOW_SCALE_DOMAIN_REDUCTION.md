@@ -144,11 +144,14 @@ and its missing-control floor are unchanged when k is lowered to one.
 Strict shape monotonicity sends N(k)<0 to N(1)<0, contrary to that
 theorem. This application uses no reverse-next hypothesis.
 
-The part with d>c remains open; the present low-scale domain bounds
-continue to apply there.
+The part with d>c is now closed by the
+[complete low-scale hand theorem](MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
+and its [independent audit](MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md).
+The present bounds are prerequisites of that proof.
 
 The later [complete reverse hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md),
 Section 5, strengthens this conclusion without any low-scale assumption:
 every common nonshort window has a<=r<c<=b*<d and
 q<(1+x)/(2t+x). Its scalar proof uses the successor sign only to contradict
-the opposite order. The low-scale d>c residual signs remain separate.
+the opposite order. The subsequent low-scale hand theorem linked above supplies the remaining
+d>c residual signs, completing a>1/2 without a successor-sign assumption.

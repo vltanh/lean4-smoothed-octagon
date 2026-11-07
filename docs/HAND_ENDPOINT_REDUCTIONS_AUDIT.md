@@ -375,3 +375,21 @@ its exclusion. This audit does not assert those extra t and k bounds
 for every forward successor or every upper shape endpoint. It also
 does not supply the other forward endpoint signs. H-N-forward remains
 open.
+
+
+## 13. The common low-scale exclusion is now complete
+
+The [full low-scale hand theorem](MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
+and [high-ratio derivative lemma](MIXED_NONSHORT_LOW_SCALE_HIGH_RATIO_DERIVATIVE.md)
+are accepted in their [dedicated audit](MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md).
+The two lower shape faces cover every hypothetical a<=1/2 window.
+The corrected rational quartic is positive by six explicit coefficient
+inequalities and two elementary square identities. The displayed derivative
+identities, tangent bounds and univariate endpoints supply every coefficient
+sign. Moving the rational polynomials to t=1/4 does not move an actual
+incoming floor; that floor is used only at the original coordinates.
+
+Thus a>1/2 is now a common hand theorem, independent of the successor sign.
+The old common low-a interval cover is not required by the active route.
+This closes the formerly open residual signs mentioned in Sections 9--11;
+the nonshort forward Casimir endpoints and the short case remain open.

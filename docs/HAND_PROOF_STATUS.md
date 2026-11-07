@@ -28,7 +28,7 @@ in force.
 | --- | --- | --- |
 | H-F | Uniform exclusion of all-forward periods through stationary norm bounds and a Casimir inequality | Closed by the [complete hand theorem](HAND_FORWARD_PERIOD_EXCLUSION.md) and [scalar audit](HAND_FORWARD_NORM_AUDIT.md). Both former forward covers are replaced. |
 | H-S | Exclusion when the smaller turn at a minimum reverse centre has a short forward run | Open. The separate opposite-norm floor face is now excluded by hand. Three remaining root/cost boundary faces still need analytic exclusions. |
-| H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Reverse successor closed by the [complete hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md) and [audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md). Forward successor remains open, including its common low-a and endpoint signs. The old small-parameter coefficient argument is bypassed by the strict duration-ratio gap. |
+| H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Reverse successor closed by the [complete hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md) and [audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md). The common low-a region is excluded by the [hand theorem](MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md), so a>1/2. Forward-successor endpoint signs remain open. The old small-parameter coefficient argument is bypassed by the strict duration-ratio gap. |
 | H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Open. In particular, distinguish supplementary identity checks from indispensable executable sign checks. |
 
 These are uniform period classes. They are not a plan to enumerate more
@@ -254,3 +254,13 @@ proves the competitive Casimir is exceeded when 1/3<=t<=2/5 and
 1<=k<=51/50. Its [independent review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md)
 accepts this conditional endpoint sign. Establishing those restrictions
 at every required forward endpoint remains open.
+
+The [complete common low-scale hand theorem](MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
+now proves a>1/2 independently of the successor sign. Its six quartic
+coefficient inequalities follow from explicit derivatives, endpoint
+values and short term bounds; the
+[high-ratio lemma](MIXED_NONSHORT_LOW_SCALE_HIGH_RATIO_DERIVATIVE.md)
+and [independent audit](MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md)
+complete the argument. The former common low-a interval cover is no
+longer a premise. The forward-successor Casimir endpoint problem remains
+open.
