@@ -55,6 +55,10 @@ closed computer-assisted gates below do not close these new obligations.
 - [x] The [common low-scale hand theorem](docs/MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
   proves a>1/2 uniformly, with its [independent audit](docs/MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md).
   Both lower shape faces are excluded by the explicit quartic sign proof.
+- [x] The [short corrected envelope cap](docs/MIXED_SMALLER_SHORT_CORRECTED_ENVELOPE_CAP.md)
+  has the uniform hand constant 1/7 and a fixed-geometry necessary score.
+  The [normalized-root residual](docs/MIXED_SMALLER_SHORT_ENVELOPE_SCALE_MONOTONICITY.md)
+  is affine and strictly increasing in outer scale; its scope is independently audited.
 - [ ] Full short-side exclusion, the nonshort forward successor, and the
   final hand-only assembly still need proofs.
 

@@ -119,6 +119,18 @@ complete the argument. The former common low-a interval cover is no
 longer a premise. The forward-successor Casimir endpoint problem remains
 open.
 
+
+For the short case, the [uniform corrected envelope cap](MIXED_SMALLER_SHORT_CORRECTED_ENVELOPE_CAP.md)
+controls the determinant increase by at most one seventh of the residual
+increase. It gives a lower bound on the original actual Casimir using
+only fixed bridge geometry, removing t, v and the unknown actual root
+from an alternative necessary cost test. The
+[normalized-root scale theorem](MIXED_SMALLER_SHORT_ENVELOPE_SCALE_MONOTONICITY.md)
+also makes the residual affine and strictly increasing in outer scale.
+Its cap and physical cost are not transported with that scale change.
+Both reductions have [independent acceptance](HAND_ENDPOINT_REDUCTIONS_AUDIT.md);
+the resulting short-domain exclusion remains open.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

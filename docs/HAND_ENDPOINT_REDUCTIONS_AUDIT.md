@@ -393,3 +393,72 @@ Thus a>1/2 is now a common hand theorem, independent of the successor sign.
 The old common low-a interval cover is not required by the active route.
 This closes the formerly open residual signs mentioned in Sections 9--11;
 the nonshort forward Casimir endpoints and the short case remain open.
+
+
+## 14. A uniform corrected cap at the short upper envelope
+
+The [corrected-envelope theorem](MIXED_SMALLER_SHORT_CORRECTED_ENVELOPE_CAP.md)
+is independently accepted as a necessary-condition reduction.
+The common short norm satisfies \(u<5/6\) by the displayed integral
+bound for \(V(x)-3/4\). At the fixed actual root, the pairing is
+at most \(3\rho_A\); both envelope segments increase E and therefore
+decrease the outer pairing. This preserves that bound without
+asserting that a comparison endpoint is an actual switch.
+
+The exact derivative ratio simplifies using
+\(1-\rho_A=\lambda(1-\rho)\).
+The term omitted for its upper bound is strictly negative because
+\(\tau E_L\le3\tau\rho_A<3r_A<3/2<2u\).
+Together with \(\tau>2,\rho_A<1/7,u<5/6\), this gives
+\(245/1728<1/7\), by \(1715<1728\).
+Both residual and determinant increase in the directions of the
+two original comparisons. Integrating the ratio therefore yields
+the correctly directed bound
+\(\Gamma_*-R_\tau^*/7\le\Gamma_{\rm actual}\).
+
+The three-case maximizer of \(R_\tau^*\) follows from its displayed
+derivative and concavity on \([2,T]\). Replacing its value at the
+actual root by its maximum decreases the lower bound. Thus
+\(G_{\rm env}\) bounds the original actual determinant and can be
+used, together with the retained central lower bound, in the monotone
+completion score. The actual positive duration also supplies \(M>0\).
+The geometry and equal-secant norm remain fixed, so \(t,v,\tau\)
+are removed from this new necessary test. No upper cap or lower
+bound is asserted for an artificial covector.
+
+The remaining fixed-geometry sign is open. This audit accepts the
+uniform correction and its original-period application, not H-S.
+
+## 15. Affine scale monotonicity of the short residual
+
+The [normalized-root scale comparison](MIXED_SMALLER_SHORT_ENVELOPE_SCALE_MONOTONICITY.md)
+is independently accepted in its stated scalar scope.
+Substituting \(q=\rho_A,p=\tau q\) gives exactly the quadratic norm,
+affine pairing and affine residual in (2)--(4) of that note.
+
+For an independent check of the decisive slope identity, substitute
+\(\delta=n+(1-B_0)/p\) directly in \(pL\).
+The coefficient of \(uB_0^2\) is one. The coefficient of \(pB_0\)
+reduces to
+\((x-1+Z(1+\alpha^{-2}))/S\), while the remaining quadratic
+coefficient in p is \(1-Z/\alpha^2\).
+These are precisely the three terms in the displayed identity (5).
+The order gives \(B_0/p\ge(x-1)/\alpha>0\);
+\(u\ge3/4\) gives \(Z\le(x-1)^2/4\); and \(p\le r_A<1/2\)
+gives \(U(p)\ge U(r_A)\ge u\).
+The resulting strict lower bound on L has the correct direction.
+
+Raising q at fixed p therefore retains the positive residual up
+to one of the three explicit scale endpoints. On \(D\le1+x\),
+the two exact norm derivatives also preserve the actual floor
+through the original envelope comparison. Its further retention
+uses the largest point of a compact closed eligible set; no
+connectedness or monotonicity of that set is assumed.
+If that largest point is an interior floor equality, the
+\(\tau\)-derivative at \(w_*=3/4\) is nonpositive and lowering
+\(\tau\) to two is legitimate.
+
+Only the residual and the explicitly justified norm floor move
+with scale. The physical score and the corrected cap depend on
+scale, so neither is transferred. The source states this limitation
+and leaves the endpoint signs and the \(D>1+x\) branch open.
