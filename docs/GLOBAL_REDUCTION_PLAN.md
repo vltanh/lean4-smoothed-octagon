@@ -45,6 +45,16 @@ forced to star exit. The full parameter proof and 146 exact checks have
 passed an independent internal audit. Arbitrary asymmetric M1 and
 shorter outgoing padding remain open; this does not close a case C.
 
+[GLOBAL_STRUCTURE_CYCLIC_COSTATE_SECTOR](GLOBAL_STRUCTURE_CYCLIC_COSTATE_SECTOR.md)
+and its audit give a common restriction for entire pure-forward/reverse
+normal periods: the primary costate is outside the closed positive
+elliptic cone, including zero and its positive parabolic boundary.
+No rank or equal-factor hypothesis is used. The remaining negative
+elliptic, negative parabolic and hyperbolic sectors still need global
+cost/index analysis. The existing sign-run proof assigns every mixed
+period to M1/M2/M3, so pure whole periods suffice as the F/R targets.
+This organizational refinement excludes no further trajectory.
+
 ## 1. Decision and exact target
 
 

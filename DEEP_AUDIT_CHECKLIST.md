@@ -164,6 +164,21 @@ The separate GLOBAL_FORWARD_INDEX method check was independently reviewed:
 - [x] State that the standard family is already cost-excluded and that no
   asymmetric-word index theorem or new competitor class follows.
 
+The separate [pure cyclic sector theorem](docs/GLOBAL_STRUCTURE_CYCLIC_COSTATE_SECTOR.md)
+received an [independent internal audit](docs/GLOBAL_STRUCTURE_CYCLIC_COSTATE_AUDIT.md):
+
+- [x] Derive the reverse signed action from its actual vertex update,
+  without assuming a reversed control is admissible.
+- [x] Check strict positive partial derivatives on the positive orthant
+  by the three-term elementary logarithm decomposition.
+- [x] Check both frame-column formulas, determinant signs and central
+  seam, including arbitrary unequal positive factors.
+- [x] Derive the actual endpoint multiplier pairing, initial-state
+  cancellation and orientation change, without a rank assumption.
+- [x] Include zero and the parabolic cone boundary in the exclusion.
+- [ ] Eliminate the hyperbolic/negative-parabolic sectors or prove the
+  remaining sharp cost/index statement in the negative elliptic sector.
+
 The new hand proofs received separate internal mathematical reviews. Such
 review is not external peer review or Lean kernel validation. No new Lean
 file, build, typechecking, Lake command, or CI was introduced or executed.

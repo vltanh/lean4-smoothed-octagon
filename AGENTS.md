@@ -37,6 +37,16 @@ degenerate tie. This does not cover asymmetric M1 or shorter outgoing
 pads, and closes no universal case-C target. Its 146-check rational
 certificate is supplementary to the displayed hand proof.
 
+GLOBAL_STRUCTURE_CYCLIC_COSTATE_SECTOR and its independent audit exclude
+zero and the closed positive elliptic primary-costate cone for complete
+pure-forward and pure-reverse normal periods, with arbitrary unequal
+factors. Hyperbolic, negative parabolic and negative elliptic sectors
+remain. The scalar derivative is before frame constraints, not a descent
+direction or index theorem. The sign-run coverage can assign every mixed
+period to M1/M2/M3, so a sufficient F/R target needs only entire pure
+periods. Do not apply the sector theorem to local F/R windows inside
+mixed periods.
+
 Read docs/SINGULAR_COST_BUDGET.md and docs/MEASURABLE_EDGE_PMP_BOUND.md.
 The complete-period Hamiltonian and polar-angle argument gives a direct
 homogeneous costate bound for every competitive closed PMP lift. On the

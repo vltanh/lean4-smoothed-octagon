@@ -104,6 +104,14 @@ octagon, not a longer-word enumeration. It refutes C>=pi and any uniform
 positive gap above A_oct on that class, without producing a PMP trajectory
 or a cost below A_oct. G4 retains optimality and boundary constraints.
 
+[GLOBAL_STRUCTURE_CYCLIC_COSTATE_SECTOR](docs/GLOBAL_STRUCTURE_CYCLIC_COSTATE_SECTOR.md)
+and its [independent audit](docs/GLOBAL_STRUCTURE_CYCLIC_COSTATE_AUDIT.md)
+exclude the closed positive elliptic primary-costate cone, including zero
+and its positive parabolic boundary, for whole pure-forward/reverse
+normal periods with arbitrary unequal factors. Hyperbolic, negative
+parabolic and negative elliptic alternatives remain. The strict action
+derivatives are not constrained descent; F and R are still open.
+
 No completed unrestricted cost comparison, affine uniqueness theorem, or
 kernel validation is claimed.
 

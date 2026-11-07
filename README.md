@@ -74,6 +74,19 @@ passed, as did all 146 supplementary exact algebra/sign checks.
 Arbitrary asymmetric M1 cores and shorter outgoing pads remain open;
 this subfamily theorem closes none of the five universal C gates.
 
+## Uniform costate-sector restriction for pure periods
+
+[The cyclic costate-sector theorem](docs/GLOBAL_STRUCTURE_CYCLIC_COSTATE_SECTOR.md)
+and its [independent audit](docs/GLOBAL_STRUCTURE_CYCLIC_COSTATE_AUDIT.md)
+exclude zero and the closed positive elliptic primary-costate cone for
+every entirely forward or entirely reverse normal PMP period. The proof
+allows arbitrary unequal factors and uses the full twisted endpoints and
+free-initial-state transversality. A signed cyclic action has strictly
+positive partial derivatives, while its exact frame columns all have
+a fixed elliptic orientation; the PMP pairing yields the contradiction.
+Hyperbolic, negative parabolic, and negative elliptic costates remain.
+This is a sector restriction, not a global cost or index bound.
+
 ## Active result: an explicit bound for every global minimizer
 
 
