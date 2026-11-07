@@ -45,8 +45,14 @@ are a proposed *research route*, not verified new G4 cost comparisons.
   complete-period PMP continuation with all normal/tie exceptions.
 - [ ] Prove one **uniform** G4 case exclusion on its complete stated
   domain, including rank defects, triple/cubic switches and boundary.
-- [ ] Independently audit GLOBAL_NORMALITY's new abnormal exclusion,
-  including backwards zero-tie identities and twisted seam.
+- [x] Independently audit GLOBAL_NORMALITY's abnormal exclusion, including
+  the actual endpoint/covector interface, backwards zero-tie identities,
+  positive-arc triple-tie obstruction and twisted seam. See
+  [GLOBAL_NORMALITY_AUDIT](docs/GLOBAL_NORMALITY_AUDIT.md). Restore the
+  previously missing checker; all 22 exact algebra checks pass.
+- [x] Deduce a qualitative positive cost-multiplier lower bound over the
+  compact unit-normalized minimizer lifts and compactness after lambda=-1.
+  No explicit numerical bound or normal-tie exclusion follows.
 
 Python/NumPy/SciPy version, commands, finite inputs, solver settings,
 numerical failures/limitations and output tables are in the experiment
@@ -672,4 +678,3 @@ target or continue increasing-length enumeration.
   these documentation and exploration changes.
 - [ ] Lean elaboration, kernel dependency inspection, and independent-kernel
   verification. Deferred.
-

@@ -15,7 +15,15 @@ closed-period Hessian gives numerical negative indices 0,2,4 for
 N=4,7,10; this reproduces already known examples and does not prove
 an asymmetric-family index bound. The case domains retain
 triple/cubic ties, vanishing factors, rank drops, and whole-period
-cost budget. GLOBAL_NORMALITY is still independently unaudited.
+cost budget. [GLOBAL_NORMALITY](docs/GLOBAL_NORMALITY.md) has now passed
+an [independent internal hand audit](docs/GLOBAL_NORMALITY_AUDIT.md): every
+finite twisted closed PMP lift is normal, without a local rank or
+transversality assumption. Existing finite representation applies this
+to every global minimizer. The normality part of T is complete; normal
+triple/cubic ties and all five C gates remain open. Compactness also gives
+a qualitative positive lower bound on the initially normalized cost
+multiplier, hence a compact family after normalization to lambda=-1.
+No numerical value for this new bound is claimed.
 
 
 ## Active global checkpoint
@@ -605,4 +613,3 @@ the new boundedness result; a valid reduction to five is still unproved.
 See [SOURCE_MAP.md](SOURCE_MAP.md) and
 [DEEP_AUDIT_CHECKLIST.md](DEEP_AUDIT_CHECKLIST.md). No new Lean theorem,
 compilation, typechecking, Lake command, kernel audit, or CI run was performed.
-

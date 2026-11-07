@@ -28,6 +28,24 @@ numerically 0,2,4, matching the existing exact standard-family
 result, but **no entire remaining case is excluded**. The final
 global cost inequality and affine equality theorem are OPEN.
 
+## Closed checkpoint: every minimizing PMP lift is normal
+
+[GLOBAL_NORMALITY](docs/GLOBAL_NORMALITY.md) and its
+[independent internal audit](docs/GLOBAL_NORMALITY_AUDIT.md) exclude every
+abnormal free-time PMP lift of a finite strict-star vertex trajectory with
+the actual twisted state, frame and cotangent endpoints. The proof covers
+rank defects and triple ties and uses no cost cap or transverse-switch
+assumption. The existing finite-representation theorem therefore applies
+it to all global minimizers.
+
+Compactness further gives a qualitative positive lower bound on the cost
+multiplier in the initial unit normalization, and a compact family after
+normalizing it to -1. No explicit value of that lower bound is claimed.
+The restored exact checker passes 22 matrix/scalar identities. This closes
+the normality obligation; normal tie branches and the five global cost
+comparisons remain open. Internal review is not external peer review or
+Lean kernel validation.
+
 ## Active result: an explicit bound for every global minimizer
 
 
@@ -383,4 +401,3 @@ CI, and kernel validation were not run. See [CREDITS.md](CREDITS.md).
 The complete pre-reorientation narrative remains in
 [the earlier README](https://github.com/vltanh/lean4-smoothed-octagon/blob/798a7e119e254c3ee23073de615288986fa61929/README.md).
 Its mathematical results are retained; its suggested next tasks are superseded.
-

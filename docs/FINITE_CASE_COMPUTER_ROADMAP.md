@@ -15,11 +15,15 @@ N<10^56 positive pieces for every minimizing period; see
 make the problem finite **in principle**, but the numerical bound is not
 a computationally practical catalogue.
 
-[GLOBAL_NORMALITY](GLOBAL_NORMALITY.md) now contains a hand-proof draft
-that a finite twisted closed PMP extremal cannot be abnormal. Its exact
-algebra was reproduced by a SymPy script. **Independent review of its
-PMP/return-map reasoning is still pending.** Do not treat numerical
-normalization to lambda=-1 as unconditional if that review finds a gap.
+[GLOBAL_NORMALITY](GLOBAL_NORMALITY.md) proves that a finite twisted
+closed PMP extremal cannot be abnormal. Its endpoint/PMP interface,
+backwards zero identities, triple-tie lemma and twisted run argument
+have passed an [independent internal hand audit](GLOBAL_NORMALITY_AUDIT.md).
+The restored companion script passes 22 exact algebra checks. Thus every
+global minimizing lift may be normalized to lambda=-1 under the stated
+inputs. Compactness gives a qualitative common bound on those normal
+lifts; no explicit numerical phase box follows from that corollary.
+Normal triple/nontransverse ties still require separate treatment.
 
 The existing coverage proof in [BOUNDED_REDUCTION](BOUNDED_REDUCTION.md)
 says that every minimizing cyclic word with N>=6 has one six-complete-piece
@@ -91,8 +95,9 @@ established. No individual floating-point sample can close gate C.
 
 Two cross-case obligations are tracked separately:
 
-- **T (ties and multiplier exceptions):** independently audit
-  GLOBAL_NORMALITY; retain triple ties and nontransverse switches
+- **T (ties and multiplier exceptions):** the GLOBAL_NORMALITY audit is
+  complete, removing abnormal minimizer lifts. Retain normal triple ties
+  and nontransverse switches
   (GLOBAL_COST_CASIMIR Section 6 gives an exact cubic example).
   If convenient, stratify the *normal* frame costate into negative
   elliptic, positive elliptic, and nonelliptic determinant sectors,
@@ -184,8 +189,9 @@ plot or optimizer output proves an unrestricted inequality.
 
 ## 5. Priority and stopping criteria
 
-1. **Audit cross-case T**: independent rederivation of normality and
-   its triple-tie/backwards-flow step (one bounded proof obligation).
+1. **Finish cross-case T**: the independent normality audit is complete.
+   Treat remaining normal triple/nontransverse branches in continuation;
+   the abnormal proof does not exclude those normal branches.
 2. **Extend M1 escape**: its existing finite escape region offers the
    clearest monotone full-period certificate. Compute the exact
    complement and identify a finite set of alternatives, not a larger
@@ -218,7 +224,7 @@ manufacture additional word lengths or count partial samples as closure.
 | M1 | **First deterministic run** | Small-core escape subregion only | OPEN |
 | M2 | **First deterministic run** | OPEN | OPEN |
 | M3 | **First deterministic run** | OPEN | OPEN |
-| T: ties/normality | New normality hand draft | Independent audit pending | OPEN |
+| T: ties/normality | Normality proved; 22 exact algebra checks | Independent normality audit complete | Normality CLOSED; normal ties OPEN |
 | B: boundaries/equality | Octagon insertion obstruction known | OPEN | OPEN |
 
 **Unrestricted Reinhardt cost inequality: OPEN. Affine uniqueness: OPEN.

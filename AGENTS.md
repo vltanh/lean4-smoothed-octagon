@@ -14,8 +14,12 @@ not certified uniform signs. The new complete-period N=4/7/10
 Hessian examples validate existing hand results only. Require
 complete-period budget, actual twisted state/costate endpoints and
 all necessary optimality tests before declaring a candidate excluded;
-retain explicit UNKNOWN outcomes. The new GLOBAL_NORMALITY proof is
-not yet independently audited.
+retain explicit UNKNOWN outcomes. GLOBAL_NORMALITY now has an independent
+internal hand audit in GLOBAL_NORMALITY_AUDIT and a restored exact algebra
+certificate. Every minimizing lift is normal under the stated inputs.
+Normal triple ties, nontransverse switches and the five global cost cases
+remain open. Its compact normal-lift corollary is qualitative, with no
+explicit multiplier bound for an interval search.
 
 
 Read docs/SINGULAR_COST_BUDGET.md and docs/MEASURABLE_EDGE_PMP_BOUND.md.
@@ -143,4 +147,3 @@ for known reductions; standard regular (6k+2) families are not all smoothed
 polygons. Report global minimality, affine uniqueness, and kernel validation
 separately. Earlier detailed status inventories remain available in Git history;
 the current ledger takes precedence over older suggested next tasks.
-

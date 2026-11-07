@@ -1,8 +1,11 @@
 # Closed finite vertex extremals are normal
 
 Date: 2026-11-07 (UTC). Hand proof with a supplementary exact algebra check.
-No Lean, Lake, typechecking, or CI was run. This note has been self-reviewed;
-it has not received independent mathematical review or kernel validation.
+No Lean, Lake, typechecking, or CI was run. An independent internal hand
+review rederived the endpoint interface, matrix algebra, backwards zero
+identities, triple-tie argument and twisted-period contradiction; see
+[GLOBAL_NORMALITY_AUDIT](GLOBAL_NORMALITY_AUDIT.md). This is not external
+peer review or kernel validation.
 
 ## Theorem and scope
 
@@ -92,7 +95,9 @@ The adjoint first-variation identity and the zero active Hamiltonians give
 \]
 
 An inserted vertex at an internal switch gives the same paired expression.
-Its value is nonpositive by Hamiltonian maximization. To check the clock,
+Its value is nonpositive by Hamiltonian maximization. The maximum condition
+holds at the switch itself by continuity of every vertex Hamiltonian and
+its almost-everywhere validity on each neighboring arc. To check the clock,
 an inserted log factor epsilon has physical duration
 p_i epsilon/2+O(epsilon^2), where its active margin p_i is positive.
 The original factors can be kept fixed: their physical durations then
@@ -337,7 +342,17 @@ all the active duration columns. Equations (11) and (14) remain valid
 because their internal factors are positive and different from 1. They
 force vanishing of the corresponding missing pairing. Vanishing is
 unaffected by reversing a clock or multiplying it by a nonzero factor.
-No backwards Hamiltonian inequality is asserted or needed.
+Here is the precise cotangent check. On a subwindow [a,b], set
+\(\widetilde x(s)=x(b-s)\) and
+\(\widetilde p(s)=p(b-s)\). For the reversed vector field \(-f_i\),
+the adjoint equation is
+\(\widetilde p'=\widetilde p\,Df_i\), exactly the reverse of the
+original homogeneous abnormal adjoint equation. Its active Hamiltonian is
+\(-p f_i=0\). Thus the reversed endpoint functional is nonzero and
+annihilates the reversed active-duration columns. The matrix products (1)
+with reciprocal factors give these inverse vertex flows. A missing
+pairing equal to zero is the same physical statement in either
+orientation. No backwards Hamiltonian inequality is asserted or needed.
 
 For explicit label checks, 0102 reverses to 2010, which cyclically relabels
 to 0121; 0201 reverses to 1020, which cyclically relabels to 0212.
@@ -418,14 +433,49 @@ The cost multiplier satisfies lambda<=0 in the maximizing convention;
 excluding lambda=0 proves lambda<0. Positive homogeneous rescaling therefore
 permits lambda=-1 on every global minimizing lift.
 
-## 7. Validation and remaining task
+## 7. Compactness gives uniform separation from abnormal multipliers
+
+Let \(\mathcal K_{\min}\) be the compact family of all normalized
+minimizing lifts in [GLOBAL_MINIMIZER_COMPACTNESS](GLOBAL_MINIMIZER_COMPACTNESS.md),
+Section 4. Use its fixed initial norm \(\|\mathcal P(0)\|=1\), with the
+cost multiplier written in this note's maximizing convention \(\lambda\le0\).
+The sign change from that note's nonnegative cost coordinate is immaterial.
+The functional \(\mathcal P\mapsto-\lambda\) is continuous and, by the
+theorem above, strictly positive on \(\mathcal K_{\min}\). Therefore
+
+\[
+\eta:=\min_{\mathcal K_{\min}}(-\lambda)>0.                 \tag{22}
+\]
+
+If not, a sequence with \(\lambda\to0\) would have a normalized
+minimizing limit. The finite-representation theorem applies to this
+actual limiting minimizer, and the present theorem would exclude its
+abnormal lift. This also explains why the conclusion is about global
+minimizers, not arbitrary incomplete normal PMP segments.
+
+Consequently division by \(-\lambda\) maps this compact family
+continuously to a compact family with \(\lambda=-1\). In particular,
+there is a common finite bound on all normalized normal costates of
+all minimizers. Smooth invertible cotangent changes over the common
+compact state set preserve this conclusion.
+
+Equation (22) is qualitative: no explicit value of \(\eta\) is supplied.
+It cannot replace a numerical phase-domain bound in a proposed interval
+computation. It supplies no octagon cost comparison and no uniqueness of
+multipliers or endpoint-rank theorem. The compactness argument uses only
+Section 4 of the compactness note; its historical singular-avoidance source
+input is not needed.
+
+## 8. Validation and remaining task
 
 The hand proof consists of the exact endpoint/covector interface, the finite
 matrix identities (9)-(16), the two triple-tie implications, and the run
 argument. The supplementary script
 [abnormal_normality_certificate.py](../explorations/abnormal_normality_certificate.py)
-recomputes 22 rational identities from the three matrices (1). It passed
-with Python 3.13.5 and SymPy 1.14.0. The script uses no samples, numerical
+performs 22 named exact matrix/scalar checks from the three matrices (1).
+The previously referenced script was absent from the audited repository
+snapshot; this revision supplies it. It passed with Python 3.12.14 and
+SymPy 1.14.0. The script uses no samples, numerical
 optimization, trajectory integration, or growing word enumeration. It does
 not independently check the PMP interpretation, the positivity deductions,
 the backwards-flow argument, or the combinatorial theorem.
@@ -438,8 +488,9 @@ All additional arguments are displayed above; no new external optimality
 theorem is imported.
 
 This is a new hand-proof result in the branch, not a claim of novelty
-relative to all literature. Self-review and exact algebraic reproduction
-are not independent review, external peer review, or kernel validation.
+relative to all literature. The independent internal audit is recorded separately with its checked
+scope. Exact algebraic reproduction and internal review are not external
+peer review or kernel validation.
 
 The sharp global comparison and affine equality remain open. Normality
 removes an entire multiplier regime, not all normal competitors. In

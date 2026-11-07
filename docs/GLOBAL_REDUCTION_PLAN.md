@@ -26,9 +26,11 @@ switch-complete standard N=7 forward window whose full period is over
 budget, a positive-cost all-reverse octagon-boundary insertion branch,
 and closed-period numerical negative indices 0/2/4 for standard
 N=4/7/10. All are diagnostics on already known families, not universal
-exclusions. The normality hand draft in GLOBAL_NORMALITY requires
-independent audit, and triple/nontransverse ties plus boundary limits
-remain mandatory.
+exclusions. The normality proof in GLOBAL_NORMALITY has now passed
+independent internal hand audit: all global minimizing lifts are normal,
+using the existing finite-representation input. A compactness corollary
+gives a qualitative common normal-costate bound. Normal triple/nontransverse
+ties, boundary limits and all five sharp comparison cases remain open.
 
 ## 1. Decision and exact target
 
