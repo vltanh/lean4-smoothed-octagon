@@ -15,9 +15,10 @@ Read it **before** attacking any additional case. The prerequisite
 [P0 audit is complete as a hand proof](docs/MINIMIZER_WINDOW_AUDIT.md):
 it verifies minimizer eligibility, twisted seams, normalized geometric sectors,
 and the finite-piece geometric/control splice. **The original local L3
-statement is now refuted:** eligible `021210` windows can have no cheaper
-replacement with at most six pieces. Read
-[the exact obstruction](docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md) before trying
+statement is now refuted:** eligible `021210` windows can minimize cost for
+their fixed endpoints among all measurable simplex controls, with free time.
+Read [the full obstruction](docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md) and
+[its self-contained six-piece foundation](docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md) before trying
 to complete that sufficient package. L1, L2, L4, and L5 remain open;
 universal analytic exclusions proved: **0/5**. A repaired reduction is
 required. Do not resume increasing-length whole-trajectory enumeration.
@@ -41,7 +42,7 @@ up to cyclic relabeling, one of these six-piece windows:
 | --- | --- | --- |
 | 012012 | Five forward switches | Open |
 | 021021 | Five reverse switches | Open |
-| 021210 | One forward switch between two reverse pairs | Refuted on the stated domain with at most six replacement pieces |
+| 021210 | One forward switch between two reverse pairs | Refuted on the stated domain even with arbitrary measurable replacements |
 | 010201 | Reverse run of length two followed by at least two forward switches | Open |
 | 021012 | Reverse run of at least three followed by at least two forward switches | Open |
 
@@ -116,6 +117,15 @@ an exact edge lower bound, compactness, and two endpoint coordinates, and has
 received independent hand review. These windows have not been shown to occur
 in actual closed minimizers. The result refutes the proposed sufficient local
 lemma; it does not refute Reinhardt or Hales's geometrically embedded conjecture.
+
+The [all-control strengthening](docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md)
+shows that sufficiently small members of that same family minimize cost for
+their fixed endpoints among **all measurable simplex controls and all terminal
+times**. It checks a published strong-optimality theorem on one fixed padded
+reference, then uses compactness and the exact edge dual to rule out cheaper
+competitors for its small trims. The theorem transfer and limiting argument
+received independent hand reviews. More replacement pieces do not fix the
+failed local lemma; additional global-minimizer information is required.
 
 The [L4 variation certificate](docs/LOCAL_SIX_VARIATION.md) proves that the
 `010201` endpoint map has rank five throughout its positive-factor domain.

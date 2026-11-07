@@ -6,7 +6,8 @@ or CI was run. The coverage proof received an independent hand review of its
 sign catalogue, twisted seam, run alternatives, and one-period window condition,
 in addition to the distinct finite-graph computational cross-check. The analytic
 local exclusions have not been proved. The original at-most-six L3 statement
-has been refuted by an independently reviewed hand counterexample.
+and its arbitrary-measurable relaxation have been refuted by independently
+reviewed hand counterexamples, with ASZ as an explicit input to the strengthening.
 
 The complete earlier audit is preserved at
 [798a7e1 / DEEP_AUDIT_CHECKLIST.md](https://github.com/vltanh/lean4-smoothed-octagon/blob/798a7e119e254c3ee23073de615288986fa61929/DEEP_AUDIT_CHECKLIST.md).
@@ -89,6 +90,33 @@ sufficiency theorem.
 - [x] Receive independent hand review of all critical identities and limits.
 - [x] Keep the local-domain counterexample distinct from geometric embedding
   in a closed minimizer, larger replacement counts, and Reinhardt itself.
+
+## L3 strengthening to all measurable replacements
+
+`docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md` proves fixed-endpoint global
+optimality for sufficiently small positive pads, among all measurable simplex
+controls and all terminal times. It adds ASZ Theorem 2.6 to the base hand proof.
+
+- [x] Read the primary ASZ paper: Assumptions 2.1–2.3, constraint space (2.8),
+  and Theorem 2.6.
+- [x] Prove exact convexification and its inverse, and use the state-only
+  clock d tau=y dt without enlarging the original admissible controls.
+- [x] Verify the normal adjoint, strict gaps, two-way ties, and transverse
+  Legendre signs for one fixed positive-pad reference P_H.
+- [x] Identify the actual one-dimensional switching variation by rank five,
+  and transfer the positive constrained edge Hessian to it.
+- [x] Add cost and constant total-duration states; check both free-duration
+  transversality conditions and the exact switching-parameter diffeomorphism.
+- [x] Extend first-exit bounds to all convexified measurable controls;
+  pass to an admissible limit with uniform states and weak-star controls.
+- [x] Use tangent turning and exact edge equality to identify the unique core.
+- [x] Prove convergence of clocks, inverse clocks, costs, and total duration.
+- [x] Splice into one fixed P_H to contradict its one fixed strong neighborhood;
+  never assume a uniform radius for shrinking-pad references.
+- [x] Independent hand reviewers checked the theorem transfer and full limiting
+  argument. This is not external peer review or kernel validation.
+- [x] Keep fixed-endpoint global optimality separate from occurrence inside a
+  closed Reinhardt minimizer; the latter has not been established.
 
 ## Full-domain L1 endpoint rank
 

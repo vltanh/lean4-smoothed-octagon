@@ -5,9 +5,10 @@
 **Mandatory session entry point:** `docs/FIVE_TEMPLATE_HANDOFF.md`. Begin with
 the completed P0 certificate in `docs/MINIMIZER_WINDOW_AUDIT.md`
 (minimizer eligibility, twisted seam, sector restrictions, and finite-piece
-geometric bridge). Then read docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md:
-the original L3 statement is FALSE on the stated local domain when the
-replacement has at most six pieces. Repair that sufficient reduction before
+geometric bridge). Then read docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md and
+docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md: the original L3 statement is FALSE
+on the stated local domain even with arbitrary measurable replacements.
+The stronger proof explicitly uses ASZ Theorem 2.6. Repair that reduction before
 treating the five-template package as a viable route. Record exact scope:
 L1, L2, L4, L5 remain open; no universal analytic exclusion is proved.
 
@@ -26,8 +27,9 @@ coverage argument reduces any minimizing word with at least six pieces to
 one of five local templates: 012012, 021021, 021210, 010201, 021012.
 The coverage is valid, but the original analytic package has a false L3
 premise. The local counterexamples have not been embedded in actual closed
-minimizers and do not refute Reinhardt. Any repair needs additional proved
-minimizer conditions, a different local target, or another uniform bound.
+minimizers and do not refute Reinhardt. Adding replacement pieces does not
+repair the counterexample. Any repair needs additional proved minimizer
+conditions, a different local target, or another uniform bound.
 
 Work should prove or refute one of those universal local statements on its
 entire explicit domain, or provide a different genuinely uniform bound and

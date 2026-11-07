@@ -8,7 +8,9 @@ application of the published sufficient-optimality theorem.
 **Subsequent status:** the distinct small-window construction in
 [LOCAL_REVERSE_SIX_OBSTRUCTION.md](LOCAL_REVERSE_SIX_OBSTRUCTION.md)
 refutes the original universal L3 target with at most six replacement
-pieces. The theorem below remains a local result for its own exact input;
+pieces; [LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md](LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md)
+extends that distinct family's result to all measurable replacements.
+The theorem below remains a local result for its own exact input;
 its limitations are not a claim that the original universal target is open.
 
 There is an explicit eligible window of type **L3 = 021210** which is a

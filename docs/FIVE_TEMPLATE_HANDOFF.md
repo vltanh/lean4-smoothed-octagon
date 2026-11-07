@@ -1,7 +1,7 @@
 # Handoff — bounded-case proof plan for the Reinhardt conjecture
 
-**Checkpoint (2026-11-07): the original at-most-six L3 statement is refuted.
-Repair the sufficient reduction before adding another whole-word case.**
+**Checkpoint (2026-11-07): L3 on the stated local superset is refuted even
+with arbitrary measurable replacements. Repair the sufficient reduction.**
 
 **Start here, then** `docs/BOUNDED_REDUCTION.md` (precise theorem/domain),
 `CHECKLIST.md` (status), `docs/FORWARD_ALTERNATION_EXCLUSION.md`
@@ -12,10 +12,15 @@ Repair the sufficient reduction before adding another whole-word case.**
 Read [LOCAL_REVERSE_SIX_OBSTRUCTION.md](LOCAL_REVERSE_SIX_OBSTRUCTION.md)
 first. It proves that eligible `021210` windows of arbitrarily small cost
 can admit no cheaper endpoint-matching replacement with at most six pieces.
+Then read [LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md](LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md):
+the strengthening allows arbitrary measurable simplex competitors and all
+terminal times. It checks ASZ's sufficient-optimality theorem on one fixed
+padded reference, then globalizes small trims by compactness and the edge dual.
 The current domain is a necessary superset of actual minimizing windows;
 no closed-minimizer embedding of these counterexamples is claimed. The next
 proof gate is a justified repair: additional necessary minimizer conditions
-or a different uniform reduction. The original five sufficient statements
+or a different uniform reduction. Adding replacement pieces is not a repair.
+The original five sufficient statements
 cannot all be proved as written.
 
 **Do not resume comparing closed words of lengths 7, 8, 9, ...** The finite
@@ -32,7 +37,7 @@ seam**. This is a structural coverage theorem, **not** a uniform bound.
 | --- | --- | --- | --- |
 | L1 | `012012` | `+++++` | **OPEN** |
 | L2 | `021021` | `-----` | **OPEN** |
-| L3 | `021210` | `--+--` | **FALSE** on the stated domain with at most six replacement pieces |
+| L3 | `021210` | `--+--` | **FALSE** on the stated domain even with arbitrary measurable replacements |
 | L4 | `010201` | `+--++` | **OPEN** |
 | L5 | `021012` | `---++` | **OPEN** |
 
@@ -46,7 +51,7 @@ limit it to at most six pieces.
 
 Each gate quantifies over **all asymmetric parameters**, not just symmetric,
 generic-rank, sampled, closed, or bounded-box tuples. The original domain
-is now proved too broad for its at-most-six L3 claim. L1, L2, L4, and L5
+is now proved too broad for L3 even without a replacement cap. L1, L2, L4, and L5
 remain open. A weaker target restricted by newly proved necessary minimizer
 conditions must keep its hypotheses explicit.
 
@@ -185,8 +190,9 @@ method. A theorem for *globally closed* `012012` does not count.
 
 - [ ] L2: `021021` (reverse-cyclic; do not infer from L1 by an unproved
   time-reversal/reflection symmetry).
-- [x] Diagnose L3: `021210` is refuted on the stated domain for at most six
-  replacement pieces by LOCAL_REVERSE_SIX_OBSTRUCTION. This is a refuted
+- [x] Diagnose L3: `021210` is refuted on the stated domain for arbitrary
+  measurable replacements by LOCAL_REVERSE_SIX_GLOBAL_MINIMUM; the
+  self-contained at-most-six foundation is LOCAL_REVERSE_SIX_OBSTRUCTION. This is a refuted
   sufficient lemma, not a proved analytic exclusion or a global counterexample.
   The earlier, distinct
   [LOCAL_L3_STRONG_MINIMUM.md](LOCAL_L3_STRONG_MINIMUM.md) supplies an exact
@@ -278,8 +284,9 @@ pieces; two closed six-piece comparisons.
 
 **Completed prerequisite:** P0 window-eligibility and finite-splice hand audit.
 
-**Refuted:** original L3 on the stated domain with at most six replacement pieces.
-Its arbitrary-finite-replacement relaxation is not settled by that proof.
+**Refuted:** L3 on the stated local superset, including its arbitrary-finite
+and arbitrary-measurable replacement relaxations. The stronger proof adds
+ASZ Theorem 2.6 as a checked external input.
 
 **Open:** L1, L2, L4, L5; a repaired L3/domain or another uniform reduction
 (**0/5 analytic exclusions proved**);

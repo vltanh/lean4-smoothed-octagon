@@ -6,7 +6,12 @@ Date: 2026-11-06. Priority: establish boundedness before further whole-word comp
 
 **Update (2026-11-07):** [LOCAL_REVERSE_SIX_OBSTRUCTION.md](LOCAL_REVERSE_SIX_OBSTRUCTION.md)
 proves that some eligible `021210` windows admit no cheaper replacement with
-at most six positive vertex pieces. Their costs can be arbitrarily small.
+at most six positive vertex pieces. The independently reviewed strengthening
+[LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md](LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md)
+removes that cap: sufficiently small members are globally optimal for their
+fixed endpoints among all measurable simplex controls and all terminal times.
+It adds the explicitly checked ASZ sufficient-optimality theorem. The costs
+can be arbitrarily small.
 The original sufficient package below therefore cannot be completed on its
 stated domain. The coverage proof and conditional implication remain valid;
 L1, L2, L4, and L5 remain open. These local examples have not been shown to
@@ -44,7 +49,7 @@ if it decreases by one. The five templates are:
 | --- | --- | --- | --- |
 | L1 | +++++ | 012012 | Open |
 | L2 | ----- | 021021 | Open |
-| L3 | --+-- | 021210 | **False on this domain with at most six replacement pieces** |
+| L3 | --+-- | 021210 | **False on this domain even with arbitrary measurable replacements** |
 | L4 | +--++ | 010201 | Open |
 | L5 | ---++ | 021012 | Open |
 
@@ -275,10 +280,10 @@ interior conditions must also be checked when the minimum is zero.
 There are finitely many such tests (opposite j indices duplicate them).
 
 These restrictions intentionally describe a necessary superset of windows
-of a global minimizer. The local analytic claims on that explicit superset
-are still conjectural. A counterexample to one would invalidate that
-sufficient claim, not disprove Reinhardt, and must not be hidden by changing
-the word-length cutoff.
+of a global minimizer. L3 on this explicit superset is now refuted, even
+with arbitrary measurable replacements; the other four targets remain open.
+The counterexample invalidates that sufficient claim, not Reinhardt, and
+must not be hidden by changing the word-length or replacement-piece cutoff.
 
 ## 5. The exact local endpoint map is not the closed-word endpoint map
 
@@ -373,6 +378,9 @@ does refute that at-most-six existence claim. It combines an exact edge
 dual, a compactness argument, positive interior third-control gaps, and two
 normal endpoint coordinates. This is a global comparison with every word
 of length at most six, not an inference from local optimality alone.
+The separate GLOBAL_MINIMUM note goes further: it verifies strong optimality
+for one fixed padded reference, then uses compactness and the edge dual to
+globalize its sufficiently small trims among arbitrary measurable controls.
 
 For L1, [LOCAL_FORWARD_RANK.md](LOCAL_FORWARD_RANK.md) now proves that the
 full endpoint rank is five throughout the positive strict-star domain, so
@@ -401,9 +409,12 @@ contradict minimality of the original trajectory.
 For example, [LOCAL_REVERSE_SIX.md](LOCAL_REVERSE_SIX.md) proves an exact
 seven-piece improvement for every q>1 in the equal-factor, state-cyclic
 reverse-six subfamily. It supplies no universal L2 theorem. The original
-at-most-six L3 statement is false; its weaker finite-replacement variant is
-not decided by the six-piece obstruction. This alternative does not expand
-the five input cases or resume increasing-length whole-word enumeration.
+at-most-six L3 statement is false, and LOCAL_REVERSE_SIX_GLOBAL_MINIMUM
+now refutes its arbitrary-finite-replacement relaxation too. The logical
+sufficiency of that relaxation remains true, but it cannot be established
+on this stated superset. More replacement pieces do not repair the route;
+additional necessary global-minimizer conditions or another uniform theorem
+are required. No growing whole-word enumeration is justified.
 
 ## 7. Bounded dimension versus a certified bounded search
 

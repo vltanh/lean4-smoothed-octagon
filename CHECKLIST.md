@@ -5,9 +5,11 @@
 [the minimizer-window audit](docs/MINIMIZER_WINDOW_AUDIT.md) for finiteness,
 twisted rebasing, normalized sectors, and the finite-piece geometric splice.
 **The original L3 lemma is refuted:**
-[LOCAL_REVERSE_SIX_OBSTRUCTION](docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md)
-constructs eligible `021210` windows with no cheaper replacement of at most
-six pieces. Repair the sufficient domain or the uniform reduction before
+[LOCAL_REVERSE_SIX_GLOBAL_MINIMUM](docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md)
+constructs eligible `021210` windows with no cheaper replacement among all
+measurable simplex controls, with free terminal time. Its additional input
+is the explicitly checked ASZ sufficient-optimality theorem; the separate
+six-piece proof is self-contained. Repair the domain or uniform reduction before
 treating this package as a viable proof plan. **No new whole-word enumeration.
 L1, L2, L4, L5 remain open; universal analytic exclusions proved: 0/5.**
 
@@ -36,7 +38,7 @@ It is not an unconditional boundedness theorem or a viable conjunction as stated
 | Coverage | Every cyclically reduced minimizing word with N>=6 contains one of the five specified six-arc windows, using the established forward-alternation exclusion. | Hand proof independently reviewed, with a separate finite-graph computational cross-check. No new cost class excluded by this alone. |
 | L1: 012012 | Strictly cheaper endpoint-preserving replacement on the entire eligible local domain. | **Open.** An exact eligible stationary minimum disproves universal nearby same-word descent; different-word or nonlocal improvements remain possible. See [LOCAL_FORWARD_SIX](docs/LOCAL_FORWARD_SIX.md). |
 | L2: 021021 | Same universal local improvement for five consecutive reverse switches. | **Open.** A regular-family comparison does not cover asymmetric local endpoints. |
-| L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Refuted for at most six replacement pieces.** Eligible arbitrarily cheap windows admit no cheaper endpoint-matching replacement with that piece bound. See [LOCAL_REVERSE_SIX_OBSTRUCTION](docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md). No closed-minimizer embedding is asserted. |
+| L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Refuted even with arbitrary measurable replacements.** Eligible arbitrarily cheap windows are global minima for their fixed endpoints, with free terminal time. See [LOCAL_REVERSE_SIX_GLOBAL_MINIMUM](docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md). No closed-minimizer embedding is asserted. |
 | L4: 010201 | Same universal local improvement at a reverse run of length two followed by at least two forward switches. | **Open.** Full-domain endpoint rank five is proved. An exact eligible stationary family has all five compensated missing-control switch needles positive; that switch-only shortcut is false. See [LOCAL_SIX_VARIATION](docs/LOCAL_SIX_VARIATION.md). |
 | L5: 021012 | Same universal local improvement at a reverse run of at least three followed by at least two forward switches. | **Open.** |
 | Uniform bound | Deduce N<=5 for every global minimizer from valid local improvements and the published finite bang-bang reduction. | Conditional implication proved, but the original L3 premise is false. A repaired reduction is required. |
@@ -115,8 +117,18 @@ compactness and endpoint normal coordinates force every cheaper competitor
 with at most six pieces to use the same word. A five-coordinate local inverse
 then fixes both padding arcs and the core endpoints; the exact edge lower
 bound rules out cheapness. Full-arc star and sector eligibility are proved.
-Independent hand review passed. Larger replacement counts are not addressed
-by this particular proof, and global Reinhardt minimality remains open.
+Independent hand review passed. This particular proof stops at six pieces.
+
+[LOCAL_REVERSE_SIX_GLOBAL_MINIMUM](docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md)
+removes that restriction. The same family's fixed positive-pad extension
+meets ASZ Theorem 2.6 after an explicit state-only clock and free-duration
+augmentation. Arbitrary cheaper competitors for shrinking pads converge to
+the unique edge core. Splicing them into that one fixed extension contradicts
+its strong local optimality. This proves fixed-endpoint global optimality
+among all measurable simplex controls, without a piece cap. Independent
+reviews checked the primary theorem, its exact variation space, and every
+compactness/clock/splice step. Increasing replacement counts cannot repair L3.
+Global Reinhardt minimality remains open.
 
 ## What is fixed, rather than growing
 
@@ -184,6 +196,13 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Strengthened the small-window L3 counterexample to all measurable controls
+  and free terminal times. Checked ASZ's hypotheses on one fixed padded
+  reference, proved arbitrary-control compactness and state-only clock
+  convergence, and used fixed-reference splicing. Independent hand reviews
+  passed. The broader finite-replacement relaxation is also refuted; no
+  geometric embedding in an actual closed minimizer is asserted.
 
 - Refuted the original at-most-six L3 lemma on its exact necessary-superset
   domain. Independently reviewed the edge dual, full-arc gap, compactness,

@@ -4,6 +4,14 @@ Date: 2026-11-06. Hand proof; no Lean compilation, Lake, or CI.
 
 ## Theorem and exact scope
 
+**Stronger result available:**
+[LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md](LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md)
+adds an explicit application of the published ASZ sufficient-optimality
+theorem and proves that sufficiently small members of this same family
+have no cheaper competitor among all measurable simplex controls, without
+a replacement-piece cap. The self-contained proof below retains its narrower
+at-most-six scope and does not depend on that additional theorem.
+
 There are strict-star six-piece windows with word **021210** and
 arbitrarily small positive cost, satisfying the input sector conditions
 of `BOUNDED_REDUCTION.md`, for which **no replacement with at most six
@@ -15,9 +23,9 @@ explicit necessary superset of minimizer windows and restricted to
 replacements with at most six pieces, is false. The examples are not
 shown to be windows of an actual closed Reinhardt minimizer. This does
 not refute Reinhardt's conjecture, Hales's geometrically embedded link
-reduction, or the relaxed local target allowing seven or more replacement
-pieces. No assertion of optimality over all measurable full-simplex
-controls is made here.
+reduction, or, by itself, the relaxed local target allowing seven or more
+replacement pieces. The separate stronger note handles all measurable
+full-simplex controls; no such assertion is a premise of the proof here.
 
 The proof first supplies an exact normal first-variation certificate:
 the middle reverse four-piece segment has positive cost for every
@@ -711,8 +719,9 @@ The example shows why a positive-dimensional same-word fiber is not
 an improvement theorem. Here the reverse-edge fiber is strictly
 minimizing, all full-control first-order needle signs have the proper
 optimality orientation, and the complete at-most-six comparison is
-an obstruction. A proposed full-domain local theorem with a larger
-replacement allowance needs a new argument.
+an obstruction. The companion GLOBAL_MINIMUM note now also excludes a cheaper
+arbitrary measurable replacement for sufficiently small pads, using a separate
+published sufficiency theorem and a fixed-reference limiting argument.
 
 It remains possible that the windows which occur in actual closed
 global minimizers obey additional conditions that exclude these
