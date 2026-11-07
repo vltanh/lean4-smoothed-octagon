@@ -1,25 +1,13 @@
 # The Reinhardt conjecture, in Lean 4
 
-Which centrally symmetric convex shape packs the plane worst? Pack copies of a disk as tightly as
-possible and they cover `π/√12 = 90.69…%` of the plane; a regular octagon does a little worse. In
-1934 Karl Reinhardt conjectured that the worst of all is the *smoothed octagon*, a regular octagon
-whose corners are cut off by arcs of hyperbolas, with greatest packing density
+Which centrally symmetric convex shape packs the plane worst? Copies of a disk, packed as tightly
+as possible, cover `π/√12 = 90.69…%` of the plane. In 1934 Karl Reinhardt conjectured that the
+worst shape is the *smoothed octagon*, a regular octagon with its corners rounded off by arcs of
+hyperbolas, which covers only
 
-  `δ_oct = (8 − 4√2 − log 2)/(2√2 − 1) = 0.902414…`,
-
-and that it is the only worst shape up to affine maps. Kurt Mahler reached the same octagon
-independently in 1947. The conjecture has been open since.
-
-This repository is a Lean 4 proof of the conjecture, with Mathlib, in progress. The informal proof
-it formalizes was written by ChatGPT (OpenAI, ChatGPT Pro) in [`docs/`](docs/HANDOFF.md). The main
-theorem is assembled in Lean from the stages of that proof; some stages are still being proved,
-and two inputs are, for now, named hypotheses ([Status](#status)). Nothing here is a claim that
-the conjecture is proved until the build reports no `sorry` and no hypothesis remains.
+  `δ_oct = (8 − 4√2 − log 2)/(2√2 − 1) = 90.24…%`.
 
 ![The smoothed octagon in its densest packing, the copies sliding through the continuum of densest packings while staying in contact](docs/figures/worst-packer.gif)
-
-The smoothed octagon packs most densely as a lattice packing, and it can do so in a continuum of
-ways: the copies slide while always touching their six neighbours.
 
 ## The smoothed octagon
 
@@ -82,6 +70,11 @@ of cost below `π`, with any measurable control, bounds such a disk.
 ![The state of the smoothed octagon's trajectory as a path in the upper half-plane, inside the star domain, with its four control arcs](docs/figures/upper-half-plane.svg)
 
 ## Status
+
+This repository is a Lean 4 proof of the conjecture, with Mathlib, in progress. The informal proof
+it formalizes was written by ChatGPT (OpenAI, ChatGPT Pro) in [`docs/`](docs/HANDOFF.md). Nothing
+here is a claim that the conjecture is proved until the build reports no `sorry` and no hypothesis
+remains.
 
 The main theorem is proved in Lean from the stages below
 ([`LowerBound.lean`](SmoothedOctagon/LowerBound.lean), [`Main.lean`](SmoothedOctagon/Main.lean)),
