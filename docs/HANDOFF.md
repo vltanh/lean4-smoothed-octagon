@@ -2,7 +2,12 @@
 
 **Active request (2026-11-07): find a hand proof that does not depend on computer assistance.** The finite replacement ledger is [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md). New explicit inequalities are in [HAND_PROOF_REFINEMENTS](HAND_PROOF_REFINEMENTS.md). That goal is not yet complete: the interval exclusions below are the completed computational baseline, not hand-only premises. Preserve the baseline and replace its indispensable computational dependencies by readable arguments.
 
-**Latest hand progress:** the [nonshort duration-ratio gap](MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md)
+**Latest hand progress:** the [small-forward-minimum hand proof](SMALL_FORWARD_MINIMUM_HAND_PROOF.md)
+replaces the hard H5 coefficient table by an integral estimate and an
+elementary cubic sign argument, with an
+[independent audit](SMALL_FORWARD_MINIMUM_HAND_AUDIT.md). This supplies
+the shared minimum-structure prerequisite for F and the mixed cases.
+The [nonshort duration-ratio gap](MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md)
 removes the old small-parameter coefficient table from the actual refined
 route. The [forward lemmas](HAND_FORWARD_LEMMAS.md) and
 [short-side outer envelope](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md) have

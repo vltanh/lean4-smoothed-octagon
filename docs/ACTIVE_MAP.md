@@ -21,6 +21,12 @@ Further reductions: [nonshort shape](MIXED_NONSHORT_SHAPE_MONOTONICITY.md),
 [short-side root/angle bound](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md).
 Each has a linked audit and leaves its remaining endpoint signs explicit.
 
+The shared small-forward-minimum prerequisite now has a complete
+[hand proof](SMALL_FORWARD_MINIMUM_HAND_PROOF.md), using the
+[integral cubic inequality](HAND_H5_INTEGRAL_RATIONAL_BOUND.md) and its
+[independent audit](SMALL_FORWARD_MINIMUM_HAND_AUDIT.md). The old H5
+large coefficient table is no longer needed by the active hand route.
+
 ## Completed theorem and review path
 
 All sufficient whole-period cases and the final cost/equality assembly

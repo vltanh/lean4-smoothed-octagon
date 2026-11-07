@@ -26,7 +26,7 @@ in force.
 
 | Gate | Required hand replacement | Current status |
 | --- | --- | --- |
-| H-F | Uniform exclusion of all-forward periods, including the small-minimum sign argument, neighbor bound and complementary Casimir inequality | Open. The two existing covers and the hard small-minimum coefficient face are discovery evidence only for this goal. |
+| H-F | Uniform exclusion of all-forward periods, including the neighbor bound and complementary Casimir inequality | Open. The hard small-minimum face now has a complete hand replacement. The two later covers still need hand replacements. |
 | H-S | Exclusion when the smaller turn at a minimum reverse centre has a short forward run | Open. Replace the six-variable cost/angle and outer-root exclusion by an analytic argument. |
 | H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Open. Retain the scalar boundary comparison and concavity reduction; replace the reverse, low-a and forward endpoint exclusions. The old small-parameter coefficient argument is now bypassed by the proved strict duration-ratio gap. |
 | H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Open. In particular, distinguish supplementary identity checks from indispensable executable sign checks. |
@@ -80,8 +80,12 @@ comparison.
 
 The broad circular-region argument in F already has a hand proof; its
 older interval-Hessian calculation need not be imported into a new
-dependency chain. The remaining small-forward-minimum polynomial face
-is a separate issue and is still included in H-F.
+dependency chain. The shared hard small-forward-minimum face now has a
+complete [integral and cubic hand proof](SMALL_FORWARD_MINIMUM_HAND_PROOF.md),
+accepted in its [independent review](SMALL_FORWARD_MINIMUM_HAND_AUDIT.md).
+This replaces the old H5 coefficient table and establishes the required
+minimum structure for both F and the mixed cases. It does not close
+either of the later forward inequalities.
 
 ## Further accepted reductions, with explicit open hypotheses
 

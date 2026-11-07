@@ -22,6 +22,11 @@ and the [short-side root/angle comparison](docs/MIXED_SMALLER_SHORT_ROOT_AND_ANG
 Their linked hand audits accept the reductions; the resulting endpoint
 exclusions are not claimed proved.
 
+The [small-forward-minimum hand replacement](docs/SMALL_FORWARD_MINIMUM_HAND_PROOF.md),
+its [cubic sign proof](docs/HAND_H5_INTEGRAL_RATIONAL_BOUND.md), and
+[independent audit](docs/SMALL_FORWARD_MINIMUM_HAND_AUDIT.md) remove the
+large H5 coefficient table from the shared minimum-structure dependency.
+
 | Scope | Active sources |
 | --- | --- |
 | Geometric/control correspondence, twisted PMP | [ADMISSIBLE_REALIZATION](docs/ADMISSIBLE_REALIZATION.md), [REVERSE_COMPARISON](docs/REVERSE_COMPARISON.md), [GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md), [final dependency review](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) |
