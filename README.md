@@ -96,10 +96,10 @@ under two named hypotheses:
 | Foundations: realization and reverse comparison | [`Foundations/`](SmoothedOctagon/Foundations) | proved |
 | Compact domain, PMP lift, clearance, edge bound, finitely many switches, rebasing, normality | [`Reduction/`](SmoothedOctagon/Reduction) | proved, given Theorem 5.0.2 |
 | Sign partition | [`Period/Partition.lean`](SmoothedOctagon/Period/Partition.lean) | proved |
-| Cases R and M3 | [`Exclusion/`](SmoothedOctagon/Exclusion) | in progress |
+| Cases R and M3 | [`Exclusion/`](SmoothedOctagon/Exclusion) | proved |
 | Case M1 | [`Exclusion/ShortRuns.lean`](SmoothedOctagon/Exclusion/ShortRuns.lean) | stated |
 | Cases F and M2 | [`Exclusion/`](SmoothedOctagon/Exclusion) | stated, from the interval covers |
-| Terminal comparison | [`Terminal/`](SmoothedOctagon/Terminal) | proved (uses case R for one five-piece word) |
+| Terminal comparison | [`Terminal/`](SmoothedOctagon/Terminal) | proved |
 | Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) | proved |
 | The Challenge's statements | [`Main.lean`](SmoothedOctagon/Main.lean) | proved from the above |
 
