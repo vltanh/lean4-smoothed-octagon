@@ -162,6 +162,12 @@ def IsCompetitive : Prop := P.cost ≤ octagonCost
 /-- The state stays in the compact domain `𝔥**` of Hales–Vajjha, Definition 5.0.1. -/
 def InCompactDomain : Prop := ∀ t ∈ Icc 0 P.T, Cited.HalesVajjha.InCompactDomain (P.X t)
 
+/-- The active margin `a_k` of piece `k`: the margin of its own vertex at the start of the piece
+(it is constant along the piece). Pieces are read modulo `N`; the twist relabels the vertex and
+conjugates the state by `R`, which leaves the active margin unchanged. -/
+noncomputable def activeMargin (k : ℤ) : ℝ :=
+  margin (P.rep.label (k % P.N)) (P.X (P.rep.τ (k % P.N)))
+
 end NormalPeriod
 
 end SmoothedOctagon

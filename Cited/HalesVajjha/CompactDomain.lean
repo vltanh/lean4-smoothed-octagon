@@ -45,14 +45,14 @@ def InCompactDomain (X : Mat2) : Prop :=
   ∃ x y : ℝ, X = Φ x y ∧ (x, y) ∈ compactDomain
 
 /-- **Theorem 5.0.2** (`th:compactification`), as a proposition. Let `K` be a balanced disk in
-circle representation with boundary trajectory `(g, X)` on `[0, t_f]`. If the state leaves `𝔥**` at
+circle representation with boundary trajectory `(g, X)` on `[0, T]`. If the state leaves `𝔥**` at
 some time, the area of `K` is strictly greater than the area of the smoothed octagon. -/
 def Theorem5_0_2 : Prop :=
-  ∀ (K : Set (Fin 2 → ℝ)) (σ : ZMod 6 → ℝ → Fin 2 → ℝ) (tf : ℝ) (u : ℝ → Fin 3 → ℝ)
+  ∀ (K : Set (Fin 2 → ℝ)) (σ : ZMod 6 → ℝ → Fin 2 → ℝ) (T : ℝ) (u : ℝ → Fin 3 → ℝ)
     (g X : ℝ → Mat2),
-    IsBalancedPair K σ tf → IsCircleRepresentation σ →
-    (∀ j, ∀ t ∈ Icc 0 tf, σ j t = g t *ᵥ sixthRoot j) → (∀ j t, σ j (t + tf) = σ (j + 1) t) →
-    IsStateTrajectory tf u g X → (∃ t ∈ Icc 0 tf, ¬ InCompactDomain (X t)) →
+    IsBalancedPair K σ T → IsCircleRepresentation σ →
+    (∀ j, ∀ t ∈ Icc 0 T, σ j t = g t *ᵥ sixthRoot j) → (∀ j t, σ j (t + T) = σ (j + 1) t) →
+    IsStateTrajectory T u g X → (∃ t ∈ Icc 0 T, ¬ InCompactDomain (X t)) →
     volume.real (smoothedPolygonDisk 1) < volume.real K
 
 end Cited.HalesVajjha

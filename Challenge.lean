@@ -48,8 +48,8 @@ Points of the plane are `Fin 2 → ℝ`, and areas are Lebesgue measure.
   in the star domain of `𝔰𝔩₂(ℝ)` such that `g' = gX` and `X' = [Z_u, X]/⟨Z_u, X⟩` in the
   integral (Carathéodory) sense. Its cost is `reinhardtCost T X = -(3/2) ∫₀ᵀ tr(JX)`. The boundary
   conditions `g(0) = I`, `g(T) = R` (rotation by `π/3`) and `X(T) = R⁻¹ X(0) R` say that the six
-  curves `t ↦ g(t) s_j` (`s_j` the sixth roots of unity) close up into the boundary of a disk whose
-  area is the cost; the density of that disk is the cost divided by `√12`.
+  curves `t ↦ g(t) s_j` (`s_j` the sixth roots of unity) close up; when the cost is below `π` they
+  bound a disk whose area is the cost, and the density of that disk is the cost divided by `√12`.
 * The smoothed octagon is the case `k = 1` of the smoothed `(6k+2)`-gons: the trajectory with
   `g(0) = I`, `X(0) = Φ(i y₀)`, `y₀ = √((√8 - 1)/3)`, and the control `e₃, e₁, e₂, e₃` on four
   intervals of length `t_sw = ln 2/(2√(√8 - 1))`, so `t_f = 4 t_sw`. The octagon is the convex hull of

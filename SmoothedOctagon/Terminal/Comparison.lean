@@ -13,8 +13,8 @@ public import SmoothedPolygons.Ch7.SmoothedPolygonDisk
 * Four pieces: tangent closure forces alternating factors and state closure forces the initial
   state; the cost, as a function of the factors, has its unique minimum `A_oct` at the octagon's
   factors `√2`, initial state `Φ(0, y₀)` and word `e₂ e₀ e₁ e₂`.
-* Five pieces: one class rebases and merges to four pieces; the mixed class costs strictly more
-  than `A_oct`; the entirely reverse class is excluded by case R.
+* Five pieces: with the twist, a five-piece word is mixed (the orbit of `01020`), which costs
+  strictly more than `A_oct`, or entirely reverse (the orbit of `02102`), which case R excludes.
 
 Equality therefore forces the smoothed octagon's trajectory, up to the relabeling of the vertices
 by a power of `R`.
