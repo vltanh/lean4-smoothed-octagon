@@ -637,16 +637,14 @@ def smoothed_octagon_plain():
     return f.save('smoothed-octagon-plain', 'Reinhardt’s smoothed octagon')
 
 
-def octagon_construction():
-    """How the corners are smoothed, in the regular frame (inradius 1): each corner of the regular
-    octagon (faint) is replaced by an arc of the hyperbola that is tangent to the two sides at the corner
-    and has the lines of the next two sides as asymptotes. For the corner (1, tan π/8): the hyperbola's
-    branch (dashed), its asymptotes y = 1 and x - y = √2 (dashed) meeting at its centre C = (1 + √2, 1),
-    the tangency points T₁, T₂ and the cut-off corner (shaded); right, the corner magnified."""
+def construction_facts():
+    """The construction of the smoothed octagon from the regular octagon, in the regular frame of
+    inradius 1, with the facts the figure states checked: returns the octagon O, the boundary of K, the
+    corner V = (1, tan π/8), the hyperbola (C, d₁, d₂, κ), the tangency points, the library's arc and
+    the cut-off corner."""
     M = oc.regular_frame(P)
     O = transform(oc.edge_polygon(P), M)
     KB = transform(P.boundary(200), M)
-    pcs = boundary_pieces(M, n_per=80)
     t8 = math.tan(PI / 8)
     m = 1
     V = O[m]
@@ -658,10 +656,11 @@ def octagon_construction():
     assert np.allclose(V, (1, t8), atol=1e-12)
     assert np.allclose(O[[0, 1], 0], 1) and np.allclose(O[[1, 2]].sum(axis=1), SQ2)
     assert np.allclose(O[[7, 0], 0] - O[[7, 0], 1], SQ2) and np.allclose(O[[2, 3], 1], 1)
-    # The asymptotes are those two lines, meeting at C = (1 + √2, 1).
+    # The asymptotes are the lines of those next two sides, meeting at the centre C = (1 + √2, 1).
     assert np.allclose(C, (1 + SQ2, 1), atol=1e-12)
     assert abs(oc.cross(d1, (1, 1))) < 1e-12 and abs(oc.cross(d2, (1, 0))) < 1e-12
-    # The library's arc (traced by σ₀ under e₁ on [t_sw, 2t_sw]) is that hyperbola's: u v = κ along it.
+    # The library's arc (traced by σ₀ under e₁ on [t_sw, 2t_sw]) is that hyperbola's: u v = κ along it
+    # (octagon.verify checks the same for all eight arcs).
     u, v = oc.hyperbola_uv(C, d1, d2, arc).T
     assert np.abs(u * v / kappa - 1).max() < 1e-10
     # The tangency points: T₁ = (1, 1 - 1/√2) on side 0 and T₂ = (√2 - 1/2, 1/2) on side 1, at
@@ -680,70 +679,136 @@ def octagon_construction():
     cut = np.vstack([arc, [V]])
     fine = np.vstack([transform(oc.piece_points(P, oc.pieces(P)[1], 4000), M), [V]])
     assert abs(abs(oc.shoelace(fine)) - (oc.shoelace(O) - oc.AREA_OCT * np.linalg.det(M)) / 8) < 1e-9
-    # The branch through the arc, for drawing.
+    # The whole branch through the arc: it approaches both asymptotes (the distance to each tends to 0
+    # at one end) and stays on the octagon's side of both.
     um, vm = oc.hyperbola_uv(C, d1, d2, arc[len(arc) // 2])[0]
-    sgrid = np.linspace(-4, 4, 3000)
+    sgrid = np.linspace(-6, 6, 4000)
     branch = C + np.outer(um * np.exp(sgrid), d1) + np.outer(vm * np.exp(-sgrid), d2)
+    dist_top = 1 - branch[:, 1]
+    dist_diag = (branch[:, 1] - branch[:, 0] + SQ2) / SQ2
+    assert dist_top.min() > 0 and dist_diag.min() > 0
+    assert min(dist_top[0], dist_top[-1]) < 2e-3 and min(dist_diag[0], dist_diag[-1]) < 2e-3
+    return dict(M=M, O=O, KB=KB, V=V, C=C, d1=d1, d2=d2, kappa=kappa, T1=T1, T2=T2, arc=arc,
+                cut=cut, branch=branch, pieces=boundary_pieces(M, n_per=80))
 
-    xl, xr, yb, yt = -1.22, 2.78, -1.22, 1.32
-    zoom_w, zoom_mag = 0.15, 4.0
-    big = zoom_w * zoom_mag
-    zoom_c = np.array([xr + 0.35 + big, 0.1])
-    f = Figure(xl, zoom_c[0] + big + 0.05, yb, yt, 112)
-    main = (xl, xr, yb, yt)
-    f.polygon(KB, fill=FILLS[0], stroke='none', width=0)
-    f.polygon(cut, fill=CUT_FILL, stroke='none', width=0)
-    f.polygon(O, stroke=FAINT, width=1.2)
-    for p0, d in ((O[7], d1), (O[2], d2)):
-        line = p0 + np.outer(np.linspace(-6, 6, 400), d)
-        for run in runs_inside(line, main):
-            f.polyline(run, stroke=INK, width=1.0, dash='6 4')
-    for run in runs_inside(branch, main):
-        f.polyline(run, stroke=ORANGE, width=1.4, dash='4 3')
-    for kind, pts in pcs:
-        f.polyline(pts, stroke=PIECE_COLORS[kind], width=2.4 if kind == 'edge' else 2.8)
-    for q in (T1, T2):
-        f.dot(q, r=3.4)
-    f.dot(C, r=3.4)
-    f.text(C + (-0.13, 0.1), 'C', size=15)
-    f.text((xl + 0.05, 1.09), 'y = 1', size=13, anchor='start', color=INK, italic=False)
-    f.text((0.55, -1.12), 'x − y = √2', size=13, anchor='start', color=INK, italic=False)
-    # The zoom window and its magnified copy.
-    wc = (T1 + T2 + V) / 3
-    win = (wc[0] - zoom_w, wc[0] + zoom_w, wc[1] - zoom_w, wc[1] + zoom_w)
-    assert all(win[0] + 0.02 < q[0] < win[1] - 0.02 and win[2] + 0.02 < q[1] < win[3] - 0.02
-               for q in (T1, T2, V))
-    sq = np.array([(-1, -1), (1, -1), (1, 1), (-1, 1)], dtype=float)
-    f.polygon(wc + zoom_w * sq, stroke=INK, width=0.9)
-    f.polygon(zoom_c + big * sq, fill='#ffffff', stroke=INK, width=0.9)
-    for sy in (-1, 1):
-        f.line(wc + (zoom_w, sy * zoom_w), zoom_c + (-big, sy * big), stroke=FAINT, width=0.8,
-               dash='3 3')
 
-    def mag(pts):
-        return (np.asarray(pts) - wc) * zoom_mag + zoom_c
+def octagon_construction(preview=True):
+    """How the smoothed octagon is made, in three steps (Matplotlib): 1, the regular octagon with one
+    corner marked; 2, that corner rounded by the hyperbola that touches both sides at the corner and
+    approaches the next two sides (its asymptotes), with the corner magnified; 3, the smoothed octagon,
+    all eight corners rounded, the cut-off corners as ghosts. Written to docs/figures/ as SVG, and as a
+    PNG preview to notes/previews/."""
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Polygon, Circle
 
-    f.polygon(mag(clip_polygon(KB, win)), fill=FILLS[0], stroke='none', width=0)
-    f.polygon(mag(clip_polygon(cut, win)), fill=CUT_FILL, stroke='none', width=0)
-    corner = np.concatenate([np.linspace(O[0], O[1], 600), np.linspace(O[1], O[2], 600)])
-    for run in runs_inside(corner, win):
-        f.polyline(mag(run), stroke=FAINT, width=1.2)
-    for run in runs_inside(branch, win):
-        f.polyline(mag(run), stroke=ORANGE, width=1.4, dash='4 3')
-    for kind, pts in pcs:
-        for run in runs_inside(pts, win):
-            f.polyline(mag(run), stroke=PIECE_COLORS[kind], width=2.6 if kind == 'edge' else 3.0)
-    for q, lab, off in ((T1, sb('T', '1', size=15), (0.12, -0.02)), (T2, sb('T', '2', size=15), (-0.13, -0.1))):
-        f.dot(mag(q), r=3.8)
-        f.text(mag(q) + off, lab, size=15)
-    f.text(zoom_c + (0, -big - 0.13), f'the corner, ×{zoom_mag:g}', size=12, italic=False)
-    return f.save('octagon-construction',
-                  'How the corners are smoothed: each corner of the regular octagon (grey) is replaced by '
-                  'an arc of the hyperbola that is tangent to the two sides at the corner and has the '
-                  'lines of the next two sides as asymptotes. For the upper right corner: the hyperbola '
-                  '(dashed orange), its asymptotes y = 1 and x − y = √2 meeting at its centre C, the '
-                  'tangency points T₁ and T₂ and the cut-off corner (shaded); the straight part left of '
-                  'each side is 1/√2 of it')
+    F = construction_facts()
+    O, KB, V, T1, T2, arc, cut, branch = (F[k] for k in ('O', 'KB', 'V', 'T1', 'T2', 'arc', 'cut',
+                                                           'branch'))
+    DARK, GREY_T, LIGHT = INK, '#6b7280', FILLS[0]
+    plt.rcParams.update({'font.family': 'serif', 'svg.hashsalt': 'reinhardt', 'svg.fonttype': 'path'})
+    boxes = [(-1.25, 1.25, -1.25, 1.25), (-0.8, 2.8, -1.25, 1.45), (-1.25, 1.25, -1.25, 1.25)]
+    scale, gap, top, bottom = 1.12, 0.45, 0.62, 0.62
+    ws = [(bx[1] - bx[0]) * scale for bx in boxes]
+    hs = [(bx[3] - bx[2]) * scale for bx in boxes]
+    W, H = sum(ws) + gap * 2, max(hs) + top + bottom
+    fig = plt.figure(figsize=(W, H))
+    axes, x = [], 0.0
+    for bx, w_, h_ in zip(boxes, ws, hs):
+        ax = fig.add_axes((x / W, (bottom + (max(hs) - h_) / 2) / H, w_ / W, h_ / H))
+        ax.set_xlim(bx[0], bx[1])
+        ax.set_ylim(bx[2], bx[3])
+        ax.set_aspect('equal')
+        ax.axis('off')
+        axes.append(ax)
+        x += w_ + gap
+    a1, a2, a3 = axes
+    titles = ('1   Regular octagon', '2   Round one corner', '3   Smoothed octagon')
+    for ax, t in zip(axes, titles):
+        pos = ax.get_position()
+        fig.text((pos.x0 + pos.x1) / 2, (bottom + max(hs) + 0.3) / H, t, ha='center', va='center',
+                 fontsize=16, color=DARK)
+
+    # 1: the regular octagon, the corner to be rounded circled.
+    a1.add_patch(Polygon(O, closed=True, fc=FILLS[0], ec=DARK, lw=2.2, joinstyle='miter'))
+    a1.add_patch(Circle(V, 0.2, fc='none', ec=ORANGE, lw=2.4))
+
+    # 2: the corner, its two sides, the next two sides as asymptotes, the hyperbola and its arc.
+    a2.add_patch(Polygon(O, closed=True, fc=LIGHT, ec='#cbd5e1', lw=1.2))
+    a2.add_patch(Polygon(cut, closed=True, fc=CUT_FILL, ec='none'))
+    for p0, d, lab, at, rot_ in ((O[2], F['d2'], 'asymptote', -0.62, 0),
+                                 (O[7], F['d1'], 'asymptote', None, 45)):
+        ln = p0 + np.outer(np.linspace(-8, 8, 50), d)
+        a2.plot(ln[:, 0], ln[:, 1], color=GREY_T, lw=1.5, ls=(0, (6, 4)), zorder=2)
+    a2.text(-0.72, 1.07, 'asymptote', fontsize=13, color=GREY_T, ha='left', va='bottom')
+    q = np.array([0.42, 0.42 - SQ2]) + 0.09 * np.array([1, -1]) / SQ2
+    a2.text(q[0], q[1], 'asymptote', fontsize=13, color=GREY_T, rotation=45, ha='center', va='center',
+            rotation_mode='anchor')
+    a2.plot(branch[:, 0], branch[:, 1], color=ORANGE, lw=1.3, ls=(0, (4, 3)), zorder=3)
+    a2.text(-0.72, 0.66, 'hyperbola', fontsize=13, color=ORANGE, ha='left', va='center')
+    for s_ in (O[[0, 1]], O[[1, 2]]):
+        a2.plot(s_[:, 0], s_[:, 1], color=DARK, lw=2.4, solid_capstyle='round', zorder=4)
+    a2.plot(arc[:, 0], arc[:, 1], color=ORANGE, lw=4, solid_capstyle='round', zorder=5)
+    a2.plot([F['C'][0]], [F['C'][1]], 'o', ms=4, color=GREY_T, zorder=5)
+    for T in (T1, T2):
+        a2.plot([T[0]], [T[1]], 'o', ms=4.5, color=DARK, zorder=6)
+    # The corner, magnified, in the empty region right of the diagonal asymptote.
+    win_c, win_w = (T1 + T2 + V) / 3, 0.15
+    ins = a2.inset_axes((1.5, -1.25, 1.3, 1.3), transform=a2.transData)
+    assert 1.5 > 0.05 + SQ2           # the inset stays right of the asymptote x - y = √2
+    ins.set_xlim(win_c[0] - win_w, win_c[0] + win_w)
+    ins.set_ylim(win_c[1] - win_w, win_c[1] + win_w)
+    ins.set_aspect('equal')
+    ins.set_xticks([])
+    ins.set_yticks([])
+    for sp in ins.spines.values():
+        sp.set_color(GREY_T)
+        sp.set_linewidth(0.9)
+    ins.add_patch(Polygon(KB, closed=True, fc=LIGHT, ec='none'))
+    ins.add_patch(Polygon(cut, closed=True, fc=CUT_FILL, ec='none'))
+    ins.plot(branch[:, 0], branch[:, 1], color=ORANGE, lw=1.3, ls=(0, (4, 3)))
+    ins.plot(O[[0, 1, 2], 0], O[[0, 1, 2], 1], color=DARK, lw=2.2)
+    ins.plot(arc[:, 0], arc[:, 1], color=ORANGE, lw=4.5, solid_capstyle='round')
+    for T in (T1, T2):
+        ins.plot([T[0]], [T[1]], 'o', ms=8, color=DARK, zorder=6)
+    lab = np.array([0.885, 0.335])                    # inside K, below and left of the arc
+    ins.text(lab[0], lab[1], 'touches\nthe side', fontsize=12, color=DARK, ha='center', va='center')
+    for T, off in ((T1, (0.045, -0.012)), (T2, (0.012, 0.03))):
+        ins.annotate('', xy=T, xytext=lab + off,
+                     arrowprops=dict(arrowstyle='-|>', color=DARK, lw=1.0, shrinkA=4, shrinkB=7,
+                                     mutation_scale=11))
+    a2.indicate_inset_zoom(ins, edgecolor=GREY_T, lw=0.9)
+    pos = a2.get_position()
+    fig.text((pos.x0 + pos.x1) / 2, (bottom - 0.32) / H,
+             'the hyperbola that touches both sides and approaches the next two sides',
+             ha='center', va='center', fontsize=13, color='#374151')
+
+    # 3: the smoothed octagon: the eight arcs orange, the straight pieces dark, the corners as ghosts.
+    for qd, v in corner_regions(F['pieces'], O):
+        a3.add_patch(Polygon(qd, closed=True, fc=CUT_FILL, ec='none'))
+        a3.plot([qd[0][0], v[0], qd[-2][0]], [qd[0][1], v[1], qd[-2][1]], color='#fb923c', lw=1.0,
+                ls=(0, (2.5, 2)))
+    a3.add_patch(Polygon(KB, closed=True, fc=FILLS[0], ec='none'))
+    for kind, pts in F['pieces']:
+        a3.plot(pts[:, 0], pts[:, 1], color=ORANGE if kind == 'arc' else DARK,
+                lw=3.4 if kind == 'arc' else 2.2, solid_capstyle='round')
+
+    path = OUT / 'octagon-construction.svg'
+    fig.savefig(path, format='svg', metadata={'Date': None})
+    if preview:
+        prev = OUT.parents[1] / 'notes' / 'previews' / 'octagon-construction.png'
+        prev.parent.mkdir(parents=True, exist_ok=True)
+        fig.savefig(prev, dpi=110)
+    plt.close(fig)
+    # An accessible title, as in the other SVGs.
+    title = ('How the smoothed octagon is made: 1, a regular octagon; 2, one corner is rounded by the '
+             'hyperbola that touches both sides at the corner and approaches the next two sides, its '
+             'asymptotes; 3, all eight corners rounded')
+    svg = path.read_text()
+    i = svg.index('>', svg.index('<svg')) + 1
+    path.write_text(svg[:i] + f'\n<title>{title}</title>' + svg[i:])
+    return path
 
 
 def octagon_tiling():
