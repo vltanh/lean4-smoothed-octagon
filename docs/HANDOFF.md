@@ -80,6 +80,17 @@ middle slack has a short quadratic-in-scale expression. Its retention
 during the further pairing deformation is conditional on J>=0, or
 requires an additional zero-slack stop; no uniform sign is presumed.
 
+
+For the common region a<=1/2, the
+[low-scale domain bounds](MIXED_NONSHORT_LOW_SCALE_DOMAIN_REDUCTION.md)
+give t<7/20 and x>3/13 without any successor or Casimir premise.
+The [forward scale-Casimir reduction](MIXED_NONSHORT_FORWARD_SHAPE_CASIMIR.md)
+writes the boundary determinant as a concave quadratic in squared
+physical scale. A compact eligible-set argument retains the stronger
+outgoing norm floor and reduces the lower endpoint to shape boundary
+faces or the existing stronger upper endpoint. Their final signs remain
+open; these are hand reductions, not completed exclusions.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

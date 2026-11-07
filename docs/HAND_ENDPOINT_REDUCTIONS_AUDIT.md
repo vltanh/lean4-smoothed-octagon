@@ -269,3 +269,51 @@ N_mid increases when J>=0. For J<0, retaining it requires a possible
 additional stop at N_mid=0; the note states that limitation explicitly.
 The sufficient condition x<=2alpha implies J>0. None of these
 preservation statements supplies an endpoint exclusion or closes H-S.
+
+
+## 8. Concavity of the forward boundary determinant in physical scale
+
+[MIXED_NONSHORT_FORWARD_SHAPE_CASIMIR](MIXED_NONSHORT_FORWARD_SHAPE_CASIMIR.md)
+is accepted. Eliminating the central incident norm from the displayed
+stationarity and transport equations gives J*h_d=B^2*w+v(s+J^2)-s(s+U_t).
+The first-forward root equation supplies the second affine identity.
+Solving these two equations gives exactly w*=1+A/B+C/B^2 and
+h_d=alpha*B+beta, with all four coefficients independent of k.
+
+At B=p^2, the polynomial identity fixes the constant numerator of
+the determinant as the negative square
+-(alpha*p^2+beta-2vJ)^2. Thus the determinant is a concave quadratic
+in X=1/(k-t^2), including the affine exceptional case. This is an
+algebraic evaluation; B=p^2 is not assigned a physical interpretation.
+
+The transported next norm has the stated rational form and strictly
+positive denominator. For any continuous varying threshold, the eligible
+subset of a finite shape interval is compact. Its minimum and maximum
+shape values suffice for the concave determinant bound, even if the
+subset is disconnected. An interior extreme must saturate the norm
+threshold, by continuity. This proves the endpoint reduction without
+assuming monotonicity of the eligibility condition.
+
+The actual r>=t bound guarantees 0<eta<1 on the proposed interval.
+The piecewise U/Phi floor is continuous and is a proved lower bound
+at the original actual next forward switch. Its applicability to the
+original b-comparison uses only the unchanged d,r. In the subsequent
+shape comparison it is retained by the eligible-subset argument.
+At a saturated threshold w*=wPhi exactly, so that face joins the
+stronger upper-w endpoint problem. The remaining shape endpoint
+signs are not certified by this audit.
+
+## 9. Two elementary bounds in the common low-scale region
+
+[MIXED_NONSHORT_LOW_SCALE_DOMAIN_REDUCTION](MIXED_NONSHORT_LOW_SCALE_DOMAIN_REDUCTION.md)
+is accepted. The root reviewer checked the exact bar-v minus derivative
+floor factor and the strictly negative derivative of T(x). If t>=7/20,
+the scale lower bound and centre gap force x>8/15, contradicting
+t<T(x)<T(8/15)<7/20. Every rational endpoint comparison is displayed.
+
+If x<=3/13, the same centre gap first gives t>41/169. The increasing
+quadratic 17t^2-2t-87/169 already equals16/28561>0 at that endpoint,
+contradicting k>=17t^2 and the upper centre gap. Hence x>3/13.
+Neither proof uses the next-switch type or a cap on an artificial root.
+The subsequent residual reduction retains the exact incoming floor;
+the two face signs remain open.

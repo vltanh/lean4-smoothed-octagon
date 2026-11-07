@@ -38,6 +38,9 @@ closed computer-assisted gates below do not close these new obligations.
 - [x] Both [short stationary slacks](docs/MIXED_SMALLER_SHORT_SLACK_RETENTION.md)
   persist along the first root comparison; all three terminal faces
   retain these actual necessary inequalities.
+- [x] The [common low-scale domain](docs/MIXED_NONSHORT_LOW_SCALE_DOMAIN_REDUCTION.md)
+  has t<7/20 and x>3/13. The [forward scale-Casimir comparison](docs/MIXED_NONSHORT_FORWARD_SHAPE_CASIMIR.md)
+  retains the stronger next-norm floor through a proved endpoint reduction.
 - [ ] Full short-side exclusion, both nonshort successors, and the final
   hand-only assembly still need proofs.
 

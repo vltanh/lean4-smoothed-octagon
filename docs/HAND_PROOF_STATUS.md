@@ -218,6 +218,17 @@ middle slack has a short quadratic-in-scale expression. Its retention
 during the further pairing deformation is conditional on J>=0, or
 requires an additional zero-slack stop; no uniform sign is presumed.
 
+
+For the common region a<=1/2, the
+[low-scale domain bounds](MIXED_NONSHORT_LOW_SCALE_DOMAIN_REDUCTION.md)
+give t<7/20 and x>3/13 without any successor or Casimir premise.
+The [forward scale-Casimir reduction](MIXED_NONSHORT_FORWARD_SHAPE_CASIMIR.md)
+writes the boundary determinant as a concave quadratic in squared
+physical scale. A compact eligible-set argument retains the stronger
+outgoing norm floor and reduces the lower endpoint to shape boundary
+faces or the existing stronger upper endpoint. Their final signs remain
+open; these are hand reductions, not completed exclusions.
+
 ## Acceptance rule
 
 Close a gate only after an independent reading checks its complete
