@@ -239,7 +239,10 @@ method. A theorem for *globally closed* `012012` does not count.
   family has all five compensated missing-control switch needles positive;
   do not assume a negative switch needle always exists. The full replacement
   target remains open.
-- [ ] L5: `021012` (a longer reverse run).
+- [ ] L5: `021012` (a longer reverse run). Full endpoint rank five is now
+  proved throughout its positive strict-star domain by LOCAL_L5_ENDPOINT_RANK;
+  its five-piece prefix already supplies five independent columns. This
+  makes the minimizing lift normal and unique, but does not prove descent.
 
 Reuse the *same* endpoint-map and constrained-variation machinery.
 Prefer a **shared theorem** that closes multiple gates simultaneously
@@ -291,7 +294,8 @@ conjecture solved at completion of P0 or at an analytic count below 5/5.
    degree of freedom only at **regular rank**. L1 now has a full-domain
    hand rank proof, as does L4 in LOCAL_SIX_VARIATION. LOCAL_MIXED_SIX_RANK now proves full rank five for L3 on its entire
    positive strict-star domain, without a cost or symmetry assumption.
-   Singular fibers for L2 and L5 remain unresolved and may
+   LOCAL_L5_ENDPOINT_RANK likewise proves rank five for L5 from a five-piece
+   prefix. Singular fibers for L2 remain a separate obligation and may
    be isolated or have higher-dimensional components.
 3. The old forward alternating four-arc argument rules out a particular
    orientation; reversing its sign reverses the Hessian sign. Do not

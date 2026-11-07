@@ -422,7 +422,9 @@ The independent paired-holonomy determinant in
 throughout L4. [LOCAL_MIXED_SIX_RANK.md](LOCAL_MIXED_SIX_RANK.md) proves
 full rank five throughout L3, using the rank-three edge endpoint map and
 two independent asymmetric normal columns. Rank zero and rank one points
-MUST still be treated for L2 and L5. In particular,
+are also resolved throughout L5 by the five-prefix proof in
+[LOCAL_L5_ENDPOINT_RANK.md](LOCAL_L5_ENDPOINT_RANK.md). They MUST still be
+treated for L2. In particular,
 dimension counting alone proves neither a smooth fiber nor a decreasing
 direction. Stationary points cannot be discarded in any template. Failure of
 this same-word local method alone does not settle different-word replacement.

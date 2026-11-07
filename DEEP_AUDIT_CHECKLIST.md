@@ -169,7 +169,11 @@ four determinant identities and signs, and constrained Hessian correction.
   fixed-coordinate transport through arbitrary outer arcs, and positive
   duration/factor changes. Independent hand review passed.
 - [x] Exclude abnormality and normalized-adjoint ambiguity throughout L3.
-- [ ] Classify interior endpoint ranks for L2 and L5.
+- [x] Prove rank five throughout L5 from prefix02101: explicit upper pivot,
+  positive two-column residual minor, and strict-star transversality to the
+  actual state-stabilizer line. Independent hand review passed.
+- [x] Deduce normality and normalized-adjoint uniqueness throughout L5.
+- [ ] Classify interior endpoint ranks for L2.
 
 `docs/LOCAL_FORWARD_PMP_LIMIT.md` derives normality on the reduced state
 manifold and proves a limitation of first-order PMP. Independent review

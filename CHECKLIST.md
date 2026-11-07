@@ -63,7 +63,7 @@ the filter does not force equal factors or a globally competitive extension.
 | L2: 021021 | Same universal local improvement for five consecutive reverse switches. | **Open.** A regular-family comparison does not cover asymmetric local endpoints. |
 | L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Refuted even with arbitrary measurable replacements.** Eligible arbitrarily cheap windows are global minima for their fixed endpoints, with free terminal time. See [LOCAL_REVERSE_SIX_GLOBAL_MINIMUM](docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md). No closed-minimizer embedding is asserted. |
 | L4: 010201 | Same universal local improvement at a reverse run of length two followed by at least two forward switches. | **Open.** Full-domain endpoint rank five is proved. An exact eligible stationary family has all five compensated missing-control switch needles positive; that switch-only shortcut is false. See [LOCAL_SIX_VARIATION](docs/LOCAL_SIX_VARIATION.md). |
-| L5: 021012 | Same universal local improvement at a reverse run of at least three followed by at least two forward switches. | **Open.** |
+| L5: 021012 | Same universal local improvement at a reverse run of at least three followed by at least two forward switches. | **Open.** Full endpoint rank five is proved throughout the positive strict-star domain; its first five factor columns already suffice. See LOCAL_L5_ENDPOINT_RANK. |
 | Revised five-target package | Restrict each input to the explicit complete-switch PMP domain, retaining abnormal alternatives where rank is unresolved. | Necessary membership and conditional sufficiency proved in SWITCH_COMPLETE_REDUCTION. All five revised improvement targets are open. |
 | Uniform bound | Deduce N<=5 for every global minimizer from valid local improvements and the published finite bang-bang reduction. | Conditional implication proved for the revised domains; its five analytic premises are open. No unconditional bound. |
 | Global comparison and equality | Apply the existing through-five cost comparison and equality classification after the uniform bound is proved. | Conditional only. Global minimality and affine rigidity remain open. |
@@ -193,10 +193,10 @@ needed when a strict local descent is established.
 All five words end in three distinct labels. Explicit positive-factor
 inversion removes the three tangent-endpoint constraints, leaving two
 state-endpoint equations on three variables. This is an exact fixed-size
-setup, not a proof that a decreasing direction always exists. For L1, L3, and L4
+setup, not a proof that a decreasing direction always exists. For L1, L3, L4, and L5
 the reduced state rank is two everywhere by LOCAL_FORWARD_RANK,
-LOCAL_MIXED_SIX_RANK, and LOCAL_SIX_VARIATION. Rank-zero and rank-one loci
-remain obligations for L2 and L5; stationary points remain part
+LOCAL_MIXED_SIX_RANK, LOCAL_SIX_VARIATION, and LOCAL_L5_ENDPOINT_RANK.
+Rank-zero and rank-one loci remain obligations for L2; stationary points remain part
 of all five targets.
 
 A bounded-coordinate compactification is recorded, but singular boundary
@@ -233,6 +233,14 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Prove endpoint rank five throughout L5 using its five-piece prefix02101.
+  A three-column frame pivot and an explicit positive two-column minor give
+  a five-dimensional paired image. A strict-star sign makes it transverse
+  to the state-stabilizer line, so actual rank is five even when the paired
+  six-by-six determinant vanishes. Independent hand review passed. L5
+  minimizing windows are normal with a unique normalized adjoint; no cost
+  exclusion is inferred.
 
 - Define and independently review a corrected five-template necessary domain
   in SWITCH_COMPLETE_REDUCTION. Preserve the false original L3 claim as

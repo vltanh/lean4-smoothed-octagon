@@ -167,6 +167,13 @@ normalized endpoint covector, and a minimizing window cannot use an abnormal
 lift. This is a rank theorem; the original broad-domain replacement target
 remains false.
 
+The [L5 endpoint theorem](docs/LOCAL_L5_ENDPOINT_RANK.md) proves rank five
+already for the prefix `02101`, hence throughout the full `021012` domain.
+Its paired image is transverse to the state-stabilizer line by a strict-star
+sign. Thus full-domain rank and normalized-adjoint uniqueness are established
+for L1, L3, L4, and L5. The rank question for L2 is separate; none of these
+rank results proves a cost improvement.
+
 The [L4 variation certificate](docs/LOCAL_SIX_VARIATION.md) proves that the
 `010201` endpoint map has rank five throughout its positive-factor domain.
 It also exhibits an eligible stationary family for which every one of the

@@ -237,12 +237,14 @@ entire normalized lift. There is no alternative lift that can repair a
 failed sign or endpoint tie.
 
 Full rank is proved on the entire positive strict-star domains for L1,
-L3, and L4, respectively, in
+L3, L4, and L5, respectively, in
 [LOCAL_FORWARD_RANK.md](LOCAL_FORWARD_RANK.md),
-[LOCAL_MIXED_SIX_RANK.md](LOCAL_MIXED_SIX_RANK.md), and
-[LOCAL_SIX_VARIATION.md](LOCAL_SIX_VARIATION.md). No uniform lower bound on
-their minors at degenerating boundaries follows. Rank-degenerate inputs
-for the other templates must still be retained until separately resolved.
+[LOCAL_MIXED_SIX_RANK.md](LOCAL_MIXED_SIX_RANK.md),
+[LOCAL_SIX_VARIATION.md](LOCAL_SIX_VARIATION.md), and
+[LOCAL_L5_ENDPOINT_RANK.md](LOCAL_L5_ENDPOINT_RANK.md). No uniform lower bound
+on their minors at degenerating boundaries follows. Rank-degenerate L2 inputs
+and possible abnormal lifts there must still be retained until separately
+resolved.
 
 For L1, [LOCAL_FORWARD_ENDPOINT_FILTER.md](LOCAL_FORWARD_ENDPOINT_FILTER.md)
 expresses the four inactive external gaps using active margins and one
