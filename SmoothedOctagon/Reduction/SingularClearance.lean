@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Reduction.Defs
+public import SmoothedOctagon.Reduction.Clearance.Frame
 
 /-!
 # Singular clearance and projective bounds of a competitive Pontryagin lift
@@ -23,6 +24,10 @@ Main API:
 * `covectorNormSq_le_singularGapSq`: `‖𝒫(t)‖² ≤ 251² Q(t)²` on `[0, T]`.
 * `covectorNormSq_projective_bounds`: `‖𝒫(0)‖² < 10¹⁶ ‖𝒫(t)‖²` and `‖𝒫(t)‖² < 10¹⁶ ‖𝒫(0)‖²`
   on `[0, T]`.
+
+The ingredients are in `Reduction/Clearance/`: `Algebra` (matrix algebra, the equilibrium
+inequality and the bound on `Λ_R`), `Winding` (the angular identity and `∫(ρ + ρ_R) ≥ 2π/3`),
+`Budget` (the budget inequality at every time) and `Frame` (the frame bound).
 -/
 
 @[expose] public section
@@ -30,6 +35,53 @@ Main API:
 namespace SmoothedOctagon.Reduction
 
 open SmoothedPolygons MeasureTheory Set
+
+private theorem frobSq_add_smul_J_eq (M : Mat2) (c : ℝ) :
+    frobSq (M + c • J) = frobSq M + 2 * c * (M 1 0 - M 0 1) + 2 * c ^ 2 := by
+  simp [frobSq, J]
+  ring
+
+private theorem covectorNormSq_pos {lam : ℝ} {Λ₁ ΛR : Mat2} (h : lam ≠ 0 ∨ Λ₁ ≠ 0 ∨ ΛR ≠ 0) :
+    0 < covectorNormSq lam Λ₁ ΛR := by
+  have h1 := scb_frobSq_nonneg Λ₁
+  have h2 := scb_frobSq_nonneg ΛR
+  unfold covectorNormSq
+  rcases h with h | h | h
+  · have := pow_pos (abs_pos.mpr h) 2
+    rw [sq_abs] at this
+    linarith
+  · have := scb_frobSq_pos h
+    nlinarith [sq_nonneg lam]
+  · have := scb_frobSq_pos h
+    nlinarith [sq_nonneg lam]
+
+/-- `‖g M g⁻¹‖_F² ≤ ‖g‖_F⁴ ‖M‖_F²` with `g⁻¹ = adj g`. -/
+private theorem frobSq_conj_adjugate_le (g M : Mat2) :
+    frobSq (g * M * g.adjugate) ≤ frobSq g ^ 2 * frobSq M := by
+  have h1 := scb_frobSq_mul_le (g * M) g.adjugate
+  have h2 := scb_frobSq_mul_le g M
+  rw [scb_frobSq_adjugate] at h1
+  have := scb_frobSq_nonneg g
+  calc frobSq (g * M * g.adjugate) ≤ frobSq (g * M) * frobSq g := h1
+    _ ≤ frobSq g * frobSq M * frobSq g := mul_le_mul_of_nonneg_right h2 this
+    _ = frobSq g ^ 2 * frobSq M := by ring
+
+/-- SINGULAR_COST_BUDGET (33), with the constant of `scb_vertex_bounds`: on `𝔥**`,
+`‖Λ_R(t)‖_F² ≤ 218700 ‖Λ₁(t) - (3/2)λJ‖_F²` (that is, `‖W‖ ≤ 468 ‖A‖`). -/
+private theorem frobSq_ΛR_le {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
+    {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
+    (hK : ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t)) {t : ℝ} (ht : t ∈ Icc 0 T) :
+    frobSq (ΛR t) ≤ 218700 * frobSq (Λ₁ t - (3 / 2 * lam) • J) := by
+  have hH := (IsPontryaginExtremal.vertexHamiltonian_max_eq_zero hext t ht).1
+  obtain ⟨-, hWtr, hWX, -⟩ := hext.2.2.2.2.2.2.2.1 t ht
+  have hb := (scb_vertex_bounds (hext.1.2.2.2.1 t ht).2 hWtr hWX hH).2
+    (two_div_fifteen_le_margin (hK t ht))
+  have hCS := scb_traceForm_sq_le (Λ₁ t - (3 / 2 * lam) • J) (X t)
+  have hX := frobSq_lt_of_inCompactDomain (hK t ht)
+  have hA := scb_frobSq_nonneg (Λ₁ t - (3 / 2 * lam) • J)
+  have : frobSq (Λ₁ t - (3 / 2 * lam) • J) * frobSq (X t) ≤
+      frobSq (Λ₁ t - (3 / 2 * lam) • J) * 81 := mul_le_mul_of_nonneg_left hX.le hA
+  linarith
 
 /-- **Singular clearance** (SINGULAR_COST_BUDGET (34), with (3), (24)-(27)). Let
 `(T, u, g, X, Λ₁, Λ_R, λ)` be a Pontryagin extremal (any `λ ≤ 0`, normal or abnormal) with cost
@@ -44,14 +96,29 @@ with `Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)` (Corollary 6.5.3) and `V = g X g⁻¹`
 winding bound `∫ρ_R ≥ (2π - C)/3` (SCB (15)-(17), from `ρ + ρ_R = 2(s² + t²)θ'` and
 `g(T) = R`). At general `t`: rebase the twisted extension of the lift (`remark6_6_1`) at `t`. Then,
 with `d = √(11/2)` the norm of `(λ, (3/2)λJ, 0)`, `‖𝒫‖ ≤ Q + d|λ| ≤ (1 + d/κ) Q < 251 Q`.
-(The compact domain is not used for this inequality in the notes' argument.) -/
+(The compact domain is not used for this inequality in the notes' argument.)
+
+Route: the notes' argument (`scb_lam_sq_le`: `λ² ≤ 10⁴ ‖A(t)‖²` from `A_oct < 3.127` and
+`π > 3.141592`); the continuous argument of `s + it` is the imaginary part of `∫ z'/z`
+(`scb_winding`), the rebasing uses `twistedFrame`/`twistedState` with the costate
+`G(τ)⁻¹ Λ₁(0) G(τ)` instead of `remark6_6_1`, and `‖𝒫‖ ≤ Q + d|λ|` is used in the squared form
+`‖Λ₁‖² ≤ (1 + ε)‖A‖² + (1 + 1/ε)(9/2)λ²`, `ε = 200`. -/
 theorem covectorNormSq_le_singularGapSq {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hcost : reinhardtCost T X ≤ octagonCost)
     (hK : ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t)) :
     ∀ t ∈ Icc 0 T,
       covectorNormSq lam (Λ₁ t) (ΛR t) ≤ 251 ^ 2 * singularGapSq lam (Λ₁ t) (ΛR t) := by
-  sorry
+  intro t ht
+  have hb := scb_lam_sq_le hext hcost t ht
+  set A := Λ₁ t - (3 / 2 * lam) • J with hA
+  have hΛ : Λ₁ t = A + (3 / 2 * lam) • J := by rw [hA, sub_add_cancel]
+  unfold covectorNormSq singularGapSq
+  rw [← hA, hΛ, frobSq_add_smul_J_eq]
+  have hW := scb_frobSq_nonneg (ΛR t)
+  have hd : (A 1 0 - A 0 1) ^ 2 ≤ 2 * frobSq A := by
+    unfold frobSq; nlinarith [sq_nonneg (A 1 0 + A 0 1), sq_nonneg (A 0 0), sq_nonneg (A 1 1)]
+  nlinarith [sq_nonneg (10 * (A 1 0 - A 0 1) - 3 / 20 * lam)]
 
 /-- **Projective bounds** (SINGULAR_COST_BUDGET (28), with (29)-(33)). Under the same hypotheses,
 for every `t ∈ [0, T]`: `‖𝒫(0)‖² < 10¹⁶ ‖𝒫(t)‖²` and `‖𝒫(t)‖² < 10¹⁶ ‖𝒫(0)‖²`, i.e.
@@ -64,7 +131,13 @@ Proof outline: (SCB (29)) `‖g(t)‖_op, ‖g(t)⁻¹‖_op ≤ exp(∫‖X‖_
 `max h - min h ≥ ω‖W‖`, `ω > 1/500`, of QUANTITATIVE_REGULAR_SWITCH_BOUND (14)); and
 `‖A‖ ≤ ‖Λ₁‖ + (3/2)√2|λ|`. Normalizing `‖𝒫(0)‖ = 1`: `‖Λ₁(t)‖ < 81`, `‖A(t)‖ < 84`,
 `‖W(t)‖ < 84·10⁶`, so `‖𝒫(t)‖ < 10⁸`; reading the same bounds from `t` back to `0` gives
-`1 ≤ 83250082 ‖𝒫(t)‖`. -/
+`1 ≤ 83250082 ‖𝒫(t)‖`.
+
+Route: Frobenius norms throughout. Gronwall for `‖g‖_F²` (`f' = 2 tr(X gᵀg) ≤ 2ρ f`) gives
+`‖g(t)‖_F² ≤ 2 e^{2C/3} < 42` (`scb_frobSq_frame_le`), so `‖Λ₁(t)‖_F² ≤ 1764 ‖Λ₁(0)‖_F²` and
+conversely; the exact equilibrium weights `ϑ_i = p_i(p_j + p_k)/8` and the margins `p_i ≥ 2/15`
+give `‖W‖_F² ≤ 2700 tr(AX)² ≤ 218700 ‖A‖_F²` (`scb_vertex_bounds`; no width estimate and no
+height bound `y ≤ 9/2`); hence `‖𝒫(t)‖² < 8·10⁸ ‖𝒫(0)‖²` and conversely. -/
 theorem covectorNormSq_projective_bounds {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hcost : reinhardtCost T X ≤ octagonCost)
@@ -72,6 +145,50 @@ theorem covectorNormSq_projective_bounds {T : ℝ} {u : ℝ → Fin 3 → ℝ} {
     ∀ t ∈ Icc 0 T,
       covectorNormSq lam (Λ₁ 0) (ΛR 0) < 10 ^ 16 * covectorNormSq lam (Λ₁ t) (ΛR t) ∧
         covectorNormSq lam (Λ₁ t) (ΛR t) < 10 ^ 16 * covectorNormSq lam (Λ₁ 0) (ΛR 0) := by
-  sorry
+  intro t ht
+  have hT : 0 < T := hext.1.1
+  have h0 : (0 : ℝ) ∈ Icc 0 T := left_mem_Icc.mpr hT.le
+  have hN0 := covectorNormSq_pos (hext.2.2.2.2.2.2.2.1 0 h0).2.2.2
+  have hNt := covectorNormSq_pos (hext.2.2.2.2.2.2.2.1 t ht).2.2.2
+  -- the frame bound and conservation
+  have hg := scb_frobSq_frame_le hext.1 hext.2.1 hcost t ht
+  have hg0 := scb_frobSq_nonneg (g t)
+  have hg2 : frobSq (g t) ^ 2 ≤ 1764 := by nlinarith
+  have hdet : (g t).det = 1 := (hext.1.2.2.2.1 t ht).1
+  have hinv : (g t)⁻¹ = (g t).adjugate := by
+    rw [Matrix.inv_def, hdet, Ring.inverse_one, one_smul]
+  have hunit : IsUnit (g t).det := by rw [hdet]; exact isUnit_one
+  have hcons := scb_conservation hext t ht
+  have hΛt : frobSq (Λ₁ t) ≤ 1764 * frobSq (Λ₁ 0) := by
+    have := scb_frobSq_conj_le hdet (Λ₁ 0)
+    rw [← hcons] at this
+    have := scb_frobSq_nonneg (Λ₁ 0)
+    nlinarith
+  have hΛ0 : frobSq (Λ₁ 0) ≤ 1764 * frobSq (Λ₁ t) := by
+    have e : Λ₁ 0 = g t * Λ₁ t * (g t).adjugate := by
+      rw [hcons, ← hinv]
+      simp only [← Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hunit, Matrix.one_mul]
+      rw [Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hunit, Matrix.mul_one]
+    have := frobSq_conj_adjugate_le (g t) (Λ₁ t)
+    rw [← e] at this
+    have := scb_frobSq_nonneg (Λ₁ t)
+    nlinarith
+  -- `‖Λ_R‖² ≤ 218700 ‖A‖²` and `‖A‖² ≤ 2‖Λ₁‖² + 9λ²`
+  have hA : ∀ s ∈ Icc 0 T, frobSq (Λ₁ s - (3 / 2 * lam) • J) ≤ 2 * frobSq (Λ₁ s) + 9 * lam ^ 2 := by
+    intro s _
+    have := scb_frobSq_add_smul_J_le (Λ₁ s) (-(3 / 2 * lam))
+    rw [neg_smul, ← sub_eq_add_neg] at this
+    nlinarith
+  have hW0 := frobSq_ΛR_le hext hK h0
+  have hWt := frobSq_ΛR_le hext hK ht
+  have hA0 := hA 0 h0
+  have hAt := hA t ht
+  have hl := sq_nonneg lam
+  have p0 := scb_frobSq_nonneg (Λ₁ 0)
+  have pt := scb_frobSq_nonneg (Λ₁ t)
+  have q0 := scb_frobSq_nonneg (ΛR 0)
+  have qt := scb_frobSq_nonneg (ΛR t)
+  unfold covectorNormSq at hN0 hNt ⊢
+  constructor <;> nlinarith
 
 end SmoothedOctagon.Reduction
