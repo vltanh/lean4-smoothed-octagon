@@ -42,9 +42,17 @@ Compactness further gives a qualitative positive lower bound on the cost
 multiplier in the initial unit normalization, and a compact family after
 normalizing it to -1. No explicit value of that lower bound is claimed.
 The restored exact checker passes 22 matrix/scalar identities. This closes
-the normality obligation; normal tie branches and the five global cost
-comparisons remain open. Internal review is not external peer review or
+the normality obligation. Internal review is not external peer review or
 Lean kernel validation.
+
+[The normal outgoing-tie theorem](docs/NORMAL_TIE_BRANCHING.md), with an
+[independent internal audit](docs/NORMAL_TIE_BRANCHING_AUDIT.md), now gives
+a necessary-and-sufficient local sign test for each candidate positive
+vertex arc. Explicit derivatives through order three resolve double and
+triple ties and quadratic/cubic contacts. All passing branches must be
+retained. The theorem supplies no uniform arc length and does not prove
+closed return, cost comparison, or optimality; all five global cost
+comparisons remain open.
 
 ## Active result: an explicit bound for every global minimizer
 

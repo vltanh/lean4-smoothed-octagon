@@ -29,8 +29,12 @@ N=4/7/10. All are diagnostics on already known families, not universal
 exclusions. The normality proof in GLOBAL_NORMALITY has now passed
 independent internal hand audit: all global minimizing lifts are normal,
 using the existing finite-representation input. A compactness corollary
-gives a qualitative common normal-costate bound. Normal triple/nontransverse
-ties, boundary limits and all five sharp comparison cases remain open.
+gives a qualitative common normal-costate bound.
+[NORMAL_TIE_BRANCHING](NORMAL_TIE_BRANCHING.md) and its independent audit
+now classify every outgoing positive vertex germ at normal ties, including
+quadratic/cubic and triple contacts, by exact signs through order three.
+Every passing branch still needs its complete-period fate proof. Boundary
+limits and all five sharp comparison cases remain open.
 
 ## 1. Decision and exact target
 

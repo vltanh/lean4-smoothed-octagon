@@ -23,7 +23,10 @@ The restored companion script passes 22 exact algebra checks. Thus every
 global minimizing lift may be normalized to lambda=-1 under the stated
 inputs. Compactness gives a qualitative common bound on those normal
 lifts; no explicit numerical phase box follows from that corollary.
-Normal triple/nontransverse ties still require separate treatment.
+[NORMAL_TIE_BRANCHING](NORMAL_TIE_BRANCHING.md) and its independent audit
+now give the exact outgoing-vertex sign rule at normal double/triple ties,
+including quadratic and cubic contacts. Retain all passing branches;
+their complete-period fates and numerical error control remain open.
 
 The existing coverage proof in [BOUNDED_REDUCTION](BOUNDED_REDUCTION.md)
 says that every minimizing cyclic word with N>=6 has one six-complete-piece
@@ -96,9 +99,12 @@ established. No individual floating-point sample can close gate C.
 Two cross-case obligations are tracked separately:
 
 - **T (ties and multiplier exceptions):** the GLOBAL_NORMALITY audit is
-  complete, removing abnormal minimizer lifts. Retain normal triple ties
-  and nontransverse switches
-  (GLOBAL_COST_CASIMIR Section 6 gives an exact cubic example).
+  complete, removing abnormal minimizer lifts. NORMAL_TIE_BRANCHING and its
+  independent audit give the exact finite rule for all normal outgoing
+  positive vertex germs. Test all three rotations and retain every passing
+  branch, including quadratic/cubic and triple ties. This rule supplies
+  no uniform positive duration, verified numerical tolerance, or complete-
+  period exclusion (GLOBAL_COST_CASIMIR Section 6 retains a cubic example).
   If convenient, stratify the *normal* frame costate into negative
   elliptic, positive elliptic, and nonelliptic determinant sectors,
   without assuming one sector exhausts the problem.
@@ -189,9 +195,10 @@ plot or optimizer output proves an unrestricted inequality.
 
 ## 5. Priority and stopping criteria
 
-1. **Finish cross-case T**: the independent normality audit is complete.
-   Treat remaining normal triple/nontransverse branches in continuation;
-   the abnormal proof does not exclude those normal branches.
+1. **Use cross-case T in continuation**: normality and the exact normal
+   outgoing positive-vertex rule have independent internal audits.
+   Continue every passing branch, with verified signs or UNKNOWN; local
+   classification is not a full-period exclusion or error-controlled code.
 2. **Extend M1 escape**: its existing finite escape region offers the
    clearest monotone full-period certificate. Compute the exact
    complement and identify a finite set of alternatives, not a larger
@@ -224,7 +231,7 @@ manufacture additional word lengths or count partial samples as closure.
 | M1 | **First deterministic run** | Small-core escape subregion only | OPEN |
 | M2 | **First deterministic run** | OPEN | OPEN |
 | M3 | **First deterministic run** | OPEN | OPEN |
-| T: ties/normality | Normality proved; 22 exact algebra checks | Independent normality audit complete | Normality CLOSED; normal ties OPEN |
+| T: ties/normality | Normality and exact normal outgoing-vertex rule proved | Independent hand audits complete; full-period branch fate OPEN | Normality and local branch rule CLOSED; no global case excluded |
 | B: boundaries/equality | Octagon insertion obstruction known | OPEN | OPEN |
 
 **Unrestricted Reinhardt cost inequality: OPEN. Affine uniqueness: OPEN.

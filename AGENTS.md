@@ -17,9 +17,14 @@ all necessary optimality tests before declaring a candidate excluded;
 retain explicit UNKNOWN outcomes. GLOBAL_NORMALITY now has an independent
 internal hand audit in GLOBAL_NORMALITY_AUDIT and a restored exact algebra
 certificate. Every minimizing lift is normal under the stated inputs.
-Normal triple ties, nontransverse switches and the five global cost cases
-remain open. Its compact normal-lift corollary is qualitative, with no
-explicit multiplier bound for an interval search.
+NORMAL_TIE_BRANCHING and its independent internal audit now give a finite
+necessary-and-sufficient sign test for every normal outgoing positive
+vertex germ, including triple ties and quadratic/cubic contacts. Test all
+three rotations with the same covector and retain every passing branch.
+This local rule supplies no uniform interval length or global return/cost
+comparison. All five global case-C targets remain open. The compact
+normal-lift corollary is qualitative, with no explicit multiplier bound
+for an interval search.
 
 
 Read docs/SINGULAR_COST_BUDGET.md and docs/MEASURABLE_EDGE_PMP_BOUND.md.

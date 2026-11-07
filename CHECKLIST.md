@@ -19,8 +19,13 @@ cost budget. [GLOBAL_NORMALITY](docs/GLOBAL_NORMALITY.md) has now passed
 an [independent internal hand audit](docs/GLOBAL_NORMALITY_AUDIT.md): every
 finite twisted closed PMP lift is normal, without a local rank or
 transversality assumption. Existing finite representation applies this
-to every global minimizer. The normality part of T is complete; normal
-triple/cubic ties and all five C gates remain open. Compactness also gives
+to every global minimizer. The normality part of T is complete.
+[NORMAL_TIE_BRANCHING](docs/NORMAL_TIE_BRANCHING.md) and its
+[independent internal audit](docs/NORMAL_TIE_BRANCHING_AUDIT.md) give exact
+necessary-and-sufficient outgoing positive-vertex tests through derivative
+order three, including normal triple and cubic ties. This closes the
+local branch rule, not the global fate of every passing branch. All five
+C gates remain open. Compactness also gives
 a qualitative positive lower bound on the initially normalized cost
 multiplier, hence a compact family after normalization to lambda=-1.
 No numerical value for this new bound is claimed.

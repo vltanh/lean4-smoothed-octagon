@@ -53,6 +53,12 @@ are a proposed *research route*, not verified new G4 cost comparisons.
 - [x] Deduce a qualitative positive cost-multiplier lower bound over the
   compact unit-normalized minimizer lifts and compactness after lambda=-1.
   No explicit numerical bound or normal-tie exclusion follows.
+- [x] Independently audit [NORMAL_TIE_BRANCHING](docs/NORMAL_TIE_BRANCHING.md):
+  reconstruct all three Hamiltonians, both gap signs and the universal
+  second-gap derivative; check zero-energy clock transport and derivatives
+  through order three. [The review](docs/NORMAL_TIE_BRANCHING_AUDIT.md)
+  covers triple ties, quadratic contacts and cubic switches, retaining
+  every passing vertex. No uniform right interval or global fate follows.
 
 Python/NumPy/SciPy version, commands, finite inputs, solver settings,
 numerical failures/limitations and output tables are in the experiment
