@@ -154,3 +154,11 @@ also makes the residual affine and strictly increasing in outer scale.
 Its cap and physical cost are not transported with that scale change.
 Both reductions have [independent acceptance](HAND_ENDPOINT_REDUCTIONS_AUDIT.md);
 the resulting short-domain exclusion remains open.
+
+The [quantitative swapped-secant theorem](MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND.md)
+strengthens the common bound to q<(1+x)/(4t+2x-1) when t>=1/4.
+The [forward ratio reduction](MIXED_NONSHORT_FORWARD_RATIO_REDUCTION.md)
+now proves the common strict t>1/4 and reduces the proposed t>1/3
+forward exclusion to one explicit rational sign at k=1.
+Both have [independent acceptance](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
+That final rational sign, and consequently t>1/3, remain unproved.

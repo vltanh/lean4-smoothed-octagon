@@ -131,6 +131,15 @@ Its cap and physical cost are not transported with that scale change.
 Both reductions have [independent acceptance](HAND_ENDPOINT_REDUCTIONS_AUDIT.md);
 the resulting short-domain exclusion remains open.
 
+
+The [quantitative swapped-secant theorem](MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND.md)
+strengthens the common bound to q<(1+x)/(4t+2x-1) when t>=1/4.
+The [forward ratio reduction](MIXED_NONSHORT_FORWARD_RATIO_REDUCTION.md)
+now proves the common strict t>1/4 and reduces the proposed t>1/3
+forward exclusion to one explicit rational sign at k=1.
+Both have [independent acceptance](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
+That final rational sign, and consequently t>1/3, remain unproved.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

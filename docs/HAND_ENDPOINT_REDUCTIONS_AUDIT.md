@@ -462,3 +462,67 @@ Only the residual and the explicitly justified norm floor move
 with scale. The physical score and the corrected cap depend on
 scale, so neither is transferred. The source states this limitation
 and leaves the endpoint signs and the \(D>1+x\) branch open.
+
+
+## 16. Quantitative swapped secants
+
+The [quantitative swap theorem](MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND.md)
+is independently accepted. The reviewer re-derived both exact logarithm
+expressions for the secant difference, checked the positive denominators,
+and independently expanded the entire 23-term numerator.
+Its grouping in powers of j agrees exactly with (5) of the source.
+
+Every absorption in the lower bound (6) follows from
+\(0<j<h\le1/2\). The constant and linear groups have the stated
+positive lower bounds; the quadratic group absorbs the negative
+part of the cubic, leaving \(67j^3/16\); and the remaining negative
+tail is absorbed by \(20hj^3\), leaving \(j^4/8\).
+The strict logarithm inequalities therefore give the strict
+swapped-secant comparison.
+
+For the actual application, the original derivative floor gives
+\(t<T(x)\), hence \(x<1\) and \(4t+x<2\) when \(t\ge1/4\).
+This supplies exactly \(j<h\). The incoming floor is the original
+secant with first argument \(W/q-p\in(0,c)\). Its strict decrease in
+that argument forces \(W/q-p>t+p-c\), proving
+\(q<W/(4t+2x-1)\). No floor or cap is moved to a changed geometry.
+A second independent internal reviewer also accepted the complete
+lemma and this application.
+
+## 17. Forward low-ratio reduction to one unit-shape sign
+
+The [forward ratio reduction](MIXED_NONSHORT_FORWARD_RATIO_REDUCTION.md)
+is independently accepted in its stated scope.
+Its first conclusion \(t>1/4\) is a completed common hand theorem:
+the already proved unit-face argument needs no low-scale assumption
+once the common strict order supplies \(x>1-2t\).
+The earlier low-scale assumption was used only for its other face.
+
+The reviewer reconstructed the affine root derivative \(N_u\),
+the next-norm derivative, and identity (4) from the original transport.
+The positive factor \(C_*\) and the combination
+\(F=6N+C_*(3/4-\mathcal T_*)\) have the stated strict necessary
+sign. Their quadratic coefficient in k is negative.
+The elementary bounds on \(Je^2\) and \(WD/x\) justify both
+substitution directions, including the case where the product in
+\(F_v\) is negative.
+
+The effective norm is below its incident ceiling on the full
+enlarged rectangle. The reviewer checked the floor difference (14),
+the exact factor in (15), its lower-t substitution, and
+\(\rho\le13/8<2\). The source correctly uses a weak intermediate
+inequality when \(v_3=g\); the final ceiling remains strict.
+
+Differentiation in k has the same justified v/log signs.
+Independent expansion of the original residual and transported norm
+reproduces the entire cubic (18), including its prefactor.
+The coefficient bounds in (19), together with \(y\le1/2\), prove
+that this derivative is positive at \(k=o\), and concavity gives
+the same direction throughout the shape interval.
+Thus lowering k to one retains the necessary negative rational
+residual. Only the polynomial inequality is changed; the incoming
+floor was used at the original coordinates.
+
+The quantitative swap theorem gives the final closed simplex (21).
+Its remaining rational sign is explicitly open. This review does
+not assert \(t>1/3\), next-norm exclusion or forward-case completion.

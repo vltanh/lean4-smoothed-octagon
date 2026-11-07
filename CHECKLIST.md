@@ -59,6 +59,10 @@ closed computer-assisted gates below do not close these new obligations.
   has the uniform hand constant 1/7 and a fixed-geometry necessary score.
   The [normalized-root residual](docs/MIXED_SMALLER_SHORT_ENVELOPE_SCALE_MONOTONICITY.md)
   is affine and strictly increasing in outer scale; its scope is independently audited.
+- [x] The [quantitative swap theorem](docs/MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND.md)
+  sharpens the first-event bound; the [forward ratio reduction](docs/MIXED_NONSHORT_FORWARD_RATIO_REDUCTION.md)
+  proves common t>1/4 and removes the shape variable from the proposed
+  t>1/3 gate. The final unit-shape sign is still open.
 - [ ] Full short-side exclusion, the nonshort forward successor, and the
   final hand-only assembly still need proofs.
 
