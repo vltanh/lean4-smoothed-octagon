@@ -24,6 +24,16 @@ preserves a relaxed necessary cost test on four boundary faces. Their
 endpoint exclusions remain open; their audits do not certify those
 unproved signs.
 
+The [nonshort high-ratio exclusion](MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION.md)
+now proves t<2/5 by hand; combined with the
+[scale estimate](MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND.md), it gives
+a<4/5 throughout the actual smaller-nonshort case. The
+[retained central bound](MIXED_NONSHORT_RETAINED_CENTRAL_CASIMIR.md)
+and [explicit turn floor](EXPLICIT_TURN_NORM_FLOOR.md) give further
+necessary restrictions. See [their audit](NONSHORT_HAND_SCALE_AUDIT.md).
+The [forward target note](HAND_FORWARD_OPEN_TARGET.md) preserves the
+genuine exterior floors and records exact obstructions to dropping them.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

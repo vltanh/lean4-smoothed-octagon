@@ -35,6 +35,20 @@ These are uniform period classes. They are not a plan to enumerate more
 word lengths or replay larger covers. An alternative hand argument may
 replace an entire class without reproducing the old scalar domain.
 
+### Closed hand prerequisites within these gates
+
+- The shared small-forward-minimum hard face has a complete
+  [integral/cubic replacement](SMALL_FORWARD_MINIMUM_HAND_PROOF.md).
+- The smaller-nonshort case now satisfies
+  [t=a/(a+c)<2/5](MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION.md) and hence
+  [a<4/5](MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND.md), with a
+  [complete hand audit](NONSHORT_HAND_SCALE_AUDIT.md).
+- The nonshort small-parameter corner is removed by the strict
+  [duration ratio greater than 1/10](MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md).
+
+These completed inequalities strengthen the remaining domains; they
+do not by themselves exclude either nonshort successor.
+
 ## New analytic results
 
 [HAND_PROOF_REFINEMENTS](HAND_PROOF_REFINEMENTS.md) supplies explicit
@@ -101,6 +115,11 @@ scalar edge cost and an explicit seven-edge accounting argument.
 Its sharper-cap extension permits the norm-sum target `1/39`.
 It also proves `(3-U)(q-1)<3/13`; a proposed homogeneous norm estimate
 would imply the sufficient target, but that estimate is still unproved.
+The [exact forward targets](HAND_FORWARD_OPEN_TARGET.md) now record the
+complete stationary norm problem and two rigorously refuted relaxations.
+In particular, dropping both genuine exterior floors is invalid. The
+[dependency inventory](HAND_FORWARD_DEPENDENCY_INVENTORY.md) distinguishes
+the two remaining F signs from the now-completed upstream minimum proof.
 
 [MIXED_SMALLER_SHORT_OUTER_ENVELOPE](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md)
 removes the opposite turn and its independent norm from one necessary
@@ -131,6 +150,16 @@ over the remaining matrix parameter. The resulting relaxed cost bound
 is preserved through the comparison to four boundary faces. Its
 [independent review](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_AUDIT.md) accepts
 the implications, not an exclusion of those enlarged faces.
+
+The [explicit turn floor](EXPLICIT_TURN_NORM_FLOOR.md) improves the
+earlier norm gap by a single AM--GM argument. The
+[retained central Casimir bound](MIXED_NONSHORT_RETAINED_CENTRAL_CASIMIR.md)
+uses that floor while keeping the incoming secant; its arguments remain
+unchanged in the scalar boundary comparison. The
+[nonpositive short-diagonal lemma](MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md)
+removes the D<=0 part of a separate opposite-floor stopping face.
+Their [hand review](HAND_FURTHER_REFINEMENTS_AUDIT.md) does not claim
+the remaining positive-D face or the other short faces are excluded.
 
 ## Acceptance rule
 

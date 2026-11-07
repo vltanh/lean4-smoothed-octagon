@@ -27,6 +27,15 @@ its [cubic sign proof](docs/HAND_H5_INTEGRAL_RATIONAL_BOUND.md), and
 [independent audit](docs/SMALL_FORWARD_MINIMUM_HAND_AUDIT.md) remove the
 large H5 coefficient table from the shared minimum-structure dependency.
 
+The [nonshort hand ratio exclusion](docs/MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION.md)
+and [scale bound](docs/MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND.md) establish
+t<2/5 and a<4/5; their [audit](docs/NONSHORT_HAND_SCALE_AUDIT.md) also
+accepts the [retained central cap](docs/MIXED_NONSHORT_RETAINED_CENTRAL_CASIMIR.md).
+The [explicit turn floor](docs/EXPLICIT_TURN_NORM_FLOOR.md),
+[short nonpositive-floor lemma](docs/MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md),
+and [exact forward targets](docs/HAND_FORWARD_OPEN_TARGET.md) have their
+[own review](docs/HAND_FURTHER_REFINEMENTS_AUDIT.md).
+
 | Scope | Active sources |
 | --- | --- |
 | Geometric/control correspondence, twisted PMP | [ADMISSIBLE_REALIZATION](docs/ADMISSIBLE_REALIZATION.md), [REVERSE_COMPARISON](docs/REVERSE_COMPARISON.md), [GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md), [final dependency review](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) |

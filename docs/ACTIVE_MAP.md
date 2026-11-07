@@ -27,6 +27,16 @@ The shared small-forward-minimum prerequisite now has a complete
 [independent audit](SMALL_FORWARD_MINIMUM_HAND_AUDIT.md). The old H5
 large coefficient table is no longer needed by the active hand route.
 
+The [nonshort ratio bound](MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION.md)
+and [scale consequence](MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND.md)
+are complete hand theorems, reviewed in
+[NONSHORT_HAND_SCALE_AUDIT](NONSHORT_HAND_SCALE_AUDIT.md).
+Further current inputs are the [retained central cap](MIXED_NONSHORT_RETAINED_CENTRAL_CASIMIR.md),
+[turn floor](EXPLICIT_TURN_NORM_FLOOR.md), and
+[nonpositive short-floor comparison](MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md).
+For F, use the [exact open targets](HAND_FORWARD_OPEN_TARGET.md)
+and [dependency inventory](HAND_FORWARD_DEPENDENCY_INVENTORY.md).
+
 ## Completed theorem and review path
 
 All sufficient whole-period cases and the final cost/equality assembly
