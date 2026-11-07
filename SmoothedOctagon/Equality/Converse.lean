@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Foundations.Problem
+public import SmoothedOctagon.Bridge.Density
 
 /-!
 # Every linear image of the smoothed octagon packs as badly
@@ -22,6 +23,6 @@ open SmoothedPolygons
 density `δ_oct`. -/
 theorem greatestPackingDensity_linear_image_octagon (A : (Fin 2 → ℝ) ≃ₗ[ℝ] (Fin 2 → ℝ)) :
     greatestPackingDensity (A '' octagon) = octagonDensity := by
-  sorry
+  rw [bridge_greatestPackingDensity_linear_image octagon_isCCSDisk A, octagon_density]
 
 end SmoothedOctagon

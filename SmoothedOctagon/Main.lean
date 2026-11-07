@@ -3,6 +3,8 @@ module
 public import SmoothedOctagon.LowerBound
 public import SmoothedOctagon.Equality.Transport
 public import SmoothedOctagon.Equality.Converse
+public import SmoothedOctagon.Bridge.Density
+public import SmoothedOctagon.Bridge.Octagon
 public import Mathlib.Analysis.Convex.Hull
 public import Mathlib.LinearAlgebra.AffineSpace.AffineEquiv
 
@@ -37,7 +39,10 @@ theorem reinhardt_of (h502 : Cited.HalesVajjha.Theorem5_0_2)
     (hcov : Certificates.IntervalCovers) (K : Set (Fin 2 → ℝ)) (hK : IsConvexDisk K)
     (hsymm : ∃ c : Fin 2 → ℝ, ∀ x ∈ K, (2 : ℝ) • c - x ∈ K) :
     (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) ≤ greatestPackingDensity K := by
-  sorry
+  obtain ⟨c, hc⟩ := hsymm
+  rw [bridge_octagonDensity_eq, ← bridge_greatestPackingDensity_translate K (-c)]
+  exact reinhardtConjecture_iff_density_lower_bound.mp (reinhardtConjecture h502 hcov) _
+    (bridge_isCCSDisk_centre hK hc)
 
 /-- `Challenge.reinhardt_equality`, under the hypotheses. -/
 theorem reinhardt_equality_of (h502 : Cited.HalesVajjha.Theorem5_0_2)
@@ -51,7 +56,33 @@ theorem reinhardt_equality_of (h502 : Cited.HalesVajjha.Theorem5_0_2)
           ∃ A : (Fin 2 → ℝ) ≃ᵃ[ℝ] (Fin 2 → ℝ),
             K = A '' convexHull ℝ
               (⋃ j : ZMod 6, (fun t ↦ Matrix.mulVec (g t) (sixthRoot j)) '' Set.Icc 0 (tf 1))) := by
-  sorry
+  refine ⟨⟨smoothedPolygonG 1, smoothedPolygonX 1, smoothedPolygon_isStateTrajectory 1 le_rfl⟩, ?_⟩
+  intro g X h hg0 hX0 K hK hsymm
+  rw [bridge_convexHull_arcs g X h hg0 hX0, bridge_octagonDensity_eq]
+  constructor
+  · -- A disk of density `δ_oct`, centred at the origin, is a worst disk, hence a linear image of
+    -- the octagon.
+    intro hd
+    obtain ⟨c, hc⟩ := hsymm
+    have hW : IsWorstDisk ((fun x ↦ x + -c) '' K) := by
+      refine ⟨bridge_isCCSDisk_centre hK hc, ?_⟩
+      rw [bridge_greatestPackingDensity_translate, hd,
+        reinhardtConjecture_iff_minimax.mp (reinhardtConjecture h502 hcov)]
+    obtain ⟨A, hA⟩ := worstDisk_eq_linear_image h502 hcov _ hW
+    refine ⟨A.toAffineEquiv.trans (AffineEquiv.constVAdd ℝ (Fin 2 → ℝ) c), ?_⟩
+    rw [AffineEquiv.coe_trans, image_comp]
+    change K = _ '' ((A : (Fin 2 → ℝ) → (Fin 2 → ℝ)) '' octagon)
+    rw [← hA, image_image]
+    simp
+  · -- An affine image of the octagon is a translate of a linear image.
+    rintro ⟨A, rfl⟩
+    have e : (A : (Fin 2 → ℝ) → (Fin 2 → ℝ)) '' octagon =
+        (fun y ↦ y + A 0) '' (A.linear '' octagon) := by
+      rw [image_image]
+      refine image_congr fun x _ ↦ ?_
+      have := A.map_vadd 0 x
+      simpa using this
+    rw [e, bridge_greatestPackingDensity_translate, greatestPackingDensity_linear_image_octagon]
 
 /-- `Challenge.reinhardt_cost`, under the hypotheses. -/
 theorem reinhardt_cost_of (h502 : Cited.HalesVajjha.Theorem5_0_2)
@@ -59,7 +90,8 @@ theorem reinhardt_cost_of (h502 : Cited.HalesVajjha.Theorem5_0_2)
     (h : IsStateTrajectory T u g X) (hg0 : g 0 = 1) (hgT : g T = R)
     (hXT : X T = R⁻¹ * X 0 * R) :
     √12 * ((8 - 4 * √2 - Real.log 2) / (2 * √2 - 1)) ≤ reinhardtCost T X := by
-  sorry
+  have := controlLowerBound h502 hcov T u g X ⟨h, hg0, hgT, hXT⟩
+  rwa [volume_real_octagon, octagonCost, ← bridge_octagonDensity_eq] at this
 
 /-- `Challenge.octagon_area` (unconditional). -/
 theorem octagon_area (g X : ℝ → Mat2)
@@ -69,6 +101,10 @@ theorem octagon_area (g X : ℝ → Mat2)
     IsConvexDisk K ∧ (∀ x ∈ K, -x ∈ K) ∧
       volume.real K = √12 * ((8 - 4 * √2 - Real.log 2) / (2 * √2 - 1)) ∧
       greatestPackingDensity K = (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) := by
-  sorry
+  intro K
+  have hK : K = octagon := bridge_convexHull_arcs g X h hg0 hX0
+  rw [hK, bridge_octagonDensity_eq]
+  obtain ⟨hconv, hcomp, hint, hneg⟩ := octagon_isCCSDisk
+  exact ⟨⟨hconv, hcomp, hint⟩, hneg, by rw [volume_real_octagon, octagonCost], octagon_density⟩
 
 end SmoothedOctagon
