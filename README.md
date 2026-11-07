@@ -21,6 +21,11 @@ with L2–L5 only against the same strict acceptance criteria. All five
 universal local improvements remain **OPEN** (0/5). Do not resume
 increasing-length whole-trajectory enumeration.
 
+The P0 note also records the corrected terminal conjugation and the explicit
+equality transfer to the concrete octagon. Independent premises and equality
+reviews found no additional gap in that conditional transfer. The global
+complexity bound is still required before it proves unrestricted rigidity.
+
 
 The user requested a bounded set of cases before continuing case-by-case
 comparisons. The current research target is therefore a uniform complexity

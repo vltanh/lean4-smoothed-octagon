@@ -1,6 +1,6 @@
 # Every selected minimizer window is eligible, and a cheaper splice is geometric
 
-Date: 2026-11-06. This is the P0 hand audit for the fixed five-template
+Date: 2026-11-07. This is the P0 hand audit for the fixed five-template
 route. No Lean source, compilation, Lake command, typechecking, or CI is
 part of this note.
 
@@ -70,6 +70,13 @@ C\leq A_{\rm oct}<\pi. \tag{1}
 The strict last inequality is the explicit octagon formula, not the
 conjectural claim that the octagon is minimal.
 
+The terminal conjugation used here is the one derived in Sections 3.5,
+4.5 and 6.6: `X(T)=R^{-1}X(0)R`. The last sentence of Problem 3.6.2
+prints the opposite conjugation. The pinned
+[control definition](https://github.com/vltanh/lean4-smoothed-polygon/blob/8ce732873a1aa054e98dac46cfaa8d7bb96ffa6f/SmoothedPolygons/Ch3/ControlProblem.lean)
+explicitly records and corrects this misprint. The global initial state
+is free; its value is fixed when replacing any selected window.
+
 ## 2. Twisted rebasing and a six-piece interval within one period
 
 Extend the trajectory by
@@ -92,6 +99,14 @@ is unaffected by left multiplication of the frame. Since `J` commutes
 with `R`, the cost density has period `T`, so rebasing preserves the
 whole-period cost. Formula (2), rather than an untwisted repeated word,
 is essential.
+
+Cyclic relabeling is implemented by an actual conjugation. For `C=R^r`,
+replace `(g,X)` by `(C^{-1}gC,C^{-1}XC)` and control label `i` by
+`i+r` modulo three. Since `Cv_j=v_{j+r}` and `det C=1`, its sector
+test at `j` is the old test at `j+r`. The cost is unchanged because
+the original cost matrix commutes with `R`. Both local endpoints are
+conjugated together; the initial identity and global terminal rotation
+are preserved. No local terminal frame is set equal to `R` by this step.
 
 Merge equal controls across the twisted seam as well as in the interior,
 and choose the cut at a genuine switch. If `N` is the resulting number
@@ -384,6 +399,48 @@ centrally symmetric disk. This is the required equality transfer; no
 claim that equality in area alone determines an arbitrary trajectory
 is being inserted.
 
+### Explicit identification with the concrete octagon
+
+The equality data give a useful direct check. Relabel to the four-piece
+word `2012` and put `N=2sqrt(2)-1`. In the rational basis of the
+four-link proof, the initial state and active margins are
+
+\[
+X_0=\begin{pmatrix}0&-\sqrt N\\1/\sqrt N&0\end{pmatrix},
+\qquad a_i=\frac2{\sqrt N}.
+\]
+
+All factors are `sqrt(2)`, so each physical duration is
+`log(2)/(2sqrt(N))`. Undoing `B=diag(1,sqrt(3))` gives
+`Phi(0,sqrt(N/3))`. These are exactly `y_0(1)`, `tsw(1)` and the
+control sequence of the pinned concrete octagon. Successive uniqueness
+of the smooth vertex flows identifies the entire frame and state on
+`[0,tf(1)]`; this is also the statement of
+[`polygon_trajectory_unique`](https://github.com/vltanh/lean4-smoothed-polygon/blob/8ce732873a1aa054e98dac46cfaa8d7bb96ffa6f/SmoothedPolygons/Ch7/SmoothedPolygon.lean).
+
+For the conditional rigidity conclusion, retain the actual realization
+of each arbitrary worst disk `K`; the finite-vertex theorem changes its
+control only on a null set, not its boundary. If `e` is its initial
+normalization, `s` is the rebase cut and `C=R^r` is the relabeling, the
+classified frame is
+
+\[
+\widehat g(t)=C^{-1}G(s)^{-1}G(s+t)C.
+\]
+
+The six contact arcs over `[0,T]` give its complete boundary by the
+cyclic contact relation. Their equality with the octagon arcs therefore
+gives `C^{-1}G(s)^{-1}eK=K_oct`: both compact convex disks are radial
+hulls of those boundaries. Explicitly,
+
+\[
+K=e^{-1}G(s)C(K_{\rm oct}).
+\]
+
+The displayed map is nonsingular and linear, which is the required
+affine equivalence in the centered disk class. No unrelated equal-cost
+minimizer is substituted in this argument.
+
 ## Audit boundary
 
 The precise minimizer-window eligibility lemma and finite-piece splice
@@ -396,6 +453,12 @@ The universal local improvement inequalities remain unproved. Their
 truth, full-domain rank degeneracies, and stationary variations are
 not consequences of this audit. The uniform bound `N<=5`, unrestricted
 minimality, affine rigidity, and Lean/kernel validation remain open.
+
+An independent premises audit agreed on the finite-source, twisted-rebase,
+sector, and splice implications. A separate equality review checked the
+forced four-piece state, physical times, trajectory identification, and
+explicit linear map above. These reviews found no additional premise gap;
+they do not re-audit every retained comparison identity or prove a local gate.
 
 ### Source entry points
 

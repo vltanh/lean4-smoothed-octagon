@@ -39,6 +39,10 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
   See `docs/MINIMIZER_WINDOW_AUDIT.md`. This is not a re-audit of every retained
   through-five identity or a proof of an analytic local improvement.
 - [x] Keep two initial-state coordinates and six factors explicit.
+- [x] Independently review the P0 premises and equality-transfer scope.
+  Record the book's terminal-conjugation misprint, the relabeling conjugation,
+  exact equality state/times, and the linear map carrying each original worst
+  disk to the concrete octagon. The future uniform bound is still a premise.
 - [x] Require strict positivity at every state endpoint, using monotonicity
   of exact vertex flows to cover the entire continuous arcs.
 - [x] Keep normalized cost C/sqrt(12) distinct from area/cost C.

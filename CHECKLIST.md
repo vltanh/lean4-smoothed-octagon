@@ -137,6 +137,12 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 ## Current-session entries
 
+- Consolidate the independent P0 review into MINIMIZER_WINDOW_AUDIT. Record
+  the corrected terminal conjugation, actual relabeling map, exact octagon
+  equality trajectory and the nonsingular linear map for each original worst
+  disk. The uniform bound is still needed before that conditional rigidity
+  conclusion applies; no duplicate P0 note or new exclusion is counted.
+
 - Prove full-domain rank five for L1 by active-margin coordinates and four
   small determinant sign identities. The action and constrained-variation
   formulas passed two independent hand reviews. This closes the interior
