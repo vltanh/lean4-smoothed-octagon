@@ -18,7 +18,13 @@ The completed **smaller-short M2** caller is `mixed_smaller_short_interval_certi
 
 The new mixed continuation identity checks are `mixed_general_short_defect_interface_certificate.py`, `mixed_general_short_slack_certificate.py`, and `mixed_nonshort_completion_continuation_certificate.py`. The additional radial-completion identities are in `global_radial_completion_certificate.py`.
 
-The **nonshort M2** identities and hand corner are checked by `mixed_nonshort_completion_blowup_certificate.py` and `mixed_nonshort_small_parameter_certificate.py`. The portable `mixed_nonshort_coefficients.py` verifies every expression in the committed `mixed_nonshort_coefficients.hpp` without changing it. The final complementary caller is `mixed_nonshort_completion_interval_certificate.cpp`, with the separately audited `certified_lp_proposal.hpp`. Both full covers are pending.
+The **nonshort M2** identities and hand corner are checked by `mixed_nonshort_completion_blowup_certificate.py` and `mixed_nonshort_small_parameter_certificate.py`. The portable `mixed_nonshort_coefficients.py` verifies every expression in the committed `mixed_nonshort_coefficients.hpp` without changing it.
+
+The **nonshort reverse-next branch is closed** by `mixed_nonshort_reverse_boundary_interval_certificate.cpp`: a new boundary comparison reduces every original chart to two four-variable roots. Both the original execution and an independent fresh replay have 106,134 nodes, 53,068 leaves, no pending or unresolved boxes and maximum depth 26. `mixed_nonshort_reverse_boundary_result.json` records the source hashes and both complete logs. `mixed_nonshort_reverse_boundary_certificate.py` checks 20 exact transfer/contractor identities and verifies the published receipt and logs. The [independent audit](../docs/MIXED_NONSHORT_REVERSE_BOUNDARY_AUDIT.md) accepts its actual-period interface and source.
+
+The forward endpoint comparison is proved in [MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION](../docs/MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION.md), with nine exact identities in `mixed_nonshort_forward_boundary_certificate.py`. It requires independent acceptance of the common low-a exclusion and both endpoint covers before closing the forward-next branch.
+
+The former three-root caller is `mixed_nonshort_completion_interval_certificate.cpp`, with the separately audited `certified_lp_proposal.hpp`. Its incomplete forests are not premises of the boundary method.
 
 With matching MPFR development headers installed, build and replay the two branches as follows:
 

@@ -4,34 +4,27 @@
 
 ## Immediate handoff: exact next actions
 
-**No full M2 nonshort certificate is recorded as completed in this PR.** An earlier multi-process run or a reported million-plus processed boxes is **not** completion: no branch is excluded until the complete original-root record (or a verified rooted chain) has an empty pending frontier and zero unknown boxes. Do not assume an external process continues after a session ends.
+**The nonshort reverse-next branch is now CLOSED.** Its new boundary comparison, two-root cover, source audit and independent fresh replay are recorded in [the reverse theorem](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md). The older incomplete three-root forests are not used. Forward acceptance and final assembly remain open until their own complete records and independent reviews are published.
 
 | Gate | Domain / required next actual switch | Acceptance |
 | --- | --- | --- |
 | M2.0 (DONE) | Smaller turn is short; and separately the nonshort `0<=epsilon<=1/32` corner | Audited short-side 107,977-node cover; hand small-parameter theorem |
-| **M2.1-F (OPEN)** | Smaller turn nonshort; next **forward** switch has transported norm `>=3/4` | Completed three-chart cover, original roots or independently verified exact chain |
-| **M2.1-R (OPEN)** | Smaller turn nonshort; next **reverse** switch satisfies the extended-turn secant bound | Same complete cover acceptance, independently for branch 1 |
-| **M2.1-V / M2.2 (OPEN)** | Independently verify both execution forests; then audit exhaustive whole-period passage | Exact record accounting, mathematical interface, all boundaries |
+| **M2.1-F (OPEN acceptance)** | Smaller turn nonshort; next **forward** switch has transported norm `>=3/4` | Common low-a boundary theorem, concavity endpoint alternative, both complete endpoint covers and independent review |
+| **M2.1-R (DONE)** | Smaller turn nonshort; next **reverse** switch satisfies the extended-turn secant bound | Accepted two-root boundary cover: 106,134 nodes, 53,068 leaves, no pending/unknown; independently replayed |
+| **M2.1-V / M2.2 (OPEN)** | Finish forward record/source review; then audit exhaustive whole-period passage | Exact record accounting, mathematical interface, all boundaries |
 | **G4 / G5 (OPEN)** | Conditional terminal cost/equality assembly and final audit | Sharp global statement with all premises and trust boundaries identified |
 
-**Frozen technical target:** [the same-covector next-switch alternative](MIXED_SMALLER_TURN_CONTINUATION.md), [five-variable/maximal-chart reduction](MIXED_NONSHORT_BLOWUP_REDUCTION.md), [epsilon hand theorem](MIXED_NONSHORT_SMALL_PARAMETER_EXCLUSION.md), and [interval-caller source/domain audit](MIXED_NONSHORT_INTERVAL_CERTIFICATE_AUDIT.md). The complement consists of **three closed chart roots per branch**, `a in [2/15,17/20]`, `c in [2/15,2]`, two free weights in `[0,1]`, the chosen maximal weight one, `epsilon in [1/32,61/4]` for chart 0 and `[1/32,15]` for charts 1/2. Overlaps and degeneracies are intentional. The next actual switch is the first event **on the same continuous normal PMP covector**, not an independent local lift or arbitrary later switch.
+**Current technical target:** [the same-covector next-switch alternative](MIXED_SMALLER_TURN_CONTINUATION.md), [reviewed boundary comparison](MIXED_NONSHORT_REVERSE_BOUNDARY_AUDIT.md), [forward concavity reduction](MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION.md), and [epsilon hand theorem](MIXED_NONSHORT_SMALL_PARAMETER_EXCLUSION.md). Increase the artificial scalar b to `K/(a+c)-a`; the incident upper-norm inequality persists and the transported w decreases. The new maximum is `epsilon=max(delta1,delta2)`, with `l0=0`, so **two four-variable chart roots** cover every original chart, including old chart 0. The hand corner applies to this new maximum. Forward use of `a>=1/2` requires the separate common low-a theorem; do not transfer an actual Casimir cap to the artificial boundary without the proved endpoint alternative. The next actual switch remains the first event **on the same continuous normal PMP covector**.
 
-**Run/replay:** the exact commands, recorded C++/MPFR trust boundary and full-cover acceptance rules are at [CERTIFICATE_REPLAY](CERTIFICATE_REPLAY.md). A direct standalone replay may use:
-
-```sh
-g++ -std=c++17 -O3 explorations/mixed_nonshort_completion_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_nonshort_completion_interval_certificate
-/tmp/mixed_nonshort_completion_interval_certificate 2000000 0  # forward successor
-/tmp/mixed_nonshort_completion_interval_certificate 2000000 1  # reverse successor
-```
-
-Alternatively, replay the audited [cover-chain coordinator and verifier](EXACT_COVER_CHAIN.md):
+**Run/replay:** the commands, C++/MPFR trust boundary and acceptance rules are at [CERTIFICATE_REPLAY](CERTIFICATE_REPLAY.md). The accepted reverse replay is:
 
 ```sh
-python explorations/mixed_nonshort_completion_cover_chain.py /tmp/mixed_nonshort_cover_chain
-python explorations/mixed_nonshort_cover_chain_verify.py /tmp/mixed_nonshort_cover_chain/manifest.json
+g++ -std=c++17 -O2 explorations/mixed_nonshort_reverse_boundary_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_nonshort_reverse_boundary
+/tmp/mixed_nonshort_reverse_boundary 2000000
+python explorations/mixed_nonshort_reverse_boundary_certificate.py
 ```
 
-The coordinator's destination directory must be new. For each branch accept only a **complete three-root** cover (serial or full exact child forest), zero pending/unknown, clean arithmetic flags, matching frozen source/executable hashes, verified record-by-record parent/child correspondence, and the aggregate `N=2L-3`. A successful child prefix or integer count in isolation cannot close M2. If the cover stalls, use the emitted verified frontier to identify a **specific missing uniform contractor/hand inequality**, not a fresh word-length enumeration. Do not edit the frozen C++ caller/headers without re-auditing and updating its source identifiers.
+For every boundary theorem accept only its complete two-root cover, zero pending/unknown, clean arithmetic flags, identified frozen sources, and `N=2L-2`. Each run must start at its stated original roots. A successful child prefix or integer count in isolation cannot close M2. The old [cover-chain method](EXACT_COVER_CHAIN.md) remains a valid unused method for the former three-root domains; its incomplete progress is not evidence for the new theorems. Do not edit frozen callers or headers without re-auditing and updating their source identifiers.
 
 **Commit protocol:** close/check off a gate only after its result and independent review are recorded and pushed. Keep [CHECKLIST](../CHECKLIST.md) and this handoff authoritative, the [replay guide](CERTIFICATE_REPLAY.md) reproducible, and the PR draft until M2, G4 and G5 are complete. Historical local notes and former diagnostic scripts are under [docs/legacy](legacy/INDEX.md) and [explorations/legacy](../explorations/legacy/README.md), not alternative roadmaps.
 
@@ -108,8 +101,9 @@ independently replayed exact/analytic checks.
 It therefore remains to exclude the **smaller-nonshort branch**. The
 [next-switch alternative](MIXED_SMALLER_TURN_CONTINUATION.md) requires
 either a transported forward norm at least `3/4` or a reverse turn norm
-below the stated extended secant. Both alternatives still require a
-uniform exclusion. The [interface audit](MIXED_MINIMUM_CONTINUATION_INTERFACE_AUDIT.md)
+below the stated extended secant. The [reverse boundary theorem](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md)
+now excludes the second alternative uniformly; the forward alternative
+still requires its published independent acceptance. The [interface audit](MIXED_MINIMUM_CONTINUATION_INTERFACE_AUDIT.md)
 accepts the necessary-condition reduction. The [radial completion bound](GLOBAL_RADIAL_COMPLETION_BOUND.md)
 also supplies a nonnegative cost for restoring the omitted radial
 coordinate of any window.
@@ -120,10 +114,14 @@ the simultaneous zero-duration denominator. The [hand corner theorem](MIXED_NONS
 excludes `epsilon<=1/32` uniformly. The published complementary caller,
 all contractors, coefficient expressions and LP proposal helper have an
 [independent source audit](MIXED_NONSHORT_INTERVAL_CERTIFICATE_AUDIT.md).
-Neither branch has a committed completed original-root cover record;
-no partial frontier or zero unknown count alone closes a branch.
+The new reverse boundary comparison replaces its five-variable cover
+with two complete four-variable roots, independently audited and
+replayed. The [forward endpoint reduction](MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION.md)
+gives two enlarged endpoint domains whose acceptance is the remaining
+computational task. No partial frontier or zero unknown count alone
+closes a branch.
 
-**M2.1 (OPEN):** At the **global minimum reverse centre whose smaller turn belongs to a nonshort forward run**, exclude both next-switch alternatives using the actual external switches and **same continuous PMP lift**. The smaller-short case is closed; do not assume a minimum must touch *two* long runs.
+**M2.1-F (OPEN acceptance):** At the **global minimum reverse centre whose smaller turn belongs to a nonshort forward run**, finish independent acceptance of the forward endpoint exclusions. The reverse-next and smaller-short cases are closed; do not assume a minimum must touch *two* long runs.
 
 **M2.2 (OPEN):** Uniformly exclude all admissible M2 periods: arbitrary nonshort run lengths, unequal margins, bridge-diagonal signs, weak third ties, singular/zero-duration limits, rank defects and the twisted seam. A local star escape or negative onsite form is not enough without the global extension/constraints.
 

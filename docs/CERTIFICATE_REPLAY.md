@@ -10,10 +10,11 @@ arithmetic run is used only with its stated mathematical reduction. It
 does not establish that an arbitrary input trajectory belongs to the
 checked domain.
 
-**Current acceptance boundary:** the F and smaller-short covers are
-complete. Neither smaller-nonshort cover has a complete independently verified result committed to this PR; whether an external process is active is not itself evidence. The commands
-below identify those remaining full-domain checks without claiming their
-success.
+**Current acceptance boundary:** F, smaller-short and nonshort reverse-next
+are complete. The reverse-next result uses the new two-root boundary
+theorem below, with independent mathematical/source review and fresh
+replay. Forward boundary acceptance remains to be recorded. The old
+three-root forests are incomplete and are not used by the new theorem.
 
 ## 1. Build environment
 
@@ -92,7 +93,39 @@ includes the frozen source hashes, compiler, arithmetic runtime and
 terminal output. The resulting theorem is
 [MIXED_SMALLER_SHORT_PERIOD_EXCLUSION](MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md).
 
-## 4. The two smaller-nonshort continuation covers
+## 4. Smaller-nonshort boundary certificates
+
+### Accepted reverse-next boundary theorem
+
+The [boundary comparison](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md)
+fixes `a,c,d,r,v`, increases the artificial scalar `b` to `K/(a+c)-a`,
+preserves the incident upper-norm condition and decreases `w`. The new
+maximum `max(delta1,delta2)` represents every original chart by two
+four-variable roots with `l0=0`. The hand small-parameter theorem applies
+to this new maximum. Its [independent review](MIXED_NONSHORT_REVERSE_BOUNDARY_AUDIT.md)
+checks the comparison, chart coverage and every retained contractor.
+
+```sh
+g++ -std=c++17 -O2 explorations/mixed_nonshort_reverse_boundary_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_nonshort_reverse_boundary
+/tmp/mixed_nonshort_reverse_boundary 2000000
+python explorations/mixed_nonshort_reverse_boundary_certificate.py
+```
+
+Both original and independent fresh executions processed 106,134 nodes
+and excluded 53,068 leaves, with maximum depth 26, zero pending and zero
+unresolved boxes. The two-root identity is `106134=2*53068-2`.
+The [result receipt](../explorations/mixed_nonshort_reverse_boundary_result.json)
+identifies source hashes, original and replay logs, toolchain and commands.
+The printed request for an interface audit is retained in the frozen
+source; the linked audit discharges it.
+
+The [forward endpoint reduction](MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION.md)
+uses concavity to obtain two necessary endpoint alternatives without
+transferring the actual Casimir cap to the artificial boundary. Its
+common low-a theorem and two full endpoint records require their own
+independent acceptance before use.
+
+### Supporting identities and former three-root method
 
 The supporting exact checks are:
 
@@ -126,10 +159,11 @@ has `a` in `[2/15,17/20]`, `c` in `[2/15,2]`, two weights in `[0,1]`,
 and the selected third weight equal to one. Chart ties and the common
 `epsilon=1/32` boundary are deliberately covered more than once.
 
-Both branch domains must be completely excluded, by successful full
-runs or by the verified complete cover chains below. Neither one branch
-alone, nor the hand corner alone, nor a successful continuation from an
-unverified pending-stack file covers the required domain.
+This former method remains a valid alternative: it would require both
+three-root domains to be completely excluded. The accepted reverse
+theorem above instead proves a new boundary reduction and completely
+covers its two roots. A successful continuation from an unverified
+pending-stack file cannot establish either theorem.
 
 ### Exact parallel cover chains
 
@@ -154,7 +188,10 @@ unknown box, failed job or orphan. It recomputes the local and aggregate
 cover identities from the actual records. A coordinator progress line
 or a child's pending-domain `PASS` does not satisfy this acceptance gate.
 
-No complete independently verified original-root chain has been committed. Its completion and final independent verification remain pending.
+No complete independently verified original three-root chain has been
+committed. Those incomplete forests are not proof premises of the new
+boundary method and are not required if that method closes both actual
+next-switch alternatives.
 
 ## 5. Acceptance of a cover
 
@@ -168,8 +205,9 @@ output. Acceptance requires all of the following:
 - The final arithmetic-flag check succeeds for MPFR-based covers.
 - Summing the reason counters gives a leaf count `L` satisfying
   `nodes=2*L-roots`, with one root for the F neighbor contraction and
-  smaller-short, and three roots for the final F cover and for each
-  nonshort branch.
+  smaller-short, three roots for the final F cover, and two roots for
+  each new nonshort boundary theorem. The unused original nonshort
+  caller instead has three roots per branch.
 
 A depth-limit or node-budget stop alone is not a proof. A valid
 node-budget prefix may be used only inside the fully verified cover chain

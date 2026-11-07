@@ -1,0 +1,117 @@
+{
+  "certificate": "M2 reverse-next b-boundary exclusion",
+  "status": "accepted: complete original execution, independent mathematical/source audit, and independent fresh replay",
+  "root_count": 2,
+  "charts": [
+    1,
+    2
+  ],
+  "coordinates": [
+    "a",
+    "c",
+    "epsilon",
+    "l0=0",
+    "other_weight"
+  ],
+  "roots": {
+    "a": [
+      "2/15",
+      "17/20"
+    ],
+    "c": [
+      "2/15",
+      "2"
+    ],
+    "epsilon": [
+      "1/32",
+      "15"
+    ],
+    "l0": [
+      "0",
+      "0"
+    ],
+    "other_weight": [
+      "0",
+      "1"
+    ]
+  },
+  "branch": 1,
+  "nodes": 106134,
+  "leaves": 53068,
+  "pending": 0,
+  "unresolved": 0,
+  "maximum_depth": 26,
+  "elapsed_seconds": 539.67,
+  "leaf_reasons": {
+    "1": 1409,
+    "17": 35210,
+    "19": 4405,
+    "20": 3948,
+    "22": 11,
+    "26": 993,
+    "27": 722,
+    "28": 5,
+    "60": 6365
+  },
+  "forest_identity": "N=2L-2",
+  "sources_and_artifacts": {
+    "reverse_boundary.cpp": "984f729590c1933ad7677b0d4a7392210f36f6a49f63f607b1576a4c6b69557c",
+    "certified_mpfr_interval.hpp": "1607b4f02063722506a514598d23d9b032a4aebfd6e74753bc302a7a67e32e76",
+    "certified_lp_proposal.hpp": "6afe296ecd67f0ac3a48caa2460c9bf5bd58f358470a326f5a324879ba891454",
+    "mixed_nonshort_coefficients.hpp": "5b0c5c70a10a058a50a2735282a640333a87def27a8dbf0def5547c46e4a266d",
+    "reverse_boundary": "3fb6b180f142297b7acb18ae54eb55a2df16d5f9c2ae71f587d0cf24fa7febb0",
+    "reverse_boundary_cover.log": "32d2d520054feaf9658777dc352c8ebb65b2878772da14f05e48ad64dffdd729",
+    "mixed_nonshort_completion_unresolved_1.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "compile_command": "g++ -std=c++17 -O2 -I/workspace/scratch/5efeb2d2f42f/m2_mpfr_vendor reverse_boundary.cpp -l:libmpfr.so.6 -lgmp -o reverse_boundary",
+  "run_command": "./reverse_boundary 1000000 > reverse_boundary_cover.log 2>&1",
+  "execution_trust_boundary": "C++17, directed MPFR/GMP arithmetic, frozen audited sources; no Lean kernel verification",
+  "mathematical_audit": "docs/MIXED_NONSHORT_REVERSE_BOUNDARY_AUDIT.md",
+  "theorem": "docs/MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md",
+  "published_artifacts": {
+    "explorations/certified_mpfr_interval.hpp": "1607b4f02063722506a514598d23d9b032a4aebfd6e74753bc302a7a67e32e76",
+    "explorations/certified_lp_proposal.hpp": "6afe296ecd67f0ac3a48caa2460c9bf5bd58f358470a326f5a324879ba891454",
+    "explorations/mixed_nonshort_coefficients.hpp": "5b0c5c70a10a058a50a2735282a640333a87def27a8dbf0def5547c46e4a266d",
+    "explorations/mixed_nonshort_reverse_boundary_interval_certificate.cpp": "984f729590c1933ad7677b0d4a7392210f36f6a49f63f607b1576a4c6b69557c",
+    "explorations/results/mixed_nonshort_reverse_boundary_original.log": "32d2d520054feaf9658777dc352c8ebb65b2878772da14f05e48ad64dffdd729",
+    "explorations/results/mixed_nonshort_reverse_boundary_replay.log": "3cd136f0e706204b4ff01b49d840be2d2fa915c8c8df722d849d80a38de6719a"
+  },
+  "environment": {
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "MPFR": "4.2.2",
+    "GMP": "6.3.0",
+    "significand_bits": 80,
+    "rounding": "explicit directed MPFR; verified exact dyadic LP proposals"
+  },
+  "independent_replay": {
+    "exit_code": 0,
+    "fresh_original_roots": true,
+    "supplied_pending_stack": false,
+    "branch": 1,
+    "nodes": 106134,
+    "leaves": 53068,
+    "pending": 0,
+    "unresolved": 0,
+    "maximum_depth": 26,
+    "elapsed_seconds": 550.63,
+    "leaf_reasons": {
+      "1": 1409,
+      "17": 35210,
+      "19": 4405,
+      "20": 3948,
+      "22": 11,
+      "26": 993,
+      "27": 722,
+      "28": 5,
+      "60": 6365
+    },
+    "executable_sha256": "704d4fb84959130baa42964e35da9768b72dc83dead1a67d4e78cf4584bc312b",
+    "log_sha256": "3cd136f0e706204b4ff01b49d840be2d2fa915c8c8df722d849d80a38de6719a",
+    "unresolved_file_bytes": 0,
+    "final_output": "FINAL branch 1 nodes 106134 stack 0 depth 26 unknown 0 seconds 550.63\nreason 1 leaves 1409\nreason 17 leaves 35210\nreason 19 leaves 4405\nreason 20 leaves 3948\nreason 22 leaves 11\nreason 26 leaves 993\nreason 27 leaves 722\nreason 28 leaves 5\nreason 60 leaves 6365\nPASS: complete two-chart reverse boundary domain excluded; interface audit still required.\n",
+    "compile_command": "g++ -std=c++17 -O2 -I/workspace/scratch/5efeb2d2f42f/m2_mpfr_vendor sources/mixed_nonshort_reverse_boundary_interval_certificate.cpp -l:libmpfr.so.6 -lgmp -o certifier",
+    "run_command": "./certifier 2000000 1 > replay.log 2>&1"
+  },
+  "portable_build": "g++ -std=c++17 -O2 explorations/mixed_nonshort_reverse_boundary_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_nonshort_reverse_boundary",
+  "portable_run": "/tmp/mixed_nonshort_reverse_boundary 2000000"
+}
