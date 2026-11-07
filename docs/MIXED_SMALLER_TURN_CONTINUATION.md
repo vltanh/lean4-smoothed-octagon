@@ -3,12 +3,18 @@
 Date: 2026-11-07. Exact hand reduction with a supplementary symbolic
 checker. No Lean, Lake, typechecking, or CI.
 
-This note **does not exclude M2**. It gives a uniform necessary scalar
-alternative for the case in which the smaller turn beside a global
-minimum reverse centre belongs to a nonshort forward run. The alternative
-uses the next actual switch, whatever the eventual run length. Its two
-scalar branches remain to be excluded. In particular, the existence of
-the first forward root by itself is not contradictory.
+This note establishes the uniform necessary scalar alternative when the
+smaller turn beside a global minimum reverse centre belongs to a nonshort
+forward run. It uses the next actual switch, whatever the eventual run
+length. The first forward root by itself is not contradictory.
+
+**Completion follow-up:** both actual successor alternatives are now
+excluded by the [reverse boundary theorem](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md)
+and [forward endpoint theorem](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md).
+Their independent source/domain and fresh-replay audits support the
+[uniform M2 assembly](MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md) and its
+[whole-period audit](MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md). The exact
+same-covector identities and scalar comparisons below are unchanged.
 
 ## 1. Actual local data and one common multiplier
 
@@ -419,10 +425,10 @@ would exclude the reverse-next branch. No such uniform sign is claimed
 here; the original inequalities, or justified relaxations of them,
 remain essential.
 
-## 6. What remains open
+## 6. Completion through the actual successor alternatives
 
-The exact alternative (15) reduces this particular M2 side assignment
-to a finite scalar question. A sufficient remaining theorem is that
+The exact alternative (15) reduces this M2 side assignment to a fixed
+scalar question. An earlier, stronger sufficient target was that
 (2)--(12), the actual first-event interpretation, the competitive
 Casimir cap, and the global minimum inequalities force simultaneously
 
@@ -431,11 +437,20 @@ t<3/4,\qquad w>\operatorname{Sec}(a,r,d).
 \tag{24}
 \]
 
-No uniform proof of (24) is supplied here. A proof may also use the
-full-period defect budget and need not establish these two stronger
-inequalities separately. The case in which the smaller adjacent turn
-belongs to a short run requires its own argument. Both distinctions
-are necessary before any M2 closure claim.
+The accepted proof excludes the actual alternatives in (15) directly,
+using the [reverse boundary comparison](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md)
+and [forward concave endpoint reduction](MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION.md)
+with its [two completed endpoint covers](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md).
+It does not require the simultaneous stronger scalar statement (24) as
+an additional theorem. In particular the reverse branch retains its
+justified condition `r^2>=ad`, and no actual Casimir cap is blindly
+transferred to the scalar boundary.
+
+The complementary smaller-short case has its own
+[completed exclusion](MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md). The
+[whole-period M2 theorem](MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md)
+combines these exhaustive branches under the retained actual-period
+premises, with a [separate audit](MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md).
 
 The companion
 [`mixed_nonshort_completion_continuation_certificate.py`](../explorations/mixed_nonshort_completion_continuation_certificate.py)

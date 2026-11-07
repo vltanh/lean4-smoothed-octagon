@@ -14,11 +14,19 @@ choice when they are equal.
 
 **The forward run adjacent to that chosen turn cannot be short.**
 
-Consequently the remaining M2 problem can always be oriented so that
+Consequently the M2 contradiction argument can always be oriented so that
 the smaller adjacent turn belongs to a forward run of length at least
 two. The [nonshort continuation alternative](MIXED_SMALLER_TURN_CONTINUATION.md)
-then applies. This theorem closes only the smaller-short branch; the
-two nonshort next-switch alternatives, and hence M2 itself, remain open.
+then applies.
+
+**Completion follow-up:** the present theorem handles the smaller-short
+branch. Both complementary nonshort successors are now excluded by the
+[reverse boundary theorem](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md)
+and [forward endpoint theorem](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md).
+The [uniform whole-period theorem](MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md)
+and [its independent audit](MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md) combine
+all three possibilities and close M2. This note's mathematical formulas,
+scalar domain and completed certificate remain unchanged.
 
 The proof uses the given period's normal covector, physical cost,
 global minimum, actual exterior reverse switch, and complete-period
@@ -186,7 +194,11 @@ on a constrained endpoint rank. Reflection/time reversal and cyclic
 continuation preserve the physical cost and actual twisted covector, so
 windows crossing the chosen seam are covered as well.
 
-The remaining task is exactly the smaller-nonshort branch: exclude both
-next-switch alternatives of [MIXED_SMALLER_TURN_CONTINUATION](MIXED_SMALLER_TURN_CONTINUATION.md).
-No M2 or unrestricted cost/equality closure is asserted until that task
-and the final assembly are complete.
+The complementary smaller-nonshort branch is now excluded by the
+[reverse boundary](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md) and
+[forward endpoint](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md) theorems.
+Together with the present result, they give the
+[uniform M2 exclusion](MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md), with
+its [whole-period audit](MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md). The final
+cost and affine equality consequence is recorded in
+[GLOBAL_COST_EQUALITY_ASSEMBLY](GLOBAL_COST_EQUALITY_ASSEMBLY.md).

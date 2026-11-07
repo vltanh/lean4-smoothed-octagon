@@ -11,9 +11,16 @@ This interface review by itself does not certify a scalar exclusion or close M2.
 The imported global geometric/PMP results retain their own named inputs
 and earlier reviews.
 
-**Completion follow-up:** the smaller-short scalar exclusion subsequently
-passed its full directed cover and [separate completion audit](MIXED_SMALLER_SHORT_CERTIFICATE_AUDIT.md).
-The smaller-nonshort exclusion remains open.
+**Completion follow-up:** the smaller-short scalar exclusion passed its
+full directed cover and [separate completion audit](MIXED_SMALLER_SHORT_CERTIFICATE_AUDIT.md).
+Both smaller-nonshort successor alternatives are now excluded by the
+[reverse boundary](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md) and
+[forward endpoint](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md) theorems,
+with their separate source/domain and fresh-replay audits. The
+[uniform M2 assembly](MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md) and its
+[independent audit](MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md) record the
+exhaustive actual-period consequence. The interface identities reviewed
+here are unchanged.
 
 ## 1. Actual-period partition and the common covector
 
@@ -61,9 +68,10 @@ The inequality directions are correct because `q>1`, `Y>0`, `ST<K`, and
 incident norm and derivative bounds. It does not justify continuing
 through an unexamined boundary or ignoring a competing first event.
 
-A proof excluding both alternatives remains required. Their exact
-reduction applies to the next actual switch regardless of the eventual
-length of the forward run, so it introduces no word-length catalogue.
+Both alternatives are excluded by the completed boundary theorems linked
+above. This exact reduction applies to the next actual switch regardless
+of the eventual length of the forward run, so the resulting proof uses
+no word-length catalogue.
 
 ## 3. The short bridge: cost, frame, angle and slack
 
@@ -128,7 +136,7 @@ have zero duration. It therefore gives the stated necessary polynomial
 and rational conditions on the entire six-variable comparison domain.
 
 All secants have their continuous divided-difference values at a
-coincident pair of endpoints. A future Taylor certificate must evaluate
+coincident pair of endpoints. Every Taylor certificate must evaluate
 the analytic functions and all derivatives on the whole enclosing
 rectangle; actual-domain inequalities cannot be used to truncate an
 intermediate function range unless they hold on that whole rectangle.
@@ -139,15 +147,21 @@ Both companion symbolic checkers were independently replayed
 successfully. The inspected identities and the hand implications above
 are accepted as necessary-condition reductions. Numerical examples and
 optimization runs in the interface note are explicitly discovery and
-regression material; they are not a substitute for the remaining
-uniform sign or covering theorem.
+regression material; they are not premises of the quantified exclusions.
 
-The current proof obligations are:
+The completed consequences of this interface are:
 
-- The smaller short-side comparison domain is now excluded by its
-  separately audited completed cover and [theorem](MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md).
-- Exclude both next-switch alternatives on the smaller nonshort side,
-  including all corner and boundary limits.
+- The smaller short-side domain is excluded by its separately audited
+  completed cover and [theorem](MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md).
+- The nonshort reverse-next domain is excluded by the
+  [boundary comparison and two-root cover](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md).
+- The nonshort forward-next domain is excluded by the
+  [concave endpoint comparison and both complete endpoint covers](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md),
+  using the branch-independent [low-a theorem](MIXED_NONSHORT_LOW_A_BOUNDARY_EXCLUSION.md).
 
-Until the remaining nonshort obligation is proved and audited, M2 and the final
-Reinhardt cost-and-equality assembly remain open.
+Their exhaustive whole-period passage, including all corner, seam and
+boundary limits, is accepted in
+[MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION](MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md)
+and [its audit](MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md). The cost and affine
+equality consequence is assembled separately in
+[GLOBAL_COST_EQUALITY_ASSEMBLY](GLOBAL_COST_EQUALITY_ASSEMBLY.md).

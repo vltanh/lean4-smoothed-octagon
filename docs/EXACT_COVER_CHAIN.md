@@ -1,6 +1,6 @@
 # Exact accounting for parallel nonshort cover replays
 
-Date: 2026-11-07. This note explains a replay method. No completed and independently verified nonshort chain is recorded in the PR; no M2 exclusion is asserted here.
+Date: 2026-11-07. This note explains the original three-root replay method. No completed original chain is recorded or used. The later [two-root boundary proof](MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md) closes M2 through complete independently reviewed and replayed boundary covers. The accounting theorem and source audit below remain valid for this superseded method; its unfinished forests are not remaining proof gates.
 
 The mathematical domain, contractions and rejection tests remain those
 of the frozen

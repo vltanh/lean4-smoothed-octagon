@@ -1,6 +1,6 @@
 # Legacy research archive
 
-**Historical reference only.** These notes are preserved intact and no longer define the active work. The current four closed sufficient whole-period classes are R, M1, M3 and F; only M2 remains open. The unrestricted Reinhardt inequality and affine uniqueness are not yet proved. Read [HANDOFF.md](../HANDOFF.md), [CHECKLIST.md](../../CHECKLIST.md), and [ACTIVE_MAP.md](../ACTIVE_MAP.md).
+**Historical reference only.** These notes are preserved intact and no longer define the active work. All five sufficient whole-period classes R, M1, M2, M3 and F, the sharp global inequality and affine uniqueness are now closed at the declared hand/computer-assisted level with independent internal review. Status statements inside this archive describe earlier stages and are not current gates. Read [HANDOFF.md](../HANDOFF.md), [CHECKLIST.md](../../CHECKLIST.md), and [ACTIVE_MAP.md](../ACTIVE_MAP.md).
 
 The original five large status files are preserved under [snapshots](snapshots/README.md). All archived notes are at their original paths in the immutable [pre-reorganization tree](https://github.com/vltanh/lean4-smoothed-octagon/tree/851c871db687337e45222a7886d901c586279244), where historical relative links resolve as they did when written. Short forwarding pointers are retained at historical documentation paths so inbound links do not break. Historical numerical scripts have instead been collected under [explorations/legacy](../../explorations/legacy/README.md); old command paths should be adjusted there.
 

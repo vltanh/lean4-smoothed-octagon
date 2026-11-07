@@ -1,8 +1,17 @@
 # A regular five-variable domain for the nonshort continuation test
 
 Date: 2026-11-07. Hand algebra and an exact symbolic identity checker.
-The two full interval exclusions described below are **pending**. This
-note alone closes no part of M2.
+**Current role:** this note supplies the accepted exact formulas and the
+original three-chart, five-variable domain. Its original complementary
+covers were not completed and are no longer required by the proof.
+The completed [reverse boundary exclusion](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md)
+and [forward endpoint exclusion](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md)
+use the proved scalar comparison to set `delta0=0`, recompute the maximum
+of the two remaining parameters, and cover two four-variable charts.
+The hand corner therefore also covers points whose original maximum was
+`delta0`. The [uniform M2 theorem](MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md)
+and its [whole-period audit](MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md) record
+the accepted consequence; this note remains an intermediate reduction.
 
 The actual same-covector interface is
 [MIXED_SMALLER_TURN_CONTINUATION](MIXED_SMALLER_TURN_CONTINUATION.md).
@@ -404,7 +413,7 @@ mixed `++` arc as well, as also explained in
 If `e_d<=0`, that calculation gives `gamma^2>3/16`, contrary to the
 competitive cap. Hence `h_d>0` at actual data.
 
-The two pending exclusion domains append respectively:
+The two original five-variable exclusion domains append respectively:
 
 1. **Forward next switch:** the transported next norm `t` in the
    continuation note satisfies `t>=3/4`.
@@ -482,6 +491,10 @@ geometry in every max chart. Positive-duration actual data would require
 `Phi<=0`, so this removes the common corner. The complementary directed
 cover may therefore start at `epsilon=1/32` in each of the three charts.
 
-The complementary finite cover is not yet complete for either next-switch
-branch. A node limit, a sampled sign, a partially exhausted stack, or a
-zero unknown count with pending boxes is not a proof of exclusion.
+The original three-root complementary covers were not completed. Their
+partial frontiers are not used in the accepted proof and need not be
+exhausted: the boundary comparisons above replace that sufficient method.
+The exact cancellation and analytic formulas in this note are retained
+unchanged in the completed boundary callers, with their separately
+reviewed domains and full two-root records. A partial stack or a sampled
+sign is not a substitute for those completed records.

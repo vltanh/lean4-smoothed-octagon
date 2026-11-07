@@ -14,8 +14,10 @@ checked domain.
 next-switch alternatives are complete. The four new two-root boundary
 covers below have independent mathematical/source reviews and complete
 fresh replays. The old three-root forests are incomplete and are not
-used by the new theorems. The whole-period/global assembly has its own
-mathematical acceptance gate.
+used by the new theorems. The [whole-M2 audit](MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md)
+and [global dependency audit](GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md)
+also accept the complete mathematical passage to the sharp bound and
+affine equality.
 
 ## 1. Build environment
 

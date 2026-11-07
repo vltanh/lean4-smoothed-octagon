@@ -3,11 +3,21 @@
 Date: 2026-11-07. Mathematical and source review; no Lean, Lake,
 typechecking, or CI.
 
-**Status:** the necessary-condition reduction and the inspected interval
-caller are accepted at the hand/exact-algebra level. A complete successful
-interval cover of **both** next-switch branches is still required. A
-prefix run, a numerical search, or the symbolic identities alone does
-not exclude this part of M2.
+**Status:** this audit accepts the original five-variable reduction and
+three-root caller at the hand/exact-algebra level. Those original covers
+were not completed and are not required by the current proof. Both
+actual next-switch alternatives are now excluded by the completed
+[reverse boundary](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md) and
+[forward endpoint](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md) theorems.
+Their changed domains and callers have separate
+[reverse](MIXED_NONSHORT_REVERSE_BOUNDARY_AUDIT.md),
+[common low-a](MIXED_NONSHORT_LOW_A_BOUNDARY_AUDIT.md), and
+[forward](MIXED_NONSHORT_FORWARD_BOUNDARY_AUDIT.md) source/replay audits.
+The [whole-period theorem](MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md) and
+[its audit](MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md) close M2. The formulas,
+source identifiers and original three-root acceptance rules below remain
+valid records of the superseded method; no prefix is reported as a
+completed cover.
 
 The latest inspected caller is the strengthened v3 snapshot identified
 in Sections 8--9. Its closed complementary roots are combined with the
@@ -47,7 +57,11 @@ continuation note: its transported norm is at least `3/4`, or the actual
 reverse turn gives the upper secant bound on `[a,d]`. These alternatives
 include the possibility that the next reverse centre equals the global
 minimum. They impose no upper bound on the eventual forward-run length.
-The caller must therefore be completed once for each branch.
+Using this original five-variable caller to prove the exclusion would
+require full completion once for each branch. The accepted proof instead
+uses the separately reviewed boundary comparisons and callers linked
+above; they cover both actual alternatives without completing this
+original caller.
 
 ## 2. Base maximal-parameter domain before the final refinements
 
@@ -282,12 +296,13 @@ three analytic remainder coefficients, and the entire zero-duration
 Casimir identity. These checks support the displayed exact identities;
 the domain and sign implications are the hand arguments above.
 
-Before closing the smaller nonshort case, a final repository source
-snapshot must be fixed and both complete branch covers must finish with
-an empty stack and zero unresolved boxes. Any mathematical changes from
-the reviewed snapshot require corresponding review. Until then this
-audit certifies the reduction and source logic, not the claimed global
-exclusion.
+For the original five-variable method, closure would require a frozen
+repository snapshot and complete branch covers with empty stacks and
+zero unresolved boxes. This audit does not claim such original covers.
+The accepted boundary method has its own frozen sources, full records and
+independent reviews, as linked above. The inspected reduction and source
+logic here remain valid inputs to that method; changes of domain or
+mathematical residuals retain their separate review requirement.
 
 ## 8. Strengthened v3 caller: compact constraints and complementary roots
 
@@ -458,9 +473,10 @@ including shared boundaries.
 
 Checkpoint serialization uses exact dyadic endpoints and verifies exact
 reconstruction. A resumed pending stack alone is correctly labelled as
-not being a stand-alone quantified proof. Final closure must retain
+not being a stand-alone quantified proof. Acceptance of this original method would require
 either a full run from the stated roots or a verified complete chain of
-cover records. No complete v3 replay is claimed by this source audit.
+cover records. No complete v3 replay is claimed or required by the
+accepted boundary proof.
 
 ## 9. Frozen published source for the full replays
 
@@ -496,11 +512,11 @@ It was independently replayed successfully after publication. All ten
 reported identity groups passed, including the strengthened compact
 constraints. The continuation checker is unchanged from Section 7.
 
-Both full runs start from these published sources and the original three
-complementary roots, rather than from an unverified pending-stack file.
-Their success is still pending. Publishing these source identifiers
-records the audited proof program; it does not assert that its covers
-have finished.
+Complete runs of this original method start from these published sources
+and the original three complementary roots, rather than from an
+unverified pending-stack file. No completed original run is claimed.
+These identifiers preserve the audited program; its full execution has
+been superseded by the accepted two-root boundary certificates.
 
 ## 10. Independent review of parallel cover accounting
 
@@ -547,6 +563,8 @@ source, log, checkpoint or graph checks, and it explicitly retains the
 arithmetic and execution trust boundary. A resumed child's successful
 footer is not accepted outside a complete rooted graph.
 
-The coordinator and verifier source audits are accepted. The live chains
-are still pending; this section records no completed nonshort cover and
-does not change the M2 status.
+The coordinator and verifier source audits are accepted. The original
+three-root chains were not completed and are not used in the accepted M2
+proof. Their source and exact accounting review remain valid for that
+historical method. Current completion is supplied by the independently
+reviewed two-root boundary records and the linked whole-period theorem.

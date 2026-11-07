@@ -2,7 +2,7 @@
 
 Date: 2026-11-07. Hand proof with an exact algebra companion. No Lean, Lake, typechecking, or CI. Primary source: Hales–Vajjha, *Packings of Smoothed Polygons*, arXiv:2405.04331v1, [Chapter 5](https://arxiv.org/html/2405.04331v1#Ch5), with [Section 4.6](https://arxiv.org/html/2405.04331v1#Ch4.S6) and [Section 2.4](https://arxiv.org/html/2405.04331v1#Ch2.S4).
 
-**Scope:** this note audits the common compact-state input and its all-control margin bound. The two nonshort M2 covers and final G4/G5 gates remain open.
+**Scope:** this note audits the common compact-state input and its all-control margin bound. The completed [global assembly](GLOBAL_COST_EQUALITY_ASSEMBLY.md) uses this input with the independently accepted M2 exclusions; the [final dependency audit](GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) records G4/G5 acceptance.
 
 ## 1. Source scope and normalization
 

@@ -10,7 +10,7 @@ For **M2**, consult the mixed_global_short_bridge family of certificates and CSV
 
 For **closed-case regressions**, consult abnormal_normality, pure_reverse_minimum and mixed_global_short_run_angle certificates.
 
-The **terminal cost and equality** checker is `small_period_cost_equality_certificate.py`: 72 exact identities and terminal word-coverage checks, supporting the independently audited minimizer-only through-five argument. The global assembly remains conditional on M2.
+The **terminal cost and equality** checker is `small_period_cost_equality_certificate.py`: 72 exact identities and terminal word-coverage checks, supporting the independently audited minimizer-only through-five argument. The global cost/equality assembly is complete and independently accepted.
 
 The completed **F** cover is `global_forward_completion_casimir_certificate.cpp`, with its source hash and result in `global_forward_completion_casimir_certificate_result.txt`. Its 20,999-node exact rational cover discharges the complementary domain of the hand circular-corner proof.
 

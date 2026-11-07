@@ -21,16 +21,19 @@ The resulting conditional statement is:
 > actual realization of any minimizing disk, this gives affine octagon
 > rigidity for that disk.
 
-This review does **not** establish that every minimizer has at most five
-pieces. M2 remains open, and the global gates G4 and G5 are not marked
-complete by this note. The status in [HANDOFF](HANDOFF.md) is authoritative.
+This terminal review does not itself establish that every minimizer has
+at most five pieces. The later [uniform M2 theorem](MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md)
+completes the sufficient whole-period exclusions; the [global assembly](GLOBAL_COST_EQUALITY_ASSEMBLY.md)
+and [final dependency audit](GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md)
+now prove and accept that reduction, the unrestricted bound and affine
+equality. The terminal calculations below remain unchanged.
 
 Reviewed sources are the active [vertex-word reduction](VERTEX_WORD_REDUCTION.md),
 the retained [four-piece proof](legacy/FOUR_LINK_HAND_PROOF.md),
 [mixed five-piece proof and coverage](legacy/FIVE_ARC_PROGRESS.md),
 [normality](GLOBAL_NORMALITY.md), [reverse-period exclusion](GLOBAL_REVERSE_PERIOD_EXCLUSION.md),
 [equality transport, Section 6](MINIMIZER_WINDOW_AUDIT.md), and
-[the conditional final assembly](GLOBAL_COST_EQUALITY_ASSEMBLY.md).
+[the completed final assembly](GLOBAL_COST_EQUALITY_ASSEMBLY.md).
 The supplementary checker is
 [small_period_cost_equality_certificate.py](../explorations/small_period_cost_equality_certificate.py).
 
