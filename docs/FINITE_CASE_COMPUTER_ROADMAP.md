@@ -73,7 +73,7 @@ sufficient package. This refinement closes no case.
 | R: pure reverse | 021021 | ----- | **CLOSED:** GLOBAL_REVERSE_PERIOD_EXCLUSION and its independent audit; 20 exact identities | A global active-margin minimum contradicts the normal 0210 PMP minimum principle. All unequal factors and costate sectors; no budget or rank assumption. |
 | M1: short mixed | 021210 | --+-- | Full local rank five; full symmetric equal-factor core exclusion with outgoing factor at least h by cost/escape dichotomy; original broad local replacement is false | Expand escape/cost/index coverage across the remaining complete-period PMP region |
 | M2: mixed transition | 010201 | +--++ | Full local rank five; switch-only descent is not universally valid | Find a whole-arc needle, global index, or continuation certificate for all complete-period candidates |
-| M3: long reverse run | 021012 | ---++ | Full local rank five from prefix 02101 | Find a uniform phase-return obstruction or exact global variation for these mixed runs |
+| M3: long reverse run | 021012 | ---++ | **CLOSED:** MIXED_GLOBAL_MINIMUM_STRUCTURE and its independent audit | A finite reverse-run minimum contradicts the reverse-four and three-arc alternation principles; all surviving mixed reverse runs have exactly two switches. |
 
 The patterns cover arbitrary N>=6 without testing N sequentially.
 They should be prioritized by reusable analytical structure; **do not
@@ -232,8 +232,11 @@ plot or optimizer output proves an unrestricted inequality.
 4. **Forward F**: use the known closed-period Fourier index as a
    template for asymmetric return maps. The standard N=7 candidate
    failing the budget is a validation check, not a universal proof.
-5. **M2 and M3**: screen complete-switch PMP boxes using the same
-   oracle; prioritize any rigorous inequality shared between them.
+5. **M3 is CLOSED; continue M2**: MIXED_GLOBAL_MINIMUM_STRUCTURE
+   and its independent audit prove every remaining mixed negative run
+   has exactly two switches. Their strict central 01020 minimum can
+   occur in local normal PMP, so further M2 work needs global return,
+   geometry, cost, or a genuine higher-order minimizing condition.
 6. **Boundary/equality B**: certify every remaining zero-duration,
    singular-rank, and nontransverse cell and apply through-five
    equality exactly once after global N<=5 (or direct inequality).
@@ -249,12 +252,12 @@ manufacture additional word lengths or count partial samples as closure.
 
 | Case | A: numerical necessary atlas | B: complete-period fate | C: uniform proof |
 |---|---|---|---|
-| F | **First deterministic run** | Closed positive elliptic costate cone excluded for whole pure periods; standard-family index retained; asymmetric complement OPEN | OPEN |
+| F | **First deterministic run** | Negative ellipticity proved for every normal whole-forward period; exact curvature-corrected Hessian available; uniform index/cost comparison OPEN | OPEN |
 | R | Superseded by direct hand proof | Global active-margin minimum contradicts the normal 0210 PMP principle; every sector covered | **CLOSED**, independently audited |
 | M1 | **First deterministic run** | Full symmetric equal-core family with outgoing factor >=h excluded by audited cost/escape dichotomy; asymmetric/short-pad complement OPEN | OPEN |
 | M2 | **First deterministic run** | OPEN | OPEN |
-| M3 | **First deterministic run** | OPEN | OPEN |
-| T: ties/normality | Normality and exact normal outgoing-vertex rule proved | Independent hand audits complete; full-period branch fate OPEN | Normality and local branch rule CLOSED; no global case excluded |
+| M3 | Superseded by direct hand proof | A bounded reverse-run minimum excludes every length at least three; only length two survives | **CLOSED**, independently audited |
+| T: ties/normality | Normality and exact normal outgoing-vertex rule proved | Independent hand audits complete; full-period branch fate OPEN | Normality and local branch rule CLOSED; they alone exclude no global case |
 | B: boundaries/equality | Octagon insertion obstruction known | OPEN | OPEN |
 
 **Unrestricted Reinhardt cost inequality: OPEN. Affine uniqueness: OPEN.

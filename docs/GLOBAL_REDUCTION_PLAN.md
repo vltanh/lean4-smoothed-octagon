@@ -15,8 +15,8 @@ five-template coverage to investigate fixed-dimensional **complete-period
 PMP** case domains F/R/M1/M2/M3. Each has three distinct gates:
 a numerical necessary-condition atlas (A), a whole-period return/escape
 fate test (B), and a universal hand certificate (C). The pure-reverse
-case R is now CLOSED by the direct minimum-margin hand proof; F and
-M1/M2/M3 remain open. These cases do not restore the false universal
+case R and long-reverse-run mixed case M3 are now CLOSED by direct
+minimum-margin hand proofs; F, M1 and M2 remain open. These cases do not restore the false universal
 M1 local replacement statement. Return time, full twist and period cost
 must be tested together; isolated local PMP windows are insufficient.
 
@@ -35,7 +35,7 @@ gives a qualitative common normal-costate bound.
 now classify every outgoing positive vertex germ at normal ties, including
 quadratic/cubic and triple contacts, by exact signs through order three.
 Every passing branch still needs its complete-period fate proof. Boundary
-limits and the four remaining sharp comparison cases remain open.
+limits and the three remaining sharp comparison cases remain open.
 
 [MIXED_GLOBAL_SYMMETRIC_ESCAPE](MIXED_GLOBAL_SYMMETRIC_ESCAPE.md) now
 excludes the complete symmetric reverse-four core family: `1<h<2`,
@@ -93,7 +93,24 @@ treats the multiplier alternative. All 20 exact identities pass.
 This closes R without a Casimir-sector split, cost budget, endpoint-rank
 assumption or implicit-function theorem. The reverse Casimir route above
 is no longer needed for that case. Focus the remaining work on F, M1,
-M2 and M3; retain the local-shortening counterexamples and full endpoints.
+M2; retain the local-shortening counterexamples and full endpoints.
+
+## Closed global case M3
+
+[MIXED_GLOBAL_MINIMUM_STRUCTURE](MIXED_GLOBAL_MINIMUM_STRUCTURE.md)
+and its independent audit exclude every bounded reverse run of length
+at least three. The exact physical reflection transfers the reverse-four
+minimum principle to its other interior arc. The same actual normal
+covector on a two-control edge gives strict log-concavity on three
+alternating arcs, hence forbids a middle minimum there. A minimum on
+a finite reverse run can then occur neither at an endpoint nor, for
+length at least three, at an interior arc. Length one is impossible
+as well. Every surviving mixed reverse run has exactly two switches.
+
+This closes M3 with all unequal factors, ties, costate sectors, and the
+actual twisted seam retained. F, M1 and M2 remain open. The existing
+short-pad PMP witness permits a strict central 01020 minimum locally,
+so that surviving pattern alone cannot yield a PMP contradiction.
 
 ## 1. Decision and exact target
 

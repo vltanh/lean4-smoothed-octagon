@@ -7,13 +7,17 @@ replaces impractical whole-word enumeration by five complete-period
 PMP exclusion cases F=012012, R=021021, M1=021210,
 M2=010201, M3=021012. For each, the finite A/B/C gates are:
 reproducible necessary-condition screening, full-period continuation and
-fate classification, and a universal hand certificate. **R is CLOSED;
-F, M1, M2 and M3 remain OPEN.**
+fate classification, and a universal hand certificate. **R and M3 are
+CLOSED; F, M1 and M2 remain OPEN.**
 [GLOBAL_REVERSE_PERIOD_EXCLUSION](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION.md)
 and its [independent audit](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION_AUDIT.md)
 exclude every entirely reverse finite PMP period by a minimum-active-
 margin argument. The 20-identity checker passes. No equal-factor, rank,
-Casimir-sector, cost-budget or transverse-switch hypothesis is used. Numerical checks in
+Casimir-sector, cost-budget or transverse-switch hypothesis is used.
+[MIXED_GLOBAL_MINIMUM_STRUCTURE](docs/MIXED_GLOBAL_MINIMUM_STRUCTURE.md)
+and its independent audit also exclude every bounded reverse run of
+length at least three, closing M3. Every surviving mixed reverse run has
+exactly two switches and a strict central margin minimum. Numerical checks in
 [CASE_ATLAS_EXPERIMENT_001](docs/CASE_ATLAS_EXPERIMENT_001.md) verify the
 oracle on known stationary and regular families. The curved
 closed-period Hessian gives numerical negative indices 0,2,4 for
@@ -30,7 +34,7 @@ to every global minimizer. The normality part of T is complete.
 necessary-and-sufficient outgoing positive-vertex tests through derivative
 order three, including normal triple and cubic ties. This closes the
 local branch rule, not the global fate of every passing branch. The
-separate reverse minimum principle closes R; the other four C gates remain open. Compactness also gives
+separate minimum principles close R and M3; three C gates remain open. Compactness also gives
 a qualitative positive lower bound on -lambda in the initial unit
 normalization, hence a compact family after normalization to lambda=-1.
 No numerical value for this new bound is claimed.
@@ -401,6 +405,13 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 ## Current-session entries
 
+- **Entire mixed case M3 CLOSED:** MIXED_GLOBAL_MINIMUM_STRUCTURE and
+  its independent audit exclude every bounded reverse run of length
+  at least three. The actual reflection, common normal edge covector,
+  alternating-margin inequality and finite-run minimum proof retain all
+  ties and the twisted seam. Every remaining mixed reverse run has
+  exactly two switches. R and M3 are closed; F, M1 and M2 remain open.
+
 - **Whole-forward ellipticity proved:** GLOBAL_STRUCTURE_FORWARD_ELLIPTIC
   and its independent audit exclude all nonelliptic primary costates
   for every normal pure-forward period, without equal factors, rank,
@@ -415,7 +426,8 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
   negative cost at the asserted margin minimum. A minimum in the actual
   twisted periodic sequence excludes all pure reverse periods, across
   every costate sector and without a budget. Independent hand review and
-  20 exact identities pass. Four global cases remain: F, M1, M2, M3.
+  20 exact identities pass. At that checkpoint four cases remained;
+  the later bounded-run minimum principle also closes M3.
 
 - **Case-first computational reorientation:** adopt the fixed five
   complete-period exclusion cases and 15 small A/B/C gates in

@@ -94,8 +94,27 @@ close the entire pure-reverse global case R.
   endpoint/cost algebra in a separate calculation. No floating-point
   search, growing word catalogue, Lean, Lake or CI was used.
 
-F, M1, M2 and M3 remain open. The historical universal local-shortening
+The later mixed-run proof also closes M3; F, M1 and M2 remain open.
+The historical universal local-shortening
 package is not closed by this global minimum principle.
+
+## Closed mixed case M3: independent proof checks
+
+[MIXED_GLOBAL_MINIMUM_STRUCTURE](docs/MIXED_GLOBAL_MINIMUM_STRUCTURE.md)
+and its [independent audit](docs/MIXED_GLOBAL_MINIMUM_STRUCTURE_AUDIT.md)
+close the entire long-reverse-run mixed case M3.
+
+- [x] Check the reflected state, primary and reduced costates, physical multiplier, Hamiltonian gaps, and actual twisted endpoints.
+- [x] Transfer the reverse-four minimum theorem to both interior positions using that actual PMP symmetry.
+- [x] Derive the common edge coefficient mu from the same full-system normal covector, without obtaining a new auxiliary edge multiplier.
+- [x] Retain weak switch derivatives, triple ties, and cubic contacts in the three-arc argument.
+- [x] Prove strict alternating-margin log-concavity, including the equality case by a positive integrating-factor integral.
+- [x] Exclude both endpoints of a minimum on a finite reverse run; exclude every interior position for length at least three.
+- [x] Continue the same lift across the actual twist; no comparison path longer than a period is used.
+- [x] Keep the surviving two-switch runs and the local 01020 counterexample; do not count M1 or M2 as closed.
+
+The proof is by displayed hand identities and inequalities; its reverse-four
+input has the separate exact checker. F, M1 and M2 remain open.
 
 ## Whole-forward ellipticity audit
 

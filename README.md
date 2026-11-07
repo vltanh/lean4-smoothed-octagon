@@ -26,9 +26,9 @@ explorations/closed_period_index_probe.py are regression diagnostics.
 The standard N=4,7,10 constrained-Hessian negative indices are
 numerically 0,2,4, matching the existing exact standard-family
 result; these numerical checks themselves exclude no whole case.
-The separate hand proof below now closes the **entire pure-reverse case R**.
-F, M1, M2 and M3, the final global cost inequality, and affine equality
-remain OPEN.
+The separate hand proofs below close **the entire pure-reverse case R
+and the entire long-reverse-run case M3**. F, M1 and M2, the final
+global cost inequality, and affine equality remain OPEN.
 
 ## Closed global case R: no entirely reverse minimizing period
 
@@ -48,11 +48,34 @@ remaining multiplier alternative. Thus R is excluded for arbitrary
 unequal positive factors and all primary-costate sectors, without a
 cost cap. The [independent internal audit](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION_AUDIT.md)
 and all 20 supplementary exact identities pass. This closes one whole
-global case; the four other case-C targets remain open.
+global case. The later run theorem below also closes M3, leaving F,
+M1 and M2 open.
 
 The older five *local improvement* targets have a different domain and
 remain separate: no universal shortening theorem for all reverse local
 windows is claimed.
+
+## Closed global case M3: every reverse run has exactly two switches
+
+[MIXED_GLOBAL_MINIMUM_STRUCTURE](docs/MIXED_GLOBAL_MINIMUM_STRUCTURE.md)
+and its [independent audit](docs/MIXED_GLOBAL_MINIMUM_STRUCTURE_AUDIT.md)
+prove that every maximal reverse run in a finite mixed normal PMP
+period has exactly two switches. An exact reflection and time reversal
+first extend the reverse-four minimum principle to both interior arcs.
+A separate three-arc alternation argument uses the same actual normal
+covector and excludes a middle active-margin minimum. In fact its
+margins satisfy the strict inequality `a_middle^2>a_left*a_right`.
+
+A smallest margin on a bounded reverse run can occur neither at an
+endpoint nor internally when the run has at least three switches. A
+one-switch run is also impossible. Thus no mixed normal period can
+contain `---`, closing all of M3 with arbitrary unequal factors,
+degenerate ties, and the actual twisted seam. No rank or cost budget
+is needed.
+
+The surviving double reverse runs have a strict middle minimum in a
+`01020` window. The existing local PMP witness allows this pattern, so
+M1 and M2 require additional global or higher-order optimality arguments.
 
 ## Whole-forward costate theorem
 
@@ -95,7 +118,7 @@ vertex arc. Explicit derivatives through order three resolve double and
 triple ties and quadratic/cubic contacts. All passing branches must be
 retained. The theorem supplies no uniform arc length and does not prove
 closed return, cost comparison, or optimality. The separate minimum-
-margin proof closes R; F and the three mixed global comparisons remain open.
+margin proofs close R and M3; F, M1 and M2 remain open.
 
 ## Uniform exclusion of the full symmetric M1 core family
 

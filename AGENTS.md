@@ -30,7 +30,18 @@ this for every entirely reverse period. Two positive needles, exact
 zero endpoint differential and strictly negative cost give a PMP
 contradiction; no endpoint rank, IFT, costate-sector split or budget is
 needed. Read its independent audit and 20-identity exact checker.
-F, M1, M2 and M3 remain open. GLOBAL_STRUCTURE_FORWARD_ELLIPTIC
+MIXED_GLOBAL_MINIMUM_STRUCTURE and its independent audit now close M3:
+actual reflection transports the reverse-four minimum principle to both
+interior positions; the same normal covector on a two-control edge gives
+a three-arc alternation minimum prohibition. A minimum on any bounded
+negative run excludes lengths one and every length at least three.
+Every remaining mixed period has negative runs of exactly two switches,
+with a strict central active-margin minimum. This includes the actual
+twisted seam, every costate sector, and degenerate ties, without rank
+or a budget. R and M3 are CLOSED; F, M1 and M2 remain open.
+The local short-pad PMP example permits the surviving 01020 minimum;
+do not assert that this pattern alone contradicts PMP.
+GLOBAL_STRUCTURE_FORWARD_ELLIPTIC
 and its independent audit now prove that every whole pure-forward
 normal period has negative elliptic primary costate, including arbitrary
 unequal factors and degenerate ties. Its Jacobi-kernel proof excludes
