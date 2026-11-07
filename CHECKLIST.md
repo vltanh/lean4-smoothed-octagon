@@ -2,7 +2,67 @@
 
 **Only authoritative next-step plan: [docs/HANDOFF.md](docs/HANDOFF.md).** The long earlier progress ledgers and abandoned targets are archived, not silently deleted.
 
-## Completed hand-proof checkpoints
+## Active goal: proof without computer assistance
+
+The user has requested a hand proof beyond the completed computational
+baseline below. [HAND_PROOF_STATUS](docs/HAND_PROOF_STATUS.md) is the finite
+replacement ledger: H-F is now closed by hand; H-S, H-N and the final
+dependency audit H-A remain open. The [new hand refinements](docs/HAND_PROOF_REFINEMENTS.md) strengthen
+the Casimir cap, reverse-centre scale and forward successor norm. The
+closed computer-assisted gates below do not close these new obligations.
+
+- [x] Hand replacement of the nonshort small-parameter corner:
+  [strict duration-ratio gap](docs/MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md),
+  independently reviewed, gives `(d-a)/(a+c)>1/10`.
+- [x] Accepted conditional [forward reductions](docs/HAND_FORWARD_LEMMAS.md)
+  and [short-side root envelope](docs/MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md).
+- [x] The shared hard small-forward-minimum face has a complete
+  [integral/cubic hand proof](docs/SMALL_FORWARD_MINIMUM_HAND_PROOF.md).
+- [x] Both forward neighbor ratios are below 4/3 by the
+  [integral proof](docs/HAND_FORWARD_NEIGHBOR_INTEGRAL.md) and
+  [asymmetric completion](docs/HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md).
+- [x] The smaller-nonshort case satisfies
+  [t<2/5](docs/MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION.md) and
+  [a<4/5](docs/MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND.md) by hand.
+- [x] The [short opposite-norm floor](docs/MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md)
+  is redundant by hand; the root comparison retains three other faces.
+- [x] The [reverse order lower face](docs/MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
+  is excluded by hand, including ties; the unit face is also now closed.
+- [x] A reviewed [fixed outer-norm deformation](docs/MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
+  further reduces the nonnegative-pairing short face, with its remaining
+  endpoint signs explicit.
+- [x] The [uniform all-forward hand theorem](docs/HAND_FORWARD_PERIOD_EXCLUSION.md),
+  with [independent norm audit](docs/HAND_FORWARD_NORM_AUDIT.md), replaces
+  both forward covers. The actual norm bounds imply a strict Casimir
+  contradiction.
+- [x] Both [short stationary slacks](docs/MIXED_SMALLER_SHORT_SLACK_RETENTION.md)
+  persist along the first root comparison; all three terminal faces
+  retain these actual necessary inequalities.
+- [x] The [common low-scale domain](docs/MIXED_NONSHORT_LOW_SCALE_DOMAIN_REDUCTION.md)
+  has t<7/20 and x>3/13. The [forward scale-Casimir comparison](docs/MIXED_NONSHORT_FORWARD_SHAPE_CASIMIR.md)
+  retains the stronger next-norm floor through a proved endpoint reduction.
+- [x] The [unit-shape hand theorem](docs/MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md)
+  excludes the reverse k_min=1 face and the common low-scale d<=c part,
+  with a [dedicated independent audit](docs/MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md).
+- [x] The [complete nonshort reverse hand theorem](docs/MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md)
+  excludes all three lower-shape cases, with an
+  [independent audit](docs/MIXED_NONSHORT_REVERSE_HAND_AUDIT.md).
+  Its common-order corollary gives a<=r<c<=b*<d and q<(1+x)/(2t+x)
+  without a successor-sign assumption.
+- [x] Conditional [incident-ceiling Casimir sign](docs/MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
+  is proved on 1/3<=t<=2/5 and 1<=k<=51/50, with an independent
+  endpoint audit. Applicability to every required endpoint is still open.
+- [x] The [common low-scale hand theorem](docs/MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
+  proves a>1/2 uniformly, with its [independent audit](docs/MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md).
+  Both lower shape faces are excluded by the explicit quartic sign proof.
+- [x] The [short corrected envelope cap](docs/MIXED_SMALLER_SHORT_CORRECTED_ENVELOPE_CAP.md)
+  has the uniform hand constant 1/7 and a fixed-geometry necessary score.
+  The [normalized-root residual](docs/MIXED_SMALLER_SHORT_ENVELOPE_SCALE_MONOTONICITY.md)
+  is affine and strictly increasing in outer scale; its scope is independently audited.
+- [ ] Full short-side exclusion, the nonshort forward successor, and the
+  final hand-only assembly still need proofs.
+
+## Baseline proof checkpoints
 
 - [x] G1: actual twisted state/frame and costate interface, free initial state and required geometric/PMP inputs.
 - [x] G2: normalized singular clearance \(D>10^{-11}\).
