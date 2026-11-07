@@ -106,6 +106,25 @@ supplies a numerical bound without the external finite bang-bang input.
 Separate internal hand reviews checked the assembled argument. This is
 an explicit sector estimate, not a numerical bound for every minimizer.
 
+## Conserved-determinant clearance
+
+[GLOBAL_CASIMIR_CLEARANCE](docs/GLOBAL_CASIMIR_CLEARANCE.md) gives a
+second direct clearance test independent of the finite bang-bang input.
+
+- [x] Prove conservation from the commutator adjoint equation and absolute
+  continuity, including every control switch.
+- [x] Expand the determinant around (3/2)*lambda*J in the actual norm;
+  prove the uniform estimate for arbitrary sign and orbit type.
+- [x] Deduce D>delta/3 from abs(Delta)>=delta, including equality at the
+  input threshold, and prove D>1/13 when abs(lambda)>=1/2.
+- [x] Apply the general coefficient bounds from the small-multiplier note
+  without importing its sector assumption; check every ceiling and power.
+- [x] Preserve E4, the one-trajectory/lift scope, and the unresolved band
+  near Delta=0. A tube in the source's exact critical Casimir slice does
+  not certify a transverse neighborhood.
+- [ ] Prove a usable determinant gap from actual minimizing-period data,
+  or provide a separate clearance argument for the remaining critical band.
+
 ## Regular forward-window descent
 
 [LOCAL_FORWARD_REGULAR_DESCENT](docs/LOCAL_FORWARD_REGULAR_DESCENT.md)

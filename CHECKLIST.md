@@ -17,7 +17,7 @@ count for a supplied clearance do not depend on that finite-switch theorem.
 | Global gate | Exact result | Status |
 | --- | --- | --- |
 | G1: full-period domain and compact lifts | Actual twisted state/costate closure; projective normalization including abnormal limits; compactness of all minimizing lifts. | **Hand proof complete.** [PMP interface](docs/GLOBAL_PERIODIC_PMP.md), [compactness](docs/GLOBAL_MINIMIZER_COMPACTNESS.md). |
-| G2: singular clearance | One common positive distance from the full singular locus for all normalized minimizing lifts. | **Qualitative implication proved using external Theorem 16.3.1.** A numerical clearance and count are now proved independently for small projective cost multipliers, including abnormal lifts; the complementary normal sector remains open. |
+| G2: singular clearance | One common positive distance from the full singular locus for all normalized minimizing lifts. | **Qualitative implication proved using external Theorem 16.3.1.** Numerical clearances and counts are independently proved for small or large projective cost multipliers, and for any prescribed separation of the determinant invariant from zero. The intermediate normal sector near the critical invariant remains open. |
 | G3: uniform switch count | Locally uniform count and effective conversion of a supplied singular clearance into an integer. | **Complete conditional quantitative theorem.** [Uniform theorem](docs/GLOBAL_CLOSED_VARIATION.md) and [explicit O(1/epsilon) bound](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md). Three guard lines give local factor 28; every coefficient is fixed. A numerical clearance is still missing. No dwell-time premise. |
 | G4: fixed finite comparison and equality | Use an explicitly certified integer bound, then exhaust precisely that fixed class. | **Blocked by quantification.** Through-five comparison and equality retained; N<=5 and unrestricted rigidity remain open. |
 
@@ -38,6 +38,14 @@ proves fewer than `10^5740` pieces whenever one normalized lift has
 clearance; no finite bang-bang representation is assumed. The complementary
 sector can be normalized to `lambda=-1` with entire costate norm below
 `10^3807`. Its singular clearance is not established by that bound.
+
+[GLOBAL_CASIMIR_CLEARANCE](docs/GLOBAL_CASIMIR_CLEARANCE.md) adds the
+conserved invariant `Delta=det(Lambda_1)-(9/4)*lambda^2`. For
+`0<delta<=1`, separation `|Delta|>=delta` gives `D>delta/3` and
+`N<10^5740/delta`. The entire sector `|lambda|>=1/2` has `D>1/13`
+and `N<10^5740`. These are complexity bounds, not cost exclusions.
+The remaining uniform gate is `m/sqrt(22)<|lambda|<1/2` near `Delta=0`;
+no supplied numerical determinant gap is known for all minimizers.
 
 ## Historical local package and preserved diagnostics
 
@@ -288,6 +296,13 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Prove conserved-determinant clearance: exact trace algebra yields
+  `|Delta|<=9*||A||/4+||A||^2/2`, so `|Delta|>=delta` forces
+  `D>delta/3` and a fully explicit count. Initial normalization also
+  separates every |lambda|>=1/2 lift. Keep the intermediate normal,
+  near-critical region open and distinguish a critical-slice tube from
+  a transverse neighborhood certificate.
 
 - Prove a numerical small-multiplier subcase: norm decomposition gives
   `D>=m-sqrt(11/2)*|lambda|`; exact coefficient bounds give fewer than

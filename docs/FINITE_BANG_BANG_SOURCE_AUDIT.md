@@ -162,6 +162,15 @@ and the actual twisted state and costate seams. It must also control
 returns from the complement of the local chart. A tube around the exact
 unstable graph handles only one part of this requirement.
 
+There is an additional transverse parameter to retain. The coordinates
+in [Section 14.1](https://arxiv.org/html/2405.04331v1#Ch14.S1) impose
+cost multiplier -1 and det(Lambda_1)=9/4. A validated tube entirely
+within that critical invariant slice does not cover nearby lifts with
+a different determinant. [GLOBAL_CASIMIR_CLEARANCE](GLOBAL_CASIMIR_CLEARANCE.md)
+gives direct numerical clearance away from the critical invariant;
+its near-critical band still requires uniform control in the transverse
+direction as well as along the exact unstable graph.
+
 Finally convert the neighborhood to the norm used by
 `QUANTITATIVE_REGULAR_SWITCH_BOUND.md`:
 

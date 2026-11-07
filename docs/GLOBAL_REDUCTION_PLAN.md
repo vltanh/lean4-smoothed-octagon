@@ -248,6 +248,30 @@ of a future rescaled clearance is recorded in that note. A bounded
 phase domain does not itself exclude a neighborhood of its singular point;
 that remains the principal numerical gate for the uncovered normal lifts.
 
+### 3.7 Determinant separation and the remaining critical band
+
+[GLOBAL_CASIMIR_CLEARANCE](GLOBAL_CASIMIR_CLEARANCE.md) proves that
+`Delta=det(Lambda_1)-(9/4)*lambda^2` is conserved, and that
+`|Delta|>=delta` gives `D>delta/3` for any fixed `0<delta<=1`.
+Consequently `N<10^5740/delta`; the whole sector `|lambda|>=1/2`
+also has `N<10^5740` by a stronger direct clearance estimate.
+These theorems bound complexity and do not exclude the corresponding
+trajectories by cost.
+
+To finish the numerical reduction, it suffices to choose one fixed
+positive determinant threshold and prove a numerical singular clearance
+on the residual minimizing lifts satisfying
+`m/sqrt(22)<|lambda|<1/2` and lying inside that critical band.
+Alternatively, a proved determinant gap for all remaining minimizing
+periods would use the new bound directly. Neither input is supplied by
+conservation alone. Increasing a sequence of determinant thresholds
+without treating its limiting region would not give a uniform bound.
+
+After cost normalization to -1 the critical slice is det(Lambda_1)=9/4.
+The source's blown-up coordinates in Section 14.1 are restricted to
+that slice. A robust certificate must also control its transverse
+neighborhood; certifying only the exact unstable graph would not do so.
+
 ## 4. Immediate continuation and stopping rules
 
 1. **Completed:** prove and independently review the local uniform switch theorem.

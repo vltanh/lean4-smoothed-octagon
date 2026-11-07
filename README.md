@@ -76,6 +76,16 @@ is coarse and applies to this stated sector. Remaining lifts can be
 normalized to `lambda=-1` with costate norm below `10^3807`; a positive
 clearance in that bounded normal domain still needs proof.
 
+The [determinant-clearance theorem](docs/GLOBAL_CASIMIR_CLEARANCE.md)
+handles further sectors. The quantity
+`Delta=det(Lambda_1)-(9/4)*lambda^2` is conserved. A specified separation
+`|Delta|>=delta`, with `0<delta<=1`, gives `D>delta/3` and
+`N<10^5740/delta`. In particular, `|lambda|>=1/2` gives `D>1/13`
+and `N<10^5740`. These results bound complexity without comparing cost.
+The remaining clearance problem concerns intermediate normal multipliers
+near the critical value Delta=0; no uniform numerical determinant gap
+for all minimizing lifts is claimed.
+
 ## Historical five-template route and retained diagnostics
 
 The [earlier five-template handoff](docs/FIVE_TEMPLATE_HANDOFF.md) records

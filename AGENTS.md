@@ -27,6 +27,13 @@ subcase N<10^5740: abnormal lifts and |lambda|<=m/sqrt(22), with all constants
 explicit. The remaining normal lifts admit lambda=-1 normalization only
 after the proved lower bound; their costate norm is below 10^3807. This
 partial count does not authorize enumeration for all minimizers.
+Then read docs/GLOBAL_CASIMIR_CLEARANCE.md: the invariant
+Delta=det(Lambda_1)-(9/4)*lambda^2 gives explicit clearance when |Delta|
+is separated from zero, and |lambda|>=1/2 has a numerical count too.
+The remaining uniform-clearance gap is the intermediate normal sector
+near Delta=0. A tube on the exact critical Casimir slice does not cover
+its transverse neighborhood; do not infer determinant separation from
+the total cost budget without a proof.
 
 The old docs/FIVE_TEMPLATE_HANDOFF.md is a historical diagnostic record.
 Its prerequisite is the completed P0 certificate in docs/MINIMIZER_WINDOW_AUDIT.md

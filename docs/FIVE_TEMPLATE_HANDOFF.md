@@ -13,7 +13,9 @@ numerical source steps not independently certified in this repository.
 The independent [small-multiplier result](GLOBAL_SMALL_MULTIPLIER_BOUND.md)
 now gives N<10^5740 for abnormal and explicitly small projective cost
 multipliers. This does not bound the remaining normal lifts or reopen
-whole-word enumeration.
+whole-word enumeration. [GLOBAL_CASIMIR_CLEARANCE](GLOBAL_CASIMIR_CLEARANCE.md)
+also bounds large normalized multipliers and any fixed separation from
+the critical determinant; the intermediate normal critical band remains open.
 The sequence below is preserved as a diagnostic record, not the active work
 order; do not retry its refuted broad-domain L3 premise.
 
