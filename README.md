@@ -77,6 +77,30 @@ The surviving double reverse runs have a strict middle minimum in a
 `01020` window. The existing local PMP witness allows this pattern, so
 M1 and M2 require additional global or higher-order optimality arguments.
 
+## Structure of every remaining normal period
+
+[MIXED_GLOBAL_COSTATE_ELLIPTIC](docs/MIXED_GLOBAL_COSTATE_ELLIPTIC.md)
+proves that every finite normal closed period has negative elliptic
+primary costate, including mixed periods. Exact stationarity gives
+positive quadratic values at every switch. A hypothetical nonelliptic
+form would make a projective coordinate strictly increase around the
+full central monodromy, contradicting periodicity. The existing Casimir
+cost bound therefore applies throughout F, M1 and M2. All 32 exact
+local identities pass.
+
+[NORMAL_SWITCH_RIGIDITY](docs/NORMAL_SWITCH_RIGIDITY.md) proves that at
+most one vertex has a positive outgoing PMP germ at a normal phase.
+It also proves that all actual switches of a finite normal closed
+period are transverse for their incident pair. Triple ties can remain,
+and an arbitrary phase can have no vertex germ. No uniform arc length
+or switching-derivative bound is asserted.
+
+[GLOBAL_STRUCTURE_FORWARD_ACUTE](docs/GLOBAL_STRUCTURE_FORWARD_ACUTE.md)
+uses the competitive Casimir cap to make every adjacent forward Jacobi
+pairing positive; all nine exact scalar identities pass. These three
+results have a common [independent internal audit](docs/GLOBAL_NORMAL_PERIOD_STRUCTURE_AUDIT.md).
+The full index or cost comparison for F/M1/M2 remains open.
+
 ## Whole-forward costate theorem
 
 [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)
@@ -115,8 +139,9 @@ Lean kernel validation.
 [independent internal audit](docs/NORMAL_TIE_BRANCHING_AUDIT.md), now gives
 a necessary-and-sufficient local sign test for each candidate positive
 vertex arc. Explicit derivatives through order three resolve double and
-triple ties and quadratic/cubic contacts. All passing branches must be
-retained. The theorem supplies no uniform arc length and does not prove
+triple ties and quadratic/cubic contacts. The later switch-rigidity
+theorem proves that at most one of the three candidates can pass.
+The tests supply no uniform arc length and do not prove
 closed return, cost comparison, or optimality. The separate minimum-
 margin proofs close R and M3; F, M1 and M2 remain open.
 

@@ -116,6 +116,24 @@ close the entire long-reverse-run mixed case M3.
 The proof is by displayed hand identities and inequalities; its reverse-four
 input has the separate exact checker. F, M1 and M2 remain open.
 
+## Whole-period normal structure audit
+
+[GLOBAL_NORMAL_PERIOD_STRUCTURE_AUDIT](docs/GLOBAL_NORMAL_PERIOD_STRUCTURE_AUDIT.md)
+independently reviews mixed ellipticity, switch rigidity, and the
+competitive forward pairing lemma.
+
+- [x] Derive all four mixed state factors and frame columns, the signed cyclic action and the actual primary multiplier.
+- [x] Prove strict turn secant bounds and check both physical switching bracket signs with normalization.
+- [x] Use double-reverse-run minima for positive switch Gram values and opposite cross-pairing signs.
+- [x] Obtain the projective contradiction from full central monodromy; do not assume spatial ray coverage from labels.
+- [x] Compare hypothetical vertex germs using one initial covector and the same constant mu; retain phases where no candidate passes.
+- [x] Check both sides of a zero-derivative switch, the unique cubic reverse alternative, and its incompatibility with strict closed-period reverse minima.
+- [x] Check the forward determinant triangle, its degenerate boundary, concavity, exact minimum vertex and strict scalar factorization.
+- [x] Run the 32 mixed and nine acute exact identities; retain the unresolved endpoint-curvature and radial/margin index.
+
+F/M1/M2 remain open. No uniform switching derivative, dwell time, or
+strict third-control gap follows from these results.
+
 ## Whole-forward ellipticity audit
 
 [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)

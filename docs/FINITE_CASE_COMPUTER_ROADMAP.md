@@ -25,8 +25,13 @@ inputs. Compactness gives a qualitative common bound on those normal
 lifts; no explicit numerical phase box follows from that corollary.
 [NORMAL_TIE_BRANCHING](NORMAL_TIE_BRANCHING.md) and its independent audit
 now give the exact outgoing-vertex sign rule at normal double/triple ties,
-including quadratic and cubic contacts. Retain all passing branches;
-their complete-period fates and numerical error control remain open.
+including quadratic and cubic contacts. NORMAL_SWITCH_RIGIDITY now
+proves at most one positive vertex germ can pass at a phase and every
+actual finite closed-period switch is transverse for its incident pair.
+Triple ties and no-germ phases remain possible; full-period return and
+numerical error control remain open. MIXED_GLOBAL_COSTATE_ELLIPTIC
+proves negative ellipticity throughout all remaining F/M1/M2 periods,
+so the established complete-period Casimir cap applies to them all.
 
 The existing coverage proof in [BOUNDED_REDUCTION](BOUNDED_REDUCTION.md)
 says that every minimizing cyclic word with N>=6 has one six-complete-piece
@@ -252,12 +257,12 @@ manufacture additional word lengths or count partial samples as closure.
 
 | Case | A: numerical necessary atlas | B: complete-period fate | C: uniform proof |
 |---|---|---|---|
-| F | **First deterministic run** | Negative ellipticity proved for every normal whole-forward period; exact curvature-corrected Hessian available; uniform index/cost comparison OPEN | OPEN |
+| F | **First deterministic run** | Negative ellipticity and positive adjacent Gram pairings proved throughout the competitive domain; exact curvature-corrected Hessian available; uniform index/cost comparison OPEN | OPEN |
 | R | Superseded by direct hand proof | Global active-margin minimum contradicts the normal 0210 PMP principle; every sector covered | **CLOSED**, independently audited |
 | M1 | **First deterministic run** | Full symmetric equal-core family with outgoing factor >=h excluded by audited cost/escape dichotomy; asymmetric/short-pad complement OPEN | OPEN |
 | M2 | **First deterministic run** | OPEN | OPEN |
 | M3 | Superseded by direct hand proof | A bounded reverse-run minimum excludes every length at least three; only length two survives | **CLOSED**, independently audited |
-| T: ties/normality | Normality and exact normal outgoing-vertex rule proved | Independent hand audits complete; full-period branch fate OPEN | Normality and local branch rule CLOSED; they alone exclude no global case |
+| T: ties/normality | Normality, exact outgoing-vertex rule and at-most-one passing germ proved | Negative ellipticity and incident-pair transversality for all finite normal closed periods; full-period fate OPEN | Structural rules CLOSED; remaining F/M1/M2 comparisons OPEN |
 | B: boundaries/equality | Octagon insertion obstruction known | OPEN | OPEN |
 
 **Unrestricted Reinhardt cost inequality: OPEN. Affine uniqueness: OPEN.

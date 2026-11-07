@@ -79,6 +79,18 @@ gives the complete constrained Hessian, including endpoint curvature;
 a uniform negative direction or further cost obstruction is still
 required to close F.
 
+[MIXED_GLOBAL_COSTATE_ELLIPTIC](MIXED_GLOBAL_COSTATE_ELLIPTIC.md) now
+extends negative ellipticity to every finite normal closed period via
+the mixed cyclic action and a full-monodromy projective contradiction.
+Thus the Casimir cap applies throughout F/M1/M2.
+[NORMAL_SWITCH_RIGIDITY](NORMAL_SWITCH_RIGIDITY.md) proves at most one
+positive normal vertex germ at a phase and transversality of every
+actual finite closed switch, retaining triple ties and no-germ phases.
+[GLOBAL_STRUCTURE_FORWARD_ACUTE](GLOBAL_STRUCTURE_FORWARD_ACUTE.md)
+uses the competitive cap to make all forward adjacent Gram pairings
+positive. The joint independent audit and 32+9 exact checks pass. No
+uniform dwell time or final constrained-index sign is asserted.
+
 ## Closed global case R
 
 [GLOBAL_REVERSE_PERIOD_EXCLUSION](GLOBAL_REVERSE_PERIOD_EXCLUSION.md)

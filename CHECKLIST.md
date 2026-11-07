@@ -37,7 +37,11 @@ local branch rule, not the global fate of every passing branch. The
 separate minimum principles close R and M3; three C gates remain open. Compactness also gives
 a qualitative positive lower bound on -lambda in the initial unit
 normalization, hence a compact family after normalization to lambda=-1.
-No numerical value for this new bound is claimed.
+No numerical value for this new bound is claimed. The later
+[NORMAL_SWITCH_RIGIDITY](docs/NORMAL_SWITCH_RIGIDITY.md) proves that
+at most one outgoing vertex candidate can pass and that actual switches
+of finite normal closed periods are transverse for their incident pair.
+Triple ties and boundary limits still require their stated treatment.
 
 
 ## Active global checkpoint
@@ -404,6 +408,16 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- **Whole-period normal structure:** MIXED_GLOBAL_COSTATE_ELLIPTIC
+  proves negative ellipticity for every finite normal closed period,
+  so the competitive Casimir cap applies throughout F/M1/M2.
+  NORMAL_SWITCH_RIGIDITY proves pairwise uniqueness of positive outgoing
+  normal vertex germs and transversality of all actual finite closed
+  switches, while retaining triple ties and no-germ phases.
+  GLOBAL_STRUCTURE_FORWARD_ACUTE proves positive forward Gram pairings
+  under the cap. The joint independent audit and 32+9 exact checks pass.
+  No further case-C closure, uniform dwell time, or index sign is claimed.
 
 - **Entire mixed case M3 CLOSED:** MIXED_GLOBAL_MINIMUM_STRUCTURE and
   its independent audit exclude every bounded reverse run of length

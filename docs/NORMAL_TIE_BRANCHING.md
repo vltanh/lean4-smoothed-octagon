@@ -4,6 +4,14 @@ Date: 2026-11-07 UTC. Hand proof with an
 [independent internal audit](NORMAL_TIE_BRANCHING_AUDIT.md).
 No Lean, Lake, typechecking or CI.
 
+
+**Later structural consequence.** [NORMAL_SWITCH_RIGIDITY](NORMAL_SWITCH_RIGIDITY.md)
+proves at most one of the three candidate tests below can pass at the
+same phase. Existence on an actual finite vertex trajectory is separate.
+It also proves incident-pair transversality in finite normal closed
+periods using the reverse-run theorem, while retaining local cubic
+examples, triple ties and no-germ phases.
+
 ## Result and scope
 
 At a strict-star normal zero-Hamiltonian phase, there is an exact finite

@@ -20,7 +20,13 @@ certificate. Every minimizing lift is normal under the stated inputs.
 NORMAL_TIE_BRANCHING and its independent internal audit now give a finite
 necessary-and-sufficient sign test for every normal outgoing positive
 vertex germ, including triple ties and quadratic/cubic contacts. Test all
-three rotations with the same covector and retain every passing branch.
+three rotations with the same covector. NORMAL_SWITCH_RIGIDITY now
+proves at most one can pass; existence on an actual finite trajectory
+comes from its positive vertex representation. It also proves every
+actual switch of a finite normal closed period is transverse for its
+incident pair, using the strict double-reverse-run minimum. Triple ties
+and no-germ phases remain possible; no uniform duration or derivative
+bound is implied.
 This local rule supplies no uniform interval length or global return/cost
 comparison. The pure-reverse case R is now CLOSED by
 GLOBAL_REVERSE_PERIOD_EXCLUSION: a four-arc 0210 normal PMP window
@@ -50,6 +56,16 @@ curvature-corrected Hessian is explicit, but its uniform negative index
 and the complete F cost comparison remain open. The compact
 normal-lift corollary is qualitative, with no explicit multiplier bound
 for an interval search.
+
+MIXED_GLOBAL_COSTATE_ELLIPTIC now proves negative ellipticity of the
+primary costate for every finite normal closed period, including mixed
+ones. It uses the common signed cyclic action, exact turn secants and
+full central monodromy, not assumed ray coverage. The complete-period
+Casimir cap therefore applies throughout F/M1/M2.
+GLOBAL_STRUCTURE_FORWARD_ACUTE further proves positive adjacent Jacobi
+pairings throughout competitive F; its radial/margin index remains open.
+Read GLOBAL_NORMAL_PERIOD_STRUCTURE_AUDIT for the independent review
+of these results and switch rigidity. The 32 and 9 exact checks pass.
 
 
 Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.
