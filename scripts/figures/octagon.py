@@ -652,6 +652,31 @@ def verify(P=OCT, n_per=40):
         assert np.linalg.norm(T1 - pts[0]) < 1e-9 and np.linalg.norm(T2 - pts[-1]) < 1e-9
         hyperbolas.append((pc, c, center, flank))
 
+    # In the regular frame of inradius 1 the sides lie on the lines ℓ_k: x cos(kπ/4) + y sin(kπ/4) = 1,
+    # and the arc at the corner of ℓ_k and ℓ_{k+1} is the curve d_{k-1} d_{k+2} = √2/4, where
+    # d_j(p) = 1 - ⟨p, n_j⟩ is the distance from p to ℓ_j: its asymptotes are ℓ_{k-1} and ℓ_{k+2}. It
+    # touches ℓ_k and ℓ_{k+1} at (3√2 - 4)/2 from the corner, keeps a straight part 2 - √2 (1/√2 of the
+    # side) of each side, and cuts the corner to the depth sec(π/8) - (1 - 2^(-3/4))/sin(π/8).
+    Mreg = regular_frame(P)
+    normals = np.array([[math.cos(k * math.pi / 4), math.sin(k * math.pi / 4)] for k in range(8)])
+    Oreg = O @ Mreg.T
+    for m in range(8):                                   # side m of edge_polygon lies on ℓ_m
+        assert np.abs(Oreg[[m, (m + 1) % 8]] @ normals[m] - 1).max() < 1e-12
+    depth = 1 / math.cos(math.pi / 8) - (1 - 2 ** -0.75) / math.sin(math.pi / 8)
+    for pc in arcs:
+        pts = piece_points(P, pc, 400) @ Mreg.T
+        mid = pts[len(pts) // 2]
+        k = int(round((math.atan2(mid[1], mid[0]) * 8 / math.pi - 1) / 2)) % 8
+        dA, dB = 1 - pts @ normals[(k - 1) % 8], 1 - pts @ normals[(k + 2) % 8]
+        assert dA.min() > 0 and dB.min() > 0
+        assert np.abs(dA * dB - SQRT2 / 4).max() < 1e-10
+        V = Oreg[(k + 1) % 8]                            # the corner of ℓ_k and ℓ_{k+1}
+        assert abs(1 - pts[0] @ normals[k]) < 1e-12 and abs(1 - pts[-1] @ normals[(k + 1) % 8]) < 1e-12
+        for T in (pts[0], pts[-1]):
+            assert abs(np.linalg.norm(T - V) - (3 * SQRT2 - 4) / 2) < 1e-12
+        assert abs(np.linalg.norm(pts - V, axis=1).min() - depth) < 1e-6
+    assert abs(depth - 0.0230402) < 1e-7
+
     # The densest lattice packing: the lattice Λ_t = Z σ₀(t) + Z σ₁(t) has determinant √3/2, no nonzero
     # point inside K and exactly six on its boundary, σ_j(t); the copies K + 2Λ_t pack the plane with
     # density area(K)/√12 = δ_oct, for every t (the balanced motion).
