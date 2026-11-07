@@ -11,7 +11,7 @@
 - [x] R: exclude every entirely reverse minimizing period.
 - [x] M3: every mixed reverse run has exactly two switches.
 - [x] Sufficient M1: exclude every all-short mixed period, all multiplicities.
-- [x] Uniform negative elliptic costate sector and whole-period Casimir constraint.
+- [x] Uniform negative elliptic costate sector; sharpened spectral cost–Casimir inequality and exact endpoint continuation budget.
 - [x] F narrowing: \(N\le61\), \(4/3<a_{\min}^2<20/11\) and \(1<q_{\min}<7/4\).
 - [x] M2 narrowing: global minimum at a reverse centre adjacent to a nonshort forward run; all reverse centres \(a^2<12/17\); reverse angle and constrained-index density bounds.
 
