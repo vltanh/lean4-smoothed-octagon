@@ -214,6 +214,18 @@ baseline bound; the required additional negative index remains open.
 Its [independent audit](docs/MIXED_GLOBAL_TURN_ELIMINATION_AUDIT.md)
 and 23 exact checks pass, including zero bridge diagonals.
 
+The [small forward-minimum theorem](docs/MIXED_GLOBAL_SMALL_FORWARD_MINIMUM.md)
+now excludes a minimum `(p,b,a,c,d)` with four forward switches and
+`a^2<=4/3`. It uses the same actual normal multiplier and both genuine
+exterior missing-control conditions, followed by scalar comparisons
+and a fixed polynomial identity with all 792 positive coefficients
+displayed. Its [independent audit](docs/MIXED_GLOBAL_SMALL_FORWARD_MINIMUM_AUDIT.md)
+and 28+199 exact checks pass, including weak third ties and the equality
+scale. It needs no Casimir or endpoint-rank assumption. Thus **every
+mixed global minimum is a reverse centre**, and the remaining pure F
+minimum satisfies **`4/3<m^2<20/11`**. This does not force the reverse
+minimum next to a long forward run or close F/M2.
+
 ## Whole-forward costate theorem
 
 [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)

@@ -154,6 +154,18 @@ form keeps the Casimir coordinate and satisfies
 baseline recovers the existing phase restriction; a further negative
 index or actual first-event/global-minimum contradiction is still needed.
 
+The audited [small forward-minimum theorem](MIXED_GLOBAL_SMALL_FORWARD_MINIMUM.md)
+now excludes a central minimum of five active margins with all four
+switches forward and central square at most `4/3`. Its same-lift
+stationarity and both genuine exterior missing-control inequalities
+reduce to two calculus faces and one fixed full-domain polynomial
+identity. All 792 positive coefficients are displayed; 28+199 exact
+checks pass. No Casimir, ellipticity, or endpoint-rank assumption is
+used. Every mixed global minimum is therefore a reverse centre, and
+the remaining pure F minimum satisfies `4/3<m^2<20/11`. The reverse
+minimum may lie inside a chain of short bridges; its adjacency to a
+long forward run and the remaining F/M2 obstructions are still open.
+
 ## 2. Small verifiable gates, repeated for each case
 
 Each of F, R, M1, M2, M3 has exactly three explicit gates.

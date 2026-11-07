@@ -107,6 +107,17 @@ Triple ties and boundary limits still require their stated treatment.
   Its independent audit and all 23 exact checks pass. The remaining
   form has `index_-(Q_closed)=index_-(S)-k-3`, recovering the same
   baseline as the phase theorem without another exclusion.
+- [x] Exclude every five-active minimum with four forward switches and
+  central square at most `4/3`; see
+  [MIXED_GLOBAL_SMALL_FORWARD_MINIMUM](docs/MIXED_GLOBAL_SMALL_FORWARD_MINIMUM.md).
+  The actual common multiplier, both exterior missing-control gaps,
+  all three scalar comparison faces, and the full fixed polynomial
+  certificate pass independent audit and 28+199 exact checks. Every
+  mixed global minimum is now a reverse centre; a remaining pure F
+  minimum has `4/3<m^2<20/11`. No Casimir or rank assumption is needed.
+- [ ] Propagate a mixed reverse global minimum through adjacent short
+  bridges, or prove another whole-period M2 obstruction. Its placement
+  next to a long forward run is not established by the minimum theorem.
 - [ ] Control the positive incident-edge terms and three actual frame
   constraints to turn the onsite inequality into a valid descent or
   complete-period index obstruction. The proved local term alone

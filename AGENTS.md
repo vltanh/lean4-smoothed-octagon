@@ -130,6 +130,19 @@ variables and the Casimir; index(Q_closed)=index(S)-k-3. The baseline
 agrees with the existing phase bound and closes no additional case.
 All 23 exact checks pass. The extra negative index remains open.
 
+MIXED_GLOBAL_SMALL_FORWARD_MINIMUM and its independent audit now
+exclude a five-active minimum `(p,b,a,c,d)` with all four intervening
+switches forward and `a^2<=4/3`. The three interior arcs use the same
+actual normal multiplier and both genuine exterior missing-control
+inequalities. Two scalar comparison faces and a fixed positive-polynomial
+certificate cover the full remaining face, including weak third ties,
+`a^2=4/3`, and exterior minimum equalities. The 28 interface and 199
+full-face exact checks pass; all 792 positive coefficients are displayed.
+No ellipticity, Casimir bound, endpoint rank, or factor monotonicity is
+assumed. Consequently every mixed global minimum is a reverse centre;
+the remaining pure F minimum satisfies `4/3<m^2<20/11`. A reverse
+minimum need not border a long forward run. F and M2 remain open.
+
 
 Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.
 The full symmetric 2121 core family, four common factors 1<h<2 and

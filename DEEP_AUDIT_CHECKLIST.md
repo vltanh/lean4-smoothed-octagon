@@ -94,6 +94,19 @@ are not excluded.
   Casimir coupling; see [MIXED_GLOBAL_TURN_ELIMINATION_AUDIT](docs/MIXED_GLOBAL_TURN_ELIMINATION_AUDIT.md).
   All 23 exact identities pass. The remaining index formula keeps
   all three endpoint constraint pairs and proves no extra sign.
+- [x] Independently reconstruct the small forward-minimum theorem's
+  actual primary-covector equations and physical missing Hamiltonian
+  signs, without rank inversion or an ellipticity assumption; see
+  [MIXED_GLOBAL_SMALL_FORWARD_MINIMUM_AUDIT](docs/MIXED_GLOBAL_SMALL_FORWARD_MINIMUM_AUDIT.md).
+- [x] Check all scalar faces, log-bound directions, positive denominators,
+  full hard-face domain changes, and the exact identity from all 792
+  displayed positive coefficients. The 28+199 exact checks pass. A false
+  own-factor monotonicity claim is not used; the full residual is bounded
+  directly. Weak third ties, equality scale, exterior minimum equalities,
+  and the actual twisted seam are included.
+- [x] Retain the precise global consequence: mixed minima are reverse
+  centres and pure F has `4/3<m^2<20/11`; adjacency to a long forward
+  run, a full cost/index obstruction, and F/M2 closure remain open.
 
 These necessary conditions close no additional whole case. F and M2
 remain open; the earlier M1 closure and its local-domain boundary are
