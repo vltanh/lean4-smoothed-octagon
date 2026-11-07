@@ -350,9 +350,16 @@ variation, and strictly positive second variation. It is a strict local
 minimum on its same-word endpoint fiber. A different-word or nonlocal
 replacement remains possible, so this does not refute L1 itself.
 
-Rank zero and rank one points MUST be treated. In particular, six variables
-minus five constraints does not prove either a smooth fiber or a decreasing
-direction. Higher-order stationary points cannot be discarded. Failure of
+For L1, [LOCAL_FORWARD_RANK.md](LOCAL_FORWARD_RANK.md) now proves that the
+full endpoint rank is five throughout the positive strict-star domain, so
+these two remaining equations have rank two everywhere. The proof resolves
+the state endpoints in active margins and signs four explicit determinant
+terms. It applies without cost or sector restrictions. It does not assert
+uniform conditioning as factors collapse or margins approach zero.
+
+Rank zero and rank one points MUST still be treated for L2–L5. In particular,
+dimension counting alone proves neither a smooth fiber nor a decreasing
+direction. Stationary points cannot be discarded in any template. Failure of
 this same-word local method leaves the more general <=6-piece replacement
 option open; it is not permission to resume enumeration at larger N.
 

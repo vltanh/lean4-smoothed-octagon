@@ -10,13 +10,14 @@ supersedes earlier recommendations to continue by increasing whole-word length.
 
 | Statement | Exact source and status |
 | --- | --- |
+| Full-domain endpoint rank for L1 | [LOCAL_FORWARD_RANK](docs/LOCAL_FORWARD_RANK.md): active-margin coordinates, exact cost action, and a hand determinant sign proof of rank five everywhere on the positive strict-star domain. Two independent hand reviews passed. No cost exclusion or boundary conditioning estimate. |
 | Exact obstruction to universal nearby same-word L1 descent | [LOCAL_FORWARD_SIX](docs/LOCAL_FORWARD_SIX.md): an eligible `012012` input with rank-five endpoint map and a strict constrained local minimum. Full L1 remains open. The [exact checker](explorations/local_forward_stationary_obstruction.py) is supplementary. |
 | P0: minimizer-window eligibility and finite-piece geometric splice | [MINIMIZER_WINDOW_AUDIT](docs/MINIMIZER_WINDOW_AUDIT.md): hand proof, using Hales--Vajjha Theorem 16.3.1 and balanced-disk correspondence; sector normalization and winding are proved explicitly. Through-five equality scope checked, not its entire algebra re-audited. |
 | Five-template coverage for every minimizing N>=6 | [BOUNDED_REDUCTION, Sections 1-2](docs/BOUNDED_REDUCTION.md): complete independently reviewed hand run argument, conditional on the already supplied forward-alternation exclusion. |
 | Local strict improvements imply N<=5 and then global minimality/rigidity | Same note, Section 3: proved conditional implication; all five new analytic premises are open. |
 | Eight-coordinate input domains | Same note, Section 4: initial margins, exact factor updates, full-arc signs, cost, and geometric sector tests. |
 | Full local endpoint map | Same note, Section 5: preserve tangent product AND terminal state with initial state fixed; generally the tangent endpoint is not R. |
-| Exact elimination of three endpoint equations | Same note, Section 6: explicit inverses for both orientations of a positive distinct-label triple; singular remaining state ranks are not excluded. |
+| Exact elimination of three endpoint equations | Same note, Section 6: explicit inverses for both orientations of a positive distinct-label triple. LOCAL_FORWARD_RANK resolves the remaining rank as two throughout the positive L1 domain; singular loci for the other four templates remain open. |
 | Parameter compactification and limits | Same note, Section 7: bounded coordinates only, not a certified finite interval search. |
 | Finite graph cross-check | [finite_window_cover.py](explorations/finite_window_cover.py): 32 blocks, 21 surviving the established exclusion, five target edges, then a 12-vertex/16-edge DAG. No analytic cost conclusion. |
 | Numerical diagnostic | [local_six_fiber_probe.py](explorations/local_six_fiber_probe.py): floating-point local search with a fixed seed and finite inputs. Neither convergence nor failures are proof premises. |

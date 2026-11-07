@@ -98,6 +98,12 @@ Do not try to prove a universal negative-Hessian assertion. The broader L1
 claim remains open: test different-word or nonlocal replacements, or prove
 additional necessary conditions for windows in actual global minimizers.
 
+**Interior rank classification is complete for L1:**
+[LOCAL_FORWARD_RANK.md](LOCAL_FORWARD_RANK.md) proves full rank five on
+the entire positive strict-star domain, hence rank two after suffix
+elimination. This uses arbitrary initial state and all unequal factors.
+It gives no uniform boundary conditioning or cost descent.
+
 L1 is the first test of whether the proposed five-case route is viable,
 **not** presumed easier or true. Use the exact initial-state chart
 
@@ -128,8 +134,9 @@ triple in `docs/BOUNDED_REDUCTION.md`, §6, to solve the final three
 factors from the required tangent product. This leaves a three-variable
 parameterization and two terminal-state equations.
 
-- [ ] Compute the exact Jacobian and classify regular rank-two points
-  **and** rank-one/rank-zero points.
+- [x] Classify the L1 endpoint rank on its entire positive domain:
+  it is five, or two after the suffix elimination. There are no interior
+  rank-one/rank-zero exceptions. See LOCAL_FORWARD_RANK.
 - [ ] On regular endpoint fibers, calculate the derivative of the
   exact cost. When nonzero, use the implicit function theorem to
   obtain a genuine strictly cheaper curve satisfying both endpoints.
@@ -204,8 +211,9 @@ conjecture solved at completion of P0 or at an analytic count below 5/5.
    the **LOCAL** L1 statement: the local tangent product is usually not
    `R`, and the initial state cannot vary in a splice.
 2. Six factor variables minus five endpoint constraints suggests one
-   degree of freedom only at **regular rank**. Singular fibers may be
-   isolated or have higher-dimensional components.
+   degree of freedom only at **regular rank**. L1 now has a full-domain
+   hand rank proof. Singular fibers for L2–L5 remain unresolved and may
+   be isolated or have higher-dimensional components.
 3. The old forward alternating four-arc argument rules out a particular
    orientation; reversing its sign reverses the Hessian sign. Do not
    assume an analogous reverse exclusion.

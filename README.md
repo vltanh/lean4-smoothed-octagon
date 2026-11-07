@@ -15,7 +15,8 @@ Read it **before** attacking any additional case. The prerequisite
 [P0 audit is complete as a hand proof](docs/MINIMIZER_WINDOW_AUDIT.md):
 it verifies minimizer eligibility, twisted seams, normalized geometric sectors,
 and the finite-piece geometric/control splice. The next target is L1 as a **local** endpoint-preserving
-cost improvement, handling regular and singular endpoint fibers. Continue
+cost improvement, including stationary endpoint fibers. L1 has full endpoint
+rank throughout its positive domain, as proved below. Continue
 with L2–L5 only against the same strict acceptance criteria. All five
 universal local improvements remain **OPEN** (0/5). Do not resume
 increasing-length whole-trajectory enumeration.
@@ -65,6 +66,13 @@ eligibility tests but is a strict minimum on its nearby same-word endpoint
 fiber. Thus universal nearby same-word descent is false even in the
 competitive geometric domain. This does not refute a different-word or
 nonlocal L1 replacement, and it is not a counterexample to Reinhardt.
+
+The [full-domain L1 rank theorem](docs/LOCAL_FORWARD_RANK.md) independently
+resolves the singular-fiber question: all five frame-and-state endpoint
+constraints have rank five for every strict-star `012012` input with positive
+durations. Its active-margin coordinates also give a nearest-neighbor cost
+formula and the exact constrained second variation. This rank result is
+compatible with the stationary minimum; it proves no local improvement.
 
 [LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md) proves a seven-piece strict
 improvement for every q>1 in the equal-factor, state-cyclic reverse six-arc

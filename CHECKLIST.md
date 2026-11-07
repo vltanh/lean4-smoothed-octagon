@@ -58,6 +58,14 @@ is strictly greater than `1/200` on the displayed nonzero tangent. Hence it
 is a strict local minimum on the same-word endpoint fiber. This refutes the
 universal nearby same-word approach, not L1's broader replacement claim.
 
+[LOCAL_FORWARD_RANK](docs/LOCAL_FORWARD_RANK.md) proves that the full L1
+endpoint map has rank five on its entire positive strict-star domain,
+for every initial state and all six unequal factors. Active-margin
+coordinates resolve the state endpoints; four explicit negative determinant
+terms prove the remaining rank-three assertion. This removes every interior
+singular-rank exception for L1. It supplies no cost exclusion and no uniform
+conditioning estimate at the boundary; the stationary minimum above remains.
+
 [LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md) proves a strict local improvement
 for every equal factor q>1 in the reverse state-cyclic family with initial
 margins 2(1,1,2q-1)/sqrt(4q-1). An inserted missing-control arc, together with
@@ -89,8 +97,10 @@ needed when a strict local descent is established.
 All five words end in three distinct labels. Explicit positive-factor
 inversion removes the three tangent-endpoint constraints, leaving two
 state-endpoint equations on three variables. This is an exact fixed-size
-setup, not a proof that a decreasing direction always exists. Rank-zero,
-rank-one, and degenerate stationary points remain part of each target.
+setup, not a proof that a decreasing direction always exists. For L1 the
+reduced state rank is two everywhere by LOCAL_FORWARD_RANK. Rank-zero and
+rank-one loci remain obligations for L2–L5; stationary points remain part
+of all five targets.
 
 A bounded-coordinate compactification is recorded, but singular boundary
 faces are NOT certified. No exhaustive interval search or uniform dwell-time
@@ -126,6 +136,11 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Prove full-domain rank five for L1 by active-margin coordinates and four
+  small determinant sign identities. The action and constrained-variation
+  formulas passed two independent hand reviews. This closes the interior
+  rank-classification subtask only; no universal local input is closed.
 
 - Proved and independently reproduced the exact eligible L1 same-word local
   minimum. The hand certificate includes rational state/sector tables, rank,

@@ -61,6 +61,20 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
 - [ ] Deduce the unconditional bound N<=5.
 - [ ] Prove unrestricted global minimality and affine rigidity.
 
+## Full-domain L1 endpoint rank
+
+`docs/LOCAL_FORWARD_RANK.md` proves rank five throughout the positive
+strict-star L1 domain, with arbitrary initial state and unequal factors.
+Two independent hand reviews checked the coordinate inverse, action,
+four determinant identities and signs, and constrained Hessian correction.
+
+- [x] Resolve both state endpoints by a smooth triangular coordinate change.
+- [x] Prove the remaining frame rank is three everywhere by explicit signs.
+- [x] Include endpoint curvature in the second-variation formula.
+- [x] Retain the exact stationary minimum; do not infer cost descent from rank.
+- [x] Distinguish interior full rank from uniform boundary conditioning.
+- [ ] Classify interior endpoint ranks for L2–L5.
+
 ## Exact L1 same-word obstruction
 
 `docs/LOCAL_FORWARD_SIX.md` gives one rational-factor input with initial
