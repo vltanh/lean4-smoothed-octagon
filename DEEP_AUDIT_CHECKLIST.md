@@ -14,6 +14,46 @@ The complete earlier audit is preserved at
 Its historical source scans and review claims are not new validation performed
 in this checkpoint. All existing mathematical and Lean proof files are retained.
 
+## New case-atlas computation boundary
+
+[FINITE_CASE_COMPUTER_ROADMAP](docs/FINITE_CASE_COMPUTER_ROADMAP.md)
+and [CASE_ATLAS_EXPERIMENT_001](docs/CASE_ATLAS_EXPERIMENT_001.md)
+are a proposed *research route*, not verified new G4 cost comparisons.
+
+- [x] Reproduce the exact algebraic factor/state/tangent endpoint formulas
+  numerically on all five fixed windows. Use complex-step for a
+  5-by-6 endpoint differential; do not infer PMP signs when the
+  normal stationarity residual is nonzero.
+- [x] Screen the two known exact stationary L1 and M1 examples:
+  computed exterior missing-control gaps are positive, so these
+  source examples fail the selected-complete-switch condition.
+  The rigorous conclusion is inherited from existing hand notes.
+- [x] Screen standard forward N=7:
+  two exterior switching ties, positive interior test gaps,
+  exact-family closed endpoints, but whole-period cost above A_oct.
+- [x] Probe four positive all-reverse octagon insertions with five
+  numerically corrected endpoint coordinates; recorded costs increase.
+  Floating-point root residuals do NOT prove exact closure or uniform
+  cost positivity.
+- [x] Compute curvature-corrected constrained Hessians on complete
+  twisted periods with **initial state free**, obtaining numerical
+  negative indices 0,2,4 at standard N=4,7,10, consistent with the
+  separately existing exact hand theorem. Check stability under
+  three finite-difference step sizes. This is not a new asymmetric
+  index theorem or interval-certified inertia count.
+- [ ] Implement and independently audit an event-driven numerical
+  complete-period PMP continuation with all normal/tie exceptions.
+- [ ] Prove one **uniform** G4 case exclusion on its complete stated
+  domain, including rank defects, triple/cubic switches and boundary.
+- [ ] Independently audit GLOBAL_NORMALITY's new abnormal exclusion,
+  including backwards zero-tie identities and twisted seam.
+
+Python/NumPy/SciPy version, commands, finite inputs, solver settings,
+numerical failures/limitations and output tables are in the experiment
+note. No independent review of the new exploratory scripts beyond
+self-checks is claimed. None of the five case-C analytic certificates
+has been proved, and the global octagon comparison remains OPEN.
+
 ## Active global proof checks
 
 The active entry point is [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md).
