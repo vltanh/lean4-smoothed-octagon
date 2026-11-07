@@ -698,53 +698,111 @@ def octagon_construction():
     branch = C + np.outer(um * np.exp(sgrid), d1) + np.outer(vm * np.exp(-sgrid), d2)
     assert np.abs(dist(2, branch) * dist(7, branch) - SQ2 / 4).max() < 1e-9
     assert dist(2, branch).min() > 0 and dist(7, branch).min() > 0
+    # The distances: d₂ = 1 - y to ℓ₂: y = 1, d₇ = (√2 - x + y)/√2 to ℓ₇: x - y = √2. For the sample
+    # point P (the middle of the arc, on the bisector of the corner) the perpendiculars from P meet ℓ₂
+    # and ℓ₇ at F₂ and F₇, with |PF₂| = d₂ = |PF₇| = d₇ = 2^(-3/4) and d₂ d₇ = √2/4.
+    Pm = arc[len(arc) // 2]
+    dP2, dP7 = dist(2, Pm)[0], dist(7, Pm)[0]
+    F2, F7 = Pm + dP2 * n(2), Pm + dP7 * n(7)
+    assert abs(dP2 - (1 - Pm[1])) < 1e-15 and abs(dP7 - (SQ2 - Pm[0] + Pm[1]) / SQ2) < 1e-15
+    assert abs(dist(2, F2)[0]) < 1e-12 and abs(dist(7, F7)[0]) < 1e-12
+    assert abs(oc.cross(F7 - Pm, (1, -1))) < 1e-12 and abs(oc.cross(F2 - Pm, (0, 1))) < 1e-12
+    assert abs(dP2 - 2 ** -0.75) < 1e-6 and abs(dP7 - 2 ** -0.75) < 1e-6
+    assert abs(dP2 * dP7 - SQ2 / 4) < 1e-10
+    # Why √2/4: it is the largest value of d₂ d₇ on each side at the corner, attained at the tangency
+    # point, so the curve d₂ d₇ = √2/4 meets each side in that one point, touching it; a smaller
+    # constant would cross the sides twice, a larger one miss them.
+    # Along the side a + s(b - a) the product (α₀ + α₁s)(β₀ + β₁s) is a quadratic in s that opens
+    # downward; its vertex is the tangency point and its top value is √2/4.
+    for a_, b_, T in ((O[0], O[1], T1), (O[1], O[2], T2)):
+        al0, be0 = dist(2, a_)[0], dist(7, a_)[0]
+        al1, be1 = -(b_ - a_) @ n(2), -(b_ - a_) @ n(7)
+        assert al1 * be1 < 0
+        s_top = -(al0 * be1 + al1 * be0) / (2 * al1 * be1)
+        top = (al0 + al1 * s_top) * (be0 + be1 * s_top)
+        assert abs(top - SQ2 / 4) < 1e-12 and np.linalg.norm(a_ + s_top * (b_ - a_) - T) < 1e-12
 
     xl, xr, yb, yt = -1.22, 2.78, -1.22, 1.34
     zoom_w, zoom_mag = 0.15, 4.0
     big = zoom_w * zoom_mag
     zoom_c = np.array([xr + 0.45 + big, 0.08])
-    f = Figure(xl, zoom_c[0] + big + 0.18, yb, yt, 112)
+    scale = 112
+    f = Figure(xl, zoom_c[0] + big + 0.5, -1.84, yt, scale)
     main = (xl, xr, yb, yt)
-    f.polygon(KB, fill=FILLS[0], stroke='none', width=0)
-    f.polygon(cut, fill=CUT_FILL, stroke='none', width=0)
-    f.polygon(O, stroke=FAINT, width=1.2)
-    for k in (7, 2):
-        p0 = O[k] if k == 2 else O[7]
-        d = d2 if k == 2 else d1
-        line = p0 + np.outer(np.linspace(-6, 6, 400), d)
-        for run in runs_inside(line, main):
-            f.polyline(run, stroke=INK, width=1.0, dash='6 4')
-    for run in runs_inside(branch, main):
-        f.polyline(run, stroke=ORANGE, width=1.4, dash='4 3')
-    for kind, pts in pcs:
-        f.polyline(pts, stroke=PIECE_COLORS[kind], width=2.4 if kind == 'edge' else 2.8)
-    for q in (T1, T2):
-        f.dot(q, r=3.4)
-    f.dot(C, r=3.4)
-    # The lines and the curve, with their equations.
-    f.text((C[0] - 0.06, 1.13), 'C = (1 + √2, 1)', size=13, anchor='end', italic=False)
-    f.text((xl + 0.05, 1.11), 'ℓ₂: y = 1', size=14, anchor='start', italic=False)
-    f.text((0.5, -1.12), 'ℓ₇: x − y = √2', size=14, anchor='start', italic=False)
-    f.text((0.85, 0.15), 'ℓ₀: x = 1', size=14, anchor='end', italic=False, color=BLUE)
-    f.text((0.86, 0.84), 'ℓ₁: x + y = √2', size=14, anchor='start', italic=False, color=BLUE)
-    # Below the upper part of the branch (where y > 0.72 for x < 0.3).
-    f.text((-0.95, 0.56), 'hyperbola d₂ d₇ = √2/4', size=14, anchor='start', italic=False,
-           color=ORANGE)
-    # The zoom window and its magnified copy, with the tangency points.
     wc = (T1 + T2 + V) / 3
     win = (wc[0] - zoom_w, wc[0] + zoom_w, wc[1] - zoom_w, wc[1] + zoom_w)
     assert all(win[0] + 0.02 < q[0] < win[1] - 0.02 and win[2] + 0.02 < q[1] < win[3] - 0.02
                for q in (T1, T2, V))
     sq = np.array([(-1, -1), (1, -1), (1, 1), (-1, 1)], dtype=float)
-    f.polygon(wc + zoom_w * sq, stroke=INK, width=0.9)
-    f.polygon(zoom_c + big * sq, fill='#ffffff', stroke=INK, width=0.9)
-    for sy in (-1, 1):
-        f.line(wc + (zoom_w, sy * zoom_w), zoom_c + (-big, sy * big), stroke=FAINT, width=0.8,
-               dash='3 3')
+    asymptotes = [run for p0, d in ((O[7], d1), (O[2], d2))
+                  for run in runs_inside(p0 + np.outer(np.linspace(-6, 6, 400), d), main)]
+    branch_runs = runs_inside(branch, main)
+    connectors = [np.array([wc + (zoom_w, sy * zoom_w), zoom_c + (-big, sy * big)]) for sy in (-1, 1)]
 
     def mag(pts):
         return (np.asarray(pts) - wc) * zoom_mag + zoom_c
 
+    # The labels, each in empty space, with a leader line to what it names where needed:
+    # (text, position, size, anchor, colour, leader or None).
+    tb = lambda y: SQ2 + y - 0.5 / (1 - y)           # the branch's lower part: x as a function of y
+    T2_lab = np.array([zoom_c[0] + (mag(T2)[0] - zoom_c[0]) * 0.5, zoom_c[1] + big + 0.22])
+    T1_lab = np.array([zoom_c[0] + (mag(T1)[0] - zoom_c[0]) * 0.5, zoom_c[1] - big - 0.2])
+    eq_c = np.array([0.15, -1.42])
+    bx, by, step_y = 1.6, -1.05, 0.17                 # the derivation, bottom right
+    labels = [
+        ('ℓ₂: y = 1', (xl + 0.05, 1.13), 14, 'start', INK, None),
+        ('C = (1 + √2, 1)', (C[0] - 0.1, 1.13), 13, 'end', INK, None),
+        ('ℓ₁: x + y = √2', (0.3, 1.13), 13, 'start', BLUE, ((0.5, SQ2 - 0.5), (0.62, 1.07))),
+        ('ℓ₀: x = 1', (1.85, -0.78), 13, 'start', BLUE, ((1.0, -0.25), (1.81, -0.76))),
+        ('ℓ₇: x − y = √2', (0.55, -1.12), 13, 'start', INK, None),
+        ('d₂', (1.03, 0.72), 13, 'start', INK, None),
+        ('d₇', (1.11, -0.1), 13, 'middle', INK, ((1.14, -0.04), (1.26, 0.124))),
+        ('(1 − y)(√2 − x + y) = ½', tuple(eq_c), 15, 'middle', ORANGE,
+         ((tb(-1.17), -1.17), (eq_c[0] - 0.05, eq_c[1] + 0.08))),
+        ('the product of the distances', (eq_c[0], -1.6), 12, 'middle', '#4b5563', None),
+        ('to the two dashed lines is constant', (eq_c[0], -1.75), 12, 'middle', '#4b5563', None),
+        ('distance to ℓ₂ (y = 1):\u2002d₂ = 1 − y', (bx, by), 13, 'start', INK, None),
+        ('distance to ℓ₇ (x − y = √2):\u2002d₇ = (√2 − x + y)/√2', (bx, by - step_y), 13, 'start', INK,
+         None),
+        ('d₂ · d₇ = √2/4\u2003⇔\u2003(1 − y)(√2 − x + y) = ½', (bx, by - 2 * step_y), 13, 'start', ORANGE,
+         None),
+        ('√2/4 makes the curve touch both sides at the corner', (bx, by - 3 * step_y - 0.02), 12,
+         'start', '#4b5563', None),
+        ('T₂ = (√2 − ½, ½)', tuple(T2_lab), 14, 'middle', INK, (mag(T2), T2_lab + (0, -0.07))),
+        ('T₁ = (1, 1 − 1/√2)', tuple(T1_lab), 14, 'middle', INK, (mag(T1), T1_lab + (0, 0.07))),
+        ('×4', (zoom_c[0] + big + 0.06, zoom_c[1]), 12, 'start', FAINT, None),
+    ]
+    drops = [np.array([Pm, F2]), np.array([Pm, F7])]
+    # The checks that no label touches a curve, a line, a fill or another label: the drawn geometry,
+    # densified, must stay out of each label's box padded by 4 px, and no corner of a box may lie in
+    # the octagon or in the magnified panel.
+    curves = ([np.vstack([O, O[:1]]), np.vstack([wc + zoom_w * sq, wc + zoom_w * sq[:1]]),
+               np.vstack([zoom_c + big * sq, zoom_c + big * sq[:1]])] + asymptotes + branch_runs +
+              [pts for _, pts in pcs] + connectors + drops +
+              [np.array([q, q]) for q in (T1, T2, C, Pm)])
+    regions = [O, zoom_c + big * sq]
+    leaders = [np.array(lab[5]) for lab in labels if lab[5] is not None]
+    check_label_layout(labels, curves, regions, leaders, scale)
+
+    f.polygon(KB, fill=FILLS[0], stroke='none', width=0)
+    f.polygon(cut, fill=CUT_FILL, stroke='none', width=0)
+    f.polygon(O, stroke=FAINT, width=1.2)
+    for run in asymptotes:
+        f.polyline(run, stroke=INK, width=1.0, dash='6 4')
+    for run in branch_runs:
+        f.polyline(run, stroke=ORANGE, width=1.4, dash='4 3')
+    for kind, pts in pcs:
+        f.polyline(pts, stroke=PIECE_COLORS[kind], width=2.4 if kind == 'edge' else 2.8)
+    for dr in drops:
+        f.line(dr[0], dr[1], stroke=INK, width=1.0)
+    for q in (T1, T2, C):
+        f.dot(q, r=3.4)
+    f.dot(Pm, r=2.6, fill=ORANGE)
+    # The zoom window and its magnified copy.
+    f.polygon(wc + zoom_w * sq, stroke=INK, width=0.9)
+    f.polygon(zoom_c + big * sq, fill='#ffffff', stroke=INK, width=0.9)
+    for cn in connectors:
+        f.line(cn[0], cn[1], stroke=FAINT, width=0.8, dash='3 3')
     f.polygon(mag(clip_polygon(KB, win)), fill=FILLS[0], stroke='none', width=0)
     f.polygon(mag(clip_polygon(cut, win)), fill=CUT_FILL, stroke='none', width=0)
     corner = np.concatenate([np.linspace(O[0], O[1], 600), np.linspace(O[1], O[2], 600)])
@@ -755,21 +813,73 @@ def octagon_construction():
     for kind, pts in pcs:
         for run in runs_inside(pts, win):
             f.polyline(mag(run), stroke=PIECE_COLORS[kind], width=2.6 if kind == 'edge' else 3.0)
-    labels = ((T1, 'T₁ = (1, 1 − 1/√2)', (0.0, -big - 0.2)),
-              (T2, 'T₂ = (√2 − ½, ½)', (0.0, big + 0.22)))
-    for q, lab, off in labels:
+    for q in (T1, T2):
         f.dot(mag(q), r=3.8)
-        anchor_pt = np.array([zoom_c[0] + (mag(q)[0] - zoom_c[0]) * 0.5, zoom_c[1] + off[1]])
-        f.line(mag(q), anchor_pt + (0, 0.08 if off[1] < 0 else -0.08), stroke=INK, width=0.8)
-        f.text(anchor_pt, lab, size=14, italic=False)
-    f.text(zoom_c + (-big - 0.04, -big + 0.12), '×4', size=12, italic=False, anchor='end', color=FAINT)
+    for text, pos, size, anchor, color, leader in labels:
+        if leader is not None:
+            f.line(leader[0], leader[1], stroke=color if color != INK else INK, width=0.8)
+        f.text(pos, text, size=size, anchor=anchor, italic=False, color=color)
     return f.save('octagon-construction',
                   'How each corner of the regular octagon is smoothed, with the octagon of inradius 1, '
                   'side k on ℓ_k: x cos(kπ/4) + y sin(kπ/4) = 1. The corner of ℓ₀: x = 1 and '
-                  'ℓ₁: x + y = √2 is replaced by an arc of the hyperbola d₂d₇ = √2/4, d_j the distance '
-                  'to ℓ_j, whose asymptotes are the next two sides ℓ₂: y = 1 and ℓ₇: x − y = √2, meeting '
-                  'at C = (1 + √2, 1). The arc touches the sides at T₁ = (1, 1 − 1/√2) and '
-                  'T₂ = (√2 − ½, ½); right, the corner magnified')
+                  'ℓ₁: x + y = √2 is replaced by an arc of the hyperbola (1 − y)(√2 − x + y) = ½: the '
+                  'product of the distances to the two dashed lines ℓ₂: y = 1 and ℓ₇: x − y = √2, its '
+                  'asymptotes, is constant. They meet at its centre C = (1 + √2, 1). The arc touches the '
+                  'sides at T₁ = (1, 1 − 1/√2) and T₂ = (√2 − ½, ½); right, the corner magnified ×4. '
+                  'Bottom right: the distances d₂ = 1 − y and d₇ = (√2 − x + y)/√2, drawn for one point '
+                  'of the arc, and d₂ · d₇ = √2/4, the value that makes the curve touch both sides')
+
+
+def text_box(pos, text, size, anchor, scale):
+    """A generous bounding box (xmin, xmax, ymin, ymax), in data units, of a line of text drawn by
+    Figure.text: 0.56 em per character, one em high, centred vertically on pos."""
+    w = 0.56 * size * len(text) / scale
+    h = size / scale
+    x0 = {'start': pos[0], 'middle': pos[0] - w / 2, 'end': pos[0] - w}[anchor]
+    return (x0, x0 + w, pos[1] - h / 2, pos[1] + h / 2)
+
+
+def densify(pts, step=0.004):
+    pts = np.asarray(pts, dtype=float)
+    out = [pts[:1]]
+    for a, b in zip(pts[:-1], pts[1:]):
+        n = max(1, int(math.ceil(np.linalg.norm(b - a) / step)))
+        out.append(a + np.outer(np.arange(1, n + 1) / n, b - a))
+    return np.vstack(out)
+
+
+def inside_polygon(poly, p):
+    """Whether p lies inside the polygon (even-odd rule)."""
+    x, y = p
+    inside = False
+    for (x0, y0), (x1, y1) in zip(poly, np.roll(poly, -1, axis=0)):
+        if (y0 > y) != (y1 > y) and x < x0 + (y - y0) * (x1 - x0) / (y1 - y0):
+            inside = not inside
+    return inside
+
+
+def check_label_layout(labels, curves, regions, leaders, scale, pad_px=4.0):
+    """Assert that the labels (text, pos, size, anchor, colour, leader) keep clear of every drawn curve
+    and of each other's leaders, that no label box meets a filled region, and that no two label boxes
+    meet, all with a margin of pad_px pixels."""
+    pad = pad_px / scale
+    boxes = [text_box(pos, text, size, anchor, scale) for text, pos, size, anchor, _, _ in labels]
+    dense = [densify(c) for c in curves]
+    for i, ((text, *_rest), (x0, x1, y0, y1)) in enumerate(zip(labels, boxes)):
+        own = labels[i][5]
+        others = [densify(ld) for ld in leaders
+                  if own is None or not np.allclose(ld, np.array(own))]
+        for pts in dense + others:
+            hit = ((pts[:, 0] > x0 - pad) & (pts[:, 0] < x1 + pad) &
+                   (pts[:, 1] > y0 - pad) & (pts[:, 1] < y1 + pad))
+            assert not hit.any(), (text, pts[hit][:1])
+        corners = [(x0, y0), (x1, y0), (x0, y1), (x1, y1), ((x0 + x1) / 2, (y0 + y1) / 2)]
+        for reg in regions:
+            assert not any(inside_polygon(reg, c) for c in corners), (text, 'in a region')
+        for j in range(i + 1, len(boxes)):
+            u0, u1, v0, v1 = boxes[j]
+            assert x1 + pad < u0 or u1 + pad < x0 or y1 + pad < v0 or v1 + pad < y0, \
+                (text, labels[j][0])
 
 
 def octagon_tiling():
