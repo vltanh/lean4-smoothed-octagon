@@ -87,6 +87,15 @@ inequality. It requires neither the whole-word endpoint F=R nor numerical
 optimization. This is a proper subfamily of L2; the full eight-dimensional
 target and the other four local targets remain open.
 
+The [exact L3 strong local minimum](docs/LOCAL_L3_STRONG_MINIMUM.md) also
+satisfies the complete input domain. Its full-arc control inequalities and
+positive constrained second variation imply strict strong local optimality
+by a published sufficient theorem, with the free-time conversion made
+explicit. Arbitrary nearby controls do not improve this example. A distant
+cheaper replacement is still possible, so this records a failed local method
+and leaves L3 open. An [exact finite reproducer](explorations/local_l3_exact_certificate.py)
+checks the displayed algebra; the interval signs are proved in the hand note.
+
 ## Earlier comparison results retained
 
 The source notes supply a full asymmetric hand comparison for every admissible

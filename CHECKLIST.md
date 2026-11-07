@@ -36,7 +36,7 @@ boundedness theorem.
 | Coverage | Every cyclically reduced minimizing word with N>=6 contains one of the five specified six-arc windows, using the established forward-alternation exclusion. | Hand proof independently reviewed, with a separate finite-graph computational cross-check. No new cost class excluded by this alone. |
 | L1: 012012 | Strictly cheaper endpoint-preserving replacement on the entire eligible local domain. | **Open.** An exact eligible stationary minimum disproves universal nearby same-word descent; different-word or nonlocal improvements remain possible. See [LOCAL_FORWARD_SIX](docs/LOCAL_FORWARD_SIX.md). |
 | L2: 021021 | Same universal local improvement for five consecutive reverse switches. | **Open.** A regular-family comparison does not cover asymmetric local endpoints. |
-| L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Open.** |
+| L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Open.** An exact eligible strict strong local minimum rules out universal nearby improvement, including arbitrary nearby controls. Distant replacements remain possible; see [LOCAL_L3_STRONG_MINIMUM](docs/LOCAL_L3_STRONG_MINIMUM.md). |
 | L4: 010201 | Same universal local improvement at a reverse run of length two followed by at least two forward switches. | **Open.** |
 | L5: 021012 | Same universal local improvement at a reverse run of at least three followed by at least two forward switches. | **Open.** |
 | Uniform bound | Deduce N<=5 for every global minimizer from all five local improvements and the published finite bang-bang reduction. | Conditional implication proved; its five analytic premises remain open. |
@@ -79,6 +79,17 @@ pieces. It does not prove the current at-most-six L2 target, its full-domain
 seven-piece variant, or a uniform bound. A universal strict improvement with
 any finite replacement count would still contradict global minimality; the
 number of pieces in a competitor need not decrease for that contradiction.
+
+[LOCAL_L3_STRONG_MINIMUM](docs/LOCAL_L3_STRONG_MINIMUM.md) gives an eligible
+`021210` window with every factor `5/4` and initial margins
+`sqrt(448/803) * (1,2,193/112)`. Its positive constrained Hessian, strict
+full-arc Hamiltonian inequalities, and transverse switches meet the
+published sufficient-optimality theorem after the explicitly justified
+free-time augmentation. It is a strict strong local minimum in the normalized
+free-log-time formulation, including its duration coordinate. Thus nearby
+same-word or arbitrary-control improvements cannot handle every L3 input.
+This is a local-method obstruction: no quantitative radius or global
+comparison excludes a distant cheaper replacement. L3 remains open.
 
 ## What is fixed, rather than growing
 
@@ -136,6 +147,12 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Prove an exact eligible L3 strict strong local minimum. The finite endpoint,
+  Hessian, sector, and needle identities have an exact reproducer; the full-arc
+  logarithm signs and published theorem's free-time hypotheses were checked
+  by hand and independently reviewed. This rules out nearby methods, not
+  the full L3 statement, and leaves the analytic completion count at 0/5.
 
 - Consolidate the independent P0 review into MINIMIZER_WINDOW_AUDIT. Record
   the corrected terminal conjugation, actual relabeling map, exact octagon

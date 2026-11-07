@@ -350,6 +350,13 @@ variation, and strictly positive second variation. It is a strict local
 minimum on its same-word endpoint fiber. A different-word or nonlocal
 replacement remains possible, so this does not refute L1 itself.
 
+[LOCAL_L3_STRONG_MINIMUM.md](LOCAL_L3_STRONG_MINIMUM.md) gives a stronger
+nearby-method obstruction for L3: an eligible input with a positive constrained
+Hessian and strict full-arc control inequalities is a strict strong local
+minimum in an explicitly normalized free-log-time formulation. This includes
+arbitrary nearby controls. The proof supplies no global exclusion of distant
+cheaper replacements, so it does not refute the stated L3 existence claim.
+
 For L1, [LOCAL_FORWARD_RANK.md](LOCAL_FORWARD_RANK.md) now proves that the
 full endpoint rank is five throughout the positive strict-star domain, so
 these two remaining equations have rank two everywhere. The proof resolves

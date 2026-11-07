@@ -161,6 +161,10 @@ method. A theorem for *globally closed* `012012` does not count.
 - [ ] L2: `021021` (reverse-cyclic; do not infer from L1 by an unproved
   time-reversal/reflection symmetry).
 - [ ] L3: `021210` (isolated forward switch inside reverse runs).
+  [LOCAL_L3_STRONG_MINIMUM.md](LOCAL_L3_STRONG_MINIMUM.md) supplies an exact
+  eligible strict strong local minimum in the normalized free-log-time
+  formulation. Universal nearby improvement, including arbitrary nearby
+  controls, is false. A distant cheaper replacement remains possible.
 - [ ] L4: `010201` (a reverse run of exactly two).
 - [ ] L5: `021012` (a longer reverse run).
 
@@ -227,6 +231,9 @@ conjecture solved at completion of P0 or at an analytic count below 5/5.
 7. The eligible exact input in `LOCAL_FORWARD_SIX.md` is a strict
    same-word local minimum. A universal local-deformation-only proof of L1
    is false; its full different-word/nonlocal replacement claim is unresolved.
+8. The eligible L3 input in `LOCAL_L3_STRONG_MINIMUM.md` is a strict strong
+   local minimum even among arbitrary nearby controls. The result gives
+   no global radius and therefore is not a full L3 counterexample.
 
 ## Handoff status and reporting contract
 

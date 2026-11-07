@@ -122,6 +122,29 @@ the use of the implicit function theorem. No material issue was found.
 - [x] State seven replacement pieces and a proper subfamily; do not mark the
   full L2 target or a uniform complexity bound complete.
 
+## Exact L3 strong local minimum
+
+`docs/LOCAL_L3_STRONG_MINIMUM.md` gives a single eligible `021210` input,
+with all factors `5/4` and raw initial state `(1,2,193/112)`. Its independent
+hand review checked all full-arc sign proofs and the ASZ theorem's hypotheses,
+including the free total log duration as a constant state. A further review
+checked the normalization, multiplier, finite variation space, and scope.
+The exact finite reproducer completed with Python 3.12.14 and SymPy 1.14.0.
+
+- [x] Verify whole-arc strict star and all sector signs by rational Bernstein
+  coefficients, with an exact competitive-cost bound.
+- [x] Use a valid full endpoint chart, rank five, and the one-dimensional
+  kernel with fixed initial state.
+- [x] Compute the constrained Hessian including endpoint curvature and prove
+  its positive sign with elementary logarithm bounds.
+- [x] Prove every nonactive full-arc needle gap is positive, with exactly two
+  maximizers at each internal switch and a strict crossing derivative.
+- [x] Check normality, free-duration transversality, and the finite second
+  variation for the fixed-interval augmented problem in ASZ Theorem 2.6.
+- [x] State strong local optimality in the normalized topology including
+  duration; do not claim it is a global endpoint minimum or refutes L3.
+- [ ] Exclude distant cheaper replacements. Not supplied by this certificate.
+
 ## Exploratory local-fiber probe: inconclusive
 
 The retained script `explorations/local_six_fiber_probe.py` records a finite
