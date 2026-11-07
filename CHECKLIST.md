@@ -60,11 +60,24 @@ is strictly greater than `1/200` on the displayed nonzero tangent. Hence it
 is a strict local minimum on the same-word endpoint fiber. This refutes the
 universal nearby same-word approach, not L1's broader replacement claim.
 
+The [complete needle audit](docs/LOCAL_FORWARD_NEEDLE_AUDIT.md) strengthens
+this to a strict strong local minimum in the augmented normalized free-log-time
+formulation. All twelve nonactive full-arc gaps are positive in the interiors;
+the external endpoints have unique active maximizers and all internal switches
+are simple and transverse. The checked ASZ theorem rules out every sufficiently
+nearby arbitrary-control improvement. This is compatible with the following
+distant replacement.
+
 For that exact input, [a different-word hand certificate](docs/LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md)
 now constructs a strictly cheaper six-piece `012021` replacement. A rational
 contraction ball proves exact endpoint equality, and rational logarithm
 bounds prove a normalized cost decrease greater than `1/100000`. This is
 one resolved explicit test input, not a full-domain L1 exclusion.
+
+The independent appendix gives a second exact slice for the same source,
+checked with standard-library Fraction arithmetic. The implicit function
+theorem continues either construction to nearby eligible inputs; no radius
+or coverage of the rest of the L1 domain is claimed.
 
 [LOCAL_FORWARD_RANK](docs/LOCAL_FORWARD_RANK.md) proves that the full L1
 endpoint map has rank five on its entire positive strict-star domain,
@@ -197,6 +210,14 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 ## Current-session entries
 
+- Prove that the exact L1 input is a strict strong local minimum against
+  arbitrary nearby controls, with twelve full-arc gap certificates and the
+  normal free-time ASZ hypotheses. Independently review the hand argument
+  and reproduce its exact identities. Preserve the concurrent nonlocal proof;
+  add a second rational slice with an independent Fraction checker and the
+  open-neighborhood continuation. These results concern the same source and
+  do not close a universal local gate.
+
 - Strengthened the small-window L3 counterexample to all measurable controls
   and free terminal times. Checked ASZ's hypotheses on one fixed padded
   reference, proved arbitrary-control compactness and state-only clock
@@ -252,7 +273,8 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
   transforming the entire disk by the initial-frame inverse. Verified the
   twisted seam, finite bang-bang source, exact endpoint splice, and low-cost
   reverse geometric construction. The through-five equality scope was
-  checked; its full algebra was not re-audited. L1--L5 remain open.
+  checked; its full algebra was not re-audited. At that checkpoint all five
+  analytic inputs were open; the later L3 refutation is recorded above.
 - `6076dc6`: proved the five-template coverage statement by a hand run argument;
   stated the exact local domains, endpoint map, suffix inverses, and conditional
   global conclusion. No analytic local case was marked closed.
@@ -261,7 +283,7 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
   Removing the five target edges leaves a 12-vertex, 16-edge acyclic graph.
   This verifies coverage without testing a maximum total length.
 - Ledger reorientation: freeze increasing-length comparisons; separate the
-  proved finite coverage theorem from the five open universal cost statements.
+  proved finite coverage theorem from the then-open universal cost statements.
   Retain the exploratory local-fiber probe with its failures, not as a certificate.
 - Independent hand review passed for the five-template coverage: all sign/label
   maps, the twisted seam, the run alternatives, and the one-period window

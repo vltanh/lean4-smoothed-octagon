@@ -365,6 +365,17 @@ variation, and strictly positive second variation. It is a strict local
 minimum on its same-word endpoint fiber. A different-word or nonlocal
 replacement remains possible, so this does not refute L1 itself.
 
+The [full-arc needle audit](LOCAL_FORWARD_NEEDLE_AUDIT.md) proves that this
+same input is a strict strong local minimum in the augmented normalized
+free-log-time formulation, even among arbitrary nearby controls. Its
+published sufficient-optimality theorem is checked explicitly; no global
+comparison with distant replacements follows from that theorem.
+
+For this exact input, [LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md](LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md)
+now supplies two exact six-piece `012021` replacement certificates with cost
+decrease greater than `1/100000`. An implicit-function argument continues
+them to nearby eligible inputs. Neither certificate covers the full L1 domain.
+
 [LOCAL_L3_STRONG_MINIMUM.md](LOCAL_L3_STRONG_MINIMUM.md) gives a stronger
 nearby-method obstruction for L3: an eligible input with a positive constrained
 Hessian and strict full-arc control inequalities is a strict strong local
@@ -389,8 +400,10 @@ the state endpoints in active margins and signs four explicit determinant
 terms. It applies without cost or sector restrictions. It does not assert
 uniform conditioning as factors collapse or margins approach zero.
 
-For L4, LOCAL_SIX_VARIATION proves full endpoint rank five by a paired-matrix
-determinant. Rank zero and rank one points remain unresolved for L2, L3, L5. In particular,
+The independent paired-holonomy determinant in
+[LOCAL_SIX_VARIATION.md](LOCAL_SIX_VARIATION.md) also proves full rank five
+throughout L4. Rank zero and rank one points MUST still be treated for L2,
+L3, and L5. In particular,
 dimension counting alone proves neither a smooth fiber nor a decreasing
 direction. Stationary points cannot be discarded in any template. Failure of
 this same-word local method alone does not settle different-word replacement.

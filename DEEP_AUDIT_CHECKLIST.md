@@ -182,6 +182,30 @@ The full L1 domain remains open.
 - [x] Independently run the supplementary exact checker under Python
   3.12.14 / SymPy 1.14.0, without Lean, Lake, or CI.
 
+The independent appendix fixes the first replacement factor rather than
+the last. Its separate Fraction checker passed with Python 3.12.14, including
+the factor ball inside `(1,4/3)^5`, all finite residual and inverse-defect
+bounds, the contraction/self-map inequalities, and the corrected cost gap.
+The same uniform hand bounds apply to either choice of five varying factors.
+Nonsingularity and strictness also give the stated nearby-input continuation;
+no global coverage or numerical neighborhood radius is inferred.
+
+## Exact L1 full-control needle audit
+
+`docs/LOCAL_FORWARD_NEEDLE_AUDIT.md` strengthens the same-word obstruction
+to a strict strong local minimum in the augmented normalized free-log-time
+topology. Its exact reproducer passed with Python 3.12.14 and SymPy 1.14.0.
+An independent hand review found no material issue in the interval signs,
+endpoint conditions, normality, free-duration transversality, or ASZ application.
+
+- [x] Display and prove all twelve whole-arc nonactive Hamiltonian signs.
+- [x] Prove unique active maximization at both external endpoints.
+- [x] Check all five simple switches and strict crossing derivatives.
+- [x] Identify five normalized switches plus total duration with the six
+  factor variables; retain the endpoint-curvature correction in the Hessian.
+- [x] State the exact strong topology and allow arbitrary nearby controls.
+- [x] Keep the distant replacement compatible with the local conclusion.
+
 ## Uniform reverse-six subfamily: exact hand certificate
 
 `docs/LOCAL_REVERSE_SIX.md` treats every q>1 with six equal factors and the

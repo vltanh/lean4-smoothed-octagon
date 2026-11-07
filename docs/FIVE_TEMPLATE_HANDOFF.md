@@ -113,11 +113,21 @@ Do not try to prove a universal negative-Hessian assertion. The broader L1
 claim remains open: test different-word or nonlocal replacements, or prove
 additional necessary conditions for windows in actual global minimizers.
 
+[LOCAL_FORWARD_NEEDLE_AUDIT.md](LOCAL_FORWARD_NEEDLE_AUDIT.md) strengthens
+the exact example to a strict strong local minimum in the augmented
+normalized free-log-time problem. All full-arc gaps and ASZ hypotheses
+are checked, so nearby arbitrary-control descent also fails. The distant
+replacement below remains compatible with that conclusion.
+
 The explicit obstruction has now been resolved by a different word:
 [LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md](LOCAL_FORWARD_NONLOCAL_REPLACEMENT.md)
 proves an exact six-piece `012021` replacement with cost decrease greater
 than `1/100000`. Do not repeat that one-input search; the missing task is
 a proof over the full L1 domain, including other stationary inputs.
+
+Its independent appendix gives a second rational slice and a standard-library
+Fraction checker, together with an unspecified nearby-input continuation.
+Neither witness gives full-domain coverage.
 
 **Interior rank classification is complete for L1:**
 [LOCAL_FORWARD_RANK.md](LOCAL_FORWARD_RANK.md) proves full rank five on
@@ -265,9 +275,10 @@ conjecture solved at completion of P0 or at an analytic count below 5/5.
    do not give a global word-length bound.
 5. The numerical local-fiber probe has failures and covers only a small
    box; treat it as exploratory evidence, not a proof.
-6. A finite list of five open universal inequalities is not a bounded
-   **enumeration of actual minimizers** until those inequalities are
-   proved.
+6. A finite list of proposed universal inequalities is not a bounded
+   **enumeration of actual minimizers**. The original list now contains
+   a false L3 premise, and a corrected sufficient list would still need
+   complete analytic proofs.
 7. The eligible exact input in `LOCAL_FORWARD_SIX.md` is a strict
    same-word local minimum. A universal local-deformation-only proof of L1
    is false; its full different-word/nonlocal replacement claim is unresolved.

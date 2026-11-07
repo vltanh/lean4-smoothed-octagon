@@ -224,3 +224,87 @@ that suggested the rational center was exploratory; equations (1)–(9)
 are the independent finite-data existence and cost certificate.
 
 No Lean compilation, typechecking, Lake command, or CI was performed.
+
+## Appendix. Independent rational slice and robustness
+
+An independently derived certificate fixes the **first** replacement factor
+at `59/50`, instead of fixing the last factor at `109/100`. Keep the same
+initial state and target, and solve for the last five factors. Their rational
+center has the following numerators over `10^18`, in order:
+
+```text
+1121447939284173062
+1314499725816582306
+1132952499501451505
+1133658541831577454
+1090582634926571007
+```
+
+For this slice use the preconditioner
+
+\[
+B_0=\frac1{1000}
+\begin{pmatrix}
+-2615&-1603&832&-213&602\\
+3910&-1066&-5951&-3595&-2512\\
+326&1146&405&840&720\\
+-954&3574&4859&4262&1977\\
+4697&3571&-1533&358&-1014
+\end{pmatrix}.
+\]
+
+Let `A` be its five-column endpoint Jacobian and `f` its endpoint residual.
+Exact application of (4) and the matrix product rule gives
+
+\[
+\|B_0\|_\infty=8517/500<18,\qquad
+\|f(c)\|_\infty<2/10^{18},\qquad
+\|B_0f(c)\|_\infty<36/10^{18}.
+\]
+
+More explicitly, `10^20 f(c)` lies coordinatewise in
+`(148,149), (-166,-165), (72,73), (68,69), (36,37)`. The five row sums of
+`|I-B_0 A|` are strictly below
+`(3434,3533,7981,4599,4566)/10^6`, all below `1/100`. Every center margin
+exceeds `74/100`, and the factor ball of radius `rho=10^-15` is contained
+in `(1,4/3)^5`.
+
+The same uniform estimates (5)–(6) apply to these five varying factors.
+Thus `y -> y-B_0 f(y)` has derivative norm less than
+`1/100+18*102400*rho<1/50`, and center displacement less than `36/10^18`.
+Since `36/10^18+rho/50<rho`, it is a self-map contraction. The inverse-defect
+bound makes `B_0` invertible, so its fixed point is again an exact endpoint
+solution. The raw margins remain above `74/100-4860*rho>73/100` on the ball.
+
+The twelve-term logarithm bounds give
+
+\[
+J_{012021}(c)<4622907/10^7,\qquad
+J_{\rm old}>4623011/10^7.
+\]
+
+Using the existing cost derivative bound `10^8` and this radius, the exact
+solution therefore improves cost by more than
+
+\[
+\frac{104}{10^7}-10^8\rho
+=\frac{103}{10^7}>\frac1{100000}.
+\]
+
+The independent [Fraction checker](../explorations/local_forward_nonlocal_fraction_certificate.py)
+reproduces every finite bound using Python's standard library alone and a
+separately propagated endpoint Jacobian. It passed with Python 3.12.14.
+The rational data and the uniform derivative arguments received independent
+hand review; no material issue was found. The two slices certify two actual
+replacements for the same source, not two completed universal cases.
+
+Both constructions also have a precise robustness consequence. The inverse
+bound makes the solved endpoint Jacobian nonsingular at the exact solution.
+Write nearby source initial states as normalized raw margins `(1,b,c)`,
+with scale squared `4/(b+c+bc)`, and vary all six source factors. The implicit
+function theorem continues the five replacement factors in these eight input
+coordinates. Strict star membership and a strict cost decrease persist on
+some open neighborhood, intersected with the eligible source domain. No
+numerical radius for that input neighborhood or full-domain coverage is
+claimed. The [strong local minimum certificate](LOCAL_FORWARD_NEEDLE_AUDIT.md)
+for the original trajectory is compatible with these distant improvements.

@@ -78,6 +78,15 @@ now resolves that particular input with a six-piece `012021` replacement
 whose normalized cost is lower by more than `1/100000`. It does not prove
 the universal L1 claim.
 
+The [full needle audit](docs/LOCAL_FORWARD_NEEDLE_AUDIT.md) proves that this
+source is a strict strong local minimum in the augmented normalized free-log-time
+problem, including arbitrary nearby controls. Every full-arc sign and the
+published sufficient theorem are checked. The cheaper path is a distant
+replacement, so the two results are compatible. The nonlocal note's independent
+appendix supplies a second exact slice with a standard-library Fraction checker;
+an implicit-function argument extends the improvement to nearby eligible inputs,
+with no claimed coverage of the full L1 domain.
+
 The [full-domain L1 rank theorem](docs/LOCAL_FORWARD_RANK.md) independently
 resolves the singular-fiber question: all five frame-and-state endpoint
 constraints have rank five for every strict-star `012012` input with positive
