@@ -66,6 +66,30 @@ note. No independent review of the new exploratory scripts beyond
 self-checks is claimed. None of the five case-C analytic certificates
 has been proved, and the global octagon comparison remains OPEN.
 
+## Uniform symmetric mixed-core review
+
+[MIXED_GLOBAL_SYMMETRIC_ESCAPE](docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md)
+received an [independent internal hand audit](docs/MIXED_GLOBAL_SYMMETRIC_AUDIT.md).
+
+- [x] Check the full strict-star core range `1<h<2, 0<v<3`, all four
+  equal factors, continuous stationary cotangent, and both outer ties.
+- [x] Identify the actual normalized lift by the existing rank-five
+  theorem, without imposing arbitrary state or frame endpoint equations
+  on the six-piece window.
+- [x] Verify the shear/cyclic cotangent transformation, physical factor
+  `-3/2`, and negative elliptic orientation in the rejected Casimir region.
+- [x] Retain equality in the outgoing switching derivative; use the
+  actual factor-h pad to reach the last critical point with a strict gap.
+- [x] Verify every rational logarithm envelope and polynomial threshold,
+  the 18 positive Bernstein coefficients, concavity, and the exact
+  determinant separation `891/400-(313/210)^2=211/35280`.
+- [x] Prove both missing-control gaps stay strict until finite star exit,
+  and use the full twisted state/costate extension for the contradiction.
+- [x] Run the supplementary checker: all 146 exact identities and rational
+  sign checks passed with Python 3.12.14 / SymPy 1.14.0.
+- [ ] Extend the theorem to arbitrary asymmetric cores and shorter
+  outgoing pads. This scoped family theorem leaves universal M1 open.
+
 ## Active global proof checks
 
 The active entry point is [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md).

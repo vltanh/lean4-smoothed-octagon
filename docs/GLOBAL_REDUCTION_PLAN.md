@@ -36,6 +36,15 @@ quadratic/cubic and triple contacts, by exact signs through order three.
 Every passing branch still needs its complete-period fate proof. Boundary
 limits and all five sharp comparison cases remain open.
 
+[MIXED_GLOBAL_SYMMETRIC_ESCAPE](MIXED_GLOBAL_SYMMETRIC_ESCAPE.md) now
+excludes the complete symmetric reverse-four core family: `1<h<2`,
+`0<v<3`, positive incoming control-0 padding, and outgoing factor at
+least `h`. Its actual unique adjoint either violates the complete-period
+Casimir budget or reaches the last state-covector critical point and is
+forced to star exit. The full parameter proof and 146 exact checks have
+passed an independent internal audit. Arbitrary asymmetric M1 and
+shorter outgoing padding remain open; this does not close a case C.
+
 ## 1. Decision and exact target
 
 

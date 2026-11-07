@@ -27,6 +27,16 @@ normal-lift corollary is qualitative, with no explicit multiplier bound
 for an interval search.
 
 
+Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.
+The full symmetric 2121 core family, four common factors 1<h<2 and
+full scale range 0<v<3, is excluded from competitive closed PMP periods
+when the outgoing control-0 pad has factor at least h and the incoming
+pad is positive. A cost--Casimir obstruction covers the complement of
+a uniform postcritical escape region. The final pad can begin at a
+degenerate tie. This does not cover asymmetric M1 or shorter outgoing
+pads, and closes no universal case-C target. Its 146-check rational
+certificate is supplementary to the displayed hand proof.
+
 Read docs/SINGULAR_COST_BUDGET.md and docs/MEASURABLE_EDGE_PMP_BOUND.md.
 The complete-period Hamiltonian and polar-angle argument gives a direct
 homogeneous costate bound for every competitive closed PMP lift. On the

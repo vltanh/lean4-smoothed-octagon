@@ -59,7 +59,7 @@ not exclude an entire case.
 |---|---|---|---|---|
 | F: pure forward | 012012 | +++++ | Full local endpoint rank five; standard-family whole-period negative index, but asymmetric case open | Uniform negative *closed-period* variation or cost/return obstruction for all competitive all-forward occurrences |
 | R: pure reverse | 021021 | ----- | Exact seven-piece descent on equal-factor state-cyclic inputs; rank-four example is above the competitive cost cap | Rule out competitive closed reverse occurrences using edge needle, rank-degenerate, and limiting alternatives |
-| M1: short mixed | 021210 | --+-- | Full local rank five; proven finite escape for an explicit small-core phase region; original broad local replacement is false | Expand escape/cost/index coverage across the remaining complete-period PMP region |
+| M1: short mixed | 021210 | --+-- | Full local rank five; full symmetric equal-factor core exclusion with outgoing factor at least h by cost/escape dichotomy; original broad local replacement is false | Expand escape/cost/index coverage across the remaining complete-period PMP region |
 | M2: mixed transition | 010201 | +--++ | Full local rank five; switch-only descent is not universally valid | Find a whole-arc needle, global index, or continuation certificate for all complete-period candidates |
 | M3: long reverse run | 021012 | ---++ | Full local rank five from prefix 02101 | Find a uniform phase-return obstruction or exact global variation for these mixed runs |
 
@@ -199,10 +199,12 @@ plot or optimizer output proves an unrestricted inequality.
    outgoing positive-vertex rule have independent internal audits.
    Continue every passing branch, with verified signs or UNKNOWN; local
    classification is not a full-period exclusion or error-controlled code.
-2. **Extend M1 escape**: its existing finite escape region offers the
-   clearest monotone full-period certificate. Compute the exact
-   complement and identify a finite set of alternatives, not a larger
-   list of whole words.
+2. **Extend M1 escape**: MIXED_GLOBAL_SYMMETRIC_ESCAPE and its audit now
+   cover every symmetric equal-factor reverse-four core with a positive
+   incoming pad and outgoing factor at least h, using either the Casimir
+   budget or postcritical escape. All 146 exact checks pass. Address
+   arbitrary asymmetric cores and shorter outgoing pads next; do not
+   count the symmetric family as universal M1 or add word lengths.
 3. **Reverse R**: test all positive/competitive L2 endpoint-rank
    alternatives and needle signs, especially boundary limits; do
    not assume the above-budget rank-four example is competitive.
@@ -228,7 +230,7 @@ manufacture additional word lengths or count partial samples as closure.
 |---|---|---|---|
 | F | **First deterministic run** | Standard N=4/7/10 Hessian pilot; asymmetric continuation OPEN | OPEN |
 | R | **First deterministic run** | OPEN | OPEN |
-| M1 | **First deterministic run** | Small-core escape subregion only | OPEN |
+| M1 | **First deterministic run** | Full symmetric equal-core family with outgoing factor >=h excluded by audited cost/escape dichotomy; asymmetric/short-pad complement OPEN | OPEN |
 | M2 | **First deterministic run** | OPEN | OPEN |
 | M3 | **First deterministic run** | OPEN | OPEN |
 | T: ties/normality | Normality and exact normal outgoing-vertex rule proved | Independent hand audits complete; full-period branch fate OPEN | Normality and local branch rule CLOSED; no global case excluded |

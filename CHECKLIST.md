@@ -86,7 +86,15 @@ Those source calculations have not been independently certified here.
 excludes every small-core padded L3 window in `0<b<=1/(10000*sqrt(3))`
 from any closed twisted-periodic PMP extremal by a finite escape test.
 Their fixed-endpoint global optimality remains true; the full L3 parameter
-domain is not excluded.
+domain is not excluded. The new
+[MIXED_GLOBAL_SYMMETRIC_ESCAPE](docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md)
+excludes the full symmetric equal-factor reverse-four core domain
+`1<h<2, 0<v<3`, with any positive incoming control-0 pad and outgoing
+control-0 factor at least `h`. A complete-period Casimir obstruction
+or postcritical finite escape covers every point of that domain. The
+[independent audit](docs/MIXED_GLOBAL_SYMMETRIC_AUDIT.md) and 146 exact
+algebra/sign checks passed. Asymmetric cores and shorter outgoing pads
+are outside the theorem; the M1 case-C gate remains open.
 
 [VERTEX_INSERTION_OBSTRUCTION](docs/VERTEX_INSERTION_OBSTRUCTION.md)
 refutes one proposed G4 shortcut: the all-reverse admissible class has

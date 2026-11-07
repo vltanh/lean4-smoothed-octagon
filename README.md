@@ -54,6 +54,26 @@ retained. The theorem supplies no uniform arc length and does not prove
 closed return, cost comparison, or optimality; all five global cost
 comparisons remain open.
 
+## Uniform exclusion of the full symmetric M1 core family
+
+[The symmetric mixed-core theorem](docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md)
+excludes every competitive closed PMP period containing a reflection-
+symmetric `2121` core with four common factors `1<h<2`, any admissible
+scale `0<v<3`, a positive incoming control-0 pad, and an outgoing
+control-0 pad of factor at least `h`. It includes all symmetric M1
+windows with six equal factors; the outer cuts may lie inside longer
+arcs. The conclusion uses the actual complete-period equations.
+
+The unique normalized adjoint either violates the complete-period
+cost--Casimir budget or forces the last vertex to the state boundary
+in finite time. The hand proof covers the full stated parameter range,
+including a degenerate initial tie, with elementary logarithm bounds
+and 18 explicit positive rational Bernstein coefficients. An
+[independent internal review](docs/MIXED_GLOBAL_SYMMETRIC_AUDIT.md)
+passed, as did all 146 supplementary exact algebra/sign checks.
+Arbitrary asymmetric M1 cores and shorter outgoing pads remain open;
+this subfamily theorem closes none of the five universal C gates.
+
 ## Active result: an explicit bound for every global minimizer
 
 
