@@ -76,7 +76,9 @@ We use these named results of Hales--Vajjha, *Packings of Smoothed Polygons*:
 
 - Theorem 5.0.2: every normalized balanced disk with cost at most A_oct has
   its entire state trajectory in the explicit compact strict-star set K
-  of Definition 5.0.1.
+  of Definition 5.0.1. The [source audit](COMPACT_DOMAIN_SOURCE_AUDIT.md)
+  repairs the printed sector reduction and supplies exact area separation
+  from Theorem 5.0.6, including `p_i>=2/15` for every control.
 - The PMP and transversality conditions in Sections 6.2 and 6.6.
 - Theorem 16.3.1: every global minimizer has a finite positive vertex-control
   representation after zero pieces are removed and equal neighbors merged.

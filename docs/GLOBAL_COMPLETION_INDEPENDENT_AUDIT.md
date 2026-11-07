@@ -68,6 +68,12 @@ assume finitely many controls. That is exactly the minimizing
 realization used in the assembly. Ordinary endpoint-submanifold and
 fixed-time Pontryagin principles are the other external analytic inputs.
 
+The [compact-domain source audit](COMPACT_DOMAIN_SOURCE_AUDIT.md) checks
+this entire-trajectory quantifier, repairs the v1 sector display, and
+replaces the decimal separation by exact bounds using the earlier geometric
+area theorem 5.0.6. It also verifies `p_i>=2/15` for all three controls,
+including inactive controls, in the physical normalization used below.
+
 The proof route uses the following dependency order:
 
 | Step | Scope needed and supplied |
