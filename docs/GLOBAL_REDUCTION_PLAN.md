@@ -5,7 +5,33 @@ The unrestricted Reinhardt conjecture, affine uniqueness, and Lean kernel
 validation remain open. No increasing-length closed-word enumeration is
 authorized by this plan.
 
+## Active successor to the impractical integer catalogue
+
+The explicit bound N<10^56 remains a proved *hand reduction*, but
+the method for completing G4 is now
+[FINITE_CASE_COMPUTER_ROADMAP](FINITE_CASE_COMPUTER_ROADMAP.md).
+Instead of comparing all words up to that cutoff, use the already proved
+five-template coverage to investigate fixed-dimensional **complete-period
+PMP** case domains F/R/M1/M2/M3. Each has three distinct gates:
+a numerical necessary-condition atlas (A), a whole-period return/escape
+fate test (B), and a universal hand certificate (C). None of the
+five C gates is closed. These cases do not restore the false universal
+M1 local replacement statement. Return time, full twist and period cost
+must be tested together; isolated local PMP windows are insufficient.
+
+[CASE_ATLAS_EXPERIMENT_001](CASE_ATLAS_EXPERIMENT_001.md) and its three
+reproducible numerical scripts give the first A-gate regression tests:
+stationary local windows without true external ties, a locally
+switch-complete standard N=7 forward window whose full period is over
+budget, a positive-cost all-reverse octagon-boundary insertion branch,
+and closed-period numerical negative indices 0/2/4 for standard
+N=4/7/10. All are diagnostics on already known families, not universal
+exclusions. The normality hand draft in GLOBAL_NORMALITY requires
+independent audit, and triple/nontransverse ties plus boundary limits
+remain mandatory.
+
 ## 1. Decision and exact target
+
 
 Work with the **complete minimizing period and its normalized Pontryagin
 lift**. Preserve the free initial state, both frame/state terminal equations,
