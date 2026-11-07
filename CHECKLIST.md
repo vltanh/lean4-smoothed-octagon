@@ -2,7 +2,16 @@
 
 **Only authoritative next-step plan: [docs/HANDOFF.md](docs/HANDOFF.md).** The long earlier progress ledgers and abandoned targets are archived, not silently deleted.
 
-## Completed hand-proof checkpoints
+## Active goal: proof without computer assistance
+
+The user has requested a hand proof beyond the completed computational
+baseline below. [HAND_PROOF_STATUS](docs/HAND_PROOF_STATUS.md) is the finite
+replacement ledger: H-F, H-S, H-N and the final dependency audit H-A are
+open. The [new hand refinements](docs/HAND_PROOF_REFINEMENTS.md) strengthen
+the Casimir cap, reverse-centre scale and forward successor norm. The
+closed computer-assisted gates below do not close these new obligations.
+
+## Baseline proof checkpoints
 
 - [x] G1: actual twisted state/frame and costate interface, free initial state and required geometric/PMP inputs.
 - [x] G2: normalized singular clearance \(D>10^{-11}\).

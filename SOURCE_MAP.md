@@ -2,6 +2,12 @@
 
 Read the **[authoritative handoff](docs/HANDOFF.md)** before following any historical cross-reference. The pre-reorganization long source map is preserved in [legacy snapshots](docs/legacy/snapshots/SOURCE_MAP.md).
 
+**Active work:** the user now requests a proof without computer assistance.
+[HAND_PROOF_STATUS](docs/HAND_PROOF_STATUS.md) records the open hand-only
+replacement gates; [HAND_PROOF_REFINEMENTS](docs/HAND_PROOF_REFINEMENTS.md)
+contains the new analytic bounds. The table below maps the completed
+computer-assisted baseline and does not assert hand-only completion.
+
 | Scope | Active sources |
 | --- | --- |
 | Geometric/control correspondence, twisted PMP | [ADMISSIBLE_REALIZATION](docs/ADMISSIBLE_REALIZATION.md), [REVERSE_COMPARISON](docs/REVERSE_COMPARISON.md), [GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md), [final dependency review](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) |

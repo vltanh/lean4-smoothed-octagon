@@ -1,6 +1,8 @@
-# Authoritative handoff — completed smoothed-octagon proof
+# Authoritative handoff — hand proof now in progress
 
-**Status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
+**Active request (2026-11-07): find a hand proof that does not depend on computer assistance.** The finite replacement ledger is [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md). New explicit inequalities are in [HAND_PROOF_REFINEMENTS](HAND_PROOF_REFINEMENTS.md). That goal is not yet complete: the interval exclusions below are the completed computational baseline, not hand-only premises. Preserve the baseline and replace its indispensable computational dependencies by readable arguments.
+
+**Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement
 

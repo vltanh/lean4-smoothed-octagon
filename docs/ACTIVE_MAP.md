@@ -2,6 +2,14 @@
 
 **Entry point:** [HANDOFF.md](HANDOFF.md). This index gives the short reading path, not another task ledger.
 
+## Current hand-proof task
+
+The active request is a proof without computer assistance. Read the
+[finite replacement ledger](HAND_PROOF_STATUS.md) and
+[new analytic refinements](HAND_PROOF_REFINEMENTS.md) first. The remaining
+reading path describes the completed computer-assisted baseline; its
+interval covers are not premises of the requested new proof.
+
 ## Completed theorem and review path
 
 All sufficient whole-period cases and the final cost/equality assembly
