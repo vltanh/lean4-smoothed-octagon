@@ -234,6 +234,14 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 ## Current-session entries
 
+- Prove that completing the outer control-0 arcs of the padded L3
+  counterexample does not yield a complete PMP candidate when the core is
+  sufficiently small. Exact limiting gaps stay positive until star loss;
+  first- and second-derivative estimates control the degenerating join.
+  Reflection handles both sides. An independent hand review passed. The
+  auxiliary cost excess applies only to intervals within one period.
+  No general L3 replacement or explicit smallness cutoff is claimed.
+
 - Prove endpoint rank five throughout L5 using its five-piece prefix02101.
   A three-column frame pivot and an explicit positive two-column minor give
   a five-dimensional paired image. A strict-star sign makes it transverse

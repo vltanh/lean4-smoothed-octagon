@@ -159,6 +159,13 @@ near the standard forward family. Thus the added condition is effective
 against the displayed obstructions, but cannot justify an equal-factor
 classification.
 
+The [PMP continuation analysis](docs/PADDED_L3_PMP_CONTINUATION.md) tests
+whether the padded counterexamples can be completed to genuine outer arcs.
+For all sufficiently small cores, their unique lift reaches the strict-star
+boundary before either next Hamiltonian tie. Thus extending those pads does
+not produce a surviving complete-window candidate. This is a proof for that
+family, with an existential smallness threshold, not a universal L3 exclusion.
+
 The [full-domain L3 rank theorem](docs/LOCAL_MIXED_SIX_RANK.md) proves endpoint
 rank five for every positive strict-star `021210` input. Three independent
 edge directions and two independent normal columns cover arbitrary outer

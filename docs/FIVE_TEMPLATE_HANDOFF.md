@@ -41,6 +41,13 @@ gives four exact L1 boundary gaps and two scalar interval-endpoint tests.
 It also proves that asymmetric eligible local-PMP windows satisfying both
 external ties persist; do not infer equal factors from these conditions.
 
+Do not try to evade the padded-family obstruction merely by extending its
+outer arcs to the next PMP switches:
+[PADDED_L3_PMP_CONTINUATION.md](PADDED_L3_PMP_CONTINUATION.md) proves that,
+for sufficiently small cores, the unique lift reaches the strict-star
+boundary first on both sides. This scoped exclusion leaves the general
+revised L3 target open.
+
 **Do not resume comparing closed words of lengths 7, 8, 9, ...** The finite
 closed-word comparisons through five pieces, and two six-piece closed orbits,
 are assets, but without a complexity bound they do not exhaust minimizers.

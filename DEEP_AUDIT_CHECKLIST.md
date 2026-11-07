@@ -102,6 +102,25 @@ gives its explicit L1 active-margin form and its classification limitation.
 - [x] Obtain independent hand review of both notes.
 - [ ] Prove a uniform strict improvement on a precisely revised domain.
 
+## Completing the padded L3 arcs
+
+`docs/PADDED_L3_PMP_CONTINUATION.md` excludes completion of that particular
+counterexample family to genuine external switches, for sufficiently small
+core size. It does not prove a general L3 improvement theorem.
+
+- [x] Derive the exact two normal control-0 gap forms, including their
+  fixed constant terms, and compute the limiting triple-tie data.
+- [x] Prove positive limiting gaps up to the first inactive-margin zero.
+- [x] Resolve the initial double-zero limit using positive small-core first
+  derivatives and uniform positive second derivatives near the join.
+- [x] Check smooth log-field continuation across the moving star endpoint
+  and the exact reflected incoming state/covector equations.
+- [x] Use short-window rank to fix the lift of any longer continuation.
+- [x] Compute the auxiliary limiting cost and restrict its budget
+  contradiction to an interval within one actual period.
+- [x] Independently review the hand argument; retain its existential
+  smallness threshold and its proper-family scope.
+
 ## L3 counterexample to the at-most-six sufficient lemma
 
 `docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md` supplies an existence family with

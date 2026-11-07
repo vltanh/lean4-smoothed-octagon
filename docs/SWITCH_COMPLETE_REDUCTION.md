@@ -312,6 +312,13 @@ the exact first-order certificate; it does not depend on ASZ or on the
 all-measurable optimality theorem. It concerns selected complete pieces,
 not arbitrary cuts through longer arcs.
 
+[PADDED_L3_PMP_CONTINUATION.md](PADDED_L3_PMP_CONTINUATION.md) goes further
+for sufficiently small cores: extending either outer control-0 arc along
+that unique lift reaches the strict-star boundary before the next tie.
+Thus completing the pads of this explicit family does not produce a new
+input in the revised domain. The smallness threshold is existential, and
+no statement about other L3 inputs follows.
+
 The revised domains remain substantial. The explicit five-dimensional
 continuation in LOCAL_FORWARD_ENDPOINT_FILTER produces eligible
 asymmetric L1 windows satisfying the full local PMP and both genuine
