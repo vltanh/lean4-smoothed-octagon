@@ -2,6 +2,22 @@
 
 **NEXT WORKER: [GLOBAL REDUCTION PLAN](docs/GLOBAL_REDUCTION_PLAN.md).**
 
+**NEW ACTIVE CASE ROADMAP:** [FINITE_CASE_COMPUTER_ROADMAP](docs/FINITE_CASE_COMPUTER_ROADMAP.md)
+replaces impractical whole-word enumeration by five complete-period
+PMP exclusion cases F=012012, R=021021, M1=021210,
+M2=010201, M3=021012. For each, the finite A/B/C gates are:
+reproducible necessary-condition screening, full-period continuation and
+fate classification, and a universal hand certificate. **None of five
+universal exclusion gates C is closed.** Numerical checks in
+[CASE_ATLAS_EXPERIMENT_001](docs/CASE_ATLAS_EXPERIMENT_001.md) verify the
+oracle on known stationary and regular families. The curved
+closed-period Hessian gives numerical negative indices 0,2,4 for
+N=4,7,10; this reproduces already known examples and does not prove
+an asymmetric-family index bound. The case domains retain
+triple/cubic ties, vanishing factors, rank drops, and whole-period
+cost budget. GLOBAL_NORMALITY is still independently unaudited.
+
+
 ## Active global checkpoint
 
 The strongest complete-period bounds are now
@@ -329,6 +345,23 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- **Case-first computational reorientation:** adopt the fixed five
+  complete-period exclusion cases and 15 small A/B/C gates in
+  FINITE_CASE_COMPUTER_ROADMAP. Publish deterministic numerical oracles:
+  structural_case_probe.py (fixed-initial-state six-window normal PMP
+  screen), octagon_boundary_probe.py (exact-endpoint numerical
+  reverse-eight degeneration), closed_period_index_probe.py (free-initial-
+  state complete-period curvature-corrected Hessian). The first experiment
+  records actual inputs, versions, commands, failures and limitations.
+  Generic windows are not stationary; known stationary L1/L3 windows
+  fail their two external switch ties; standard N=7 forward passes
+  local PMP but exceeds the full-period octagon cost. Numeric constrained
+  indices 0/2/4 at N=4/7/10 match an **existing** standard-family theorem.
+  No universal cost exclusion, new hand inequality, or practical exhaustive
+  search is claimed. Do not increase N sequentially. All five case C gates
+  and the unrestricted conjecture remain open.
+
 
 Newest entries come first. Earlier entries record the scope at their own
 checkpoint; the active gate table above controls current status.
