@@ -1,6 +1,31 @@
-# Proof ledger: bounded reduction before further case comparisons
+# Proof ledger: global reduction before a fixed finite comparison
 
-**NEXT WORKER: [FIVE-TEMPLATE HANDOFF](docs/FIVE_TEMPLATE_HANDOFF.md).**
+**NEXT WORKER: [GLOBAL REDUCTION PLAN](docs/GLOBAL_REDUCTION_PLAN.md).**
+
+## Active global checkpoint
+
+The new route uses the complete minimizing period and its normalized lift.
+The original five-template analytic package remains false on its old domain.
+
+| Global gate | Exact result | Status |
+| --- | --- | --- |
+| G1: full-period domain and compact lifts | Actual twisted state/costate closure; projective normalization including abnormal limits; compactness of all minimizing lifts. | **Hand proof complete.** [PMP interface](docs/GLOBAL_PERIODIC_PMP.md), [compactness](docs/GLOBAL_MINIMIZER_COMPACTNESS.md). |
+| G2: singular clearance | One common positive distance from the full singular locus for all normalized minimizing lifts. | **Qualitative theorem proved. Numerical clearance open.** |
+| G3: uniform switch count | Locally uniform count at every nonsingular phase satisfying the minimizer edge condition; finite cover gives one common finite integer for all minimizers. | **Existential uniform bound proved. Specific integer open.** [Uniform theorem](docs/GLOBAL_CLOSED_VARIATION.md). No dwell-time premise. |
+| G4: fixed finite comparison and equality | Use an explicitly certified integer bound, then exhaust precisely that fixed class. | **Blocked by quantification.** Through-five comparison and equality retained; N<=5 and unrestricted rigidity remain open. |
+
+**Actual global exclusion:** [GLOBAL_PERIOD_BUDGET](docs/GLOBAL_PERIOD_BUDGET.md)
+proves a finite state/costate escape test. Every small-core padded L3 window
+in `0<b<=1/(10000*sqrt(3))` satisfies it, so none can occur anywhere in a
+closed twisted-periodic PMP extremal. This is stronger than disqualifying
+their external cuts as complete-piece switches. Their fixed-endpoint global
+optimality remains true, and the full L3 global parameter domain is not excluded.
+
+No numerical switch bound, new larger closed-word comparison, completed
+Reinhardt proof, affine uniqueness theorem, or kernel validation is claimed.
+
+## Historical local package and preserved diagnostics
+
 **P0 is complete at the hand-proof level:** see
 [the minimizer-window audit](docs/MINIMIZER_WINDOW_AUDIT.md) for finiteness,
 twisted rebasing, normalized sectors, and the finite-piece geometric splice.
@@ -21,7 +46,7 @@ ledger and chronological source history remain at
 [798a7e1](https://github.com/vltanh/lean4-smoothed-octagon/blob/798a7e119e254c3ee23073de615288986fa61929/CHECKLIST.md).
 No mathematical proof file or earlier contribution has been removed.
 
-## The controlling checkpoint
+## The earlier local coverage checkpoint
 
 **Prove a uniform bound on the complexity of every global minimizer before
 expanding whole-trajectory case coverage.** A finite list of open lemmas is not
@@ -31,13 +56,14 @@ The original package in [docs/BOUNDED_REDUCTION.md](docs/BOUNDED_REDUCTION.md)
 has a proved coverage argument, four open analytic inputs, and one refuted
 sufficient input. It cannot be proved as stated.
 
-The revised candidate is
+The concurrent revised local candidate is
 [SWITCH_COMPLETE_REDUCTION](docs/SWITCH_COMPLETE_REDUCTION.md). It defines
 five explicit domains requiring one nontrivial whole-window PMP lift and
 inactive ties at both external switches. Every selected minimizing window
 belongs to one of these domains; improvement on all five still implies
 N<=5 by the P0 splice. This necessary-domain and conditional-implication
 proof is complete. **All five revised analytic targets remain open.**
+It is retained alongside the active global compactness/count route above.
 
 A proved necessary restriction is now available:
 [MINIMIZER_WINDOW_PMP](docs/MINIMIZER_WINDOW_PMP.md) requires an inactive
@@ -65,7 +91,7 @@ the filter does not force equal factors or a globally competitive extension.
 | L4: 010201 | Same universal local improvement at a reverse run of length two followed by at least two forward switches. | **Open.** Full-domain endpoint rank five is proved. An exact eligible stationary family has all five compensated missing-control switch needles positive; that switch-only shortcut is false. See [LOCAL_SIX_VARIATION](docs/LOCAL_SIX_VARIATION.md). |
 | L5: 021012 | Same universal local improvement at a reverse run of at least three followed by at least two forward switches. | **Open.** Full endpoint rank five is proved throughout the positive strict-star domain; its first five factor columns already suffice. See LOCAL_L5_ENDPOINT_RANK. |
 | Revised five-target package | Restrict each input to the explicit complete-switch PMP domain, retaining abnormal alternatives where rank is unresolved. | Necessary membership and conditional sufficiency proved in SWITCH_COMPLETE_REDUCTION. All five revised improvement targets are open. |
-| Uniform bound | Deduce N<=5 for every global minimizer from valid local improvements and the published finite bang-bang reduction. | Conditional implication proved for the revised domains; its five analytic premises are open. No unconditional bound. |
+| Bound of five | Deduce N<=5 for every global minimizer from valid local improvements and the published finite bang-bang reduction. | Conditional implication proved for the revised domains; its five analytic premises are open. No unconditional N<=5 theorem. |
 | Global comparison and equality | Apply the existing through-five cost comparison and equality classification after the uniform bound is proved. | Conditional only. Global minimality and affine rigidity remain open. |
 | Kernel validation | Compile and inspect the final statements and dependencies. | Deferred under the current workflow. |
 

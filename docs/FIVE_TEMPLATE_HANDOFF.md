@@ -1,4 +1,11 @@
-# Handoff — bounded-case proof plan for the Reinhardt conjecture
+# Historical handoff — the failed five-template sufficient package
+
+**Active replacement plan:** [GLOBAL_REDUCTION_PLAN](GLOBAL_REDUCTION_PLAN.md).
+The global route now proves a finite escape obstruction for the small L3
+family, compactness and singular clearance of normalized minimizing lifts,
+and an existential uniform switch bound. A numerical bound remains open.
+The sequence below is preserved as a diagnostic record, not the active work
+order; do not retry its refuted broad-domain L3 premise.
 
 **Checkpoint (2026-11-07): L3 on the stated local superset is refuted even
 with arbitrary measurable replacements. The revised complete-switch PMP

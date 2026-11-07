@@ -1,0 +1,236 @@
+# Global reduction plan after the failed local-improvement premise
+
+Date: 2026-11-07. **Active hand-proof plan and next-worker entry point.**
+The unrestricted Reinhardt conjecture, affine uniqueness, and Lean kernel
+validation remain open. No increasing-length closed-word enumeration is
+authorized by this plan.
+
+## 1. Decision and exact target
+
+Work with the **complete minimizing period and its normalized Pontryagin
+lift**. Preserve the free initial state, both frame/state terminal equations,
+the twisted costate equations, and the complete-period cost budget.
+
+The original five-template coverage theorem remains correct. Its proposed
+universal local improvement package does not: some eligible L3 windows
+are global minima for their fixed endpoints even among arbitrary measurable
+controls and free terminal times. More replacement pieces do not repair
+that statement. The old
+[FIVE_TEMPLATE_HANDOFF](FIVE_TEMPLATE_HANDOFF.md) and
+[BOUNDED_REDUCTION](BOUNDED_REDUCTION.md) are retained as diagnostic records
+and reusable coverage arguments, rather than the controlling proof plan.
+
+The replacement target is:
+
+> Produce a certified **specific integer** N_max such that every actual
+> global minimizer has a cyclically reduced period with at most N_max
+> positive vertex pieces; then make the resulting fixed finite comparison
+> and equality proof. A direct global theorem N<=5 would finish the
+> comparison using the existing through-five certificates.
+
+An existential uniform bound is useful progress, but it does not identify
+that finite list. A finite list of open lemmas, or finiteness for each
+individual trajectory, is not a specific bound either.
+
+## 2. Fixed sequence of proof obligations
+
+| Gate | Acceptance condition | Current status |
+| --- | --- | --- |
+| G1. Complete-period domain and compact lifts | Prove the actual boundary conditions and compactness after projective normalization, including abnormal limits. | **Hand proof complete.** See GLOBAL_PERIODIC_PMP and GLOBAL_MINIMIZER_COMPACTNESS. |
+| G2. Uniform regularity of minimizers | Separate every normalized minimizing lift from the full singular locus, uniformly over all minimizers and times. | **Qualitative separation proved:** some epsilon_* > 0 exists. A certified numerical value remains open. |
+| G3. Uniform switch complexity | Bound switches uniformly on a supplied compact regular phase domain, including near-degenerate ties; make the constants usable with G2. | **Existential uniform bound proved**, using GLOBAL_CLOSED_VARIATION. Effective constants and a numerical N_max remain to be supplied. |
+| G4. Fixed finite comparison and equality | After a numerical N_max, prove the remaining closed comparisons and equality classification for exactly that fixed set. | **Blocked by the quantitative bound.** Through-five comparison/equality are retained assets. No new larger-word list has been started. |
+
+G2 and G3 are separate obligations. The compactness proof alone does not
+bound switches. A local switch theorem with unspecified neighborhoods
+does not provide a numerical N_max. Neither of these limitations may be
+hidden by stating that the remaining search is "finite."
+
+The complete-period cost constraint is C<=A_oct. Periodicity and first-order
+PMP alone are insufficient: the standard forward polygons already provide
+non-octagonal periodic extremals, with noncompetitive whole-period cost.
+
+## 3. Work already carried through this plan
+
+### 3.1 Exact global PMP interface
+
+[GLOBAL_PERIODIC_PMP](GLOBAL_PERIODIC_PMP.md) derives the full problem on
+the actual five-dimensional state manifold. In the original notation,
+
+\[
+g(0)=I,\qquad g(T)=R,\qquad X(T)=R^{-1}X(0)R,
+\]
+
+\[
+\Lambda_R(T)=R^{-1}\Lambda_R(0)R,\qquad
+\Lambda_1(t)=g(t)^{-1}\Lambda_1(0)g(t).
+\]
+
+The second line uses free-initial-state transversality and spatial
+costate conservation. A full-rank local endpoint map excludes abnormal
+occurrences and determines the unique normalized adjoint. Thus a global
+extension cannot avoid a local continuation obstruction by selecting
+different multipliers or by stopping at the terminal seam.
+
+These interface facts support the following actual exclusion; by themselves
+they are not new cost comparisons.
+
+### 3.2 A finite continuation test excludes the L3 counterexample family
+
+[GLOBAL_PERIOD_BUDGET](GLOBAL_PERIOD_BUDGET.md) gives an explicit region
+of state/costate space from which the uniquely optimal vertex is forced
+until the strict-star boundary. In rotated control-1 coordinates put
+
+\[
+q=1/\sqrt3,\quad W=(q-a)^2w,\quad
+\mathscr R=\frac{(1+W)(q-a)}{2qW}.
+\]
+
+The sufficient inequalities are
+
+\[
+0<a<q,\quad p_w\le0,\quad\mu\le a^2,\quad
+B<0,\quad B_S\le0,\quad\mathscr R\ge5.
+\]
+
+The note defines the adjoint quantities and derives all their equations.
+The two competing Hamiltonian gaps stay strictly unfavorable until a
+finite boundary exit. The logarithm estimate is exact:
+
+\[
+\log 5>\frac85,
+\qquad
+\log r>2(1-1/r)\quad(r\ge5).
+\]
+
+Every small reverse-core L3 window in the established range
+0<b<=q/10000, with sufficiently small positive outer pads, satisfies
+the test after rotation. The initial derivative has an exact finite-b
+sign proof; no floating-point integration or unspecified small-b cutoff
+is a premise.
+
+Consequently these windows **cannot occur as any subwindow of any closed
+twisted-periodic PMP extremal**, irrespective of its total cost or number
+of pieces. This is stronger than the concurrent
+[complete-piece endpoint filter](MINIMIZER_WINDOW_PMP.md), which only
+disqualifies the particular external cuts as genuine switches.
+
+Their fixed-endpoint global optimality remains valid. The contradiction
+was in the old sufficient domain, not in Reinhardt. The continuation
+test handles this entire family and a larger explicit phase region;
+it does **not** exclude every L3 input or close any universal local gate.
+
+### 3.3 Compactness and a uniform qualitative singular clearance
+
+[GLOBAL_MINIMIZER_COMPACTNESS](GLOBAL_MINIMIZER_COMPACTNESS.md) normalizes
+the cost multiplier together with all five actual cotangent coordinates
+at the start of the period. It keeps abnormal limits and proves compactness
+using the exact affine control transformation, uniform state/costate
+convergence, and weak-star convergence of controls.
+
+The complete-period frame and cost conditions give explicit time bounds:
+
+\[
+\frac{\log2}{9}\le T\le\frac{A_{oct}}3<\frac\pi3.
+\]
+
+The published finite bang-bang minimizer theorem and the vertex-arc
+singular-endpoint exclusion show that **every** normalized lift of every
+minimizer avoids the full singular locus. The compact family therefore
+has a common positive distance epsilon_* from that locus.
+
+This is a uniform statement over actual minimizers. It is not asserted
+for all competitive local extremals or all arbitrary periodic PMP lifts.
+It supplies no numerical epsilon_* and no dwell-time bound.
+
+### 3.4 One finite bound for all global minimizers
+
+[GLOBAL_CLOSED_VARIATION](GLOBAL_CLOSED_VARIATION.md) proves a separate
+uniform local count near every nonsingular phase for trajectories satisfying
+the minimizer edge-optimality condition. Write the reduced switching
+covector equation as
+
+\[
+W'=\mathcal L(t)W+b(t).
+\]
+
+Transport its homogeneous part to place the covector in one fixed plane.
+At a simple zero its first derivative is uniformly near a nonzero vector.
+At a double zero outside the full singular locus its second derivative is
+uniformly near a nonzero control-independent vector. These estimates hold
+for all nearby initial phases and measurable controls.
+
+Choose finitely many generic lines in that plane, with sectors narrow
+enough that each sector excludes one control vertex. Every projection
+onto a line's normal has at most one or two zeros. The remaining time
+intervals use only a fixed edge, and edge optimality bounds each by four
+pieces. A finite cover of the compact family of minimizing phases gives
+
+\[
+N\le B\left\lceil\frac{A_{oct}}{3h}\right\rceil
+\]
+
+for common B<infinity and h>0. Therefore **one finite integer bounds all
+global minimizers**, not merely each minimizer separately. The proof has
+received three separate internal hand reviews.
+
+The constants in this display have not been turned into numbers. This
+establishes a uniform existence theorem, not a computed case catalogue.
+It does not give a lower bound on individual arc lengths.
+
+## 4. Immediate continuation and stopping rules
+
+1. **Completed:** prove and independently review the local uniform switch theorem.
+   Transport the switching covector into a fixed two-dimensional plane;
+   use finitely many guard lines whose scalar projections have uniformly
+   nonzero first or second derivatives. Between their zeros a fixed
+   control vertex is excluded. The established forward-alternation
+   theorem bounds each remaining two-control block. Do not differentiate
+   a piecewise switching function through control jumps without proof.
+2. Make that regular-domain estimate quantitative for an explicitly
+   supplied singular clearance. State its dependence on the state domain,
+   multiplier normalization, and clearance. If a step fails, record the
+   actual missing inequality; do not substitute pathwise finiteness.
+3. Obtain a **numerical** singular clearance, or an explicit global
+   continuation/index exclusion with the same boundedness consequence.
+   This remains the principal research gate. The current L3 escape region
+   is a useful exclusion certificate, not a cover of the whole phase domain.
+4. Only when these steps give a certified integer may G4 enumerate its
+   fixed set. If instead a global second-variation argument proves N<=5
+   directly, use the retained through-five comparison and equality transfer.
+
+The parallel variation check uses the full twisted-closed endpoint fiber,
+including initial-state variation. A negative index theorem for the
+standard forward family would validate that method uniformly in its
+length, but the family is already excluded by the retained cost comparison.
+Do not count such a result as another previously unexcluded global family.
+
+## 5. Preserved contributions and validation boundary
+
+Read the current [ledger](../CHECKLIST.md),
+[source map](../SOURCE_MAP.md), and [audit](../DEEP_AUDIT_CHECKLIST.md)
+for the exact scope of earlier certificates. The concurrent L1 needle
+audit, different-word replacement, external-switch conditions, explicit
+L1 filter, and full-domain L3 and L5 rank theorems are preserved. They remain
+available for proving exclusions on parts of the global phase domain.
+
+The concurrent [SWITCH_COMPLETE_REDUCTION](SWITCH_COMPLETE_REDUCTION.md)
+records revised necessary domains for all five local words. All five
+analytic improvement targets on those domains remain open; that conditional
+route is retained alongside the global one. The independent
+[PADDED_L3_PMP_CONTINUATION](PADDED_L3_PMP_CONTINUATION.md) derives the
+small-family boundary obstruction in different coordinates and also proves
+a two-sided continuation cost obstruction. Our finite escape test adds an
+explicit core-size range and a larger phase-region criterion; it does not
+represent a second excluded global family.
+
+Acceptance is a hand proof with the actual hypotheses, endpoints,
+normalization, and boundary cases checked. Independent reviews here are
+internal mathematical reviews, not external peer review or kernel
+validation. The new global interface, compactness, finite escape, and
+uniform local switch proofs have received separate hand reviews.
+
+No Lean file is added or changed by this plan. Do not compile Lean, run
+Lake or typechecking, or add, modify, or execute CI. Continue making small
+coherent proof commits on the existing PR branch with [skip ci], keeping
+the ledger, README, source map, audit, handoff, and PR description aligned.

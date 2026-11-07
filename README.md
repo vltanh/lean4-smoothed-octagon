@@ -8,10 +8,43 @@ uniqueness up to affine equivalence. It reuses the geometry of
 **The unrestricted conjecture is not proved. Lean compilation and kernel
 validation have not been run. New formalization infrastructure is paused.**
 
-## Current priority: establish boundedness before more enumeration
+## Active plan: complete minimizing periods and a uniform bound
 
-**Next-session handoff:** [five-template action plan](docs/FIVE_TEMPLATE_HANDOFF.md).
-Read it **before** attacking any additional case. The prerequisite
+**Start with [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md).** The
+replacement route retains the full twisted state and costate endpoints,
+free initial state, and total cost budget. Its target is a certified
+specific bound on every minimizer's number of pieces before any further
+closed-word enumeration.
+
+The global checkpoint has three substantive hand results:
+
+- [A finite continuation obstruction](docs/GLOBAL_PERIOD_BUDGET.md)
+  excludes the entire small-core L3 counterexample family from **any**
+  occurrence inside a closed PMP extremal. Its unique adjoint forces the
+  outgoing vertex to the strict-star boundary. The proof covers
+  `0<b<=1/(10000*sqrt(3))` with sufficiently small positive pads, using
+  exact inequalities. Their fixed-endpoint global optimality remains true.
+- [Compact normalized minimizer lifts](docs/GLOBAL_MINIMIZER_COMPACTNESS.md)
+  give a **uniform positive qualitative distance** from the full singular
+  locus, including all normal and abnormal lifts. The time bounds are
+  `log(2)/9 <= T <= A_oct/3`.
+- [A uniform local switch theorem](docs/GLOBAL_CLOSED_VARIATION.md),
+  combined with that compactness, proves that **one finite integer bounds
+  the number of pieces of every global minimizer**. The proof transports
+  the switching covector into a fixed plane and controls finitely many
+  scalar projections. It does not assume a lower bound on arc durations.
+
+[GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md) proves the full-period
+interface and the rank/unique-adjoint bridge used in the exclusion.
+The uniform bound is **existential**: a numerical singular clearance and
+specific integer bound remain open. An actual finite list of cases is
+therefore not yet available. Global minimality and affine uniqueness
+remain unproved.
+
+## Historical five-template route and retained diagnostics
+
+The [earlier five-template handoff](docs/FIVE_TEMPLATE_HANDOFF.md) records
+the failed sufficient package and its useful coverage proof. The prerequisite
 [P0 audit is complete as a hand proof](docs/MINIMIZER_WINDOW_AUDIT.md):
 it verifies minimizer eligibility, twisted seams, normalized geometric sectors,
 and the finite-piece geometric/control splice. **The original local L3
@@ -62,7 +95,7 @@ alone contradicts minimality. Actual six-to-five shortening is not necessary.
 
 The existing through-five comparison and equality case would then finish the
 hand proof. **Coverage and this conditional implication are proved, but the
-original L3 premise is false; the uniform bound remains open.** No finite
+original L3 premise is false; N<=5 remains open.** No finite
 interval computation on a truncated parameter box is advertised as exhaustive.
 
 The complete domains, twisted-seam argument, exact endpoint map, positive-factor

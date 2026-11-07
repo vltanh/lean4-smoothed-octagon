@@ -1,5 +1,13 @@
 # A fixed five-template route to a uniform bound
 
+**Historical sufficient route.** Follow
+[GLOBAL_REDUCTION_PLAN](GLOBAL_REDUCTION_PLAN.md) for the active plan.
+The new global notes prove an existential uniform switch bound by compactness
+and a uniform regular-domain theorem; no numerical integer is yet available.
+They also exclude the small padded L3 counterexample family from every closed
+PMP occurrence by finite forced exit. The local coverage and failed sufficient
+statements recorded below retain their original scope.
+
 Date: 2026-11-06. Priority: establish boundedness before further whole-word comparisons.
 
 ## Status: coverage proved; the original L3 sufficient statement is false
@@ -52,7 +60,7 @@ minimizers or a different uniform reduction. The existing comparison through
 five pieces and its equality classification are retained. Increasing-length
 whole-word enumeration does not repair this failed sufficient lemma.
 
-**Not established:** a uniform switch bound, any of the five universal local
+**Not established by this local package:** a uniform switch bound, any of the five universal local
 improvement statements, the unrestricted cost inequality, or kernel validation.
 A finite list of inputs to an implication is not a proof of those inputs.
 

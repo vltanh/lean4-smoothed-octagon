@@ -1,4 +1,4 @@
-# Audit boundary for the bounded-reduction checkpoint
+# Audit boundary for the global-reduction checkpoint
 
 Date: 2026-11-07. New work is hand research and explicitly scoped exploration.
 No new Lean file was added; no compilation, Lake, typechecking, kernel audit,
@@ -14,7 +14,45 @@ The complete earlier audit is preserved at
 Its historical source scans and review claims are not new validation performed
 in this checkpoint. All existing mathematical and Lean proof files are retained.
 
-## Coverage checks
+## Active global proof checks
+
+The active entry point is [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md).
+The original five-template sufficient domain remains refuted.
+
+- [x] Derive twisted state-covector closure from the actual free-initial-state
+  endpoint graph, and distinguish it from automatic frame-covector closure.
+- [x] Prove full endpoint rank forces normality and a unique normalized lift;
+  continue that same lift through arbitrary period seams.
+- [x] Prove the finite escape criterion by exact vertex equations and
+  `log(5)>8/5`, including every interior time before the strict-star exit.
+- [x] Verify the rotated small L3 family meets the criterion throughout the
+  explicit core range; the derivative sign has an exact finite-parameter proof.
+- [x] Keep arbitrary-subwindow escape exclusion separate from the concurrent
+  six-complete-piece endpoint filter and from fixed-endpoint optimality.
+- [x] Normalize all genuine cotangent coordinates together with the cost
+  multiplier; retain abnormal limits and uniform nontriviality bounds.
+- [x] Prove compactness with exact affine controls, weak-star convergence,
+  continuous cost, and the actual common globally minimizing cost.
+- [x] Check the primary singular-arc lemma excludes an endpoint of a positive
+  vertex arc on either side; combine with the finite bang-bang minimizer theorem.
+- [x] Obtain uniform qualitative singular clearance for actual minimizers,
+  without asserting it for all competitive PMP trajectories.
+- [x] Prove transport of the reduced costate to a fixed plane and uniform
+  first/second derivative estimates without differentiating measurable controls.
+- [x] Choose closed angular sectors with robust exclusions and generic guard
+  lines; at most one or two zeros of each projection bound the edge intervals.
+- [x] Use the minimizer edge bound explicitly; do not assert it for arbitrary
+  full-system PMP lifts. Finite cover then gives a common finite piece bound.
+- [ ] Supply a certified numerical singular clearance and a specific integer
+  bound. The existential uniform theorem does not identify a finite case list.
+- [ ] Complete the remaining global comparison and affine equality theorem.
+- [ ] Run kernel validation (deferred under the user's current workflow).
+
+The new hand proofs received separate internal mathematical reviews. Such
+review is not external peer review or Lean kernel validation. No new Lean
+file, build, typechecking, Lake command, or CI was introduced or executed.
+
+## Historical coverage checks
 
 - [x] Use the actual twisted seam: the wrapped label increases by one, rather
   than silently imposing an untwisted periodic label word.
@@ -69,8 +107,9 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
   implication, retaining abnormal alternatives where rank is unresolved.
 - [x] Independently review the revised physical fields, cost convention,
   single cotangent lift, neighbor labels, twist, and competitor scope.
-- [ ] Prove all five revised analytic improvement targets or a different
-  unconditional uniform bound.
+- [ ] Prove all five revised analytic improvement targets or another
+  unconditional bound of five. The separate global route now gives a
+  uniform finite integer existentially, without identifying it.
 - [ ] Certify singular boundary faces of the bounded-coordinate compactification.
 - [ ] Deduce the unconditional bound N<=5.
 - [ ] Prove unrestricted global minimality and affine rigidity.

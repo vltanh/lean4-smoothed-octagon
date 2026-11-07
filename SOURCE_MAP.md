@@ -1,4 +1,4 @@
-# Source map: the bounded-reduction checkpoint
+# Source map: the global-reduction checkpoint
 
 Date: 2026-11-07. No Lean declaration was added or modified for this checkpoint.
 The earlier full declaration-by-declaration map is preserved at
@@ -6,7 +6,17 @@ The earlier full declaration-by-declaration map is preserved at
 All corresponding proof files remain in the repository. The current ledger
 supersedes earlier recommendations to continue by increasing whole-word length.
 
-## New hand reduction
+## Active global reduction
+
+| Statement | Exact source and scope |
+| --- | --- |
+| Replacement action plan and acceptance gates | [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md). Full-period domain, singular clearance, uniform count, then a fixed finite comparison. Numerical clearance and a specific integer remain open. |
+| Full-period PMP and unique-adjoint bridge | [GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md). Free-initial-state transversality, conserved spatial covector, twisted extension, full-rank normality/uniqueness, and a finite-escape implication. |
+| Explicit global continuation exclusion | [GLOBAL_PERIOD_BUDGET](docs/GLOBAL_PERIOD_BUDGET.md). Finite phase inequalities force one vertex to the strict-star boundary. Exact proof for all small-core L3 inputs `0<b<=1/(10000*sqrt(3))` with sufficiently small pads. Excludes any closed-PMP occurrence, not all L3 windows. |
+| Compactness and uniform qualitative singular clearance | [GLOBAL_MINIMIZER_COMPACTNESS](docs/GLOBAL_MINIMIZER_COMPACTNESS.md). All projectively normalized actual-minimizer lifts, including abnormal ones; exact affine controls and weak-star closedness; positive common distance from the singular locus. No numerical distance. |
+| Uniform finite switch bound over all global minimizers | [GLOBAL_CLOSED_VARIATION](docs/GLOBAL_CLOSED_VARIATION.md). Transport to a fixed plane, robust finite angular sectors, uniformly signed first/second projection derivatives, and the minimizer edge bound. Compactness gives one common finite integer, without a numerical value or dwell-time assertion. |
+
+## Earlier local reduction and diagnostics
 
 | Statement | Exact source and status |
 | --- | --- |
@@ -27,7 +37,7 @@ supersedes earlier recommendations to continue by increasing whole-word length.
 | Exact obstruction to universal nearby same-word L1 descent | [LOCAL_FORWARD_SIX](docs/LOCAL_FORWARD_SIX.md): an eligible `012012` input with rank-five endpoint map and a strict constrained local minimum. Full L1 remains open. The [exact checker](explorations/local_forward_stationary_obstruction.py) is supplementary. |
 | P0: minimizer-window eligibility and finite-piece geometric splice | [MINIMIZER_WINDOW_AUDIT](docs/MINIMIZER_WINDOW_AUDIT.md): hand proof, using Hales--Vajjha Theorem 16.3.1 and balanced-disk correspondence; sector normalization and winding are proved explicitly. Independent premises and equality-transfer reviews passed; exact octagon trajectory and linear equivalence are displayed. The entire through-five algebra was not re-audited. |
 | Five-template coverage for every minimizing N>=6 | [BOUNDED_REDUCTION, Sections 1-2](docs/BOUNDED_REDUCTION.md): complete independently reviewed hand run argument, conditional on the already supplied forward-alternation exclusion. |
-| Local strict improvements imply N<=5 and then global minimality/rigidity | Same note, Section 3: valid conditional implication, but the original L3 premise is false; the sufficient reduction needs repair. No uniform bound is proved. |
+| Local strict improvements imply N<=5 and then global minimality/rigidity | Same note, Section 3: valid conditional implication, but the original L3 premise is false. The revised domains are in SWITCH_COMPLETE_REDUCTION; their five analytic premises remain open. No N<=5 theorem is proved. |
 | Eight-coordinate input domains | Same note, Section 4: initial margins, exact factor updates, full-arc signs, cost, and geometric sector tests. |
 | Full local endpoint map | Same note, Section 5: preserve tangent product AND terminal state with initial state fixed; generally the tangent endpoint is not R. |
 | Exact elimination of three endpoint equations | Same note, Section 6: explicit inverses for both orientations of a positive distinct-label triple. LOCAL_FORWARD_RANK, LOCAL_MIXED_SIX_RANK, LOCAL_SIX_VARIATION, and LOCAL_L5_ENDPOINT_RANK resolve the remaining rank as two throughout the positive L1, L3, L4, and L5 domains; singular loci for L2 remain a separate obligation. |
