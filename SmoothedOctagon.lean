@@ -25,20 +25,33 @@ public import SmoothedOctagon.Foundations.CircleExclusion
 public import SmoothedOctagon.Foundations.SingularArc
 public import SmoothedOctagon.Foundations.SwitchingMargin
 public import SmoothedOctagon.Foundations.StrongSwitching
+public import SmoothedOctagon.Main
 
 /-!
-# Research toward the Reinhardt conjecture
+# The Reinhardt conjecture
 
-The conjecture is stated in `SmoothedOctagon.Problem`; it is not asserted as a theorem.
-`SmoothedOctagon.SwitchingMargin` supplies a quantitative bound for one explicit scalar
-switching expression. See `CHECKLIST.md` for the remaining mathematical obligations.
+The smoothed octagon has the least greatest packing density among centrally symmetric convex disks
+in the plane, `δ_oct = (8 - 4√2 - log 2)/(2√2 - 1)`, and it is the only such disk up to invertible
+affine maps.
 
-`BalancedReduction` constructs a balanced circle minimizer from an actual worst disk;
-`BalancedTargets` identifies the exact remaining area and rigidity targets.
-`AdmissibleRealization` constructs the full forward control realization with exact area cost.
-`ReverseComparison` constructs geometric competitors for all admissible controls and proves
-the exact global control-minimizer correspondence. The octagon lower bound remains open.
-`SingularLocus` and `SingularArc` identify control independence and its interval rigidity;
-`CircleExclusion` rules out only an entirely circular full minimizer.
-This source development has not been compiled or kernel-checked.
+The proof is organized by stage:
+
+* `Foundations/`: the geometric reformulation. A worst disk, normalized and parametrized by its
+  balanced boundary, is realized by a trajectory of Hales's control problem whose cost is its area;
+  conversely every admissible trajectory of cost below `π`, with any measurable control, bounds a
+  balanced disk of that area. So the conjecture is equivalent to the control lower bound, and the
+  realization of a worst disk is a global control minimizer.
+* `Reduction/`: a global minimizer is a normal vertex period with finitely many pieces in the compact
+  domain `𝔥**`.
+* `Period/`: vertex periods, margins, switch signs and the partition of sign sequences into the
+  classes R, F, M3, M1, M2.
+* `Exclusion/`: each class is impossible for competitive periods with at least six pieces.
+* `Terminal/`: periods with at most five pieces cost at least `A_oct`, with equality only for the
+  octagon.
+* `LowerBound`, `Equality/`, `Main`: the assembly.
+* `Certificates/`: the interval covers used by cases F and M2, named hypotheses until their hand
+  replacements are complete.
+
+`Cited/` holds the one result from the literature that is not yet formalized, Hales–Vajjha's
+Theorem 5.0.2, as a named hypothesis.
 -/

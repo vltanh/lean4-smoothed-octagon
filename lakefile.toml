@@ -1,7 +1,7 @@
 name = "SmoothedOctagon"
 version = "0.1.0"
 keywords = ["math", "reinhardt", "packing"]
-defaultTargets = ["SmoothedOctagon", "Challenge", "Solution"]
+defaultTargets = ["Cited", "SmoothedOctagon", "Challenge", "Solution"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -21,6 +21,10 @@ rev = "9d581dfff2e41de989072ea63abf3daf69311520"
 name = "SmoothedPolygons"
 git = "/home/vltanh/Documents/lean4-smoothed-octagon"
 rev = "a37ab122d101e7665558c8360e93ce7460d298e2"
+
+[[lean_lib]]
+name = "Cited"
+globs = ["Cited.+"]
 
 [[lean_lib]]
 name = "SmoothedOctagon"
