@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Reduction.Defs
+public import SmoothedOctagon.Reduction.Normal.Bridge
 
 /-!
 # Normality of closed finite vertex extremals
@@ -40,11 +41,22 @@ algebra (GN (9)-(16), certificate C2) shows: no three consecutive equal signs (G
 flanked by `-σ` forces triple ties at both ends of the middle arc (GN (18)-(19)), which no arc can
 have (GN §5).
 Hence the signs alternate, `i_{j+2} = i_j`, only two labels occur; but the label set is invariant
-under `+1`. -/
+under `+1`.
+
+Route: the endpoint covector, needle variations and the four-arc matrix algebra (certificate C2) are
+replaced by the coordinates `μ_j(a)`, `μ_j(b)` of `a = -XΛ₁X`, `b = Λ_R + 2Λ₁ + ⟨Λ₁, X⟩X`, which
+every vertex piece transports by the one-arc margin map (`Normal/Flow.lean`, `gn_piece`); the
+missing-vertex inequalities are the maximum condition at the switching times, and GN (17)-(19), §5
+and §6 become scalar lemmas on the resulting sequence (`Normal/Word.lean`). Both triple-tie
+implications follow from one forward identity (`GnSeq.bounce`); no backward reading is used. -/
 theorem lam_lt_zero_of_vertexRepresentation {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hmin : IsReinhardtMinimizer T u g X)
     (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) (ρ : VertexRepresentation T u) : lam < 0 := by
-  sorry
+  rcases (hext.2.2.2.2.2.2.1 : lam ≤ 0).lt_or_eq with h | h
+  · exact h
+  · subst h
+    obtain ⟨S, hS⟩ := gn_abnormal_seq hext ρ
+    exact (S.false_of_twist hS).elim
 
 /-! ### Positive homogeneity of Pontryagin extremals -/
 
