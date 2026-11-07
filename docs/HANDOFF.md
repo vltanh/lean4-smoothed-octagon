@@ -34,6 +34,13 @@ necessary restrictions. See [their audit](NONSHORT_HAND_SCALE_AUDIT.md).
 The [forward target note](HAND_FORWARD_OPEN_TARGET.md) preserves the
 genuine exterior floors and records exact obstructions to dropping them.
 
+The forward neighbor bound is now complete by hand: the
+[symmetric integral proof](HAND_FORWARD_NEIGHBOR_INTEGRAL.md) and
+[asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md)
+prove both ratios below 4/3, with their
+[independent audit](HAND_FORWARD_NEIGHBOR_AUDIT.md). F still needs the
+stationary norm-sum or direct Casimir sign.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

@@ -23,9 +23,10 @@ S^2/Z\le h\le S/z,\qquad T^2/W\le k\le T/w,\\
 \]
 
 The last line is the proved exterior-factor cost budget. Its weak version
-enlarges the actual competitive domain. The neighbor assumption
-`z,w<=4/3` is still a separate unresolved hand target; it is not a
-consequence of the results in this note.
+enlarges the actual competitive domain. The neighbor bound z,w<4/3 is now proved by the
+[integral neighbor theorem](HAND_FORWARD_NEIGHBOR_INTEGRAL.md) and its
+[asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md). It is
+therefore an established actual-data input to this remaining norm problem.
 
 Define
 
@@ -283,10 +284,9 @@ Casimir implication with norm budget `1/39`, stronger actual exterior
 cost budget, and small product estimate. They replace no unresolved
 premise by a numerical assertion.
 
-To finish this route one must still prove the two neighbor planar
-residual signs in Section 1 of
-[HAND_FORWARD_LEMMAS](HAND_FORWARD_LEMMAS.md), and the norm target (7)
-or another uniform Casimir exclusion. The upstream `U<3` prerequisite now has a complete
+To finish this route one must still prove the norm target (7), or
+another uniform Casimir exclusion. Both neighbor planar signs are
+now established by the linked hand theorem. The upstream `U<3` prerequisite now has a complete
 [hand replacement](SMALL_FORWARD_MINIMUM_HAND_PROOF.md), with no large
 coefficient table. The remaining inequalities identified here still leave
 the hand-only forward theorem open.

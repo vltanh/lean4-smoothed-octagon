@@ -37,6 +37,11 @@ Further current inputs are the [retained central cap](MIXED_NONSHORT_RETAINED_CE
 For F, use the [exact open targets](HAND_FORWARD_OPEN_TARGET.md)
 and [dependency inventory](HAND_FORWARD_DEPENDENCY_INVENTORY.md).
 
+The neighbor input is now a complete hand theorem:
+[integral/symmetric proof](HAND_FORWARD_NEIGHBOR_INTEGRAL.md),
+[asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md), and
+[audit](HAND_FORWARD_NEIGHBOR_AUDIT.md).
+
 ## Completed theorem and review path
 
 All sufficient whole-period cases and the final cost/equality assembly

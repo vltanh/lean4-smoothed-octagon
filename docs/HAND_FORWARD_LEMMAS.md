@@ -127,6 +127,13 @@ z&w&U\\\hline
 This is a proved reduction of the neighbor task. The final negative
 signs on (7) are not asserted proved by this lemma.
 
+**Subsequent completion.** Both signs now have full hand proofs in the
+[integral neighbor theorem](HAND_FORWARD_NEIGHBOR_INTEGRAL.md) and its
+[asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md), accepted
+by their [independent audit](HAND_FORWARD_NEIGHBOR_AUDIT.md). Thus the
+sufficient neighbor bound is established; the norm-sum target below
+remains open.
+
 ## 2. A small norm-sum bound would replace the full Casimir cover
 
 Write

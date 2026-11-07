@@ -9,7 +9,7 @@ the pure-forward hand-only gate is closed.
 | Input | Existing justification | Hand replacement status |
 | --- | --- | --- |
 | `U=4/a_min^2<3` | [SMALL_FORWARD_MINIMUM_HAND_PROOF](SMALL_FORWARD_MINIMUM_HAND_PROOF.md), with its elementary integral/cubic comparison | Closed by hand. The [independent audit](SMALL_FORWARD_MINIMUM_HAND_AUDIT.md) accepts the entire hard face, also supplying the mixed minimum-structure prerequisite. |
-| `z,w<5/4` | The 8,183-node [neighbor cover](GLOBAL_FORWARD_NEIGHBOR_CONTRACTION.md) | Open. A proved exterior-factor concavity lemma reduces a weaker sufficient `z,w<4/3` target to two planar faces. No signs on those whole planar faces have yet been accepted by hand. |
+| `z,w<4/3`, sufficient for the new route | The [integral neighbor theorem](HAND_FORWARD_NEIGHBOR_INTEGRAL.md), [asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md), and [hand audit](HAND_FORWARD_NEIGHBOR_AUDIT.md) | Closed by hand. This replaces the need for the older 8,183-node cover, which proves the stronger but unnecessary bound `z,w<5/4`. |
 | Complementary Casimir contradiction | The 20,999-node [five-variable cover](GLOBAL_FORWARD_PERIOD_EXCLUSION.md) | Open. The new hand lemma proves the entire Casimir implication from `z,w<=4/3` and `delta u+delta v<=1/39`. The latter norm estimate remains unproved. |
 
 The H5 table gives its full coefficients, not merely an execution count.

@@ -36,6 +36,12 @@ The [explicit turn floor](docs/EXPLICIT_TURN_NORM_FLOOR.md),
 and [exact forward targets](docs/HAND_FORWARD_OPEN_TARGET.md) have their
 [own review](docs/HAND_FURTHER_REFINEMENTS_AUDIT.md).
 
+The hand neighbor theorem consists of the
+[symmetric integral proof](docs/HAND_FORWARD_NEIGHBOR_INTEGRAL.md),
+[asymmetric completion](docs/HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md), and
+[audit](docs/HAND_FORWARD_NEIGHBOR_AUDIT.md). The remaining F target is
+the stationary norm sum or a direct Casimir comparison.
+
 | Scope | Active sources |
 | --- | --- |
 | Geometric/control correspondence, twisted PMP | [ADMISSIBLE_REALIZATION](docs/ADMISSIBLE_REALIZATION.md), [REVERSE_COMPARISON](docs/REVERSE_COMPARISON.md), [GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md), [final dependency review](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) |

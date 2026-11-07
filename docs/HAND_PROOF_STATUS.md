@@ -26,7 +26,7 @@ in force.
 
 | Gate | Required hand replacement | Current status |
 | --- | --- | --- |
-| H-F | Uniform exclusion of all-forward periods, including the neighbor bound and complementary Casimir inequality | Open. The hard small-minimum face now has a complete hand replacement. The two later covers still need hand replacements. |
+| H-F | Uniform exclusion of all-forward periods through the stationary norm-sum or a direct Casimir inequality | Open. The hard small-minimum face and sufficient neighbor bound are proved by hand. The complementary Casimir cover still needs a hand replacement. |
 | H-S | Exclusion when the smaller turn at a minimum reverse centre has a short forward run | Open. Replace the six-variable cost/angle and outer-root exclusion by an analytic argument. |
 | H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Open. Retain the scalar boundary comparison and concavity reduction; replace the reverse, low-a and forward endpoint exclusions. The old small-parameter coefficient argument is now bypassed by the proved strict duration-ratio gap. |
 | H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Open. In particular, distinguish supplementary identity checks from indispensable executable sign checks. |
@@ -39,6 +39,10 @@ replace an entire class without reproducing the old scalar domain.
 
 - The shared small-forward-minimum hard face has a complete
   [integral/cubic replacement](SMALL_FORWARD_MINIMUM_HAND_PROOF.md).
+- Both forward neighbor ratios are strictly below 4/3 by the
+  [integral proof](HAND_FORWARD_NEIGHBOR_INTEGRAL.md), its
+  [asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md), and
+  [independent audit](HAND_FORWARD_NEIGHBOR_AUDIT.md).
 - The smaller-nonshort case now satisfies
   [t=a/(a+c)<2/5](MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION.md) and hence
   [a<4/5](MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND.md), with a
@@ -98,17 +102,17 @@ dependency chain. The shared hard small-forward-minimum face now has a
 complete [integral and cubic hand proof](SMALL_FORWARD_MINIMUM_HAND_PROOF.md),
 accepted in its [independent review](SMALL_FORWARD_MINIMUM_HAND_AUDIT.md).
 This replaces the old H5 coefficient table and establishes the required
-minimum structure for both F and the mixed cases. It does not close
-either of the later forward inequalities.
+minimum structure for both F and the mixed cases. The neighbor inequality
+also now has a hand proof. The stationary norm-sum comparison remains open.
 
 ## Further accepted reductions, with explicit open hypotheses
 
 [HAND_FORWARD_LEMMAS](HAND_FORWARD_LEMMAS.md) proves exterior-factor
 concavity and reduces a sufficient neighbor bound to two planar signs.
 It also proves that the bounds `z,w<=4/3` and
-`(u-3/4)+(v-3/4)<=1/40` imply `gamma^2>23/125` by hand. Proving those
-two bounds for actual stationary data remains open; numerical evidence
-for them is not a proof premise.
+`(u-3/4)+(v-3/4)<=1/40` imply `gamma^2>23/125` by hand. The neighbor
+bound is now established by hand; the stationary norm-sum bound remains
+open. Numerical evidence is not a proof premise for either assertion.
 The same note strengthens the whole-period cost budget by retaining
 both exterior factors, using the positive mixed derivative of the
 scalar edge cost and an explicit seven-edge accounting argument.
@@ -119,7 +123,7 @@ The [exact forward targets](HAND_FORWARD_OPEN_TARGET.md) now record the
 complete stationary norm problem and two rigorously refuted relaxations.
 In particular, dropping both genuine exterior floors is invalid. The
 [dependency inventory](HAND_FORWARD_DEPENDENCY_INVENTORY.md) distinguishes
-the two remaining F signs from the now-completed upstream minimum proof.
+the remaining F norm sign from the completed upstream minimum and neighbor proofs.
 
 [MIXED_SMALLER_SHORT_OUTER_ENVELOPE](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md)
 removes the opposite turn and its independent norm from one necessary

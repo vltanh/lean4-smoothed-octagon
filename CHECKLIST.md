@@ -16,9 +16,17 @@ closed computer-assisted gates below do not close these new obligations.
   independently reviewed, gives `(d-a)/(a+c)>1/10`.
 - [x] Accepted conditional [forward reductions](docs/HAND_FORWARD_LEMMAS.md)
   and [short-side root envelope](docs/MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md).
-- [ ] The sufficient neighbor and norm-sum bounds, full short-side
-  defect exclusion, both nonshort successors, and upstream hard
-  small-forward-minimum face still need hand proofs.
+- [x] The shared hard small-forward-minimum face has a complete
+  [integral/cubic hand proof](docs/SMALL_FORWARD_MINIMUM_HAND_PROOF.md).
+- [x] Both forward neighbor ratios are below 4/3 by the
+  [integral proof](docs/HAND_FORWARD_NEIGHBOR_INTEGRAL.md) and
+  [asymmetric completion](docs/HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md).
+- [x] The smaller-nonshort case satisfies
+  [t<2/5](docs/MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION.md) and
+  [a<4/5](docs/MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND.md) by hand.
+- [ ] The stationary norm-sum/Casimir bound, full short-side defect
+  exclusion, both nonshort successors, and final hand-only assembly
+  still need proofs.
 
 ## Baseline proof checkpoints
 
