@@ -99,7 +99,7 @@ under two named hypotheses:
 | Cases R and M3 | [`Exclusion/`](SmoothedOctagon/Exclusion) | in progress |
 | Case M1 | [`Exclusion/ShortRuns.lean`](SmoothedOctagon/Exclusion/ShortRuns.lean) | stated |
 | Cases F and M2 | [`Exclusion/`](SmoothedOctagon/Exclusion) | stated, from the interval covers |
-| Terminal comparison | [`Terminal/`](SmoothedOctagon/Terminal) | proved from four scalar lemmas, in progress |
+| Terminal comparison | [`Terminal/`](SmoothedOctagon/Terminal) | proved (uses case R for one five-piece word) |
 | Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) | proved |
 | The Challenge's statements | [`Main.lean`](SmoothedOctagon/Main.lean) | proved from the above |
 
