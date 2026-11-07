@@ -50,8 +50,8 @@ are a proposed *research route*, not verified new G4 cost comparisons.
   positive-arc triple-tie obstruction and twisted seam. See
   [GLOBAL_NORMALITY_AUDIT](docs/GLOBAL_NORMALITY_AUDIT.md). Restore the
   previously missing checker; all 22 exact algebra checks pass.
-- [x] Deduce a qualitative positive cost-multiplier lower bound over the
-  compact unit-normalized minimizer lifts and compactness after lambda=-1.
+- [x] Deduce a qualitative positive lower bound on -lambda over the compact
+  unit-normalized minimizer lifts and compactness after lambda=-1.
   No explicit numerical bound or normal-tie exclusion follows.
 - [x] Independently audit [NORMAL_TIE_BRANCHING](docs/NORMAL_TIE_BRANCHING.md):
   reconstruct all three Hamiltonians, both gap signs and the universal
@@ -89,6 +89,37 @@ received an [independent internal hand audit](docs/MIXED_GLOBAL_SYMMETRIC_AUDIT.
   sign checks passed with Python 3.12.14 / SymPy 1.14.0.
 - [ ] Extend the theorem to arbitrary asymmetric cores and shorter
   outgoing pads. This scoped family theorem leaves universal M1 open.
+
+## Exact limitations on the next global extensions
+
+[MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION](docs/MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION.md)
+received an [independent internal audit](docs/GLOBAL_STRUCTURE_MIXED_SHORT_PAD_AUDIT.md).
+
+- [x] Reconstruct the fixed asymmetric core, one continuous normal
+  cotangent, all three inner edge ties and both adjoining control-0 ties.
+- [x] Prove all whole-core third-control gaps using exact curvature and
+  endpoint slope signs; construct a positive incoming 0 germ by the
+  actual physical Hamiltonian switching derivative.
+- [x] Verify the outgoing third gap stays strict and the other numerator
+  has its unique first positive zero in `(251/250,201/200)`, while x<0.
+- [x] Check the physical negative-elliptic determinant is below the actual
+  competitive cap, with a local cost below A_oct. All 71 exact identities
+  and rational sign checks pass with Python 3.12.14 / SymPy 1.14.0.
+- [x] Keep the first external switch, geometric sector/embedding, full
+  twisted return and minimality unproved. The counterexample refutes only
+  the stated local inference, not the revised complete-switch M1 target.
+
+[REVERSE_PERIOD_CASIMIR_REDUCTION](docs/REVERSE_PERIOD_CASIMIR_REDUCTION.md)
+received an independent internal recheck of the trace signs, admissible
+local triple, regular stationary multiplier, rank-three Fourier modes,
+and strict logarithmic Casimir comparison. The individual trace bound is
+an **upper** bound. The regular lower bound is only an already excluded
+family check; no arbitrary reverse-period conclusion follows.
+
+The sign-compatible parabolic/hyperbolic matrices in the cyclic-sector
+note separately show why column orientation and derivative signs alone
+cannot remove the remaining sectors. They are not claimed stationary
+multipliers or actual PMP examples.
 
 ## Active global proof checks
 

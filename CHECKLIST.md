@@ -18,7 +18,7 @@ triple/cubic ties, vanishing factors, rank drops, and whole-period
 cost budget. [GLOBAL_NORMALITY](docs/GLOBAL_NORMALITY.md) has now passed
 an [independent internal hand audit](docs/GLOBAL_NORMALITY_AUDIT.md): every
 finite twisted closed PMP lift is normal, without a local rank or
-transversality assumption. Existing finite representation applies this
+transverse-switch assumption. Existing finite representation applies this
 to every global minimizer. The normality part of T is complete.
 [NORMAL_TIE_BRANCHING](docs/NORMAL_TIE_BRANCHING.md) and its
 [independent internal audit](docs/NORMAL_TIE_BRANCHING_AUDIT.md) give exact
@@ -26,8 +26,8 @@ necessary-and-sufficient outgoing positive-vertex tests through derivative
 order three, including normal triple and cubic ties. This closes the
 local branch rule, not the global fate of every passing branch. All five
 C gates remain open. Compactness also gives
-a qualitative positive lower bound on the initially normalized cost
-multiplier, hence a compact family after normalization to lambda=-1.
+a qualitative positive lower bound on -lambda in the initial unit
+normalization, hence a compact family after normalization to lambda=-1.
 No numerical value for this new bound is claimed.
 
 
@@ -95,6 +95,13 @@ or postcritical finite escape covers every point of that domain. The
 [independent audit](docs/MIXED_GLOBAL_SYMMETRIC_AUDIT.md) and 146 exact
 algebra/sign checks passed. Asymmetric cores and shorter outgoing pads
 are outside the theorem; the M1 case-C gate remains open.
+[MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION](docs/MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION.md)
+certifies an asymmetric local normal PMP window with a subcritical
+negative-elliptic Casimir and low local cost whose outgoing 0 arc returns
+before the postcritical point, at factor in `(251/250,201/200)`. Thus the
+listed local first-order tests cannot force sufficient padding. No true
+first external switch, geometric eligibility, full-period closure or
+minimality is claimed; the revised complete-switch target remains open.
 
 [VERTEX_INSERTION_OBSTRUCTION](docs/VERTEX_INSERTION_OBSTRUCTION.md)
 refutes one proposed G4 shortcut: the all-reverse admissible class has
@@ -111,6 +118,11 @@ and its positive parabolic boundary, for whole pure-forward/reverse
 normal periods with arbitrary unequal factors. Hyperbolic, negative
 parabolic and negative elliptic alternatives remain. The strict action
 derivatives are not constrained descent; F and R are still open.
+[REVERSE_PERIOD_CASIMIR_REDUCTION](docs/REVERSE_PERIOD_CASIMIR_REDUCTION.md)
+shows the individual trace inequality supplies an upper Casimir bound.
+It cannot be reversed into the needed lower bound; arbitrary unequal
+periods require a further cyclic compatibility argument. The retained
+regular-family strict lower bound closes no additional competitor class.
 
 No completed unrestricted cost comparison, affine uniqueness theorem, or
 kernel validation is claimed.

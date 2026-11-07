@@ -38,9 +38,9 @@ rank defects and triple ties and uses no cost cap or transverse-switch
 assumption. The existing finite-representation theorem therefore applies
 it to all global minimizers.
 
-Compactness further gives a qualitative positive lower bound on the cost
-multiplier in the initial unit normalization, and a compact family after
-normalizing it to -1. No explicit value of that lower bound is claimed.
+Compactness further gives a qualitative positive lower bound on -lambda
+in the initial unit normalization, and a compact family after normalizing
+lambda to -1. No explicit value of that lower bound is claimed.
 The restored exact checker passes 22 matrix/scalar identities. This closes
 the normality obligation. Internal review is not external peer review or
 Lean kernel validation.
@@ -74,6 +74,15 @@ passed, as did all 146 supplementary exact algebra/sign checks.
 Arbitrary asymmetric M1 cores and shorter outgoing pads remain open;
 this subfamily theorem closes none of the five universal C gates.
 
+[An exact short-pad obstruction](docs/MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION.md)
+shows why the extension needs more than the local moments, adjoining ties
+and Casimir cap. One asymmetric normal PMP core passes all those tests,
+but its outgoing 0 arc switches back at a factor strictly between
+`251/250` and `201/200`, before reaching the positive critical point.
+Its first incoming cut is not asserted to be a switch; complete-period
+closure, geometric embedding and minimality are unchecked. This refutes
+the proposed local implication, not the full M1 target.
+
 ## Uniform costate-sector restriction for pure periods
 
 [The cyclic costate-sector theorem](docs/GLOBAL_STRUCTURE_CYCLIC_COSTATE_SECTOR.md)
@@ -86,6 +95,13 @@ positive partial derivatives, while its exact frame columns all have
 a fixed elliptic orientation; the PMP pairing yields the contradiction.
 Hyperbolic, negative parabolic, and negative elliptic costates remain.
 This is a sector restriction, not a global cost or index bound.
+
+[The reverse Casimir calculation](docs/REVERSE_PERIOD_CASIMIR_REDUCTION.md)
+identifies a specific remaining obstacle: each stationary trace equation
+gives an upper bound on the Casimir, whereas the cost obstruction needs
+a lower bound. The required lower bound holds for the already excluded
+equal-margin family. Arbitrary unequal margins still require a cyclic
+compatibility argument.
 
 ## Active result: an explicit bound for every global minimizer
 

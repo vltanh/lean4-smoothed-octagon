@@ -135,6 +135,16 @@ can instead assign every mixed period to M1, M2, or M3; pure F/R periods
 are the two remaining global classes. This is a sufficient organization
 of the existing coverage proof, not a newly excluded competitor class.
 
+The added sign-only obstruction is also exact: the positive parabolic
+triangular matrix `U_0=[[0,-1],[0,0]]` pairs with every frame column with
+the required derivative sign. The hyperbolic perturbation
+`U_epsilon=[[epsilon,-1],[0,-epsilon]]` preserves all those finitely many
+strict signs for small nonzero `epsilon`. This includes columns of
+central-monodromy periods. These matrices are not claimed to satisfy
+the actual stationarity equalities. The example correctly demonstrates
+that a sector strengthening must use more than column orientation and
+cost-derivative signs.
+
 No material mathematical correction was needed. The complete-period
 cost inequality, all five uniform case-C targets, and affine rigidity
 remain open.

@@ -215,11 +215,20 @@ plot or optimizer output proves an unrestricted inequality.
    cover every symmetric equal-factor reverse-four core with a positive
    incoming pad and outgoing factor at least h, using either the Casimir
    budget or postcritical escape. All 146 exact checks pass. Address
-   arbitrary asymmetric cores and shorter outgoing pads next; do not
-   count the symmetric family as universal M1 or add word lengths.
+   arbitrary asymmetric cores and shorter outgoing pads next.
+   MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION proves that local moments, both
+   core-adjoining ties, a subcritical Casimir and low window cost do not
+   force sufficient padding: its first return is in (251/250,201/200).
+   The first external switch, geometry and full-period return are not
+   asserted for that witness. Use additional global/variational input;
+   do not count the symmetric family as universal M1 or add word lengths.
 3. **Reverse R**: test all positive/competitive L2 endpoint-rank
    alternatives and needle signs, especially boundary limits; do
    not assume the above-budget rank-four example is competitive.
+   REVERSE_PERIOD_CASIMIR_REDUCTION records exact cyclic stationarity:
+   its individual trace inequalities give upper Casimir bounds. A lower
+   bound sufficient for the cost obstruction needs genuine whole-period
+   compatibility; the equal-margin calculation does not provide it.
 4. **Forward F**: use the known closed-period Fourier index as a
    template for asymmetric return maps. The standard N=7 candidate
    failing the budget is a validation check, not a universal proof.

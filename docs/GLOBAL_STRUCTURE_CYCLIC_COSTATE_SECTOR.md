@@ -348,3 +348,38 @@ of the full matrix endpoint map. The Fourier evaluation in
 [GLOBAL_FORWARD_INDEX](GLOBAL_FORWARD_INDEX.md) treats that term only
 at the standard equal-arc family. Extending it to arbitrary stationary
 periods remains an independent unresolved step.
+
+
+### Why column orientation alone cannot remove the remaining sectors
+
+There is an exact limitation on the preceding sign argument. In triangular
+coordinates set
+
+\[
+U_0=\begin{pmatrix}0&-1\\0&0\end{pmatrix},\qquad
+U_\epsilon=\begin{pmatrix}\epsilon&-1\\0&-\epsilon\end{pmatrix}.
+\tag{15}
+\]
+
+The first matrix is positive parabolic. Every negative elliptic forward
+column has negative lower-left entry, so `tr(U_0 V_i^+)>0`. Every positive
+elliptic reverse column has positive lower-left entry, so
+`tr(U_0 V_i^-)<0`. These are exactly the required cost-derivative signs.
+They hold for every central-monodromy period as well.
+
+Moreover `det U_epsilon=-epsilon^2<0` for nonzero `epsilon`, and
+
+\[
+\operatorname{tr}(U_\epsilon V_i^\pm)
+ =2\epsilon(V_i^\pm)_{11}-(V_i^\pm)_{21}.
+\]
+
+For any fixed finite period, all the strict signs persist for sufficiently
+small nonzero `epsilon`. Thus correctly signed cost derivatives, central
+holonomy and elliptic column orientation alone cannot eliminate the
+remaining parabolic or hyperbolic sectors. A stronger theorem needs the
+**exact magnitudes** in (10) or additional full PMP information.
+
+These matrices are sign-compatible test multipliers, not asserted
+stationary multipliers: no equality in (10), full Hamiltonian maximality,
+competitive cost or closed PMP counterexample is claimed for them.

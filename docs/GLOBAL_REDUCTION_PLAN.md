@@ -54,6 +54,20 @@ elliptic, negative parabolic and hyperbolic sectors still need global
 cost/index analysis. The existing sign-run proof assigns every mixed
 period to M1/M2/M3, so pure whole periods suffice as the F/R targets.
 This organizational refinement excludes no further trajectory.
+[REVERSE_PERIOD_CASIMIR_REDUCTION](REVERSE_PERIOD_CASIMIR_REDUCTION.md)
+records the exact outstanding algebra: individual trace inequalities
+give upper Casimir bounds, while the desired cost obstruction needs a
+lower bound. The regular-family calculation is not an unequal-margin
+argument.
+
+[MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION](MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION.md)
+now certifies a local asymmetric normal PMP window with both core ties,
+subcritical Casimir and low local cost that switches back at factor in
+`(251/250,201/200)`, before the postcritical point. Thus those first-order
+data cannot force the symmetric theorem's long-padding premise. The
+first external switch, geometry, full return and minimality are not
+asserted. The full M1 case remains open; a valid extension must add
+whole-period or variational information.
 
 ## 1. Decision and exact target
 

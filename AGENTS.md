@@ -36,6 +36,14 @@ a uniform postcritical escape region. The final pad can begin at a
 degenerate tie. This does not cover asymmetric M1 or shorter outgoing
 pads, and closes no universal case-C target. Its 146-check rational
 certificate is supplementary to the displayed hand proof.
+MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION certifies one asymmetric normal local
+PMP window with both core-adjoining ties, determinant below the actual
+competitive cap, and local cost below A_oct, whose outgoing 0 arc switches
+back at factor in (251/250,201/200) before reaching the postcritical
+point. The incoming cut is not claimed to be a true external switch;
+geometry, complete-period return and minimality are unchecked. This
+refutes only the local inference that those first-order conditions force
+long enough padding, not M1 or the conjecture.
 
 GLOBAL_STRUCTURE_CYCLIC_COSTATE_SECTOR and its independent audit exclude
 zero and the closed positive elliptic primary-costate cone for complete
@@ -45,7 +53,12 @@ remain. The scalar derivative is before frame constraints, not a descent
 direction or index theorem. The sign-run coverage can assign every mixed
 period to M1/M2/M3, so a sufficient F/R target needs only entire pure
 periods. Do not apply the sector theorem to local F/R windows inside
-mixed periods.
+mixed periods. REVERSE_PERIOD_CASIMIR_REDUCTION derives the exact
+reverse stationarity equations: the individual Lorentz trace inequality
+gives an upper Casimir bound, not the needed lower bound. Its regular-
+family kappa>3/2 calculation treats an already excluded family. Neither
+that calculation nor the sign-only sector argument resolves cyclic
+compatibility for arbitrary unequal margins.
 
 Read docs/SINGULAR_COST_BUDGET.md and docs/MEASURABLE_EDGE_PMP_BOUND.md.
 The complete-period Hamiltonian and polar-angle argument gives a direct
