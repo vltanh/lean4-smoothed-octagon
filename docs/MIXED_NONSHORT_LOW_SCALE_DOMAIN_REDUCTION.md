@@ -131,3 +131,18 @@ The strict residual sign on those faces has not been proved in this
 note. These two necessary bounds are a reproducible hand increment,
 not an assertion of completion of the common low-scale or forward-next
 case.
+
+
+## 4. Subsequent closure of the d<=c part
+
+The [unit-shape hand theorem](MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md)
+and its [independent audit](MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md)
+now exclude every point of this common low-scale region with d<=c.
+Indeed t<7/20<13/35, d<=c is exactly x<=1-2t, and the actual
+centre gap with k>=1 implies 1<2t+2x+x^2. The exact incoming secant
+and its missing-control floor are unchanged when k is lowered to one.
+Strict shape monotonicity sends N(k)<0 to N(1)<0, contrary to that
+theorem. This application uses no reverse-next hypothesis.
+
+The part with d>c remains open; the present low-scale domain bounds
+continue to apply there.

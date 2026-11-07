@@ -64,8 +64,12 @@ whole-case exclusions.
 
 
 The [reverse order face](MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
-is now excluded by a complete hand proof, including ties. Two other
-lower shape faces remain. The
+is now excluded by a complete hand proof, including ties. The
+[unit-shape face](MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md)
+is also excluded, with its
+[independent audit](MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md).
+Only the scale lower face remains in that reverse partition. The same
+unit theorem closes the d<=c part of the common low-scale problem. The
 [fixed outer-norm comparison](MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
 reduces the nonnegative-pairing part of the short w=3/4 face to further
 endpoints, retaining the actual outgoing norm floor in its cost score.

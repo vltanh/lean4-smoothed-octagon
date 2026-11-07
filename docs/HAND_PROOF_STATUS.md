@@ -165,8 +165,10 @@ for a reverse successor. The [actual-floor order argument](MIXED_NONSHORT_REVERS
 also proves d<b*, adding k>=2t+x to the shape lower bound. The
 [order-face hand proof](MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
 now excludes that lower face, including ties, by first-event concavity
-and two explicit endpoint signs. The k=1 and k=(29/4)t^2 lower faces
-and the final upper-shape-endpoint exclusion remain open.
+and two explicit endpoint signs. The [unit-shape theorem](MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md),
+with [independent audit](MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md), now
+also excludes k=1. Only k=(29/4)t^2 remains in this lower-face route;
+the alternative upper-shape-endpoint sign remains open.
 
 [The short-side root and angle reduction](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md)
 keeps an actual outer root while decreasing the Casimir, with an explicit

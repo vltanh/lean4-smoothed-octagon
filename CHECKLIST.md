@@ -27,7 +27,7 @@ closed computer-assisted gates below do not close these new obligations.
 - [x] The [short opposite-norm floor](docs/MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md)
   is redundant by hand; the root comparison retains three other faces.
 - [x] The [reverse order lower face](docs/MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
-  is excluded by hand, including ties; the other two lower faces remain.
+  is excluded by hand, including ties; the unit face is also now closed.
 - [x] A reviewed [fixed outer-norm deformation](docs/MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
   further reduces the nonnegative-pairing short face, with its remaining
   endpoint signs explicit.
@@ -41,6 +41,9 @@ closed computer-assisted gates below do not close these new obligations.
 - [x] The [common low-scale domain](docs/MIXED_NONSHORT_LOW_SCALE_DOMAIN_REDUCTION.md)
   has t<7/20 and x>3/13. The [forward scale-Casimir comparison](docs/MIXED_NONSHORT_FORWARD_SHAPE_CASIMIR.md)
   retains the stronger next-norm floor through a proved endpoint reduction.
+- [x] The [unit-shape hand theorem](docs/MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md)
+  excludes the reverse k_min=1 face and the common low-scale d<=c part,
+  with a [dedicated independent audit](docs/MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md).
 - [ ] Full short-side exclusion, both nonshort successors, and the final
   hand-only assembly still need proofs.
 

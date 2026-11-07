@@ -317,3 +317,19 @@ contradicting k>=17t^2 and the upper centre gap. Hence x>3/13.
 Neither proof uses the next-switch type or a cap on an artificial root.
 The subsequent residual reduction retains the exact incoming floor;
 the two face signs remain open.
+
+
+## 10. The unit shape face is now excluded
+
+The complete [unit-shape proof](MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md)
+is accepted in its [dedicated audit](MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md).
+It closes k_min=1 in the reverse lower-shape partition, including ties.
+The only still-open lower face in that partition is the scale face.
+
+The same theorem excludes the d<=c part of the common a<=1/2
+domain. The previously proved t<7/20 lies strictly below 13/35,
+and d<=c gives x<=1-2t. The centre gap, exact incoming secant and
+incoming missing-control floor all meet the theorem's unchanged-coordinate
+hypotheses. Shape monotonicity then lowers to k=1 in the correct
+direction. No outgoing norm or artificial Casimir condition is used.
+The common d>c region and the forward endpoint signs remain open.
