@@ -1,8 +1,8 @@
 # Legacy research archive
 
-**Historical reference only.** These notes are preserved intact and no longer define the active work. The current two open global cases are F and M2; the unrestricted Reinhardt inequality and affine uniqueness remain unproved. Read [HANDOFF.md](../HANDOFF.md), [CHECKLIST.md](../../CHECKLIST.md), and [ACTIVE_MAP.md](../ACTIVE_MAP.md).
+**Historical reference only.** These notes are preserved intact and no longer define the active work. The current four closed sufficient whole-period classes are R, M1, M3 and F; only M2 remains open. The unrestricted Reinhardt inequality and affine uniqueness are not yet proved. Read [HANDOFF.md](../HANDOFF.md), [CHECKLIST.md](../../CHECKLIST.md), and [ACTIVE_MAP.md](../ACTIVE_MAP.md).
 
-The original five large status files are preserved under [snapshots](snapshots/README.md). All archived notes are at their original paths in the immutable [pre-reorganization tree](https://github.com/vltanh/lean4-smoothed-octagon/tree/851c871db687337e45222a7886d901c586279244), where historical relative links resolve as they did when written. Short forwarding pointers are retained at former paths so inbound links do not break.
+The original five large status files are preserved under [snapshots](snapshots/README.md). All archived notes are at their original paths in the immutable [pre-reorganization tree](https://github.com/vltanh/lean4-smoothed-octagon/tree/851c871db687337e45222a7886d901c586279244), where historical relative links resolve as they did when written. Short forwarding pointers are retained at historical documentation paths so inbound links do not break. Historical numerical scripts have instead been collected under [explorations/legacy](../../explorations/legacy/README.md); old command paths should be adjusted there.
 
 ## Superseded notes
 
@@ -57,3 +57,7 @@ The original five large status files are preserved under [snapshots](snapshots/R
 ## Scope
 
 Legacy means *not part of the live F/M2 proof gate*, not invalid mathematics. Closed special-family hand theorems, counterexamples to failed local shortcuts, rejected plans, local rank diagnostics, and older quantitative bounds are preserved. Do not revive the disproved unconditional local M1 six-window shortening statement.
+
+## Historical code
+
+The 20 retired probe/local-window scripts have been moved intact to [explorations/legacy](../../explorations/legacy/README.md). Active certificates and cover-chain verification remain at the repository's original `explorations/` paths. Older run commands can use the immutable prior tree or change their prefix to `explorations/legacy/`. No live M2 gate depends on the archived experiments being rerun.

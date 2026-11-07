@@ -1,6 +1,6 @@
 # Explorations and exact certificate scripts
 
-These scripts are preserved for reproducibility, including the older probes. They are **not** Lean tests and no script alone proves a global exclusion without its audited mathematical reduction. Current instructions: [docs/HANDOFF.md](../docs/HANDOFF.md).
+The active sources and exact certificate scripts remain here; historical probes, local-window diagnostics and superseded special-case scripts have been moved byte-for-byte to [legacy/](legacy/README.md). They are **not** Lean tests and no script alone proves a global exclusion without its audited mathematical reduction. Current instructions: [docs/HANDOFF.md](../docs/HANDOFF.md).
 
 The [certificate replay guide](../docs/CERTIFICATE_REPLAY.md) collects the current build commands, domain coverage and acceptance conditions in one place.
 
@@ -39,4 +39,4 @@ explains why a fully verified chain covers the same original roots.
 The live chains remain pending; individual child results are not
 stand-alone domain exclusions.
 
-The remaining numerical event probes, local L1–L4 certificates and earlier finite-window work are historical diagnostics, retained in place to avoid breaking script imports. The corresponding [notes are archived](../docs/legacy/INDEX.md).
+The earlier numerical return/event probes, local L1–L4 tests, small-word experiments and superseded M1/reverse-five scripts are archived under **[explorations/legacy](legacy/README.md)**. Archived inter-script imports remain together. Original script paths in old notes must be adjusted using the legacy index; the original file layout is retained in immutable Git history. Their corresponding [notes are archived](../docs/legacy/INDEX.md).
