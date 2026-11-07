@@ -17,6 +17,8 @@ Read the **[authoritative handoff](docs/HANDOFF.md)** before following any histo
 | Actual constrained cost Hessian | [MIXED_GLOBAL_AUGMENTED_INDEX](docs/MIXED_GLOBAL_AUGMENTED_INDEX.md), [MIXED_GLOBAL_SCALAR_DUAL](docs/MIXED_GLOBAL_SCALAR_DUAL.md) |
 | Terminal cost/equality audited; global assembly conditional on M2 | [GLOBAL_COST_EQUALITY_ASSEMBLY](docs/GLOBAL_COST_EQUALITY_ASSEMBLY.md), [SMALL_PERIOD_COST_EQUALITY_AUDIT](docs/SMALL_PERIOD_COST_EQUALITY_AUDIT.md) |
 
+**Current open verification:** [M2 first-switch F/R branch quantification](docs/MIXED_NONSHORT_BLOWUP_REDUCTION.md), [source/domain audit](docs/MIXED_NONSHORT_INTERVAL_CERTIFICATE_AUDIT.md), [replay commands](docs/CERTIFICATE_REPLAY.md), [rooted cover-chain verifier](docs/EXACT_COVER_CHAIN.md). Neither branch is committed as a complete cover. Historical diagnostics are in [explorations/legacy](explorations/legacy/README.md).
+
 Companion _AUDIT notes and exact certificate scripts remain available. Superseded plans, local comparisons, rejected shortcuts and weaker reduction estimates are [legacy](docs/legacy/INDEX.md); their old paths remain short pointers to preserve inbound links. Lean sources and dependency pins are unchanged.
 
 The [certificate replay guide](docs/CERTIFICATE_REPLAY.md) gives the

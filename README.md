@@ -2,6 +2,15 @@
 
 **The unrestricted cost inequality and affine uniqueness are still OPEN.** This draft PR contains research hand proofs and exact algebra certificates, not Lean-kernel verification. No Lean, Lake, typechecking or CI was run for the current hand-proof programme.
 
+## Repository organization
+
+- `docs/HANDOFF.md`: the **sole next-worker instructions**, including the two open M2 successor branches and exact certificate acceptance criteria.
+- `CHECKLIST.md`: the finite, auditable gate ledger; `docs/ACTIVE_MAP.md` and `SOURCE_MAP.md`: dependency references, not extra competing plans.
+- `docs/legacy/`: 48 historical research notes plus snapshots, with short compatibility pointers at former documentation paths.
+- `explorations/`: active exact certificate callers, audited backends, completed result records and cover-chain tooling.
+- `explorations/legacy/`: 20 byte-preserved retired numerical probes, local-window experiments and superseded small-word scripts; old invocation paths must be adjusted.
+- `SmoothedOctagon/*.lean`: untouched existing formalization drafts; no compilation or CI in this handoff.
+
 ## Where to start
 
 - **[Authoritative handoff](docs/HANDOFF.md)** — exact M2 remaining statements, current restrictions and finite acceptance gates.
@@ -22,7 +31,7 @@
 
 This is a **case count**, not a completion percentage. Case closures use hand proofs, exact algebra/rational certificates, internal audits and named inputs.
 
-A global minimizer has \(N<10^{56}\) under the established geometric/PMP inputs; [the pure-forward class with at least six pieces is now excluded uniformly](docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md). Its exact complementary-domain certificate processed 20,999 nodes with no unresolved box. In M2, the [smaller-short branch is now excluded](docs/MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md) by a complete 107,977-node directed cover with no unresolved box. The remaining task is to exclude both next-switch alternatives when the smaller turn at a global minimum belongs to a nonshort forward run.
+A global minimizer has \(N<10^{56}\) under the established geometric/PMP inputs; [the pure-forward class with at least six pieces is now excluded uniformly](docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md). Its exact complementary-domain certificate processed 20,999 nodes with no unresolved box. In M2, the [smaller-short branch is now excluded](docs/MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md) by a complete 107,977-node directed cover with no unresolved box. The remaining task is to exclude **both** next-actual-switch alternatives when the smaller turn at a global minimum belongs to a nonshort forward run. Neither branch currently has a complete, independently verified source/result record in this PR; see [the exact execution handoff](docs/HANDOFF.md#immediate-handoff-exact-next-actions).
 
 ## Working rules
 

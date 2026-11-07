@@ -11,7 +11,7 @@ does not establish that an arbitrary input trajectory belongs to the
 checked domain.
 
 **Current acceptance boundary:** the F and smaller-short covers are
-complete. Both smaller-nonshort covers are still running. The commands
+complete. Neither smaller-nonshort cover has a complete independently verified result committed to this PR; whether an external process is active is not itself evidence. The commands
 below identify those remaining full-domain checks without claiming their
 success.
 
@@ -154,8 +154,7 @@ unknown box, failed job or orphan. It recomputes the local and aggregate
 cover identities from the actual records. A coordinator progress line
 or a child's pending-domain `PASS` does not satisfy this acceptance gate.
 
-These live chains are currently running. Their completion and the final
-independent verification remain pending.
+No complete independently verified original-root chain has been committed. Its completion and final independent verification remain pending.
 
 ## 5. Acceptance of a cover
 

@@ -1,7 +1,6 @@
 # Exact accounting for parallel nonshort cover replays
 
-Date: 2026-11-07. This note explains a replay method. The live nonshort
-chains are still incomplete; no M2 exclusion is asserted here.
+Date: 2026-11-07. This note explains a replay method. No completed and independently verified nonshort chain is recorded in the PR; no M2 exclusion is asserted here.
 
 The mathematical domain, contractions and rejection tests remain those
 of the frozen

@@ -2,6 +2,39 @@
 
 **Status (2026-11-07): the unrestricted Reinhardt cost inequality and affine uniqueness are NOT proved.** The research branch is a draft. The accepted current work consists of hand proofs, independent internal mathematical reviews, and supplementary exact algebra/rational checks; no Lean compilation, kernel validation, Lake or CI has been run.
 
+## Immediate handoff: exact next actions
+
+**No full M2 nonshort certificate is recorded as completed in this PR.** An earlier multi-process run or a reported million-plus processed boxes is **not** completion: no branch is excluded until the complete original-root record (or a verified rooted chain) has an empty pending frontier and zero unknown boxes. Do not assume an external process continues after a session ends.
+
+| Gate | Domain / required next actual switch | Acceptance |
+| --- | --- | --- |
+| M2.0 (DONE) | Smaller turn is short; and separately the nonshort `0<=epsilon<=1/32` corner | Audited short-side 107,977-node cover; hand small-parameter theorem |
+| **M2.1-F (OPEN)** | Smaller turn nonshort; next **forward** switch has transported norm `>=3/4` | Completed three-chart cover, original roots or independently verified exact chain |
+| **M2.1-R (OPEN)** | Smaller turn nonshort; next **reverse** switch satisfies the extended-turn secant bound | Same complete cover acceptance, independently for branch 1 |
+| **M2.1-V / M2.2 (OPEN)** | Independently verify both execution forests; then audit exhaustive whole-period passage | Exact record accounting, mathematical interface, all boundaries |
+| **G4 / G5 (OPEN)** | Conditional terminal cost/equality assembly and final audit | Sharp global statement with all premises and trust boundaries identified |
+
+**Frozen technical target:** [the same-covector next-switch alternative](MIXED_SMALLER_TURN_CONTINUATION.md), [five-variable/maximal-chart reduction](MIXED_NONSHORT_BLOWUP_REDUCTION.md), [epsilon hand theorem](MIXED_NONSHORT_SMALL_PARAMETER_EXCLUSION.md), and [interval-caller source/domain audit](MIXED_NONSHORT_INTERVAL_CERTIFICATE_AUDIT.md). The complement consists of **three closed chart roots per branch**, `a in [2/15,17/20]`, `c in [2/15,2]`, two free weights in `[0,1]`, the chosen maximal weight one, `epsilon in [1/32,61/4]` for chart 0 and `[1/32,15]` for charts 1/2. Overlaps and degeneracies are intentional. The next actual switch is the first event **on the same continuous normal PMP covector**, not an independent local lift or arbitrary later switch.
+
+**Run/replay:** the exact commands, recorded C++/MPFR trust boundary and full-cover acceptance rules are at [CERTIFICATE_REPLAY](CERTIFICATE_REPLAY.md). A direct standalone replay may use:
+
+```sh
+g++ -std=c++17 -O3 explorations/mixed_nonshort_completion_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_nonshort_completion_interval_certificate
+/tmp/mixed_nonshort_completion_interval_certificate 2000000 0  # forward successor
+/tmp/mixed_nonshort_completion_interval_certificate 2000000 1  # reverse successor
+```
+
+Alternatively, replay the audited [cover-chain coordinator and verifier](EXACT_COVER_CHAIN.md):
+
+```sh
+python explorations/mixed_nonshort_completion_cover_chain.py /tmp/mixed_nonshort_cover_chain
+python explorations/mixed_nonshort_cover_chain_verify.py /tmp/mixed_nonshort_cover_chain/manifest.json
+```
+
+The coordinator's destination directory must be new. For each branch accept only a **complete three-root** cover (serial or full exact child forest), zero pending/unknown, clean arithmetic flags, matching frozen source/executable hashes, verified record-by-record parent/child correspondence, and the aggregate `N=2L-3`. A successful child prefix or integer count in isolation cannot close M2. If the cover stalls, use the emitted verified frontier to identify a **specific missing uniform contractor/hand inequality**, not a fresh word-length enumeration. Do not edit the frozen C++ caller/headers without re-auditing and updating its source identifiers.
+
+**Commit protocol:** close/check off a gate only after its result and independent review are recorded and pushed. Keep [CHECKLIST](../CHECKLIST.md) and this handoff authoritative, the [replay guide](CERTIFICATE_REPLAY.md) reproducible, and the PR draft until M2, G4 and G5 are complete. Historical local notes and former diagnostic scripts are under [docs/legacy](legacy/INDEX.md) and [explorations/legacy](../explorations/legacy/README.md), not alternative roadmaps.
+
 **Start here on every future session.** Use [the active finite ledger](../CHECKLIST.md), [active proof map](ACTIVE_MAP.md), and the specific theorem notes named below. Superseded plans and local investigations are in [legacy](legacy/INDEX.md).
 
 ## Objective and sufficient case partition
@@ -87,7 +120,7 @@ the simultaneous zero-duration denominator. The [hand corner theorem](MIXED_NONS
 excludes `epsilon<=1/32` uniformly. The published complementary caller,
 all contractors, coefficient expressions and LP proposal helper have an
 [independent source audit](MIXED_NONSHORT_INTERVAL_CERTIFICATE_AUDIT.md).
-Both full branch covers are running from their original three roots;
+Neither branch has a committed completed original-root cover record;
 no partial frontier or zero unknown count alone closes a branch.
 
 **M2.1 (OPEN):** At the **global minimum reverse centre whose smaller turn belongs to a nonshort forward run**, exclude both next-switch alternatives using the actual external switches and **same continuous PMP lift**. The smaller-short case is closed; do not assume a minimum must touch *two* long runs.

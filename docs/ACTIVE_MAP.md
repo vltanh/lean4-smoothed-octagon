@@ -2,6 +2,21 @@
 
 **Entry point:** [HANDOFF.md](HANDOFF.md). This index gives the short reading path, not another task ledger.
 
+## Current branch to discharge
+
+Only **M2** is open. The two remaining subbranches are the next **forward**
+switch and next **reverse** switch after the *smaller nonshort turn at the
+global minimum reverse centre*. Start with [the exact work queue and
+commands](HANDOFF.md#immediate-handoff-exact-next-actions),
+[the uniform scalar reduction](MIXED_NONSHORT_BLOWUP_REDUCTION.md),
+[the reviewed source/domain](MIXED_NONSHORT_INTERVAL_CERTIFICATE_AUDIT.md),
+[the replay requirements](CERTIFICATE_REPLAY.md) and
+[the independently verified cover-chain accounting](EXACT_COVER_CHAIN.md).
+The entire `epsilon<=1/32` corner is handled by hand. **Neither
+complementary branch is recorded as completely verified.** Do not substitute
+the retired local-window and word-atlas experiments for the same-PMP-lift
+whole-period obstruction.
+
 ## Read in this order
 
 1. Geometric/PMP foundation: [actual realization](ADMISSIBLE_REALIZATION.md), [arbitrary-control reverse comparison](REVERSE_COMPARISON.md), [GLOBAL_PERIODIC_PMP](GLOBAL_PERIODIC_PMP.md), [singular clearance](SINGULAR_COST_BUDGET.md), [measurable-edge finiteness](MEASURABLE_EDGE_PMP_BOUND.md), [finite switch count](QUANTITATIVE_REGULAR_SWITCH_BOUND.md), and then [GLOBAL_NORMALITY](GLOBAL_NORMALITY.md). The normal lift supplies [ellipticity](MIXED_GLOBAL_COSTATE_ELLIPTIC.md), the [spectral cost–Casimir bound](GLOBAL_SPECTRAL_COST_CASIMIR.md), and the [endpoint defect test](GLOBAL_ENDPOINT_DEFECT_TEST.md).
@@ -19,4 +34,4 @@ and the acceptance conditions for every full domain cover. The
 specifies the external geometric and standard PMP inputs and the scope
 of the arbitrary-competitor and original-disk equality conclusions.
 
-**Historical vs active:** [legacy archive](legacy/INDEX.md) holds the old five-case numerical atlas, superseded reduction plan, disproved local-shortening proposal, many local windows and weaker quantitative bounds. Old file paths provide stable pointers; do not use their historical NEXT WORKER instructions.
+**Historical vs active:** [legacy archive](legacy/INDEX.md) holds the old five-case numerical atlas, superseded reduction plan, disproved local-shortening proposal, many local windows and weaker quantitative bounds. Old documentation paths provide stable pointers and 20 retired scripts now live in [explorations/legacy](../explorations/legacy/README.md); do not use their historical NEXT WORKER instructions.

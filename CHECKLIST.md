@@ -21,13 +21,15 @@
 - [x] Terminal cost/equality audit: arbitrary four-piece parameters, mixed five-piece strictness, complete terminal word coverage and original-disk equality transport independently reviewed; 72 exact checks replayed. The global assembly remains conditional on M2.
 - [x] M2 nonshort boundary: regular five-variable charts, exact cancelled coefficients, and a uniform hand exclusion of `epsilon<=1/32`. Both complementary branch covers are independently source-audited and running; completion is still required.
 
-## Remaining finite proof gates
+## Remaining finite proof gates (the only live checklist)
 
-- [x] **F1: uniform pure-forward exclusion.** The same-lift minimum equations, exterior floors and global cost/Casimir budget exclude every F period with \(N\ge6\), arbitrary unequal factors; the exact complementary cover has 20,999 nodes and no unresolved boxes.
-- [x] **F2: F closure audit.** Independent internal review verifies the actual-lift normalization, exterior switches, whole-period budget, seam, weak ties, boundary cover, positive-window nondegeneracy, and exact rational verifier. See [the closure](docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md) and [audit](docs/GLOBAL_FORWARD_CASIMIR_CERTIFICATE_AUDIT.md).
-- [ ] **M2.1: long-run minimum obstruction.** The smaller-short side is excluded. On the smaller-nonshort side, exclude both next-actual-switch alternatives in the finite scalar continuation model.
-- [ ] **M2.2: M2 closure audit.** Cover arbitrary unequal margins, all nonshort run lengths, diagonal signs, degeneracies, twisted seam and rank limits. Mark M2 closed only then.
-- [ ] **G4: sharp global assembly.** Combine the five sufficient exclusions to obtain \(N\le5\), apply the retained through-five comparison, and prove unrestricted affine equality rigidity.
-- [ ] **G5: final mathematical dependency audit.** Verify inputs, complete exact checks and edge/equality cases. Record Lean/kernel validation as deferred.
+- [x] **F1 / F2:** uniform pure-forward exclusion and independent completion audit. The whole-period rational cover has 20,999 nodes and zero unresolved boxes; the all-forward length catalogue is retired.
+- [x] **M2.0:** the smaller-turn **short** side is excluded by a complete audited 107,977-node directed cover; the **nonshort** epsilon corner `0<=epsilon<=1/32` is excluded by hand. The nonshort coefficient formulas and caller have a source/domain audit.
+- [ ] **M2.1-F:** close the smaller-**nonshort**, *next forward switch* branch (transported norm at least `3/4`). Produce a complete, independently verifiable three-chart exact cover with zero unknown/unassigned records.
+- [ ] **M2.1-R:** close the smaller-**nonshort**, *next reverse switch* branch (norm at most the extended actual-turn secant), to the **same** acceptance standard.
+- [ ] **M2.1-V:** independently verify **both** full root-cover execution records: frozen source hashes, exact every-parent-record/child assignment if chained, accepted arithmetic flags, no pending/unknown job, original three roots and aggregate `N=2L-3` separately per branch. Interim zero-unknown counters are insufficient.
+- [ ] **M2.2:** hand-audit the exhaustiveness of the two actual next switches and the same covector, arbitrary unequal factors, all nonshort run lengths, weak ties, diagonal signs, zero-duration/edge limits, twisted seam and any remaining rank issue; then close the **entire** M2 period class.
+- [ ] **G4:** discharge the conditional [global cost/equality assembly](docs/GLOBAL_COST_EQUALITY_ASSEMBLY.md) using all five whole-period cases and the already reviewed through-five comparison; prove the sharp inequality and original-disk affine equality.
+- [ ] **G5:** independently audit the complete dependency chain, external inputs, exact replay records, mathematical boundary cases and final theorem scope. Lean/kernel verification stays **deferred**, not falsely marked complete.
 
 **Current status:** R, M1, M3 and F closed at hand/exact-proof level; M2, global cost inequality and affine uniqueness open. The old *local* L3 shortening lemma is false and is in [legacy](docs/legacy/INDEX.md). The \(N\le61\) theorem is not a plan for length-by-length enumeration. No Lean, Lake or CI.
