@@ -97,6 +97,23 @@ close the entire pure-reverse global case R.
 F, M1, M2 and M3 remain open. The historical universal local-shortening
 package is not closed by this global minimum principle.
 
+## Whole-forward ellipticity audit
+
+[GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)
+and its [independent audit](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC_AUDIT.md)
+prove negative ellipticity throughout the normal pure-forward domain.
+
+- [x] Use the actual primary multiplier and cancellation of free initial-state terms.
+- [x] Include the positive physical clock and cost-normalization factors.
+- [x] Derive the weak switching inequality without excluding triple or zero-derivative ties.
+- [x] Use exact stationarity for the off-diagonal Gram bound; sign-only pairing is insufficient.
+- [x] Derive two independent Jacobi solutions from full central frame monodromy.
+- [x] Treat rank-one and indefinite forms, both periodic boundary signs, and the exact positive-kernel identity.
+- [x] Retain endpoint curvature in the remaining Hessian and justify rank for N>=7 using the proved local six-forward rank theorem.
+- [x] Run all ten exact local identities; do not interpret them as a uniform index calculation.
+
+F remains open. The Jacobi inverse in the full Hessian is indefinite.
+
 ## Uniform symmetric mixed-core review
 
 [MIXED_GLOBAL_SYMMETRIC_ESCAPE](docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md)

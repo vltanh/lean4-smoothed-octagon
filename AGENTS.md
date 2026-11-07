@@ -30,7 +30,13 @@ this for every entirely reverse period. Two positive needles, exact
 zero endpoint differential and strictly negative cost give a PMP
 contradiction; no endpoint rank, IFT, costate-sector split or budget is
 needed. Read its independent audit and 20-identity exact checker.
-F, M1, M2 and M3 remain open. The compact
+F, M1, M2 and M3 remain open. GLOBAL_STRUCTURE_FORWARD_ELLIPTIC
+and its independent audit now prove that every whole pure-forward
+normal period has negative elliptic primary costate, including arbitrary
+unequal factors and degenerate ties. Its Jacobi-kernel proof excludes
+the remaining nonelliptic sectors; the 10 exact identities pass. The
+curvature-corrected Hessian is explicit, but its uniform negative index
+and the complete F cost comparison remain open. The compact
 normal-lift corollary is qualitative, with no explicit multiplier bound
 for an interval search.
 

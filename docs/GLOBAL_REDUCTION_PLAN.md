@@ -70,6 +70,15 @@ first external switch, geometry, full return and minimality are not
 asserted. The full M1 case remains open; a valid extension must add
 whole-period or variational information.
 
+The later [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)
+and its independent audit prove negative ellipticity for every normal
+whole-forward period with arbitrary unequal factors. Full central frame
+monodromy, exact stationarity and weak switching derivatives exclude
+nonelliptic multipliers. All ten exact identities pass. Its appendix
+gives the complete constrained Hessian, including endpoint curvature;
+a uniform negative direction or further cost obstruction is still
+required to close F.
+
 ## Closed global case R
 
 [GLOBAL_REVERSE_PERIOD_EXCLUSION](GLOBAL_REVERSE_PERIOD_EXCLUSION.md)

@@ -54,6 +54,23 @@ The older five *local improvement* targets have a different domain and
 remain separate: no universal shortening theorem for all reverse local
 windows is claimed.
 
+## Whole-forward costate theorem
+
+[GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)
+and its [independent audit](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC_AUDIT.md)
+prove that every normal entirely forward closed period has a negative
+elliptic primary costate. This covers arbitrary unequal factors and
+degenerate ties. Exact stationarity and weak switching derivatives give
+a positive quadratic form on a two-dimensional scalar Jacobi kernel;
+a hypothetical nonelliptic multiplier would force that kernel to be
+one-dimensional, contradicting full frame closure. All ten exact local
+identities pass.
+
+Thus the complete-period Casimir cost bound applies throughout F. The
+appendix gives its exact constrained Hessian with endpoint curvature.
+A uniform negative direction or further cost bound is still needed;
+**F remains open**.
+
 ## Closed checkpoint: every minimizing PMP lift is normal
 
 [GLOBAL_NORMALITY](docs/GLOBAL_NORMALITY.md) and its

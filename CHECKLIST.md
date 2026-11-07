@@ -132,6 +132,12 @@ periods were not resolved by that route. The new minimum-margin proof
 closes R without that lower bound; the retained regular-family strict
 lower bound is no additional competitor exclusion.
 
+The later [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)
+and its independent audit now remove the nonelliptic alternatives for
+whole pure-forward periods as well. Every such normal lift has negative
+elliptic primary costate. This makes the complete-period Casimir bound
+available throughout F, but closes no further case-C gate.
+
 No completed unrestricted cost comparison, affine uniqueness theorem, or
 kernel validation is claimed.
 
@@ -394,6 +400,14 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- **Whole-forward ellipticity proved:** GLOBAL_STRUCTURE_FORWARD_ELLIPTIC
+  and its independent audit exclude all nonelliptic primary costates
+  for every normal pure-forward period, without equal factors, rank,
+  a budget or transverse ties. The two-dimensional Jacobi kernel and
+  exact stationarity give the contradiction. Ten exact identities pass.
+  The remaining curvature-corrected constrained Hessian is explicit;
+  no uniform negative direction or complete F comparison is claimed.
 
 - **Entire reverse global case CLOSED:** GLOBAL_REVERSE_PERIOD_EXCLUSION
   proves a strict minimum principle for every normal 0210 PMP window.

@@ -69,7 +69,7 @@ sufficient package. This refinement closes no case.
 
 | ID | Six labels | Sign pattern | Reusable existing input | Exact new case target |
 |---|---|---|---|---|
-| F: pure forward | 012012 | +++++ | Full local endpoint rank five; standard-family negative index; closed positive elliptic costate cone excluded | Uniform negative *closed-period* variation or cost/return obstruction for all competitive entirely forward periods |
+| F: pure forward | 012012 | +++++ | Full local endpoint rank five; standard-family negative index; negative ellipticity of every normal whole-forward costate proved by GLOBAL_STRUCTURE_FORWARD_ELLIPTIC | Uniform negative *closed-period* variation or cost/return obstruction for all competitive entirely forward periods |
 | R: pure reverse | 021021 | ----- | **CLOSED:** GLOBAL_REVERSE_PERIOD_EXCLUSION and its independent audit; 20 exact identities | A global active-margin minimum contradicts the normal 0210 PMP minimum principle. All unequal factors and costate sectors; no budget or rank assumption. |
 | M1: short mixed | 021210 | --+-- | Full local rank five; full symmetric equal-factor core exclusion with outgoing factor at least h by cost/escape dichotomy; original broad local replacement is false | Expand escape/cost/index coverage across the remaining complete-period PMP region |
 | M2: mixed transition | 010201 | +--++ | Full local rank five; switch-only descent is not universally valid | Find a whole-arc needle, global index, or continuation certificate for all complete-period candidates |
