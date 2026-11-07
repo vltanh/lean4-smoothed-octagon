@@ -1,6 +1,6 @@
 # Audit boundary for the bounded-reduction checkpoint
 
-Date: 2026-11-06. New work is hand research and explicitly scoped exploration.
+Date: 2026-11-07. New work is hand research and explicitly scoped exploration.
 No new Lean file was added; no compilation, Lake, typechecking, kernel audit,
 or CI was run. The coverage proof received an independent hand review of its
 sign catalogue, twisted seam, run alternatives, and one-period window condition,
@@ -55,6 +55,30 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
 - [ ] Certify singular boundary faces of the bounded-coordinate compactification.
 - [ ] Deduce the unconditional bound N<=5.
 - [ ] Prove unrestricted global minimality and affine rigidity.
+
+## Uniform reverse-six subfamily: exact hand certificate
+
+`docs/LOCAL_REVERSE_SIX.md` treats every q>1 with six equal factors and the
+specified cyclic initial state. It does not vary that initial state during
+the endpoint correction. The normalized tangent chart avoids artificial
+singularities of an unnormalized matrix-entry chart.
+An independent hand review rederived all four Schur-complement entries and
+checked the insertion column, correcting factors, endpoint conventions, and
+the use of the implicit function theorem. No material issue was found.
+
+- [x] Fix both tangent and terminal-state endpoints, and recover the actual
+  frame endpoint from them.
+- [x] Supply a nonzero five-column endpoint minor for every q>1, with an
+  explicit three-by-three / two-by-two elimination calculation.
+- [x] Display the correcting factor derivatives and check both endpoint
+  variations; use the implicit function theorem for exact endpoint equality.
+- [x] Keep the inserted factor positive and preserve every whole-arc star
+  inequality by continuity and monotonicity of the vertex flows.
+- [x] Derive the exact cost derivative and prove it is strictly negative by
+  log(q)>2(q-1)/(q+1), without numerical signs as premises.
+- [x] Record loss of a uniform variation margin as q approaches one.
+- [x] State seven replacement pieces and a proper subfamily; do not mark the
+  full L2 target or a uniform complexity bound complete.
 
 ## Exploratory local-fiber probe: inconclusive
 

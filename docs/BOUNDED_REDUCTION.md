@@ -344,6 +344,22 @@ direction. Higher-order stationary points cannot be discarded. Failure of
 this same-word local method leaves the more general <=6-piece replacement
 option open; it is not permission to resume enumeration at larger N.
 
+### A sufficient variant may use more replacement pieces
+
+The bound of six on the replacement word is an additional sufficient target,
+not a requirement of the global-minimality contradiction. If every eligible
+input in each of the same five templates has any actual strictly cheaper
+finite-piece replacement with the same endpoints, Section 3 still applies.
+The improved full trajectory may have more pieces: it is used only to
+contradict minimality of the original trajectory.
+
+For example, [LOCAL_REVERSE_SIX.md](LOCAL_REVERSE_SIX.md) proves an exact
+seven-piece improvement for every q>1 in the equal-factor, state-cyclic
+reverse-six subfamily. It supplies no universal L2 theorem. Both the original
+at-most-six statements and their weaker finite-replacement variants remain
+open on the full eligible input domains. This alternative does not expand
+the five input cases or resume increasing-length whole-word enumeration.
+
 ## 7. Bounded dimension versus a certified bounded search
 
 Each input has eight real coordinates. One can put them in a bounded box:

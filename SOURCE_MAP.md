@@ -1,6 +1,6 @@
 # Source map: the bounded-reduction checkpoint
 
-Date: 2026-11-06. No Lean declaration was added or modified for this checkpoint.
+Date: 2026-11-07. No Lean declaration was added or modified for this checkpoint.
 The earlier full declaration-by-declaration map is preserved at
 [798a7e1 / SOURCE_MAP.md](https://github.com/vltanh/lean4-smoothed-octagon/blob/798a7e119e254c3ee23073de615288986fa61929/SOURCE_MAP.md).
 All corresponding proof files remain in the repository. The current ledger
@@ -18,6 +18,7 @@ supersedes earlier recommendations to continue by increasing whole-word length.
 | Parameter compactification and limits | Same note, Section 7: bounded coordinates only, not a certified finite interval search. |
 | Finite graph cross-check | [finite_window_cover.py](explorations/finite_window_cover.py): 32 blocks, 21 surviving the established exclusion, five target edges, then a 12-vertex/16-edge DAG. No analytic cost conclusion. |
 | Numerical diagnostic | [local_six_fiber_probe.py](explorations/local_six_fiber_probe.py): floating-point local search with a fixed seed and finite inputs. Neither convergence nor failures are proof premises. |
+| Uniform/state-cyclic reverse-six subfamily | [LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md): for every q>1, a strict seven-piece improvement with the same initial/final frame and state. Exact rank, correction, and cost-sign hand certificates. A proper subfamily only; full L2 and its at-most-six replacement statement remain open. |
 
 ## Existing mathematical inputs to the conditional implication
 

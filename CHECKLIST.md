@@ -9,7 +9,7 @@ endpoint elimination, singular-rank obligations, and stop/failure rules are
 spelled out there. **No new whole-word enumeration. No claim that the five
 universal statements are true. L1–L5: 0/5 proved.**
 
-Status date: **2026-11-06**. New Lean infrastructure, compilation, Lake, and CI remain paused.
+Status date: **2026-11-07**. New Lean infrastructure, compilation, Lake, and CI remain paused.
 
 The user requested a bounded set of cases before further enumeration. This ledger
 therefore supersedes the earlier next-six/next-seven progression. The full prior
@@ -43,6 +43,22 @@ boundedness theorem.
 **Analytic exclusions closed in this five-template package: 0/5.** This is a
 count of precisely stated local targets, not a percentage of the conjecture
 or an assertion that the targets have equal difficulty.
+
+### Scoped local result; no full input closed
+
+[LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md) proves a strict local improvement
+for every equal factor q>1 in the reverse state-cyclic family with initial
+margins 2(1,1,2q-1)/sqrt(4q-1). An inserted missing-control arc, together with
+five corrected original factors, gives an actual seven-piece competitor with
+exactly the same frame and state endpoints. A normalized endpoint minor is
+nonzero for all q>1; an elementary logarithm inequality proves strict descent.
+The correction size and cost decrease need not be uniform as q approaches one.
+
+This is a proper one-parameter subfamily of L2 and uses seven replacement
+pieces. It does not prove the current at-most-six L2 target, its full-domain
+seven-piece variant, or a uniform bound. A universal strict improvement with
+any finite replacement count would still contradict global minimality; the
+number of pieces in a competitor need not decrease for that contradiction.
 
 ## What is fixed, rather than growing
 
@@ -115,6 +131,9 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 - Preserve the previously completed closed-012102 moment boundary arguments.
   Their cost implication and finite boundary proofs were independently reviewed;
   the two interior inequalities remain open and their investigation is paused.
+- Prove the uniform/state-cyclic reverse-six subfamily admits a strict
+  seven-piece endpoint-preserving improvement for every q>1. This is recorded
+  separately from the five full-domain targets; none is marked closed.
 
 ## Literature and validation boundary
 

@@ -57,6 +57,16 @@ separate hand review of the sign catalogue, twisted seam, and run argument. The 
 32 fixed-size sign blocks and verifies an acyclic graph; it does not enumerate
 trajectories up to an arbitrary maximum length.
 
+### A local subfamily with an exact improvement
+
+[LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md) proves a seven-piece strict
+improvement for every q>1 in the equal-factor, state-cyclic reverse six-arc
+family. The proof fixes the initial state, corrects both terminal endpoints
+exactly, and proves the cost derivative is negative by an elementary logarithm
+inequality. It requires neither the whole-word endpoint F=R nor numerical
+optimization. This is a proper subfamily of L2; the full eight-dimensional
+target and the other four local targets remain open.
+
 ## Earlier comparison results retained
 
 The source notes supply a full asymmetric hand comparison for every admissible
