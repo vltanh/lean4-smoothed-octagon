@@ -2,7 +2,22 @@
 
 ## Current priority: global cost comparison after an explicit uniform bound
 
-**Mandatory session entry point:** `docs/GLOBAL_REDUCTION_PLAN.md`.
+**Mandatory session entry points:** docs/FINITE_CASE_COMPUTER_ROADMAP.md
+and docs/GLOBAL_REDUCTION_PLAN.md. For the active G4 comparison,
+use five fixed complete-switch PMP patterns F/R/M1/M2/M3, **not** an
+enumeration of words up to the N<10^56 theoretical cutoff.
+Read docs/CASE_ATLAS_EXPERIMENT_001.md and the three exploratory
+Python scripts before adding numerical assertions. Their complex-step
+derivatives, positive insertion costs and constrained-Hessian inertia
+checks are empirical regression diagnostics on finitely many inputs,
+not certified uniform signs. The new complete-period N=4/7/10
+Hessian examples validate existing hand results only. Require
+complete-period budget, actual twisted state/costate endpoints and
+all necessary optimality tests before declaring a candidate excluded;
+retain explicit UNKNOWN outcomes. The new GLOBAL_NORMALITY proof is
+not yet independently audited.
+
+
 Read docs/SINGULAR_COST_BUDGET.md and docs/MEASURABLE_EDGE_PMP_BOUND.md.
 The complete-period Hamiltonian and polar-angle argument gives a direct
 homogeneous costate bound for every competitive closed PMP lift. On the
