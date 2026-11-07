@@ -208,3 +208,9 @@ failure if any box is unprocessed or reaches the depth limit.
 The linear-budget polynomial certificate was also replayed. These
 checks concern the hand reduction and supplementary rational verifier;
 no Lean kernel validation is asserted.
+
+A separate [independent source and dependency audit](GLOBAL_FORWARD_CASIMIR_CERTIFICATE_AUDIT.md)
+reviewed the same domain, approximation and arithmetic rules and replayed
+the repository checker. It reproduced exactly 8183 processed nodes, six
+empty-domain leaves, 4086 negative Taylor leaves, maximum depth 20, and
+no unprocessed or depth-limit boxes.
