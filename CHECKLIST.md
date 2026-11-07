@@ -11,6 +11,15 @@ open. The [new hand refinements](docs/HAND_PROOF_REFINEMENTS.md) strengthen
 the Casimir cap, reverse-centre scale and forward successor norm. The
 closed computer-assisted gates below do not close these new obligations.
 
+- [x] Hand replacement of the nonshort small-parameter corner:
+  [strict duration-ratio gap](docs/MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md),
+  independently reviewed, gives `(d-a)/(a+c)>1/10`.
+- [x] Accepted conditional [forward reductions](docs/HAND_FORWARD_LEMMAS.md)
+  and [short-side root envelope](docs/MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md).
+- [ ] The sufficient neighbor and norm-sum bounds, full short-side
+  defect exclusion, both nonshort successors, and upstream hard
+  small-forward-minimum face still need hand proofs.
+
 ## Baseline proof checkpoints
 
 - [x] G1: actual twisted state/frame and costate interface, free initial state and required geometric/PMP inputs.

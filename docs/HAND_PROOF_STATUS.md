@@ -28,7 +28,7 @@ in force.
 | --- | --- | --- |
 | H-F | Uniform exclusion of all-forward periods, including the small-minimum sign argument, neighbor bound and complementary Casimir inequality | Open. The two existing covers and the hard small-minimum coefficient face are discovery evidence only for this goal. |
 | H-S | Exclusion when the smaller turn at a minimum reverse centre has a short forward run | Open. Replace the six-variable cost/angle and outer-root exclusion by an analytic argument. |
-| H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Open. Retain the scalar boundary comparison and concavity reduction; replace the reverse, low-a and forward endpoint exclusions. The small-parameter coefficient argument also needs a complete readable hand justification or a bypass. |
+| H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Open. Retain the scalar boundary comparison and concavity reduction; replace the reverse, low-a and forward endpoint exclusions. The old small-parameter coefficient argument is now bypassed by the proved strict duration-ratio gap. |
 | H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Open. In particular, distinguish supplementary identity checks from indispensable executable sign checks. |
 
 These are uniform period classes. They are not a plan to enumerate more
@@ -58,6 +58,10 @@ marked closed on the strength of these necessary conditions alone.
 
 ## Dependency pruning under review
 
+[The independent reduction review](HAND_REDUCTION_REVIEW.md) accepts
+the following pruning and distinguishes its proved implications from
+the remaining exclusion targets.
+
 The earlier theorem excluding two adjacent short bridges at a minimum
 is not needed if H-S is proved directly: choose the smaller adjacent
 turn immediately, then apply H-S or H-N according to its actual run.
@@ -65,10 +69,40 @@ Its large coefficient tables would then disappear from the final chain.
 The elementary secant and outer-root facts used by the direct short-side
 interface still need to be retained with their own proofs.
 
+[MIXED_NONSHORT_UPPER_ENVELOPE_GAP](MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md)
+and its [independent hand review](MIXED_NONSHORT_UPPER_ENVELOPE_GAP_AUDIT.md)
+prove `d^2+2cd>4` and then `(d-a)/(a+c)>1/10`. Thus the whole old
+`epsilon<=1/32` corner is absent for actual data, including the original
+delta0-maximal chart. Its coefficient table is no longer needed by the
+refined hand route. The same note proves two simple turn-length bounds
+and records which additional reverse-successor constraints survive the
+comparison.
+
 The broad circular-region argument in F already has a hand proof; its
 older interval-Hessian calculation need not be imported into a new
 dependency chain. The remaining small-forward-minimum polynomial face
 is a separate issue and is still included in H-F.
+
+## Further accepted reductions, with explicit open hypotheses
+
+[HAND_FORWARD_LEMMAS](HAND_FORWARD_LEMMAS.md) proves exterior-factor
+concavity and reduces a sufficient neighbor bound to two planar signs.
+It also proves that the bounds `z,w<=4/3` and
+`(u-3/4)+(v-3/4)<=1/40` imply `gamma^2>23/125` by hand. Proving those
+two bounds for actual stationary data remains open; numerical evidence
+for them is not a proof premise.
+The same note strengthens the whole-period cost budget by retaining
+both exterior factors, using the positive mixed derivative of the
+scalar edge cost and an explicit seven-edge accounting argument.
+
+[MIXED_SMALLER_SHORT_OUTER_ENVELOPE](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md)
+removes the opposite turn and its independent norm from one necessary
+outer-root condition, for both diagonal signs. Its exact loss formulas
+show how a quantitative corrected Casimir cap could be transported.
+Neither the useful ratio bound nor the required physical cost-defect
+exclusion is claimed established.
+
+Both reductions have [independent internal hand acceptance](HAND_REDUCTION_REVIEW.md).
 
 ## Acceptance rule
 

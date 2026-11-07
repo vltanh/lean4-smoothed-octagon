@@ -8,6 +8,14 @@ replacement gates; [HAND_PROOF_REFINEMENTS](docs/HAND_PROOF_REFINEMENTS.md)
 contains the new analytic bounds. The table below maps the completed
 computer-assisted baseline and does not assert hand-only completion.
 
+The [nonshort gap](docs/MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md) replaces the
+old corner calculation. [Forward lemmas](docs/HAND_FORWARD_LEMMAS.md)
+and the [short-side envelope](docs/MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md)
+are accepted conditional reductions. Their
+[hand review](docs/HAND_REDUCTION_REVIEW.md) identifies the exact remaining
+sign arguments and removes the optional both-sides-short theorem from
+the proposed dependency chain.
+
 | Scope | Active sources |
 | --- | --- |
 | Geometric/control correspondence, twisted PMP | [ADMISSIBLE_REALIZATION](docs/ADMISSIBLE_REALIZATION.md), [REVERSE_COMPARISON](docs/REVERSE_COMPARISON.md), [GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md), [final dependency review](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) |

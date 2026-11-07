@@ -10,6 +10,12 @@ The active request is a proof without computer assistance. Read the
 reading path describes the completed computer-assisted baseline; its
 interval covers are not premises of the requested new proof.
 
+The accepted next hand results are the [nonshort duration gap](MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md),
+[forward reductions](HAND_FORWARD_LEMMAS.md), and
+[short-side root envelope](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md).
+Their exact limitations and dependency pruning are in
+[HAND_REDUCTION_REVIEW](HAND_REDUCTION_REVIEW.md).
+
 ## Completed theorem and review path
 
 All sufficient whole-period cases and the final cost/equality assembly

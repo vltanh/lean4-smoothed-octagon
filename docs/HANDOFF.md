@@ -2,6 +2,15 @@
 
 **Active request (2026-11-07): find a hand proof that does not depend on computer assistance.** The finite replacement ledger is [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md). New explicit inequalities are in [HAND_PROOF_REFINEMENTS](HAND_PROOF_REFINEMENTS.md). That goal is not yet complete: the interval exclusions below are the completed computational baseline, not hand-only premises. Preserve the baseline and replace its indispensable computational dependencies by readable arguments.
 
+**Latest hand progress:** the [nonshort duration-ratio gap](MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md)
+removes the old small-parameter coefficient table from the actual refined
+route. The [forward lemmas](HAND_FORWARD_LEMMAS.md) and
+[short-side outer envelope](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md) have
+accepted conditional reductions with their remaining hypotheses stated.
+See the [independent hand review](HAND_REDUCTION_REVIEW.md); no final
+F, short-side or nonshort successor exclusion is claimed from these
+refinements alone.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

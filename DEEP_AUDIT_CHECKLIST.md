@@ -11,6 +11,12 @@ computer-assisted scope. The new
 [analytic refinements](docs/HAND_PROOF_REFINEMENTS.md) have an accepted
 [independent hand review](docs/HAND_PROOF_REFINEMENTS_AUDIT.md).
 
+The [nonshort duration gap](docs/MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md)
+has its own [accepted hand audit](docs/MIXED_NONSHORT_UPPER_ENVELOPE_GAP_AUDIT.md).
+The [forward and short-side reduction review](docs/HAND_REDUCTION_REVIEW.md)
+accepts the conditional mathematical implications and dependency pruning,
+while leaving the full exclusion obligations open.
+
 ## F
 
 - [x] Normal negative elliptic sector and global cost/Casimir normalization.
