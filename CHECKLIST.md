@@ -66,6 +66,15 @@ terms prove the remaining rank-three assertion. This removes every interior
 singular-rank exception for L1. It supplies no cost exclusion and no uniform
 conditioning estimate at the boundary; the stationary minimum above remains.
 
+[LOCAL_FORWARD_PMP_LIMIT](docs/LOCAL_FORWARD_PMP_LIMIT.md) deduces normality
+and uniqueness of the normalized adjoint from this rank theorem. It also
+exhibits eligible six-windows of the existing standard forward polygons
+with full PMP, transverse switches, and a twisted periodic extension; their
+local costs tend to zero. Their displayed full periods exceed the octagon
+cost. Thus local first-order PMP plus unrestricted periodic extendibility
+cannot close L1; the total minimizing-period budget remains a distinct
+possible input. No new closed family or uniform bound is asserted.
+
 [LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md) proves a strict local improvement
 for every equal factor q>1 in the reverse state-cyclic family with initial
 margins 2(1,1,2q-1)/sqrt(4q-1). An inserted missing-control arc, together with
@@ -147,6 +156,12 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Derive L1 normality and a unique normalized adjoint from full endpoint rank.
+  Prove that local PMP plus unrestricted twisted periodic extendibility is
+  insufficient, using already known standard polygons with arbitrarily cheap
+  eligible six-windows. Their whole periods are not competitive. Independent
+  hand and primary-source reviews passed; no local target is closed.
 
 - Prove an exact eligible L3 strict strong local minimum. The finite endpoint,
   Hessian, sector, and needle identities have an exact reproducer; the full-arc

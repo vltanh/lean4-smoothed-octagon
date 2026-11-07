@@ -79,6 +79,13 @@ durations. Its active-margin coordinates also give a nearest-neighbor cost
 formula and the exact constrained second variation. This rank result is
 compatible with the stationary minimum; it proves no local improvement.
 
+Its [PMP consequence and limitation](docs/LOCAL_FORWARD_PMP_LIMIT.md) shows
+that a minimizing L1 window has a unique normalized normal adjoint, but local
+first-order control tests plus an unrestricted periodic extension still do
+not exclude all eligible windows. Standard forward polygons already supply
+such windows with arbitrarily small local cost. Their whole periods cost
+more than the octagon, so the whole-period budget cannot be dropped.
+
 [LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md) proves a seven-piece strict
 improvement for every q>1 in the equal-factor, state-cyclic reverse six-arc
 family. The proof fixes the initial state, corrects both terminal endpoints

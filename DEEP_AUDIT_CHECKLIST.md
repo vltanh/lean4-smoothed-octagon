@@ -79,6 +79,18 @@ four determinant identities and signs, and constrained Hessian correction.
 - [x] Distinguish interior full rank from uniform boundary conditioning.
 - [ ] Classify interior endpoint ranks for L2–L5.
 
+`docs/LOCAL_FORWARD_PMP_LIMIT.md` derives normality on the reduced state
+manifold and proves a limitation of first-order PMP. Independent review
+checked Hales--Vajjha Section 7.5 and the following exact implications:
+
+- [x] Surjectivity excludes an abnormal reduced covector and makes the
+  normalized adjoint unique for a stationary L1 input.
+- [x] Standard forward polygons with `N=3k+1>=7` give proper eligible
+  six-windows, with exact margins, full-arc sectors, and inherited full PMP.
+- [x] Prove their local costs tend to zero using `C_window<6*pi/N`.
+- [x] Keep the noncompetitive whole period distinct from the competitive
+  local window; no low-cost periodic extension or local optimum is inferred.
+
 ## Exact L1 same-word obstruction
 
 `docs/LOCAL_FORWARD_SIX.md` gives one rational-factor input with initial

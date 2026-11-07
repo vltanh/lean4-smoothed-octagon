@@ -104,6 +104,14 @@ the entire positive strict-star domain, hence rank two after suffix
 elimination. This uses arbitrary initial state and all unequal factors.
 It gives no uniform boundary conditioning or cost descent.
 
+[LOCAL_FORWARD_PMP_LIMIT.md](LOCAL_FORWARD_PMP_LIMIT.md) then proves
+normality and uniqueness of a minimizing window's normalized adjoint.
+It also shows why local first-order PMP plus mere twisted periodic
+extendibility is insufficient: existing standard polygons supply eligible
+full-PMP six-windows of arbitrarily small cost, while their displayed
+whole periods exceed the octagon budget. Keep that total-period budget
+when trying a stronger necessary-condition route.
+
 L1 is the first test of whether the proposed five-case route is viable,
 **not** presumed easier or true. Use the exact initial-state chart
 
