@@ -5,9 +5,11 @@
 **Mandatory session entry point:** `docs/FIVE_TEMPLATE_HANDOFF.md`. Begin with
 the completed P0 certificate in `docs/MINIMIZER_WINDOW_AUDIT.md`
 (minimizer eligibility, twisted seam, sector restrictions, and finite-piece
-geometric bridge). Then attempt universal local L1, followed by L2–L5.
-Record exact obstruction or hand certificate for each attempt. The five
-analytic claims are all currently open; do not relabel them as solved.
+geometric bridge). Then read docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md:
+the original L3 statement is FALSE on the stated local domain when the
+replacement has at most six pieces. Repair that sufficient reduction before
+treating the five-template package as a viable route. Record exact scope:
+L1, L2, L4, L5 remain open; no universal analytic exclusion is proved.
 
 Read `docs/LOCAL_FORWARD_SIX.md` before continuing L1: its exact eligible
 stationary minimum disproves universal nearby same-word descent. Do not
@@ -21,9 +23,11 @@ also paused: mathematical closure and a hand proof come first.
 
 The current candidate finite route is docs/BOUNDED_REDUCTION.md. Its hand
 coverage argument reduces any minimizing word with at least six pieces to
-one of five local templates: 012012, 021021, 021210, 010201, 021012. The FIVE
-universal local improvement claims are all open. A conditional finite package
-is not an unconditional bound and is not five completed cases.
+one of five local templates: 012012, 021021, 021210, 010201, 021012.
+The coverage is valid, but the original analytic package has a false L3
+premise. The local counterexamples have not been embedded in actual closed
+minimizers and do not refute Reinhardt. Any repair needs additional proved
+minimizer conditions, a different local target, or another uniform bound.
 
 Work should prove or refute one of those universal local statements on its
 entire explicit domain, or provide a different genuinely uniform bound and

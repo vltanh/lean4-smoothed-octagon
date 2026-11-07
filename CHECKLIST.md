@@ -4,12 +4,12 @@
 **P0 is complete at the hand-proof level:** see
 [the minimizer-window audit](docs/MINIMIZER_WINDOW_AUDIT.md) for finiteness,
 twisted rebasing, normalized sectors, and the finite-piece geometric splice.
-Attack **L1 (012012)** as a *universal local
-endpoint-preserving improvement*; test for obstructions before extending to
-L2–L5. The proof acceptance criteria, exact eight-variable domain, local
-endpoint elimination, singular-rank obligations, and stop/failure rules are
-spelled out there. **No new whole-word enumeration. No claim that the five
-universal statements are true. L1–L5: 0/5 proved.**
+**The original L3 lemma is refuted:**
+[LOCAL_REVERSE_SIX_OBSTRUCTION](docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md)
+constructs eligible `021210` windows with no cheaper replacement of at most
+six pieces. Repair the sufficient domain or the uniform reduction before
+treating this package as a viable proof plan. **No new whole-word enumeration.
+L1, L2, L4, L5 remain open; universal analytic exclusions proved: 0/5.**
 
 Status date: **2026-11-07**. New Lean infrastructure, compilation, Lake, and CI remain paused.
 
@@ -27,8 +27,8 @@ itself such a bound.
 
 The candidate route is the fixed five-template package in
 [docs/BOUNDED_REDUCTION.md](docs/BOUNDED_REDUCTION.md). It has a proved coverage
-argument and five unresolved analytic inputs. It is not an unconditional
-boundedness theorem.
+argument, four open analytic inputs, and one refuted sufficient input.
+It is not an unconditional boundedness theorem or a viable conjunction as stated.
 
 | Component | Exact completion condition | Status |
 | --- | --- | --- |
@@ -36,10 +36,10 @@ boundedness theorem.
 | Coverage | Every cyclically reduced minimizing word with N>=6 contains one of the five specified six-arc windows, using the established forward-alternation exclusion. | Hand proof independently reviewed, with a separate finite-graph computational cross-check. No new cost class excluded by this alone. |
 | L1: 012012 | Strictly cheaper endpoint-preserving replacement on the entire eligible local domain. | **Open.** An exact eligible stationary minimum disproves universal nearby same-word descent; different-word or nonlocal improvements remain possible. See [LOCAL_FORWARD_SIX](docs/LOCAL_FORWARD_SIX.md). |
 | L2: 021021 | Same universal local improvement for five consecutive reverse switches. | **Open.** A regular-family comparison does not cover asymmetric local endpoints. |
-| L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Open.** An exact eligible strict strong local minimum rules out universal nearby improvement, including arbitrary nearby controls. Distant replacements remain possible; see [LOCAL_L3_STRONG_MINIMUM](docs/LOCAL_L3_STRONG_MINIMUM.md). |
+| L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Refuted for at most six replacement pieces.** Eligible arbitrarily cheap windows admit no cheaper endpoint-matching replacement with that piece bound. See [LOCAL_REVERSE_SIX_OBSTRUCTION](docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md). No closed-minimizer embedding is asserted. |
 | L4: 010201 | Same universal local improvement at a reverse run of length two followed by at least two forward switches. | **Open.** Full-domain endpoint rank five is proved. An exact eligible stationary family has all five compensated missing-control switch needles positive; that switch-only shortcut is false. See [LOCAL_SIX_VARIATION](docs/LOCAL_SIX_VARIATION.md). |
 | L5: 021012 | Same universal local improvement at a reverse run of at least three followed by at least two forward switches. | **Open.** |
-| Uniform bound | Deduce N<=5 for every global minimizer from all five local improvements and the published finite bang-bang reduction. | Conditional implication proved; its five analytic premises remain open. |
+| Uniform bound | Deduce N<=5 for every global minimizer from valid local improvements and the published finite bang-bang reduction. | Conditional implication proved, but the original L3 premise is false. A repaired reduction is required. |
 | Global comparison and equality | Apply the existing through-five cost comparison and equality classification after the uniform bound is proved. | Conditional only. Global minimality and affine rigidity remain open. |
 | Kernel validation | Compile and inspect the final statements and dependencies. | Deferred under the current workflow. |
 
@@ -104,7 +104,19 @@ free-time augmentation. It is a strict strong local minimum in the normalized
 free-log-time formulation, including its duration coordinate. Thus nearby
 same-word or arbitrary-control improvements cannot handle every L3 input.
 This is a local-method obstruction: no quantitative radius or global
-comparison excludes a distant cheaper replacement. L3 remains open.
+comparison excludes a distant cheaper replacement for that explicit example.
+The separate small-window theorem below refutes the original universal L3 target.
+
+[LOCAL_REVERSE_SIX_OBSTRUCTION](docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md)
+supplies that counterexample without an optimal-control sufficiency theorem.
+A scaled reverse-four core has an exact edge dual and positive interior
+third-control gaps. After adding two small positive control-0 arcs,
+compactness and endpoint normal coordinates force every cheaper competitor
+with at most six pieces to use the same word. A five-coordinate local inverse
+then fixes both padding arcs and the core endpoints; the exact edge lower
+bound rules out cheapness. Full-arc star and sector eligibility are proved.
+Independent hand review passed. Larger replacement counts are not addressed
+by this particular proof, and global Reinhardt minimality remains open.
 
 ## What is fixed, rather than growing
 
@@ -172,6 +184,12 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Refuted the original at-most-six L3 lemma on its exact necessary-superset
+  domain. Independently reviewed the edge dual, full-arc gap, compactness,
+  deletion expansion, normal masses, and inverse argument. Updated the
+  reduction and worker instructions to require a repair. No new global
+  minimizer class is excluded and no counterexample to Reinhardt is claimed.
 
 - Proved full-domain rank five for L4 and an exact eligible stationary
   family with all five compensated switch needles strictly positive.

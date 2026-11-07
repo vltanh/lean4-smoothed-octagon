@@ -2,7 +2,16 @@
 
 Date: 2026-11-06. Priority: establish boundedness before further whole-word comparisons.
 
-## Status: coverage proved; the five analytic exclusions are open
+## Status: coverage proved; the original L3 sufficient statement is false
+
+**Update (2026-11-07):** [LOCAL_REVERSE_SIX_OBSTRUCTION.md](LOCAL_REVERSE_SIX_OBSTRUCTION.md)
+proves that some eligible `021210` windows admit no cheaper replacement with
+at most six positive vertex pieces. Their costs can be arbitrarily small.
+The original sufficient package below therefore cannot be completed on its
+stated domain. The coverage proof and conditional implication remain valid;
+L1, L2, L4, and L5 remain open. These local examples have not been shown to
+occur in actual closed minimizers, so this is not a counterexample to
+Reinhardt or Hales's geometrically embedded link-reduction conjecture.
 
 This note supplies a complete hand proof of a finite coverage statement:
 
@@ -13,12 +22,13 @@ This note supplies a complete hand proof of a finite coverage statement:
 The proof uses the existing local exclusion of forward four-piece alternation.
 It does NOT assert that the five windows have already been excluded.
 
-The remaining bounded research package consists of five local improvement
-statements, on explicit fixed-dimensional domains. Proving them would force
-EVERY global minimizer to have at most five pieces. The existing comparison
-through five pieces would then prove global minimality and affine rigidity.
-No next-seven, next-eight, or successively increasing whole-word enumeration
-is needed by this route.
+The originally proposed package consists of five local improvement
+statements on explicit fixed-dimensional domains. Their conjunction would
+force every global minimizer to have at most five pieces, but its L3 premise
+is false. A repair must supply additional necessary conditions for actual
+minimizers or a different uniform reduction. The existing comparison through
+five pieces and its equality classification are retained. Increasing-length
+whole-word enumeration does not repair this failed sufficient lemma.
 
 **Not established:** a uniform switch bound, any of the five universal local
 improvement statements, the unrestricted cost inequality, or kernel validation.
@@ -34,7 +44,7 @@ if it decreases by one. The five templates are:
 | --- | --- | --- | --- |
 | L1 | +++++ | 012012 | Open |
 | L2 | ----- | 021021 | Open |
-| L3 | --+-- | 021210 | Open |
+| L3 | --+-- | 021210 | **False on this domain with at most six replacement pieces** |
 | L4 | +--++ | 010201 | Open |
 | L5 | ---++ | 021012 | Open |
 
@@ -47,7 +57,7 @@ apart from the explicit eligibility tests in Section 4. The ambient input
 dimension is eight, independent of the total length of a surrounding word.
 The targets are whole parameter domains, not sampled factor tuples.
 
-The local statement sought for each row is:
+The original sufficient local statement for each row was:
 
 > Every eligible six-piece window of that type has an actual strict-star
 > replacement, with the SAME initial and final frame AND state, and strictly
@@ -158,8 +168,8 @@ In symbols, with the cited reduction and existing hand results as inputs,
         implies every global minimizer has at most five pieces
         implies Reinhardt minimality and affine rigidity.
 
-This is a proved CONDITIONAL implication. None of its five new analytic
-inputs is marked complete. Crucially, strict local improvement is enough;
+This is a proved CONDITIONAL implication, whose original L3 premise is now
+refuted. None of its five analytic exclusions is complete. Strict cost improvement is enough;
 we need not actually construct a six-to-five replacement in every case.
 
 ## 4. Explicit, fixed-dimensional eligibility domain
@@ -357,6 +367,13 @@ minimum in an explicitly normalized free-log-time formulation. This includes
 arbitrary nearby controls. The proof supplies no global exclusion of distant
 cheaper replacements, so it does not refute the stated L3 existence claim.
 
+The distinct small-window construction in
+[LOCAL_REVERSE_SIX_OBSTRUCTION.md](LOCAL_REVERSE_SIX_OBSTRUCTION.md) now
+does refute that at-most-six existence claim. It combines an exact edge
+dual, a compactness argument, positive interior third-control gaps, and two
+normal endpoint coordinates. This is a global comparison with every word
+of length at most six, not an inference from local optimality alone.
+
 For L1, [LOCAL_FORWARD_RANK.md](LOCAL_FORWARD_RANK.md) now proves that the
 full endpoint rank is five throughout the positive strict-star domain, so
 these two remaining equations have rank two everywhere. The proof resolves
@@ -364,11 +381,13 @@ the state endpoints in active margins and signs four explicit determinant
 terms. It applies without cost or sector restrictions. It does not assert
 uniform conditioning as factors collapse or margins approach zero.
 
-Rank zero and rank one points MUST still be treated for L2–L5. In particular,
+For L4, LOCAL_SIX_VARIATION proves full endpoint rank five by a paired-matrix
+determinant. Rank zero and rank one points remain unresolved for L2, L3, L5. In particular,
 dimension counting alone proves neither a smooth fiber nor a decreasing
 direction. Stationary points cannot be discarded in any template. Failure of
-this same-word local method leaves the more general <=6-piece replacement
-option open; it is not permission to resume enumeration at larger N.
+this same-word local method alone does not settle different-word replacement.
+The separate L3 counterexample does settle its original target negatively;
+neither result is permission to resume enumeration at larger N.
 
 ### A sufficient variant may use more replacement pieces
 
@@ -381,9 +400,9 @@ contradict minimality of the original trajectory.
 
 For example, [LOCAL_REVERSE_SIX.md](LOCAL_REVERSE_SIX.md) proves an exact
 seven-piece improvement for every q>1 in the equal-factor, state-cyclic
-reverse-six subfamily. It supplies no universal L2 theorem. Both the original
-at-most-six statements and their weaker finite-replacement variants remain
-open on the full eligible input domains. This alternative does not expand
+reverse-six subfamily. It supplies no universal L2 theorem. The original
+at-most-six L3 statement is false; its weaker finite-replacement variant is
+not decided by the six-piece obstruction. This alternative does not expand
 the five input cases or resume increasing-length whole-word enumeration.
 
 ## 7. Bounded dimension versus a certified bounded search
@@ -440,6 +459,7 @@ no claim of Lean compilation or kernel validation for the new reduction.
 Whole-word case expansion is paused. Work counts toward the boundedness
 checkpoint only if it proves or refutes one of L1-L5 on its ENTIRE stated
 domain, or supplies a genuinely different uniform bound with a complete
-coverage theorem. Rewriting these five open statements as checked boxes,
+coverage theorem. Rewriting these unproved or refuted statements as checked boxes,
 proving another closed six-piece family, or increasing the tested N does
 not close this checkpoint.
+

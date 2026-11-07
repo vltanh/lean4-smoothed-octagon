@@ -1,13 +1,22 @@
 # Handoff — bounded-case proof plan for the Reinhardt conjecture
 
-**Checkpoint (2026-11-06): prove or refute a fixed five-template LOCAL
-improvement package before adding another whole-word case.**
+**Checkpoint (2026-11-07): the original at-most-six L3 statement is refuted.
+Repair the sufficient reduction before adding another whole-word case.**
 
 **Start here, then** `docs/BOUNDED_REDUCTION.md` (precise theorem/domain),
 `CHECKLIST.md` (status), `docs/FORWARD_ALTERNATION_EXCLUSION.md`
 (proved local descent), and `docs/WORD_HOLONOMY.md` (endpoint algebra).
 
 ## Executive decision
+
+Read [LOCAL_REVERSE_SIX_OBSTRUCTION.md](LOCAL_REVERSE_SIX_OBSTRUCTION.md)
+first. It proves that eligible `021210` windows of arbitrarily small cost
+can admit no cheaper endpoint-matching replacement with at most six pieces.
+The current domain is a necessary superset of actual minimizing windows;
+no closed-minimizer embedding of these counterexamples is claimed. The next
+proof gate is a justified repair: additional necessary minimizer conditions
+or a different uniform reduction. The original five sufficient statements
+cannot all be proved as written.
 
 **Do not resume comparing closed words of lengths 7, 8, 9, ...** The finite
 closed-word comparisons through five pieces, and two six-piece closed orbits,
@@ -23,7 +32,7 @@ seam**. This is a structural coverage theorem, **not** a uniform bound.
 | --- | --- | --- | --- |
 | L1 | `012012` | `+++++` | **OPEN** |
 | L2 | `021021` | `-----` | **OPEN** |
-| L3 | `021210` | `--+--` | **OPEN** |
+| L3 | `021210` | `--+--` | **FALSE** on the stated domain with at most six replacement pieces |
 | L4 | `010201` | `+--++` | **OPEN** |
 | L5 | `021012` | `---++` | **OPEN** |
 
@@ -36,9 +45,10 @@ pieces. Its word may differ, but if using the finite replacement search,
 limit it to at most six pieces.
 
 Each gate quantifies over **all asymmetric parameters**, not just symmetric,
-generic-rank, sampled, closed, or bounded-box tuples. These five claims
-have **not** been proved and might be too strong; test them rather than
-presupposing them.
+generic-rank, sampled, closed, or bounded-box tuples. The original domain
+is now proved too broad for its at-most-six L3 claim. L1, L2, L4, and L5
+remain open. A weaker target restricted by newly proved necessary minimizer
+conditions must keep its hypotheses explicit.
 
 ## Why the package suffices, conditionally
 
@@ -118,7 +128,8 @@ full-PMP six-windows of arbitrarily small cost, while their displayed
 whole periods exceed the octagon budget. Keep that total-period budget
 when trying a stronger necessary-condition route.
 
-L1 is the first test of whether the proposed five-case route is viable,
+L1 remains an analytic target, but the refuted L3 premise already blocks
+the original five-case route. The following L1 work is retained for a repair,
 **not** presumed easier or true. Use the exact initial-state chart
 
 `p=(a,b,(4-ab)/(a+b))` with `a>0,b>0,ab<4`, and six factors
@@ -174,11 +185,15 @@ method. A theorem for *globally closed* `012012` does not count.
 
 - [ ] L2: `021021` (reverse-cyclic; do not infer from L1 by an unproved
   time-reversal/reflection symmetry).
-- [ ] L3: `021210` (isolated forward switch inside reverse runs).
+- [x] Diagnose L3: `021210` is refuted on the stated domain for at most six
+  replacement pieces by LOCAL_REVERSE_SIX_OBSTRUCTION. This is a refuted
+  sufficient lemma, not a proved analytic exclusion or a global counterexample.
+  The earlier, distinct
   [LOCAL_L3_STRONG_MINIMUM.md](LOCAL_L3_STRONG_MINIMUM.md) supplies an exact
   eligible strict strong local minimum in the normalized free-log-time
   formulation. Universal nearby improvement, including arbitrary nearby
-  controls, is false. A distant cheaper replacement remains possible.
+  controls, is false. A distant cheaper replacement for that particular
+  equal-factor input is not excluded by its local theorem.
 - [ ] L4: `010201` (a reverse run of exactly two). Full-domain endpoint
   rank five is proved in LOCAL_SIX_VARIATION. Its exact eligible stationary
   family has all five compensated missing-control switch needles positive;
@@ -263,7 +278,11 @@ pieces; two closed six-piece comparisons.
 
 **Completed prerequisite:** P0 window-eligibility and finite-splice hand audit.
 
-**Open:** L1, L2, L3, L4, L5 (**0/5**);
+**Refuted:** original L3 on the stated domain with at most six replacement pieces.
+Its arbitrary-finite-replacement relaxation is not settled by that proof.
+
+**Open:** L1, L2, L4, L5; a repaired L3/domain or another uniform reduction
+(**0/5 analytic exclusions proved**);
 unconditional bound `N<=5`; global cost inequality; affine rigidity.
 
 **Forbidden next milestone:** a closed seven-arc or longer comparison,
@@ -293,8 +312,8 @@ exploration. Do not compile Lean or run CI under the current agreement.
   finite bang-bang theorem and the missing uniform bound:
   https://arxiv.org/abs/2405.04331
 
-This handoff changes **research priorities**, not mathematical status:
-the five local analytic claims remain OPEN, and no Lean compilation,
+The original L3 sufficient statement has been refuted; the conjecture and
+unconditional complexity bound remain open. No Lean compilation,
 typechecking, Lake, CI, or kernel validation was run.
 
 

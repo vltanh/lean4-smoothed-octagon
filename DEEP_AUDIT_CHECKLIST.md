@@ -5,7 +5,8 @@ No new Lean file was added; no compilation, Lake, typechecking, kernel audit,
 or CI was run. The coverage proof received an independent hand review of its
 sign catalogue, twisted seam, run alternatives, and one-period window condition,
 in addition to the distinct finite-graph computational cross-check. The analytic
-local targets have not been proved or independently certified.
+local exclusions have not been proved. The original at-most-six L3 statement
+has been refuted by an independently reviewed hand counterexample.
 
 The complete earlier audit is preserved at
 [798a7e1 / DEEP_AUDIT_CHECKLIST.md](https://github.com/vltanh/lean4-smoothed-octagon/blob/798a7e119e254c3ee23073de615288986fa61929/DEEP_AUDIT_CHECKLIST.md).
@@ -60,10 +61,34 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
   obligations rather than count dimensions as a descent theorem.
 - [x] State that a replacement need not remove an arc: strict cost decrease
   with preserved endpoints suffices for contradiction to global minimality.
-- [ ] Prove any of L1-L5 on its full stated domain.
+- [x] Refute the original at-most-six L3 target on its full stated domain
+  by producing eligible counterexamples. This is not a proved exclusion.
+- [ ] Prove a repaired sufficient package or a different uniform bound.
 - [ ] Certify singular boundary faces of the bounded-coordinate compactification.
 - [ ] Deduce the unconditional bound N<=5.
 - [ ] Prove unrestricted global minimality and affine rigidity.
+
+## L3 counterexample to the at-most-six sufficient lemma
+
+`docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md` supplies an existence family with
+arbitrarily small positive cost and no cheaper endpoint-matching replacement
+with at most six vertex pieces. The proof is independent of an optimal-control
+sufficiency theorem.
+
+- [x] Verify the scaled reverse-edge profile, exact dual, and equality case.
+- [x] Check actual adjoint equations, third-control gaps, second derivative,
+  switch jumps, and the Green-function sign bound on complete intervals.
+- [x] Derive the two endpoint normal columns and their independence.
+- [x] Match a smooth exact edge endpoint bound to the terminal covector.
+- [x] Prove a uniform compact strict-star box for every cheaper competitor
+  and an O(h) bound on all control-0 duration from the monotone tangent angle.
+- [x] Justify deletion Taylor estimates at zero durations and merged arcs.
+- [x] Force positive leading control-0 mass at both endpoints, then use the
+  six-piece bound to force the exact word and the five-coordinate inverse.
+- [x] Prove complete strict-star, cost, and sector eligibility.
+- [x] Receive independent hand review of all critical identities and limits.
+- [x] Keep the local-domain counterexample distinct from geometric embedding
+  in a closed minimizer, larger replacement counts, and Reinhardt itself.
 
 ## Full-domain L1 endpoint rank
 

@@ -5,6 +5,12 @@ application of the published sufficient-optimality theorem.
 
 ## Result and exact limitation
 
+**Subsequent status:** the distinct small-window construction in
+[LOCAL_REVERSE_SIX_OBSTRUCTION.md](LOCAL_REVERSE_SIX_OBSTRUCTION.md)
+refutes the original universal L3 target with at most six replacement
+pieces. The theorem below remains a local result for its own exact input;
+its limitations are not a claim that the original universal target is open.
+
 There is an explicit eligible window of type **L3 = 021210** which is a
 strict strong local minimum for its fixed initial and final frame and state,
 with free elapsed time, in the normalized log-time formulation described
@@ -478,8 +484,9 @@ excluding every distant cheaper six-piece path, and small cost by itself
 does not identify such a radius. A finite search over replacement words
 cannot fill that gap.
 
-Thus the universal L3 replacement statement remains open. What has been
-proved is a concrete obstruction to closing it by asserting that every
+Thus this local theorem alone does not decide universal L3. Its later
+refutation for at most six pieces uses the distinct construction linked
+at the top. What is proved here is a concrete obstruction to asserting that every
 eligible L3 tuple has a nearby descent direction, a negative constrained
 Hessian, or a favorable infinitesimal needle.
 
@@ -544,3 +551,4 @@ Assumptions 2.1–2.3 and Theorem 2.6 of the primary paper; a further review
 checked the normalization, multiplier, second-variation space, and scope.
 Neither review found a material issue. No Lean, Lake, typecheck, or CI
 command has been run for this result.
+

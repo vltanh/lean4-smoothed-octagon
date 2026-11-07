@@ -14,12 +14,13 @@ validation have not been run. New formalization infrastructure is paused.**
 Read it **before** attacking any additional case. The prerequisite
 [P0 audit is complete as a hand proof](docs/MINIMIZER_WINDOW_AUDIT.md):
 it verifies minimizer eligibility, twisted seams, normalized geometric sectors,
-and the finite-piece geometric/control splice. The next target is L1 as a **local** endpoint-preserving
-cost improvement, including stationary endpoint fibers. L1 has full endpoint
-rank throughout its positive domain, as proved below. Continue
-with L2–L5 only against the same strict acceptance criteria. All five
-universal local improvements remain **OPEN** (0/5). Do not resume
-increasing-length whole-trajectory enumeration.
+and the finite-piece geometric/control splice. **The original local L3
+statement is now refuted:** eligible `021210` windows can have no cheaper
+replacement with at most six pieces. Read
+[the exact obstruction](docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md) before trying
+to complete that sufficient package. L1, L2, L4, and L5 remain open;
+universal analytic exclusions proved: **0/5**. A repaired reduction is
+required. Do not resume increasing-length whole-trajectory enumeration.
 
 The P0 note also records the corrected terminal conjugation and the explicit
 equality transfer to the concrete octagon. Independent premises and equality
@@ -40,7 +41,7 @@ up to cyclic relabeling, one of these six-piece windows:
 | --- | --- | --- |
 | 012012 | Five forward switches | Open |
 | 021021 | Five reverse switches | Open |
-| 021210 | One forward switch between two reverse pairs | Open |
+| 021210 | One forward switch between two reverse pairs | Refuted on the stated domain with at most six replacement pieces |
 | 010201 | Reverse run of length two followed by at least two forward switches | Open |
 | 021012 | Reverse run of at least three followed by at least two forward switches | Open |
 
@@ -52,8 +53,8 @@ most five pieces. A replacement may still use six pieces; strict cost decrease
 alone contradicts minimality. Actual six-to-five shortening is not necessary.
 
 The existing through-five comparison and equality case would then finish the
-hand proof. **Coverage and this conditional implication are proved; the five
-analytic exclusions and hence the uniform bound remain open.** No finite
+hand proof. **Coverage and this conditional implication are proved, but the
+original L3 premise is false; the uniform bound remains open.** No finite
 interval computation on a truncated parameter box is advertised as exhaustive.
 
 The complete domains, twisted-seam argument, exact endpoint map, positive-factor
@@ -96,7 +97,7 @@ family. The proof fixes the initial state, corrects both terminal endpoints
 exactly, and proves the cost derivative is negative by an elementary logarithm
 inequality. It requires neither the whole-word endpoint F=R nor numerical
 optimization. This is a proper subfamily of L2; the full eight-dimensional
-target and the other four local targets remain open.
+L2 target remains open; this subfamily does not repair the refuted L3 premise.
 
 The [exact L3 strong local minimum](docs/LOCAL_L3_STRONG_MINIMUM.md) also
 satisfies the complete input domain. Its full-arc control inequalities and
@@ -104,8 +105,17 @@ positive constrained second variation imply strict strong local optimality
 by a published sufficient theorem, with the free-time conversion made
 explicit. Arbitrary nearby controls do not improve this example. A distant
 cheaper replacement is still possible, so this records a failed local method
-and leaves L3 open. An [exact finite reproducer](explorations/local_l3_exact_certificate.py)
+for that particular input. An [exact finite reproducer](explorations/local_l3_exact_certificate.py)
 checks the displayed algebra; the interval signs are proved in the hand note.
+
+The separate [small-window L3 counterexample](docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md)
+proves a stronger, global statement with a fixed piece limit: some eligible
+`021210` windows, of arbitrarily small cost, admit **no cheaper replacement
+with at most six pieces**, regardless of word or elapsed time. The proof uses
+an exact edge lower bound, compactness, and two endpoint coordinates, and has
+received independent hand review. These windows have not been shown to occur
+in actual closed minimizers. The result refutes the proposed sufficient local
+lemma; it does not refute Reinhardt or Hales's geometrically embedded conjecture.
 
 The [L4 variation certificate](docs/LOCAL_SIX_VARIATION.md) proves that the
 `010201` endpoint map has rank five throughout its positive-factor domain.
