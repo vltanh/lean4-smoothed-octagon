@@ -27,7 +27,7 @@ in force.
 | Gate | Required hand replacement | Current status |
 | --- | --- | --- |
 | H-F | Uniform exclusion of all-forward periods through the stationary norm-sum or a direct Casimir inequality | Open. The hard small-minimum face and sufficient neighbor bound are proved by hand. The complementary Casimir cover still needs a hand replacement. |
-| H-S | Exclusion when the smaller turn at a minimum reverse centre has a short forward run | Open. Replace the six-variable cost/angle and outer-root exclusion by an analytic argument. |
+| H-S | Exclusion when the smaller turn at a minimum reverse centre has a short forward run | Open. The separate opposite-norm floor face is now excluded by hand. Three remaining root/cost boundary faces still need analytic exclusions. |
 | H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Open. Retain the scalar boundary comparison and concavity reduction; replace the reverse, low-a and forward endpoint exclusions. The old small-parameter coefficient argument is now bypassed by the proved strict duration-ratio gap. |
 | H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Open. In particular, distinguish supplementary identity checks from indispensable executable sign checks. |
 
@@ -152,7 +152,11 @@ makes the lower comparison gap affine and strictly decreasing in shape,
 leaving a single necessary upper endpoint. The retained symmetric
 central lower bound also decreases with shape, so its high-a cap
 condition can be used there with the exact incoming secant fixed.
-The final endpoint sign remains open.
+The [exact secant refinement](MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON.md)
+strengthens that upper endpoint and gives d<7c/3, as well as d<7r/3
+for a reverse successor. The [actual-floor order argument](MIXED_NONSHORT_REVERSE_ORDER_BOUND.md)
+also proves d<b*, adding k>=2t+x to the shape lower bound. Both the
+upper-endpoint and new lower-face residual exclusions remain open.
 
 [The short-side root and angle reduction](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md)
 keeps an actual outer root while decreasing the Casimir, with an explicit
@@ -175,12 +179,14 @@ the remaining positive-D face or the other short faces are excluded.
 [The shear/cost formulas](MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md)
 identify every possible scale minimum of the relaxed short cost: scale
 endpoints, the clipping point, and one explicit critical angle.
-For the separate positive-D opposite-floor remainder, a two-step Jensen
-argument removes the apparent root-interval endpoint. Completed squares
-and one short polynomial identity exclude the entire outer-scale
-endpoint. Only the central-duration endpoint remains for that floor
-face. These [reviewed reductions](HAND_ENDPOINT_REDUCTIONS_AUDIT.md)
-leave the remaining cost and floor signs explicit. Actual lower Casimir
+For the separate opposite-floor face, a two-step Jensen argument removes
+the apparent root-interval endpoint. Completed squares, one short
+polynomial identity and a monotone constrained quadratic minimum exclude
+both the outer-scale and central-duration endpoints. This removes the
+separate v=3/4 face entirely. The remaining three root/cost faces are
+t=r, v=U(t), and w=3/4. These
+[reviewed results](HAND_ENDPOINT_REDUCTIONS_AUDIT.md) do not claim their
+exclusion. Actual lower Casimir
 information, including a bound from the fixed incoming turn, is retained
 in the cost score without claiming a lower bound on the artificially
 deformed determinant.

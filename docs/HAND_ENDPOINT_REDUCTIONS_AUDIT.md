@@ -29,6 +29,33 @@ endpoint inequality. No actual norm floor or physical Casimir cap is
 assigned to the artificial root. The sign that would exclude this final
 endpoint is not supplied by the reduction.
 
+### Exact secant and sharper turn-length comparison
+
+[MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON](MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON.md)
+is also accepted. Extending the secant to zero and using three positive
+atanh terms proves d<7c/3, and the reverse turn similarly gives d<7r/3.
+The pointwise expression for d minus the integrand of J' has a concave
+quadratic bracket, positive at both endpoints. Hence J'<d on the
+required unchanged-coordinate range. The exact weighted root-gap
+derivative is bounded above by the displayed strictly negative
+three-coefficient expression. Thus the upper shape endpoint retains
+the exact secant, improving the earlier rational-line necessary bound.
+Its final exclusion sign remains open.
+
+### Order forced by the two actual exterior floors
+
+[MIXED_NONSHORT_REVERSE_ORDER_BOUND](MIXED_NONSHORT_REVERSE_ORDER_BOUND.md)
+is accepted. The pointwise swapped-secant identity has positive factors
+throughout the integration interior. Both actual missing-control floors
+have the stated secant forms, and starting-point monotonicity applies
+on the required positive intervals. If d>b*, the incoming comparison
+forces r<c<d, and the outgoing comparison then forces A0>a, contrary
+to A0<a. The equality argument and actual positive-duration strictness
+are both valid. Therefore actual reverse-next data have d<b*, and
+the enlarged shape domain may use k>=2t+x. No outgoing floor is
+assigned to the artificial root. The new three lower shape faces
+remain necessary-domain reductions rather than a completed exclusion.
+
 ## 2. Shape monotonicity of the retained central lower bound
 
 Section 5 of
@@ -110,9 +137,27 @@ remaining degree-six identity has nonnegative higher terms and one
 explicitly positive completed square. All these steps are hand sign
 arguments; an executable sign check is not a premise.
 
-Consequently only the central-duration endpoint ell((1+x)^2)<0
-remains for a separate v-floor face. This audit does not exclude that
-last face, or any other short root-comparison face.
+Section 11 now excludes that last central-duration endpoint as well.
+The coarse logarithm bound and completed square first reduce alpha
+below 9/8; the positive-diagonal inequality then forces x<8/3.
+The sharper norm and bracket estimates reduce alpha below 10/9.
+At fixed alpha, the lower diagonal comparison delta_*(K) decreases
+with K, while H=delta_*-4b/3 strictly increases. Its second derivative
+has the stated positive lower comparison, and the initial derivative
+has the strict rational margin 809/82215.
+
+The quadratic minimum over delta>=max(0,delta_*) has exactly the two
+displayed branches. When H>=0 it is nonnegative. When H<0, each branch
+strictly increases with K, their derivatives agree at the transition,
+and the initial value is positive by the already accepted Section 10
+identity. The comparison at K=7 is only a scalar calculation; no
+trajectory or original cap is assigned there.
+
+Thus both endpoints contradict the necessary ell<0. The positive-D
+opposite-norm floor is impossible, and the nonpositive-D part is
+impossible or already on w=3/4. The separate v=3/4 stopping face is
+redundant. Exactly three other short comparison faces remain:
+t=r, v=U(t), and w=3/4. This review does not exclude those faces.
 
 ## 5. Shear, physical cost and every possible scale minimum
 

@@ -47,8 +47,10 @@ The current mixed endpoint sources are the
 [short shear/cost reduction](MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md),
 and [short floor reductions](MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md),
 with [independent review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
-The last source excludes the root-interval and outer-scale endpoints;
-its separate floor face retains one central-duration inequality.
+The floor source now excludes the separate opposite-norm floor face;
+three other short root/cost faces remain. Reverse refinements are the
+[exact secant endpoint](MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON.md)
+and [actual-floor order bound](MIXED_NONSHORT_REVERSE_ORDER_BOUND.md).
 
 ## Completed theorem and review path
 

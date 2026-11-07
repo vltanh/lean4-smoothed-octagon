@@ -24,6 +24,8 @@ closed computer-assisted gates below do not close these new obligations.
 - [x] The smaller-nonshort case satisfies
   [t<2/5](docs/MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION.md) and
   [a<4/5](docs/MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND.md) by hand.
+- [x] The [short opposite-norm floor](docs/MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md)
+  is redundant by hand; the root comparison retains three other faces.
 - [ ] The stationary norm-sum/Casimir bound, full short-side defect
   exclusion, both nonshort successors, and final hand-only assembly
   still need proofs.

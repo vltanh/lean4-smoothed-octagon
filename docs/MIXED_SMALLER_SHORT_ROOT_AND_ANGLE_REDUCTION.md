@@ -7,8 +7,11 @@ This note gives two further scalar reductions of the smaller-short
 branch. The first preserves its competitive upper Casimir bound while
 moving to an explicit boundary. The second eliminates the diagonal
 pairing from an upper bound for the physical two-turn polar angle. Their
-combination retains a necessary cost inequality on four boundary faces.
-Those faces are **not yet excluded** here.
+combination initially retains a necessary cost inequality on four
+boundary faces. The subsequent
+[opposite-floor hand proof](MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md)
+removes the separate v=3/4 face. The other three faces, t=r,
+v=U(t) and w=3/4, remain **unexcluded**.
 
 The inputs are the actual six-variable interface in
 [MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION](MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION.md),
@@ -528,6 +531,11 @@ and the score is nondecreasing. The same proof with m=3/4 gives a
 weaker entirely rational norm floor if preferred.
 
 ## 6. What remains after this reduction
+
+The original four-face conclusion below can now be sharpened using the
+[opposite-floor theorem](MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md): only
+t=r, v=U(t), and w=3/4 need remain. This additional theorem does not
+alter the root deformation or transfer any unjustified lower cap.
 
 Every actual smaller-short competitive period supplies a scalar point
 on at least one of the four faces (7), with the same fixed short-bridge

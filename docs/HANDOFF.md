@@ -42,12 +42,16 @@ prove both ratios below 4/3, with their
 stationary norm-sum or direct Casimir sign.
 
 For the mixed cases, the [affine reverse comparison](MIXED_NONSHORT_REVERSE_AFFINE_COMPARISON.md)
-leaves one upper shape endpoint, and the
+leaves one upper shape endpoint, now improved by the
+[exact secant comparison](MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON.md).
+The [actual-floor order bound](MIXED_NONSHORT_REVERSE_ORDER_BOUND.md)
+adds d<b* and a new lower shape face. The
 [short shear/cost formulas](MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md)
 list all possible scale minima. The
 [short floor analysis](MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md)
-removes both the root-interval and outer-scale endpoints, leaving one
-central-duration sign for the separate opposite-floor face. Their
+now excludes the separate opposite-floor face entirely. Its root-interval,
+outer-scale and central-duration endpoint signs all have hand arguments.
+The short root comparison therefore retains three open faces. Their
 [review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md) does not close the remaining
 whole-case exclusions.
 

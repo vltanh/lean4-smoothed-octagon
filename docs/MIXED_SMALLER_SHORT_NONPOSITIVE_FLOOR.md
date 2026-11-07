@@ -1,15 +1,17 @@
-# The opposite norm floor cannot occur alone when the short diagonal is nonpositive
+# The opposite norm floor is redundant in the short-root comparison
 
 Date: 2026-11-07. Hand proof, accepted in independent internal review.
 The original nonpositive-diagonal lemma is reviewed in
-[HAND_FURTHER_REFINEMENTS_AUDIT](HAND_FURTHER_REFINEMENTS_AUDIT.md);
-the subsequent endpoint reductions and exclusions are reviewed in
-[HAND_ENDPOINT_REDUCTIONS_AUDIT](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
+[HAND_FURTHER_REFINEMENTS_AUDIT](HAND_FURTHER_REFINEMENTS_AUDIT.md).
+The endpoint reductions and complete positive-diagonal exclusion are
+reviewed in [HAND_ENDPOINT_REDUCTIONS_AUDIT](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
 
-This removes the nonpositive-diagonal part of one stopping face in
+This removes the separate v=3/4 stopping face in
 [MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md).
-It does not exclude the remaining positive-diagonal part or the other
-boundary faces. The argument is a scalar inequality; no runtime
+For a nonpositive short diagonal, that face is impossible or already
+lies on w=3/4. For a positive diagonal, Sections 6--11 exclude it.
+The three other faces t=r, U(t)-v=0 and w=3/4 remain open.
+Every sign below is a displayed scalar inequality; no runtime
 certificate or large coefficient table is used.
 
 ## 1. Statement
@@ -213,8 +215,8 @@ Thus a sufficient further face-collapse inequality would be
 \tfrac34(1-\tau d-\lambda^2)+d^2u-dC_0\ge0.
 \]
 
-It is not proved here on the remaining positive-diagonal domain. That
-case and the other stopping faces remain open.
+Sections 6--11 establish the needed exclusion on the remaining
+positive-diagonal domain. The other three stopping faces remain open.
 
 ## 6. A simple localization of the remaining positive-diagonal face
 
@@ -317,9 +319,8 @@ This removes both the opposite-turn variable and the descending-root
 parameter from the remaining floor question. At least one of the three
 displayed lower bounds is an equality at q_min. The same short shape,
 equal secants and x<31/10 are retained. No actual trajectory, root or
-Casimir cap is asserted at this artificial scale endpoint. A proof that
-the three correctly enlarged endpoint domains have ell>=0 would remove
-this last separate floor face; that sign is still open here.
+Casimir cap is asserted at this artificial scale endpoint. The following sections remove the T=2 alternative and prove positivity
+on both remaining correctly enlarged endpoint domains.
 
 ## 8. One easy region of the outer-scale endpoint
 
@@ -375,9 +376,9 @@ Consequently
 \]
 
 contrary to (10). Thus a surviving outer-scale endpoint must have
-alpha<4/3. The central-duration endpoint and the smaller-alpha part of
-the outer-scale endpoint remain open. The apparent T=2 endpoint is
-removed by the next hand lemma.
+alpha<4/3. The following sections treat the remaining smaller-alpha
+outer-scale region and the central-duration endpoint. The apparent T=2
+endpoint is removed by the next hand lemma.
 
 ## 9. The T=2 endpoint cannot dominate
 
@@ -657,6 +658,292 @@ v=3/4 endpoint must have
 \tag{21}
 \]
 
-The central-duration scalar sign in (21) is the only remaining
-question for this separate floor face. The other root-comparison
-faces remain outside the scope of this note.
+Section 11 resolves the central-duration scalar sign in (21).
+The other root-comparison faces remain outside the scope of this note.
+
+## 11. The central-duration endpoint is positive
+
+**Status:** accepted in independent internal review. The derivative,
+endpoint and constrained-minimum arguments were checked independently.
+
+We prove the last scalar sign from (21):
+
+\[
+\boxed{q=(1+x)^2\ge6\alpha^2+1
+       \quad\Longrightarrow\quad\ell(q)>0.}
+\tag{22}
+\]
+
+All hypotheses retained above remain in force, including D>0,
+x<31/10 and 2<T_B<7/2. This is a comparison of explicit scalar
+expressions; no artificial endpoint is assigned a physical trajectory
+or an original Casimir cap.
+
+### Normalize the remaining scale parameter
+
+Put
+
+\[
+K=\frac{q+\alpha^2-1}{\alpha^2}\ge7,\qquad
+\varepsilon=1-\alpha^{-2},\qquad \delta=D/\alpha^2>0,
+\]
+\[
+A_K=\frac34(2K\varepsilon-\varepsilon^2),\qquad
+B_K=(u-1)T_B+T_B^{-1}+1+\log(2T_B/K).
+\]
+
+Then (8) becomes the exact identity
+
+\[
+\frac{\ell(q)}{\alpha^4}
+=A_K+u\delta^2+(1-KB_K)\delta.
+\tag{23}
+\]
+
+Notice that \(A_K\ge A_7=A(\alpha)\) from (16). Also
+
+\[
+B_K=B_7+\log(7/K).
+\tag{24}
+\]
+
+### First reduce alpha to the interval [1,10/9)
+
+The bound x<31/10 and (12) give u<77/100. For 0<z<=1,
+the elementary atanh inequality gives
+\(\log z\le2(z-1)/(z+1)\). Apply it with z=2T_B/7,
+which is less than one. Writing y=T_B-2>0, direct subtraction gives
+
+\[
+-\frac{23}{100}T_B+T_B^{-1}+1
+       +\frac{2(2T_B-7)}{2T_B+7}-\frac12
+=-\frac{12+y(46y^2-63y+46)}
+       {100T_B(2T_B+7)}<0.
+\tag{25}
+\]
+
+The quadratic in the numerator is positive: its discriminant is
+\(63^2-4\cdot46^2=-4495<0\). Hence \(B_7<1/2\).
+The function \(K[1/2-\log(K/7)]-1\) strictly decreases for
+K>=7 and equals 5/2 at K=7. Consequently (23)--(24) give
+
+\[
+\frac{\ell(q)}{\alpha^4}
+>A_7+\frac34\delta^2-\frac52\delta
+\ge A_7-\frac{25}{12}.
+\]
+
+For alpha>=9/8 the last expression is positive, since A_7 increases
+with alpha and
+
+\[
+A_7(9/8)-\frac{25}{12}
+=\frac{18989}{8748}-\frac{25}{12}
+=\frac{191}{2187}>0.
+\]
+
+Thus only alpha<9/8 remains. Since beta>=x and alpha<x,
+
+\[
+D\le\alpha^2+2\alpha x+1+2x-2x^2
+<\frac{145}{64}+\frac{17x}{4}-2x^2.
+\]
+
+The last quadratic is decreasing for x>=8/3, and at 8/3 its value
+is -359/576. Therefore D>0 forces x<8/3. Formula (12) now gives
+u<49/64.
+
+The sharper bracket bound of Section 10 applies:
+\(B_7<67/140\). The function
+\(K[67/140-\log(K/7)]-1\) also strictly decreases for K>=7,
+with value 47/20 at K=7. Hence
+
+\[
+\frac{\ell(q)}{\alpha^4}
+>A_7+\frac34\delta^2-\frac{47}{20}\delta.
+\]
+
+The completed-square estimate in Section 10 excludes alpha>=10/9
+with the same positive surplus 15251/120000. It remains to prove
+(22) when \(1\le\alpha\le10/9\).
+
+### A lower bound for the diagonal, as a function of K
+
+Fix alpha in this last interval and define
+
+\[
+\sigma=\alpha^2-1,\quad C=(\alpha+1)^2,\quad
+S_K=\sqrt{(K-1)\alpha^2+1}.
+\]
+
+Because q=(1+x)^2, one has x=S_K-1. The short order
+beta<=alpha*x and the negative beta coefficient in D imply
+
+\[
+\delta\ge\delta_*(K):=
+\frac{C(2S_K-1)}{\alpha^2}
+             -2\alpha(K-1)-\frac2\alpha.
+\tag{26}
+\]
+
+This is the same elementary lower bound for D used in (18);
+here its dependence on K is retained. In particular,
+
+\[
+\delta_*'(K)=\frac C{S_K}-2\alpha<0,\qquad
+\delta_*''(K)=-\frac{\alpha^2C}{2S_K^3}.
+\tag{27}
+\]
+
+For the strict first sign, \(S_K\ge S_7>\alpha+1\), because
+\(S_7^2-(\alpha+1)^2=\alpha(5\alpha-2)>0\).
+
+Set
+
+\[
+b(K)=K[67/140-\log(K/7)]-1,\qquad
+\mathcal H(K)=\delta_*(K)-\frac43b(K).
+\]
+
+The bracket estimate and (23) give
+
+\[
+\frac{\ell(q)}{\alpha^4}
+>A_K+\frac34\delta^2-b(K)\delta.
+\tag{28}
+\]
+
+The key elementary fact is
+
+\[
+\boxed{\mathcal H'(K)>0\qquad(K\ge7).}
+\tag{29}
+\]
+
+Indeed \(b'(K)=67/140-1-\log(K/7)<0\) and
+\(b''(K)=-1/K\), so
+
+\[
+\mathcal H''(K)
+=-\frac{\alpha^2C}{2S_K^3}+\frac4{3K}>0.
+\]
+
+For the last strict inequality, multiply by positive factors and use
+\(\alpha^2K=S_K^2+\sigma\). It is equivalent to
+
+\[
+3C(1+\sigma/S_K^2)<8S_K.
+\]
+
+Here \(C\le361/81<9/2\), \(\sigma\le19/81<1/4\),
+and \(S_K\ge\sqrt7>5/2\). The left side is therefore less than
+\(3(9/2)(1+1/25)=351/25<20\), while the right side exceeds 20.
+
+It remains to check the initial derivative. The function
+
+\[
+\alpha\longmapsto
+\frac{(\alpha+1)^2}{\sqrt{6\alpha^2+1}}-2\alpha
+\]
+
+strictly decreases for alpha>=1: differentiating gives
+
+\[
+\frac{2(\alpha+1)}{\sqrt{6\alpha^2+1}}
+-\frac{6\alpha(\alpha+1)^2}{(6\alpha^2+1)^{3/2}}-2<0,
+\]
+
+since the first term is less than 2. At alpha=10/9,
+\(\sqrt{6\alpha^2+1}=\sqrt{681}/9<29/10\). Therefore
+
+\[
+\mathcal H'(7)
+>\frac{3610}{2349}-\frac{20}{9}+\frac{73}{105}
+=\frac{809}{82215}>0.
+\]
+
+Together with the positive second derivative, this proves (29).
+
+### The constrained quadratic minimum remains positive
+
+If b(K)<=0, the right side of (28) is positive because delta>0
+and A_K>=0. Suppose b(K)>0. Minimize the displayed quadratic
+over its valid enlarged domain
+\(\delta\ge\max\{0,\delta_*(K)\}\). Its minimum is
+
+\[
+M(K)=
+\begin{cases}
+A_K+\frac34\delta_*(K)^2-b(K)\delta_*(K),
+       &\delta_*(K)\ge2b(K)/3,\\[2mm]
+A_K-b(K)^2/3,&\delta_*(K)\le2b(K)/3.
+\end{cases}
+\tag{30}
+\]
+
+The branches agree, including their first derivatives, at the displayed
+transition.
+
+If \(\mathcal H(K)\ge0\), then
+\(\delta_*(K)\ge4b(K)/3\); the quadratic is nonnegative on its
+entire permitted interval, and hence M(K)>=A_K>=0. The strict
+inequality (28) already proves ell(q)>0 in this case.
+
+Consider instead the interval where \(\mathcal H(K)<0\).
+By (29), this is either empty or an initial interval starting at K=7.
+On the first branch of (30), write
+
+\[
+M=A_K+\frac34\delta_*\mathcal H.
+\]
+
+Then
+
+\[
+M'=A_K'+\frac34
+       [\delta_*'\mathcal H+\delta_*\mathcal H']>0.
+\]
+
+Both terms in brackets are strictly positive: delta_*'<0,
+\(\mathcal H<0\), and delta_*>=2b/3>0, while
+\(\mathcal H'>0\). Also \(A_K'=3\varepsilon/2\ge0\).
+On the second branch of (30),
+
+\[
+M'=A_K'-\frac23bb'>0.
+\]
+
+Consequently M is strictly increasing throughout this initial interval.
+
+Its initial value is positive by the already displayed algebra in
+Section 10. More precisely, (19) gives
+\(\delta_*(7)>\delta_0(\alpha)>47/30=2b(7)/3\),
+and (20), with its completed square, gives
+
+\[
+M(7)
+=A_7+\frac34\delta_*(7)^2-\frac{47}{20}\delta_*(7)>0.
+\]
+
+This use of K=7 is solely a comparison of explicit scalar functions.
+No physical trajectory, reverse root or Casimir condition is asserted
+there. Thus M>0 wherever \(\mathcal H<0\), completing all cases
+in (30). Equation (28) proves (22).
+
+### Consequence for the root-preserving comparison
+
+Sections 8--11 exclude both possible maxima in q_min. Therefore no
+positive-diagonal v=3/4 endpoint satisfying the retained root and norm
+bounds exists. For D<=0, Sections 1--4 show that such an endpoint is
+either impossible or is also on w=3/4.
+
+The separate opposite-norm floor face is therefore redundant:
+the root-preserving comparison need only stop on
+
+\[
+\boxed{t=r,\qquad U(t)-v=0,\qquad w=3/4.}
+\]
+
+Those three other faces still require hand exclusions. This conclusion
+does not claim that the smaller-short branch, or the global hand proof,
+is complete.

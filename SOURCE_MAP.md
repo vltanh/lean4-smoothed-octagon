@@ -47,7 +47,9 @@ Further mixed reductions are the [single reverse shape endpoint](docs/MIXED_NONS
 and [short floor endpoints](docs/MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md),
 accepted with their explicit remaining signs in the
 [endpoint review](docs/HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
-Only the central-duration endpoint remains for the separate opposite-floor face.
+The separate opposite-floor face is now excluded by hand. Reverse
+refinements retain the [exact secant](docs/MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON.md)
+and the [actual-floor order constraint](docs/MIXED_NONSHORT_REVERSE_ORDER_BOUND.md).
 
 | Scope | Active sources |
 | --- | --- |
