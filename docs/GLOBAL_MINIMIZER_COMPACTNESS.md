@@ -17,6 +17,13 @@ with the ordinary topology on terminal time. The associated controls have
 weak-star convergent subsequences. The whole family stays a positive distance
 from the singular locus, uniformly over the period and over minimizers.
 
+The singular-avoidance step uses Hales--Vajjha Theorem 16.3.1 as an
+external input. [FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md)
+records numerical unstable-curve and basin-containment dependencies in the
+checked source that have not been independently certified here. Compactness
+through Section 4 is independent of that finite-switch input; Sections 5--6
+and the minimizing-family common-bound consequence retain it.
+
 The clearance obtained here is **qualitative**: there exists epsilon_* > 0.
 No numerical value for epsilon_*, no uniform dwell time, and no numerical
 upper bound on the number of switches is claimed. The separate uniform local

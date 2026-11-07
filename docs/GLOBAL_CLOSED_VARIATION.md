@@ -23,7 +23,12 @@ time, and whose lifted phases lie in a compact set disjoint from the full
 singular locus has **one common finite bound on the number of positive
 vertex pieces**. Applying
 [GLOBAL_MINIMIZER_COMPACTNESS.md](GLOBAL_MINIMIZER_COMPACTNESS.md) proves
-that such an integer exists for all complete global minimizers.
+that such an integer exists for all complete global minimizers, using
+Hales--Vajjha Theorem 16.3.1 as its external singular-avoidance input.
+[FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md) identifies
+the numerical source steps not independently certified here. The local
+count and compact-regular-family implication themselves do not use that
+finite bang-bang theorem.
 
 This is an existential uniform bound, not a stated numerical integer. The
 compactness note does not give a numerical distance from the singular locus.
@@ -285,16 +290,16 @@ The number `epsilon` can be made arbitrarily small by shrinking the
 initial-state neighborhood, independently of the measurable control.
 The number `d` then tends to zero as that neighborhood and `h` shrink.
 
-## 4. A finite set of separating lines
+## 4. Three separating lines suffice
 
 The following elementary planar observation is the control-selection
 part of the proof. Fix `X_*`, the plane `E`, and a nonzero vector `v_*`
 in `E`. The vector will be specified separately in the two zero cases.
 
-There are finitely many distinct lines
+There are three distinct lines
 
 \[
-\ker\ell_1,\ldots,\ker\ell_m\subset E,
+\ker\ell_1,\ker\ell_2,\ker\ell_3\subset E,
 \qquad \|\ell_j\|=1,
 \tag{20}
 \]
@@ -310,23 +315,41 @@ with these properties:
    the ambient linear map `T` is sufficiently close to the identity and
    maps `E` into `X^perp`.
 
-Here is a construction that includes the boundary rays. On the unit
-circle of `E`, the open sets
+Here is a construction that includes every boundary ray. For the three
+unordered pairs of distinct vertex indices, define the nonzero linear
+comparisons
 
 \[
-\{\xi:h_i(X_*,\xi)>h_j(X_*,\xi)\},\qquad i\ne j,
+c_{ij}(Y)=h_i(X_*,Y)-h_j(X_*,Y),\qquad Y\in E.
 \tag{21}
 \]
 
-cover the circle by the vertex test in Section 1. Choose a Lebesgue
-number for this finite open cover. Take equally spaced lines with mesh
-fine enough that every **closed** sector's unit-circle arc has diameter
-smaller than that number. Rotate the whole finite line arrangement by
-an angle avoiding the finitely many choices for which one line is
-parallel to `v_*`. Each closed sector is contained in one set (21).
-Its comparison `h_i-h_j` has a positive minimum on its compact
-unit-circle arc. Taking the minimum over the finitely many sectors
-gives a positive common margin `beta`.
+Each comparison is nonzero. Otherwise a nonzero vector in the kernel
+of either remaining comparison would make all three vertex values
+equal, contradicting Section 1. Their three kernels are distinct:
+a nonzero vector on two coincident kernels would again make all three
+values equal. Thus these three lines cut `E` into six angular sectors.
+
+On each open sector the three values have a fixed strict ordering.
+Let `i` and `j` be its highest and lowest indices. On the corresponding
+**closed** sector that ordering is weak, but `h_i-h_j` is still strictly
+positive at every nonzero vector: equality of the highest and lowest
+would force equality of all three. In particular the same excluded
+vertex `j` works on both boundary rays. Each such comparison has a
+positive minimum on its closed unit-circle arc. The minimum over all
+six arcs is a positive number `beta_0`.
+
+Rotate the entire three-line arrangement by one sufficiently small
+Euclidean angle in `E`. Each new closed sector is the rotation of its
+old sector. Uniform continuity on the six compact unit arcs preserves
+their respective highest-lowest comparisons with margin at least
+`beta_0/2`. Within this small angle interval, avoid the finitely many
+angles for which one rotated line contains `v_*`. Choose unit-norm
+functionals `ell_1,ell_2,ell_3` with these rotated kernels. They now
+satisfy properties 1 and 2, with a common positive closed-sector
+margin `beta`. The small rotation need not preserve the complete
+ordering: preserving its selected strict highest-lowest comparison
+is all that the control exclusion requires.
 
 The functions in (5) depend continuously on `X` and linearly on `W`.
 Uniform continuity on the finite collection of compact arcs therefore
@@ -340,7 +363,7 @@ sectors may exclude different vertices.
 Define the positive derivative margin
 
 \[
-\alpha=\min_{1\le j\le m}|\ell_j(v_*)|>0.
+\alpha=\min_{1\le j\le3}|\ell_j(v_*)|>0.
 \tag{22}
 \]
 
@@ -357,8 +380,8 @@ After deleting all these zeros from a time interval, each remaining
 connected component stays in a single open sector. Indeed the
 continuous vector cannot cross a separating line without a zero of
 one of the selected scalar functions. A zero of the whole vector is
-also in that finite deleted set. There are at most `m+1` components in
-the first-derivative case and at most `2m+1` in the second-derivative
+also in that finite deleted set. There are at most four components in
+the first-derivative case and at most seven in the second-derivative
 case. On the closure of each nondegenerate component one fixed control
 coordinate is zero almost everywhere; finite endpoints do not affect
 that statement. Property (E4) therefore supplies at most four pieces
@@ -429,7 +452,7 @@ Every guard projection is strictly monotone. The count in Section 4
 therefore gives the common bound
 
 \[
-B_*=4(m+1).
+B_*=4(3+1)=16.
 \tag{25}
 \]
 
@@ -481,14 +504,16 @@ survive, and (8) keeps all trajectories in the outer ball. Each guard
 projection has a strictly signed second derivative. The count is now
 
 \[
-B_*=4(2m+1).
+B_*=4(2\cdot3+1)=28.
 \tag{29}
 \]
 
 Again neither `A` nor `W` must vanish on the nearby trajectory. The
 control-independent leading term in (28) dominates all its measurable
 control-dependent terms uniformly. The three cases exhaust every
-nontrivial phase outside (4), proving the theorem.
+nontrivial phase outside (4), proving the theorem. In particular every
+reference phase admits the common numerical local count `B_* <= 28`,
+although its neighborhood and time `h_*` still depend on that phase.
 
 ## 6. Compact regular families have a uniform finite bound
 
@@ -503,17 +528,17 @@ control having at most `N_*` positive pieces on its whole period.
 a finite subcover by the inner neighborhoods `V_1,...,V_s`. Let
 
 \[
-h=\min_j h_j>0,\qquad B=\max_j B_j<\infty.
+h=\min_j h_j>0.
 \]
 
 Partition each period into intervals of length at most `h`. At each
 interval's left endpoint the phase is in one selected `V_j`. The local
-theorem bounds that whole interval by `B` positive vertex pieces.
+theorem bounds that whole interval by at most 28 positive vertex pieces.
 Concatenation and merging equal neighboring controls cannot increase
 the resulting count. Thus one may take
 
 \[
-\boxed{\quad N_*=B\left\lceil\frac{T_{\max}}h\right\rceil.\quad}
+\boxed{\quad N\le N_*:=28\left\lceil\frac{T_{\max}}h\right\rceil.\quad}
 \tag{30}
 \]
 
@@ -563,10 +588,13 @@ An effective finite comparison still needs additional work:
    them. The compactness proof only asserts existence of the clearance.
 2. **Now completed conditionally:**
    [QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md)
-   supplies a fixed angular mesh, explicit comparison and derivative
+   supplies three rotated comparison lines, explicit comparison and derivative
    margins, and an explicit O(1/epsilon) count for a supplied normalized
    clearance. All coefficient constants are fixed. A numerical clearance
    remains necessary before this becomes a particular integer.
+   Its three-line construction makes the rotation and derivative margins
+   explicit and recomputes the interval time scale from them. The factor
+   28 alone is not substituted into the earlier mesh's time scale.
 3. Prove a uniform global cost comparison on the resulting domain, with
    the actual free initial state and twisted closure. The current
    through-five comparison cannot be invoked unless a separate argument
@@ -604,3 +632,12 @@ estimates, closed-sector margins, scalar zero counts, (E4) on component
 closures, and the finite-cover passage. Three separate reviews found no
 substantive gap. This records hand review, not kernel validation or an
 explicit numerical value of the final bound.
+
+An additional independent hand audit checked the reduced equations
+against the pinned definitions and the primary source, the absence of
+control derivatives in (9)--(17), and the closed-component application
+of (E4). The three-comparison-line construction above gives the sharper
+local counts 16 and 28 without changing those hypotheses. Its sector
+argument includes the boundary rays and allows the common rotation to
+change the full ordering while preserving the strict comparison used.
+No numerical singular clearance or common time scale is asserted.

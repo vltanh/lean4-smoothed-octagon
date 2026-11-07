@@ -16,6 +16,13 @@ free initial state, and total cost budget. Its target is a certified
 specific bound on every minimizer's number of pieces before any further
 closed-word enumeration.
 
+The following global implications use Hales--Vajjha Theorem 16.3.1 as
+an external input for singular avoidance. The [source audit](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md)
+records numerical unstable-curve and basin-containment steps in the checked
+manuscript that have not been independently certified here. The compactness
+proof and the switch count conditional on a supplied clearance are separate
+from that dependency.
+
 The global checkpoint has three substantive hand results:
 
 - [A finite continuation obstruction](docs/GLOBAL_PERIOD_BUDGET.md)
@@ -39,12 +46,14 @@ makes the conversion effective: for a supplied normalized singular
 clearance epsilon, it gives
 
 \[
-N\le4(2k+1)\left\lceil
+N\le28\left\lceil
 \frac{T_{\max}}{c\min(\varepsilon,1,m)}\right\rceil,
 \]
 
-with every coefficient fixed by explicit formulas. One may take k=200000;
-these are coarse proof constants. The missing boundedness input is now a
+with every coefficient fixed by explicit formulas. Three comparison lines
+and four possible rotations give the factor 28; their derivative margin
+is included in the stated constant c. These are coarse proof constants.
+The missing boundedness input is a
 **numerical singular clearance**, not an unproved regular-domain switch
 estimate. A final global cost/equality comparison remains a separate gate.
 

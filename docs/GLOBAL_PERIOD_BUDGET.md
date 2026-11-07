@@ -586,8 +586,9 @@ and (11) gives a finite, verifiable continuation test that detects it.
 
 This is not a universal L3 theorem. An arbitrary L3 window need not
 satisfy `a>0`, the two derivative signs, or the exit-ratio condition after
-rotation. Rank degeneracies outside the present full-rank family also
-remain in scope. The finite five-template coverage remains usable only
+rotation. Full-domain L3 endpoint rank is now established; rank questions
+for other templates, especially competitive L2 inputs, remain separate.
+The finite five-template coverage remains usable only
 with a newly proved global exclusion or replacement statement on each
 remaining parameter region; this note closes one explicit region of L3,
 not one of the five universal gates.

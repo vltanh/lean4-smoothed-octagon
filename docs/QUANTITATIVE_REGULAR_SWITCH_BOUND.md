@@ -4,7 +4,7 @@ Date: 2026-11-07. Hand proof; no Lean compilation, Lake, or CI.
 
 ## Theorem and exact scope
 
-There are explicit constants \(k\in\mathbb N\) and \(c>0\), depending
+There is an explicit constant \(c>0\), depending
 only on the common strict-star state bounds, a bound on elapsed time,
 and projective normalization of the costate, with the following property.
 Suppose a free-time Pontryagin trajectory has singular clearance at least
@@ -19,7 +19,7 @@ Then its number of positive pieces is at most
 
 \[
 \boxed{
-N(\varepsilon)=4(2k+1)
+N(\varepsilon)=28
  \left\lceil\frac{T_{\max}}
  {c\min(\varepsilon,1,m)}\right\rceil .}
 \tag{1}
@@ -32,16 +32,17 @@ are deliberately coarse; no useful numerical upper bound is claimed.
 
 Actual global minimizers satisfy (E4) by
 [EDGE_SWITCH_BOUND.md](EDGE_SWITCH_BOUND.md). The qualitative compactness
-result in [GLOBAL_MINIMIZER_COMPACTNESS.md](GLOBAL_MINIMIZER_COMPACTNESS.md)
-supplies the existence of a positive clearance, but does not give its
-numerical value. The present theorem makes the subsequent conversion
+result in [GLOBAL_MINIMIZER_COMPACTNESS.md](GLOBAL_MINIMIZER_COMPACTNESS.md),
+using its external finite bang-bang input, supplies the existence of a
+positive clearance but does not give its numerical value. The present
+theorem makes the subsequent conversion
 from a certified clearance to a stated integer completely effective.
 It neither supplies that missing clearance nor proves a cost comparison
 for the resulting words.
 
 The proof quantifies the transported-covector argument in
-[GLOBAL_CLOSED_VARIATION.md](GLOBAL_CLOSED_VARIATION.md). It uses a fixed
-number of separating lines and a time interval of length proportional
+[GLOBAL_CLOSED_VARIATION.md](GLOBAL_CLOSED_VARIATION.md). It uses three
+separating lines and a time interval of length proportional
 to the clearance. It does not assume a minimum duration for individual
 arcs, and it permits arbitrary measurable controls.
 
@@ -258,7 +259,7 @@ C(X,\lambda)=-\frac32\lambda[[J,X],X].
 
 Thus \(\|C(X,\lambda)\|\ge6|\lambda|\|X-J\|\).
 
-## 3. A fixed number of separating lines with explicit margins
+## 3. Three separating lines with explicit margins
 
 Set \(h_i(X,W)=-\langle W,P_i(X)\rangle\). There is a uniform width
 bound for every unit vector \(W\in X^\perp\):
@@ -299,57 +300,92 @@ Moreover \(\langle Y,X\rangle=-2s\), so
 
 which proves (14).
 
-Choose the integer and its convenient derivative margin
+Define the rotation allowance and derivative margin
 
 \[
-k=\max\left(2,\left\lceil\frac{8\pi K_P}{\omega}\right\rceil\right),
-\qquad \sigma=\frac1k.
+\delta=\min\left(\frac14,\frac{\omega}{8K_P}\right),
+\qquad \sigma=\frac{2\delta}{3\pi}>0.
 \tag{15}
 \]
 
-Any larger integer may replace this k if sigma is also replaced by 1/k.
-For the explicit inputs (10), the quantities simplify to
+In the Euclidean plane \(E=X_0^\perp\), take the three comparison
+lines \(\ker(h_i(X_0,\cdot)-h_j(X_0,\cdot))\), one for each
+unordered pair of distinct indices. Each comparison is nonzero and
+the three kernels are distinct. A zero comparison, or two coincident
+kernels, would give a nonzero vector on which all three values agree,
+contradicting the positive width (14).
 
-\[
-\omega=\frac{2}{249\sqrt{15}},\qquad
-\frac{8\pi K_P}{\omega}=37350\pi\sqrt2.
-\]
+Their six closed angular sectors are ordering sectors. On each one,
+choose its fixed highest and lowest indices \(i,j\). The ordering
+is strict in its interior and weak on the boundary rays, so on every
+unit vector \(\xi\) of that closed sector the selected difference is
+the full width and is at least \(\omega\).
 
-Thus the convenient fixed choice k=200000 is valid: the elementary bounds
-pi<22/7 and sqrt(2)<3/2 give 37350*pi*sqrt(2)<1232550/7<200000.
-It gives B=4(2k+1)=1600004 in (30). This deliberately coarse local count
-is not a numerical whole-period bound; the clearance and interval length
-in (1) remain necessary.
-
-In the Euclidean plane \(E=X_0^\perp\), take \(k\) equally spaced
-lines. Each closed angular sector has width \(\pi/k\). At the middle
-unit vector of a sector choose vertex indices \(i,j\) giving the
-width in (14). Since \(\|P_i-P_j\|\le2K_P\), every unit vector
-\(\xi\) in that closed sector has
+Rotate all three lines by one common angle \(\theta\) with
+\(|\theta|\le\delta\), using the Euclidean rotation \(R_\theta\)
+of \(E\). The corresponding new closed sector is the rotation of
+the old one. Since \(\|P_i-P_j\|\le2K_P\) and
+\(\|R_\theta-I\|\le|\theta|\), its old selected comparison loses
+at most \(2K_P\delta\le\omega/4\). Thus every unit vector of
+the rotated sector satisfies
 
 \[
 h_i(X_0,\xi)-h_j(X_0,\xi)\ge\frac{3\omega}{4}.
 \tag{16}
 \]
 
-Indeed its distance from the middle vector is at most \(\pi/k\),
-and (15) bounds the resulting loss by \(\omega/4\). Thus each sector
-has one fixed strictly excluded vertex, including its boundary rays.
+This excludes one fixed vertex on each closed sector, including both
+boundary rays. The rotation need not preserve the full ordering; only
+the displayed strict comparison is used afterward.
 
-For any nonzero \(v\in E\), rotate this equally spaced arrangement
-so that the direction of \(v\) lies halfway between two adjacent
-lines. The unit normal functionals \(\ell_j\) then satisfy
+For any prescribed nonzero \(v\in E\), choose the rotation from just
+four candidates:
 
 \[
-|\ell_j(v)|\ge\sin\frac\pi{2k}\,\|v\|
-             \ge\sigma\|v\|\quad(1\le j\le k).
+\theta\in\left\{-\delta,-\frac\delta3,
+                         \frac\delta3,\delta\right\}.
+\]
+
+For each of the three lines, at most one candidate places it at
+angular distance strictly less than \(\delta/3\) from \(v\),
+where line directions are measured modulo \(\pi\). Indeed distinct
+candidates have separation at least \(2\delta/3\), and all their
+pairwise differences are at most \(2\delta\le1/2<\pi/2\);
+two strict bad distances would violate the triangle inequality.
+At most three candidates are therefore bad for some line. Choose a
+remaining candidate. The three unit normal functionals \(\ell_j\)
+of its rotated lines satisfy
+
+\[
+|\ell_j(v)|\ge\sin\frac\delta3\,\|v\|
+             \ge\sigma\|v\|\quad(1\le j\le3).
 \tag{17}
 \]
 
 The last inequality follows from concavity of sine on \([0,\pi/2]\).
-This rotation does not change (16), which was established for any
-arrangement of that mesh. Both the number of lines and all the stated
-margins are uniform over the initial phase.
+Both the number of lines and the two margins (16)--(17) are uniform
+over the initial phase. No unspecified angular-cover minimum enters
+the quantitative theorem.
+
+For the explicit state inputs (10), the quantities simplify to
+
+\[
+\omega=\frac{2}{249\sqrt{15}},\qquad
+\delta=\frac1{37350\sqrt2},\qquad
+\sigma=\frac1{56025\pi\sqrt2}.
+\]
+
+The second equality uses \(K_P=5\sqrt{30}/2\) and
+\(\omega/(8K_P)<1/4\). The local count is now 28 in (30),
+but the threshold and time constants below must use this new
+\(\sigma\).
+
+For comparison, the earlier equally spaced mesh chose
+\(k\ge8\pi K_P/\omega\), used derivative margin \(1/k\), and
+gave local count \(4(2k+1)\); the convenient choice \(k=200000\)
+gave 1600004 for (10). The three-line construction replaces that
+argument. Its different derivative margin is propagated through
+(26)--(29); it does not substitute 28 while reusing the old time scale.
 
 ## 4. Explicit derivative and perturbation constants
 
@@ -560,8 +596,8 @@ Take \(h=ce\). Since \(e\le1\), all the transport and sector
 requirements hold on every interval of length at most \(h\). The
 three case-specific error bounds of Section 5 hold there as well.
 
-In Case II delete the at most \(k\) guard zeros; in Case III delete
-the at most \(2k\) guard zeros. Every remaining connected component
+In Case II delete the at most three guard zeros; in Case III delete
+the at most six guard zeros. Every remaining connected component
 stays in one angular sector. Its actual reduced covector is
 \(W=U\eta\), so (16), (21), and (23) give a fixed excluded vertex
 throughout that component. Property (E4) provides at most four positive
@@ -572,7 +608,7 @@ control or its integral trajectory. Thus every such short interval
 has at most
 
 \[
-B=4(2k+1)
+B=4(2\cdot3+1)=28
 \tag{30}
 \]
 
@@ -588,7 +624,7 @@ For \(0<\varepsilon\le\min(1,m)\), this can be displayed as
 
 \[
 N(\varepsilon)
-\le4(2k+1)\left(1+\frac{T_{\max}}{c\varepsilon}\right).
+\le28\left(1+\frac{T_{\max}}{c\varepsilon}\right).
 \tag{31}
 \]
 
@@ -598,8 +634,8 @@ bound (E4). Individual arcs may be arbitrarily short.
 ## 7. What is now effective, and what remains open
 
 For normalized global minimizers, equations (10), (4), and (7) give
-explicit state and costate bounds. Equations (14)--(15) give a fixed
-integer \(k\) and uniform comparison and derivative margins. Equations
+explicit state and costate bounds. Equations (14)--(17) give three
+guards and uniform comparison and derivative margins. Equations
 (18), (22), (26), and (29) then give \(c\) by finite arithmetic,
 exponentiation, and one ceiling. A supplied numerical lower bound for
 the singular distance (9) would therefore produce a definite integer
@@ -620,6 +656,12 @@ A complete global proof still needs a cost comparison on every
 remaining complete-period competitor, with the free initial state
 and the twisted endpoint conditions preserved.
 
+[FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md) records
+the exact external-input boundary of that qualitative application.
+The cited Theorem 16.3.1 uses numerical source steps not independently
+certified here. The proof of the present count for a supplied clearance,
+with (E4) and (3)--(9), is independent of that theorem.
+
 No increasing-length enumeration, numerical trajectory fit, symbolic
 sign oracle, Lean compilation, Lake command, or CI check is part of
 this proof. The theorem is a conditional quantitative reduction with
@@ -631,5 +673,8 @@ stated in (9).
 Three separate internal mathematical reviews checked the exact state
 denominator bound, both algebraic coercivity estimates, the width constant,
 guard rotation, every transport/error budget, the phase thresholds, and
-the final count. No substantive gap was found. These reviews are not
-external peer review or kernel validation.
+the final count. The subsequent three-line refinement received separate
+independent hand checks of its closed ordering sectors, four-angle choice,
+explicit derivative margin, and use of a recomputed (29). No substantive
+gap was found. These reviews are not external peer review or kernel
+validation.

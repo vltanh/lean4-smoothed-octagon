@@ -12,7 +12,13 @@ bound, with every coefficient fixed. The global checkpoint proves a finite
 forced-exit test excluding the small L3 counterexample family from ANY
 closed PMP occurrence. Compact normalized minimizing lifts and a separate
 uniform local switch theorem prove the existence of one finite bound over
-all global minimizers. No numerical clearance or integer bound is claimed.
+all global minimizers, using Hales--Vajjha Theorem 16.3.1 as an external
+input. Read docs/FINITE_BANG_BANG_SOURCE_AUDIT.md: the checked source uses
+numerical unstable-curve and basin-containment steps not independently
+certified here. Do not describe those inputs as hand- or kernel-validated.
+The regular-domain conditional count is independently proved with three
+guard lines and 28 pieces per certified short interval. No numerical
+clearance or integer bound for all minimizers is claimed.
 Supply a numerical singular clearance in the specified normalization before
 starting a fixed closed-word comparison; the conversion to an integer is proved.
 Do not equate an existential bound with an identified finite case list.

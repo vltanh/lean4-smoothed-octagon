@@ -19,6 +19,14 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
 The active entry point is [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md).
 The original five-template sufficient domain remains refuted.
 
+The [finite bang-bang source audit](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md)
+separates our deductions from the external Theorem 16.3.1. The checked source
+uses numerical unstable-curve escape and cell-image containments; their
+independent rigorous certification is outside the completed review. This
+qualifies the downstream singular-avoidance and common-bound claims, while
+the compactness and conditional regular-domain count remain independent of
+that particular input.
+
 - [x] Derive twisted state-covector closure from the actual free-initial-state
   endpoint graph, and distinguish it from automatic frame-covector closure.
 - [x] Prove full endpoint rank forces normality and a unique normalized lift;
@@ -35,8 +43,11 @@ The original five-template sufficient domain remains refuted.
   continuous cost, and the actual common globally minimizing cost.
 - [x] Check the primary singular-arc lemma excludes an endpoint of a positive
   vertex arc on either side; combine with the finite bang-bang minimizer theorem.
-- [x] Obtain uniform qualitative singular clearance for actual minimizers,
-  without asserting it for all competitive PMP trajectories.
+- [x] Deduce uniform qualitative singular clearance for actual minimizers
+  using external Theorem 16.3.1, without asserting it for all competitive
+  PMP trajectories or independently validating the cited numerical steps.
+- [ ] Independently certify the source's unstable-curve escape and basin
+  containments, or replace their role in the finite bang-bang input.
 - [x] Prove transport of the reduced costate to a fixed plane and uniform
   first/second derivative estimates without differentiating measurable controls.
 - [x] Choose closed angular sectors with robust exclusions and generic guard
@@ -45,10 +56,13 @@ The original five-template sufficient domain remains refuted.
   full-system PMP lifts. Finite cover then gives a common finite piece bound.
 - [x] Make the regular-domain count effective in a specified projective norm:
   verify the explicit common denominator, augmented-covector Gronwall bounds,
-  both algebraic coercivity estimates, fixed guard-line mesh and margins,
+  both algebraic coercivity estimates, three comparison lines, four
+  possible small rotations, explicit margins,
   the exhaustive three-case split, and every interval-length error budget.
   Three independent internal hand reviews passed. No numerical clearance
-  was inferred from compactness or from changing norms.
+  was inferred from compactness or from changing norms. The factor-28
+  refinement was separately reviewed, and its changed derivative margin
+  is propagated through the time constants rather than reusing the old mesh.
 - [ ] Supply a certified numerical singular clearance and a specific integer
   bound. The existential uniform theorem does not identify a finite case list.
 - [ ] Complete the remaining global comparison and affine equality theorem.

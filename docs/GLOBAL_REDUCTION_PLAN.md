@@ -32,12 +32,24 @@ An existential uniform bound is useful progress, but it does not identify
 that finite list. A finite list of open lemmas, or finiteness for each
 individual trajectory, is not a specific bound either.
 
+## External-input boundary
+
+[FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md) records
+what is and is not certified about the cited finite bang-bang theorem.
+Hales--Vajjha Theorem 16.3.1 uses unstable-curve escape and basin-containment
+calculations described numerically in the checked manuscript. Those steps
+have not been independently enclosed or proved here. The G2 qualitative
+implication and existential global count retain that external input;
+compactness in G1 and the G3 count for a supplied clearance do not use it.
+A self-contained final proof must certify or replace the relevant source
+inputs. This audit does not assert that the cited theorem is false.
+
 ## 2. Fixed sequence of proof obligations
 
 | Gate | Acceptance condition | Current status |
 | --- | --- | --- |
 | G1. Complete-period domain and compact lifts | Prove the actual boundary conditions and compactness after projective normalization, including abnormal limits. | **Hand proof complete.** See GLOBAL_PERIODIC_PMP and GLOBAL_MINIMIZER_COMPACTNESS. |
-| G2. Uniform regularity of minimizers | Separate every normalized minimizing lift from the full singular locus, uniformly over all minimizers and times. | **Qualitative separation proved:** some epsilon_* > 0 exists. A certified numerical value remains open. |
+| G2. Uniform regularity of minimizers | Separate every normalized minimizing lift from the full singular locus, uniformly over all minimizers and times. | **Qualitative separation deduced using external Theorem 16.3.1:** some epsilon_* > 0 exists. Its computational source inputs and a certified numerical value remain separate obligations. |
 | G3. Uniform switch complexity | Bound switches uniformly on a supplied compact regular phase domain, including near-degenerate ties; make the constants usable with G2. | **Complete conditional quantitative theorem.** GLOBAL_CLOSED_VARIATION proves the uniform existence result; QUANTITATIVE_REGULAR_SWITCH_BOUND supplies an explicit N(epsilon), with every coefficient fixed. A numerical epsilon is still needed. |
 | G4. Fixed finite comparison and equality | After a numerical N_max, prove the remaining closed comparisons and equality classification for exactly that fixed set. | **Blocked by the quantitative bound.** Through-five comparison/equality are retained assets. No new larger-word list has been started. |
 
@@ -160,18 +172,19 @@ At a double zero outside the full singular locus its second derivative is
 uniformly near a nonzero control-independent vector. These estimates hold
 for all nearby initial phases and measurable controls.
 
-Choose finitely many generic lines in that plane, with sectors narrow
-enough that each sector excludes one control vertex. Every projection
+Choose the three pairwise comparison lines in that plane and make a
+small common rotation so each closed sector excludes one control vertex. Every projection
 onto a line's normal has at most one or two zeros. The remaining time
 intervals use only a fixed edge, and edge optimality bounds each by four
 pieces. A finite cover of the compact family of minimizing phases gives
 
 \[
-N\le B\left\lceil\frac{A_{oct}}{3h}\right\rceil
+N\le28\left\lceil\frac{A_{oct}}{3h}\right\rceil
 \]
 
-for common B<infinity and h>0. Therefore **one finite integer bounds all
-global minimizers**, not merely each minimizer separately. The proof has
+for common h>0. Therefore, using the external finite bang-bang input,
+**one finite integer bounds all global minimizers**, not merely each
+minimizer separately. The proof has
 received three separate internal hand reviews.
 
 This establishes a uniform existence theorem, not a computed case catalogue.
@@ -184,14 +197,16 @@ quantitative strengthening fixes all constants apart from the clearance.
 proves
 
 \[
-\boxed{\quad N(\varepsilon)=4(2k+1)
+\boxed{\quad N(\varepsilon)=28
 \left\lceil\frac{T_{\max}}{c\min(\varepsilon,1,m)}\right\rceil.\quad}
 \]
 
-Here k, c>0, and m>0 are given by explicit finite formulas in that note.
+Here c>0 and m>0 are given by explicit finite formulas in that note.
 The state inputs are K_X=9, Gamma=2/(15*sqrt(3)), and T_max=pi/3.
-One may use the fixed integer k=200000; the constants are intentionally
-coarse. Normal and abnormal lifts are retained. The exact normalization is
+Three comparison lines and four possible small rotations give an explicit
+margin sigma=1/(56025*pi*sqrt(2)), which is propagated through c. The
+constants are intentionally coarse. Normal and abnormal lifts are retained.
+The exact normalization is
 
 \[
 \|(\lambda,\Lambda_1,W)(0)\|=1,\qquad
@@ -206,7 +221,7 @@ and the supplied clearance is
 \]
 
 For small epsilon this is an O(1/epsilon) bound. The proof uses an
-explicit uniform Hamiltonian width, a fixed angular mesh, and the exact
+explicit uniform Hamiltonian width, the three rotated guard lines, and the exact
 estimate ||[[J,X],X]||_F >= 4||X-J||_F. Every time and derivative error
 budget is given. There is no further unproved switch-count step after a
 numerical clearance has been supplied. The compactness theorem proves

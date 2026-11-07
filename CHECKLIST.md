@@ -7,11 +7,18 @@
 The new route uses the complete minimizing period and its normalized lift.
 The original five-template analytic package remains false on its old domain.
 
+**External-input boundary:** the qualitative singular-clearance argument
+and its common finite-bound consequence use Hales--Vajjha Theorem 16.3.1.
+[The source audit](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md) identifies numerical
+unstable-curve and basin-containment steps in the checked manuscript that
+have not been independently certified here. Compactness itself and the
+count for a supplied clearance do not depend on that finite-switch theorem.
+
 | Global gate | Exact result | Status |
 | --- | --- | --- |
 | G1: full-period domain and compact lifts | Actual twisted state/costate closure; projective normalization including abnormal limits; compactness of all minimizing lifts. | **Hand proof complete.** [PMP interface](docs/GLOBAL_PERIODIC_PMP.md), [compactness](docs/GLOBAL_MINIMIZER_COMPACTNESS.md). |
-| G2: singular clearance | One common positive distance from the full singular locus for all normalized minimizing lifts. | **Qualitative theorem proved. Numerical clearance open.** |
-| G3: uniform switch count | Locally uniform count and effective conversion of a supplied singular clearance into an integer. | **Complete conditional quantitative theorem.** [Uniform theorem](docs/GLOBAL_CLOSED_VARIATION.md) and [explicit O(1/epsilon) bound](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md). Every coefficient is fixed; a numerical clearance is still missing. No dwell-time premise. |
+| G2: singular clearance | One common positive distance from the full singular locus for all normalized minimizing lifts. | **Qualitative implication proved using external Theorem 16.3.1. Numerical clearance open.** |
+| G3: uniform switch count | Locally uniform count and effective conversion of a supplied singular clearance into an integer. | **Complete conditional quantitative theorem.** [Uniform theorem](docs/GLOBAL_CLOSED_VARIATION.md) and [explicit O(1/epsilon) bound](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md). Three guard lines give local factor 28; every coefficient is fixed. A numerical clearance is still missing. No dwell-time premise. |
 | G4: fixed finite comparison and equality | Use an explicitly certified integer bound, then exhaust precisely that fixed class. | **Blocked by quantification.** Through-five comparison and equality retained; N<=5 and unrestricted rigidity remain open. |
 
 **Actual global exclusion:** [GLOBAL_PERIOD_BUDGET](docs/GLOBAL_PERIOD_BUDGET.md)
@@ -273,6 +280,22 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Sharpen the regular-domain count to three comparison lines and local
+  factor 28. Four possible small rotations supply an explicit derivative
+  margin; propagate its new value through every threshold and time bound.
+  The conditional formula is now `28*ceil(T_max/[c*min(epsilon,1,m)])`.
+  Independent reviews checked both the angular construction and constants.
+- Audit the external finite bang-bang input. FINITE_BANG_BANG_SOURCE_AUDIT
+  records the numerical unstable-curve and basin steps used by the checked
+  source. The minimizing-family clearance and existential common bound
+  remain deductions using Theorem 16.3.1; no independent certification of
+  that theorem's computational support is claimed. Compactness and the
+  supplied-clearance count retain their separate proofs.
+- Publish LOCAL_FORWARD_REGULAR_DESCENT: exact same-word improvement on
+  1<q<=5/4 and open neighborhoods of the state-cyclic references, with
+  independent Hessian, sign, endpoint-fiber, and nearby-input reviews.
+  Full L1 remains open; no new standard global family is counted.
 
 - Prove and independently review GLOBAL_FORWARD_INDEX: the standard
   N=3k+1 forward family has constrained negative index at least 2(k-1).

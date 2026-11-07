@@ -6,7 +6,10 @@ family, compactness and singular clearance of normalized minimizing lifts,
 and an existential uniform switch bound. The conversion from a supplied
 singular clearance to an integer is now explicit in
 [QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md).
-A numerical clearance and resulting bound remain open.
+A numerical clearance and resulting bound remain open. The qualitative
+minimizer clearance uses external Hales--Vajjha Theorem 16.3.1; read
+[FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md) for the
+numerical source steps not independently certified in this repository.
 The sequence below is preserved as a diagnostic record, not the active work
 order; do not retry its refuted broad-domain L3 premise.
 
