@@ -14,8 +14,9 @@ Instead of comparing all words up to that cutoff, use the already proved
 five-template coverage to investigate fixed-dimensional **complete-period
 PMP** case domains F/R/M1/M2/M3. Each has three distinct gates:
 a numerical necessary-condition atlas (A), a whole-period return/escape
-fate test (B), and a universal hand certificate (C). None of the
-five C gates is closed. These cases do not restore the false universal
+fate test (B), and a universal hand certificate (C). The pure-reverse
+case R is now CLOSED by the direct minimum-margin hand proof; F and
+M1/M2/M3 remain open. These cases do not restore the false universal
 M1 local replacement statement. Return time, full twist and period cost
 must be tested together; isolated local PMP windows are insufficient.
 
@@ -34,7 +35,7 @@ gives a qualitative common normal-costate bound.
 now classify every outgoing positive vertex germ at normal ties, including
 quadratic/cubic and triple contacts, by exact signs through order three.
 Every passing branch still needs its complete-period fate proof. Boundary
-limits and all five sharp comparison cases remain open.
+limits and the four remaining sharp comparison cases remain open.
 
 [MIXED_GLOBAL_SYMMETRIC_ESCAPE](MIXED_GLOBAL_SYMMETRIC_ESCAPE.md) now
 excludes the complete symmetric reverse-four core family: `1<h<2`,
@@ -68,6 +69,22 @@ data cannot force the symmetric theorem's long-padding premise. The
 first external switch, geometry, full return and minimality are not
 asserted. The full M1 case remains open; a valid extension must add
 whole-period or variational information.
+
+## Closed global case R
+
+[GLOBAL_REVERSE_PERIOD_EXCLUSION](GLOBAL_REVERSE_PERIOD_EXCLUSION.md)
+and its independent audit prove that a normal PMP 0210 window cannot
+have its third active margin no greater than the other three. Two
+positive needles and four active-factor corrections give zero actual
+endpoint differential but strictly negative cost, contradicting PMP.
+A smallest entry in the actual twisted periodic active-margin sequence
+then excludes every entirely reverse finite period. Global normality
+treats the multiplier alternative. All 20 exact identities pass.
+
+This closes R without a Casimir-sector split, cost budget, endpoint-rank
+assumption or implicit-function theorem. The reverse Casimir route above
+is no longer needed for that case. Focus the remaining work on F, M1,
+M2 and M3; retain the local-shortening counterexamples and full endpoints.
 
 ## 1. Decision and exact target
 

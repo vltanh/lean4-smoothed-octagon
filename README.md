@@ -25,8 +25,34 @@ explorations/octagon_boundary_probe.py, and
 explorations/closed_period_index_probe.py are regression diagnostics.
 The standard N=4,7,10 constrained-Hessian negative indices are
 numerically 0,2,4, matching the existing exact standard-family
-result, but **no entire remaining case is excluded**. The final
-global cost inequality and affine equality theorem are OPEN.
+result; these numerical checks themselves exclude no whole case.
+The separate hand proof below now closes the **entire pure-reverse case R**.
+F, M1, M2 and M3, the final global cost inequality, and affine equality
+remain OPEN.
+
+## Closed global case R: no entirely reverse minimizing period
+
+[GLOBAL_REVERSE_PERIOD_EXCLUSION](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION.md)
+proves that a normal PMP window with four positive arcs `0210` cannot
+have its third active margin no greater than the other three. The proof
+constructs two positive missing-control needles and four active-factor
+corrections with exactly zero physical endpoint differential. Their
+cost differential is strictly negative under those minimum inequalities,
+contradicting the actual PMP. No endpoint rank or implicit-function
+argument is required.
+
+Every finite entirely reverse twisted period has a smallest active margin.
+Placing it third in a four-arc window, including across the genuine
+twisted seam, gives that contradiction. Global normality treats the
+remaining multiplier alternative. Thus R is excluded for arbitrary
+unequal positive factors and all primary-costate sectors, without a
+cost cap. The [independent internal audit](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION_AUDIT.md)
+and all 20 supplementary exact identities pass. This closes one whole
+global case; the four other case-C targets remain open.
+
+The older five *local improvement* targets have a different domain and
+remain separate: no universal shortening theorem for all reverse local
+windows is claimed.
 
 ## Closed checkpoint: every minimizing PMP lift is normal
 
@@ -51,8 +77,8 @@ a necessary-and-sufficient local sign test for each candidate positive
 vertex arc. Explicit derivatives through order three resolve double and
 triple ties and quadratic/cubic contacts. All passing branches must be
 retained. The theorem supplies no uniform arc length and does not prove
-closed return, cost comparison, or optimality; all five global cost
-comparisons remain open.
+closed return, cost comparison, or optimality. The separate minimum-
+margin proof closes R; F and the three mixed global comparisons remain open.
 
 ## Uniform exclusion of the full symmetric M1 core family
 
@@ -100,8 +126,9 @@ This is a sector restriction, not a global cost or index bound.
 identifies a specific remaining obstacle: each stationary trace equation
 gives an upper bound on the Casimir, whereas the cost obstruction needs
 a lower bound. The required lower bound holds for the already excluded
-equal-margin family. Arbitrary unequal margins still require a cyclic
-compatibility argument.
+equal-margin family. Arbitrary unequal margins were not resolved by that Casimir route.
+The new minimum-margin proof closes R directly and makes that missing
+Casimir lower bound unnecessary.
 
 ## Active result: an explicit bound for every global minimizer
 

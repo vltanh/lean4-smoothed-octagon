@@ -43,7 +43,7 @@ The new target for each type is **not** “every local window can be
 shortened.” The target is:
 
 > No globally minimizing, strictly admissible, cost-competitive, twisted
-> closed period containing a selected window of this type can have N>=6.
+> closed period assigned to this case can have N>=6.
 > It is enough to prove, throughout the complete-period domain, that
 > its normal PMP extension fails, reaches the star boundary, exceeds
 > the octagon budget, has a genuine negative constrained variation, or
@@ -70,7 +70,7 @@ sufficient package. This refinement closes no case.
 | ID | Six labels | Sign pattern | Reusable existing input | Exact new case target |
 |---|---|---|---|---|
 | F: pure forward | 012012 | +++++ | Full local endpoint rank five; standard-family negative index; closed positive elliptic costate cone excluded | Uniform negative *closed-period* variation or cost/return obstruction for all competitive entirely forward periods |
-| R: pure reverse | 021021 | ----- | Equal-factor state-cyclic needle descent; closed positive elliptic costate cone excluded; rank-four example above the cost cap | Rule out competitive entirely reverse periods using actual stationarity, the remaining costate sectors, and limiting alternatives |
+| R: pure reverse | 021021 | ----- | **CLOSED:** GLOBAL_REVERSE_PERIOD_EXCLUSION and its independent audit; 20 exact identities | A global active-margin minimum contradicts the normal 0210 PMP minimum principle. All unequal factors and costate sectors; no budget or rank assumption. |
 | M1: short mixed | 021210 | --+-- | Full local rank five; full symmetric equal-factor core exclusion with outgoing factor at least h by cost/escape dichotomy; original broad local replacement is false | Expand escape/cost/index coverage across the remaining complete-period PMP region |
 | M2: mixed transition | 010201 | +--++ | Full local rank five; switch-only descent is not universally valid | Find a whole-arc needle, global index, or continuation certificate for all complete-period candidates |
 | M3: long reverse run | 021012 | ---++ | Full local rank five from prefix 02101 | Find a uniform phase-return obstruction or exact global variation for these mixed runs |
@@ -222,13 +222,13 @@ plot or optimizer output proves an unrestricted inequality.
    The first external switch, geometry and full-period return are not
    asserted for that witness. Use additional global/variational input;
    do not count the symmetric family as universal M1 or add word lengths.
-3. **Reverse R**: test all positive/competitive L2 endpoint-rank
-   alternatives and needle signs, especially boundary limits; do
-   not assume the above-budget rank-four example is competitive.
-   REVERSE_PERIOD_CASIMIR_REDUCTION records exact cyclic stationarity:
-   its individual trace inequalities give upper Casimir bounds. A lower
-   bound sufficient for the cost obstruction needs genuine whole-period
-   compatibility; the equal-margin calculation does not provide it.
+3. **Reverse R is CLOSED**: GLOBAL_REVERSE_PERIOD_EXCLUSION rules out a
+   third-margin minimum on any normal 0210 window by two positive
+   compensated needles with zero endpoint derivative and negative cost.
+   The actual periodic margin sequence supplies that minimum. The
+   independent audit and 20 exact identities pass. Its proof bypasses
+   the incomplete reverse Casimir lower-bound route, including every
+   costate sector and rank defect. Do not reopen unnecessary subcases.
 4. **Forward F**: use the known closed-period Fourier index as a
    template for asymmetric return maps. The standard N=7 candidate
    failing the budget is a validation check, not a universal proof.
@@ -250,7 +250,7 @@ manufacture additional word lengths or count partial samples as closure.
 | Case | A: numerical necessary atlas | B: complete-period fate | C: uniform proof |
 |---|---|---|---|
 | F | **First deterministic run** | Closed positive elliptic costate cone excluded for whole pure periods; standard-family index retained; asymmetric complement OPEN | OPEN |
-| R | **First deterministic run** | Closed positive elliptic costate cone excluded for whole pure periods; remaining sectors OPEN | OPEN |
+| R | Superseded by direct hand proof | Global active-margin minimum contradicts the normal 0210 PMP principle; every sector covered | **CLOSED**, independently audited |
 | M1 | **First deterministic run** | Full symmetric equal-core family with outgoing factor >=h excluded by audited cost/escape dichotomy; asymmetric/short-pad complement OPEN | OPEN |
 | M2 | **First deterministic run** | OPEN | OPEN |
 | M3 | **First deterministic run** | OPEN | OPEN |

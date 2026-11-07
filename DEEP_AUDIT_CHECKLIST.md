@@ -64,7 +64,38 @@ Python/NumPy/SciPy version, commands, finite inputs, solver settings,
 numerical failures/limitations and output tables are in the experiment
 note. No independent review of the new exploratory scripts beyond
 self-checks is claimed. None of the five case-C analytic certificates
-has been proved, and the global octagon comparison remains OPEN.
+was proved by those numerical diagnostics. The direct hand proof below
+now closes pure-reverse R; the other four cases and the global octagon
+comparison remain OPEN.
+
+## Closed global reverse case: independent proof checks
+
+[GLOBAL_REVERSE_PERIOD_EXCLUSION](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION.md)
+and its [independent audit](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION_AUDIT.md)
+close the entire pure-reverse global case R.
+
+- [x] Convert the third-active-margin minimum exactly to the three
+  non-strict inequalities in A, B, Z, b and c; retain equal minima.
+- [x] Reconstruct the two positive missing-control needles, four original
+  factor corrections, zero tangent-frame derivative and state-stabilizer
+  derivative; all actual state/frame endpoint derivatives vanish.
+- [x] Independently differentiate the complete margin and cost updates
+  and obtain the same exact cost numerator.
+- [x] Prove its uniform strict negative sign using the two elementary
+  logarithm bounds, including the rational Padé remainder derivative.
+- [x] Check positive physical needle clocks, the same actual cotangent,
+  formal outer-factor stripping, and the zero active Hamiltonians.
+  Use a necessary-PMP contradiction only; no rank or IFT is assumed.
+- [x] Place the minimum in the twisted periodic active-margin sequence,
+  with valid cotangent continuation across every seam.
+- [x] Apply global normality to minimizing lifts, retaining all costate
+  sectors and arbitrary unequal factors. No total-cost bound is needed.
+- [x] Run all 20 exact symbolic identities and independently reconstruct
+  endpoint/cost algebra in a separate calculation. No floating-point
+  search, growing word catalogue, Lean, Lake or CI was used.
+
+F, M1, M2 and M3 remain open. The historical universal local-shortening
+package is not closed by this global minimum principle.
 
 ## Uniform symmetric mixed-core review
 

@@ -22,7 +22,15 @@ necessary-and-sufficient sign test for every normal outgoing positive
 vertex germ, including triple ties and quadratic/cubic contacts. Test all
 three rotations with the same covector and retain every passing branch.
 This local rule supplies no uniform interval length or global return/cost
-comparison. All five global case-C targets remain open. The compact
+comparison. The pure-reverse case R is now CLOSED by
+GLOBAL_REVERSE_PERIOD_EXCLUSION: a four-arc 0210 normal PMP window
+cannot have its third active margin no greater than the other three.
+A global minimum in the periodic active-margin sequence contradicts
+this for every entirely reverse period. Two positive needles, exact
+zero endpoint differential and strictly negative cost give a PMP
+contradiction; no endpoint rank, IFT, costate-sector split or budget is
+needed. Read its independent audit and 20-identity exact checker.
+F, M1, M2 and M3 remain open. The compact
 normal-lift corollary is qualitative, with no explicit multiplier bound
 for an interval search.
 
@@ -58,7 +66,9 @@ reverse stationarity equations: the individual Lorentz trace inequality
 gives an upper Casimir bound, not the needed lower bound. Its regular-
 family kappa>3/2 calculation treats an already excluded family. Neither
 that calculation nor the sign-only sector argument resolves cyclic
-compatibility for arbitrary unequal margins.
+compatibility for arbitrary unequal margins. Those reverse routes are
+now superseded by the minimum-margin PMP exclusion above; do not spend
+further work closing their unnecessary Casimir-sector subcases.
 
 Read docs/SINGULAR_COST_BUDGET.md and docs/MEASURABLE_EDGE_PMP_BOUND.md.
 The complete-period Hamiltonian and polar-angle argument gives a direct

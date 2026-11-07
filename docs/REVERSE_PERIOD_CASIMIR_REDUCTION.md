@@ -4,6 +4,13 @@ Date: 2026-11-07. Hand calculation with an independent internal
 recheck of the signs, local triple, regular multiplier and strict
 Casimir comparison. No Lean, Lake, typechecking, or CI.
 
+
+**Later global resolution:** [GLOBAL_REVERSE_PERIOD_EXCLUSION](GLOBAL_REVERSE_PERIOD_EXCLUSION.md)
+now closes the entire pure-reverse case R by a minimum-margin PMP
+contradiction, independently of the Casimir/sector route studied here.
+The earlier limitations below describe this note's own argument; they
+do not leave global R open. F and the three mixed cases remain open.
+
 ## Scope
 
 The pure reverse case would be excluded from competitive complete periods

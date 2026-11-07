@@ -5,6 +5,13 @@ Date: 2026-11-07. Hand proof with an
 No Lean, Lake, typechecking, or CI. Internal review is not external peer
 review or kernel validation.
 
+
+**Later global resolution:** [GLOBAL_REVERSE_PERIOD_EXCLUSION](GLOBAL_REVERSE_PERIOD_EXCLUSION.md)
+now closes the entire pure-reverse case R by a minimum-margin PMP
+contradiction, independently of the Casimir/sector route studied here.
+The earlier limitations below describe this note's own argument; they
+do not leave global R open. F and the three mixed cases remain open.
+
 ## Result and boundary
 
 Consider an actual normal PMP period consisting entirely of forward

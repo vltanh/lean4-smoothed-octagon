@@ -7,8 +7,13 @@ replaces impractical whole-word enumeration by five complete-period
 PMP exclusion cases F=012012, R=021021, M1=021210,
 M2=010201, M3=021012. For each, the finite A/B/C gates are:
 reproducible necessary-condition screening, full-period continuation and
-fate classification, and a universal hand certificate. **None of five
-universal exclusion gates C is closed.** Numerical checks in
+fate classification, and a universal hand certificate. **R is CLOSED;
+F, M1, M2 and M3 remain OPEN.**
+[GLOBAL_REVERSE_PERIOD_EXCLUSION](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION.md)
+and its [independent audit](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION_AUDIT.md)
+exclude every entirely reverse finite PMP period by a minimum-active-
+margin argument. The 20-identity checker passes. No equal-factor, rank,
+Casimir-sector, cost-budget or transverse-switch hypothesis is used. Numerical checks in
 [CASE_ATLAS_EXPERIMENT_001](docs/CASE_ATLAS_EXPERIMENT_001.md) verify the
 oracle on known stationary and regular families. The curved
 closed-period Hessian gives numerical negative indices 0,2,4 for
@@ -24,8 +29,8 @@ to every global minimizer. The normality part of T is complete.
 [independent internal audit](docs/NORMAL_TIE_BRANCHING_AUDIT.md) give exact
 necessary-and-sufficient outgoing positive-vertex tests through derivative
 order three, including normal triple and cubic ties. This closes the
-local branch rule, not the global fate of every passing branch. All five
-C gates remain open. Compactness also gives
+local branch rule, not the global fate of every passing branch. The
+separate reverse minimum principle closes R; the other four C gates remain open. Compactness also gives
 a qualitative positive lower bound on -lambda in the initial unit
 normalization, hence a compact family after normalization to lambda=-1.
 No numerical value for this new bound is claimed.
@@ -117,12 +122,15 @@ exclude the closed positive elliptic primary-costate cone, including zero
 and its positive parabolic boundary, for whole pure-forward/reverse
 normal periods with arbitrary unequal factors. Hyperbolic, negative
 parabolic and negative elliptic alternatives remain. The strict action
-derivatives are not constrained descent; F and R are still open.
+derivatives are not constrained descent. The sector theorem itself
+closes neither F nor R; R is now closed by the separate minimum-margin
+PMP contradiction.
 [REVERSE_PERIOD_CASIMIR_REDUCTION](docs/REVERSE_PERIOD_CASIMIR_REDUCTION.md)
 shows the individual trace inequality supplies an upper Casimir bound.
 It cannot be reversed into the needed lower bound; arbitrary unequal
-periods require a further cyclic compatibility argument. The retained
-regular-family strict lower bound closes no additional competitor class.
+periods were not resolved by that route. The new minimum-margin proof
+closes R without that lower bound; the retained regular-family strict
+lower bound is no additional competitor exclusion.
 
 No completed unrestricted cost comparison, affine uniqueness theorem, or
 kernel validation is claimed.
@@ -387,6 +395,14 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 ## Current-session entries
 
+- **Entire reverse global case CLOSED:** GLOBAL_REVERSE_PERIOD_EXCLUSION
+  proves a strict minimum principle for every normal 0210 PMP window.
+  Two positive needles with zero endpoint differential have strictly
+  negative cost at the asserted margin minimum. A minimum in the actual
+  twisted periodic sequence excludes all pure reverse periods, across
+  every costate sector and without a budget. Independent hand review and
+  20 exact identities pass. Four global cases remain: F, M1, M2, M3.
+
 - **Case-first computational reorientation:** adopt the fixed five
   complete-period exclusion cases and 15 small A/B/C gates in
   FINITE_CASE_COMPUTER_ROADMAP. Publish deterministic numerical oracles:
@@ -400,8 +416,9 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
   local PMP but exceeds the full-period octagon cost. Numeric constrained
   indices 0/2/4 at N=4/7/10 match an **existing** standard-family theorem.
   No universal cost exclusion, new hand inequality, or practical exhaustive
-  search is claimed. Do not increase N sequentially. All five case C gates
-  and the unrestricted conjecture remain open.
+  search is claimed. Do not increase N sequentially. At that checkpoint
+  all five case C gates and the unrestricted conjecture remained open;
+  the later direct reverse-period proof closes R.
 
 
 Newest entries come first. Earlier entries record the scope at their own

@@ -5,6 +5,13 @@ Date: 2026-11-07 UTC. Independent internal hand review of
 This is not external peer review or Lean kernel validation. No Lean, Lake,
 typechecking, or CI was run.
 
+
+**Later global resolution:** [GLOBAL_REVERSE_PERIOD_EXCLUSION](GLOBAL_REVERSE_PERIOD_EXCLUSION.md)
+now closes the entire pure-reverse case R by a minimum-margin PMP
+contradiction, independently of the Casimir/sector route studied here.
+The earlier limitations below describe this note's own argument; they
+do not leave global R open. F and the three mixed cases remain open.
+
 ## Finding
 
 The theorem is valid for a complete normal pure-forward or pure-reverse
