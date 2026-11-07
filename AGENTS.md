@@ -45,7 +45,12 @@ escape test excluding the small L3 counterexample family from any closed
 PMP occurrence. Preserve the full-period budget and both frame/state
 constraints in every new comparison or variation. The normal determinant
 gap is proved by the complete-period cost inequality; conservation alone
-would not supply it.
+would not supply it. Read GLOBAL_COST_CASIMIR Section 6 before using the
+new gap in a global index argument: equality in its bound is the circle,
+not the octagon, and exact subcritical local PMP examples permit both switch
+directions and a genuine cubic reverse switch. Do not assume forward-only
+or transverse switching from determinant separation. These local diagnostics
+have no claimed full-period closure and do not refute a global reduction.
 
 The old docs/FIVE_TEMPLATE_HANDOFF.md is a historical diagnostic record.
 Its prerequisite is the completed P0 certificate in docs/MINIMIZER_WINDOW_AUDIT.md

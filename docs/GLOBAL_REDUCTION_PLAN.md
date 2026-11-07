@@ -358,8 +358,10 @@ replace exponential covector propagation by
 10^{-8}<\|\mathcal P(t)\|<10^8.
 \]
 
-The exact rational octagon budget gives `kappa>1/100`, and the product
-norm decomposition then gives `D>10^-11`. The three-line coefficient
+The exact rational octagon budget gives
+`3*(pi-A_oct)/(2*pi-A_oct)>1/100` (a budget coefficient, distinct from
+the elliptic kappa in Section 3.8). The product norm decomposition then
+gives `D>10^-11`. The three-line coefficient
 arithmetic is valid for any certified lower/upper covector bounds, so with
 `m=10^-8,M=10^8` it gives `c>10^-43`, a common counting interval longer
 than `10^-54`, and **N<10^56**. The preceding cost--Casimir proof and its
@@ -383,6 +385,28 @@ A nonzero quadratic has at most two roots, so Rolle's theorem bounds
 vanishes identically, nontriviality gives a nonzero constant switching
 function. The proof includes abnormal multipliers, measurable controls,
 strict-star margins, and the exact free-duration splice.
+
+### 3.11 Sharpness of the cost bound and limits of pointwise reductions
+
+[GLOBAL_COST_CASIMIR, Section 6](GLOBAL_COST_CASIMIR.md#6-exact-defect-and-equality-in-the-cost--casimir-bound)
+expresses `(2*kappa+3)*C-4*pi*kappa` exactly as a sum of three nonnegative
+terms: excess polar winding, frame nonorthogonality, and stationary-control
+Hamiltonian slack. Equality forces the normal centroid-controlled circle
+with cost pi. This is the equality case of the auxiliary costate inequality,
+not the octagon equality classification required by G4.
+
+The same note gives strictly subcritical local PMP examples with both
+forward and reverse transverse switches, and an exact cubic reverse switch.
+They have no claimed complete-period closure or minimizing property. They
+show that determinant separation alone cannot justify either forward-only
+switching or a transverse-switch assumption. A valid general index theorem
+must use the full endpoints and include these local alternatives.
+
+The bounded investigation of the next gate has not produced a general
+negative closed-endpoint direction or an additional global cost exclusion.
+The remaining bridge is a new inequality controlling the defects using
+complete-period information, or another uniform structural/variation result.
+The explicit integer does not remove that mathematical obligation.
 
 ## 4. Immediate continuation and stopping rules
 

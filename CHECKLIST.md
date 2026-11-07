@@ -62,6 +62,16 @@ domain is not excluded.
 No completed unrestricted cost comparison, affine uniqueness theorem, or
 kernel validation is claimed.
 
+**Next-gate sharpness check:** [GLOBAL_COST_CASIMIR, Section 6](docs/GLOBAL_COST_CASIMIR.md#6-exact-defect-and-equality-in-the-cost--casimir-bound)
+now gives the exact three-term nonnegative defect and proves equality only
+for the normal centroid-controlled circle, whose cost is pi. This does not
+settle octagon equality. Explicit strictly subcritical local PMP phases
+admit either switching direction, and another gives a genuine cubic reverse
+switch. Neither has a claimed full-period closure or minimizing property.
+Thus the new determinant gap does not justify a forward-only or simple-switch
+assumption in G4. The bounded global variation investigation has not produced
+a general negative direction or any additional global cost exclusion.
+
 ## Historical local package and preserved diagnostics
 
 **P0 is complete at the hand-proof level:** see
@@ -314,6 +324,15 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 Newest entries come first. Earlier entries record the scope at their own
 checkpoint; the active gate table above controls current status.
+
+- Complete the sharpness audit of GLOBAL_COST_CASIMIR. The exact defect
+  identity separates winding, frame nonorthogonality, and stationary-control
+  slack; equality is precisely the normal circle lift, with centroid control
+  almost everywhere. Add exact local subcritical forward/reverse and cubic
+  reverse-switch examples to prevent invalid pointwise reductions. Independent
+  hand derivations checked the two active switching derivatives and the
+  edge-coordinate pullback. These diagnostics close no additional G4 class:
+  a comparison using actual complete-period closure remains the open step.
 
 - Sharpen the universal bound to `D>10^-11`, `N<10^56` in
   SINGULAR_COST_BUDGET. A direct homogeneous polar-budget inequality

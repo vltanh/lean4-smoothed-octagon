@@ -18,8 +18,9 @@ It proves the optimality property **(E4)** used in
 [QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md).
 
 More generally, the same conclusion holds for a strict-star edge trajectory
-that is a local minimum among nearby edge trajectories with its initial and
-final frame and state fixed and its physical terminal time free. Global
+that is a strong local minimum among edge trajectories with uniformly
+nearby state curves, its initial and final frame and state fixed, and its
+physical terminal time free. Global
 minimality is used only to obtain that local minimum. The edge problem has
 its own nontrivial Pontryagin multiplier; the result is not asserted for
 every extremal of the full control system.

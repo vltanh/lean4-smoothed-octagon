@@ -64,6 +64,14 @@ through-five comparison applicable. Exact frame and state closure, free
 initial state, boundary limits, and equality cases remain part of that task.
 The integer bound supplies none of those cost inequalities.
 
+The [sharpness audit](docs/GLOBAL_COST_CASIMIR.md#6-exact-defect-and-equality-in-the-cost--casimir-bound)
+gives an exact sum of three nonnegative defects. Equality in that bound
+forces the centroid-controlled circle, with cost pi; this is separate from
+the octagon equality case. Exact local PMP examples also show that the
+competitive determinant gap permits both switch directions and a genuine
+cubic switch. A general closed-period comparison must retain those cases;
+the gap alone supplies neither a forward-only rule nor simple switches.
+
 Earlier results remain available: [compact normalized minimizing lifts](docs/GLOBAL_MINIMIZER_COMPACTNESS.md),
 [the full-period PMP interface](docs/GLOBAL_PERIODIC_PMP.md), and
 [an explicit continuation obstruction](docs/GLOBAL_PERIOD_BUDGET.md)

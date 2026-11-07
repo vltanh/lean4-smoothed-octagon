@@ -194,6 +194,22 @@ received separate internal hand reviews of their complete arguments.
 - [x] Reopen E4's Chapter 8 edge dependency and verify it does not use
   Theorem 16.3.1. Keep E4 essential to counting, and distinguish clearance
   for competitive PMP lifts from the count for actual minimizing controls.
+- [x] Derive the exact three-term cost defect and classify equality in this
+  bound alone: n=0, orthogonal B, X=J, T=pi/3, kappa=3/2, W=0, and
+  centroid control almost everywhere. Retain traceless W and the actual
+  state equation; verify the converse and homogeneous rescaling.
+- [x] Check the exact subcritical two-direction switch phases and their
+  side-independent Hamiltonian-gap derivative. Construct genuine short PMP
+  segments using strict third-control separation and transversality.
+- [x] Check the exact subcritical cubic reverse switch by pulling back the
+  full cotangent vector to the invariant edge coordinates, preserving the
+  positive physical clock, and computing the cubic leading coefficient.
+  Retain nontransverse switches in any proposed general index theorem.
+  Keep this restriction of a zero physical Hamiltonian distinct from the
+  separate fixed-time PMP used for E4, which imposes no zero-Hamiltonian
+  condition in its independent-variable formulation.
+- [x] Keep all three sharpness/diagnostic results separate from octagon
+  equality, a full-period counterexample, or a new global cost exclusion.
 - [ ] Complete the uniform global cost comparison and affine equality case.
   Neither the enormous integer nor the normal determinant gap supplies it.
 - [ ] Formalize and run kernel validation after mathematical closure, under
