@@ -61,6 +61,25 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
 - [ ] Deduce the unconditional bound N<=5.
 - [ ] Prove unrestricted global minimality and affine rigidity.
 
+## Exact L1 same-word obstruction
+
+`docs/LOCAL_FORWARD_SIX.md` gives one rational-factor input with initial
+margins normalized by `sqrt(1975/1684)`. It satisfies every explicit local
+input test but is a strict local minimum on its same-word endpoint fiber.
+This refutes a method, not L1 or Reinhardt. Independent exact reproduction
+used Python 3.12.14 and SymPy 1.14.0; the finite input and command are in
+`explorations/local_forward_stationary_obstruction.py`.
+
+- [x] Verify determinant-one normalization and every whole-arc star margin.
+- [x] Prove the competitive cost bound by rational/logarithmic inequalities.
+- [x] Verify positive Bernstein coefficients for all whole-arc sector tests.
+- [x] Use a valid tangent matrix chart and a nonzero five-column rank minor.
+- [x] Verify the exact null vector and zero first constrained variation.
+- [x] Include endpoint curvature in the constrained Hessian and prove
+  its value exceeds `1/200` using `log(11/10)<143/1500`.
+- [x] Distinguish strict same-word local minimality from arbitrary-control
+  optimality, a full L1 counterexample, or an actual global minimizer.
+
 ## Uniform reverse-six subfamily: exact hand certificate
 
 `docs/LOCAL_REVERSE_SIX.md` treats every q>1 with six equal factors and the

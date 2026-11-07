@@ -9,6 +9,11 @@ geometric bridge). Then attempt universal local L1, followed by L2–L5.
 Record exact obstruction or hand certificate for each attempt. The five
 analytic claims are all currently open; do not relabel them as solved.
 
+Read `docs/LOCAL_FORWARD_SIX.md` before continuing L1: its exact eligible
+stationary minimum disproves universal nearby same-word descent. Do not
+repeat a search for a negative constrained Hessian at every stationary point.
+Different-word, nonlocal, or additional minimizer/PMP arguments remain in scope.
+
 The user explicitly requested a bounded set of cases before proceeding further.
 Pause increasing-length whole-word enumeration. Do not make seven-, eight-, or
 higher-arc closed comparisons the next milestones. New Lean infrastructure is

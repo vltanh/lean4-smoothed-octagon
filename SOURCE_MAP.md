@@ -10,6 +10,7 @@ supersedes earlier recommendations to continue by increasing whole-word length.
 
 | Statement | Exact source and status |
 | --- | --- |
+| Exact obstruction to universal nearby same-word L1 descent | [LOCAL_FORWARD_SIX](docs/LOCAL_FORWARD_SIX.md): an eligible `012012` input with rank-five endpoint map and a strict constrained local minimum. Full L1 remains open. The [exact checker](explorations/local_forward_stationary_obstruction.py) is supplementary. |
 | P0: minimizer-window eligibility and finite-piece geometric splice | [MINIMIZER_WINDOW_AUDIT](docs/MINIMIZER_WINDOW_AUDIT.md): hand proof, using Hales--Vajjha Theorem 16.3.1 and balanced-disk correspondence; sector normalization and winding are proved explicitly. Through-five equality scope checked, not its entire algebra re-audited. |
 | Five-template coverage for every minimizing N>=6 | [BOUNDED_REDUCTION, Sections 1-2](docs/BOUNDED_REDUCTION.md): complete independently reviewed hand run argument, conditional on the already supplied forward-alternation exclusion. |
 | Local strict improvements imply N<=5 and then global minimality/rigidity | Same note, Section 3: proved conditional implication; all five new analytic premises are open. |

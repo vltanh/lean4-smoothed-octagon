@@ -90,6 +90,14 @@ it open; do not count L1–L5 as a sufficient package until repaired.
 
 ### P1 — Prove or diagnose the first universal LOCAL gate (start with L1)
 
+**Exact obstruction already found:** [LOCAL_FORWARD_SIX.md](LOCAL_FORWARD_SIX.md)
+gives an input satisfying all eligibility conditions where the same-word
+endpoint fiber has a strict local cost minimum. Its rank is five, first
+variation is zero, and constrained second variation is greater than `1/200`.
+Do not try to prove a universal negative-Hessian assertion. The broader L1
+claim remains open: test different-word or nonlocal replacements, or prove
+additional necessary conditions for windows in actual global minimizers.
+
 L1 is the first test of whether the proposed five-case route is viable,
 **not** presumed easier or true. Use the exact initial-state chart
 
@@ -208,6 +216,9 @@ conjecture solved at completion of P0 or at an analytic count below 5/5.
 6. A finite list of five open universal inequalities is not a bounded
    **enumeration of actual minimizers** until those inequalities are
    proved.
+7. The eligible exact input in `LOCAL_FORWARD_SIX.md` is a strict
+   same-word local minimum. A universal local-deformation-only proof of L1
+   is false; its full different-word/nonlocal replacement claim is unresolved.
 
 ## Handoff status and reporting contract
 

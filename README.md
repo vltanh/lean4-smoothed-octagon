@@ -60,6 +60,12 @@ trajectories up to an arbitrary maximum length.
 
 ### A local subfamily with an exact improvement
 
+The [exact L1 obstruction](docs/LOCAL_FORWARD_SIX.md) satisfies all the input
+eligibility tests but is a strict minimum on its nearby same-word endpoint
+fiber. Thus universal nearby same-word descent is false even in the
+competitive geometric domain. This does not refute a different-word or
+nonlocal L1 replacement, and it is not a counterexample to Reinhardt.
+
 [LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md) proves a seven-piece strict
 improvement for every q>1 in the equal-factor, state-cyclic reverse six-arc
 family. The proof fixes the initial state, corrects both terminal endpoints

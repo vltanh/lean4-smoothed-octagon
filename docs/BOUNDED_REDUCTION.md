@@ -343,6 +343,13 @@ stationary point, a negative constrained second variation also supplies
 an exact local improvement. These are proposed certificates, not asserted
 sign theorems for L1-L5.
 
+There is now an exact obstruction to asserting that such a negative
+variation always exists: [LOCAL_FORWARD_SIX.md](LOCAL_FORWARD_SIX.md) gives
+an eligible L1 input with rank-five endpoint map, zero first constrained
+variation, and strictly positive second variation. It is a strict local
+minimum on its same-word endpoint fiber. A different-word or nonlocal
+replacement remains possible, so this does not refute L1 itself.
+
 Rank zero and rank one points MUST be treated. In particular, six variables
 minus five constraints does not prove either a smooth fiber or a decreasing
 direction. Higher-order stationary points cannot be discarded. Failure of

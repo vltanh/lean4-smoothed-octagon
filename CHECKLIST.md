@@ -34,7 +34,7 @@ boundedness theorem.
 | --- | --- | --- |
 | P0: minimizer eligibility and splice | Prove every selected window meets the entire stated domain and every cheaper finite strict-star splice gives a geometric competitor. | **Hand proof complete**, using the named published reduction and retained through-five comparison certificates. Does not exclude a new cost class. |
 | Coverage | Every cyclically reduced minimizing word with N>=6 contains one of the five specified six-arc windows, using the established forward-alternation exclusion. | Hand proof independently reviewed, with a separate finite-graph computational cross-check. No new cost class excluded by this alone. |
-| L1: 012012 | Strictly cheaper endpoint-preserving replacement on the entire eligible local domain. | **Open.** The closed six-piece comparison does not prove this local claim. |
+| L1: 012012 | Strictly cheaper endpoint-preserving replacement on the entire eligible local domain. | **Open.** An exact eligible stationary minimum disproves universal nearby same-word descent; different-word or nonlocal improvements remain possible. See [LOCAL_FORWARD_SIX](docs/LOCAL_FORWARD_SIX.md). |
 | L2: 021021 | Same universal local improvement for five consecutive reverse switches. | **Open.** A regular-family comparison does not cover asymmetric local endpoints. |
 | L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Open.** |
 | L4: 010201 | Same universal local improvement at a reverse run of length two followed by at least two forward switches. | **Open.** |
@@ -48,6 +48,15 @@ count of precisely stated local targets, not a percentage of the conjecture
 or an assertion that the targets have equal difficulty.
 
 ### Scoped local result; no full input closed
+
+An exact [L1 obstruction](docs/LOCAL_FORWARD_SIX.md) has factors
+`(11/10,11/10,121/100,121/100,11/10,121/100)` and initial margins
+`sqrt(1975/1684) * (1,1,4761/3950)`. It satisfies the entire explicit
+eligibility domain, including whole-arc sector inequalities. The endpoint
+map has rank five, the first constrained variation is zero, and the second
+is strictly greater than `1/200` on the displayed nonzero tangent. Hence it
+is a strict local minimum on the same-word endpoint fiber. This refutes the
+universal nearby same-word approach, not L1's broader replacement claim.
 
 [LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md) proves a strict local improvement
 for every equal factor q>1 in the reverse state-cyclic family with initial
@@ -118,6 +127,11 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 ## Current-session entries
 
+- Proved and independently reproduced the exact eligible L1 same-word local
+  minimum. The hand certificate includes rational state/sector tables, rank,
+  stationarity, and the positive constrained Hessian; the finite exact checker
+  is supplementary. A different-word, nonlocal, or minimizer-specific argument
+  is now required at this input. No full local target is marked closed.
 - P0: proved the selected-window eligibility lemma, including sectors after
   transforming the entire disk by the initial-frame inverse. Verified the
   twisted seam, finite bang-bang source, exact endpoint splice, and low-cost
