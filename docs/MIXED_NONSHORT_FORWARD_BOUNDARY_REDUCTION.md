@@ -1,8 +1,10 @@
 # A four-variable endpoint reduction for the nonshort forward successor
 
-Date: 2026-11-07. Hand argument with exact algebra checks. The two endpoint
-domain exclusions are pending; this note alone does not close M2. No Lean,
-Lake, typechecking or CI.
+Date: 2026-11-07. Hand argument with exact algebra checks. Both endpoint
+domains are now excluded by [complete independently reviewed and replayed
+covers](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md). This note proves
+the mathematical reduction used by those covers. No Lean, Lake,
+typechecking or CI.
 
 ## 1. Follow the same scalar root to the central boundary
 
@@ -162,7 +164,7 @@ expressions are positive on the reconstructed comparison charts. Since
 also extends regularly to enlarged scalar boundary points; no assertion
 of physical realizability is made there.
 
-## 5. Finite domain and remaining acceptance gates
+## 5. Finite domain and completed acceptance
 
 At `b_*` the central reverse factor is one: `delta_0=0`. The unchanged
 actual coordinates retain their global-minimum, scale, compact-state,
@@ -181,16 +183,18 @@ weight give two closed maximal charts, with four effective coordinates
 applies with `l_0=0`, so it excludes their entire common corner
 `epsilon<=1/32`. The complementary domains have `epsilon in [1/32,15]`,
 `c in [2/15,2]`, and one relative weight in `[0,1]`. The two-chart
-boundary theorem, when independently accepted, excludes `a<=1/2` for
-both next-switch alternatives; only then may these covers start at
-`a=1/2`. The closed overlap at that endpoint is intentional.
+[common low-a boundary theorem](MIXED_NONSHORT_LOW_A_BOUNDARY_EXCLUSION.md)
+and its [independent audit](MIXED_NONSHORT_LOW_A_BOUNDARY_AUDIT.md) exclude
+`a<=1/2` for both next-switch alternatives. These covers therefore start
+at `a=1/2`. The closed overlap at that endpoint is intentional.
 
 The boundary domain must not inherit `b_*<=8`, `u_*>=3/4`, `h_{d,*}>=0`,
 the original outgoing derivative/missing-control bounds, or an additional
 Casimir bound. Each endpoint alternative uses only its own cap residual
-in (8)--(9). The source, contractor, two-root coverage, and final empty
-frontier require separate independent review before this reduction is
-used to close the forward branch.
+in (8)--(9). The [independent forward review](MIXED_NONSHORT_FORWARD_BOUNDARY_AUDIT.md)
+accepts the source, all contractors, two-root coverage, and final empty
+frontiers. The two endpoint executions have 37,940 and 60,976 nodes,
+respectively, and separate fresh replays reproduce both complete covers.
 
 The companion
 [exact identity checker](../explorations/mixed_nonshort_forward_boundary_certificate.py)

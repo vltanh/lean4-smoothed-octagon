@@ -10,11 +10,12 @@ arithmetic run is used only with its stated mathematical reduction. It
 does not establish that an arbitrary input trajectory belongs to the
 checked domain.
 
-**Current acceptance boundary:** F, smaller-short and nonshort reverse-next
-are complete. The reverse-next result uses the new two-root boundary
-theorem below, with independent mathematical/source review and fresh
-replay. Forward boundary acceptance remains to be recorded. The old
-three-root forests are incomplete and are not used by the new theorem.
+**Current acceptance boundary:** F, smaller-short and both nonshort
+next-switch alternatives are complete. The four new two-root boundary
+covers below have independent mathematical/source reviews and complete
+fresh replays. The old three-root forests are incomplete and are not
+used by the new theorems. The whole-period/global assembly has its own
+mathematical acceptance gate.
 
 ## 1. Build environment
 
@@ -119,11 +120,56 @@ identifies source hashes, original and replay logs, toolchain and commands.
 The printed request for an interface audit is retained in the frozen
 source; the linked audit discharges it.
 
+### Accepted common low-a and forward endpoint theorems
+
+The [common low-a theorem](MIXED_NONSHORT_LOW_A_BOUNDARY_EXCLUSION.md)
+excludes `a<=1/2` without imposing either actual successor alternative.
+Its [independent review](MIXED_NONSHORT_LOW_A_BOUNDARY_AUDIT.md) accepts
+the boundary reduction, retained common contractors and both complete
+execution records.
+
+```sh
+g++ -std=c++17 -O2 explorations/mixed_nonshort_low_a_boundary_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_nonshort_low_a_boundary
+/tmp/mixed_nonshort_low_a_boundary 2000000
+```
+
+The original and fresh replay have 74,772 nodes, 37,387 leaves, maximum
+depth 23, zero pending and zero unresolved boxes. The complete two-root
+identity is `74772=2*37387-2`. Source, original/replay logs and commands
+are in [the receipt](../explorations/mixed_nonshort_low_a_boundary_result.json).
+
 The [forward endpoint reduction](MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION.md)
-uses concavity to obtain two necessary endpoint alternatives without
-transferring the actual Casimir cap to the artificial boundary. Its
-common low-a theorem and two full endpoint records require their own
-independent acceptance before use.
+uses concavity to obtain two necessary endpoint alternatives. The actual
+Casimir cap is used only to prove that disjunction. The [endpoint theorem](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md)
+and [independent review](MIXED_NONSHORT_FORWARD_BOUNDARY_AUDIT.md) accept
+both complete exclusions on the enlarged `a in [1/2,17/20]` domain.
+
+```sh
+g++ -std=c++17 -O2 explorations/mixed_nonshort_forward_boundary_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_nonshort_forward_boundary
+/tmp/mixed_nonshort_forward_boundary 2000000 0
+/tmp/mixed_nonshort_forward_boundary 2000000 1
+python explorations/mixed_nonshort_forward_boundary_certificate.py
+python explorations/mixed_nonshort_boundary_records_verify.py
+```
+
+| Endpoint | Nodes | Leaves | Maximum depth | Pending / unresolved |
+| --- | ---: | ---: | ---: | --- |
+| 0: boundary outgoing norm | 37,940 | 18,971 | 27 | 0 / 0 |
+| 1: outgoing norm at next norm `3/4` | 60,976 | 30,489 | 32 | 0 / 0 |
+
+The [endpoint-0 receipt](../explorations/mixed_nonshort_forward_boundary_0_result.json)
+and [endpoint-1 receipt](../explorations/mixed_nonshort_forward_boundary_1_result.json)
+include both original and separate fresh executions. Each run starts
+from both stated roots and satisfies `N=2L-2`. Independent replays
+reproduce every reason counter; all processes returned exit status
+zero after the arithmetic-flag check. The roots fix `l0=0`, choose
+`l1=1` or `l2=1`, and use `epsilon in [1/32,15]`, `c in [2/15,2]`
+and the other weight in `[0,1]`. The recomputed maximum includes points
+originally assigned to the old delta0-maximal chart.
+
+The last Python command verifies the four published receipt/hash pairs
+and their original/replay logs. It does not execute the covers or
+replace the independent mathematical/source audits.
 
 ### Supporting identities and former three-root method
 

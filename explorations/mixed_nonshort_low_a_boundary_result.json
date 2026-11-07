@@ -1,0 +1,115 @@
+{
+  "certificate": "M2 common nonshort low-a boundary exclusion",
+  "status": "accepted: complete original execution, independent mathematical/source audit, and independent fresh replay",
+  "root_count": 2,
+  "charts": [
+    1,
+    2
+  ],
+  "coordinates": [
+    "a",
+    "c",
+    "epsilon",
+    "l0=0",
+    "other_weight"
+  ],
+  "roots": {
+    "a": [
+      "2/15",
+      "1/2"
+    ],
+    "c": [
+      "2/15",
+      "2"
+    ],
+    "epsilon": [
+      "1/32",
+      "15"
+    ],
+    "l0": [
+      "0",
+      "0"
+    ],
+    "other_weight": [
+      "0",
+      "1"
+    ]
+  },
+  "branch": 2,
+  "branch_meaning": "neither next-switch alternative imposed",
+  "nodes": 74772,
+  "leaves": 37387,
+  "pending": 0,
+  "unresolved": 0,
+  "maximum_depth": 23,
+  "elapsed_seconds": 395.69,
+  "leaf_reasons": {
+    "1": 1219,
+    "15": 8,
+    "17": 30142,
+    "19": 868,
+    "20": 2029,
+    "22": 13,
+    "60": 3108
+  },
+  "forest_identity": "N=2L-2",
+  "sources_and_artifacts": {
+    "low_a_boundary.cpp": "448b6ad8858dcb6568a8748a41722d686e1fa525cc819cb87f7eff37a5e01edd",
+    "certified_mpfr_interval.hpp": "1607b4f02063722506a514598d23d9b032a4aebfd6e74753bc302a7a67e32e76",
+    "certified_lp_proposal.hpp": "6afe296ecd67f0ac3a48caa2460c9bf5bd58f358470a326f5a324879ba891454",
+    "mixed_nonshort_coefficients.hpp": "5b0c5c70a10a058a50a2735282a640333a87def27a8dbf0def5547c46e4a266d",
+    "low_a_boundary": "f12aed2a1ae34407eb79fc0cf41c3cdef66f2a1d05eacd6a2974cd86a8390722",
+    "low_a_boundary_cover.log": "2d882a3f615ced3159132ecc4a56f82727aa7280978bb3c64094bd696e232f4f",
+    "low_a_boundary_unresolved_2.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "compile_command": "g++ -std=c++17 -O2 -I/workspace/scratch/5efeb2d2f42f/m2_mpfr_vendor low_a_boundary.cpp -l:libmpfr.so.6 -lgmp -o low_a_boundary",
+  "run_command": "./low_a_boundary 1000000 > low_a_boundary_cover.log 2>&1",
+  "execution_trust_boundary": "C++17, directed MPFR/GMP arithmetic, frozen audited sources; no Lean kernel verification",
+  "observed_process_exit_status": 0,
+  "mathematical_audit": "docs/MIXED_NONSHORT_LOW_A_BOUNDARY_AUDIT.md",
+  "theorem": "docs/MIXED_NONSHORT_LOW_A_BOUNDARY_EXCLUSION.md",
+  "published_artifacts": {
+    "explorations/certified_mpfr_interval.hpp": "1607b4f02063722506a514598d23d9b032a4aebfd6e74753bc302a7a67e32e76",
+    "explorations/certified_lp_proposal.hpp": "6afe296ecd67f0ac3a48caa2460c9bf5bd58f358470a326f5a324879ba891454",
+    "explorations/mixed_nonshort_coefficients.hpp": "5b0c5c70a10a058a50a2735282a640333a87def27a8dbf0def5547c46e4a266d",
+    "explorations/mixed_nonshort_low_a_boundary_interval_certificate.cpp": "448b6ad8858dcb6568a8748a41722d686e1fa525cc819cb87f7eff37a5e01edd",
+    "explorations/results/mixed_nonshort_low_a_boundary_original.log": "2d882a3f615ced3159132ecc4a56f82727aa7280978bb3c64094bd696e232f4f",
+    "explorations/results/mixed_nonshort_low_a_boundary_replay.log": "e7942150b68464b21eb4a18a492e8c78a015ae0b6212f03a1d449d778c22d016"
+  },
+  "environment": {
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "MPFR": "4.2.2",
+    "GMP": "6.3.0",
+    "significand_bits": 80,
+    "rounding": "explicit directed MPFR; verified exact dyadic LP proposals"
+  },
+  "independent_replay": {
+    "exit_code": 0,
+    "fresh_original_roots": true,
+    "supplied_pending_stack": false,
+    "branch": 2,
+    "nodes": 74772,
+    "leaves": 37387,
+    "pending": 0,
+    "unresolved": 0,
+    "maximum_depth": 23,
+    "elapsed_seconds": 370.73,
+    "leaf_reasons": {
+      "1": 1219,
+      "15": 8,
+      "17": 30142,
+      "19": 868,
+      "20": 2029,
+      "22": 13,
+      "60": 3108
+    },
+    "executable_sha256": "e530a5a55f4609f80acff98e1b39b29baa6a57cb002dad381e400c8ee49915bc",
+    "log_sha256": "e7942150b68464b21eb4a18a492e8c78a015ae0b6212f03a1d449d778c22d016",
+    "unresolved_file_bytes": 0,
+    "final_output": "FINAL branch 2 nodes 74772 stack 0 depth 23 unknown 0 seconds 370.73\nreason 1 leaves 1219\nreason 15 leaves 8\nreason 17 leaves 30142\nreason 19 leaves 868\nreason 20 leaves 2029\nreason 22 leaves 13\nreason 60 leaves 3108\nPASS: complete two-chart low-a boundary domain excluded; interface audit still required.\n",
+    "compile_command": "g++ -std=c++17 -O2 -I/workspace/scratch/5efeb2d2f42f/m2_mpfr_vendor sources/mixed_nonshort_low_a_interval_certificate.cpp -l:libmpfr.so.6 -lgmp -o certifier",
+    "run_command": "./certifier 2000000 2 > replay.log 2>&1"
+  },
+  "portable_build": "g++ -std=c++17 -O2 explorations/mixed_nonshort_low_a_boundary_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_nonshort_low_a_boundary",
+  "portable_run": "/tmp/mixed_nonshort_low_a_boundary 2000000"
+}

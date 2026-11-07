@@ -4,14 +4,15 @@
 
 ## Immediate handoff: exact next actions
 
-**The nonshort reverse-next branch is now CLOSED.** Its new boundary comparison, two-root cover, source audit and independent fresh replay are recorded in [the reverse theorem](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md). The older incomplete three-root forests are not used. Forward acceptance and final assembly remain open until their own complete records and independent reviews are published.
+**Both nonshort next-switch branches are now CLOSED.** The [reverse theorem](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md), [common low-a theorem](MIXED_NONSHORT_LOW_A_BOUNDARY_EXCLUSION.md), and [forward endpoint theorem](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md) have independent source/domain audits and complete fresh replays. The older incomplete three-root forests are not used. The remaining gates are the exhaustive whole-M2 passage and global cost/equality assembly with their independent reviews.
 
 | Gate | Domain / required next actual switch | Acceptance |
 | --- | --- | --- |
 | M2.0 (DONE) | Smaller turn is short; and separately the nonshort `0<=epsilon<=1/32` corner | Audited short-side 107,977-node cover; hand small-parameter theorem |
-| **M2.1-F (OPEN acceptance)** | Smaller turn nonshort; next **forward** switch has transported norm `>=3/4` | Common low-a boundary theorem, concavity endpoint alternative, both complete endpoint covers and independent review |
+| **M2.1-F (DONE)** | Smaller turn nonshort; next **forward** switch has transported norm `>=3/4` | Accepted low-a cover (74,772 nodes), endpoint covers (37,940 and 60,976 nodes), independent source reviews and complete fresh replays |
 | **M2.1-R (DONE)** | Smaller turn nonshort; next **reverse** switch satisfies the extended-turn secant bound | Accepted two-root boundary cover: 106,134 nodes, 53,068 leaves, no pending/unknown; independently replayed |
-| **M2.1-V / M2.2 (OPEN)** | Finish forward record/source review; then audit exhaustive whole-period passage | Exact record accounting, mathematical interface, all boundaries |
+| **M2.1-V (DONE)** | Verify all four boundary execution records | Frozen hashes, complete original/replay logs, two-root accounting, empty frontiers and independent reviews |
+| **M2.2 (OPEN)** | Audit exhaustive whole-period passage | Mathematical interface, all run lengths and boundary cases |
 | **G4 / G5 (OPEN)** | Conditional terminal cost/equality assembly and final audit | Sharp global statement with all premises and trust boundaries identified |
 
 **Current technical target:** [the same-covector next-switch alternative](MIXED_SMALLER_TURN_CONTINUATION.md), [reviewed boundary comparison](MIXED_NONSHORT_REVERSE_BOUNDARY_AUDIT.md), [forward concavity reduction](MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION.md), and [epsilon hand theorem](MIXED_NONSHORT_SMALL_PARAMETER_EXCLUSION.md). Increase the artificial scalar b to `K/(a+c)-a`; the incident upper-norm inequality persists and the transported w decreases. The new maximum is `epsilon=max(delta1,delta2)`, with `l0=0`, so **two four-variable chart roots** cover every original chart, including old chart 0. The hand corner applies to this new maximum. Forward use of `a>=1/2` requires the separate common low-a theorem; do not transfer an actual Casimir cap to the artificial boundary without the proved endpoint alternative. The next actual switch remains the first event **on the same continuous normal PMP covector**.
@@ -102,8 +103,10 @@ It therefore remains to exclude the **smaller-nonshort branch**. The
 [next-switch alternative](MIXED_SMALLER_TURN_CONTINUATION.md) requires
 either a transported forward norm at least `3/4` or a reverse turn norm
 below the stated extended secant. The [reverse boundary theorem](MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md)
-now excludes the second alternative uniformly; the forward alternative
-still requires its published independent acceptance. The [interface audit](MIXED_MINIMUM_CONTINUATION_INTERFACE_AUDIT.md)
+now excludes the second alternative uniformly, and the [forward endpoint
+theorem](MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md) excludes the first.
+Both have independent source/domain review and complete fresh replays.
+The [interface audit](MIXED_MINIMUM_CONTINUATION_INTERFACE_AUDIT.md)
 accepts the necessary-condition reduction. The [radial completion bound](GLOBAL_RADIAL_COMPLETION_BOUND.md)
 also supplies a nonnegative cost for restoring the omitted radial
 coordinate of any window.
@@ -117,11 +120,12 @@ all contractors, coefficient expressions and LP proposal helper have an
 The new reverse boundary comparison replaces its five-variable cover
 with two complete four-variable roots, independently audited and
 replayed. The [forward endpoint reduction](MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION.md)
-gives two enlarged endpoint domains whose acceptance is the remaining
-computational task. No partial frontier or zero unknown count alone
-closes a branch.
+gives two enlarged endpoint domains now excluded by complete reviewed
+covers and independent fresh replays. The separate common low-a cover
+is accepted too. No partial frontier or zero unknown count alone is
+used to close a branch.
 
-**M2.1-F (OPEN acceptance):** At the **global minimum reverse centre whose smaller turn belongs to a nonshort forward run**, finish independent acceptance of the forward endpoint exclusions. The reverse-next and smaller-short cases are closed; do not assume a minimum must touch *two* long runs.
+**M2.1 (DONE):** At the **global minimum reverse centre whose smaller turn belongs to a nonshort forward run**, both actual successor alternatives are excluded. The smaller-short case is closed too. Do not assume a minimum must touch *two* long runs.
 
 **M2.2 (OPEN):** Uniformly exclude all admissible M2 periods: arbitrary nonshort run lengths, unequal margins, bridge-diagonal signs, weak third ties, singular/zero-duration limits, rank defects and the twisted seam. A local star escape or negative onsite form is not enough without the global extension/constraints.
 

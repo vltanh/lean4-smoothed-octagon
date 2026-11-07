@@ -1,0 +1,120 @@
+{
+  "certificate": "M2 forward-next concave endpoint exclusion",
+  "status": "accepted: complete original execution, independent mathematical/source audit, and independent fresh replay",
+  "branch": 0,
+  "branch_meaning": "lower w boundary endpoint",
+  "root_count": 2,
+  "charts": [
+    1,
+    2
+  ],
+  "coordinates": [
+    "a",
+    "c",
+    "epsilon",
+    "l0=0",
+    "other_weight"
+  ],
+  "roots": {
+    "a": [
+      "1/2",
+      "17/20"
+    ],
+    "c": [
+      "2/15",
+      "2"
+    ],
+    "epsilon": [
+      "1/32",
+      "15"
+    ],
+    "l0": [
+      "0",
+      "0"
+    ],
+    "other_weight": [
+      "0",
+      "1"
+    ]
+  },
+  "lower_a_dependency": "completed common low-a boundary exclusion",
+  "nodes": 37940,
+  "leaves": 18971,
+  "pending": 0,
+  "unresolved": 0,
+  "maximum_depth": 27,
+  "elapsed_seconds": 203.56,
+  "leaf_reasons": {
+    "1": 195,
+    "15": 25,
+    "17": 8396,
+    "19": 647,
+    "20": 3320,
+    "26": 1016,
+    "27": 782,
+    "28": 153,
+    "60": 4437
+  },
+  "forest_identity": "N=2L-2",
+  "sources_and_artifacts": {
+    "forward_boundary.cpp": "fc5a99b57c7546df86a4f800063f417a01537f0264de9b4c349ef323e839ad27",
+    "certified_mpfr_interval.hpp": "1607b4f02063722506a514598d23d9b032a4aebfd6e74753bc302a7a67e32e76",
+    "certified_lp_proposal.hpp": "6afe296ecd67f0ac3a48caa2460c9bf5bd58f358470a326f5a324879ba891454",
+    "mixed_nonshort_coefficients.hpp": "5b0c5c70a10a058a50a2735282a640333a87def27a8dbf0def5547c46e4a266d",
+    "forward_boundary": "b2915a1aad73e84008fb54ed939acffb94e10103f4e2e5ee7098388b2e0863d0",
+    "forward_boundary_0_cover.log": "8312da2c0172549af162c62403d5f31afc7d9aea564325099e6bfb1c220e2d10",
+    "forward_boundary_unresolved_0.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "compile_command": "g++ -std=c++17 -O2 -I/workspace/scratch/5efeb2d2f42f/m2_mpfr_vendor forward_boundary.cpp -l:libmpfr.so.6 -lgmp -o forward_boundary",
+  "run_command": "./forward_boundary 1000000 0 > forward_boundary_0_cover.log 2>&1",
+  "execution_trust_boundary": "C++17, directed MPFR/GMP arithmetic, frozen audited sources; no Lean kernel verification",
+  "observed_process_exit_status": 0,
+  "mathematical_audit": "docs/MIXED_NONSHORT_FORWARD_BOUNDARY_AUDIT.md",
+  "theorem": "docs/MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md",
+  "published_artifacts": {
+    "explorations/certified_mpfr_interval.hpp": "1607b4f02063722506a514598d23d9b032a4aebfd6e74753bc302a7a67e32e76",
+    "explorations/certified_lp_proposal.hpp": "6afe296ecd67f0ac3a48caa2460c9bf5bd58f358470a326f5a324879ba891454",
+    "explorations/mixed_nonshort_coefficients.hpp": "5b0c5c70a10a058a50a2735282a640333a87def27a8dbf0def5547c46e4a266d",
+    "explorations/mixed_nonshort_forward_boundary_interval_certificate.cpp": "fc5a99b57c7546df86a4f800063f417a01537f0264de9b4c349ef323e839ad27",
+    "explorations/results/mixed_nonshort_forward_boundary_0_original.log": "8312da2c0172549af162c62403d5f31afc7d9aea564325099e6bfb1c220e2d10",
+    "explorations/results/mixed_nonshort_forward_boundary_0_replay.log": "89a93c191c490502f1ff797ad155c33309e8d74346db66f70280623a84503b56"
+  },
+  "environment": {
+    "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+    "MPFR": "4.2.2",
+    "GMP": "6.3.0",
+    "significand_bits": 80,
+    "rounding": "explicit directed MPFR; verified exact dyadic LP proposals"
+  },
+  "independent_replay": {
+    "exit_code": 0,
+    "fresh_original_roots": true,
+    "supplied_pending_stack": false,
+    "branch": 0,
+    "nodes": 37940,
+    "leaves": 18971,
+    "pending": 0,
+    "unresolved": 0,
+    "maximum_depth": 27,
+    "elapsed_seconds": 203.24,
+    "leaf_reasons": {
+      "1": 195,
+      "15": 25,
+      "17": 8396,
+      "19": 647,
+      "20": 3320,
+      "26": 1016,
+      "27": 782,
+      "28": 153,
+      "60": 4437
+    },
+    "executable_sha256": "104905f4e793ee036796603e95b3621570790dad87c90934b46b90bd486da01d",
+    "log_sha256": "89a93c191c490502f1ff797ad155c33309e8d74346db66f70280623a84503b56",
+    "unresolved_file_bytes": 0,
+    "final_output": "FINAL branch 0 nodes 37940 stack 0 depth 27 unknown 0 seconds 203.24\nreason 1 leaves 195\nreason 15 leaves 25\nreason 17 leaves 8396\nreason 19 leaves 647\nreason 20 leaves 3320\nreason 26 leaves 1016\nreason 27 leaves 782\nreason 28 leaves 153\nreason 60 leaves 4437\nPASS: complete two-chart forward endpoint domain excluded; interface audit still required.\n",
+    "compile_command": "g++ -std=c++17 -O2 -I/workspace/scratch/5efeb2d2f42f/m2_mpfr_vendor sources/mixed_nonshort_forward_boundary_interval_certificate.cpp -l:libmpfr.so.6 -lgmp -o certifier",
+    "run_command": "../certifier 2000000 0 > replay.log 2>&1"
+  },
+  "portable_build": "g++ -std=c++17 -O2 explorations/mixed_nonshort_forward_boundary_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_nonshort_forward_boundary",
+  "portable_run": "/tmp/mixed_nonshort_forward_boundary 2000000 0"
+}
