@@ -331,6 +331,14 @@ is asserted for those perturbations. The standard forward reference
 families also show why unrestricted periodic extendibility alone does
 not retain the required total-period cost budget.
 
+[LOCAL_FORWARD_REGULAR_DESCENT](LOCAL_FORWARD_REGULAR_DESCENT.md) resolves
+a proper part of the revised L1 domain: every standard forward reference
+window and an unspecified open neighborhood have a cheaper same-word
+six-piece replacement, with both endpoints fixed. Its continuous-q
+Hessian sign holds for every state-cyclic reference with 1<q<=5/4.
+This is a local second-order exclusion; it does not extend to all
+asymmetric inputs passing the necessary conditions or close revised L1.
+
 The immediate analytic problem is therefore a genuine uniform comparison
 or further proved necessary restriction on the remaining inputs. A finite
 list of formulas, rank theorems, or excluded illustrative families does

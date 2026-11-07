@@ -146,6 +146,20 @@ cost. Thus local first-order PMP plus unrestricted periodic extendibility
 cannot close L1; the total minimizing-period budget remains a distinct
 possible input. No new closed family or uniform bound is asserted.
 
+[LOCAL_FORWARD_REGULAR_DESCENT](docs/LOCAL_FORWARD_REGULAR_DESCENT.md) now
+proves a same-word six-piece improvement for every state-cyclic forward
+reference with `1<q<=5/4`, `a^2=4q/(4-q)`, and initial margins
+`(a,a*(2/q-1),a)`. The exact constrained Hessian is strictly negative;
+the rank theorem integrates its direction to the full endpoint fiber.
+The improvement persists on an unspecified open neighborhood of each
+reference, including unequal factors. This covers the existing standard
+complete-switch windows `q_k=2*cos(pi*k/(3k+1))`, `k>=2`, and nearby inputs.
+It does not cover all asymmetric L1 inputs or close its universal target.
+The standard global family was already cost-excluded; this is a scoped
+local exclusion and second-variation certificate, not a new global family.
+Independent hand reviews passed; no numerical neighborhood radius or
+uniform boundary estimate as q tends to one is asserted.
+
 [LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md) proves a strict local improvement
 for every equal factor q>1 in the reverse state-cyclic family with initial
 margins 2(1,1,2q-1)/sqrt(4q-1). An inserted missing-control arc, together with

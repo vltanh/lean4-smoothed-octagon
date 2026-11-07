@@ -24,7 +24,7 @@ even full local PMP with both external ties does not force equal factors
 or a state-cyclic regular window. Section 6 proves that asymmetric
 eligible PMP windows persist near the standard forward family. No
 whole-period endpoint or global cost comparison is supplied by that
-persistence argument. L1 and the uniform reduction remain open.
+persistence argument. Full L1 and the five-template reduction to N<=5 remain open.
 
 ## 1. Active chain, action, and the frame covector
 
@@ -525,6 +525,14 @@ lie strictly inside the corresponding intervals, so it fails (18).
 The unique normalized adjoint prevents choosing a different lift to
 repair that failure. This is consistent with its local optimality for
 the fixed-endpoint problem.
+
+The later [LOCAL_FORWARD_REGULAR_DESCENT](LOCAL_FORWARD_REGULAR_DESCENT.md)
+proves a negative constrained second variation for the standard references
+used in Section 6, and exact same-word improvement in an unspecified open
+neighborhood of each. Thus nearby members of the asymmetric PMP family
+can pass this first-order filter and still admit a cheaper replacement.
+This does not cover the entire five-dimensional family or the full
+stationary domain of (18).
 
 What remains is a uniform comparison or a further genuine minimizer
 restriction on the stationary inputs passing (18), with global

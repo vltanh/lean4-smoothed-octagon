@@ -184,6 +184,15 @@ full-PMP six-windows of arbitrarily small cost, while their displayed
 whole periods exceed the octagon budget. Keep that total-period budget
 when trying a stronger necessary-condition route.
 
+[LOCAL_FORWARD_REGULAR_DESCENT](LOCAL_FORWARD_REGULAR_DESCENT.md) now
+proves same-word strict improvement for every state-cyclic forward reference
+with 1<q<=5/4, including those standard complete-switch windows. The exact
+negative constrained Hessian integrates to a replacement preserving both
+endpoints, and the improvement persists on an open neighborhood of each
+reference. No uniform radius near q=1 or coverage of the full asymmetric
+domain follows. This scoped local theorem does not add a newly excluded
+global standard family or close revised L1.
+
 L1 remains an analytic target, but the refuted L3 premise already blocks
 the original five-case route. The following L1 work is retained for a repair,
 **not** presumed easier or true. Use the exact initial-state chart

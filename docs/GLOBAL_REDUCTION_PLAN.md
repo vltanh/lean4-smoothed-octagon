@@ -257,6 +257,13 @@ audit, different-word replacement, external-switch conditions, explicit
 L1 filter, and full-domain L3 and L5 rank theorems are preserved. They remain
 available for proving exclusions on parts of the global phase domain.
 
+[LOCAL_FORWARD_REGULAR_DESCENT](LOCAL_FORWARD_REGULAR_DESCENT.md) adds an
+exact same-word local improvement for every state-cyclic forward reference
+with 1<q<=5/4 and an unspecified open neighborhood of each. It covers the
+standard complete-switch windows and nearby asymmetric inputs, but not the
+whole revised L1 domain. The standard global family was already cost-excluded;
+this is reusable local variation information, not a new global family count.
+
 The concurrent [SWITCH_COMPLETE_REDUCTION](SWITCH_COMPLETE_REDUCTION.md)
 records revised necessary domains for all five local words. All five
 analytic improvement targets on those domains remain open; that conditional

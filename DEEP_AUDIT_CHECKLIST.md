@@ -72,6 +72,29 @@ The new hand proofs received separate internal mathematical reviews. Such
 review is not external peer review or Lean kernel validation. No new Lean
 file, build, typechecking, Lake command, or CI was introduced or executed.
 
+## Regular forward-window descent
+
+[LOCAL_FORWARD_REGULAR_DESCENT](docs/LOCAL_FORWARD_REGULAR_DESCENT.md)
+proves a local theorem on the full stated interval 1<q<=5/4.
+
+- [x] Derive the fixed-initial-state active-margin tangent and unique frame
+  endpoint multiplier; include the full endpoint curvature in the Hessian.
+- [x] Prove its scalar value is negative by exact polynomial expansion and
+  the elementary logarithm bound, without sampled Hessian evidence.
+- [x] Integrate the tangent to an actual endpoint fiber and preserve positive
+  factors and strict star for each reference.
+- [x] Prove improvement persists for nearby unequal-factor inputs, including
+  nonstationary ones, while each input retains its own initial/end states.
+- [x] Include all known standard complete-switch forward windows by the exact
+  bound 2*cos(2*pi/7)<5/4. Keep global closure and PMP hypotheses separate
+  from the broader continuous-q local theorem.
+- [x] Retain the unresolved full L1 domain and lack of uniform neighborhood
+  size at q=1. This does not add a newly excluded global standard family.
+
+Independent internal hand reviews checked the complete derivation and its
+scalar and implicit-function steps. No Lean, Lake, typecheck, CI, or new
+exploratory computation was used for this result.
+
 ## Historical coverage checks
 
 - [x] Use the actual twisted seam: the wrapped label increases by one, rather

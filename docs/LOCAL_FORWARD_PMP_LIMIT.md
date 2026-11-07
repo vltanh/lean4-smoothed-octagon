@@ -226,19 +226,23 @@ whole-period cost at most \(A_{\rm oct}\): their displayed extensions
 have strictly larger cost. It would be incorrect to discard the total
 budget and treat these two extension conditions as equivalent.
 
-No assertion is made about the sign of their constrained second
-variation, strong local optimality, or the existence of a distant cheaper
-endpoint-matching replacement. The separate exact example in
+The first-order certificate here makes no second-variation assertion.
+The subsequent [LOCAL_FORWARD_REGULAR_DESCENT](LOCAL_FORWARD_REGULAR_DESCENT.md)
+proves that these particular standard windows do have a negative constrained
+second variation, an exact cheaper same-word replacement, and open
+neighborhoods of inputs with the same improvement. Its continuous-q
+statement covers 1<q<=5/4 and fixes both endpoints. The separate exact example in
 [LOCAL_FORWARD_SIX.md](LOCAL_FORWARD_SIX.md) already shows that universal
 same-word negative second variation is false, but its further optimality
 properties are a different question.
 
 A uniform L1 route must therefore use more than first-order local PMP
-and periodic extendibility. Possibilities still requiring an actual
-proof are a higher-order or nonlocal endpoint-preserving replacement,
-or an estimate using the cost of the entire compatible minimizing
-period. None is supplied by this failed-criterion certificate. L1
-and the five-template uniform reduction remain open.
+and periodic extendibility. The higher-order theorem just cited resolves
+this standard reference family and nearby inputs, but a replacement or
+further genuine minimizer restriction on the full asymmetric domain is
+still missing. L1 and the five-template implication to N<=5 remain open.
+The active global route separately proves an existential uniform bound
+and an effective count conditional on a supplied singular clearance.
 
 ## Sources and validation
 

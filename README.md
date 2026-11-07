@@ -155,6 +155,17 @@ not exclude all eligible windows. Standard forward polygons already supply
 such windows with arbitrarily small local cost. Their whole periods cost
 more than the octagon, so the whole-period budget cannot be dropped.
 
+The [regular forward-window descent theorem](docs/LOCAL_FORWARD_REGULAR_DESCENT.md)
+adds a second-order exclusion on part of that PMP domain. For every
+`1<q<=5/4`, the state-cyclic reference has an exact endpoint-preserving,
+strictly cheaper six-piece `012012` replacement. The constrained Hessian
+sign is proved uniformly over the stated interval, and the improvement
+persists in an open neighborhood of each reference. In particular, all
+standard forward windows with at least seven pieces in their full period
+are covered. The neighborhood sizes are not uniform near q=1; general
+asymmetric L1 remains open. The standard closed family was already excluded
+by its cost comparison, so this is additional local information.
+
 [LOCAL_REVERSE_SIX](docs/LOCAL_REVERSE_SIX.md) proves a seven-piece strict
 improvement for every q>1 in the equal-factor, state-cyclic reverse six-arc
 family. The proof fixes the initial state, corrects both terminal endpoints
