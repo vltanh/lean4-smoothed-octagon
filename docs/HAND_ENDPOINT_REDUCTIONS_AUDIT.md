@@ -53,8 +53,29 @@ forces r<c<d, and the outgoing comparison then forces A0>a, contrary
 to A0<a. The equality argument and actual positive-duration strictness
 are both valid. Therefore actual reverse-next data have d<b*, and
 the enlarged shape domain may use k>=2t+x. No outgoing floor is
-assigned to the artificial root. The new three lower shape faces
-remain necessary-domain reductions rather than a completed exclusion.
+assigned to the artificial root. The three lower shape faces are necessary-domain reductions. The order
+face is now excluded by the following hand argument; the other two
+remain open.
+
+### Complete exclusion of the reverse order face
+
+[MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION](MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
+is accepted. On k=2t+x, the actual incoming floor and the swapped-secant
+order restrict the first-event factor to 1<q<=W/k. The exact residual is
+concave on this interval, since its moving endpoint lies between t and
+c<=p. Its value at q=1 is strictly positive by two positive atanh terms,
+three completed squares and the already proved duration bound.
+
+At q=W/k, the hand ratio and scale bounds imply x>1/4. The substitutions
+h=1-2t and s=k-1 give the stated rectangle and h+s>1/4. The residual
+decreases in both the incoming norm and log q, so the displayed rational
+upper bounds give a strict lower residual comparison. Its eight explicit
+coefficient polynomials contain only four negative higher terms; the two
+shown absorptions remove them. The remaining constant and linear terms
+are positive by an increasing polynomial for h>=1/4 and one concave
+polynomial with positive rational endpoint values for 1/5<=h<=1/4.
+This proves the entire face impossible, including lower-bound ties.
+The k=1 and k=(29/4)t^2 faces still require separate exclusions.
 
 ## 2. Shape monotonicity of the retained central lower bound
 
@@ -188,3 +209,38 @@ endpoint-only minimum claim would be unjustified. The note states the
 additional explicit inequality needed for that simplification. Neither
 it nor a uniform lower bound for every listed candidate is claimed
 proved in this review.
+
+
+## 6. Further comparison on the fixed outer-norm face
+
+[MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION](MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
+is accepted with its explicit E_L>=0 hypothesis. At fixed short geometry,
+the outer root equation makes tau decrease as the pairing xi increases.
+Solving the two-turn transport equations gives the displayed affine
+E(xi), v(xi), and implicit differentiation gives the stated dt/dxi.
+The comparison continues to a listed endpoint by compactness and the
+nonvanishing central derivative away from the ceiling. The accepted
+opposite-floor theorem rules out an additional v=3/4 stop.
+
+The outer pairing ceiling gives 0<=xi<3/7, so the determinant stays
+strictly positive and decreases with xi. The physical matrix and cost
+stay fixed, and the relaxed completion score has the needed monotonicity.
+The comparison therefore preserves its necessary upper cap and cost
+inequality without assigning any actual lower Casimir bound to the
+artificial determinant.
+
+The retained actual outgoing-turn floor is also accepted. At a fixed
+outer root, lowering the actual outgoing norm to Phi(1-1/tau) strictly
+lowers the central Casimir because its norm derivative is positive.
+Along the subsequent nonnegative-pairing comparison, the displayed
+derivative proves G_out increases with tau. Hence tau decreasing retains
+both the actual cap and the contribution of G_out to the effective
+cost parameter. These are statements about the unchanged actual period.
+
+Finally, lowering the opposite outer ratio to its zero-duration value
+and then the fixed incoming norm to 3/4 gives
+E_L>1+rho_A-1/(8rho_A). The right side increases with rho_A, and
+A>=5/7 implies the explicit positive margin 359/44200. Thus any part
+outside the nonnegative-pairing comparison has A<5/7. The negative-pairing
+part and the terminal cost signs remain open; this result does not
+close H-S.

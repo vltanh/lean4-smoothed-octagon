@@ -155,8 +155,11 @@ condition can be used there with the exact incoming secant fixed.
 The [exact secant refinement](MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON.md)
 strengthens that upper endpoint and gives d<7c/3, as well as d<7r/3
 for a reverse successor. The [actual-floor order argument](MIXED_NONSHORT_REVERSE_ORDER_BOUND.md)
-also proves d<b*, adding k>=2t+x to the shape lower bound. Both the
-upper-endpoint and new lower-face residual exclusions remain open.
+also proves d<b*, adding k>=2t+x to the shape lower bound. The
+[order-face hand proof](MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
+now excludes that lower face, including ties, by first-event concavity
+and two explicit endpoint signs. The k=1 and k=(29/4)t^2 lower faces
+and the final upper-shape-endpoint exclusion remain open.
 
 [The short-side root and angle reduction](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md)
 keeps an actual outer root while decreasing the Casimir, with an explicit
@@ -190,6 +193,14 @@ exclusion. Actual lower Casimir
 information, including a bound from the fixed incoming turn, is retained
 in the cost score without claiming a lower bound on the artificially
 deformed determinant.
+
+The [fixed outer-norm deformation](MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
+further reduces the E_L>=0 part of w=3/4 to listed endpoints while
+preserving the cap and necessary cost score. It retains the actual
+outgoing-turn floor in that score. The elementary bound
+E_L>1+rho_A-1/(8rho_A) shows that every A>=5/7 point is in this
+nonnegative-pairing part. Its terminal signs and the E_L<0 part remain
+open, as recorded in the [endpoint review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
 
 ## Acceptance rule
 

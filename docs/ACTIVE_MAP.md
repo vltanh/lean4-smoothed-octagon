@@ -52,6 +52,15 @@ three other short root/cost faces remain. Reverse refinements are the
 [exact secant endpoint](MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON.md)
 and [actual-floor order bound](MIXED_NONSHORT_REVERSE_ORDER_BOUND.md).
 
+
+The [reverse order face](MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
+is now excluded by a complete hand proof, including ties. Two other
+lower shape faces remain. The
+[fixed outer-norm comparison](MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
+reduces the nonnegative-pairing part of the short w=3/4 face to further
+endpoints, retaining the actual outgoing norm floor in its cost score.
+The negative-pairing part and the terminal signs remain open.
+
 ## Completed theorem and review path
 
 All sufficient whole-period cases and the final cost/equality assembly

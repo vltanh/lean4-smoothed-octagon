@@ -26,6 +26,11 @@ closed computer-assisted gates below do not close these new obligations.
   [a<4/5](docs/MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND.md) by hand.
 - [x] The [short opposite-norm floor](docs/MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md)
   is redundant by hand; the root comparison retains three other faces.
+- [x] The [reverse order lower face](docs/MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
+  is excluded by hand, including ties; the other two lower faces remain.
+- [x] A reviewed [fixed outer-norm deformation](docs/MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
+  further reduces the nonnegative-pairing short face, with its remaining
+  endpoint signs explicit.
 - [ ] The stationary norm-sum/Casimir bound, full short-side defect
   exclusion, both nonshort successors, and final hand-only assembly
   still need proofs.

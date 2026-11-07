@@ -51,6 +51,15 @@ The separate opposite-floor face is now excluded by hand. Reverse
 refinements retain the [exact secant](docs/MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON.md)
 and the [actual-floor order constraint](docs/MIXED_NONSHORT_REVERSE_ORDER_BOUND.md).
 
+
+The [reverse order face](docs/MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
+is now excluded by a complete hand proof, including ties. Two other
+lower shape faces remain. The
+[fixed outer-norm comparison](docs/MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
+reduces the nonnegative-pairing part of the short w=3/4 face to further
+endpoints, retaining the actual outgoing norm floor in its cost score.
+The negative-pairing part and the terminal signs remain open.
+
 | Scope | Active sources |
 | --- | --- |
 | Geometric/control correspondence, twisted PMP | [ADMISSIBLE_REALIZATION](docs/ADMISSIBLE_REALIZATION.md), [REVERSE_COMPARISON](docs/REVERSE_COMPARISON.md), [GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md), [final dependency review](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) |

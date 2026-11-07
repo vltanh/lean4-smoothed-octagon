@@ -55,6 +55,15 @@ The short root comparison therefore retains three open faces. Their
 [review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md) does not close the remaining
 whole-case exclusions.
 
+
+The [reverse order face](MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
+is now excluded by a complete hand proof, including ties. Two other
+lower shape faces remain. The
+[fixed outer-norm comparison](MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
+reduces the nonnegative-pairing part of the short w=3/4 face to further
+endpoints, retaining the actual outgoing norm floor in its cost score.
+The negative-pairing part and the terminal signs remain open.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement
