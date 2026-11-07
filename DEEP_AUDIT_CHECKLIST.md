@@ -14,6 +14,30 @@ The complete earlier audit is preserved at
 Its historical source scans and review claims are not new validation performed
 in this checkpoint. All existing mathematical and Lean proof files are retained.
 
+## Audited all-short mixed equations and geometric winding
+
+- [x] Independently multiply the all-short three-factor bridge, retain
+  its full central sign, and combine the two-node antiperiodic incidences
+  correctly; see [MIXED_GLOBAL_SHORT_RUN_PERIOD_AUDIT](docs/MIXED_GLOBAL_SHORT_RUN_PERIOD_AUDIT.md).
+- [x] Derive the Euler cost identity with the same actual normal covector
+  and the free-initial-state boundary cancellation. Common scaling is
+  differentiated before the frame constraint, not asserted to preserve it.
+- [x] Check the strict two-centre cost bound, arbitrary unequal factors,
+  positive-duration boundary, and all eight exact symbolic identities.
+- [x] Independently audit the state contraction, fixed-endpoint frame
+  homotopy, canonical lifted product, all four switch-vector angle
+  branches, and double-reverse gauges; see
+  [MIXED_GLOBAL_PROJECTIVE_WINDING_AUDIT](docs/MIXED_GLOBAL_PROJECTIVE_WINDING_AUDIT.md).
+- [x] Keep exactly two Jacobi kernel vectors along the regular-polygon
+  deformation and count the ordinary inertia, including the two-node case.
+- [ ] Prove a uniform constrained cost-index or comparison theorem for
+  the remaining all-short `m>=5` domain and the other open F/M2 cases.
+  The winding and scalar inertia alone do not prove this step.
+
+These are independent internal hand audits, not external peer review
+or Lean kernel validation. The two-centre comparison closes one fixed
+base branch of a uniform family, not the entire sufficient M1 case.
+
 ## New case-atlas computation boundary
 
 [FINITE_CASE_COMPUTER_ROADMAP](docs/FINITE_CASE_COMPUTER_ROADMAP.md)

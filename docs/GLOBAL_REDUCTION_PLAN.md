@@ -91,6 +91,26 @@ uses the competitive cap to make all forward adjacent Gram pairings
 positive. The joint independent audit and 32+9 exact checks pass. No
 uniform dwell time or final constrained-index sign is asserted.
 
+## Refined mixed assignment and actual winding
+
+After the reverse-run theorem, assign every mixed period having any
+forward run of length at least two to M2. The sufficient M1 problem
+is then the whole all-short family `(--+)^m`, `m=2 mod 3`.
+[MIXED_GLOBAL_SHORT_RUN_PERIOD](MIXED_GLOBAL_SHORT_RUN_PERIOD.md)
+and its independent audit give one recurrence and normal cost identity
+for every multiplicity. The fixed two-centre base branch is excluded
+by `C>2*sqrt(6)-sqrt(3)>pi>A_oct`; all eight exact checks pass.
+The single uniform `m>=5` branch remains open, with no increasing-length
+catalogue proposed.
+
+[MIXED_GLOBAL_PROJECTIVE_WINDING](MIXED_GLOBAL_PROJECTIVE_WINDING.md)
+and its independent audit use the actual geometric frame lift to prove
+`n=(N-m-1)/3`, with `m` the number of double reverse runs and
+`P=N-2m` the collapsed node count. The ordinary Jacobi inertia is
+`(n-1,2,P-n-1)`. A full constrained cost-index theorem must additionally
+control the augmented Hessian and the frame-constraint curvature; it
+does not follow merely from this inertia. F, M1 and M2 remain open.
+
 ## Closed global case R
 
 [GLOBAL_REVERSE_PERIOD_EXCLUSION](GLOBAL_REVERSE_PERIOD_EXCLUSION.md)

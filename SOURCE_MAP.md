@@ -40,6 +40,13 @@ supersedes earlier recommendations to continue by increasing whole-word length.
 | Whole-forward negative ellipticity | [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md), [independent audit](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC_AUDIT.md), and [10-identity checker](explorations/global_structure_forward_ellipticity_certificate.py). Full central monodromy gives two independent scalar Jacobi kernel vectors; weak forward switching derivatives and exact stationarity rule out a nonelliptic multiplier. All unequal factors and degenerate ties are retained. The appendix retains the exact endpoint-curvature term in the remaining index problem. F remains open. |
 | Closed-period index in the standard forward family | [GLOBAL_FORWARD_INDEX](docs/GLOBAL_FORWARD_INDEX.md). At least 2(k-1) negative constrained directions for N=3k+1, with free initial state, exact state closure, and all three frame constraints. Exact multiplier, curvature correction, Fourier sum, and hand logarithm sign. Independently reviewed; validates a method on an already cost-excluded family. |
 
+## New mixed-period and winding interfaces
+
+| Statement | Exact source and scope |
+| --- | --- |
+| Sufficient all-short mixed family and its two-centre exclusion | [MIXED_GLOBAL_SHORT_RUN_PERIOD](docs/MIXED_GLOBAL_SHORT_RUN_PERIOD.md), [independent audit](docs/MIXED_GLOBAL_SHORT_RUN_PERIOD_AUDIT.md), and [eight-identity checker](explorations/mixed_global_short_run_certificate.py). Assign any period with a longer forward run to M2; M1 then needs only `(--+)^m`, `m=2 mod 3`. The common recurrence and normal Euler identity cover every multiplicity. The fixed two-centre branch has `C>2*sqrt(6)-sqrt(3)>pi>A_oct` with arbitrary unequal positive factors and no rank assumption. The single uniform `m>=5` comparison remains open. |
+| Actual geometric projective winding and ordinary Jacobi inertia | [MIXED_GLOBAL_PROJECTIVE_WINDING](docs/MIXED_GLOBAL_PROJECTIVE_WINDING.md) and [independent audit](docs/MIXED_GLOBAL_PROJECTIVE_WINDING_AUDIT.md). An equivariant state contraction, the actual geometric sector lift, and the full central frame monodromy give `n=(N-m-1)/3` after collapsing the turns around `m` double reverse runs. The scalar Jacobi inertia is `(n-1,2,P-n-1)` on `P=N-2m` nodes, by a fixed-kernel deformation. No constrained cost index, endpoint-preserving comparison, or additional whole-case exclusion is inferred. |
+
 ## Earlier local reduction and diagnostics
 
 | Statement | Exact source and status |

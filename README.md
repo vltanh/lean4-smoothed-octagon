@@ -101,6 +101,29 @@ pairing positive; all nine exact scalar identities pass. These three
 results have a common [independent internal audit](docs/GLOBAL_NORMAL_PERIOD_STRUCTURE_AUDIT.md).
 The full index or cost comparison for F/M1/M2 remains open.
 
+## Uniform remaining mixed family and geometric winding
+
+After the reverse-run theorem, any mixed period with a forward run of
+length at least two can be assigned to M2. The sufficient M1 problem
+therefore consists of complete sign sequences `(--+)^m`, with
+`m=2 mod 3`. [MIXED_GLOBAL_SHORT_RUN_PERIOD](docs/MIXED_GLOBAL_SHORT_RUN_PERIOD.md)
+derives one common recurrence and normal cost identity for all of them.
+Its two-centre base branch has the strict bound
+`C>2*sqrt(6)-sqrt(3)>pi>A_oct`, for arbitrary unequal positive factors.
+The [independent audit](docs/MIXED_GLOBAL_SHORT_RUN_PERIOD_AUDIT.md)
+and all eight exact identities pass. The uniform `m>=5` family remains
+open; no increasing-length catalogue is used.
+
+[MIXED_GLOBAL_PROJECTIVE_WINDING](docs/MIXED_GLOBAL_PROJECTIVE_WINDING.md)
+and its [independent audit](docs/MIXED_GLOBAL_PROJECTIVE_WINDING_AUDIT.md)
+fix the actual lifted winding of the collapsed switch vectors:
+`n=(N-m-1)/3`, on `P=N-2m` nodes, where `m` is the number of double
+reverse runs. The corresponding scalar Jacobi matrix has inertia
+`(positive, zero, negative)=(n-1,2,P-n-1)`. The proof explicitly uses
+the geometric sector lift and the full frame endpoint. The constrained
+cost Hessian has additional terms, so a cost-index theorem and the
+remaining F/M1/M2 comparisons are still required.
+
 ## Whole-forward costate theorem
 
 [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)

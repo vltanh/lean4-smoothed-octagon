@@ -84,6 +84,25 @@ The patterns cover arbitrary N>=6 without testing N sequentially.
 They should be prioritized by reusable analytical structure; **do not
 assume equal difficulty or count subfamilies as closed rows**.
 
+### Sufficient mixed assignment after the reverse-run theorem
+
+Every surviving reverse run has exactly two switches. Assign a mixed
+period with any forward run of length at least two to M2. M1 then
+needs only the entire all-short sequence `(--+)^m`, `m=2 mod 3`.
+This does not exclude local M1 windows inside periods assigned to M2.
+[MIXED_GLOBAL_SHORT_RUN_PERIOD](MIXED_GLOBAL_SHORT_RUN_PERIOD.md)
+and its independent audit derive common equations for every multiplicity
+and exclude the fixed two-centre base branch by a strict cost bound
+above pi. The uniform `m>=5` obligation remains one open problem;
+do not enumerate its lengths.
+
+The [geometric winding theorem](MIXED_GLOBAL_PROJECTIVE_WINDING.md)
+and its independent audit fix `n=(N-m-1)/3` and the ordinary scalar
+Jacobi inertia `(n-1,2,P-n-1)`, with `P=N-2m`. Here `m` counts
+double reverse runs, and is zero for F. This supplies a topological
+input to a possible index argument. It does not count negative
+directions of the constrained cost or close another case-C row.
+
 ## 2. Small verifiable gates, repeated for each case
 
 Each of F, R, M1, M2, M3 has exactly three explicit gates.

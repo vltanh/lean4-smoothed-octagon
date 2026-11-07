@@ -67,6 +67,20 @@ pairings throughout competitive F; its radial/margin index remains open.
 Read GLOBAL_NORMAL_PERIOD_STRUCTURE_AUDIT for the independent review
 of these results and switch rigidity. The 32 and 9 exact checks pass.
 
+The sufficient mixed assignment can now be sharpened: assign any period
+with a forward run of length at least two to M2. M1 then needs only
+the complete all-short family `(--+)^m`, `m=2 mod 3`. Read
+MIXED_GLOBAL_SHORT_RUN_PERIOD and its independent audit. Its common
+collapsed recurrence and normal Euler identity cover every multiplicity;
+the fixed two-centre base branch has C>2*sqrt(6)-sqrt(3)>pi and is
+excluded with arbitrary unequal factors. The single uniform m>=5
+obligation remains open; do not replace it by a growing catalogue.
+MIXED_GLOBAL_PROJECTIVE_WINDING and its independent audit use the
+actual geometric sector lift to fix n=(N-m-1)/3 on the collapsed
+P=N-2m switch-vector cycle. Its ordinary scalar Jacobi inertia is
+(n-1,2,P-n-1). This is not the constrained cost index: the augmented
+Hessian and full endpoint curvature still require a uniform sign proof.
+
 
 Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.
 The full symmetric 2121 core family, four common factors 1<h<2 and

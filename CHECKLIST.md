@@ -44,6 +44,25 @@ of finite normal closed periods are transverse for their incident pair.
 Triple ties and boundary limits still require their stated treatment.
 
 
+## Audited whole-period mixed reduction and winding
+
+- [x] Assign every remaining mixed period with any forward run of length
+  at least two to M2. The sufficient M1 domain is the single whole-period
+  family `(--+)^m`, `m=2 mod 3`.
+- [x] Derive its common collapsed Jacobi recurrence, actual central sign,
+  and normal Euler identity for arbitrary unequal margins; see
+  [MIXED_GLOBAL_SHORT_RUN_PERIOD](docs/MIXED_GLOBAL_SHORT_RUN_PERIOD.md).
+- [x] Exclude its two-centre base branch by the strict full-period bound
+  `C>2*sqrt(6)-sqrt(3)>pi>A_oct`. The independent audit and eight exact
+  identities pass; no rank assumption or equal-factor hypothesis is used.
+- [x] Fix the geometric winding `n=(N-m-1)/3` and ordinary scalar Jacobi
+  inertia `(n-1,2,P-n-1)`, `P=N-2m`, with the full endpoint lift retained;
+  see [MIXED_GLOBAL_PROJECTIVE_WINDING](docs/MIXED_GLOBAL_PROJECTIVE_WINDING.md)
+  and its independent audit.
+- [ ] Prove one uniform comparison or constrained-index theorem for the
+  remaining all-short `m>=5` family. Ordinary Jacobi inertia does not
+  supply the cost index. F and M2 also remain open.
+
 ## Active global checkpoint
 
 The strongest complete-period bounds are now
