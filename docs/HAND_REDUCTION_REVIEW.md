@@ -45,6 +45,14 @@ norm-sum bound `1/40` to `gamma^2>23/125`. Neither of those two new
 stationary-system bounds is assumed proved for actual periods. The
 upstream small-forward-minimum sign argument is also still required.
 
+The later Section 2.4 is accepted as well: its explicit bound on the
+negative norm derivative, integrated over `1/39-1/40`, leaves the stated
+positive margin above the sharper global cap. Thus `1/39` is a valid
+weaker sufficient target. Section 3.1's product bound follows from
+AM--GM and the displayed cubic completed-square estimate. It proves
+the product bound only; the proposed homogeneous norm estimate is
+still open.
+
 ## 3. Cost budget retaining both exterior factors
 
 [HAND_FORWARD_LEMMAS, Section 3](HAND_FORWARD_LEMMAS.md#3-the-same-cost-argument-retains-both-exterior-factors)

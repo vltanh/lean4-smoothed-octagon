@@ -11,6 +11,14 @@ See the [independent hand review](HAND_REDUCTION_REVIEW.md); no final
 F, short-side or nonshort successor exclusion is claimed from these
 refinements alone.
 
+Further accepted hand work reduces the nonshort residual by
+[shape monotonicity](MIXED_NONSHORT_SHAPE_MONOTONICITY.md) and the reverse
+successor by [weighted secant concavity](MIXED_NONSHORT_REVERSE_SHAPE_REDUCTION.md).
+The [short-side root and angle reduction](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md)
+preserves a relaxed necessary cost test on four boundary faces. Their
+endpoint exclusions remain open; their audits do not certify those
+unproved signs.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

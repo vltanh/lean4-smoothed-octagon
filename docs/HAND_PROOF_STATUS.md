@@ -94,6 +94,9 @@ for them is not a proof premise.
 The same note strengthens the whole-period cost budget by retaining
 both exterior factors, using the positive mixed derivative of the
 scalar edge cost and an explicit seven-edge accounting argument.
+Its sharper-cap extension permits the norm-sum target `1/39`.
+It also proves `(3-U)(q-1)<3/13`; a proposed homogeneous norm estimate
+would imply the sufficient target, but that estimate is still unproved.
 
 [MIXED_SMALLER_SHORT_OUTER_ENVELOPE](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md)
 removes the opposite turn and its independent norm from one necessary
@@ -103,6 +106,27 @@ Neither the useful ratio bound nor the required physical cost-defect
 exclusion is claimed established.
 
 Both reductions have [independent internal hand acceptance](HAND_REDUCTION_REVIEW.md).
+
+### Further mixed-case dimension reductions
+
+[Nonshort shape monotonicity](MIXED_NONSHORT_SHAPE_MONOTONICITY.md)
+shows that the incident-upper residual numerator is affine and strictly
+increasing in the shape variable. It reduces the low-a residual problem
+to two lower shape faces, without claiming their signs.
+[Weighted secant concavity](MIXED_NONSHORT_REVERSE_SHAPE_REDUCTION.md)
+then gives a two-endpoint alternative for the reverse successor. Its
+lower endpoint retains the positive reverse turn; the upper endpoint
+has a saturated incident ceiling. Their
+[independent review](MIXED_NONSHORT_SHAPE_REDUCTION_AUDIT.md) checks all
+domain and sign directions. Enlarged endpoint positivity remains open.
+
+[The short-side root and angle reduction](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md)
+keeps an actual outer root while decreasing the Casimir, with an explicit
+positive determinant bound. A circle formula maximizes the polar angle
+over the remaining matrix parameter. The resulting relaxed cost bound
+is preserved through the comparison to four boundary faces. Its
+[independent review](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_AUDIT.md) accepts
+the implications, not an exclusion of those enlarged faces.
 
 ## Acceptance rule
 

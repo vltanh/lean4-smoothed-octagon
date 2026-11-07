@@ -16,6 +16,11 @@ The accepted next hand results are the [nonshort duration gap](MIXED_NONSHORT_UP
 Their exact limitations and dependency pruning are in
 [HAND_REDUCTION_REVIEW](HAND_REDUCTION_REVIEW.md).
 
+Further reductions: [nonshort shape](MIXED_NONSHORT_SHAPE_MONOTONICITY.md),
+[reverse secant concavity](MIXED_NONSHORT_REVERSE_SHAPE_REDUCTION.md), and
+[short-side root/angle bound](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md).
+Each has a linked audit and leaves its remaining endpoint signs explicit.
+
 ## Completed theorem and review path
 
 All sufficient whole-period cases and the final cost/equality assembly

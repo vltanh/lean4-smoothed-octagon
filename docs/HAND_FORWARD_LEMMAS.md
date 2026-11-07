@@ -324,6 +324,48 @@ Q(x)\le Q_+(1/3)-242991104-\frac{701870080}{256}
 Every denominator in (17) is positive. These two explicit inequalities
 prove (10), completing the conditional Casimir lemma.
 
+### 2.4 The sharper global cap permits the weaker norm target 1/39
+
+With all other assumptions in (9) unchanged, the weaker assumption
+`delta u+delta v<=1/39` still gives
+
+\[
+\gamma^2>\frac{9193}{50000},
+\tag{18}
+\]
+
+contradicting the sharper hand-proved
+[competitive Casimir cap](HAND_PROOF_REFINEMENTS.md#1-a-sharper-competitive-casimir-bound).
+No additional polynomial sign proof is needed.
+
+It suffices to consider `1/40<=t<=1/39`. Use the same endpoint allocation
+and positive upper bound `widehat E` in (12)--(13). The derivative of
+its resulting lower expression with respect to `t` is
+
+\[
+\frac{K^2}{16U^2}\{3-2S(\widehat E+St)\}.
+\]
+
+Since `K^2/(16U^2)<=16/121`, `S<=7/3` and
+`widehat E<=e_0<=73/80`, its negative part is at most
+
+\[
+\frac{16}{121}
+ \left\{\frac{14}{3}\left(\frac{73}{80}+\frac7{117}\right)-3\right\}
+=\frac{43174}{212355}<\frac5{24}.
+\]
+
+Integrating from `t=1/40`, where the preceding proof gives a strict
+lower bound `23/125`, proves
+
+\[
+\gamma^2>\frac{23}{125}-\frac5{24}
+ \left(\frac1{39}-\frac1{40}\right)
+=\frac{9193}{50000}+\frac{151}{23400000}.
+\]
+
+Thus the remaining uniform norm target may be weakened to `1/39`.
+
 ## 3. The same cost argument retains both exterior factors
 
 For an actual forward minimum window, put
@@ -342,7 +384,7 @@ P=p/a=h(z^2+U)/(1+z)-z,
 \[
 \boxed{\frac{h(z^2+U)}{1+z}+\frac{k(w^2+U)}{1+w}
        <\frac{5U+1}{3}.}
-\tag{18}
+\tag{19}
 \]
 
 This strengthens the old budget, because `P,D>=1`. It uses the same
@@ -362,7 +404,7 @@ Integrating this derivative over a rectangle whose lower corner is
 
 \[
 G(ar,at)\ge G(ar,a)+G(a,at)-G(a,a).
-\tag{19}
+\tag{20}
 \]
 
 The seven-entry comparison retains `(a,p,b,a,c,d_ext,a)`.
@@ -371,7 +413,7 @@ two other indices are lowered to `a`; this gives exactly the seven
 cyclic edges displayed, each counted once. For `N>7`, lowering the
 remaining indices leaves additional copies of `G(a,a)>0`, which may
 be discarded. A cyclic relabeling handles a retained window crossing
-the seam. Apply (19) to the two distinct edges `(p,b)` and
+the seam. Apply (20) to the two distinct edges `(p,b)` and
 `(c,d_ext)`; all other retained edges are unchanged.
 Writing `g_U(r)=G(a,ar)/a^2` as in the linear-budget note, the actual
 cost therefore satisfies
@@ -379,14 +421,14 @@ cost therefore satisfies
 \[
 C\ge\frac{\sqrt3}{U}
  \{2g_U(P)+2g_U(z)+2g_U(w)+2g_U(D)-g_U(1)\}.
-\tag{20}
+\tag{21}
 \]
 
 All four ratios lie in `[1,U]`: the global minimum gives their lower
 bounds, while the actual strict-star products give `Pz<U`, `wD<U`,
 `z<U` and `w<U`.
 
-Suppose (18) failed. Monotonicity allows the four ratios in (20) to
+Suppose (19) failed. Monotonicity allows the four ratios in (21) to
 be lowered until their sum is `2+5(U-1)/3`. The function `g_U` is
 concave on `[1,U]`. At this fixed sum its four-term sum is minimized
 by concentrating all the excess above one into one coordinate.
@@ -399,7 +441,7 @@ The excess is `(5U-11)/3`, which lies in `[0,U-1]` for
 \left(1,1,1,\frac{5U-8}{3}\right).
 \]
 
-Consequently the right side of (20) is at least
+Consequently the right side of (21) is at least
 
 \[
 \frac{\sqrt3}{U}\left\{2g_U((5U-8)/3)+5g_U(1)\right\}.
@@ -407,8 +449,52 @@ Consequently the right side of (20) is at least
 
 This is exactly the one-variable expression proved strictly larger
 than `A_oct` in Section 2 of the linked linear-budget proof. The
-contradiction proves (18). These are scalar inequalities; the lowered
+contradiction proves (19). These are scalar inequalities; the lowered
 arrays are never asserted to close their frames or satisfy PMP.
+
+### 3.1 A small product bound from the central budget
+
+The central linear budget alone also implies the useful estimate
+
+\[
+\boxed{(3-U)(q-1)<\frac3{13},\qquad q=\frac{(1+z)(1+w)}{1+U}.}
+\tag{22}
+\]
+
+Indeed, `4(1+z)(1+w)<=(2+z+w)^2`, so
+
+\[
+q-1\le\frac{25U^2-26U-35}{36(U+1)}.
+\]
+
+To prove (22) on the closed interval `11/5<=U<=3`, it suffices to
+check positivity of
+
+\[
+108(U+1)-13(3-U)(25U^2-26U-35)
+=325U^3-1313U^2+667U+1473.
+\]
+
+Put `t=U-12/5`, so `-1/5<=t<=3/5`. This last polynomial is
+
+\[
+325t^3+1027t^2-\frac{97}{5}t+\frac{93}{25}
+\ge962t^2-\frac{97}{5}t+\frac{93}{25}>0.
+\]
+
+The last inequality follows by completing the square: its minimum on
+the whole real line is
+`93/25-(97/5)^2/(4*962)>0`.
+
+In particular, a future proof of the homogeneous norm estimate
+
+\[
+\delta u+\delta v\le\frac{(3-U)(q-1)}9
+\]
+
+would imply the sufficient target `delta u+delta v<1/39`. This last
+norm estimate remains a proposed target, not a conclusion of the
+product lemma.
 
 ## 4. What remains to replace the two F covers
 
@@ -417,8 +503,9 @@ analytic targets; they do not assume those targets have been proved:
 
 1. Finish the negative residual signs on the two planar domains (7),
    which would give the weaker but sufficient bound `z,w<4/3`.
-2. Prove `delta u+delta v<=1/40` for the actual same-covector stationary
-   system with its genuine exterior floors. Lemma 2 would then replace
+2. Prove `delta u+delta v<=1/39` (or the stronger `1/40`) for the
+   actual same-covector stationary system with its genuine exterior
+   floors. Lemma 2 and Section 2.4 would then replace
    the five-variable complementary Casimir cover completely, including
    the circular limit, without any separate interval computation.
 

@@ -279,3 +279,30 @@ g_r(a)-g_r(x)=
 
 shows s<g_r(a), even when r^2=ad. Lemma 3 therefore also applies to
 this extended secant and gives the additional reverse-only d<5r/2.
+
+## A second centre gap when the next switch is reverse
+
+In the reverse-next branch one also has
+
+\[
+\boxed{d^2+2dr>4.}
+\]
+
+Indeed let `A` be the next actual reverse centre. The actual local window
+is `a,c,d,r,A`, and the run between its two reverse centres has exactly
+two forward switches. Reflect the physical trajectory and reverse time,
+using the same transformed PMP covector as in the established reversal
+symmetry. The corresponding nonshort window is now `A,r,d,c,a`.
+Reverse-centre strictness and the positive turn at `r` give `A<r`,
+`A<d`, and `Ad<r^2`; the other adjacent turn at `A` also exceeds `A`.
+The genuine forward arc at `d` has factor
+`(r+d)(d+c)/(d^2+4)>1`, and its outgoing norm has the actual floor
+`>g_d(c)`. These are precisely the hypotheses of the first two core
+upper-envelope lemmas with the substitution
+`(a,c,d,r)=(A,r,d,c)`. Their proofs do not use smaller-turn ordering or
+global minimality of the reverse centre. Lemma 2 therefore gives the
+claimed strict inequality.
+
+Only the centre inequality is asserted here. The later duration-ratio
+corollary requires its own scale and smaller-turn shape hypotheses and
+is not being applied at `A`.

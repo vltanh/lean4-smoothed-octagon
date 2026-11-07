@@ -16,6 +16,12 @@ are accepted conditional reductions. Their
 sign arguments and removes the optional both-sides-short theorem from
 the proposed dependency chain.
 
+The next analytic reductions are [shape monotonicity](docs/MIXED_NONSHORT_SHAPE_MONOTONICITY.md),
+[reverse weighted-secant concavity](docs/MIXED_NONSHORT_REVERSE_SHAPE_REDUCTION.md),
+and the [short-side root/angle comparison](docs/MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md).
+Their linked hand audits accept the reductions; the resulting endpoint
+exclusions are not claimed proved.
+
 | Scope | Active sources |
 | --- | --- |
 | Geometric/control correspondence, twisted PMP | [ADMISSIBLE_REALIZATION](docs/ADMISSIBLE_REALIZATION.md), [REVERSE_COMPARISON](docs/REVERSE_COMPARISON.md), [GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md), [final dependency review](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) |
