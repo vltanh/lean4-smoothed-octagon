@@ -8,7 +8,28 @@ uniqueness up to affine equivalence. It reuses the geometry of
 **The unrestricted conjecture is not proved. Lean compilation and kernel
 validation have not been run. New formalization infrastructure is paused.**
 
+## Active research route: finite complete-period PMP cases
+
+See the [computer-assisted five-case roadmap](docs/FINITE_CASE_COMPUTER_ROADMAP.md)
+and [reproducible first experiment](docs/CASE_ATLAS_EXPERIMENT_001.md).
+The existing sign-coverage theorem sends every possible N>=6 minimizer
+to one of five fixed six-window types: 012012, 021021, 021210,
+010201, or 021012. Rather than enumerate lengths up to 10^56,
+investigate the *complete-period minimizing extension* of each
+type: necessary PMP switches, full twisted return and cost budget,
+then a uniform hand-certified exclusion. The broad local 021210
+replacement is known false and is not reinstated.
+
+The numerical oracles in explorations/structural_case_probe.py,
+explorations/octagon_boundary_probe.py, and
+explorations/closed_period_index_probe.py are regression diagnostics.
+The standard N=4,7,10 constrained-Hessian negative indices are
+numerically 0,2,4, matching the existing exact standard-family
+result, but **no entire remaining case is excluded**. The final
+global cost inequality and affine equality theorem are OPEN.
+
 ## Active result: an explicit bound for every global minimizer
+
 
 **Start with [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md).**
 Under the retained geometric, compact-state, and standard Pontryagin maximum
