@@ -34,6 +34,7 @@ For an **entirely forward competitive normal closed period** with \(N\ge6\), all
 - At its smallest active margin \(a\), \(4/3<a^2<20/11\) ([small-forward minimum](MIXED_GLOBAL_SMALL_FORWARD_MINIMUM.md)).
 - For its central actual arc factor \(q=(a+b)(a+c)/(a^2+4)\), \(1<q<7/4\) ([forward budget](GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET.md)).
 - Primary costate negative elliptic; neighboring Jacobi pairings acute ([forward elliptic](GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md), [forward acute](GLOBAL_STRUCTURE_FORWARD_ACUTE.md)).
+- The [three-arc multiplier system is nonsingular](GLOBAL_FORWARD_MINIMUM_NONSINGULAR.md) on the actual minimum domain. The [circular corner](GLOBAL_STRUCTURE_FORWARD_CIRCLE_CORNER.md) is excluded uniformly in both exterior factors for positive windows; its degenerate all-zero-duration covector fibre is explicitly retained. See the [independent audit](GLOBAL_FORWARD_MINIMUM_CERTIFICATE_AUDIT.md). A certificate for the full complementary domain is still required.
 
 **F1 (OPEN):** Prove uniformly over the remaining continuous unequal-factor domain a sharp whole-period cost/Casimir obstruction, a cheaper *exact closed endpoint-preserving* competitor, or a negative **fully constrained** second variation. A scalar Jacobi inertia count, local low cost, or sample is insufficient.
 
