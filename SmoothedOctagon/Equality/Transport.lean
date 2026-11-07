@@ -103,7 +103,7 @@ theorem worstDisk_eq_linear_image (h502 : Cited.HalesVajjha.Theorem5_0_2)
     rw [octagonCost, hdens]
     field_simp
   /- The finite normal representation and the terminal equality. -/
-  obtain ⟨P, s, hPT, hs0, hsT, hPg, hPcost, -, hPK, -⟩ := finiteNormalRepresentation h502 hmin
+  obtain ⟨P, s, hPT, hs0, hsT, hPg, hPcost, -, hPK⟩ := finiteNormalRepresentation h502 hmin
   have hPc : P.cost = octagonCost := hPcost.trans hcost
   obtain ⟨hPtf, r, hr⟩ := terminal_equality P (period_le_five hcov P hPc.le hPK) hPc
   have hTtf : T = tf 1 := hPT.symm.trans hPtf

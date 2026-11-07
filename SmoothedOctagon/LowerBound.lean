@@ -70,7 +70,7 @@ theorem period_le_five (hcov : Certificates.IntervalCovers) (P : NormalPeriod)
 theorem minimizer_cost_ge (h502 : Cited.HalesVajjha.Theorem5_0_2)
     (hcov : Certificates.IntervalCovers) {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2}
     (hmin : IsReinhardtMinimizer T u g X) : octagonCost ≤ reinhardtCost T X := by
-  obtain ⟨P, -, -, -, -, -, hcost, -, hK, -⟩ := finiteNormalRepresentation h502 hmin
+  obtain ⟨P, -, -, -, -, -, hcost, -, hK⟩ := finiteNormalRepresentation h502 hmin
   have hc : P.IsCompetitive := by
     unfold NormalPeriod.IsCompetitive
     rw [hcost]
