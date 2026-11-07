@@ -101,6 +101,13 @@ outgoing norm floor and reduces the lower endpoint to shape boundary
 faces or the existing stronger upper endpoint. Their final signs remain
 open; these are hand reductions, not completed exclusions.
 
+
+The [near-unit incident-ceiling bound](MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
+proves the competitive Casimir is exceeded when 1/3<=t<=2/5 and
+1<=k<=51/50. Its [independent review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md)
+accepts this conditional endpoint sign. Establishing those restrictions
+at every required forward endpoint remains open.
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

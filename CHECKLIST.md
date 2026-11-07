@@ -49,6 +49,9 @@ closed computer-assisted gates below do not close these new obligations.
   [independent audit](docs/MIXED_NONSHORT_REVERSE_HAND_AUDIT.md).
   Its common-order corollary gives a<=r<c<=b*<d and q<(1+x)/(2t+x)
   without a successor-sign assumption.
+- [x] Conditional [incident-ceiling Casimir sign](docs/MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
+  is proved on 1/3<=t<=2/5 and 1<=k<=51/50, with an independent
+  endpoint audit. Applicability to every required endpoint is still open.
 - [ ] Full short-side exclusion, the nonshort forward successor, and the
   final hand-only assembly still need proofs.
 

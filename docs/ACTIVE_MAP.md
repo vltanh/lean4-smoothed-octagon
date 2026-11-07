@@ -127,3 +127,9 @@ specifies the external geometric and standard PMP inputs and the scope
 of the arbitrary-competitor and original-disk equality conclusions.
 
 **Historical vs active:** [legacy archive](legacy/INDEX.md) holds the old five-case numerical atlas, superseded reduction plan, disproved local-shortening proposal, many local windows and weaker quantitative bounds. Old documentation paths provide stable pointers and 20 retired scripts now live in [explorations/legacy](../explorations/legacy/README.md); do not use their historical NEXT WORKER instructions.
+
+The [near-unit incident-ceiling bound](MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
+proves the competitive Casimir is exceeded when 1/3<=t<=2/5 and
+1<=k<=51/50. Its [independent review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md)
+accepts this conditional endpoint sign. Establishing those restrictions
+at every required forward endpoint remains open.

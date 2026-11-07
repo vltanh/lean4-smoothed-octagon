@@ -248,3 +248,9 @@ domain, all endpoint signs, the actual same-covector interface and every
 logical dependency. The final hand-proof claim requires all four rows
 above to be closed. The computational baseline has its own completed
 ledger and is not relabeled as a proof without computer assistance.
+
+The [near-unit incident-ceiling bound](MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
+proves the competitive Casimir is exceeded when 1/3<=t<=2/5 and
+1<=k<=51/50. Its [independent review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md)
+accepts this conditional endpoint sign. Establishing those restrictions
+at every required forward endpoint remains open.

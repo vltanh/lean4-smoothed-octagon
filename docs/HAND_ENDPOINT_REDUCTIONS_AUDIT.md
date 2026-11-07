@@ -353,3 +353,25 @@ secant and original incoming floor then give q<(1+x)/(2t+x). The actual
 next margin satisfies r<c, so the physical order is a<=r<c<=b*<d.
 This excludes the common d<=c region at every allowed scale. It does not
 exclude the remaining forward successor.
+
+
+## 12. Conditional incident-ceiling Casimir rectangle
+
+The [near-unit ceiling theorem](MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
+has an independent internal hand acceptance. The reviewer checked the
+explicit radical floor for v, including the rational comparison
+6936>6889; the strict positive derivative of the determinant in v; and
+the substitution giving the denominator 112896 t^2(k-t^2)^2.
+The two-variable polynomial identity was independently expanded and
+matches all eighteen displayed terms. Every negative term is absorbed
+by one of the three short bounds on 0<=a<=1/5 and 0<=b<=1, leaving
+22453418+342984000000a>0. The proof supplies an elementary positive
+rational margin, not an executable sign premise.
+
+The conclusion is conditional on 1/3<=t<=2/5 and 1<=k<=51/50.
+At the proposed upper shape endpoint the incident ceiling and unchanged
+incoming norm have the stated values, so these hypotheses suffice for
+its exclusion. This audit does not assert those extra t and k bounds
+for every forward successor or every upper shape endpoint. It also
+does not supply the other forward endpoint signs. H-N-forward remains
+open.

@@ -138,3 +138,9 @@ The [short-bridge endpoint formulas](docs/MIXED_GENERAL_SHORT_DEFECT_INTERFACE.m
 The [directed interval engine](docs/INTERVAL_ARITHMETIC_ENGINE.md) and smaller-short caller have an [independent completion audit](docs/MIXED_SMALLER_SHORT_CERTIFICATE_AUDIT.md). Its full cover discharged 53,989 leaves in 107,977 nodes, with zero unresolved boxes. The separate 116,914 engine checks are implementation regression evidence; the completed full cover and mathematical interface supply the branch exclusion.
 
 For the nonshort branch, the [regular five-variable charts](docs/MIXED_NONSHORT_BLOWUP_REDUCTION.md) and [uniform small-parameter exclusion](docs/MIXED_NONSHORT_SMALL_PARAMETER_EXCLUSION.md) have exact coefficient checks and a [caller/domain audit](docs/MIXED_NONSHORT_INTERVAL_CERTIFICATE_AUDIT.md). The later boundary comparison replaces the original three-root task with four completed two-root exclusions, including the branch-independent low-a reduction. Their original and independent replay records are accepted. The [final dependency review](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) closes the global cost and equality chain.
+
+The [near-unit incident-ceiling bound](docs/MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
+proves the competitive Casimir is exceeded when 1/3<=t<=2/5 and
+1<=k<=51/50. Its [independent review](docs/HAND_ENDPOINT_REDUCTIONS_AUDIT.md)
+accepts this conditional endpoint sign. Establishing those restrictions
+at every required forward endpoint remains open.
