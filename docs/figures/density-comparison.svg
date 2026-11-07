@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="340" viewBox="0 0 640 340" role="img" aria-label="The packing densities area/√12 of the smoothed (6k + 2)-gons for k = 1, …, 6 (the area computed as the cost of the trajectory): they increase with k towards the density π/√12 of the disk (dashed). The smoothed octagon (k = 1, orange) has the least, δ_oct ≈ 0.902414, below the regular octagon’s (4 + 4√2)/(5 + 4√2) ≈ 0.906164">
+<title>The packing densities area/√12 of the smoothed (6k + 2)-gons for k = 1, …, 6 (the area computed as the cost of the trajectory): they increase with k towards the density π/√12 of the disk (dashed). The smoothed octagon (k = 1, orange) has the least, δ_oct ≈ 0.902414, below the regular octagon’s (4 + 4√2)/(5 + 4√2) ≈ 0.906164</title>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#1f2937"/></marker></defs>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<line x1="78.0" y1="266.3" x2="460.0" y2="266.3" stroke="#e5e7eb" stroke-width="1" stroke-linecap="round"/>
+<text x="70.0" y="266.3" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="end" dominant-baseline="middle">0.902</text>
+<line x1="78.0" y1="219.3" x2="460.0" y2="219.3" stroke="#e5e7eb" stroke-width="1" stroke-linecap="round"/>
+<text x="70.0" y="219.3" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="end" dominant-baseline="middle">0.903</text>
+<line x1="78.0" y1="172.3" x2="460.0" y2="172.3" stroke="#e5e7eb" stroke-width="1" stroke-linecap="round"/>
+<text x="70.0" y="172.3" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="end" dominant-baseline="middle">0.904</text>
+<line x1="78.0" y1="125.3" x2="460.0" y2="125.3" stroke="#e5e7eb" stroke-width="1" stroke-linecap="round"/>
+<text x="70.0" y="125.3" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="end" dominant-baseline="middle">0.905</text>
+<line x1="78.0" y1="78.4" x2="460.0" y2="78.4" stroke="#e5e7eb" stroke-width="1" stroke-linecap="round"/>
+<text x="70.0" y="78.4" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="end" dominant-baseline="middle">0.906</text>
+<line x1="78.0" y1="31.4" x2="460.0" y2="31.4" stroke="#e5e7eb" stroke-width="1" stroke-linecap="round"/>
+<text x="70.0" y="31.4" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="end" dominant-baseline="middle">0.907</text>
+<line x1="78.0" y1="278.0" x2="460.0" y2="278.0" stroke="#9ca3af" stroke-width="1" stroke-linecap="round"/>
+<text x="109.0" y="294.0" font-size="13" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">1</text>
+<text x="109.0" y="309.0" font-size="11" font-family="Georgia, 'Times New Roman', serif" fill="#9ca3af" text-anchor="middle" dominant-baseline="middle">(8)</text>
+<text x="171.0" y="294.0" font-size="13" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">2</text>
+<text x="171.0" y="309.0" font-size="11" font-family="Georgia, 'Times New Roman', serif" fill="#9ca3af" text-anchor="middle" dominant-baseline="middle">(14)</text>
+<text x="233.0" y="294.0" font-size="13" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">3</text>
+<text x="233.0" y="309.0" font-size="11" font-family="Georgia, 'Times New Roman', serif" fill="#9ca3af" text-anchor="middle" dominant-baseline="middle">(20)</text>
+<text x="295.0" y="294.0" font-size="13" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">4</text>
+<text x="295.0" y="309.0" font-size="11" font-family="Georgia, 'Times New Roman', serif" fill="#9ca3af" text-anchor="middle" dominant-baseline="middle">(26)</text>
+<text x="357.0" y="294.0" font-size="13" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">5</text>
+<text x="357.0" y="309.0" font-size="11" font-family="Georgia, 'Times New Roman', serif" fill="#9ca3af" text-anchor="middle" dominant-baseline="middle">(32)</text>
+<text x="419.0" y="294.0" font-size="13" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">6</text>
+<text x="419.0" y="309.0" font-size="11" font-family="Georgia, 'Times New Roman', serif" fill="#9ca3af" text-anchor="middle" dominant-baseline="middle">(38)</text>
+<text x="264.0" y="328.0" font-size="13" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">k  (the smoothed (6k + 2)-gon)</text>
+<text x="18.0" y="150.0" font-size="16" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle" font-style="italic">δ</text>
+<line x1="78.0" y1="36.1" x2="460.0" y2="36.1" stroke="#1f2937" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="5 4"/>
+<text x="466.0" y="28.1" font-size="13" font-family="Georgia, 'Times New Roman', serif" fill="#1f2937" text-anchor="start" dominant-baseline="middle">disk</text>
+<text x="466.0" y="44.1" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="start" dominant-baseline="middle">π/√12 = 0.906900</text>
+<g><title>regular octagon: (4 + 4√2)/(5 + 4√2) = 0.906164</title><circle cx="109.0" cy="70.7" r="5" fill="#ffffff" stroke="#1f2937" stroke-width="1.5"/></g>
+<text x="109.0" y="88.7" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">regular octagon</text>
+<text x="109.0" y="102.7" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">0.906164</text>
+<g><title>k = 1, smoothed 8-gon: δ = 0.902414</title><circle cx="109.0" cy="246.8" r="6" fill="#ea580c" stroke="#ffffff" stroke-width="2"/></g>
+<g><title>k = 2, smoothed 14-gon: δ = 0.906052</title><circle cx="171.0" cy="75.9" r="6" fill="#2563eb" stroke="#ffffff" stroke-width="2"/></g>
+<g><title>k = 3, smoothed 20-gon: δ = 0.906607</title><circle cx="233.0" cy="49.9" r="6" fill="#2563eb" stroke="#ffffff" stroke-width="2"/></g>
+<g><title>k = 4, smoothed 26-gon: δ = 0.906766</title><circle cx="295.0" cy="42.4" r="6" fill="#2563eb" stroke="#ffffff" stroke-width="2"/></g>
+<g><title>k = 5, smoothed 32-gon: δ = 0.906828</title><circle cx="357.0" cy="39.5" r="6" fill="#2563eb" stroke="#ffffff" stroke-width="2"/></g>
+<g><title>k = 6, smoothed 38-gon: δ = 0.906857</title><circle cx="419.0" cy="38.1" r="6" fill="#2563eb" stroke="#ffffff" stroke-width="2"/></g>
+<text x="121.0" y="245.8" font-size="13" font-family="Georgia, 'Times New Roman', serif" fill="#1f2937" text-anchor="start" dominant-baseline="middle">smoothed octagon</text>
+<text x="121.0" y="261.8" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="start" dominant-baseline="middle">δ<tspan dy="3.6" font-size="8.2">oct</tspan><tspan dy="-3.6"> = 0.902414</tspan></text>
+<text x="419.0" y="54.1" font-size="12" font-family="Georgia, 'Times New Roman', serif" fill="#6b7280" text-anchor="middle" dominant-baseline="middle">0.906857</text>
+</svg>

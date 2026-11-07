@@ -4,3 +4,4 @@
 *.ilean
 *.trace
 notes/
+__pycache__/
