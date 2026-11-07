@@ -23,6 +23,20 @@ or a different uniform reduction. Adding replacement pieces is not a repair.
 The original five sufficient statements
 cannot all be proved as written.
 
+An additional necessary condition is now proved in
+[MINIMIZER_WINDOW_PMP.md](MINIMIZER_WINDOW_PMP.md): every selected window
+starts and ends at genuine switches, so the same PMP lift has an inactive
+tie at both external endpoints. Full endpoint rank makes that lift unique
+at the exact L1 input and the sufficiently small padded L3 examples, whose
+external active controls are strictly unique. Thus those examples cannot
+be the selected six complete pieces of an actual minimizer. This gives a
+justified domain restriction, not a universal improvement theorem.
+
+[LOCAL_FORWARD_ENDPOINT_FILTER.md](LOCAL_FORWARD_ENDPOINT_FILTER.md)
+gives four exact L1 boundary gaps and two scalar interval-endpoint tests.
+It also proves that asymmetric eligible local-PMP windows satisfying both
+external ties persist; do not infer equal factors from these conditions.
+
 **Do not resume comparing closed words of lengths 7, 8, 9, ...** The finite
 closed-word comparisons through five pieces, and two six-piece closed orbits,
 are assets, but without a complexity bound they do not exhaust minimizers.
@@ -294,6 +308,10 @@ endpoint formulas; the complete comparison through five positive
 pieces; two closed six-piece comparisons.
 
 **Completed prerequisite:** P0 window-eligibility and finite-splice hand audit.
+
+**Additional necessary conditions:** genuine external-switch ties, their
+exact L1 active-margin filter, and exclusion of the displayed endpoint-unique
+L1/L3 examples from selected complete windows. They do not close a local gate.
 
 **Refuted:** L3 on the stated local superset, including its arbitrary-finite
 and arbitrary-measurable replacement relaxations. The stronger proof adds

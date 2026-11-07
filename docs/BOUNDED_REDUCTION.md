@@ -18,6 +18,16 @@ L1, L2, L4, and L5 remain open. These local examples have not been shown to
 occur in actual closed minimizers, so this is not a counterexample to
 Reinhardt or Hales's geometrically embedded link-reduction conjecture.
 
+[MINIMIZER_WINDOW_PMP.md](MINIMIZER_WINDOW_PMP.md) now proves an additional
+necessary condition for selected windows of six complete pieces: the same
+PMP lift has an inactive Hamiltonian tie at both external endpoints. It
+excludes the exact endpoint-unique L1 input and the sufficiently small
+padded L3 examples from selected complete minimizer windows. The explicit
+L1 equations are in
+[LOCAL_FORWARD_ENDPOINT_FILTER.md](LOCAL_FORWARD_ENDPOINT_FILTER.md).
+These restrictions do not establish a universal replacement on the remaining
+domain; the original larger-domain claims below retain their recorded status.
+
 This note supplies a complete hand proof of a finite coverage statement:
 
 > If a finite, cyclically reduced minimizing trajectory has at least six

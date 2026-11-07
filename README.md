@@ -136,6 +136,22 @@ competitors for its small trims. The theorem transfer and limiting argument
 received independent hand reviews. More replacement pieces do not fix the
 failed local lemma; additional global-minimizer information is required.
 
+The [complete-window PMP lemma](docs/MINIMIZER_WINDOW_PMP.md) supplies one
+such necessary restriction: a selected window begins and ends at genuine
+switches, so an inactive Hamiltonian must tie at each end. Full endpoint
+rank fixes the normalized adjoint and shows that the exact L1 input and
+the sufficiently small padded L3 examples fail both ties. They cannot
+be the selected six complete pieces of a minimizer. This does not exclude
+arbitrary cuts inside longer arcs or prove a replacement theorem on the
+remaining domain.
+
+For L1, the [explicit boundary filter](docs/LOCAL_FORWARD_ENDPOINT_FILTER.md)
+reduces those four gaps to two scalar interval-endpoint tests. It also proves
+that asymmetric eligible local-PMP windows with both external ties persist
+near the standard forward family. Thus the added condition is effective
+against the displayed obstructions, but cannot justify an equal-factor
+classification.
+
 The [L4 variation certificate](docs/LOCAL_SIX_VARIATION.md) proves that the
 `010201` endpoint map has rank five throughout its positive-factor domain.
 It also exhibits an eligible stationary family for which every one of the

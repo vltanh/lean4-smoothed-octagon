@@ -32,6 +32,22 @@ The candidate route is the fixed five-template package in
 argument, four open analytic inputs, and one refuted sufficient input.
 It is not an unconditional boundedness theorem or a viable conjunction as stated.
 
+A proved necessary restriction is now available:
+[MINIMIZER_WINDOW_PMP](docs/MINIMIZER_WINDOW_PMP.md) requires an inactive
+Hamiltonian tie at both ends of a window of six complete pieces. Endpoint
+rank makes the adjoint unique at the exact L1 input and throughout the
+displayed sufficiently small padded L3 family. Both have strictly unique
+active controls at the external cuts, so neither can be a selected complete
+minimizer window. This does not rule out arbitrary cuts through longer arcs
+or prove improvement on the remaining domain.
+
+For L1, [LOCAL_FORWARD_ENDPOINT_FILTER](docs/LOCAL_FORWARD_ENDPOINT_FILTER.md)
+expresses the four inactive gaps through two scalar boundary residuals and
+one three-dimensional linear solve. Each residual must be an endpoint of
+an explicit nonnegative interval. The same note proves a five-dimensional
+family of asymmetric eligible local-PMP windows passing both external ties;
+the filter does not force equal factors or a globally competitive extension.
+
 | Component | Exact completion condition | Status |
 | --- | --- | --- |
 | P0: minimizer eligibility and splice | Prove every selected window meets the entire stated domain and every cheaper finite strict-star splice gives a geometric competitor. | **Hand proof complete**, using the named published reduction and retained through-five comparison certificates. Does not exclude a new cost class. |
@@ -209,6 +225,13 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Prove the complete-window external-switch condition, including the actual
+  twisted seam and the unique-adjoint argument. Exclude the exact L1 input
+  and the displayed sufficiently small padded L3 family from this necessary
+  domain. Derive an exact active-margin filter for L1, and prove that full
+  local PMP plus both endpoint ties still permits asymmetric windows.
+  Independent hand reviews passed. No universal analytic target is closed.
 
 - Prove that the exact L1 input is a strict strong local minimum against
   arbitrary nearby controls, with twelve full-arc gap certificates and the

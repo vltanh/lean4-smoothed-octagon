@@ -12,6 +12,12 @@ The stronger proof explicitly uses ASZ Theorem 2.6. Repair that reduction before
 treating the five-template package as a viable route. Record exact scope:
 L1, L2, L4, L5 remain open; no universal analytic exclusion is proved.
 
+Read docs/MINIMIZER_WINDOW_PMP.md for the proved external-switch necessary
+conditions. They exclude the displayed endpoint-unique L1 input and the
+sufficiently small padded L3 family from selected six-complete-piece windows.
+The exact L1 filter in docs/LOCAL_FORWARD_ENDPOINT_FILTER.md still admits
+asymmetric local PMP windows; it does not force equal factors or prove descent.
+
 Read `docs/LOCAL_FORWARD_SIX.md` before continuing L1: its exact eligible
 stationary minimum disproves universal nearby same-word descent. Do not
 repeat a search for a negative constrained Hessian at every stationary point.

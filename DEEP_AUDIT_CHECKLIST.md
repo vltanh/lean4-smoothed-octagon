@@ -69,6 +69,33 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
 - [ ] Deduce the unconditional bound N<=5.
 - [ ] Prove unrestricted global minimality and affine rigidity.
 
+## Necessary external-switch conditions
+
+`docs/MINIMIZER_WINDOW_PMP.md` proves a necessary condition for selected
+windows consisting of six complete pieces. `docs/LOCAL_FORWARD_ENDPOINT_FILTER.md`
+gives its explicit L1 active-margin form and its classification limitation.
+
+- [x] Derive both external ties from continuous free-time Hamiltonians,
+  including actual costate transversality at the twisted seam.
+- [x] Keep the initial state fixed in prepend-needle differentiation and
+  account for propagation through the entire old suffix.
+- [x] Use endpoint rank on the actual five-dimensional manifold to exclude
+  abnormal multipliers and prove uniqueness of the normalized adjoint.
+- [x] Preserve zero ties under positive vertex-dependent clock factors;
+  do not transfer an equality of nonzero Hamiltonian values that way.
+- [x] Exclude the exact L1 input and an open neighborhood from selected
+  complete minimizer windows using strict external gaps.
+- [x] Exclude the sufficiently small padded L3 family using fixed-input
+  rank and external cuts lying inside longer strict control-0 continuations.
+  This argument needs neither ASZ nor the all-word optimality theorem.
+- [x] Derive all four L1 boundary gaps and retain all four neighboring-label
+  branches and possible triple ties.
+- [x] Prove asymmetric local-PMP persistence by strict switch continuation
+  and a rank-based smooth left inverse; keep whole-period closure and total
+  competitive cost outside that conclusion.
+- [x] Obtain independent hand review of both notes.
+- [ ] Prove a uniform strict improvement on a precisely revised domain.
+
 ## L3 counterexample to the at-most-six sufficient lemma
 
 `docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md` supplies an existence family with
