@@ -1,5 +1,12 @@
 # The complete short-forward-run problem and its two-centre exclusion
 
+**Later closure:** [MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION](MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION.md)
+and its independent audit exclude every all-short `m>=5` uniformly
+by the competitive reverse-angle gap and actual twisted winding. With
+the two-centre cost theorem, sufficient M1 is now closed. Historical
+remaining-case statements below describe the scope of this earlier
+argument; F and M2 still remain open.
+
 Date: 2026-11-07 UTC. Hand identities for whole normal periods.
 No Lean, Lake, typechecking, or CI.
 

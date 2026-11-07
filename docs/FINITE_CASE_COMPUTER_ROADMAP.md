@@ -76,7 +76,7 @@ sufficient package. This refinement closes no case.
 |---|---|---|---|---|
 | F: pure forward | 012012 | +++++ | Full local endpoint rank five; standard-family negative index; negative ellipticity of every normal whole-forward costate proved by GLOBAL_STRUCTURE_FORWARD_ELLIPTIC | Uniform negative *closed-period* variation or cost/return obstruction for all competitive entirely forward periods |
 | R: pure reverse | 021021 | ----- | **CLOSED:** GLOBAL_REVERSE_PERIOD_EXCLUSION and its independent audit; 20 exact identities | A global active-margin minimum contradicts the normal 0210 PMP minimum principle. All unequal factors and costate sectors; no budget or rank assumption. |
-| M1: short mixed | 021210 | --+-- | Full local rank five; full symmetric equal-factor core exclusion with outgoing factor at least h by cost/escape dichotomy; original broad local replacement is false | Expand escape/cost/index coverage across the remaining complete-period PMP region |
+| M1: short mixed | 021210 | --+-- | **CLOSED on its sufficient assignment:** MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION and its independent audit; 21 exact checks | Every all-short `(--+)^m` period with `m>=5` contradicts the reverse-angle gap and actual winding; `m=2` has cost above pi. Local M1 occurrences inside M2 are not excluded. |
 | M2: mixed transition | 010201 | +--++ | Full local rank five; switch-only descent is not universally valid | Find a whole-arc needle, global index, or continuation certificate for all complete-period candidates |
 | M3: long reverse run | 021012 | ---++ | **CLOSED:** MIXED_GLOBAL_MINIMUM_STRUCTURE and its independent audit | A finite reverse-run minimum contradicts the reverse-four and three-arc alternation principles; all surviving mixed reverse runs have exactly two switches. |
 
@@ -95,9 +95,15 @@ and its independent audit derive common equations for every multiplicity
 and exclude the fixed two-centre base branch by a strict cost bound
 above pi. The later [reverse-centre phase bound](MIXED_REVERSE_CENTRE_PHASE_BOUND.md)
 and its independent audit prove `index_-(Q_closed)>=(m-8)/3` and
-exclude every `m>=11` uniformly. The sufficient M1 domain therefore
-has `m=5,8` left. These remain open; seek a common strengthening,
-not a growing sequence of length comparisons.
+exclude every `m>=11` uniformly. The stronger
+[reverse-angle gap](MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION.md) and its
+[independent audit](MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION_AUDIT.md)
+now exclude every `m>=5` at once: each angle has `cos(phi)<3/10`,
+whereas the actual all-short sum is `(m+1)pi/3`. The exact rational
+Casimir contradiction passes all 21 supplementary checks. Together
+with `m=2`, this closes the entire sufficient M1 domain. The scalar
+comparison does not assert a trajectory deformation, and does not
+exclude local M1 occurrences in M2. No growing catalogue is used.
 
 The [geometric winding theorem](MIXED_GLOBAL_PROJECTIVE_WINDING.md)
 and its independent audit fix `n=(N-m-1)/3` and the ordinary scalar
@@ -292,10 +298,10 @@ manufacture additional word lengths or count partial samples as closure.
 |---|---|---|---|
 | F | **First deterministic run** | Negative ellipticity and positive adjacent Gram pairings proved throughout the competitive domain; exact curvature-corrected Hessian available; uniform index/cost comparison OPEN | OPEN |
 | R | Superseded by direct hand proof | Global active-margin minimum contradicts the normal 0210 PMP principle; every sector covered | **CLOSED**, independently audited |
-| M1 | **First deterministic run** | Sufficient all-short family: m=2 excluded by cost; all m>=11 excluded by uniform constrained index; only m=5,8 remain | OPEN |
+| M1 | Superseded by direct hand proof | Sufficient all-short family: m=2 excluded by cost; every m>=5 excluded by the reverse-angle gap and actual twisted winding | **CLOSED**, independently audited |
 | M2 | **First deterministic run** | OPEN | OPEN |
 | M3 | Superseded by direct hand proof | A bounded reverse-run minimum excludes every length at least three; only length two survives | **CLOSED**, independently audited |
-| T: ties/normality | Normality, exact outgoing-vertex rule and at-most-one passing germ proved | Negative ellipticity and incident-pair transversality for all finite normal closed periods; full-period fate OPEN | Structural rules CLOSED; remaining F/M1/M2 comparisons OPEN |
+| T: ties/normality | Normality, exact outgoing-vertex rule and at-most-one passing germ proved | Negative ellipticity and incident-pair transversality for all finite normal closed periods; full-period fate OPEN | Structural rules CLOSED; remaining F/M2 comparisons OPEN |
 | B: boundaries/equality | Octagon insertion obstruction known | OPEN | OPEN |
 
 **Unrestricted Reinhardt cost inequality: OPEN. Affine uniqueness: OPEN.

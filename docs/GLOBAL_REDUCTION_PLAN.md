@@ -16,7 +16,8 @@ PMP** case domains F/R/M1/M2/M3. Each has three distinct gates:
 a numerical necessary-condition atlas (A), a whole-period return/escape
 fate test (B), and a universal hand certificate (C). The pure-reverse
 case R and long-reverse-run mixed case M3 are now CLOSED by direct
-minimum-margin hand proofs; F, M1 and M2 remain open. These cases do not restore the false universal
+minimum-margin hand proofs. The angle theorem below also closes the
+sufficient M1 case; F and M2 remain open. These results do not restore the false universal
 M1 local replacement statement. Return time, full twist and period cost
 must be tested together; isolated local PMP windows are insufficient.
 
@@ -35,7 +36,7 @@ gives a qualitative common normal-costate bound.
 now classify every outgoing positive vertex germ at normal ties, including
 quadratic/cubic and triple contacts, by exact signs through order three.
 Every passing branch still needs its complete-period fate proof. Boundary
-limits and the three remaining sharp comparison cases remain open.
+limits and the two remaining sharp comparison cases F/M2 remain open.
 
 [MIXED_GLOBAL_SYMMETRIC_ESCAPE](MIXED_GLOBAL_SYMMETRIC_ESCAPE.md) now
 excludes the complete symmetric reverse-four core family: `1<h<2`,
@@ -67,8 +68,9 @@ subcritical Casimir and low local cost that switches back at factor in
 `(251/250,201/200)`, before the postcritical point. Thus those first-order
 data cannot force the symmetric theorem's long-padding premise. The
 first external switch, geometry, full return and minimality are not
-asserted. The full M1 case remains open; a valid extension must add
-whole-period or variational information.
+asserted. The sufficient M1 case is now closed by the separate
+whole-period angle theorem below, without strengthening this local
+assertion or excluding local M1 windows inside M2.
 
 The later [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)
 and its independent audit prove negative ellipticity for every normal
@@ -103,9 +105,15 @@ by `C>2*sqrt(6)-sqrt(3)>pi>A_oct`; all eight exact checks pass.
 The later [MIXED_REVERSE_CENTRE_PHASE_BOUND](MIXED_REVERSE_CENTRE_PHASE_BOUND.md)
 and its independent audit prove the uniform constrained-index estimate
 `index_-(Q_closed)>=(m-8)/3`, excluding every `m>=11` together. All
-13 exact identities pass. Only `m=5,8` remain in the sufficient M1
-domain. Seek a common strengthening that treats them together; this
-fixed-threshold theorem does not authorize a growing length catalogue.
+13 exact identities pass. The stronger
+[MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION](MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION.md)
+and its independent audit now prove `cos(phi)<3/10` at every reverse
+centre under the actual complete-period Casimir cap. The all-short
+angle sum `(m+1)pi/3` contradicts this bound for every `m>=5` at
+once. Together with the two-centre cost comparison, this closes the
+entire sufficient M1 case. All 21 exact checks pass. This is a uniform
+scalar inequality, not a growing length catalogue or an asserted
+endpoint-preserving comparison path.
 
 [MIXED_GLOBAL_PROJECTIVE_WINDING](MIXED_GLOBAL_PROJECTIVE_WINDING.md)
 and its independent audit use the actual geometric frame lift to prove
@@ -113,7 +121,7 @@ and its independent audit use the actual geometric frame lift to prove
 `P=N-2m` the collapsed node count. The ordinary Jacobi inertia is
 `(n-1,2,P-n-1)`. A full constrained cost-index theorem must additionally
 control the augmented Hessian and the frame-constraint curvature; it
-does not follow merely from this inertia. F, M1 and M2 remain open.
+does not follow merely from this inertia. F and M2 remain open.
 The independent audits of MIXED_GLOBAL_AUGMENTED_INDEX and
 MIXED_GLOBAL_SHORT_RUN_VARIATION supply the actual rank-three and Schur
 interfaces used in the proved phase estimate. The audited scalar duals
@@ -126,8 +134,8 @@ independent audit use a direct phase graph to extend the bound to
 all competitive remaining periods: the constrained index is at least
 `(2m-P-8)/3`, so any minimizer satisfies `2m<=P+8`, or raw prefix
 winding `k>=-3`. This excludes one entire reverse-dense region with
-arbitrary forward-run lengths. It leaves low reverse density in M2,
-the two stated M1 branches, and F open.
+arbitrary forward-run lengths. Low reverse density in M2 and F
+remain open; sufficient M1 is closed by the angle theorem.
 
 ## Closed global case R
 
@@ -142,8 +150,8 @@ treats the multiplier alternative. All 20 exact identities pass.
 
 This closes R without a Casimir-sector split, cost budget, endpoint-rank
 assumption or implicit-function theorem. The reverse Casimir route above
-is no longer needed for that case. Focus the remaining work on F, M1,
-M2; retain the local-shortening counterexamples and full endpoints.
+is no longer needed for that case. Focus the remaining work on F
+and M2; retain the local-shortening counterexamples and full endpoints.
 
 ## Closed global case M3
 
@@ -158,7 +166,8 @@ length at least three, at an interior arc. Length one is impossible
 as well. Every surviving mixed reverse run has exactly two switches.
 
 This closes M3 with all unequal factors, ties, costate sectors, and the
-actual twisted seam retained. F, M1 and M2 remain open. The existing
+actual twisted seam retained. The angle theorem separately closes
+sufficient M1; F and M2 remain open. The existing
 short-pad PMP witness permits a strict central 01020 minimum locally,
 so that surviving pattern alone cannot yield a PMP contradiction.
 

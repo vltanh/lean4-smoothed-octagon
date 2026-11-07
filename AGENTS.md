@@ -44,7 +44,8 @@ negative run excludes lengths one and every length at least three.
 Every remaining mixed period has negative runs of exactly two switches,
 with a strict central active-margin minimum. This includes the actual
 twisted seam, every costate sector, and degenerate ties, without rank
-or a budget. R and M3 are CLOSED; F, M1 and M2 remain open.
+or a budget. R and M3 are CLOSED by these minimum principles. The later angle
+theorem below also closes sufficient M1; F and M2 remain open.
 The local short-pad PMP example permits the surviving 01020 minimum;
 do not assert that this pattern alone contradicts PMP.
 GLOBAL_STRUCTURE_FORWARD_ELLIPTIC
@@ -76,9 +77,15 @@ the fixed two-centre base branch has C>2*sqrt(6)-sqrt(3)>pi and is
 excluded with arbitrary unequal factors. The later
 MIXED_REVERSE_CENTRE_PHASE_BOUND and its independent audit prove the
 uniform constrained-index lower bound (m-8)/3, excluding every m>=11
-at once. The sufficient M1 obligation is now confined to m=5,8;
-these remain open. This is a fixed consequence of a uniform theorem,
-not permission to resume increasing-length enumeration.
+at once. MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION and its independent audit now
+close the entire sufficient M1 domain: every reverse-centre angle has
+cos(phi)<3/10 under the actual complete-period Casimir cap, whereas
+the all-short winding sum is (m+1)pi/3. This excludes every m>=5
+uniformly; the two-centre cost theorem excludes m=2. All 21 exact
+checks pass. The auxiliary fixed-angle path is a scalar comparison,
+not a trajectory variation. Local M1 windows in M2 are not excluded.
+R, M1 and M3 are CLOSED; F and M2 remain open. No increasing-length
+enumeration is authorized.
 MIXED_GLOBAL_PROJECTIVE_WINDING and its independent audit use the
 actual geometric sector lift to fix n=(N-m-1)/3 on the collapsed
 P=N-2m switch-vector cycle. Its ordinary scalar Jacobi inertia is
@@ -95,7 +102,7 @@ graph directly to every remaining competitive period: index(Q_closed)
 is at least (2m-P-8)/3, where P=N-2m. Thus every such minimizer
 satisfies 2m<=P+8, equivalently its actual raw prefix winding k>=-3.
 This excludes the entire violating region without an enumeration;
-low reverse density in M2 and the remaining F/M1 signs stay open.
+low reverse density in M2 and the remaining F signs stay open.
 
 
 Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.

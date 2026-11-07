@@ -26,9 +26,10 @@ explorations/closed_period_index_probe.py are regression diagnostics.
 The standard N=4,7,10 constrained-Hessian negative indices are
 numerically 0,2,4, matching the existing exact standard-family
 result; these numerical checks themselves exclude no whole case.
-The separate hand proofs below close **the entire pure-reverse case R
-and the entire long-reverse-run case M3**. F, M1 and M2, the final
-global cost inequality, and affine equality remain OPEN.
+The separate hand proofs below close **R, sufficient M1, and M3**:
+entirely reverse periods, all-short mixed periods, and mixed periods
+with a longer reverse run. **F and M2**, the final global cost inequality,
+and unrestricted affine equality remain OPEN.
 
 ## Closed global case R: no entirely reverse minimizing period
 
@@ -48,8 +49,8 @@ remaining multiplier alternative. Thus R is excluded for arbitrary
 unequal positive factors and all primary-costate sectors, without a
 cost cap. The [independent internal audit](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION_AUDIT.md)
 and all 20 supplementary exact identities pass. This closes one whole
-global case. The later run theorem below also closes M3, leaving F,
-M1 and M2 open.
+global case. The later run and angle theorems below also close M3
+and sufficient M1, leaving F and M2 open.
 
 The older five *local improvement* targets have a different domain and
 remain separate: no universal shortening theorem for all reverse local
@@ -75,7 +76,32 @@ is needed.
 
 The surviving double reverse runs have a strict middle minimum in a
 `01020` window. The existing local PMP witness allows this pattern, so
-M1 and M2 require additional global or higher-order optimality arguments.
+the later M1 angle proof uses whole-period information. M2 still
+requires an additional global or higher-order optimality argument.
+
+## Closed global case M1: a uniform reverse-centre angle gap
+
+[MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION](docs/MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION.md)
+proves that every reverse-centre angle `phi` of a competitive normal
+geometric period satisfies **`cos(phi)<3/10`**, using the actual
+complete-period costate cap. A monotone scalar comparison at fixed
+angle reduces the estimate to a symmetric boundary, where exact
+rational logarithm bounds contradict that cap.
+
+Assign every mixed period with a forward run of length at least two
+to M2. The sufficient M1 domain is then exactly `(--+)^m`, with
+`m=2 mod 3`. Its actual twisted winding fixes
+`sum(phi)=(m+1)pi/3`. For every `m>=5`, the required average is at
+most 72 degrees, while the angle gap makes every angle greater than
+72 degrees. The earlier two-centre strict cost bound excludes `m=2`.
+Thus **the entire sufficient M1 case is closed**, with arbitrary
+unequal factors and no rank or quantitative transversality assumption.
+
+The [independent internal audit](docs/MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION_AUDIT.md)
+and all 21 supplementary exact checks pass. The comparison path is
+used to prove a scalar inequality; no endpoint-preserving deformation
+is asserted. Local M1 occurrences inside periods assigned to M2 are
+not excluded. F and M2 remain open.
 
 ## Structure of every remaining normal period
 
@@ -99,7 +125,8 @@ or switching-derivative bound is asserted.
 uses the competitive Casimir cap to make every adjacent forward Jacobi
 pairing positive; all nine exact scalar identities pass. These three
 results have a common [independent internal audit](docs/GLOBAL_NORMAL_PERIOD_STRUCTURE_AUDIT.md).
-The full index or cost comparison for F/M1/M2 remains open.
+The full index or cost comparison for F and M2 remains open. The
+whole-period angle theorem below closes sufficient M1 separately.
 
 ## Uniform remaining mixed family and geometric winding
 
@@ -117,9 +144,9 @@ The later [reverse-centre phase theorem](docs/MIXED_REVERSE_CENTRE_PHASE_BOUND.m
 proves a uniform lower bound `(m-8)/3` for the actual constrained cost
 index. It excludes **every `m>=11` at once**, with arbitrary unequal
 factors. Its [independent audit](docs/MIXED_REVERSE_CENTRE_PHASE_BOUND_AUDIT.md)
-and 13 exact identities pass. Thus the sufficient M1 comparison has
-only `m=5,8` left. Those two branches remain open; this conclusion
-comes from a uniform inequality, not an increasing-length catalogue.
+and 13 exact identities pass. The stronger angle theorem below now
+excludes every `m>=5` uniformly, completing sufficient M1 together
+with the two-centre comparison.
 
 [MIXED_GLOBAL_PROJECTIVE_WINDING](docs/MIXED_GLOBAL_PROJECTIVE_WINDING.md)
 and its [independent audit](docs/MIXED_GLOBAL_PROJECTIVE_WINDING_AUDIT.md)
@@ -129,7 +156,7 @@ reverse runs. The corresponding scalar Jacobi matrix has inertia
 `(positive, zero, negative)=(n-1,2,P-n-1)`. The proof explicitly uses
 the geometric sector lift and the full frame endpoint. The constrained
 cost Hessian has additional terms, so a cost-index theorem and the
-remaining F/M1/M2 comparisons are still required.
+remaining F/M2 comparisons are still required.
 
 [MIXED_GLOBAL_AUGMENTED_INDEX](docs/MIXED_GLOBAL_AUGMENTED_INDEX.md)
 proves the full frame rank and exact index transfer, including all three
@@ -193,7 +220,8 @@ triple ties and quadratic/cubic contacts. The later switch-rigidity
 theorem proves that at most one of the three candidates can pass.
 The tests supply no uniform arc length and do not prove
 closed return, cost comparison, or optimality. The separate minimum-
-margin proofs close R and M3; F, M1 and M2 remain open.
+margin proofs close R and M3, and the separate angle theorem closes
+sufficient M1. F and M2 remain open.
 
 ## Uniform exclusion of the full symmetric M1 core family
 
@@ -212,8 +240,9 @@ including a degenerate initial tie, with elementary logarithm bounds
 and 18 explicit positive rational Bernstein coefficients. An
 [independent internal review](docs/MIXED_GLOBAL_SYMMETRIC_AUDIT.md)
 passed, as did all 146 supplementary exact algebra/sign checks.
-Arbitrary asymmetric M1 cores and shorter outgoing pads remain open;
-this subfamily theorem closes none of the five universal C gates.
+Arbitrary asymmetric local M1 cores and shorter outgoing pads are
+outside this subfamily theorem. The later complete-period angle proof
+closes sufficient M1 without asserting their universal local exclusion.
 
 [An exact short-pad obstruction](docs/MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION.md)
 shows why the extension needs more than the local moments, adjoining ties

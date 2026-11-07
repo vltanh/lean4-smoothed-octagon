@@ -50,14 +50,21 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
   reverse-centre normalization and constraint pair; see
   [MIXED_GLOBAL_PHASE_DENSITY_AUDIT](docs/MIXED_GLOBAL_PHASE_DENSITY_AUDIT.md).
   Its exact cost-index bound excludes `2m>P+8` uniformly. It does not
-  close all of M2 or the remaining M1 branches.
+  close all of M2.
+- [x] Independently audit the reverse-centre angle comparison, including
+  its same-covector normalization, implicit continuation, every boundary,
+  symmetric monotonicity and exact rational separation; see
+  [MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION_AUDIT](docs/MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION_AUDIT.md).
+  All 21 exact checks pass. The actual twisted angle sum excludes every
+  all-short `m>=5`, completing sufficient M1 with the `m=2` theorem.
 - [ ] Prove a comparison or stronger uniform cost-index estimate for
-  the remaining all-short `m=5,8` branches and the other open F/M2 cases.
+  the remaining F/M2 cases.
 
 These are independent internal hand audits, not external peer review
-or Lean kernel validation. The two-centre comparison and uniform
-`m>=11` index theorem leave `m=5,8`; they do not close the entire
-sufficient M1 case.
+or Lean kernel validation. The angle theorem and two-centre comparison
+close the entire sufficient M1 case. Its scalar path is not asserted
+to preserve trajectory endpoints, and local M1 occurrences inside M2
+are not excluded.
 
 ## New case-atlas computation boundary
 
@@ -139,7 +146,8 @@ close the entire pure-reverse global case R.
   endpoint/cost algebra in a separate calculation. No floating-point
   search, growing word catalogue, Lean, Lake or CI was used.
 
-The later mixed-run proof also closes M3; F, M1 and M2 remain open.
+The later mixed-run proof closes M3 and the angle proof closes
+sufficient M1; F and M2 remain open.
 The historical universal local-shortening
 package is not closed by this global minimum principle.
 
@@ -156,10 +164,11 @@ close the entire long-reverse-run mixed case M3.
 - [x] Prove strict alternating-margin log-concavity, including the equality case by a positive integrating-factor integral.
 - [x] Exclude both endpoints of a minimum on a finite reverse run; exclude every interior position for length at least three.
 - [x] Continue the same lift across the actual twist; no comparison path longer than a period is used.
-- [x] Keep the surviving two-switch runs and the local 01020 counterexample; do not count M1 or M2 as closed.
+- [x] Keep the surviving two-switch runs and the local 01020 counterexample; this minimum theorem alone does not close M1 or M2.
 
 The proof is by displayed hand identities and inequalities; its reverse-four
-input has the separate exact checker. F, M1 and M2 remain open.
+input has the separate exact checker. The later angle proof closes
+sufficient M1; F and M2 remain open.
 
 ## Whole-period normal structure audit
 
@@ -176,7 +185,8 @@ competitive forward pairing lemma.
 - [x] Check the forward determinant triangle, its degenerate boundary, concavity, exact minimum vertex and strict scalar factorization.
 - [x] Run the 32 mixed and nine acute exact identities; retain the unresolved endpoint-curvature and radial/margin index.
 
-F/M1/M2 remain open. No uniform switching derivative, dwell time, or
+These structure results alone do not close F/M1/M2; the separate
+angle theorem now closes sufficient M1. No uniform switching derivative, dwell time, or
 strict third-control gap follows from these results.
 
 ## Whole-forward ellipticity audit
@@ -218,7 +228,8 @@ received an [independent internal hand audit](docs/MIXED_GLOBAL_SYMMETRIC_AUDIT.
 - [x] Run the supplementary checker: all 146 exact identities and rational
   sign checks passed with Python 3.12.14 / SymPy 1.14.0.
 - [ ] Extend the theorem to arbitrary asymmetric cores and shorter
-  outgoing pads. This scoped family theorem leaves universal M1 open.
+  outgoing pads, if useful for M2. The sufficient whole-period M1 case
+  is now closed independently by the angle theorem.
 
 ## Exact limitations on the next global extensions
 

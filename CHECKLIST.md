@@ -7,8 +7,8 @@ replaces impractical whole-word enumeration by five complete-period
 PMP exclusion cases F=012012, R=021021, M1=021210,
 M2=010201, M3=021012. For each, the finite A/B/C gates are:
 reproducible necessary-condition screening, full-period continuation and
-fate classification, and a universal hand certificate. **R and M3 are
-CLOSED; F, M1 and M2 remain OPEN.**
+fate classification, and a universal hand certificate. **R, sufficient M1 and M3 are
+CLOSED; F and M2 remain OPEN.**
 [GLOBAL_REVERSE_PERIOD_EXCLUSION](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION.md)
 and its [independent audit](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION_AUDIT.md)
 exclude every entirely reverse finite PMP period by a minimum-active-
@@ -34,7 +34,8 @@ to every global minimizer. The normality part of T is complete.
 necessary-and-sufficient outgoing positive-vertex tests through derivative
 order three, including normal triple and cubic ties. This closes the
 local branch rule, not the global fate of every passing branch. The
-separate minimum principles close R and M3; three C gates remain open. Compactness also gives
+separate minimum principles close R and M3; the angle theorem below
+closes sufficient M1. Two C gates remain open. Compactness also gives
 a qualitative positive lower bound on -lambda in the initial unit
 normalization, hence a compact family after normalization to lambda=-1.
 No numerical value for this new bound is claimed. The later
@@ -68,10 +69,14 @@ Triple ties and boundary limits still require their stated treatment.
 - [x] Independently audit the common augmented-index bridge, all-short
   variation, and signed scalar dual. Their exact index transfers are
   established; a full negative-subspace assertion is not.
-- [ ] Close the two remaining all-short multiplicities `m=5,8`, or
-  strengthen the same uniform estimate to cover them together.
-  F and M2 also remain open. No ordinary Jacobi count by itself is
-  treated as a constrained cost index.
+- [x] Close every all-short `m>=5` by the uniform reverse-centre angle
+  gap `cos(phi)<3/10` and exact sum `(m+1)pi/3`; see
+  [MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION](docs/MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION.md).
+  Its independent audit and all 21 exact checks pass. Together with
+  `m=2`, this closes the entire sufficient M1 case. Local M1 windows
+  inside M2 remain a separate domain.
+- [ ] Close F and M2. No ordinary Jacobi count by itself is treated
+  as a constrained cost index.
 - [x] Extend the angular graph to arbitrary forward-run lengths:
   [MIXED_GLOBAL_PHASE_DENSITY](docs/MIXED_GLOBAL_PHASE_DENSITY.md)
   and its independent audit give `index_-(Q_closed)>=(2m-P-8)/3`.
@@ -142,7 +147,8 @@ control-0 factor at least `h`. A complete-period Casimir obstruction
 or postcritical finite escape covers every point of that domain. The
 [independent audit](docs/MIXED_GLOBAL_SYMMETRIC_AUDIT.md) and 146 exact
 algebra/sign checks passed. Asymmetric cores and shorter outgoing pads
-are outside the theorem; the M1 case-C gate remains open.
+are outside this local-core theorem. The later angle proof closes
+sufficient whole-period M1 without extending this local assertion.
 [MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION](docs/MIXED_GLOBAL_SHORT_PAD_OBSTRUCTION.md)
 certifies an asymmetric local normal PMP window with a subcritical
 negative-elliptic Casimir and low local cost whose outgoing 0 arc returns
@@ -459,7 +465,8 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
   at least three. The actual reflection, common normal edge covector,
   alternating-margin inequality and finite-run minimum proof retain all
   ties and the twisted seam. Every remaining mixed reverse run has
-  exactly two switches. R and M3 are closed; F, M1 and M2 remain open.
+  exactly two switches. The later angle theorem also closes sufficient
+  M1; F and M2 remain open.
 
 - **Whole-forward ellipticity proved:** GLOBAL_STRUCTURE_FORWARD_ELLIPTIC
   and its independent audit exclude all nonelliptic primary costates
