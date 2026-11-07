@@ -124,6 +124,19 @@ At an actual maximizer all missing-control Delta values are nonnegative;
 at a genuine adjacent switch the corresponding gap is **zero**. The
 numerical thresholds only screen; signs near zero require exact work.
 
+The additional [closed-period index oracle](../explorations/closed_period_index_probe.py)
+evaluates the actual five closed endpoint constraints with the initial
+state free. It includes the endpoint-curvature term when computing the
+constrained Hessian. Its first three deterministic checks are the
+standard N=4,7,10 forward periods, with numerical negative indices
+0,2,4 respectively. This agrees with the retained standard-family
+hand theorem but **does not** extend it to asymmetric candidates.
+See [CASE_ATLAS_EXPERIMENT_001](CASE_ATLAS_EXPERIMENT_001.md).
+The [octagon boundary oracle](../explorations/octagon_boundary_probe.py)
+separately tests a four-insertion all-reverse degeneration and uses
+SciPy to correct five complete-period endpoint coordinates. Both
+scripts are regression diagnostics, not globally certified solvers.
+
 For any selected six-complete-piece window, the next oracle must use
 **the same PMP lift** to continue the trajectory and enforce:
 
@@ -200,7 +213,7 @@ manufacture additional word lengths or count partial samples as closure.
 
 | Case | A: numerical necessary atlas | B: complete-period fate | C: uniform proof |
 |---|---|---|---|
-| F | **First deterministic run** | Existing standard family only | OPEN |
+| F | **First deterministic run** | Standard N=4/7/10 Hessian pilot; asymmetric continuation OPEN | OPEN |
 | R | **First deterministic run** | OPEN | OPEN |
 | M1 | **First deterministic run** | Small-core escape subregion only | OPEN |
 | M2 | **First deterministic run** | OPEN | OPEN |
