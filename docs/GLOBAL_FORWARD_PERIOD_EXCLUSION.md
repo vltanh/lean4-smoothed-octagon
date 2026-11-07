@@ -3,13 +3,13 @@
 Date: 2026-11-07 UTC. Hand reduction and an exact rational interval
 certificate. No Lean, Lake, typechecking, or CI.
 
-**Verification status: the full complementary-domain exact replay is
-pending.** The prerequisite lemmas and the broad circular exclusion are
-proved and checked. The final checker has passed an independent source
-and interface review, but its running verification has not yet returned
-a complete certificate. The theorem below is the proposed final
-assembly; F must remain open until Section 6 records a successful exact
-replay and its audit is updated.
+**Verification status: complete at the hand-proof and exact-certificate level.**
+The full complementary-domain replay processed 20,999 nodes, excluded every
+leaf, and returned an empty stack with zero depth-limit boxes. The
+prerequisite proofs, the actual-lift interface, and the exact source have
+an [independent internal audit](GLOBAL_FORWARD_CASIMIR_CERTIFICATE_AUDIT.md).
+This closes case F under the named global inputs; M2 and final assembly
+remain separate obligations.
 
 ## Theorem and actual whole-period hypotheses
 
@@ -24,7 +24,7 @@ physical cost multiplier to `lambda=-1`, and assume
 C\le A_{\rm oct}.
 \]
 
-The proposed conclusion is that no such period exists. Factors may be
+**No such period exists.** Factors may be
 unequal. A zero first switching derivative or a third-control tie is
 allowed. The argument is a uniform whole-period necessary-condition
 exclusion; it does not construct a local shortcut or use an ordinary
@@ -313,26 +313,52 @@ is part of these exclusions. The
 reviews the rational approximations, complete cover, contractions,
 normalization, source operations and Taylor scope.
 
-## 6. Pending finite verification and final implication
+## 6. Completed exact verification and final implication
 
-**Pending:** record the full exact program's completed node, leaf and
-depth counts here after it returns an empty stack, zero depth-limit
-boxes and its `PASS` message. No partial count is a proof. The full
-source review is complete; the final replay has not yet completed at
-this note's creation.
+The exact program completed successfully with the following deterministic
+counts. Its process exit code was zero.
 
-To run the exact verifier with a C++17 compiler and GMP headers:
+| Verification item | Result |
+|---|---:|
+| Initial closed rectangles | 3 |
+| Processed nodes | 20999 |
+| Left residual negative (reason 10) | 5436 leaves |
+| Right residual negative (reason 11) | 995 leaves |
+| Right norm below its floor (reason 13) | 65 leaves |
+| Casimir excess positive (reason 20) | 4005 leaves |
+| Total excluded leaves | 10501 |
+| Unprocessed boxes | 0 |
+| Depth-limit boxes | 0 |
+| Maximum depth | 23 |
+
+The full binary forest identity is `20999=2*10501-3`. No other exit reason
+was used. The successful result and source identifier are recorded in
+[the replay record](../explorations/global_forward_completion_casimir_certificate_result.txt).
+Wall time in the recorded environment was 998.89 seconds; elapsed time is
+not a mathematical input.
+
+To reproduce with a C++17 compiler and GMP headers:
 
 ```sh
 g++ -O2 -std=c++17 explorations/global_forward_completion_casimir_certificate.cpp -lgmpxx -lgmp -o /tmp/forward_casimir_certificate
 /tmp/forward_casimir_certificate
 ```
 
-If this finite verification succeeds, (13)--(14) exclude every point of
+The successful exact cover proves that (13)--(14) exclude every point of
 the complementary domain that could come from an actual competitive
-period. Equation (10) excludes its central cube. These two exhaustive
-alternatives contradict (2) for the chosen global minimum and therefore
-exclude every competitive all-forward minimizing period with `N>=6`.
+period. Equation (10) excludes the central cube. These exhaustive
+alternatives contradict (2) for the chosen global minimum. Hence every
+competitive all-forward minimizing period with `N>=6` is excluded.
+
 The number and unequal factors of the rest of the period never enter a
-word catalogue. This final implication will close case F only after the
-pending verification is complete and independently audited.
+word catalogue. The proof retains every permitted exterior factor, weak
+third-control tie, shared boundary face, and actual twisted seam through
+the necessary-condition relaxation. It assumes neither endpoint rank nor
+a positive lower bound on individual durations. The all-zero-duration
+algebraic covector fibre is handled by the stated positive-window
+nondegeneracy, not discarded by an unsupported inverse.
+
+**F1 and F2 are closed at the hand/exact level.** This is an internal
+mathematical audit and an exact rational certificate, not Lean kernel
+validation or external peer review. The unrestricted Reinhardt inequality
+and affine uniqueness remain open until M2 and final assembly close.

@@ -3,13 +3,15 @@
 Date: 2026-11-07 UTC. Independent mathematical and exact-source review.
 No Lean, Lake, typechecking, or CI.
 
-**Status:** the prerequisite linear-budget checker and neighbor-contraction
-checker have both been independently replayed successfully. The broad
-circular exclusion has an exact hand proof and supplementary algebra
-checker. The full complementary-domain checker has passed source and
-mathematical-interface review; its first complete exact replay is still
-pending at the time of this audit. This document does not yet certify
-closure of F.
+**Status:** F is closed at the hand-proof and exact rational-certificate
+level, relative to the imported global interfaces listed below. The
+prerequisite linear-budget and neighbor-contraction checkers have both
+been independently replayed successfully. The broad circular exclusion
+has an exact hand proof and supplementary algebra checker. The full
+complementary-domain source and mathematical interface were independently
+reviewed before its successful exact replay; the resulting complete
+cover and exit counts have now been checked against that unchanged
+source. This is not a Lean compilation or kernel-checking claim.
 
 ## 1. Dependency order and global scope
 
@@ -240,12 +242,38 @@ in the reviewed sources prints elapsed wall time.
 
 ## 8. Completion status and reviewed source versions
 
-The prerequisite independent replays are complete. The full source and
-derivation review is complete, with no mathematical or arithmetic defect
-found. The full complementary-domain replay is **pending**; its node and
-leaf counts must be recorded only after the exact program exits with an
-empty stack and no depth-limit boxes. Until then, the final F exclusion
-remains unverified by this audit.
+The prerequisite independent replays and the full source/derivation
+review are complete, with no mathematical or arithmetic defect found.
+The full complementary-domain checker then exited successfully with the
+following exact branch counts, independently compared with its source:
+
+| Check | Completed exact replay |
+|---|---:|
+| Initial root boxes | 3 |
+| Processed nodes | 20999 |
+| First row/floor residual negative, reason 10 | 5436 leaves |
+| Second row/floor residual negative, reason 11 | 995 leaves |
+| Reconstructed right norm below its floor, reason 13 | 65 leaves |
+| Casimir excess strictly positive, reason 20 | 4005 leaves |
+| Total certified leaves | 10501 |
+| Unprocessed boxes | 0 |
+| Depth-limit boxes | 0 |
+| Maximum depth | 23 |
+
+The full binary-forest identity is exact:
+`20999 = 2*10501 - 3`. There are no unreported leaf reasons, discarded
+nonempty boxes, unresolved singular boxes, or remaining stack entries.
+The source hash below is unchanged from the pre-replay independent
+review. The replay printed its explicit `PASS` result after checking the
+empty stack and zero depth-limit count. Its elapsed time was 998.89
+seconds; elapsed time has no role in the proof.
+
+The independently reviewed source, successful complete replay, broad
+circular hand lemma, and preceding necessary-condition reductions
+therefore establish the stated F exclusion. The full replay itself was
+performed once by the parent worker; this audit independently reviewed
+the source, domain cover, interfaces, output counts and completion,
+rather than claiming a second full replay.
 
 Reviewed SHA-256 source identifiers:
 

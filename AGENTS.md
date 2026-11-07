@@ -1,6 +1,6 @@
 # Active worker directions
 
-**First read:** [docs/HANDOFF.md](docs/HANDOFF.md), [CHECKLIST.md](CHECKLIST.md), and [docs/ACTIVE_MAP.md](docs/ACTIVE_MAP.md). The entire live proof task is to close **F and M2**, then assemble the already retained small-period octagon comparison and affine uniqueness. R, sufficient M1 and M3 have hand-level closure.
+**First read:** [docs/HANDOFF.md](docs/HANDOFF.md), [CHECKLIST.md](CHECKLIST.md), and [docs/ACTIVE_MAP.md](docs/ACTIVE_MAP.md). The entire live proof task is to close **M2**, then assemble the already retained small-period octagon comparison and affine uniqueness. R, sufficient M1, M3 and F have hand/exact-level closure; F uses the independently audited uniform minimum-domain certificate.
 
 - Prove one **uniform whole-period theorem** at a time. No growing word-length catalogue, no local six-window shortcuts and no ungrounded percentages.
 - Preserve the true twisted state/frame and costate seam, same PMP covector, free initial state, positive arc durations, genuine first/last switching conditions and geometric eligibility.

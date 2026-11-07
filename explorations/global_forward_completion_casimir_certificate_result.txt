@@ -1,0 +1,22 @@
+Exact complementary-domain forward Casimir certificate
+Date: 2026-11-07 UTC
+Source: explorations/global_forward_completion_casimir_certificate.cpp
+SHA-256: ff891cf53948eda3e2a77d135e2d9b75012930814f8aae154bd70ab61cb719d0
+Build: g++ -O2 -std=c++17 explorations/global_forward_completion_casimir_certificate.cpp -lgmpxx -lgmp -o /tmp/forward_casimir_certificate
+Run: /tmp/forward_casimir_certificate
+Proof arithmetic: GMP exact rationals, outward integer rounding to denominator 2^80.
+Default node limit: 200000. Maximum permitted depth: 70.
+
+FINAL nodes 20999 stack 0 max_depth 23 unknown 0 seconds 998.89
+reason 10 leaves 5436
+reason 11 leaves 995
+reason 13 leaves 65
+reason 20 leaves 4005
+PASS: exact complementary-domain certificate; combine with the stated hand lemmas.
+Process exit code: 0
+
+The deterministic certificate consists of the displayed rational roots,
+contractions, exact bisection, and exclusion tests in the source, together
+with the mathematical reduction in docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md.
+Counts alone are not a proof. This record identifies the completed replay
+of the independently reviewed source. No Lean, Lake or CI was run.

@@ -18,11 +18,11 @@
 
 ## Remaining finite proof gates
 
-- [ ] **F1: uniform pure-forward exclusion.** Prove a complete-period sharp cost/Casimir inequality, exact closed cost improvement or a genuinely negative constrained second variation on all F periods with \(N\ge6\), arbitrary unequal factors.
-- [ ] **F2: F closure audit.** Verify the same continuous PMP lift, all exterior switches, twisted endpoints, cost, frame constraints, endpoint curvature, degenerate ties and boundary limits. Mark F closed only then.
+- [x] **F1: uniform pure-forward exclusion.** The same-lift minimum equations, exterior floors and global cost/Casimir budget exclude every F period with \(N\ge6\), arbitrary unequal factors; the exact complementary cover has 20,999 nodes and no unresolved boxes.
+- [x] **F2: F closure audit.** Independent internal review verifies the actual-lift normalization, exterior switches, whole-period budget, seam, weak ties, boundary cover, positive-window nondegeneracy, and exact rational verifier. See [the closure](docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md) and [audit](docs/GLOBAL_FORWARD_CASIMIR_CERTIFICATE_AUDIT.md).
 - [ ] **M2.1: long-run minimum obstruction.** At a global smallest reverse centre touching a forward run of length at least two, derive a first-event/return, cost-budget or correct constrained-index contradiction.
 - [ ] **M2.2: M2 closure audit.** Cover arbitrary unequal margins, all nonshort run lengths, diagonal signs, degeneracies, twisted seam and rank limits. Mark M2 closed only then.
 - [ ] **G4: sharp global assembly.** Combine the five sufficient exclusions to obtain \(N\le5\), apply the retained through-five comparison, and prove unrestricted affine equality rigidity.
 - [ ] **G5: final mathematical dependency audit.** Verify inputs, complete exact checks and edge/equality cases. Record Lean/kernel validation as deferred.
 
-**Current status:** R, M1 and M3 closed at hand-proof level; F, M2, global cost inequality and affine uniqueness open. The old *local* L3 shortening lemma is false and is in [legacy](docs/legacy/INDEX.md). The \(N\le61\) theorem is not a plan for length-by-length enumeration. No Lean, Lake or CI.
+**Current status:** R, M1, M3 and F closed at hand/exact-proof level; M2, global cost inequality and affine uniqueness open. The old *local* L3 shortening lemma is false and is in [legacy](docs/legacy/INDEX.md). The \(N\le61\) theorem is not a plan for length-by-length enumeration. No Lean, Lake or CI.

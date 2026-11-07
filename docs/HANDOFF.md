@@ -13,7 +13,7 @@ The aim is the **sharp octagon cost inequality with equality only in the affine 
 | R | Entirely reverse | **CLOSED** |
 | M3 | Mixed with a reverse run of forbidden length | **CLOSED** |
 | M1 | Mixed, every forward run length one (after M3) | **CLOSED** |
-| F | Entirely forward, at least six pieces | **OPEN** |
+| F | Entirely forward, at least six pieces | **CLOSED** |
 | M2 | Mixed, a forward run length at least two (after M3) | **OPEN** |
 
 These are **entire minimizing-period classes**, not assertions that all local six-piece windows can be shortened. A local M1-shaped window can still occur inside a period assigned to M2. The historical unconditional six-window L3/M1 shortening claim is **false** and must not be reinstated.
@@ -26,19 +26,28 @@ These are **entire minimizing-period classes**, not assertions that all local si
 - [MIXED_GLOBAL_SHORT_RUN_PERIOD](MIXED_GLOBAL_SHORT_RUN_PERIOD.md) and [MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION](MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION.md) close the sufficient all-short M1 domain for every multiplicity by the two-centre cost comparison and exact winding contradiction.
 - [MIXED_GLOBAL_COSTATE_ELLIPTIC](MIXED_GLOBAL_COSTATE_ELLIPTIC.md) supplies negative ellipticity in the remaining global cases; the [spectral cost–Casimir inequality](GLOBAL_SPECTRAL_COST_CASIMIR.md) sharpens the earlier bound to `C >= (pi/3)(kappa+3/2)`, strictly off the circle. The [endpoint defect test](GLOBAL_ENDPOINT_DEFECT_TEST.md) computes the same-covector angle without quadrature and bounds the admissible cost of every continuation window. Neither result closes F or M2. The [augmented index](MIXED_GLOBAL_AUGMENTED_INDEX.md) and [turn elimination](MIXED_GLOBAL_TURN_ELIMINATION.md) retain endpoint curvature, rank and all three frame constraint pairs.
 
-## Open F: one uniform theorem, not 61 separate cases
+## F closed: one uniform whole-period obstruction
 
-For an **entirely forward competitive normal closed period** with \(N\ge6\), all factors must remain positive, strictly geometric and potentially unequal, with the true exterior switch conditions and twisted seam. Existing hand results show:
+[GLOBAL_FORWARD_PERIOD_EXCLUSION](GLOBAL_FORWARD_PERIOD_EXCLUSION.md) closes
+**F1 and F2** with an independently reviewed hand reduction and exact rational
+cover. At a global minimum of any actual all-forward period with `N>=6`
+(hence `N>=7`), the same normal covector satisfies three stationary
+identities and both exterior switching floors. The full cost budget gives
+`gamma^2<23/125` and the linear neighbor budget; the independently replayed
+neighbor certificate gives `1<=z,w<5/4`.
 
-- \(N\le61\) ([forward angle count](GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT.md)).
-- At its smallest active margin \(a\), \(4/3<a^2<20/11\) ([small-forward minimum](MIXED_GLOBAL_SMALL_FORWARD_MINIMUM.md)).
-- For its central actual arc factor \(q=(a+b)(a+c)/(a^2+4)\), \(1<q<7/4\) ([forward budget](GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET.md)).
-- Primary costate negative elliptic; neighboring Jacobi pairings acute ([forward elliptic](GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md), [forward acute](GLOBAL_STRUCTURE_FORWARD_ACUTE.md)).
-- The [three-arc multiplier system is nonsingular](GLOBAL_FORWARD_MINIMUM_NONSINGULAR.md) on the actual minimum domain. The [circular corner](GLOBAL_STRUCTURE_FORWARD_CIRCLE_CORNER.md) is excluded uniformly in both exterior factors for positive windows; its degenerate all-zero-duration covector fibre is explicitly retained. See the [independent audit](GLOBAL_FORWARD_MINIMUM_CERTIFICATE_AUDIT.md). The [linear neighbor budget](GLOBAL_FORWARD_LINEAR_BUDGET.md) gives `z+w < 5(U-1)/3`. The [exact neighbor contraction](GLOBAL_FORWARD_NEIGHBOR_CONTRACTION.md), independently replayed, gives `1 <= z,w < 5/4`. The [centered system](GLOBAL_FORWARD_CENTERED_SYSTEM.md) supplies cancellation-free identities and a broader hand exclusion whenever `3-U+(z-1)+(w-1) <= 3/20`. The [complete uniform exclusion assembly](GLOBAL_FORWARD_PERIOD_EXCLUSION.md) and its [independent source/interface audit](GLOBAL_FORWARD_CASIMIR_CERTIFICATE_AUDIT.md) are now recorded. The exact complementary-domain replay is still running; F remains open until it completes successfully and the audit records its result.
+The [centered system](GLOBAL_FORWARD_CENTERED_SYSTEM.md) excludes the circular
+region by hand, with `gamma^2>37/200`. The exact complementary-domain replay
+processed **20,999 nodes**, excluded all **10,501 leaves**, and returned
+**zero unresolved or depth-limit boxes**, maximum depth 23. Its source and
+actual-period interface have an [independent internal audit](GLOBAL_FORWARD_CASIMIR_CERTIFICATE_AUDIT.md).
+The all-zero-duration algebraic fibre is explicitly outside the positive
+window theorem. Weak ties, unequal factors, exterior switches and the
+twisted seam remain covered. No word-length enumeration, rank assumption,
+or numerical sign is used as a premise.
 
-**F1 (OPEN):** Prove uniformly over the remaining continuous unequal-factor domain a sharp whole-period cost/Casimir obstruction, a cheaper *exact closed endpoint-preserving* competitor, or a negative **fully constrained** second variation. A scalar Jacobi inertia count, local low cost, or sample is insufficient.
-
-**F2 (OPEN):** Independently audit F1 for every permitted factor, weakest tie, zero-duration limit, boundary face and exact frame constraint. Only then mark F closed. The bound 61 is a genuine improvement but not a completion percentage or license for length-by-length enumeration.
+The earlier bounds `N<=61`, `4/3<a_min^2<20/11` and `q_min<7/4` remain valid
+intermediate results; there is no remaining F length-by-length task.
 
 ## Open M2: finish the nonshort-forward-run minimum
 
@@ -54,7 +63,7 @@ by [MIXED_REVERSE_CENTRE_SCALE_BOUND](MIXED_REVERSE_CENTRE_SCALE_BOUND.md). All 
 
 **M2.2 (OPEN):** Uniformly exclude all admissible M2 periods: arbitrary nonshort run lengths, unequal margins, bridge-diagonal signs, weak third ties, singular/zero-duration limits, rank defects and the twisted seam. A local star escape or negative onsite form is not enough without the global extension/constraints.
 
-## Final assembly after F and M2
+## Final assembly after M2
 
 **G4 (OPEN):** Use all five sufficient whole-period exclusions to reduce a global minimizer to \(N\le5\), then apply the retained asymmetric through-five cost-and-equality comparison; alternatively give a direct full-period sharp comparison. Prove **affine uniqueness**, not just a cost lower bound. Recheck the geometric correspondence, boundary controls and equality transport.
 
@@ -62,10 +71,10 @@ by [MIXED_REVERSE_CENTRE_SCALE_BOUND](MIXED_REVERSE_CENTRE_SCALE_BOUND.md). All 
 
 ## Working protocol
 
-1. Choose F1 or M2.1, not a new side quest. State one falsifiable uniform inequality with exact quantified domain and the whole-period conditions it uses.
+1. Work on M2.1, not a new side quest. State one falsifiable uniform inequality with exact quantified domain and the whole-period conditions it uses.
 2. Use numerical/SymPy probes only to discover failures or guide a hand proof. Exact certificates must be reproducible, with all factors, normalizations, signs and coefficient tables documented.
 3. Keep the true initial state, final frame/state, costate twist, exterior switches, cost budget, endpoint curvature and all three frame constraints. A locally valid PMP segment is not a globally minimizing period.
 4. Obtain a separate internal mathematical review; commit and push verified increments, updating [CHECKLIST](../CHECKLIST.md) and this file only on actual progress.
-5. Preserve invalid routes and completed special cases in [legacy](legacy/INDEX.md). Never claim a final Reinhardt proof while F or M2 is open.
+5. Preserve invalid routes and completed special cases in [legacy](legacy/INDEX.md). Never claim a final Reinhardt proof while M2 or final cost/equality assembly is open.
 
 **Exit criterion:** F closed, M2 closed, assembled sharp octagon cost inequality and affine uniqueness proved and audited. No credible percent-of-effort or completion date is known.
