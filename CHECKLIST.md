@@ -16,6 +16,8 @@
 - [x] F minimum refinement: whole-period linear neighbor budget, exact uniform neighbor contraction `1 <= z,w < 5/4`, and a broad hand exclusion `3-U+(z-1)+(w-1) <= 3/20`; centered multiplier/Casimir identities independently checked.
 - [x] M2 narrowing: global minimum at a reverse centre adjacent to a nonshort forward run; all reverse centres \(a^2<12/17\); reverse angle and constrained-index density bounds.
 
+- [x] M2 continuation interfaces: exact two-turn bridge cost/angle and compact six-variable reduction; next-actual-switch alternative on the nonshort side; radial completion penalty. Necessary-condition interfaces audited; uniform exclusions still open.
+
 ## Remaining finite proof gates
 
 - [x] **F1: uniform pure-forward exclusion.** The same-lift minimum equations, exterior floors and global cost/Casimir budget exclude every F period with \(N\ge6\), arbitrary unequal factors; the exact complementary cover has 20,999 nodes and no unresolved boxes.

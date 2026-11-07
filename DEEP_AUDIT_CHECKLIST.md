@@ -5,8 +5,8 @@ The historical full audit checklist is preserved at [legacy snapshots](docs/lega
 ## F
 
 - [x] Verify the normal negative elliptic sector; \(N\le61\), \(4/3<a_{\min}^2<20/11\), \(q<7/4\).
-- [ ] Prove a genuine whole-period sharp cost/Casimir contradiction, exact closed descent or fully constrained negative Hessian direction, for every remaining unequal-factor F period.
-- [ ] Audit weak ties, endpoint curvature, all frame constraints, the twist, positive durations and boundary limits.
+- [x] Prove the uniform whole-period cost/Casimir contradiction for every unequal-factor F period: [full exclusion](docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md), with the completed 20,999-node exact cover.
+- [x] Independently audit the same actual multiplier, all exterior floors, whole-period cost, twist, weak ties, positive-window nondegeneracy and boundary cover: [completion audit](docs/GLOBAL_FORWARD_CASIMIR_CERTIFICATE_AUDIT.md). This necessary-condition proof does not require a constrained variation.
 
 ## M2
 

@@ -59,6 +59,25 @@ In a remaining **mixed competitive normal period**, every reverse run has exactl
 
 by [MIXED_REVERSE_CENTRE_SCALE_BOUND](MIXED_REVERSE_CENTRE_SCALE_BOUND.md). All reverse-centre angles exceed \(75^\circ\), and with \(m\) reverse centres and \(E\) forward same-sign arcs, \(m\le\min(2E+3,E+8)\), and \(\gamma^2>27/256\) ([angle/density](MIXED_GLOBAL_REVERSE_ANGLE_DENSITY.md)). The [Schur turn-elimination theorem](MIXED_GLOBAL_TURN_ELIMINATION.md) retains the global Casimir and exact constrained index \(\mathrm{index}_{-}(Q_{\mathrm{closed}})=\mathrm{index}_{-}(S)-k-3\).
 
+The current fixed continuation interfaces choose the **smaller adjacent turn**.
+If its forward run is short, the [two-turn cost/angle interface](MIXED_GENERAL_SHORT_DEFECT_INTERFACE.md)
+and [six-variable necessary domain](MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION.md)
+retain both actual turn secants, the transported outer reverse root,
+stationary-control slack, and the complete-period defect budget. If the
+run is nonshort, the [next-switch alternative](MIXED_SMALLER_TURN_CONTINUATION.md)
+requires either a transported forward norm at least `3/4` or a reverse
+turn norm below the stated extended secant. These reductions have an
+[independent interface audit](MIXED_MINIMUM_CONTINUATION_INTERFACE_AUDIT.md);
+their uniform scalar exclusions remain open. The [radial completion bound](GLOBAL_RADIAL_COMPLETION_BOUND.md)
+also supplies a nonnegative cost for restoring the omitted radial
+coordinate of any window.
+
+The smaller-short scalar caller and its 80-bit directed MPFR engine have
+passed an [independent source audit](MIXED_SMALLER_SHORT_CERTIFICATE_AUDIT.md).
+The engine passed 116,914 independently replayed exact/analytic checks.
+The first full cover is running; no exclusion follows until it finishes
+with every box discharged. See [the arithmetic contract](INTERVAL_ARITHMETIC_ENGINE.md).
+
 **M2.1 (OPEN):** At the **global minimum reverse centre touching a nonshort forward run**, derive a true first-event/return, full-cost or constrained-index contradiction from the actual external switches and **same continuous PMP lift**. Do not assume a minimum must touch *two* long runs.
 
 **M2.2 (OPEN):** Uniformly exclude all admissible M2 periods: arbitrary nonshort run lengths, unequal margins, bridge-diagonal signs, weak third ties, singular/zero-duration limits, rank defects and the twisted seam. A local star escape or negative onsite form is not enough without the global extension/constraints.
