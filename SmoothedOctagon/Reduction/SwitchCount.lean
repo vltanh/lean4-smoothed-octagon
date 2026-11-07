@@ -1,6 +1,8 @@
 module
 
 public import SmoothedOctagon.Reduction.Defs
+public import SmoothedOctagon.Reduction.Switch.Glue
+public import SmoothedOctagon.Reduction.Switch.Local
 
 /-!
 # Finitely many switches
@@ -14,6 +16,9 @@ a.e. a concatenation of finitely many vertex pieces on `[0, T]`. The notes' expl
 Main API:
 
 * `exists_isPiecewiseVertex`: finitely many vertex pieces.
+
+The local analysis is in `Reduction/Switch/Local.lean`, the gluing and the compactness argument in
+`Reduction/Switch/Glue.lean`.
 -/
 
 @[expose] public section
@@ -28,18 +33,21 @@ form). Let `(T, u, g, X, Λ₁, Λ_R, λ)` be a Pontryagin extremal with cost at
 Then on `[0, T]` the control is a.e. a concatenation of finitely many vertex pieces.
 
 Proof outline (QRSB §§2-6, made qualitative). By nontriviality `‖𝒫(t)‖ > 0`, so the clearance
-gives `Q(t) > 0`: the costate never meets the singular locus. Around each `t₀ ∈ [0, T]` there is a
-neighbourhood on which the control has finitely many vertex pieces: if one vertex Hamiltonian is
-strictly below the maximum at `t₀`, it stays so nearby, that coordinate of the control vanishes
-a.e. (`maximizing_control_support`), and (E4) gives at most four pieces; otherwise the
-trichotomy of QRSB §5 and its guard lines (15)-(17) apply, the guard projections are strictly
-monotone near `t₀` because `Q(t₀) > 0` (QRSB's Case III is empty), so the neighbourhood splits
-into at most seven pieces each lying in one rotated sector, and (E4) applies in each. Compactness of
-`[0, T]` gives finitely many pieces in all.
+gives `Q(t) > 0`: the costate never meets the singular locus (`qrsb_singularGapSq_pos`). Around
+each `t₀ ∈ [0, T]` there are `δ > 0` and vertices `j`, `k` with `H_j < 0` on `(t₀, t₀ + δ)` and
+`H_k < 0` on `(t₀ - δ, t₀)` (`qrsb_exists_excluded_vertex`): if one vertex Hamiltonian is
+strictly below the maximum at `t₀`, it stays so nearby; otherwise the three tie, which forces
+`Λ_R(t₀) = 0`, and `Q(t₀) > 0` makes `Λ_R'(t₀) = [X, A] ≠ 0`, whose vertex comparisons are not all
+equal, so one comparison `H_j - H_k` changes sign at `t₀`. On each side that coordinate of the
+control vanishes a.e. (`maximizing_control_support`) and (E4) gives at most four pieces; gluing at
+`t₀` and compactness of `[0, T]` (Lebesgue number) give finitely many pieces in all. The cost bound
+`hcost` is not used (it enters through the clearance `hclear`).
 
 Route: the notes bound the number of pieces explicitly (`N < 10^56`), which needs the projective
-bounds and the constants of QRSB §1.4; the proof only uses finiteness, so the local argument and
-compactness suffice. -/
+bounds and the constants of QRSB §1.4, and handle a tie by three guard lines transported along the
+flow (QRSB §§3-6); the proof only uses finiteness, so at a tie the first-order expansion
+`Λ_R(t) = (t - t₀)[X(t₀), A(t₀)] + o(t - t₀)` replaces the guard lines (only QRSB's Case II occurs
+at a tie, and Case III is empty because `Q(t₀) > 0`). -/
 theorem exists_isPiecewiseVertex {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hcost : reinhardtCost T X ≤ octagonCost)
@@ -48,6 +56,30 @@ theorem exists_isPiecewiseVertex {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ�
       covectorNormSq lam (Λ₁ t) (ΛR t) ≤ 251 ^ 2 * singularGapSq lam (Λ₁ t) (ΛR t))
     (hedge : EdgeBound T u) :
     ∃ n, IsPiecewiseVertex u 0 T n := by
-  sorry
+  apply qrsb_isPiecewiseVertex_of_local hext.1.1.le
+  intro t₀ ht₀
+  have hQ := qrsb_singularGapSq_pos (hext.2.2.2.2.2.2.2.1 t₀ ht₀).2.2.2 (hclear t₀ ht₀)
+  obtain ⟨δ, hδ, j, k, hj, hk⟩ := qrsb_exists_excluded_vertex hext hK ht₀ hQ
+  -- right of `t₀` the coordinate `u_j` vanishes a.e., left of `t₀` the coordinate `u_k`
+  have hright : ∀ a b, t₀ ≤ a → a < b → b < t₀ + δ → 0 ≤ a → b ≤ T →
+      ∃ n, IsPiecewiseVertex u a b n := by
+    intro a b hta hab hbt ha hb
+    obtain ⟨n, -, hn⟩ := hedge a b ha hab hb j (qrsb_ae_coord_eq_zero hext ha hb fun t ht ↦
+      hj t ⟨ha.trans ht.1.le, ht.2.le.trans hb⟩ (hta.trans_lt ht.1) (ht.2.trans hbt))
+    exact ⟨n, hn⟩
+  have hleft : ∀ a b, t₀ - δ < a → a < b → b ≤ t₀ → 0 ≤ a → b ≤ T →
+      ∃ n, IsPiecewiseVertex u a b n := by
+    intro a b hta hab hbt ha hb
+    obtain ⟨n, -, hn⟩ := hedge a b ha hab hb k (qrsb_ae_coord_eq_zero hext ha hb fun t ht ↦
+      hk t ⟨ha.trans ht.1.le, ht.2.le.trans hb⟩ (hta.trans ht.1) (ht.2.trans_le hbt))
+    exact ⟨n, hn⟩
+  refine ⟨δ, hδ, fun a b ha hab hb hδa hδb ↦ ?_⟩
+  rcases le_or_gt t₀ a with h1 | h1
+  · exact hright a b h1 hab hδb ha hb
+  rcases le_or_gt b t₀ with h2 | h2
+  · exact hleft a b hδa hab h2 ha hb
+  obtain ⟨n, hn⟩ := hleft a t₀ hδa h1 le_rfl ha ht₀.2
+  obtain ⟨m, hm⟩ := hright t₀ b le_rfl h2 hδb ht₀.1 hb
+  exact ⟨n + m, qrsb_isPiecewiseVertex_append hn hm⟩
 
 end SmoothedOctagon.Reduction
