@@ -380,7 +380,10 @@ with positive diagonal derivatives \(2q_j/p_j\); dependence of
 \(p_j\) on preceding arcs does not change invertibility. The smooth
 state coordinate \((x,w,A)\), where \(A=gK(x)\), and the positive
 state-only clock used in the base note also preserve this endpoint
-rank. No full-domain rank assertion for arbitrary L3 inputs is needed.
+rank. No full-domain rank assertion for arbitrary L3 inputs is needed for this
+corollary. The later independent theorem in
+[LOCAL_MIXED_SIX_RANK.md](LOCAL_MIXED_SIX_RANK.md) establishes that stronger
+rank-five statement throughout the entire positive strict-star L3 domain.
 
 ### 6.2 Strictness holds at the external cuts, not only in open pieces
 

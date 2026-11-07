@@ -185,10 +185,10 @@ needed when a strict local descent is established.
 All five words end in three distinct labels. Explicit positive-factor
 inversion removes the three tangent-endpoint constraints, leaving two
 state-endpoint equations on three variables. This is an exact fixed-size
-setup, not a proof that a decreasing direction always exists. For L1 and L4
-the reduced state rank is two everywhere by LOCAL_FORWARD_RANK and
-LOCAL_SIX_VARIATION. Rank-zero and rank-one loci remain obligations for
-L2, L3, and L5; stationary points remain part
+setup, not a proof that a decreasing direction always exists. For L1, L3, and L4
+the reduced state rank is two everywhere by LOCAL_FORWARD_RANK,
+LOCAL_MIXED_SIX_RANK, and LOCAL_SIX_VARIATION. Rank-zero and rank-one loci
+remain obligations for L2 and L5; stationary points remain part
 of all five targets.
 
 A bounded-coordinate compactification is recorded, but singular boundary
@@ -225,6 +225,14 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Prove full endpoint rank five on the entire positive strict-star L3
+  domain in [LOCAL_MIXED_SIX_RANK](docs/LOCAL_MIXED_SIX_RANK.md). The middle
+  edge map has rank three; two exact asymmetric normal columns have strictly
+  negative determinant. Fixed outer-flow transformations cover arbitrary
+  positive padding, with the initial state fixed. Independent hand review
+  passed. This removes abnormality and normalized-adjoint ambiguity throughout
+  L3; it supplies no descent and does not restore the original false target.
 
 - Prove the complete-window external-switch condition, including the actual
   twisted seam and the unique-adjoint argument. Exclude the exact L1 input

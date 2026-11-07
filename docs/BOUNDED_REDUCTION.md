@@ -412,8 +412,10 @@ uniform conditioning as factors collapse or margins approach zero.
 
 The independent paired-holonomy determinant in
 [LOCAL_SIX_VARIATION.md](LOCAL_SIX_VARIATION.md) also proves full rank five
-throughout L4. Rank zero and rank one points MUST still be treated for L2,
-L3, and L5. In particular,
+throughout L4. [LOCAL_MIXED_SIX_RANK.md](LOCAL_MIXED_SIX_RANK.md) proves
+full rank five throughout L3, using the rank-three edge endpoint map and
+two independent asymmetric normal columns. Rank zero and rank one points
+MUST still be treated for L2 and L5. In particular,
 dimension counting alone proves neither a smooth fiber nor a decreasing
 direction. Stationary points cannot be discarded in any template. Failure of
 this same-word local method alone does not settle different-word replacement.

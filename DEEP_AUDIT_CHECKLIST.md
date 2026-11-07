@@ -158,7 +158,12 @@ four determinant identities and signs, and constrained Hessian correction.
 - [x] Retain the exact stationary minimum; do not infer cost descent from rank.
 - [x] Distinguish interior full rank from uniform boundary conditioning.
 - [x] Classify interior endpoint rank for L4: see LOCAL_SIX_VARIATION.
-- [ ] Classify interior endpoint ranks for L2, L3, and L5.
+- [x] Prove full endpoint rank five throughout L3 in LOCAL_MIXED_SIX_RANK:
+  arbitrary unequal edge-core data, exact two-dimensional normal determinant,
+  fixed-coordinate transport through arbitrary outer arcs, and positive
+  duration/factor changes. Independent hand review passed.
+- [x] Exclude abnormality and normalized-adjoint ambiguity throughout L3.
+- [ ] Classify interior endpoint ranks for L2 and L5.
 
 `docs/LOCAL_FORWARD_PMP_LIMIT.md` derives normality on the reduced state
 manifold and proves a limitation of first-order PMP. Independent review

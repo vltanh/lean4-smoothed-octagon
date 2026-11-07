@@ -279,8 +279,9 @@ conjecture solved at completion of P0 or at an analytic count below 5/5.
    `R`, and the initial state cannot vary in a splice.
 2. Six factor variables minus five endpoint constraints suggests one
    degree of freedom only at **regular rank**. L1 now has a full-domain
-   hand rank proof, as does L4 in LOCAL_SIX_VARIATION. Singular fibers for
-   L2, L3, and L5 remain unresolved and may
+   hand rank proof, as does L4 in LOCAL_SIX_VARIATION. LOCAL_MIXED_SIX_RANK now proves full rank five for L3 on its entire
+   positive strict-star domain, without a cost or symmetry assumption.
+   Singular fibers for L2 and L5 remain unresolved and may
    be isolated or have higher-dimensional components.
 3. The old forward alternating four-arc argument rules out a particular
    orientation; reversing its sign reverses the Hessian sign. Do not
@@ -308,6 +309,10 @@ endpoint formulas; the complete comparison through five positive
 pieces; two closed six-piece comparisons.
 
 **Completed prerequisite:** P0 window-eligibility and finite-splice hand audit.
+
+**Additional rank theorem:** LOCAL_MIXED_SIX_RANK proves full endpoint rank
+five throughout L3; minimizing windows are normal with a unique normalized
+adjoint. The original broader L3 replacement claim remains false.
 
 **Additional necessary conditions:** genuine external-switch ties, their
 exact L1 active-margin filter, and exclusion of the displayed endpoint-unique

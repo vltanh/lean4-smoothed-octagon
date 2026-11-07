@@ -152,6 +152,14 @@ near the standard forward family. Thus the added condition is effective
 against the displayed obstructions, but cannot justify an equal-factor
 classification.
 
+The [full-domain L3 rank theorem](docs/LOCAL_MIXED_SIX_RANK.md) proves endpoint
+rank five for every positive strict-star `021210` input. Three independent
+edge directions and two independent normal columns cover arbitrary outer
+arc lengths and unequal states. Thus every stationary L3 input has one
+normalized endpoint covector, and a minimizing window cannot use an abnormal
+lift. This is a rank theorem; the original broad-domain replacement target
+remains false.
+
 The [L4 variation certificate](docs/LOCAL_SIX_VARIATION.md) proves that the
 `010201` endpoint map has rank five throughout its positive-factor domain.
 It also exhibits an eligible stationary family for which every one of the
