@@ -49,7 +49,12 @@ include the possibility that the next reverse centre equals the global
 minimum. They impose no upper bound on the eventual forward-run length.
 The caller must therefore be completed once for each branch.
 
-## 2. Maximal-parameter charts cover the whole actual domain
+## 2. Base maximal-parameter domain before the final refinements
+
+This section records the original enclosing domain. Section 8 gives the
+stronger compact bounds and the exact complementary roots used by the
+frozen published caller. The original boxes below are not its final
+replay roots.
 
 Define three strictly positive actual parameters
 
@@ -71,7 +76,7 @@ d=a+T\delta_1,\quad W=T(1+\delta_1),\quad
 Z=\frac{Q(1+\delta_2)}W,\quad r=Z-d.
 \]
 
-The initial rational boxes are
+The original rational enclosing boxes are
 
 \[
 2/15\le a\le17/20,\quad 2/15\le c\le2,
@@ -92,9 +97,12 @@ For the last implication, `dr<4` gives
 `1+delta_2=W(d+r)/Q<W/d`, so `delta_2<c/d`.
 The closed boxes also contain every relevant limiting face.
 
-## 3. Directed contractors preserve every actual point
+## 3. Base directed contractors preserve every actual point
 
-The caller contracts only with necessary geometric inequalities. From
+These are the first reviewed geometric contractors. The frozen caller's
+additional and stronger contractors are reviewed in Section 8.
+
+The base contractions use only necessary geometric inequalities. From
 `S>=T` and `ST<=K` it obtains
 
 \[

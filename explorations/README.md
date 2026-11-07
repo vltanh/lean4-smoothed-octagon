@@ -2,6 +2,8 @@
 
 These scripts are preserved for reproducibility, including the older probes. They are **not** Lean tests and no script alone proves a global exclusion without its audited mathematical reduction. Current instructions: [docs/HANDOFF.md](../docs/HANDOFF.md).
 
+The [certificate replay guide](../docs/CERTIFICATE_REPLAY.md) collects the current build commands, domain coverage and acceptance conditions in one place.
+
 For **F**, consult the global_structure_forward_small_minimum, global_structure_forward_minimum_budget, global_structure_forward_angle_count, global_structure_forward_dual and global_structure_forward_ellipticity certificate scripts.
 
 For **M2**, consult the mixed_global_short_bridge family of certificates and CSV tables, mixed_reverse_centre_scale, mixed_global_reverse_angle_density, mixed_global_turn_elimination and mixed_global_scalar_dual certificates.

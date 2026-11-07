@@ -7,6 +7,7 @@
 - **[Authoritative handoff](docs/HANDOFF.md)** — exact M2 remaining statements, current restrictions and finite acceptance gates.
 - **[Compact progress ledger](CHECKLIST.md)** — active gates and the definition of completion.
 - **[Active proof map](docs/ACTIVE_MAP.md)** — precise theorem dependencies and audit/checker entry points.
+- **[Certificate replay guide](docs/CERTIFICATE_REPLAY.md)** — build commands, quantified domains and full-cover acceptance checks.
 - **[Legacy archive](docs/legacy/INDEX.md)** — retired roadmaps, old local windows, weaker bounds and original verbose status documents, preserved intact.
 
 ## Global case status
