@@ -16,4 +16,16 @@ The completed **smaller-short M2** caller is `mixed_smaller_short_interval_certi
 
 The new mixed continuation identity checks are `mixed_general_short_defect_interface_certificate.py`, `mixed_general_short_slack_certificate.py`, and `mixed_nonshort_completion_continuation_certificate.py`. The additional radial-completion identities are in `global_radial_completion_certificate.py`.
 
+The **nonshort M2** identities and hand corner are checked by `mixed_nonshort_completion_blowup_certificate.py` and `mixed_nonshort_small_parameter_certificate.py`. The portable `mixed_nonshort_coefficients.py` verifies every expression in the committed `mixed_nonshort_coefficients.hpp` without changing it. The final complementary caller is `mixed_nonshort_completion_interval_certificate.cpp`, with the separately audited `certified_lp_proposal.hpp`. Both full covers are pending.
+
+With matching MPFR development headers installed, build and replay the two branches as follows:
+
+```sh
+g++ -std=c++17 -O3 explorations/mixed_nonshort_completion_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_nonshort_completion_interval_certificate
+/tmp/mixed_nonshort_completion_interval_certificate 2000000 0
+/tmp/mixed_nonshort_completion_interval_certificate 2000000 1
+```
+
+Each invocation starts from all three complementary chart roots. The hand corner covers `epsilon<=1/32`. A successful resumed pending stack is explicitly labelled as insufficient for a stand-alone full-domain proof. See the [source audit](../docs/MIXED_NONSHORT_INTERVAL_CERTIFICATE_AUDIT.md) for hashes and the complete coverage boundary.
+
 The remaining numerical event probes, local L1–L4 certificates and earlier finite-window work are historical diagnostics, retained in place to avoid breaking script imports. The corresponding [notes are archived](../docs/legacy/INDEX.md).

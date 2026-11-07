@@ -81,6 +81,15 @@ accepts the necessary-condition reduction. The [radial completion bound](GLOBAL_
 also supplies a nonnegative cost for restoring the omitted radial
 coordinate of any window.
 
+The nonshort [five-variable reduction](MIXED_NONSHORT_BLOWUP_REDUCTION.md)
+uses three closed maximal-parameter charts and an exact cancellation of
+the simultaneous zero-duration denominator. The [hand corner theorem](MIXED_NONSHORT_SMALL_PARAMETER_EXCLUSION.md)
+excludes `epsilon<=1/32` uniformly. The published complementary caller,
+all contractors, coefficient expressions and LP proposal helper have an
+[independent source audit](MIXED_NONSHORT_INTERVAL_CERTIFICATE_AUDIT.md).
+Both full branch covers are running from their original three roots;
+no partial frontier or zero unknown count alone closes a branch.
+
 **M2.1 (OPEN):** At the **global minimum reverse centre whose smaller turn belongs to a nonshort forward run**, exclude both next-switch alternatives using the actual external switches and **same continuous PMP lift**. The smaller-short case is closed; do not assume a minimum must touch *two* long runs.
 
 **M2.2 (OPEN):** Uniformly exclude all admissible M2 periods: arbitrary nonshort run lengths, unequal margins, bridge-diagonal signs, weak third ties, singular/zero-duration limits, rank defects and the twisted seam. A local star escape or negative onsite form is not enough without the global extension/constraints.
@@ -97,7 +106,12 @@ excludes reverse-five minimizing periods directly. M2 must still close
 before this assembly proves the unrestricted cost inequality and affine
 uniqueness.
 
-**G5 (OPEN):** Perform an independent complete *mathematical* dependency audit. Keep external premises and internal hand checks explicit. Lean proof and CI remain deferred by the current instructions.
+**G5 (OPEN):** The [independent dependency review](GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md)
+accepts the realization, measurable-control, finite-before-normal,
+same-covector, complete-period and affine-equality chain conditional on
+the remaining nonshort covers and their final completion review. The
+external premises and arithmetic trust boundaries are explicit. Lean
+proof and CI remain deferred by the current instructions.
 
 ## Working protocol
 
