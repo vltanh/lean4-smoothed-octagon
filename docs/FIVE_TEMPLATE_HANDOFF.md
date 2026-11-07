@@ -1,9 +1,11 @@
 # Handoff — bounded-case proof plan for the Reinhardt conjecture
 
 **Checkpoint (2026-11-07): L3 on the stated local superset is refuted even
-with arbitrary measurable replacements. Repair the sufficient reduction.**
+with arbitrary measurable replacements. The revised complete-switch PMP
+package has a proved necessary domain; all five analytic targets remain open.**
 
-**Start here, then** `docs/BOUNDED_REDUCTION.md` (precise theorem/domain),
+**Start here, then** `docs/SWITCH_COMPLETE_REDUCTION.md` (revised domains and
+conditional theorem), `docs/BOUNDED_REDUCTION.md` (coverage and original domain),
 `CHECKLIST.md` (status), `docs/FORWARD_ALTERNATION_EXCLUSION.md`
 (proved local descent), and `docs/WORD_HOLONOMY.md` (endpoint algebra).
 
@@ -18,8 +20,10 @@ terminal times. It checks ASZ's sufficient-optimality theorem on one fixed
 padded reference, then globalizes small trims by compactness and the edge dual.
 The current domain is a necessary superset of actual minimizing windows;
 no closed-minimizer embedding of these counterexamples is claimed. The next
-proof gate is a justified repair: additional necessary minimizer conditions
-or a different uniform reduction. Adding replacement pieces is not a repair.
+proof gate is a uniform analytic result on the revised necessary domain,
+proved in [SWITCH_COMPLETE_REDUCTION.md](SWITCH_COMPLETE_REDUCTION.md), or
+another genuinely uniform reduction. Adding replacement pieces alone is not
+a repair of the original claim.
 The original five sufficient statements
 cannot all be proved as written.
 
@@ -47,7 +51,7 @@ global minimizer with `N >= 6` has a six-arc window of one of the following
 types, after cyclic relabeling. The proof accounts for the **twisted cyclic
 seam**. This is a structural coverage theorem, **not** a uniform bound.
 
-| Gate | Six control labels | Five switch signs | Universal LOCAL improvement |
+| Gate | Six control labels | Five switch signs | Original-domain improvement |
 | --- | --- | --- | --- |
 | L1 | `012012` | `+++++` | **OPEN** |
 | L2 | `021021` | `-----` | **OPEN** |
@@ -55,7 +59,12 @@ seam**. This is a structural coverage theorem, **not** a uniform bound.
 | L4 | `010201` | `+--++` | **OPEN** |
 | L5 | `021012` | `---++` | **OPEN** |
 
-**Required theorem for each gate:** For **every** six-positive-factor window
+The revised domains in SWITCH_COMPLETE_REDUCTION add the full free-time PMP
+and both external ties. Their necessity and conditional sufficiency are
+proved; **all five revised analytic targets are open**, including revised L3.
+The table above records the original larger-domain statements.
+
+**Required theorem for each revised gate:** For **every** six-positive-factor window
 of its specified type that can occur in a minimizer of cost at most the
 octagon's, construct an ACTUAL strict-star admissible replacement with
 *exactly the same initial and final frame and state*, with **strictly lower
@@ -66,8 +75,9 @@ limit it to at most six pieces.
 Each gate quantifies over **all asymmetric parameters**, not just symmetric,
 generic-rank, sampled, closed, or bounded-box tuples. The original domain
 is now proved too broad for L3 even without a replacement cap. L1, L2, L4, and L5
-remain open. A weaker target restricted by newly proved necessary minimizer
-conditions must keep its hypotheses explicit.
+remain open. The revised target uses the explicit domains D_i^sw in
+SWITCH_COMPLETE_REDUCTION; do not silently substitute either the original
+larger domain or only a symmetric, normal-by-assumption, or sampled subset.
 
 ## Why the package suffices, conditionally
 
@@ -309,6 +319,10 @@ endpoint formulas; the complete comparison through five positive
 pieces; two closed six-piece comparisons.
 
 **Completed prerequisite:** P0 window-eligibility and finite-splice hand audit.
+
+**Revised conditional package:** SWITCH_COMPLETE_REDUCTION proves the
+necessary-domain and finite-splice implication. All five revised analytic
+targets are open; none is counted as a proved exclusion.
 
 **Additional rank theorem:** LOCAL_MIXED_SIX_RANK proves full endpoint rank
 five throughout L3; minimizing windows are normal with a unique normalized

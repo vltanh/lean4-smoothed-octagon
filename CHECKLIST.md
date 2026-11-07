@@ -9,9 +9,9 @@ twisted rebasing, normalized sectors, and the finite-piece geometric splice.
 constructs eligible `021210` windows with no cheaper replacement among all
 measurable simplex controls, with free terminal time. Its additional input
 is the explicitly checked ASZ sufficient-optimality theorem; the separate
-six-piece proof is self-contained. Repair the domain or uniform reduction before
-treating this package as a viable proof plan. **No new whole-word enumeration.
-L1, L2, L4, L5 remain open; universal analytic exclusions proved: 0/5.**
+six-piece proof is self-contained. The revised necessary domains below retain
+the same five templates; all five strict-improvement premises are open.
+**No new whole-word enumeration. Universal analytic exclusions proved: 0/5.**
 
 Status date: **2026-11-07**. New Lean infrastructure, compilation, Lake, and CI remain paused.
 
@@ -27,10 +27,17 @@ No mathematical proof file or earlier contribution has been removed.
 expanding whole-trajectory case coverage.** A finite list of open lemmas is not
 itself such a bound.
 
-The candidate route is the fixed five-template package in
-[docs/BOUNDED_REDUCTION.md](docs/BOUNDED_REDUCTION.md). It has a proved coverage
-argument, four open analytic inputs, and one refuted sufficient input.
-It is not an unconditional boundedness theorem or a viable conjunction as stated.
+The original package in [docs/BOUNDED_REDUCTION.md](docs/BOUNDED_REDUCTION.md)
+has a proved coverage argument, four open analytic inputs, and one refuted
+sufficient input. It cannot be proved as stated.
+
+The revised candidate is
+[SWITCH_COMPLETE_REDUCTION](docs/SWITCH_COMPLETE_REDUCTION.md). It defines
+five explicit domains requiring one nontrivial whole-window PMP lift and
+inactive ties at both external switches. Every selected minimizing window
+belongs to one of these domains; improvement on all five still implies
+N<=5 by the P0 splice. This necessary-domain and conditional-implication
+proof is complete. **All five revised analytic targets remain open.**
 
 A proved necessary restriction is now available:
 [MINIMIZER_WINDOW_PMP](docs/MINIMIZER_WINDOW_PMP.md) requires an inactive
@@ -57,7 +64,8 @@ the filter does not force equal factors or a globally competitive extension.
 | L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Refuted even with arbitrary measurable replacements.** Eligible arbitrarily cheap windows are global minima for their fixed endpoints, with free terminal time. See [LOCAL_REVERSE_SIX_GLOBAL_MINIMUM](docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md). No closed-minimizer embedding is asserted. |
 | L4: 010201 | Same universal local improvement at a reverse run of length two followed by at least two forward switches. | **Open.** Full-domain endpoint rank five is proved. An exact eligible stationary family has all five compensated missing-control switch needles positive; that switch-only shortcut is false. See [LOCAL_SIX_VARIATION](docs/LOCAL_SIX_VARIATION.md). |
 | L5: 021012 | Same universal local improvement at a reverse run of at least three followed by at least two forward switches. | **Open.** |
-| Uniform bound | Deduce N<=5 for every global minimizer from valid local improvements and the published finite bang-bang reduction. | Conditional implication proved, but the original L3 premise is false. A repaired reduction is required. |
+| Revised five-target package | Restrict each input to the explicit complete-switch PMP domain, retaining abnormal alternatives where rank is unresolved. | Necessary membership and conditional sufficiency proved in SWITCH_COMPLETE_REDUCTION. All five revised improvement targets are open. |
+| Uniform bound | Deduce N<=5 for every global minimizer from valid local improvements and the published finite bang-bang reduction. | Conditional implication proved for the revised domains; its five analytic premises are open. No unconditional bound. |
 | Global comparison and equality | Apply the existing through-five cost comparison and equality classification after the uniform bound is proved. | Conditional only. Global minimality and affine rigidity remain open. |
 | Kernel validation | Compile and inspect the final statements and dependencies. | Deferred under the current workflow. |
 
@@ -225,6 +233,12 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Define and independently review a corrected five-template necessary domain
+  in SWITCH_COMPLETE_REDUCTION. Preserve the false original L3 claim as
+  historical, retain one continuous PMP lift and both external ties, and
+  prove actual minimizing-window membership and the finite-splice conditional
+  implication. All five revised cost-improvement targets remain open.
 
 - Prove full endpoint rank five on the entire positive strict-star L3
   domain in [LOCAL_MIXED_SIX_RANK](docs/LOCAL_MIXED_SIX_RANK.md). The middle

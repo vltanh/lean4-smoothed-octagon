@@ -64,7 +64,13 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
   with preserved endpoints suffices for contradiction to global minimality.
 - [x] Refute the original at-most-six L3 target on its full stated domain
   by producing eligible counterexamples. This is not a proved exclusion.
-- [ ] Prove a repaired sufficient package or a different uniform bound.
+- [x] Define the complete-switch PMP domains in SWITCH_COMPLETE_REDUCTION
+  and prove actual-window membership plus the conditional finite-splice
+  implication, retaining abnormal alternatives where rank is unresolved.
+- [x] Independently review the revised physical fields, cost convention,
+  single cotangent lift, neighbor labels, twist, and competitor scope.
+- [ ] Prove all five revised analytic improvement targets or a different
+  unconditional uniform bound.
 - [ ] Certify singular boundary faces of the bounded-coordinate compactification.
 - [ ] Deduce the unconditional bound N<=5.
 - [ ] Prove unrestricted global minimality and affine rigidity.

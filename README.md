@@ -20,8 +20,15 @@ their fixed endpoints among all measurable simplex controls, with free time.
 Read [the full obstruction](docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md) and
 [its self-contained six-piece foundation](docs/LOCAL_REVERSE_SIX_OBSTRUCTION.md) before trying
 to complete that sufficient package. L1, L2, L4, and L5 remain open;
-universal analytic exclusions proved: **0/5**. A repaired reduction is
-required. Do not resume increasing-length whole-trajectory enumeration.
+universal analytic exclusions proved: **0/5**.
+
+The revised [complete-switch PMP package](docs/SWITCH_COMPLETE_REDUCTION.md)
+now has a proved necessary domain and conditional implication: every selected
+minimizing window admits one nontrivial PMP lift with inactive ties at both
+external switches, and strict finite-piece improvement on the five restricted
+domains would imply N<=5. **All five revised analytic targets remain open.**
+The new hypotheses do not establish any universal cost decrease. Do not
+resume increasing-length whole-trajectory enumeration.
 
 The P0 note also records the corrected terminal conjugation and the explicit
 equality transfer to the concrete octagon. Independent premises and equality
@@ -38,7 +45,7 @@ using the established local forward-alternation exclusion, any finite cyclically
 reduced minimizing trajectory with at least six positive vertex pieces contains,
 up to cyclic relabeling, one of these six-piece windows:
 
-| Local template | Sign description | Universal improvement status |
+| Local template | Sign description | Original-domain improvement status |
 | --- | --- | --- |
 | 012012 | Five forward switches | Open |
 | 021021 | Five reverse switches | Open |

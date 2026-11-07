@@ -4,6 +4,13 @@ Date: 2026-11-06. Priority: establish boundedness before further whole-word comp
 
 ## Status: coverage proved; the original L3 sufficient statement is false
 
+**Revised candidate:** [SWITCH_COMPLETE_REDUCTION.md](SWITCH_COMPLETE_REDUCTION.md)
+defines stronger necessary input domains using one whole-window PMP lift and
+both external-switch ties. Their necessity and the conditional five-target
+implication are proved; all five revised cost-improvement assertions are open.
+The original larger-domain statements below are preserved with their original
+status, including the false L3 premise.
+
 **Update (2026-11-07):** [LOCAL_REVERSE_SIX_OBSTRUCTION.md](LOCAL_REVERSE_SIX_OBSTRUCTION.md)
 proves that some eligible `021210` windows admit no cheaper replacement with
 at most six positive vertex pieces. The independently reviewed strengthening
