@@ -77,9 +77,9 @@ theorem starState_eq_J_of_commutator_zero {X : Mat2} (hX : IsStarState X)
     (hcomm : J * X - X * J = 0) : X = J := by
   have h00 := congrArg (fun M : Mat2 ↦ M 0 0) hcomm
   have h01 := congrArg (fun M : Mat2 ↦ M 0 1) hcomm
-  simp only [J, Matrix.sub_apply, Matrix.mul_apply, Fin.sum_univ_two,
-    Matrix.cons_val_zero, Matrix.cons_val_one, zero_mul, one_mul, neg_one_mul,
-    mul_zero, mul_one, mul_neg_one, zero_add, add_zero, Pi.zero_apply] at h00 h01
+  simp only [J, Matrix.sub_apply, Matrix.mul_apply, Fin.sum_univ_two, Matrix.of_apply,
+    Matrix.cons_val_zero, Matrix.cons_val_one, zero_mul, neg_one_mul,
+    mul_zero, mul_one, mul_neg_one, zero_add, add_zero, Matrix.zero_apply] at h00 h01
   have htr := hX.1
   rw [Matrix.trace_fin_two] at htr
   have ha : X 0 0 = 0 := by linarith
@@ -104,7 +104,7 @@ theorem circle_control_unique {u : Fin 3 → ℝ} (hu : u ∈ controlSimplex)
     u = fun _ ↦ (1 / 3 : ℝ) := by
   have hden : traceForm (controlMatrix u) J = -(2 / 3 : ℝ) := by
     simp only [traceForm, controlMatrix, J, Matrix.trace_fin_two, Matrix.mul_apply,
-      Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one,
+      Fin.sum_univ_two, Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one,
       mul_zero, mul_one, mul_neg_one, zero_add, add_zero]
     linarith [hu.2]
   have hP : controlP u J = (-3 / 2 : ℝ) • controlMatrix u := by
@@ -117,12 +117,13 @@ theorem circle_control_unique {u : Fin 3 → ℝ} (hu : u ∈ controlSimplex)
   have h00 := congrArg (fun M : Mat2 ↦ M 0 0) hZ
   have h01 := congrArg (fun M : Mat2 ↦ M 0 1) hZ
   simp only [controlMatrix, J, Matrix.sub_apply, Matrix.mul_apply, Fin.sum_univ_two,
-    Matrix.cons_val_zero, Matrix.cons_val_one, zero_mul, one_mul, neg_one_mul,
-    mul_zero, mul_one, mul_neg_one, zero_add, add_zero, Pi.zero_apply] at h00 h01
+    Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one, zero_mul,
+    neg_one_mul, mul_zero, mul_one, mul_neg_one, zero_add, add_zero,
+    Matrix.zero_apply] at h00 h01
   have h3 : (√3 : ℝ) ≠ 0 := by positivity
   field_simp [h3] at h01
   funext i
-  fin_cases i <;> linarith [hu.2]
+  fin_cases i <;> simp only [Fin.reduceFinMk] <;> linarith [hu.2]
 
 /-! ## The actual integral extremal on an explicit subinterval -/
 

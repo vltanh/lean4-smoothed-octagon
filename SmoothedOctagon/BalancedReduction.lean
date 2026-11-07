@@ -44,7 +44,7 @@ theorem positiveBoundaryParam_reparam {K : Set (Fin 2 → ℝ)}
   · intro t hz
     have hp := hpos t
     rw [hz] at hp
-    simpa [det2] using hp
+    simp [det2] at hp
   · rw [a.surjective.range_comp γ]
     exact hγ.2.2.1
 
@@ -109,7 +109,7 @@ theorem normalized_worstDisk_exists_balanced_circle {K : Set (Fin 2 → ℝ)}
   have hτimage : ∀ j, τ j '' Ico 0 P = frontier K := by
     intro j
     change (σ j ∘ a) '' Ico 0 P = frontier K
-    rw [← image_image, hIco]
+    rw [image_comp, hIco]
     simpa only [zero_add] using criticalBoundaryTrace_image_Ico hG j 0
   have hperiod : 6 * (P / 6) = P := by ring
   refine ⟨τ, P / 6, ⟨hK.1, fun j ↦ ⟨(hτpar j).1, (hτpar j).2.1⟩,

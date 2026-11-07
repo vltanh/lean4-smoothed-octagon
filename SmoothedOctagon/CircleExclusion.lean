@@ -34,7 +34,7 @@ theorem reinhardtCost_eq_three_mul_of_circle {T : ℝ} {X : ℝ → Mat2}
       ∫ _ in (0 : ℝ)..T, (-2 : ℝ) := by
     apply intervalIntegral.integral_congr_Ioo_of_le hT
     intro t ht
-    rw [hcircle t ht]
+    simp only [hcircle t ht]
     norm_num [traceForm, J, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
   unfold reinhardtCost
   rw [hi, intervalIntegral.integral_const]

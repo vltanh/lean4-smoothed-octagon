@@ -46,7 +46,8 @@ theorem state_cyclic_of_frame {G Y : ℝ → Mat2} {T : ℝ}
   have hleft : HasDerivAtEntrywise (fun u ↦ G (u + T))
       (G (t + T) * Y (t + T)) t := by
     simpa only [one_smul] using
-      (hD (t + T)).scomp ((hasDerivAt_id t).add_const T)
+      HasDerivAtEntrywise.scomp (h := fun u ↦ u + T) (hD (t + T))
+        ((hasDerivAt_id' t).add_const T)
   rw [hfun] at hleft
   have hmatrix := hleft.unique ((hD t).mul_const R)
   rw [hshift t] at hmatrix

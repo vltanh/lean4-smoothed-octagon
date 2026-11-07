@@ -69,12 +69,12 @@ theorem continuousOn_controlCommutator {X : ℝ → Mat2} {T : ℝ}
   have hZon : ContinuousOn (fun p : ℝ × (Fin 3 → ℝ) ↦ controlMatrix p.2)
       (Icc 0 T ×ˢ controlSimplex) :=
     (continuous_controlMatrix.comp continuous_snd).continuousOn
-  have hmul := hZon.mul hXon
+  have hmul := hZon.fun_mul hXon
   have hden : ContinuousOn
       (fun p : ℝ × (Fin 3 → ℝ) ↦ traceForm (controlMatrix p.2) (X p.1))
       (Icc 0 T ×ˢ controlSimplex) := by
     simpa only [traceForm, Matrix.trace_fin_two] using
-      (Matrix.continuousOn_iff_entrywise.mp hmul 0 0).add
+      (Matrix.continuousOn_iff_entrywise.mp hmul 0 0).fun_add
         (Matrix.continuousOn_iff_entrywise.mp hmul 1 1)
   have hne : ∀ p ∈ Icc 0 T ×ˢ controlSimplex,
       traceForm (controlMatrix p.2) (X p.1) ≠ 0 := by
@@ -217,7 +217,7 @@ theorem stateTrajectory_stateCurvature_nonneg {T : ℝ} {u : ℝ → Fin 3 → �
   intro j
   rw [(hd ht).derivEntrywise, oct_stateCurvature_eq hstar (u t) hden.ne j]
   exact mul_nonneg
-    (mul_nonneg_of_nonpos_of_nonpos (by norm_num : (-2 : ℝ) ≤ 0) (inv_neg.mpr hden).le)
+    (mul_nonneg_of_nonpos_of_nonpos (by norm_num : (-2 : ℝ) ≤ 0) (inv_neg''.mpr hden).le)
     (hu.1 j).1
 
 /-- The three state curvatures control all six contacts: the other three are
@@ -239,13 +239,11 @@ theorem sixthRoot_curvature_nonneg_of_stateCurvature {X X' : Mat2}
   · have heq : q 4 = q 1 := hneg 1
     rwa [heq] at h4
   · exact h2
-  · have heq : q 3 = q 0 := hneg 0
-    rw [heq]
-    exact h0
+  · have heq : q 0 = q 3 := (hneg 0).symm
+    rwa [heq] at h0
   · exact h4
-  · have heq : q 5 = q 2 := hneg 2
-    rw [heq]
-    exact h2
+  · have heq : q 2 = q 5 := (hneg 2).symm
+    rwa [heq] at h2
 
 /-- Every contact of an arbitrary integral-form state trajectory has nonnegative
 signed curvature almost everywhere on the open interval. The proof is local:

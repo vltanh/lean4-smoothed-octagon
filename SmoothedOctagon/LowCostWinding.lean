@@ -137,8 +137,9 @@ theorem reflectedFirstRow_contDiff {g : ℝ → Mat2}
   apply contDiff_pi.mpr
   intro i
   fin_cases i
-  · simpa only [reflectedFirstRow, Matrix.cons_val_zero] using hgc 0 0
-  · simpa only [reflectedFirstRow, Matrix.cons_val_one] using (hgc 0 1).neg
+  · simpa only [reflectedFirstRow, Fin.zero_eta, Matrix.cons_val_zero] using hgc 0 0
+  · simpa only [reflectedFirstRow, Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_zero]
+      using (hgc 0 1).neg
 
 theorem reflectedFirstRow_ne_zero {g : ℝ → Mat2}
     (hdet : ∀ t, (g t).det = 1) (t : ℝ) : reflectedFirstRow g t ≠ 0 := by
@@ -148,7 +149,9 @@ theorem reflectedFirstRow_ne_zero {g : ℝ → Mat2}
   simp only [reflectedFirstRow, Matrix.cons_val_zero, Matrix.cons_val_one, Pi.zero_apply] at h0 h1
   have hd := hdet t
   rw [Matrix.det_fin_two] at hd
-  nlinarith
+  have h1' : g t 0 1 = 0 := by linarith
+  rw [h0, h1'] at hd
+  norm_num at hd
 
 theorem reflectedFirstRow_hasDerivAt {g X : ℝ → Mat2}
     (hg : ∀ t, HasDerivAtEntrywise g (g t * X t) t) (t : ℝ) :
@@ -157,8 +160,9 @@ theorem reflectedFirstRow_hasDerivAt {g X : ℝ → Mat2}
   rw [hasDerivAt_pi]
   intro i
   fin_cases i
-  · simpa only [reflectedFirstRow, Matrix.cons_val_zero] using hg t 0 0
-  · simpa only [reflectedFirstRow, Matrix.cons_val_one] using (hg t 0 1).neg
+  · simpa only [reflectedFirstRow, Fin.zero_eta, Matrix.cons_val_zero] using hg t 0 0
+  · simpa only [reflectedFirstRow, Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_zero]
+      using (hg t 0 1).fun_neg
 
 theorem reflectedFirstRow_cross {g X : ℝ → Mat2}
     (hg : ∀ t, HasDerivAtEntrywise g (g t * X t) t)
@@ -186,7 +190,8 @@ theorem reflectedFirstRow_angularSpeed_bounds {g X : ℝ → Mat2}
       (reflectedFirstRow g t 0) ^ 2 + (reflectedFirstRow g t 1) ^ 2 := by
     simp [Complex.normSq_apply, sc_toC_re, sc_toC_im, pow_two]
   have htrace : -traceForm J (X t) = X t 1 0 - X t 0 1 := by
-    simp [traceForm, J, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two]
+    simp [traceForm, J, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two,
+      Matrix.vecMul, dotProduct]
     ring
   rw [sc_logDeriv_im, reflectedFirstRow_cross hg hstar t]
   refine ⟨div_pos (starRowQuadratic_pos (hstar t) hz) hn, ?_⟩
@@ -224,8 +229,9 @@ theorem reflectedFirstRow_angle_le_cost {g X : ℝ → Mat2} {T : ℝ}
       (hanglec.intervalIntegrable 0 T)
     simpa only [sc_angle_zero, sub_zero] using h
   have hle := intervalIntegral.integral_mono_on hT
-    (hanglec.intervalIntegrable 0 T) (htracec.neg.intervalIntegrable 0 T)
+    (hanglec.intervalIntegrable 0 T) (htracec.neg.intervalIntegrable (μ := MeasureTheory.volume) 0 T)
     (fun t _ ↦ (reflectedFirstRow_angularSpeed_bounds hdet hg hstar t).2)
+  simp only [Function.comp_def, Pi.neg_apply] at hle
   rw [hangleint, intervalIntegral.integral_neg] at hle
   unfold reinhardtCost
   linarith
@@ -251,10 +257,10 @@ theorem lowCost_reflectedFirstRow_angle {g X : ℝ → Mat2} {T : ℝ}
   have hzT : sc_toC (reflectedFirstRow g T) =
       Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I) := by
     apply Complex.ext
-    · simp [reflectedFirstRow, hgT, R, Complex.exp_ofReal_mul_I_re,
-        Real.cos_pi_div_three]
-    · simp [reflectedFirstRow, hgT, R, Complex.exp_ofReal_mul_I_im,
-        Real.sin_pi_div_three]
+    · rw [Complex.exp_ofReal_mul_I_re, Real.cos_pi_div_three]
+      simp [reflectedFirstRow, hgT, R]
+    · rw [Complex.exp_ofReal_mul_I_im, Real.sin_pi_div_three]
+      simp [reflectedFirstRow, hgT, R]
   have hexp : Complex.exp (sc_log (reflectedFirstRow g) T) =
       Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I) := by
     have h := toComplex_eq_exp_log_of_contDiff hγ hne T

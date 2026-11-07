@@ -25,6 +25,7 @@ Source draft only: compilation and kernel validation have not been run.
 namespace SmoothedOctagon
 
 open Set Real SmoothedPolygons Matrix
+open scoped NNReal
 
 private lemma exists_lipschitzWith_mul_const {f : ℝ → ℝ} {C : ℝ≥0}
     (hf : LipschitzWith C f) (c : ℝ) :
@@ -124,7 +125,7 @@ theorem balancedPair_reparam_of_derivatives_lipschitz {K : Set (Fin 2 → ℝ)}
   have hτimage : ∀ j, τ j '' Ico 0 P = frontier K := by
     intro j
     change (σ j ∘ a) '' Ico 0 P = frontier K
-    rw [← image_image, hIco]
+    rw [image_comp, hIco]
     exact hbal.2.2.2.2.2.2.2.2.2 j
   have hperiod : 6 * (P / 6) = P := by ring
   refine ⟨hbal.1, fun j ↦ ⟨(hτpar j).1, (hτpar j).2.1⟩,
@@ -151,6 +152,7 @@ theorem balancedPair_determinantClock_reparam {K : Set (Fin 2 → ℝ)}
     IsBalancedPair K (fun j ↦ σ j ∘ a) (P / 6) := by
   have hperiod : Function.Periodic (fun t ↦ contactFrame σ (a t)) P := by
     intro t
+    show contactFrame σ (a (t + P)) = contactFrame σ (a t)
     rw [haper]
     exact contactFrame_periodic hbal.2.2.2.2.2.2.2.1 (a t)
   have hvel := frame_velocity_lipschitz_periodic hg hLip hP hperiod

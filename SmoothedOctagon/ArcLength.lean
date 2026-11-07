@@ -76,7 +76,7 @@ theorem periodic_euclideanSpeed {γ : ℝ → Fin 2 → ℝ} {T : ℝ}
     intro t
     have hcomp : HasDerivAt (γ ∘ (fun u : ℝ ↦ u + T)) (deriv γ (t + T)) t := by
       simpa only [one_smul] using
-        (hd (t + T)).hasDerivAt.scomp t ((hasDerivAt_id t).add_const T)
+        (hd (t + T)).hasDerivAt.scomp t ((hasDerivAt_id' t).add_const T)
     rw [hshift] at hcomp
     exact hcomp.deriv.symm
   intro t

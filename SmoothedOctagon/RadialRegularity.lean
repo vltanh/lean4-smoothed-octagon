@@ -115,8 +115,10 @@ lemma hasDerivAt_rein_dir (θ : ℝ) :
   · simpa [rein_dir, radialDirectionDerivative] using Real.hasDerivAt_sin θ
 
 lemma contDiff_rein_dir : ContDiff ℝ 1 rein_dir := by
-  unfold rein_dir
-  fun_prop
+  refine contDiff_pi.2 fun i ↦ ?_
+  fin_cases i
+  · simpa [rein_dir] using Real.contDiff_cos
+  · simpa [rein_dir] using Real.contDiff_sin
 
 lemma continuous_radialDirectionDerivative : Continuous radialDirectionDerivative := by
   unfold radialDirectionDerivative

@@ -28,7 +28,7 @@ namespace SmoothedOctagon
 open MeasureTheory Set Real Matrix PlaneCurve SmoothedPolygons
 
 /-- The six contact curves associated with a global matrix frame. -/
-def frameContact (g : ℝ → Mat2) (j : ZMod 6) (t : ℝ) : Fin 2 → ℝ :=
+noncomputable def frameContact (g : ℝ → Mat2) (j : ZMod 6) (t : ℝ) : Fin 2 → ℝ :=
   g t *ᵥ sixthRoot j
 
 lemma cyclicFrame_add_nat {g : ℝ → Mat2} {T : ℝ}
@@ -53,7 +53,8 @@ lemma frameContact_contDiff {g : ℝ → Mat2}
   apply contDiff_pi.mpr
   intro i
   simpa only [frameContact, Matrix.mulVec, dotProduct, Fin.sum_univ_two] using
-    ((hgc i 0).mul_const (sixthRoot j 0)).add ((hgc i 1).mul_const (sixthRoot j 1))
+    ((hgc i 0).mul (contDiff_const (c := sixthRoot j 0))).add
+      ((hgc i 1).mul (contDiff_const (c := sixthRoot j 1)))
 
 lemma frameContact_hasDerivAt {g X : ℝ → Mat2}
     (hg : ∀ t, HasDerivAtEntrywise g (g t * X t) t) (j : ZMod 6) (t : ℝ) :
@@ -129,13 +130,17 @@ lemma continuous_angle_of_contDiff {γ : ℝ → Fin 2 → ℝ}
 
 lemma sc_toC_R_mulVec (v : Fin 2 → ℝ) :
     sc_toC (R *ᵥ v) = Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I) * sc_toC v := by
+  have hre : (Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I)).re = 1 / 2 := by
+    rw [Complex.exp_ofReal_mul_I_re, Real.cos_pi_div_three]
+  have him : (Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I)).im = √3 / 2 := by
+    rw [Complex.exp_ofReal_mul_I_im, Real.sin_pi_div_three]
   apply Complex.ext
-  · simp [sc_toC_re, sc_toC_im, Complex.mul_re, Complex.exp_ofReal_mul_I_re,
-      Complex.exp_ofReal_mul_I_im, Real.cos_pi_div_three, Real.sin_pi_div_three,
-      R, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> ring
-  · simp [sc_toC_re, sc_toC_im, Complex.mul_im, Complex.exp_ofReal_mul_I_re,
-      Complex.exp_ofReal_mul_I_im, Real.cos_pi_div_three, Real.sin_pi_div_three,
-      R, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> ring
+  · rw [Complex.mul_re, hre, him]
+    simp [sc_toC_re, sc_toC_im, R, dotProduct, Fin.sum_univ_two]
+    ring
+  · rw [Complex.mul_im, hre, him]
+    simp [sc_toC_re, sc_toC_im, R, dotProduct, Fin.sum_univ_two]
+    ring
 
 lemma reflectedFirstRow_shift {g : ℝ → Mat2} {T : ℝ}
     (hshift : ∀ t, g (t + T) = g t * R) (t : ℝ) :
@@ -340,7 +345,7 @@ lemma curve_injOn_of_full_angle {γ : ℝ → Fin 2 → ℝ} {P : ℝ}
   linarith
 
 /-- The explicit radial hull of the first contact of a global cyclic frame. -/
-def cyclicFrameDisk (g : ℝ → Mat2) (T : ℝ) : Set (Fin 2 → ℝ) :=
+noncomputable def cyclicFrameDisk (g : ℝ → Mat2) (T : ℝ) : Set (Fin 2 → ℝ) :=
   radialHull (frameContact g 0) 0 (6 * T)
 
 /-- A global low-cost cyclic smooth frame with the actual star and a.e. curvature

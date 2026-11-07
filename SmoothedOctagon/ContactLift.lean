@@ -52,7 +52,7 @@ lemma successorAngle_strictMono (hG : rein_Good K) : StrictMono (successorAngle 
 
 lemma successorAngle_add_two_pi (hG : rein_Good K) (θ : ℝ) :
     successorAngle hG (θ + 2 * π) = successorAngle hG θ + 2 * π := by
-  simpa only [Int.cast_one, one_mul] using
+  simpa only [successorAngle, Int.cast_one, one_mul] using
     rein_φ_add_int hG (fun t ↦ (criticalHexagonAtAngle_spec hG t).1)
       (fun t ↦ (criticalHexagonAtAngle_spec hG t).2) (j := 1) θ 1
 
@@ -129,8 +129,8 @@ lemma successorAngle_twice_lt_add_pi (hG : rein_Good K) (θ : ℝ) :
   have h2 := successorAngle_bounds hG (successorAngle hG θ)
   have htrace : criticalBoundaryTrace hG 0
       (successorAngle hG (successorAngle hG θ)) = criticalBoundaryTrace hG 2 θ := by
-    simpa only [Function.iterate_succ_apply, Function.iterate_zero_apply, zero_add] using
-      criticalBoundaryTrace_successor_iterate hG 2 0 θ
+    simpa only [Function.iterate_succ_apply, Function.iterate_zero_apply, zero_add,
+      Nat.cast_ofNat] using criticalBoundaryTrace_successor_iterate hG 2 0 θ
   have hdet : 0 < det2 (rein_bd K θ)
       (rein_bd K (successorAngle hG (successorAngle hG θ))) := by
     rw [← criticalBoundaryTrace_zero hG, htrace]
@@ -155,9 +155,10 @@ lemma successorAngle_iterate_three (hG : rein_Good K) (θ : ℝ) :
     calc
       criticalBoundaryTrace hG 0 ((successorAngle hG)^[3] θ) =
           criticalBoundaryTrace hG 3 θ := by
-        simpa only [zero_add] using criticalBoundaryTrace_successor_iterate hG 3 0 θ
+        simpa only [zero_add, Nat.cast_ofNat] using
+          criticalBoundaryTrace_successor_iterate hG 3 0 θ
       _ = -criticalBoundaryTrace hG 0 θ := by
-        simpa only [zero_add] using
+        simpa only [criticalBoundaryTrace, zero_add] using
           rein_hexMidpoint_add_three (criticalHexagonAtAngle_spec hG θ).1.1 0
   have hπ : criticalBoundaryTrace hG 0 (θ + π) = -criticalBoundaryTrace hG 0 θ := by
     rw [criticalBoundaryTrace_zero, rein_bd_add_pi_of_isCCSDisk hG.1]
@@ -291,10 +292,10 @@ private lemma starCurve_eq_radial {γ : ℝ → Fin 2 → ℝ} {T : ℝ}
   fin_cases i
   · have hre := congrArg Complex.re hz
     simpa only [sc_toC_re, Complex.exp_re, rein_dir, sc_angle, Pi.smul_apply,
-      smul_eq_mul, Matrix.cons_val_zero] using hre
+      smul_eq_mul, Fin.zero_eta, Matrix.cons_val_zero] using hre
   · have him := congrArg Complex.im hz
     simpa only [sc_toC_im, Complex.exp_im, rein_dir, sc_angle, Pi.smul_apply,
-      smul_eq_mul, Matrix.cons_val_one, Matrix.cons_val_zero] using him
+      smul_eq_mul, Fin.mk_one, Matrix.cons_val_one, Matrix.cons_val_zero] using him
 
 /-- Every balanced circle representation of an actual worst disk has a smooth positive
 successor lift. It shifts all six contacts and advances by exactly one full period after

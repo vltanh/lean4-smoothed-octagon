@@ -24,7 +24,7 @@ Source draft only: compilation and kernel validation have not been run.
 namespace SmoothedOctagon
 
 open Set Filter MeasureTheory Real Matrix SmoothedPolygons
-open scoped Topology
+open scoped Topology NNReal
 
 /-! ## Six copies of a matrix arc -/
 
@@ -114,7 +114,7 @@ theorem cyclicMatrixExtension_continuous {A B : Mat2} {T : ℝ} {f : ℝ → Mat
     (cyclic_pw_continuousAt_pos hT hglue hf hn).congr
       (cyclicMatrixExtension_eventuallyEq hT hA hB hn).symm
   have hcomp : ContinuousAt (fun x ↦ cyclicMatrixExtension A B T f (x + n * (6 * T))) t :=
-    hc.comp (by fun_prop)
+    ContinuousAt.comp (f := fun x : ℝ ↦ x + n * (6 * T)) hc (by fun_prop)
   rwa [show (fun x ↦ cyclicMatrixExtension A B T f (x + n * (6 * T))) =
     cyclicMatrixExtension A B T f from funext hp] at hcomp
 
@@ -137,12 +137,14 @@ theorem cyclicMatrixExtension_hasDerivAt {A B : Mat2} {T : ℝ} {f v : ℝ → M
         (fun i _ u hu ↦ poly_pw_of_mem_Ico hT hu)
     have hc := cyclic_pw_continuousAt_pos hT hvglue hv hs
     rw [cyclicMatrixExtension_of_nonneg hT hA hB hs.le]
-    exact (Matrix.hasDerivAtEntrywise_of_eq_add_integral hI ⟨hs, hsN⟩ hc)
-      .congr_of_eventuallyEq (cyclicMatrixExtension_eventuallyEq hT hA hB hs)
+    exact HasDerivAtEntrywise.congr_of_eventuallyEq
+      (Matrix.hasDerivAtEntrywise_of_eq_add_integral hI ⟨hs, hsN⟩ hc)
+      (cyclicMatrixExtension_eventuallyEq hT hA hB hs)
   obtain ⟨n, hn⟩ := oct_exists_int_add_pos (by positivity : 0 < 6 * T) t
   have hpf := (cyclicMatrixExtension_periodic (A := A) (B := B) (f := f) hT).int_mul n
   have hpv := (cyclicMatrixExtension_periodic (A := A) (B := B) (f := v) hT).int_mul n
-  have hcomp := (hpositive _ hn).scomp ((hasDerivAt_id' t).add_const (n * (6 * T)))
+  have hcomp := HasDerivAtEntrywise.scomp (h := fun x : ℝ ↦ x + n * (6 * T))
+    (hpositive _ hn) ((hasDerivAt_id' t).add_const (n * (6 * T)))
   rw [one_smul, hpv, show (fun x ↦ cyclicMatrixExtension A B T f (x + n * (6 * T))) =
     cyclicMatrixExtension A B T f from funext hpf] at hcomp
   exact hcomp
@@ -275,6 +277,7 @@ theorem cyclicMatrixExtension_lipschitz {A B : Mat2} {T : ℝ} {f : ℝ → Mat2
     (hglue : f T = A * f 0 * B) (hf : LipschitzOnEntrywise f (Icc 0 T)) :
     LipschitzOnEntrywise (cyclicMatrixExtension A B T f) univ := by
   have hlocal := cyclic_pw_lipschitzOn hT hglue hf 12
+  simp only [Nat.cast_ofNat] at hlocal
   have hext : LipschitzOnEntrywise (cyclicMatrixExtension A B T f) (Icc 0 (2 * (6 * T))) := by
     intro i j
     obtain ⟨C, hC⟩ := hlocal i j
@@ -295,8 +298,8 @@ theorem ae_of_periodic_ae_on_Ioo {p : ℝ → Prop} {T : ℝ} (hT : 0 < T)
     ∀ᵐ t, p t := by
   have htrans : ∀ n : ℤ, ∀ᵐ t, t - (n : ℝ) * T ∈ Ioo 0 T → p (t - (n : ℝ) * T) := by
     intro n
-    have h := (measurePreserving_add_right (volume : Measure ℝ) (-((n : ℝ) * T)))
-      .quasiMeasurePreserving.ae hae
+    have h := (measurePreserving_add_right (volume : Measure ℝ)
+      (-((n : ℝ) * T))).quasiMeasurePreserving.ae hae
     simpa only [sub_eq_add_neg] using h
   have hgrid : ∀ᵐ t ∂volume, t ∉ range (fun n : ℤ ↦ (n : ℝ) * T) :=
     (countable_range _).ae_notMem volume
@@ -407,8 +410,9 @@ theorem exists_cyclic_extension_of_isReinhardtAdmissible
   have hD : ∀ t, HasDerivAtEntrywise G (G t * Y t) t := by
     intro t
     have hd := cyclicMatrixExtension_hasDerivAt hT (by simp) oct_R_pow_six hgglue hvglue
-      hgc (hgc.mul hXc) (stateTrajectory_frame_hasDerivAt htraj) t
-    simpa only [cyclic_extension_velocity] using hd
+      hgc (hgc.fun_mul hXc) (stateTrajectory_frame_hasDerivAt htraj) t
+    rw [cyclic_extension_velocity] at hd
+    exact hd
   have hC1 : ∀ i j, ContDiff ℝ 1 (fun t ↦ G t i j) := by
     intro i j
     refine contDiff_one_iff_deriv.2 ⟨fun t ↦ (hD t i j).differentiableAt, ?_⟩
@@ -436,8 +440,10 @@ theorem exists_cyclic_extension_of_isReinhardtAdmissible
   have hG0 : G 0 = 1 := (hagree 0 ⟨le_rfl, hT.le⟩).1.trans hg0
   have hGshift : ∀ t, G (t + T) = G t * R := by
     intro t
-    simpa only [Matrix.one_mul] using
-      cyclicMatrixExtension_shift (f := g) hT (by simp : (1 : Mat2) ^ 6 = 1) oct_R_pow_six t
+    have h := cyclicMatrixExtension_shift (f := g) hT (by simp : (1 : Mat2) ^ 6 = 1)
+      oct_R_pow_six t
+    rw [Matrix.one_mul] at h
+    exact h
   have hYshift : ∀ t, Y (t + T) = R⁻¹ * Y t * R :=
     cyclicMatrixExtension_shift hT oct_Rinv_pow_six oct_R_pow_six
   have hGperiod : Function.Periodic G (6 * T) := cyclicMatrixExtension_periodic hT
@@ -462,7 +468,7 @@ theorem exists_cyclic_extension_of_isReinhardtAdmissible
     apply intervalIntegral.integral_congr
     intro t ht
     rw [uIcc_of_le hT.le] at ht
-    rw [(hagree t ht).2]
+    simp only [(hagree t ht).2]
   exact ⟨G, Y, hagree, hC1, hYcont, hYlip, fun t ↦ (hstate t).1,
     fun t ↦ (hstate t).2, hD, hG0, hGshift, hYshift, hGperiod, hcurv, hcost⟩
 

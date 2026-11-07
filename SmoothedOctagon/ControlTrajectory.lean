@@ -39,6 +39,7 @@ and their sum is positive. The separate coordinates make the repair set manifest
 def UsableCurvatures (κ : Fin 3 → ℝ) : Prop :=
   0 ≤ κ 0 ∧ 0 ≤ κ 1 ∧ 0 ≤ κ 2 ∧ 0 < κ 0 + κ 1 + κ 2
 
+open Classical in
 /-- Normalize genuine curvatures and use the uniform control on the exceptional set. -/
 noncomputable def repairedCurvatureControl (κ : ℝ → Fin 3 → ℝ)
     (t : ℝ) : Fin 3 → ℝ :=
@@ -50,10 +51,11 @@ theorem controlVariables_mem_of_usable {κ : Fin 3 → ℝ} (hκ : UsableCurvatu
   refine ⟨?_, ?_⟩
   · intro j
     have hnonneg : 0 ≤ κ j := by fin_cases j <;> assumption
-    have hle : κ j ≤ κ 0 + κ 1 + κ 2 := by fin_cases j <;> linarith
+    have hle : κ j ≤ κ 0 + κ 1 + κ 2 := by
+      fin_cases j <;> simp only [Fin.reduceFinMk] <;> linarith
     exact ⟨div_nonneg hnonneg hs.le, (div_le_iff₀ hs).2 (by simpa using hle)⟩
   · dsimp [controlVariables]
-    field_simp [hs.ne'] <;> ring
+    field_simp [hs.ne']
 
 /-- Simplex membership holds at every time, including exceptional derivative points. -/
 theorem repairedCurvatureControl_mem (κ : ℝ → Fin 3 → ℝ) (t : ℝ) :
@@ -179,7 +181,7 @@ lemma normalized_curvature_identity (g X X' : Mat2) (hg : g.det = 1)
   have heq : (g * X) * (X + X⁻¹ * X') = g * X * X + g * X' := by
     rw [Matrix.mul_add, ← Matrix.mul_assoc (g * X) X⁻¹ X',
       Matrix.mul_assoc g X X⁻¹, Matrix.mul_nonsing_inv _ hunit, Matrix.mul_one]
-  rw [← heq, ← Matrix.mulVec_mulVec, oct_det2_mulVec,
+  rw [← heq, ← Matrix.mulVec_mulVec v (g * X) (X + X⁻¹ * X'), oct_det2_mulVec,
     Matrix.det_mul, hg, hX, one_mul, one_mul]
 
 private lemma ae_hasDerivAtEntrywise_of_lipschitz_univ {X : ℝ → Mat2}
@@ -341,7 +343,7 @@ theorem frame_velocity_lipschitz_periodic {g X : ℝ → Mat2}
   have hvperiod : Function.Periodic (fun t ↦ g t * X t) P := by
     intro t
     have hs : HasDerivAt (fun u : ℝ ↦ u + P) 1 t := (hasDerivAt_id t).add_const P
-    have hd := (hg (t + P)).scomp hs
+    have hd := HasDerivAtEntrywise.scomp (h := fun u ↦ u + P) (hg (t + P)) hs
     have heq : (fun u ↦ g (u + P)) = g := funext hperiod
     rw [heq, one_smul] at hd
     exact hd.unique (hg t)
@@ -364,8 +366,7 @@ theorem integralCurve_of_lipschitz_ae {f v : ℝ → Mat2} {T : ℝ} (hT : 0 ≤
     rw [uIoc_of_le hb.1] at htb
     exact (ht ⟨htb.1, lt_of_le_of_ne (htb.2.trans hb.2) hne⟩ i j).deriv
   refine ⟨hac.intervalIntegrable_deriv.congr_ae ?_, ?_⟩
-  · rw [ae_restrict_iff' measurableSet_uIoc]
-    exact hae T ⟨hT, le_rfl⟩
+  · exact (ae_restrict_iff' measurableSet_uIoc).2 (hae T ⟨hT, le_rfl⟩)
   · intro t ht
     have hact := hac.mono (uIcc_subset_uIcc left_mem_uIcc (Icc_subset_uIcc ht))
     calc
@@ -395,7 +396,7 @@ theorem boundaryControl_eq_raw_ae {g X : ℝ → Mat2} {T : ℝ}
       stateCurvature (X t) (derivEntrywise X t) 1 +
       stateCurvature (X t) (derivEntrywise X t) 2 := by
     obtain ⟨j, hj⟩ := hp ht
-    fin_cases j <;> linarith [hn 0, hn 1, hn 2]
+    fin_cases j <;> simp only [Fin.reduceFinMk] at hj <;> linarith [hn 0, hn 1, hn 2]
   have husable : UsableCurvatures (stateCurvature (X t) (derivEntrywise X t)) :=
     ⟨hn 0, hn 1, hn 2, hsum⟩
   simp only [boundaryControl, repairedCurvatureControl, if_pos husable]

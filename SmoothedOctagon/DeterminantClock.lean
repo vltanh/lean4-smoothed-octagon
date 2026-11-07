@@ -65,8 +65,9 @@ lemma contactFrame_unique {σ : ZMod 6 → ℝ → Fin 2 → ℝ} (t : ℝ) {A :
   simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_two,
     Matrix.cons_val_zero, Matrix.cons_val_one, mul_one, mul_zero, add_zero] at e0 e1
   fin_cases j
-  · simpa only [contactFrame, Matrix.of_apply, Matrix.cons_val_zero] using e0
-  · simp only [contactFrame, Matrix.of_apply, Matrix.cons_val_one, Matrix.cons_val_zero]
+  · simpa only [contactFrame, Matrix.of_apply, Fin.zero_eta, Matrix.cons_val_zero] using e0
+  · simp only [contactFrame, Matrix.of_apply, Fin.mk_one, Matrix.cons_val_one,
+      Matrix.cons_val_zero]
     rw [eq_div_iff h3]
     nlinarith [e0, e1]
 
@@ -74,7 +75,8 @@ lemma contactFrame_unique {σ : ZMod 6 → ℝ → Fin 2 → ℝ} (t : ℝ) {A :
 theorem contactFrame_action {σ : ZMod 6 → ℝ → Fin 2 → ℝ}
     (hmp : ∀ t, IsMultiPoint fun j ↦ σ j t) (t : ℝ) (j : ZMod 6) :
     σ j t = contactFrame σ t *ᵥ sixthRoot j := by
-  refine bdy_seq_eq (bdy_mp_succ (hmp t)) (fun k ↦ ?_)
+  refine bdy_seq_eq (y := fun k ↦ contactFrame σ t *ᵥ sixthRoot k)
+    (bdy_mp_succ (hmp t)) (fun k ↦ ?_)
     (contactFrame_zero_contact σ t).symm (contactFrame_one_contact σ t).symm j
   rw [bdy_mp_succ bdy_isMultiPoint_sixthRoot, Matrix.mulVec_add]
 
@@ -104,9 +106,10 @@ theorem contactFrame_contDiff {σ : ZMod 6 → ℝ → Fin 2 → ℝ}
   have h0 : ContDiff ℝ 1 (fun t ↦ σ 0 t i) := contDiff_pi.1 (hC 0) i
   have h1 : ContDiff ℝ 1 (fun t ↦ σ 1 t i) := contDiff_pi.1 (hC 1) i
   fin_cases j
-  · simpa only [contactFrame, Matrix.of_apply, Matrix.cons_val_zero] using h0
+  · simpa only [contactFrame, Matrix.of_apply, Fin.zero_eta, Matrix.cons_val_zero] using h0
   · have htwo : ContDiff ℝ 1 (fun _ : ℝ ↦ (2 : ℝ)) := contDiff_const
-    simpa only [contactFrame, Matrix.of_apply, Matrix.cons_val_one, Matrix.cons_val_zero] using
+    simpa only [contactFrame, Matrix.of_apply, Fin.mk_one, Matrix.cons_val_one,
+      Matrix.cons_val_zero] using
       ((htwo.mul h1).sub h0).div_const (√3 : ℝ)
 
 theorem contactFrame_hasDerivAt {σ : ZMod 6 → ℝ → Fin 2 → ℝ}
@@ -182,12 +185,14 @@ theorem contactLogDerivative_periodic {σ : ZMod 6 → ℝ → Fin 2 → ℝ} {T
     Function.Periodic (contactLogDerivative σ) T := by
   have hgper := contactFrame_periodic hperiod
   intro t
-  simp only [contactLogDerivative, hgper t]
-  congr 1
-  ext i j
-  simp only [derivEntrywise, Matrix.of_apply]
-  rw [← deriv_comp_add_const]
-  simp only [hgper]
+  have hd : derivEntrywise (contactFrame σ) (t + T) = derivEntrywise (contactFrame σ) t := by
+    ext i j
+    simp only [derivEntrywise, Matrix.of_apply]
+    rw [← deriv_comp_add_const (fun s ↦ contactFrame σ s i j) T t]
+    congr 1
+    funext s
+    rw [hgper s]
+  simp only [contactLogDerivative, hgper t, hd]
 
 /-- Because the contact frame has determinant one, its logarithmic derivative and
 its ordinary entrywise derivative have the same determinant. -/
@@ -195,7 +200,7 @@ theorem contactLogDerivative_det {σ : ZMod 6 → ℝ → Fin 2 → ℝ}
     (hmp : ∀ t, IsMultiPoint fun j ↦ σ j t) (t : ℝ) :
     (contactLogDerivative σ t).det = (derivEntrywise (contactFrame σ) t).det := by
   simp only [contactLogDerivative, Matrix.det_mul, Matrix.det_nonsing_inv,
-    contactFrame_det hmp t, Ring.inverse_one, inv_one, one_mul]
+    contactFrame_det hmp t, Ring.inverse_one, one_mul]
 
 /-- Speed of the determinant-one time parameter: `ds/dt = sqrt (det X(t))`. -/
 noncomputable def determinantSpeed (σ : ZMod 6 → ℝ → Fin 2 → ℝ) (t : ℝ) : ℝ :=
@@ -357,15 +362,17 @@ theorem determinantClock_conjugates_successor {K : Set (Fin 2 → ℝ)}
         (deriv φ (a t) * (determinantSpeed σ (a t))⁻¹) = 1 := by
       rw [← mul_assoc, determinantSpeed_contact_shift hbal hφ hφpos hshift (a t),
         mul_inv_cancel₀ (determinantSpeed_pos hbal (a t)).ne']
-    simpa only [hs] using hchain
+    rw [hs] at hchain
+    exact hchain
   have hdiff : ∀ t, HasDerivAt (fun u ↦ F u - u) 0 t := by
     intro t
-    simpa only [sub_self] using (hFD t).sub (hasDerivAt_id t)
+    have h := (hFD t).sub (hasDerivAt_id t)
+    rw [sub_self] at h
+    exact h
   have hF : ∀ t, F t = t + F 0 := by
     intro t
     have hconst := is_const_of_deriv_eq_zero
       (fun u ↦ (hdiff u).differentiableAt) (fun u ↦ (hdiff u).deriv) t 0
-    dsimp only at hconst
     linarith
   have hφa : ∀ t, φ (a t) = a (t + F 0) := by
     intro t

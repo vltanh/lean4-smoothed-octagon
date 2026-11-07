@@ -75,8 +75,9 @@ theorem eq_zero_of_traceForm_control_vertices_eq_zero {A : Mat2}
     linear_combination (1 / 4) * h1 - (1 / 4) * h2
   have hsqrt : (√3 : ℝ) ≠ 0 := by positivity
   have ha : A 0 0 = 0 := by
-    field_simp [hsqrt] at haq
-    exact haq
+    rcases div_eq_zero_iff.mp haq with h | h
+    · exact h
+    · exact absurd h hsqrt
   have hb : A 0 1 = 0 := by linarith
   ext i j
   fin_cases i <;> fin_cases j <;> simp [ha, hb, hc, h11]
