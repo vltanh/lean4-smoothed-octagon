@@ -115,6 +115,13 @@ Triple ties and boundary limits still require their stated treatment.
   certificate pass independent audit and 28+199 exact checks. Every
   mixed global minimum is now a reverse centre; a remaining pure F
   minimum has `4/3<m^2<20/11`. No Casimir or rank assumption is needed.
+- [x] Use the actual whole-forward budget to bound the central factor
+  at a global minimum by `q<7/4`; see
+  [GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET.md).
+  The uniform scalar clamp, logarithmic-coordinate convexity,
+  fixed-factor scale comparison and exact cutoff pass independent
+  audit and 21 exact checks. The smaller F cost--Casimir problem
+  retains the actual outer factors and both exterior gaps.
 - [ ] Propagate a mixed reverse global minimum through adjacent short
   bridges, or prove another whole-period M2 obstruction. Its placement
   next to a long forward run is not established by the minimum theorem.

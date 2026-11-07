@@ -62,6 +62,16 @@ supersedes earlier recommendations to continue by increasing whole-word length.
 | Exact elimination of all mixed turn variables | [MIXED_GLOBAL_TURN_ELIMINATION](docs/MIXED_GLOBAL_TURN_ELIMINATION.md), [independent audit](docs/MIXED_GLOBAL_TURN_ELIMINATION_AUDIT.md), and [23-check certificate](explorations/mixed_global_turn_elimination_certificate.py). The full turn principal block has inertia `(2m,0,2m)` for isolated turns and adjacent pairs with either bridge sign or zero diagonal. Explicit Schur forms retain all neighboring variables and the Casimir. The remaining `2P+1` dimensional matrix satisfies `index_-(Q_closed)=index_-(S)-k-3`; its further negative index remains unproved. The baseline is the earlier density restriction, not another excluded family. |
 | Exclusion of a small forward minimum | [MIXED_GLOBAL_SMALL_FORWARD_MINIMUM](docs/MIXED_GLOBAL_SMALL_FORWARD_MINIMUM.md), [independent audit](docs/MIXED_GLOBAL_SMALL_FORWARD_MINIMUM_AUDIT.md), [28-check interface certificate](explorations/mixed_global_small_forward_minimum_certificate.py), and [199-check full-face certificate](explorations/global_structure_forward_small_minimum_certificate.py). With four forward switches, five active margins cannot have a central minimum with square at most `4/3`. Both actual exterior missing-control gaps and the same normal multiplier are retained. Two calculus faces and a fixed polynomial identity with all 792 positive coefficients cover the domain, without Casimir or rank assumptions. Every mixed global minimum is a reverse centre; remaining pure F has `4/3<m^2<20/11`. Neither adjacency to a long run nor F/M2 closure follows. |
 
+The further [whole-forward minimum-budget comparison](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET.md),
+its [independent audit](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET_AUDIT.md),
+and [21-check certificate](explorations/global_structure_forward_minimum_budget_certificate.py)
+give `C>=B(a,q)` and `q<7/4` at a pure-F global minimum. The proof
+uses the whole cyclic action, a scalar clamp uniform in `N>=7`,
+convexity in the logarithm of adjacent sums, and a fixed-factor scale
+comparison. These are scalar bounds, not closed or PMP deformations;
+the actual outer factors and both exterior gaps remain necessary.
+The uniform F cost--Casimir/index obstruction is still open.
+
 ## Earlier local reduction and diagnostics
 
 | Statement | Exact source and status |

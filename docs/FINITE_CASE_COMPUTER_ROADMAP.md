@@ -166,6 +166,15 @@ the remaining pure F minimum satisfies `4/3<m^2<20/11`. The reverse
 minimum may lie inside a chain of short bridges; its adjacency to a
 long forward run and the remaining F/M2 obstructions are still open.
 
+[GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET](GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET.md)
+and its independent audit further prove `C>=B(a,q)` and `q<7/4`
+at the pure-F global minimum. The whole scalar action supplies a
+uniform clamp for every `N>=7`; convexity in logarithmic adjacent
+sums and a fixed-factor scale comparison yield the exact cutoff.
+All 21 checks pass. No intermediate array is asserted to preserve
+frame closure or PMP. The remaining F domain keeps the actual outer
+factors and both exterior gaps; its cost--Casimir sign remains open.
+
 ## 2. Small verifiable gates, repeated for each case
 
 Each of F, R, M1, M2, M3 has exactly three explicit gates.

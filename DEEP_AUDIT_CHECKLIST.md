@@ -107,6 +107,13 @@ are not excluded.
 - [x] Retain the precise global consequence: mixed minima are reverse
   centres and pure F has `4/3<m^2<20/11`; adjacency to a long forward
   run, a full cost/index obstruction, and F/M2 closure remain open.
+- [x] Independently audit the uniform whole-forward scalar cost clamp,
+  ordinary edge concavity, the distinct convexity in logarithmic
+  adjacent sums, and the fixed-factor scale path; see
+  [GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET_AUDIT](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET_AUDIT.md).
+  All 21 exact checks pass. The rational contradiction at `q=7/4`
+  uses the whole-period budget; comparison arrays have no asserted
+  frame closure or PMP status. The actual F exclusion remains open.
 
 These necessary conditions close no additional whole case. F and M2
 remain open; the earlier M1 closure and its local-domain boundary are

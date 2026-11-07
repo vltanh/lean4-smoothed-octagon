@@ -142,6 +142,14 @@ No ellipticity, Casimir bound, endpoint rank, or factor monotonicity is
 assumed. Consequently every mixed global minimum is a reverse centre;
 the remaining pure F minimum satisfies `4/3<m^2<20/11`. A reverse
 minimum need not border a long forward run. F and M2 remain open.
+GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET and its independent audit now
+use the actual whole-period action to prove `q<7/4` at a pure-F global
+minimum. Lowering other scalar margins and using convexity in the
+logarithm of adjacent sums gives an explicit bound `C>=B(a,q)`;
+the fixed-factor scale comparison and rational cutoff pass 21 exact
+checks. The comparison arrays are not asserted to be closed or PMP.
+Actual outer factors and both exterior gaps remain in the F domain;
+the required cost--Casimir comparison on that domain is still open.
 
 
 Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.

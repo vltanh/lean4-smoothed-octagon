@@ -226,6 +226,17 @@ mixed global minimum is a reverse centre**, and the remaining pure F
 minimum satisfies **`4/3<m^2<20/11`**. This does not force the reverse
 minimum next to a long forward run or close F/M2.
 
+For F, the [whole minimum-budget comparison](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET.md)
+also proves **`q<7/4`** for the minimum's central arc. The full cyclic
+action gives an explicit lower cost depending only on its minimum
+margin and central factor. Convexity in the logarithm of adjacent sums
+and a fixed-factor scale comparison give the strict rational cutoff.
+Its [independent audit](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET_AUDIT.md)
+and 21 exact checks pass. These scalar comparisons retain the actual
+whole-period budget but make no claim that their intermediate arrays
+satisfy frame closure. A uniform cost--Casimir or index obstruction
+is still needed on the smaller F domain.
+
 ## Whole-forward costate theorem
 
 [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)
