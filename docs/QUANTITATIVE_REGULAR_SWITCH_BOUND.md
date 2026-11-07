@@ -2,6 +2,16 @@
 
 Date: 2026-11-07. Hand proof; no Lean compilation, Lake, or CI.
 
+**Completed numerical application.**
+[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) and
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now supply
+\(\varepsilon_0=10^{-1906}\) in the normalization below for every
+normalized minimizing lift and obtain \(N<10^{5741}\) from this
+theorem. They retain the stated compact-state, PMP, and edge-optimality
+inputs and do not use Hales--Vajjha Theorem 16.3.1. The theorem here
+remains conditional on a supplied clearance and applies more broadly;
+none of its hypotheses or coefficient estimates is changed.
+
 ## Theorem and exact scope
 
 There is an explicit constant \(c>0\), depending
@@ -28,17 +38,22 @@ N(\varepsilon)=28
 The positive constant \(m\) is explicit too. Every constant in (1) is
 specified in Section 6. In particular this proves an \(O(1/\varepsilon)\)
 bound for a supplied clearance in a fixed normalization. The constants
-are deliberately coarse; no useful numerical upper bound is claimed.
+are deliberately coarse. The subsequent numerical application gives
+a stated finite ceiling, without claiming that it is small enough
+for a practical exhaustive comparison.
 
 Actual global minimizers satisfy (E4) by
-[EDGE_SWITCH_BOUND.md](EDGE_SWITCH_BOUND.md). The qualitative compactness
-result in [GLOBAL_MINIMIZER_COMPACTNESS.md](GLOBAL_MINIMIZER_COMPACTNESS.md),
-using its external finite bang-bang input, supplies the existence of a
-positive clearance but does not give its numerical value. The present
-theorem makes the subsequent conversion
-from a certified clearance to a stated integer completely effective.
-It neither supplies that missing clearance nor proves a cost comparison
-for the resulting words.
+[EDGE_SWITCH_BOUND.md](EDGE_SWITCH_BOUND.md). The present theorem makes
+the conversion from a certified clearance to a stated integer
+completely effective. It does not itself supply a clearance.
+That input is now proved in
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) using the
+complete-period endpoint and octagon cost budget. The earlier
+qualitative compactness route in
+[GLOBAL_MINIMIZER_COMPACTNESS.md](GLOBAL_MINIMIZER_COMPACTNESS.md)
+retains its external finite bang-bang input and is not needed for
+this numerical application. Neither counting argument proves the
+cost comparison for the resulting words.
 
 The proof quantifies the transported-covector argument in
 [GLOBAL_CLOSED_VARIATION.md](GLOBAL_CLOSED_VARIATION.md). It uses three
@@ -638,20 +653,30 @@ explicit state and costate bounds. Equations (14)--(17) give three
 guards and uniform comparison and derivative margins. Equations
 (18), (22), (26), and (29) then give \(c\) by finite arithmetic,
 exponentiation, and one ceiling. A supplied numerical lower bound for
-the singular distance (9) would therefore produce a definite integer
+the singular distance (9) therefore produces a definite integer
 in (1); there is no further unproved switch-count or dwell-time step.
 
-The qualitative compactness theorem gives some positive clearance and
-therefore an existential uniform integer. It applies also to precisely
+The complete-period argument in
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now supplies
+\(\varepsilon_0=10^{-1906}\), estimates \(c>10^{-27}m^2\) with
+\(m>10^{-1903}\), and obtains \(N<10^{5741}\) from (1).
+Its cost--Casimir input is proved in
+[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md). This completes the
+numerical-clearance application under the retained geometric, PMP,
+and edge-optimality inputs. The resulting ceiling does not reduce
+the comparison to the existing through-five results.
+
+For comparison, the earlier qualitative compactness route gives some
+positive clearance and therefore an existential uniform integer,
+using its external finite bang-bang input. It applies also to precisely
 the normalization (6): convert its compact family by the smooth invertible
 cotangent-coordinate map, then divide each lift by its positive initial
 norm in (6). This is a continuous operation on a compact family; the
 initial norm has a positive minimum by nontriviality. Its evaluation image
 is compact and still disjoint from the singular locus, so the distance
 (9) has a positive minimum. This argument does not evaluate that
-clearance. This note does not convert its existence proof into a
-numerical estimate, assert a particular integer, or claim that the
-bound is small enough for the existing through-five comparison.
+clearance; the numerical follow-up uses the separate complete-period
+cost argument instead.
 A complete global proof still needs a cost comparison on every
 remaining complete-period competitor, with the free initial state
 and the twisted endpoint conditions preserved.
@@ -660,7 +685,9 @@ and the twisted endpoint conditions preserved.
 the exact external-input boundary of that qualitative application.
 The cited Theorem 16.3.1 uses numerical source steps not independently
 certified here. The proof of the present count for a supplied clearance,
-with (E4) and (3)--(9), is independent of that theorem.
+with (E4) and (3)--(9), and the numerical complete-period application
+linked above are independent of that theorem. Neither certifies its
+numerical source steps.
 
 No increasing-length enumeration, numerical trajectory fit, symbolic
 sign oracle, Lean compilation, Lake command, or CI check is part of

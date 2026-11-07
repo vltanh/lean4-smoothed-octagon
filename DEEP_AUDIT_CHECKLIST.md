@@ -19,13 +19,13 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
 The active entry point is [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md).
 The original five-template sufficient domain remains refuted.
 
+The current numerical reduction bypasses external Theorem 16.3.1.
 The [finite bang-bang source audit](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md)
-separates our deductions from the external Theorem 16.3.1. The checked source
-uses numerical unstable-curve escape and cell-image containments; their
-independent rigorous certification is outside the completed review. This
-qualifies the downstream singular-avoidance and common-bound claims, while
-the compactness and conditional regular-domain count remain independent of
-that particular input.
+still records numerical unstable-curve and basin-containment steps not
+independently certified here. The earlier qualitative route used that
+input; the new all-component clearance and E4 count do not. The named
+geometric correspondence, compact-state, PMP, and Chapter 8 edge results
+remain explicit dependencies.
 
 - [x] Derive twisted state-covector closure from the actual free-initial-state
   endpoint graph, and distinguish it from automatic frame-covector closure.
@@ -46,8 +46,10 @@ that particular input.
 - [x] Deduce uniform qualitative singular clearance for actual minimizers
   using external Theorem 16.3.1, without asserting it for all competitive
   PMP trajectories or independently validating the cited numerical steps.
-- [ ] Independently certify the source's unstable-curve escape and basin
-  containments, or replace their role in the finite bang-bang input.
+- [x] Replace the role of the audited finite bang-bang input in the active
+  reduction: GLOBAL_COST_CASIMIR and GLOBAL_NUMERICAL_REDUCTION prove
+  clearance directly and construct finiteness with E4. The source
+  unstable-curve and basin calculations themselves remain uncertified here.
 - [x] Prove transport of the reduced costate to a fixed plane and uniform
   first/second derivative estimates without differentiating measurable controls.
 - [x] Choose closed angular sectors with robust exclusions and generic guard
@@ -63,8 +65,10 @@ that particular input.
   was inferred from compactness or from changing norms. The factor-28
   refinement was separately reviewed, and its changed derivative margin
   is propagated through the time constants rather than reusing the old mesh.
-- [ ] Supply a certified numerical singular clearance and a specific integer
-  bound. The existential uniform theorem does not identify a finite case list.
+- [x] Supply a numerical singular clearance and specific integer:
+  D>10^-1906 for every normalized competitive complete-period lift, and
+  N<10^5741 for every global minimizer with the stated inputs. This is
+  an explicit ceiling, not a practical or evaluated case catalogue.
 - [ ] Complete the remaining global comparison and affine equality theorem.
 - [ ] Run kernel validation (deferred under the user's current workflow).
 
@@ -101,10 +105,12 @@ supplies a numerical bound without the external finite bang-bang input.
 - [x] Normalize the complementary sector to lambda=-1 only after the
   explicit lower bound on abs(lambda); prove the entire covector bound
   and conversion for any future normal-sector clearance.
-- [ ] Establish singular clearance for the complementary normal sector.
+- [x] Establish singular clearance for the complementary normal sector in
+  GLOBAL_COST_CASIMIR and GLOBAL_NUMERICAL_REDUCTION; cover every orbit type.
 
 Separate internal hand reviews checked the assembled argument. This is
-an explicit sector estimate, not a numerical bound for every minimizer.
+an explicit sector estimate; the separate all-component numerical reduction
+now completes the count for every minimizer.
 
 ## Conserved-determinant clearance
 
@@ -119,11 +125,47 @@ second direct clearance test independent of the finite bang-bang input.
   input threshold, and prove D>1/13 when abs(lambda)>=1/2.
 - [x] Apply the general coefficient bounds from the small-multiplier note
   without importing its sector assumption; check every ceiling and power.
-- [x] Preserve E4, the one-trajectory/lift scope, and the unresolved band
-  near Delta=0. A tube in the source's exact critical Casimir slice does
-  not certify a transverse neighborhood.
-- [ ] Prove a usable determinant gap from actual minimizing-period data,
-  or provide a separate clearance argument for the remaining critical band.
+- [x] Preserve E4 and the scoped hypotheses of this determinant lemma.
+  A tube in the source's exact critical Casimir slice would not certify
+  a transverse neighborhood; the new whole-period proof bypasses it.
+- [x] Prove the competitive negative elliptic determinant gap from actual
+  frame closure and the cost budget; treat the other orbit components
+  separately. GLOBAL_NUMERICAL_REDUCTION resolves the formerly missing band.
+
+## Complete-period cost–Casimir inequality and universal numerical bound
+
+The assembled notes [GLOBAL_COST_CASIMIR](docs/GLOBAL_COST_CASIMIR.md)
+and [GLOBAL_NUMERICAL_REDUCTION](docs/GLOBAL_NUMERICAL_REDUCTION.md)
+received separate internal hand reviews of their complete arguments.
+
+- [x] Check the original physical-time Hamiltonian signs against the pinned
+  upstream definitions; construct all three strictly positive coefficients
+  of the stationary comparison control and use the full simplex maximum.
+- [x] Prove spatial costate conservation and the explicit negative elliptic
+  conjugacy; distinguish body and spatial angular quantities.
+- [x] Expand the nonvanishing complex polar coordinate and its derivative
+  exactly. Use the actual matrix endpoint to bound its continuous angle
+  increment; no assumed primary winding or finite-switch representation.
+- [x] Derive C>=4*pi*kappa/(2*kappa+3), the homogeneous cost-multiplier
+  version, and the strictly separated determinant under C<=A_oct<pi.
+- [x] Prove A_oct<313/100 and pi>157/50 with rational square, logarithm,
+  and arctangent inequalities, including the angle branch in Machin's identity.
+- [x] Exhaust negative elliptic, nonpositive-determinant, and positive
+  elliptic normal costates. Prove the common cost-normalized ||A||>1/120
+  without falsely imposing initial unit norm after cost normalization.
+- [x] Convert homogeneously to the initial product norm, include the entire
+  small-multiplier sector and abnormal lifts, and prove D>10^-1906 for
+  every competitive complete-period lift in the stated state domain.
+- [x] Reuse the general coefficient estimates c>10^-27*m^2 and m>10^-1903
+  without importing a small-multiplier-only hypothesis; check the short
+  interval scale and integer ceilings giving N<10^5741.
+- [x] Reopen E4's Chapter 8 edge dependency and verify it does not use
+  Theorem 16.3.1. Keep E4 essential to counting, and distinguish clearance
+  for competitive PMP lifts from the count for actual minimizing controls.
+- [ ] Complete the uniform global cost comparison and affine equality case.
+  Neither the enormous integer nor the normal determinant gap supplies it.
+- [ ] Formalize and run kernel validation after mathematical closure, under
+  the agreed later workflow. No Lean, Lake, typechecking, or CI was run.
 
 ## Regular forward-window descent
 

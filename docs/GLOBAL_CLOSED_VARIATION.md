@@ -21,7 +21,7 @@ one edge.
 Consequently, a family satisfying (E4), having uniformly bounded elapsed
 time, and whose lifted phases lie in a compact set disjoint from the full
 singular locus has **one common finite bound on the number of positive
-vertex pieces**. Applying
+vertex pieces**. The original qualitative application of
 [GLOBAL_MINIMIZER_COMPACTNESS.md](GLOBAL_MINIMIZER_COMPACTNESS.md) proves
 that such an integer exists for all complete global minimizers, using
 Hales--Vajjha Theorem 16.3.1 as its external singular-avoidance input.
@@ -30,10 +30,12 @@ the numerical source steps not independently certified here. The local
 count and compact-regular-family implication themselves do not use that
 finite bang-bang theorem.
 
-This is an existential uniform bound, not a stated numerical integer. The
-compactness note does not give a numerical distance from the singular locus.
-The estimates below explain what additional data would make the bound
-effective. Neither `N <= 5` nor the octagon cost comparison follows here.
+That original application is existential. The later
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now supplies
+D>10^-1906 and N<10^5741 under the stated inputs, using the explicit
+version of this local theorem and the new complete-period cost–Casimir
+inequality. It bypasses Theorem 16.3.1 and does not assume finiteness in
+advance. Neither N<=5 nor the octagon cost comparison follows.
 
 The main point is uniformity under changes of the initial phase and under
 arbitrary measurable controls. A Taylor expansion at a zero of a switching
@@ -552,7 +554,20 @@ argument. Arbitrarily short arcs and coalescing switches are allowed;
 the finitely many guard zeros, followed by (E4) on each edge interval,
 bound their number.
 
-## 7. Application to actual global minimizers and the remaining gates
+## 7. Applications to actual global minimizers and the remaining gate
+
+### Current numerical application
+
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) proves a direct
+clearance D>10^-1906 for every normalized competitive complete-period lift
+in the common state domain. The explicit constants in
+[QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md),
+together with E4, construct a representation with N<10^5741 pieces.
+No finite-switch theorem or pre-existing finite representation is used.
+The geometric, compact-state, PMP, and Chapter 8 local edge inputs remain
+stated dependencies. This completes numerical boundedness, not cost comparison.
+
+### Original compactness application, retained for its precise scope
 
 [GLOBAL_MINIMIZER_COMPACTNESS.md](GLOBAL_MINIMIZER_COMPACTNESS.md) proves
 the needed hypotheses for all actual global minimizers after projective
@@ -581,31 +596,22 @@ regular compact set, and Sections 2--6 supply a new **uniform** local
 count on that set. Pathwise finiteness alone was never used to assert
 an upper bound over a family.
 
-An effective finite comparison still needs additional work:
+### Remaining global comparison
 
-1. Give a certified numerical singular clearance for normalized global
-   minimizers, or an explicit regular compact phase domain containing
-   them. The compactness proof only asserts existence of the clearance.
-2. **Now completed conditionally:**
-   [QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md)
-   supplies three rotated comparison lines, explicit comparison and derivative
-   margins, and an explicit O(1/epsilon) count for a supplied normalized
-   clearance. All coefficient constants are fixed. A numerical clearance
-   remains necessary before this becomes a particular integer.
-   Its three-line construction makes the rotation and derivative margins
-   explicit and recomputes the interval time scale from them. The factor
-   28 alone is not substituted into the earlier mesh's time scale.
-3. Prove a uniform global cost comparison on the resulting domain, with
-   the actual free initial state and twisted closure. The current
-   through-five comparison cannot be invoked unless a separate argument
-   reduces the resulting bound to five or otherwise completes that
-   global comparison.
+The supplied-clearance conversion and the missing numerical clearance
+are both now proved in the linked follow-ups. The three-line construction
+makes its rotation and derivative margins explicit and recomputes the
+interval time scale; factor 28 is not substituted into the earlier mesh's
+time scale without that change.
 
-Statement (31) supplies a genuine uniform reduction theorem, but not an
-explicit list of cases. It does not authorize resuming an increasing
-sequence of word-length comparisons. The failed universal local L3
-replacement remains false on its original domain; none of the reasoning
-here changes that domain or assumes it away.
+A uniform global cost comparison remains open. It must retain the actual
+free initial state and twisted matrix closure, treat boundary limits,
+and prove the equality case. The through-five result applies only after
+a valid reduction to at most five pieces or another complete comparison.
+N<10^5741 is an explicit theorem but an impractical enumeration ceiling.
+It does not justify an open-ended sequence of larger-word comparisons.
+The original universal local L3 replacement remains false on its stated
+domain; neither the local count nor the new global clearance repairs it.
 
 ## Sources and validation boundary
 
@@ -640,4 +646,5 @@ of (E4). The three-comparison-line construction above gives the sharper
 local counts 16 and 28 without changing those hypotheses. Its sector
 argument includes the boundary rays and allows the common rotation to
 change the full ordering while preserving the strict comparison used.
-No numerical singular clearance or common time scale is asserted.
+This local refinement alone asserts no numerical singular clearance;
+the two later quantitative follow-ups provide the explicit global application.

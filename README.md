@@ -8,83 +8,61 @@ uniqueness up to affine equivalence. It reuses the geometry of
 **The unrestricted conjecture is not proved. Lean compilation and kernel
 validation have not been run. New formalization infrastructure is paused.**
 
-## Active plan: complete minimizing periods and a uniform bound
+## Active result: an explicit bound for every global minimizer
 
-**Start with [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md).** The
-replacement route retains the full twisted state and costate endpoints,
-free initial state, and total cost budget. Its target is a certified
-specific bound on every minimizer's number of pieces before any further
-closed-word enumeration.
-
-The following global implications use Hales--Vajjha Theorem 16.3.1 as
-an external input for singular avoidance. The [source audit](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md)
-records numerical unstable-curve and basin-containment steps in the checked
-manuscript that have not been independently certified here. The compactness
-proof and the switch count conditional on a supplied clearance are separate
-from that dependency.
-
-The global checkpoint has three substantive hand results:
-
-- [A finite continuation obstruction](docs/GLOBAL_PERIOD_BUDGET.md)
-  excludes the entire small-core L3 counterexample family from **any**
-  occurrence inside a closed PMP extremal. Its unique adjoint forces the
-  outgoing vertex to the strict-star boundary. The proof covers
-  `0<b<=1/(10000*sqrt(3))` with sufficiently small positive pads, using
-  exact inequalities. Their fixed-endpoint global optimality remains true.
-- [Compact normalized minimizer lifts](docs/GLOBAL_MINIMIZER_COMPACTNESS.md)
-  give a **uniform positive qualitative distance** from the full singular
-  locus, including all normal and abnormal lifts. The time bounds are
-  `log(2)/9 <= T <= A_oct/3`.
-- [A uniform local switch theorem](docs/GLOBAL_CLOSED_VARIATION.md),
-  combined with that compactness, proves that **one finite integer bounds
-  the number of pieces of every global minimizer**. The proof transports
-  the switching covector into a fixed plane and controls finitely many
-  scalar projections. It does not assume a lower bound on arc durations.
-
-The [quantitative follow-up](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md)
-makes the conversion effective: for a supplied normalized singular
-clearance epsilon, it gives
+**Start with [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md).**
+Under the retained geometric, compact-state, Pontryagin maximum principle
+(PMP), and local edge-optimality inputs, every global minimizer has a
+complete period with
 
 \[
-N\le28\left\lceil
-\frac{T_{\max}}{c\min(\varepsilon,1,m)}\right\rceil,
+\boxed{N<10^{5741}}
 \]
 
-with every coefficient fixed by explicit formulas. Three comparison lines
-and four possible rotations give the factor 28; their derivative margin
-is included in the stated constant c. These are coarse proof constants.
-The missing boundedness input is a
-**numerical singular clearance**, not an unproved regular-domain switch
-estimate. A final global cost/equality comparison remains a separate gate.
+positive constant vertex pieces. This is an explicit hand-proof bound,
+including abnormal lifts. The numerical boundedness gate is complete;
+the global cost comparison and affine equality case remain open.
+The ceiling is far too large for a practical exhaustive calculation.
 
-[GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md) proves the full-period
-interface and the rank/unique-adjoint bridge used in the exclusion.
-The uniform bound is **existential**: a numerical singular clearance and
-specific integer bound remain open. An actual finite list of cases is
-therefore not yet available. Global minimality and affine uniqueness
-remain unproved.
+The proof has three parts:
 
-### A numerical bound on one multiplier sector
+- [GLOBAL_COST_CASIMIR](docs/GLOBAL_COST_CASIMIR.md) compares the Hamiltonian
+  with an explicit stationary simplex control and tracks the polar angle
+  of the actual frame path. For a normal lift with cost multiplier -1
+  and negative elliptic frame costate of determinant kappa squared, it gives
+  `C >= 4*pi*kappa/(2*kappa+3)`. The whole-period budget `C<=A_oct<pi`
+  therefore separates this component from its critical determinant.
+- [GLOBAL_NUMERICAL_REDUCTION](docs/GLOBAL_NUMERICAL_REDUCTION.md) treats
+  every remaining normal orbit type and the small-multiplier sector,
+  including abnormal lifts. In the stated initial product normalization,
+  **every** competitive complete-period lift has singular distance
+  `D>10^-1906`. All rational cost and coefficient estimates are explicit.
+- [QUANTITATIVE_REGULAR_SWITCH_BOUND](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md)
+  converts that clearance to the displayed integer using three comparison
+  lines and the four-piece edge bound (E4). It constructs a finite
+  representation without assuming one in advance or a minimum arc duration.
 
-[GLOBAL_SMALL_MULTIPLIER_BOUND](docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md)
-proves fewer than `10^5740` pieces when a trajectory admits a normalized
-lift with `|lambda|<=m/sqrt(22)`. Every abnormal lift is covered, and the
-rational threshold `|lambda|<=10^-1904` is sufficient. The clearance comes
-from a direct norm inequality and all numerical estimates are proved by
-hand, independently of the external finite bang-bang theorem. The bound
-is coarse and applies to this stated sector. Remaining lifts can be
-normalized to `lambda=-1` with costate norm below `10^3807`; a positive
-clearance in that bounded normal domain still needs proof.
+This route does **not** use Hales--Vajjha Theorem 16.3.1. The numerical
+unstable-curve and basin-containment inputs identified in
+[the source audit](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md) are bypassed,
+not independently certified. The common state domain, PMP, geometric
+correspondence, and Chapter 8 edge-optimality results remain explicit inputs.
+The new proofs have received separate internal hand reviews; they are not
+Lean kernel certificates or external peer review.
 
-The [determinant-clearance theorem](docs/GLOBAL_CASIMIR_CLEARANCE.md)
-handles further sectors. The quantity
-`Delta=det(Lambda_1)-(9/4)*lambda^2` is conserved. A specified separation
-`|Delta|>=delta`, with `0<delta<=1`, gives `D>delta/3` and
-`N<10^5740/delta`. In particular, `|lambda|>=1/2` gives `D>1/13`
-and `N<10^5740`. These results bound complexity without comparing cost.
-The remaining clearance problem concerns intermediate normal multipliers
-near the critical value Delta=0; no uniform numerical determinant gap
-for all minimizing lifts is claimed.
+The active task is a uniform cost comparison on the bounded class, or a
+stronger structural/index reduction such as `N<=5` that makes the retained
+through-five comparison applicable. Exact frame and state closure, free
+initial state, boundary limits, and equality cases must all be retained.
+An integer bound does not supply any of those remaining inequalities.
+
+Earlier results remain available: [compact normalized minimizing lifts](docs/GLOBAL_MINIMIZER_COMPACTNESS.md),
+[the full-period PMP interface](docs/GLOBAL_PERIODIC_PMP.md), and
+[an explicit continuation obstruction](docs/GLOBAL_PERIOD_BUDGET.md)
+excluding every small-core padded L3 occurrence from a closed PMP period.
+The independent [small-multiplier](docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md)
+and [determinant-separation](docs/GLOBAL_CASIMIR_CLEARANCE.md) estimates
+are retained as useful components of the completed numerical reduction.
 
 ## Historical five-template route and retained diagnostics
 

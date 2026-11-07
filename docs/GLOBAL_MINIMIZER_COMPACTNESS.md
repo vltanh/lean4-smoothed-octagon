@@ -3,7 +3,17 @@
 Date: 2026-11-07. Hand proof. The word "global" throughout this note refers
 to a complete minimizing period, with its actual twisted endpoints.
 
-## Result and limitation
+## Current independent numerical follow-up
+
+[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) and
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now give
+D>10^-1906 in their explicitly stated initial matrix-covector norm and,
+with E4, N<10^5741 for every global minimizer. That argument uses the
+common state bounds below, but not Sections 5--6 or Theorem 16.3.1.
+The original cotangent normalization and qualitative derivation in this
+note are preserved; no numerical norm conversion is silently asserted.
+
+## Original result and limitation
 
 Let A_* be the minimum cost in the Reinhardt control problem. The concrete
 octagon gives A_* <= A_oct < pi. Normalize a Pontryagin multiplier at the
@@ -17,7 +27,7 @@ with the ordinary topology on terminal time. The associated controls have
 weak-star convergent subsequences. The whole family stays a positive distance
 from the singular locus, uniformly over the period and over minimizers.
 
-The singular-avoidance step uses Hales--Vajjha Theorem 16.3.1 as an
+The original singular-avoidance step below uses Hales--Vajjha Theorem 16.3.1 as an
 external input. [FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md)
 records numerical unstable-curve and basin-containment dependencies in the
 checked source that have not been independently certified here. Compactness
@@ -296,7 +306,7 @@ stronger than choosing one favorable lift and does not discard abnormal
 limits. If lambda=0, (13) would make the whole covector zero, already
 excluded by nontriviality.
 
-## 6. Uniform qualitative clearance and the quantitative gap
+## 6. Uniform qualitative clearance and the original quantitative gap
 
 The evaluation map from the compact family in Section 4 times [0,1] into
 (z,P)-space is continuous. Its image is compact. It is disjoint from the
@@ -329,13 +339,17 @@ Section 7 explains why the compactness argument also gives qualitative
 clearance in precisely that normalization. The separate uniform theorem
 is essential; the pathwise source theorems alone would not give it.
 
-The remaining boundedness input is a certified numerical clearance,
-or a substitute explicit global exclusion theorem with the same consequence.
-Only after that input can one state a particular integer N_max and use a
-fixed finite collection of closed words. No increasing-length case list is
-licensed by the present qualitative theorem. A global index argument that
-directly excludes all minimizing N>=6 would bypass the larger enumeration,
-but it must be proved with the full period constraints.
+The original missing boundedness input was a numerical clearance in that
+matrix-covector norm. [GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md)
+now supplies it directly and proves N<10^5741 without the source-dependent
+avoidance argument in Section 5. The common state estimates here remain
+inputs to that proof; compactness is not used to evaluate its clearance.
+
+The remaining task is a global cost/equality comparison or a stronger
+structural reduction. A global index argument excluding every minimizing
+N>=6 would make the through-five comparison applicable, but it must retain
+the full period constraints. The enormous numerical ceiling is not a
+practical case catalogue or an evaluated comparison.
 
 ## Sources and validation boundary
 

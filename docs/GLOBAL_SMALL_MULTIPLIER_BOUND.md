@@ -3,6 +3,16 @@
 Date: 2026-11-07. Hand proof with explicit constants; no Lean, Lake,
 typechecking, or CI.
 
+**Completed global follow-up.**
+[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) and
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now supply
+the complementary normal-sector argument. With the complete-period
+octagon cost budget and the stated state, PMP, and edge-optimality
+inputs, they prove \(D>10^{-1906}\) for every normalized minimizing
+lift and \(N<10^{5741}\) for every minimizing period, without
+Hales--Vajjha Theorem 16.3.1. The stronger count below remains a
+separate theorem for the small-multiplier sector; its proof is unchanged.
+
 ## Theorem and exact scope
 
 Use the reduced physical-time Pontryagin equations, state bounds, and
@@ -73,8 +83,10 @@ Hales--Vajjha Theorem 16.3.1 or the source steps audited in
 
 For the remaining sector, Section 5 gives a safe normalization to
 \(\lambda=-1\), with an explicit bound \(10^{3807}\) on the entire
-rescaled costate. A numerical clearance for those remaining minimizing
-lifts is still needed.
+rescaled costate. This scoped lemma does not prove its clearance;
+the complete-period argument in
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now
+provides it.
 
 ## 1. Projective size gives a singular clearance
 
@@ -349,7 +361,7 @@ The theorem applies to a trajectory if it admits **one** normalized
 Pontryagin lift satisfying (4). It does not require every lift of that
 trajectory to have a small cost multiplier.
 
-## 5. An explicitly bounded normal sector contains the remaining gate
+## 5. Explicit normal rescaling and its completed global application
 
 For a normalized lift outside (4), put
 \[
@@ -384,7 +396,7 @@ The exact bounds are
 Thus normalization to cost multiplier \(-1\) is used only after an
 explicit lower bound on its projective size has been proved.
 
-There is also an explicit conversion for any future clearance result.
+There is also an explicit conversion for a normal-clearance estimate.
 Define
 \[
 \overline D^2
@@ -398,7 +410,7 @@ Because \(0<\mu\le1\),
 \]
 
 In particular, a supplied bound \(\overline D\ge\delta>0\) for
-the remaining normal minimizing lifts would imply
+the complementary normal minimizing lifts implies
 
 \[
 D\ge\frac{m}{\sqrt{22}}\,\delta
@@ -406,10 +418,14 @@ D\ge\frac{m}{\sqrt{22}}\,\delta
 \tag{25}
 \]
 
-Such a bound is not proved here. The residual task still retains the
-actual complete-period endpoints, free initial state, cost budget,
-and minimizing property. Equations (22)--(25) merely confine its
-cotangent variables to an explicit bounded normal sector.
+Such a bound is not proved by this scoped lemma. It is now provided by
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md), which
+uses the actual complete-period frame endpoint and octagon cost
+budget to prove \(\overline D>1/120\), then applies (24)--(25).
+The full minimizing problem continues to retain its free initial
+state and twisted state and costate endpoints. Equations (22)--(25)
+give the explicit normalization and clearance conversion used in that
+follow-up.
 
 In these rescaled **reduced** phase coordinates the zero of
 \(\overline D\) is the single point
@@ -434,11 +450,14 @@ rescaling (22)--(25) are hand arguments. They require no numerical
 trajectory, symbolic sign oracle, finite-bang-bang source theorem,
 or assumed dwell time.
 
-The result does not supply one numerical bound for all global
-minimizers, a comparison of the resulting finite words, or affine
-uniqueness. It does not authorize a growing sequence of closed-word
-comparisons. It isolates a genuine numerical subcase of the global
-clearance problem and states the remaining normal-sector task.
+The result in this note remains a numerical subcase of the global
+clearance problem. The common bound for all minimizing periods is
+proved in [GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md)
+using the complementary complete-period argument. Neither result
+proves the cost comparison for all words under that ceiling or affine
+uniqueness. The finite comparison remains separate from these
+clearance and counting proofs; no increasing-length enumeration is
+part of this note.
 
 Two independent hand reviews checked the norm decomposition, all integer
 coefficient and exponent bounds, the minimum defining \(c\), the ceiling

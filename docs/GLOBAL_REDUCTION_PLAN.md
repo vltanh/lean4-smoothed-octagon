@@ -20,7 +20,7 @@ that statement. The old
 [BOUNDED_REDUCTION](BOUNDED_REDUCTION.md) are retained as diagnostic records
 and reusable coverage arguments, rather than the controlling proof plan.
 
-The replacement target is:
+The numerical part of the replacement target is now complete:
 
 > Produce a certified **specific integer** N_max such that every actual
 > global minimizer has a cyclically reduced period with at most N_max
@@ -28,30 +28,37 @@ The replacement target is:
 > and equality proof. A direct global theorem N<=5 would finish the
 > comparison using the existing through-five certificates.
 
-An existential uniform bound is useful progress, but it does not identify
-that finite list. A finite list of open lemmas, or finiteness for each
-individual trajectory, is not a specific bound either.
+The specific integer N_max=10^5741 is now proved under the retained inputs,
+with the strict count N<N_max. This completes G2 and G3, but the ceiling
+is far too large for a practical catalogue. The active target is the
+remaining uniform cost comparison and equality, or a stronger structural
+reduction such as N<=5. Finiteness does not supply that comparison.
 
-## External-input boundary
+## External-input boundary and its replacement
 
 [FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md) records
-what is and is not certified about the cited finite bang-bang theorem.
-Hales--Vajjha Theorem 16.3.1 uses unstable-curve escape and basin-containment
-calculations described numerically in the checked manuscript. Those steps
-have not been independently enclosed or proved here. The G2 qualitative
-implication and existential global count retain that external input;
-compactness in G1 and the G3 count for a supplied clearance do not use it.
-A self-contained final proof must certify or replace the relevant source
-inputs. This audit does not assert that the cited theorem is false.
+numerical unstable-curve and basin-containment dependencies in the checked
+proof of Hales--Vajjha Theorem 16.3.1. Those calculations have not been
+independently certified here. The earlier qualitative clearance and
+compactness-based count retained that theorem as an external input.
+
+The new [cost–Casimir inequality](GLOBAL_COST_CASIMIR.md) and
+[numerical reduction](GLOBAL_NUMERICAL_REDUCTION.md) bypass Theorem
+16.3.1 and those computational ingredients. They prove clearance directly
+for all competitive complete-period lifts and construct finiteness using
+the measurable-control regular-domain theorem plus E4. They still use the
+named geometric correspondence, compact-state, PMP, and Chapter 8 local
+edge-optimality results. The source audit remains valid; replacement of
+one dependency is not a claim that every source theorem has been re-proved.
 
 ## 2. Fixed sequence of proof obligations
 
 | Gate | Acceptance condition | Current status |
 | --- | --- | --- |
 | G1. Complete-period domain and compact lifts | Prove the actual boundary conditions and compactness after projective normalization, including abnormal limits. | **Hand proof complete.** See GLOBAL_PERIODIC_PMP and GLOBAL_MINIMIZER_COMPACTNESS. |
-| G2. Uniform regularity of minimizers | Separate every normalized minimizing lift from the full singular locus, uniformly over all minimizers and times. | **Qualitative separation deduced using external Theorem 16.3.1:** some epsilon_* > 0 exists. Its computational source inputs and a certified numerical value remain separate obligations. |
-| G3. Uniform switch complexity | Bound switches uniformly on a supplied compact regular phase domain, including near-degenerate ties; make the constants usable with G2. | **Complete conditional quantitative theorem.** GLOBAL_CLOSED_VARIATION proves the uniform existence result; QUANTITATIVE_REGULAR_SWITCH_BOUND supplies an explicit N(epsilon), with every coefficient fixed. A numerical epsilon is still needed. |
-| G4. Fixed finite comparison and equality | After a numerical N_max, prove the remaining closed comparisons and equality classification for exactly that fixed set. | **Blocked by the quantitative bound.** Through-five comparison/equality are retained assets. No new larger-word list has been started. |
+| G2. Uniform regularity of minimizers | Separate every normalized minimizing lift from the full singular locus, uniformly over all minimizers and times. | **Explicit hand proof complete:** D>10^-1906 for every normalized competitive complete-period lift in the common state domain, including abnormal lifts. See GLOBAL_COST_CASIMIR and GLOBAL_NUMERICAL_REDUCTION. |
+| G3. Uniform switch complexity | Bound switches uniformly on a supplied compact regular phase domain, including near-degenerate ties; make the constants usable with G2. | **Explicit integer complete:** N<10^5741 for every global minimizer, using the quantitative three-line theorem and E4. No previous finite representation or minimum arc length. |
+| G4. Fixed finite comparison and equality | After a numerical N_max, prove the remaining closed comparisons and equality classification for exactly that fixed set. | **Active and open.** The numerical bound is known but impractical to enumerate. Prove a uniform comparison or a stronger reduction; through-five comparison/equality remain retained assets. |
 
 G2 and G3 are separate obligations. The compactness proof alone does not
 bound switches. A local switch theorem with unspecified neighborhoods
@@ -132,7 +139,7 @@ was in the old sufficient domain, not in Reinhardt. The continuation
 test handles this entire family and a larger explicit phase region;
 it does **not** exclude every L3 input or close any universal local gate.
 
-### 3.3 Compactness and a uniform qualitative singular clearance
+### 3.3 The retained qualitative compactness route
 
 [GLOBAL_MINIMIZER_COMPACTNESS](GLOBAL_MINIMIZER_COMPACTNESS.md) normalizes
 the cost multiplier together with all five actual cotangent coordinates
@@ -153,9 +160,10 @@ has a common positive distance epsilon_* from that locus.
 
 This is a uniform statement over actual minimizers. It is not asserted
 for all competitive local extremals or all arbitrary periodic PMP lifts.
-It supplies no numerical epsilon_* and no dwell-time bound.
+This older argument supplies no numerical epsilon_* and no dwell-time bound.
+Section 3.8 now gives a direct numerical clearance without its finite-switch input.
 
-### 3.4 One finite bound for all global minimizers
+### 3.4 The uniform local theorem and its original qualitative application
 
 [GLOBAL_CLOSED_VARIATION](GLOBAL_CLOSED_VARIATION.md) proves a separate
 uniform local count near every nonsingular phase for trajectories satisfying
@@ -226,13 +234,16 @@ estimate ||[[J,X],X]||_F >= 4||X-J||_F. Every time and derivative error
 budget is given. There is no further unproved switch-count step after a
 numerical clearance has been supplied. The compactness theorem proves
 that some clearance exists in this normalization, but does not evaluate it.
+The direct argument in Section 3.8 now supplies epsilon=10^-1906.
 
 ### 3.6 A numerical subcase independent of the finite bang-bang input
 
 [GLOBAL_SMALL_MULTIPLIER_BOUND](GLOBAL_SMALL_MULTIPLIER_BOUND.md) proves
+
 \[
 D\ge m-\sqrt{11/2}\,|\lambda|.
 \]
+
 Thus one normalized lift with `|lambda|<=m/sqrt(22)` has clearance at least
 m/2 throughout its period. Exact evaluation of the coarse coefficient
 bounds gives **N<10^5740**, including every abnormal lift. The rational
@@ -244,11 +255,11 @@ The complementary normal lifts have `|lambda|>10^-1904`. They may safely
 be rescaled to cost multiplier -1, with entire extended-covector norm
 below `10^3807`. Their reduced singular locus is the single point
 `(X,Lambda_1,W)=(J,-3J/2,0)`, with the frame omitted. The exact conversion
-of a future rescaled clearance is recorded in that note. A bounded
-phase domain does not itself exclude a neighborhood of its singular point;
-that remains the principal numerical gate for the uncovered normal lifts.
+of a rescaled clearance is recorded in that note. A bounded phase domain
+does not itself exclude a neighborhood of its singular point. Section 3.8
+now supplies the additional whole-period inequality that resolves this gate.
 
-### 3.7 Determinant separation and the remaining critical band
+### 3.7 Determinant separation and the formerly missing critical band
 
 [GLOBAL_CASIMIR_CLEARANCE](GLOBAL_CASIMIR_CLEARANCE.md) proves that
 `Delta=det(Lambda_1)-(9/4)*lambda^2` is conserved, and that
@@ -258,45 +269,84 @@ also has `N<10^5740` by a stronger direct clearance estimate.
 These theorems bound complexity and do not exclude the corresponding
 trajectories by cost.
 
-To finish the numerical reduction, it suffices to choose one fixed
-positive determinant threshold and prove a numerical singular clearance
-on the residual minimizing lifts satisfying
-`m/sqrt(22)<|lambda|<1/2` and lying inside that critical band.
-Alternatively, a proved determinant gap for all remaining minimizing
-periods would use the new bound directly. Neither input is supplied by
-conservation alone. Increasing a sequence of determinant thresholds
-without treating its limiting region would not give a uniform bound.
+This scoped argument alone did not supply a determinant threshold for
+all intermediate normal lifts. Conservation is insufficient to infer a
+uniform gap. After cost normalization to -1, the source's Section 14.1
+coordinates lie on the exact slice det(Lambda_1)=9/4; certifying a tube
+only on that slice would not cover a transverse neighborhood.
 
-After cost normalization to -1 the critical slice is det(Lambda_1)=9/4.
-The source's blown-up coordinates in Section 14.1 are restricted to
-that slice. A robust certificate must also control its transverse
-neighborhood; certifying only the exact unstable graph would not do so.
+The following complete-period inequality resolves the gap directly,
+without constructing those tubes.
+
+### 3.8 Complete-period cost–Casimir inequality and universal numerical bound
+
+[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) treats a normal lift with
+lambda=-1 and negative elliptic frame costate
+`Lambda_1(0)=-kappa*h*J*h^-1`. An explicitly positive stationary simplex
+control is admissible for Hamiltonian comparison at every state.
+The full maximum condition gives `2*kappa*m_s<=3*m_b`, with body and
+spatial angular quantities defined in that note.
+
+Set `B=h^-1*g` and `z(B)=tr(B)+i*(B_21-B_12)`. Its nonvanishing follows
+from `|z|^2=||B||_F^2+2>=4`, and direct differentiation gives
+`arg(z)'=2*(m_b+m_s)/(||B||_F^2+2)>0`. The actual endpoint
+`B(T)=B(0)*exp(pi*J/3)` forces an angle increment at least pi/3.
+Integration therefore yields
+
+\[
+\boxed{C\ge\frac{4\pi\kappa}{2\kappa+3}.}
+\]
+
+There is no assumed winding number or prior finite vertex representation.
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) proves by
+hand that `A_oct<313/100` and `pi>157/50`. The budget then gives
+`kappa<313/210` and `det(Lambda_1)-9/4<-1/40` in the negative elliptic
+component. Nonpositive determinant has a larger direct gap; the positive
+elliptic component has a direct trace separation. Thus every competitive
+normal lift after cost normalization satisfies
+
+\[
+\|\Lambda_1+\tfrac32J\|_F>\frac1{120}.
+\]
+
+Combining the homogeneous conversion with the small-multiplier estimate
+covers every lift in the initial product normalization of Section 3.5:
+
+\[
+\boxed{D>10^{-1906}.}
+\]
+
+The previously proved coefficient bounds `m>10^-1903` and
+`c>10^-27*m^2`, and the quantitative theorem with E4, now give
+
+\[
+\boxed{N<10^{5741}.}
+\]
+
+This constructs a finite representation of every minimizing period under
+the retained geometric, compact-state, PMP, and local edge inputs. The
+source-dependent singular-avoidance route is unnecessary. Separate
+internal reviews checked the fully assembled two notes, every normal
+orbit component, abnormal limits, rational inequalities, and integer
+ceilings. No practical enumeration or final cost comparison follows.
 
 ## 4. Immediate continuation and stopping rules
 
-1. **Completed:** prove and independently review the local uniform switch theorem.
-   Transport the switching covector into a fixed two-dimensional plane;
-   use finitely many guard lines whose scalar projections have uniformly
-   nonzero first or second derivatives. Between their zeros a fixed
-   control vertex is excluded. The established forward-alternation
-   theorem bounds each remaining two-control block. Do not differentiate
-   a piecewise switching function through control jumps without proof.
-2. **Completed:** make that regular-domain estimate quantitative for an explicitly
-   supplied singular clearance. State its dependence on the state domain,
-   multiplier normalization, and clearance. If a step fails, record the
-   actual missing inequality; do not substitute pathwise finiteness.
-3. **Active research gate:** obtain a **numerical** singular clearance, or an explicit global
-   continuation/index exclusion with the same boundedness consequence.
-   This remains the principal research gate. The current L3 escape region
-   is a useful exclusion certificate, not a cover of the whole phase domain.
-   The precise target is a stated positive rational epsilon_0 in the
-   normalization of Section 3.5. It is enough to supply one such lift
-   for each minimizer; proving the stronger claim for all normalized
-   minimizing lifts is also sufficient. Sampled phase values or a
-   positive minimum on an unjustified truncation do not meet this gate.
-4. Only when these steps give a certified integer may G4 enumerate its
-   fixed set. If instead a global second-variation argument proves N<=5
-   directly, use the retained through-five comparison and equality transfer.
+1. **Completed:** the measurable-control uniform local switch theorem,
+   including fixed-plane transport, three guard lines, and the E4 edge bound.
+2. **Completed:** every regular-domain coefficient and the explicit
+   clearance-to-count formula in the specified initial product norm.
+3. **Completed:** the whole-period cost–Casimir inequality and all-component
+   clearance D>10^-1906, including abnormal lifts. Together these give the
+   specific integer bound N<10^5741 without Theorem 16.3.1.
+4. **Active research gate:** prove a uniform global cost comparison and
+   equality classification, or a stronger global structural/index reduction
+   such as N<=5. Retain the actual matrix endpoint equations, free initial
+   state, costate seam, rank degeneracies, and boundary cases. The retained
+   through-five comparison finishes only after a valid reduction to that
+   class. The enormous bound does not make literal enumeration practical;
+   do not resume an open-ended sequence of seven-, eight-, or higher-piece
+   comparisons or advertise an uncomputed catalogue as a completed proof.
 
 The parallel variation check is also complete for the standard forward
 family: [GLOBAL_FORWARD_INDEX](GLOBAL_FORWARD_INDEX.md) proves at least

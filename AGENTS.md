@@ -1,39 +1,42 @@
 # Working agreement
 
-## Current priority: a proved uniform reduction before more case comparisons
+## Current priority: global cost comparison after an explicit uniform bound
 
 **Mandatory session entry point:** `docs/GLOBAL_REDUCTION_PLAN.md`.
-The active route retains complete-period state and costate closure and the
-whole-period budget. Read docs/GLOBAL_PERIODIC_PMP.md,
-docs/GLOBAL_PERIOD_BUDGET.md, docs/GLOBAL_MINIMIZER_COMPACTNESS.md, and
-docs/GLOBAL_CLOSED_VARIATION.md. Then read
-docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md for the explicit O(1/epsilon)
-bound, with every coefficient fixed. The global checkpoint proves a finite
-forced-exit test excluding the small L3 counterexample family from ANY
-closed PMP occurrence. Compact normalized minimizing lifts and a separate
-uniform local switch theorem prove the existence of one finite bound over
-all global minimizers, using Hales--Vajjha Theorem 16.3.1 as an external
-input. Read docs/FINITE_BANG_BANG_SOURCE_AUDIT.md: the checked source uses
-numerical unstable-curve and basin-containment steps not independently
-certified here. Do not describe those inputs as hand- or kernel-validated.
-The regular-domain conditional count is independently proved with three
-guard lines and 28 pieces per certified short interval. No numerical
-clearance or integer bound for all minimizers is claimed.
-Supply a numerical singular clearance in the specified normalization before
-starting a fixed closed-word comparison; the conversion to an integer is proved.
-Do not equate an existential bound with an identified finite case list.
-Read docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md for the independent numerical
-subcase N<10^5740: abnormal lifts and |lambda|<=m/sqrt(22), with all constants
-explicit. The remaining normal lifts admit lambda=-1 normalization only
-after the proved lower bound; their costate norm is below 10^3807. This
-partial count does not authorize enumeration for all minimizers.
-Then read docs/GLOBAL_CASIMIR_CLEARANCE.md: the invariant
-Delta=det(Lambda_1)-(9/4)*lambda^2 gives explicit clearance when |Delta|
-is separated from zero, and |lambda|>=1/2 has a numerical count too.
-The remaining uniform-clearance gap is the intermediate normal sector
-near Delta=0. A tube on the exact critical Casimir slice does not cover
-its transverse neighborhood; do not infer determinant separation from
-the total cost budget without a proof.
+Read docs/GLOBAL_COST_CASIMIR.md and docs/GLOBAL_NUMERICAL_REDUCTION.md.
+The complete-period Hamiltonian and polar-angle argument now proves
+D>10^-1906 for every normalized competitive PMP lift in the stated common
+state domain. Together with the quantitative switch theorem and the
+minimizer edge property E4, it proves N<10^5741 for every global minimizer.
+The numerical-clearance and uniform-integer gates are complete under the
+retained geometric, compact-state, PMP, and Chapter 8 edge inputs.
+
+Read docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md for the three-line count
+and all coefficients; docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md and
+docs/GLOBAL_CASIMIR_CLEARANCE.md retain useful sector estimates.
+The new route does not use Hales--Vajjha Theorem 16.3.1. The older
+qualitative route and its source boundary remain in
+docs/GLOBAL_MINIMIZER_COMPACTNESS.md and
+docs/FINITE_BANG_BANG_SOURCE_AUDIT.md. The audited numerical source steps
+were bypassed, not independently hand- or kernel-validated.
+
+The active gate is the global cost comparison and affine equality case.
+The specific ceiling is far too large for a practical exhaustive catalogue.
+Prefer a uniform cost inequality or a stronger complete-period structural
+or index reduction, ideally N<=5 so the retained through-five certificates
+apply. Do not claim the conjecture is close merely because an integer is
+known, and do not replace a uniform argument by an increasing sequence of
+seven-, eight-, or higher-piece comparisons. A smaller proposed bound must
+hold for every actual global minimizer, with abnormal/rank-degenerate and
+boundary alternatives treated.
+
+Read docs/GLOBAL_PERIODIC_PMP.md and docs/GLOBAL_PERIOD_BUDGET.md for the
+actual twisted endpoints, free-initial-state transversality, and the finite
+escape test excluding the small L3 counterexample family from any closed
+PMP occurrence. Preserve the full-period budget and both frame/state
+constraints in every new comparison or variation. The normal determinant
+gap is proved by the complete-period cost inequality; conservation alone
+would not supply it.
 
 The old docs/FIVE_TEMPLATE_HANDOFF.md is a historical diagnostic record.
 Its prerequisite is the completed P0 certificate in docs/MINIMIZER_WINDOW_AUDIT.md

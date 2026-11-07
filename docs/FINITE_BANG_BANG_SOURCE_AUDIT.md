@@ -3,10 +3,20 @@
 Date: 2026-11-07. Source audit and certificate specification; no Lean, Lake,
 typechecking, CI, or numerical trajectory computation was run for this note.
 
+## Current status: the active numerical proof bypasses this input
+
+[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) and
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now prove
+D>10^-1906 and, with E4, N<10^5741 without Theorem 16.3.1, the source's
+unstable-curve escape, or its basin containments. The audit below and its
+certificate specifications are retained. The new direct argument replaces
+their role in the active boundedness proof; it does not independently
+certify these source calculations or assert that the source theorem is false.
+
 ## 1. Finding and precise scope
 
-The finite bang-bang theorem used by this repository is **an external
-input**. The displayed arguments in the source contain numerical steps
+The finite bang-bang theorem used by the repository's original qualitative
+route is **an external input**. The displayed arguments in the source contain numerical steps
 that this repository has not independently certified. This audit does
 not assert that the theorem is false, or that a certificate cannot exist
 elsewhere. It identifies what was actually checked and what remains
@@ -39,18 +49,19 @@ a visually convincing plot and contraction observed near a fixed point
 are not uniform error bounds for a continued invariant curve or for all
 points of a cell face.
 
-## 2. Exact effect on this repository
+## 2. Exact effect on the original qualitative route
 
-The following distinctions prevent an external theorem from being
-silently promoted into a newly certified result.
+The following distinctions describe the original compactness-based
+derivation. The new numerical proof above is independent of this route;
+no external theorem is silently promoted into a newly certified result.
 
 | Repository argument | Dependence on the audited finite-switch input |
 | --- | --- |
 | Compactness of normalized minimizing lifts, through Section 4 of [GLOBAL_MINIMIZER_COMPACTNESS](GLOBAL_MINIMIZER_COMPACTNESS.md) | Independent of finite bang-bang representation. It uses the stated geometric, compact-state, PMP, and transversality inputs. |
 | Avoidance of the full singular locus, Section 5 of that note | Uses Theorem 16.3.1 to supply a positive one-sided vertex arc at each time, then Lemma 8.3.4 to exclude its singular endpoint. |
 | Uniform qualitative clearance, Section 6 | Follows from compactness and the preceding avoidance statement; therefore retains the finite-switch external input. |
-| One common finite switch bound for actual global minimizers | Uses that qualitative clearance and the independently proved regular-domain counting theorem; therefore retains the same external input. |
-| [QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md), with a supplied numerical clearance and its stated hypotheses | Does not use Theorem 16.3.1 to prove the conditional count. The missing clearance must be supplied separately. |
+| Original compactness-based common finite switch bound | Uses that qualitative clearance and the independently proved regular-domain counting theorem; therefore retains the same external input. |
+| [QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md), with a supplied numerical clearance and its stated hypotheses | Does not use Theorem 16.3.1 to prove the conditional count. The clearance is supplied separately by GLOBAL_NUMERICAL_REDUCTION, without the audited finite-switch input. |
 
 The point of the first row is logical independence from this particular
 input, not a claim that every other cited result has been re-proved here.
@@ -143,7 +154,7 @@ source check included the arXiv record and the authors' linked
 It did not locate a rigorous enclosure certificate there. That is a
 statement about this search, not an assertion of nonexistence.
 
-## 5. Why certifying escape still does not produce a numerical clearance
+## 5. Why an exact escape certificate alone would not give numerical clearance
 
 A certificate for the exact unstable graph repairs that specific input
 to the finite bang-bang argument. It does not by itself exclude every
@@ -152,8 +163,9 @@ graph, pass near the singular locus, and leave the local chart through a
 different part of its boundary. Local stable-manifold existence alone
 does not bound that passage or its later return.
 
-For the active quantitative gate, one needs a further **robust** statement
-with numerical constants. One possible target is an explicit neighborhood
+A quantitative argument along this older route would need a further
+**robust** statement with numerical constants. The new cost–Casimir proof
+resolves the gate by a different argument, without such tubes. One possible target is an explicit neighborhood
 of the full normalized singular set such that every competitive closed
 PMP lift entering it is forced into a certified exit tube, violates the
 whole-period budget, or admits a proved decreasing variation. The proof
@@ -168,8 +180,10 @@ cost multiplier -1 and det(Lambda_1)=9/4. A validated tube entirely
 within that critical invariant slice does not cover nearby lifts with
 a different determinant. [GLOBAL_CASIMIR_CLEARANCE](GLOBAL_CASIMIR_CLEARANCE.md)
 gives direct numerical clearance away from the critical invariant;
-its near-critical band still requires uniform control in the transverse
-direction as well as along the exact unstable graph.
+that scoped lemma alone leaves a near-critical band requiring transverse
+control if this tube approach is pursued. The complete-period inequality
+in GLOBAL_COST_CASIMIR instead resolves the negative elliptic band directly;
+GLOBAL_NUMERICAL_REDUCTION treats the other components.
 
 Finally convert the neighborhood to the norm used by
 `QUANTITATIVE_REGULAR_SWITCH_BOUND.md`:

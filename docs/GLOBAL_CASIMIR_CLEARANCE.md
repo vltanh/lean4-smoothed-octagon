@@ -3,6 +3,17 @@
 Date: 2026-11-07. Hand proof with explicit constants; no Lean, Lake,
 typechecking, CI, numerical trajectory, or symbolic sign calculation.
 
+**Completed global follow-up.**
+[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) now relates the
+complete-period cost to this invariant on the negative elliptic
+component. [GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md)
+combines that relation with the other costate components and the
+small-multiplier estimate to prove \(D>10^{-1906}\) for every
+normalized minimizing lift and \(N<10^{5741}\) for every minimizing
+period, under the retained state, PMP, and edge-optimality inputs.
+It bypasses Hales--Vajjha Theorem 16.3.1. The sector estimates proved
+below keep their original, broader hypotheses.
+
 ## Theorem and scope
 
 Use the physical-time equations and projective normalization from
@@ -236,7 +247,7 @@ The constants are deliberately coarse. These inequalities require no
 lower bound for individual arc durations and no previously established
 finite-word representation.
 
-## 4. What remains close to the critical invariant
+## 4. The critical invariant and the completed global follow-up
 
 The small-multiplier theorem handles
 \(|\lambda|\le m/\sqrt{22}\). Equation (10) handles
@@ -248,11 +259,13 @@ therefore confined to
 \tag{15}
 \]
 
-This restriction does not supply a lower bound for \(|\Delta|\).
+This restriction alone does not supply a lower bound for \(|\Delta|\).
 For any separately chosen \(n\), (5) handles the additional sector
 \(|\Delta|\ge10^{-n}\), while the shrinking band
-\(|\Delta|<10^{-n}\) remains untreated. Passing to larger \(n\)
-does not give one common numerical count near \(\Delta=0\).
+\(|\Delta|<10^{-n}\) is not treated by these scoped estimates.
+Passing to larger \(n\) does not give one common numerical count near
+\(\Delta=0\). The complete-period cost argument linked below supplies
+the additional restriction for minimizing trajectories.
 
 For the normal rescaling \(\mu=|\lambda|\),
 \(\overline\Lambda_1=\Lambda_1/\mu\), \(\overline\lambda=-1\),
@@ -265,10 +278,17 @@ the invariant transforms exactly as
 \tag{16}
 \]
 
-The explicit normal-sector bounds and conversion of a future
+The explicit normal-sector bounds and conversion of a normal
 \(\overline D\)-clearance to \(D\) are given in Section 5 of
-`GLOBAL_SMALL_MULTIPLIER_BOUND.md`. The state, cost, and complete-period
-endpoint constraints remain part of that unresolved minimizing problem.
+[GLOBAL_SMALL_MULTIPLIER_BOUND](GLOBAL_SMALL_MULTIPLIER_BOUND.md).
+[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) now uses the full frame
+endpoint and cost budget \(C\le A_{\rm oct}<\pi\) to separate the
+negative elliptic normal component from the critical determinant.
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) treats the
+other components, proves \(\overline D>1/120\) for every normal lift
+under that budget, and carries out the projective conversion. These
+are additional complete-period arguments, rather than conclusions
+of (15)--(16) alone.
 
 There is a relevant source limitation: the coordinates of
 [Hales--Vajjha Section 14.1](https://arxiv.org/html/2405.04331v1#Ch14.S1)
@@ -277,6 +297,9 @@ the critical slice \(\overline\Delta=0\). A tube certified only
 inside that slice would not cover a full neighborhood transverse to it.
 The distinct source-enclosure obligations are recorded in
 [FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md).
+They belong to the earlier qualitative route; the complete-period
+cost argument and its numerical clearance do not use or certify
+those source computations.
 
 ## Validation boundary
 
@@ -288,11 +311,13 @@ finite bang-bang theorem. Applications to actual minimizers still retain
 the compact-state and edge-optimality source inputs identified in the
 linked notes.
 
-The result isolates explicit portions of the global clearance problem.
-It does not prove a clearance for all minimizing lifts, a uniform
-integer for all minimizers, a cost comparison for the resulting words,
-or affine uniqueness. No new increasing-length word enumeration is
-licensed by these sector bounds.
+The result in this note isolates explicit portions of the global
+clearance problem. The all-lift clearance and uniform minimizing-period
+integer are now proved in
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md), with
+its additional complete-period hypotheses. The cost comparison for
+all words under that ceiling and affine uniqueness remain separate.
+No increasing-length word enumeration is part of these sector proofs.
 
 Two independent internal hand reviews checked the assembled conservation
 proof, both strict clearance estimates, every coefficient and ceiling bound,

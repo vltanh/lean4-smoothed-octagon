@@ -1,23 +1,24 @@
 # Historical handoff — the failed five-template sufficient package
 
 **Active replacement plan:** [GLOBAL_REDUCTION_PLAN](GLOBAL_REDUCTION_PLAN.md).
-The global route now proves a finite escape obstruction for the small L3
-family, compactness and singular clearance of normalized minimizing lifts,
-and an existential uniform switch bound. The conversion from a supplied
-singular clearance to an integer is now explicit in
-[QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md).
-A numerical clearance and resulting bound remain open. The qualitative
-minimizer clearance uses external Hales--Vajjha Theorem 16.3.1; read
-[FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md) for the
-numerical source steps not independently certified in this repository.
-The independent [small-multiplier result](GLOBAL_SMALL_MULTIPLIER_BOUND.md)
-now gives N<10^5740 for abnormal and explicitly small projective cost
-multipliers. This does not bound the remaining normal lifts or reopen
-whole-word enumeration. [GLOBAL_CASIMIR_CLEARANCE](GLOBAL_CASIMIR_CLEARANCE.md)
-also bounds large normalized multipliers and any fixed separation from
-the critical determinant; the intermediate normal critical band remains open.
-The sequence below is preserved as a diagnostic record, not the active work
-order; do not retry its refuted broad-domain L3 premise.
+[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) and
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now prove
+D>10^-1906 for every normalized competitive complete-period lift, and
+N<10^5741 for every global minimizer using the retained geometric,
+compact-state, PMP, and local edge inputs. The three-line quantitative
+count constructs finiteness without a prior finite-switch theorem.
+
+The numerical-clearance and specific-integer gates are complete. The
+ceiling is far too large for a practical catalogue; the active task is
+the global cost comparison and equality, or a stronger structural bound.
+The new route bypasses Theorem 16.3.1 and the numerical dependencies in
+[FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md); it does
+not certify those calculations. Earlier compactness, continuation, and
+multiplier-sector results remain valid and are preserved.
+
+The sequence below is a historical diagnostic record, not the active work
+order. Do not retry its refuted broad-domain L3 premise or resume an
+open-ended progression of larger closed-word comparisons.
 
 **Checkpoint (2026-11-07): L3 on the stated local superset is refuted even
 with arbitrary measurable replacements. The revised complete-switch PMP
@@ -69,7 +70,8 @@ revised L3 target open.
 
 **Do not resume comparing closed words of lengths 7, 8, 9, ...** The finite
 closed-word comparisons through five pieces, and two six-piece closed orbits,
-are assets, but without a complexity bound they do not exhaust minimizers.
+are assets, but they do not exhaust the new bounded class. A comparison
+for a few additional lengths does not bridge the enormous proven ceiling.
 
 The hand coverage argument in `docs/BOUNDED_REDUCTION.md` shows: *assuming
 the established forward-alternation exclusion*, any finite cyclically reduced
