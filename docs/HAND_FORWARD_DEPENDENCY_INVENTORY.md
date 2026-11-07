@@ -1,84 +1,86 @@
-# Pure-forward dependencies for a proof without computer assistance
+# All-forward dependencies for a proof without computer assistance
 
-Date: 2026-11-07. This inventory separates the current computer-assisted
-baseline from the replacement hand arguments. It does not claim that
-the pure-forward hand-only gate is closed.
+Date: 2026-11-07. The all-forward hand-only gate H-F is closed by
+[HAND_FORWARD_PERIOD_EXCLUSION](HAND_FORWARD_PERIOD_EXCLUSION.md),
+using the [independently reviewed scalar norm proof](HAND_FORWARD_NORM_AUDIT.md).
+The mixed gates H-S and H-N, and the full final audit H-A, remain open.
 
-## Essential quantified signs still to replace
+## The three quantified forward inputs now have hand proofs
 
-| Input | Existing justification | Hand replacement status |
+| Input | Hand justification | Status |
 | --- | --- | --- |
-| `U=4/a_min^2<3` | [SMALL_FORWARD_MINIMUM_HAND_PROOF](SMALL_FORWARD_MINIMUM_HAND_PROOF.md), with its elementary integral/cubic comparison | Closed by hand. The [independent audit](SMALL_FORWARD_MINIMUM_HAND_AUDIT.md) accepts the entire hard face, also supplying the mixed minimum-structure prerequisite. |
-| `z,w<4/3`, sufficient for the new route | The [integral neighbor theorem](HAND_FORWARD_NEIGHBOR_INTEGRAL.md), [asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md), and [hand audit](HAND_FORWARD_NEIGHBOR_AUDIT.md) | Closed by hand. This replaces the need for the older 8,183-node cover, which proves the stronger but unnecessary bound `z,w<5/4`. |
-| Complementary Casimir contradiction | The 20,999-node [five-variable cover](GLOBAL_FORWARD_PERIOD_EXCLUSION.md) | Open. The new hand lemma proves the entire Casimir implication from `z,w<=4/3` and `delta u+delta v<=1/39`. The latter norm estimate remains unproved. |
+| U=4/a_min^2<3 | [Small-forward-minimum integral/cubic proof](SMALL_FORWARD_MINIMUM_HAND_PROOF.md), with [independent audit](SMALL_FORWARD_MINIMUM_HAND_AUDIT.md) | Closed. Replaces the hard H5 coefficient table and also supplies the shared mixed minimum-structure input. |
+| z,w<4/3 | [Integral neighbor proof](HAND_FORWARD_NEIGHBOR_INTEGRAL.md), [asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md), and [audit](HAND_FORWARD_NEIGHBOR_AUDIT.md) | Closed. Replaces the older 8,183-node cover, which proved the stronger but unnecessary bound 5/4. |
+| Complementary Casimir contradiction | [Conditional two-norm theorem](HAND_FORWARD_CONDITIONAL_NORM_BOUNDS.md), [sum initial/low-D proof](HAND_FORWARD_SYMMETRIC_SUM_REDUCTION.md), [high-D proof](HAND_FORWARD_SYMMETRIC_SUM_HIGH_D.md), and [larger-neighbor norm proof](HAND_FORWARD_LARGER_NORM_HAND_PROOF.md) | Closed. The exact first row and genuine exterior floors imply delta u+delta v<1/35 and delta v<1/64. These imply gamma^2>23/125, contradicting gamma^2<9193/50000. The 20,999-node cover is not used. |
 
-The H5 table gives its full coefficients, not merely an execution count.
-It is now replaced in the active hand route by the integral/cubic proof
-linked above. The baseline certificate is preserved as historical evidence;
-its coefficient count is not a premise of the new hand argument.
+The two residuals decrease as the larger neighboring margin increases,
+so both reduce to equal-neighbor inequalities. The sum proof uses a
+quantitative initial-value cancellation, elementary rational logarithm
+bounds, six displayed coefficient polynomials and one quartic sign.
+The larger-neighbor norm proof uses exterior-factor concavity and two
+tangent values, whose finite coefficient identities have explicit short
+bounds. None of these signs is delegated to an executable test.
 
-## Essential inputs that already have readable hand arguments
+The earlier sufficient targets delta u+delta v<=1/40, <=1/39, and the
+stronger homogeneous target are not needed. Their unresolved status
+does not leave an obligation in this completed route.
 
-- The upper active-minimum bound `a_min^2<20/11`, hence `U>11/5`,
+## Essential inputs with readable hand arguments
+
+- The upper active-minimum bound a_min^2<20/11, hence U>11/5,
   follows from coordinatewise monotonicity of the actual cyclic scalar
   cost, seven retained pieces, and a short logarithm estimate in
   [GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD](GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD.md).
 - Negative ellipticity follows from the actual stationary Jacobi
   system and the positive-kernel-vector contradiction in
   [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md).
-  It is not an output of either F cover.
+  It is not an output of either forward cover.
 - The whole-period competitive Casimir cap follows from the spectral
   cost theorem and explicit rational bounds for the octagon cost and
-  pi. The stronger current hand cap is
-  `gamma^2<9193/50000` in
+  pi. The hand cap is gamma^2<9193/50000 in
   [HAND_PROOF_REFINEMENTS](HAND_PROOF_REFINEMENTS.md).
-- The centered stationary equations, the scalar determinant
-  factorization and the exact Casimir formula are displayed algebraic
-  identities in [GLOBAL_FORWARD_CENTERED_SYSTEM](GLOBAL_FORWARD_CENTERED_SYSTEM.md).
-  Their use retains one actual PMP lift; no fitted local multiplier
-  or endpoint-rank assumption is needed.
-- The two exterior missing-control floors are derived from the actual
+- The centered stationary equations, determinant factorization and
+  exact Casimir formula are displayed algebraic identities in
+  [GLOBAL_FORWARD_CENTERED_SYSTEM](GLOBAL_FORWARD_CENTERED_SYSTEM.md).
+  Their use retains one actual PMP lift; there is no fitted local
+  multiplier or endpoint-rank premise.
+- The genuine exterior missing-control floors follow from the actual
   first/last Hamiltonian inequalities in Sections 1--2 of
   [MIXED_GLOBAL_SMALL_FORWARD_MINIMUM](MIXED_GLOBAL_SMALL_FORWARD_MINIMUM.md).
   Those identities do not depend on the hard-face sign table later in
   that note. Weak third-control ties remain covered.
 - The symmetric edge cost has a positive mixed derivative and is
-  increasing and concave in the second argument over the stated
-  minimum domain. These derivative signs and their domain are proved
-  in [GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET](GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET.md).
-- The central linear budget uses one explicitly displayed degree-eleven
-  polynomial identity with twelve positive integer coefficients in
+  increasing and concave in the second argument on the required domain.
+  These signs are proved in
+  [GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET](GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET.md).
+- The stronger exterior-factor budget in Section 3 of
+  [HAND_FORWARD_LEMMAS](HAND_FORWARD_LEMMAS.md) retains both actual
+  exterior factors, using the positive mixed derivative and explicit
+  seven-edge accounting. Its one-variable cost contradiction reuses the
+  displayed degree-eleven identity with twelve positive coefficients in
   [GLOBAL_FORWARD_LINEAR_BUDGET](GLOBAL_FORWARD_LINEAR_BUDGET.md).
-  This is a small exact hand-checkable identity, but remains a named
-  premise of the current refinements. The new exterior-factor budget
-  reuses that identical one-variable contradiction and introduces no
-  new sign table.
-- The broad circular exclusion in
-  [GLOBAL_FORWARD_CENTERED_SYSTEM](GLOBAL_FORWARD_CENTERED_SYSTEM.md)
-  has a complete displayed estimate using positive row sums, a cubic
-  logarithmic remainder and a completed square. Its proof does not
-  require execution of its supplementary symbolic checker.
+  This is an explicit finite algebraic proof, not a coefficient-count
+  assertion.
+- The exact positive central offset and the exterior-factor concavity
+  used by the scalar norm proof are established in Sections 1--2.1 of
+  [HAND_FORWARD_LEMMAS](HAND_FORWARD_LEMMAS.md).
 
-## Computational or quantitative material that need not be imported
+## Material not imported into the hand proof
 
-The earlier small-corner interval-Hessian table in
-`GLOBAL_STRUCTURE_FORWARD_CIRCLE_CORNER` is superseded for this
-application by the broad circular hand argument. It is unnecessary
-once the conditional Casimir lemma in `HAND_FORWARD_LEMMAS` is applied,
-because that lemma treats the entire stated scalar domain directly.
+The historical H5 table, 8,183-node neighbor cover and 20,999-node Casimir
+cover remain preserved as parts of the computational baseline. None is
+a premise of H-F. The older interval-Hessian circle calculation and even
+the broad circular comparison are unnecessary here, because the new
+two-norm theorem treats the entire required scale domain.
 
-The separate factor bound `q<7/4`, the finite ceiling `N<=61`, and the
-length-by-length forward experiments are not premises of the present
-uniform hand route. The linear neighbor budget already bounds the
-initial neighbor domain. No catalogue of complete words is needed.
+The separate factor bound q<7/4, finite ceiling N<=61 and length-by-length
+forward experiments are also unnecessary. This is a uniform period
+argument, with no enumeration of increasing word lengths.
 
-The full forward endpoint-rank and dual-Hessian/index results are also
-unnecessary for a necessary-condition contradiction using the actual
-normal lift. They remain possible alternative research routes; ordinary
-Jacobi inertia or an unproved negative-subspace assertion must not be
-substituted for the missing scalar hand inequalities.
+The forward endpoint-rank and dual-Hessian/index results remain possible
+alternative routes. Ordinary Jacobi inertia or an unproved negative-space
+assertion is not substituted for a scalar sign.
 
 The finite-before-normality and geometric/PMP foundation retain their
-separate global dependency audit. This F-specific inventory does not
-claim to replace any computational premise elsewhere in that upstream
-chain.
+separate global dependency audit. Closing this forward-specific gate does
+not close the remaining mixed cases or the final hand-only assembly.

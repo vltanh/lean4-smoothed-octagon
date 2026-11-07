@@ -26,7 +26,7 @@ in force.
 
 | Gate | Required hand replacement | Current status |
 | --- | --- | --- |
-| H-F | Uniform exclusion of all-forward periods through the stationary norm-sum or a direct Casimir inequality | Open. The hard small-minimum face and sufficient neighbor bound are proved by hand. The complementary Casimir cover still needs a hand replacement. |
+| H-F | Uniform exclusion of all-forward periods through stationary norm bounds and a Casimir inequality | Closed by the [complete hand theorem](HAND_FORWARD_PERIOD_EXCLUSION.md) and [scalar audit](HAND_FORWARD_NORM_AUDIT.md). Both former forward covers are replaced. |
 | H-S | Exclusion when the smaller turn at a minimum reverse centre has a short forward run | Open. The separate opposite-norm floor face is now excluded by hand. Three remaining root/cost boundary faces still need analytic exclusions. |
 | H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Open. Retain the scalar boundary comparison and concavity reduction; replace the reverse, low-a and forward endpoint exclusions. The old small-parameter coefficient argument is now bypassed by the proved strict duration-ratio gap. |
 | H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Open. In particular, distinguish supplementary identity checks from indispensable executable sign checks. |
@@ -35,8 +35,15 @@ These are uniform period classes. They are not a plan to enumerate more
 word lengths or replay larger covers. An alternative hand argument may
 replace an entire class without reproducing the old scalar domain.
 
-### Closed hand prerequisites within these gates
+### Completed all-forward gate and other hand prerequisites
 
+- The [all-forward period exclusion](HAND_FORWARD_PERIOD_EXCLUSION.md)
+  is complete by hand. The first stationary row and genuine exterior
+  floors imply delta u+delta v<1/35 and delta v<1/64; a concave
+  two-vertex comparison then gives gamma^2>23/125, contradicting the
+  competitive cap gamma^2<9193/50000. See the
+  [norm audit](HAND_FORWARD_NORM_AUDIT.md) and updated
+  [dependency inventory](HAND_FORWARD_DEPENDENCY_INVENTORY.md).
 - The shared small-forward-minimum hard face has a complete
   [integral/cubic replacement](SMALL_FORWARD_MINIMUM_HAND_PROOF.md).
 - Both forward neighbor ratios are strictly below 4/3 by the
@@ -71,8 +78,9 @@ proofs of the following stronger necessary conditions:
    comparison and improves both necessary endpoint alternatives.
 
 [Independent internal hand review](HAND_PROOF_REFINEMENTS_AUDIT.md)
-accepts these refinements. None of the three main exclusion gates is
-marked closed on the strength of these necessary conditions alone.
+accepts these refinements. These necessary conditions alone do not
+close an exclusion gate; H-F is closed by the additional norm arguments
+and actual-period assembly linked above.
 
 ## Dependency pruning under review
 
@@ -103,27 +111,26 @@ complete [integral and cubic hand proof](SMALL_FORWARD_MINIMUM_HAND_PROOF.md),
 accepted in its [independent review](SMALL_FORWARD_MINIMUM_HAND_AUDIT.md).
 This replaces the old H5 coefficient table and establishes the required
 minimum structure for both F and the mixed cases. The neighbor inequality
-also now has a hand proof. The stationary norm-sum comparison remains open.
+also now has a hand proof. The two sufficient stationary norm bounds
+and resulting Casimir contradiction are now proved by hand as well.
 
 ## Further accepted reductions, with explicit open hypotheses
 
 [HAND_FORWARD_LEMMAS](HAND_FORWARD_LEMMAS.md) proves exterior-factor
-concavity and reduces a sufficient neighbor bound to two planar signs.
-It also proves that the bounds `z,w<=4/3` and
-`(u-3/4)+(v-3/4)<=1/40` imply `gamma^2>23/125` by hand. The neighbor
-bound is now established by hand; the stationary norm-sum bound remains
-open. Numerical evidence is not a proof premise for either assertion.
-The same note strengthens the whole-period cost budget by retaining
-both exterior factors, using the positive mixed derivative of the
-scalar edge cost and an explicit seven-edge accounting argument.
-Its sharper-cap extension permits the norm-sum target `1/39`.
-It also proves `(3-U)(q-1)<3/13`; a proposed homogeneous norm estimate
-would imply the sufficient target, but that estimate is still unproved.
-The [exact forward targets](HAND_FORWARD_OPEN_TARGET.md) now record the
-complete stationary norm problem and two rigorously refuted relaxations.
-In particular, dropping both genuine exterior floors is invalid. The
-[dependency inventory](HAND_FORWARD_DEPENDENCY_INVENTORY.md) distinguishes
-the remaining F norm sign from the completed upstream minimum and neighbor proofs.
+concavity and a stronger whole-period cost budget retaining both exterior
+factors. Its older sufficient sum targets 1/40 and 1/39 remain valid
+conditional lemmas, but are no longer needed. The completed route uses
+the [two-norm criterion](HAND_FORWARD_CONDITIONAL_NORM_BOUNDS.md):
+delta u+delta v<1/35 and delta v<1/64. Both residuals decrease with
+the larger neighboring margin. On the equal-neighbor domain, the
+[sum initial/low-D argument](HAND_FORWARD_SYMMETRIC_SUM_REDUCTION.md),
+[high-D completion](HAND_FORWARD_SYMMETRIC_SUM_HIGH_D.md), and
+[larger-norm tangent proof](HAND_FORWARD_LARGER_NORM_HAND_PROOF.md)
+supply every sign. The [scalar audit](HAND_FORWARD_NORM_AUDIT.md) and
+[actual-period theorem](HAND_FORWARD_PERIOD_EXCLUSION.md) close H-F.
+The [earlier target note](HAND_FORWARD_OPEN_TARGET.md) preserves exact
+stationary formulas and the refuted relaxations; dropping both genuine
+exterior floors remains invalid.
 
 [MIXED_SMALLER_SHORT_OUTER_ENVELOPE](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md)
 removes the opposite turn and its independent norm from one necessary

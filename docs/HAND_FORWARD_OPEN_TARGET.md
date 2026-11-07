@@ -1,12 +1,18 @@
-# Exact remaining targets for a hand-only forward proof
+# Exact forward stationary formulas and earlier stronger targets
 
-Date: 2026-11-07. This is a status and problem-definition note, not a
-closure claim. The proved reductions are in
-[HAND_FORWARD_LEMMAS](HAND_FORWARD_LEMMAS.md); the prerequisite inventory is
-in [HAND_FORWARD_DEPENDENCY_INVENTORY](HAND_FORWARD_DEPENDENCY_INVENTORY.md).
-No numerical extremum or coefficient count is used as a premise below.
+Date: 2026-11-07. The hand-only forward theorem is now complete in
+[HAND_FORWARD_PERIOD_EXCLUSION](HAND_FORWARD_PERIOD_EXCLUSION.md).
+This note preserves its exact stationary formulas, earlier stronger
+sufficient targets, and rigorously refuted relaxations. The completed
+route uses delta u+delta v<1/35 and delta v<1/64, proved in the
+[linked norm sources](HAND_FORWARD_CONDITIONAL_NORM_BOUNDS.md).
+The stronger targets (7)--(8) below remain unproved and are not premises
+or outstanding obligations of that completed route. The
+[dependency inventory](HAND_FORWARD_DEPENDENCY_INVENTORY.md) records the
+full current chain. No numerical extremum or coefficient count is a
+premise.
 
-## 1. The unresolved uniform norm inequality
+## 1. Exact stationary formulas and an earlier stronger sum target
 
 The strongest useful proposed target presently has the following exact,
 reproducible definition. Put
@@ -26,7 +32,8 @@ The last line is the proved exterior-factor cost budget. Its weak version
 enlarges the actual competitive domain. The neighbor bound z,w<4/3 is now proved by the
 [integral neighbor theorem](HAND_FORWARD_NEIGHBOR_INTEGRAL.md) and its
 [asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md). It is
-therefore an established actual-data input to this remaining norm problem.
+therefore an established actual-data input to both these formulas and
+the completed norm proof.
 
 Define
 
@@ -220,11 +227,12 @@ The two middle gaps are respectively `98719/1056930000` and
 `13/275800`. Every assertion in this obstruction is thus checkable
 using the displayed identities and integer arithmetic.
 
-## 3. What the final targeted attempt reduced
+## 3. The larger-neighbor reduction, now completed
 
-One subsidiary route would prove `delta v<1/64` for the larger
-neighbor. This would still need a bound on the other increment, or
-some additional sum argument; it is not a replacement for (7) alone.
+The completed route proves `delta v<1/64` for the larger neighbor,
+together with `delta u+delta v<1/35`. The
+[conditional Casimir theorem](HAND_FORWARD_CONDITIONAL_NORM_BOUNDS.md)
+shows why this pair suffices. The original reduction is retained here.
 Define
 
 \[
@@ -271,25 +279,25 @@ planar sign comparisons would be
 \tag{15}
 \]
 
-on the noncircular part of (14). These final comparisons remain
-unproved. Cubic bounds on `f` turn them into explicit rational
-inequalities, but the polynomial expansions obtained in discovery
-are too long to count as an unreported hand sign argument. No claim
-based on those expansions is included here.
+on (14) with U<3. Both are now proved in
+[HAND_FORWARD_LARGER_NORM_HAND_PROOF](HAND_FORWARD_LARGER_NORM_HAND_PROOF.md).
+That proof displays the complete finite identities and short coefficient
+bounds establishing their signs, including the near-circular region.
 
-## 4. Current proof boundary
+## 4. Completed proof boundary
 
-The accepted results are the exterior-factor concavity, conditional
-Casimir implication with norm budget `1/39`, stronger actual exterior
-cost budget, and small product estimate. They replace no unresolved
-premise by a numerical assertion.
+The upstream U<3 and neighbor restrictions have hand proofs. The
+exterior-factor concavity and stronger physical cost budget used below
+also have hand proofs. The two stationary residual signs are proved in
+[HAND_FORWARD_SYMMETRIC_SUM_REDUCTION](HAND_FORWARD_SYMMETRIC_SUM_REDUCTION.md),
+[HAND_FORWARD_SYMMETRIC_SUM_HIGH_D](HAND_FORWARD_SYMMETRIC_SUM_HIGH_D.md),
+and [HAND_FORWARD_LARGER_NORM_HAND_PROOF](HAND_FORWARD_LARGER_NORM_HAND_PROOF.md).
+Their [independent audit](HAND_FORWARD_NORM_AUDIT.md) and the
+[actual-period theorem](HAND_FORWARD_PERIOD_EXCLUSION.md) close H-F.
 
-To finish this route one must still prove the norm target (7), or
-another uniform Casimir exclusion. Both neighbor planar signs are
-now established by the linked hand theorem. The upstream `U<3` prerequisite now has a complete
-[hand replacement](SMALL_FORWARD_MINIMUM_HAND_PROOF.md), with no large
-coefficient table. The remaining inequalities identified here still leave
-the hand-only forward theorem open.
+The alternate stronger inequalities in Sections 1, 5 and 6 remain
+research comparisons only. They are not needed for that conclusion.
+The genuine exterior floors remain essential and were retained.
 
 ## 5. An exact decomposition using only the larger-neighbor floor
 

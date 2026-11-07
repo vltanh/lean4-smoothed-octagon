@@ -39,8 +39,14 @@ and [exact forward targets](docs/HAND_FORWARD_OPEN_TARGET.md) have their
 The hand neighbor theorem consists of the
 [symmetric integral proof](docs/HAND_FORWARD_NEIGHBOR_INTEGRAL.md),
 [asymmetric completion](docs/HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md), and
-[audit](docs/HAND_FORWARD_NEIGHBOR_AUDIT.md). The remaining F target is
-the stationary norm sum or a direct Casimir comparison.
+[audit](docs/HAND_FORWARD_NEIGHBOR_AUDIT.md). F is now closed by the
+[complete hand theorem](docs/HAND_FORWARD_PERIOD_EXCLUSION.md), using
+the [two-norm criterion](docs/HAND_FORWARD_CONDITIONAL_NORM_BOUNDS.md),
+[sum initial/low-D proof](docs/HAND_FORWARD_SYMMETRIC_SUM_REDUCTION.md),
+[high-D completion](docs/HAND_FORWARD_SYMMETRIC_SUM_HIGH_D.md), and
+[larger-norm proof](docs/HAND_FORWARD_LARGER_NORM_HAND_PROOF.md).
+Their [scalar audit](docs/HAND_FORWARD_NORM_AUDIT.md) records the
+independent checks; neither forward interval cover is used.
 
 Further mixed reductions are the [single reverse shape endpoint](docs/MIXED_NONSHORT_REVERSE_AFFINE_COMPARISON.md),
 [short shear/cost candidates](docs/MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md),

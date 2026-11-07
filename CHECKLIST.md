@@ -6,8 +6,8 @@
 
 The user has requested a hand proof beyond the completed computational
 baseline below. [HAND_PROOF_STATUS](docs/HAND_PROOF_STATUS.md) is the finite
-replacement ledger: H-F, H-S, H-N and the final dependency audit H-A are
-open. The [new hand refinements](docs/HAND_PROOF_REFINEMENTS.md) strengthen
+replacement ledger: H-F is now closed by hand; H-S, H-N and the final
+dependency audit H-A remain open. The [new hand refinements](docs/HAND_PROOF_REFINEMENTS.md) strengthen
 the Casimir cap, reverse-centre scale and forward successor norm. The
 closed computer-assisted gates below do not close these new obligations.
 
@@ -31,9 +31,12 @@ closed computer-assisted gates below do not close these new obligations.
 - [x] A reviewed [fixed outer-norm deformation](docs/MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
   further reduces the nonnegative-pairing short face, with its remaining
   endpoint signs explicit.
-- [ ] The stationary norm-sum/Casimir bound, full short-side defect
-  exclusion, both nonshort successors, and final hand-only assembly
-  still need proofs.
+- [x] The [uniform all-forward hand theorem](docs/HAND_FORWARD_PERIOD_EXCLUSION.md),
+  with [independent norm audit](docs/HAND_FORWARD_NORM_AUDIT.md), replaces
+  both forward covers. The actual norm bounds imply a strict Casimir
+  contradiction.
+- [ ] Full short-side exclusion, both nonshort successors, and the final
+  hand-only assembly still need proofs.
 
 ## Baseline proof checkpoints
 

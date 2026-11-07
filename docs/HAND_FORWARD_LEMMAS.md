@@ -1,6 +1,8 @@
 # Hand reductions for the remaining pure-forward exclusion
 
-Date: 2026-11-07. These are analytic lemmas, not a closure claim for F.
+Date: 2026-11-07. These analytic lemmas support the now completed
+[all-forward hand theorem](HAND_FORWARD_PERIOD_EXCLUSION.md). The older
+stronger norm targets below are not required by that completed route.
 Every polynomial and sign comparison used below is displayed. Numerical
 experiments were used to discover the proposed targets but are not
 premises of these proofs. No interval cover or coefficient-count result
@@ -131,8 +133,9 @@ signs on (7) are not asserted proved by this lemma.
 [integral neighbor theorem](HAND_FORWARD_NEIGHBOR_INTEGRAL.md) and its
 [asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md), accepted
 by their [independent audit](HAND_FORWARD_NEIGHBOR_AUDIT.md). Thus the
-sufficient neighbor bound is established; the norm-sum target below
-remains open.
+sufficient neighbor bound is established. The stronger sum-only target
+below remains optional; the completed route instead uses the proved
+[two-norm criterion](HAND_FORWARD_CONDITIONAL_NORM_BOUNDS.md).
 
 ## 2. A small norm-sum bound would replace the full Casimir cover
 

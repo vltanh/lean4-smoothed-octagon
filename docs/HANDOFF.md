@@ -12,9 +12,9 @@ removes the old small-parameter coefficient table from the actual refined
 route. The [forward lemmas](HAND_FORWARD_LEMMAS.md) and
 [short-side outer envelope](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md) have
 accepted conditional reductions with their remaining hypotheses stated.
-See the [independent hand review](HAND_REDUCTION_REVIEW.md); no final
-F, short-side or nonshort successor exclusion is claimed from these
-refinements alone.
+See the [independent hand review](HAND_REDUCTION_REVIEW.md). These
+refinements alone did not finish the exclusions; the additional
+all-forward norm proofs below now close H-F.
 
 Further accepted hand work reduces the nonshort residual by
 [shape monotonicity](MIXED_NONSHORT_SHAPE_MONOTONICITY.md) and the reverse
@@ -38,8 +38,15 @@ The forward neighbor bound is now complete by hand: the
 [symmetric integral proof](HAND_FORWARD_NEIGHBOR_INTEGRAL.md) and
 [asymmetric completion](HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md)
 prove both ratios below 4/3, with their
-[independent audit](HAND_FORWARD_NEIGHBOR_AUDIT.md). F still needs the
-stationary norm-sum or direct Casimir sign.
+[independent audit](HAND_FORWARD_NEIGHBOR_AUDIT.md). The
+[two sufficient norm bounds](HAND_FORWARD_CONDITIONAL_NORM_BOUNDS.md)
+now also have complete proofs: the [sum argument](HAND_FORWARD_SYMMETRIC_SUM_REDUCTION.md),
+[high-D completion](HAND_FORWARD_SYMMETRIC_SUM_HIGH_D.md), and
+[larger-norm argument](HAND_FORWARD_LARGER_NORM_HAND_PROOF.md).
+Their [scalar audit](HAND_FORWARD_NORM_AUDIT.md) and
+[actual-period assembly](HAND_FORWARD_PERIOD_EXCLUSION.md) close H-F.
+The remaining hand-only tasks are the mixed short and nonshort exclusions
+and the final global dependency audit.
 
 For the mixed cases, the [affine reverse comparison](MIXED_NONSHORT_REVERSE_AFFINE_COMPARISON.md)
 leaves one upper shape endpoint, now improved by the

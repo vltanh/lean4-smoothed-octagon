@@ -34,8 +34,9 @@ are complete hand theorems, reviewed in
 Further current inputs are the [retained central cap](MIXED_NONSHORT_RETAINED_CENTRAL_CASIMIR.md),
 [turn floor](EXPLICIT_TURN_NORM_FLOOR.md), and
 [nonpositive short-floor comparison](MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md).
-For F, use the [exact open targets](HAND_FORWARD_OPEN_TARGET.md)
-and [dependency inventory](HAND_FORWARD_DEPENDENCY_INVENTORY.md).
+For F, use the [completed hand theorem](HAND_FORWARD_PERIOD_EXCLUSION.md),
+[scalar norm audit](HAND_FORWARD_NORM_AUDIT.md), and
+[dependency inventory](HAND_FORWARD_DEPENDENCY_INVENTORY.md).
 
 The neighbor input is now a complete hand theorem:
 [integral/symmetric proof](HAND_FORWARD_NEIGHBOR_INTEGRAL.md),
