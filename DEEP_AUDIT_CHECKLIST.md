@@ -33,6 +33,11 @@ in this checkpoint. All existing mathematical and Lean proof files are retained.
 
 ## Endpoint and domain checks
 
+- [x] P0 hand audit: use the final finite bang-bang theorem, prove sectors after
+  left normalization by transforming the entire disk, and justify a finite
+  cheaper splice as a geometric competitor without an extra winding premise.
+  See `docs/MINIMIZER_WINDOW_AUDIT.md`. This is not a re-audit of every retained
+  through-five identity or a proof of an analytic local improvement.
 - [x] Keep two initial-state coordinates and six factors explicit.
 - [x] Require strict positivity at every state endpoint, using monotonicity
   of exact vertex flows to cover the entire continuous arcs.

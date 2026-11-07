@@ -164,6 +164,11 @@ we need not actually construct a six-to-five replacement in every case.
 
 ## 4. Explicit, fixed-dimensional eligibility domain
 
+The complete P0 eligibility and splice proof is in
+[MINIMIZER_WINDOW_AUDIT.md](MINIMIZER_WINDOW_AUDIT.md). It validates the
+input-sector test after left normalization and the reverse geometric bridge
+for a finite cheaper replacement; it proves none of L1--L5.
+
 ### 4.1 State coordinates
 
 Use the triangular coordinates of FIVE_ARC_PROGRESS. The generators and

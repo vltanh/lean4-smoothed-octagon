@@ -11,9 +11,10 @@ validation have not been run. New formalization infrastructure is paused.**
 ## Current priority: establish boundedness before more enumeration
 
 **Next-session handoff:** [five-template action plan](docs/FIVE_TEMPLATE_HANDOFF.md).
-Read it **before** attacking any additional case. The first checkpoint is P0
-(audit minimizer eligibility, twisted seams, geometric sectors, and the
-geometric/control bridge); then test L1 as a **local** endpoint-preserving
+Read it **before** attacking any additional case. The prerequisite
+[P0 audit is complete as a hand proof](docs/MINIMIZER_WINDOW_AUDIT.md):
+it verifies minimizer eligibility, twisted seams, normalized geometric sectors,
+and the finite-piece geometric/control splice. The next target is L1 as a **local** endpoint-preserving
 cost improvement, handling regular and singular endpoint fibers. Continue
 with L2–L5 only against the same strict acceptance criteria. All five
 universal local improvements remain **OPEN** (0/5). Do not resume

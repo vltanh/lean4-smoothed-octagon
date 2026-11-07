@@ -1,8 +1,10 @@
 # Proof ledger: bounded reduction before further case comparisons
 
 **NEXT WORKER: [FIVE-TEMPLATE HANDOFF](docs/FIVE_TEMPLATE_HANDOFF.md).**
-Begin with **P0: validate the finiteness, twisted-seam, local-sector, and
-geometric-bridge premises**, then attack **L1 (012012)** as a *universal local
+**P0 is complete at the hand-proof level:** see
+[the minimizer-window audit](docs/MINIMIZER_WINDOW_AUDIT.md) for finiteness,
+twisted rebasing, normalized sectors, and the finite-piece geometric splice.
+Attack **L1 (012012)** as a *universal local
 endpoint-preserving improvement*; test for obstructions before extending to
 L2–L5. The proof acceptance criteria, exact eight-variable domain, local
 endpoint elimination, singular-rank obligations, and stop/failure rules are
@@ -30,6 +32,7 @@ boundedness theorem.
 
 | Component | Exact completion condition | Status |
 | --- | --- | --- |
+| P0: minimizer eligibility and splice | Prove every selected window meets the entire stated domain and every cheaper finite strict-star splice gives a geometric competitor. | **Hand proof complete**, using the named published reduction and retained through-five comparison certificates. Does not exclude a new cost class. |
 | Coverage | Every cyclically reduced minimizing word with N>=6 contains one of the five specified six-arc windows, using the established forward-alternation exclusion. | Hand proof independently reviewed, with a separate finite-graph computational cross-check. No new cost class excluded by this alone. |
 | L1: 012012 | Strictly cheaper endpoint-preserving replacement on the entire eligible local domain. | **Open.** The closed six-piece comparison does not prove this local claim. |
 | L2: 021021 | Same universal local improvement for five consecutive reverse switches. | **Open.** A regular-family comparison does not cover asymmetric local endpoints. |
@@ -115,6 +118,11 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 ## Current-session entries
 
+- P0: proved the selected-window eligibility lemma, including sectors after
+  transforming the entire disk by the initial-frame inverse. Verified the
+  twisted seam, finite bang-bang source, exact endpoint splice, and low-cost
+  reverse geometric construction. The through-five equality scope was
+  checked; its full algebra was not re-audited. L1--L5 remain open.
 - `6076dc6`: proved the five-template coverage statement by a hand run argument;
   stated the exact local domains, endpoint map, suffix inverses, and conditional
   global conclusion. No analytic local case was marked closed.

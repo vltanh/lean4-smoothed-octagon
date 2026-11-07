@@ -64,17 +64,22 @@ validation; the current workflow forbids compilation/CI.
 
 ### P0 — Audit the precise premises before attempting cost estimates
 
-- [ ] Recheck that every *actual* global minimizer has the requisite
+**Completed as a hand proof:** [MINIMIZER_WINDOW_AUDIT.md](MINIMIZER_WINDOW_AUDIT.md).
+The published finite reduction and retained comparison certificates remain
+named inputs. This audit proves eligibility and the splice; it does not prove
+an analytic exclusion or independently recheck every through-five identity.
+
+- [x] Recheck that every *actual* global minimizer has the requisite
   finite vertex representation, including possible singular/edge portions;
   identify the exact published result and its hypotheses.
-- [ ] Recheck that the forward `+-+` exclusion can be spliced into an
+- [x] Recheck that the forward `+-+` exclusion can be spliced into an
   arbitrary minimizer, including windows that meet the **twisted seam**.
-- [ ] Recheck that every six-arc window selected by the coverage proof
+- [x] Recheck that every six-arc window selected by the coverage proof
   satisfies **all** chosen eligibility restrictions. In particular audit
   the sector inequalities after left-normalizing the window frame. If
   this is unjustified, **drop that restriction** from the local theorem
   rather than omit legitimate minimizer windows.
-- [ ] Recheck that the geometric/control bridge permits the improved
+- [x] Recheck that the geometric/control bridge permits the improved
   integral trajectory and that the through-five equality claim has the
   scope needed for affine rigidity.
 
@@ -211,7 +216,9 @@ coverage (conditional on forward-alternation exclusion); exact local
 endpoint formulas; the complete comparison through five positive
 pieces; two closed six-piece comparisons.
 
-**Open:** independent premises audit P0; L1, L2, L3, L4, L5 (**0/5**);
+**Completed prerequisite:** P0 window-eligibility and finite-splice hand audit.
+
+**Open:** L1, L2, L3, L4, L5 (**0/5**);
 unconditional bound `N<=5`; global cost inequality; affine rigidity.
 
 **Forbidden next milestone:** a closed seven-arc or longer comparison,
@@ -244,3 +251,4 @@ exploration. Do not compile Lean or run CI under the current agreement.
 This handoff changes **research priorities**, not mathematical status:
 the five local analytic claims remain OPEN, and no Lean compilation,
 typechecking, Lake, CI, or kernel validation was run.
+

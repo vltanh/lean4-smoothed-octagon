@@ -3,7 +3,8 @@
 ## Current priority: a proved uniform reduction before more case comparisons
 
 **Mandatory session entry point:** `docs/FIVE_TEMPLATE_HANDOFF.md`. Begin with
-P0 (audit minimizer eligibility, twisted seam, sector restrictions, and
+the completed P0 certificate in `docs/MINIMIZER_WINDOW_AUDIT.md`
+(minimizer eligibility, twisted seam, sector restrictions, and finite-piece
 geometric bridge). Then attempt universal local L1, followed by L2–L5.
 Record exact obstruction or hand certificate for each attempt. The five
 analytic claims are all currently open; do not relabel them as solved.
@@ -45,3 +46,4 @@ for known reductions; standard regular (6k+2) families are not all smoothed
 polygons. Report global minimality, affine uniqueness, and kernel validation
 separately. Earlier detailed status inventories remain available in Git history;
 the current ledger takes precedence over older suggested next tasks.
+
