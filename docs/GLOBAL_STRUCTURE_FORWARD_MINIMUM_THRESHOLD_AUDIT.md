@@ -31,6 +31,14 @@ Thus `rho_min<5/16`. In a mixed period a reverse centre has
 `a^2<4/3`, so its global minimum has `rho_min<1/4` independently
 of any monotonicity assertion for the mixed action.
 
+The added four-switch restriction (9a) also checks directly. A turn
+immediately before or after a `++` global minimum has the displayed
+factor ratio, whose strict positivity condition `q>1` would put a
+smaller active margin two arcs away. Both signs and index placements
+are correct. This uses actual complete positive arcs and extends
+through the twisted seam; it supplies four consecutive forward
+switches, without silently extending that count to five.
+
 ## The two scalar ranges
 
 For `rt<rho<=1/4`, assume `L>=0`. The actual positive Gram pairing

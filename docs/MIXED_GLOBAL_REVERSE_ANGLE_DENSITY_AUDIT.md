@@ -77,7 +77,19 @@ are present. Consequently `m<2E+4`, and integrality gives
 `m<=2E+3`. The independent bound `2m<=P+8`, with `P=m+E`, is
 exactly `m<=E+8`. The combined minimum in the statement is correct.
 
-The supplementary checker passed all 10 exact checks. The domain,
+## Whole-mixed lower Casimir bound
+
+The additional bound `gamma^2>27/256` also passes review. Since
+`m>=1`, the actual average gauged angle is at least `pi/3`.
+Every gauged angle is below `2pi/3`, using forward acuteness and
+the reverse-angle bound. A selected angle at least the average
+therefore has sine at least `sqrt(3)/2`. The exact metric Wronskian
+identity, `K_i>4`, and both adjacent norms at least `3/32` give
+the strict bound `gamma>3*sqrt(3)/16`. Multiplying by `sqrt(12)`
+gives `kappa>9/8`. The selection of this angle uses the whole
+geometric period and is unavailable on an arbitrary local window.
+
+The supplementary checker passed all 13 exact checks. The domain,
 comparison continuation, actual covector normalization, and geometric
 winding are hand arguments reviewed above. This is internal review,
 not external peer review or kernel validation.

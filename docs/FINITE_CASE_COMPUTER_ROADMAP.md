@@ -129,7 +129,8 @@ for arbitrary forward-run lengths, without closing all M2 or F.
 and its independent audit sharpen the reverse angle to `cos(phi)<1/4`
 and `phi>5pi/12`. The exact mixed angular budget gives `m<=2E+3`,
 where `E=P-m` counts forward same-sign arcs. Together with the phase
-index, `m<=min(2E+3,E+8)`. All 10 exact checks pass; this does not
+index, `m<=min(2E+3,E+8)`. All 13 exact checks pass; the same whole-period winding also gives
+`gamma^2>27/256`, or physical `kappa>9/8`. The density bound does not
 bound `E` or complete M2.
 
 [GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD](GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD.md)
@@ -141,6 +142,17 @@ of the full scalar cyclic cost. The sharper rational Casimir cap is
 term is negative definite, but incident-edge terms and all three frame
 constraints remain to be controlled. A full descent/index implication
 is still required. F and M2 remain open.
+
+A forward global minimum must have four consecutive forward switches
+around it: a neighboring turn's positive factor would force a smaller
+margin two arcs away. The audited
+[MIXED_GLOBAL_TURN_ELIMINATION](MIXED_GLOBAL_TURN_ELIMINATION.md)
+removes all turn variables with inertia `(2m,0,2m)`, including the
+zero bridge diagonal. The explicit remaining `2P+1` dimensional
+form keeps the Casimir coordinate and satisfies
+`index_-(Q_closed)=index_-(S)-k-3`. All 23 exact checks pass. Its
+baseline recovers the existing phase restriction; a further negative
+index or actual first-event/global-minimum contradiction is still needed.
 
 ## 2. Small verifiable gates, repeated for each case
 

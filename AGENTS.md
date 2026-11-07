@@ -118,7 +118,17 @@ with N>=7, using the sharper rational cap gamma^2<23/125. Only the
 onsite two-variable term is negative definite: positive incident-edge
 terms and all three frame constraints still require control. Do not
 promote this to a negative principal block or a descent theorem.
-The separate independent audits and 10+24 exact checks pass.
+The separate independent audits and 13+24 exact checks pass.
+The angle note additionally gives the whole-mixed lower bound
+gamma^2>27/256, or physical kappa>9/8. A global minimum at a ++ arc
+has four consecutive forward switches around it; positive duration at
+an adjacent turn would force a smaller margin two arcs away.
+MIXED_GLOBAL_TURN_ELIMINATION and its independent audit eliminate every
+turn block with exactly 2m positive and 2m negative pivots, including
+zero bridge diagonals. Its explicit remaining form S retains 2P+1
+variables and the Casimir; index(Q_closed)=index(S)-k-3. The baseline
+agrees with the existing phase bound and closes no additional case.
+All 23 exact checks pass. The extra negative index remains open.
 
 
 Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.

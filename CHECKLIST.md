@@ -91,13 +91,22 @@ Triple ties and boundary limits still require their stated treatment.
   `m<=2E+3`, where `E=P-m` counts forward same-sign arcs. Combine
   with `m<=E+8`; see
   [MIXED_GLOBAL_REVERSE_ANGLE_DENSITY](docs/MIXED_GLOBAL_REVERSE_ANGLE_DENSITY.md).
-  The independent audit and all 10 exact checks pass.
+  The independent audit and all 13 exact checks pass. The actual
+  winding also gives `gamma^2>27/256`, or physical `kappa>9/8`.
 - [x] Prove `b_i>2*gamma*a_i^2` at a whole-period global minimum
   with two forward incident switches, both in mixed periods and in
   pure F with `N>=7`; see
   [GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD.md).
   Its independent audit and 24 exact checks pass, including the
   rational cap `gamma^2<23/125` and the pure-F minimum scale bound.
+- [x] Show that a forward global minimum has four consecutive forward
+  switches around it; an adjacent turn would give a smaller margin.
+- [x] Eliminate every isolated or paired turn, including zero bridge
+  diagonals, with inertia `(2m,0,2m)` and exact remaining Casimir
+  coupling; see [MIXED_GLOBAL_TURN_ELIMINATION](docs/MIXED_GLOBAL_TURN_ELIMINATION.md).
+  Its independent audit and all 23 exact checks pass. The remaining
+  form has `index_-(Q_closed)=index_-(S)-k-3`, recovering the same
+  baseline as the phase theorem without another exclusion.
 - [ ] Control the positive incident-edge terms and three actual frame
   constraints to turn the onsite inequality into a valid descent or
   complete-period index obstruction. The proved local term alone

@@ -187,7 +187,8 @@ reverse centres, the exact geometric angular budget gives `m<=2E+3`.
 Together with the cost-index restriction, every remaining mixed
 minimizer satisfies **`m<=min(2E+3,E+8)`**. This does not bound `E`
 or close M2. Its [independent audit](docs/MIXED_GLOBAL_REVERSE_ANGLE_DENSITY_AUDIT.md)
-and 10 exact rational/count checks pass.
+and 13 exact rational/count checks pass. The same whole-period winding
+also gives the lower bound `gamma^2>27/256`, or physical `kappa>9/8`.
 
 The [forward minimum threshold](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD.md)
 uses a whole-period smallest active margin. If both incident switches
@@ -200,6 +201,18 @@ scalar-dual Hessian is negative definite. The incident edges and full
 frame constraints still have to be controlled before this gives a
 valid descent. Its [independent audit](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD_AUDIT.md)
 and 24 exact checks pass. **F and M2 remain open.**
+
+The minimum argument also forces four consecutive forward switches
+around any forward global minimum: an adjacent turn would force a
+smaller active margin two arcs away. The
+[exact mixed turn elimination](docs/MIXED_GLOBAL_TURN_ELIMINATION.md)
+then removes all turn variables from the common scalar Hessian,
+with exactly `2m` positive and `2m` negative pivots. Its explicit
+remaining form retains `2P+1` variables, including the Casimir, and
+satisfies `index_-(Q_closed)=index_-(S)-k-3`. This recovers the prior
+baseline bound; the required additional negative index remains open.
+Its [independent audit](docs/MIXED_GLOBAL_TURN_ELIMINATION_AUDIT.md)
+and 23 exact checks pass, including zero bridge diagonals.
 
 ## Whole-forward costate theorem
 

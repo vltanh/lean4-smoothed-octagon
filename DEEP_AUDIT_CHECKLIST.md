@@ -82,7 +82,18 @@ are not excluded.
   [GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD_AUDIT](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD_AUDIT.md).
 - [x] Check the translation to `b_i>2*gamma*a_i^2` and the negative
   onsite determinant, keeping incident-edge terms and endpoint
-  constraints explicitly unresolved. The 10 and 24 exact checks pass.
+  constraints explicitly unresolved. The 13 and 24 exact checks pass.
+
+- [x] Audit the whole-mixed lower Casimir bound: the average gauged
+  angle supplies one angle in `[pi/3,2pi/3)`, so the metric Wronskian
+  and norm floors give `gamma^2>27/256`, or `kappa>9/8`.
+- [x] Check the four-forward-switch minimum restriction directly from
+  the two positive turn factors, with the twisted seam retained.
+- [x] Independently audit the full mixed turn elimination, both signs
+  of the paired bridge diagonal, its zero case, and every surviving
+  Casimir coupling; see [MIXED_GLOBAL_TURN_ELIMINATION_AUDIT](docs/MIXED_GLOBAL_TURN_ELIMINATION_AUDIT.md).
+  All 23 exact identities pass. The remaining index formula keeps
+  all three endpoint constraint pairs and proves no extra sign.
 
 These necessary conditions close no additional whole case. F and M2
 remain open; the earlier M1 closure and its local-domain boundary are

@@ -187,6 +187,38 @@ site. The previously proved alternation minimum principle excludes
 a turn as a global minimum; a reverse centre remains a separate
 possibility, to which the present forward lemma does not apply.
 
+### Four forward switches around a forward global minimum
+
+There is a further exact restriction on this alternative. Suppose the
+global minimum is `a_i` and its two incident signs are forward. The
+preceding arc cannot be a `-+` turn: its positive factor would be
+
+\[
+q_{i-1}=\frac{a_{i-1}+a_i}{a_{i-2}+a_{i-1}}>1,
+\]
+
+forcing `a_i>a_(i-2)`, contrary to the choice of a global minimum.
+The following arc cannot be a `+-` turn either, since its factor
+
+\[
+q_{i+1}=\frac{a_i+a_{i+1}}{a_{i+1}+a_{i+2}}>1
+\]
+
+would force `a_i>a_(i+2)`. Consequently
+
+\[
+\boxed{\epsilon_{i-2}=\epsilon_{i-1}=\epsilon_i
+=\epsilon_{i+1}=+1.}
+\tag{9a}
+\]
+
+These are the signed factor identities in MIXED_GLOBAL_COSTATE_ELLIPTIC,
+applied to actual complete positive arcs. They hold across the twisted
+seam. Thus every whole-period minimum is either a reverse centre or
+lies in a block of four consecutive forward switches. This observation
+does not assert five forward switches, or exclude the alternative of
+a minimum inside a forward run of length exactly four.
+
 ## 3. A scalar forward-minimum inequality
 
 At the chosen `++` site abbreviate its margin by `a` and its adjacent

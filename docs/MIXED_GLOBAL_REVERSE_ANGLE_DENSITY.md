@@ -47,6 +47,11 @@ geometric winding and complete-period Casimir cap. The second bound
 in (3) additionally uses the previously proved constrained-index and
 rank-three interface.
 
+Section 3 also proves the lower Casimir bound `gamma^2>27/256`, or
+equivalently `kappa>9/8`, for every competitive mixed period. This
+additional compact-domain restriction uses full-period winding;
+it is not asserted for an arbitrary local normal PMP window.
+
 ## 1. A second exact cutoff in the same scalar comparison
 
 The comparison theorem already proved in the cited M1 note says that,
@@ -167,6 +172,52 @@ index bound is `m<=E+8`, proving (3). Triple ties, unequal factors,
 the twisted seam and arbitrarily short positive arcs remain within
 the stated domain; the proof introduces no uniform duration bound.
 
+## 3. A whole-mixed lower Casimir bound
+
+There are `P=E+m` edges in the collapsed cycle. Since a mixed period
+has `m>=1`, its actual winding satisfies
+
+\[
+\frac nP=\frac{P+m-1}{3P}\ge\frac13.
+\]
+
+Thus some positively gauged angle `theta` is at least `pi/3`.
+Every gauged angle is strictly less than `2pi/3`: at a forward site
+this follows from acuteness, while at a reverse centre the angle is
+`pi-phi<7pi/12<2pi/3` by (1). Consequently the selected edge has
+
+\[
+\frac\pi3\le\theta<\frac{2\pi}3,
+\qquad \sin\theta\ge\frac{\sqrt3}{2}.
+\]
+
+At any surviving edge the same metric Gram identity gives
+
+\[
+\gamma=K_i\sqrt{\nu_{i-1}\nu_i}\sin\theta.
+\]
+
+Here `K_i=a_i^2+4>4`. Every switch-vector norm in the remaining
+mixed domain is at least `3/32`: forward edges have the forward
+switching bound, and reverse edges adjoin turns with their strict
+secant bound. The turn identifications and sign gauge leave these
+norms unchanged. Hence
+
+\[
+\boxed{
+\gamma>4\cdot\frac3{32}\cdot\frac{\sqrt3}{2}
+=\frac{3\sqrt3}{16},\qquad
+\gamma^2>\frac{27}{256},\qquad
+\kappa=\sqrt{12}\,\gamma>\frac98.}
+\tag{10}
+\]
+
+Together with the established competitive upper cap, this confines
+the primary costate to a fixed positive Casimir interval on the
+whole mixed domain. The existence of the selected angle comes from
+the actual complete-period winding. A short local window does not
+have that input and may have a much smaller Casimir.
+
 ## Supplementary exact checker
 
 Run
@@ -175,7 +226,7 @@ Run
 python3 explorations/mixed_global_reverse_angle_density_certificate.py
 ```
 
-The checker verifies the fixed rational comparisons and the angular
-count identities. The logarithmic comparison, the reused scalar
+The checker verifies the fixed rational comparisons, the angular
+count identities and the lower-Casimir normalization. The logarithmic comparison, the reused scalar
 monotonicity, the actual normal-covector interface and the geometric
 winding are the displayed hand arguments.

@@ -45,5 +45,8 @@ n = (extra + 2 * m - 1) / 3
 equal("mixed defect budget", extra / 3 + 2 * m / 3 - n, sp.Rational(1, 3))
 equal("forward count", (p + m - 1).subs(p, extra + m), extra + 2 * m - 1)
 equal("density rearrangement", 12 * (sp.Rational(1, 3) - m / 12 + extra / 6), 4 - m + 2 * extra)
+equal("mixed average angle", (p + m - 1) / (3 * p) - sp.Rational(1, 3), (m - 1) / (3 * p))
+equal("metric lower Casimir square", (4 * sp.Rational(3, 32)) ** 2 * sp.Rational(3, 4), sp.Rational(27, 256))
+equal("physical lower Casimir square", 12 * sp.Rational(27, 256), sp.Rational(9, 8) ** 2)
 
 print(f"PASS: {checks} exact checks; the uniform signs and period scope are the hand proof.")
