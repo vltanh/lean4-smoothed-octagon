@@ -154,7 +154,46 @@ bounds and boundary faces. The general theorem already proves
 that exact closed insertions exist and their cost approaches
 A_oct from an unspecified side.
 
-## 5. Next computational test (not yet implemented)
+## 5. Full-period constrained Hessian: method validation
+
+The additional script
+[closed_period_index_probe.py](../explorations/closed_period_index_probe.py)
+computes the *complete* five-dimensional twisted closed-endpoint
+residual, including two free initial-state variables. It uses
+complex-step first derivatives, solves the normal endpoint multiplier
+system, constructs the curvature-corrected Hessian of
+
+    L = C/sqrt(12) - nu dot endpoint,
+
+and restricts this Hessian to the numerical nullspace of the five
+endpoint constraints. Its Hessian uses central differences of the
+complex-step gradient with step 10^-4; independent checks at
+3*10^-4 and 3*10^-5 preserve every displayed inertia count.
+
+These are three **already known** exact standard forward families
+(k=1,2,3 with N=3k+1, common factor 2cos(pi*k/N)):
+
+| Period length | Physical cost | Endpoint rank | Stationarity residual | Numerical constrained eigenvalues | Negative index |
+|---:|---:|---:|---:|---|---:|
+| 4 (octagon) | 3.126054429 | 5 | 2.4e-15 | +0.0235112 | 0 |
+| 7 | 3.138655342 | 5 | 1.9e-15 | -0.0826154, -0.0394188, +0.0187055, +0.0435372 | 2 |
+| 10 | 3.140577469 | 5 | 3.4e-15 | -0.0747698, -0.0515440, -0.0227700, -0.0123483, +0.0080512, +0.0347043, +0.0539848 | 4 |
+
+All full endpoint closure residuals are below 1.2e-15 at the
+displayed inputs. The negative counts match the retained exact hand
+theorem [GLOBAL_FORWARD_INDEX](GLOBAL_FORWARD_INDEX.md), which
+supplies at least 2(k-1) negative constrained directions for the
+standard k>=2 family. The octagon's positive numerical eigenvalue
+is consistent with its known strict micro-local minimality.
+
+**This is a regression test of the closed-period index oracle, not
+a new exclusion.** In particular, the listed families are symmetric,
+and the calculation does not justify a negative-index theorem for
+asymmetric forward words, mixed words, singular endpoint fibers, or
+general measurable controls. Numeric Hessian eigenvalues are not
+verified interval enclosures.
+
+## 6. Next computational test (not yet implemented)
 
 Implement an **event-driven complete-period PMP return/escape oracle**
 on the normal initial-phase manifold. For each of the five templates:
