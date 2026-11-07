@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Terminal.Words
+public import SmoothedOctagon.Terminal.Analysis.FourDensity
 
 /-!
 # Terminal comparison: four pieces
@@ -16,7 +17,8 @@ The density inequality `δ(a, b) ≥ δ_oct`, with equality only at `a = b`, is 
   `p²q² = p² + q²` (FLH (4)).
 * `Term.Cycle.four_param`: the parametrization of a four-piece cycle (closure, forced state, cost).
 * `Term.fourDensity`, `Term.fourPiece_density_ge`, `Term.fourPiece_density_eq`: the density
-  inequality and its equality case (FLH §5; still `sorry`, pure one-variable real analysis).
+  inequality and its equality case (FLH §5), from `ra_four_density`
+  (`Terminal/Analysis/FourDensity`).
 * `Term.Cycle.four_rawCost_ge`: `8 δ_oct ≤ rawCost`.
 -/
 
@@ -33,15 +35,23 @@ noncomputable def fourDensity (a b : ℝ) : ℝ :=
   (4 * (a + b) * (a + b - 1) + 2 * (1 + a) * (1 - b) * Real.log a +
     2 * (1 - a) * (1 + b) * Real.log b) / ((a + b - 1) * (a + b + 3))
 
-/-- **The four-piece density inequality** (FLH §5): `δ(a, b) ≥ δ_oct` on the quarter circle. -/
+private lemma octagonDensity_eq_four :
+    octagonDensity = (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) := by
+  rw [octagonDensity, ra_sqrt32, ra_sqrt8]
+
+/-- **The four-piece density inequality** (FLH §5): `δ(a, b) ≥ δ_oct` on the quarter circle.
+Route: the sign of FLH's `H(s)` comes from the monotonicity of `x ↦ (2x + c) log x/(1 - x)`,
+`c = 2 + 2ab`, instead of the integral representation (12) (see `ra_four_density`). -/
 theorem fourPiece_density_ge {a b : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 = 1) :
     octagonDensity ≤ fourDensity a b := by
-  sorry
+  rw [octagonDensity_eq_four]
+  exact (ra_four_density ha hb hab).1
 
 /-- **Equality in the four-piece density inequality** only at `a = b`. -/
 theorem fourPiece_density_eq {a b : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 = 1)
     (h : fourDensity a b = octagonDensity) : a = b := by
-  sorry
+  rw [octagonDensity_eq_four] at h
+  exact (ra_four_density ha hb hab).2 h
 
 private lemma tm_entries {M : Mat2} (h : M = triR) :
     M 0 0 = 0 ∧ M 0 1 = 1 ∧ M 1 0 = -1 ∧ M 1 1 = 1 := by

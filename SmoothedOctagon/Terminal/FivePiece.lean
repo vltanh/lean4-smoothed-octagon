@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Terminal.Words
+public import SmoothedOctagon.Terminal.Analysis.FiveEnvelope
 
 /-!
 # Terminal comparison: five mixed pieces
@@ -14,7 +15,8 @@ FAP (4)-(7)), initial margins `(2/√N)(A, d, B)` with `d = (1 - u)(1 - v)`, `N 
 inequality `δ(u, v) > δ_oct` is FAP (19)-(25).
 
 * `Term.fiveF`, `Term.fiveDensity`, `Term.fivePiece_density_gt` (FAP (23)-(25)), from
-  `Term.fiveEnvelope` (FAP (19)-(22), still `sorry`: `F(t) + 2 log(1 - t) ≤ F(t*) + 2 log(1 - t*)`).
+  `Term.fiveEnvelope` (FAP (19)-(22): `F(t) + 2 log(1 - t) ≤ F(t*) + 2 log(1 - t*)`, proved as
+  `ra_five_envelope` in `Terminal/Analysis/FiveEnvelope`).
 * `Term.Cycle.five_param` (closure, forced state and cost algebra, FAP (4)-(18)),
   `Term.Cycle.five_rawCost_gt`.
 -/
@@ -41,8 +43,8 @@ noncomputable def fiveDensity (u v : ℝ) : ℝ :=
 /-- **The envelope** (FAP (19)-(22)): `F(t) + 2 log(1 - t) ≤ F(t*) + 2 log(1 - t*)`,
 `t* = √2 - 1`, `F(t*) = (3 + 2√2) log 2`. -/
 theorem fiveEnvelope {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
-    fiveF t + 2 * Real.log (1 - t) ≤ (3 + 2 * √2) * Real.log 2 + 2 * Real.log (2 - √2) := by
-  sorry
+    fiveF t + 2 * Real.log (1 - t) ≤ (3 + 2 * √2) * Real.log 2 + 2 * Real.log (2 - √2) :=
+  ra_five_envelope ht0 ht1
 
 private lemma five_sqrt32 : √32 = 4 * √2 := by
   rw [show (32 : ℝ) = 4 ^ 2 * 2 by norm_num, Real.sqrt_mul (by norm_num), Real.sqrt_sq (by norm_num)]
