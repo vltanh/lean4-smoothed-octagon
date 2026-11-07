@@ -1,93 +1,158 @@
-# Smoothed octagon: a hand and computer-assisted proof
+# The Reinhardt conjecture, in Lean 4
 
-**The hand/computer-assisted proof of the sharp Reinhardt cost bound and affine equality case is complete, with independent internal mathematical and source reviews.** All five sufficient whole-period cases, the terminal comparison and the final dependency audit are closed under the documented external geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts remain unverified; no Lean, Lake, typechecking or CI was run in this programme.
+Which centrally symmetric convex shape packs the plane worst? Pack copies of a disk as tightly as
+possible and they cover `π/√12 = 90.69…%` of the plane; a regular octagon does a little worse. In
+1934 Karl Reinhardt conjectured that the worst of all is the *smoothed octagon*, a regular octagon
+whose corners are cut off by arcs of hyperbolas, with greatest packing density
 
-## Main result
+  `δ_oct = (8 − 4√2 − log 2)/(2√2 − 1) = 0.902414…`,
 
-Let
+and that it is the only worst shape up to affine maps. Kurt Mahler reached the same octagon
+independently in 1947. The conjecture has been open since.
 
-\[
-\delta_{\rm oct}=\frac{8-4\sqrt2-\log2}{2\sqrt2-1}.
-\]
+This repository is a Lean 4 proof of the conjecture, with Mathlib, in progress. The informal proof
+it formalizes was written by ChatGPT (OpenAI, ChatGPT Pro) in [`docs/`](docs/HANDOFF.md). The main
+theorem is assembled in Lean from the stages of that proof; some stages are still being proved,
+and two inputs are, for now, named hypotheses ([Status](#status)). Nothing here is a claim that
+the conjecture is proved until the build reports no `sorry` and no hypothesis remains.
 
-Every centrally symmetric planar convex disk K satisfies
+![The smoothed octagon in its densest packing, the copies sliding through the continuum of densest packings while staying in contact](docs/figures/worst-packer.gif)
 
-\[
-\delta(K)\ge\delta_{\rm oct},
-\]
+The smoothed octagon packs most densely as a lattice packing, and it can do so in a continuum of
+ways: the copies slide while always touching their six neighbours.
 
-with equality exactly for the affine images of the smoothed octagon.
-The control formulation proves \(C\ge\sqrt{12}\,\delta_{\rm oct}\) for
-every trajectory in the original integral admissible class, including
-measurable controls. The [final proof and equality argument](docs/GLOBAL_COST_EQUALITY_ASSEMBLY.md)
-state the quantifiers and explain the passage from actual minimizers to
-arbitrary competitors. The [independent dependency audit](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md)
-identifies the external inputs and every computational trust boundary.
+## The smoothed octagon
 
-## Read the completed proof
+![A regular octagon, one corner rounded by the hyperbola that touches the two sides at the corner and approaches the next two sides, and the smoothed octagon](docs/figures/octagon-construction.svg)
 
-1. [Authoritative handoff and completion record](docs/HANDOFF.md).
-2. [Global cost and affine equality theorem](docs/GLOBAL_COST_EQUALITY_ASSEMBLY.md), with its [independent audit](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md).
-3. [Uniform M2 theorem](docs/MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md), with its [whole-period audit](docs/MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md).
-4. [Certificate replay guide](docs/CERTIFICATE_REPLAY.md), [finite gate ledger](CHECKLIST.md), and [active proof map](docs/ACTIVE_MAP.md).
+Take the regular octagon whose sides lie on the lines `x cos(kπ/4) + y sin(kπ/4) = 1`. Replace each
+corner by the arc of the hyperbola `d · d' = √2/4` whose asymptotes are the next two side lines
+(`d`, `d'` the distances to them); it touches the two sides at the corner. Each side keeps a
+straight middle part of length `2 − √2`.
 
-| Sufficient whole-period case | Accepted exclusion |
-| --- | --- |
-| R: entirely reverse | [Reverse-period theorem](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION.md) |
-| M3: forbidden mixed reverse runs | [Minimum structure](docs/MIXED_GLOBAL_MINIMUM_STRUCTURE.md) |
-| M1: all-short mixed | [Whole-period angle theorem](docs/MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION.md) |
-| F: entirely forward with at least six pieces | [Uniform forward theorem](docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md) |
-| M2: mixed with a nonshort forward run | [Uniform mixed theorem](docs/MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md) |
+![Densest packings of the disk, the regular octagon, the smoothed 14-gon and the smoothed octagon, with densities 0.906900, 0.906164, 0.906052 and 0.902414](docs/figures/packing-densities.svg)
 
-These are assignments of complete minimizing periods. The proof uses
-neither growing word-length enumeration nor the refuted unconditional
-local L3 shortening assertion.
+## Statements
 
-## The final M2 step
+All definitions are in [`Challenge.lean`](Challenge.lean), which imports only Mathlib. They are
+copied word for word from [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon),
+the formalization of Hales and Vajjha's *Packings of Smoothed Polygons* on which this project
+builds. `greatestPackingDensity K` is the supremum of the densities of packings of the plane by
+congruent copies of `K`.
 
-At a global minimum reverse centre, choose the smaller adjacent turn.
-The smaller-short case has its accepted 107,977-node cover. For the
-nonshort case, a [scalar boundary comparison](docs/MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md)
-preserves the incident upper norm and decreases the transported outgoing
-norm. It reduces every original maximal chart to two four-variable
-charts, including the original delta0-maximal region.
-
-The reverse-next case is excluded by a complete 106,134-node cover.
-A common 74,772-node cover proves a>1/2. For the forward-next case,
-[Casimir concavity](docs/MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION.md)
-places the actual solution between two endpoints and forces at least
-one endpoint to satisfy the competitive cap. The [two endpoint covers](docs/MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md)
-exclude those alternatives in 37,940 and 60,976 nodes. All four new
-covers have independent mathematical/source audits and fresh complete
-replays, with zero pending or unresolved boxes.
-
-The original and replay logs, frozen source hashes, root domains and
-exact leaf accounting are retained with each receipt. To check their
-published record consistency:
-
-```sh
-python explorations/mixed_nonshort_boundary_records_verify.py
+```lean
+theorem reinhardt (K : Set (Fin 2 → ℝ)) (hK : IsConvexDisk K)
+    (hsymm : ∃ c : Fin 2 → ℝ, ∀ x ∈ K, (2 : ℝ) • c - x ∈ K) :
+    (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) ≤ greatestPackingDensity K
 ```
 
-The [replay guide](docs/CERTIFICATE_REPLAY.md) gives the C++ commands that
-re-execute the quantified covers and the symbolic checks supporting the
-hand reductions. A record verifier is separate from an arithmetic replay.
+| Theorem | In words |
+| --- | --- |
+| `reinhardt` | every centrally symmetric convex disk has greatest packing density at least `δ_oct` |
+| `reinhardt_equality` | equality holds exactly for the images of the smoothed octagon under invertible affine maps |
+| `reinhardt_cost` | every trajectory of Hales's control problem with the boundary conditions costs at least `√12 δ_oct` |
+| `octagon_area` | the smoothed octagon, defined from its trajectory, has area `√12 δ_oct` and density `δ_oct` |
 
-## Scope and repository organization
+The smoothed octagon is defined as the convex hull of the six arcs `t ↦ g(t) s_j`, `t ∈ [0, t_f]`,
+of the trajectory `g` of Hales's control problem with the octagon's bang-bang control; `octagon_area`
+identifies it with Reinhardt's octagon.
 
-The proof imports the explicitly identified geometric existence,
-balanced-boundary/area and compact-domain results, together with the
-standard Pontryagin principles. The [compact-domain source audit](docs/COMPACT_DOMAIN_SOURCE_AUDIT.md)
-checks the all-control margin normalization and exact density separation.
-Computer-assisted steps trust the reviewed C++ callers, directed
-MPFR/GMP arithmetic and execution platform. Internal review does not
-constitute external peer review or Lean kernel verification.
+## Proof outline
 
-- `docs/`: active theorem and independent audit notes; [SOURCE_MAP.md](SOURCE_MAP.md) indexes dependencies.
-- `explorations/`: exact identity checkers, frozen cover callers, arithmetic headers, receipts and complete logs.
-- `docs/legacy/` and `explorations/legacy/`: historical plans, probes, rejected shortcuts and superseded local investigations. Their old status statements describe earlier stages.
-- `SmoothedOctagon/*.lean` and dependency pins: existing formalization drafts, untouched by this hand-proof completion.
+Following Hales, the problem becomes optimal control on `SL₂(ℝ)`. A worst disk, normalized so that
+its critical hexagon is regular, is traced by six points `g(t) s_j` that slide along its boundary,
+and its area is the cost `−(3/2) ∫ tr(J X)` of the trajectory `(g, X)`. Conversely every trajectory
+of cost below `π`, with any measurable control, bounds such a disk.
 
-The old incomplete three-root nonshort runs are not premises of the
-completed boundary proof. The theoretical switch bound \(N<10^{56}\)
-is used for finite minimum selection and case coverage, not a catalogue.
+![The six contact points of the smoothed octagon moving around its boundary through one period, with the six neighbouring copies of its densest packing and the control word e₃ e₁ e₂ e₃](docs/figures/multipoint.gif)
+
+1. **Foundations.** The conjecture is equivalent to a lower bound on the cost of every admissible
+   trajectory, and the realization of a worst disk is a global minimizer of the control problem.
+2. **Reduction.** A global minimizer stays in a compact part of the state space, lifts to a
+   Pontryagin extremal (proved in lean4-smoothed-polygon from the maximum principle of
+   [lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control)), switches between the
+   three vertices of the control simplex finitely many times, and is normal.
+3. **Five cases.** Read cyclically, the switches of a minimizing period are forward or reverse.
+   With six or more pieces the sign sequence falls in one of five classes, and each is excluded.
+4. **Terminal comparison.** A period with at most five pieces costs at least `√12 δ_oct`, with
+   equality only for the octagon's four-piece word `e₂ e₀ e₁ e₂` with equal durations.
+5. **Equality.** The boundary realization of any worst disk is then the octagon's trajectory, so
+   the disk is a linear image of the octagon; conversely linear images pack equally badly.
+
+![The state of the smoothed octagon's trajectory as a path in the upper half-plane, inside the star domain, with its four control arcs](docs/figures/upper-half-plane.svg)
+
+## Status
+
+The main theorem is proved in Lean from the stages below
+([`LowerBound.lean`](SmoothedOctagon/LowerBound.lean), [`Main.lean`](SmoothedOctagon/Main.lean)),
+under two named hypotheses:
+
+- `Cited.HalesVajjha.Theorem5_0_2`: Hales and Vajjha's compactness theorem (Theorem 5.0.2 of
+  their book), until its formalization in lean4-smoothed-polygon is complete;
+- `Certificates.IntervalCovers`: seven interval-arithmetic covers used by the cases F and M2,
+  stated exactly as the C++ programs certify them, until ChatGPT Pro's hand replacements are done.
+
+| Stage | Lean | State |
+| --- | --- | --- |
+| Foundations: realization and reverse comparison | [`Foundations/`](SmoothedOctagon/Foundations) | proved |
+| Compact domain, rebasing, word reduction, clearance, switch count | [`Reduction/`](SmoothedOctagon/Reduction) | proved, given Theorem 5.0.2 |
+| Edge bound (E4), normality | [`Reduction/`](SmoothedOctagon/Reduction) | in progress |
+| Sign partition | [`Period/Partition.lean`](SmoothedOctagon/Period/Partition.lean) | proved |
+| Cases R and M3 | [`Exclusion/`](SmoothedOctagon/Exclusion) | in progress |
+| Case M1 | [`Exclusion/ShortRuns.lean`](SmoothedOctagon/Exclusion/ShortRuns.lean) | stated |
+| Cases F and M2 | [`Exclusion/`](SmoothedOctagon/Exclusion) | stated, from the interval covers |
+| Terminal comparison | [`Terminal/`](SmoothedOctagon/Terminal) | proved from four scalar lemmas, in progress |
+| Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) | proved |
+| The Challenge's statements | [`Main.lean`](SmoothedOctagon/Main.lean) | proved from the above |
+
+`Solution.lean` will restate the Challenge word for word once no `sorry` and no hypothesis remain.
+
+## Prior work
+
+Reinhardt (1934) and Mahler (1947) posed the problem and found the octagon; Fejes Tóth showed that
+densest packings of centrally symmetric disks can be taken to be lattice packings; Ledermann,
+Ennola and Tammela proved lower bounds (Tammela's `0.8926`, 1970, stood for decades), and Nazarov
+showed the smoothed octagon is a local minimum (1986). Hales recast the problem as optimal control
+(2011, 2017), and Hales and Vajjha studied its Pontryagin extremals in *Packings of Smoothed
+Polygons* (2024). [docs/prior-work.md](docs/prior-work.md) gives the full history with references.
+
+## Verification
+
+```sh
+lake exe cache get
+lake build
+python3 scripts/figures/make_figures.py   # the figures, with every illustrated fact asserted
+```
+
+Lean and Mathlib are pinned at `v4.36.0-rc2`. The project depends on lean4-smoothed-polygon, at a
+development commit for now.
+
+## Layout
+
+```text
+Challenge.lean                 the statements of record, in Mathlib's vocabulary
+SmoothedOctagon/
+  Foundations/                 geometry ↔ control: realization, reverse comparison
+  Reduction/                   minimizer → finite normal period
+  Period/                      vertex periods, flows, twist, Hamiltonians, the sign partition
+  Exclusion/                   the five cases R, M3, M1, F, M2
+  Terminal/                    periods with at most five pieces
+  Equality/                    rigidity and its converse
+  Certificates/                the interval covers (hypotheses, to be replaced)
+  Bridge/                      translation, affine maps and the octagon in the Challenge's terms
+  LowerBound.lean, Main.lean   the assembly
+Cited/HalesVajjha/             Theorem 5.0.2 of Hales–Vajjha (hypothesis)
+docs/                          the informal proof notes (ChatGPT Pro), prior work, figures
+scripts/figures/               the numeric model of the octagon and the figure generator
+```
+
+## Credits
+
+The-Anh Vu-Le directs the work. ChatGPT Pro (OpenAI) wrote the informal proof, with its
+computer-assisted parts, in [`docs/`](docs/HANDOFF.md). Claude Opus 5.5 (Anthropic), in Claude Code,
+writes the Lean formalization, the figures and this documentation. The geometric and
+control-theoretic foundations come from lean4-smoothed-polygon and lean4-optimal-control.
+
+## License
+
+Apache-2.0 ([`LICENSE`](LICENSE)).
