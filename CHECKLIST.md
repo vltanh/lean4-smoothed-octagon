@@ -37,7 +37,7 @@ boundedness theorem.
 | L1: 012012 | Strictly cheaper endpoint-preserving replacement on the entire eligible local domain. | **Open.** An exact eligible stationary minimum disproves universal nearby same-word descent; different-word or nonlocal improvements remain possible. See [LOCAL_FORWARD_SIX](docs/LOCAL_FORWARD_SIX.md). |
 | L2: 021021 | Same universal local improvement for five consecutive reverse switches. | **Open.** A regular-family comparison does not cover asymmetric local endpoints. |
 | L3: 021210 | Same universal local improvement for a single forward switch between two reverse pairs. | **Open.** An exact eligible strict strong local minimum rules out universal nearby improvement, including arbitrary nearby controls. Distant replacements remain possible; see [LOCAL_L3_STRONG_MINIMUM](docs/LOCAL_L3_STRONG_MINIMUM.md). |
-| L4: 010201 | Same universal local improvement at a reverse run of length two followed by at least two forward switches. | **Open.** |
+| L4: 010201 | Same universal local improvement at a reverse run of length two followed by at least two forward switches. | **Open.** Full-domain endpoint rank five is proved. An exact eligible stationary family has all five compensated missing-control switch needles positive; that switch-only shortcut is false. See [LOCAL_SIX_VARIATION](docs/LOCAL_SIX_VARIATION.md). |
 | L5: 021012 | Same universal local improvement at a reverse run of at least three followed by at least two forward switches. | **Open.** |
 | Uniform bound | Deduce N<=5 for every global minimizer from all five local improvements and the published finite bang-bang reduction. | Conditional implication proved; its five analytic premises remain open. |
 | Global comparison and equality | Apply the existing through-five cost comparison and equality classification after the uniform bound is proved. | Conditional only. Global minimality and affine rigidity remain open. |
@@ -108,6 +108,15 @@ comparison excludes a distant cheaper replacement. L3 remains open.
 
 ## What is fixed, rather than growing
 
+[LOCAL_SIX_VARIATION](docs/LOCAL_SIX_VARIATION.md) proves full-domain L4
+endpoint rank by a short paired-holonomy determinant identity. It also proves
+that a negative compensated needle gives a genuine cheaper replacement.
+An exact eligible stationary L4 family nevertheless has all five switch
+needles strictly positive. Rational logarithm bounds and Bernstein sector
+coefficients certify the signs; positive outer padding follows by the
+implicit function theorem. This excludes a proposed switch-only method,
+not the full L4 target or every interior-arc needle.
+
 The labels are three control vertices. Every input template has two free
 initial-state coordinates and six positive arc factors: eight real variables,
 independent of the total word length. The exact domain includes whole-arc
@@ -123,9 +132,10 @@ needed when a strict local descent is established.
 All five words end in three distinct labels. Explicit positive-factor
 inversion removes the three tangent-endpoint constraints, leaving two
 state-endpoint equations on three variables. This is an exact fixed-size
-setup, not a proof that a decreasing direction always exists. For L1 the
-reduced state rank is two everywhere by LOCAL_FORWARD_RANK. Rank-zero and
-rank-one loci remain obligations for L2–L5; stationary points remain part
+setup, not a proof that a decreasing direction always exists. For L1 and L4
+the reduced state rank is two everywhere by LOCAL_FORWARD_RANK and
+LOCAL_SIX_VARIATION. Rank-zero and rank-one loci remain obligations for
+L2, L3, and L5; stationary points remain part
 of all five targets.
 
 A bounded-coordinate compactification is recorded, but singular boundary
@@ -162,6 +172,12 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Proved full-domain rank five for L4 and an exact eligible stationary
+  family with all five compensated switch needles strictly positive.
+  Independently checked the determinant proof, endpoint-correction argument,
+  rational logarithm bounds, and whole-arc sector certificate. The exact
+  reproduction passed. This refutes the switch-only shortcut; L4 stays open.
 
 - Resolved the broader replacement question at the explicit stationary L1
   input by an exact six-piece `012021` construction. Independently checked

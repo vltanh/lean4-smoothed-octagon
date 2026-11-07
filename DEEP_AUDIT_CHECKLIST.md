@@ -77,7 +77,8 @@ four determinant identities and signs, and constrained Hessian correction.
 - [x] Include endpoint curvature in the second-variation formula.
 - [x] Retain the exact stationary minimum; do not infer cost descent from rank.
 - [x] Distinguish interior full rank from uniform boundary conditioning.
-- [ ] Classify interior endpoint ranks for L2–L5.
+- [x] Classify interior endpoint rank for L4: see LOCAL_SIX_VARIATION.
+- [ ] Classify interior endpoint ranks for L2, L3, and L5.
 
 `docs/LOCAL_FORWARD_PMP_LIMIT.md` derives normality on the reduced state
 manifold and proves a limitation of first-order PMP. Independent review
@@ -174,6 +175,26 @@ The exact finite reproducer completed with Python 3.12.14 and SymPy 1.14.0.
 - [x] State strong local optimality in the normalized topology including
   duration; do not claim it is a global endpoint minimum or refutes L3.
 - [ ] Exclude distant cheaper replacements. Not supplied by this certificate.
+
+## Exact L4 rank and switch-needle obstruction
+
+`docs/LOCAL_SIX_VARIATION.md` proves the full positive-domain L4 rank
+lemma, exact endpoint compensation, and an eligible stationary family
+with every missing-control switch needle strictly unfavorable.
+
+- [x] Use the full paired tangent spaces and explicitly quotient the
+  one-dimensional state centralizer; avoid matrix-entry chart artifacts.
+- [x] Verify the nonzero determinant by the displayed short elimination.
+- [x] Specify the stationary root by a rational interval and a strictly
+  negative derivative; prove the logarithm bounds by series remainders.
+- [x] Check all five positive compensated derivatives and cost eligibility.
+- [x] Prove full-arc sectors with rational Bernstein coefficients.
+- [x] Remove zero outer durations by the implicit function theorem while
+  retaining stationarity, eligibility, and all five strict needle signs.
+- [x] Independently run the finite exact checker with Python 3.12.14 and
+  SymPy 1.14.0; keep it supplementary to the hand certificate.
+- [x] Distinguish this switch-only obstruction from arbitrary-control
+  local or global optimality and from a refutation of full L4.
 
 ## Exploratory local-fiber probe: inconclusive
 

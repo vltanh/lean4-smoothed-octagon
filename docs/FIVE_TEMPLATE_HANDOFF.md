@@ -179,7 +179,11 @@ method. A theorem for *globally closed* `012012` does not count.
   eligible strict strong local minimum in the normalized free-log-time
   formulation. Universal nearby improvement, including arbitrary nearby
   controls, is false. A distant cheaper replacement remains possible.
-- [ ] L4: `010201` (a reverse run of exactly two).
+- [ ] L4: `010201` (a reverse run of exactly two). Full-domain endpoint
+  rank five is proved in LOCAL_SIX_VARIATION. Its exact eligible stationary
+  family has all five compensated missing-control switch needles positive;
+  do not assume a negative switch needle always exists. The full replacement
+  target remains open.
 - [ ] L5: `021012` (a longer reverse run).
 
 Reuse the *same* endpoint-map and constrained-variation machinery.
@@ -230,7 +234,8 @@ conjecture solved at completion of P0 or at an analytic count below 5/5.
    `R`, and the initial state cannot vary in a splice.
 2. Six factor variables minus five endpoint constraints suggests one
    degree of freedom only at **regular rank**. L1 now has a full-domain
-   hand rank proof. Singular fibers for L2–L5 remain unresolved and may
+   hand rank proof, as does L4 in LOCAL_SIX_VARIATION. Singular fibers for
+   L2, L3, and L5 remain unresolved and may
    be isolated or have higher-dimensional components.
 3. The old forward alternating four-arc argument rules out a particular
    orientation; reversing its sign reverses the Hessian sign. Do not

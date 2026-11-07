@@ -107,6 +107,14 @@ cheaper replacement is still possible, so this records a failed local method
 and leaves L3 open. An [exact finite reproducer](explorations/local_l3_exact_certificate.py)
 checks the displayed algebra; the interval signs are proved in the hand note.
 
+The [L4 variation certificate](docs/LOCAL_SIX_VARIATION.md) proves that the
+`010201` endpoint map has rank five throughout its positive-factor domain.
+It also exhibits an eligible stationary family for which every one of the
+five compensated missing-control switch needles is strictly unfavorable.
+The proof uses exact endpoint derivatives, rational logarithm bounds, and
+whole-arc Bernstein sector certificates. It rules out a switch-only descent
+criterion; the universal L4 replacement statement remains open.
+
 ## Earlier comparison results retained
 
 The source notes supply a full asymmetric hand comparison for every admissible
