@@ -126,9 +126,36 @@ has `a` in `[2/15,17/20]`, `c` in `[2/15,2]`, two weights in `[0,1]`,
 and the selected third weight equal to one. Chart ties and the common
 `epsilon=1/32` boundary are deliberately covered more than once.
 
-Both full runs must finish successfully. Neither one branch alone, nor
-the hand corner alone, nor a successful continuation from an unverified
-pending-stack file covers the required domain.
+Both branch domains must be completely excluded, by successful full
+runs or by the verified complete cover chains below. Neither one branch
+alone, nor the hand corner alone, nor a successful continuation from an
+unverified pending-stack file covers the required domain.
+
+### Exact parallel cover chains
+
+The [cover-chain accounting proof](EXACT_COVER_CHAIN.md) permits finite
+prefixes of the same frozen caller to be joined into a complete rooted
+cover. The coordinator starts each branch from its original three roots
+and assigns every emitted checkpoint record, unchanged, to exactly one
+child invocation. It uses at most six child processes. On a machine with
+matching MPFR development headers, a fresh replay and its independent
+verification are:
+
+```sh
+python explorations/mixed_nonshort_completion_cover_chain.py /tmp/mixed_nonshort_cover_chain
+python explorations/mixed_nonshort_cover_chain_verify.py /tmp/mixed_nonshort_cover_chain/manifest.json
+```
+
+The output directory must not already exist. The coordinator retains the
+source snapshot, toolchain and executable hashes, every process result,
+and every exact input and pending checkpoint. The independent verifier
+must find a complete graph for both branches, with no omitted frontier,
+unknown box, failed job or orphan. It recomputes the local and aggregate
+cover identities from the actual records. A coordinator progress line
+or a child's pending-domain `PASS` does not satisfy this acceptance gate.
+
+These live chains are currently running. Their completion and the final
+independent verification remain pending.
 
 ## 5. Acceptance of a cover
 
@@ -145,9 +172,11 @@ output. Acceptance requires all of the following:
   smaller-short, and three roots for the final F cover and for each
   nonshort branch.
 
-A depth-limit or node-budget stop is not a proof. An intermediate line
-with zero unresolved boxes is also insufficient while boxes remain on
-the stack. Domain-overlap exceptions lead to subdivision, not exclusion.
+A depth-limit or node-budget stop alone is not a proof. A valid
+node-budget prefix may be used only inside the fully verified cover chain
+above. An intermediate line with zero unresolved boxes is also
+insufficient while boxes remain on the stack. Domain-overlap exceptions
+lead to subdivision, not exclusion.
 A conclusively excluded box at the permitted maximum depth is valid;
 an unresolved box at that depth prevents acceptance.
 

@@ -30,4 +30,13 @@ g++ -std=c++17 -O3 explorations/mixed_nonshort_completion_interval_certificate.c
 
 Each invocation starts from all three complementary chart roots. The hand corner covers `epsilon<=1/32`. A successful resumed pending stack is explicitly labelled as insufficient for a stand-alone full-domain proof. See the [source audit](../docs/MIXED_NONSHORT_INTERVAL_CERTIFICATE_AUDIT.md) for hashes and the complete coverage boundary.
 
+The independently reviewed `mixed_nonshort_completion_cover_chain.py`
+can schedule exact prefixes of that unchanged caller in parallel.
+`mixed_nonshort_cover_chain_verify.py` checks the complete rooted graph,
+every exact checkpoint assignment, source and process records, and local
+and aggregate cover counts. The [accounting proof](../docs/EXACT_COVER_CHAIN.md)
+explains why a fully verified chain covers the same original roots.
+The live chains remain pending; individual child results are not
+stand-alone domain exclusions.
+
 The remaining numerical event probes, local L1–L4 certificates and earlier finite-window work are historical diagnostics, retained in place to avoid breaking script imports. The corresponding [notes are archived](../docs/legacy/INDEX.md).

@@ -501,3 +501,52 @@ complementary roots, rather than from an unverified pending-stack file.
 Their success is still pending. Publishing these source identifiers
 records the audited proof program; it does not assert that its covers
 have finished.
+
+## 10. Independent review of parallel cover accounting
+
+The same frozen caller can also complete a recorded chain of finite
+prefixes. The proof of this method is given in
+[EXACT_COVER_CHAIN](EXACT_COVER_CHAIN.md). Its scheduling and offline
+verification programs have been independently reviewed:
+
+| Program | SHA256 |
+| --- | --- |
+| `mixed_nonshort_completion_cover_chain.py` | `a458da4a7b3f1f0e33a26f00448229aca4e9271c5883a8354f3479618f704e79` |
+| `mixed_nonshort_cover_chain_verify.py` | `36d27e66d6c259d4248fa6c5d500f3354e084006145cf7159f197abfad2a458c` |
+
+The coordinator compiles a copy of the four frozen mathematical sources
+and uses that unchanged executable throughout. Each fresh branch begins
+without a supplied stack, so it uses all three original complementary
+roots. Every record of a stopped prefix is copied verbatim, including
+its subdivision depth, into exactly one child invocation. Repeated equal
+records retain their multiplicity; no numerical deduplication or new
+mathematical subdivision is performed by the coordinator.
+
+The independent verifier reconstructs the exact 80-bit outward endpoints
+of the initial roots. It strictly parses complete checkpoint records,
+normalizes exact zero before interpreting its MPFR exponent sentinel,
+and checks containment in the corresponding initial root. For every job
+it verifies the actual final log counters, return code, footer, empty
+unresolved file, source and executable identities, and the local forest
+identity `N=2L+P-R`. The build source argument is bound to the retained
+source snapshot; an explicit MPFR include directory is bound to its
+recorded header. These bindings were tightened during the independent
+review and agree with the actual coordinator records.
+
+Every graph edge is checked in both directions by parent identifier,
+frontier ordinal, branch, and the exact bytes of the assigned record.
+The verifier rejects missing or duplicate jobs, unassigned frontiers,
+cycles, orphan jobs, changed records and unresolved boxes. A complete
+graph has one fresh three-root invocation per branch and satisfies
+`N=2L-3` independently for each branch. These checks establish complete
+record replacement, rather than relying on aggregate counts alone.
+
+The optional archive mode permits the recorded executable and external
+MPFR header to be absent after archiving. It does not relax the retained
+source, log, checkpoint or graph checks, and it explicitly retains the
+arithmetic and execution trust boundary. A resumed child's successful
+footer is not accepted outside a complete rooted graph.
+
+The coordinator and verifier source audits are accepted. The live chains
+are still pending; this section records no completed nonshort cover and
+does not change the M2 status.
