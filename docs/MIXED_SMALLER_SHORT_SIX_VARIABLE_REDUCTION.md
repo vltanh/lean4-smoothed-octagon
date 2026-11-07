@@ -1,6 +1,7 @@
 # Six-variable necessary domain for the smaller short bridge
 
-Date: 2026-11-07. Exact hand reduction, not a completed exclusion.
+Date: 2026-11-07. Exact hand reduction. Its scalar exclusion is now
+complete; see [the theorem](MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md).
 The target is the M2 branch in which the smaller turn adjacent to a
 global minimum reverse centre belongs to a short bridge. Every scalar
 below is reconstructed from the same actual normal multiplier.
@@ -464,10 +465,15 @@ the checker must use a different valid enclosure or subdivide.
 
 ## 7. Status
 
-This reduction is exact. The compact-domain positivity target remains
-open pending a complete exact cover or a hand inequality. Local
-numerical searches locate a two-turn defect excess near `0.00153978`,
-but wider searches showed that the earlier, weaker dropped-logarithm
-upper bound admitted false opposite-turn data. The stronger bound (9)
-and all stated constraints are the current target. Numerical searches
-and floating interval discovery remain guidance rather than closure.
+The compact domain is now excluded by the completed directed-interval
+cover: 107,977 nodes, 53,989 leaves, zero unresolved boxes, maximum
+depth 37. The [exclusion theorem](MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md)
+and [independent audit](MIXED_SMALLER_SHORT_CERTIFICATE_AUDIT.md) record
+the mathematical interface, unchanged source and successful replay.
+
+Earlier numerical searches located a two-turn defect excess near
+`0.00153978`; wider searches showed that the weaker dropped-logarithm
+upper bound admitted false opposite-turn data. Those probes motivated
+the stronger bound (9) but are not proof premises. The completed cover
+uses directed arithmetic and all stated necessary constraints. The
+smaller-nonshort branch and full M2 remain open.

@@ -21,7 +21,7 @@
 
 This is a **case count**, not a completion percentage. Case closures use hand proofs, exact algebra/rational certificates, internal audits and named inputs.
 
-A global minimizer has \(N<10^{56}\) under the established geometric/PMP inputs; [the pure-forward class with at least six pieces is now excluded uniformly](docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md). Its exact complementary-domain certificate processed 20,999 nodes with no unresolved box. In the remaining mixed case M2, every global minimum is a reverse centre touching a nonshort forward run; a uniform cost/continuation or constrained-index obstruction is still required.
+A global minimizer has \(N<10^{56}\) under the established geometric/PMP inputs; [the pure-forward class with at least six pieces is now excluded uniformly](docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md). Its exact complementary-domain certificate processed 20,999 nodes with no unresolved box. In M2, the [smaller-short branch is now excluded](docs/MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md) by a complete 107,977-node directed cover with no unresolved box. The remaining task is to exclude both next-switch alternatives when the smaller turn at a global minimum belongs to a nonshort forward run.
 
 ## Working rules
 

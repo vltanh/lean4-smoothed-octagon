@@ -6,8 +6,11 @@ review. No Lean, Lake, typechecking or CI.
 **Status:** the scalar reduction, interval engine and full caller have
 passed independent source review. The engine regression checker has
 also been independently compiled and replayed successfully. The first
-full directed-interval cover is running; its completion remains pending.
-This audit does not yet close the smaller-short branch or M2.
+full directed-interval cover has completed successfully with unchanged
+reviewed source. Its log, source hashes and complete-tree counts have
+been independently checked. The smaller-short branch is therefore
+closed at the hand/exact-certificate level. The smaller nonshort branch
+of M2 remains a separate obligation.
 
 ## 1. Mathematical scope
 
@@ -180,10 +183,29 @@ arithmetic failure midway through a proof run. A remaining stack,
 depth-limit box, or nonbisectable nonempty interval produces an
 incomplete result and a nonzero exit status.
 
-At the time of this source audit the full replay is pending. An
-exclusion theorem may be concluded only after that unchanged source
-finishes with an empty stack, zero unresolved boxes, no bad flags and
-its explicit success exit. No duplicate full replay is claimed here.
+The full replay finished successfully with the unchanged reviewed
+source and the following final report:
+
+```
+FINAL nodes 107977 stack 0 depth 37 unknown 0 domain_splits 0 sec 571.21
+PASS: the full initial scalar box is excluded by directed interval bounds.
+```
+
+The fourteen rejection counters sum to 53,989 leaves. The one-root
+binary-tree identity is exact:
+
+\[
+107977=2\cdot53989-1.
+\]
+
+Thus the reported rejection counts account for the complete initial
+box, with no outstanding branch, unresolved box or analytic-domain
+subdivision. The caller checked its sticky arithmetic flags before the
+success message and exited successfully. The final caller and engine
+hashes were independently read again and equal those listed below.
+This audit combines independent source review, an independent engine
+regression replay, and inspection of the first successful complete
+proof replay; it does not claim a duplicate full run.
 
 ## 6. Reviewed source identifiers
 

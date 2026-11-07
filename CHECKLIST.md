@@ -16,13 +16,14 @@
 - [x] F minimum refinement: whole-period linear neighbor budget, exact uniform neighbor contraction `1 <= z,w < 5/4`, and a broad hand exclusion `3-U+(z-1)+(w-1) <= 3/20`; centered multiplier/Casimir identities independently checked.
 - [x] M2 narrowing: global minimum at a reverse centre adjacent to a nonshort forward run; all reverse centres \(a^2<12/17\); reverse angle and constrained-index density bounds.
 
-- [x] M2 continuation interfaces: exact two-turn bridge cost/angle and compact six-variable reduction; next-actual-switch alternative on the nonshort side; radial completion penalty. Necessary-condition interfaces audited; uniform exclusions still open.
+- [x] M2 continuation interfaces: exact two-turn bridge cost/angle and compact six-variable reduction; next-actual-switch alternative on the nonshort side; radial completion penalty. Necessary-condition interfaces audited; the nonshort exclusion remains open.
+- [x] M2 smaller-short side: complete directed cover of the fixed six-variable necessary domain, 107,977 nodes and 53,989 excluded leaves, zero unresolved boxes; independent source/interface and completion audit.
 
 ## Remaining finite proof gates
 
 - [x] **F1: uniform pure-forward exclusion.** The same-lift minimum equations, exterior floors and global cost/Casimir budget exclude every F period with \(N\ge6\), arbitrary unequal factors; the exact complementary cover has 20,999 nodes and no unresolved boxes.
 - [x] **F2: F closure audit.** Independent internal review verifies the actual-lift normalization, exterior switches, whole-period budget, seam, weak ties, boundary cover, positive-window nondegeneracy, and exact rational verifier. See [the closure](docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md) and [audit](docs/GLOBAL_FORWARD_CASIMIR_CERTIFICATE_AUDIT.md).
-- [ ] **M2.1: long-run minimum obstruction.** At a global smallest reverse centre touching a forward run of length at least two, derive a first-event/return, cost-budget or correct constrained-index contradiction.
+- [ ] **M2.1: long-run minimum obstruction.** The smaller-short side is excluded. On the smaller-nonshort side, exclude both next-actual-switch alternatives in the finite scalar continuation model.
 - [ ] **M2.2: M2 closure audit.** Cover arbitrary unequal margins, all nonshort run lengths, diagonal signs, degeneracies, twisted seam and rank limits. Mark M2 closed only then.
 - [ ] **G4: sharp global assembly.** Combine the five sufficient exclusions to obtain \(N\le5\), apply the retained through-five comparison, and prove unrestricted affine equality rigidity.
 - [ ] **G5: final mathematical dependency audit.** Verify inputs, complete exact checks and edge/equality cases. Record Lean/kernel validation as deferred.

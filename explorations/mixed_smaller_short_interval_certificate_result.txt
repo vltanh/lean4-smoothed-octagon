@@ -1,0 +1,56 @@
+M2 smaller-short directed interval certificate — completed
+Date: 2026-11-07 UTC
+Scope: the fixed six-variable necessary domain in
+  docs/MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION.md
+The theorem and same-actual-period reduction are in
+  docs/MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md
+The smaller-nonshort branch and full M2 remain open.
+No Lean, Lake, typechecking or CI.
+
+Source SHA-256 identifiers:
+68ad563d1db8e0743eb6e2f94ef8d13a4f7fbf1f4e78c8f2dac9bcb0e350b36a  explorations/mixed_smaller_short_interval_certificate.cpp
+1607b4f02063722506a514598d23d9b032a4aebfd6e74753bc302a7a67e32e76  explorations/certified_mpfr_interval.hpp
+6639591181a4237726ba0c5ee254e794ca98ff615536db151c27d66c7cae486e  explorations/certified_mpfr_interval_check.cpp
+
+Compiler: g++ (Debian 14.2.0-19) 14.2.0
+Arithmetic runtime: MPFR 4.2.2; precision 80 significand bits.
+Successful process exit: 0.
+The source's final check rejected no MPFR domain/range flags.
+Independent engine replay: 116,914 exact/analytic checks passed.
+The full caller and mathematical interface were independently reviewed
+before this replay; no second full-cover replay is claimed.
+
+Standard build with matching MPFR development headers:
+  g++ -std=c++17 -O3 explorations/mixed_smaller_short_interval_certificate.cpp -lmpfr -lgmp -o /tmp/mixed_smaller_short_interval_certificate
+  /tmp/mixed_smaller_short_interval_certificate 2000000
+
+The workspace's matching external MPFR header was supplied with:
+  -I /workspace/scratch/5efeb2d2f42f/m2_mpfr_vendor
+The versioned runtime library was linked with -l:libmpfr.so.6.
+The replay binary was built from byte-identical scratch source
+  /workspace/scratch/5efeb2d2f42f/m2_short_mpfrELP4.cpp
+Published caller SHA above is identical. No source edits occurred during replay.
+
+Complete terminal output:
+FINAL nodes 107977 stack 0 depth 37 unknown 0 domain_splits 0 sec 571.21
+reason1 leaves1340
+reason10 leaves3682
+reason13 leaves166
+reason14 leaves589
+reason15 leaves284
+reason16 leaves4389
+reason17 leaves95
+reason18 leaves8277
+reason20 leaves3386
+reason21 leaves1553
+reason22 leaves4209
+reason31 leaves419
+reason37 leaves35
+reason39 leaves25565
+PASS: the full initial scalar box is excluded by directed interval bounds.
+
+Leaf sum: 53,989.
+Full binary cover identity: 107,977 = 2 * 53,989 - 1.
+All proof rejection bounds use directed interval arithmetic; native
+floating-point LP calculations only propose exact nonnegative dyadic
+weights that are subsequently checked by a new rigorous Taylor bound.

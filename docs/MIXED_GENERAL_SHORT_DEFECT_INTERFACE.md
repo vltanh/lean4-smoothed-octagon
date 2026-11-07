@@ -6,6 +6,11 @@ defect inequality. Section 6 records numerical discovery and an
 obstruction to a weaker proposed reduction; it is not an exclusion of
 M2. No Lean, Lake, typechecking or CI was used.
 
+**Completion follow-up:** the necessary scalar domain built from this
+interface is now excluded by the [smaller-short theorem](MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md)
+and its completed directed-interval cover. The nonshort part of M2
+remains open; the discovery examples below retain their stated scope.
+
 ## 1. Actual data and orientation
 
 At a globally smallest reverse centre of physical active margin `a`,
@@ -438,8 +443,10 @@ the same positive two-turn excess minimum, around
 `beta=2.23638067677`, `rho=0.102200970426`, and
 `gamma^2=0.183276057112`. These probes retained the two actual secants,
 outer reverse-root conditions, central Hamiltonian slack and reverse
-scale bounds. They do not prove uniform positivity. A complete exact
-cover or a hand inequality proving (9) impossible remains required.
+scale bounds. They do not prove uniform positivity. The subsequent
+completed cover and its uniform theorem are linked at the start of
+this note; they supply the rigorous exclusion independently of these
+numerical probes.
 
 The exact identity checker is
 [mixed_general_short_defect_interface_certificate.py](../explorations/mixed_general_short_defect_interface_certificate.py).

@@ -11,6 +11,7 @@ The historical full audit checklist is preserved at [legacy snapshots](docs/lega
 ## M2
 
 - [x] Every reverse run length two, global minimum a reverse centre touching a nonshort forward run, reverse-centre \(a^2<12/17\).
+- [x] Smaller-short branch: exact physical cost/angle interface, compact necessary domain, interval engine and caller independently audited; complete 107,977-node directed replay and source hashes verified.
 - [ ] Prove the actual nonshort-bridge first-event/return/cost/index exclusion using the same continuous normal PMP multiplier.
 - [ ] Audit all diagonal signs, unequal factors, geometric restrictions, zero-duration limits, endpoint rank, full curvature and three constraint pairs.
 

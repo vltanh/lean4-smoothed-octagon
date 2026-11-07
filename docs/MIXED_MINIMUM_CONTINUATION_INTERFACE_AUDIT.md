@@ -7,9 +7,13 @@ replays. No Lean, Lake, typechecking or CI.
 [MIXED_SMALLER_TURN_CONTINUATION](MIXED_SMALLER_TURN_CONTINUATION.md),
 [MIXED_GENERAL_SHORT_DEFECT_INTERFACE](MIXED_GENERAL_SHORT_DEFECT_INTERFACE.md),
 and [MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION](MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION.md).
-It does not certify either remaining scalar exclusion or close M2.
+This interface review by itself does not certify a scalar exclusion or close M2.
 The imported global geometric/PMP results retain their own named inputs
 and earlier reviews.
+
+**Completion follow-up:** the smaller-short scalar exclusion subsequently
+passed its full directed cover and [separate completion audit](MIXED_SMALLER_SHORT_CERTIFICATE_AUDIT.md).
+The smaller-nonshort exclusion remains open.
 
 ## 1. Actual-period partition and the common covector
 
@@ -140,10 +144,10 @@ uniform sign or covering theorem.
 
 The current proof obligations are:
 
-- Exclude the smaller short-side comparison domain using the exact
-  window cost/angle budget and its actual constraints.
+- The smaller short-side comparison domain is now excluded by its
+  separately audited completed cover and [theorem](MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md).
 - Exclude both next-switch alternatives on the smaller nonshort side,
   including all corner and boundary limits.
 
-Until those obligations are proved and audited, M2 and the final
+Until the remaining nonshort obligation is proved and audited, M2 and the final
 Reinhardt cost-and-equality assembly remain open.
