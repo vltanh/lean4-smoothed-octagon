@@ -62,6 +62,15 @@ reduces the nonnegative-pairing part of the short w=3/4 face to further
 endpoints, retaining the actual outgoing norm floor in its cost score.
 The negative-pairing part and the terminal signs remain open.
 
+
+Both actual stationary-control slacks also survive the first short
+root comparison, by their explicit positive derivatives in
+[MIXED_SMALLER_SHORT_SLACK_RETENTION](MIXED_SMALLER_SHORT_SLACK_RETENTION.md).
+All three terminal faces may therefore retain them. On w=3/4 the
+middle slack has a short quadratic-in-scale expression. Its retention
+during the further pairing deformation is conditional on J>=0, or
+requires an additional zero-slack stop; no uniform sign is presumed.
+
 ## Completed theorem and review path
 
 All sufficient whole-period cases and the final cost/equality assembly

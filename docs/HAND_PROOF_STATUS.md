@@ -209,6 +209,15 @@ E_L>1+rho_A-1/(8rho_A) shows that every A>=5/7 point is in this
 nonnegative-pairing part. Its terminal signs and the E_L<0 part remain
 open, as recorded in the [endpoint review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
 
+
+Both actual stationary-control slacks also survive the first short
+root comparison, by their explicit positive derivatives in
+[MIXED_SMALLER_SHORT_SLACK_RETENTION](MIXED_SMALLER_SHORT_SLACK_RETENTION.md).
+All three terminal faces may therefore retain them. On w=3/4 the
+middle slack has a short quadratic-in-scale expression. Its retention
+during the further pairing deformation is conditional on J>=0, or
+requires an additional zero-slack stop; no uniform sign is presumed.
+
 ## Acceptance rule
 
 Close a gate only after an independent reading checks its complete

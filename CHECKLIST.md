@@ -35,6 +35,9 @@ closed computer-assisted gates below do not close these new obligations.
   with [independent norm audit](docs/HAND_FORWARD_NORM_AUDIT.md), replaces
   both forward covers. The actual norm bounds imply a strict Casimir
   contradiction.
+- [x] Both [short stationary slacks](docs/MIXED_SMALLER_SHORT_SLACK_RETENTION.md)
+  persist along the first root comparison; all three terminal faces
+  retain these actual necessary inequalities.
 - [ ] Full short-side exclusion, both nonshort successors, and the final
   hand-only assembly still need proofs.
 

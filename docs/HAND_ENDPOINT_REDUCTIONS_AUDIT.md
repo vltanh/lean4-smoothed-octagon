@@ -244,3 +244,28 @@ A>=5/7 implies the explicit positive margin 359/44200. Thus any part
 outside the nonnegative-pairing comparison has A<5/7. The negative-pairing
 part and the terminal cost signs remain open; this result does not
 close H-S.
+
+
+## 7. Retain the two actual stationary-control slacks
+
+[MIXED_SMALLER_SHORT_SLACK_RETENTION](MIXED_SMALLER_SHORT_SLACK_RETENTION.md)
+is accepted. Both slacks are the actual middle and outer entrance
+inequalities of the physical short window, with positive prefactors
+and the same primary multiplier. Their derivatives along the first
+fixed-root comparison have the displayed signs. The middle derivative
+uses only J<Q and tau/T<1, without assuming J>=0. The outer derivative
+uses tau*rho_A<r_A and w'<0. Thus both weak inequalities persist to
+all three terminal faces; no additional stopping face is needed.
+
+The compact floor identity was independently expanded from the original
+middle slack. Writing P_mid=B0^2+rho P1 gives
+P1-B_mid^2=-B0^2. After the solved transport substitution, the rho^2*u
+coefficient is exactly B0^2-J^2, and the other terms are precisely
+the displayed constant and linear coefficients of N0. Hence the
+fixed-w expression N_mid=N0+(rho J/lambda)xi is exact.
+
+During the further fixed-w comparison, H_A strictly increases with xi.
+N_mid increases when J>=0. For J<0, retaining it requires a possible
+additional stop at N_mid=0; the note states that limitation explicitly.
+The sufficient condition x<=2alpha implies J>0. None of these
+preservation statements supplies an endpoint exclusion or closes H-S.
