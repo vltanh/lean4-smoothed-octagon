@@ -338,6 +338,44 @@ def cross(d, e):
     return d[0] * e[1] - d[1] * e[0]
 
 
+def corner_hyperbola(O, m):
+    """The classical construction of the arc at the corner O[m] of a convex polygon O (vertices
+    counterclockwise; side k joins O[k] and O[k+1]): the hyperbola whose asymptotes are the lines of the
+    two sides next to the sides at the corner (sides m - 2 and m + 1) and which is tangent to the side
+    m - 1. It is {C + u d₁ + v d₂ : uv = κ}, C the meeting point of the asymptotes and d₁, d₂ their
+    directions. Returns C, d₁, d₂, κ and the tangency points T₁ on side m - 1 and T₂ on side m (the
+    second tangency is computed, not imposed)."""
+    n = len(O)
+    V = lambda k: np.asarray(O[k % n], dtype=float)
+    d1, d2 = V(m - 1) - V(m - 2), V(m + 2) - V(m + 1)
+    d1, d2 = d1 / np.linalg.norm(d1), d2 / np.linalg.norm(d2)
+    C = line_intersection(V(m - 2), d1, V(m + 1), d2)
+    B = np.array([d1, d2]).T
+
+    def uv(p):
+        return np.linalg.solve(B, np.asarray(p) - C)
+
+    def tangency(a, b, kappa=None):
+        # The points a + s(b - a) with u v = κ: (u₀ + s u₁)(v₀ + s v₁) = κ; tangency is a double root.
+        u0, v0 = uv(a)
+        u1, v1 = np.linalg.solve(B, b - a)
+        lin, quad = u0 * v1 + u1 * v0, u1 * v1
+        if kappa is None:
+            kappa = u0 * v0 - lin ** 2 / (4 * quad)
+        disc = lin ** 2 - 4 * quad * (u0 * v0 - kappa)
+        return kappa, a + (-lin / (2 * quad)) * (b - a), disc
+
+    kappa, T1, _ = tangency(V(m - 1), V(m))
+    _, T2, disc2 = tangency(V(m), V(m + 1), kappa)
+    assert abs(disc2) < 1e-12 * max(1.0, abs(kappa))      # also tangent to side m
+    return C, d1, d2, kappa, T1, T2
+
+
+def hyperbola_uv(C, d1, d2, pts):
+    """The coordinates (u, v) of the points in the frame C, d₁, d₂."""
+    return np.linalg.solve(np.array([d1, d2]).T, (np.atleast_2d(pts) - C).T).T
+
+
 def classical_map(P):
     """The area-preserving linear map A = c diag(1/h₀₁, 1/sin θ_k), c = √(h₀₁ sin θ_k), in whose
     coordinates h = g_sw R⁻¹ is the rotation by -θ_k (`oct_hat`, rescaled to determinant 1), so that
@@ -386,6 +424,66 @@ def inscribed_hexagon_det(P, gauge, phi, n_per=200):
     a, b = t_p + P.period / 12, t_p + P.period / 4
     t_q = brentq(f, a, b, xtol=1e-14)
     return float(det2(p, P.curve(0, t_q)))
+
+
+def disk_gauge(w):
+    """The gauge of the unit disk: the Euclidean norm."""
+    return np.linalg.norm(np.atleast_2d(w), axis=1)
+
+
+def regular_octagon(inradius=1.0):
+    """The regular octagon with the given inradius and horizontal and vertical edges, counterclockwise
+    from its vertex at the polar angle 22.5°."""
+    R_c = inradius / math.cos(math.pi / 8)
+    return np.array([[R_c * math.cos(math.pi / 8 + m * math.pi / 4),
+                      R_c * math.sin(math.pi / 8 + m * math.pi / 4)] for m in range(8)])
+
+
+def hexagon_det(gauge, phi):
+    """For the boundary point p of a centrally symmetric convex disk (given by its gauge) at the polar
+    angle phi, the next vertex q of the affinely regular hexagon p, q, q - p, -p, -q, p - q inscribed
+    in it (q and q - p on the boundary, q counterclockwise from p by less than π); returns det(p, q),
+    a third of the area of the hexagon, with p and q."""
+    def radial(a):
+        u = np.array([math.cos(a), math.sin(a)])
+        return u / gauge(u)[0]
+    p = radial(phi)
+    a = brentq(lambda b: float(gauge(radial(b) - p)[0]) - 1.0, phi + 1e-9, phi + math.pi - 1e-9,
+               xtol=1e-15)
+    q = radial(a)
+    return float(det2(p, q)), p, q
+
+
+def critical_determinant(gauge, n=360):
+    """The critical determinant Δ(K) of a centrally symmetric convex disk: the least determinant of a
+    lattice with no nonzero point in the interior of K. By Reinhardt and Mahler it is the least
+    det(p, q) over the affinely regular hexagons p, q, q - p, … inscribed in K, and the lattice Zp + Zq
+    of a least one is critical. Minimized on a grid of n angles in [0, π), then refined; returns
+    (Δ, p, q). Independent of the trajectory: it uses only the gauge."""
+    from scipy.optimize import minimize_scalar
+    grid = np.linspace(0, math.pi, n, endpoint=False)
+    vals = [hexagon_det(gauge, a)[0] for a in grid]
+    m = int(np.argmin(vals))
+    step = math.pi / n
+    res = minimize_scalar(lambda a: hexagon_det(gauge, a)[0], bounds=(grid[m] - step, grid[m] + step),
+                          method='bounded', options={'xatol': 1e-12})
+    d, p, q = hexagon_det(gauge, res.x)
+    return min(d, vals[m]), p, q
+
+
+def is_admissible(gauge, b0, b1, m=4, tol=1e-9):
+    """No nonzero point of the lattice Z b0 + Z b1 lies in the interior of K; returns that and the
+    number of lattice points on the boundary of K (within 1e-6)."""
+    pts, _ = lattice_points(b0, b1, m)
+    g = gauge(pts)
+    return bool(g.min() > 1 - tol), int(np.sum(g < 1 + 1e-6))
+
+
+def regular_frame(P=None):
+    """The map K ↦ A K / a₀₀ that puts the smoothed octagon in Reinhardt's regular orientation with
+    inradius 1: A is `classical_map`, and A O has inradius a₀₀ (its edge x = 1 goes to x = a₀₀)."""
+    A = classical_map(OCT if P is None else P)
+    return A / A[0, 0]
 
 
 # ---- the checks --------------------------------------------------------------------------------
@@ -543,6 +641,15 @@ def verify(P=OCT, n_per=40):
         dirs = asymptote_directions(c)
         for p, d in flank:
             assert min(abs(cross(d, e)) for e in dirs) < 1e-9
+        # The classical construction from the octagon O alone (asymptotes: the sides next to the sides
+        # at the corner; tangent to one side at the corner) gives the same hyperbola, tangent to the
+        # other side too, at the ends of the arc.
+        m = int(np.argmin(np.linalg.norm(O - pts[len(pts) // 2], axis=1)))
+        Cc, e1, e2, kappa, T1, T2 = corner_hyperbola(O, m)
+        assert np.linalg.norm(Cc - center) < 1e-9
+        u, v = hyperbola_uv(Cc, e1, e2, pts).T
+        assert np.abs(u * v / kappa - 1).max() < 1e-10
+        assert np.linalg.norm(T1 - pts[0]) < 1e-9 and np.linalg.norm(T2 - pts[-1]) < 1e-9
         hyperbolas.append((pc, c, center, flank))
 
     # The densest lattice packing: the lattice Λ_t = Z σ₀(t) + Z σ₁(t) has determinant √3/2, no nonzero

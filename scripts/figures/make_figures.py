@@ -7,6 +7,15 @@
 - multipoint.gif: the six contact points σ_j(t) moving around K over one period [0, t_f];
 - upper-half-plane.svg: the state X(t) = Φ(z(t)) as a path in the upper half-plane;
 - density-comparison.svg: the densities of the smoothed (6k+2)-gons, k = 1, …, 6, and of the disk.
+- smoothed-octagon-plain.svg: Reinhardt's smoothed octagon alone, in its regular orientation, with
+  the corners cut from the regular octagon as ghosts;
+- octagon-construction.svg: how each corner is smoothed: the hyperbola, its asymptotes, the tangency
+  points and the cut-off corner;
+- octagon-tiling.svg: its densest (critical lattice) packing, cropped to a rectangle;
+- packing-densities.svg: the disk, the regular octagon, the smoothed 14-gon and the smoothed octagon,
+  of inradius 1, each with its densest lattice packing and its density;
+- worst-packer.gif: the smoothed octagon's densest packing sliding through its one-parameter family
+  of critical lattices (the balanced motion), for the top of the README; no lines, points or text.
 
     python3 scripts/figures/make_figures.py
 
@@ -24,6 +33,7 @@ import octagon as oc  # noqa: E402
 from reinhardt_figures import Figure, OUT, FAINT, COLORS, FILLS, INK, sb  # noqa: E402
 
 PI = math.pi
+SQ2 = math.sqrt(2)
 BLUE, ORANGE, GREEN, PURPLE = COLORS[0], COLORS[1], COLORS[2], COLORS[3]
 FLOOR = '#f3f4f6'
 # The colours of the three vertex controls e₁, e₂, e₃ (Fin-index 0, 1, 2). Under e₁ the curve σ₀
@@ -538,10 +548,405 @@ def density_comparison(facts):
                   'the least, δ_oct ≈ 0.902414, below the regular octagon’s (4 + 4√2)/(5 + 4√2) ≈ 0.906164')
 
 
+# ---- plain figures: smoothed-octagon-plain.svg, octagon-tiling.svg, packing-densities.svg ------
+
+PLAIN_FILL, PLAIN_STROKE = FILLS[0], BLUE
+CUT_FILL = '#fed7aa'               # the corners cut from the regular octagon
+CENTRAL_TINT = '#c8dbfb'          # the one copy that stays put in worst-packer.gif
+
+
+def clip_begin(f, box, cid):
+    """Start a group clipped to the box (xmin, xmax, ymin, ymax) of data coordinates."""
+    (x0, y1), (x1, y0) = f.p(box[0], box[2]), f.p(box[1], box[3])
+    f.add(f'<clipPath id="{cid}"><rect x="{x0:.1f}" y="{y0:.1f}" width="{x1 - x0:.1f}" '
+          f'height="{y1 - y0:.1f}"/></clipPath>')
+    f.add(f'<g clip-path="url(#{cid})">')
+
+
+def clip_end(f):
+    f.add('</g>')
+
+
+def copies_in(box, b0, b1, reach, m=10):
+    """The points a b0 + b b1 (|a|, |b| ≤ m) whose copy, of circumradius `reach`, meets the box."""
+    out = []
+    for a in range(-m, m + 1):
+        for b in range(-m, m + 1):
+            v = a * b0 + b * b1
+            if box[0] - reach < v[0] < box[1] + reach and box[2] - reach < v[1] < box[3] + reach:
+                out.append(v)
+    return np.array(out)
+
+
+def regular_k(n_per=200):
+    """The boundary of A K: Reinhardt's smoothed octagon, area-preserving, edges horizontal and
+    vertical."""
+    return transform(P.boundary(n_per), oc.classical_map(P))
+
+
+def corner_regions(K_pieces, O):
+    """The corners cut from the polygon O by the arcs: each arc closed up by the vertex it replaces."""
+    out = []
+    for kind, pts in K_pieces:
+        if kind == 'arc':
+            v = O[np.argmin(np.linalg.norm(O - pts[len(pts) // 2], axis=1))]
+            out.append((np.vstack([pts, [v]]), v))
+    return out
+
+
+SOFT_GRADIENT = ('<defs><radialGradient id="soft" cx="50%" cy="42%" r="62%">'
+                 '<stop offset="0%" stop-color="#f5f9ff"/><stop offset="100%" stop-color="#d4e4fd"/>'
+                 '</radialGradient></defs>')
+
+
+def smoothed_octagon_plain():
+    """Reinhardt's smoothed octagon A K alone, in its regular orientation: a soft fill, its 8 straight
+    edges in blue and its 8 hyperbolic arcs in orange, and the 8 corners cut from the regular octagon
+    as faint ghosts."""
+    A = oc.classical_map(P)
+    AB = regular_k()
+    g = oc.Gauge(AB)
+    AO = transform(oc.edge_polygon(P), A)
+    pcs = boundary_pieces(A, n_per=60)
+    ghosts = corner_regions(pcs, AO)
+    # A K is A applied to the library's K, with det A = 1, so its area is √12 δ_oct; it is centrally
+    # symmetric about the origin and invariant under the rotation by π/4, and the lines of its edges
+    # bound a regular octagon A O with horizontal and vertical edges.
+    assert abs(np.linalg.det(A) - 1) < 1e-14
+    assert abs(oc.shoelace(AB) - oc.AREA_OCT) < 1e-6
+    assert np.abs(g(-AB) - 1).max() < 1e-6 and np.abs(g(AB @ rot(PI / 4).T) - 1).max() < 1e-6
+    assert np.allclose(AO / A[0, 0], oc.regular_octagon(1.0)[[7, 0, 1, 2, 3, 4, 5, 6]], atol=1e-12)
+    # The ghosts are exactly what was cut away: 8 congruent corners whose areas add up to
+    # area(A O) - area(A K); each side keeps a straight middle part of 1/√2 of its length.
+    assert len(ghosts) == 8
+    areas = [abs(oc.shoelace(q)) for q, _ in corner_regions(boundary_pieces(A, n_per=2000), AO)]
+    assert np.ptp(areas) < 1e-9 and abs(sum(areas) - (oc.shoelace(AO) - oc.AREA_OCT)) < 1e-7
+    side = np.linalg.norm(AO[1] - AO[0])
+    for kind, pts in pcs:
+        if kind == 'edge':
+            assert abs(np.linalg.norm(pts[-1] - pts[0]) / side - 1 / SQ2) < 1e-12
+    r = np.abs(AO).max() + 0.05
+    f = Figure(-r, r, -r, r, 190)
+    f.add(SOFT_GRADIENT)
+    for q, v in ghosts:
+        f.polygon(q, fill=CUT_FILL, stroke='none', width=0)
+        f.polyline([q[0], v, q[-2]], stroke='#fb923c', width=1.3, dash='2.5 2')
+    f.polygon(AB, fill='url(#soft)', stroke='none', width=0)
+    for kind, pts in pcs:
+        f.polyline(pts, stroke=PIECE_COLORS[kind], width=3.4 if kind == 'arc' else 3.0)
+    return f.save('smoothed-octagon-plain', 'Reinhardt’s smoothed octagon')
+
+
+def octagon_construction():
+    """How the corners are smoothed, in the regular frame (inradius 1): each corner of the regular
+    octagon (faint) is replaced by an arc of the hyperbola that is tangent to the two sides at the corner
+    and has the lines of the next two sides as asymptotes. For the corner (1, tan π/8): the hyperbola's
+    branch (dashed), its asymptotes y = 1 and x - y = √2 (dashed) meeting at its centre C = (1 + √2, 1),
+    the tangency points T₁, T₂ and the cut-off corner (shaded); right, the corner magnified."""
+    M = oc.regular_frame(P)
+    O = transform(oc.edge_polygon(P), M)
+    KB = transform(P.boundary(200), M)
+    pcs = boundary_pieces(M, n_per=80)
+    t8 = math.tan(PI / 8)
+    m = 1
+    V = O[m]
+    C, d1, d2, kappa, T1, T2 = oc.corner_hyperbola(O, m)
+    arc = transform(oc.piece_points(P, oc.pieces(P)[1], 200), M)
+    # The octagon: regular, inradius 1; the corner (1, tan π/8) joins side 0 (x = 1) and side 1
+    # (x + y = √2); the next sides are side 7 (x - y = √2) and side 2 (y = 1).
+    assert np.allclose(O, oc.regular_octagon(1.0)[[7, 0, 1, 2, 3, 4, 5, 6]], atol=1e-12)
+    assert np.allclose(V, (1, t8), atol=1e-12)
+    assert np.allclose(O[[0, 1], 0], 1) and np.allclose(O[[1, 2]].sum(axis=1), SQ2)
+    assert np.allclose(O[[7, 0], 0] - O[[7, 0], 1], SQ2) and np.allclose(O[[2, 3], 1], 1)
+    # The asymptotes are those two lines, meeting at C = (1 + √2, 1).
+    assert np.allclose(C, (1 + SQ2, 1), atol=1e-12)
+    assert abs(oc.cross(d1, (1, 1))) < 1e-12 and abs(oc.cross(d2, (1, 0))) < 1e-12
+    # The library's arc (traced by σ₀ under e₁ on [t_sw, 2t_sw]) is that hyperbola's: u v = κ along it.
+    u, v = oc.hyperbola_uv(C, d1, d2, arc).T
+    assert np.abs(u * v / kappa - 1).max() < 1e-10
+    # The tangency points: T₁ = (1, 1 - 1/√2) on side 0 and T₂ = (√2 - 1/2, 1/2) on side 1, at
+    # (3√2 - 4)/2 from the corner; the arc meets the sides there with a common tangent (C¹), and the
+    # straight middle part of each side is 2 - √2, 1/√2 of the side.
+    assert np.allclose(T1, (1, 1 - 1 / SQ2), atol=1e-12) and np.allclose(T2, (SQ2 - 0.5, 0.5), atol=1e-12)
+    assert np.allclose(arc[[0, -1]], [T1, T2], atol=1e-9)
+    for T in (T1, T2):
+        assert abs(np.linalg.norm(T - V) - (3 * SQ2 - 4) / 2) < 1e-12
+    for t, side in ((P.tsw, O[1] - O[0]), (2 * P.tsw, O[2] - O[1])):
+        left, right = M @ P.curve_d(0, t - 1e-13), M @ P.curve_d(0, t + 1e-13)
+        assert np.linalg.norm(left - right) < 1e-9 and abs(oc.cross(left, side)) < 1e-9
+    side = np.linalg.norm(O[1] - O[0])
+    assert abs(side - 2 * (SQ2 - 1)) < 1e-12 and abs((side - 2 * np.linalg.norm(T1 - V)) - (2 - SQ2)) < 1e-12
+    # The cut-off corner is an eighth of area(O) - area(K).
+    cut = np.vstack([arc, [V]])
+    fine = np.vstack([transform(oc.piece_points(P, oc.pieces(P)[1], 4000), M), [V]])
+    assert abs(abs(oc.shoelace(fine)) - (oc.shoelace(O) - oc.AREA_OCT * np.linalg.det(M)) / 8) < 1e-9
+    # The branch through the arc, for drawing.
+    um, vm = oc.hyperbola_uv(C, d1, d2, arc[len(arc) // 2])[0]
+    sgrid = np.linspace(-4, 4, 3000)
+    branch = C + np.outer(um * np.exp(sgrid), d1) + np.outer(vm * np.exp(-sgrid), d2)
+
+    xl, xr, yb, yt = -1.22, 2.78, -1.22, 1.32
+    zoom_w, zoom_mag = 0.15, 4.0
+    big = zoom_w * zoom_mag
+    zoom_c = np.array([xr + 0.35 + big, 0.1])
+    f = Figure(xl, zoom_c[0] + big + 0.05, yb, yt, 112)
+    main = (xl, xr, yb, yt)
+    f.polygon(KB, fill=FILLS[0], stroke='none', width=0)
+    f.polygon(cut, fill=CUT_FILL, stroke='none', width=0)
+    f.polygon(O, stroke=FAINT, width=1.2)
+    for p0, d in ((O[7], d1), (O[2], d2)):
+        line = p0 + np.outer(np.linspace(-6, 6, 400), d)
+        for run in runs_inside(line, main):
+            f.polyline(run, stroke=INK, width=1.0, dash='6 4')
+    for run in runs_inside(branch, main):
+        f.polyline(run, stroke=ORANGE, width=1.4, dash='4 3')
+    for kind, pts in pcs:
+        f.polyline(pts, stroke=PIECE_COLORS[kind], width=2.4 if kind == 'edge' else 2.8)
+    for q in (T1, T2):
+        f.dot(q, r=3.4)
+    f.dot(C, r=3.4)
+    f.text(C + (-0.13, 0.1), 'C', size=15)
+    f.text((xl + 0.05, 1.09), 'y = 1', size=13, anchor='start', color=INK, italic=False)
+    f.text((0.55, -1.12), 'x − y = √2', size=13, anchor='start', color=INK, italic=False)
+    # The zoom window and its magnified copy.
+    wc = (T1 + T2 + V) / 3
+    win = (wc[0] - zoom_w, wc[0] + zoom_w, wc[1] - zoom_w, wc[1] + zoom_w)
+    assert all(win[0] + 0.02 < q[0] < win[1] - 0.02 and win[2] + 0.02 < q[1] < win[3] - 0.02
+               for q in (T1, T2, V))
+    sq = np.array([(-1, -1), (1, -1), (1, 1), (-1, 1)], dtype=float)
+    f.polygon(wc + zoom_w * sq, stroke=INK, width=0.9)
+    f.polygon(zoom_c + big * sq, fill='#ffffff', stroke=INK, width=0.9)
+    for sy in (-1, 1):
+        f.line(wc + (zoom_w, sy * zoom_w), zoom_c + (-big, sy * big), stroke=FAINT, width=0.8,
+               dash='3 3')
+
+    def mag(pts):
+        return (np.asarray(pts) - wc) * zoom_mag + zoom_c
+
+    f.polygon(mag(clip_polygon(KB, win)), fill=FILLS[0], stroke='none', width=0)
+    f.polygon(mag(clip_polygon(cut, win)), fill=CUT_FILL, stroke='none', width=0)
+    corner = np.concatenate([np.linspace(O[0], O[1], 600), np.linspace(O[1], O[2], 600)])
+    for run in runs_inside(corner, win):
+        f.polyline(mag(run), stroke=FAINT, width=1.2)
+    for run in runs_inside(branch, win):
+        f.polyline(mag(run), stroke=ORANGE, width=1.4, dash='4 3')
+    for kind, pts in pcs:
+        for run in runs_inside(pts, win):
+            f.polyline(mag(run), stroke=PIECE_COLORS[kind], width=2.6 if kind == 'edge' else 3.0)
+    for q, lab, off in ((T1, sb('T', '1', size=15), (0.12, -0.02)), (T2, sb('T', '2', size=15), (-0.13, -0.1))):
+        f.dot(mag(q), r=3.8)
+        f.text(mag(q) + off, lab, size=15)
+    f.text(zoom_c + (0, -big - 0.13), f'the corner, ×{zoom_mag:g}', size=12, italic=False)
+    return f.save('octagon-construction',
+                  'How the corners are smoothed: each corner of the regular octagon (grey) is replaced by '
+                  'an arc of the hyperbola that is tangent to the two sides at the corner and has the '
+                  'lines of the next two sides as asymptotes. For the upper right corner: the hyperbola '
+                  '(dashed orange), its asymptotes y = 1 and x − y = √2 meeting at its centre C, the '
+                  'tangency points T₁ and T₂ and the cut-off corner (shaded); the straight part left of '
+                  'each side is 1/√2 of it')
+
+
+def octagon_tiling():
+    """The densest lattice packing of A K: the copies A K + 2AΛ, Λ = Z s₀* + Z s₁*, cropped to a
+    rectangle. Each copy touches six neighbours: the two beside it share a vertical edge, the four
+    above and below touch it at single points; elsewhere thin gaps remain."""
+    A = oc.classical_map(P)
+    AB = regular_k()
+    g = oc.Gauge(AB)
+    b0, b1 = 2 * A @ oc.SIXTH[0], 2 * A @ oc.SIXTH[1]
+    # The lattice 2AΛ has covolume √12 (det A = 1), so the density is area(A K)/√12 = δ_oct.
+    assert abs(oc.det2(b0, b1) - math.sqrt(12)) < 1e-12
+    assert abs(oc.shoelace(AB) / oc.det2(b0, b1) - oc.DELTA_OCT) < 1e-6
+    # AΛ is critical for A K: its determinant √3/2 is the least det(p, q) over the affinely regular
+    # hexagons inscribed in A K, and it has no nonzero point inside A K.
+    crit, _, _ = oc.critical_determinant(g)
+    assert abs(crit - oc.SQRT3 / 2) < 1e-6
+    ok, on = oc.is_admissible(g, b0 / 2, b1 / 2, tol=1e-6)
+    assert ok and on == 6
+    # Neighbouring copies touch, and no others: ‖v‖ = 2 for the six neighbours ±b0, ±b1, ±(b1 - b0),
+    # more for any other lattice vector.
+    nb = [b0, b1, b1 - b0, -b0, -b1, b0 - b1]
+    assert all(abs(g(v)[0] - 2) < 1e-6 for v in nb)
+    pts, _ = oc.lattice_points(b0, b1, 4)
+    far = [v for v in pts if min(np.linalg.norm(v - w) for w in nb) > 1e-9]
+    assert g(np.array(far)).min() > 2.3
+    # The copies beside each other share a whole vertical edge; the others touch at one point.
+    assert abs(b0[1]) < 1e-15 and abs(b0[0] - 2 * A[0, 0]) < 1e-12
+    edge = [pts_ for kind, pts_ in boundary_pieces(A) if kind == 'edge'][0]   # the edge x = a₀₀
+    assert np.allclose(edge[:, 0], A[0, 0]) and np.allclose(edge[0], -edge[-1] * (-1, 1))
+    for v in (b1, b1 - b0):
+        c = v / 2                                            # the contact point
+        assert np.abs(AB - c).sum(axis=1).min() < 1e-9
+        assert min(np.linalg.norm(pts_[[0, -1]] - c, axis=1).min()
+                   for kind, pts_ in boundary_pieces(A) if kind == 'edge') < 1e-12
+
+    box = (-5.6, 5.6, -3.55, 3.55)
+    f = Figure(*box, 56, pad=10)
+    clip_begin(f, box, 'tiling')
+    shape = regular_k(n_per=12)
+    for v in copies_in(box, b0, b1, 1.1):
+        f.polygon(shape + v, fill=PLAIN_FILL, stroke=PLAIN_STROKE, width=1.4)
+    clip_end(f)
+    return f.save('octagon-tiling',
+                  'The densest packing of Reinhardt’s smoothed octagon, a lattice packing of density '
+                  '(8 − 4√2 − ln 2)/(2√2 − 1) ≈ 0.902414: each copy shares a vertical edge with the '
+                  'copies beside it and touches the four above and below at single points')
+
+
+def packing_densities():
+    """The disk, the regular octagon, the smoothed 14-gon and the smoothed octagon, all of inradius 1,
+    in the order of decreasing packing density, each in front of a patch of its densest lattice
+    packing, with its density."""
+    th = np.linspace(0, 2 * PI, 4000, endpoint=False)
+    disk = np.c_[np.cos(th), np.sin(th)]
+    octa = oc.regular_octagon(1.0)
+    P2 = oc.SmoothedPolygon(2)
+    M1, M2 = oc.regular_frame(P), oc.regular_frame(P2)
+    oct_s = transform(P.boundary(400), M1)
+    gon14 = transform(P2.boundary(400), M2)
+    # In the regular frames the edge lines of the smoothed polygons are regular polygons of inradius 1
+    # with a vertical edge at x = 1 (the edge through σ₀(0) = s₀*).
+    assert np.allclose(oc.edge_polygon(P) @ M1.T, octa[[7, 0, 1, 2, 3, 4, 5, 6]], atol=1e-12)
+    E14 = oc.edge_polygon(P2) @ M2.T
+    assert len(E14) == 14 and np.ptp(np.linalg.norm(E14, axis=1)) < 1e-12
+    assert abs(np.linalg.norm(E14[0]) - 1 / math.cos(PI / 14)) < 1e-12
+    shapes = [('disk', disk, oc.disk_gauge, 'π/√12 = '),
+              ('regular octagon', octa, oc.Gauge(octa), '(4 + 4√2)/(5 + 4√2) = '),
+              ('smoothed 14-gon', gon14, oc.Gauge(gon14), ''),
+              ('smoothed octagon', oct_s, oc.Gauge(oct_s), '(8 − 4√2 − log 2)/(2√2 − 1) = ')]
+    closed = [oc.DELTA_DISK, oc.DELTA_REGULAR_OCTAGON, P2.density(), oc.DELTA_OCT]
+    assert abs(oc.DELTA_REGULAR_OCTAGON - (12 - 4 * SQ2) / 7) < 1e-15
+    assert [f'{d:.6f}' for d in closed] == ['0.906900', '0.906164', '0.906052', '0.902414']
+    # The lattices: the hexagonal one for the disk; for each smoothed polygon the image of
+    # Λ = Z s₀* + Z s₁* under its regular frame, which serves the regular octagon as well.
+    lat = [(np.array([1.0, 0.0]), np.array([0.5, oc.SQRT3 / 2])),
+           (M1 @ oc.SIXTH[0], M1 @ oc.SIXTH[1]),
+           (M2 @ oc.SIXTH[0], M2 @ oc.SIXTH[1]),
+           (M1 @ oc.SIXTH[0], M1 @ oc.SIXTH[1])]
+    assert np.allclose(lat[1][0], (1, 0)) and np.allclose(lat[1][1], (0.5, SQ2 - 0.5))
+    dens = []
+    for (name, pts, g, _), (b0, b1), d in zip(shapes, lat, closed):
+        # Inradius 1: the least radial distance 1/‖u‖ over the unit vectors u is 1 (the directions
+        # include those of the edge midpoints).
+        assert abs(1 / g(disk[::5]).max() - 1) < 1e-6, name
+        # Critical: det(b0, b1) is the critical determinant, the least det(p, q) over the inscribed
+        # affinely regular hexagons, and the lattice is admissible with six points on the boundary.
+        crit, _, _ = oc.critical_determinant(g)
+        assert abs(oc.det2(b0, b1) - crit) < 1e-6, (name, crit)
+        ok, on = oc.is_admissible(g, b0, b1, tol=1e-6)
+        assert ok and on == 6, (name, on)
+        # The density, computed independently as area / covolume of the packing lattice 2(Zb0 + Zb1).
+        dens.append(oc.shoelace(pts) / (4 * crit))
+        assert abs(dens[-1] - d) < 2e-6, (name, dens[-1], d)
+    assert dens[0] > dens[1] > dens[2] > dens[3]
+    assert abs(oc.critical_determinant(shapes[1][2])[0] - (SQ2 - 0.5)) < 1e-9
+
+    w, gap, text_h = 2.3, 0.55, 1.05
+    cols = [0.0, 2 * w + gap]
+    rows = [0.0, -(2 * w + text_h + 0.3)]
+    f = Figure(-w, cols[1] + w, rows[1] - w - text_h, w, 50)
+    for i, ((name, pts, _, formula), (b0, b1), d) in enumerate(zip(shapes, lat, closed)):
+        c = np.array([cols[i % 2], rows[i // 2]])
+        clip_begin(f, (c[0] - w, c[0] + w, c[1] - w, c[1] + w), f'panel{i}')
+        step = max(1, len(pts) // 700)
+        for v in copies_in((-w, w, -w, w), 2 * b0, 2 * b1, 1.1):
+            if np.linalg.norm(v) > 1e-9:
+                f.polygon(pts[::step] + v + c, fill=PLAIN_FILL, stroke=PLAIN_STROKE, width=1.0,
+                          opacity=0.45, stroke_opacity=0.45)
+        f.polygon(pts[::step] + c, fill=PLAIN_FILL, stroke=PLAIN_STROKE, width=2.2)
+        clip_end(f)
+        f.text((c[0], c[1] - w - 0.33), name, size=15, italic=False)
+        f.text((c[0], c[1] - w - 0.7), f'{formula}{d:.6f}', size=13, italic=False, color='#4b5563')
+    return f.save('packing-densities',
+                  'The disk, the regular octagon, the smoothed 14-gon and the smoothed octagon, all of '
+                  'inradius 1, each in front of its densest lattice packing, in the order of decreasing '
+                  'packing density: π/√12 = 0.906900, (4 + 4√2)/(5 + 4√2) = 0.906164, 0.906052 and '
+                  '(8 − 4√2 − log 2)/(2√2 − 1) = 0.902414')
+
+
+# ---- worst-packer.gif ------------------------------------------------------------------------------
+
+def worst_packer_gif(name='worst-packer.gif', n_frames=120, ms=60, width=600, height=340, scale=78):
+    """Reinhardt's smoothed octagon A K in its densest packing A K + 2AΛ_t, Λ_t = Z σ₀(t) + Z σ₁(t), as
+    t runs over one period [0, t_f): every Λ_t is a critical lattice, so the copies slide around the
+    central one (tinted a little deeper), keeping their orientation and their contacts: the octagon has
+    a continuum of densest packings. Λ_{t_f} = Λ₀, so the loop is seamless. No lines, points or text."""
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import Polygon
+    from PIL import Image
+
+    A = oc.classical_map(P)
+    AB = regular_k()
+    g = oc.Gauge(AB)
+    shape = regular_k(n_per=16)
+    ts = np.linspace(0, P.tf, n_frames, endpoint=False)
+    w, h = width / scale / 2, height / scale / 2
+    box = (-w, w, -h, h)
+    lattices = []
+    for t in ts:
+        b0, b1 = A @ P.curve(0, t), A @ P.curve(1, t)
+        # Every frame is a densest packing: covolume √12, density δ_oct, no overlaps, six contacts.
+        assert abs(oc.det2(2 * b0, 2 * b1) - math.sqrt(12)) < 1e-12
+        ok, on = oc.is_admissible(g, b0, b1, tol=1e-6)
+        assert ok and on == 6
+        lattices.append((b0, b1))
+    assert abs(oc.shoelace(AB) / math.sqrt(12) - oc.DELTA_OCT) < 1e-6
+    # The lattice at t_f is Λ₀ again: its basis (s₁*, s₂*) is a unimodular integer change of (s₀*, s₁*).
+    e0, e1 = A @ P.curve(0, P.tf), A @ P.curve(1, P.tf)
+    U = np.linalg.solve(np.array([A @ oc.SIXTH[0], A @ oc.SIXTH[1]]).T, np.array([e0, e1]).T)
+    assert np.allclose(U, np.round(U), atol=1e-12) and abs(abs(np.linalg.det(U)) - 1) < 1e-12
+    # Smooth enough and short enough for the top of the README.
+    # (GIF stores durations in hundredths of a second.)
+    assert ms % 10 == 0 and 1000 / ms >= 15 and 6000 <= n_frames * ms <= 10000
+
+    images = []
+    for t, (b0, b1) in zip(ts, lattices):
+        fig = plt.figure(figsize=(width / 100, height / 100), dpi=100)
+        ax = fig.add_axes([0, 0, 1, 1])
+        ax.set_xlim(-w, w)
+        ax.set_ylim(-h, h)
+        ax.set_aspect('equal')
+        ax.axis('off')
+        for v in copies_in(box, 2 * b0, 2 * b1, 1.1, m=8):
+            tint = CENTRAL_TINT if np.linalg.norm(v) < 1e-9 else PLAIN_FILL
+            ax.add_patch(Polygon(shape + v, closed=True, facecolor=tint, edgecolor=PLAIN_STROKE,
+                                 lw=1.1))
+        fig.canvas.draw()
+        images.append(Image.fromarray(np.asarray(fig.canvas.buffer_rgba())[:, :, :3].copy()))
+        plt.close(fig)
+    path = OUT / name
+    save_gif(images, path, ms)
+    assert path.stat().st_size < 2 * 1024 * 1024
+    return path
+
+
+def save_gif(images, path, ms, colors=31):
+    """Write the frames as a looping GIF with one palette (from a frame of the middle, with pure white
+    kept), each frame mapped to its nearest colours."""
+    from PIL import Image
+    pal = images[len(images) // 3].quantize(colors=colors, method=Image.Quantize.MEDIANCUT)
+    rgb = np.vstack([[255, 255, 255], np.array(pal.getpalette()[:3 * colors]).reshape(-1, 3)])
+    frames = []
+    for im in images:
+        a = np.asarray(im).reshape(-1, 3).astype(int)
+        cols, inv = np.unique(a, axis=0, return_inverse=True)
+        near = ((cols[:, None, :] - rgb[None, :, :]) ** 2).sum(axis=2).argmin(axis=1)
+        q = Image.fromarray(near[inv.ravel()].reshape(im.size[1], im.size[0]).astype(np.uint8), 'P')
+        q.putpalette(rgb.ravel().tolist())
+        frames.append(q)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    frames[0].save(path, save_all=True, append_images=frames[1:], duration=ms, loop=0, optimize=True,
+                   disposal=1)
+
+
 def main():
     facts = oc.verify()
     for path in (smoothed_octagon(facts), octagon_packing(), upper_half_plane(),
-                 density_comparison(facts), multipoint_gif()):
+                 density_comparison(facts), smoothed_octagon_plain(), octagon_construction(),
+                 octagon_tiling(),
+                 packing_densities(), worst_packer_gif(), multipoint_gif()):
         print(f'wrote {path.relative_to(OUT.parents[1])} ({path.stat().st_size // 1024} KiB)')
 
 
