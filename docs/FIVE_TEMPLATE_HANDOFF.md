@@ -10,6 +10,10 @@ A numerical clearance and resulting bound remain open. The qualitative
 minimizer clearance uses external Hales--Vajjha Theorem 16.3.1; read
 [FINITE_BANG_BANG_SOURCE_AUDIT](FINITE_BANG_BANG_SOURCE_AUDIT.md) for the
 numerical source steps not independently certified in this repository.
+The independent [small-multiplier result](GLOBAL_SMALL_MULTIPLIER_BOUND.md)
+now gives N<10^5740 for abnormal and explicitly small projective cost
+multipliers. This does not bound the remaining normal lifts or reopen
+whole-word enumeration.
 The sequence below is preserved as a diagnostic record, not the active work
 order; do not retry its refuted broad-domain L3 premise.
 

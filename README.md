@@ -64,6 +64,18 @@ specific integer bound remain open. An actual finite list of cases is
 therefore not yet available. Global minimality and affine uniqueness
 remain unproved.
 
+### A numerical bound on one multiplier sector
+
+[GLOBAL_SMALL_MULTIPLIER_BOUND](docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md)
+proves fewer than `10^5740` pieces when a trajectory admits a normalized
+lift with `|lambda|<=m/sqrt(22)`. Every abnormal lift is covered, and the
+rational threshold `|lambda|<=10^-1904` is sufficient. The clearance comes
+from a direct norm inequality and all numerical estimates are proved by
+hand, independently of the external finite bang-bang theorem. The bound
+is coarse and applies to this stated sector. Remaining lifts can be
+normalized to `lambda=-1` with costate norm below `10^3807`; a positive
+clearance in that bounded normal domain still needs proof.
+
 ## Historical five-template route and retained diagnostics
 
 The [earlier five-template handoff](docs/FIVE_TEMPLATE_HANDOFF.md) records

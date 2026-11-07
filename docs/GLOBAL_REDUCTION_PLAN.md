@@ -227,6 +227,27 @@ budget is given. There is no further unproved switch-count step after a
 numerical clearance has been supplied. The compactness theorem proves
 that some clearance exists in this normalization, but does not evaluate it.
 
+### 3.6 A numerical subcase independent of the finite bang-bang input
+
+[GLOBAL_SMALL_MULTIPLIER_BOUND](GLOBAL_SMALL_MULTIPLIER_BOUND.md) proves
+\[
+D\ge m-\sqrt{11/2}\,|\lambda|.
+\]
+Thus one normalized lift with `|lambda|<=m/sqrt(22)` has clearance at least
+m/2 throughout its period. Exact evaluation of the coarse coefficient
+bounds gives **N<10^5740**, including every abnormal lift. The rational
+condition `|lambda|<=10^-1904` suffices. This theorem uses the explicit
+state bounds, PMP, and E4, not Theorem 16.3.1 or a pre-existing finite
+vertex representation.
+
+The complementary normal lifts have `|lambda|>10^-1904`. They may safely
+be rescaled to cost multiplier -1, with entire extended-covector norm
+below `10^3807`. Their reduced singular locus is the single point
+`(X,Lambda_1,W)=(J,-3J/2,0)`, with the frame omitted. The exact conversion
+of a future rescaled clearance is recorded in that note. A bounded
+phase domain does not itself exclude a neighborhood of its singular point;
+that remains the principal numerical gate for the uncovered normal lifts.
+
 ## 4. Immediate continuation and stopping rules
 
 1. **Completed:** prove and independently review the local uniform switch theorem.

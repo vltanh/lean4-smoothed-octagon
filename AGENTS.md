@@ -22,6 +22,11 @@ clearance or integer bound for all minimizers is claimed.
 Supply a numerical singular clearance in the specified normalization before
 starting a fixed closed-word comparison; the conversion to an integer is proved.
 Do not equate an existential bound with an identified finite case list.
+Read docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md for the independent numerical
+subcase N<10^5740: abnormal lifts and |lambda|<=m/sqrt(22), with all constants
+explicit. The remaining normal lifts admit lambda=-1 normalization only
+after the proved lower bound; their costate norm is below 10^3807. This
+partial count does not authorize enumeration for all minimizers.
 
 The old docs/FIVE_TEMPLATE_HANDOFF.md is a historical diagnostic record.
 Its prerequisite is the completed P0 certificate in docs/MINIMIZER_WINDOW_AUDIT.md

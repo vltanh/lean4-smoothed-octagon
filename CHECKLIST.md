@@ -17,7 +17,7 @@ count for a supplied clearance do not depend on that finite-switch theorem.
 | Global gate | Exact result | Status |
 | --- | --- | --- |
 | G1: full-period domain and compact lifts | Actual twisted state/costate closure; projective normalization including abnormal limits; compactness of all minimizing lifts. | **Hand proof complete.** [PMP interface](docs/GLOBAL_PERIODIC_PMP.md), [compactness](docs/GLOBAL_MINIMIZER_COMPACTNESS.md). |
-| G2: singular clearance | One common positive distance from the full singular locus for all normalized minimizing lifts. | **Qualitative implication proved using external Theorem 16.3.1. Numerical clearance open.** |
+| G2: singular clearance | One common positive distance from the full singular locus for all normalized minimizing lifts. | **Qualitative implication proved using external Theorem 16.3.1.** A numerical clearance and count are now proved independently for small projective cost multipliers, including abnormal lifts; the complementary normal sector remains open. |
 | G3: uniform switch count | Locally uniform count and effective conversion of a supplied singular clearance into an integer. | **Complete conditional quantitative theorem.** [Uniform theorem](docs/GLOBAL_CLOSED_VARIATION.md) and [explicit O(1/epsilon) bound](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md). Three guard lines give local factor 28; every coefficient is fixed. A numerical clearance is still missing. No dwell-time premise. |
 | G4: fixed finite comparison and equality | Use an explicitly certified integer bound, then exhaust precisely that fixed class. | **Blocked by quantification.** Through-five comparison and equality retained; N<=5 and unrestricted rigidity remain open. |
 
@@ -28,8 +28,16 @@ closed twisted-periodic PMP extremal. This is stronger than disqualifying
 their external cuts as complete-piece switches. Their fixed-endpoint global
 optimality remains true, and the full L3 global parameter domain is not excluded.
 
-No numerical switch bound, new larger closed-word comparison, completed
+No numerical switch bound for all global minimizers, new larger closed-word comparison, completed
 Reinhardt proof, affine uniqueness theorem, or kernel validation is claimed.
+
+**Numerical subcase:** [GLOBAL_SMALL_MULTIPLIER_BOUND](docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md)
+proves fewer than `10^5740` pieces whenever one normalized lift has
+`|lambda|<=m/sqrt(22)`, including every abnormal lift. The rational condition
+`|lambda|<=10^-1904` suffices. An elementary norm estimate supplies the
+clearance; no finite bang-bang representation is assumed. The complementary
+sector can be normalized to `lambda=-1` with entire costate norm below
+`10^3807`. Its singular clearance is not established by that bound.
 
 ## Historical local package and preserved diagnostics
 
@@ -280,6 +288,13 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Prove a numerical small-multiplier subcase: norm decomposition gives
+  `D>=m-sqrt(11/2)*|lambda|`; exact coefficient bounds give fewer than
+  `10^5740` pieces when `|lambda|<=m/sqrt(22)`. This includes every abnormal
+  lift and does not use Theorem 16.3.1. Safely normalize the complementary
+  lifts to cost multiplier -1 with explicit costate bound `10^3807`.
+  Independent hand reviews checked the arithmetic and one-lift quantifier.
 
 - Sharpen the regular-domain count to three comparison lines and local
   factor 28. Four possible small rotations supply an explicit derivative

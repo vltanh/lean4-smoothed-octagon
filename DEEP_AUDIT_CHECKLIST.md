@@ -86,6 +86,26 @@ The new hand proofs received separate internal mathematical reviews. Such
 review is not external peer review or Lean kernel validation. No new Lean
 file, build, typechecking, Lake command, or CI was introduced or executed.
 
+## Numerical small-multiplier count
+
+[GLOBAL_SMALL_MULTIPLIER_BOUND](docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md)
+supplies a numerical bound without the external finite bang-bang input.
+
+- [x] Use the actual product norm and the exact constant sqrt(11/2) to
+  give D>=m/2 for abs(lambda)<=m/sqrt(22); include abnormal lifts.
+- [x] Check every state, Gronwall, derivative, and time coefficient by
+  elementary inequalities; prove c>10^-27*m^2 and m>10^-1903.
+- [x] Apply the three-line theorem and the integer ceiling to obtain
+  N<10^5740, without assuming a pre-existing finite representation.
+- [x] Keep E4 explicit and require only one favorable normalized lift.
+- [x] Normalize the complementary sector to lambda=-1 only after the
+  explicit lower bound on abs(lambda); prove the entire covector bound
+  and conversion for any future normal-sector clearance.
+- [ ] Establish singular clearance for the complementary normal sector.
+
+Separate internal hand reviews checked the assembled argument. This is
+an explicit sector estimate, not a numerical bound for every minimizer.
+
 ## Regular forward-window descent
 
 [LOCAL_FORWARD_REGULAR_DESCENT](docs/LOCAL_FORWARD_REGULAR_DESCENT.md)
