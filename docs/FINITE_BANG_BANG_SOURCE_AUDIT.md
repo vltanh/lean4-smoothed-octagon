@@ -5,13 +5,21 @@ typechecking, CI, or numerical trajectory computation was run for this note.
 
 ## Current status: the active numerical proof bypasses this input
 
+[SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md) proves D>10^-11 and,
+with the direct [measurable-edge theorem](MEASURABLE_EDGE_PMP_BOUND.md),
+N<10^56. The independent earlier
 [GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) and
-[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now prove
-D>10^-1906 and, with E4, N<10^5741 without Theorem 16.3.1, the source's
-unstable-curve escape, or its basin containments. The audit below and its
-certificate specifications are retained. The new direct argument replaces
-their role in the active boundedness proof; it does not independently
-certify these source calculations or assert that the source theorem is false.
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) proofs
+with D>10^-1906 and N<10^5741 are preserved. None of these numerical
+routes uses Theorem 16.3.1, the source's unstable-curve escape, or its
+basin containments. The new direct E4 proof additionally removes the
+separate edge finite-switch theorem 8.1.4 from the active input list.
+
+The audit and certificate specifications below are retained. These new
+arguments replace the source steps' role in the boundedness proof; they
+do not independently certify the source calculations or assert that the
+source theorem is false. Geometric normalization, the common state domain,
+and standard PMP remain named inputs.
 
 ## 1. Finding and precise scope
 

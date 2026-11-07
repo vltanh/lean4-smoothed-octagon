@@ -3,20 +3,29 @@
 ## Current priority: global cost comparison after an explicit uniform bound
 
 **Mandatory session entry point:** `docs/GLOBAL_REDUCTION_PLAN.md`.
-Read docs/GLOBAL_COST_CASIMIR.md and docs/GLOBAL_NUMERICAL_REDUCTION.md.
-The complete-period Hamiltonian and polar-angle argument now proves
-D>10^-1906 for every normalized competitive PMP lift in the stated common
-state domain. Together with the quantitative switch theorem and the
-minimizer edge property E4, it proves N<10^5741 for every global minimizer.
+Read docs/SINGULAR_COST_BUDGET.md and docs/MEASURABLE_EDGE_PMP_BOUND.md.
+The complete-period Hamiltonian and polar-angle argument gives a direct
+homogeneous costate bound for every competitive closed PMP lift. On the
+common cyclically invariant minimizer state domain, algebraic costate
+bounds sharpen the numerical clearance to D>10^-11 and the complete-period
+piece count to N<10^56, in the stated initial product normalization.
+The edge property E4 now has a direct fixed-time PMP and integrating-factor
+proof for arbitrary measurable controls, including abnormal multipliers.
 The numerical-clearance and uniform-integer gates are complete under the
-retained geometric, compact-state, PMP, and Chapter 8 edge inputs.
+retained geometric, compact-state, and standard PMP inputs.
 
 Read docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md for the three-line count
-and all coefficients; docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md and
-docs/GLOBAL_CASIMIR_CLEARANCE.md retain useful sector estimates.
-The new route does not use Hales--Vajjha Theorem 16.3.1. The older
-qualitative route and its source boundary remain in
-docs/GLOBAL_MINIMIZER_COMPACTNESS.md and
+and all coefficients. Its proof permits any certified lower and upper
+covector norm bounds; the new application uses m=10^-8 and M=10^8.
+The independent concurrent cost--Casimir proof and its original larger
+bound remain in docs/GLOBAL_COST_CASIMIR.md and
+docs/GLOBAL_NUMERICAL_REDUCTION.md. Preserve both arguments and the
+sector estimates in docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md and
+docs/GLOBAL_CASIMIR_CLEARANCE.md.
+
+The current route needs neither Hales--Vajjha Theorem 8.1.4 nor Theorem
+16.3.1 as an input. The older qualitative route and its source boundary
+remain in docs/GLOBAL_MINIMIZER_COMPACTNESS.md and
 docs/FINITE_BANG_BANG_SOURCE_AUDIT.md. The audited numerical source steps
 were bypassed, not independently hand- or kernel-validated.
 

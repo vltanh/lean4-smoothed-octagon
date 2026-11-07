@@ -4,55 +4,63 @@
 
 ## Active global checkpoint
 
-The complete-period route now supplies the specific bounds
+The strongest complete-period bounds are now
 
 \[
-\boxed{D>10^{-1906},\qquad N<10^{5741}.}
+\boxed{D>10^{-11},\qquad N<10^{56}.}
 \]
 
-The clearance holds for every normalized competitive complete-period PMP
-lift in the stated common state domain. Adding the local edge-optimality
-property (E4) gives the piece count, hence the conclusion for every actual
-global minimizer under the retained geometric, compact-state, PMP, and
-Chapter 8 edge inputs. No pre-existing finite vertex representation or
-dwell-time estimate is assumed.
+The clearance holds for every competitive complete-period PMP lift in the
+common cyclically invariant state domain, with
+`norm((lambda,Lambda_1,W)(0))=1`. The direct measurable-edge proof of (E4)
+then gives the count for every actual global minimizer. The retained inputs
+are the geometric/control correspondence, the common state domain, and
+standard PMP. Normal and abnormal lifts are included; no prior finite
+vertex representation or minimum arc duration is assumed.
 
 | Global gate | Exact result | Status |
 | --- | --- | --- |
-| G1: full-period domain and compact lifts | Actual twisted state/costate closure; projective normalization including abnormal limits; common state bounds and compactness of minimizing lifts. | **Hand proof complete under the stated source inputs.** [PMP interface](docs/GLOBAL_PERIODIC_PMP.md), [compactness](docs/GLOBAL_MINIMIZER_COMPACTNESS.md). |
-| G2: singular clearance | In the initial norm `norm((lambda,Lambda_1,W)(0))=1`, every competitive complete-period lift satisfies `D>10^-1906` at every time. | **Explicit hand proof complete.** [Cost–Casimir inequality](docs/GLOBAL_COST_CASIMIR.md) and [all-component numerical reduction](docs/GLOBAL_NUMERICAL_REDUCTION.md), including abnormal lifts. |
-| G3: uniform switch count | Every global minimizer has fewer than `10^5741` positive vertex pieces. | **Specific integer proved.** [Numerical reduction](docs/GLOBAL_NUMERICAL_REDUCTION.md) applies the [quantitative theorem](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md) with E4; no prior finiteness or minimum arc length. |
-| G4: global cost comparison and equality | Prove the octagon comparison and affine equality case for the bounded class, or make a stronger structural reduction. | **Open.** The ceiling is not a practical case catalogue. Through-five comparison/equality are retained; `N<=5` and unrestricted rigidity remain open. |
+| G1: full-period domain and compact lifts | Actual twisted state/costate closure; projective normalization including abnormal limits; common state bounds and compactness. | **Hand proof complete under the stated inputs.** [PMP interface](docs/GLOBAL_PERIODIC_PMP.md), [compactness](docs/GLOBAL_MINIMIZER_COMPACTNESS.md). |
+| G2: singular clearance | Every normalized competitive closed lift in the common domain has `D>10^-11` at every time. | **Explicit hand proof complete.** [SINGULAR_COST_BUDGET](docs/SINGULAR_COST_BUDGET.md), with a direct homogeneous estimate covering every costate component. |
+| G3: uniform switch count | Every global minimizer has fewer than `10^56` positive vertex pieces. | **Specific integer proved.** The [quantitative theorem](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md) uses `m=10^-8`, `M=10^8`, and the [direct edge proof](docs/MEASURABLE_EDGE_PMP_BOUND.md). |
+| G4: global cost comparison and equality | Prove the octagon comparison and affine equality case for the bounded class, or a stronger structural reduction. | **Open.** The ceiling is not a practical catalogue. Through-five comparison/equality are retained; `N<=5` and unrestricted rigidity remain open. |
 
-**New whole-period bridge:** for a normal lift with `lambda=-1` and
-negative elliptic frame costate of determinant `kappa^2`,
-`C>=4*pi*kappa/(2*kappa+3)`. The exact estimates
-`A_oct<313/100` and `pi>157/50` give
-`det(Lambda_1)-9/4<-1/40` in this component. The nonpositive-determinant
-and positive elliptic components have separate direct estimates.
-Together they give `||Lambda_1+3J/2||>1/120` for every cost-normalized
-competitive normal lift. Projective rescaling and the small-multiplier
-norm estimate produce the stated universal clearance.
+**Direct whole-period bridge:** let `A=Lambda_1-(3/2)*lambda*J`. Every
+closed lift of cost `C<pi` satisfies
+`norm(A(t)) >= abs(lambda)*3*(pi-C)/(2*pi-C)` at every time. The proof uses
+an interior equilibrium control, spatial costate conservation, the exact
+frame endpoint, and rebasing of the same twisted lift. On the minimizer
+state domain, Hamiltonian width and positive equilibrium weights also give
+`norm(W)<=10^6*norm(A)` and `10^-8<norm(P)<10^8`. These are explicit
+algebraic improvements over the earlier Gronwall estimates.
 
-**Source boundary:** the new numerical proof bypasses Hales--Vajjha
-Theorem 16.3.1 and its audited numerical escape/basin inputs. The earlier
-qualitative route through that theorem remains recorded in
-[the source audit](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md); those source
-calculations have not been independently certified here. The new route
-still uses the named geometric, common-state, PMP, and local edge results.
+**Direct E4 proof:** [MEASURABLE_EDGE_PMP_BOUND](docs/MEASURABLE_EDGE_PMP_BOUND.md)
+uses a separate two-state, fixed-time edge PMP. A positive integrating
+factor makes the switching derivative a positive factor times a quadratic,
+so at most three switches occur. The identically zero polynomial and all
+abnormal cases are treated. The exact change of parameter preserves both
+physical endpoints and the free-duration cost comparison.
+
+**Preserved concurrent result:** [GLOBAL_COST_CASIMIR](docs/GLOBAL_COST_CASIMIR.md)
+and [GLOBAL_NUMERICAL_REDUCTION](docs/GLOBAL_NUMERICAL_REDUCTION.md) prove
+an independent normal-component estimate, `D>10^-1906`, and `N<10^5741`.
+Their proof and the small/large-multiplier and determinant-sector bounds
+remain intact. The new homogeneous proof improves the universal constants.
+
+**Source boundary:** the active route needs neither Hales--Vajjha Theorem
+8.1.4 nor Theorem 16.3.1. The earlier qualitative route and numerical
+source audit remain recorded in
+[FINITE_BANG_BANG_SOURCE_AUDIT](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md).
+Those source calculations have not been independently certified here.
 
 **Actual global exclusion:** [GLOBAL_PERIOD_BUDGET](docs/GLOBAL_PERIOD_BUDGET.md)
-proves a finite state/costate escape test. Every small-core padded L3 window
-in `0<b<=1/(10000*sqrt(3))` satisfies it, so none can occur anywhere in a
-closed twisted-periodic PMP extremal. Their fixed-endpoint global
-optimality remains true; the full L3 parameter domain is not excluded.
+excludes every small-core padded L3 window in `0<b<=1/(10000*sqrt(3))`
+from any closed twisted-periodic PMP extremal by a finite escape test.
+Their fixed-endpoint global optimality remains true; the full L3 parameter
+domain is not excluded.
 
-The [small-multiplier](docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md) and
-[conserved-determinant](docs/GLOBAL_CASIMIR_CLEARANCE.md) sector bounds
-remain valid, with `N<10^5740` in their stated special sectors. The new
-whole-period bridge resolves the formerly missing intermediate normal
-critical band. No completed unrestricted cost comparison, affine
-uniqueness theorem, or kernel validation is claimed.
+No completed unrestricted cost comparison, affine uniqueness theorem, or
+kernel validation is claimed.
 
 ## Historical local package and preserved diagnostics
 
@@ -306,6 +314,17 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 
 Newest entries come first. Earlier entries record the scope at their own
 checkpoint; the active gate table above controls current status.
+
+- Sharpen the universal bound to `D>10^-11`, `N<10^56` in
+  SINGULAR_COST_BUDGET. A direct homogeneous polar-budget inequality
+  covers every costate component and abnormal multiplier; positive
+  equilibrium weights and frame conservation replace exponential norm
+  propagation by `10^-8<norm(P)<10^8`. MEASURABLE_EDGE_PMP_BOUND proves
+  E4 directly by a separate fixed-time PMP, integrating factor, and
+  quadratic zero count. Independent full hand reviews checked both notes
+  and every numerical substitution. The concurrent cost--Casimir proof is
+  preserved. The active chain needs no source Theorem 8.1.4 or 16.3.1;
+  G4 cost comparison and affine equality remain open.
 
 - Complete the universal numerical reduction. GLOBAL_COST_CASIMIR proves
   the actual-frame polar-angle inequality and the competitive negative

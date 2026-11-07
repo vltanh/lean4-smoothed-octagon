@@ -5,13 +5,16 @@ to a complete minimizing period, with its actual twisted endpoints.
 
 ## Current independent numerical follow-up
 
+[SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md) gives D>10^-11 in the
+explicit initial matrix-covector norm and, with the direct
+[measurable-edge E4 proof](MEASURABLE_EDGE_PMP_BOUND.md), N<10^56.
+It uses the common cyclically invariant state domain below, but not
+Sections 5--6 or Theorem 16.3.1. The independent earlier
 [GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) and
-[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now give
-D>10^-1906 in their explicitly stated initial matrix-covector norm and,
-with E4, N<10^5741 for every global minimizer. That argument uses the
-common state bounds below, but not Sections 5--6 or Theorem 16.3.1.
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) arguments
+and their larger bound remain preserved.
 The original cotangent normalization and qualitative derivation in this
-note are preserved; no numerical norm conversion is silently asserted.
+note are unchanged; no numerical norm conversion is silently asserted.
 
 ## Original result and limitation
 

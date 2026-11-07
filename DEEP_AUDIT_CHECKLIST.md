@@ -24,8 +24,9 @@ The [finite bang-bang source audit](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md)
 still records numerical unstable-curve and basin-containment steps not
 independently certified here. The earlier qualitative route used that
 input; the new all-component clearance and E4 count do not. The named
-geometric correspondence, compact-state, PMP, and Chapter 8 edge results
-remain explicit dependencies.
+geometric correspondence, compact-state, and standard PMP remain explicit
+dependencies. The direct measurable-edge proof below removes the separate
+Chapter 8 finite-edge theorem from the active dependency chain.
 
 - [x] Derive twisted state-covector closure from the actual free-initial-state
   endpoint graph, and distinguish it from automatic frame-covector closure.
@@ -66,8 +67,9 @@ remain explicit dependencies.
   refinement was separately reviewed, and its changed derivative margin
   is propagated through the time constants rather than reusing the old mesh.
 - [x] Supply a numerical singular clearance and specific integer:
-  D>10^-1906 for every normalized competitive complete-period lift, and
-  N<10^5741 for every global minimizer with the stated inputs. This is
+  D>10^-11 for every normalized competitive closed lift in the common
+  state domain, and N<10^56 for every global minimizer. The earlier
+  independent D>10^-1906 and N<10^5741 proof is preserved. This is
   an explicit ceiling, not a practical or evaluated case catalogue.
 - [ ] Complete the remaining global comparison and affine equality theorem.
 - [ ] Run kernel validation (deferred under the user's current workflow).
@@ -89,6 +91,36 @@ The separate GLOBAL_FORWARD_INDEX method check was independently reviewed:
 The new hand proofs received separate internal mathematical reviews. Such
 review is not external peer review or Lean kernel validation. No new Lean
 file, build, typechecking, Lake command, or CI was introduced or executed.
+
+## Direct period budget and measurable-edge review
+
+[SINGULAR_COST_BUDGET](docs/SINGULAR_COST_BUDGET.md) and
+[MEASURABLE_EDGE_PMP_BOUND](docs/MEASURABLE_EDGE_PMP_BOUND.md) have been
+read in full and checked by the root and independent internal reviewers.
+
+- [x] Verify strict positivity and normalization of the equilibrium control,
+  including its barycentric weights in the control-affine formulation.
+- [x] Derive the positive-elliptic conjugation identity, both polar angular
+  velocities, the lifted endpoint angle, and the integrated cost inequality.
+- [x] Rebase the same twisted lift at every time, preserving the period cost
+  and the body covector; retain abnormal multipliers without dividing by them.
+- [x] Check cyclic invariance and rotated height bounds, the Hamiltonian
+  width estimate, `norm(W)<=607500*norm(A)`, and both algebraic projective
+  norm bounds. Reuse the proved rational octagon and circle estimates.
+- [x] Derive `D>10^-11`, verify that the count uses only certified `m,M`
+  bounds, and recompute every time coefficient and ceiling for `N<10^56`.
+- [x] Reconstruct every nearby measurable edge competitor in physical time
+  with both frame and state endpoints fixed. Check strict-star margins,
+  positivity, the bi-Lipschitz change of variable, and the free-time splice.
+- [x] Apply a separate fixed-time PMP to that edge problem. Do not impose
+  zero Hamiltonian or restrict an arbitrary full-system abnormal lift.
+- [x] Treat the nonzero quadratic, identically zero polynomial, and abnormal
+  cases; prove the finite zero count before claiming a vertex representation.
+- [x] Preserve the independent concurrent cost--Casimir proof and explicitly
+  remove source Theorems 8.1.4 and 16.3.1 from this active proof chain.
+
+These are internal hand reviews, not external peer review or kernel
+validation. The final cost comparison and affine equality theorem are open.
 
 ## Numerical small-multiplier count
 

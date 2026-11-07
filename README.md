@@ -11,58 +11,66 @@ validation have not been run. New formalization infrastructure is paused.**
 ## Active result: an explicit bound for every global minimizer
 
 **Start with [GLOBAL_REDUCTION_PLAN](docs/GLOBAL_REDUCTION_PLAN.md).**
-Under the retained geometric, compact-state, Pontryagin maximum principle
-(PMP), and local edge-optimality inputs, every global minimizer has a
-complete period with
+Under the retained geometric, compact-state, and standard Pontryagin maximum
+principle (PMP) inputs, every global minimizer has a complete period with
 
 \[
-\boxed{N<10^{5741}}
+\boxed{N<10^{56}}
 \]
 
-positive constant vertex pieces. This is an explicit hand-proof bound,
-including abnormal lifts. The numerical boundedness gate is complete;
-the global cost comparison and affine equality case remain open.
-The ceiling is far too large for a practical exhaustive calculation.
+positive constant vertex pieces. This hand-proof bound includes abnormal
+lifts and constructs a finite representation from arbitrary measurable
+controls. The numerical boundedness gate is complete; global minimality
+and affine uniqueness remain open. The ceiling is still far too large for
+a practical exhaustive calculation.
 
-The proof has three parts:
+The strongest current proof has three parts:
 
-- [GLOBAL_COST_CASIMIR](docs/GLOBAL_COST_CASIMIR.md) compares the Hamiltonian
-  with an explicit stationary simplex control and tracks the polar angle
-  of the actual frame path. For a normal lift with cost multiplier -1
-  and negative elliptic frame costate of determinant kappa squared, it gives
-  `C >= 4*pi*kappa/(2*kappa+3)`. The whole-period budget `C<=A_oct<pi`
-  therefore separates this component from its critical determinant.
-- [GLOBAL_NUMERICAL_REDUCTION](docs/GLOBAL_NUMERICAL_REDUCTION.md) treats
-  every remaining normal orbit type and the small-multiplier sector,
-  including abnormal lifts. In the stated initial product normalization,
-  **every** competitive complete-period lift has singular distance
-  `D>10^-1906`. All rational cost and coefficient estimates are explicit.
-- [QUANTITATIVE_REGULAR_SWITCH_BOUND](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md)
-  converts that clearance to the displayed integer using three comparison
-  lines and the four-piece edge bound (E4). It constructs a finite
-  representation without assuming one in advance or a minimum arc duration.
+- [SINGULAR_COST_BUDGET](docs/SINGULAR_COST_BUDGET.md) compares the zero
+  Hamiltonian with an explicit equilibrium simplex control. Spatial costate
+  conservation and the polar angle of the actual frame path give
+  `norm(Lambda_1-(3/2)*lambda*J) >= abs(lambda)*3*(pi-C)/(2*pi-C)`
+  at every time in a complete period with `C<pi`. The argument includes all
+  frame-costate components without dividing by the cost multiplier.
+- The same note uses the total cost and positive equilibrium weights to
+  prove `10^-8 < norm((lambda,Lambda_1,W)(t)) < 10^8` in the initial unit
+  product normalization. The octagon budget then gives the explicit
+  singular clearance **`D>10^-11`** for every normalized competitive
+  closed lift in the common state domain.
+- [MEASURABLE_EDGE_PMP_BOUND](docs/MEASURABLE_EDGE_PMP_BOUND.md) proves the
+  four-piece edge property (E4) directly. An independent edge PMP and a
+  positive integrating factor reduce its switch count to the roots of a
+  quadratic. [QUANTITATIVE_REGULAR_SWITCH_BOUND](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md)
+  combines E4 with three comparison lines and the supplied clearance to
+  obtain the stated integer. No minimum arc duration is assumed.
 
-This route does **not** use Hales--Vajjha Theorem 16.3.1. The numerical
-unstable-curve and basin-containment inputs identified in
-[the source audit](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md) are bypassed,
-not independently certified. The common state domain, PMP, geometric
-correspondence, and Chapter 8 edge-optimality results remain explicit inputs.
-The new proofs have received separate internal hand reviews; they are not
-Lean kernel certificates or external peer review.
+This route does not require Hales--Vajjha Theorem 8.1.4 or Theorem 16.3.1.
+The numerical escape and basin inputs recorded in
+[the source audit](docs/FINITE_BANG_BANG_SOURCE_AUDIT.md) remain uncertified
+here; the current proof bypasses them. The geometric correspondence, common
+compact state domain, and standard PMP remain explicit inputs. Separate
+internal hand reviews checked the assembled proofs and constants; these
+are not Lean kernel certificates or external peer review.
+
+The independent concurrent [cost--Casimir inequality](docs/GLOBAL_COST_CASIMIR.md)
+and [original numerical reduction](docs/GLOBAL_NUMERICAL_REDUCTION.md)
+remain intact. They give the larger bound `N<10^5741` by a different
+costate-component argument and the earlier Gronwall estimates.
+The sharper result above replaces that bound in the active plan.
 
 The active task is a uniform cost comparison on the bounded class, or a
 stronger structural/index reduction such as `N<=5` that makes the retained
 through-five comparison applicable. Exact frame and state closure, free
-initial state, boundary limits, and equality cases must all be retained.
-An integer bound does not supply any of those remaining inequalities.
+initial state, boundary limits, and equality cases remain part of that task.
+The integer bound supplies none of those cost inequalities.
 
 Earlier results remain available: [compact normalized minimizing lifts](docs/GLOBAL_MINIMIZER_COMPACTNESS.md),
 [the full-period PMP interface](docs/GLOBAL_PERIODIC_PMP.md), and
 [an explicit continuation obstruction](docs/GLOBAL_PERIOD_BUDGET.md)
 excluding every small-core padded L3 occurrence from a closed PMP period.
-The independent [small-multiplier](docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md)
-and [determinant-separation](docs/GLOBAL_CASIMIR_CLEARANCE.md) estimates
-are retained as useful components of the completed numerical reduction.
+The [small-multiplier](docs/GLOBAL_SMALL_MULTIPLIER_BOUND.md) and
+[determinant-separation](docs/GLOBAL_CASIMIR_CLEARANCE.md) estimates are
+preserved as independent scoped results.
 
 ## Historical five-template route and retained diagnostics
 
@@ -88,8 +96,9 @@ resume increasing-length whole-trajectory enumeration.
 
 The P0 note also records the corrected terminal conjugation and the explicit
 equality transfer to the concrete octagon. Independent premises and equality
-reviews found no additional gap in that conditional transfer. The global
-complexity bound is still required before it proves unrestricted rigidity.
+reviews found no additional gap in that conditional transfer. A valid reduction
+to the through-five class is still required before that equality transfer
+proves unrestricted rigidity.
 
 
 The user requested a bounded set of cases before continuing case-by-case

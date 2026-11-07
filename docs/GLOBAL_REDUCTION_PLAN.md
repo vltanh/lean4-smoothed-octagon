@@ -28,7 +28,7 @@ The numerical part of the replacement target is now complete:
 > and equality proof. A direct global theorem N<=5 would finish the
 > comparison using the existing through-five certificates.
 
-The specific integer N_max=10^5741 is now proved under the retained inputs,
+The specific integer N_max=10^56 is now proved under the retained inputs,
 with the strict count N<N_max. This completes G2 and G3, but the ceiling
 is far too large for a practical catalogue. The active target is the
 remaining uniform cost comparison and equality, or a stronger structural
@@ -47,17 +47,20 @@ The new [cost–Casimir inequality](GLOBAL_COST_CASIMIR.md) and
 16.3.1 and those computational ingredients. They prove clearance directly
 for all competitive complete-period lifts and construct finiteness using
 the measurable-control regular-domain theorem plus E4. They still use the
-named geometric correspondence, compact-state, PMP, and Chapter 8 local
-edge-optimality results. The source audit remains valid; replacement of
-one dependency is not a claim that every source theorem has been re-proved.
+named geometric correspondence, compact-state, and standard PMP inputs.
+[SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md) sharpens the bound to
+N<10^56, and [MEASURABLE_EDGE_PMP_BOUND](MEASURABLE_EDGE_PMP_BOUND.md)
+proves E4 directly, so the active chain also needs no separate source
+Theorem 8.1.4. The source audit remains valid; these replacements do not
+claim that every source theorem has been re-proved.
 
 ## 2. Fixed sequence of proof obligations
 
 | Gate | Acceptance condition | Current status |
 | --- | --- | --- |
 | G1. Complete-period domain and compact lifts | Prove the actual boundary conditions and compactness after projective normalization, including abnormal limits. | **Hand proof complete.** See GLOBAL_PERIODIC_PMP and GLOBAL_MINIMIZER_COMPACTNESS. |
-| G2. Uniform regularity of minimizers | Separate every normalized minimizing lift from the full singular locus, uniformly over all minimizers and times. | **Explicit hand proof complete:** D>10^-1906 for every normalized competitive complete-period lift in the common state domain, including abnormal lifts. See GLOBAL_COST_CASIMIR and GLOBAL_NUMERICAL_REDUCTION. |
-| G3. Uniform switch complexity | Bound switches uniformly on a supplied compact regular phase domain, including near-degenerate ties; make the constants usable with G2. | **Explicit integer complete:** N<10^5741 for every global minimizer, using the quantitative three-line theorem and E4. No previous finite representation or minimum arc length. |
+| G2. Uniform regularity of minimizers | Separate every normalized minimizing lift from the full singular locus, uniformly over all minimizers and times. | **Explicit hand proof complete:** D>10^-11 for every normalized competitive closed lift in the common cyclically invariant state domain, including abnormal lifts. See SINGULAR_COST_BUDGET; the earlier independent cost--Casimir proof is preserved. |
+| G3. Uniform switch complexity | Bound switches uniformly on a supplied compact regular phase domain, including near-degenerate ties; make the constants usable with G2. | **Explicit integer complete:** N<10^56 for every global minimizer, using the quantitative three-line theorem with algebraic covector bounds and the direct measurable-edge E4 proof. No previous finite representation or minimum arc length. |
 | G4. Fixed finite comparison and equality | After a numerical N_max, prove the remaining closed comparisons and equality classification for exactly that fixed set. | **Active and open.** The numerical bound is known but impractical to enumerate. Prove a uniform comparison or a stronger reduction; through-five comparison/equality remain retained assets. |
 
 G2 and G3 are separate obligations. The compactness proof alone does not
@@ -330,15 +333,67 @@ internal reviews checked the fully assembled two notes, every normal
 orbit component, abnormal limits, rational inequalities, and integer
 ceilings. No practical enumeration or final cost comparison follows.
 
+### 3.9 Stronger homogeneous clearance and algebraic covector bounds
+
+[SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md) proves directly, without
+splitting costate orbit types or dividing by the cost multiplier,
+
+\[
+\|A(t)\|_F\ge |\lambda|\frac{3(\pi-C)}{2\pi-C},
+\qquad A=\Lambda_1-\frac32\lambda J.
+\]
+
+Its equilibrium comparison has `P=-X/2`. With body and spatial positive
+elliptic speeds `rho,rho_R`, the lifted polar angle gives
+`integral(rho+rho_R)>=2*pi/3`; spatial costate conservation gives the
+stated cost-dependent gap. Rebasing uses the actual twisted extension and
+keeps the same body covector at every new initial time.
+
+On the common cyclically invariant state domain, the total-period budget
+gives `norm(g)_op,norm(g^-1)_op<9`. Positive equilibrium barycentric weights
+and the Hamiltonian width give `norm(W)<=607500*norm(A)`. These estimates
+replace exponential covector propagation by
+
+\[
+10^{-8}<\|\mathcal P(t)\|<10^8.
+\]
+
+The exact rational octagon budget gives `kappa>1/100`, and the product
+norm decomposition then gives `D>10^-11`. The three-line coefficient
+arithmetic is valid for any certified lower/upper covector bounds, so with
+`m=10^-8,M=10^8` it gives `c>10^-43`, a common counting interval longer
+than `10^-54`, and **N<10^56**. The preceding cost--Casimir proof and its
+larger bound remain valid independent results.
+
+### 3.10 The edge hypothesis now has a direct measurable-control proof
+
+[MEASURABLE_EDGE_PMP_BOUND](MEASURABLE_EDGE_PMP_BOUND.md) obtains E4
+without a source finite-switch theorem. On a two-control interval, use
+the increasing coordinate `x` and states `w=y^-2`, `s'=w`. Fixing their
+endpoints fixes the physical frame and state endpoints; the varying cost
+is `integral(x^2*w)`. A separate fixed-time PMP has switching covector
+`p_w`, and a positive integrating factor gives
+
+\[
+(\rho p_w)'=-\rho(p_s+\lambda x^2).
+\]
+
+A nonzero quadratic has at most two roots, so Rolle's theorem bounds
+`p_w` by three zeros and the control by four pieces. If the polynomial
+vanishes identically, nontriviality gives a nonzero constant switching
+function. The proof includes abnormal multipliers, measurable controls,
+strict-star margins, and the exact free-duration splice.
+
 ## 4. Immediate continuation and stopping rules
 
 1. **Completed:** the measurable-control uniform local switch theorem,
    including fixed-plane transport, three guard lines, and the E4 edge bound.
 2. **Completed:** every regular-domain coefficient and the explicit
    clearance-to-count formula in the specified initial product norm.
-3. **Completed:** the whole-period cost–Casimir inequality and all-component
-   clearance D>10^-1906, including abnormal lifts. Together these give the
-   specific integer bound N<10^5741 without Theorem 16.3.1.
+3. **Completed:** the whole-period cost--Casimir inequality and its direct
+   homogeneous refinement. Algebraic covector bounds give D>10^-11 and
+   N<10^56. The independent measurable-edge proof supplies E4 without
+   source Theorem 8.1.4; neither route uses Theorem 16.3.1.
 4. **Active research gate:** prove a uniform global cost comparison and
    equality classification, or a stronger global structural/index reduction
    such as N<=5. Retain the actual matrix endpoint equations, free initial

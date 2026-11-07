@@ -278,26 +278,33 @@ not a sufficiency or classification theorem.
 
 ## 7. Corollary for arbitrary measurable edge intervals
 
-Using the published edge-extremality results, one obtains a statement
-without an initial finite-piece assumption:
+The direct proof in
+[MEASURABLE_EDGE_PMP_BOUND](MEASURABLE_EDGE_PMP_BOUND.md) establishes:
 
 **On every closed nondegenerate subinterval of a global minimizer on which
 one control coordinate is zero almost everywhere, the control agrees
 almost everywhere with at most four constant vertex pieces.**
 
-Here are the precise inputs. Hales–Vajjha Definition 8.1.1 uses a free
-terminal time and fixes the initial and final values of `s,x,y`, exactly
-the endpoint data in Section 2. Proposition 8.1.3 says a global Reinhardt
-minimizer is also extremal for this edge problem. Theorem 8.1.4 gives
-finitely many bang-bang pieces on every such closed interval. Merge equal
-neighbors and discard zero-duration pieces. If five pieces remained,
-the strict local improvement above would contradict global minimality.
+It uses the exact coordinates, endpoint reconstruction, and cost in
+Sections 1--2 above. The two-state fixed-time edge problem has a separate
+nontrivial PMP multiplier. A positive integrating factor gives
+`(rho*p_w)'=-rho*(p_s+lambda*x^2)`. A nonzero quadratic has at most two
+roots; Rolle's theorem bounds `p_w` by three zeros and hence the control
+by four pieces. The identically zero polynomial and abnormal cases are
+handled explicitly. This proves (E4) from arbitrary measurable controls,
+without source Theorem 8.1.4 or a pre-existing finite representation.
 
-This corollary uses extremality for the separate edge problem. A lift
-for the original full system alone is insufficient: Remark 8.1.6 records
-abnormal full-system lifts for arbitrary measurable edge controls. None
-of that formalization gap is silently discharged here. The published
-input and the hand variation are logically separate.
+The earlier source-based derivation remains valid: Hales--Vajjha
+Definition 8.1.1 fixes the same `s,x,y` endpoint data with physical time
+free, Proposition 8.1.3 supplies edge extremality for a global minimizer,
+and Theorem 8.1.4 supplies finite vertex pieces. The five-piece variation
+in this note then reduces that representation to four. The direct proof
+above replaces this source chain in the current uniform bound.
+
+Both arguments use optimality for the separate edge problem. A lift for
+the full system alone is insufficient: the source's Remark 8.1.6 records
+abnormal full-system lifts for arbitrary measurable edge controls. Such
+a lift is not substituted for the nontrivial edge multiplier.
 
 ## Scope and remaining gap
 
@@ -310,7 +317,8 @@ varies four switch positions while retaining five arcs.
 
 The result does not exclude words such as `012012…`, does not control
 windows using all three vertices, and does not supply a global switch
-bound. The finite-window proof is independent of the published input used
-in Section 7; the measurable-interval corollary uses that input explicitly.
+bound. The finite-window proof remains an independent strict-improvement
+argument. The measurable-interval corollary now also has the direct PMP
+proof cited in Section 7.
 No Lean source,
 typechecking, build, or CI execution is part of this hand argument.

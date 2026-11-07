@@ -13,7 +13,7 @@ satisfy the following additional optimality property:
 > constant vertex pieces.
 
 Actual global Reinhardt minimizers have (E4), by
-[EDGE_SWITCH_BOUND.md](EDGE_SWITCH_BOUND.md), Section 7. It does not hold for
+[MEASURABLE_EDGE_PMP_BOUND](MEASURABLE_EDGE_PMP_BOUND.md). It does not hold for
 arbitrary full-system Pontryagin extremals. The distinction is necessary:
 abnormal full-system lifts can accompany arbitrary measurable controls on
 one edge.
@@ -36,6 +36,11 @@ D>10^-1906 and N<10^5741 under the stated inputs, using the explicit
 version of this local theorem and the new complete-period cost–Casimir
 inequality. It bypasses Theorem 16.3.1 and does not assume finiteness in
 advance. Neither N<=5 nor the octagon cost comparison follows.
+
+The stronger [SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md) application
+now gives D>10^-11 and N<10^56 using algebraic covector bounds. The direct
+measurable-edge proof removes source Theorem 8.1.4 from that chain. The
+preceding larger bound and the local proof below remain valid.
 
 The main point is uniformity under changes of the initial phase and under
 arbitrary measurable controls. A Taylor expansion at a zero of a switching
@@ -558,14 +563,16 @@ bound their number.
 
 ### Current numerical application
 
-[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) proves a direct
-clearance D>10^-1906 for every normalized competitive complete-period lift
-in the common state domain. The explicit constants in
+[SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md) proves the direct clearance
+D>10^-11 for every normalized competitive closed lift in the common cyclic
+state domain. Its algebraic covector bounds and the explicit constants of
 [QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md),
-together with E4, construct a representation with N<10^5741 pieces.
-No finite-switch theorem or pre-existing finite representation is used.
-The geometric, compact-state, PMP, and Chapter 8 local edge inputs remain
-stated dependencies. This completes numerical boundedness, not cost comparison.
+together with the direct [measurable-edge E4 proof](MEASURABLE_EDGE_PMP_BOUND.md),
+construct a representation with N<10^56 pieces. No source finite-switch
+theorem or pre-existing finite representation is used. The geometric,
+compact-state, and standard PMP inputs remain explicit. The independent
+GLOBAL_NUMERICAL_REDUCTION proof with N<10^5741 remains preserved.
+This completes numerical boundedness, not cost comparison.
 
 ### Original compactness application, retained for its precise scope
 
@@ -598,7 +605,7 @@ an upper bound over a family.
 
 ### Remaining global comparison
 
-The supplied-clearance conversion and the missing numerical clearance
+The supplied-clearance conversion and numerical clearance
 are both now proved in the linked follow-ups. The three-line construction
 makes its rotation and derivative margins explicit and recomputes the
 interval time scale; factor 28 is not substituted into the earlier mesh's
@@ -608,7 +615,7 @@ A uniform global cost comparison remains open. It must retain the actual
 free initial state and twisted matrix closure, treat boundary limits,
 and prove the equality case. The through-five result applies only after
 a valid reduction to at most five pieces or another complete comparison.
-N<10^5741 is an explicit theorem but an impractical enumeration ceiling.
+N<10^56 is an explicit theorem but an impractical enumeration ceiling.
 It does not justify an open-ended sequence of larger-word comparisons.
 The original universal local L3 replacement remains false on its stated
 domain; neither the local count nor the new global clearance repairs it.
@@ -619,9 +626,10 @@ domain; neither the local count nor the new global clearance repairs it.
   the state and reduced-adjoint equations.
 - [Section 8.2](https://arxiv.org/html/2405.04331v1#Ch8.S2): the control
   support test and the full singular locus.
-- [Section 8.1](https://arxiv.org/html/2405.04331v1#Ch8.S1), together with
-  [EDGE_SWITCH_BOUND.md](EDGE_SWITCH_BOUND.md): the measurable edge
-  interval bound (E4) for actual global minimizers.
+- [MEASURABLE_EDGE_PMP_BOUND](MEASURABLE_EDGE_PMP_BOUND.md): the direct
+  measurable edge bound (E4). The earlier Section 8.1 source argument
+  and the finite-window improvement remain in
+  [EDGE_SWITCH_BOUND.md](EDGE_SWITCH_BOUND.md).
 - [GLOBAL_MINIMIZER_COMPACTNESS.md](GLOBAL_MINIMIZER_COMPACTNESS.md):
   compactness, normalization, and uniform qualitative singular clearance.
 - [GLOBAL_PERIODIC_PMP.md](GLOBAL_PERIODIC_PMP.md): actual cotangent

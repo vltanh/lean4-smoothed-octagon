@@ -2,15 +2,17 @@
 
 Date: 2026-11-07. Hand proof; no Lean compilation, Lake, or CI.
 
-**Completed numerical application.**
-[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) and
-[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now supply
-\(\varepsilon_0=10^{-1906}\) in the normalization below for every
-normalized minimizing lift and obtain \(N<10^{5741}\) from this
-theorem. They retain the stated compact-state, PMP, and edge-optimality
-inputs and do not use Hales--Vajjha Theorem 16.3.1. The theorem here
-remains conditional on a supplied clearance and applies more broadly;
-none of its hypotheses or coefficient estimates is changed.
+**Completed numerical applications.**
+[SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md) supplies
+\(\varepsilon=10^{-11}\) in the normalization below on the common
+minimizer state domain. Its algebraic covector bounds \(m=10^{-8}\),
+\(M=10^8\) give \(N<10^{56}\) by this theorem.
+[MEASURABLE_EDGE_PMP_BOUND](MEASURABLE_EDGE_PMP_BOUND.md) proves E4
+independently for arbitrary measurable minimizing edge intervals.
+Neither source Theorem 8.1.4 nor Theorem 16.3.1 is required.
+The earlier [GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md)
+application with \(N<10^{5741}\) is preserved. The conditional theorem
+here applies more broadly; its geometric and optimality hypotheses remain.
 
 ## Theorem and exact scope
 
@@ -43,11 +45,13 @@ a stated finite ceiling, without claiming that it is small enough
 for a practical exhaustive comparison.
 
 Actual global minimizers satisfy (E4) by
-[EDGE_SWITCH_BOUND.md](EDGE_SWITCH_BOUND.md). The present theorem makes
+[MEASURABLE_EDGE_PMP_BOUND](MEASURABLE_EDGE_PMP_BOUND.md), independently
+of a source finite-switch theorem. The present theorem makes
 the conversion from a certified clearance to a stated integer
 completely effective. It does not itself supply a clearance.
 That input is now proved in
-[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) using the
+[SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md), and independently in
+[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md), using the
 complete-period endpoint and octagon cost budget. The earlier
 qualitative compactness route in
 [GLOBAL_MINIMIZER_COMPACTNESS.md](GLOBAL_MINIMIZER_COMPACTNESS.md)
@@ -171,6 +175,14 @@ norm bound. Forward and backward Gronwall yield
 \boxed{m\le\|\mathcal P(t)\|\le M.}
 \tag{8}
 \]
+
+**Any certified covector bounds may be used.** The rest of the proof uses
+\(m,M\) only through (8), with \(0<m\le1\) and finite \(M\).
+Equation (7) is one sufficient choice, not a required identity for the
+count. Given other proved bounds satisfying (8), use them throughout
+Sections 4--6 when forming \(K_\lambda,K_W,K_A,\lambda_{\min}\) and all
+dependent coefficients. In particular the complete-period application
+uses \(m=10^{-8}\), \(M=10^8\) and recomputes the same formulas.
 
 The supplied singular clearance means
 
@@ -665,6 +677,14 @@ Its cost--Casimir input is proved in
 numerical-clearance application under the retained geometric, PMP,
 and edge-optimality inputs. The resulting ceiling does not reduce
 the comparison to the existing through-five results.
+
+The sharper application in
+[SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md) uses the permitted
+bounds \(m=10^{-8}\), \(M=10^8\), proves \(\varepsilon=10^{-11}\),
+and obtains \(c>10^{-43}\) and \(N<10^{56}\). The direct edge proof
+supplies E4. The earlier larger-bound derivation above is retained as an
+independent application; the coefficient substitutions are explicit in
+both notes.
 
 For comparison, the earlier qualitative compactness route gives some
 positive clearance and therefore an existential uniform integer,

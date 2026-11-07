@@ -1,12 +1,13 @@
 # Historical handoff — the failed five-template sufficient package
 
 **Active replacement plan:** [GLOBAL_REDUCTION_PLAN](GLOBAL_REDUCTION_PLAN.md).
-[GLOBAL_COST_CASIMIR](GLOBAL_COST_CASIMIR.md) and
-[GLOBAL_NUMERICAL_REDUCTION](GLOBAL_NUMERICAL_REDUCTION.md) now prove
-D>10^-1906 for every normalized competitive complete-period lift, and
-N<10^5741 for every global minimizer using the retained geometric,
-compact-state, PMP, and local edge inputs. The three-line quantitative
-count constructs finiteness without a prior finite-switch theorem.
+[SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md) now proves D>10^-11
+for every normalized competitive closed lift in the common state domain,
+and N<10^56 for every global minimizer. The
+[direct measurable-edge proof](MEASURABLE_EDGE_PMP_BOUND.md) supplies E4
+from standard PMP, so the count needs neither source Theorem 8.1.4 nor
+Theorem 16.3.1. The independent earlier cost--Casimir proof and its bound
+N<10^5741 remain preserved in GLOBAL_NUMERICAL_REDUCTION.
 
 The numerical-clearance and specific-integer gates are complete. The
 ceiling is far too large for a practical catalogue; the active task is

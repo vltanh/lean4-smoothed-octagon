@@ -4,6 +4,16 @@ Date: 2026-11-07. Hand proof with rational clearance and an explicit
 integer. No Lean, Lake, typechecking, CI, numerical trajectory,
 optimization, or symbolic sign calculation.
 
+## Stronger subsequent bound; this proof is preserved
+
+[SINGULAR_COST_BUDGET](SINGULAR_COST_BUDGET.md) gives a direct homogeneous
+costate estimate and sharper algebraic covector bounds on the common
+cyclically invariant minimizer state domain. It proves D>10^-11 and
+N<10^56. [MEASURABLE_EDGE_PMP_BOUND](MEASURABLE_EDGE_PMP_BOUND.md)
+now supplies E4 directly. The independent cost--Casimir and Gronwall
+argument below, with its exact stated hypotheses and original constants,
+is retained unchanged as a valid alternative proof.
+
 ## Theorem and exact scope
 
 Let a free-time Pontryagin trajectory satisfy the actual matrix endpoint
