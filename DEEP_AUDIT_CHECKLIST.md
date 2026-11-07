@@ -66,6 +66,28 @@ close the entire sufficient M1 case. Its scalar path is not asserted
 to preserve trajectory endpoints, and local M1 occurrences inside M2
 are not excluded.
 
+## Sharper reverse angle and forward minimum audits
+
+- [x] Independently check that the earlier fixed-angle comparison
+  uses only `0<c<1/2` before its final cutoff; reuse it at `c>=1/4`.
+- [x] Verify the cubic logarithm estimate at `rho=5/32`, positive
+  squaring interval, and strict Casimir gap `31/529200`; see
+  [MIXED_GLOBAL_REVERSE_ANGLE_DENSITY_AUDIT](docs/MIXED_GLOBAL_REVERSE_ANGLE_DENSITY_AUDIT.md).
+- [x] Check the exact angular budget with `E` forward same-sign arcs,
+  the actual twisted winding, the strict integer bound `m<=2E+3`,
+  and compatibility with the independent `m<=E+8` index bound.
+- [x] Independently audit both scalar ranges at a forward global
+  minimum, the rational Casimir cap, the pure-forward monotone cost
+  bound and the mixed reverse-centre scale input; see
+  [GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD_AUDIT](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD_AUDIT.md).
+- [x] Check the translation to `b_i>2*gamma*a_i^2` and the negative
+  onsite determinant, keeping incident-edge terms and endpoint
+  constraints explicitly unresolved. The 10 and 24 exact checks pass.
+
+These necessary conditions close no additional whole case. F and M2
+remain open; the earlier M1 closure and its local-domain boundary are
+unchanged. These audits are internal hand reviews, not kernel validation.
+
 ## New case-atlas computation boundary
 
 [FINITE_CASE_COMPUTER_ROADMAP](docs/FINITE_CASE_COMPUTER_ROADMAP.md)

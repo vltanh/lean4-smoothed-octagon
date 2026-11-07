@@ -84,6 +84,25 @@ Triple ties and boundary limits still require their stated treatment.
   equivalently actual raw prefix winding `k>=-3`. The whole violating
   region is excluded; low reverse density and F remain open.
 
+## Further audited restrictions on the open cases
+
+- [x] Sharpen every competitive reverse-centre angle to `cos(phi)<1/4`
+  and `phi>5pi/12`; derive the exact angular budget and uniform bound
+  `m<=2E+3`, where `E=P-m` counts forward same-sign arcs. Combine
+  with `m<=E+8`; see
+  [MIXED_GLOBAL_REVERSE_ANGLE_DENSITY](docs/MIXED_GLOBAL_REVERSE_ANGLE_DENSITY.md).
+  The independent audit and all 10 exact checks pass.
+- [x] Prove `b_i>2*gamma*a_i^2` at a whole-period global minimum
+  with two forward incident switches, both in mixed periods and in
+  pure F with `N>=7`; see
+  [GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD.md).
+  Its independent audit and 24 exact checks pass, including the
+  rational cap `gamma^2<23/125` and the pure-F minimum scale bound.
+- [ ] Control the positive incident-edge terms and three actual frame
+  constraints to turn the onsite inequality into a valid descent or
+  complete-period index obstruction. The proved local term alone
+  does not close F or M2, and the density bound does not bound `E`.
+
 ## Active global checkpoint
 
 The strongest complete-period bounds are now

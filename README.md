@@ -178,6 +178,29 @@ then applies the exact constrained-index transfer. This excludes the
 whole region violating that inequality; it leaves the other mixed
 periods and the forward cost comparison open.
 
+## Further necessary conditions for F and M2
+
+The [sharper reverse-angle theorem](docs/MIXED_GLOBAL_REVERSE_ANGLE_DENSITY.md)
+proves `cos(phi)<1/4`, hence every reverse angle exceeds 75 degrees.
+If `E` counts arcs with two forward incident switches and `m` counts
+reverse centres, the exact geometric angular budget gives `m<=2E+3`.
+Together with the cost-index restriction, every remaining mixed
+minimizer satisfies **`m<=min(2E+3,E+8)`**. This does not bound `E`
+or close M2. Its [independent audit](docs/MIXED_GLOBAL_REVERSE_ANGLE_DENSITY_AUDIT.md)
+and 10 exact rational/count checks pass.
+
+The [forward minimum threshold](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD.md)
+uses a whole-period smallest active margin. If both incident switches
+are forward, the actual auxiliary costate variable satisfies
+**`b_i>2*gamma*a_i^2`**. This covers mixed periods and pure-forward
+periods with at least seven pieces. A sharper rational budget gives
+`gamma^2<23/125`; in pure F, monotonicity of the scalar cyclic cost
+also bounds the minimum margin. The resulting onsite term in the
+scalar-dual Hessian is negative definite. The incident edges and full
+frame constraints still have to be controlled before this gives a
+valid descent. Its [independent audit](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD_AUDIT.md)
+and 24 exact checks pass. **F and M2 remain open.**
+
 ## Whole-forward costate theorem
 
 [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)

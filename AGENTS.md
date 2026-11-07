@@ -105,6 +105,22 @@ This excludes the entire violating region without an enumeration;
 low reverse density in M2 and the remaining F signs stay open.
 
 
+Further audited necessary conditions for F/M2 are in
+MIXED_GLOBAL_REVERSE_ANGLE_DENSITY and
+GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD. The sharper angle bound
+is cos(phi)<1/4, so every reverse angle exceeds 75 degrees. With
+E=P-m forward same-sign arcs, the actual angular budget gives
+m<=2E+3; together with the phase index, m<=min(2E+3,E+8).
+This does not bound E or close M2. At a whole-period minimum margin
+with two forward incident switches, the actual scalar-dual variable
+satisfies b_i>2*gamma*a_i^2. The proof covers mixed periods and pure F
+with N>=7, using the sharper rational cap gamma^2<23/125. Only the
+onsite two-variable term is negative definite: positive incident-edge
+terms and all three frame constraints still require control. Do not
+promote this to a negative principal block or a descent theorem.
+The separate independent audits and 10+24 exact checks pass.
+
+
 Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.
 The full symmetric 2121 core family, four common factors 1<h<2 and
 full scale range 0<v<3, is excluded from competitive closed PMP periods

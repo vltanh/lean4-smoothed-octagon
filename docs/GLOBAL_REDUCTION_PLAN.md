@@ -137,6 +137,25 @@ winding `k>=-3`. This excludes one entire reverse-dense region with
 arbitrary forward-run lengths. Low reverse density in M2 and F
 remain open; sufficient M1 is closed by the angle theorem.
 
+### Further proved restrictions on the remaining domain
+
+[MIXED_GLOBAL_REVERSE_ANGLE_DENSITY](MIXED_GLOBAL_REVERSE_ANGLE_DENSITY.md)
+and its independent audit sharpen the reverse angle to `cos(phi)<1/4`
+and `phi>5pi/12`. The exact mixed angular budget gives `m<=2E+3`,
+where `E=P-m` counts forward same-sign arcs. Together with the phase
+index, `m<=min(2E+3,E+8)`. All 10 exact checks pass; this does not
+bound `E` or complete M2.
+
+[GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD](GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD.md)
+and its independent audit prove `b_i>2*gamma*a_i^2` at any whole-period
+smallest margin with two forward incident switches. Mixed periods
+use the reverse-centre scale bound; pure F with `N>=7` uses monotonicity
+of the full scalar cyclic cost. The sharper rational Casimir cap is
+`gamma^2<23/125`; all 24 exact checks pass. The onsite scalar-dual
+term is negative definite, but incident-edge terms and all three frame
+constraints remain to be controlled. A full descent/index implication
+is still required. F and M2 remain open.
+
 ## Closed global case R
 
 [GLOBAL_REVERSE_PERIOD_EXCLUSION](GLOBAL_REVERSE_PERIOD_EXCLUSION.md)
