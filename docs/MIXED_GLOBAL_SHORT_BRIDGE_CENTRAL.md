@@ -4,6 +4,10 @@ Research checkpoint, 2026-11-07. This is a uniform comparison on one
 actual short bridge. It proves a central residual bound for either sign
 of the bridge diagonal; it does not settle the outer root or close M2.
 
+The general comparison is now completed in
+[MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM](MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM.md)
+and its independent audit. The scope of this constituent lemma is retained.
+
 ## 1. Exact secant continuation
 
 Normalize the selected global reverse-centre minimum to `a=1` in the

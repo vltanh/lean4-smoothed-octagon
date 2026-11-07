@@ -5,6 +5,10 @@ face of the M2 minimum problem, not a closure of M2. The neighbouring
 reverse centres are assumed equal to the middle centre. No Lean, Lake,
 typechecking, CI, word enumeration, or sampled sign assertion is used.
 
+The general comparison is now completed in
+[MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM](MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM.md)
+and its independent audit. The scope of this constituent lemma is retained.
+
 ## 1. Actual data and the necessary outer root
 
 Work in an actual finite normal closed period, where the proved reverse

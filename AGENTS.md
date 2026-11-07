@@ -140,8 +140,9 @@ certificate cover the full remaining face, including weak third ties,
 full-face exact checks pass; all 792 positive coefficients are displayed.
 No ellipticity, Casimir bound, endpoint rank, or factor monotonicity is
 assumed. Consequently every mixed global minimum is a reverse centre;
-the remaining pure F minimum satisfies `4/3<m^2<20/11`. A reverse
-minimum need not border a long forward run. F and M2 remain open.
+the remaining pure F minimum satisfies `4/3<m^2<20/11`. The complete
+short-bridge theorem below now places every mixed minimum beside a
+nonshort forward run. F and M2 remain open.
 GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET and its independent audit now
 use the actual whole-period action to prove `q<7/4` at a pure-F global
 minimum. Lowering other scalar margins and using convexity in the
@@ -162,10 +163,19 @@ the central residual along the exact secant path for either diagonal
 sign, and strict scale increase of the transported outer root maximum
 for positive diagonal. The 35+19+17 exact checks pass; the complete
 142- and 362-coefficient tables were independently reconstructed.
-The general outer comparison still retains central zero factor, outer
-derivative, lower norm `w=3/4`/`T=2`, and nonpositive diagonal faces.
-No adjacency-to-long-run theorem or further whole M2 exclusion follows.
-F and M2 remain OPEN; no Lean, Lake, typechecking or CI was run.
+MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM and its independent audit now complete
+the general two-short-bridge exclusion. The genuine secant gap gives the
+quantitative order `alpha>=beta/x+(2/7)(beta-x)`. The entire upper endpoint,
+both central maximum faces, the truncated scale numerator, and the correct
+nonpositive-diagonal maximum are proved for their full scalar domains.
+A positive maximum cannot reach either negative comparison endpoint.
+Consequently every mixed global active minimum touches a forward run of
+length at least two. MIXED_REVERSE_CENTRE_SCALE_BOUND and its independent
+audit also give `rho<3/20`, hence `a^2<12/17`, at every competitive reverse
+centre. The new package passes 85 exact checks and independent hand review;
+all coefficient tables are literal, complete, and exactly reconstructed.
+These results close no further whole case: F and nonshort-run M2 remain
+OPEN. No Lean, Lake, typechecking or CI was run.
 
 
 Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.

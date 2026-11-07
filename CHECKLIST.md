@@ -134,12 +134,23 @@ Triple ties and boundary limits still require their stated treatment.
   The 35+19+17 exact checks pass; all 142 and 362 positive coefficient
   tables were independently reconstructed. These are fixed scalar
   comparisons using the actual common multiplier.
-- [ ] Complete the unequal-centre outer-root boundary signs, including
-  central zero factor, incident derivative, lower norm `w=3/4`/`T=2`,
-  and the nonpositive bridge diagonal.
-- [ ] Propagate a mixed reverse global minimum through adjacent short
-  bridges, or prove another whole-period M2 obstruction. Its placement
-  next to a long forward run is not established by the minimum theorem.
+- [x] Complete the unequal-centre two-short-bridge comparison, including
+  both diagonal signs, the full upper endpoint, both central norm faces,
+  and the correct truncated maximum through `w=3/4`; see
+  [MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM](docs/MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM.md)
+  and its [independent audit](docs/MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM_AUDIT.md).
+  The five new scalar certificates pass 63 exact checks, with complete
+  positive-coefficient tables and explicit square decompositions.
+- [x] Prove that every mixed global active minimum touches a forward
+  run of length at least two. The positive-component continuation
+  excludes both negative endpoint faces without an omitted norm exit.
+- [x] Prove `rho<3/20`, hence `a^2<12/17`, at every competitive reverse
+  centre; see [MIXED_REVERSE_CENTRE_SCALE_BOUND](docs/MIXED_REVERSE_CENTRE_SCALE_BOUND.md).
+  Its independent audit and 22 exact checks pass, without a restriction
+  on adjacent run lengths.
+- [ ] Exclude the actual nonshort bridges touching a mixed minimum,
+  using first events, full return, whole budget, or a valid constrained
+  index argument. The new minimum placement does not close M2.
 - [ ] Control the positive incident-edge terms and three actual frame
   constraints to turn the onsite inequality into a valid descent or
   complete-period index obstruction. The proved local term alone

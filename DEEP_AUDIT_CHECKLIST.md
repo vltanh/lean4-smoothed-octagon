@@ -104,9 +104,10 @@ are not excluded.
   own-factor monotonicity claim is not used; the full residual is bounded
   directly. Weak third ties, equality scale, exterior minimum equalities,
   and the actual twisted seam are included.
-- [x] Retain the precise global consequence: mixed minima are reverse
-  centres and pure F has `4/3<m^2<20/11`; adjacency to a long forward
-  run, a full cost/index obstruction, and F/M2 closure remain open.
+- [x] Retain the precise consequence of the small forward-minimum theorem:
+  mixed minima are reverse centres and pure F has `4/3<m^2<20/11`.
+  The later complete short-bridge theorem establishes adjacency to a
+  nonshort run; a full cost/index obstruction and F/M2 closure remain open.
 - [x] Independently audit the uniform whole-forward scalar cost clamp,
   ordinary edge concavity, the distinct convexity in logarithmic
   adjacent sums, and the fixed-factor scale path; see
@@ -125,8 +126,22 @@ are not excluded.
   [MIXED_GLOBAL_SHORT_BRIDGE_AUDIT](docs/MIXED_GLOBAL_SHORT_BRIDGE_AUDIT.md).
   The 35+19+17 exact checks pass. Separate parsing of the manuscripts
   reconstructs all 142 and 362 positive coefficients. Both norm-clipping
-  branches and the actual same-lift derivative were checked. The open
-  outer faces include the possible `w=3/4`/`T=2` exit.
+  branches and the actual same-lift derivative were checked.
+- [x] Audit the complete unequal-centre comparison and positive-component
+  continuation; see
+  [MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM_AUDIT](docs/MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM_AUDIT.md).
+  The genuine strengthened order, upper endpoint, both central maximum
+  faces, nonnegative-diagonal truncated numerator and nonpositive-diagonal
+  C1 maximum cover every exit. All 63 new exact checks pass; every literal
+  coefficient and strict reserve was independently reviewed. No chord is
+  extrapolated below its norm interval. Every mixed minimum now touches a
+  nonshort forward run; those runs are not excluded by this theorem.
+- [x] Audit the uniform reverse-centre scale comparison, including all
+  norm and ratio monotonicity directions and the rational Casimir
+  separation; see
+  [MIXED_REVERSE_CENTRE_SCALE_BOUND_AUDIT](docs/MIXED_REVERSE_CENTRE_SCALE_BOUND_AUDIT.md).
+  All 22 exact checks pass. Every competitive reverse centre has
+  `rho<3/20` and `a^2<12/17`, regardless of adjacent run lengths.
 
 These necessary conditions close no additional whole case. F and M2
 remain open; the earlier M1 closure and its local-domain boundary are

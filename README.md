@@ -223,8 +223,8 @@ displayed. Its [independent audit](docs/MIXED_GLOBAL_SMALL_FORWARD_MINIMUM_AUDIT
 and 28+199 exact checks pass, including weak third ties and the equality
 scale. It needs no Casimir or endpoint-rank assumption. Thus **every
 mixed global minimum is a reverse centre**, and the remaining pure F
-minimum satisfies **`4/3<m^2<20/11`**. This does not force the reverse
-minimum next to a long forward run or close F/M2.
+minimum satisfies **`4/3<m^2<20/11`**. The later short-bridge theorem below
+places a mixed minimum beside a nonshort run; F/M2 remain open.
 
 For F, the [whole minimum-budget comparison](docs/GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET.md)
 also proves **`q<7/4`** for the minimum's central arc. The full cyclic
@@ -252,9 +252,24 @@ bridge-diagonal sign. The [scale comparison](docs/MIXED_GLOBAL_SHORT_BRIDGE_SCAL
 proves strict increase of the actual outer-root maximum on the positive
 diagonal domain. The [joint independent audit](docs/MIXED_GLOBAL_SHORT_BRIDGE_AUDIT.md)
 and 35+19+17 exact checks pass, including complete coefficient tables.
-The general outer-root boundary signs and nonpositive-diagonal outer
-comparison are still open. A reverse minimum is not yet known to
-border a long run. **F and M2 remain open.**
+The [complete short-bridge minimum theorem](docs/MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM.md)
+and its [independent audit](docs/MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM_AUDIT.md)
+now join all the remaining outer-root comparisons. A quantitative order
+from the actual turn secants makes the upper endpoint and both central
+maximum faces negative for either bridge-diagonal sign. The scale
+arguments include the correct truncated maximum below norm `3/4`, so
+no lower-norm boundary is omitted. This proves that **every mixed global
+active minimum touches a forward run of length at least two**.
+
+The [reverse-centre scale theorem](docs/MIXED_REVERSE_CENTRE_SCALE_BOUND.md)
+and its [independent audit](docs/MIXED_REVERSE_CENTRE_SCALE_BOUND_AUDIT.md)
+also prove **`rho<3/20` and `a^2<12/17` at every competitive reverse
+centre**, with no restriction on neighboring forward-run lengths.
+The complete new package passes 85 exact checks and independent hand
+review. Its coefficient tables give full integer identities; no numerical
+sign or kernel validation is claimed. **F and M2 remain open**: the
+nonshort bridges and the remaining pure-forward domain still require
+whole-period exclusion.
 
 ## Whole-forward costate theorem
 

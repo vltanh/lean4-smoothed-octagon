@@ -4,6 +4,10 @@ Research checkpoint, 2026-11-07. This proves one scalar monotonicity
 needed for M2. The upper comparison faces are still separate obligations;
 this note does not close the general short-bridge exclusion or M2.
 
+The general comparison is now completed in
+[MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM](MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM.md)
+and its independent audit. The scope of this constituent lemma is retained.
+
 ## 1. Actual window and notation
 
 Work in an actual finite normal closed period. Let a reverse centre of

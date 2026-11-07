@@ -176,9 +176,9 @@ reduce to two calculus faces and one fixed full-domain polynomial
 identity. All 792 positive coefficients are displayed; 28+199 exact
 checks pass. No Casimir, ellipticity, or endpoint-rank assumption is
 used. Every mixed global minimum is therefore a reverse centre, and
-the remaining pure F minimum satisfies `4/3<m^2<20/11`. The reverse
-minimum may lie inside a chain of short bridges; its adjacency to a
-long forward run and the remaining F/M2 obstructions are still open.
+the remaining pure F minimum satisfies `4/3<m^2<20/11`. The complete
+short-bridge theorem below now puts every reverse global minimum beside
+a nonshort forward run. The remaining F/M2 obstructions are still open.
 
 [GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET](GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET.md)
 and its independent audit further prove `C>=B(a,q)` and `q<7/4`
@@ -200,10 +200,25 @@ The audited short-bridge comparisons now exclude the
 along the unique exact secant path, and prove
 [positive-diagonal scale monotonicity](MIXED_GLOBAL_SHORT_BRIDGE_SCALE.md)
 of the same-lift outer root maximum. The 35+19+17 checks and complete
-142/362 positive coefficient tables pass independent review. The general
-outer comparison still requires central zero-factor, incident derivative,
-lower norm `w=3/4`/`T=2`, and nonpositive-diagonal faces. A reverse
-minimum is not yet placed next to a long forward run. F/M2 remain OPEN.
+142/362 positive coefficient tables pass independent review.
+
+The [complete short-bridge minimum theorem](MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM.md)
+and its [independent audit](MIXED_GLOBAL_SHORT_BRIDGE_MINIMUM_AUDIT.md)
+now supply every remaining outer comparison. The genuine secant path gives
+`alpha>=beta/x+(2/7)(beta-x)`. Under that order, the whole upper endpoint
+and both central maximum faces are strictly negative for either diagonal
+sign. The truncated numerator and correct C1 maximum cover the lower-norm
+transition. Positive-component continuation cannot reach either final
+negative endpoint. Thus every mixed global active minimum touches a
+forward run of length at least two. The five new scalar certificates pass
+63 exact checks with complete literal positive tables and explicit squares.
+
+The [reverse-centre scale bound](MIXED_REVERSE_CENTRE_SCALE_BOUND.md)
+and its [independent audit](MIXED_REVERSE_CENTRE_SCALE_BOUND_AUDIT.md)
+prove `rho<3/20`, hence `a^2<12/17`, at every competitive reverse centre.
+All 22 exact checks pass, with no restriction on neighboring forward runs.
+F and nonshort M2 remain OPEN; these results neither exclude nonshort
+bridges nor authorize a growing word-length catalogue.
 
 ## Closed global case R
 
