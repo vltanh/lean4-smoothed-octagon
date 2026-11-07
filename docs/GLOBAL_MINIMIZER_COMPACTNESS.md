@@ -314,18 +314,17 @@ would make any homogeneous covector distance arbitrarily small. Equation
 (14) is not asserted for every local extremal or every competitive
 Pontryagin trajectory; compactness was proved for actual global minimizers.
 
-Two distinct tasks remain before obtaining an effective finite search:
+The regular-domain counting step is now effective:
+[QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md)
+specifies every coefficient in an O(1/epsilon) bound for a supplied
+clearance, in an explicitly stated matrix-covector normalization. Its
+Section 7 explains why the compactness argument also gives qualitative
+clearance in precisely that normalization. The separate uniform theorem
+is essential; the pathwise source theorems alone would not give it.
 
-1. Replace the existential epsilon_* by a certified numerical clearance,
-   or a substitute explicit exclusion theorem with the same consequence.
-2. Make the uniform regular-domain count numerical, including near-degenerate
-   ties. [GLOBAL_CLOSED_VARIATION](GLOBAL_CLOSED_VARIATION.md) now proves
-   the local uniformity and an existential common finite bound. Its cover
-   radii and derivative margins still need effective values for a supplied
-   explicit regular domain. The pathwise statements of Theorems 8.3.1--8.3.2
-   alone would not give that uniform estimate.
-
-Only after those steps can one state a particular integer N_max and use a
+The remaining boundedness input is a certified numerical clearance,
+or a substitute explicit global exclusion theorem with the same consequence.
+Only after that input can one state a particular integer N_max and use a
 fixed finite collection of closed words. No increasing-length case list is
 licensed by the present qualitative theorem. A global index argument that
 directly excludes all minimizing N>=6 would bypass the larger enumeration,

@@ -38,7 +38,7 @@ individual trajectory, is not a specific bound either.
 | --- | --- | --- |
 | G1. Complete-period domain and compact lifts | Prove the actual boundary conditions and compactness after projective normalization, including abnormal limits. | **Hand proof complete.** See GLOBAL_PERIODIC_PMP and GLOBAL_MINIMIZER_COMPACTNESS. |
 | G2. Uniform regularity of minimizers | Separate every normalized minimizing lift from the full singular locus, uniformly over all minimizers and times. | **Qualitative separation proved:** some epsilon_* > 0 exists. A certified numerical value remains open. |
-| G3. Uniform switch complexity | Bound switches uniformly on a supplied compact regular phase domain, including near-degenerate ties; make the constants usable with G2. | **Existential uniform bound proved**, using GLOBAL_CLOSED_VARIATION. Effective constants and a numerical N_max remain to be supplied. |
+| G3. Uniform switch complexity | Bound switches uniformly on a supplied compact regular phase domain, including near-degenerate ties; make the constants usable with G2. | **Complete conditional quantitative theorem.** GLOBAL_CLOSED_VARIATION proves the uniform existence result; QUANTITATIVE_REGULAR_SWITCH_BOUND supplies an explicit N(epsilon), with every coefficient fixed. A numerical epsilon is still needed. |
 | G4. Fixed finite comparison and equality | After a numerical N_max, prove the remaining closed comparisons and equality classification for exactly that fixed set. | **Blocked by the quantitative bound.** Through-five comparison/equality are retained assets. No new larger-word list has been started. |
 
 G2 and G3 are separate obligations. The compactness proof alone does not
@@ -174,9 +174,43 @@ for common B<infinity and h>0. Therefore **one finite integer bounds all
 global minimizers**, not merely each minimizer separately. The proof has
 received three separate internal hand reviews.
 
-The constants in this display have not been turned into numbers. This
-establishes a uniform existence theorem, not a computed case catalogue.
-It does not give a lower bound on individual arc lengths.
+This establishes a uniform existence theorem, not a computed case catalogue.
+It does not give a lower bound on individual arc lengths. The following
+quantitative strengthening fixes all constants apart from the clearance.
+
+### 3.5 Effective conversion of clearance into a switch bound
+
+[QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md)
+proves
+
+\[
+\boxed{\quad N(\varepsilon)=4(2k+1)
+\left\lceil\frac{T_{\max}}{c\min(\varepsilon,1,m)}\right\rceil.\quad}
+\]
+
+Here k, c>0, and m>0 are given by explicit finite formulas in that note.
+The state inputs are K_X=9, Gamma=2/(15*sqrt(3)), and T_max=pi/3.
+One may use the fixed integer k=200000; the constants are intentionally
+coarse. Normal and abnormal lifts are retained. The exact normalization is
+
+\[
+\|(\lambda,\Lambda_1,W)(0)\|=1,\qquad
+A=\Lambda_1-\tfrac32\lambda J,\quad W=\Lambda_R,
+\]
+
+and the supplied clearance is
+
+\[
+\bigl(\|X-J\|_F^2+\|A\|_F^2+\|W\|_F^2\bigr)^{1/2}
+\ge\varepsilon.
+\]
+
+For small epsilon this is an O(1/epsilon) bound. The proof uses an
+explicit uniform Hamiltonian width, a fixed angular mesh, and the exact
+estimate ||[[J,X],X]||_F >= 4||X-J||_F. Every time and derivative error
+budget is given. There is no further unproved switch-count step after a
+numerical clearance has been supplied. The compactness theorem proves
+that some clearance exists in this normalization, but does not evaluate it.
 
 ## 4. Immediate continuation and stopping rules
 
@@ -187,23 +221,32 @@ It does not give a lower bound on individual arc lengths.
    control vertex is excluded. The established forward-alternation
    theorem bounds each remaining two-control block. Do not differentiate
    a piecewise switching function through control jumps without proof.
-2. Make that regular-domain estimate quantitative for an explicitly
+2. **Completed:** make that regular-domain estimate quantitative for an explicitly
    supplied singular clearance. State its dependence on the state domain,
    multiplier normalization, and clearance. If a step fails, record the
    actual missing inequality; do not substitute pathwise finiteness.
-3. Obtain a **numerical** singular clearance, or an explicit global
+3. **Active research gate:** obtain a **numerical** singular clearance, or an explicit global
    continuation/index exclusion with the same boundedness consequence.
    This remains the principal research gate. The current L3 escape region
    is a useful exclusion certificate, not a cover of the whole phase domain.
+   The precise target is a stated positive rational epsilon_0 in the
+   normalization of Section 3.5. It is enough to supply one such lift
+   for each minimizer; proving the stronger claim for all normalized
+   minimizing lifts is also sufficient. Sampled phase values or a
+   positive minimum on an unjustified truncation do not meet this gate.
 4. Only when these steps give a certified integer may G4 enumerate its
    fixed set. If instead a global second-variation argument proves N<=5
    directly, use the retained through-five comparison and equality transfer.
 
-The parallel variation check uses the full twisted-closed endpoint fiber,
-including initial-state variation. A negative index theorem for the
-standard forward family would validate that method uniformly in its
-length, but the family is already excluded by the retained cost comparison.
-Do not count such a result as another previously unexcluded global family.
+The parallel variation check is also complete for the standard forward
+family: [GLOBAL_FORWARD_INDEX](GLOBAL_FORWARD_INDEX.md) proves at least
+2(k-1) negative directions for its N=3k+1 period. Its hand Fourier
+calculation uses the full twisted-closed endpoint fiber, including
+initial-state variation and all three frame constraints. The rank-three
+implicit function theorem produces actual cheaper closed variations for
+k>=2. This validates the method uniformly in that family, which was
+already excluded by the retained cost comparison. It is not a new excluded
+global class or a theorem for arbitrary asymmetric words.
 
 ## 5. Preserved contributions and validation boundary
 

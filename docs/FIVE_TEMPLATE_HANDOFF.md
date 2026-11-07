@@ -3,7 +3,10 @@
 **Active replacement plan:** [GLOBAL_REDUCTION_PLAN](GLOBAL_REDUCTION_PLAN.md).
 The global route now proves a finite escape obstruction for the small L3
 family, compactness and singular clearance of normalized minimizing lifts,
-and an existential uniform switch bound. A numerical bound remains open.
+and an existential uniform switch bound. The conversion from a supplied
+singular clearance to an integer is now explicit in
+[QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md).
+A numerical clearance and resulting bound remain open.
 The sequence below is preserved as a diagnostic record, not the active work
 order; do not retry its refuted broad-domain L3 premise.
 

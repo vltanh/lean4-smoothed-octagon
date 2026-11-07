@@ -6,12 +6,15 @@
 The active route retains complete-period state and costate closure and the
 whole-period budget. Read docs/GLOBAL_PERIODIC_PMP.md,
 docs/GLOBAL_PERIOD_BUDGET.md, docs/GLOBAL_MINIMIZER_COMPACTNESS.md, and
-docs/GLOBAL_CLOSED_VARIATION.md. The global checkpoint proves a finite
+docs/GLOBAL_CLOSED_VARIATION.md. Then read
+docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md for the explicit O(1/epsilon)
+bound, with every coefficient fixed. The global checkpoint proves a finite
 forced-exit test excluding the small L3 counterexample family from ANY
 closed PMP occurrence. Compact normalized minimizing lifts and a separate
 uniform local switch theorem prove the existence of one finite bound over
 all global minimizers. No numerical clearance or integer bound is claimed.
-Quantify that bound before starting a fixed closed-word comparison.
+Supply a numerical singular clearance in the specified normalization before
+starting a fixed closed-word comparison; the conversion to an integer is proved.
 Do not equate an existential bound with an identified finite case list.
 
 The old docs/FIVE_TEMPLATE_HANDOFF.md is a historical diagnostic record.

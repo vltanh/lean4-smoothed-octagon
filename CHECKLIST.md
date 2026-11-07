@@ -11,7 +11,7 @@ The original five-template analytic package remains false on its old domain.
 | --- | --- | --- |
 | G1: full-period domain and compact lifts | Actual twisted state/costate closure; projective normalization including abnormal limits; compactness of all minimizing lifts. | **Hand proof complete.** [PMP interface](docs/GLOBAL_PERIODIC_PMP.md), [compactness](docs/GLOBAL_MINIMIZER_COMPACTNESS.md). |
 | G2: singular clearance | One common positive distance from the full singular locus for all normalized minimizing lifts. | **Qualitative theorem proved. Numerical clearance open.** |
-| G3: uniform switch count | Locally uniform count at every nonsingular phase satisfying the minimizer edge condition; finite cover gives one common finite integer for all minimizers. | **Existential uniform bound proved. Specific integer open.** [Uniform theorem](docs/GLOBAL_CLOSED_VARIATION.md). No dwell-time premise. |
+| G3: uniform switch count | Locally uniform count and effective conversion of a supplied singular clearance into an integer. | **Complete conditional quantitative theorem.** [Uniform theorem](docs/GLOBAL_CLOSED_VARIATION.md) and [explicit O(1/epsilon) bound](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md). Every coefficient is fixed; a numerical clearance is still missing. No dwell-time premise. |
 | G4: fixed finite comparison and equality | Use an explicitly certified integer bound, then exhaust precisely that fixed class. | **Blocked by quantification.** Through-five comparison and equality retained; N<=5 and unrestricted rigidity remain open. |
 
 **Actual global exclusion:** [GLOBAL_PERIOD_BUDGET](docs/GLOBAL_PERIOD_BUDGET.md)
@@ -259,6 +259,34 @@ as inputs or checks; their preservation is not new progress in this checkpoint.
 | Earlier constructive Lean drafts | Actual-minimizer geometric/control realization and reverse comparison. They remain uncompiled and unchanged by this checkpoint. |
 
 ## Current-session entries
+
+- Prove and independently review GLOBAL_FORWARD_INDEX: the standard
+  N=3k+1 forward family has constrained negative index at least 2(k-1).
+  Cyclic active margins resolve state closure; all three remaining frame
+  equations, the endpoint curvature correction, and Fourier signs are
+  checked. Rank-three regularity yields genuine cheaper closed variations.
+  This is a method check on an already cost-excluded family, not new
+  competitor coverage or a theorem for asymmetric words.
+
+- Replace the failed broad local route with the complete-period global plan.
+  Prove the actual PMP interface, compactness of all normalized minimizing
+  lifts including abnormal limits, uniform qualitative singular clearance,
+  and a locally uniform transported-covector switch theorem. Together they
+  give one common finite bound over every global minimizer. Published as
+  [48e3a42](https://github.com/vltanh/lean4-smoothed-octagon/commit/48e3a425391a1e194911929a98ff7c2d7780e3e1).
+
+- Make the regular-domain count effective in QUANTITATIVE_REGULAR_SWITCH_BOUND.
+  Prove explicit state denominator and multiplier bounds, two exact algebraic
+  coercivity estimates, a fixed angular mesh, and every short-time error
+  budget. A supplied normalized clearance epsilon gives an explicit
+  O(1/epsilon) bound; no numerical clearance, particular integer, or global
+  cost comparison is inferred. Three separate hand reviews passed.
+
+- Prove the finite phase-region escape criterion in GLOBAL_PERIOD_BUDGET
+  and verify it over the explicit core range 0<b<=1/(10000*sqrt(3)). It
+  excludes any closed-PMP occurrence of the small padded L3 family.
+  Preserve the independent concurrent asymptotic continuation/cost proof
+  below; these are complementary certificates for one family.
 
 - Certify actual endpoint rank four at one full positive strict-star L2
   input in LOCAL_L2_RANK_DROP. The paired image has rank five and contains

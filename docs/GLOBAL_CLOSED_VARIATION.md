@@ -561,9 +561,12 @@ An effective finite comparison still needs additional work:
 1. Give a certified numerical singular clearance for normalized global
    minimizers, or an explicit regular compact phase domain containing
    them. The compactness proof only asserts existence of the clearance.
-2. Choose the finite angular covers, their positive comparison margins,
-   the derivative margins in (22), and the local radii and times using
-   (24) and (28). This would turn (30) into a stated numerical integer.
+2. **Now completed conditionally:**
+   [QUANTITATIVE_REGULAR_SWITCH_BOUND](QUANTITATIVE_REGULAR_SWITCH_BOUND.md)
+   supplies a fixed angular mesh, explicit comparison and derivative
+   margins, and an explicit O(1/epsilon) count for a supplied normalized
+   clearance. All coefficient constants are fixed. A numerical clearance
+   remains necessary before this becomes a particular integer.
 3. Prove a uniform global cost comparison on the resulting domain, with
    the actual free initial state and twisted closure. The current
    through-five comparison cannot be invoked unless a separate argument

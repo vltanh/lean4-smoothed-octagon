@@ -43,10 +43,30 @@ The original five-template sufficient domain remains refuted.
   lines; at most one or two zeros of each projection bound the edge intervals.
 - [x] Use the minimizer edge bound explicitly; do not assert it for arbitrary
   full-system PMP lifts. Finite cover then gives a common finite piece bound.
+- [x] Make the regular-domain count effective in a specified projective norm:
+  verify the explicit common denominator, augmented-covector Gronwall bounds,
+  both algebraic coercivity estimates, fixed guard-line mesh and margins,
+  the exhaustive three-case split, and every interval-length error budget.
+  Three independent internal hand reviews passed. No numerical clearance
+  was inferred from compactness or from changing norms.
 - [ ] Supply a certified numerical singular clearance and a specific integer
   bound. The existential uniform theorem does not identify a finite case list.
 - [ ] Complete the remaining global comparison and affine equality theorem.
 - [ ] Run kernel validation (deferred under the user's current workflow).
+
+The separate GLOBAL_FORWARD_INDEX method check was independently reviewed:
+
+- [x] Resolve twisted state closure with cyclic active margins and impose
+  the full frame matrix equation, rather than just its trace.
+- [x] Prove rank three and the exact Fourier tangent kernel; compute the
+  uniquely determined endpoint multiplier and the endpoint curvature term.
+- [x] Derive the finite commutator sum, diagonalize on the constrained
+  tangent space, and prove the strict logarithm sign by hand.
+- [x] Integrate the 2(k-1) negative directions to actual closed feasible
+  curves with varying initial state, using the rank-three implicit function
+  theorem and the finite-piece geometric bridge.
+- [x] State that the standard family is already cost-excluded and that no
+  asymmetric-word index theorem or new competitor class follows.
 
 The new hand proofs received separate internal mathematical reviews. Such
 review is not external peer review or Lean kernel validation. No new Lean

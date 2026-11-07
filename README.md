@@ -34,6 +34,20 @@ The global checkpoint has three substantive hand results:
   the switching covector into a fixed plane and controls finitely many
   scalar projections. It does not assume a lower bound on arc durations.
 
+The [quantitative follow-up](docs/QUANTITATIVE_REGULAR_SWITCH_BOUND.md)
+makes the conversion effective: for a supplied normalized singular
+clearance epsilon, it gives
+
+\[
+N\le4(2k+1)\left\lceil
+\frac{T_{\max}}{c\min(\varepsilon,1,m)}\right\rceil,
+\]
+
+with every coefficient fixed by explicit formulas. One may take k=200000;
+these are coarse proof constants. The missing boundedness input is now a
+**numerical singular clearance**, not an unproved regular-domain switch
+estimate. A final global cost/equality comparison remains a separate gate.
+
 [GLOBAL_PERIODIC_PMP](docs/GLOBAL_PERIODIC_PMP.md) proves the full-period
 interface and the rank/unique-adjoint bridge used in the exclusion.
 The uniform bound is **existential**: a numerical singular clearance and
@@ -163,8 +177,8 @@ proves a stronger, global statement with a fixed piece limit: some eligible
 `021210` windows, of arbitrarily small cost, admit **no cheaper replacement
 with at most six pieces**, regardless of word or elapsed time. The proof uses
 an exact edge lower bound, compactness, and two endpoint coordinates, and has
-received independent hand review. These windows have not been shown to occur
-in actual closed minimizers. The result refutes the proposed sufficient local
+received independent hand review. The subsequent global continuation theorem
+excludes this family from any closed PMP occurrence. The result refutes the proposed sufficient local
 lemma; it does not refute Reinhardt or Hales's geometrically embedded conjecture.
 
 The [all-control strengthening](docs/LOCAL_REVERSE_SIX_GLOBAL_MINIMUM.md)
@@ -226,6 +240,14 @@ whole-arc Bernstein sector certificates. It rules out a switch-only descent
 criterion; the universal L4 replacement statement remains open.
 
 ## Earlier comparison results retained
+
+The [closed-period index theorem](docs/GLOBAL_FORWARD_INDEX.md) gives a
+separate uniform method check: the standard forward family with N=3k+1
+has at least 2(k-1) negative constrained directions when its initial
+state varies and both period endpoints remain exact. For k>=2 these
+integrate to actual cheaper nearby closed trajectories. This family was
+already excluded by its cost comparison; the result does not classify
+asymmetric forward words or add another excluded global class.
 
 The source notes supply a full asymmetric hand comparison for every admissible
 trajectory representable with at most five positive-duration vertex pieces,
