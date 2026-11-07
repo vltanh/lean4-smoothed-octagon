@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.ControlTrajectory
+public import SmoothedOctagon.Foundations.ControlTrajectory
 public import Mathlib.Topology.MetricSpace.Pseudo.Pi
 
 /-!

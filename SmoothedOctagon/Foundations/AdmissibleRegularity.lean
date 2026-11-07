@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.ControlTrajectory
+public import SmoothedOctagon.Foundations.ControlTrajectory
 public import SmoothedPolygons.Ch7.SmoothedPolygonDisk
 public import Mathlib.Analysis.Calculus.ContDiff.Deriv
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.LebesgueDifferentiationThm

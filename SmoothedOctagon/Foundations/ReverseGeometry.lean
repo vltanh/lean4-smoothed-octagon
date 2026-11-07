@@ -1,7 +1,7 @@
 module
 
-public import SmoothedOctagon.LowCostWinding
-public import SmoothedOctagon.BalancedClock
+public import SmoothedOctagon.Foundations.LowCostWinding
+public import SmoothedOctagon.Foundations.BalancedClock
 public import SmoothedPolygons.Ch7.SmoothedPolygonDisk
 
 /-!

@@ -1,12 +1,13 @@
 name = "SmoothedOctagon"
 version = "0.1.0"
 keywords = ["math", "reinhardt", "packing"]
-defaultTargets = ["SmoothedOctagon"]
+defaultTargets = ["SmoothedOctagon", "Challenge", "Solution"]
 
 [leanOptions]
 pp.unicode.fun = true
 autoImplicit = false
 relaxedAutoImplicit = false
+maxSynthPendingDepth = 3
 
 [[require]]
 name = "mathlib"
@@ -23,3 +24,10 @@ rev = "a37ab122d101e7665558c8360e93ce7460d298e2"
 
 [[lean_lib]]
 name = "SmoothedOctagon"
+globs = ["SmoothedOctagon.+"]
+
+[[lean_lib]]
+name = "Challenge"
+
+[[lean_lib]]
+name = "Solution"

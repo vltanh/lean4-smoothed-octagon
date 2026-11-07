@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.AdmissibleRegularity
+public import SmoothedOctagon.Foundations.AdmissibleRegularity
 public import SmoothedPolygons.Ch7.SmoothedPolygonDisk
 public import Mathlib.MeasureTheory.Group.Measure
 

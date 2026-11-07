@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Normalization
-public import SmoothedOctagon.BoundaryTrace
-public import SmoothedOctagon.RadialRegularity
-public import SmoothedOctagon.ArcLength
+public import SmoothedOctagon.Foundations.Normalization
+public import SmoothedOctagon.Foundations.BoundaryTrace
+public import SmoothedOctagon.Foundations.RadialRegularity
+public import SmoothedOctagon.Foundations.ArcLength
 public import SmoothedPolygons.Ch2.BalancedDensity
 
 /-!

@@ -1,7 +1,7 @@
 module
 
-public import SmoothedOctagon.AdmissibleRealization
-public import SmoothedOctagon.BalancedTargets
+public import SmoothedOctagon.Foundations.AdmissibleRealization
+public import SmoothedOctagon.Foundations.BalancedTargets
 public import SmoothedPolygons.Ch4.TerminalTime
 
 /-!

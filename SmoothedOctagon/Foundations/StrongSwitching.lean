@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.SwitchingMargin
+public import SmoothedOctagon.Foundations.SwitchingMargin
 public import SmoothedPolygons.Ch7.HMax
 
 /-!

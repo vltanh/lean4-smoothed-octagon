@@ -1,8 +1,8 @@
 module
 
-public import SmoothedOctagon.AdmissibleRegularity
-public import SmoothedOctagon.CircleExclusion
-public import SmoothedOctagon.SingularLocus
+public import SmoothedOctagon.Foundations.AdmissibleRegularity
+public import SmoothedOctagon.Foundations.CircleExclusion
+public import SmoothedOctagon.Foundations.SingularLocus
 public import SmoothedPolygons.Ch6.Hamiltonian
 public import Mathlib.MeasureTheory.Measure.OpenPos
 

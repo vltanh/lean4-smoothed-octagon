@@ -1,7 +1,7 @@
 module
 
-public import SmoothedOctagon.Problem
-public import SmoothedOctagon.BalancedReduction
+public import SmoothedOctagon.Foundations.Problem
+public import SmoothedOctagon.Foundations.BalancedReduction
 
 /-!
 # Exact remaining targets in the balanced problem

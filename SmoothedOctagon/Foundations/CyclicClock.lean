@@ -1,7 +1,7 @@
 module
 
-public import SmoothedOctagon.BalancedClock
-public import SmoothedOctagon.ContactLift
+public import SmoothedOctagon.Foundations.BalancedClock
+public import SmoothedOctagon.Foundations.ContactLift
 
 /-!
 # Cyclic determinant time for an actual worst disk

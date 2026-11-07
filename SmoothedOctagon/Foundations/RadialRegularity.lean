@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.SupportNormal
+public import SmoothedOctagon.Foundations.SupportNormal
 public import Mathlib.Analysis.Calculus.Deriv.Slope
 public import Mathlib.Analysis.Calculus.Deriv.Inv
 public import Mathlib.Analysis.Calculus.Deriv.Mul

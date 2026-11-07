@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.ArcLength
+public import SmoothedOctagon.Foundations.ArcLength
 public import Mathlib.Analysis.Calculus.MeanValue
 public import Mathlib.Logic.Function.Iterate
 public import SmoothedPolygons.Ch2.Boundary

@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.CyclicClock
+public import SmoothedOctagon.Foundations.CyclicClock
 public import SmoothedPolygons.Ch2.BalancedDensity
 
 /-!

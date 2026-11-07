@@ -1,7 +1,7 @@
 module
 
-public import SmoothedOctagon.BalancedReduction
-public import SmoothedOctagon.DeterminantClock
+public import SmoothedOctagon.Foundations.BalancedReduction
+public import SmoothedOctagon.Foundations.DeterminantClock
 public import SmoothedPolygons.Ch3.ControlProblem
 public import SmoothedPolygons.Ch3.LieAlgebraDynamics
 public import Basic.Analysis.Calculus.MatrixFTC

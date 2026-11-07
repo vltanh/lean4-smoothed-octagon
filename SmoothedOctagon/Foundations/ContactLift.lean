@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.BoundaryTrace
+public import SmoothedOctagon.Foundations.BoundaryTrace
 public import SmoothedPolygons.Ch3.AreaFormula
 public import Mathlib.Analysis.Calculus.Deriv.Inverse
 public import Mathlib.Analysis.Calculus.ContDiff.Deriv

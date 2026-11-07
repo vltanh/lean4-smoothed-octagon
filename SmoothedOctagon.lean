@@ -1,30 +1,30 @@
 module
 
-public import SmoothedOctagon.Problem
-public import SmoothedOctagon.Normalization
-public import SmoothedOctagon.BoundaryTrace
-public import SmoothedOctagon.SupportNormal
-public import SmoothedOctagon.RadialRegularity
-public import SmoothedOctagon.ArcLength
-public import SmoothedOctagon.BalancedReduction
-public import SmoothedOctagon.BalancedTargets
-public import SmoothedOctagon.DeterminantClock
-public import SmoothedOctagon.ControlTrajectory
-public import SmoothedOctagon.ContactLift
-public import SmoothedOctagon.BalancedClock
-public import SmoothedOctagon.CyclicClock
-public import SmoothedOctagon.AdmissibleRealization
-public import SmoothedOctagon.LowCostWinding
-public import SmoothedOctagon.AdmissibleRegularity
-public import SmoothedOctagon.ControlBounds
-public import SmoothedOctagon.ReverseGeometry
-public import SmoothedOctagon.CyclicExtension
-public import SmoothedOctagon.ReverseComparison
-public import SmoothedOctagon.SingularLocus
-public import SmoothedOctagon.CircleExclusion
-public import SmoothedOctagon.SingularArc
-public import SmoothedOctagon.SwitchingMargin
-public import SmoothedOctagon.StrongSwitching
+public import SmoothedOctagon.Foundations.Problem
+public import SmoothedOctagon.Foundations.Normalization
+public import SmoothedOctagon.Foundations.BoundaryTrace
+public import SmoothedOctagon.Foundations.SupportNormal
+public import SmoothedOctagon.Foundations.RadialRegularity
+public import SmoothedOctagon.Foundations.ArcLength
+public import SmoothedOctagon.Foundations.BalancedReduction
+public import SmoothedOctagon.Foundations.BalancedTargets
+public import SmoothedOctagon.Foundations.DeterminantClock
+public import SmoothedOctagon.Foundations.ControlTrajectory
+public import SmoothedOctagon.Foundations.ContactLift
+public import SmoothedOctagon.Foundations.BalancedClock
+public import SmoothedOctagon.Foundations.CyclicClock
+public import SmoothedOctagon.Foundations.AdmissibleRealization
+public import SmoothedOctagon.Foundations.LowCostWinding
+public import SmoothedOctagon.Foundations.AdmissibleRegularity
+public import SmoothedOctagon.Foundations.ControlBounds
+public import SmoothedOctagon.Foundations.ReverseGeometry
+public import SmoothedOctagon.Foundations.CyclicExtension
+public import SmoothedOctagon.Foundations.ReverseComparison
+public import SmoothedOctagon.Foundations.SingularLocus
+public import SmoothedOctagon.Foundations.CircleExclusion
+public import SmoothedOctagon.Foundations.SingularArc
+public import SmoothedOctagon.Foundations.SwitchingMargin
+public import SmoothedOctagon.Foundations.StrongSwitching
 
 /-!
 # Research toward the Reinhardt conjecture

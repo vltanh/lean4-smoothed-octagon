@@ -1,8 +1,8 @@
 module
 
-public import SmoothedOctagon.CyclicExtension
-public import SmoothedOctagon.ReverseGeometry
-public import SmoothedOctagon.ControlBounds
+public import SmoothedOctagon.Foundations.CyclicExtension
+public import SmoothedOctagon.Foundations.ReverseGeometry
+public import SmoothedOctagon.Foundations.ControlBounds
 
 /-!
 # Completing the geometric and control comparison

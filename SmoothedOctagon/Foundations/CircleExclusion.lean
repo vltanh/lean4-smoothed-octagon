@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.ReverseComparison
+public import SmoothedOctagon.Foundations.ReverseComparison
 
 /-!
 # Excluding a circular state on the entire minimizing interval
