@@ -2,6 +2,7 @@ module
 
 public import SmoothedOctagon.LowerBound
 public import SmoothedOctagon.Equality.Transport
+public import SmoothedOctagon.Equality.Converse
 public import Mathlib.Analysis.Convex.Hull
 public import Mathlib.LinearAlgebra.AffineSpace.AffineEquiv
 
