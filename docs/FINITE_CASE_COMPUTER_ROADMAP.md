@@ -175,6 +175,22 @@ All 21 checks pass. No intermediate array is asserted to preserve
 frame closure or PMP. The remaining F domain keeps the actual outer
 factors and both exterior gaps; its cost--Casimir sign remains open.
 
+[GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT](GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT.md)
+and its independent audit now give `N<=61` uniformly in competitive F,
+using the actual strict angle deficit and winding. All 8 exact checks
+pass; the bound does not authorize a length catalogue or close F.
+
+The audited short-bridge comparisons now exclude the
+[equal-centre face](MIXED_GLOBAL_SHORT_BRIDGE_EQUAL_CENTRES.md), prove the
+[all-sign central residual bound](MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL.md)
+along the unique exact secant path, and prove
+[positive-diagonal scale monotonicity](MIXED_GLOBAL_SHORT_BRIDGE_SCALE.md)
+of the same-lift outer root maximum. The 35+19+17 checks and complete
+142/362 positive coefficient tables pass independent review. The general
+outer comparison still requires central zero-factor, incident derivative,
+lower norm `w=3/4`/`T=2`, and nonpositive-diagonal faces. A reverse
+minimum is not yet placed next to a long forward run. F/M2 remain OPEN.
+
 ## 2. Small verifiable gates, repeated for each case
 
 Each of F, R, M1, M2, M3 has exactly three explicit gates.

@@ -72,6 +72,13 @@ comparison. These are scalar bounds, not closed or PMP deformations;
 the actual outer factors and both exterior gaps remain necessary.
 The uniform F cost--Casimir/index obstruction is still open.
 
+| Further restriction | Source and exact scope |
+| --- | --- |
+| Uniform pure-forward size bound | [GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT](docs/GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT.md), [independent audit](docs/GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT_AUDIT.md), and [8-check certificate](explorations/global_structure_forward_angle_count_certificate.py). The strict minimum bound and actual Casimir cap give an angle deficit at every arc; actual geometric winding gives `N<=61`. No length catalogue or F closure follows. |
+| Equal-centre short-bridge exclusion | [MIXED_GLOBAL_SHORT_BRIDGE_EQUAL_CENTRES](docs/MIXED_GLOBAL_SHORT_BRIDGE_EQUAL_CENTRES.md), [joint independent audit](docs/MIXED_GLOBAL_SHORT_BRIDGE_AUDIT.md), and [35-check certificate](explorations/mixed_global_short_bridge_equal_centres_certificate.py). Three equal reverse centres connected by two short runs are impossible, allowing unequal turn sizes and either diagonal sign, with no Casimir cap. |
+| General short-bridge central comparison | [MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL](docs/MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL.md), the joint audit, and [19-check certificate](explorations/mixed_global_short_bridge_central_certificate.py). The unique two-secant path strictly decreases the central residual for either diagonal sign. A complete 362-positive-coefficient table and four explicit positive pieces prove the rational bound. This does not settle the outer root. |
+| General short-bridge scale comparison | [MIXED_GLOBAL_SHORT_BRIDGE_SCALE](docs/MIXED_GLOBAL_SHORT_BRIDGE_SCALE.md), the joint audit, and [17-check certificate](explorations/mixed_global_short_bridge_scale_certificate.py). The same-lift outer root maximum increases strictly in scale when the bridge diagonal is positive. Three complete tables contain 142 positive coefficients. Upper comparison faces, including the lower norm exit, remain open. |
+
 ## Earlier local reduction and diagnostics
 
 | Statement | Exact source and status |

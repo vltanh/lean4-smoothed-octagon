@@ -115,6 +115,19 @@ are not excluded.
   uses the whole-period budget; comparison arrays have no asserted
   frame closure or PMP status. The actual F exclusion remains open.
 
+- [x] Independently review the uniform pure-F angle gap, Casimir
+  normalization, and actual winding count `N<=61`; see
+  [GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT_AUDIT](docs/GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT_AUDIT.md).
+  All 8 exact arithmetic checks pass. No length catalogue is authorized.
+- [x] Independently review the equal-centre short-bridge exclusion,
+  unique general secant continuation, all-sign central comparison,
+  and positive-diagonal root scale monotonicity; see
+  [MIXED_GLOBAL_SHORT_BRIDGE_AUDIT](docs/MIXED_GLOBAL_SHORT_BRIDGE_AUDIT.md).
+  The 35+19+17 exact checks pass. Separate parsing of the manuscripts
+  reconstructs all 142 and 362 positive coefficients. Both norm-clipping
+  branches and the actual same-lift derivative were checked. The open
+  outer faces include the possible `w=3/4`/`T=2` exit.
+
 These necessary conditions close no additional whole case. F and M2
 remain open; the earlier M1 closure and its local-domain boundary are
 unchanged. These audits are internal hand reviews, not kernel validation.

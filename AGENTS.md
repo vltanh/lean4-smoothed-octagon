@@ -151,6 +151,22 @@ checks. The comparison arrays are not asserted to be closed or PMP.
 Actual outer factors and both exterior gaps remain in the F domain;
 the required cost--Casimir comparison on that domain is still open.
 
+GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT and its independent audit now give
+the uniform pure-F restriction `N<=61`: every active square exceeds
+`4/3`, the switch norm floors and actual Casimir cap give an angle gap,
+and the actual geometric winding sums it once. All 8 exact checks pass.
+This does not authorize a word-length catalogue or close F.
+The three audited MIXED_GLOBAL_SHORT_BRIDGE notes prove an equal-centre
+two-short-bridge exclusion with unequal turn sizes, strict decrease of
+the central residual along the exact secant path for either diagonal
+sign, and strict scale increase of the transported outer root maximum
+for positive diagonal. The 35+19+17 exact checks pass; the complete
+142- and 362-coefficient tables were independently reconstructed.
+The general outer comparison still retains central zero factor, outer
+derivative, lower norm `w=3/4`/`T=2`, and nonpositive diagonal faces.
+No adjacency-to-long-run theorem or further whole M2 exclusion follows.
+F and M2 remain OPEN; no Lean, Lake, typechecking or CI was run.
+
 
 Read docs/MIXED_GLOBAL_SYMMETRIC_ESCAPE.md and its independent audit.
 The full symmetric 2121 core family, four common factors 1<h<2 and

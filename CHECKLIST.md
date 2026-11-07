@@ -122,6 +122,21 @@ Triple ties and boundary limits still require their stated treatment.
   fixed-factor scale comparison and exact cutoff pass independent
   audit and 21 exact checks. The smaller F cost--Casimir problem
   retains the actual outer factors and both exterior gaps.
+- [x] Prove the uniform competitive pure-F count `N<=61`, using the
+  actual angle deficit and geometric winding; see
+  [GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT](docs/GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT.md).
+  Its independent audit and 8 exact checks pass. No length catalogue
+  or F closure follows.
+- [x] Exclude the equal-centre two-short-bridge face with unequal turn
+  sizes; prove the all-sign general central residual comparison and
+  the positive-diagonal outer scale monotonicity. See the
+  [joint short-bridge audit](docs/MIXED_GLOBAL_SHORT_BRIDGE_AUDIT.md).
+  The 35+19+17 exact checks pass; all 142 and 362 positive coefficient
+  tables were independently reconstructed. These are fixed scalar
+  comparisons using the actual common multiplier.
+- [ ] Complete the unequal-centre outer-root boundary signs, including
+  central zero factor, incident derivative, lower norm `w=3/4`/`T=2`,
+  and the nonpositive bridge diagonal.
 - [ ] Propagate a mixed reverse global minimum through adjacent short
   bridges, or prove another whole-period M2 obstruction. Its placement
   next to a long forward run is not established by the minimum theorem.

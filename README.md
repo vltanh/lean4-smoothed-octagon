@@ -237,6 +237,25 @@ whole-period budget but make no claim that their intermediate arrays
 satisfy frame closure. A uniform cost--Casimir or index obstruction
 is still needed on the smaller F domain.
 
+The [uniform forward angle count](docs/GLOBAL_STRUCTURE_FORWARD_ANGLE_COUNT.md)
+now also gives **`N<=61`** for every competitive pure-forward period.
+It uses the strict minimum bound, actual switch norm floors, Casimir
+cap and geometric winding. Its independent audit and 8 exact checks
+pass. This is one uniform bound, with no enumeration of lengths.
+
+For a reverse minimum between two short runs, the
+[equal-centre face](docs/MIXED_GLOBAL_SHORT_BRIDGE_EQUAL_CENTRES.md)
+is excluded even when the two turn sizes differ. The
+[general central comparison](docs/MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL.md)
+then proves a strict residual bound for unequal centres and either
+bridge-diagonal sign. The [scale comparison](docs/MIXED_GLOBAL_SHORT_BRIDGE_SCALE.md)
+proves strict increase of the actual outer-root maximum on the positive
+diagonal domain. The [joint independent audit](docs/MIXED_GLOBAL_SHORT_BRIDGE_AUDIT.md)
+and 35+19+17 exact checks pass, including complete coefficient tables.
+The general outer-root boundary signs and nonpositive-diagonal outer
+comparison are still open. A reverse minimum is not yet known to
+border a long run. **F and M2 remain open.**
+
 ## Whole-forward costate theorem
 
 [GLOBAL_STRUCTURE_FORWARD_ELLIPTIC](docs/GLOBAL_STRUCTURE_FORWARD_ELLIPTIC.md)
