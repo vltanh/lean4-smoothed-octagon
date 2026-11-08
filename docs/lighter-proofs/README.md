@@ -34,7 +34,7 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 
 | Priority | Gate and note | Replacement status |
 |---|---|---|
-| S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | Full sign open; first H-S priority. Both tests in [branch S](SHORT_OUTER_S_TERMINAL.md) are complete, with margin `499/884000`. The [actual small-shape branch B's `F0` sign](SHORT_OUTER_LOW_SHAPE_TERMINAL.md) is complete. Branch A and branch B's `F1` sign remain open. |
+| S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | Full sign open; first H-S priority. Both tests in [branch S](SHORT_OUTER_S_TERMINAL.md) and [branch A](SHORT_OUTER_LARGE_SHAPE_REDUCTION.md) are complete on their unchanged domains. The [actual small-shape branch B's `F0` sign](SHORT_OUTER_LOW_SHAPE_TERMINAL.md) is complete. Only branch B's `F1` sign remains open in this row. |
 | S1.2 | `MIXED_SMALLER_SHORT_LOW_RATIO_CENTRAL_HAND_SIGN` (20)--(25), Appendices A--C | Open. |
 | S1.3 | `MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_SIGN` (7) | Open. |
 | S1.4 | `MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN` (3) and `MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES` (5) | Open. |
@@ -199,6 +199,22 @@ Two auxiliary lemmas support the remaining A/B reductions. The
 proves the common pole coefficient negative using six degree-six
 univariate signs. Both have been checked against the original transport
 formulas. These auxiliary lemmas do not alone close an additional branch.
+
+The [outer A-branch replacement](SHORT_OUTER_LARGE_SHAPE_REDUCTION.md)
+closes both original tests. Two affine bounds enclose the actual norm
+interval and stay below the beta-concavity ceiling for `F1`; `F0` uses a
+wider constant interval. Separate small curvature signs reduce reciprocal
+shape to `a=6/5` and `a=x`. The [shared first face](SHORT_OUTER_UPPER_SHAPE_TERMINAL.md)
+has margin greater than `1/2000`. At `a=x`, the
+[`F0` face](SHORT_OUTER_A_F0_TERMINAL.md) has margin greater than `3/500`,
+and the four [affine-norm `F1` curves](SHORT_OUTER_LARGE_SHAPE_F1_TERMINAL.md)
+have margin greater than `1/15000`. All terminal signs use concavity in
+x and scalar endpoints. The only split is at `x=5/3` in a shared curvature
+estimate. Laurent terms and primitive proper numerators are kept separate
+so that every expanded source identity stays within degree eight and
+twelve-digit coefficients. Independent reviews checked the source links,
+all printed derivative polynomials, the exact caller, and every endpoint
+rounding. These proofs do not use the original A-row coefficient tables.
 
 The [high-ratio lower-shape proof](NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md)
 uses the same constant multipliers 4 and 1. It first proves `-H^2 S>30000`

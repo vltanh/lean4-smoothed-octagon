@@ -2,12 +2,14 @@
 
 **Partial lighter replacement:** both signs in branch S now have a
 [complete small-identity proof](../../docs/lighter-proofs/SHORT_OUTER_S_TERMINAL.md)
-on the unchanged domain, with lower bound \(499/884000\). The actual
+on the unchanged domain, with lower bound \(499/884000\). Both signs in
+branch A have a [completed reciprocal-shape proof](../../docs/lighter-proofs/SHORT_OUTER_LARGE_SHAPE_REDUCTION.md)
+on its unchanged domain. The actual
 small-shape branch B has a
 [proof of its \(F_0\) sign](../../docs/lighter-proofs/SHORT_OUTER_LOW_SHAPE_TERMINAL.md)
 using small derivative identities and a scalar endpoint bound. It covers
 the original actual caller, including its shape cap, rather than all extra
-points in the generated B row. Branch B's \(F_1\) sign and branch A still
+points in the generated B row. Only branch B's \(F_1\) sign still
 require replacements under the requested no-table standard; this does not
 close S1. The original source argument remains below.
 
