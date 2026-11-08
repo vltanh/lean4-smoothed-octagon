@@ -4,6 +4,8 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Interface
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Basic
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Slope
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Data
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S4Defs
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4
 
 /-!
 # Hand proof of the smaller-short case, gate S4: `α ≤ 1 + 3δ` and `Γ > 1829/10000`
@@ -34,14 +36,6 @@ substitution `u ↦ ū` (`hs4_u_dec`) and the central-scale floor `min{Φ, Ψ}(�
 namespace SmoothedOctagon
 
 open Set Real
-
-/-- `Φ = Γ_*(q_c) - R*_2(q_c)/7` (`SMALL_SHAPE_CASIMIR_FLOOR` (10)). -/
-noncomputable def hs4Phi (x be al u : ℝ) : ℝ :=
-  hsGs x al u (hsQc x al) - hsRs x be al u (hsQc x al) 2 / 7
-
-/-- `Ψ = Φ - (T - 2)(w_*(q_c) - 3/4)/7`, `T = r_A/q_c` (`SMALL_SHAPE_CASIMIR_FLOOR` (11)). -/
-noncomputable def hs4Psi (x be al u : ℝ) : ℝ :=
-  hs4Phi x be al u - (hsRA al be / hsQc x al - 2) * (hsWs x be al u (hsQc x al) - 3 / 4) / 7
 
 /-- **The fixed-`p` scale move** (`ENVELOPE_SCALE_MONOTONICITY` (5)-(10), `CORRECTED_CAP_SCALE` (1),
 (8)-(10); inventory HS-S4 R13, R14, R17(a)): for `x > 1`, `1 ≤ α < x ≤ β`, `0 < p ≤ r_A`,
@@ -409,7 +403,7 @@ theorem hs4_floor_box {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ :
     (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
     1829 / 10000 < hs4Phi x (x * (1 + δ)) al (hsUbar x (x * (1 + δ))) ∧
       1829 / 10000 < hs4Psi x (x * (1 + δ)) al (hsUbar x (x * (1 + δ))) := by
-  sorry
+  apply hs4_floor_box_proof <;> assumption
 
 /-- **The ratio bound with constant `1/7`** (`CORRECTED_ENVELOPE_CAP` (6)-(7), inventory HS-S4
 R12): `2ub + e ≤ (8/7)(1 - q)²(1 + τb)` when `e ≤ 3q`, `u ≤ 13/16`, `q < 3/20`, `τ > 2`,
