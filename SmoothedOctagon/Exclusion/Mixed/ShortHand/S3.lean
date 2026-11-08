@@ -1,16 +1,20 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S3Leaves
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3Central
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3Outer
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandCentral
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandOuter
 
 /-!
 # Gate S3: the displacement bound `δ < 1/19`
 
 `MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION`. The leaves are in `S3Leaves.lean`; the central
-and outer face signs (`DISPLACEMENT_CENTRAL_FACE` §2, `DISPLACEMENT_OUTER_FACE`) are the
-certificates `hs3_central_alpha_proof` (`Heavy/S3Central.lean`) and `hs3_outer_face_proof`
-(`Heavy/S3Outer.lean`).
+and outer face signs (`DISPLACEMENT_CENTRAL_FACE` §2, `DISPLACEMENT_OUTER_FACE`) are the hand proofs
+`hs3_central_alpha_proof` (`Heavy/S3HandCentral.lean`, after
+`archive/lighter-proofs/SHORT_DISPLACEMENT_CENTRAL_SHAPE.md`) and `hs3_outer_face_proof`
+(`Heavy/S3HandOuter.lean`, after `archive/lighter-proofs/SHORT_DISPLACEMENT_OUTER_COMPLETE.md`).
+Both are stated on the actual caller's shapes: the central sign keeps the central cap
+`6α² ≤ x(x + 2)` (instead of `α ≤ 89/72`), the outer sign keeps `x(x + 2) ≤ 6α²` and the lower
+short-order slope `g ≥ 8/(9x + 8)` (instead of `α ≥ a₀(x)`, `g ≥ 1/4`).
 
 ## Main API
 
@@ -171,7 +175,7 @@ private lemma hs3_gate_central {x be al u : ℝ} (h1 : 2 ≤ x) (h2 : x ≤ 13 /
   have hqc0 : 0 < hsQc x al := by rw [hsQc]; positivity
   have h6 : 6 * al ^ 2 ≤ x * (x + 2) := (hs_qc_le_iff hx0).1 hqc7
   obtain ⟨hamin, hbb⟩ := hs3_central_straight h1 h2 hδ hQ
-  obtain ⟨hb2, hb2', hα89⟩ := hs3_b_facts h1 h2 hamin h6
+  obtain ⟨hb2, hb2', -⟩ := hs3_b_facts h1 h2 hamin h6
   have hb20 : 20 * x / 19 ≤ be := by
     rw [div_le_iff₀ (by norm_num)]
     have := mul_le_mul_of_nonneg_left hδ hx0.le
@@ -184,7 +188,7 @@ private lemma hs3_gate_central {x be al u : ℝ} (h1 : 2 ≤ x) (h2 : x ≤ 13 /
   obtain ⟨hu0, hu1⟩ := hs3_gate_us h1 h2 h108 hax hxb (hs3_D_pos h2 hal1 hax hb2a) hDQ hD3
     hrA3 hrA13 hqc0 hqc7 huc
   obtain ⟨hβ0, hβ1⟩ := hs3_beta_mono h1 h2 h108 h6 hb20 hbb.le hb2 hb2'
-  obtain ⟨hF0, hF1⟩ := hs3_central_alpha_proof h1 h2 hamin.le hα89
+  obtain ⟨hF0, hF1⟩ := hs3_central_alpha_proof h1 h2 hamin.le h6
   have := max_lt (hu0.trans_lt (hβ0.trans_lt hF0)) (hu1.trans_lt (hβ1.trans_lt hF1))
   linarith
 
@@ -201,8 +205,17 @@ private lemma hs3_gate_outer {x be al u : ℝ} (h1 : 2 ≤ x) (h2 : x ≤ 13 / 6
   have h6 : x * (x + 2) ≤ 6 * al ^ 2 := by
     rw [hsQc, lt_div_iff₀ (by positivity)] at hqc7
     linarith
-  obtain ⟨ha0, hg1, hg2⟩ := hs3_outer_enclose h1 h2 hax h6 hU hδ hQ
+  obtain ⟨-, -, hg2⟩ := hs3_outer_enclose h1 h2 hax h6 hU hδ hQ
   have hα1 : 0 < al - 1 := by linarith
+  -- the retained lower short-order slope `g ≥ 8/(9x + 8)`
+  have hg8 : 8 / (9 * x + 8) ≤ (be / x - 1) / (al - 1) := by
+    have hU' : x * (9 * x + 8 * al) ≤ be * (9 * x + 8) := by
+      rwa [div_le_iff₀ (by positivity)] at hU
+    have hbx : be = x * (1 + (be / x - 1)) := by field_simp; ring
+    rw [hbx, mul_assoc] at hU'
+    have h9 : 9 * x + 8 * al ≤ (1 + (be / x - 1)) * (9 * x + 8) := le_of_mul_le_mul_left hU' hx0
+    rw [div_le_div_iff₀ (by positivity) hα1]
+    linarith
   have hbg : x * (1 + (be / x - 1) / (al - 1) * (al - 1)) = be := by
     rw [div_mul_cancel₀ _ hα1.ne']; field_simp; ring
   have hbo : be ≤ x + 5 * x * (x - 1) / 13 := by
@@ -219,7 +232,7 @@ private lemma hs3_gate_outer {x be al u : ℝ} (h1 : 2 ≤ x) (h2 : x ≤ 13 / 6
   have huo : u ≤ hsUO x be := by rw [hu]; exact hs3_outer_ceiling h1 h2 hxb hbo
   obtain ⟨hu0, hu1⟩ := hs3_gate_us h1 h2 h108 hax hxb (hs3_D_pos h2 hal1 hax hb2a) hDQ hD3
     hrA3 hrA13 (by norm_num) le_rfl huo
-  obtain ⟨hF0, hF1⟩ := hs3_outer_face_proof h1 h2 ha0 hax hg1 hg2
+  obtain ⟨hF0, hF1⟩ := hs3_outer_face_proof h1 h2 hal1 hax h6 hg8 hg2
   rw [hbg] at hF0 hF1
   have := max_lt (hu0.trans_lt hF0) (hu1.trans_lt hF1)
   linarith

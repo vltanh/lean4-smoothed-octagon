@@ -5,7 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Basic
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Slope
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Data
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S4Defs
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4Hand
 
 /-!
 # Hand proof of the smaller-short case, gate S4: `α ≤ 1 + 3δ` and `Γ > 1829/10000`
@@ -27,7 +27,9 @@ substitution `u ↦ ū` (`hs4_u_dec`) and the central-scale floor `min{Φ, Ψ}(�
 * `hs4Phi`, `hs4Psi`: `Φ = Γ_*(q_c) - R*_2(q_c)/7`, `Ψ = Φ - (T - 2)(w_*(q_c) - 3/4)/7`
   (`SMALL_SHAPE_CASIMIR_FLOOR` (10)-(11)).
 * Stable: `HsData.hs4_cap_env`, `hs4_scale_dec_p`, `hs4_tau2_dec`, `hs4_u_dec`, `hs4_ubar_box`.
-* Heavy: `hs4_floor_box` (`EXTENDED_CASIMIR_DERIVATIVES` (4)-(31), `EXTENDED_CASIMIR_FLOOR` (10)).
+* Heavy: `hs4_floor_box` (`EXTENDED_CASIMIR_DERIVATIVES` (4)-(31), `EXTENDED_CASIMIR_FLOOR` (10)),
+  proved by hand in `Heavy/S4Hand*` (`archive/lighter-proofs/SHORT_CASIMIR_COMPLETE.md`: the six
+  derivative signs W1-W6 and three scalar endpoints).
 * Gate: `HsData.s4`, `M2Short.hs_S4`.
 -/
 
@@ -398,7 +400,8 @@ theorem hs4_ubar_box {x δ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 �
 /-- **The extended original-Casimir floor at the central scale** (`EXTENDED_CASIMIR_DERIVATIVES`
 (4)-(31), `EXTENDED_CASIMIR_FLOOR` (9)-(10); inventory HS-S4 R20-R22): on the closed box
 `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`, `β = x(1 + δ)`, with `u = ū(x, β)`:
-`Φ > 1829/10000` and `Ψ > 1829/10000`. Status: heavy. -/
+`Φ > 1829/10000` and `Ψ > 1829/10000`. Status: heavy, by hand (`Heavy/S4Hand`: W1-W6 of
+`SHORT_CASIMIR_COMPLETE`, then three scalar endpoints). -/
 theorem hs4_floor_box {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1 / 19)
     (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
     1829 / 10000 < hs4Phi x (x * (1 + δ)) al (hsUbar x (x * (1 + δ))) ∧

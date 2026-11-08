@@ -5,7 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs6.Angle
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs6.Concave
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs6.Shear
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S6Defs
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S6
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S6Hand
 
 /-!
 # Hand proof of the smaller-short case, gate S6: the completion cost is too large
@@ -28,7 +28,8 @@ central-scale score `𝓕_c` (`HsData.hs6_continuation`), `𝓕_c > cπ/3 + √3
   `hs6_tangent_inv`, `hs6_tangent_anti`, `hs6_score_deriv`, `hs6_barrier_sin`, `hs6_barrier`,
   `hs6_Fc_gt`, `hs6_T_eq`, `hs6_B_concave`, `hs6_constants`.
 * Stable actual-data leaves: `HsData.hs6_angle` (AL), `HsData.hs6_continuation` (S6.2).
-* Heavy: `hs6_B_endpoint` (`SMALL_SHAPE_COST_EXCLUSION` (20)-(31)).
+* Heavy: `hs6_B_endpoint` (`SMALL_SHAPE_COST_EXCLUSION` (20)-(31)), proved by hand in
+  `Heavy/S6Hand*` (`archive/lighter-proofs/SHORT_COST_CONCAVITY.md`).
 * Gate: `HsData.s6`, `M2Short.hs_S6`.
 * Helper modules: `Hs6.Angle` (the rotated trace identity, AB1-AB2), `Hs6.Concave` (concavity of
   `𝓑` in `T`, S6.5), `Hs6.Shear` (the central shear bounds, CS.3).
@@ -1059,7 +1060,8 @@ theorem hs6_B_concave {R δ η : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19) (h
 
 /-- **The two endpoint polynomials** (`SMALL_SHAPE_COST_EXCLUSION` (20)-(31); inventory HS-S567
 S6.6, S6.7): for `1/3 ≤ R ≤ 7/19`, `0 ≤ δ ≤ 1/19` and `e ∈ {13/5, 3}`:
-`𝓑(u_q; R, T(e), δ) > b*`. Status: heavy. -/
+`𝓑(u_q; R, T(e), δ) > b*`. Status: heavy, by hand (`Heavy/S6Hand`: concavity in `R`, then
+monotonicity in `δ`, `SHORT_COST_CONCAVITY`). -/
 theorem hs6_B_endpoint {R δ e : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (he : e = 13 / 5 ∨ e = 3) :
     hs6bstar < hs6B R (hs6T R δ e) δ (hs6uq R δ) := by

@@ -1,7 +1,7 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs02.Common
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0Faces
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0Hand
 
 /-!
 # Hand proof of the smaller-short case, gate S0: `x < 12/5`, `D > 0`, `E_L > 0`
@@ -21,7 +21,10 @@ the three duration tests (`hs_dur_three`) reduce to the face signs `hs0_central_
   `hs0_face_alpha`, `hs0_ubar_le_uhat`, `hs0_D_pos`, `hs0_pairing`.
 * Scale leaves: `hs0_uslope`, `hs0_endpoint_alt`, `hs0_G_zero_neg`, `hs0_tau_two`.
 * Heavy face signs: `hs0_central_tau_two` (`CENTRAL_TAU_TWO_SIGN` (3)), `hs0_central_duration`
-  (`CENTRAL_DURATION_FACES` (5)), `hs0_outer_tests` (`OUTER_SCALE_LARGE_RATIO_SIGN` (7)).
+  (`CENTRAL_DURATION_FACES` (5)), `hs0_outer_tests` (`OUTER_SCALE_LARGE_RATIO_SIGN` (7)), proved by
+  hand in `Heavy/S0Hand*` (`archive/lighter-proofs/SHORT_DURATION_CENTRAL_TAU_TWO.md`,
+  `SHORT_DURATION_CENTRAL_UPPER_FACES.md`, `SHORT_DURATION_CENTRAL_LOWER_FACE.md`,
+  `SHORT_SCALE_OUTER_LARGE_RATIO.md`).
 * Gate: `HsData.s0`, `M2Short.hs_S0`.
 -/
 
@@ -1140,7 +1143,8 @@ theorem hs0_tau_two {x be al u q₁ q₂ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤
 /-- **The central face, `τ = 2` test** (`CENTRAL_TAU_TWO_SIGN` (3); inventory HS-S01 B7): on
 `Dom_c` (`12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12`, `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`),
 at `q = q_c`, `u = û(x, β)`, `T = r_A/q_c`: `F(2, 5/(2T) - 11/9) < 0` for the floor-weighted face
-value. Status: heavy. -/
+value. Status: heavy, by hand (`Heavy/S0HandCen*`: beta convexity, the lower face and four
+upper faces, `SHORT_DURATION_CENTRAL_TAU_TWO`). -/
 theorem hs0_central_tau_two {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -1150,7 +1154,8 @@ theorem hs0_central_tau_two {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) 
 
 /-- **The central face, `τ = T` and `τ = 8T/9` tests** (`CENTRAL_DURATION_FACES` (5); inventory
 HS-S01 B8): on `Dom_c`, at `q = q_c`, `u = û`, `T = r_A/q_c`: `F(T, 0) < 0` and
-`F(8T/9, -1/9) < 0` (no condition `cT ≥ 2`). Status: heavy. -/
+`F(8T/9, -1/9) < 0` (no condition `cT ≥ 2`). Status: heavy, by hand (`Heavy/S0HandCen*`: beta
+convexity, the lower face and four upper faces, `SHORT_DURATION_CENTRAL_UPPER_FACES`). -/
 theorem hs0_central_duration {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -1162,7 +1167,9 @@ theorem hs0_central_duration {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
 /-- **The outer face, three tests** (`OUTER_SCALE_LARGE_RATIO_SIGN` (7); inventory HS-S01 B9): on
 `Dom_o` (`12/5 ≤ x ≤ 9`, `(22x + 20)/55 ≤ α ≤ x`,
 `x + 4x(α - 1)/(5x + 4) ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`), at `q = 1/7`, `u = ū(x, β)`,
-`T = 7r_A`: `F(T, 0) < 0`, `F(8T/9, -1/9) < 0`, `F(2, 5/(2T) - 11/9) < 0`. Status: heavy. -/
+`T = 7r_A`: `F(T, 0) < 0`, `F(8T/9, -1/9) < 0`, `F(2, 5/(2T) - 11/9) < 0`. Status: heavy, by hand
+(`Heavy/S0HandOut*`: the cubic comparison on the large shapes, beta convexity and five faces on the
+strip, `SHORT_SCALE_OUTER_LARGE_RATIO`). -/
 theorem hs0_outer_tests {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (hal : (22 * x + 20) / 55 ≤ al) (hax : al ≤ x)
     (hb : x + 4 * x * (al - 1) / (5 * x + 4) ≤ be)

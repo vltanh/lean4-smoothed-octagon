@@ -5,8 +5,8 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Basic
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Slope
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Data
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Ratio
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1Central
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1Outer
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandCentral
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOuter
 
 /-!
 # Hand proof of the smaller-short case, gate S1: `x > 2`
