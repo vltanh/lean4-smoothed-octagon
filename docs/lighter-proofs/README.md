@@ -17,7 +17,7 @@ generated coefficient tables remain an open hand-proof dependency.
 | Priority | Requested sign | Replacement status |
 |---|---|---|
 | N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | Open; first priority. |
-| N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | Open. |
+| N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | Full sign open. Its [base-quadratic subclaim](NONSHORT_LOW_RATIO.md) is replaced by three 21-monomial degree-eight square identities, with margin greater than 4. |
 | N3 | `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`, `k=1+j` | Open. |
 | N4a | `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13), `k=29t²/4` | Open. |
 | N4b | The same caller's upper face, `k=1+j` | **Hand dependency removed**, conditional on the retained N4a sign; [shape monotonicity proof](NONSHORT_HIGH_RATIO_SHAPE.md). Lean integration remains open. |
@@ -65,9 +65,11 @@ The new expanded correction identities have at most six monomials and
 degree at most four. The high-ratio endpoint derivative checks have
 11, 15, 12 and 5 monomials, in two variables and degree at most six.
 All necessary polynomials and the size counts are printed in the notes.
-An independent mathematical and exact-algebra review accepted the
-high-ratio caller reduction; the three corrections were separately
-reviewed against their actual domains and source callers.
+Independent mathematical and exact-algebra reviews accepted the
+high-ratio caller reduction and the low-ratio base quadratic; the three
+corrections were separately reviewed against their actual domains and
+source callers. The base quadratic is a subordinate replacement and
+does not close N2's remaining monotonicity and remainder obligations.
 
 ## Validation boundary
 
