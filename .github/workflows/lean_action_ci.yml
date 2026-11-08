@@ -21,14 +21,15 @@ jobs:
           auto-config: false
           use-mathlib-cache: true
           use-github-cache: true
-      # The generated certificate files need several GB of memory each; build the largest ones one
-      # at a time before the parallel build, so that the 16 GB runner never holds several at once.
-      - name: Build the large certificate modules one at a time
+      # A few generated certificate modules need 5-6 GB each (the largest are split into chains of
+      # modules, `scripts/certificates/split_module.py`). Build them one at a time first, so that the
+      # 16 GB runner never holds several; everything else, at most about 3 GB per module, is built
+      # in parallel afterwards.
+      - name: Build the memory-heavy certificate modules one at a time
         run: |
-          find SmoothedOctagon -name '*.lean' -size +150k | sort \
-            | sed 's/\.lean$//; s#/#.#g' | while read m; do
-              echo "::group::$m"; lake build "$m"; echo "::endgroup::"
-            done
+          for m in $(grep -v '^#' scripts/ci/sequential-modules.txt); do
+            echo "::group::$m"; lake build "$m"; echo "::endgroup::"
+          done
       - name: Build everything
         run: lake build
       - name: Check that the audit imports every module
