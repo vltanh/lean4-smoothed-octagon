@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Period.Defs
+public import SmoothedOctagon.Exclusion.Mixed.Extract.Reflect
 
 /-!
 # Case M2: the reflection and time-reversal symmetry
@@ -15,8 +16,9 @@ carried along. The switch signs are read in reverse order and are not negated.
 
 ## Main API
 
-* `m2_reflect`: the reflected period (the one `sorry`: the construction of the reflected extremal
-  and of its vertex representation).
+* `m2_reflect`: the reflected period (constructed in `Mixed/Extract/Reflect` as
+  `NormalPeriod.wx_refl`: `u'(t) = σ u(T - t)`, `g'(t) = S R⁻¹ g(T - t) S`, `X'(t) = -S X(T - t) S`,
+  `Λ'(t) = -S Λ(T - t) S`; the image of the piece `k` is the piece `N - 1 - k`, `c = -1`).
 * `m2_reflect_fwd_iff`: switch `k` of the image is forward iff switch `-2 - k` of the original is.
 * `m2_reflect_classM2`: the image of an M2 period is M2.
 -/
@@ -33,8 +35,9 @@ theorem m2_reflect (P : NormalPeriod) :
     ∃ P' : NormalPeriod, P'.N = P.N ∧ P'.cost = P.cost ∧
       (P.InCompactDomain → P'.InCompactDomain) ∧
       (∃ c : Fin 3, ∀ k, P'.rep.label k = c - P.rep.label (-1 - k)) ∧
-      ∀ k, P'.activeMargin k = P.activeMargin (-1 - k) := by
-  sorry
+      ∀ k, P'.activeMargin k = P.activeMargin (-1 - k) :=
+  ⟨P.wx_refl, P.wx_refl_N, P.wx_refl_cost, P.wx_refl_inCompactDomain, ⟨-1, P.wx_refl_label⟩,
+    P.wx_refl_activeMargin⟩
 
 section
 
