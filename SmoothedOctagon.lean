@@ -25,7 +25,13 @@ public import SmoothedOctagon.Foundations.CircleExclusion
 public import SmoothedOctagon.Foundations.SingularArc
 public import SmoothedOctagon.Foundations.SwitchingMargin
 public import SmoothedOctagon.Foundations.StrongSwitching
-public import SmoothedOctagon.Main
+public import SmoothedOctagon.LowerBound
+public import SmoothedOctagon.Equality.Transport
+public import SmoothedOctagon.Equality.Converse
+public import SmoothedOctagon.Bridge.Density
+public import SmoothedOctagon.Bridge.Octagon
+public import SmoothedOctagon.Bridge.Classical
+public import SmoothedOctagon.Defs
 
 /-!
 # The Reinhardt conjecture
@@ -48,7 +54,8 @@ The proof is organized by stage:
 * `Exclusion/`: each class is impossible for competitive periods with at least six pieces.
 * `Terminal/`: periods with at most five pieces cost at least `A_oct`, with equality only for the
   octagon.
-* `LowerBound`, `Equality/`, `Main`: the assembly.
+* `LowerBound`, `Equality/`: the assembly; the main theorems are in `ReinhardtSolution.lean`.
+* `Bridge/`: the Challenge's vocabulary, and Reinhardt's description of the smoothed octagon.
 * `Certificates/`: the interval covers used by cases F and M2, named hypotheses until their hand
   replacements are complete.
 

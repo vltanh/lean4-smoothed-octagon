@@ -1,17 +1,21 @@
 module
 
 public import SmoothedOctagon.Bridge.Octagon
+public import SmoothedOctagon.Equality.Converse
 public import SmoothedOctagon.Defs
 
 /-!
 # Reinhardt's smoothed octagon
 
 Reinhardt described the smoothed octagon as a regular octagon whose corners are cut off by arcs of
-hyperbolas. The library defines it instead as the region swept by the curve `σ₀(t) = g(t) s₀` of
-the octagon's trajectory (`octagon`). This module proves that the two agree up to a linear map.
+hyperbolas (`ReinhardtChallenge.smoothedOctagon`, in `SmoothedOctagon/Defs.lean`). The library defines it instead as the region swept by the curve
+`σ₀(t) = g(t) s₀` of the octagon's trajectory (`octagon`). This module proves that the two agree up
+to a linear map, and transfers to Reinhardt's octagon the facts known about the library's. It
+also identifies the packing definitions of `SmoothedOctagon/Defs.lean` (the Challenge's) with the
+library's.
 
-Write `d_k(x) = 1 - (x₀ cos(kπ/4) + x₁ sin(kπ/4))` for the distance from `x` to the `k`-th side
-line of the regular octagon of inradius `1` (positive inside), `k : Fin 8`. Reinhardt's octagon
+Write `d_k(x) = 1 - (x₀ cos(kπ/4) + x₁ sin(kπ/4))` (`octagonSideDist`) for the distance from `x` to
+the `k`-th side line of the regular octagon of inradius `1` (positive inside), `k : Fin 8`.
 `smoothedOctagon` is the regular octagon `d_k(x) ≥ 0` with each corner `k` (between sides `k` and
 `k + 1`) cut along the hyperbola `d_{k-1} d_{k+2} = √2/4`, whose asymptotes are the next two side
 lines: beyond the chord `d_k + d_{k+1} = 3/2 - √2` through its two points of tangency with the
@@ -38,12 +42,15 @@ Let `A = diag(1, b/√3)`, `b = 2√2 - 1 = 3y₀²`. In the frame of `A`:
 
 ## Main API
 
-* `smoothedOctagon`: Reinhardt's smoothed octagon.
 * `clsEquiv`: the linear map `A`.
 * `cls_image_octagon`: `A '' octagon = smoothedOctagon`.
 * `octagon_classical`: the convex hull of the arcs of the octagon trajectory is a linear image of
   `smoothedOctagon`.
 * `cls_exists_affine_iff`: affine images of `octagon` are the affine images of `smoothedOctagon`.
+* `smoothedOctagon_spec`: `smoothedOctagon` is a centrally symmetric convex disk of greatest
+  packing density `δ_oct`.
+* `cls_isConvexDisk_iff`, `cls_greatestPackingDensity_eq`: the Challenge's convex disks and greatest
+  packing density are the library's.
 -/
 
 @[expose] public section
@@ -51,6 +58,7 @@ Let `A = diag(1, b/√3)`, `b = 2√2 - 1 = 3y₀²`. In the frame of `A`:
 namespace SmoothedOctagon
 
 open SmoothedPolygons Set Matrix
+open ReinhardtChallenge (octagonSideDist smoothedOctagon)
 
 /-! ### Constants -/
 
@@ -643,5 +651,31 @@ theorem cls_exists_affine_iff (K : Set (Fin 2 → ℝ)) :
     refine ⟨clsEquiv.toAffineEquiv.trans B, ?_⟩
     rw [AffineEquiv.coe_trans, image_comp]
     rfl
+
+/-- **Reinhardt's smoothed octagon is a centrally symmetric convex disk of greatest packing density
+`δ_oct`.** -/
+theorem smoothedOctagon_spec :
+    IsConvexDisk smoothedOctagon ∧ (∀ x ∈ smoothedOctagon, -x ∈ smoothedOctagon) ∧
+      greatestPackingDensity smoothedOctagon = (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) := by
+  rw [← cls_image_octagon, bridge_octagonDensity_eq]
+  obtain ⟨hconv, hcomp, hint, hneg⟩ := octagon_isCCSDisk
+  refine ⟨⟨hconv.linear_image clsEquiv.toLinearMap,
+    hcomp.image clsEquiv.toLinearMap.continuous_of_finiteDimensional, ?_⟩, ?_,
+    greatestPackingDensity_linear_image_octagon clsEquiv⟩
+  · have e := (LinearEquiv.toContinuousLinearEquiv clsEquiv).toHomeomorph.image_interior octagon
+    have h : (clsEquiv '' octagon) =
+        (LinearEquiv.toContinuousLinearEquiv clsEquiv).toHomeomorph '' octagon := rfl
+    rw [h, ← e]
+    exact hint.image _
+  · rintro _ ⟨y, hy, rfl⟩
+    exact ⟨-y, hneg y hy, by simp⟩
+
+/-- The Challenge's convex disks are the library's. -/
+theorem cls_isConvexDisk_iff (K : Set (Fin 2 → ℝ)) :
+    ReinhardtChallenge.IsConvexDisk K ↔ IsConvexDisk K := Iff.rfl
+
+/-- The Challenge's greatest packing density is the library's. -/
+theorem cls_greatestPackingDensity_eq (K : Set (Fin 2 → ℝ)) :
+    ReinhardtChallenge.greatestPackingDensity K = greatestPackingDensity K := rfl
 
 end SmoothedOctagon

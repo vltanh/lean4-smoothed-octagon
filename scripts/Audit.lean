@@ -435,7 +435,6 @@ import all SmoothedOctagon.Interval.SmallerShort.Res
 import all SmoothedOctagon.Interval.Special
 import all SmoothedOctagon.Interval.Trig
 import all SmoothedOctagon.LowerBound
-import all SmoothedOctagon.Main
 import all SmoothedOctagon.Period.Costate
 import all SmoothedOctagon.Period.Defs
 import all SmoothedOctagon.Period.Elliptic
