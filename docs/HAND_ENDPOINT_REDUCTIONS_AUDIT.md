@@ -526,3 +526,61 @@ floor was used at the original coordinates.
 The quantitative swap theorem gives the final closed simplex (21).
 Its remaining rational sign is explicitly open. This review does
 not assert \(t>1/3\), next-norm exclusion or forward-case completion.
+
+
+## 18. The corrected short cap also moves with scale
+
+The [corrected-cap scale theorem](MIXED_SMALLER_SHORT_CORRECTED_CAP_SCALE.md)
+is independently accepted. Lowering beta preserves the p-domain and
+decreases \(B_0\), hence the slope L; the norm dependence is affine.
+At the upper norm endpoint, all three elementary identities giving
+\(4UA_2-A_3^2=3\) are exact, and the factored discriminant has the
+correct nonpositive sign. Its only possible zero when \(\alpha=x\)
+lies beyond \(p\le1/2\), so strict positivity persists in that closure.
+
+At the lower norm endpoint, the reviewer reconstructed the cleared
+expression directly from \(L=pA_2+p^{-1}-1-A_3\).
+Substituting \(p=\alpha/(\alpha+x+k)\) gives exactly identity (5):
+all twelve terms of P and all twenty-two terms of Q match the displayed
+polynomials. Their positive terms prove strictness because \(x>1\).
+This completes the slope inequality without a runtime sign premise.
+
+The quadratic formula for \(16\Gamma_*\), its scale derivative and
+the normalization \(s=q/(\alpha^2(1-q))\) are consistent.
+The slope bound gives the stated constants \(49/384<1/7\) and
+\(-41/2688\) for the corrected derivative.
+Consequently the residual increases while the corrected cap expression
+decreases to each scale endpoint. The extra \(w_*=3/4,\tau=2\)
+stop also preserves both scalar tests: lowering tau there increases
+the residual at fixed envelope determinant.
+
+The comparison remains a numerical lower bound on the original actual
+Casimir. It does not assert a cap on an artificial trajectory, and
+it does not move the physical completion score. The latter comparison
+or the remaining endpoint signs are still required to close H-S.
+
+## 19. Conditional monotonicity of the forward Casimir
+
+The [conditional forward lemma](MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY.md)
+has independent hand acceptance. The additional \(t\ge1/3\) and
+\(\chi=pq/W\ge4/7\) remain explicit hypotheses.
+
+The reviewer checked the normalization of the first-event diagonal
+against the physical stationarity equation; (4) is the same original
+squared Casimir. The displayed turn-floor polynomial and its value
+\(83/72\) prove \(j<1/4\). The bounds
+\(s-p^2>7/144\), \(15/11\le A<2\), and \(A/\chi>2\)
+follow with the stated directions.
+
+The original incoming floor gives the lower bound (10) on L.
+The derivative expression then decreases in v; substituting \(v=3/4\)
+has the correct upper-bound direction. The remaining function decreases
+in chi and is convex in A. Both exact endpoint fractions are correct,
+giving the derivative margin \(135/108416\).
+The original next forward switch has the strict norm floor from
+HAND_PROOF_REFINEMENTS, Section 4, equation (13), so the comparison
+from the actual w to \(w_{3/4}\) is strict.
+
+This establishes a conditional route that would subsume the separate
+lower-Casimir endpoint. It does not prove its additional ratio
+hypotheses or the upper-endpoint lower bound. H-N-forward remains open.

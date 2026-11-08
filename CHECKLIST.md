@@ -63,6 +63,10 @@ closed computer-assisted gates below do not close these new obligations.
   sharpens the first-event bound; the [forward ratio reduction](docs/MIXED_NONSHORT_FORWARD_RATIO_REDUCTION.md)
   proves common t>1/4 and removes the shape variable from the proposed
   t>1/3 gate. The final unit-shape sign is still open.
+- [x] The [short corrected cap](docs/MIXED_SMALLER_SHORT_CORRECTED_CAP_SCALE.md)
+  now decreases along the residual scale comparison. Its physical-score
+  comparison remains open. The [conditional forward monotonicity](docs/MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY.md)
+  is proved for t>=1/3 and p*q/(1+x)>=4/7; applicability is still open.
 - [ ] Full short-side exclusion, the nonshort forward successor, and the
   final hand-only assembly still need proofs.
 

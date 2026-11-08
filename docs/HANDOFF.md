@@ -140,6 +140,17 @@ forward exclusion to one explicit rational sign at k=1.
 Both have [independent acceptance](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
 That final rational sign, and consequently t>1/3, remain unproved.
 
+
+The [short corrected-cap scale theorem](MIXED_SMALLER_SHORT_CORRECTED_CAP_SCALE.md)
+now carries both the positive envelope residual and its corrected cap
+to the explicit scale endpoints. The physical completion score still
+needs its own comparison. Separately, a
+[conditional forward Casimir monotonicity](MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY.md)
+shows that t>=1/3 and p*q/(1+x)>=4/7 would let the upper-w endpoint
+alone control the original actual Casimir. Those extra forward ratio
+bounds and its final lower-bound sign remain open. Both results have
+[independent acceptance](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
+
 **Baseline status (2026-11-07): the hand/computer-assisted proof of the sharp Reinhardt cost inequality and affine uniqueness is COMPLETE, with independent internal review.** F, M2, G4 and G5 are closed under the declared geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts are not kernel-verified; no Lean compilation, Lake, typechecking or CI was run.
 
 ## 1. Exact completed statement

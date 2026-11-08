@@ -173,3 +173,13 @@ now proves the common strict t>1/4 and reduces the proposed t>1/3
 forward exclusion to one explicit rational sign at k=1.
 Both have [independent acceptance](docs/HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
 That final rational sign, and consequently t>1/3, remain unproved.
+
+The [short corrected-cap scale theorem](docs/MIXED_SMALLER_SHORT_CORRECTED_CAP_SCALE.md)
+now carries both the positive envelope residual and its corrected cap
+to the explicit scale endpoints. The physical completion score still
+needs its own comparison. Separately, a
+[conditional forward Casimir monotonicity](docs/MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY.md)
+shows that t>=1/3 and p*q/(1+x)>=4/7 would let the upper-w endpoint
+alone control the original actual Casimir. Those extra forward ratio
+bounds and its final lower-bound sign remain open. Both results have
+[independent acceptance](docs/HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
