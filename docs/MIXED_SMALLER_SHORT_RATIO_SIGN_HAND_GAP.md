@@ -1,6 +1,10 @@
 # Exact hand-proof gap in the smaller-short ratio contractions
 
-Date: 2026-11-08 UTC. **Status: S1 and S2 remain open.** This note
+Date: 2026-11-08 UTC. **Historical gap record: S2 is now closed; S1 remains open.**
+The [accepted sharp upper-ratio theorem](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_EXCLUSION.md)
+and [review](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_AUDIT.md) discharge both
+S2 signs below with explicit hand proofs. The old coefficient-minimum
+claims discussed here remain excluded as premises. This note
 separates useful analytic reductions from the terminal coefficient
 claims in the earlier unpushed leads. It does not alter the completed
 computer-assisted theorem or relabel its certificates as hand proofs.
@@ -185,7 +189,7 @@ and does not supply either S1 obligation.
 
 ## 3. Completion discipline
 
-The completion plan's S1 and S2 boxes stay open until the stated
+The completion plan's S1 box stays open until its stated
 signs have short independently reviewable proofs. The eight quartics
 in the new scale-continuation argument are fully displayed and have
 individual elementary sign estimates; they do not justify replacing

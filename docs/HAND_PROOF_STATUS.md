@@ -1,77 +1,36 @@
 # Proof without computer assistance: active finite ledger
 
-Date: 2026-11-08 UTC.
+Date: 2026-11-08 UTC. **Authoritative accepted state.**
 
-**Accepted conditional physical-cost contradiction:** the
-[small-shape cost theorem](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md),
-its [analytic shape bounds](MIXED_SMALLER_SHORT_CENTRAL_COST_SHAPE_BOUNDS.md),
-and [independent reading](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_AUDIT.md)
-prove C_period>A_oct on 2<=x<=13/6, delta<=1/19,
-13/5<=eta<=3, Gamma_actual>1829/10000. This retains the original
-period cost and original covector. The actual ratio hypotheses and
-the extended Casimir floor remain caller obligations, so H-S is open.
+The hand proof is not yet complete. H-F and both H-N successors are
+closed, while H-S and the final H-A acceptance remain open. The
+[finite completion plan](HAND_ONLY_COMPLETION_PLAN.md) is the next-work authority.
 
-**Accepted conditional displacement exclusion:** the
-[complete hand theorem](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
-proves delta<1/19 whenever an actual retained short bridge has
-2<=x<=13/6. Its [independent review](MIXED_SMALLER_SHORT_DISPLACEMENT_FACE_AUDIT.md)
-accepts both terminal scale faces and the original-root interface.
-The lower and upper ratio exclusions remain necessary to apply this
-theorem to every actual bridge; H-S remains open.
+**Actual short-domain results:** S0 and S2 are closed. Every retained
+actual smaller-short bridge has `x<13/6`, `D>0`, and `E_L>0`, by the
+[sharp upper-ratio assembly](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_EXCLUSION.md)
+and its [independent review](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_AUDIT.md).
+Both scale faces and all duration/equality boundaries are excluded.
+The lower-ratio conclusion `x>2` remains S1's open obligation.
 
-**Accepted upper-ratio central sign:** the
-[complete central-face proof](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN.md)
-has passed its [separate reading](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_AUDIT.md).
-It excludes all central-scale tests on 13/6<=x<=12/5. The outer
-face and actual-domain assembly remain open, so S2 is not yet closed.
+**Accepted conditional theorems:** the
+[displacement exclusion](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
+proves `delta<1/19` on `2<=x<=13/6`. The
+[root-to-shear theorem](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
+proves the required shear regime when also `13/5<=eta<=3`.
+The [physical-cost exclusion](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md)
+proves the strict original-period cost contradiction on that domain
+if `Gamma_actual>1829/10000`. Each theorem has a separate accepted
+scope/sign audit. Their original-period costs and covector constraints
+are never transferred to artificial comparison points.
 
-**Accepted displacement reductions:** a
-[positive floor weight](MIXED_SMALLER_SHORT_DISPLACEMENT_WEIGHT_REDUCTION.md)
-now reduces delta>=1/19 to two duration tests at the central or outer
-scale face. The [scale continuation](MIXED_SMALLER_SHORT_DISPLACEMENT_SCALE_CONTINUATION.md)
-and [zero-scale sign](MIXED_SMALLER_SHORT_DISPLACEMENT_ZERO_SCALE.md)
-have explicit hand proofs. The [central-beta sign](MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_BETA.md)
-and [quadratic secant order](MIXED_SMALLER_SHORT_RATIONAL_QUADRATIC_ORDER.md)
-are independently reviewed in the
-[displacement audit](MIXED_SMALLER_SHORT_DISPLACEMENT_REDUCTION_AUDIT.md).
-The terminal face signs are now supplied by the conditional theorem
-above. Its actual ratio hypotheses remain open; H-S is not closed.
-
-**Latest accepted conditional theorem:** the
-[small-shape root-to-shear proof](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
-and its [separate review](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR_AUDIT.md)
-prove `q>(29/30)q_c` and `sqrt(3) h R+13A/3<0` when
-`2<=x<=13/6`, `delta<=1/19`, and `alpha=1+eta delta` with
-`13/5<=eta<=3`. The proof uses two logarithm tangents, convexity,
-and explicit small polynomial majorants. Its
-[incoming-norm monotonicity lemma](MIXED_SMALLER_SHORT_ROOT_INCOMING_MONOTONICITY.md)
-holds on the entire ordered shape domain. The actual ratio and
-displacement hypotheses and the completion-cost contradiction remain
-open, so this does not close H-S or an actual-domain S-gate.
-
-**Accepted scale increment:** the [variable-floor scale reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
-and [independent reading](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_AUDIT.md)
-replace its old coefficient-minimum continuation test by four derivative
-identities and eight explicit quartics. The two terminal scale signs
-remain open. The [ratio-gap review](MIXED_SMALLER_SHORT_RATIO_SIGN_HAND_GAP.md)
-explains why the old unpushed S1/S2 coefficient certificates do not
-constitute the requested hand proofs; no S-gate is promoted by them.
-
-**Next-work authority:** [HAND_ONLY_COMPLETION_PLAN](HAND_ONLY_COMPLETION_PLAN.md)
-defines the detailed finite S0–S7 and A1 subgates. S0 (x<12/5,
-D,E_L>0) is closed; S1–S7 and A1 remain unchecked. The conditional
-root-to-shear theorem above supplies the scalar implication needed by
-S5 once its actual shape hypotheses are proved. The claims x>2,
-x<13/6 and the physical-cost contradiction are not yet accepted.
-
-**Immediate mathematical gap:** the accepted conditional Casimir
-floor requires 2<=x<=15/7 and delta=beta/x-1<=1/19, so x<13/6 alone
-would not cover [15/7,13/6). This strip needs a separate exclusion,
-a stronger actual ratio bound, or a proved extension of the applicable
-Casimir and cost inequalities. Also Gamma_actual>183/1000 alone does
-not contradict the competitive cap Gamma_actual<9193/50000; the
-physical completion-cost comparison is essential.
-
+**Remaining inputs:** finish S1 and the S4 extension of the original
+Casimir floor to `x<13/6`, then apply the conditional theorems and
+assemble S7/A1. The older floor `Gamma_actual>183/1000` covers only
+`x<=15/7`, so `[15/7,13/6)` still needs that extension. The actual
+upper cap `Gamma_actual<9193/50000` is distinct from either lower
+floor; the accepted physical-cost theorem supplies the contradiction
+only after its caller hypotheses are proved.
 
 ## Goal and baseline
 

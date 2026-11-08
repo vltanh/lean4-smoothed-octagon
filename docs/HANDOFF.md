@@ -1,76 +1,36 @@
-# Authoritative handoff — hand proof now in progress
+# Authoritative handoff — hand proof in progress
 
-**Accepted conditional S6 theorem:** the
-[physical-cost exclusion](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md)
-has passed its [separate review](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_AUDIT.md).
-It proves the strict original-period contradiction under
-2<=x<=13/6, delta<=1/19, 13/5<=eta<=3 and the original
-Casimir floor Gamma_actual>1829/10000. The ratio and extended
-Casimir callers still require completion before H-S can close.
+**Start here:** [HAND_ONLY_COMPLETION_PLAN](HAND_ONLY_COMPLETION_PLAN.md),
+[HAND_PROOF_STATUS](HAND_PROOF_STATUS.md), and
+[HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md).
+These current entries supersede historical next-worker suggestions below.
 
-**Accepted conditional S3 theorem:** the
-[complete displacement exclusion](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
-and its [independent review](MIXED_SMALLER_SHORT_DISPLACEMENT_FACE_AUDIT.md)
-prove delta<1/19 on the actual ratio strip 2<=x<=13/6. Both terminal
-scale faces are complete. S1/S2 must still establish that ratio strip
-for every actual smaller-short bridge; the full H-S theorem remains open.
+**Accepted current state (2026-11-08):** H-F and both H-N successors
+are complete by hand. H-S is the only remaining uniform whole-period
+exclusion class. Its actual-domain gates S0 and S2 now give
+`x<13/6`, `D>0`, and `E_L>0`. See the
+[sharp upper-ratio theorem](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_EXCLUSION.md)
+and its [independent review](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_AUDIT.md).
+This result does not assume a lower-ratio or small-gap bound.
 
-**Accepted S2 central face:** the
-[central ratio sign](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN.md)
-and [separate reading](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_AUDIT.md)
-exclude the central scale endpoint uniformly for 13/6<=x<=12/5.
-The exact duration comparison retains its cubic loss. S2 still needs
-the outer scale face and its final actual-domain assembly.
+The [displacement theorem](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
+now proves `delta<1/19` whenever `2<=x<=13/6`. The
+[root-to-shear theorem](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
+and [physical-cost theorem](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md)
+are also accepted on that small-shape strip, the latter requiring the
+original Casimir floor `Gamma_actual>1829/10000`. All have separate
+accepted reviews and preserve the original-period comparison scope.
 
-**Accepted displacement increment:** the
-[weight reduction](MIXED_SMALLER_SHORT_DISPLACEMENT_WEIGHT_REDUCTION.md),
-[scale continuation](MIXED_SMALLER_SHORT_DISPLACEMENT_SCALE_CONTINUATION.md),
-and [zero-scale proof](MIXED_SMALLER_SHORT_DISPLACEMENT_ZERO_SCALE.md)
-leave two duration tests on each positive-scale face. The
-[central-beta lemma](MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_BETA.md)
-and [quadratic order](MIXED_SMALLER_SHORT_RATIONAL_QUADRATIC_ORDER.md)
-have passed [separate review](MIXED_SMALLER_SHORT_DISPLACEMENT_REDUCTION_AUDIT.md).
-The central and outer terminal signs are now accepted in the
-conditional theorem above; the actual-ratio gates remain open.
+**Concrete remaining work:** finish S1 (`x>2`) and S4 (the extended
+Casimir floor and upper order through `x<13/6`). Then apply the
+accepted conditional S3/S5/S6 theorems, assemble the complete actual
+H-S theorem, and perform A1's final global dependency audit. The
+old Casimir proof stops at `15/7`; its uncovered strip is not ignored.
+The old unpushed coefficient-minimum drafts are discovery leads only.
 
-**Current conditional theorem:** the
-[small-shape root-to-shear proof](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
-has passed its [separate review](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR_AUDIT.md).
-It proves `q>(29/30)q_c` and the required negative shear under
-`2<=x<=13/6`, `delta<=1/19`, `13/5<=eta<=3`.
-The ratio and displacement hypotheses remain to be established for
-every actual short bridge; H-S and the actual-domain S-gates remain open.
-
-**Accepted scale increment:** the [variable-floor reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
-has a separately reviewed scale-continuation proof using four factored
-derivatives and eight displayed quartics. Its
-[audit](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_AUDIT.md) accepts only the
-reduction to two scale faces. The [ratio sign gap](MIXED_SMALLER_SHORT_RATIO_SIGN_HAND_GAP.md)
-records the remaining central/outer inequalities and explains why the
-large unpushed coefficient certifications do not close S1 or S2.
-
-**START HERE — active finite plan (2026-11-08):** [HAND_ONLY_COMPLETION_PLAN](HAND_ONLY_COMPLETION_PLAN.md).
-This document is the detailed *source map*; the linked plan is the single
-ordered list of remaining hand-only gates, their scope, deliverables,
-acceptance tests, and commit/handoff procedure. The finite status ledger
-remains [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md).
-
-**Verified pushed status:** H-F and both H-N successors are closed by
-hand. The only unfinished uniform whole-period exclusion is H-S
-(smaller-short); H-A is a conditional global audit. The pushed
-large-ratio theorem has already established x<12/5 and D,E_L>0.
-Do **not** mark the hand proof complete merely because the
-computer-assisted theorem is complete.
-
-**Concrete restart:** work through S1/S2 (the actual short ratio), S3
-(the exact shape displacement), S4 (cover the ratio interval omitted
-by the conditional Casimir theorem), S5 (actual root-to-shear),
-S6 (strict physical cost contradiction), S7 (full H-S theorem and
-audit), then A1 (global acceptance). The accepted Casimir floor
-assumes x<=15/7 and delta<=1/19; a proposed x<13/6 leaves
-15/7<=x<13/6 uncovered. Unpushed claims about sharper ratios,
-root-to-shear or conditional cost are leads, **not** accepted proofs.
-
+No Lean, Lake, typechecking or CI is authorized. Keep committing
+reviewed hand increments with `[skip ci]`. Do not label the
+computer-assisted baseline as the completed hand proof.
 
 **Active request (2026-11-07): find a hand proof that does not depend on computer assistance.** The finite replacement ledger is [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md). New explicit inequalities are in [HAND_PROOF_REFINEMENTS](HAND_PROOF_REFINEMENTS.md). That goal is not yet complete: the interval exclusions below are the completed computational baseline, not hand-only premises. Preserve the baseline and replace its indispensable computational dependencies by readable arguments.
 
