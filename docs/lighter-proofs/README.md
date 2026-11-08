@@ -37,7 +37,7 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 | S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | **Complete hand caller replacement.** The [assembled proof](SHORT_OUTER_COMPLETE.md) closes both tests in all three branches. The last B `F1` terminal has margin `1597/144000000`. The exact actual outer caller and its original duration conclusion are preserved. |
 | S1.2 | `MIXED_SMALLER_SHORT_LOW_RATIO_CENTRAL_HAND_SIGN` (20)--(25), Appendices A--C | **Complete hand caller replacement.** The [central assembly](SHORT_CENTRAL_COMPLETE.md) retains the original norm curve for `F0`, reaches the exact cap, and reuses the completed outer sign. A separate curvature argument reduces `F1` to two fixed shapes. Both original strict signs and the duration caller are preserved. |
 | S1.3 | `MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_SIGN` (7) | Open. |
-| S1.4 | `MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN` (3) and `MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES` (5) | Open. |
+| S1.4 | `MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN` (3) and `MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES` (5) | **Complete hand replacement.** The [tau-two proof](SHORT_DURATION_CENTRAL_TAU_TWO.md) and [two duration-face proofs](SHORT_DURATION_CENTRAL_UPPER_FACES.md) share a [lower beta face](SHORT_DURATION_CENTRAL_LOWER_FACE.md). Four constant beta slopes, positive second derivatives and three slanted edges replace the large endpoint expansions. All three original strict signs, norm ceilings and callers are preserved. |
 | S2.1 | `MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN` (5) | Open. |
 | S2.2 | `MIXED_SMALLER_SHORT_OUTER_RATIO_HAND_SIGN` (11)--(18) | Open. |
 | S3.1 | `MIXED_SMALLER_SHORT_DISPLACEMENT_OUTER_FACE` (7)--(21) | Open. |
@@ -48,8 +48,8 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 These are the finite requested obligations. The three corrections below
 are recorded separately and are not counted as polynomial replacements.
 
-Four of the ten H-S replacement rows are now complete: S1.1, S1.2,
-S3.2 and S6. The remaining six are the unchanged finite list above. This count
+Five of the ten H-S replacement rows are now complete: S1.1, S1.2,
+S1.4, S3.2 and S6. The remaining five are the unchanged finite list above. This count
 describes completed rows, not equal amounts of remaining effort, and
 does not claim completion of H-S or Lean integration.
 
