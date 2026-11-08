@@ -6,6 +6,11 @@ closed under the declared external mathematical inputs.** The
 The [status](HAND_PROOF_STATUS.md) and
 [finite acceptance record](HAND_ONLY_COMPLETION_PLAN.md) are authoritative.
 
+For a separate, still-open attempt to replace large-coefficient sign
+arguments with short analytic bounds, see the
+[small-coefficient refactor record](HAND_COEFFICIENT_REFACTOR.md).
+It does not change the accepted proof or delete a certificate.
+
 ## 1. Global theorem and final reviews
 
 Read [HAND_COST_EQUALITY_THEOREM](HAND_COST_EQUALITY_THEOREM.md) alongside:
