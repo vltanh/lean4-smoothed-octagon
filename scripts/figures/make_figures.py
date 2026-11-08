@@ -6,6 +6,8 @@
 - octagon-packing.svg: a patch of the densest lattice packing K + 2Λ, with the critical hexagon;
 - multipoint.gif: the six contact points σ_j(t) moving around K over one period [0, t_f];
 - upper-half-plane.svg: the state X(t) = Φ(z(t)) as a path in the upper half-plane;
+- octagon-arcs.svg: the definition of the smoothed octagon, the convex hull of the six arcs
+  g(t) s_j*, t ∈ [0, t_f];
 - density-comparison.svg: the densities of the smoothed (6k+2)-gons, k = 1, …, 6, and of the disk.
 - smoothed-octagon-plain.svg: Reinhardt's smoothed octagon alone, in its regular orientation, with
   the corners cut from the regular octagon as ghosts;
@@ -483,6 +485,70 @@ def upper_half_plane():
                   'under e₃ (green), a circle through ±1/√3 under e₁ (orange), a line through 1/√3 under '
                   'e₂ (purple), and the first line again under e₃: z(t_f) = R⁻¹·z(0), the twisted '
                   'boundary condition X(t_f) = R⁻¹X(0)R. R fixes i')
+
+
+# ---- octagon-arcs.svg ----------------------------------------------------------------------------
+
+def octagon_arcs(n_per=200):
+    """The definition of the smoothed octagon: the six arcs t ↦ g(t) s_j*, t ∈ [0, t_f], of its
+    trajectory. Arc j runs from s_j* to s_{j+1}*, the six arcs close up into one convex curve, σ₀
+    over a whole period, and the convex hull they bound is K, of area √12 δ_oct."""
+    ts = P.times(n_per, n_int=P.N)
+    ts = np.append(ts, P.tf)
+    arcs = [np.array([P.curve(j, t) for t in ts]) for j in range(6)]
+    gK = oc.Gauge(P.boundary(200))
+    for j, a in enumerate(arcs):
+        assert np.allclose(a[0], oc.SIXTH[j], atol=1e-12)
+        assert np.allclose(a[-1], oc.SIXTH[(j + 1) % 6], atol=1e-12)
+        assert np.abs(gK(a) - 1).max() < 1e-6
+        # σ_j(t) = σ₀(t + j t_f): the six arcs are σ₀ over the whole period [0, 6 t_f].
+        assert np.allclose(a, np.array([P.curve(0, t + j * P.tf) for t in ts]), atol=1e-12)
+    loop = np.vstack([a[:-1] for a in arcs])
+    # The closed curve is convex (it never turns right, along the straight edges it goes straight,
+    # and it turns once in all), so it bounds its convex hull, and the hull has area √12 δ_oct.
+    d = np.roll(loop, -1, axis=0) - loop
+    e = np.roll(d, -1, axis=0)
+    turn = np.arctan2(d[:, 0] * e[:, 1] - d[:, 1] * e[:, 0], (d * e).sum(axis=1))
+    assert turn.min() > -1e-9 and abs(turn.sum() - 2 * PI) < 1e-9
+    assert abs(oc.shoelace(loop) - oc.AREA_OCT) < 1e-5
+
+    lim = 1.42
+    f = Figure(-lim, lim, -lim, lim, 150)
+    th = np.linspace(0, 2 * PI, 400)
+    f.polygon(loop, fill=FLOOR, stroke='none', width=0)
+    f.polyline(np.c_[np.cos(th), np.sin(th)], stroke=FAINT, width=1.0, dash='2 3')
+    f.polygon(oc.SIXTH, stroke=FAINT, width=1.0, dash='5 4')
+    arc_colors = COLORS[:6]
+    for j, a in enumerate(arcs):
+        f.polyline(a, stroke=arc_colors[j], width=3.2)
+        # An arrowhead pointing the way t increases, on a straight stretch of the arc (where σ_j
+        # does not bend), as near the middle of the arc as possible; its tip and the middle of its
+        # base lie on the stretch.
+        d = 50
+        straight = np.array([P.bending(j, t) < 1e-9 for t in ts])
+        ok = [m for m in range(d, len(a) - d) if straight[m - d:m + d + 1].all()]
+        h = min(ok, key=lambda m: abs(m - len(a) // 2))
+        tip, back = a[h + d], a[h - d]
+        u = (tip - back) / np.linalg.norm(tip - back)
+        assert abs(oc.cross(u, a[h] - back)) < 1e-9 and np.dot(u, a[h + 1] - a[h - 1]) > 0
+        n = np.array([-u[1], u[0]])
+        f.polygon([tip, back + 0.045 * n, back - 0.045 * n], fill=arc_colors[j],
+                  stroke=arc_colors[j], width=1.0)
+    for j, p in enumerate(oc.SIXTH):
+        f.dot(p, r=4.6, fill='#ffffff')
+        f.circle(p, 4.6 / 150, stroke=INK, width=1.4)
+        f.text(1.17 * p, 's' + '₀₁₂₃₄₅'[j], size=17)
+    for j, a in enumerate(arcs):
+        m = a[len(a) // 2]
+        q = m / np.linalg.norm(m) * (np.linalg.norm(m) + 0.27)
+        f.text(q, 'g(t) s' + '₀₁₂₃₄₅'[j], size=15, color=arc_colors[j])
+    f.text((0, 0.06), 'K', size=24, color=INK)
+    f.text((0, -0.2), 'convex hull of the six arcs', size=13, italic=False, color=INK)
+    return f.save('octagon-arcs',
+                  'The smoothed octagon from its definition: the six points s₀, …, s₅ of a regular '
+                  'hexagon on the unit circle (white dots), and the six arcs g(t) s_j, 0 ≤ t ≤ t_f, '
+                  'that the trajectory g moves them along. Each arc runs from s_j to s_(j+1); together '
+                  'they close up into one convex curve, the boundary of K, and K is their convex hull')
 
 
 # ---- density-comparison.svg ----------------------------------------------------------------------
@@ -1079,7 +1145,7 @@ def save_gif(images, path, ms, colors=31):
 
 def main():
     facts = oc.verify()
-    for path in (smoothed_octagon(facts), octagon_packing(), upper_half_plane(),
+    for path in (smoothed_octagon(facts), octagon_packing(), upper_half_plane(), octagon_arcs(),
                  density_comparison(facts), smoothed_octagon_plain(), octagon_construction(),
                  octagon_tiling(),
                  packing_densities(), worst_packer_gif(), multipoint_gif()):

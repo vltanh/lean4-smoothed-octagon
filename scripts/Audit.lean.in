@@ -16,8 +16,8 @@ namespace Audit
 
 /-- The theorems that Palomar's comparator checks (`theorem_names` of `comparator.json`). -/
 meta def solutionResults : List Name :=
-  [``ReinhardtChallenge.reinhardt, ``ReinhardtChallenge.reinhardt_equality,
-   ``ReinhardtChallenge.reinhardt_cost, ``ReinhardtChallenge.octagon_area]
+  [``ReinhardtChallenge.octagon_density, ``ReinhardtChallenge.reinhardt,
+   ``ReinhardtChallenge.reinhardt_equality]
 
 /-- Lean's standard axioms. -/
 meta def standardAxioms : List Name := [``propext, ``Classical.choice, ``Quot.sound]

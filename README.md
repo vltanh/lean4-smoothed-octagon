@@ -1,5 +1,7 @@
 # The Reinhardt conjecture, in Lean 4
 
+![The smoothed octagon in its densest packing, the copies sliding through the continuum of densest packings while staying in contact](docs/figures/worst-packer.gif)
+
 Which centrally symmetric convex shape packs the plane worst? Pack copies of a disk as tightly as
 possible and they cover `π/√12 = 90.69…%` of the plane; a regular octagon does a little worse. In
 1934 Karl Reinhardt conjectured that the worst of all is the *smoothed octagon*, a regular octagon
@@ -10,34 +12,61 @@ whose corners are cut off by arcs of hyperbolas, with greatest packing density
 and that it is the only worst shape up to affine maps. Kurt Mahler reached the same octagon
 independently in 1947. The conjecture has been open since.
 
+![Densest packings of the disk, the regular octagon, the smoothed 14-gon and the smoothed octagon, with densities 0.906900, 0.906164, 0.906052 and 0.902414](docs/figures/packing-densities.svg)
+
+*Four shapes of the same inradius in their densest packings, from the best packer to the worst: the
+disk, the regular octagon, a smoothed 14-gon (a regular 14-gon with its corners cut by hyperbolas in
+the same way) and the smoothed octagon.*
+
 This repository proves the conjecture in Lean 4, with Mathlib, together with its equality case. The
 informal proof it formalizes was written by ChatGPT (ChatGPT Pro, OpenAI). No person has checked
 the proofs; Lean's kernel checks all of them, and every theorem depends only on Lean's standard
 axioms `propext`, `Classical.choice` and `Quot.sound`.
 
-![The smoothed octagon in its densest packing, the copies sliding through the continuum of densest packings while staying in contact](docs/figures/worst-packer.gif)
-
-The smoothed octagon packs most densely as a lattice packing, and it can do so in a continuum of
-ways: the copies slide while always touching their six neighbours.
+For an interactive introduction, see the
+[Smoothed Octagon Playground](https://vltanh.me/smoothed-octagon/).
 
 ## The smoothed octagon
+
+The smoothed octagon has two equivalent definitions: Reinhardt's construction from a regular
+octagon, which the Lean statements use, and Hales's description through a control problem, which
+the proof works with. [`Bridge/Classical.lean`](SmoothedOctagon/Bridge/Classical.lean) proves that
+the two give the same shape, up to a linear map.
+
+### Reinhardt's construction
 
 ![A regular octagon, one corner rounded by the hyperbola that touches the two sides at the corner and approaches the next two sides, and the smoothed octagon](docs/figures/octagon-construction.svg)
 
 Take the regular octagon whose sides lie on the lines `x cos(kπ/4) + y sin(kπ/4) = 1`. Replace each
 corner by the arc of the hyperbola `d · d' = √2/4` whose asymptotes are the next two side lines
 (`d`, `d'` the distances to them); it touches the two sides at the corner. Each side keeps a
-straight middle part of length `2 − √2`.
+straight middle part of length `2 − √2`. In Lean this is `smoothedOctagon`, in
+[`SmoothedOctagon/Defs.lean`](SmoothedOctagon/Defs.lean).
 
-![Densest packings of the disk, the regular octagon, the smoothed 14-gon and the smoothed octagon, with densities 0.906900, 0.906164, 0.906052 and 0.902414](docs/figures/packing-densities.svg)
+### Hales's control problem
+
+The smoothed octagon is the convex hull of the six arcs `t ↦ g(t) s_j`, `t ∈ [0, t_f]`, of the
+trajectory `g` of Hales's control problem with the octagon's bang-bang control. Its area is the
+cost of the trajectory, `√12 δ_oct`.
+
+![The six points s₀ to s₅ of a regular hexagon, the six coloured arcs g(t) s_j that the trajectory moves them along, and their convex hull, the smoothed octagon K](docs/figures/octagon-arcs.svg)
+
+*The white dots `s₀, …, s₅` are the corners of a regular hexagon on the unit circle. The trajectory
+`g` is a path of 2 × 2 matrices, and as `t` runs from `0` to `t_f`, `g(t)` carries each `s_j` along
+one coloured arc, to where the next point `s_{j+1}` started. The six arcs join into one closed
+convex curve, and the region it encloses, their convex hull, is the smoothed octagon. It is drawn
+as Hales normalizes it: Reinhardt's octagon squeezed vertically by about 5%.*
 
 ## Statements
 
-All definitions are in [`ReinhardtChallenge.lean`](ReinhardtChallenge.lean), which imports only Mathlib. They are
-copied word for word from [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon),
-the formalization of Hales and Vajjha's *Packings of Smoothed Polygons* on which this project
-builds. `greatestPackingDensity K` is the supremum of the densities of packings of the plane by
-congruent copies of `K`.
+The statements are in [`ReinhardtChallenge.lean`](ReinhardtChallenge.lean), which imports only
+Mathlib. Its definitions are copied word for word from library modules: the packing definitions
+from [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon), the formalization
+of Hales and Vajjha's *Packings of Smoothed Polygons* on which this project builds, and
+`smoothedOctagon` from [`SmoothedOctagon/Defs.lean`](SmoothedOctagon/Defs.lean).
+
+`greatestPackingDensity K` is the supremum of the densities of packings of the plane by congruent
+copies of `K`.
 
 ```lean
 theorem reinhardt (K : Set (Fin 2 → ℝ)) (hK : IsConvexDisk K)
@@ -47,45 +76,56 @@ theorem reinhardt (K : Set (Fin 2 → ℝ)) (hK : IsConvexDisk K)
 
 | Theorem | In words |
 | --- | --- |
+| `octagon_density` | the smoothed octagon is a centrally symmetric convex disk of greatest packing density `δ_oct` |
 | `reinhardt` | every centrally symmetric convex disk has greatest packing density at least `δ_oct` |
 | `reinhardt_equality` | equality holds exactly for the images of the smoothed octagon under invertible affine maps |
-| `reinhardt_cost` | every trajectory of Hales's control problem with the boundary conditions costs at least `√12 δ_oct` |
-| `octagon_area` | the smoothed octagon, defined from its trajectory, has area `√12 δ_oct` and density `δ_oct` |
 
-The smoothed octagon is defined as the convex hull of the six arcs `t ↦ g(t) s_j`, `t ∈ [0, t_f]`,
-of the trajectory `g` of Hales's control problem with the octagon's bang-bang control; `octagon_area`
-identifies it with Reinhardt's octagon.
+## How the proof works
 
-## Proof outline
+A shape like this (convex, and unchanged by a half turn) packs most densely in a grid: every copy is
+the same shape shifted, never rotated, and each one touches six neighbours (Fejes Tóth). The density
+is then the area of the shape divided by the area of one grid cell. Stretching or shearing the
+picture scales both areas alike, so we may stretch it until the six touching points form a regular
+hexagon. That fixes the grid, and the question becomes: among the shapes whose tightest grid is this
+one, which has the smallest area?
 
-Following Hales, the problem becomes optimal control on `SL₂(ℝ)`. A worst disk, normalized so that
-its critical hexagon is regular, is traced by six points `g(t) s_j` that slide along its boundary,
-and its area is the cost `−(3/2) ∫ tr(J X)` of the trajectory `(g, X)`. Conversely every trajectory
-of cost below `π`, with any measurable control, bounds such a disk.
+A worst shape has a whole family of tightest grids, and its grid can slide from one to the next. As
+it slides, the six contact points run around the edge of the shape, always forming a hexagon of the
+same area, and together they trace its whole boundary. Thomas Hales turned this into a steering
+problem. At every moment a control, chosen from a triangle of settings, decides how sharply the
+contact points curve, and the area of the traced shape is the cost of the steering. Finding the
+worst packer means finding the cheapest steering, an *optimal control* problem of the kind used to
+plan a spacecraft's most fuel-efficient flight.
 
-![The six contact points of the smoothed octagon moving around its boundary through one period, with the six neighbouring copies of its densest packing and the control word e₃ e₁ e₂ e₃](docs/figures/multipoint.gif)
+![The six contact points of the smoothed octagon moving around its boundary through one period, with the six neighbouring copies of its densest packing and the steering pattern e₃ e₁ e₂ e₃](docs/figures/multipoint.gif)
 
-1. **Foundations.** The conjecture is equivalent to a lower bound on the cost of every admissible
-   trajectory, and the realization of a worst disk is a global minimizer of the control problem.
-2. **Reduction.** A global minimizer stays in a compact part of the state space, lifts to a
-   Pontryagin extremal (proved in lean4-smoothed-polygon from the maximum principle of
-   [lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control)), switches between the
-   three vertices of the control simplex finitely many times, and is normal.
-3. **Five cases.** Read cyclically, the switches of a minimizing period are forward or reverse.
-   With six or more pieces the sign sequence falls in one of five classes, and each is excluded.
-4. **Terminal comparison.** A period with at most five pieces costs at least `√12 δ_oct`, with
-   equality only for the octagon's four-piece word `e₂ e₀ e₁ e₂` with equal durations.
-5. **Equality.** The boundary realization of any worst disk is then the octagon's trajectory, so
-   the disk is a linear image of the octagon; conversely linear images pack equally badly.
+*The smoothed octagon (blue) and its six neighbours (grey) in a densest packing. The black dots are
+where the neighbours touch it; the hexagon joining them keeps the same area throughout. As the
+packing slides, the dots run along the straight sides (blue) and round the curved corners (orange).
+The bar at the bottom shows the steering: each of the three settings `e₁`, `e₂`, `e₃` belongs to
+one opposite pair of dots, and only that pair goes round a corner while the other four move along
+straight sides. The white dots mark where the black dots start. Follow the dot labelled `σ₀`:
+after four equal steps, `e₃ e₁ e₂ e₃`, it has reached the next white dot, where its neighbour
+started. Every dot has moved on by one place, and the motion repeats.*
 
-![The state of the smoothed octagon's trajectory as a path in the upper half-plane, inside the star domain, with its four control arcs](docs/figures/upper-half-plane.svg)
+The Pontryagin maximum principle, a basic tool of optimal control, tells what the cheapest steering
+looks like: it always holds one of the three extreme settings and switches between them only
+finitely often. So a worst shape is built from straight segments and hyperbola arcs, and it is
+described by its pattern of switches. The proof then goes through the patterns. Those with six or
+more steps fall into five families, and none of them can be the cheapest. Those with at most five
+steps are compared directly, and the cheapest is the octagon's four equal steps. No other pattern
+matches its cost, so the octagon is the only worst shape, up to stretching and shearing.
+
+The [Smoothed Octagon Playground](https://vltanh.me/smoothed-octagon/) lets you try this by hand:
+pack the octagon yourself, build it corner by corner, look for a worse packer, and watch its
+sliding packings.
 
 ## Status
 
-[`ReinhardtSolution.lean`](ReinhardtSolution.lean) restates the four theorems of
+[`ReinhardtSolution.lean`](ReinhardtSolution.lean) restates the three theorems of
 [`ReinhardtChallenge.lean`](ReinhardtChallenge.lean) word for word and proves them from the library,
-with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 96,916 declarations of the
-library, and the four theorems, depend only on the standard axioms.
+with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 97,664 declarations of the
+library, and the three theorems, depend only on the standard axioms.
 
 | Stage | Lean |
 | --- | --- |
@@ -96,19 +136,7 @@ library, and the four theorems, depend only on the standard axioms.
 | Terminal comparison: at most five pieces | [`Terminal/`](SmoothedOctagon/Terminal) |
 | Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) |
 | The statements in the Challenge's vocabulary | [`Main.lean`](SmoothedOctagon/Main.lean), [`Bridge/`](SmoothedOctagon/Bridge) |
-
-The informal proof was at first partly computer-assisted: it used seven interval-arithmetic covers
-run in C++ with MPFR. Six of them have been replaced by hand arguments (case F, and the reverse,
-low-scale and forward parts of case M2), and their Lean proofs follow those arguments. The seventh,
-the smaller-short cover of case M2, is checked by Lean's kernel itself:
-[`Interval/`](SmoothedOctagon/Interval) is a verified interval arithmetic (outward-rounded
-fixed-point intervals, proved enclosures of `√`, `log` and `arctan`, a sound branch-and-bound checker),
-and [`Interval/SmallerShort/`](SmoothedOctagon/Interval/SmallerShort) is a certificate of 337,399 boxes
-checked by `decide`, without `native_decide`. The notes have since proved that case by hand too
-([`MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION`](archive/notes/MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md));
-formalizing that proof, which will remove the certificate, is in progress. Several steps of the
-informal proof are proved by shorter routes than the notes; each docstring that departs from them
-says so in a `Route:` line.
+| Reinhardt's construction: the octagon of the trajectory is a linear image of it | [`Bridge/Classical.lean`](SmoothedOctagon/Bridge/Classical.lean) |
 
 ## Prior work
 
@@ -151,7 +179,8 @@ SmoothedOctagon/
   Equality/                    rigidity and its converse
   Certificates/                the scalar statements of the informal proof's interval covers
   Interval/                    verified interval arithmetic and the kernel-checked certificate
-  Bridge/                      translation, affine maps and the octagon in the Challenge's terms
+  Bridge/                      the Challenge's terms; Hales's octagon is a linear image of Reinhardt's
+  Defs.lean                    Reinhardt's smoothed octagon, shared with the Challenge
   LowerBound.lean, Main.lean   the assembly
 Cited/HalesVajjha/             Definition 5.0.1 of Hales–Vajjha (the compact domain)
 docs/                          prior work and the figures
@@ -161,11 +190,11 @@ scripts/                       the audit, the definitions check, the figures and
 
 ## Credits
 
-The-Anh Vu-Le directed the work. ChatGPT Pro (OpenAI) found the proof, in the notes of
-[`archive/`](archive/README.md), first with computer-assisted parts and then replacing all of them
-by hand. Claude Opus 5.5 (Anthropic), in Claude Code, wrote the Lean formalization (with sub-agents),
-the verified interval arithmetic and certificate, the figures and this documentation. The geometric
-and control-theoretic foundations come from lean4-smoothed-polygon and lean4-optimal-control.
+The-Anh Vu-Le directed the work. ChatGPT Pro (OpenAI) developed the informal proof. Claude Opus
+5.5 (Anthropic), in Claude Code, did the formalization, the visualizations and the presentation.
+The geometric and control-theoretic foundations come from
+[lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) and
+[lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control).
 
 ## License
 

@@ -26,49 +26,49 @@ Reinhardt (1934) asked which centrally symmetric convex disk in the plane packs 
 has the least greatest packing density. He conjectured that the answer is the *smoothed octagon*,
 a regular octagon whose corners are cut off by arcs of hyperbolas, with density
 
-  `δ_oct = (8 - 4√2 - log 2)/(2√2 - 1) = 0.902414…`.
+  `δ_oct = (8 - 4√2 - log 2)/(2√2 - 1) = 0.902414…`,
 
-This file states the conjecture, its equality case, and its form as an optimal control problem.
-It imports only Mathlib.
+and that it is the only worst disk up to affine maps. This file states the conjecture with its
+equality case. It imports only Mathlib.
 
 ## Definitions
 
-The definitions between the markers are those of the formalization of Hales and Vajjha,
-*Packings of Smoothed Polygons* (arXiv:2405.04331), copied word for word from
-`SmoothedPolygons/Defs.lean` of `lean4-smoothed-polygon`; the docstrings there explain each one.
-Points of the plane are `Fin 2 → ℝ`, and areas are Lebesgue measure.
+Points of the plane are `Fin 2 → ℝ`, and areas are Lebesgue measure. The definitions sit in two
+blocks between markers, each copied word for word from a library module
+(`python3 scripts/sync_challenge_defs.py`).
+
+The first block is from `SmoothedPolygons/Defs.lean` of `lean4-smoothed-polygon`, the formalization
+of Hales and Vajjha, *Packings of Smoothed Polygons* (arXiv:2405.04331); the docstrings there
+explain each definition. The statements use two of them:
 
 * `greatestPackingDensity K` is the greatest density `δ(K)` of a packing of the plane by congruent
   copies of `K`: the supremum, over packings whose density exists, of the limit of the fraction of
   the disk of radius `r` that they cover, as `r → ∞`.
 * `IsConvexDisk K`: `K` is compact and convex with nonempty interior. The theorems below take a
   centre `c` of symmetry, `2c - x ∈ K` for every `x ∈ K`.
-* The control problem (Hales, 2011): a state trajectory `IsStateTrajectory T u g X` on `[0, T]` is
-  a measurable control `u` with values in the simplex `U_T`, a frame `g` in `SL₂(ℝ)` and a state `X`
-  in the star domain of `𝔰𝔩₂(ℝ)` such that `g' = gX` and `X' = [Z_u, X]/⟨Z_u, X⟩` in the
-  integral (Carathéodory) sense. Its cost is `reinhardtCost T X = -(3/2) ∫₀ᵀ tr(JX)`. The boundary
-  conditions `g(0) = I`, `g(T) = R` (rotation by `π/3`) and `X(T) = R⁻¹ X(0) R` say that the six
-  curves `t ↦ g(t) s_j` (`s_j` the sixth roots of unity) close up; when the cost is below `π` they
-  bound a disk whose area is the cost, and the density of that disk is the cost divided by `√12`.
-* The smoothed octagon is the case `k = 1` of the smoothed `(6k+2)`-gons: the trajectory with
-  `g(0) = I`, `X(0) = Φ(i y₀)`, `y₀ = √((√8 - 1)/3)`, and the control `e₃, e₁, e₂, e₃` on four
-  intervals of length `t_sw = ln 2/(2√(√8 - 1))`, so `t_f = 4 t_sw`. The octagon is the convex hull of
-  the six arcs `g([0, t_f]) s_j`; one period of `t ↦ g(t) s₀` traces its whole boundary.
+
+The rest of the block defines Hales's control problem, through which the library proves the
+conjecture; the statements do not use it.
+
+The second block is from `SmoothedOctagon/Defs.lean` of this project. It defines the smoothed
+octagon `smoothedOctagon` as Reinhardt described it. With `octagonSideDist k x` the distance from
+`x` to the line `x₀ cos(kπ/4) + x₁ sin(kπ/4) = 1` of the `k`-th side of the regular octagon of
+inradius `1` (`k : Fin 8`), positive on the side of the origin, the regular octagon is
+`0 ≤ octagonSideDist k x` for all `k`. Its corner between sides `k` and `k + 1` is cut off along the
+hyperbola `octagonSideDist (k - 1) x * octagonSideDist (k + 2) x = √2/4`, whose asymptotes are the
+next two side lines. The hyperbola touches the two sides where
+`octagonSideDist k x + octagonSideDist (k + 1) x = 3/2 - √2`; beyond that chord, only the points on
+the side of the origin of the hyperbola are kept.
 
 ## Theorems
 
+* `octagon_density`: the smoothed octagon is a centrally symmetric convex disk of greatest packing
+  density `δ_oct`.
 * `reinhardt`: every centrally symmetric convex disk has greatest packing density at least
   `δ_oct`.
-* `reinhardt_equality`: the octagon trajectory exists, and a centrally symmetric convex disk has
-  greatest packing density `δ_oct` if and only if it is the image of the smoothed octagon under an
-  invertible affine map of the plane.
-* `reinhardt_cost`: every trajectory of the control problem with the boundary conditions above
-  has cost at least `√12 δ_oct`, whatever its terminal time and measurable control.
-* `octagon_area`: the smoothed octagon is a centrally symmetric convex disk of area `√12 δ_oct`
-  and greatest packing density `δ_oct`, which identifies the definition above with Reinhardt's
-  octagon.
+* `reinhardt_equality`: a centrally symmetric convex disk has greatest packing density `δ_oct` if
+  and only if it is the image of the smoothed octagon under an invertible affine map of the plane.
 -/
-
 @[expose] public section
 
 -- BEGIN SHARED DEFINITIONS
@@ -313,52 +313,52 @@ end SmoothedPolygons
 
 -- END SHARED DEFINITIONS
 
+-- BEGIN SHARED OCTAGON
+namespace SmoothedOctagon
+
+/-- The distance `d_k(x) = 1 - (x₀ cos(kπ/4) + x₁ sin(kπ/4))` from `x` to the line
+`x₀ cos(kπ/4) + x₁ sin(kπ/4) = 1` of the `k`-th side of the regular octagon of inradius `1`,
+positive on the side of the origin. -/
+noncomputable def octagonSideDist (k : Fin 8) (x : Fin 2 → ℝ) : ℝ :=
+  1 - (x 0 * Real.cos ((k : ℕ) * Real.pi / 4) + x 1 * Real.sin ((k : ℕ) * Real.pi / 4))
+
+/-- **Reinhardt's smoothed octagon.** The regular octagon `d_k ≥ 0` (`k : Fin 8`) with each corner
+cut off by an arc of a hyperbola. The corner between sides `k` and `k + 1` is replaced by the arc of
+the hyperbola `d_{k-1} d_{k+2} = √2/4`, whose asymptotes are the next two side lines; the arc
+touches the two sides where `d_k + d_{k+1} = 3/2 - √2`, and beyond that chord only the points with
+`d_{k-1} d_{k+2} ≥ √2/4` are kept. -/
+def smoothedOctagon : Set (Fin 2 → ℝ) :=
+  {x | ∀ k : Fin 8, 0 ≤ octagonSideDist k x ∧
+    (octagonSideDist k x + octagonSideDist (k + 1) x ≤ 3 / 2 - √2 →
+      √2 / 4 ≤ octagonSideDist (k - 1) x * octagonSideDist (k + 2) x)}
+
+end SmoothedOctagon
+-- END SHARED OCTAGON
+
 namespace ReinhardtChallenge
 
-open SmoothedPolygons MeasureTheory
+open SmoothedPolygons SmoothedOctagon MeasureTheory
+
+/-- **The smoothed octagon.** Reinhardt's smoothed octagon is a centrally symmetric convex disk of
+greatest packing density `δ_oct = (8 - 4√2 - log 2)/(2√2 - 1)`. -/
+theorem octagon_density :
+    IsConvexDisk smoothedOctagon ∧ (∀ x ∈ smoothedOctagon, -x ∈ smoothedOctagon) ∧
+      greatestPackingDensity smoothedOctagon = (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) := by
+  sorry
 
 /-- **The Reinhardt conjecture.** Every centrally symmetric convex disk `K` in the plane has
-greatest packing density at least `δ_oct = (8 - 4√2 - log 2)/(2√2 - 1)`, the density of the
-smoothed octagon. -/
+greatest packing density at least `δ_oct`, the density of the smoothed octagon. -/
 theorem reinhardt (K : Set (Fin 2 → ℝ)) (hK : IsConvexDisk K)
     (hsymm : ∃ c : Fin 2 → ℝ, ∀ x ∈ K, (2 : ℝ) • c - x ∈ K) :
     (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) ≤ greatestPackingDensity K := by
   sorry
 
-/-- **The equality case.** The trajectory of the smoothed octagon exists, and a centrally symmetric
-convex disk has greatest packing density `δ_oct` if and only if it is the image of the smoothed
-octagon, the convex hull of the arcs `g([0, t_f]) s_j`, under an invertible affine map. -/
-theorem reinhardt_equality :
-    (∃ g X : ℝ → Mat2,
-      IsStateTrajectory (tf 1) (polygonControl 1) g X ∧ g 0 = 1 ∧ X 0 = Φ 0 (y₀ 1)) ∧
-    ∀ g X : ℝ → Mat2, IsStateTrajectory (tf 1) (polygonControl 1) g X → g 0 = 1 →
-      X 0 = Φ 0 (y₀ 1) →
-      ∀ K : Set (Fin 2 → ℝ), IsConvexDisk K → (∃ c : Fin 2 → ℝ, ∀ x ∈ K, (2 : ℝ) • c - x ∈ K) →
-        (greatestPackingDensity K = (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) ↔
-          ∃ A : (Fin 2 → ℝ) ≃ᵃ[ℝ] (Fin 2 → ℝ),
-            K = A '' convexHull ℝ
-              (⋃ j : ZMod 6, (fun t ↦ Matrix.mulVec (g t) (sixthRoot j)) '' Set.Icc 0 (tf 1))) := by
-  sorry
-
-/-- **The control form.** Every trajectory of Hales's control problem from `g(0) = I` to
-`g(T) = R` with `X(T) = R⁻¹ X(0) R`, for any terminal time `T` and any measurable control, has
-cost at least `√12 δ_oct`. -/
-theorem reinhardt_cost (T : ℝ) (u : ℝ → Fin 3 → ℝ) (g X : ℝ → Mat2)
-    (h : IsStateTrajectory T u g X) (hg0 : g 0 = 1) (hgT : g T = R)
-    (hXT : X T = R⁻¹ * X 0 * R) :
-    √12 * ((8 - 4 * √2 - Real.log 2) / (2 * √2 - 1)) ≤ reinhardtCost T X := by
-  sorry
-
-/-- **The smoothed octagon.** For the octagon trajectory, the convex hull of the arcs
-`g([0, t_f]) s_j` is a convex disk symmetric about the origin, of area `√12 δ_oct` and greatest
-packing density `δ_oct`. -/
-theorem octagon_area (g X : ℝ → Mat2)
-    (h : IsStateTrajectory (tf 1) (polygonControl 1) g X) (hg0 : g 0 = 1)
-    (hX0 : X 0 = Φ 0 (y₀ 1)) :
-    let K := convexHull ℝ (⋃ j : ZMod 6, (fun t ↦ Matrix.mulVec (g t) (sixthRoot j)) '' Set.Icc 0 (tf 1))
-    IsConvexDisk K ∧ (∀ x ∈ K, -x ∈ K) ∧
-      volume.real K = √12 * ((8 - 4 * √2 - Real.log 2) / (2 * √2 - 1)) ∧
-      greatestPackingDensity K = (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) := by
+/-- **The equality case.** A centrally symmetric convex disk has greatest packing density `δ_oct`
+if and only if it is the image of the smoothed octagon under an invertible affine map. -/
+theorem reinhardt_equality (K : Set (Fin 2 → ℝ)) (hK : IsConvexDisk K)
+    (hsymm : ∃ c : Fin 2 → ℝ, ∀ x ∈ K, (2 : ℝ) • c - x ∈ K) :
+    greatestPackingDensity K = (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) ↔
+      ∃ A : (Fin 2 → ℝ) ≃ᵃ[ℝ] (Fin 2 → ℝ), K = A '' smoothedOctagon := by
   sorry
 
 end ReinhardtChallenge

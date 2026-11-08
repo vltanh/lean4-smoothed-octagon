@@ -3,11 +3,13 @@ module
 public meta import Lean.Elab.Command
 import all Cited.HalesVajjha.CompactDomain
 import all SmoothedOctagon
+import all SmoothedOctagon.Bridge.Classical
 import all SmoothedOctagon.Bridge.Density
 import all SmoothedOctagon.Bridge.Octagon
 import all SmoothedOctagon.Certificates.Covers
 import all SmoothedOctagon.Certificates.Nonshort
 import all SmoothedOctagon.Certificates.SmallerShort
+import all SmoothedOctagon.Defs
 import all SmoothedOctagon.Equality.Converse
 import all SmoothedOctagon.Equality.Frontier
 import all SmoothedOctagon.Equality.Transport
@@ -492,8 +494,8 @@ namespace Audit
 
 /-- The theorems that Palomar's comparator checks (`theorem_names` of `comparator.json`). -/
 meta def solutionResults : List Name :=
-  [``ReinhardtChallenge.reinhardt, ``ReinhardtChallenge.reinhardt_equality,
-   ``ReinhardtChallenge.reinhardt_cost, ``ReinhardtChallenge.octagon_area]
+  [``ReinhardtChallenge.octagon_density, ``ReinhardtChallenge.reinhardt,
+   ``ReinhardtChallenge.reinhardt_equality]
 
 /-- Lean's standard axioms. -/
 meta def standardAxioms : List Name := [``propext, ``Classical.choice, ``Quot.sound]
