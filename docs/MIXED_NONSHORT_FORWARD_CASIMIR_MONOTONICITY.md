@@ -189,4 +189,7 @@ be unnecessary for this route.
 
 This note does not prove \(\chi\ge4/7\), does not prove the
 upper-endpoint lower bound in the preceding paragraph, and does not
-claim completion of the forward-successor exclusion.
+by itself claim completion of the forward-successor exclusion. Those
+additional hypotheses and the stationary-envelope lower bound are now
+supplied by the [complete forward hand theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md)
+and its cited small-gap lemmas.

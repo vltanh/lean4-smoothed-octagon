@@ -1,19 +1,20 @@
 # Hand-only global dependency review and conditional assembly
 
-Date: 2026-11-07. Internal mathematical dependency review of the hand
-route at commit `ea21d7a7bb268d99545f240a668bb9b1ddcfaf2a`, with the new
-[terminal hand count](HAND_TERMINAL_COVERAGE.md). No Lean, Lake,
-typechecking, CI, interval replay or executable sign check was run for
-this review.
+Date: 2026-11-08. Internal mathematical dependency review of the hand
+route, incorporating the [terminal hand count](HAND_TERMINAL_COVERAGE.md)
+and the [completed nonshort hand proof](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md).
+No Lean, Lake, typechecking, CI, interval replay or executable sign
+check is a premise of this review.
 
 **Scope.** The global reduction, finite-before-normal ordering,
 whole-period interfaces, terminal classification and affine transport
 can be assembled using hand arguments and explicitly named external
-geometric/PMP results. The two pending mixed exclusions remain genuine
-mathematical premises: H-S and the forward-successor part of H-N.
-This review does not close them or relabel the earlier computational
-assembly as a proof without computer assistance. Gate H-A remains open
-until their complete proofs and actual-period interfaces are reviewed.
+geometric/PMP results. Both nonshort successor alternatives are now
+proved by hand and their actual-period interfaces are accepted. H-S
+remains a genuine mathematical premise. This review does not close it
+or relabel the earlier computational assembly as a proof without
+computer assistance. Gate H-A remains conditional on the complete
+short-case proof and its actual-period interface.
 
 ## 1. What is asserted conditionally
 
@@ -25,26 +26,26 @@ Write
 A_{\mathrm{oct}}=\sqrt{12}\,\delta_{\mathrm{oct}}.
 \]
 
-The remaining sufficient hand statements are the following.
+The sole remaining sufficient hand statement is the following.
 
 - **H-S.** At a globally smallest active reverse-centre margin of any
   actual competitive finite normal mixed minimizing period with at
   least six pieces, the chosen smaller adjacent turn cannot belong to
   a short forward run.
-- **H-N-F.** In the corresponding smaller-nonshort assignment, the
-  actual next switch cannot be forward. The reverse next-switch
-  alternative is already excluded by
-  [MIXED_NONSHORT_REVERSE_HAND_EXCLUSION](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md).
 
-Each statement must include equal smaller-turn choices, unequal
+The corresponding smaller-nonshort assignment is now excluded for
+both actual successor signs by the
+[forward hand theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md) and
+[reverse hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md).
+
+The H-S statement must include equal smaller-turn choices, unequal
 positive factors, the genuine incoming and outgoing switches, the
 original common covector, and the original complete-period cost cap.
 The scalar domains may be enlarged for a contradiction, but no
 artificial comparison point acquires an unproved physical closure,
 Hamiltonian inequality or Casimir cap.
 
-If these two statements are proved by hand with that scope, the
-retained chain yields
+If H-S is proved by hand with that scope, the retained chain yields
 
 \[
 C\ge A_{\mathrm{oct}}
@@ -56,7 +57,7 @@ planar convex disk, with equality precisely for invertible affine
 images of the concrete smoothed octagon.
 
 The following sections verify this implication and identify its exact
-external boundary. They do not claim its two pending premises.
+external boundary. They do not claim its pending short-case premise.
 
 ## 2. The original competitor class and the disk retained for equality
 
@@ -142,7 +143,7 @@ pieces, the following partition is sufficient.
 | Mixed with a reverse run other than length two | [MIXED_GLOBAL_MINIMUM_STRUCTURE](MIXED_GLOBAL_MINIMUM_STRUCTURE.md) excludes it by the reverse four-arc obstruction and strict three-arc log-concavity. |
 | Mixed with all forward runs of length one | The two-centre cost argument in [MIXED_GLOBAL_SHORT_RUN_PERIOD](MIXED_GLOBAL_SHORT_RUN_PERIOD.md) and the angle contradiction in [MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION](MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION.md) supply a uniform hand exclusion. |
 | Entirely forward | [HAND_FORWARD_PERIOD_EXCLUSION](HAND_FORWARD_PERIOD_EXCLUSION.md), with its scalar norm proofs, excludes every eligible length at least six. |
-| Mixed with a nonshort forward run | Choose the smaller adjacent turn at a global minimum reverse centre. H-S or H-N applies according to its actual run; H-N splits by the actual successor sign. H-S and H-N-F remain open at the reviewed head. |
+| Mixed with a nonshort forward run | Choose the smaller adjacent turn at a global minimum reverse centre. H-S or H-N applies according to its actual run; H-N splits by the actual successor sign. H-N is complete for both actual successor signs; H-S remains open. |
 
 The all-forward application is genuinely a whole-period argument.
 Its twist gives \(N\equiv1\pmod3\), so \(N\ge6\) implies
@@ -183,8 +184,17 @@ face. Its internal coefficient identities are accompanied by explicit
 hand bounds. This review accepts its role in the whole-period
 implication, as detailed by
 [MIXED_NONSHORT_REVERSE_HAND_AUDIT](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md).
-It does not infer the unproved forward-successor conclusion from that
-reverse result or from the newly proved common order of margins.
+The forward conclusion has a separate complete hand proof in
+[MIXED_NONSHORT_FORWARD_HAND_EXCLUSION](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md),
+accepted by [its independent audit](MIXED_NONSHORT_FORWARD_HAND_AUDIT.md).
+That proof derives t>1/3 and j<1/30 from the actual secant, missing
+floor and transported forward norm; the stationary Casimir then
+contradicts the original competitive cap. Its ratio split includes
+t=3/8, its shape comparisons include their endpoints, and the actual
+successor may cross the twisted seam. Artificial scalar points receive
+no physical closure, new covector or competitive cap. The two actual
+successor alternatives are exhaustive, so these accepted results
+close all of H-N.
 
 ## 5. Terminal coverage has a direct hand proof
 
@@ -220,7 +230,7 @@ which R already excludes in that orientation.
 
 ## 6. Cost and affine equality after the pending premises close
 
-Once H-S and H-N-F close, Section 4 excludes every actual minimizing
+Once H-S closes, Section 4 excludes every actual minimizing
 representation with at least six pieces. Section 5 then makes its
 cost exactly \(A_{\mathrm{oct}}\). The minimizing comparison in
 Section 2 proves the unrestricted inequality directly.
@@ -269,15 +279,14 @@ No later computer-assisted chattering or basin theorem is a premise.
 The active hand ledger must therefore continue to distinguish:
 
 - a completed computational baseline;
-- proved hand foundations, H-F and the reverse part of H-N;
-- the two outstanding mixed hand exclusions; and
-- the final acceptance of their complete actual-period interfaces.
+- proved hand foundations, H-F and all of H-N;
+- the outstanding short-case hand exclusion H-S; and
+- final acceptance of its complete actual-period interface.
 
-At the reviewed head, no further indispensable executable exclusion was
-identified outside the two outstanding mixed tasks. This is a review
-of the stated dependency spine and its quantifiers; it is not a claim
-that every historical document has been re-proved, or that the pending
-mixed signs follow automatically. In particular, the physical cost
-comparison under the short scale deformation and the remaining
-forward Casimir signs cannot be supplied by the older certificates
-when declaring a proof without computer assistance.
+No further indispensable executable exclusion was identified outside
+H-S on this dependency spine. This reviews the stated chain and its
+quantifiers; it does not claim that every historical document has
+been re-proved or that the pending short signs follow automatically.
+In particular, the physical cost comparison under the short scale
+deformation and its terminal signs cannot be supplied by the older
+certificates when declaring a proof without computer assistance.

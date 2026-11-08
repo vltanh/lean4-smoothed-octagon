@@ -6,8 +6,8 @@
 
 The user has requested a hand proof beyond the completed computational
 baseline below. [HAND_PROOF_STATUS](docs/HAND_PROOF_STATUS.md) is the finite
-replacement ledger: H-F is now closed by hand; H-S, H-N and the final
-dependency audit H-A remain open. The [new hand refinements](docs/HAND_PROOF_REFINEMENTS.md) strengthen
+replacement ledger: H-F and H-N are closed by hand. H-S is the sole
+remaining exclusion; final assembly H-A is conditional on H-S. The [new hand refinements](docs/HAND_PROOF_REFINEMENTS.md) strengthen
 the Casimir cap, reverse-centre scale and forward successor norm. The
 closed computer-assisted gates below do not close these new obligations.
 
@@ -51,7 +51,8 @@ closed computer-assisted gates below do not close these new obligations.
   without a successor-sign assumption.
 - [x] Conditional [incident-ceiling Casimir sign](docs/MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
   is proved on 1/3<=t<=2/5 and 1<=k<=51/50, with an independent
-  endpoint audit. Applicability to every required endpoint is still open.
+  endpoint audit. This older conditional lemma is optional in the
+  completed forward route.
 - [x] The [common low-scale hand theorem](docs/MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
   proves a>1/2 uniformly, with its [independent audit](docs/MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md).
   Both lower shape faces are excluded by the explicit quartic sign proof.
@@ -68,22 +69,32 @@ closed computer-assisted gates below do not close these new obligations.
 - [x] The [short corrected cap](docs/MIXED_SMALLER_SHORT_CORRECTED_CAP_SCALE.md)
   now decreases along the residual scale comparison. Its physical-score
   comparison remains open. The [conditional forward monotonicity](docs/MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY.md)
-  is proved for t>=1/3 and p*q/(1+x)>=4/7; applicability is still open.
+  is proved for t>=1/3 and p*q/(1+x)>=4/7; the completed forward
+  theorem now supplies both hypotheses.
 - [x] The [small-gap forward hand theorem](docs/MIXED_NONSHORT_SMALL_GAP_HAND_EXCLUSION.md)
   excludes the actual domain t>=1/3, j<=1/30 by the reviewed chi bound,
   event-factor elimination and scalar Casimir sign. The t>1/3 condition
-  is now proved; the actual j<=1/30 bound remains open.
-- [ ] Full short-side exclusion, the nonshort forward successor, and the
-  final hand-only assembly still need proofs.
+  is now proved, and the new large-gap signs give actual j<1/30.
+- [x] The [complete nonshort forward theorem](docs/MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md),
+  with its [independent audit](docs/MIXED_NONSHORT_FORWARD_HAND_AUDIT.md),
+  closes the forward successor and hence all of H-N.
+- [ ] Full short-side exclusion H-S and final hand-only assembly H-A
+  still need completion.
 - [x] [Direct terminal hand coverage](docs/HAND_TERMINAL_COVERAGE.md)
   uses the twist congruence and reverse-run length to leave only `0120`
   and `01020`; no terminal word enumerator is needed. The
   [global dependency review](docs/HAND_GLOBAL_DEPENDENCY_AUDIT.md)
-  accepts the retained assembly conditional on the two mixed exclusions.
+  accepts the retained assembly conditional on H-S alone.
 - [x] [Uniform short pairing](docs/MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
   proves D>=0 implies E_L>0, with a separate
   [hand review](docs/MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md).
   Remaining nonpositive-pairing points have x>12/5 and D<0.
+
+- [x] The [strong exact short order](docs/MIXED_SMALLER_SHORT_STRONG_ORDER.md)
+  and [negative-diagonal scale monotonicity](docs/MIXED_SMALLER_SHORT_NEGATIVE_DIAGONAL_SCALE.md)
+  have [independent hand acceptance](docs/MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md).
+  The [scope audit](docs/HAND_REVERSE_CENTRE_SCALE_SCOPE_AUDIT.md)
+  confirms rho<1/7 at the outer reverse centre as well.
 
 ## Baseline proof checkpoints
 

@@ -1,6 +1,6 @@
 # Proof without computer assistance: active finite ledger
 
-Date: 2026-11-07 UTC.
+Date: 2026-11-08 UTC.
 
 ## Goal and baseline
 
@@ -28,8 +28,8 @@ in force.
 | --- | --- | --- |
 | H-F | Uniform exclusion of all-forward periods through stationary norm bounds and a Casimir inequality | Closed by the [complete hand theorem](HAND_FORWARD_PERIOD_EXCLUSION.md) and [scalar audit](HAND_FORWARD_NORM_AUDIT.md). Both former forward covers are replaced. |
 | H-S | Exclusion when the smaller turn at a minimum reverse centre has a short forward run | Open. The separate opposite-norm floor face is now excluded by hand. Three remaining root/cost boundary faces still need analytic exclusions. |
-| H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Reverse successor closed by the [complete hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md) and [audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md). The common low-a region is excluded by the [hand theorem](MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md), so a>1/2. Forward-successor endpoint signs remain open. The old small-parameter coefficient argument is bypassed by the strict duration-ratio gap. |
-| H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Conditional global review complete in [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md). A direct [terminal hand count](HAND_TERMINAL_COVERAGE.md) removes word enumeration. Final acceptance remains open until H-S and H-N-forward and their actual-period interfaces close. |
+| H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Closed. The [forward hand theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md) and [independent audit](MIXED_NONSHORT_FORWARD_HAND_AUDIT.md) complete the forward alternative. The [reverse hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md) and [audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md) exclude the other actual successor. Both retain the original common covector and competitive period cap. |
+| H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Conditional global review complete in [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md). A direct [terminal hand count](HAND_TERMINAL_COVERAGE.md) removes word enumeration. Final acceptance remains conditional on H-S alone; H-N and its actual-period interface are now accepted. |
 
 These are uniform period classes. They are not a plan to enumerate more
 word lengths or replay larger covers. An alternative hand argument may
@@ -46,9 +46,9 @@ analytic cost comparisons are already proved. No terminal enumerator is
 needed. The [global hand review](HAND_GLOBAL_DEPENDENCY_AUDIT.md)
 checks the finite-before-normal order, all-forward and mixed interfaces,
 arbitrary competitors and original-disk affine equality. On that stated
-dependency spine, the remaining indispensable computational exclusions
-are precisely H-S and H-N-forward. This conditional audit does not
-supply either missing mathematical sign.
+dependency spine, the sole remaining exclusion to replace is H-S.
+H-N is now complete by hand, including its actual-period interface.
+The conditional audit does not supply the missing short-case sign.
 
 ### Completed all-forward gate and other hand prerequisites
 
@@ -72,8 +72,9 @@ supply either missing mathematical sign.
 - The nonshort small-parameter corner is removed by the strict
   [duration ratio greater than 1/10](MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md).
 
-These completed inequalities strengthen the remaining domains; they
-do not by themselves exclude either nonshort successor.
+These inequalities are prerequisites of the now-completed forward and
+reverse nonshort exclusions; their conclusions use the additional
+arguments in the complete theorems linked above.
 
 ## New analytic results
 
@@ -83,7 +84,8 @@ proofs of the following stronger necessary conditions:
 1. Every competitive actual period has
    `gamma^2 < 9193/50000`, using the spectral cost inequality and short
    rational estimates of the octagon cost and pi.
-2. At a global minimum reverse centre, `a^2 < 2/3`. The proof reduces to
+2. At every competitive reverse centre, `a^2 < 2/3`, as confirmed by the
+   [scope review](HAND_REVERSE_CENTRE_SCALE_SCOPE_AUDIT.md). The proof reduces to
    a monotone one-variable function and three terms of a positive
    logarithm series.
 3. At a forward successor, the outgoing norm has a quantitative gap above
@@ -193,7 +195,8 @@ reverse-successor branch. No alternative upper-shape sign is needed.
 The same scalar theorem gives the common necessary order
 `a <= r < c <= b* < d` and `q < (1+x)/(2t+x)`, independently of the
 successor sign. In particular, the common d<=c region is excluded
-without a low-a restriction. The forward successor remains open.
+without a low-a restriction. The forward successor is now closed by the
+[complete forward hand theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md).
 
 [The short-side root and angle reduction](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md)
 keeps an actual outer root while decreasing the Casimir, with an explicit
@@ -267,8 +270,9 @@ ledger and is not relabeled as a proof without computer assistance.
 The [near-unit incident-ceiling bound](MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
 proves the competitive Casimir is exceeded when 1/3<=t<=2/5 and
 1<=k<=51/50. Its [independent review](HAND_ENDPOINT_REDUCTIONS_AUDIT.md)
-accepts this conditional endpoint sign. Establishing those restrictions
-at every required forward endpoint remains open.
+accepts this conditional endpoint sign. The completed forward proof
+uses the later stationary-envelope Casimir theorem, so applicability of
+this older endpoint lemma is no longer a required gate.
 
 The [complete common low-scale hand theorem](MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
 now proves a>1/2 independently of the successor sign. Its six quartic
@@ -277,8 +281,9 @@ values and short term bounds; the
 [high-ratio lemma](MIXED_NONSHORT_LOW_SCALE_HIGH_RATIO_DERIVATIVE.md)
 and [independent audit](MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md)
 complete the argument. The former common low-a interval cover is no
-longer a premise. The forward-successor Casimir endpoint problem remains
-open.
+longer a premise. The later
+[complete forward hand theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md)
+closes the forward successor through the small-gap stationary Casimir.
 
 For the short case, the [uniform corrected envelope cap](MIXED_SMALLER_SHORT_CORRECTED_ENVELOPE_CAP.md)
 controls the determinant increase by at most one seventh of the residual
@@ -316,8 +321,10 @@ to the explicit scale endpoints. The physical completion score still
 needs its own comparison. Separately, a
 [conditional forward Casimir monotonicity](MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY.md)
 shows that t>=1/3 and p*q/(1+x)>=4/7 would let the upper-w endpoint
-alone control the original actual Casimir. Those extra forward ratio
-bounds and its final lower-bound sign remain open. Both results have
+alone control the original actual Casimir. The completed
+[forward hand theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md) now
+supplies those ratio bounds and the final stationary-envelope sign.
+Both reductions have
 [independent acceptance](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
 
 
@@ -330,16 +337,41 @@ complete that restricted argument. Their [lemma review](MIXED_NONSHORT_SMALL_GAP
 and [scalar review](MIXED_NONSHORT_FORWARD_ENVELOPE_CASIMIR_AUDIT.md)
 check the domains, signs and endpoints. A separate
 [positive-integral secant bound](MIXED_NONSHORT_POSITIVE_INTEGRAL_SECANT_BOUND.md)
-is also proved by hand. Establishing the actual t and j restrictions,
-or excluding their complementary domain, remains necessary; H-N-forward
-is not yet closed.
+is also proved by hand. The
+[complete forward theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md)
+now proves the actual t>1/3 and j<1/30 restrictions, completing H-N-forward.
 
 
 The [complete low-ratio hand exclusion](MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md)
 now proves t>1/3 in the nonshort forward case, with a dedicated
 [independent audit](MIXED_NONSHORT_LOW_RATIO_HAND_AUDIT.md). Its proof
 reduces to a positive quadratic in j, an explicit positive discriminant,
-and a bounded higher-order remainder. Combined with the small-gap
-Casimir theorem, the only remaining domain obligation for this route
-is to exclude actual j>1/30 (a proof of j<=1/30 would suffice).
-The complete H-S exclusion remains open separately.
+and a bounded higher-order remainder. The later large-gap signs now
+prove j<1/30 as well.
+
+The [complete nonshort forward hand theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md)
+now supplies both actual domain bounds, t>1/3 and j<1/30, and applies
+the small-gap Casimir contradiction. Its
+[independent audit](MIXED_NONSHORT_FORWARD_HAND_AUDIT.md) checks the
+three shape signs and the actual-period interface. Together with the
+reverse-successor hand theorem, it closes all of H-N. The only remaining
+mixed exclusion is H-S; final hand-only assembly remains conditional
+on that short-case proof.
+
+
+### Further short-case hand reductions
+
+The [strong exact short-order theorem](MIXED_SMALLER_SHORT_STRONG_ORDER.md)
+proves
+`alpha >= beta/x + 4(x+1)(beta-x)/(7x+1)` on the actual x<=9 domain.
+The [negative-diagonal scale theorem](MIXED_SMALLER_SHORT_NEGATIVE_DIAGONAL_SCALE.md)
+proves that the outer-envelope residual increases at fixed tau=2 up to
+the outer scale cap. Their
+[independent review](MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md)
+accepts those scalar statements without transporting a physical cost
+or cap to the comparison points. The
+[reverse-centre scope review](HAND_REVERSE_CENTRE_SCALE_SCOPE_AUDIT.md)
+also confirms that the improved rho<1/7 bound applies at every
+competitive reverse centre, including the outer centre. These are
+proved reductions; the complete short-domain and cost exclusion is
+still open.

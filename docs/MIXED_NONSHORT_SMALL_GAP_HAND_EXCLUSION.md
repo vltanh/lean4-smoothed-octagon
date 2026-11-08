@@ -1,8 +1,10 @@
 # The nonshort forward case is excluded on the small-gap domain
 
 Date: 2026-11-08 UTC. Hand theorem on an explicitly restricted actual
-domain. The two restrictions in (1) are not asserted for every remaining
-window. In particular this theorem alone does not close H-N-forward.
+domain. The two restrictions in (1) are supplied for every hypothetical
+remaining actual window by the later
+[complete forward theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md).
+The present note proves the final small-gap contradiction used there.
 
 Use the actual smaller-nonshort window, its common normal covector,
 its actual first forward event and its actual forward successor. Keep
@@ -152,7 +154,7 @@ The competitive actual-period cap from
 \(\Gamma_{\rm actual}<9193/50000\). This contradicts (8)--(11)
 and proves the theorem.
 
-## 4. The exact remaining domain obligation
+## 4. The actual-domain interface
 
 All comparisons above retain the original incoming secant, missing
 floor, event factor and common covector. The physical cost cap is used
@@ -161,11 +163,13 @@ is assigned to an artificial trajectory.
 
 The independently reviewed
 [low-ratio theorem](MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md) now
-proves t>1/3 for every actual remaining forward window. Thus the exact
-remaining domain obligation for this route is j>1/30: a proof that
-actual data have j<=1/30 would complete H-N-forward. This restriction
-does not follow merely from the scalar domain used here. Until that
-obligation is closed, H-N-forward stays open.
+proves t>1/3 for every hypothetical remaining actual forward window.
+The later [complete forward theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md),
+Section 3, independently excludes j>=1/30 by the low-ratio unit-shape,
+upper-shape and high-ratio scale signs. Thus its actual point satisfies
+0<j<1/30, and the present theorem completes the forward contradiction.
+The restriction is proved from the original necessary inequalities; it
+is not inferred merely from the scalar domain used here.
 
 ## 5. Independent interface review
 
@@ -177,4 +181,6 @@ before squaring. It also checked the strict inequalities in (8)--(11),
 the unchanged incoming floor, and that the competitive cap is used
 only at the actual norm. The review accepts this restricted exclusion
 and originally left the two domain obligations open. The later
-low-ratio theorem closes the t obligation; the j obligation remains.
+low-ratio theorem closes the t obligation, and the later large-gap
+theorems close the j obligation. The complete actual interface is
+accepted in the [forward hand audit](MIXED_NONSHORT_FORWARD_HAND_AUDIT.md).
