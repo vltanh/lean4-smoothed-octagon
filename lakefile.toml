@@ -15,12 +15,10 @@ scope = "leanprover-community"
 git = "https://github.com/leanprover-community/mathlib4"
 rev = "9d581dfff2e41de989072ea63abf3daf69311520"
 
-# Development pin: the user's unpublished `layer1` branch of lean4-smoothed-polygon, cloned from
-# the local checkout. Switch to the published repository at a pinned commit before pushing.
 [[require]]
 name = "SmoothedPolygons"
-git = "/home/vltanh/Documents/lean4-smoothed-octagon"
-rev = "a37ab122d101e7665558c8360e93ce7460d298e2"
+git = "https://github.com/vltanh/lean4-smoothed-polygon"
+rev = "b9846532aa26ddf49945ae9fe94549f3ed7918d2"
 
 [[lean_lib]]
 name = "Cited"
@@ -28,7 +26,7 @@ globs = ["Cited.+"]
 
 [[lean_lib]]
 name = "SmoothedOctagon"
-globs = ["SmoothedOctagon.+"]
+globs = ["SmoothedOctagon", "SmoothedOctagon.+"]
 
 [[lean_lib]]
 name = "Challenge"

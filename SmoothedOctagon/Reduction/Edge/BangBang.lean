@@ -110,8 +110,8 @@ theorem e4_ps_const {Te ν : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × �
 theorem e4_ae_hasDerivAt_p {Te ν : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
     {p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ)} (hA : IsAdjoint e4_edgeField e4_edgeCost ν v q Te p) :
     ∀ᵐ t, t ∈ Ioo 0 Te → HasDerivAt p (-e4_adj ν v q p t) t := by
-  refine ae_hasDerivAt_of_eq_add_integral (v := fun r ↦ -e4_adj ν v q p r) hA.1.neg
-    ⟨hTe, le_rfl⟩ (a := p Te) fun t ht ↦ ?_
+  refine ae_hasDerivAt_of_eq_add_integral (w := fun r ↦ -e4_adj ν v q p r) hA.1.neg
+    ⟨hTe, le_rfl⟩ (x₀ := p Te) fun t ht ↦ ?_
   rw [hA.2 t ht, intervalIntegral.integral_neg, intervalIntegral.integral_symm]
   rfl
 

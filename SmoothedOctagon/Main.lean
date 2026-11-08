@@ -16,9 +16,9 @@ octagon is a worst disk, and every worst disk is a linear image of it), then in 
 `Challenge.lean`: arbitrary centres of symmetry, invertible affine maps, the octagon as the convex
 hull of the six arcs of its trajectory, and the constant written `(8 - 4√2 - log 2)/(2√2 - 1)`.
 
-Both are conditional on the two named hypotheses of the proof: Hales–Vajjha's Theorem 5.0.2
-(`Cited.HalesVajjha.Theorem5_0_2`, until Chapter 5 is formalized in `lean4-smoothed-polygon`) and
-the interval covers (`Certificates.IntervalCovers`, until their hand replacements are complete).
+Both are conditional on the one remaining named hypothesis of the proof, the interval covers
+(`Certificates.IntervalCovers`, until their hand replacements are complete). Hales–Vajjha's
+Theorem 5.0.2 is proved in `lean4-smoothed-polygon` (`SmoothedPolygons.theorem5_0_2`).
 -/
 
 @[expose] public section
@@ -28,25 +28,22 @@ namespace SmoothedOctagon
 open SmoothedPolygons MeasureTheory Set
 
 /-- **The Reinhardt conjecture with its equality case**, in the library's vocabulary. -/
-theorem fullReinhardtConjecture (h502 : Cited.HalesVajjha.Theorem5_0_2)
-    (hcov : Certificates.IntervalCovers) : FullReinhardtConjecture :=
-  ⟨reinhardtConjecture h502 hcov, worstDisk_eq_linear_image h502 hcov⟩
+theorem fullReinhardtConjecture (hcov : Certificates.IntervalCovers) : FullReinhardtConjecture :=
+  ⟨reinhardtConjecture hcov, worstDisk_eq_linear_image hcov⟩
 
-/-! ### The statements of `Challenge.lean`, under the two hypotheses -/
+/-! ### The statements of `Challenge.lean`, under the hypothesis -/
 
-/-- `Challenge.reinhardt`, under the hypotheses. -/
-theorem reinhardt_of (h502 : Cited.HalesVajjha.Theorem5_0_2)
-    (hcov : Certificates.IntervalCovers) (K : Set (Fin 2 → ℝ)) (hK : IsConvexDisk K)
-    (hsymm : ∃ c : Fin 2 → ℝ, ∀ x ∈ K, (2 : ℝ) • c - x ∈ K) :
+/-- `Challenge.reinhardt`, under the hypothesis. -/
+theorem reinhardt_of (hcov : Certificates.IntervalCovers) (K : Set (Fin 2 → ℝ))
+    (hK : IsConvexDisk K) (hsymm : ∃ c : Fin 2 → ℝ, ∀ x ∈ K, (2 : ℝ) • c - x ∈ K) :
     (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) ≤ greatestPackingDensity K := by
   obtain ⟨c, hc⟩ := hsymm
   rw [bridge_octagonDensity_eq, ← bridge_greatestPackingDensity_translate K (-c)]
-  exact reinhardtConjecture_iff_density_lower_bound.mp (reinhardtConjecture h502 hcov) _
+  exact reinhardtConjecture_iff_density_lower_bound.mp (reinhardtConjecture hcov) _
     (bridge_isCCSDisk_centre hK hc)
 
-/-- `Challenge.reinhardt_equality`, under the hypotheses. -/
-theorem reinhardt_equality_of (h502 : Cited.HalesVajjha.Theorem5_0_2)
-    (hcov : Certificates.IntervalCovers) :
+/-- `Challenge.reinhardt_equality`, under the hypothesis. -/
+theorem reinhardt_equality_of (hcov : Certificates.IntervalCovers) :
     (∃ g X : ℝ → Mat2,
       IsStateTrajectory (tf 1) (polygonControl 1) g X ∧ g 0 = 1 ∧ X 0 = Φ 0 (y₀ 1)) ∧
     ∀ g X : ℝ → Mat2, IsStateTrajectory (tf 1) (polygonControl 1) g X → g 0 = 1 →
@@ -67,8 +64,8 @@ theorem reinhardt_equality_of (h502 : Cited.HalesVajjha.Theorem5_0_2)
     have hW : IsWorstDisk ((fun x ↦ x + -c) '' K) := by
       refine ⟨bridge_isCCSDisk_centre hK hc, ?_⟩
       rw [bridge_greatestPackingDensity_translate, hd,
-        reinhardtConjecture_iff_minimax.mp (reinhardtConjecture h502 hcov)]
-    obtain ⟨A, hA⟩ := worstDisk_eq_linear_image h502 hcov _ hW
+        reinhardtConjecture_iff_minimax.mp (reinhardtConjecture hcov)]
+    obtain ⟨A, hA⟩ := worstDisk_eq_linear_image hcov _ hW
     refine ⟨A.toAffineEquiv.trans (AffineEquiv.constVAdd ℝ (Fin 2 → ℝ) c), ?_⟩
     rw [AffineEquiv.coe_trans, image_comp]
     change K = _ '' ((A : (Fin 2 → ℝ) → (Fin 2 → ℝ)) '' octagon)
@@ -84,13 +81,12 @@ theorem reinhardt_equality_of (h502 : Cited.HalesVajjha.Theorem5_0_2)
       simpa using this
     rw [e, bridge_greatestPackingDensity_translate, greatestPackingDensity_linear_image_octagon]
 
-/-- `Challenge.reinhardt_cost`, under the hypotheses. -/
-theorem reinhardt_cost_of (h502 : Cited.HalesVajjha.Theorem5_0_2)
-    (hcov : Certificates.IntervalCovers) (T : ℝ) (u : ℝ → Fin 3 → ℝ) (g X : ℝ → Mat2)
-    (h : IsStateTrajectory T u g X) (hg0 : g 0 = 1) (hgT : g T = R)
+/-- `Challenge.reinhardt_cost`, under the hypothesis. -/
+theorem reinhardt_cost_of (hcov : Certificates.IntervalCovers) (T : ℝ) (u : ℝ → Fin 3 → ℝ)
+    (g X : ℝ → Mat2) (h : IsStateTrajectory T u g X) (hg0 : g 0 = 1) (hgT : g T = R)
     (hXT : X T = R⁻¹ * X 0 * R) :
     √12 * ((8 - 4 * √2 - Real.log 2) / (2 * √2 - 1)) ≤ reinhardtCost T X := by
-  have := controlLowerBound h502 hcov T u g X ⟨h, hg0, hgT, hXT⟩
+  have := controlLowerBound hcov T u g X ⟨h, hg0, hgT, hXT⟩
   rwa [volume_real_octagon, octagonCost, ← bridge_octagonDensity_eq] at this
 
 /-- `Challenge.octagon_area` (unconditional). -/

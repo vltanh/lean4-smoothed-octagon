@@ -27,8 +27,8 @@ public import SmoothedOctagon.Terminal.Comparison
    therefore costs at least `A_oct` (`controlLowerBound`), and every centrally symmetric convex disk
    has density at least `δ_oct` (`reinhardtConjecture`).
 
-The hypotheses are Hales–Vajjha's Theorem 5.0.2 (`Cited.HalesVajjha.Theorem5_0_2`) and the interval
-covers (`Certificates.IntervalCovers`).
+The one hypothesis is the interval covers (`Certificates.IntervalCovers`); Hales–Vajjha's
+Theorem 5.0.2, used in step 1, is proved in `SmoothedPolygons` (`theorem5_0_2`).
 -/
 
 @[expose] public section
@@ -67,10 +67,9 @@ theorem period_le_five (hcov : Certificates.IntervalCovers) (P : NormalPeriod)
   · exact nonshort_exclusion hcov.mixed P hc hK h2 hN
 
 /-- **Every global minimizer costs at least `A_oct`.** -/
-theorem minimizer_cost_ge (h502 : Cited.HalesVajjha.Theorem5_0_2)
-    (hcov : Certificates.IntervalCovers) {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2}
-    (hmin : IsReinhardtMinimizer T u g X) : octagonCost ≤ reinhardtCost T X := by
-  obtain ⟨P, -, -, -, -, -, hcost, -, hK⟩ := finiteNormalRepresentation h502 hmin
+theorem minimizer_cost_ge (hcov : Certificates.IntervalCovers) {T : ℝ} {u : ℝ → Fin 3 → ℝ}
+    {g X : ℝ → Mat2} (hmin : IsReinhardtMinimizer T u g X) : octagonCost ≤ reinhardtCost T X := by
+  obtain ⟨P, -, -, -, -, -, hcost, -, hK⟩ := finiteNormalRepresentation hmin
   have hc : P.IsCompetitive := by
     unfold NormalPeriod.IsCompetitive
     rw [hcost]
@@ -81,17 +80,15 @@ theorem minimizer_cost_ge (h502 : Cited.HalesVajjha.Theorem5_0_2)
 /-- **The control lower bound.** Every admissible trajectory of the Reinhardt control problem, with
 any terminal time and any measurable control, costs at least the area `A_oct` of the smoothed
 octagon. -/
-theorem controlLowerBound (h502 : Cited.HalesVajjha.Theorem5_0_2)
-    (hcov : Certificates.IntervalCovers) : ControlLowerBound := by
+theorem controlLowerBound (hcov : Certificates.IntervalCovers) : ControlLowerBound := by
   intro T u g X hadm
   obtain ⟨K, S, σ, G, Y, -, -, -, hWmin, -⟩ := exists_worstDisk_controlMinimizer
   rw [volume_real_octagon]
-  exact (minimizer_cost_ge h502 hcov hWmin).trans (hWmin.2 T u g X hadm)
+  exact (minimizer_cost_ge hcov hWmin).trans (hWmin.2 T u g X hadm)
 
 /-- **The Reinhardt conjecture.** The smoothed octagon is a worst disk: every centrally symmetric
 convex disk has greatest packing density at least `δ_oct`. -/
-theorem reinhardtConjecture (h502 : Cited.HalesVajjha.Theorem5_0_2)
-    (hcov : Certificates.IntervalCovers) : ReinhardtConjecture :=
-  reinhardtConjecture_iff_controlLowerBound.mpr (controlLowerBound h502 hcov)
+theorem reinhardtConjecture (hcov : Certificates.IntervalCovers) : ReinhardtConjecture :=
+  reinhardtConjecture_iff_controlLowerBound.mpr (controlLowerBound hcov)
 
 end SmoothedOctagon

@@ -2,26 +2,30 @@ module
 
 public import SmoothedOctagon.Reduction.Defs
 public import SmoothedOctagon.Foundations.ReverseComparison
+public import SmoothedPolygons.Ch5.Theorem502
 
 /-!
 # The compact domain along a global minimizer
 
 COMPACT_DOMAIN_SOURCE_AUDIT (main theorem and §§1, 4) and GLOBAL_MINIMIZER_COMPACTNESS (3)
 (inventory A2, §2.2, `CDSA:Main`, `CDSA:§1`, `CDSA:§4`, `GMC:(3)`). The state of every global
-minimizer stays in the compact domain `𝔥**` of Hales–Vajjha, Definition 5.0.1: realize the
-minimizer as a balanced disk, keeping the link `σ_j(t) = g(t) s_j*` and the cyclic shift, and apply
-Hales–Vajjha, Theorem 5.0.2 (the hypothesis `Cited.HalesVajjha.Theorem5_0_2`) in the
-contrapositive: the disk's area is the minimizer's cost, at most `A_oct`. Route: the notes'
-repaired proof of Theorem 5.0.2 (sector reduction, `CDSA:§§2-3`) is not needed here, since
-Theorem 5.0.2 is a hypothesis.
+minimizer stays in the compact domain `𝔥**` of Hales–Vajjha, Definition 5.0.1. This module is the
+bridge to Hales–Vajjha's Theorem 5.0.2, proved in `SmoothedPolygons` as
+`SmoothedPolygons.theorem5_0_2` (`Ch5/Theorem502.lean`): extend the minimizer cyclically to a
+global trajectory `(G, Y)` of the same cost (`exists_cyclic_extension_of_isReinhardtAdmissible`),
+whose frame contacts `σ_j(t) = G(t) s_j*` bound a balanced disk at every time
+(`lowCost_cyclicFrame_isBalancedPair`), with `Y = G⁻¹G'` and `Y = Φ ∘ z`, `z` in `𝔥*`, everywhere;
+then apply Theorem 5.0.2 in the contrapositive: leaving `𝔥**` would make the cost exceed `A_oct`.
+Route: the notes' repaired proof of Theorem 5.0.2 (sector reduction, `CDSA:§§2-3`) is replaced by
+the one in `SmoothedPolygons`.
 
 Main API:
 
 * `cost_le_octagonCost`: a global minimizer costs at most `A_oct`.
 * `volume_real_smoothedPolygonDisk_one`, `octagonCost_lt_pi`: the octagon's area is `A_oct < π`.
-* `exists_linked_balanced_realization`: a low-cost admissible trajectory is the boundary
-  trajectory of a balanced disk in circle representation, with `σ_j(t) = g(t) s_j*` on `[0, T]` and
-  `σ_j(t + T) = σ_{j+1}(t)`, whose area is the cost.
+* `compactDomain_eq_truncatedStarDomain`: `𝔥**` written with the star functions
+  (`Cited.HalesVajjha.compactDomain`) is `SmoothedPolygons.truncatedStarDomain`.
+* `exists_mem_starDomain_eq_Φ`: a star state is `Φ(z)` with `z ∈ 𝔥*`.
 * `inCompactDomain_of_isReinhardtMinimizer`: the state of a global minimizer stays in `𝔥**`.
 * `margin_eq_two_mul_ρ`, `two_div_fifteen_le_margin`: on traceless states `p₀ = 2ρ₂`,
   `p₁ = 2ρ₁`, `p₂ = 2ρ₀`; on `𝔥**` every margin is at least `2/15` (`CDSA:§1`).
@@ -58,46 +62,133 @@ theorem octagonCost_lt_pi : octagonCost < π := by
   have h := octagon_area_lt_pi
   rwa [octagon, volume_real_smoothedPolygonDisk_one] at h
 
-/-- **Balanced realization with the frame link** (the correspondence of ADMISSIBLE_REALIZATION
-and REVERSE_COMPARISON, as `lowCost_admissible_balanced_realization`, keeping the link and the
-shift). A low-cost admissible trajectory is the boundary trajectory `σ_j(t) = g(t) s_j*` of a
-balanced disk in circle representation, with `σ_j(t + T) = σ_{j+1}(t)`, whose area is its cost. -/
-theorem exists_linked_balanced_realization {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2}
-    (hadm : IsReinhardtAdmissible T u g X) (hcost : reinhardtCost T X < π) :
-    ∃ (K : Set (Fin 2 → ℝ)) (σ : ZMod 6 → ℝ → Fin 2 → ℝ),
-      IsBalancedPair K σ T ∧ IsCircleRepresentation σ ∧
-      (∀ j, ∀ t ∈ Icc 0 T, σ j t = g t *ᵥ sixthRoot j) ∧ (∀ j t, σ j (t + T) = σ (j + 1) t) ∧
-      volume.real K = reinhardtCost T X := by
+/-! ### `𝔥**` in the two vocabularies -/
+
+private lemma ρ₀_Φ (x y : ℝ) : ρ₀ (Φ x y) = (x + 1 / √3) / y := by
+  have h3 : √3 ≠ 0 := by positivity
+  simp only [ρ₀, Φ, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one]
+  rcases eq_or_ne y 0 with rfl | hy
+  · simp
+  field_simp
+  ring
+
+private lemma ρ₁_Φ (x y : ℝ) : ρ₁ (Φ x y) = (1 / √3 - x) / y := by
+  have h3 : √3 ≠ 0 := by positivity
+  simp only [ρ₁, Φ, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one]
+  rcases eq_or_ne y 0 with rfl | hy
+  · simp
+  field_simp
+
+private lemma ρ₂_Φ (x y : ℝ) : ρ₂ (Φ x y) = √3 / 2 * (x ^ 2 + y ^ 2 - 1 / 3) / y := by
+  have h3 : √3 ≠ 0 := by positivity
+  have h3sq : √3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  simp only [ρ₂, Φ, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
+    Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one]
+  rcases eq_or_ne y 0 with rfl | hy
+  · simp
+  field_simp
+  ring_nf
+  rw [h3sq]
+  ring
+
+/-- **`𝔥**` in the two vocabularies** (Definition 5.0.1). `Cited.HalesVajjha.compactDomain` (the
+cusp disks `8y/27 ≤ (x ∓ 1/√3)² + y²` and the star functions `ρⱼ(Φ(z)) ≥ 1/15`) is
+`truncatedStarDomain` of `SmoothedPolygons` (the horoballs and the edge half-planes, in the explicit
+form `truncatedStarDomain_eq`): `ρ₀(Φ(z)) = (x + 1/√3)/y`, `ρ₁(Φ(z)) = (1/√3 - x)/y` and
+`ρ₂(Φ(z)) = (√3/2)(x² + y² - 1/3)/y`. -/
+theorem compactDomain_eq_truncatedStarDomain :
+    Cited.HalesVajjha.compactDomain = truncatedStarDomain := by
+  rw [truncatedStarDomain_eq]
+  ext ⟨x, y⟩
+  simp only [Cited.HalesVajjha.compactDomain, mem_ofPred_eq, ρ₀_Φ, ρ₁_Φ, ρ₂_Φ]
+  have h3sq : √3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have e : 2 * y / (15 * √3) = 2 / 3 * √3 * (1 / 15 * y) := by
+    field_simp
+    rw [h3sq]
+  have e2 : 2 / 3 * √3 * (√3 / 2 * (x ^ 2 + y ^ 2 - 1 / 3)) = x ^ 2 + y ^ 2 - 1 / 3 := by
+    have : 2 / 3 * √3 * (√3 / 2 * (x ^ 2 + y ^ 2 - 1 / 3)) =
+        √3 ^ 2 / 3 * (x ^ 2 + y ^ 2 - 1 / 3) := by ring
+    rw [this, h3sq]
+    ring
+  have hpos : (0 : ℝ) < 2 / 3 * √3 := by positivity
+  constructor
+  · rintro ⟨hz, h1, h2, h3, h4, h5, h6⟩
+    have hy : 0 < y := hz.1
+    rw [le_div_iff₀ hy] at h4 h5 h6
+    refine ⟨hz, h1, by nlinarith, by nlinarith, by linarith, ?_, by linarith⟩
+    have := mul_le_mul_of_nonneg_left h6 hpos.le
+    rw [e2] at this
+    rw [e]
+    linarith
+  · rintro ⟨hz, h1, h2, h3, h4, h5, h6⟩
+    have hy : 0 < y := hz.1
+    refine ⟨hz, h1, by nlinarith, by nlinarith, ?_, ?_, ?_⟩ <;> rw [le_div_iff₀ hy]
+    · linarith
+    · linarith
+    · rw [e] at h5
+      have h7 : 2 / 3 * √3 * (1 / 15 * y) ≤ 2 / 3 * √3 * (√3 / 2 * (x ^ 2 + y ^ 2 - 1 / 3)) := by
+        rw [e2]; linarith
+      exact le_of_mul_le_mul_left h7 hpos
+
+/-- A star state is `Φ(z)` for some `z ∈ 𝔥*` (Lemmas 4.1.1, 4.2.1 and Theorem 4.4.1). -/
+theorem exists_mem_starDomain_eq_Φ {X : Mat2} (hX : IsStarState X) :
+    ∃ z ∈ starDomain, X = Φ z.1 z.2 := by
+  have hmem : X ∈ adjointOrbit J := by
+    rw [← lemma4_1_1]
+    exact ⟨hX.1, hX.2.1, poly_traceForm_J_neg hX⟩
+  obtain ⟨z, -, hz⟩ := lemma4_2_1.surjOn hmem
+  have hX' : X = Φ z.re z.im := by rw [← hz, ΦH]
+  exact ⟨(z.re, z.im), (theorem4_4_1 _ _ z.im_pos).1 (hX' ▸ hX), hX'⟩
+
+/-! ### The compact domain from Theorem 5.0.2 -/
+
+/-- **The compact domain** (COMPACT_DOMAIN_SOURCE_AUDIT, main theorem, from Hales–Vajjha,
+Theorem 5.0.2, `SmoothedPolygons.theorem5_0_2`). The state of every global minimizer stays in `𝔥**`
+at every time of `[0, T]`.
+
+Proof: the cyclic extension `(G, Y)` of the minimizer
+(`exists_cyclic_extension_of_isReinhardtAdmissible`) agrees with `(g, X)` on `[0, T]`, has the
+same cost, `G' = GY` and `Y` a star state at every time, and `G(t + T) = G(t) R`; its frame
+contacts `σ_j = G s_j*` bound a balanced disk (`lowCost_cyclicFrame_isBalancedPair`, the cost being
+at most `A_oct < π`). These are the global hypotheses of `theorem5_0_2` (`Y = G⁻¹G'` since
+`det G = 1`, and `Y = Φ ∘ z` with `z` in `𝔥*` by `exists_mem_starDomain_eq_Φ`), which then puts
+the cost strictly above `A_oct` if `X(t₀) = Y(t₀)` leaves `𝔥** = truncatedStarDomain`. -/
+theorem inCompactDomain_of_isReinhardtMinimizer {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2}
+    (hmin : IsReinhardtMinimizer T u g X) :
+    ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t) := by
+  intro t₀ ht₀
+  by_contra hout
+  have hcost := cost_le_octagonCost hmin
+  -- the global cyclic extension `(G, Y)` of the minimizer, and its balanced disk
   obtain ⟨G, Y, hagree, hGC, hYC, hYLip, hdet, hstar, hD, hG0,
       hGshift, -, -, hcurv, hcosteq⟩ :=
-    exists_cyclic_extension_of_isReinhardtAdmissible hadm
+    exists_cyclic_extension_of_isReinhardtAdmissible hmin.1
   have hκ : ∀ j, ∀ᵐ t, 0 ≤ det2 (deriv (frameContact G j) t)
       (deriv (deriv (frameContact G j)) t) := by
     intro j
     filter_upwards [hcurv] with t ht
     exact ht j
-  have hlow : reinhardtCost T Y < π := by rw [hcosteq]; exact hcost
-  obtain ⟨hbal, hcirc⟩ := lowCost_cyclicFrame_isBalancedPair hadm.1.1 hGC hdet hYC
+  have hlow : reinhardtCost T Y < π := by
+    rw [hcosteq]; exact hcost.trans_lt octagonCost_lt_pi
+  obtain ⟨hbal, -⟩ := lowCost_cyclicFrame_isBalancedPair hmin.1.1.1 hGC hdet hYC
     hD hstar hYLip hG0 hGshift hκ hlow
-  have harea : reinhardtCost T Y = volume.real (cyclicFrameDisk G T) :=
-    cost_eq_area_of_balanced_cyclic hbal G Y (fun j t _ ↦ rfl)
-      (fun t _ ↦ hD t) (frameContact_shift hGshift)
-  refine ⟨cyclicFrameDisk G T, frameContact G, hbal, hcirc, fun j t ht ↦ ?_,
-    frameContact_shift hGshift, harea.symm.trans hcosteq⟩
-  simp only [frameContact, (hagree t ht).1]
-
-/-- **The compact domain** (COMPACT_DOMAIN_SOURCE_AUDIT, main theorem, from Hales–Vajjha,
-Theorem 5.0.2). The state of every global minimizer stays in `𝔥**` at every time of `[0, T]`. -/
-theorem inCompactDomain_of_isReinhardtMinimizer (h502 : Cited.HalesVajjha.Theorem5_0_2)
-    {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2} (hmin : IsReinhardtMinimizer T u g X) :
-    ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t) := by
-  by_contra h
-  push Not at h
-  have hcost := cost_le_octagonCost hmin
-  obtain ⟨K, σ, hbal, hcirc, hlink, hshift, harea⟩ :=
-    exists_linked_balanced_realization hmin.1 (hcost.trans_lt octagonCost_lt_pi)
-  have hlt := h502 K σ T u g X hbal hcirc hlink hshift hmin.1.1 h
-  rw [volume_real_smoothedPolygonDisk_one, harea] at hlt
+  -- `Y = G⁻¹G'` and `Y = Φ ∘ z` with `z` in `𝔥*`, at every time
+  have hY : ∀ t, Y t = (G t)⁻¹ * derivEntrywise G t := by
+    intro t
+    rw [(hD t).derivEntrywise, ← Matrix.mul_assoc,
+      Matrix.nonsing_inv_mul _ (by rw [hdet t]; exact isUnit_one), Matrix.one_mul]
+  choose z hzD hzΦ using fun t ↦ exists_mem_starDomain_eq_Φ (hstar t)
+  -- the state leaves `𝔥**` at `t₀`
+  have hz₀ : z t₀ ∉ truncatedStarDomain := by
+    intro hmem
+    refine hout ⟨(z t₀).1, (z t₀).2, ?_, compactDomain_eq_truncatedStarDomain ▸ hmem⟩
+    rw [← (hagree t₀ ht₀).2, hzΦ t₀]
+  -- Theorem 5.0.2: then the cost exceeds the area `A_oct` of the smoothed octagon
+  have hlt := (theorem5_0_2 hbal (fun j t ↦ rfl) (frameContact_shift hGshift) hY
+    (fun t ↦ ⟨hzD t, hzΦ t⟩) hz₀).1
+  rw [volume_real_smoothedPolygonDisk_one, hcosteq] at hlt
   linarith
 
 /-- **Margin dictionary** (COMPACT_DOMAIN_SOURCE_AUDIT §1): on traceless matrices
