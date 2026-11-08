@@ -125,7 +125,7 @@ sliding packings.
 
 [`SmoothedOctagon.lean`](SmoothedOctagon.lean), the root of the library, restates the three
 theorems of [`Palomar/Challenge.lean`](Palomar/Challenge.lean) word for word and proves them,
-with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 8,695 declarations of the
+with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 8,295 declarations of the
 library, and the three theorems, depend only on the standard axioms.
 
 | Stage | Lean |
@@ -167,8 +167,8 @@ Lean and Mathlib are pinned at `v4.36.0-rc2`. The project depends on
 [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) (Hales–Vajjha's book,
 including the Pontryagin lift of a minimizer and Theorem 5.0.2) and, through it, on
 [lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control) (the maximum principle).
-A full build of the library takes about 4 CPU-hours, about 20 minutes on 20 cores. No module needs
-more than 7 GB of memory; CI builds the few that need more than 4 GB
+A full build of the library takes about 3.5 CPU-hours, about 18 minutes on 20 cores. No module
+needs more than 7 GB of memory; CI builds the few that need more than 4 GB
 (`scripts/ci/sequential-modules.txt`) one at a time, then the rest in parallel.
 
 ## Layout
