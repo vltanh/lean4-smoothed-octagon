@@ -15,8 +15,9 @@ arguments ([`archive/notes/HAND_PROOF_STATUS.md`](archive/notes/HAND_PROOF_STATU
 
 Claude Opus 5.5 (Anthropic), in Claude Code, wrote the Lean formalization from 7 to 8 November 2026,
 coordinating sub-agents that inventoried the notes, stated each stage, and proved the stages in
-parallel; it also wrote the verified interval arithmetic and the kernel-checked certificate of the
-remaining cover, the figures and the playground, and this documentation. The procedure followed the
+parallel, and generated Bernstein certificates, checked by `ring`, for the largest polynomial signs;
+it also wrote the figures, the playground and this documentation. Five of the largest signs of the
+nonshort case follow ChatGPT Pro's lighter hand proofs (pull request #2). The procedure followed the
 [formalize-math-paper](https://github.com/vltanh/formalize-math-paper) skill (version 3.0.0), with
 shorter routes than the notes allowed wherever they exist (marked `Route:` in the docstrings).
 

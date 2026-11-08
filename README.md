@@ -124,7 +124,7 @@ sliding packings.
 
 [`ReinhardtSolution.lean`](ReinhardtSolution.lean) restates the three theorems of
 [`ReinhardtChallenge.lean`](ReinhardtChallenge.lean) word for word and proves them from the library,
-with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 97,664 declarations of the
+with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 8,684 declarations of the
 library, and the three theorems, depend only on the standard axioms.
 
 | Stage | Lean |
@@ -162,8 +162,9 @@ Lean and Mathlib are pinned at `v4.36.0-rc2`. The project depends on
 [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) (Hales–Vajjha's book,
 including the Pontryagin lift of a minimizer and Theorem 5.0.2) and, through it, on
 [lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control) (the maximum principle).
-A full build takes about an hour on 16 cores: the interval certificate alone is about 4 CPU-hours of
-kernel time, and some certificate files need up to 10 GB of memory each.
+A full build of the library takes about 4 CPU-hours, about 20 minutes on 20 cores. No module needs
+more than 7 GB of memory; CI builds the few that need more than 4 GB
+(`scripts/ci/sequential-modules.txt`) one at a time, then the rest in parallel.
 
 ## Layout
 
@@ -177,8 +178,7 @@ SmoothedOctagon/
   Exclusion/                   the five cases R, M3, M1, F, M2
   Terminal/                    periods with at most five pieces
   Equality/                    rigidity and its converse
-  Certificates/                the scalar statements of the informal proof's interval covers
-  Interval/                    verified interval arithmetic and the kernel-checked certificate
+  Certificates/                the six-variable point of a smaller-short window
   Bridge/                      the Challenge's terms; Hales's octagon is a linear image of Reinhardt's
   Defs.lean                    Reinhardt's smoothed octagon, shared with the Challenge
   LowerBound.lean, Main.lean   the assembly
