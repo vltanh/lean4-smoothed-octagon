@@ -3,10 +3,7 @@
 This note reduces the \(F_1\) test in
 [MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN](../../archive/notes/MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN.md)
 to two beta endpoints, before any shape substitution or large polynomial
-expansion. It is a partial replacement: **the resulting \(F_1\) signs
-remain to be proved.** The companion \(F_0\) sign is now proved on the
-[actual small-shape branch](SHORT_OUTER_LOW_SHAPE_TERMINAL.md); its other
-branches and S1 as a whole remain open.
+expansion. It supplies one reduction in the [completed S1.1 outer replacement](SHORT_OUTER_COMPLETE.md). The downstream terminal signs are now proved; the other S1 rows remain separate obligations.
 
 The largest expanded identity used below has 19 monomials, total degree
 seven in two variables, and coefficients of absolute value at most 1242.

@@ -3,8 +3,8 @@
 This closes the \(F_0\) part of the actual small-shape branch B in
 [MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN](../../archive/notes/MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN.md),
 using the [beta](SHORT_OUTER_BETA_LOW_SHAPE.md) and
-[shape](SHORT_OUTER_ALPHA_LOW_SHAPE.md) reductions. It does not
-close the \(F_1\) sign, the S or A branches, or S1 as a whole.
+[shape](SHORT_OUTER_ALPHA_LOW_SHAPE.md) reductions. The companion \(F_1\) sign and the S and A branches are assembled in
+the [completed outer replacement](SHORT_OUTER_COMPLETE.md).
 
 The conclusion is
 \[

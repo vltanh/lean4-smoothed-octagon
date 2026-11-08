@@ -34,7 +34,7 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 
 | Priority | Gate and note | Replacement status |
 |---|---|---|
-| S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | Full sign open; first H-S priority. Both tests in [branch S](SHORT_OUTER_S_TERMINAL.md) and [branch A](SHORT_OUTER_LARGE_SHAPE_REDUCTION.md) are complete on their unchanged domains. The [actual small-shape branch B's `F0` sign](SHORT_OUTER_LOW_SHAPE_TERMINAL.md) is complete. Only branch B's `F1` sign remains open in this row. |
+| S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | **Complete hand caller replacement.** The [assembled proof](SHORT_OUTER_COMPLETE.md) closes both tests in all three branches. The last B `F1` terminal has margin `1597/144000000`. The exact actual outer caller and its original duration conclusion are preserved. |
 | S1.2 | `MIXED_SMALLER_SHORT_LOW_RATIO_CENTRAL_HAND_SIGN` (20)--(25), Appendices A--C | Open. |
 | S1.3 | `MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_SIGN` (7) | Open. |
 | S1.4 | `MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN` (3) and `MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES` (5) | Open. |
@@ -43,10 +43,15 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 | S3.1 | `MIXED_SMALLER_SHORT_DISPLACEMENT_OUTER_FACE` (7)--(21) | Open. |
 | S3.2 | `MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_FACE`, Section 2 (4)--(10) | Open. |
 | S4 | `MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES` (4)--(30) | Open. |
-| S6 | `MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION` (20)--(31) | Open. |
+| S6 | `MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION` (20)--(31) | **Complete hand replacement.** [Angle concavity and four endpoint curves](SHORT_COST_CONCAVITY.md) give `B>113/50000`, with margin greater than `3/100000` over the original target. Primitive numerator degree is at most five; only one rational split is used. The original physical-cost caller is unchanged. |
 
 These are the finite requested obligations. The three corrections below
 are recorded separately and are not counted as polynomial replacements.
+
+Two of the ten H-S replacement rows are now complete: S1.1 and S6.
+The remaining eight are the unchanged finite list above. This count
+describes completed rows, not equal amounts of remaining effort, and
+does not claim completion of H-S or Lean integration.
 
 ## Repaired H-S interfaces
 
@@ -232,6 +237,20 @@ Independent reviews reconstructed the original source and checked all
 identities, interval bounds, scalar roundings, and the unchanged caller.
 
 ## Validation boundary
+
+The [completed outer row](SHORT_OUTER_COMPLETE.md) includes the formerly
+unpublished B `F1` source and terminal. Independent reconstruction checked
+the original transport functions, every printed source polynomial, the
+pole and infinity data, curvature identities, derivative signs and directed
+scalar endpoint enclosures. Both original residuals now close on all of
+the actual outer caller's domain.
+
+The [S6 replacement](SHORT_COST_CONCAVITY.md) was independently checked
+against the original physical-cost score. Its concavity proof retains
+small rational factors throughout; its six short curve comparisons and
+four scalar values have explicit rational recipes. Independent exact
+checks confirmed all derivative bounds and both sets of scalar roundings.
+It removes the original degree-24 cleared polynomials from that caller.
 
 Exact rational symbolic calculations check transcription and monomial
 counts. The displayed identities and inequalities supply the hand

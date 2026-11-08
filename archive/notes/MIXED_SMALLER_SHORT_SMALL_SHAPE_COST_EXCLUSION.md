@@ -1,5 +1,13 @@
 # A strict physical-cost contradiction on the small short-shape domain
 
+**Complete lighter replacement:** [angle concavity and four endpoint
+curves](../../docs/lighter-proofs/SHORT_COST_CONCAVITY.md) replace equations
+(20)--(31) below. They give `B>113/50000`, with more than `3/100000` of
+margin over the original target, using primitive polynomials of degree
+at most five and one displacement split at `1/38`. Sections 1--4 and 7,
+including the corrected outer-cap provenance, remain the physical caller.
+The large cleared-polynomial argument is preserved as the original source.
+
 Date: 2026-11-08 UTC. Conditional hand theorem, with a separate
 [scope and arithmetic audit](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_AUDIT.md).
 This proves the completion-cost step on its stated domain. It does not
