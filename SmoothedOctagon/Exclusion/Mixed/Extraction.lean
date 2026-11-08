@@ -5,6 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.Reflection
 public import SmoothedOctagon.Exclusion.Mixed.Extract.Compact
 public import SmoothedOctagon.Exclusion.Mixed.Extract.Transport
 public import SmoothedOctagon.Exclusion.Mixed.Extract.WindowAlg
+public import SmoothedOctagon.Exclusion.Mixed.Short.Window
 
 /-!
 # Case M2: the scalar windows of an actual period
@@ -41,6 +42,14 @@ Ingredients, all on the costate cycle of the period and its covector calculus
   `m2_scale`);
 * for the short window, the middle missing-control slack and the two-turn window-defect inequality
   (`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (M), (A), (8)-(9)).
+
+The short window uses `Mixed/Short/Window`: the same-lift transport to the outer centre
+(`ss_alg_wEL`) and the middle slack `N_mid = (4/K_a²) G_L` from the missing control
+`M2Calculus.mc_fwd` at the forward switch `C → B` (`ss_alg_mid`), the centre frames
+(`ss_centre_frame`) and the cover's `u`, `β`, `x` at the window point (`ss_point_*`). The
+window-defect field (`M2Short.defect`, GLOBAL_SPECTRAL_COST_CASIMIR (13) on the two-turn window,
+with the endpoint traces of `MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (5)-(7) and the modulus filter
+(A)) is not provided by `M2Calculus` and remains open here.
 
 Helpers (usable for both windows): `Mixed/Extract/Compact` (`NormalPeriod.wx_m_ge`,
 `wx_half_le_m_add`, `wx_m_le`: the compact-domain bounds on the switch margins),
@@ -341,6 +350,194 @@ theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InComp
       D.a = P.costateCycle.act m ∧ D.C = P.costateCycle.act (m + 1) ∧
       D.B = P.costateCycle.act (m + 2) ∧ D.A = P.costateCycle.act (m + 3) ∧
       D.Pf = P.costateCycle.act (m + 4) := by
-  sorry
+  obtain ⟨K⟩ := P.m2_calculus
+  set Y := P.costateCycle with hY
+  have hmix : P.rep.IsMixed := h.1
+  have hact : ∀ j, P.activeMargin j = Y.act j := fun j => (P.costateCycle_m_lab j).symm
+  have hrev : ∀ j, ¬ Y.m2Fwd j → P.rep.IsReverse j := fun j hj =>
+    (P.rep.m2_fwd_or_rev j).resolve_left hj
+  -- the reverse run after the short bridge: switches `m + 2`, `m + 3` reverse, `m + 4` forward
+  obtain ⟨⟨f, hf⟩, -⟩ := hmix
+  obtain ⟨k, L, hrunA, hk1, hk2⟩ := P.rep.m2_exists_reverseRun hf (hrev _ h4)
+  have hL := h.2.1 k L hrunA
+  subst hL
+  have hk : k = m + 2 := by
+    have : k = m + 1 ∨ k = m + 2 := by push_cast at hk2; omega
+    rcases this with rfl | rfl
+    · exact absurd ⟨h3, hrunA.2.2.2 (m + 1) le_rfl (by push_cast; omega)⟩
+        (P.rep.m2_not_fwd_and_rev (m + 1))
+    · rfl
+  subst hk
+  have h5 : ¬ Y.m2Fwd (m + 3) := fun e =>
+    P.rep.m2_not_fwd_and_rev (m + 3) ⟨e, hrunA.2.2.2 (m + 3) (by omega) (by push_cast; omega)⟩
+  have h6 : Y.m2Fwd (m + 4) := by
+    have := hrunA.2.2.1; rwa [show m + 2 + ((2 : ℕ) : ℤ) = m + 4 by push_cast; ring] at this
+  -- the strict centre minima at `a` and at `A`
+  have hruna : P.rep.IsReverseRun (m - 1) 2 := by
+    refine ⟨by norm_num, ?_, ?_, fun j hj1 hj2 => hrev j ?_⟩
+    · rw [show m - 1 - 1 = m - 2 by ring]; exact h2
+    · rw [show m - 1 + ((2 : ℕ) : ℤ) = m + 1 by push_cast; ring]; exact h3
+    · have : j = m - 1 ∨ j = m := by push_cast at hj2; omega
+      rcases this with rfl | rfl
+      · exact h1
+      · exact h0
+  obtain ⟨-, hap, hab, hac, -⟩ := reverseRun_two_and_centre_min P h.1 hruna
+  simp only [hact, show m - 1 + 1 = m by ring, show m - 1 - 1 = m - 2 by ring,
+    show m - 1 + 2 = m + 1 by ring] at hap hab hac
+  obtain ⟨-, hAC', hAB, hAPf, -⟩ := reverseRun_two_and_centre_min P h.1 hrunA
+  simp only [hact, show m + 2 + 1 = m + 3 by ring, show m + 2 - 1 = m + 1 by ring,
+    show m + 2 + 2 = m + 4 by ring] at hAC' hAB hAPf
+  -- positivity
+  have pos := fun k => Y.act_pos k
+  have b0 := pos (m - 1)
+  have a0 := pos m
+  have c0 := pos (m + 1)
+  have B0 := pos (m + 2)
+  have A0 := pos (m + 3)
+  have P0 := pos (m + 4)
+  -- signs at shifted indices
+  have h1' : ¬ Y.m2Fwd (m + 1 - 1) := by rw [add_sub_cancel_right]; exact h0
+  have h3' : Y.m2Fwd (m + 2 - 1) := by rw [show m + 2 - 1 = m + 1 by ring]; exact h3
+  have h4' : ¬ Y.m2Fwd (m + 3 - 1) := by rw [show m + 3 - 1 = m + 2 by ring]; exact h4
+  have h5' : ¬ Y.m2Fwd (m + 4 - 1) := by rw [show m + 4 - 1 = m + 3 by ring]; exact h5
+  -- factors (CE (2))
+  have qm := Y.m2_factor_rr h1 h0
+  have q1 := Y.m2_factor_rf h1' h3
+  rw [add_sub_cancel_right, show m + 1 + 1 = m + 2 by ring] at q1
+  have q2 := Y.m2_factor_fr h3' h4
+  rw [show m + 2 - 1 = m + 1 by ring, show m + 2 + 1 = m + 3 by ring] at q2
+  have q3 := Y.m2_factor_rr h4' h5
+  rw [show m + 3 - 1 = m + 2 by ring, show m + 3 + 1 = m + 4 by ring] at q3
+  have qm1 := Y.one_lt_q m
+  have q21 := Y.one_lt_q (m + 2)
+  have q31 := Y.one_lt_q (m + 3)
+  have hqm : Y.q m = (Y.act m ^ 2 + 4) / ((Y.act (m - 1) + Y.act m) * (Y.act m + Y.act (m + 1))) := by
+    rw [eq_div_iff (by positivity)]; exact qm
+  have hq1 : Y.q (m + 1) = (Y.act (m + 1) + Y.act (m + 2)) / (Y.act m + Y.act (m + 1)) := by
+    rw [eq_div_iff (by positivity)]; exact q1
+  have hq2 : Y.q (m + 2) = (Y.act (m + 1) + Y.act (m + 2)) / (Y.act (m + 2) + Y.act (m + 3)) := by
+    rw [eq_div_iff (by positivity)]; exact q2
+  have hq3 : Y.q (m + 3) = (Y.act (m + 3) ^ 2 + 4) /
+      ((Y.act (m + 2) + Y.act (m + 3)) * (Y.act (m + 3) + Y.act (m + 4))) := by
+    rw [eq_div_iff (by positivity)]; exact q3
+  -- strict star
+  have st_pb := Y.m2_star (m - 1)
+  have st_ab := Y.m2_star m
+  have st_aC := Y.m2_star (m + 1)
+  have st_CB := Y.m2_star (m + 2)
+  have st_BA := Y.m2_star (m + 3)
+  have st_APf := Y.m2_star (m + 4)
+  rw [show m - 1 - 1 = m - 2 by ring] at st_pb
+  rw [add_sub_cancel_right] at st_aC
+  rw [show m + 2 - 1 = m + 1 by ring] at st_CB
+  rw [show m + 3 - 1 = m + 2 by ring] at st_BA
+  rw [show m + 4 - 1 = m + 3 by ring] at st_APf
+  -- the turn secants (CE (15))
+  have sec_b := K.secant (m - 1)
+    (by rw [show m - 1 - 1 = m - 2 by ring]; exact fun e => h1 (e.1 h2))
+  rw [show m - 1 - 1 = m - 2 by ring, sub_add_cancel] at sec_b
+  have sec_C := K.secant (m + 1) (by rw [add_sub_cancel_right]; exact fun e => h0 (e.2 h3))
+  rw [add_sub_cancel_right, show m + 1 + 1 = m + 2 by ring] at sec_C
+  have sec_B := K.secant (m + 2) (by
+    rw [show m + 2 - 1 = m + 1 by ring]; exact fun e => h4 (e.1 h3))
+  rw [show m + 2 - 1 = m + 1 by ring, show m + 2 + 1 = m + 3 by ring] at sec_B
+  have sec_P := K.secant (m + 4) (by
+    rw [show m + 4 - 1 = m + 3 by ring]; exact fun e => h5 (e.2 h6))
+  rw [show m + 4 - 1 = m + 3 by ring] at sec_P
+  have hu1 : Y.m2Norm K.M (m + 1) = Y.m2Norm K.M m := by rw [sec_C.2, ← sec_C.1]
+  have hu2 : Y.m2Norm K.M (m + 2) = Y.m2Norm K.M m := by rw [sec_B.2, ← sec_B.1, hu1]
+  have hv2 : Y.m2Norm K.M (m - 2) = Y.m2Norm K.M (m - 1) := by rw [sec_b.1, ← sec_b.2]
+  -- the switching inequalities (CE (17))
+  have fge_pb := K.fwd_ge (m - 2) h2
+  rw [show m - 2 + 1 = m - 1 by ring, hv2] at fge_pb
+  have rle_b := K.rev_le (m - 1) h1
+  rw [sub_add_cancel, m2g_comm] at rle_b
+  have rle_a := K.rev_le m h0
+  have fge_C := K.fwd_ge (m + 1) h3
+  rw [show m + 1 + 1 = m + 2 by ring, hu1] at fge_C
+  have rle_B := K.rev_le (m + 2) h4
+  rw [show m + 2 + 1 = m + 3 by ring, hu2] at rle_B
+  have rle_A := K.rev_le (m + 3) h5
+  rw [show m + 3 + 1 = m + 4 by ring] at rle_A
+  -- the centre frames
+  obtain ⟨cfa_E, cfa_Γ⟩ := ss_centre_frame P K h1 h0
+  obtain ⟨cfA_E, cfA_Γ⟩ := ss_centre_frame P K (k := m + 3) h4' h5
+  rw [show m + 3 - 1 = m + 2 by ring, show m + 3 + 1 = m + 4 by ring, hu2] at cfA_E
+  rw [show m + 3 - 1 = m + 2 by ring, hu2] at cfA_Γ
+  -- the scale bounds (RCSB (1))
+  obtain ⟨Da, -, -, hDa, -, -, hDaΓ⟩ := m2_centre P K h.1 h2 h1 h0 h3
+  have hsc := m2_scale Da (by rw [hDaΓ]; linarith [K.cas_lt hc])
+  rw [hDa] at hsc
+  obtain ⟨DA, -, -, hDA, -, -, hDAΓ⟩ := m2_centre P K h.1 (k := m + 3)
+    (by rw [show m + 3 - 2 = m + 1 by ring]; exact h3) h4' h5
+    (by rw [show m + 3 + 1 = m + 4 by ring]; exact h6)
+  have hscA := m2_scale DA (by rw [hDAΓ]; linarith [K.cas_lt hc])
+  rw [hDA] at hscA
+  -- the frames: `M m = [[h, y₀], [z₀, -h]]`, transported to `C`, `B`, `A`
+  have tr0 := K.trace_eq m
+  rw [Matrix.trace_fin_two] at tr0
+  have e11 : K.M m 1 1 = -K.M m 0 0 := by linarith
+  have hv' : Y.m2Norm K.M (m - 1) = 8 * K.M m 1 0 / (Y.act (m - 1) + Y.act m) ^ 2 := by
+    have := Y.m2_norm_next K.transport (m - 1)
+    simp only [h1, ↓reduceIte, sub_add_cancel] at this
+    exact this
+  have hu' : Y.m2Norm K.M m = -8 * K.M m 0 1 /
+      (Y.q m ^ 2 * (Y.act m + Y.act (m + 1)) ^ 2) := by
+    unfold CostateCycle.m2Norm; simp only [h0, ↓reduceIte]
+  have hw' : Y.m2Norm K.M (m + 3) = -8 * K.M (m + 3) 0 1 /
+      (Y.q (m + 3) ^ 2 * (Y.act (m + 3) + Y.act (m + 4)) ^ 2) := by
+    unfold CostateCycle.m2Norm; simp only [h5, ↓reduceIte]
+    rw [show m + 3 + 1 = m + 4 by ring]
+  obtain ⟨x1, y1, z1, w1⟩ := Y.wx_next_rev K.transport h0
+  obtain ⟨x2, y2, z2, w2⟩ := Y.wx_next_fwd K.transport h3
+  rw [show m + 1 + 1 = m + 2 by ring] at x2 y2 z2 w2
+  obtain ⟨x3, y3, -, -⟩ := Y.wx_next_rev K.transport h4
+  rw [show m + 2 + 1 = m + 3 by ring] at x3 y3
+  rw [e11] at x1 y1
+  obtain ⟨hwt, hELt⟩ := ss_alg_wEL a0 b0 c0 B0 A0 P0 hqm hq1 hq2 hq3 x1 y1 z1 w1 x2 y2 z2 w2 x3 y3
+  rw [← hv', ← hu', ← hw'] at hwt
+  rw [← hu'] at hELt
+  -- the middle slack (`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (M))
+  have hGL := K.mc_fwd (m + 2) h3'
+  rw [show m + 2 - 1 = m + 1 by ring] at hGL
+  rw [ss_alg_mid a0 b0 c0 B0 hqm hq1 x1 y1 z1 w1 x2 y2 z2, ← hv', ← hu'] at hGL
+  have hmid := nonneg_of_mul_nonneg_right hGL (show (0 : ℝ) < (Y.act m ^ 2 + 4) ^ 2 / 4
+    by positivity)
+  -- the window
+  refine ⟨{
+    pb := Y.act (m - 2), b := Y.act (m - 1), a := Y.act m, C := Y.act (m + 1), B := Y.act (m + 2)
+    A := Y.act (m + 3), Pf := Y.act (m + 4), u := Y.m2Norm K.M m, v := Y.m2Norm K.M (m - 1)
+    w := Y.m2Norm K.M (m + 3), E := 16 * K.M m 0 0 / (Y.act m ^ 2 + 4)
+    EL := 16 * K.M (m + 3) 0 0 / (Y.act (m + 3) ^ 2 + 4), Γ := K.Γ
+    a_pos := a0, a_lt_b := hab, a_lt_C := hac, a_le_A := hm _, a_le_pb := hm _, A_lt_B := hAB
+    A_lt_Pf := hAPf, C_le_b := hcb, A_lt_C := hAC', star_pb := st_pb
+    star_ab := by rw [mul_comm]; exact st_ab
+    star_aC := st_aC, star_CB := st_CB, star_BA := st_BA, star_APf := st_APf
+    central := by
+      have := mul_lt_mul_of_pos_right qm1
+        (show 0 < (Y.act (m - 1) + Y.act m) * (Y.act m + Y.act (m + 1)) by positivity)
+      rw [show Y.act m + Y.act (m - 1) = Y.act (m - 1) + Y.act m by ring]
+      linarith
+    central_A := by
+      have := mul_lt_mul_of_pos_right q31
+        (show 0 < (Y.act (m + 2) + Y.act (m + 3)) * (Y.act (m + 3) + Y.act (m + 4)) by positivity)
+      linarith
+    a_ge := P.wx_m_ge hK m _, scale := hsc, scale_A := hscA
+    u_eq := sec_C.1
+    u_eq' := by rw [← hu1]; exact sec_B.1
+    v_eq := by rw [sec_b.2, m2Sec_comm]
+    u_le := rle_a, u_ge := fge_C, u_le' := rle_B, v_le := rle_b, v_ge := fge_pb, w_le := rle_A
+    w_ge := by rw [sec_P.1]; exact m2Sec_ge A0 P0 (pos _)
+    E_eq := cfa_E, EL_eq := cfA_E, Γ_eq := cfa_Γ, Γ_eq' := cfA_Γ
+    cas_lt := K.cas_lt hc, cas_gt := K.cas_gt hc hK h.1
+    w_transport := hwt, EL_transport := hELt
+    mid := by
+      rw [Certificates.SmallerShort.Point.fmid, Certificates.SmallerShort.Point.pmid,
+        ss_point_be a0 c0, ss_point_x a0 c0, ss_point_u a0 c0 B0, ← sec_C.1]
+      exact hmid
+    defect := by
+      -- GLOBAL_SPECTRAL_COST_CASIMIR (13) on the two-turn window `C, B` and the endpoint traces of
+      -- MIXED_GENERAL_SHORT_DEFECT_INTERFACE (5)-(7), (A): not provided by `M2Calculus`
+      sorry }, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
 
 end SmoothedOctagon
