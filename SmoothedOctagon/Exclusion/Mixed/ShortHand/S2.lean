@@ -2,9 +2,9 @@ module
 
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs02.Common
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S2Defs
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2Central
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2Small
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2Large
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCentral
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandSmall
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandLarge
 
 /-!
 # Hand proof of the smaller-short case, gate S2: `x < 13/6`
@@ -17,14 +17,16 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2Large
 `hs2_zero_neg`) and the `τ = 2` continuation (`hs2_tau2_mono`) reach a face `q* = min{q_c, 1/7}`;
 the incoming coefficient (`hs2_uslope`) and the face ceilings (`hs2_central_ceiling`,
 `hs2_outer_ceiling`) reduce to the face signs `hs2_central_sign`, `hs2_outer_sign_small`,
-`hs2_outer_sign_large` (heavy).
+`hs2_outer_sign_large` (hand proofs in `Heavy/S2Hand*.lean`).
 
 ## Main API
 
 * `hsUC`, `hsUs`: the face ceilings `u_C`, `u_s`.
 * Stable: `hs2_uslope`, `hs2_zero_neg`, `hs2_tau2_mono`, `hs2_central_ceiling`,
   `hs2_outer_ceiling`.
-* Heavy: `hs2_central_sign` (`CENTRAL_RATIO_HAND_SIGN` (5)), `hs2_outer_sign_small`,
+* Hand (`archive/lighter-proofs/SHORT_RATIO_CENTRAL_COMPLETE.md`): `hs2_central_sign`
+  (`CENTRAL_RATIO_HAND_SIGN` (5)).
+* Hand (`archive/lighter-proofs/SHORT_RATIO_OUTER_COMPLETE.md`): `hs2_outer_sign_small`,
   `hs2_outer_sign_large` (`OUTER_RATIO_HAND_SIGN` (13), (16), (18)).
 * Gate: `HsData.s2`, `M2Short.hs_S2`.
 -/
@@ -816,7 +818,8 @@ theorem hs2_outer_ceiling {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 
 /-- **The central sharp-ratio face** (`CENTRAL_RATIO_HAND_SIGN` (5); inventory HS-S2 R23): for
 `13/6 ≤ x ≤ 12/5`, `1 ≤ α`, `6α² ≤ x(x + 2)`, the strip
 `x + 8x(α - 1)/(9x + 8) ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`, `q = q_c`, `u = u_C(x, β)` and
-`2 ≤ τ ≤ T = r_A/q_c`: `G_τ = R*_τ + (2 - 7τ/(4T))(w_* - 3/4) < 0`. Status: heavy. -/
+`2 ≤ τ ≤ T = r_A/q_c`: `G_τ = R*_τ + (2 - 7τ/(4T))(w_* - 3/4) < 0`. Status: hand
+(`Heavy/S2HandCentral`). -/
 theorem hs2_central_sign {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) (hτ : 2 ≤ τ)
@@ -827,7 +830,8 @@ theorem hs2_central_sign {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 
 
 /-- **The outer sharp-ratio face, small `α`** (`OUTER_RATIO_HAND_SIGN` §§4-5, (13), (16); inventory
 HS-S2 R24): for `13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ 3/2`, `α ≤ x`, `x(x + 2) ≤ 6α²`, the strip of
-`hs2_central_sign`, `q = 1/7`, `u = u_s(x, β)` and `2 ≤ τ ≤ 7r_A`: `G_τ < 0`. Status: heavy. -/
+`hs2_central_sign`, `q = 1/7`, `u = u_s(x, β)` and `2 ≤ τ ≤ 7r_A`: `G_τ < 0`. Status: hand
+(`Heavy/S2HandSmall`). -/
 theorem hs2_outer_sign_small {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hal' : al ≤ 3 / 2) (hax : al ≤ x) (hqc : x * (x + 2) ≤ 6 * al ^ 2)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
@@ -839,7 +843,7 @@ theorem hs2_outer_sign_small {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤
 
 /-- **The outer sharp-ratio face, large `α`** (`OUTER_RATIO_HAND_SIGN` §6, (18); inventory HS-S2
 R24): for `13/6 ≤ x ≤ 12/5`, `3/2 ≤ α ≤ x`, the strip of `hs2_central_sign`, `q = 1/7`,
-`u = V̄(x)` and `2 ≤ τ ≤ 7r_A`: `G_τ < 0`. Status: heavy. -/
+`u = V̄(x)` and `2 ≤ τ ≤ 7r_A`: `G_τ < 0`. Status: hand (`Heavy/S2HandLarge`). -/
 theorem hs2_outer_sign_large {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
     (hal : 3 / 2 ≤ al) (hax : al ≤ x) (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) (hτ : 2 ≤ τ)

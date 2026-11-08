@@ -29,9 +29,10 @@ The zero-scale face, the `τ = 2` continuation and the central-face leaves are p
 modules `Hs35/Zero.lean`, `Hs35/Cont.lean`, `Hs35/Central.lean`. The gate uses only the weak actual
 root `R_τ = 0` and `w ≥ 3/4`, and `D > 0` is derived locally from `β < 2α` (inventory HS-S3 R9(e)).
 
-The two heavy face signs and the gate itself are in `S3.lean`, which imports the certificates
-`Heavy/S3Central.lean`, `Heavy/S3Outer.lean` (they use `hs3_log_maj` and `hs3_central_endpoint` from
-this module).
+The two face signs and the gate itself are in `S3.lean`, which imports the hand proofs
+`Heavy/S3HandCentral.lean` and `Heavy/S3HandOuter.lean` (after `archive/lighter-proofs/`
+`SHORT_DISPLACEMENT_CENTRAL_SHAPE.md` and `SHORT_DISPLACEMENT_OUTER_COMPLETE.md`; they use
+`hs3_log_maj` and `hs3_central_endpoint` from this module).
 -/
 
 @[expose] public section
