@@ -100,7 +100,8 @@ under two named hypotheses:
 | Sign partition | [`Period/Partition.lean`](SmoothedOctagon/Period/Partition.lean) | proved |
 | Cases R and M3 | [`Exclusion/`](SmoothedOctagon/Exclusion) | proved |
 | Case M1 | [`Exclusion/ShortRuns.lean`](SmoothedOctagon/Exclusion/ShortRuns.lean) | proved |
-| Cases F and M2 | [`Exclusion/`](SmoothedOctagon/Exclusion) | assembled from stated lemmas, in progress |
+| Case F | [`Exclusion/Forward.lean`](SmoothedOctagon/Exclusion/Forward.lean) | proved, without interval covers |
+| Case M2 | [`Exclusion/Nonshort.lean`](SmoothedOctagon/Exclusion/Nonshort.lean) | proved from three interval covers, except two lemmas in progress |
 | Terminal comparison | [`Terminal/`](SmoothedOctagon/Terminal) | proved |
 | Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) | proved |
 | The Challenge's statements | [`Main.lean`](SmoothedOctagon/Main.lean) | proved from the above |
