@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.Window
+public import SmoothedOctagon.Exclusion.Mixed.ChartAux.Root
 
 /-!
 # Case M2: the scalar boundary comparison `b → b*`
@@ -63,10 +64,114 @@ end M2Window
 /-- **The boundary comparison** (CONT (25)-(27); inventory E2, entries 7, 21, 21a). For the
 actual smaller-nonshort window: `G(b*) = R_d(U*; b*) < 0`, the boundary root solves
 `R_d(u*; b*) = 0`, lies strictly below the incident ceiling, `u* < U*`, and the boundary
-transported norm is strictly below the actual one, `w* < w`. -/
+transported norm is strictly below the actual one, `w* < w`.
+Route: the ODE-free form of E2 entry 21a (`G` and the root-curve diagonal `chH` are strictly
+decreasing on `[b, b*]` by their derivatives, `Mixed/ChartAux/Root`), not CONT's integrating factor;
+only the weak `u ≤ U(a/S)` is used. -/
 theorem m2_comparison (W : M2Window) :
     m2RootAt W.a W.bStar W.c W.d W.r W.v W.ceilStar < 0 ∧
       m2RootAt W.a W.bStar W.c W.d W.r W.v W.uStar = 0 ∧ W.uStar < W.ceilStar ∧ W.wStar < W.w := by
-  sorry
+  have ha := W.a_pos
+  have hc : 0 < W.c := by linarith [W.a_lt_c]
+  have hd : 0 < W.d := by linarith [W.a_lt_d]
+  have hr : 0 < W.r := by linarith [W.a_le_r]
+  have hT : 0 < W.a + W.c := by linarith
+  have hK : 0 < W.a ^ 2 + 4 := by positivity
+  have hSstar : W.a + W.bStar = (W.a ^ 2 + 4) / (W.a + W.c) := by
+    unfold M2Window.bStar m2bStar; ring
+  have hbb : W.b < W.bStar := by
+    have : W.a + W.b < (W.a ^ 2 + 4) / (W.a + W.c) := by
+      rw [lt_div_iff₀ hT]; exact W.central
+    linarith
+  have hRu : ∀ x ∈ Set.Icc W.b W.bStar, chRu W.a x W.c W.d W.r < 0 := by
+    intro x hx
+    refine ch_Ru_neg ha hc W.a_lt_d W.factor_d (by linarith [hx.1, W.a_lt_b]) ?_
+    have : W.a + x ≤ (W.a ^ 2 + 4) / (W.a + W.c) := by rw [← hSstar]; linarith [hx.2]
+    rwa [le_div_iff₀ hT] at this
+  -- `G` is strictly decreasing on `[b, b*]`
+  have hGanti : StrictAntiOn (chG W.a W.c W.d W.r W.v) (Set.Icc W.b W.bStar) := by
+    refine ch_strictAntiOn (fun x hx => ch_hasDerivAt_G ha (by linarith [hx.1, W.a_lt_b]) hT) ?_
+    intro x hx
+    refine mul_neg_of_neg_of_pos (hRu x (Set.Ioo_subset_Icc_self hx)) ?_
+    have : 0 < W.a + x := by linarith [hx.1, W.a_lt_b]
+    exact div_pos (mul_pos ha (by linarith [hx.1, W.a_lt_b])) (by positivity)
+  have hroot0 : m2Root W.a W.c W.d W.r W.u W.v (m2h W.a W.b W.c W.u W.v) = 0 := by
+    rw [← W.h_eq]; exact W.root
+  -- `G(b) ≤ 0`
+  have hG0 : chG W.a W.c W.d W.r W.v W.b ≤ 0 := by
+    have hU : W.u ≤ m2U (W.a / (W.a + W.b)) := by
+      rw [← m2g_eq_m2U (by linarith [W.a_lt_b])]; exact W.u_le
+    have hR0 := hRu W.b ⟨le_rfl, hbb.le⟩
+    have h1 := hroot0
+    unfold chG
+    rw [ch_root_affine ha.ne'] at h1 ⊢
+    nlinarith
+  have hGlt : ∀ x ∈ Set.Ioc W.b W.bStar, chG W.a W.c W.d W.r W.v x < 0 := fun x hx =>
+    lt_of_lt_of_le (hGanti ⟨le_rfl, hbb.le⟩ ⟨hx.1.le, hx.2⟩ hx.1) hG0
+  have hGs := hGlt W.bStar ⟨hbb, le_rfl⟩
+  have hceil : W.ceilStar = m2U (W.a / (W.a + W.bStar)) := by
+    unfold M2Window.ceilStar
+    rw [hSstar]
+    congr 1
+    field_simp
+  have hRs := hRu W.bStar ⟨hbb.le, le_rfl⟩
+  -- the boundary root
+  have hR1 : m2RootAt W.a W.bStar W.c W.d W.r W.v 1 - m2RootAt W.a W.bStar W.c W.d W.r W.v 0 =
+      chRu W.a W.bStar W.c W.d W.r := by
+    unfold m2RootAt; rw [ch_root_affine (u := 1) ha.ne']; ring
+  have hus : W.uStar = -m2RootAt W.a W.bStar W.c W.d W.r W.v 0 / chRu W.a W.bStar W.c W.d W.r := by
+    unfold M2Window.uStar m2uRoot; rw [hR1]
+  have hrootS : m2RootAt W.a W.bStar W.c W.d W.r W.v W.uStar = 0 := by
+    unfold m2RootAt
+    rw [ch_root_affine ha.ne', hus]
+    unfold m2RootAt
+    have := hRs.ne
+    field_simp
+    ring
+  have hGs' : m2RootAt W.a W.bStar W.c W.d W.r W.v W.ceilStar < 0 := by
+    rw [hceil]; exact hGs
+  have huU : W.uStar < W.ceilStar := by
+    have h1 := hGs'
+    have h2 := hrootS
+    unfold m2RootAt at h1 h2
+    rw [ch_root_affine ha.ne'] at h1 h2
+    nlinarith
+  refine ⟨hGs', hrootS, huU, ?_⟩
+  -- `w* < w`: the diagonal on the root curve decreases
+  have hβ : chβ W.a W.d W.r < 0 := by
+    unfold chβ
+    have : 0 < (W.d ^ 2 + 4) ^ 2 := by positivity
+    have h1 : 0 < (W.d + W.r) * (W.a ^ 2 + 4) ^ 2 := mul_pos (by linarith) (by positivity)
+    exact div_neg_of_neg_of_pos (by linarith [neg_mul (W.d + W.r) ((W.a ^ 2 + 4) ^ 2)]) this
+  have hHanti : StrictAntiOn (chH W.a W.c W.d W.r W.v) (Set.Icc W.b W.bStar) := by
+    refine ch_strictAntiOn (fun x hx => ch_hasDerivAt_H ha (by linarith [hx.1, W.a_lt_b]) hT
+      (hRu x hx).ne) ?_
+    intro x hx
+    have hG := hGlt x ⟨hx.1, hx.2.le⟩
+    have hR := hRu x (Set.Ioo_subset_Icc_self hx)
+    have hk : 0 < (W.a ^ 2 + 4) / (16 * W.a) := by positivity
+    have : 0 < -((W.a ^ 2 + 4) / (16 * W.a)) * chβ W.a W.d W.r := by nlinarith
+    exact div_neg_of_neg_of_pos (mul_neg_of_pos_of_neg this hG) (by nlinarith)
+  have hHlt := hHanti ⟨le_rfl, hbb.le⟩ ⟨hbb.le, le_rfl⟩ hbb
+  have hhs : W.hStar = chH W.a W.c W.d W.r W.v W.bStar := ch_h_of_root ha hRs.ne hrootS
+  have hh0 : W.h = chH W.a W.c W.d W.r W.v W.b := by
+    rw [W.h_eq]; exact ch_h_of_root ha (hRu W.b ⟨le_rfl, hbb.le⟩).ne hroot0
+  have hZ : 0 < W.d + W.r := by linarith
+  have hws : W.wStar = (m2Stat W.c W.d W.r - (W.c + W.d) * W.v +
+      16 * W.d * m2hd W.a W.c W.d W.v W.hStar / (W.d ^ 2 + 4)) / (W.d + W.r) :=
+    ch_w_of_root hZ hrootS
+  have hw : W.w = (m2Stat W.c W.d W.r - (W.c + W.d) * W.v +
+      16 * W.d * m2hd W.a W.c W.d W.v W.h / (W.d ^ 2 + 4)) / (W.d + W.r) := by
+    rw [W.w_eq]; exact ch_w_of_root hZ W.root
+  rw [hws, hw]
+  apply div_lt_div_of_pos_right _ hZ
+  have hQ : 0 < W.d ^ 2 + 4 := by positivity
+  have : 16 * W.d * m2hd W.a W.c W.d W.v W.hStar / (W.d ^ 2 + 4) <
+      16 * W.d * m2hd W.a W.c W.d W.v W.h / (W.d ^ 2 + 4) := by
+    apply div_lt_div_of_pos_right _ hQ
+    unfold m2hd
+    rw [hhs, hh0]
+    nlinarith
+  linarith
 
 end SmoothedOctagon
