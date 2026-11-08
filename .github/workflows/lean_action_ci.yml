@@ -21,10 +21,9 @@ jobs:
           auto-config: false
           use-mathlib-cache: true
           use-github-cache: true
-      # A few generated certificate modules need 5-6 GB each (the largest are split into chains of
-      # modules, `scripts/certificates/split_module.py`). Build them one at a time first, so that the
-      # 16 GB runner never holds several; everything else, at most about 3 GB per module, is built
-      # in parallel afterwards.
+      # A few modules need 5-7 GB of memory each. Build them one at a time first, so that the 16 GB
+      # runner never holds several; everything else, at most about 4 GB per module, is built in
+      # parallel afterwards.
       - name: Build the memory-heavy certificate modules one at a time
         run: |
           for m in $(grep -v '^#' scripts/ci/sequential-modules.txt); do
