@@ -84,10 +84,10 @@ remains.
 
 The main theorem is proved in Lean from the stages below
 ([`LowerBound.lean`](SmoothedOctagon/LowerBound.lean), [`Main.lean`](SmoothedOctagon/Main.lean)),
-under one named hypothesis, `Certificates.IntervalCovers`: three interval-arithmetic covers used by
-case M2 (the smaller-short cover and the two forward-endpoint covers), stated exactly as the C++
-programs certify them, until their hand replacements are done. Case F and the other parts of M2
-already follow hand arguments.
+under one named hypothesis, `Certificates.IntervalCovers`: the smaller-short interval cover of case
+M2, stated exactly as its C++ program certifies it. A kernel-checked certificate for it is being
+written ([`Interval/`](SmoothedOctagon/Interval)). Case F and the rest of case M2 follow hand
+arguments, with no interval cover.
 
 Hales and Vajjha's compactness theorem (Theorem 5.0.2 of their book) is no longer a hypothesis: it
 is proved in lean4-smoothed-polygon (`SmoothedPolygons.theorem5_0_2`) and applied to a global
@@ -101,7 +101,7 @@ minimizer in [`Reduction/CompactDomain.lean`](SmoothedOctagon/Reduction/CompactD
 | Cases R and M3 | [`Exclusion/`](SmoothedOctagon/Exclusion) | proved |
 | Case M1 | [`Exclusion/ShortRuns.lean`](SmoothedOctagon/Exclusion/ShortRuns.lean) | proved |
 | Case F | [`Exclusion/Forward.lean`](SmoothedOctagon/Exclusion/Forward.lean) | proved, without interval covers |
-| Case M2 | [`Exclusion/Nonshort.lean`](SmoothedOctagon/Exclusion/Nonshort.lean) | proved, from three interval covers |
+| Case M2 | [`Exclusion/Nonshort.lean`](SmoothedOctagon/Exclusion/Nonshort.lean) | proved, from the smaller-short interval cover |
 | Terminal comparison | [`Terminal/`](SmoothedOctagon/Terminal) | proved |
 | Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) | proved |
 | The Challenge's statements | [`Main.lean`](SmoothedOctagon/Main.lean) | proved from the above |
