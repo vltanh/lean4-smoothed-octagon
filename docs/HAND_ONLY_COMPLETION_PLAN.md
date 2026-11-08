@@ -23,6 +23,14 @@ are also proved. Their [separate review](MIXED_SMALLER_SHORT_DISPLACEMENT_REDUCT
 preserves the original-root and incoming-ceiling interfaces. These
 reductions do not alone close S3; terminal face signs remain separate.
 
+**Accepted S2 central face:** the
+[central ratio sign](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN.md)
+and [independent reading](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_AUDIT.md)
+exclude the entire central endpoint for 13/6<=x<=12/5, including
+all durations. The proof retains a cubic duration loss and uses
+complete finite polynomial norm bounds. S2 now requires the outer
+face q=1/7<=q_c and the final actual-domain assembly.
+
 **Current ratio continuation:** the [variable-floor reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
 now has a genuinely analytic proof of its tau=2 scale continuation:
 four factored derivative identities and eight fully displayed quartics

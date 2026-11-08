@@ -1,5 +1,12 @@
 # Authoritative handoff — hand proof now in progress
 
+**Accepted S2 central face:** the
+[central ratio sign](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN.md)
+and [separate reading](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_AUDIT.md)
+exclude the central scale endpoint uniformly for 13/6<=x<=12/5.
+The exact duration comparison retains its cubic loss. S2 still needs
+the outer scale face and its final actual-domain assembly.
+
 **Accepted displacement increment:** the
 [weight reduction](MIXED_SMALLER_SHORT_DISPLACEMENT_WEIGHT_REDUCTION.md),
 [scale continuation](MIXED_SMALLER_SHORT_DISPLACEMENT_SCALE_CONTINUATION.md),

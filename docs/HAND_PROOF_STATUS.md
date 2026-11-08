@@ -2,6 +2,12 @@
 
 Date: 2026-11-08 UTC.
 
+**Accepted upper-ratio central sign:** the
+[complete central-face proof](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN.md)
+has passed its [separate reading](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_AUDIT.md).
+It excludes all central-scale tests on 13/6<=x<=12/5. The outer
+face and actual-domain assembly remain open, so S2 is not yet closed.
+
 **Accepted displacement reductions:** a
 [positive floor weight](MIXED_SMALLER_SHORT_DISPLACEMENT_WEIGHT_REDUCTION.md)
 now reduces delta>=1/19 to two duration tests at the central or outer
