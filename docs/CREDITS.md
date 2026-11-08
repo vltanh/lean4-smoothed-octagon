@@ -26,10 +26,10 @@ The formalization builds on two Lean libraries by the same author:
 the packing problem, critical lattices, Fejes Tóth's theorem, the control reformulation, the
 Pontryagin lift of a minimizer, Theorem 5.0.2, the smoothed octagon and its density) and
 [lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control) (Filippov's theorem and the
-Pontryagin maximum principle). The definitions of `ReinhardtChallenge.lean` are copied from the
+Pontryagin maximum principle). The definitions of `Palomar/Challenge.lean` are copied from the
 first, which is distributed under Apache-2.0 like this project.
 
 ## History of the problem
 
-[`docs/prior-work.md`](docs/prior-work.md) lists the work on the Reinhardt problem since 1934 with
+[`docs/prior-work.md`](prior-work.md) lists the work on the Reinhardt problem since 1934 with
 references.

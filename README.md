@@ -58,7 +58,7 @@ as Hales normalizes it: Reinhardt's octagon squeezed vertically by about 5%.*
 
 ## Statements
 
-The statements are in [`ReinhardtChallenge.lean`](ReinhardtChallenge.lean), which imports only
+The statements are in [`Palomar/Challenge.lean`](Palomar/Challenge.lean), which imports only
 Mathlib. Its definitions are copied word for word from
 [`SmoothedOctagon/Defs.lean`](SmoothedOctagon/Defs.lean): `smoothedOctagon`, and the packing
 definitions of [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon), the
@@ -121,8 +121,8 @@ sliding packings.
 
 ## Status
 
-[`ReinhardtSolution.lean`](ReinhardtSolution.lean) restates the three theorems of
-[`ReinhardtChallenge.lean`](ReinhardtChallenge.lean) word for word and proves them from the library,
+[`SmoothedOctagon.lean`](SmoothedOctagon.lean), the root of the library, restates the three
+theorems of [`Palomar/Challenge.lean`](Palomar/Challenge.lean) word for word and proves them,
 with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 8,695 declarations of the
 library, and the three theorems, depend only on the standard axioms.
 
@@ -134,7 +134,7 @@ library, and the three theorems, depend only on the standard axioms.
 | Cases R, M3, M1, F, M2 | [`Exclusion/`](SmoothedOctagon/Exclusion) |
 | Terminal comparison: at most five pieces | [`Terminal/`](SmoothedOctagon/Terminal) |
 | Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) |
-| The statements in the Challenge's vocabulary | [`ReinhardtSolution.lean`](ReinhardtSolution.lean), [`Bridge/`](SmoothedOctagon/Bridge) |
+| The statements in the Challenge's vocabulary | [`SmoothedOctagon.lean`](SmoothedOctagon.lean), [`Bridge/`](SmoothedOctagon/Bridge) |
 | Reinhardt's construction: the octagon of the trajectory is a linear image of it | [`Bridge/Classical.lean`](SmoothedOctagon/Bridge/Classical.lean) |
 
 ## Prior work
@@ -152,7 +152,7 @@ Polygons* (2024). [docs/prior-work.md](docs/prior-work.md) gives the full histor
 lake exe cache get
 lake build
 lake env lean scripts/Audit.lean          # every declaration uses only the standard axioms
-lake env lake comparator --config=comparator.json   # needs bubblewrap; the Solution proves the Challenge
+lake env lake comparator --config=Palomar/comparator.json   # needs bubblewrap; the Solution proves the Challenge
 python3 scripts/sync_challenge_defs.py --check     # the Challenge's definitions are the library's
 python3 scripts/figures/make_figures.py   # the figures, with every illustrated fact asserted
 ```
@@ -168,8 +168,9 @@ more than 7 GB of memory; CI builds the few that need more than 4 GB
 ## Layout
 
 ```text
-ReinhardtChallenge.lean        the statements of record, in Mathlib's vocabulary
-ReinhardtSolution.lean         the main theorems, with their proofs
+Palomar/                       the Challenge (the statements of record, in Mathlib's vocabulary) and
+                               the Comparator configuration
+SmoothedOctagon.lean           the main theorems, with their proofs (the Solution)
 SmoothedOctagon/
   Foundations/                 geometry ↔ control: realization, reverse comparison
   Reduction/                   minimizer → finite normal period
@@ -182,8 +183,8 @@ SmoothedOctagon/
   Defs.lean                    the definitions of the statements, shared with the Challenge
   LowerBound.lean              the assembly
 Cited/HalesVajjha/             Definition 5.0.1 of Hales–Vajjha (the compact domain)
-docs/                          prior work and the figures
-archive/                       the informal proof notes (ChatGPT Pro) and their computations
+docs/                          credits, prior work, the figures, the paper, and the archive of the
+                               informal proof notes (ChatGPT Pro) and their computations
 scripts/                       the audit, the definitions check, the figures and the certificate generators
 ```
 
@@ -193,7 +194,8 @@ The-Anh Vu-Le directed the work. ChatGPT Pro (OpenAI) developed the informal pro
 5.5 (Anthropic), in Claude Code, did the formalization, the visualizations and the presentation.
 The geometric and control-theoretic foundations come from
 [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) and
-[lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control).
+[lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control). See
+[`docs/CREDITS.md`](docs/CREDITS.md).
 
 ## License
 

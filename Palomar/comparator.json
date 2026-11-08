@@ -1,12 +1,16 @@
 {
-  "challenge_module": "ReinhardtChallenge",
-  "solution_module": "ReinhardtSolution",
+  "challenge_module": "Palomar.Challenge",
+  "solution_module": "SmoothedOctagon",
   "theorem_names": [
     "ReinhardtChallenge.octagon_density",
     "ReinhardtChallenge.reinhardt",
     "ReinhardtChallenge.reinhardt_equality"
   ],
   "definition_names": [],
-  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
   "enable_nanoda": true
 }

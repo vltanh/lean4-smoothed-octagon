@@ -43,7 +43,7 @@ shorter routes marked `Route:`.
 
 The notes are kept as written. Some of their links point at the original Lean draft of the pull
 request, for example `../SmoothedOctagon/BoundaryTrace.lean`; those files now live in
-[`SmoothedOctagon/Foundations/`](../SmoothedOctagon/Foundations). The instructions in `AGENTS.md`
+[`SmoothedOctagon/Foundations/`](../../SmoothedOctagon/Foundations). The instructions in `AGENTS.md`
 (for example, not to run Lean) were addressed to the notes' author and do not apply to this
 repository. No person has reviewed the notes; their "accepted" and "audited" labels record the
 author's own reviews.

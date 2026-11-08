@@ -21,7 +21,7 @@ from pathlib import Path
 # ---- configuration -------------------------------------------------------------------------
 # The library module that holds the shared definitions, and the Challenge file.
 DEFS = 'SmoothedOctagon/Defs.lean'
-CHALLENGE = 'ReinhardtChallenge.lean'
+CHALLENGE = 'Palomar/Challenge.lean'
 # The marker lines around the shared block, in both files.
 BEGIN = '-- BEGIN SHARED DEFINITIONS\n'
 END = '-- END SHARED DEFINITIONS\n'

@@ -344,15 +344,14 @@ import all SmoothedOctagon.Terminal.FivePiece
 import all SmoothedOctagon.Terminal.FourPiece
 import all SmoothedOctagon.Terminal.Identification
 import all SmoothedOctagon.Terminal.Words
-import all ReinhardtSolution
 
 /-!
 # Axiom audit
 
 Run with `lake env lean scripts/Audit.lean` after `lake build` (regenerate the imports first with
 `python3 scripts/gen_audit.py`). Every module of the libraries is imported with `import all`, so
-that the proofs are visible. The audit prints the axioms of the theorems of `ReinhardtSolution.lean` (the
-statements of `ReinhardtChallenge.lean`) and fails if any declaration of the libraries, or any of those
+that the proofs are visible. The audit prints the axioms of the theorems of `SmoothedOctagon.lean` (the
+statements of `Palomar/Challenge.lean`) and fails if any declaration of the libraries, or any of those
 theorems, depends on an axiom other than Lean's standard `propext`, `Classical.choice` and
 `Quot.sound` (a `sorry` would show up as `sorryAx`).
 -/
@@ -361,7 +360,7 @@ open Lean Elab Command
 
 namespace Audit
 
-/-- The theorems that Palomar's comparator checks (`theorem_names` of `comparator.json`). -/
+/-- The theorems that Palomar's comparator checks (`theorem_names` of `Palomar/comparator.json`). -/
 meta def solutionResults : List Name :=
   [``ReinhardtChallenge.octagon_density, ``ReinhardtChallenge.reinhardt,
    ``ReinhardtChallenge.reinhardt_equality]
@@ -371,7 +370,7 @@ meta def standardAxioms : List Name := [``propext, ``Classical.choice, ``Quot.so
 
 /-- Whether `m` is a module of the project's libraries. -/
 meta def isLibraryModule (m : Name) : Bool :=
-  (`SmoothedOctagon).isPrefixOf m || (`Cited).isPrefixOf m || m == `ReinhardtSolution
+  (`SmoothedOctagon).isPrefixOf m || (`Cited).isPrefixOf m
 
 elab "#audit" : command => do
   let env ← getEnv

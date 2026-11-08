@@ -17,7 +17,7 @@ head = '''module
 
 public meta import Lean.Elab.Command
 '''
-imports = ''.join(f'import all {m}\n' for m in sorted(set(mods)) + ['ReinhardtSolution'])
+imports = ''.join(f'import all {m}\n' for m in sorted(set(mods)))
 body = (ROOT / 'scripts' / 'Audit.lean.in').read_text()
 (ROOT / 'scripts' / 'Audit.lean').write_text(head + imports + body)
 print(f'scripts/Audit.lean: {len(set(mods)) + 1} modules')

@@ -300,4 +300,4 @@ domains*, p. 118; Ledermann and Mahler, p. 320; both below).
   - The pull request says: "This is not a claim of Lean-kernel verification or external peer review."
 - The Lean formalization of that proof is in progress and is not complete. It builds on
   [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon), and
-  [`ReinhardtChallenge.lean`](../ReinhardtChallenge.lean) states the conjecture, its equality case and its form as a control problem.
+  [`Palomar/Challenge.lean`](../Palomar/Challenge.lean) states the conjecture, its equality case and its form as a control problem.

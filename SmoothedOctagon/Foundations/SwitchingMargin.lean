@@ -19,7 +19,7 @@ For `2 ≤ y ≤ r ≤ 4`, the principal new estimate is
 In particular, `(r - y)^3 / 8 ≤ hmaxF y r`. The bound degenerates on the switching
 diagonal `r = y`; it is not a positive lower bound on switching intervals or their lengths.
 
-See `archive/notes/SWITCHING_MARGIN.md` for the hand proof and the precise connection to
+See `docs/archive/notes/SWITCHING_MARGIN.md` for the hand proof and the precise connection to
 Hales--Vajjha, Lemma 7.5.3. This is an uncompiled source draft.
 -/
 

@@ -22,11 +22,11 @@ public import Mathlib.Topology.Instances.ENNReal.Lemmas
 /-!
 # The definitions of the statements of record
 
-The definitions that the statements of `ReinhardtChallenge.lean` use: convex disks, packings and
+The definitions that the statements of `Palomar/Challenge.lean` use: convex disks, packings and
 the greatest packing density, and Reinhardt's smoothed octagon. The block between the two marker
-comments is copied word for word into `ReinhardtChallenge.lean` by
+comments is copied word for word into `Palomar/Challenge.lean` by
 `scripts/sync_challenge_defs.py`, so that the Challenge and the library elaborate the same constants
-(Palomar's Comparator requires this). This module imports exactly what `ReinhardtChallenge.lean`
+(Palomar's Comparator requires this). This module imports exactly what `Palomar/Challenge.lean`
 imports, and nothing precedes the block: Lean abstracts the proofs inside a definition's body (for
 instance of `Nat.AtLeastTwo` for a numeral) into auxiliary lemmas and reuses those of earlier
 declarations of the same module, so a copy is the same constant only if what precedes it is too.
