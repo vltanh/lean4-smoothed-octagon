@@ -1,4 +1,12 @@
-# Authoritative handoff -- hand proof complete
+# Historical handoff -- superseded for the lighter-proof request
+
+**Current work (8 November 2026):** use the
+[replacement ledger](../../docs/lighter-proofs/README.md).
+The completion claims below record the previous acceptance. All fifteen
+requested replacement rows now have separate source, caller and size
+reviews, and the three reported interfaces are repaired. The new ledger
+records completion of that hand replacement task. Existing Lean
+formalizations outside H-S are a separate, unchanged baseline.
 
 Date: 2026-11-08 UTC.
 

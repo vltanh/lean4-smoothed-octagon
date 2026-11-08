@@ -1,5 +1,12 @@
 # The outer displacement face is strictly negative
 
+**Replacement status, 2026-11-08:** the [new outer displacement assembly](../../docs/lighter-proofs/SHORT_DISPLACEMENT_OUTER_COMPLETE.md)
+replaces the large signs (7)--(21) for the original actual caller.
+It retains the lower beta order, covers both signs of the continued
+norm residual, and uses reciprocal-shape convexity with three terminal
+families. Every expanded identity has degree at most eight and at most
+39 monomials; the original duration and scale conclusion is preserved.
+
 Date: 2026-11-08 UTC. Conditional scalar hand theorem for the terminal
 scale \(q=1/7\). The proof below specifies both rational numerators
 completely, reduces a degree-six or degree-five variable by the

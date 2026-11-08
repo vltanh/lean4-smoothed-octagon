@@ -2,13 +2,15 @@
 
 This directory keeps the informal proof that the Lean formalization follows, as its author wrote
 it. ChatGPT Pro (OpenAI) wrote it in pull request #1 (branch `feat/reinhardt-foundations`), merged
-here up to commit `5a6c628`. Nothing in it is a premise of the Lean proof. Lean's kernel checks
+here up to commit `5a6c628`, and the lighter proofs of its largest polynomial signs in pull request
+#2 (branch `proof/lighter-signs`), merged up to commit `277c660`. Nothing in it is a premise of the Lean proof. Lean's kernel checks
 every step, and the notes serve as the reference the Lean docstrings cite.
 
 | Path | Contents |
 | --- | --- |
 | [`notes/`](notes) | The proof notes, one Markdown file per result or reduction, with their audits |
 | [`notes/legacy/`](notes/legacy) | Earlier versions and snapshots that the notes link to |
+| [`lighter-proofs/`](lighter-proofs/README.md) | Lighter hand proofs of the largest polynomial signs, written for the formalization (pull request #2), with errata to the notes |
 | [`explorations/`](explorations/README.md) | The computations: the C++/MPFR interval covers, exact-arithmetic scripts and their result records |
 | [`AGENTS.md`](AGENTS.md), [`CHECKLIST.md`](CHECKLIST.md), [`DEEP_AUDIT_CHECKLIST.md`](DEEP_AUDIT_CHECKLIST.md), [`SOURCE_MAP.md`](SOURCE_MAP.md) | The directions and checklists that guided the notes' author |
 
@@ -30,10 +32,12 @@ Lean docstrings name a note by its file name: `MIXED_SMALLER_SHORT_PERIOD_EXCLUS
 A `Route:` line in a docstring marks a step that the Lean proof takes differently from the notes,
 usually a shorter argument.
 
-The Lean proof follows the hand arguments of the notes for every case except one. For the
-smaller-short case of M2 (gate H-S), the Lean proof checks the notes' earlier interval cover with
-its own kernel-checked certificate (`SmoothedOctagon/Interval/`). The notes have since proved that
-case by hand as well, and the formalization of that proof is in progress.
+The Lean proof follows the hand arguments of the notes for every case; it uses no interval cover.
+Five of the largest polynomial signs of the nonshort case follow the lighter proofs of
+[`lighter-proofs/`](lighter-proofs/README.md). The largest signs of the smaller-short case (gate H-S)
+are proved by generated Bernstein certificates checked by `ring`
+(`SmoothedOctagon/Exclusion/Mixed/ShortHand/Heavy/`, generators in `scripts/certificates/`), or by
+shorter routes marked `Route:`.
 
 ## Reading the notes
 

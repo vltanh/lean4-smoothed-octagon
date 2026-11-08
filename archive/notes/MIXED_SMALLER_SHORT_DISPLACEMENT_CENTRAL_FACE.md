@@ -1,5 +1,11 @@
 # The central displacement face is strictly negative
 
+**Replacement status, 2026-11-08:** the [new shape derivative proof](../../docs/lighter-proofs/SHORT_DISPLACEMENT_CENTRAL_SHAPE.md)
+replaces Section 2, equations (4)--(10), on the actual comparison path.
+Both exact-log derivative signs reach the same endpoint used below.
+The beta reduction in Section 1 and the separate endpoint signs in
+Section 3 remain dependencies; the latter are outside the requested S3.2 row.
+
 Date: 2026-11-08 UTC. Conditional scalar hand theorem. Together with
 [the displacement reduction](MIXED_SMALLER_SHORT_DISPLACEMENT_WEIGHT_REDUCTION.md),
 this excludes the central scale face for an actual candidate with

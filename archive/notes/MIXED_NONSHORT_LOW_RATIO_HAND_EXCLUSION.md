@@ -2,6 +2,14 @@
 
 Date: 2026-11-08 UTC.
 
+**Lighter replacement:** the complete unit-shape sign (10) now has a
+[fourth-derivative proof](../../docs/lighter-proofs/NONSHORT_LOW_RATIO_LINK.md)
+with the same conclusion and domain, no coefficient tables, and expanded
+identities of degree at most eight with at most 41 monomials. That note and
+its three companion proofs replace the large sign argument below for the
+requested hand-proof standard. The original argument is retained here as
+the historical source. Existing Lean sources have not been changed or run.
+
 This note completes the scalar sign left open in
 [MIXED_NONSHORT_FORWARD_RATIO_REDUCTION](MIXED_NONSHORT_FORWARD_RATIO_REDUCTION.md),
 with the sharper integral secant majorant from

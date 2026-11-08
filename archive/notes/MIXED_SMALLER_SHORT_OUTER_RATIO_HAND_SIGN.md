@@ -1,5 +1,12 @@
 # A hand sign for the outer face of the short upper-ratio reduction
 
+**Replacement status, 2026-11-08:** the [new outer-ratio assembly](../../docs/lighter-proofs/SHORT_RATIO_OUTER_COMPLETE.md)
+replaces the large signs (11)--(18) with reciprocal-shape convexity,
+a lower-shape beta comparison, and three terminal families. It retains
+the actual condition `a<=x`, both original incoming ceilings and both
+duration tests. Every expanded identity has degree at most eight and
+at most 35 monomials. The exact original caller closes.
+
 Date: 2026-11-08 UTC. **Result:** the outer scale face cannot carry
 the positive variable-floor test when \(13/6\le x\le12/5\).
 This complete proof is accepted in the

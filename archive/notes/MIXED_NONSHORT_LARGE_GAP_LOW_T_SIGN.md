@@ -1,5 +1,14 @@
 # A hand sign for the low-t unit-shape large-gap face
 
+**Lighter caller replacement:** the [new unit-sign proof and caller
+argument](../../docs/lighter-proofs/NONSHORT_LOW_T_CALLER.md) remove this
+large-polynomial dependency from the actual low-t branch of `fh_small_gap_j`.
+They use simpler positive multipliers, prove their residual on the full
+comparison domain by monotonicity and three faces, and obtain the negative
+actual condition from the general `fh_window_comb` theorem. The old scalar
+polynomial sign below is retained as historical source; the new proof names
+the caller and explains the changed intermediate premise explicitly.
+
 Date: 2026-11-08 UTC.
 
 This note proves the remaining unit-shape sign for the low-t part of

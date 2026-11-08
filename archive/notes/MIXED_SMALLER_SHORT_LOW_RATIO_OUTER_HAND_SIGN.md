@@ -1,5 +1,14 @@
 # The three outer corrected-cap faces when x is at most two
 
+**Complete lighter caller replacement:** the
+[assembled outer proof](../../docs/lighter-proofs/SHORT_OUTER_COMPLETE.md)
+now proves both signs in all three actual branches without the coefficient
+tables below. The final B `F1` terminal has lower bound `1597/144000000`.
+The actual caller, its original shape cap and duration conclusion are
+explicitly preserved. This closes the outer row S1.1; the central row
+and other H-S replacements remain separate obligations. The original
+source argument is preserved below.
+
 Date: 2026-11-08 UTC. Analytic terminal-face theorem, using the
 correction coefficient supplied by the
 [sharp low-ratio corrected-cap reduction](MIXED_SMALLER_SHORT_SHARP_LOW_RATIO_CORRECTED_CAP.md).

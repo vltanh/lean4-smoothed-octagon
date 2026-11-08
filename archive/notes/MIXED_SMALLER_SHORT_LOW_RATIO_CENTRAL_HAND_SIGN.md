@@ -1,5 +1,11 @@
 # A hand sign for the central low-ratio corrected cap
 
+**Replacement status, 2026-11-08:** the [new central proof](../../docs/lighter-proofs/SHORT_CENTRAL_COMPLETE.md)
+replaces equations (20)--(25) and Appendices A--C under the requested
+small-identity standard. It preserves the two original strict signs,
+the actual domain and the duration caller. The old certificate-style
+arguments below are retained as historical source material.
+
 Date: 2026-11-08 UTC. **Result:** at the central scale cap, every
 actual short shape with \(1<x\le2\) has corrected Casimir strictly
 above \(9193/50000\), with correction coefficient \(7/96\).

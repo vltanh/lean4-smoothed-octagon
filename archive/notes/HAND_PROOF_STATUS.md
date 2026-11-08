@@ -1,5 +1,15 @@
 # Proof without computer assistance: finite acceptance ledger
 
+**Correction after the lighter-proof request (8 November 2026).** The
+acceptance recorded below is historical. All fifteen requested
+replacement rows now have separate source, caller and size reviews;
+the finite hand replacement task is complete under the requested
+standard. Three reported interface gaps are repaired in
+[the errata](../../docs/lighter-proofs/HS_ERRATA.md). The
+[current replacement ledger](../../docs/lighter-proofs/README.md)
+records those repairs and the completed replacement proofs. This
+correction makes no change to the completed Lean exclusions outside H-S.
+
 Date: 2026-11-08 UTC. **Authoritative accepted state.**
 
 **The hand proof is complete under its explicitly listed external

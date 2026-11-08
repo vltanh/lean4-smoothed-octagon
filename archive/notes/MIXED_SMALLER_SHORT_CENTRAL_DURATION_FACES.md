@@ -1,5 +1,10 @@
 # The full and eight-ninths duration faces at central scale
 
+**Replacement status, 2026-11-08:** the [new duration-face proofs](../../docs/lighter-proofs/SHORT_DURATION_CENTRAL_UPPER_FACES.md)
+replace the large endpoint generating-polynomial argument for both tests.
+The original strict signs, incoming norm ceiling, domain and caller are
+unchanged; the elementary beta convexity is retained explicitly.
+
 Date: 2026-11-08 UTC. Complete hand sign, accepted in the
 [independent central-duration review](MIXED_SMALLER_SHORT_CENTRAL_DURATION_AUDIT.md),
 for two of the central-scale tests. The tau=2 face and the outer-scale tests are

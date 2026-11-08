@@ -1,5 +1,12 @@
 # Hand exclusion of the high-ratio, large-gap forward case
 
+**Lighter replacement:** the [new lower-shape reduction](../../docs/lighter-proofs/NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md)
+and its [terminal face](../../docs/lighter-proofs/NONSHORT_HIGH_RATIO_LOWER_FACE.md)
+prove the original lower-shape sign on its unchanged domain using small
+derivative identities. Together with [shape monotonicity](../../docs/lighter-proofs/NONSHORT_HIGH_RATIO_SHAPE.md),
+they close the unchanged `fh_LGB_core` caller and remove both old endpoint
+certificate dependencies. The historical large-polynomial argument remains below.
+
 Date: 2026-11-08 UTC. This proves the remaining high-ratio part of the
 nonshort forward gap bound. The low-ratio and upper-shape signs for
 the other multiplier are separate lemmas.

@@ -1,5 +1,10 @@
 # The central-scale, tau-two floor-weighted sign
 
+**Replacement status, 2026-11-08:** the [new tau-two proof](../../docs/lighter-proofs/SHORT_DURATION_CENTRAL_TAU_TWO.md)
+replaces the large endpoint expansion with degree-eight second derivatives
+and small horizontal or slanted boundary signs. The original strict sign,
+incoming norm ceiling, domain and floor-weighted-envelope caller are unchanged.
+
 Date: 2026-11-08 UTC. Complete scalar hand lemma, accepted in the
 [independent short-lemma review](MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md),
 Section 13. The proof
