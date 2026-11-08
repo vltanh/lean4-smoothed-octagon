@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs02.Common
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0Faces
 
 /-!
 # Hand proof of the smaller-short case, gate S0: `x < 12/5`, `D > 0`, `E_L > 0`
@@ -1145,7 +1146,7 @@ theorem hs0_central_tau_two {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) 
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
     hsF x be al (hsUhat x be) (hsQc x al) 2
       (5 / (2 * (hsRA al be / hsQc x al)) - 11 / 9) (1 / 2) < 0 := by
-  sorry
+  apply hs0_central_tau_two_proof <;> assumption
 
 /-- **The central face, `τ = T` and `τ = 8T/9` tests** (`CENTRAL_DURATION_FACES` (5); inventory
 HS-S01 B8): on `Dom_c`, at `q = q_c`, `u = û`, `T = r_A/q_c`: `F(T, 0) < 0` and
@@ -1156,7 +1157,7 @@ theorem hs0_central_duration {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     hsF x be al (hsUhat x be) (hsQc x al) (hsRA al be / hsQc x al) 0 (1 / 2) < 0 ∧
       hsF x be al (hsUhat x be) (hsQc x al) (8 * (hsRA al be / hsQc x al) / 9) (-1 / 9) (1 / 2) <
         0 := by
-  sorry
+  apply hs0_central_duration_proof <;> assumption
 
 /-- **The outer face, three tests** (`OUTER_SCALE_LARGE_RATIO_SIGN` (7); inventory HS-S01 B9): on
 `Dom_o` (`12/5 ≤ x ≤ 9`, `(22x + 20)/55 ≤ α ≤ x`,
@@ -1169,7 +1170,7 @@ theorem hs0_outer_tests {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     hsF x be al (hsUbar x be) (1 / 7) (7 * hsRA al be) 0 (1 / 2) < 0 ∧
       hsF x be al (hsUbar x be) (1 / 7) (8 * (7 * hsRA al be) / 9) (-1 / 9) (1 / 2) < 0 ∧
       hsF x be al (hsUbar x be) (1 / 7) 2 (5 / (2 * (7 * hsRA al be)) - 11 / 9) (1 / 2) < 0 := by
-  sorry
+  apply hs0_outer_tests_proof <;> assumption
 
 /-! ### Gate S0 -/
 
