@@ -20,6 +20,19 @@ reverse-run theorem. The
 [global hand dependency review](HAND_GLOBAL_DEPENDENCY_AUDIT.md)
 accepts the retained assembly conditional on H-S alone.
 
+**Current short-case focus:** the
+[global upper short order](MIXED_SMALLER_SHORT_GLOBAL_UPPER_ORDER.md)
+and strong lower order confine the exact bridge shape to a rational
+strip. The [floor-weighted envelope](MIXED_SMALLER_SHORT_FLOOR_WEIGHTED_ENVELOPE.md)
+retains the genuine root and outgoing norm floor in one positive
+actual expression. Its [scale reduction](MIXED_SMALLER_SHORT_ROOT_FLOOR_SCALE.md)
+leaves three positive-scale signs for the proposed x<12/5 bound;
+the zero-scale face is already excluded. Those three signs remain
+open. The [angle barrier](MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md)
+is a separate conditional cost reduction, with its remaining actual
+lower-shear hypothesis explicit. See the
+[independent short-lemma review](MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md).
+
 The [uniform short-pairing lemma](MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
 now proves D>=0 implies E_L>0, with an
 [independent review](MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md).

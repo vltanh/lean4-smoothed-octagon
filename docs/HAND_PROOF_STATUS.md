@@ -31,6 +31,31 @@ in force.
 | H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Closed. The [forward hand theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md) and [independent audit](MIXED_NONSHORT_FORWARD_HAND_AUDIT.md) complete the forward alternative. The [reverse hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md) and [audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md) exclude the other actual successor. Both retain the original common covector and competitive period cap. |
 | H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Conditional global review complete in [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md). A direct [terminal hand count](HAND_TERMINAL_COVERAGE.md) removes word enumeration. Final acceptance remains conditional on H-S alone; H-N and its actual-period interface are now accepted. |
 
+### Current short-case route
+
+The [global upper short order](MIXED_SMALLER_SHORT_GLOBAL_UPPER_ORDER.md)
+and the earlier strong lower order give a rational strip for the exact
+two-secant shape. The
+[floor-weighted envelope](MIXED_SMALLER_SHORT_FLOOR_WEIGHTED_ENVELOPE.md)
+combines the genuine outer root and outgoing norm floor before making
+any comparison. Its value is positive at actual data and increases
+under the central upper-envelope motion for either diagonal sign.
+The [combined scale theorem](MIXED_SMALLER_SHORT_ROOT_FLOOR_SCALE.md)
+then reduces this test to explicit endpoints. Its zero-scale face is
+excluded; three positive-scale signs remain for the proposed x<12/5
+contraction. This contraction has not yet been proved.
+
+The [angle barrier](MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md)
+conditionally excludes clipping and the upper critical angle on
+x<=12/5. Its decreasing-score conclusion additionally requires a
+lower-shear inequality not yet derived from the actual root. The
+[backward root comparison](MIXED_SMALLER_SHORT_BACKWARD_ROOT_REDUCTION.md)
+and [small-shape upper order](MIXED_SMALLER_SHORT_SMALL_SHAPE_UPPER_ORDER.md)
+are further accepted reductions with their hypotheses stated. The
+[short-lemma audit](MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md)
+checks all these scopes. None of these conditional results alone
+closes H-S or the final assembly.
+
 These are uniform period classes. They are not a plan to enumerate more
 word lengths or replay larger covers. An alternative hand argument may
 replace an entire class without reproducing the old scalar domain.

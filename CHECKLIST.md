@@ -96,6 +96,15 @@ closed computer-assisted gates below do not close these new obligations.
   The [scope audit](docs/HAND_REVERSE_CENTRE_SCALE_SCOPE_AUDIT.md)
   confirms rho<1/7 at the outer reverse centre as well.
 
+Further accepted H-S reductions: the
+[global upper short order](docs/MIXED_SMALLER_SHORT_GLOBAL_UPPER_ORDER.md),
+[floor-weighted root envelope](docs/MIXED_SMALLER_SHORT_FLOOR_WEIGHTED_ENVELOPE.md),
+[combined scale alternative](docs/MIXED_SMALLER_SHORT_ROOT_FLOOR_SCALE.md),
+and [conditional angle barrier](docs/MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md).
+Their [hand review](docs/MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md)
+accepts the stated reductions; the positive-scale signs, actual
+lower-shear implication and complete short exclusion remain open.
+
 ## Baseline proof checkpoints
 
 - [x] G1: actual twisted state/frame and costate interface, free initial state and required geometric/PMP inputs.

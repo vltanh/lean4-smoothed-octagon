@@ -25,6 +25,15 @@ reverse-successor hand theorem, it closes all of H-N. The only remaining
 mixed exclusion is H-S; final hand-only assembly remains conditional
 on that short-case proof.
 
+For the current H-S route, read the
+[global short upper order](MIXED_SMALLER_SHORT_GLOBAL_UPPER_ORDER.md),
+[floor-weighted envelope](MIXED_SMALLER_SHORT_FLOOR_WEIGHTED_ENVELOPE.md),
+[combined scale endpoints](MIXED_SMALLER_SHORT_ROOT_FLOOR_SCALE.md),
+and [conditional angle barrier](MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md).
+Their [independent review](MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md)
+accepts the proved reductions. The positive-scale domain signs and
+the final cost exclusion remain open.
+
 For the short outer-floor sign, use the
 [uniform positive-pairing theorem](MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
 and [independent review](MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md).
