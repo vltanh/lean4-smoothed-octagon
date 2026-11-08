@@ -67,6 +67,10 @@ closed computer-assisted gates below do not close these new obligations.
   now decreases along the residual scale comparison. Its physical-score
   comparison remains open. The [conditional forward monotonicity](docs/MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY.md)
   is proved for t>=1/3 and p*q/(1+x)>=4/7; applicability is still open.
+- [x] The [small-gap forward hand theorem](docs/MIXED_NONSHORT_SMALL_GAP_HAND_EXCLUSION.md)
+  excludes the actual domain t>=1/3, j<=1/30 by the reviewed chi bound,
+  event-factor elimination and scalar Casimir sign. Actual membership
+  in that domain remains to be proved.
 - [ ] Full short-side exclusion, the nonshort forward successor, and the
   final hand-only assembly still need proofs.
 - [x] [Direct terminal hand coverage](docs/HAND_TERMINAL_COVERAGE.md)

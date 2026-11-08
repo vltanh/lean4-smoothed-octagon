@@ -321,3 +321,17 @@ completion record. If an accepted proof premise is materially changed,
 reopen the affected gate, review its domain and rerun its necessary
 certificate before closing it again. Existing Lean sources and dependency
 pins remain untouched until a different workflow is explicitly requested.
+
+
+The [small-gap hand theorem](MIXED_NONSHORT_SMALL_GAP_HAND_EXCLUSION.md)
+now excludes every actual nonshort forward window with t>=1/3 and
+j=2t+x-1<=1/30. The [conditional chi bound](MIXED_NONSHORT_SMALL_GAP_CHI_BOUND.md),
+[event-factor elimination](MIXED_NONSHORT_FORWARD_Q_ELIMINATION.md), and
+[final scalar Casimir sign](MIXED_NONSHORT_FORWARD_ENVELOPE_CASIMIR_SIGN.md)
+complete that restricted argument. Their [lemma review](MIXED_NONSHORT_SMALL_GAP_LEMMAS_AUDIT.md)
+and [scalar review](MIXED_NONSHORT_FORWARD_ENVELOPE_CASIMIR_AUDIT.md)
+check the domains, signs and endpoints. A separate
+[positive-integral secant bound](MIXED_NONSHORT_POSITIVE_INTEGRAL_SECANT_BOUND.md)
+is also proved by hand. Establishing the actual t and j restrictions,
+or excluding their complementary domain, remains necessary; H-N-forward
+is not yet closed.
