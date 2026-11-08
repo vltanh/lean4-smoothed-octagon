@@ -2,9 +2,10 @@
 
 This removes beta from the \(F_0\) test in domain B of
 [the low-ratio outer-face note](../../archive/notes/MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN.md),
-including its beta-dependent upper norm \(u_\ell\). It is a partial
-reduction: **the resulting bivariate signs are unproved, and S1 remains
-open under the requested size budget.**
+including its beta-dependent upper norm \(u_\ell\). This reduction now
+feeds the completed [actual small-shape \(F_0\) proof](SHORT_OUTER_LOW_SHAPE_TERMINAL.md).
+The \(F_1\) test, other branches, and S1 as a whole remain open under
+the requested size budget.
 
 Use the fixed-scale functions \(w,E_L,\overline R_2,\Gamma_*\) and cubic
 logarithm bound from [SHORT_OUTER_BETA](SHORT_OUTER_BETA.md), (1)--(2).

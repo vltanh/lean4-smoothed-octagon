@@ -3,9 +3,10 @@
 This note reduces the \(F_1\) test in
 [MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN](../../archive/notes/MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN.md)
 to two beta endpoints, before any shape substitution or large polynomial
-expansion. It is a partial replacement: **the resulting bivariate signs
-and the companion \(F_0\) test remain to be proved.** No S1 terminal sign
-or gate is declared closed here.
+expansion. It is a partial replacement: **the resulting \(F_1\) signs
+remain to be proved.** The companion \(F_0\) sign is now proved on the
+[actual small-shape branch](SHORT_OUTER_LOW_SHAPE_TERMINAL.md); its other
+branches and S1 as a whole remain open.
 
 The largest expanded identity used below has 19 monomials, total degree
 seven in two variables, and coefficients of absolute value at most 1242.
@@ -39,6 +40,22 @@ T&=\frac{7a}{B},\qquad
 \end{aligned}
 \tag{1}
 \]
+
+For completeness, the central-envelope quantities used in the companion
+norm and shape derivatives are the following small rational expressions:
+\[
+U(r)=1-r+r^2,\qquad
+v=U(S/K)=1-S/K+S^2/K^2,\qquad
+E=E_0+(2S-1)/K,
+\]
+\[
+\Gamma_*=\frac{K^2(4uv-E^2)}{576a^4},\qquad
+\lambda=\frac{K}{7a^2},\quad\delta=\frac{D}{7a^2}.
+\]
+Thus the same transport can be written, without changing any scalar norm,
+\(w=\lambda^2v+\delta^2u-\delta\lambda E\) and
+\(E_L=2\delta u-\lambda E\). These follow from the displayed definitions
+of \(M,J\); all polynomial factors are printed above.
 
 The one logarithm bound is the original
 \(\log y\le\ell(y)\) for \(0<y\le1\). Here its argument

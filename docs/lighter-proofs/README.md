@@ -32,7 +32,7 @@ argument replaces `hB` and `fh_comb_pos_of_ends`.
 
 | Priority | Gate and note | Replacement status |
 |---|---|---|
-| S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | Open; first H-S priority. The [first residual's beta concavity](SHORT_OUTER_BETA.md) and [second residual's beta reduction on the low-shape outer strip](SHORT_OUTER_BETA_LOW_SHAPE.md) are proved; the bivariate terminal signs remain open. |
+| S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | Full sign open; first H-S priority. The [actual small-shape branch's `F0` sign](SHORT_OUTER_LOW_SHAPE_TERMINAL.md) is complete. Its `F1` sign and the S/A branches remain open; [beta concavity](SHORT_OUTER_BETA.md) is available for `F1`. |
 | S1.2 | `MIXED_SMALLER_SHORT_LOW_RATIO_CENTRAL_HAND_SIGN` (20)--(25), Appendices A--C | Open. |
 | S1.3 | `MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_SIGN` (7) | Open. |
 | S1.4 | `MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN` (3) and `MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES` (5) | Open. |
@@ -111,8 +111,18 @@ endpoints, followed by norm concavity. For the second residual on its
 low-shape strip, both the uniform-floor curve and the beta-dependent
 upper-norm curve decrease in beta. The latter total derivative is less
 than `-143/1274880`; freezing that upper norm during beta comparison
-would not justify the reduction. These results leave respectively four
-and two bivariate terminal signs; no terminal sign is claimed from them.
+would not justify the reduction. The first reduction still leaves four
+bivariate terminal signs for `F1`. The second now feeds
+[shape monotonicity](SHORT_OUTER_ALPHA_LOW_SHAPE.md) and the
+[completed actual B-branch `F0` sign](SHORT_OUTER_LOW_SHAPE_TERMINAL.md).
+That proof uses a single split at `x=5/3`, small derivative identities, and
+a scalar endpoint enclosure with certified margin `167/144000000`.
+Its largest expanded identity has 29 monomials and degree eight.
+The narrower conclusion omits extraneous generated-table points with
+`a<1` or without the actual cap; the original note's actual branch caller
+still closes for its `F0` alternative. The rational comparison has a
+thinner endpoint margin than the old bound; its benefit is the small
+algebraic verification, not additional slack.
 
 The [shared rational logarithm bound](LOG_BOUND.md) has a seven-monomial,
 degree-six derivative identity and a factored curvature proof. Its direct

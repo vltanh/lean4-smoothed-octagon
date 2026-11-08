@@ -1,5 +1,13 @@
 # The three outer corrected-cap faces when x is at most two
 
+**Partial lighter replacement:** the actual small-shape branch B now has a
+[proof of its \(F_0\) sign](../../docs/lighter-proofs/SHORT_OUTER_LOW_SHAPE_TERMINAL.md)
+using small derivative identities and a scalar endpoint bound. It covers
+the original actual caller, including its shape cap, rather than all extra
+points in the generated B row. The \(F_1\) sign and the S/A branches still
+require replacements under the requested no-table standard; this does not
+close S1. The original source argument remains below.
+
 Date: 2026-11-08 UTC. Analytic terminal-face theorem, using the
 correction coefficient supplied by the
 [sharp low-ratio corrected-cap reduction](MIXED_SMALLER_SHORT_SHARP_LOW_RATIO_CORRECTED_CAP.md).
