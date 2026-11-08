@@ -292,7 +292,7 @@ domains*, p. 118; Ledermann and Mahler, p. 320; both below).
 ## This repository
 
 - This repository proves the conjecture with its equality case, in Lean 4, from 6 to 8 November 2026. The proof was
-  drafted by ChatGPT Pro (OpenAI), in working notes kept in [`archive/`](archive/README.md), and written in Lean and
+  drafted by ChatGPT Pro (OpenAI), in pull requests #1 and #2, and written in Lean and
   organized by Claude Opus 5.5 (Anthropic). It builds on
   [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) and
   [lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control), and it is unconditional.

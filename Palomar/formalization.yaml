@@ -56,9 +56,9 @@ sources:
     note: >-
       The proof was written in this repository, whose history is the record of how it was made,
       starting from Hales's control formulation and Hales and Vajjha's book. ChatGPT Pro (OpenAI,
-      in ChatGPT) drafted the argument, in working notes of pull requests #1 and #2, archived in
-      docs/archive/; Claude Opus 5.5 (Anthropic, in Claude Code) wrote the Lean proof and organized
-      it. No person has reviewed the proof. docs/CREDITS.md tells how the work was done.
+      in ChatGPT) drafted the argument, in pull requests #1 and #2; Claude Opus 5.5 (Anthropic, in
+      Claude Code) wrote the Lean proof and organized it. No person has reviewed the proof.
+      docs/CREDITS.md tells how the work was done.
   - title: "Über die dichteste gitterförmige Lagerung kongruenter Bereiche in der Ebene und eine besondere Art konvexer Kurven"
     authors:
       - "Karl Reinhardt"
@@ -166,11 +166,11 @@ automation:
       models: ["ChatGPT Pro (OpenAI)"]
       framework: "ChatGPT (OpenAI), committing to the repository through GitHub"
       tool_setup: >-
-        Drafted the argument, from 6 to 8 November 2026, in working notes of pull requests #1
-        (branch feat/reinhardt-foundations) and #2 (branch proof/lighter-signs) of this repository,
-        archived in docs/archive/: the reduction, the five classes of switch patterns and their
-        exclusions, the terminal comparison and the equality case, with the scalar estimates of each
-        case, and a first Lean sketch of the geometric reformulation.
+        Drafted the argument, from 6 to 8 November 2026, in pull requests #1 (branch
+        feat/reinhardt-foundations) and #2 (branch proof/lighter-signs) of this repository: the
+        reduction, the five classes of switch patterns and their exclusions, the terminal comparison
+        and the equality case, with the scalar estimates of each case, and a first Lean sketch of the
+        geometric reformulation.
       cost:
         spend_usd: "not tracked"
     - method: agent

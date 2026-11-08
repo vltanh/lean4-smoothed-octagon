@@ -189,8 +189,7 @@ SmoothedOctagon/
   Defs.lean                    the definitions of the statements, shared with the Challenge
   LowerBound.lean              the assembly
 Cited/HalesVajjha/             Definition 5.0.1 of Hales–Vajjha (the compact domain)
-docs/                          credits, prior work, the figures, and the archive of the working
-                               notes
+docs/                          credits, prior work and the figures
 scripts/                       the audit, the definitions check, the figures and the certificate generators
 ```
 

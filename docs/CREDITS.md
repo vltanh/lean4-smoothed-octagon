@@ -9,10 +9,9 @@ The proof was written in this repository, from 6 to 8 November 2026, and its his
 of how. It starts from Thomas Hales's formulation of the problem as optimal control on `SL₂(ℝ)` and
 from Hales and Vajjha's [*Packings of Smoothed Polygons*](https://arxiv.org/abs/2405.04331).
 
-- ChatGPT Pro (OpenAI, in ChatGPT) drafted the argument, in the working notes kept in
-  [`archive/`](archive/README.md): the reduction to finite normal periods, the five classes of
-  switch patterns and their exclusions, the terminal comparison and the equality case, with the
-  scalar estimates of each case.
+- ChatGPT Pro (OpenAI, in ChatGPT) drafted the argument, in pull requests #1 and #2: the
+  reduction to finite normal periods, the five classes of switch patterns and their exclusions,
+  the terminal comparison and the equality case, with the scalar estimates of each case.
 - Claude Opus 5.5 (Anthropic, in Claude Code) wrote the Lean proof and organized it, with
   sub-agents of the same model that stated and proved the stages in parallel, following the
   [formalize-math-paper](https://github.com/vltanh/formalize-math-paper) skill. It also wrote the
