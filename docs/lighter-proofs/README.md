@@ -42,14 +42,14 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 | S2.2 | `MIXED_SMALLER_SHORT_OUTER_RATIO_HAND_SIGN` (11)--(18) | Open. |
 | S3.1 | `MIXED_SMALLER_SHORT_DISPLACEMENT_OUTER_FACE` (7)--(21) | Open. |
 | S3.2 | `MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_FACE`, Section 2 (4)--(10) | **Complete hand caller replacement for the requested shape derivative.** The [central displacement proof](SHORT_DISPLACEMENT_CENTRAL_SHAPE.md) groups the exact-log derivative using two correlated transport bounds. A convex quadratic proves both negative signs on the actual comparison path and reaches the original endpoint. The source's separate beta lemma and Section 3 endpoint signs remain dependencies. |
-| S4 | `MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES` (4)--(30) | Open. |
+| S4 | `MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES` (4)--(30) | **Complete hand caller replacement.** The [six-sign assembly](SHORT_CASIMIR_COMPLETE.md) uses small derivative identities, a moving-norm comparison, two boundary concavity arguments and six elementary terminal terms. Five signs retain their original full domains; W3 is proved at `e=13/5`, exactly after the caller's W2 comparison. The original actual Casimir floor and all three endpoint margins are preserved. |
 | S6 | `MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION` (20)--(31) | **Complete hand replacement.** [Angle concavity and four endpoint curves](SHORT_COST_CONCAVITY.md) give `B>113/50000`, with margin greater than `3/100000` over the original target. Primitive numerator degree is at most five; only one rational split is used. The original physical-cost caller is unchanged. |
 
 These are the finite requested obligations. The three corrections below
 are recorded separately and are not counted as polynomial replacements.
 
-Five of the ten H-S replacement rows are now complete: S1.1, S1.2,
-S1.4, S3.2 and S6. The remaining five are the unchanged finite list above. This count
+Six of the ten H-S replacement rows are now complete: S1.1, S1.2,
+S1.4, S3.2, S4 and S6. The remaining four are the unchanged finite list above. This count
 describes completed rows, not equal amounts of remaining effort, and
 does not claim completion of H-S or Lean integration.
 

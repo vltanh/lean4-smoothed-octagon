@@ -1,5 +1,11 @@
 # Six explicit derivative signs for the extended Casimir floor
 
+**Replacement status, 2026-11-08:** the [new six-sign assembly](../../docs/lighter-proofs/SHORT_CASIMIR_COMPLETE.md)
+replaces this note's derivative dependencies with small identities and
+elementary rational bounds. Five signs retain their full original domains;
+the ratio derivative is proved at eta=13/5, precisely where the caller uses
+it after its preceding eta comparison. The original actual floor closes.
+
 Date: 2026-11-08 UTC. Hand proof accepted in the
 [independent extended-shape review](MIXED_SMALLER_SHORT_EXTENDED_SHAPE_AUDIT.md),
 including its final independent reading in Section 6.

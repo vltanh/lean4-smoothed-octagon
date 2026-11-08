@@ -1,5 +1,11 @@
 # A corrected Casimir floor up to short ratio thirteen sixths
 
+**Replacement status, 2026-11-08:** the [new derivative assembly](../../docs/lighter-proofs/SHORT_CASIMIR_COMPLETE.md)
+supplies every derivative comparison used in Section 4 and checks the same
+three scalar endpoint margins. Its restricted ratio derivative is used
+only after eta has already been lowered to 13/5. The actual-covector
+conclusion and the earlier analytic reductions are unchanged.
+
 Date: 2026-11-08 UTC. **Accepted hand theorem on the full extended
 shape interval.** The
 [six derivative signs](MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES.md)
