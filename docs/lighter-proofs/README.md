@@ -16,7 +16,7 @@ generated coefficient tables remain an open hand-proof dependency.
 
 | Priority | Requested sign | Replacement status |
 |---|---|---|
-| N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | Open; first priority. For a simpler eligible residual, [shape monotonicity](NONSHORT_LOW_T_SHAPE.md) and the [unit face `h=1/4`](NONSHORT_LOW_T_UNIT_FACE.md) are proved. The reduction in `h` and the other boundary faces remain open. |
+| N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | Open; first priority. For a simpler eligible residual, [shape monotonicity](NONSHORT_LOW_T_SHAPE.md), the [unit face `h=1/4`](NONSHORT_LOW_T_UNIT_FACE.md), and the [outer-gap face `j=5h/7`](NONSHORT_LOW_T_OUTER_FACE.md) are proved. The reduction in `h` and the maximum-duration face remain open. |
 | N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | **Complete hand replacement.** The [fourth-derivative proof](NONSHORT_LOW_RATIO_LINK.md) closes the original sign using the base quadratic, monotonicity, and factored remainder. The largest expanded identity has 41 monomials and degree eight. Lean integration remains open. |
 | N3 | `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`, `k=1+j` | Open. The new [low-t shape derivative](NONSHORT_LOW_T_SHAPE.md) would remove this endpoint dependency once its different unit-shape residual is proved positive throughout N1's domain. |
 | N4a | `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13), `k=29t²/4` | Open. |
@@ -86,6 +86,16 @@ Every expanded identity in that face proof has at most nine monomials,
 degree at most eight, and coefficients of at most twelve digits.
 Independent reviews reconstructed the original residuals and checked all
 printed coefficient identities and scalar comparisons in both notes.
+
+The [outer-gap unit face](NONSHORT_LOW_T_OUTER_FACE.md) is also complete.
+It differentiates its coefficient functions twice before expanding,
+then checks their values and first derivatives at `x=1/2`. The seven
+second-derivative identities have at most nine monomials and degree eight.
+The normalized residual is greater than 10 at `q=1`, and its derivative
+in `q` is greater than 500 throughout that face. An independent review
+checked the original affine source, all sixteen coefficient polynomials,
+the seven derivative identities, the fourteen boundary values, and the
+remaining sign comparisons.
 
 The [N2 base quadratic](NONSHORT_LOW_RATIO.md) is greater than 4 on its
 full domain; its three square identities each have 21 monomials and total
