@@ -11,7 +11,16 @@ It preserves the original physical scale in its conclusion. The
 actual-domain S5 gate still awaits the ratio and displacement results;
 the conditional theorem does not assume or prove the cost contradiction.
 
-**Accepted S3 reductions:** the
+**Accepted conditional S3 theorem:** the
+[displacement exclusion](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
+and [independent face/interface review](MIXED_SMALLER_SHORT_DISPLACEMENT_FACE_AUDIT.md)
+now prove delta<1/19 for every actual retained bridge with
+2<=x<=13/6. Both central and outer terminal signs are complete,
+including equality boundaries. S1 and S2 must still establish the
+ratio hypotheses for all actual bridges before the actual-domain
+S3 gate can be marked closed.
+
+The underlying
 [displacement weight](MIXED_SMALLER_SHORT_DISPLACEMENT_WEIGHT_REDUCTION.md),
 [tau-two scale continuation](MIXED_SMALLER_SHORT_DISPLACEMENT_SCALE_CONTINUATION.md),
 and [zero-scale sign](MIXED_SMALLER_SHORT_DISPLACEMENT_ZERO_SCALE.md)
@@ -21,7 +30,8 @@ positive-scale faces. The
 and [quadratic secant order](MIXED_SMALLER_SHORT_RATIONAL_QUADRATIC_ORDER.md)
 are also proved. Their [separate review](MIXED_SMALLER_SHORT_DISPLACEMENT_REDUCTION_AUDIT.md)
 preserves the original-root and incoming-ceiling interfaces. These
-reductions do not alone close S3; terminal face signs remain separate.
+reductions and the two accepted terminal face signs form the complete
+conditional displacement theorem just cited.
 
 **Accepted S2 central face:** the
 [central ratio sign](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN.md)

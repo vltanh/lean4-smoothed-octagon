@@ -1,5 +1,12 @@
 # Authoritative handoff — hand proof now in progress
 
+**Accepted conditional S3 theorem:** the
+[complete displacement exclusion](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
+and its [independent review](MIXED_SMALLER_SHORT_DISPLACEMENT_FACE_AUDIT.md)
+prove delta<1/19 on the actual ratio strip 2<=x<=13/6. Both terminal
+scale faces are complete. S1/S2 must still establish that ratio strip
+for every actual smaller-short bridge; the full H-S theorem remains open.
+
 **Accepted S2 central face:** the
 [central ratio sign](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN.md)
 and [separate reading](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_AUDIT.md)
@@ -15,8 +22,8 @@ leave two duration tests on each positive-scale face. The
 [central-beta lemma](MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_BETA.md)
 and [quadratic order](MIXED_SMALLER_SHORT_RATIONAL_QUADRATIC_ORDER.md)
 have passed [separate review](MIXED_SMALLER_SHORT_DISPLACEMENT_REDUCTION_AUDIT.md).
-The central and outer terminal signs require their own acceptance;
-the displacement and actual-ratio gates are not yet closed.
+The central and outer terminal signs are now accepted in the
+conditional theorem above; the actual-ratio gates remain open.
 
 **Current conditional theorem:** the
 [small-shape root-to-shear proof](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)

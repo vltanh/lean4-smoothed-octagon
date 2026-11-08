@@ -2,6 +2,14 @@
 
 Date: 2026-11-08 UTC.
 
+**Accepted conditional displacement exclusion:** the
+[complete hand theorem](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
+proves delta<1/19 whenever an actual retained short bridge has
+2<=x<=13/6. Its [independent review](MIXED_SMALLER_SHORT_DISPLACEMENT_FACE_AUDIT.md)
+accepts both terminal scale faces and the original-root interface.
+The lower and upper ratio exclusions remain necessary to apply this
+theorem to every actual bridge; H-S remains open.
+
 **Accepted upper-ratio central sign:** the
 [complete central-face proof](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN.md)
 has passed its [separate reading](MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_AUDIT.md).
@@ -17,8 +25,8 @@ have explicit hand proofs. The [central-beta sign](MIXED_SMALLER_SHORT_DISPLACEM
 and [quadratic secant order](MIXED_SMALLER_SHORT_RATIONAL_QUADRATIC_ORDER.md)
 are independently reviewed in the
 [displacement audit](MIXED_SMALLER_SHORT_DISPLACEMENT_REDUCTION_AUDIT.md).
-The terminal face signs and the actual ratio hypotheses remain open;
-this increment does not close S3 or H-S.
+The terminal face signs are now supplied by the conditional theorem
+above. Its actual ratio hypotheses remain open; H-S is not closed.
 
 **Latest accepted conditional theorem:** the
 [small-shape root-to-shear proof](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
