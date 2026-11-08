@@ -1,0 +1,207 @@
+module
+
+public import SmoothedOctagon.Exclusion.Mixed.Hand.Link
+public import SmoothedOctagon.Exclusion.Mixed.Hand.CertOrder
+public import Mathlib.Analysis.Convex.Deriv
+
+/-!
+# Case M2 by hand: the reverse order face `k = 2t + x`
+
+`MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION`, in the strengthened form of
+`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §1: for `0 < t < 2/5`, `x > 1/4`, `k = 2t + x ≥ 1`,
+`x < 7/3 - (10/3)t`, the exact incoming secant `v` and `1 < q ≤ W/k`, `N(k) > 0`. On this face
+`B = Wk` and `R(q) = α + βq + γ/q - p log q` is concave on `[1, W/k]` (`nh_concave_min`), so it
+suffices to check the two endpoints: `R(1) > 0` by the exact identity (5) and the polynomial (7),
+`R(W/k) > 0` by the rational relaxation (13) and the certificate `nhOP_pos_a`, `nhOP_pos_b`.
+The bound `q ≤ W/k` (from the incoming floor and the swapped secant order) is a hypothesis here.
+
+## Main API
+
+* `nh_concave_min`: the minimum principle for `α + βq + γ/q - p log q` where it is concave.
+* `nh_order_face`: **the order-face lemma**.
+-/
+
+@[expose] public section
+
+namespace SmoothedOctagon
+
+/-- **Minimum principle**: `f(q) = α + βq + γ/q - p log q` is concave on `[q₀, q₁]` when
+`p q₁ + 2γ ≤ 0`, hence at least the smaller endpoint value. -/
+theorem nh_concave_min {α β γ p q0 q1 q : ℝ} (hq0 : 0 < q0) (hp : 0 ≤ p)
+    (hγ : p * q1 + 2 * γ ≤ 0) (hq : q ∈ Set.Icc q0 q1) :
+    min (α + β * q0 + γ / q0 - p * Real.log q0) (α + β * q1 + γ / q1 - p * Real.log q1) ≤
+      α + β * q + γ / q - p * Real.log q := by
+  have hconc : ConcaveOn ℝ (Set.Icc q0 q1) (fun z => α + β * z + γ / z - p * Real.log z) := by
+    apply concaveOn_of_hasDerivWithinAt2_nonpos (convex_Icc q0 q1)
+      (f' := fun z => β - γ / z ^ 2 - p / z) (f'' := fun z => 2 * γ / z ^ 3 + p / z ^ 2)
+    · intro z hz
+      have hz0 : 0 < z := lt_of_lt_of_le hq0 hz.1
+      have : HasDerivAt (fun z => α + β * z + γ / z - p * Real.log z)
+          (β - γ / z ^ 2 - p / z) z := by
+        have h1 := ((hasDerivAt_id z).const_mul β).const_add α
+        have h2 := (hasDerivAt_inv hz0.ne').const_mul γ
+        have h3 := (Real.hasDerivAt_log hz0.ne').const_mul p
+        convert (h1.add h2).sub h3 using 1
+        · ext w; simp [div_eq_mul_inv]
+        · simp [div_eq_mul_inv]; ring
+      exact this.continuousAt.continuousWithinAt
+    · intro z hz
+      rw [interior_Icc] at hz
+      have hz0 : 0 < z := lt_trans hq0 hz.1
+      have h1 := ((hasDerivAt_id z).const_mul β).const_add α
+      have h2 := (hasDerivAt_inv hz0.ne').const_mul γ
+      have h3 := (Real.hasDerivAt_log hz0.ne').const_mul p
+      have := (h1.add h2).sub h3
+      refine (this.congr_deriv ?_).hasDerivWithinAt.congr_of_mem (fun w _ => ?_) ?_
+      · simp [div_eq_mul_inv]; ring
+      · simp [div_eq_mul_inv]
+      · rw [interior_Icc]; exact hz
+    · intro z hz
+      rw [interior_Icc] at hz
+      have hz0 : 0 < z := lt_trans hq0 hz.1
+      have h2 : HasDerivAt (fun z : ℝ => γ / z ^ 2) (-(2 * γ) / z ^ 3) z := by
+        have := (hasDerivAt_pow 2 z).inv (by positivity) |>.const_mul γ
+        convert this using 1
+        · ext w; simp [div_eq_mul_inv]
+        · field_simp; ring
+      have h3 : HasDerivAt (fun z : ℝ => p / z) (-p / z ^ 2) z := by
+        have := (hasDerivAt_inv hz0.ne').const_mul p
+        convert this using 1
+        · ext w; simp [div_eq_mul_inv]
+        · field_simp
+      have := ((hasDerivAt_const z β).sub h2).sub h3
+      refine (this.congr_deriv ?_).hasDerivWithinAt
+      field_simp; ring
+    · intro z hz
+      rw [interior_Icc] at hz
+      have hz0 : 0 < z := lt_trans hq0 hz.1
+      have hpz : p * z ≤ p * q1 := mul_le_mul_of_nonneg_left hz.2.le hp
+      have : 2 * γ / z ^ 3 + p / z ^ 2 = (p * z + 2 * γ) / z ^ 3 := by field_simp; ring
+      rw [this]
+      exact div_nonpos_of_nonpos_of_nonneg (by linarith) (by positivity)
+  exact hconc.min_le_of_mem_Icc (Set.left_mem_Icc.2 (hq.1.trans hq.2))
+    (Set.right_mem_Icc.2 (hq.1.trans hq.2)) hq
+
+/-- The polynomial (7) of `MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION`, positive for
+`0 < t < 1/2`, `0 < x < 5/2`. -/
+theorem nh_order_P7_pos {t x : ℝ} (hx : 0 < x) (hx2 : x < 5 / 2) :
+    0 < t * (3 * t - 1) * x ^ 3 + (18 * t ^ 2 - 15 * t + 5) * x ^ 2
+      + (36 * t ^ 2 - 40 * t + 14) * x + (24 * t ^ 2 - 32 * t + 12) := by
+  have h1 : 0 ≤ (t * (3 * t - 1) + 1 / 12) * x ^ 3 := mul_nonneg (by nlinarith [sq_nonneg (t - 1 / 6)]) (by positivity)
+  have h2 : 0 ≤ (18 * t ^ 2 - 15 * t + 5 - 15 / 8) * x ^ 2 :=
+    mul_nonneg (by nlinarith [sq_nonneg (t - 5 / 12)]) (by positivity)
+  have h3 : 0 ≤ (36 * t ^ 2 - 40 * t + 14 - 26 / 9) * x :=
+    mul_nonneg (by nlinarith [sq_nonneg (t - 5 / 9)]) hx.le
+  have h4 : 0 ≤ 24 * t ^ 2 - 32 * t + 12 - 4 / 3 := by nlinarith [sq_nonneg (t - 2 / 3)]
+  have h5 : 0 ≤ x ^ 2 * (5 / 2 - x) := mul_nonneg (by positivity) (by linarith)
+  have h6 : 0 < x ^ 2 := by positivity
+  nlinarith
+
+/-- The concave form of the residual on the face `k = 2t + x` (`B = Wk`, `Z = qk`). -/
+theorem nh_order_R_form {t x q v L : ℝ} (ht : 0 < t) (hx : 0 < x) (_hk : 0 < 2 * t + x)
+    (hq : q ≠ 0) :
+    nhR t x (2 * t + x) q v L =
+      ((1 - t) - (t + x) ^ 2 / (1 + x) + (t + x) ^ 3 / ((1 + x) * (2 * t + x)) - (1 + x) * v
+        + (t + x) * ((2 * t + x) / t * (v - 1 + t ^ 2) + t * (2 - t) + 2 * v * (x * (x + 2)))
+          / ((1 + x) * (2 * t + x)))
+      + ((2 * t + x) * (1 - ((2 * t + x) ^ 2 - (2 * t + x) * t + t ^ 2
+          + ((2 * t + x) / t * (v - 1 + t ^ 2) + t * (2 - t)) * (x * (x + 2))
+          + v * (x * (x + 2)) ^ 2) / ((1 + x) * (2 * t + x)) ^ 2)) * q
+      + (-(t + x) ^ 2 / (2 * t + x)) / q - (t + x) * L := by
+  have hW : 0 < 1 + x := by linarith
+  have hB : 2 * t + x + 2 * t * x + x ^ 2 = (1 + x) * (2 * t + x) := by ring
+  unfold nhR
+  rw [hB]
+  field_simp
+  ring
+
+/-- **The order-face lemma** (`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §1). -/
+theorem nh_order_face {t x q v : ℝ} (ht : 0 < t) (ht2 : t < 2 / 5) (hx : 1 / 4 < x)
+    (hk : 1 ≤ 2 * t + x) (hdur : x < 7 / 3 - 10 / 3 * t) (hv : v = nhSecN t x) (hq : 1 < q)
+    (hqk : q ≤ (1 + x) / (2 * t + x)) : 0 < nhN t x (2 * t + x) q v (Real.log q) := by
+  have hx0 : 0 < x := by linarith
+  have hk0 : 0 < 2 * t + x := by linarith
+  have hW : 0 < 1 + x := by linarith
+  have hq0 : 0 < q := by linarith
+  have hvb : v < nhVbar t x := hv ▸ nh_secN_lt_vbar hx0 (by linarith)
+  set k := 2 * t + x with hkdef
+  -- the concave form
+  set α := (1 - t) - (t + x) ^ 2 / (1 + x) + (t + x) ^ 3 / ((1 + x) * k) - (1 + x) * v
+        + (t + x) * (k / t * (v - 1 + t ^ 2) + t * (2 - t) + 2 * v * (x * (x + 2))) / ((1 + x) * k)
+    with hα
+  set β := k * (1 - (k ^ 2 - k * t + t ^ 2 + (k / t * (v - 1 + t ^ 2) + t * (2 - t)) * (x * (x + 2))
+          + v * (x * (x + 2)) ^ 2) / ((1 + x) * k) ^ 2) with hβ
+  set γ := -(t + x) ^ 2 / k with hγ
+  have hRf : ∀ z, z ≠ 0 → nhR t x k z v (Real.log z) = α + β * z + γ / z - (t + x) * Real.log z :=
+    fun z hz => nh_order_R_form ht hx0 hk0 hz
+  have hBk : 0 < k + 2 * t * x + x ^ 2 := by positivity
+  have hNR : ∀ z, 0 < z → nhN t x k z v (Real.log z) =
+      t * (k + 2 * t * x + x ^ 2) * z * (1 + x) * (α + β * z + γ / z - (t + x) * Real.log z) :=
+    fun z hz => by rw [nhN_eq_R ht hx0 hk0 hz, hRf z hz.ne']
+  -- the endpoint q = 1
+  have hR1 : 0 < α + β * 1 + γ / 1 - (t + x) * Real.log 1 := by
+    have e1 : nhN t x k 1 v 0 = x * ((k + t * (x * (x + 2))) * (1 - v) - 2 * t * (1 - t) * (t + x)) := by
+      rw [hkdef]; unfold nhN; ring
+    have e2 : x * ((k + t * (x * (x + 2))) * (1 - nhVbar t x) - 2 * t * (1 - t) * (t + x)) =
+        (1 - t) * x ^ 3 / (3 * (1 + x) * (x + 2) ^ 3) * (t * (3 * t - 1) * x ^ 3
+          + (18 * t ^ 2 - 15 * t + 5) * x ^ 2 + (36 * t ^ 2 - 40 * t + 14) * x
+          + (24 * t ^ 2 - 32 * t + 12)) := by
+      rw [hkdef]; unfold nhVbar; field_simp; ring
+    have hP7 := nh_order_P7_pos (t := t) hx0 (by linarith)
+    have hpos : 0 < (1 - t) * x ^ 3 / (3 * (1 + x) * (x + 2) ^ 3) := by
+      have : 0 < 1 - t := by linarith
+      positivity
+    have hkY : 0 < k + t * (x * (x + 2)) := by positivity
+    have hN1 : 0 < nhN t x k 1 v 0 := by
+      rw [e1]
+      have : x * ((k + t * (x * (x + 2))) * (1 - nhVbar t x) - 2 * t * (1 - t) * (t + x)) <
+          x * ((k + t * (x * (x + 2))) * (1 - v) - 2 * t * (1 - t) * (t + x)) := by
+        apply mul_lt_mul_of_pos_left _ hx0
+        have := mul_lt_mul_of_pos_left (show 1 - nhVbar t x < 1 - v by linarith) hkY
+        linarith
+      rw [e2] at this
+      linarith [mul_pos hpos hP7]
+    have := hNR 1 one_pos
+    rw [Real.log_one] at this
+    rw [this] at hN1
+    have hc : 0 < t * (k + 2 * t * x + x ^ 2) * 1 * (1 + x) := by positivity
+    rw [Real.log_one]
+    exact pos_of_mul_pos_right hN1 hc.le
+  -- the endpoint q = W/k
+  have hq1 : 1 < (1 + x) / k := by rw [lt_div_iff₀ hk0]; linarith
+  have hR2 : 0 < α + β * ((1 + x) / k) + γ / ((1 + x) / k) - (t + x) * Real.log ((1 + x) / k) := by
+    have hq10 : 0 < (1 + x) / k := by positivity
+    have hcert : 0 < nhOP (1 - 2 * t) (2 * t + x - 1) := by
+      rcases le_total (1 - 2 * t) (1 / 4) with h1 | h1
+      · exact nhOP_pos_a _ _ (by linarith) h1 (by linarith) (by linarith) (by linarith)
+      · exact nhOP_pos_b _ _ h1 (by linarith) (by linarith) (by linarith) (by linarith)
+    have eP : 24 * k ^ 3 * (1 + x + k) * (x + 2) ^ 3 *
+        nhN t x k ((1 + x) / k) (nhVbar t x) (nhLp ((1 + x) / k)) =
+        (k + 2 * t * x + x ^ 2) * nhOP (1 - 2 * t) (2 * t + x - 1) := by
+      rw [hkdef]; unfold nhN nhVbar nhLp nhOP; field_simp; ring
+    have hNb : 0 < nhN t x k ((1 + x) / k) (nhVbar t x) (nhLp ((1 + x) / k)) := by
+      have h1 : 0 < (k + 2 * t * x + x ^ 2) * nhOP (1 - 2 * t) (2 * t + x - 1) := mul_pos hBk hcert
+      rw [← eP] at h1
+      exact pos_of_mul_pos_right h1 (by positivity)
+    have hN := nh_N_pos_of_relax (t := t) (x := x) (k := k) (q := (1 + x) / k) (v := v)
+      (L := Real.log ((1 + x) / k)) (vb := nhVbar t x) (Lb := nhLp ((1 + x) / k)) (Fl := v) (m := 0)
+      hvb.le (nh_log_lt_Lp hq1).le (nhNv_nonpos ht.le hx0.le hq1.le (by linarith))
+      (nhNL_nonpos ht.le hx0.le hq10.le hk0.le) le_rfl le_rfl (by simpa using hNb)
+    rw [hNR _ hq10] at hN
+    have hc : 0 < t * (k + 2 * t * x + x ^ 2) * ((1 + x) / k) * (1 + x) := by positivity
+    exact pos_of_mul_pos_right hN hc.le
+  -- concavity
+  have hmin := nh_concave_min (α := α) (β := β) (γ := γ) (p := t + x) (q0 := 1)
+    (q1 := (1 + x) / k) (q := q) one_pos (by linarith) (by
+      rw [hγ]
+      have : (t + x) * ((1 + x) / k) + 2 * (-(t + x) ^ 2 / k) = (t + x) * (1 + x - 2 * (t + x)) / k := by
+        field_simp; ring
+      rw [this]
+      apply div_nonpos_of_nonpos_of_nonneg _ hk0.le
+      apply mul_nonpos_of_nonneg_of_nonpos (by linarith) (by linarith)) ⟨hq.le, hqk⟩
+  have hRq : 0 < α + β * q + γ / q - (t + x) * Real.log q :=
+    lt_of_lt_of_le (lt_min hR1 hR2) hmin
+  rw [hNR q hq0]
+  positivity
+
+end SmoothedOctagon
