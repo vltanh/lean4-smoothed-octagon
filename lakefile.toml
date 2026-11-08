@@ -15,12 +15,17 @@ scope = "leanprover-community"
 git = "https://github.com/leanprover-community/mathlib4"
 rev = "9d581dfff2e41de989072ea63abf3daf69311520"
 
+[[require]]
+name = "OptimalControl"
+git = "https://github.com/vltanh/lean4-optimal-control"
+rev = "88689a80ebc400f2e7b3656ee0b9d95a7bf42820"
+
 # Development pin: the user's unpublished `layer1` branch of lean4-smoothed-polygon, cloned from
 # the local checkout. Switch to the published repository at a pinned commit before pushing.
 [[require]]
 name = "SmoothedPolygons"
 git = "/home/vltanh/Documents/lean4-smoothed-octagon"
-rev = "a37ab122d101e7665558c8360e93ce7460d298e2"
+rev = "826d8b304edb93e0860e789143bce150ac98b6c7"
 
 [[lean_lib]]
 name = "Cited"
