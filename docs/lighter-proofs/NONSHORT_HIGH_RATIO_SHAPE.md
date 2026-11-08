@@ -2,8 +2,8 @@
 
 This replaces the use of the upper face `k = 1 + j` in
 `SmoothedOctagon/Exclusion/Mixed/FwdHand/LargeGap.lean`, theorem
-`fh_LGB_core`. It retains the lower-face sign at `k = 29t²/4` as an
-explicit dependency. It does **not** replace that lower-face sign.
+`fh_LGB_core`. Its lower-face dependency at `k = 29t²/4` is now supplied
+by the [completed lower-shape replacement](NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md).
 
 The relevant scalar proof already appears in Section 2 of
 [the high-ratio note](../../archive/notes/MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION.md).
@@ -38,7 +38,7 @@ k_0:=29t^2/4<k<k_+.
 \]
 
 In particular \(k_0\ge261/256>1\), and every point between \(k_0\)
-and \(k\) lies in the interval in (1). Therefore the retained lower-face
+and \(k\) lies in the interval in (1). Therefore the proved lower-face
 sign gives
 
 \[
@@ -47,8 +47,8 @@ G_4(t,x,q,k)>G_4(t,x,q,k_0)>0,
 
 contradicting the unchanged necessary condition \(G_4<0\).
 
-In `fh_LGB_core`, retain the substitution proof through `hG` and the
-lower endpoint proof `hA` using `fhCLGc_pos_y` and `fh_LGc_link`.
+In `fh_LGB_core`, retain the substitution proof through `hG` and obtain
+the lower endpoint `hA` from the [new lower-face proof](NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md).
 Replace `hB` and `fh_comb_pos_of_ends` by (1) integrated on
 \([29t^2/4,k]\). The Lean expression `fhComb 4 1 ...` is
 \(4q(1+x)^2G_4\); its positive multiplier is independent of shape.
@@ -391,7 +391,7 @@ d_0+y(d_1+d_2y)+d_3y^3>0.
 Equations (8)--(11) prove (1), including \(q=1\). Section 1 then
 removes the upper-shape certificate from the actual high-ratio caller.
 
-## Validation and remaining boundary
+## Validation and completed lower dependency
 
 The four identities (13), the coefficient collections (10), and all
 displayed factorizations have been checked with exact rational symbolic
@@ -399,6 +399,8 @@ arithmetic. Their displayed algebra is the proof; the computation is
 only a transcription check. No Lean compilation or CI was run, and
 this note does not claim a measured time or memory improvement.
 
-The lower-face certificate `CertLGc` remains required until its own
-replacement is proved. The low-t and low-ratio signs, and all requested
-S1--S6 replacements, are separate obligations.
+The lower-face certificate `CertLGc` is replaced by the
+[small-identity lower-shape proof](NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md).
+Together the two arguments close the original high-ratio caller without
+either endpoint certificate. Lean integration remains open; all requested
+S1--S6 replacements are separate obligations.

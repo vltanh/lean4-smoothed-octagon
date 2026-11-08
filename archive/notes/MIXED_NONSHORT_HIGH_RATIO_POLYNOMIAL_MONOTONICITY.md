@@ -1,5 +1,11 @@
 # A decreasing scalar polynomial on the high-ratio scale face
 
+**Lighter caller replacement:** the [new h-reduction proof](../../docs/lighter-proofs/NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md)
+differentiates a factored source before expansion and reduces its derivative
+signs one variable at a time. Its terminal face and norm comparison prove
+the original lower-shape sign and close the same caller. The negative-part
+coefficient norm below is not used in that replacement.
+
 Date: 2026-11-08 UTC. Hand derivative inequality for the constant
 multiplier residual. Its endpoint value at h=1/4 is a separate sign.
 

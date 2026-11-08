@@ -19,14 +19,16 @@ generated coefficient tables remain an open hand-proof dependency.
 | N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | **Complete hand caller replacement.** The [new unit sign and caller argument](NONSHORT_LOW_T_CALLER.md) use monotonicity in `h`, three proved faces, and shape monotonicity. The actual low-t branch of `fh_small_gap_j` supplies the new necessary condition through `fh_window_comb`. The old residual's standalone scalar statement is not claimed. Lean integration remains open. |
 | N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | **Complete hand replacement.** The [fourth-derivative proof](NONSHORT_LOW_RATIO_LINK.md) closes the original sign using the base quadratic, monotonicity, and factored remainder. The largest expanded identity has 41 monomials and degree eight. Lean integration remains open. |
 | N3 | `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`, `k=1+j` | **Hand dependency removed** from the actual low-t caller by the [completed N1 replacement](NONSHORT_LOW_T_CALLER.md). The wider old scalar face is not re-proved; its exact caller and changed intermediate premise are explicit. Lean integration remains open. |
-| N4a | `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13), `k=29t²/4` | Open. |
-| N4b | The same caller's upper face, `k=1+j` | **Hand dependency removed**, conditional on the retained N4a sign; [shape monotonicity proof](NONSHORT_HIGH_RATIO_SHAPE.md). Lean integration remains open. |
+| N4a | `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13), `k=29t²/4` | **Complete hand replacement on the original domain.** The [h reduction](NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md) and [terminal face](NONSHORT_HIGH_RATIO_LOWER_FACE.md) prove a normalized residual at least `13/4`; norm monotonicity gives the original sign. Lean integration remains open. |
+| N4b | The same caller's upper face, `k=1+j` | **Hand dependency removed** by [shape monotonicity](NONSHORT_HIGH_RATIO_SHAPE.md) and the completed N4a lower sign. The original `fh_LGB_core` statement closes with its unchanged necessary-condition premise. Lean integration remains open. |
 
 N4b is a caller-preserving weakening, not a claim on an enlarged face
 outside the actual feasible shape interval. The exact caller is
 `fh_LGB_core` in `SmoothedOctagon/Exclusion/Mixed/FwdHand/LargeGap.lean`.
-Its existing lower-endpoint proof `hA` is retained; the new monotonicity
-argument replaces `hB` and `fh_comb_pos_of_ends`.
+Its lower endpoint `hA` is now supplied by the new N4a proof; shape
+monotonicity replaces `hB` and `fh_comb_pos_of_ends`. Thus every entry in
+the first requested table has a complete hand replacement or an explicit
+caller-preserving dependency removal. None has yet been integrated into Lean.
 
 ## H-S signs, in requested priority order
 
@@ -175,6 +177,21 @@ degree-six derivative identity and a factored curvature proof. Its direct
 incoming-norm majorant has 19 monomials and degree five in two variables.
 It gives a rigorously bounded error at `x=2` of at most `1/8608908`.
 This is a reusable bound, not a completed S1, S3 or S4 replacement.
+
+The [high-ratio lower-shape proof](NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md)
+uses the same constant multipliers 4 and 1. It first proves `-H^2 S>30000`
+on a rectangle, then proves the initial `-H S>680`, reducing the sign
+to `h=1/4`. Its seven second-derivative identities have at most forty
+monomials and degree eight. On the [terminal face](NONSHORT_HIGH_RATIO_LOWER_FACE.md),
+concavity in `y` leaves a zero face and a line. A 21-monomial, degree-five
+ninth derivative controls the line through small scalar jets, with one
+split at `x=2/5` and a final tangent bound `S>=13/4`.
+Every expanded identity has degree at most eight and coefficients of at
+most twelve digits. The source collection includes explicit intermediate
+polynomials and an order of operations keeping even the individual
+expanded contributions below twelve digits; the largest is 916,895,167,299.
+Independent reviews reconstructed the original source and checked all
+identities, interval bounds, scalar roundings, and the unchanged caller.
 
 ## Validation boundary
 
