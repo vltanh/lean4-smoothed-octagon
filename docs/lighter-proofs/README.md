@@ -35,21 +35,21 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 | Priority | Gate and note | Replacement status |
 |---|---|---|
 | S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | **Complete hand caller replacement.** The [assembled proof](SHORT_OUTER_COMPLETE.md) closes both tests in all three branches. The last B `F1` terminal has margin `1597/144000000`. The exact actual outer caller and its original duration conclusion are preserved. |
-| S1.2 | `MIXED_SMALLER_SHORT_LOW_RATIO_CENTRAL_HAND_SIGN` (20)--(25), Appendices A--C | Open. |
+| S1.2 | `MIXED_SMALLER_SHORT_LOW_RATIO_CENTRAL_HAND_SIGN` (20)--(25), Appendices A--C | **Complete hand caller replacement.** The [central assembly](SHORT_CENTRAL_COMPLETE.md) retains the original norm curve for `F0`, reaches the exact cap, and reuses the completed outer sign. A separate curvature argument reduces `F1` to two fixed shapes. Both original strict signs and the duration caller are preserved. |
 | S1.3 | `MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_SIGN` (7) | Open. |
 | S1.4 | `MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN` (3) and `MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES` (5) | Open. |
 | S2.1 | `MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN` (5) | Open. |
 | S2.2 | `MIXED_SMALLER_SHORT_OUTER_RATIO_HAND_SIGN` (11)--(18) | Open. |
 | S3.1 | `MIXED_SMALLER_SHORT_DISPLACEMENT_OUTER_FACE` (7)--(21) | Open. |
-| S3.2 | `MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_FACE`, Section 2 (4)--(10) | Open. |
+| S3.2 | `MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_FACE`, Section 2 (4)--(10) | **Complete hand caller replacement for the requested shape derivative.** The [central displacement proof](SHORT_DISPLACEMENT_CENTRAL_SHAPE.md) groups the exact-log derivative using two correlated transport bounds. A convex quadratic proves both negative signs on the actual comparison path and reaches the original endpoint. The source's separate beta lemma and Section 3 endpoint signs remain dependencies. |
 | S4 | `MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES` (4)--(30) | Open. |
 | S6 | `MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION` (20)--(31) | **Complete hand replacement.** [Angle concavity and four endpoint curves](SHORT_COST_CONCAVITY.md) give `B>113/50000`, with margin greater than `3/100000` over the original target. Primitive numerator degree is at most five; only one rational split is used. The original physical-cost caller is unchanged. |
 
 These are the finite requested obligations. The three corrections below
 are recorded separately and are not counted as polynomial replacements.
 
-Two of the ten H-S replacement rows are now complete: S1.1 and S6.
-The remaining eight are the unchanged finite list above. This count
+Four of the ten H-S replacement rows are now complete: S1.1, S1.2,
+S3.2 and S6. The remaining six are the unchanged finite list above. This count
 describes completed rows, not equal amounts of remaining effort, and
 does not claim completion of H-S or Lean integration.
 
@@ -164,8 +164,8 @@ endpoints, followed by norm concavity. For the second residual on its
 low-shape strip, both the uniform-floor curve and the beta-dependent
 upper-norm curve decrease in beta. The latter total derivative is less
 than `-143/1274880`; freezing that upper norm during beta comparison
-would not justify the reduction. The first reduction still leaves four
-bivariate terminal signs for `F1`. The second now feeds
+would not justify the reduction. The first reduction feeds the now completed
+`F1` terminal signs in the [outer assembly](SHORT_OUTER_COMPLETE.md). The second feeds
 [shape monotonicity](SHORT_OUTER_ALPHA_LOW_SHAPE.md) and the
 [completed actual B-branch `F0` sign](SHORT_OUTER_LOW_SHAPE_TERMINAL.md).
 That proof uses a single split at `x=5/3`, small derivative identities, and
