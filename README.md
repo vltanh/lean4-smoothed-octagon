@@ -40,8 +40,7 @@ the two give the same shape, up to a linear map.
 Take the regular octagon whose sides lie on the lines `x cos(kπ/4) + y sin(kπ/4) = 1`. Replace each
 corner by the arc of the hyperbola `d · d' = √2/4` whose asymptotes are the next two side lines
 (`d`, `d'` the distances to them); it touches the two sides at the corner. Each side keeps a
-straight middle part of length `2 − √2`. In Lean this is `smoothedOctagon`, in
-[`SmoothedOctagon/Defs.lean`](SmoothedOctagon/Defs.lean).
+straight middle part of length `2 − √2`. In Lean this is `smoothedOctagon`.
 
 ### Hales's control problem
 
@@ -60,10 +59,10 @@ as Hales normalizes it: Reinhardt's octagon squeezed vertically by about 5%.*
 ## Statements
 
 The statements are in [`ReinhardtChallenge.lean`](ReinhardtChallenge.lean), which imports only
-Mathlib. Its definitions are copied word for word from library modules: the packing definitions
-from [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon), the formalization
-of Hales and Vajjha's *Packings of Smoothed Polygons* on which this project builds, and
-`smoothedOctagon` from [`SmoothedOctagon/Defs.lean`](SmoothedOctagon/Defs.lean).
+Mathlib. Its definitions are copied word for word from
+[`SmoothedOctagon/Defs.lean`](SmoothedOctagon/Defs.lean): `smoothedOctagon`, and the packing
+definitions of [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon), the
+formalization of Hales and Vajjha's *Packings of Smoothed Polygons* on which this project builds.
 
 `greatestPackingDensity K` is the supremum of the densities of packings of the plane by congruent
 copies of `K`.
@@ -124,7 +123,7 @@ sliding packings.
 
 [`ReinhardtSolution.lean`](ReinhardtSolution.lean) restates the three theorems of
 [`ReinhardtChallenge.lean`](ReinhardtChallenge.lean) word for word and proves them from the library,
-with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 8,684 declarations of the
+with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 8,695 declarations of the
 library, and the three theorems, depend only on the standard axioms.
 
 | Stage | Lean |
@@ -135,7 +134,7 @@ library, and the three theorems, depend only on the standard axioms.
 | Cases R, M3, M1, F, M2 | [`Exclusion/`](SmoothedOctagon/Exclusion) |
 | Terminal comparison: at most five pieces | [`Terminal/`](SmoothedOctagon/Terminal) |
 | Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) |
-| The statements in the Challenge's vocabulary | [`Main.lean`](SmoothedOctagon/Main.lean), [`Bridge/`](SmoothedOctagon/Bridge) |
+| The statements in the Challenge's vocabulary | [`ReinhardtSolution.lean`](ReinhardtSolution.lean), [`Bridge/`](SmoothedOctagon/Bridge) |
 | Reinhardt's construction: the octagon of the trajectory is a linear image of it | [`Bridge/Classical.lean`](SmoothedOctagon/Bridge/Classical.lean) |
 
 ## Prior work
@@ -170,7 +169,7 @@ more than 7 GB of memory; CI builds the few that need more than 4 GB
 
 ```text
 ReinhardtChallenge.lean        the statements of record, in Mathlib's vocabulary
-ReinhardtSolution.lean         their proofs from the library
+ReinhardtSolution.lean         the main theorems, with their proofs
 SmoothedOctagon/
   Foundations/                 geometry ↔ control: realization, reverse comparison
   Reduction/                   minimizer → finite normal period
@@ -180,8 +179,8 @@ SmoothedOctagon/
   Equality/                    rigidity and its converse
   Certificates/                the six-variable point of a smaller-short window
   Bridge/                      the Challenge's terms; Hales's octagon is a linear image of Reinhardt's
-  Defs.lean                    Reinhardt's smoothed octagon, shared with the Challenge
-  LowerBound.lean, Main.lean   the assembly
+  Defs.lean                    the definitions of the statements, shared with the Challenge
+  LowerBound.lean              the assembly
 Cited/HalesVajjha/             Definition 5.0.1 of Hales–Vajjha (the compact domain)
 docs/                          prior work and the figures
 archive/                       the informal proof notes (ChatGPT Pro) and their computations

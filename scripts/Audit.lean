@@ -305,7 +305,6 @@ import all SmoothedOctagon.Foundations.StrongSwitching
 import all SmoothedOctagon.Foundations.SupportNormal
 import all SmoothedOctagon.Foundations.SwitchingMargin
 import all SmoothedOctagon.LowerBound
-import all SmoothedOctagon.Main
 import all SmoothedOctagon.Period.Costate
 import all SmoothedOctagon.Period.Defs
 import all SmoothedOctagon.Period.Elliptic
