@@ -32,7 +32,9 @@ instance of `Nat.AtLeastTwo` for a numeral) into auxiliary lemmas and reuses tho
 declarations of the same module, so a copy is the same constant only if what precedes it is too.
 
 The packing definitions are those of `SmoothedPolygons/Defs.lean` in `lean4-smoothed-polygon`
-(Hales and Vajjha, *Packings of Smoothed Polygons*, Definition 2.1.1), copied word for word;
+(https://github.com/vltanh/lean4-smoothed-polygon, commit
+`b9846532aa26ddf49945ae9fe94549f3ed7918d2`, Apache-2.0, by the same author; Hales and Vajjha,
+*Packings of Smoothed Polygons*, Definition 2.1.1), copied word for word;
 `SmoothedOctagon.Bridge.Classical` proves that they agree with the library's
 (`cls_isConvexDisk_iff`, `cls_greatestPackingDensity_eq`).
 -/

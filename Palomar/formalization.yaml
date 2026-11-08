@@ -1,0 +1,259 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+# The Palomar entry of this repository: the Challenge Palomar/Challenge.lean (module
+# Palomar.Challenge), the Solution SmoothedOctagon.lean (module SmoothedOctagon), the Comparator
+# configuration Palomar/comparator.json, and this file (submit with
+# formalization_metadata_path: Palomar/formalization.yaml). The Challenge is not a top-level module
+# Challenge because lean4-smoothed-polygon, a dependency, has one.
+
+project:
+  name: "The Reinhardt conjecture, formalized in Lean 4"
+  # The description is shown as plain text that keeps line breaks. Its paragraphs are separated by
+  # two empty lines, which this folded block turns into one empty line.
+  description: >-
+    The Reinhardt problem asks for the centrally symmetric convex disk in the plane whose densest
+    packing by congruent copies is least dense. Karl Reinhardt (1934) and, independently, Kurt
+    Mahler (1947) found the smoothed octagon, a regular octagon whose corners are cut off by arcs of
+    hyperbolas, each asymptotic to the next two side lines, with greatest packing density
+    delta_oct = (8 - 4 sqrt 2 - log 2)/(2 sqrt 2 - 1) = 0.902414..., and Reinhardt conjectured
+    that no centrally symmetric convex disk packs worse. The conjecture has been open since 1934;
+    Thomas Hales recast it as an optimal control problem on SL2(R) (2011, 2017), and Hales and
+    Koundinya Vajjha studied that problem in Packings of Smoothed Polygons (2024).
+
+
+    This entry proves the conjecture with its equality case. Every centrally symmetric convex disk
+    has greatest packing density at least delta_oct, with equality if and only if the disk is the
+    image of the smoothed octagon under an invertible affine map; and the smoothed octagon, in
+    Reinhardt's description, is a centrally symmetric convex disk of greatest packing density
+    delta_oct.
+
+
+    The proof follows Hales's control formulation. A worst disk is realized by a global minimizer
+    of the control problem, which lifts to a Pontryagin extremal, stays in Hales and Vajjha's
+    compact domain, switches finitely often and is normal. Its switch signs fall into five classes,
+    each excluded for periods with at least six pieces by scalar estimates; periods with at most
+    five pieces cost at least the octagon's area, with equality only for the octagon. Every case is
+    proved by hand-style arguments: inequalities, identities, monotonicity and convexity, with
+    no interval cover. The geometric and control-theoretic foundations, among them Fejes Toth's
+    lattice theorem, Theorem 5.0.2 of Hales and Vajjha and the Pontryagin maximum principle, come
+    from the pinned libraries lean4-smoothed-polygon and lean4-optimal-control.
+  authors:
+    - "The-Anh Vu-Le"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "The-Anh Vu-Le"
+
+classification:
+  arxiv: ["math.MG", "math.OC"]
+  msc2020: ["52C15", "52A10", "52A40", "49K15", "68V20"]
+
+sources:
+  - title: "A proof of the Reinhardt conjecture"
+    type: original-proof
+    relationship: other
+    note: >-
+      ChatGPT Pro (OpenAI) found the proof, in research notes written in pull requests #1 and #2 of
+      this repository and archived in docs/archive/, starting from Hales's control formulation and
+      Hales and Vajjha's book. Claude Opus 5.5 (Anthropic) wrote the Lean proof from those notes,
+      and the manuscript in docs/paper/. No person has reviewed the proof. docs/CREDITS.md tells
+      how the work was done.
+  - title: "Über die dichteste gitterförmige Lagerung kongruenter Bereiche in der Ebene und eine besondere Art konvexer Kurven"
+    authors:
+      - "Karl Reinhardt"
+    id: "doi:10.1007/BF02940676"
+    type: paper
+    location: "Abhandlungen aus dem Mathematischen Seminar der Universität Hamburg 10 (1934), 216-230"
+    relationship: background
+    note: >-
+      Poses the problem and proposes, on p. 230, the regular octagon with each corner cut off by the
+      hyperbola tangent to its two sides and asymptotic to the next two. The Challenge's
+      smoothedOctagon is this description, in coordinates where the octagon has inradius 1.
+    author_endorsement: n/a
+  - title: "On the area and the densest packing of convex domains"
+    authors:
+      - "Kurt Mahler"
+    type: paper
+    location: "Proceedings of the Koninklijke Nederlandse Akademie van Wetenschappen 50 (1947), 108-118"
+    relationship: background
+    note: >-
+      Mahler's independent formulation of the problem in the calculus of variations, with the
+      conjecture that the boundary of an extreme domain consists of segments and arcs of
+      hyperbolas. Context only.
+    author_endorsement: n/a
+  - title: "On the Reinhardt conjecture"
+    authors:
+      - "Thomas C. Hales"
+    id: "arXiv:1103.4518"
+    type: paper
+    location: "Vietnam Journal of Mathematics 39 (2011), no. 3, 287-307"
+    relationship: background
+    note: "Casts the problem as a problem of Bolza; context for the control formulation."
+    author_endorsement: not-contacted
+  - title: "The Reinhardt conjecture as an optimal control problem"
+    authors:
+      - "Thomas C. Hales"
+    id: "arXiv:1703.01352"
+    type: paper
+    location: "https://arxiv.org/abs/1703.01352"
+    relationship: background
+    note: >-
+      The optimal control problem on SL2(R) whose lower bound the proof establishes; the cost of a
+      trajectory is the area of the disk it bounds.
+    author_endorsement: not-contacted
+  - title: "Packings of Smoothed Polygons"
+    authors:
+      - "Thomas Hales"
+      - "Koundinya Vajjha"
+    id: "arXiv:2405.04331v1"
+    type: book
+    location: "https://arxiv.org/abs/2405.04331v1"
+    relationship: background
+    note: >-
+      The definitions of packings and of the greatest packing density (Definition 2.1.1), the
+      control problem, its Pontryagin extremals and the compact domain (Definition 5.0.1, Theorem
+      5.0.2). These results are proved in lean4-smoothed-polygon; the abstract states that the
+      Reinhardt conjecture remains open.
+    author_endorsement: not-contacted
+  - title: "Some packing and covering theorems"
+    authors:
+      - "László Fejes Tóth"
+    type: paper
+    location: "Acta Scientiarum Mathematicarum (Szeged) 12 A (1950), 62-67"
+    relationship: background
+    note: >-
+      Densest packings of a centrally symmetric convex disk by congruent copies are lattice
+      packings, so Reinhardt's lattice problem is the problem for all packings. Proved in
+      lean4-smoothed-polygon.
+    author_endorsement: n/a
+
+related_formalizations:
+  - id: "https://github.com/vltanh/lean4-smoothed-polygon"
+    relationship: builds-on
+    note: >-
+      The formalization of Hales and Vajjha's book by the same maintainer, pinned at commit
+      b9846532aa26ddf49945ae9fe94549f3ed7918d2: packings and the greatest packing density, Fejes
+      Toth's and Mahler's theorems, the control reformulation, the Pontryagin lift of a global
+      minimizer, Theorem 5.0.2 and the density of the smoothed octagon. Its packing definitions are
+      copied into the Challenge, and SmoothedOctagon/Bridge/Classical.lean proves that the copies
+      agree with the library's. It does not prove the conjecture.
+  - id: "https://github.com/vltanh/lean4-optimal-control"
+    relationship: builds-on
+    note: >-
+      Filippov's theorem and the Pontryagin maximum principle, by the same maintainer, used through
+      lean4-smoothed-polygon at commit 88689a80ebc400f2e7b3656ee0b9d95a7bf42820.
+
+status:
+  scope: >-
+    Formalized: the Reinhardt conjecture (every centrally symmetric convex disk has greatest packing
+    density at least (8 - 4 sqrt 2 - log 2)/(2 sqrt 2 - 1)); its equality case (equality if and
+    only if the disk is the image of the smoothed octagon under an invertible affine map); and that
+    the smoothed octagon, as Reinhardt described it, is a centrally symmetric convex disk of that
+    greatest packing density. The library also proves the control form: every admissible trajectory
+    of Hales's problem, with any measurable control, costs at least sqrt 12 times that density, and
+    the octagon's trajectory attains it. The formalization is unconditional; its foundations are
+    proved in the pinned libraries lean4-smoothed-polygon and lean4-optimal-control.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: agent
+      models: ["ChatGPT Pro (OpenAI)"]
+      framework: "ChatGPT (OpenAI), committing to the repository through GitHub"
+      tool_setup: >-
+        Found the proof, from 6 to 8 November 2026, in research notes of pull request #1 of this
+        repository (branch feat/reinhardt-foundations): first with seven interval-arithmetic covers
+        computed in C++ with MPFR, then replacing each by a hand argument, with an uncompiled Lean
+        draft of the geometric reformulation. In pull request #2 (branch proof/lighter-signs, 8
+        November 2026) it rewrote the largest polynomial sign claims with small identities, at the
+        request of the maintainer, for a lighter Lean check. Both are archived in docs/archive/.
+      cost:
+        spend_usd: "not tracked"
+    - method: agent
+      models: ["Claude Opus 5.5 (claude-opus-5-5)"]
+      framework: "Claude Code (Anthropic)"
+      tool_setup: >-
+        Following the formalize-math-paper skill (https://github.com/vltanh/formalize-math-paper),
+        with dozens of sub-agents of the same model: inventories of the notes, statements, and proofs
+        of the stages in parallel, each checked against a private snapshot of the compiled library.
+        It made the draft compile, wrote the Challenge, the Solution and the axiom audit, proved the
+        reduction, the five exclusions, the terminal comparison and the equality case, and
+        formalized the hand arguments of both pull requests; along the way it built a verified
+        interval arithmetic that checked the last interval cover in the kernel, retired once the
+        hand proof was formalized. It also wrote the documentation, the figures, the manuscript in
+        docs/paper/ and this metadata. A second session of the same model restated the Challenge
+        with Reinhardt's description of the smoothed octagon and proved that it is a linear image of
+        the octagon given by Hales's trajectory (SmoothedOctagon/Bridge/Classical.lean).
+      cost:
+        wall_time: "about two days, 7 to 8 November 2026"
+        spend_usd: "not tracked"
+        hardware: "a local machine with 20 cores and 62 GB of memory for the Lean builds"
+  spend_usd: "not tracked"
+  notes: >-
+    The proof was found by ChatGPT Pro and formalized by Claude Opus 5.5. The-Anh Vu-Le, the author
+    and maintainer of this repository, chose the problem and the scope, directed the work, and
+    decided the publication. Every result is compiled. scripts/Audit.lean checks that each
+    declaration of the library uses only propext, Classical.choice and Quot.sound, and lake
+    comparator checks this Challenge/Solution pair with Palomar/comparator.json.
+
+fidelity:
+  divergences: >-
+    (1) The plane is Fin 2 -> R with Lebesgue measure. A convex disk is a compact convex set with
+    nonempty interior; a disk is centrally symmetric if some point c has 2c - x in K for every x in
+    K. These are Hales and Vajjha's conventions, copied from lean4-smoothed-polygon.
+    (2) The greatest packing density is Hales and Vajjha's Definition 2.1.1: the supremum of the
+    densities of the packings of the plane by congruent copies of K (images under an orthogonal
+    map followed by a translation, so reflections are allowed), over the packings whose density,
+    the limit over the disks of radius r about the origin of the covered fraction, exists. For
+    centrally symmetric disks this equals the lattice packing density in which Reinhardt posed the
+    problem (Fejes Toth's theorem, proved in lean4-smoothed-polygon).
+    (3) The smoothed octagon is Reinhardt's description: the regular octagon of inradius 1 with
+    sides on the lines x cos(k pi/4) + y sin(k pi/4) = 1, with the corner between sides k and k+1
+    cut off by the arc of the hyperbola d_(k-1) d_(k+2) = sqrt 2/4, where d_j is the distance to the
+    j-th side line. octagon_density proves that it is a centrally symmetric convex disk of greatest
+    packing density delta_oct; the library proves that it is a linear image of the octagon that
+    Hales defines by its trajectory.
+    (4) The constant is written (8 - 4 sqrt 2 - log 2)/(2 sqrt 2 - 1), equal to the usual
+    (8 - sqrt 32 - ln 2)/(sqrt 8 - 1).
+
+review:
+  status: "agent-reviewed"
+  reviewers:
+    - "Challenge: a Claude Opus 5.5 sub-agent, separate from the writing agents, compared every definition and theorem of the Challenge with Reinhardt's, Mahler's and Hales and Vajjha's statements"
+  notes: >-
+    No person has reviewed the proofs, the statements or the definitions. Lean's kernel checks the
+    formal proofs, and Comparator checks that the Solution proves the Challenge's statements with
+    the standard axioms only, under Lean's kernel and an independent one. The informal notes and
+    their own reviews are AI-written and are not evidence for the result.
+
+alignment:
+  namespace: "ReinhardtChallenge"
+  statements:
+    - source: "The Reinhardt conjecture (Reinhardt 1934)"
+      lean: "ReinhardtChallenge.reinhardt"
+      module: "Palomar.Challenge"
+      status: "proved"
+      note: >-
+        Every centrally symmetric convex disk K has greatest packing density at least
+        (8 - 4 sqrt 2 - log 2)/(2 sqrt 2 - 1).
+    - source: "The equality case of the Reinhardt conjecture (Reinhardt 1934; Mahler 1947)"
+      lean: "ReinhardtChallenge.reinhardt_equality"
+      module: "Palomar.Challenge"
+      status: "proved"
+      note: >-
+        A centrally symmetric convex disk has greatest packing density delta_oct if and only if it
+        is the image of the smoothed octagon under an invertible affine map of the plane.
+    - source: "The smoothed octagon and its density (Reinhardt 1934, p. 230)"
+      lean: "ReinhardtChallenge.octagon_density"
+      module: "Palomar.Challenge"
+      status: "proved"
+      note: >-
+        Reinhardt's smoothed octagon is a convex disk, symmetric about the origin, of greatest
+        packing density delta_oct; with reinhardt, it attains the bound, so the bound is sharp.
+
+acknowledgements: >-
+  Mathlib and the Lean toolchain (Lean 4, Lake, Comparator); lean4-smoothed-polygon and
+  lean4-optimal-control, for the formalization of Hales and Vajjha's book and of the Pontryagin
+  maximum principle.

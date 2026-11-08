@@ -1,5 +1,7 @@
 # The Reinhardt conjecture, in Lean 4
 
+[![Lean Action CI](https://github.com/vltanh/lean4-smoothed-octagon/actions/workflows/lean_action_ci.yml/badge.svg?branch=main)](https://github.com/vltanh/lean4-smoothed-octagon/actions/workflows/lean_action_ci.yml?query=branch%3Amain)
+
 ![The smoothed octagon in its densest packing, the copies sliding through the continuum of densest packings while staying in contact](docs/figures/worst-packer.gif)
 
 Which centrally symmetric convex shape packs the plane worst? Pack copies of a disk as tightly as
@@ -156,6 +158,10 @@ lake env lake comparator --config=Palomar/comparator.json   # needs bubblewrap; 
 python3 scripts/sync_challenge_defs.py --check     # the Challenge's definitions are the library's
 python3 scripts/figures/make_figures.py   # the figures, with every illustrated fact asserted
 ```
+
+The Palomar files are in [`Palomar/`](Palomar): the Challenge, the Comparator configuration and
+[`formalization.yaml`](Palomar/formalization.yaml). The workflow `palomar_preflight.yml` runs
+Palomar's verification on a commit.
 
 Lean and Mathlib are pinned at `v4.36.0-rc2`. The project depends on
 [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) (Hales–Vajjha's book,

@@ -36,7 +36,8 @@ equality case. It imports only Mathlib.
 The definitions between the markers are copied word for word from `SmoothedOctagon/Defs.lean`
 (`python3 scripts/sync_challenge_defs.py`). The packing definitions there are those of Hales and
 Vajjha, *Packings of Smoothed Polygons* (arXiv:2405.04331), Definition 2.1.1, as formalized in
-`lean4-smoothed-polygon`. Points of the plane are `Fin 2 → ℝ`, and areas are Lebesgue measure.
+`lean4-smoothed-polygon` (https://github.com/vltanh/lean4-smoothed-polygon, commit
+`b9846532aa26ddf49945ae9fe94549f3ed7918d2`, Apache-2.0). Points of the plane are `Fin 2 → ℝ`, and areas are Lebesgue measure.
 
 * `IsConvexDisk K`: `K` is compact and convex with nonempty interior. The theorems below take a
   centre `c` of symmetry, `2c - x ∈ K` for every `x ∈ K`.
