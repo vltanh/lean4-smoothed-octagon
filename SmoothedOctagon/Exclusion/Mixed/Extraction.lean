@@ -6,6 +6,7 @@ public import SmoothedOctagon.Exclusion.Mixed.Extract.Compact
 public import SmoothedOctagon.Exclusion.Mixed.Extract.Transport
 public import SmoothedOctagon.Exclusion.Mixed.Extract.WindowAlg
 public import SmoothedOctagon.Exclusion.Mixed.Short.Window
+public import SmoothedOctagon.Exclusion.Mixed.Defect.Field
 
 /-!
 # Case M2: the scalar windows of an actual period
@@ -49,7 +50,9 @@ The short window uses `Mixed/Short/Window`: the same-lift transport to the outer
 (`ss_centre_frame`) and the cover's `u`, `β`, `x` at the window point (`ss_point_*`). The
 window-defect field (`M2Short.defect`, GLOBAL_SPECTRAL_COST_CASIMIR (13) on the two-turn window,
 with the endpoint traces of `MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (5)-(7) and the modulus filter
-(A)) is not provided by `M2Calculus` and remains open here.
+(A)) is `NormalPeriod.df_defect` (`Mixed/Defect/`): the window angle of the costate frame
+(`df_window`) and the cover's traces identified with the rotated triangular frames
+(`df_alg_traces`, `df_alg_cost`).
 
 Helpers (usable for both windows): `Mixed/Extract/Compact` (`NormalPeriod.wx_m_ge`,
 `wx_half_le_m_add`, `wx_m_le`: the compact-domain bounds on the switch margins),
@@ -535,9 +538,7 @@ theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InComp
       rw [Certificates.SmallerShort.Point.fmid, Certificates.SmallerShort.Point.pmid,
         ss_point_be a0 c0, ss_point_x a0 c0, ss_point_u a0 c0 B0, ← sec_C.1]
       exact hmid
-    defect := by
-      -- GLOBAL_SPECTRAL_COST_CASIMIR (13) on the two-turn window `C, B` and the endpoint traces of
-      -- MIXED_GENERAL_SHORT_DEFECT_INTERFACE (5)-(7), (A): not provided by `M2Calculus`
-      sorry }, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
+    defect := P.df_defect hc h.1 (by omega) K h2 h1 h0 h3 h4 hAC' }, rfl, rfl, rfl, rfl, rfl,
+    rfl, rfl⟩
 
 end SmoothedOctagon
