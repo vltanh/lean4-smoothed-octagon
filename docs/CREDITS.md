@@ -4,7 +4,8 @@ The-Anh Vu-Le directed the work and is the author and maintainer of this reposit
 
 ## The informal proof
 
-ChatGPT Pro (OpenAI) found the proof, in the research notes of [`archive/`](archive/README.md),
+The proof was written in this repository, and its history is the record of how. ChatGPT Pro
+(OpenAI, in ChatGPT) drafted it, in the research notes of [`archive/`](archive/README.md),
 starting from Thomas Hales's formulation of the problem as optimal control on `SL₂(ℝ)` and from
 Hales and Vajjha's [*Packings of Smoothed Polygons*](https://arxiv.org/abs/2405.04331). The notes
 first closed the argument with seven interval-arithmetic covers computed in C++ with MPFR

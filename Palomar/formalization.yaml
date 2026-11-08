@@ -54,10 +54,15 @@ sources:
     type: original-proof
     relationship: other
     note: >-
-      ChatGPT Pro (OpenAI) found the proof, in research notes written in pull requests #1 and #2 of
-      this repository and archived in docs/archive/, starting from Hales's control formulation and
-      Hales and Vajjha's book. Claude Opus 5.5 (Anthropic) wrote the Lean proof from those notes.
-      No person has reviewed the proof. docs/CREDITS.md tells how the work was done.
+      The proof was written in this repository, whose history is the record of how it was made.
+      ChatGPT Pro (OpenAI, in ChatGPT) drafted it, starting from Hales's control formulation and
+      Hales and Vajjha's book, in research notes of pull requests #1 and #2, archived in
+      docs/archive/; it first used computer-assisted interval covers, then replaced each by a hand
+      argument. Claude Opus 5.5 (Anthropic, in Claude Code) formalized it in Lean and organized it.
+      The formalization fed back into the draft: errata found while formalizing were corrected
+      there, and the largest polynomial signs were rewritten with small identities for the Lean
+      check (pull request #2). No person has reviewed the proof. docs/CREDITS.md tells how the work
+      was done.
   - title: "Über die dichteste gitterförmige Lagerung kongruenter Bereiche in der Ebene und eine besondere Art konvexer Kurven"
     authors:
       - "Karl Reinhardt"
@@ -165,7 +170,7 @@ automation:
       models: ["ChatGPT Pro (OpenAI)"]
       framework: "ChatGPT (OpenAI), committing to the repository through GitHub"
       tool_setup: >-
-        Found the proof, from 6 to 8 November 2026, in research notes of pull request #1 of this
+        Drafted the proof, from 6 to 8 November 2026, in research notes of pull request #1 of this
         repository (branch feat/reinhardt-foundations): first with seven interval-arithmetic covers
         computed in C++ with MPFR, then replacing each by a hand argument, with an uncompiled Lean
         draft of the geometric reformulation. In pull request #2 (branch proof/lighter-signs, 8
@@ -193,7 +198,8 @@ automation:
         hardware: "a local machine with 20 cores and 62 GB of memory for the Lean builds"
   spend_usd: "not tracked"
   notes: >-
-    The proof was found by ChatGPT Pro and formalized by Claude Opus 5.5. The-Anh Vu-Le, the author
+    The proof was written in this repository: ChatGPT Pro drafted it, and Claude Opus 5.5 formalized
+    and organized it, each step informing the next. The-Anh Vu-Le, the author
     and maintainer of this repository, chose the problem and the scope, directed the work, and
     decided the publication. Every result is compiled. scripts/Audit.lean checks that each
     declaration of the library uses only propext, Classical.choice and Quot.sound, and lake
