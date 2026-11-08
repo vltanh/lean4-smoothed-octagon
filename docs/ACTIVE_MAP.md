@@ -1,6 +1,6 @@
 # Active proof map and reproducibility
 
-**Entry point:** [HANDOFF.md](HANDOFF.md). This index gives the short reading path, not another task ledger.
+**Entry point:** [HAND_ONLY_COMPLETION_PLAN.md](HAND_ONLY_COMPLETION_PLAN.md) is the authoritative finite hand-only plan; [HANDOFF.md](HANDOFF.md) is the source map. This index gives the short reading path, not another task ledger.
 
 ## Current hand-proof task
 
