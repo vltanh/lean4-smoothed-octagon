@@ -2,10 +2,7 @@
 # memory (measured with /usr/bin/time; the GitHub runner has 16 GB and 4 cores). A chain of split
 # modules (CertLGa/Part1, ...) is built in order by building its last module.
 SmoothedOctagon.Exclusion.Mixed.FwdHand.CertLGa
-SmoothedOctagon.Exclusion.Mixed.FwdHand.CertLRa
 SmoothedOctagon.Exclusion.Mixed.FwdHand.CertLGb
-SmoothedOctagon.Exclusion.Mixed.FwdHand.CertLGc
-SmoothedOctagon.Exclusion.Mixed.FwdHand.CertLGd
 SmoothedOctagon.Exclusion.Mixed.FwdHand.CertLRb
 SmoothedOctagon.Exclusion.Forward.Scalars.Neighbor
 SmoothedOctagon.Exclusion.Forward.Scalars.SumSym

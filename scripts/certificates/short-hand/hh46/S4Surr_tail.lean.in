@@ -1,0 +1,63 @@
+
+/-- `P = Pn/du` for `u = nu/du`. -/
+theorem hh46_s4_P_div {x nu du : ℝ} (hdu : du ≠ 0) :
+    hh46S4P x (nu / du) = ((1 + x) ^ 3 * (nu - du) + (3 * (1 + x) - 1) * du) / du := by
+  unfold hh46S4P; field_simp; ring
+
+/-- **The surrogate of `Φ` over the common denominator.** -/
+theorem hh46_s4_phiR_link {k L0 x be al nu du : ℝ} (hx : 0 < x) (hal : 0 < al) (hbe : 0 < be)
+    (hdu : 0 < du) :
+    hh46S4PhiR k L0 x be al (nu / du) - 1829 / 10000 =
+      hh46S4NPhi x al (al + be) (x * (x + 2) + al ^ 2) (1 + x) ((1 + x) ^ 2 - (1 + x) + 1)
+          (hsDg x be al) ((1 + x) ^ 3 * (nu - du) + (3 * (1 + x) - 1) * du) nu du k L0 /
+        hh46S4M x al (al + be) (x * (x + 2) + al ^ 2) du := by
+  have hM := hh46_s4_M_pos (X := x) (AL := al) (A := al + be) (Sg := x * (x + 2) + al ^ 2) (du := du)
+    hx hal (by positivity) (by positivity) hdu
+  rw [eq_div_iff hM.ne']
+  unfold hh46S4PhiR hh46S4Rest hh46S4G hh46S4Wc hh46S4EL hh46S4Ls hh46S4h
+  rw [hh46_s4_P_div hdu.ne']
+  have hx0 : x ≠ 0 := hx.ne'
+  have hx2 : x + 2 ≠ 0 := by positivity
+  have hal0 : al ≠ 0 := hal.ne'
+  have hdu0 : du ≠ 0 := hdu.ne'
+  have hA : al + be ≠ 0 := by positivity
+  have hSg : x * (x + 2) + al ^ 2 ≠ 0 := by positivity
+  unfold hh46S4M hh46S4NPhi
+  generalize ((1 + x) ^ 3 * (nu - du) + (3 * (1 + x) - 1) * du) = Pn
+  generalize hsDg x be al = D
+  generalize ((1 + x) ^ 2 - (1 + x) + 1) = U
+  generalize (1 + x) = S
+  generalize hA' : al + be = A at hA ⊢
+  generalize hS' : x * (x + 2) + al ^ 2 = Sg at hSg ⊢
+  field_simp
+  ring
+
+/-- **The surrogate of `Ψ` over the common denominator.** -/
+theorem hh46_s4_psiR_link {k L0 x be al nu du : ℝ} (hx : 0 < x) (hal : 0 < al) (hbe : 0 < be)
+    (hdu : 0 < du) :
+    hh46S4PsiR k L0 x be al (nu / du) - 1829 / 10000 =
+      hh46S4NPsi x al (al + be) (x * (x + 2) + al ^ 2) (1 + x) ((1 + x) ^ 2 - (1 + x) + 1)
+          (hsDg x be al) ((1 + x) ^ 3 * (nu - du) + (3 * (1 + x) - 1) * du) nu du k L0 /
+        hh46S4M x al (al + be) (x * (x + 2) + al ^ 2) du := by
+  have hM := hh46_s4_M_pos (X := x) (AL := al) (A := al + be) (Sg := x * (x + 2) + al ^ 2) (du := du)
+    hx hal (by positivity) (by positivity) hdu
+  rw [eq_div_iff hM.ne']
+  unfold hh46S4PsiR hh46S4Rest hh46S4G hh46S4Wc hh46S4EL hh46S4Ls hh46S4h
+  rw [hh46_s4_P_div hdu.ne']
+  have hx0 : x ≠ 0 := hx.ne'
+  have hx2 : x + 2 ≠ 0 := by positivity
+  have hal0 : al ≠ 0 := hal.ne'
+  have hdu0 : du ≠ 0 := hdu.ne'
+  have hA : al + be ≠ 0 := by positivity
+  have hSg : x * (x + 2) + al ^ 2 ≠ 0 := by positivity
+  unfold hh46S4M hh46S4NPsi
+  generalize ((1 + x) ^ 3 * (nu - du) + (3 * (1 + x) - 1) * du) = Pn
+  generalize hsDg x be al = D
+  generalize ((1 + x) ^ 2 - (1 + x) + 1) = U
+  generalize (1 + x) = S
+  generalize hA' : al + be = A at hA ⊢
+  generalize hS' : x * (x + 2) + al ^ 2 = Sg at hSg ⊢
+  field_simp
+  ring
+
+end SmoothedOctagon
