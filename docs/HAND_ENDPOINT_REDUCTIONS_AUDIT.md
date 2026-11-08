@@ -462,3 +462,125 @@ Only the residual and the explicitly justified norm floor move
 with scale. The physical score and the corrected cap depend on
 scale, so neither is transferred. The source states this limitation
 and leaves the endpoint signs and the \(D>1+x\) branch open.
+
+
+## 16. Quantitative swapped secants
+
+The [quantitative swap theorem](MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND.md)
+is independently accepted. The reviewer re-derived both exact logarithm
+expressions for the secant difference, checked the positive denominators,
+and independently expanded the entire 23-term numerator.
+Its grouping in powers of j agrees exactly with (5) of the source.
+
+Every absorption in the lower bound (6) follows from
+\(0<j<h\le1/2\). The constant and linear groups have the stated
+positive lower bounds; the quadratic group absorbs the negative
+part of the cubic, leaving \(67j^3/16\); and the remaining negative
+tail is absorbed by \(20hj^3\), leaving \(j^4/8\).
+The strict logarithm inequalities therefore give the strict
+swapped-secant comparison.
+
+For the actual application, the original derivative floor gives
+\(t<T(x)\), hence \(x<1\) and \(4t+x<2\) when \(t\ge1/4\).
+This supplies exactly \(j<h\). The incoming floor is the original
+secant with first argument \(W/q-p\in(0,c)\). Its strict decrease in
+that argument forces \(W/q-p>t+p-c\), proving
+\(q<W/(4t+2x-1)\). No floor or cap is moved to a changed geometry.
+A second independent internal reviewer also accepted the complete
+lemma and this application.
+
+## 17. Forward low-ratio reduction to one unit-shape sign
+
+The [forward ratio reduction](MIXED_NONSHORT_FORWARD_RATIO_REDUCTION.md)
+is independently accepted in its stated scope.
+Its first conclusion \(t>1/4\) is a completed common hand theorem:
+the already proved unit-face argument needs no low-scale assumption
+once the common strict order supplies \(x>1-2t\).
+The earlier low-scale assumption was used only for its other face.
+
+The reviewer reconstructed the affine root derivative \(N_u\),
+the next-norm derivative, and identity (4) from the original transport.
+The positive factor \(C_*\) and the combination
+\(F=6N+C_*(3/4-\mathcal T_*)\) have the stated strict necessary
+sign. Their quadratic coefficient in k is negative.
+The elementary bounds on \(Je^2\) and \(WD/x\) justify both
+substitution directions, including the case where the product in
+\(F_v\) is negative.
+
+The effective norm is below its incident ceiling on the full
+enlarged rectangle. The reviewer checked the floor difference (14),
+the exact factor in (15), its lower-t substitution, and
+\(\rho\le13/8<2\). The source correctly uses a weak intermediate
+inequality when \(v_3=g\); the final ceiling remains strict.
+
+Differentiation in k has the same justified v/log signs.
+Independent expansion of the original residual and transported norm
+reproduces the entire cubic (18), including its prefactor.
+The coefficient bounds in (19), together with \(y\le1/2\), prove
+that this derivative is positive at \(k=o\), and concavity gives
+the same direction throughout the shape interval.
+Thus lowering k to one retains the necessary negative rational
+residual. Only the polynomial inequality is changed; the incoming
+floor was used at the original coordinates.
+
+The quantitative swap theorem gives the final closed simplex (21).
+Its remaining rational sign is explicitly open. This review does
+not assert \(t>1/3\), next-norm exclusion or forward-case completion.
+
+
+## 18. The corrected short cap also moves with scale
+
+The [corrected-cap scale theorem](MIXED_SMALLER_SHORT_CORRECTED_CAP_SCALE.md)
+is independently accepted. Lowering beta preserves the p-domain and
+decreases \(B_0\), hence the slope L; the norm dependence is affine.
+At the upper norm endpoint, all three elementary identities giving
+\(4UA_2-A_3^2=3\) are exact, and the factored discriminant has the
+correct nonpositive sign. Its only possible zero when \(\alpha=x\)
+lies beyond \(p\le1/2\), so strict positivity persists in that closure.
+
+At the lower norm endpoint, the reviewer reconstructed the cleared
+expression directly from \(L=pA_2+p^{-1}-1-A_3\).
+Substituting \(p=\alpha/(\alpha+x+k)\) gives exactly identity (5):
+all twelve terms of P and all twenty-two terms of Q match the displayed
+polynomials. Their positive terms prove strictness because \(x>1\).
+This completes the slope inequality without a runtime sign premise.
+
+The quadratic formula for \(16\Gamma_*\), its scale derivative and
+the normalization \(s=q/(\alpha^2(1-q))\) are consistent.
+The slope bound gives the stated constants \(49/384<1/7\) and
+\(-41/2688\) for the corrected derivative.
+Consequently the residual increases while the corrected cap expression
+decreases to each scale endpoint. The extra \(w_*=3/4,\tau=2\)
+stop also preserves both scalar tests: lowering tau there increases
+the residual at fixed envelope determinant.
+
+The comparison remains a numerical lower bound on the original actual
+Casimir. It does not assert a cap on an artificial trajectory, and
+it does not move the physical completion score. The latter comparison
+or the remaining endpoint signs are still required to close H-S.
+
+## 19. Conditional monotonicity of the forward Casimir
+
+The [conditional forward lemma](MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY.md)
+has independent hand acceptance. The additional \(t\ge1/3\) and
+\(\chi=pq/W\ge4/7\) remain explicit hypotheses.
+
+The reviewer checked the normalization of the first-event diagonal
+against the physical stationarity equation; (4) is the same original
+squared Casimir. The displayed turn-floor polynomial and its value
+\(83/72\) prove \(j<1/4\). The bounds
+\(s-p^2>7/144\), \(15/11\le A<2\), and \(A/\chi>2\)
+follow with the stated directions.
+
+The original incoming floor gives the lower bound (10) on L.
+The derivative expression then decreases in v; substituting \(v=3/4\)
+has the correct upper-bound direction. The remaining function decreases
+in chi and is convex in A. Both exact endpoint fractions are correct,
+giving the derivative margin \(135/108416\).
+The original next forward switch has the strict norm floor from
+HAND_PROOF_REFINEMENTS, Section 4, equation (13), so the comparison
+from the actual w to \(w_{3/4}\) is strict.
+
+This establishes a conditional route that would subsume the separate
+lower-Casimir endpoint. It does not prove its additional ratio
+hypotheses or the upper-endpoint lower bound. H-N-forward remains open.

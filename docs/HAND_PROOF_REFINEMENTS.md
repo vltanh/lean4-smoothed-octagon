@@ -68,9 +68,10 @@ The whole-period endpoint and the same actual primary multiplier are
 essential here. This is not a cap on an independently fitted local
 costate.
 
-## 2. Every global minimum reverse centre satisfies a^2 < 2/3
+## 2. Every competitive reverse centre satisfies a^2 < 2/3
 
-At the actual global minimum reverse centre, use the notation of
+At any actual reverse-run centre of a competitive finite normal period,
+use the notation of
 [the reverse-centre scale proof](MIXED_REVERSE_CENTRE_SCALE_BOUND.md):
 
 \[
@@ -92,6 +93,16 @@ the squared Casimir is
 \gamma^2=\frac{4uv-E^2}{16(1-\rho)^2}.
 \tag{3}
 \]
+
+The incident orders, positive reverse factor, norm bounds and exact
+identities used here hold at every reverse-run centre by Section 1
+of that cited proof. The competitive cap is the conserved cap of the
+same complete period. These are all the hypotheses of the argument
+below. Thus the conclusion applies both to the global minimum centre
+and to the adjacent outer centre of a short bridge; in particular it
+gives rho_A<1/7 at that actual outer centre. The
+[independent scope audit](HAND_REVERSE_CENTRE_SCALE_SCOPE_AUDIT.md)
+checks these inputs and this extension explicitly.
 
 Here is the short reduction to the same one-variable lower bound, with
 the new threshold included. Throughout the norm rectangle,
