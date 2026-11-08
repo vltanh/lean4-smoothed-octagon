@@ -291,18 +291,11 @@ domains*, p. 118; Ledermann and Mahler, p. 320; both below).
 
 ## This repository
 
-- The proof formalized here comes from hand and computer-assisted notes written by ChatGPT (OpenAI, ChatGPT Pro) in
-  pull request [vltanh/lean4-smoothed-octagon#1](https://github.com/vltanh/lean4-smoothed-octagon/pull/1), opened on
-  6 November 2026.
-  - The notes state that every centrally symmetric convex disk `K` has `δ(K) ≥ (8 − 4√2 − log 2)/(2√2 − 1)`, with
-    equality exactly for affine images of the smoothed octagon. They rest on classical geometric and maximum
-    principle inputs that they list. They first used interval-arithmetic computations in C++ with MPFR and GMP,
-    and by 8 November 2026 replaced every one of them by hand arguments; pull request
-    [#2](https://github.com/vltanh/lean4-smoothed-octagon/pull/2) rewrote the largest polynomial signs with small
-    identities.
-  - The pull request says: "This is not a claim of Lean-kernel verification or external peer review."
-- The Lean formalization of that proof is complete and unconditional, and uses no interval cover. It builds on
-  [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon), and
-  [`Palomar/Challenge.lean`](../Palomar/Challenge.lean) states the conjecture, its equality case, and the density of
+- This repository proves the conjecture with its equality case, in Lean 4, from 6 to 8 November 2026. The proof was
+  drafted by ChatGPT Pro (OpenAI), in working notes kept in [`archive/`](archive/README.md), and written in Lean and
+  organized by Claude Opus 5.5 (Anthropic). It builds on
+  [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) and
+  [lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control), and it is unconditional.
+- [`Palomar/Challenge.lean`](../Palomar/Challenge.lean) states the conjecture, its equality case, and the density of
   Reinhardt's smoothed octagon. The library also proves the conjecture's form as a control problem
   (`SmoothedOctagon.reinhardt_cost`).

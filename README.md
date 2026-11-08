@@ -20,9 +20,9 @@ independently in 1947. The conjecture has been open since.
 disk, the regular octagon, a smoothed 14-gon (a regular 14-gon with its corners cut by hyperbolas in
 the same way) and the smoothed octagon.*
 
-This repository proves the conjecture in Lean 4, with Mathlib, together with its equality case. The
-informal proof it formalizes was written by ChatGPT (ChatGPT Pro, OpenAI). No person has checked
-the proofs; Lean's kernel checks all of them, and every theorem depends only on Lean's standard
+This repository proves the conjecture, together with its equality case, in Lean 4 with Mathlib.
+The proof was written here by ChatGPT Pro (OpenAI) and Claude Opus 5.5 (Anthropic). No person has
+checked it; Lean's kernel checks every step, and every theorem depends only on Lean's standard
 axioms `propext`, `Classical.choice` and `Quot.sound`.
 
 For an interactive introduction, see the
@@ -189,15 +189,16 @@ SmoothedOctagon/
   Defs.lean                    the definitions of the statements, shared with the Challenge
   LowerBound.lean              the assembly
 Cited/HalesVajjha/             Definition 5.0.1 of Hales–Vajjha (the compact domain)
-docs/                          credits, prior work, the figures, and the archive of the
-                               informal proof notes (ChatGPT Pro) and their computations
+docs/                          credits, prior work, the figures, and the archive of the working
+                               notes
 scripts/                       the audit, the definitions check, the figures and the certificate generators
 ```
 
 ## Credits
 
-The-Anh Vu-Le directed the work. ChatGPT Pro (OpenAI) developed the informal proof. Claude Opus
-5.5 (Anthropic), in Claude Code, did the formalization, the visualizations and the presentation.
+The-Anh Vu-Le chose the problem and directed the work. ChatGPT Pro (OpenAI) drafted the argument,
+and Claude Opus 5.5 (Anthropic), in Claude Code, wrote the Lean proof and organized it, with the
+visualizations and this presentation.
 The geometric and control-theoretic foundations come from
 [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) and
 [lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control). See

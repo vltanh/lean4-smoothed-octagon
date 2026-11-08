@@ -34,9 +34,9 @@ project:
     of the control problem, which lifts to a Pontryagin extremal, stays in Hales and Vajjha's
     compact domain, switches finitely often and is normal. Its switch signs fall into five classes,
     each excluded for periods with at least six pieces by scalar estimates; periods with at most
-    five pieces cost at least the octagon's area, with equality only for the octagon. Every case is
-    proved by hand-style arguments: inequalities, identities, monotonicity and convexity, with
-    no interval cover. The geometric and control-theoretic foundations, among them Fejes Toth's
+    five pieces cost at least the octagon's area, with equality only for the octagon. The scalar
+    estimates are inequalities, polynomial identities, monotonicity and convexity arguments; a few
+    polynomial signs are checked by explicit Bernstein expansions, and no interval cover is used. The geometric and control-theoretic foundations, among them Fejes Toth's
     lattice theorem, Theorem 5.0.2 of Hales and Vajjha and the Pontryagin maximum principle, come
     from the pinned libraries lean4-smoothed-polygon and lean4-optimal-control.
   authors:
@@ -54,15 +54,11 @@ sources:
     type: original-proof
     relationship: other
     note: >-
-      The proof was written in this repository, whose history is the record of how it was made.
-      ChatGPT Pro (OpenAI, in ChatGPT) drafted it, starting from Hales's control formulation and
-      Hales and Vajjha's book, in research notes of pull requests #1 and #2, archived in
-      docs/archive/; it first used computer-assisted interval covers, then replaced each by a hand
-      argument. Claude Opus 5.5 (Anthropic, in Claude Code) formalized it in Lean and organized it.
-      The formalization fed back into the draft: errata found while formalizing were corrected
-      there, and the largest polynomial signs were rewritten with small identities for the Lean
-      check (pull request #2). No person has reviewed the proof. docs/CREDITS.md tells how the work
-      was done.
+      The proof was written in this repository, whose history is the record of how it was made,
+      starting from Hales's control formulation and Hales and Vajjha's book. ChatGPT Pro (OpenAI,
+      in ChatGPT) drafted the argument, in working notes of pull requests #1 and #2, archived in
+      docs/archive/; Claude Opus 5.5 (Anthropic, in Claude Code) wrote the Lean proof and organized
+      it. No person has reviewed the proof. docs/CREDITS.md tells how the work was done.
   - title: "Über die dichteste gitterförmige Lagerung kongruenter Bereiche in der Ebene und eine besondere Art konvexer Kurven"
     authors:
       - "Karl Reinhardt"
@@ -170,12 +166,11 @@ automation:
       models: ["ChatGPT Pro (OpenAI)"]
       framework: "ChatGPT (OpenAI), committing to the repository through GitHub"
       tool_setup: >-
-        Drafted the proof, from 6 to 8 November 2026, in research notes of pull request #1 of this
-        repository (branch feat/reinhardt-foundations): first with seven interval-arithmetic covers
-        computed in C++ with MPFR, then replacing each by a hand argument, with an uncompiled Lean
-        draft of the geometric reformulation. In pull request #2 (branch proof/lighter-signs, 8
-        November 2026) it rewrote the largest polynomial sign claims with small identities, at the
-        request of the maintainer, for a lighter Lean check. Both are archived in docs/archive/.
+        Drafted the argument, from 6 to 8 November 2026, in working notes of pull requests #1
+        (branch feat/reinhardt-foundations) and #2 (branch proof/lighter-signs) of this repository,
+        archived in docs/archive/: the reduction, the five classes of switch patterns and their
+        exclusions, the terminal comparison and the equality case, with the scalar estimates of each
+        case, and a first Lean sketch of the geometric reformulation.
       cost:
         spend_usd: "not tracked"
     - method: agent
@@ -183,23 +178,22 @@ automation:
       framework: "Claude Code (Anthropic)"
       tool_setup: >-
         Following the formalize-math-paper skill (https://github.com/vltanh/formalize-math-paper),
-        with dozens of sub-agents of the same model: inventories of the notes, statements, and proofs
-        of the stages in parallel, each checked against a private snapshot of the compiled library.
-        It made the draft compile, wrote the Challenge, the Solution and the axiom audit, proved the
-        reduction, the five exclusions, the terminal comparison and the equality case, and
-        formalized the hand arguments of both pull requests; along the way it built a verified
-        interval arithmetic that checked the last interval cover in the kernel, retired once the
-        hand proof was formalized. It also wrote the documentation, the figures and this metadata. A second session of the same model restated the Challenge
-        with Reinhardt's description of the smoothed octagon and proved that it is a linear image of
-        the octagon given by Hales's trajectory (SmoothedOctagon/Bridge/Classical.lean).
+        with dozens of sub-agents of the same model that stated and proved the stages in parallel,
+        each checked against a private snapshot of the compiled library. It wrote the Lean proof (the
+        foundations, the reduction, the five exclusions, the terminal comparison and the equality
+        case), the Challenge, the Solution and the axiom audit, and organized the library; it also
+        wrote the documentation, the figures and this metadata. A second session of the same model
+        stated the Challenge with Reinhardt's description of the smoothed octagon and proved that it
+        is a linear image of the octagon given by Hales's trajectory
+        (SmoothedOctagon/Bridge/Classical.lean).
       cost:
         wall_time: "about two days, 7 to 8 November 2026"
         spend_usd: "not tracked"
         hardware: "a local machine with 20 cores and 62 GB of memory for the Lean builds"
   spend_usd: "not tracked"
   notes: >-
-    The proof was written in this repository: ChatGPT Pro drafted it, and Claude Opus 5.5 formalized
-    and organized it, each step informing the next. The-Anh Vu-Le, the author
+    The proof was written in this repository: ChatGPT Pro drafted the argument, and Claude Opus 5.5
+    wrote the Lean proof and organized it. The-Anh Vu-Le, the author
     and maintainer of this repository, chose the problem and the scope, directed the work, and
     decided the publication. Every result is compiled. scripts/Audit.lean checks that each
     declaration of the library uses only propext, Classical.choice and Quot.sound, and lake
@@ -246,8 +240,8 @@ review:
     invariant under rotation by pi/4, that each arc touches its two sides, and that its density is
     0.90241418299715727... Its documentation corrections are made. Lean's kernel checks the
     formal proofs, and Comparator checks that the Solution proves the Challenge's statements with
-    the standard axioms only, under Lean's kernel and an independent one. The informal notes and
-    their own reviews are AI-written and are not evidence for the result.
+    the standard axioms only, under Lean's kernel and an independent one.
+    The working notes and their own reviews are not evidence for the result.
 
 alignment:
   namespace: "ReinhardtChallenge"
