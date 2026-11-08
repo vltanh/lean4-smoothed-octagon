@@ -61,7 +61,7 @@ theorem period_le_five (hcov : Certificates.IntervalCovers) (P : NormalPeriod)
   have hN : 6 ≤ P.N := by omega
   rcases P.rep.partition with hR | hF | h3 | h1 | h2
   · exact reverse_exclusion P hR
-  · exact forward_exclusion hcov.forward P hc hF hN
+  · exact forward_exclusion P hc hF hN
   · exact minimumStructure_exclusion P h3
   · exact shortRuns_exclusion P hc h1
   · exact nonshort_exclusion hcov.mixed P hc hK h2 hN

@@ -1,7 +1,6 @@
 module
 
 public import SmoothedOctagon.Period.Defs
-public import SmoothedOctagon.Certificates.Covers
 public import SmoothedOctagon.Exclusion.Forward.Interface
 public import SmoothedOctagon.Exclusion.Forward.Window
 public import SmoothedOctagon.Exclusion.Forward.Core
@@ -20,8 +19,8 @@ Route (HFPE): `N ≡ 1 (mod 3)` gives `N ≥ 7` (`NormalPeriod.ff_N_mod_three`).
 * the three stationarity rows, the two exterior floors and the Gram identity of the normal
   multiplier (`Forward/Interface.lean`, to be supplied by `Period/Elliptic`),
 * the competitive Casimir cap `γ² < 23/125` (`NormalPeriod.ff_cost_casimir`, `ff_gam2_cap`).
-These form an `ff_Win`, which the scalar argument of `Forward/Core.lean` excludes. The interval
-covers `Certificates.ForwardCovers` are not used.
+These form an `ff_Win`, which the scalar argument of `Forward/Core.lean` excludes. No interval
+cover is used.
 -/
 
 @[expose] public section
@@ -30,9 +29,8 @@ namespace SmoothedOctagon
 
 /-- **Case F** (`GLOBAL_FORWARD_PERIOD_EXCLUSION`). No competitive normal vertex period with at least
 six pieces has every switch forward. -/
-theorem forward_exclusion (hcov : Certificates.ForwardCovers) (P : NormalPeriod)
+theorem forward_exclusion (P : NormalPeriod)
     (hc : P.IsCompetitive) (hF : P.rep.AllForward) (hN : 6 ≤ P.N) : False := by
-  clear hcov
   set C := P.costateCycle with hC
   have hF' : ∀ k, C.lab (k + 1) = C.lab k + 1 := fun k ↦ hF k
   have hN7 : 7 ≤ P.N := by have := P.ff_N_mod_three hF; omega

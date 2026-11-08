@@ -88,8 +88,10 @@ under two named hypotheses:
 
 - `Cited.HalesVajjha.Theorem5_0_2`: Hales and Vajjha's compactness theorem (Theorem 5.0.2 of
   their book), until its formalization in lean4-smoothed-polygon is complete;
-- `Certificates.IntervalCovers`: seven interval-arithmetic covers used by the cases F and M2,
-  stated exactly as the C++ programs certify them, until ChatGPT Pro's hand replacements are done.
+- `Certificates.IntervalCovers`: three interval-arithmetic covers used by case M2 (the
+  smaller-short cover and the two forward-endpoint covers), stated exactly as the C++ programs
+  certify them, until their hand replacements are done. Case F and the other parts of M2 already
+  follow hand arguments.
 
 | Stage | Lean | State |
 | --- | --- | --- |
@@ -98,7 +100,7 @@ under two named hypotheses:
 | Sign partition | [`Period/Partition.lean`](SmoothedOctagon/Period/Partition.lean) | proved |
 | Cases R and M3 | [`Exclusion/`](SmoothedOctagon/Exclusion) | proved |
 | Case M1 | [`Exclusion/ShortRuns.lean`](SmoothedOctagon/Exclusion/ShortRuns.lean) | stated |
-| Cases F and M2 | [`Exclusion/`](SmoothedOctagon/Exclusion) | stated, from the interval covers |
+| Cases F and M2 | [`Exclusion/`](SmoothedOctagon/Exclusion) | assembled from stated lemmas, in progress |
 | Terminal comparison | [`Terminal/`](SmoothedOctagon/Terminal) | proved |
 | Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) | proved |
 | The Challenge's statements | [`Main.lean`](SmoothedOctagon/Main.lean) | proved from the above |
@@ -136,7 +138,7 @@ SmoothedOctagon/
   Exclusion/                   the five cases R, M3, M1, F, M2
   Terminal/                    periods with at most five pieces
   Equality/                    rigidity and its converse
-  Certificates/                the interval covers (hypotheses, to be replaced)
+  Certificates/                the remaining interval covers (hypotheses, to be replaced)
   Bridge/                      translation, affine maps and the octagon in the Challenge's terms
   LowerBound.lean, Main.lean   the assembly
 Cited/HalesVajjha/             Theorem 5.0.2 of Hales–Vajjha (hypothesis)
