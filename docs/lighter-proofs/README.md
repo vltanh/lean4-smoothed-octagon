@@ -16,9 +16,9 @@ generated coefficient tables remain an open hand-proof dependency.
 
 | Priority | Requested sign | Replacement status |
 |---|---|---|
-| N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | Open; first priority. |
+| N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | Open; first priority. For a simpler eligible residual, [shape monotonicity](NONSHORT_LOW_T_SHAPE.md) and the [unit face `h=1/4`](NONSHORT_LOW_T_UNIT_FACE.md) are proved. The reduction in `h` and the other boundary faces remain open. |
 | N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | **Complete hand replacement.** The [fourth-derivative proof](NONSHORT_LOW_RATIO_LINK.md) closes the original sign using the base quadratic, monotonicity, and factored remainder. The largest expanded identity has 41 monomials and degree eight. Lean integration remains open. |
-| N3 | `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`, `k=1+j` | Open. |
+| N3 | `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`, `k=1+j` | Open. The new [low-t shape derivative](NONSHORT_LOW_T_SHAPE.md) would remove this endpoint dependency once its different unit-shape residual is proved positive throughout N1's domain. |
 | N4a | `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13), `k=29t²/4` | Open. |
 | N4b | The same caller's upper face, `k=1+j` | **Hand dependency removed**, conditional on the retained N4a sign; [shape monotonicity proof](NONSHORT_HIGH_RATIO_SHAPE.md). Lean integration remains open. |
 
@@ -75,6 +75,17 @@ boundary polynomial blocks, the thirty-two normalized face comparisons,
 and the eight fourth-derivative identities.
 
 ## Additional completed reductions
+
+For N1, the new multipliers are `a=7/2-10(q-1)` and
+`m=8j+8(q-1)-1/6`. Their actual necessary condition and rational
+substitution signs are proved in the [shape note](NONSHORT_LOW_T_SHAPE.md).
+Its positive shape derivative reduces both shape endpoints to the unit
+shape, whose full sign is still open. The [unit-face proof](NONSHORT_LOW_T_UNIT_FACE.md)
+closes `h=1/4` using a cubic square completion and four univariate signs.
+Every expanded identity in that face proof has at most nine monomials,
+degree at most eight, and coefficients of at most twelve digits.
+Independent reviews reconstructed the original residuals and checked all
+printed coefficient identities and scalar comparisons in both notes.
 
 The [N2 base quadratic](NONSHORT_LOW_RATIO.md) is greater than 4 on its
 full domain; its three square identities each have 21 monomials and total
