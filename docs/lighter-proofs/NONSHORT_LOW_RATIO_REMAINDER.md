@@ -2,14 +2,15 @@
 
 Date: 2026-11-08.
 
-**Scope and unresolved link.** This supplies small sign proofs for the
+**Scope.** This supplies small sign proofs for the
 higher-gap coefficient functions \(C_3,\ldots,C_{10}\) of
 [MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION](../../archive/notes/MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md).
-Their complete factored forms are printed below. They have been checked
-with exact symbolic arithmetic against the original coefficient definitions,
-but **the original three-variable collection identity linking \(G\) to
-\(P=\sum_{i=0}^{10}C_i j^i\) still needs a budget-compliant derivation**.
-This note does not close that link or the full requested sign by itself.
+Their complete factored forms are printed below. The
+[fourth-derivative bridge](NONSHORT_LOW_RATIO_LINK.md) derives their connection
+to the original rational residual using a cubic boundary coefficient and a
+fourth derivative. Together with the base-quadratic and monotonicity notes,
+that bridge closes the full unit-shape sign without expanding the original
+three-variable collection identity \(P=\sum_{i=0}^{10}C_i j^i\).
 
 The result for the displayed coefficient functions is
 \[
@@ -687,10 +688,11 @@ products have at most eleven digits. The factors and their numerical bounds
 are all printed, so checking the signs requires elementary integer arithmetic
 and the two endpoint inequalities \(1/3\le h\le1/2\).
 
-The remaining task is to derive these factored \(C_i\) from the original
-rational residual by small, staged coefficient identities. An instruction to
-expand the original \(P\) as one three-variable polynomial would exceed the
-requested budget and is **not** supplied as an acceptable link here. Exact
-symbolic comparison was used to check the transcription of the displayed
-factors; it is not offered as a substitute for that missing budget-compliant
-link. No Lean or CI run, and no measured Lean speedup, is claimed.
+The [fourth-derivative bridge](NONSHORT_LOW_RATIO_LINK.md) derives these
+factored \(C_i\) from the original rational residual through small boundary
+identities and a fourth derivative computed before expanding. Expanding
+the original \(P\) as one three-variable polynomial would exceed the
+requested budget and is outside that verification interface. Exact symbolic
+comparison was used to check the transcription of the displayed factors;
+the printed identities and inequalities are the proof premises. No Lean or
+CI run, and no measured Lean speedup, is claimed.

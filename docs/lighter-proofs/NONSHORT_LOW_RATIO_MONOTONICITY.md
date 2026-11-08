@@ -2,15 +2,16 @@
 
 Date: 2026-11-08.
 
-**Scope and unresolved link.** This proves the three monotonicity claims used
+**Scope.** This proves the three monotonicity claims used
 in Section 3 of
 [MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION](../../archive/notes/MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md)
 for the fully displayed, factored polynomials \(\mathcal A_i\) below. They
 are the original \(A_i\), reconstructed exactly from the original definitions
-of \(P,C_0,C_1,C_2\). That reconstruction has been checked with exact symbolic
-arithmetic, but **a budget-compliant derivation of the original collection
-identity \(P=\sum C_i j^i\) is still missing**. This note does not present the
-large collection as an acceptable identity to expand.
+of \(P,C_0,C_1,C_2\). The [fourth-derivative bridge](NONSHORT_LOW_RATIO_LINK.md)
+derives their connection to the original residual by small boundary
+calculations, and combines this result with the base and remainder proofs
+to close the full unit-shape sign. It does not expand the original collection
+identity \(P=\sum C_i j^i\) as one polynomial.
 
 The completed mathematical result here is
 \[
@@ -426,8 +427,10 @@ most eight. The largest derivative coefficient printed here is 35,438,280.
 
 The factored definitions themselves should be retained in Lean. Expanding
 all exterior powers, all powers of \(z\), or the original \(P\) into one
-ring identity would lose this budget. **The link from the original residual
-\(G\) to these coefficient definitions remains unresolved under the budget.**
+ring identity would lose this budget. The
+[fourth-derivative bridge](NONSHORT_LOW_RATIO_LINK.md) provides the required
+link from the original residual \(G\) to these coefficient definitions
+through small coefficient identities, with the verification order stated there.
 No Lean verification or performance improvement is claimed here.
 
 ## Appendix A. Complete factored starting polynomials

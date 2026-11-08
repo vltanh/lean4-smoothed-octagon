@@ -17,7 +17,7 @@ generated coefficient tables remain an open hand-proof dependency.
 | Priority | Requested sign | Replacement status |
 |---|---|---|
 | N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | Open; first priority. |
-| N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | Full sign open at the algebraic collection link. The [base quadratic](NONSHORT_LOW_RATIO.md), [three monotonicity claims](NONSHORT_LOW_RATIO_MONOTONICITY.md), and [higher-gap remainder](NONSHORT_LOW_RATIO_REMAINDER.md) have small sign proofs. |
+| N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | **Complete hand replacement.** The [fourth-derivative proof](NONSHORT_LOW_RATIO_LINK.md) closes the original sign using the base quadratic, monotonicity, and factored remainder. The largest expanded identity has 41 monomials and degree eight. Lean integration remains open. |
 | N3 | `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`, `k=1+j` | Open. |
 | N4a | `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13), `k=29t²/4` | Open. |
 | N4b | The same caller's upper face, `k=1+j` | **Hand dependency removed**, conditional on the retained N4a sign; [shape monotonicity proof](NONSHORT_HIGH_RATIO_SHAPE.md). Lean integration remains open. |
@@ -68,11 +68,11 @@ All necessary polynomials and the size counts are printed in the notes.
 Independent mathematical and exact-algebra reviews accepted the
 high-ratio caller reduction and the low-ratio base quadratic; the three
 corrections were separately reviewed against their actual domains and
-source callers. The N2 sign components are subordinate replacements.
-Their remaining obligation is a derivation, within the expansion budget,
-from the original rational residual to the displayed factored coefficient
-functions. An exact symbolic check of that large collection is not accepted
-as that derivation.
+source callers. The N2 collection link is now supplied by four boundary
+calculations and a fourth derivative, with differentiation performed before
+expansion. Independent reviews checked its source cancellation, all sixteen
+boundary polynomial blocks, the thirty-two normalized face comparisons,
+and the eight fourth-derivative identities.
 
 ## Additional completed reductions
 
@@ -83,8 +83,16 @@ gives derivative lower bounds 3500, 12400 and 5400. The
 [N2 remainder proof](NONSHORT_LOW_RATIO_REMAINDER.md) gives
 `C3>700`, `C4>3900`, and nonnegative remaining coefficients.
 Both latter proofs use explicitly printed univariate factors with at most
-nine monomials and degree at most eight. They do not supply the outstanding
-collection link.
+nine monomials and degree at most eight. The
+[completed link](NONSHORT_LOW_RATIO_LINK.md) combines these ingredients to
+prove `Pi>4h^3(1+h)^3+700j^3+3900j^4`, on the original domain and in fact
+for all nonnegative `j` with `0<=q-1<=h`. Its eight fourth-derivative
+identities have 26, 39, 41, 41, 41, 40, 33 and 24 monomials.
+The exact Lean caller is `hA` in `fh_lowRatio_core` in
+`SmoothedOctagon/Exclusion/Mixed/FwdHand/LowRatio.lean`; its upper endpoint
+`hB` and shape-concavity step can be retained. The new proof replaces the
+unit-shape certificate and its large link, without changing the sign or
+shrinking its domain.
 
 The two S1 outer reductions preserve the norm dependencies. For the first
 residual, beta concavity at fixed norm reduces beta to its two admissible

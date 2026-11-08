@@ -5,9 +5,11 @@ Date: 2026-11-08.
 **Scope.** This replaces Section 4 of
 [MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION](../../archive/notes/MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md),
 including its degree-14 discriminant and large coefficient table. It is a completed
-subordinate replacement, **not a replacement for that note's full three-variable
-sign (10)**. The derivative comparison in Section 3 and the remainder estimate
-in Section 5 remain outside this result and still require lighter proofs.
+subordinate replacement. The separate
+[monotonicity proof](NONSHORT_LOW_RATIO_MONOTONICITY.md) and
+[factored remainder proof](NONSHORT_LOW_RATIO_REMAINDER.md) supply the other
+sign premises, and the [fourth-derivative bridge](NONSHORT_LOW_RATIO_LINK.md)
+combines them into a replacement for the full unit-shape sign (10).
 
 The caller is equation (15) of that note. It uses
 \(\beta=j/[h(h+1)]\ge0\), and needs precisely
@@ -178,7 +180,7 @@ The positivity of \(a_2\) justifies the first inequality's use of
 \(h+1\ge4/3\). This replaces the original use of a degree-14 discriminant
 by comparisons and three bivariate degree-eight identities.
 
-## 6. Expansion budget and remaining boundary
+## 6. Expansion budget and connection to the full sign
 
 | Item | Variables | Monomials after clearing denominators | Total degree |
 | --- | --- | ---: | ---: |
@@ -198,11 +200,14 @@ printed factors, within the stated budget.
 
 These are **replacement identities for the base quadratic only**. They do
 not prove the \(h\)-derivative signs or the three-variable remainder in the
-original low-ratio note. Those dependencies must remain open in any ledger
-for the full lighter-sign request. No Lean check or performance claim is made.
+original low-ratio note. Those separate results and their connection to
+the original rational residual are proved in the companion notes linked
+above. The bridge uses four boundary calculations and a fourth derivative
+before expanding; a global expansion of the original polynomial is outside
+the proposed verification interface. No Lean check or performance claim is made.
 
 An independent review parsed the printed square identities from this
 document and verified all three identities, their stated expansion sizes,
 the three error identities, positivity at every closed interval endpoint,
 and the exact use of the nonnegative caller parameter. The review does
-not establish the separate derivative or remainder premises.
+not by itself establish the separate derivative or remainder premises.
