@@ -5,39 +5,16 @@ public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Arctan
 public import Mathlib.Analysis.Real.Sqrt
 
 /-!
-# Case M2, smaller-short branch: the six-variable cover
+# Case M2, smaller-short branch: the six-variable point
 
-The directed-interval cover `explorations/mixed_smaller_short_interval_certificate.cpp`, stated as
-the proposition its run certifies. It is a named hypothesis of the main theorem pending a hand
-proof: gate H-S of `docs/HAND_PROOF_STATUS.md` (PR branch).
+The coordinates `(r, δ, α, ρ, v, E)` of a smaller-short window and the quantities derived from them
+(`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION`), with the program's names. `M2Short` states its
+middle-switch slack (`Point.fmid`) and its window-defect inequality (`Point.AA`, `Point.BB`,
+`Point.Tk`, `Point.cost`, `Point.kap`) with them.
 
-Consumed by `MIXED_SMALLER_SHORT_PERIOD_EXCLUSION` §4 (the residuals and the root box are derived in
-`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION`): the actual data `(r, δ, α, ρ, v, E)` of a period
-whose smaller turn at a minimum reverse centre has a short forward run is a point of the root box
-`B₀` at which every residual `f₀, …, f₂₇` is nonnegative.
-
-Record (`explorations/mixed_smaller_short_interval_certificate_result.txt`): 1 root,
-107977 nodes, 53989 leaves (reason 1: 1340; residual reasons 10, 13-18, 20-22, 31, 37; LP
-combination, reason 39: 25565), maximum depth 37, no domain splits.
-
-## What the run certifies
-
-The engine (`certified_mpfr_interval.hpp`) uses 80-bit MPFR with directed rounding and
-second-order jets; the root box is entered with outward-rounded endpoints, a superset of `B₀`.
-Each node is contracted (four sweeps) by consequences of `f₂, f₉, f₁₃, f₁₆, …, f₂₀ ≥ 0`, then is a
-leaf if it is empty (reason 1), if the direct or Taylor upper bound of one evaluated residual
-`fᵢ` is negative (reason `10 + i`), or if a fresh Taylor upper bound of `∑ wᵢ fᵢ` is negative for
-exact dyadic weights `wᵢ ∈ 2⁻²⁰ ℕ ∩ [0, 1]` proposed by a floating-point LP (reason 39). The LP
-only proposes weights: the certified fact is still that no point of the box has all `fᵢ ≥ 0`.
-Domain errors cause bisection, never a leaf.
-
-`f₂₃, …, f₂₆` are evaluated only on boxes with `inf Γ > 0`, and `f₂₇` only on boxes with
-`inf (𝒜 + ℬ) > 0`; a leaf where they were not evaluated is excluded by the other residuals alone.
-The value enclosures of `u` and `u_a` are intersected with `[3/4, 1]` (line 31), which is valid
-on the whole box: every continuous secant over positive endpoints lies in `[3/4, 1]`
-(`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION` §6). Lean's `√x = 0` for `x < 0`, `x / 0 = 0` and
-`arctan` agree with the program wherever it evaluated a residual, so the proposition below, with
-all 28 residuals, is what the run proves.
+The notes first excluded these windows by an interval cover of the residuals `f₀, …, f₂₇` below over
+a six-dimensional box; the hand proof (`Exclusion/Mixed/ShortHand/`) replaces it. `logDiv` is the
+analytic continuation of `log q/(q - 1)`, equal to `1` at `q = 1`.
 -/
 
 @[expose] public section
@@ -375,14 +352,5 @@ def AllResidualsNonneg (p : Point) : Prop :=
 end Point
 
 end SmallerShort
-
-/-- **The smaller-short cover** (`mixed_smaller_short_interval_certificate.cpp`). No point of
-`B₀ = [1/10, 1/2] × [0, 2] × [1, 631/100] × [1/226, 3/20] × [3/4, 1] × [-23/16, 9/20]`
-(lines 161-162) has all residuals `f₀, …, f₂₇` nonnegative. -/
-def CertSmallerShort : Prop :=
-  ∀ r δ α ρ v E : ℝ, r ∈ Set.Icc (1 / 10 : ℝ) (1 / 2) → δ ∈ Set.Icc (0 : ℝ) 2 →
-    α ∈ Set.Icc (1 : ℝ) (631 / 100) → ρ ∈ Set.Icc (1 / 226 : ℝ) (3 / 20) →
-    v ∈ Set.Icc (3 / 4 : ℝ) 1 → E ∈ Set.Icc (-23 / 16 : ℝ) (9 / 20) →
-    ¬ (⟨r, δ, α, ρ, v, E⟩ : SmallerShort.Point).AllResidualsNonneg
 
 end SmoothedOctagon.Certificates

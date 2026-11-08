@@ -19,9 +19,8 @@ smoothed octagon `smoothedOctagon`, and the constant written `(8 - 4√2 - log 2
 way, Hales's control form: the equality case with the octagon given as the convex hull of the six
 arcs of its trajectory, the lower bound on the cost, and the octagon's area.
 
-Both are conditional on the one remaining named hypothesis of the proof, the interval covers
-(`Certificates.IntervalCovers`, until their hand replacements are complete). Hales–Vajjha's
-Theorem 5.0.2 is proved in `lean4-smoothed-polygon` (`SmoothedPolygons.theorem5_0_2`).
+They have no hypothesis. Hales–Vajjha's Theorem 5.0.2 is proved in `lean4-smoothed-polygon`
+(`SmoothedPolygons.theorem5_0_2`).
 -/
 
 @[expose] public section
@@ -31,13 +30,13 @@ namespace SmoothedOctagon
 open SmoothedPolygons MeasureTheory Set
 
 /-- **The Reinhardt conjecture with its equality case**, in the library's vocabulary. -/
-theorem fullReinhardtConjecture (hcov : Certificates.IntervalCovers) : FullReinhardtConjecture :=
-  ⟨reinhardtConjecture hcov, worstDisk_eq_linear_image hcov⟩
+theorem fullReinhardtConjecture : FullReinhardtConjecture :=
+  ⟨reinhardtConjecture, worstDisk_eq_linear_image⟩
 
 /-! ### Hales's control form -/
 
 /-- The equality case with the smoothed octagon given by its trajectory, under the hypothesis. -/
-theorem reinhardt_equality_of (hcov : Certificates.IntervalCovers) :
+theorem reinhardt_equality_of :
     (∃ g X : ℝ → Mat2,
       IsStateTrajectory (tf 1) (polygonControl 1) g X ∧ g 0 = 1 ∧ X 0 = Φ 0 (y₀ 1)) ∧
     ∀ g X : ℝ → Mat2, IsStateTrajectory (tf 1) (polygonControl 1) g X → g 0 = 1 →
@@ -58,8 +57,8 @@ theorem reinhardt_equality_of (hcov : Certificates.IntervalCovers) :
     have hW : IsWorstDisk ((fun x ↦ x + -c) '' K) := by
       refine ⟨bridge_isCCSDisk_centre hK hc, ?_⟩
       rw [bridge_greatestPackingDensity_translate, hd,
-        reinhardtConjecture_iff_minimax.mp (reinhardtConjecture hcov)]
-    obtain ⟨A, hA⟩ := worstDisk_eq_linear_image hcov _ hW
+        reinhardtConjecture_iff_minimax.mp (reinhardtConjecture)]
+    obtain ⟨A, hA⟩ := worstDisk_eq_linear_image _ hW
     refine ⟨A.toAffineEquiv.trans (AffineEquiv.constVAdd ℝ (Fin 2 → ℝ) c), ?_⟩
     rw [AffineEquiv.coe_trans, image_comp]
     change K = _ '' ((A : (Fin 2 → ℝ) → (Fin 2 → ℝ)) '' octagon)
@@ -77,11 +76,11 @@ theorem reinhardt_equality_of (hcov : Certificates.IntervalCovers) :
 
 /-- The control form, under the hypothesis: every admissible trajectory costs at least
 `√12 δ_oct`. -/
-theorem reinhardt_cost_of (hcov : Certificates.IntervalCovers) (T : ℝ) (u : ℝ → Fin 3 → ℝ)
+theorem reinhardt_cost_of (T : ℝ) (u : ℝ → Fin 3 → ℝ)
     (g X : ℝ → Mat2) (h : IsStateTrajectory T u g X) (hg0 : g 0 = 1) (hgT : g T = R)
     (hXT : X T = R⁻¹ * X 0 * R) :
     √12 * ((8 - 4 * √2 - Real.log 2) / (2 * √2 - 1)) ≤ reinhardtCost T X := by
-  have := controlLowerBound hcov T u g X ⟨h, hg0, hgT, hXT⟩
+  have := controlLowerBound T u g X ⟨h, hg0, hgT, hXT⟩
   rwa [volume_real_octagon, octagonCost, ← bridge_octagonDensity_eq] at this
 
 /-- The smoothed octagon given by its trajectory has area `√12 δ_oct` and density `δ_oct`. -/
@@ -101,12 +100,12 @@ theorem octagon_area (g X : ℝ → Mat2)
 /-! ### The statements of `ReinhardtChallenge.lean`, under the hypothesis -/
 
 /-- `Challenge.reinhardt`, under the hypothesis. -/
-theorem reinhardt_of (hcov : Certificates.IntervalCovers) (K : Set (Fin 2 → ℝ))
+theorem reinhardt_of (K : Set (Fin 2 → ℝ))
     (hK : IsConvexDisk K) (hsymm : ∃ c : Fin 2 → ℝ, ∀ x ∈ K, (2 : ℝ) • c - x ∈ K) :
     (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) ≤ greatestPackingDensity K := by
   obtain ⟨c, hc⟩ := hsymm
   rw [bridge_octagonDensity_eq, ← bridge_greatestPackingDensity_translate K (-c)]
-  exact reinhardtConjecture_iff_density_lower_bound.mp (reinhardtConjecture hcov) _
+  exact reinhardtConjecture_iff_density_lower_bound.mp (reinhardtConjecture) _
     (bridge_isCCSDisk_centre hK hc)
 
 /-- `Challenge.octagon_density` (unconditional): Reinhardt's smoothed octagon is a centrally
@@ -129,12 +128,11 @@ theorem smoothedOctagon_spec :
 
 /-- `Challenge.reinhardt_equality`, under the hypothesis: the worst disks are the affine images of
 Reinhardt's smoothed octagon. -/
-theorem reinhardt_equality_classical_of (hcov : Certificates.IntervalCovers)
-    (K : Set (Fin 2 → ℝ)) (hK : IsConvexDisk K)
+theorem reinhardt_equality_classical_of (K : Set (Fin 2 → ℝ)) (hK : IsConvexDisk K)
     (hsymm : ∃ c : Fin 2 → ℝ, ∀ x ∈ K, (2 : ℝ) • c - x ∈ K) :
     greatestPackingDensity K = (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) ↔
       ∃ A : (Fin 2 → ℝ) ≃ᵃ[ℝ] (Fin 2 → ℝ), K = A '' smoothedOctagon := by
-  obtain ⟨⟨g, X, h, hg0, hX0⟩, heq⟩ := reinhardt_equality_of hcov
+  obtain ⟨⟨g, X, h, hg0, hX0⟩, heq⟩ := reinhardt_equality_of
   rw [heq g X h hg0 hX0 K hK hsymm, bridge_convexHull_arcs g X h hg0 hX0, cls_exists_affine_iff]
 
 end SmoothedOctagon

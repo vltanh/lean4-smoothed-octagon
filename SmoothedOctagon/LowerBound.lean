@@ -27,8 +27,8 @@ public import SmoothedOctagon.Terminal.Comparison
    therefore costs at least `A_oct` (`controlLowerBound`), and every centrally symmetric convex disk
    has density at least `δ_oct` (`reinhardtConjecture`).
 
-The one hypothesis is the interval covers (`Certificates.IntervalCovers`); Hales–Vajjha's
-Theorem 5.0.2, used in step 1, is proved in `SmoothedPolygons` (`theorem5_0_2`).
+There is no hypothesis: every case is proved by hand, and Hales–Vajjha's Theorem 5.0.2, used in
+step 1, is proved in `SmoothedPolygons` (`theorem5_0_2`).
 -/
 
 @[expose] public section
@@ -55,7 +55,7 @@ theorem cost_le_octagonCost_of_isReinhardtMinimizer {T : ℝ} {u : ℝ → Fin 3
 
 /-- **At most five pieces.** A competitive normal vertex period in the compact domain has at most
 five pieces. -/
-theorem period_le_five (hcov : Certificates.IntervalCovers) (P : NormalPeriod)
+theorem period_le_five (P : NormalPeriod)
     (hc : P.IsCompetitive) (hK : P.InCompactDomain) : P.N ≤ 5 := by
   by_contra h
   have hN : 6 ≤ P.N := by omega
@@ -64,10 +64,10 @@ theorem period_le_five (hcov : Certificates.IntervalCovers) (P : NormalPeriod)
   · exact forward_exclusion P hc hF hN
   · exact minimumStructure_exclusion P h3
   · exact shortRuns_exclusion P hc h1
-  · exact nonshort_exclusion hcov.mixed P hc hK h2 hN
+  · exact nonshort_exclusion P hc hK h2 hN
 
 /-- **Every global minimizer costs at least `A_oct`.** -/
-theorem minimizer_cost_ge (hcov : Certificates.IntervalCovers) {T : ℝ} {u : ℝ → Fin 3 → ℝ}
+theorem minimizer_cost_ge {T : ℝ} {u : ℝ → Fin 3 → ℝ}
     {g X : ℝ → Mat2} (hmin : IsReinhardtMinimizer T u g X) : octagonCost ≤ reinhardtCost T X := by
   obtain ⟨P, -, -, -, -, -, hcost, -, hK⟩ := finiteNormalRepresentation hmin
   have hc : P.IsCompetitive := by
@@ -75,20 +75,20 @@ theorem minimizer_cost_ge (hcov : Certificates.IntervalCovers) {T : ℝ} {u : �
     rw [hcost]
     exact cost_le_octagonCost_of_isReinhardtMinimizer hmin
   rw [← hcost]
-  exact terminal_cost P (period_le_five hcov P hc hK)
+  exact terminal_cost P (period_le_five P hc hK)
 
 /-- **The control lower bound.** Every admissible trajectory of the Reinhardt control problem, with
 any terminal time and any measurable control, costs at least the area `A_oct` of the smoothed
 octagon. -/
-theorem controlLowerBound (hcov : Certificates.IntervalCovers) : ControlLowerBound := by
+theorem controlLowerBound : ControlLowerBound := by
   intro T u g X hadm
   obtain ⟨K, S, σ, G, Y, -, -, -, hWmin, -⟩ := exists_worstDisk_controlMinimizer
   rw [volume_real_octagon]
-  exact (minimizer_cost_ge hcov hWmin).trans (hWmin.2 T u g X hadm)
+  exact (minimizer_cost_ge hWmin).trans (hWmin.2 T u g X hadm)
 
 /-- **The Reinhardt conjecture.** The smoothed octagon is a worst disk: every centrally symmetric
 convex disk has greatest packing density at least `δ_oct`. -/
-theorem reinhardtConjecture (hcov : Certificates.IntervalCovers) : ReinhardtConjecture :=
-  reinhardtConjecture_iff_controlLowerBound.mpr (controlLowerBound hcov)
+theorem reinhardtConjecture : ReinhardtConjecture :=
+  reinhardtConjecture_iff_controlLowerBound.mpr (controlLowerBound)
 
 end SmoothedOctagon

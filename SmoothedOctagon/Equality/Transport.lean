@@ -87,7 +87,7 @@ theorem eq_R_pow_mulVec_sixthRoot (n : ℕ) (j : ZMod 6) :
     ring_nf
 
 /-- **Rigidity.** Every worst disk is an invertible linear image of the smoothed octagon. -/
-theorem worstDisk_eq_linear_image (hcov : Certificates.IntervalCovers) : AffineRigidity := by
+theorem worstDisk_eq_linear_image : AffineRigidity := by
   intro K hK
   /- The realization of `K` by its own boundary trajectory. -/
   obtain ⟨e, T, σ, g, X, hK', hbal, -, hframe, hshift, hmin, hdens⟩ :=
@@ -97,14 +97,14 @@ theorem worstDisk_eq_linear_image (hcov : Certificates.IntervalCovers) : AffineR
   /- Its cost is `A_oct`, by the sharp lower bound. -/
   have hcost : reinhardtCost T X = octagonCost := by
     have h1 : greatestPackingDensity K = octagonDensity := by
-      rw [hK.2, ← (reinhardtConjecture hcov).2, octagon_density]
+      rw [hK.2, ← (reinhardtConjecture).2, octagon_density]
     rw [h1] at hdens
     rw [octagonCost, hdens]
     field_simp
   /- The finite normal representation and the terminal equality. -/
   obtain ⟨P, s, hPT, hs0, hsT, hPg, hPcost, -, hPK⟩ := finiteNormalRepresentation hmin
   have hPc : P.cost = octagonCost := hPcost.trans hcost
-  obtain ⟨hPtf, r, hr⟩ := terminal_equality P (period_le_five hcov P hPc.le hPK) hPc
+  obtain ⟨hPtf, r, hr⟩ := terminal_equality P (period_le_five P hPc.le hPK) hPc
   have hTtf : T = tf 1 := hPT.symm.trans hPtf
   /- The frame of `eK`, rebased at `s` and relabeled by `R^r`, is the octagon's frame. -/
   have hgs : IsUnit (g s).det := by

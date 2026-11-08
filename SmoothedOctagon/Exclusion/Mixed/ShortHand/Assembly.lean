@@ -21,8 +21,8 @@ the window cost plus completion exceed `A_oct`, contradicting the window-defect 
 
 ## Main API
 
-* `m2_short_exclusion_hand`: no smaller-short window exists, without the interval cover
-  `CertSmallerShort` (compare `m2_short_exclusion`).
+* `m2_short_exclusion_hand`: no smaller-short window exists. It replaces the six-variable interval
+  cover of the notes' first proof, which this library used to check by a kernel certificate.
 -/
 
 @[expose] public section

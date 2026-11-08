@@ -9,9 +9,9 @@ public import SmoothedOctagon.Certificates.SmallerShort
 
 The scalar data that case M2 extracts from one actual period, as structures of real numbers with
 the necessary conditions of the notes as fields. The period-level modules (`Mixed/Centre`,
-`Mixed/Extraction`) produce them; the scalar exclusions (`Mixed/Comparison`, `Mixed/Chart`,
-`Mixed/ForwardEndpoint`, `Mixed/ReverseHand`, `Mixed/LowScaleHand`, `Mixed/SmallerShort`) consume
-them, so a hand proof can replace a cover without touching the period-level argument.
+`Mixed/Extraction`) produce them; the scalar exclusions (`Mixed/Comparison`, `Mixed/ReverseHand`,
+`Mixed/LowScaleHand`, `Mixed/ForwardHand`, `Mixed/ShortHand`) consume them, so the scalar arguments
+are independent of the period-level argument.
 
 * `m2E`, `m2Gam`: the centre pairing and the squared Casimir at a reverse centre
   (`MIXED_REVERSE_CENTRE_SCALE_BOUND` (3)).
