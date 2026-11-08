@@ -5,6 +5,8 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Basic
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Slope
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Data
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Ratio
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1Central
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1Outer
 
 /-!
 # Hand proof of the smaller-short case, gate S1: `x > 2`
@@ -426,7 +428,7 @@ theorem hs1_central_face {x al be u τ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal 
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) (hu : 3 / 4 ≤ u)
     (hul : u ≤ hsUl x be) (hτ : 2 ≤ τ) (hτT : τ * hsQc x al ≤ hsRA al be) :
     9193 / 50000 < hsGs x al u (hsQc x al) - 7 / 96 * hsRs x be al u (hsQc x al) τ := by
-  sorry
+  apply hs1_central_face_proof <;> assumption
 
 /-- **The outer low-ratio face** (`LOW_RATIO_OUTER_HAND_SIGN` §6; inventory HS-S01 D-R22): for
 `1 < x ≤ 2`, `1 ≤ α ≤ x`, `x ≤ β ≤ αx`, `x(x + 2) ≤ 6α²` (`q_c ≥ 1/7`), the strip of
@@ -439,7 +441,7 @@ theorem hs1_outer_face {x al be u τ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 
     (huv : u ≤ hsVbar x) (hul : 3 / 2 ≤ x → al ≤ 6 / 5 → u ≤ hsUl x be) (hτ : 2 ≤ τ)
     (hτT : τ ≤ 7 * hsRA al be) :
     9193 / 50000 < hsGs x al u (1 / 7) - 7 / 96 * hsRs x be al u (1 / 7) τ := by
-  sorry
+  apply hs1_outer_face_proof <;> assumption
 
 /-- **`D > 0` on the S1 range** (inventory HS-S01 C12; route: `β ≤ αx` and the quadratic
 `(1 + 2x)α² - 2x²α + (1 + 2x)` with negative discriminant for `x < 1 + √2`, instead of the
