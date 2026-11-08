@@ -298,3 +298,18 @@ def atanI(x):
     if a is None or b is None:
         return None
     return (a[0], b[1])
+
+
+LD24 = [ofRat(1, 2 * k + 1) for k in range(24)]
+
+
+def pow24(x):
+    x2 = sq(x); x3 = mul(x2, x); x6 = sq(x3); x12 = sq(x6)
+    return sq(x12)
+
+
+LD8 = [ofRat(1, 2 * k + 1) for k in range(8)]
+
+
+def pow8(x):
+    return sq(sq(sq(x)))

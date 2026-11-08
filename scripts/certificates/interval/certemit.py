@@ -11,14 +11,27 @@ def remap(c, m):
         return ('S', [(m[k], w) for k, w in c[1]])
     raise ValueError(c)
 
+def children_boxes(c, B):
+    """For an inner node, the two child boxes (split: midpoint; cut: point p)."""
+    j = c[1]; lo, hi = B[j]
+    p = ((lo + hi) >> 1) if c[0] == 'split' else c[2]
+    BL = list(B); BL[j] = (lo, p); BR = list(B); BR[j] = (p, hi)
+    return BL, BR
+
+def kids(c):
+    return (c[2], c[3]) if c[0] == 'split' else (c[3], c[4])
+
 def leaves(c):
-    return leaves(c[2]) + leaves(c[3]) if c[0] == 'split' else 1
+    if c[0] in ('split', 'cut'):
+        a, b = kids(c)
+        return leaves(a) + leaves(b)
+    return 1
 
 def pycheck(fs, B, c):
-    if c[0] == 'split':
-        j = c[1]; lo, hi = B[j]; m = (lo + hi) >> 1
-        BL = list(B); BL[j] = (lo, m); BR = list(B); BR[j] = (m, hi)
-        return pycheck(fs, BL, c[2]) and pycheck(fs, BR, c[3])
+    if c[0] in ('split', 'cut'):
+        BL, BR = children_boxes(c, B)
+        a, b = kids(c)
+        return pycheck(fs, BL, a) and pycheck(fs, BR, b)
     if c[0] == 'R':
         r = expr.evalR(B, fs[c[1]], {})
         return r is not None and r[1] < 0
@@ -34,6 +47,9 @@ def pycheck(fs, B, c):
 def lean_cert(c):
     if c[0] == 'split':
         return f'(.split {c[1]} {lean_cert(c[2])} {lean_cert(c[3])})'
+    if c[0] == 'cut':
+        p = f'({c[2]})' if c[2] < 0 else str(c[2])
+        return f'(.cut {c[1]} {p} {lean_cert(c[3])} {lean_cert(c[4])})'
     if c[0] == 'R':
         return f'(.byR {c[1]})'
     if c[0] == 'hole':
@@ -45,12 +61,13 @@ def lean_box(B):
 
 def chunk(c, B, K, chunks):
     """Replace subtrees with <= K leaves by holes; returns top tree."""
-    if leaves(c) <= K or c[0] != 'split':
+    if leaves(c) <= K or c[0] not in ('split', 'cut'):
         chunks.append((B, c))
         return ('hole', len(chunks) - 1)
-    j = c[1]; lo, hi = B[j]; m = (lo + hi) >> 1
-    BL = list(B); BL[j] = (lo, m); BR = list(B); BR[j] = (m, hi)
-    return ('split', j, chunk(c[2], BL, K, chunks), chunk(c[3], BR, K, chunks))
+    BL, BR = children_boxes(c, B)
+    a, b = kids(c)
+    l = chunk(a, BL, K, chunks); r = chunk(b, BR, K, chunks)
+    return ('split', c[1], l, r) if c[0] == 'split' else ('cut', c[1], c[2], l, r)
 
 if __name__ == '__main__':
     cand = pickle.load(open(sys.argv[1], 'rb'))[int(sys.argv[2])]

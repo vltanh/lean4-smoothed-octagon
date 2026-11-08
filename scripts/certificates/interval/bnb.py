@@ -40,6 +40,39 @@ class Problem:
                 return ('S', w)
         return None
 
+    def find_cut(self, B):
+        """C++-style contraction: a cut whose outer slab is excluded by a cheap residual."""
+        if not getattr(self, 'contractors', None):
+            return None
+        best = None
+        for (k, j, side, bound) in self.contractors:
+            try:
+                bnd = bound([(lo / fx.U, hi / fx.U) for lo, hi in B])
+            except (ZeroDivisionError, ValueError):
+                continue
+            if bnd is None:
+                continue
+            lo, hi = B[j]
+            w = hi - lo
+            if w <= 0:
+                continue
+            p = int(bnd * fx.U) + (1 if side == 'hi' else -1) * max(16, w >> 12)
+            for attempt in range(4):
+                if not (lo < p < hi):
+                    break
+                frac = (hi - p) / w if side == 'hi' else (p - lo) / w
+                if frac < 0.02:
+                    break
+                slab = list(B); slab[j] = (p, hi) if side == 'hi' else (lo, p)
+                r = expr.evalR(slab, self.res[k], {})
+                if r is not None and r[1] < 0:
+                    if best is None or frac > best[0]:
+                        best = (frac, j, p, side, k)
+                    break
+                # move the cut further out
+                p = (p + hi) >> 1 if side == 'hi' else (p + lo) >> 1
+        return best
+
     def split_axis(self, B):
         if getattr(self, 'smart', False) and self.last_slopes:
             # residual with the smallest slope upper bound; split the axis with largest |G_j| rad_j
@@ -138,11 +171,31 @@ def solve(prob, B, depth=0, stats=None, limit=10**7):
         stats = {'nodes': 0, 'leaves': 0, 'R': 0, 'S': 0, 'L': 0, 'fail': 0, 'maxdepth': 0}
     stack_cert = []
     # iterative DFS producing nested tuples
+    import os
+    XK = os.environ.get('XO_K')
+    if XK is not None:
+        import smaller as _sm
+        _xs = [0.3196127, 0.050935, 1.1397991, 0.1021522, 0.7825397, 0.1008571]
+        _h = 2.0 ** -int(XK)
+        KB = [(int((x - _h * s) * fx.U), int((x + _h * s) * fx.U)) for x, s in zip(_xs, _sm.SCALES)]
     def rec(B, depth):
         stats['nodes'] += 1
+        if XK is not None and all(KB[j][0] <= B[j][0] and B[j][1] <= KB[j][1] for j in range(len(B))):
+            stats['K'] = stats.get('K', 0) + 1
+            return ('K',)
         stats['maxdepth'] = max(stats['maxdepth'], depth)
         if stats['nodes'] > limit:
             raise RuntimeError('limit')
+        if getattr(prob, 'contractors', None):
+            cut = prob.find_cut(B)
+            if cut is not None:
+                frac, j, p, side, k = cut
+                lo, hi = B[j]
+                BL = list(B); BL[j] = (lo, p); BR = list(B); BR[j] = (p, hi)
+                stats['leaves'] += 1; stats['R'] += 1; stats['cuts'] = stats.get('cuts', 0) + 1
+                if side == 'hi':
+                    return ('cut', j, p, rec(BL, depth), ('R', k))
+                return ('cut', j, p, ('R', k), rec(BR, depth))
         v = prob.judge(B)
         if v is not None:
             stats['leaves'] += 1

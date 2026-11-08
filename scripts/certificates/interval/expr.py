@@ -3,6 +3,8 @@ natural / slope evaluators that mirror IExpr.evalR / IExpr.evalS exactly, and a 
 from fractions import Fraction
 import fx
 
+import os
+NEWSLOPE = os.environ.get('NEWSLOPE', '1') == '1'
 _nodes = []          # id -> node tuple
 _index = {}          # node tuple -> id
 names = {}           # id -> lean name (named intermediates)
@@ -267,6 +269,89 @@ def s_pow(s, n):
     return s_mul(s_pow(s, n - 1), s)
 
 
+def s_hornerS(x, cs):
+    acc = s_const(fx.ZERO)
+    for c in reversed(cs):
+        acc = s_add(s_const(c), s_mul(x, acc))
+    return acc
+
+
+def s_logdiv(s):
+    if not (s[0][0] >= 1):
+        return None
+    W = s_inv(s_add(s, s_const(fx.ONE)))
+    if W is None:
+        return None
+    T = s_sub(s_const(fx.ONE), s_scale(2, W))
+    T2 = s_sq(T)
+    tau = T2[0][1]
+    if not (tau + 1 <= fx.U):
+        return None
+    d = fx.inv(fx.sub(fx.ONE, fx.point(tau)))
+    if d is None:
+        return None
+    tail = fx.mul(fx.pow24(fx.point(tau)), d)
+    P = s_hornerS(T2, fx.LD24)
+    return s_mul(s_sub(s_const(fx.ONE), T), s_add(P, s_const((0, tail[1]))))
+
+
+def s_atan(s):
+    a = fx.atanI(s[0]); b = fx.atanI(s[1])
+    if a is None or b is None:
+        return None
+    H = (min(s[0][0], s[1][0]), max(s[0][1], s[1][1]))
+    D = fx.inv(fx.add(fx.ONE, fx.sq(H)))
+    if D is None:
+        return None
+    return (a, b, [fx.mul(g, D) for g in s[2]])
+
+
+def s_logdiv8(s):
+    if not (s[0][0] >= 1):
+        return None
+    W = s_inv(s_add(s, s_const(fx.ONE)))
+    if W is None:
+        return None
+    T = s_sub(s_const(fx.ONE), s_scale(2, W))
+    T2 = s_sq(T)
+    tau = T2[0][1]
+    if not (tau + 1 <= fx.U):
+        return None
+    d = fx.inv(fx.sub(fx.ONE, fx.point(tau)))
+    if d is None:
+        return None
+    tail = fx.mul(fx.pow8(fx.point(tau)), d)
+    P = s_hornerS(T2, fx.LD8)
+    return s_mul(s_sub(s_const(fx.ONE), T), s_add(P, s_const((0, tail[1]))))
+
+
+def s_logdivQ(s):
+    if not (s[0][0] >= 1):
+        return None
+    s1 = s_sqrt(s)
+    s2 = s_sqrt(s1)
+    L = s_logdiv8(s2)
+    if L is None:
+        return None
+    i1 = s_inv(s_add(s_const(fx.ONE), s1))
+    if i1 is None:
+        return None
+    i2 = s_inv(s_add(s_const(fx.ONE), s2))
+    if i2 is None:
+        return None
+    return s_mul(s_mul(L, s_scale(2, i2)), s_scale(2, i1))
+
+
+def s_sqrt(s):
+    R, V = s[0], s[1]
+    sr, sv = fx.sqrtI(R), fx.sqrtI(V)
+    if R[0] >= 0 and V[0] >= 0:
+        w = fx.inv(fx.add(sr, sv))
+        if w is not None:
+            return (sr, sv, [fx.mul(a, w) for a in s[2]])
+    return (sr, sr, [])
+
+
 def s_scale(w, s):
     return (fx.smul(w, s[0]), fx.smul(w, s[1]), [fx.smul(w, a) for a in s[2]])
 
@@ -306,11 +391,14 @@ def evalS(B, i, memo):
             elif k == 'pow':
                 r = s_pow(x, t[2])
             elif k == 'sqrt':
-                v = fx.sqrtI(x[0])
-                r = (v, v, [])
+                r = s_sqrt(x) if NEWSLOPE else (fx.sqrtI(x[0]), fx.sqrtI(x[0]), [])
             elif k == 'log':
                 v = fx.logI(x[0])
                 r = None if v is None else (v, v, [])
+            elif k == 'logdiv' and NEWSLOPE:
+                r = s_logdivQ(x)
+            elif k == 'atan' and NEWSLOPE:
+                r = s_atan(x)
             elif k in ('hlog', 'atan', 'logdiv'):
                 v = {'hlog': fx.hlogI, 'atan': fx.atanI, 'logdiv': fx.logDivI}[k](x[0])
                 r = None if v is None else (v, v, [])

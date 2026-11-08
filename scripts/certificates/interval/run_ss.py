@@ -1,10 +1,33 @@
 import sys, time, pickle, os, multiprocessing as mp
 import fx, expr, smaller, bnb
 
+import math
+
+def _xl(b):
+    return 1 / b[0][1] - 1
+
+# (residual index, axis, side, new-bound function of the float box) from the C++ `contract`
+CONTRACTORS = [
+    (16, 3, 'hi', lambda b: b[0][1] ** 2),                                   # rho <= r^2
+    (16, 0, 'lo', lambda b: math.sqrt(b[3][0])),                             # r >= sqrt rho
+    (17, 2, 'hi', lambda b: 1 / b[0][0] - 1),                                # al <= x
+    (9, 2, 'hi', lambda b: math.sqrt(3 * (1 - b[3][0]) / (17 * b[3][0]))),   # rhoA <= 3/20
+    (17, 0, 'hi', lambda b: 1 / (1 + b[2][0])),                              # x >= al
+    (18, 2, 'lo', lambda b: 1 + b[1][0] * (1 + 2 * _xl(b) / 7)),             # al >= 1 + delta(..)
+    (18, 1, 'hi', lambda b: (b[2][1] - 1) / (1 + 2 * _xl(b) / 7)),
+    (19, 3, 'hi', lambda b: 1 / (b[2][0] ** 2 + 2 * b[2][0] * (1 + b[1][0]) * _xl(b) + 1)),
+    (20, 3, 'hi', lambda b: 1 / (1 + (1 + b[1][0]) * _xl(b) ** 2)),
+    (2, 4, 'hi', lambda b: 1 - b[3][0] / b[0][1] + (b[3][0] / b[0][1]) ** 2),
+    (13, 5, 'hi', lambda b: 3 * b[3][1]),
+]
+
 def make(lp):
     f, nm = smaller.build()
     sc = [lambda lo, s=s: s * fx.U for s in smaller.SCALES]
-    return bnb.Problem(f, nm, sc, lp=lp, maxdepth=int(os.environ.get('MAXDEPTH', '70')))
+    p = bnb.Problem(f, nm, sc, lp=lp, maxdepth=int(os.environ.get('MAXDEPTH', '70')))
+    if os.environ.get('CONTRACT', '0') == '1':
+        p.contractors = CONTRACTORS
+    return p
 
 def top_split(prob, B, D):
     out = [((), B)]

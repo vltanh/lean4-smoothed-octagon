@@ -26,6 +26,14 @@ public import Mathlib.Analysis.SpecialFunctions.Complex.Arctan
 
 namespace SmoothedOctagon.Interval
 
+/-- `0 < n`, read off the constructor. -/
+def zPos : ℤ → Bool
+  | .ofNat (_ + 1) => true
+  | _ => false
+
+theorem zPos_iff (n : ℤ) : zPos n = true ↔ 0 < n := by
+  rcases n with (_ | n) | n <;> simp [zPos]
+
 /-- `log q/(q - 1)`, `1` at `q = 1`; the same function as
 `SmoothedOctagon.Certificates.SmallerShort.logDiv`. -/
 noncomputable def logDivR (q : ℝ) : ℝ := if q = 1 then 1 else Real.log q / (q - 1)
@@ -135,6 +143,50 @@ theorem odd_tail_bounds {s : ℝ} (hs0 : 0 ≤ s) (hs1 : s < 1) {L : ℝ}
           div_le_self (by positivity) hk
       _ = s ^ N * s ^ k := by ring
 
+/-- `logDivR q = (1 - t)(∑_{k<N} t²ᵏ/(2k + 1) + R)`, `t = 1 - 2/(q + 1)`, with
+`0 ≤ R ≤ τᴺ/(1 - τ)` whenever `t² ≤ τ < 1`. -/
+theorem logDiv_decomp {q τ : ℝ} (hq : 0 < q) (N : ℕ) (hτ : (1 - 2 * (q + 1)⁻¹) ^ 2 ≤ τ)
+    (hτ1 : τ < 1) :
+    ∃ R, 0 ≤ R ∧ R ≤ τ ^ N / (1 - τ) ∧
+      logDivR q = (1 - (1 - 2 * (q + 1)⁻¹)) *
+        (∑ k ∈ Finset.range N, ((1 - 2 * (q + 1)⁻¹) ^ 2) ^ k / (2 * (k : ℝ) + 1) + R) := by
+  set t := 1 - 2 * (q + 1)⁻¹ with htdef
+  have hs0 : 0 ≤ t ^ 2 := sq_nonneg t
+  have ht1 : |t| < 1 := by rw [← sq_lt_one_iff_abs_lt_one]; linarith
+  have hqt : (1 + t) / (1 - t) = q := by
+    have : q + 1 ≠ 0 := by linarith
+    rw [htdef]; field_simp; ring
+  have hsum := logDiv_hasSum ht1
+  rw [hqt] at hsum
+  obtain ⟨b1, b2⟩ := odd_tail_bounds hs0 (by linarith) hsum N
+  refine ⟨logDivR q / (1 - t) - ∑ k ∈ Finset.range N, (t ^ 2) ^ k / (2 * (k : ℝ) + 1), b1, ?_, ?_⟩
+  · refine le_trans b2 ?_
+    have hτ0 : 0 ≤ τ := le_trans hs0 hτ
+    rw [div_eq_mul_inv, div_eq_mul_inv]
+    exact mul_le_mul (pow_le_pow_left₀ hs0 hτ N) (inv_anti₀ (by linarith) (by linarith))
+      (inv_nonneg.2 (by linarith)) (by positivity)
+  · have : 1 - t ≠ 0 := by linarith [(abs_lt.1 ht1).2]
+    field_simp; ring
+
+/-- The square-root reduction `logDivR q = 2 logDivR(√q)/(1 + √q)`. -/
+theorem logDivR_sqrt {q : ℝ} (hq : 0 < q) :
+    logDivR q = logDivR (Real.sqrt q) * (2 * (1 + Real.sqrt q)⁻¹) := by
+  have hs : 0 < Real.sqrt q := Real.sqrt_pos.2 hq
+  have hs2 : Real.sqrt q ^ 2 = q := Real.sq_sqrt hq.le
+  by_cases h1 : q = 1
+  · subst h1; simp [logDivR]; norm_num
+  have hs1 : Real.sqrt q ≠ 1 := by
+    intro h; apply h1; rw [← hs2, h]; norm_num
+  have hlog : Real.log q = 2 * Real.log (Real.sqrt q) := by
+    rw [Real.log_sqrt hq.le]; ring
+  simp only [logDivR, h1, hs1, ↓reduceIte]
+  rw [hlog]
+  have e : q - 1 = (Real.sqrt q - 1) * (1 + Real.sqrt q) := by nlinarith
+  rw [e]
+  have h3 : Real.sqrt q - 1 ≠ 0 := sub_ne_zero.2 hs1
+  have h4 : 1 + Real.sqrt q ≠ 0 := by linarith
+  field_simp
+
 theorem hasSum_arctan_real {y : ℝ} (hy : |y| < 1) :
     HasSum (fun n : ℕ => (-1) ^ n * y ^ (2 * n + 1) / (2 * n + 1)) (Real.arctan y) := by
   have h := Complex.hasSum_arctan (z := (y : ℂ)) (by simpa [Complex.norm_real] using hy)
@@ -182,6 +234,29 @@ theorem arctan_series_bound {y : ℝ} (hy : y ^ 2 ≤ 1764 / 10000) :
     have q2 := mul_le_mul q1 p2 (inv_nonneg.2 (by linarith)) (by positivity)
     rw [e53]; exact le_trans q2 atan_num
   rw [abs_le]; constructor <;> linarith
+
+/-- Mean value theorem for `arctan`: `arctan y - arctan v = (y - v)/(1 + ξ²)` for some `ξ`
+between `v` and `y`. -/
+theorem arctan_mvt (y v : ℝ) :
+    ∃ ξ, min y v ≤ ξ ∧ ξ ≤ max y v ∧ Real.arctan y - Real.arctan v = (y - v) * (1 + ξ ^ 2)⁻¹ := by
+  rcases lt_trichotomy v y with h | rfl | h
+  · obtain ⟨c, hc, hd⟩ := exists_deriv_eq_slope Real.arctan h
+      Real.continuous_arctan.continuousOn Real.differentiable_arctan.differentiableOn
+    rw [Real.deriv_arctan] at hd
+    refine ⟨c, by rw [min_eq_right h.le]; exact hc.1.le, by rw [max_eq_left h.le]; exact hc.2.le, ?_⟩
+    have hne : y - v ≠ 0 := sub_ne_zero.2 h.ne'
+    simp only at hd
+    rw [eq_div_iff hne] at hd
+    rw [← hd]; ring
+  · exact ⟨v, min_le_left _ _, le_max_left _ _, by ring⟩
+  · obtain ⟨c, hc, hd⟩ := exists_deriv_eq_slope Real.arctan h
+      Real.continuous_arctan.continuousOn Real.differentiable_arctan.differentiableOn
+    rw [Real.deriv_arctan] at hd
+    refine ⟨c, by rw [min_eq_left h.le]; exact hc.1.le, by rw [max_eq_right h.le]; exact hc.2.le, ?_⟩
+    have hne : v - y ≠ 0 := sub_ne_zero.2 h.ne'
+    simp only at hd
+    rw [eq_div_iff hne] at hd
+    linear_combination hd
 
 /-- The half-angle step. -/
 theorem arctan_half (x : ℝ) :
