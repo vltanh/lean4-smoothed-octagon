@@ -1,5 +1,16 @@
 # Hand-only completion: finite, auditable handoff
 
+**Accepted conditional physical-cost theorem:**
+[SMALL_SHAPE_COST_EXCLUSION](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md)
+and its [separate review](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_AUDIT.md)
+prove the strict original-period cost contradiction on
+2<=x<=13/6, delta<=1/19, 13/5<=eta<=3, provided the original
+Casimir satisfies Gamma_actual>1829/10000. The proof continues only
+the explicitly justified scalar score and cancels the leading shear
+term before bounding it. S1/S2/S4 and the final actual-domain assembly
+must still provide every hypothesis; the conditional result does not
+by itself close H-S.
+
 Date: 2026-11-08 UTC. **Authoritative next-work plan.** Read with [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md) and [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md). This note records the state of the pushed branch, not unpushed drafts or computational discoveries.
 
 **Accepted conditional S5 input:** the

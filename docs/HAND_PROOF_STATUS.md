@@ -2,6 +2,15 @@
 
 Date: 2026-11-08 UTC.
 
+**Accepted conditional physical-cost contradiction:** the
+[small-shape cost theorem](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md),
+its [analytic shape bounds](MIXED_SMALLER_SHORT_CENTRAL_COST_SHAPE_BOUNDS.md),
+and [independent reading](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_AUDIT.md)
+prove C_period>A_oct on 2<=x<=13/6, delta<=1/19,
+13/5<=eta<=3, Gamma_actual>1829/10000. This retains the original
+period cost and original covector. The actual ratio hypotheses and
+the extended Casimir floor remain caller obligations, so H-S is open.
+
 **Accepted conditional displacement exclusion:** the
 [complete hand theorem](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
 proves delta<1/19 whenever an actual retained short bridge has

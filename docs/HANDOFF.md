@@ -1,5 +1,13 @@
 # Authoritative handoff — hand proof now in progress
 
+**Accepted conditional S6 theorem:** the
+[physical-cost exclusion](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md)
+has passed its [separate review](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_AUDIT.md).
+It proves the strict original-period contradiction under
+2<=x<=13/6, delta<=1/19, 13/5<=eta<=3 and the original
+Casimir floor Gamma_actual>1829/10000. The ratio and extended
+Casimir callers still require completion before H-S can close.
+
 **Accepted conditional S3 theorem:** the
 [complete displacement exclusion](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
 and its [independent review](MIXED_SMALLER_SHORT_DISPLACEMENT_FACE_AUDIT.md)
