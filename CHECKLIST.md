@@ -88,7 +88,8 @@ closed computer-assisted gates below do not close these new obligations.
 - [x] [Uniform short pairing](docs/MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
   proves D>=0 implies E_L>0, with a separate
   [hand review](docs/MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md).
-  Remaining nonpositive-pairing points have x>12/5 and D<0.
+  Together with the large-ratio theorem below, this now gives
+  D>0 and E_L>0 for every actual smaller-short bridge.
 
 - [x] The [strong exact short order](docs/MIXED_SMALLER_SHORT_STRONG_ORDER.md)
   and [negative-diagonal scale monotonicity](docs/MIXED_SMALLER_SHORT_NEGATIVE_DIAGONAL_SCALE.md)
@@ -102,8 +103,19 @@ Further accepted H-S reductions: the
 [combined scale alternative](docs/MIXED_SMALLER_SHORT_ROOT_FLOOR_SCALE.md),
 and [conditional angle barrier](docs/MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md).
 Their [hand review](docs/MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md)
-accepts the stated reductions; the positive-scale signs, actual
-lower-shear implication and complete short exclusion remain open.
+accepts the stated reductions.
+
+- [x] The [large-ratio hand theorem](docs/MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md)
+  proves x<12/5 for every actual smaller-short bridge. Its central
+  and outer boundary signs and complete actual-to-scalar interface
+  have independent reviews. This closes the D<=0 and E_L<=0
+  alternatives.
+- [x] The [conditional small-shape Casimir floor](docs/MIXED_SMALLER_SHORT_SMALL_SHAPE_CASIMIR_FLOOR.md)
+  proves Gamma_actual>183/1000 on 2<=x<=15/7 and beta/x-1<=1/19,
+  with an [independent review](docs/MIXED_SMALLER_SHORT_SMALL_SHAPE_CASIMIR_AUDIT.md).
+  These extra actual shape bounds remain unproved.
+- [ ] Derive the remaining actual shape and lower-shear restrictions,
+  and prove the final smaller-short physical-cost contradiction.
 
 ## Baseline proof checkpoints
 

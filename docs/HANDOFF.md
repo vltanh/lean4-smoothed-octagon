@@ -21,24 +21,23 @@ reverse-run theorem. The
 accepts the retained assembly conditional on H-S alone.
 
 **Current short-case focus:** the
-[global upper short order](MIXED_SMALLER_SHORT_GLOBAL_UPPER_ORDER.md)
-and strong lower order confine the exact bridge shape to a rational
-strip. The [floor-weighted envelope](MIXED_SMALLER_SHORT_FLOOR_WEIGHTED_ENVELOPE.md)
-retains the genuine root and outgoing norm floor in one positive
-actual expression. Its [scale reduction](MIXED_SMALLER_SHORT_ROOT_FLOOR_SCALE.md)
-leaves three positive-scale signs for the proposed x<12/5 bound;
-the zero-scale face is already excluded. Those three signs remain
-open. The [angle barrier](MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md)
-is a separate conditional cost reduction, with its remaining actual
-lower-shear hypothesis explicit. See the
-[independent short-lemma review](MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md).
+[large-ratio hand theorem](MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md)
+and [independent interface review](MIXED_SMALLER_SHORT_LARGE_RATIO_INTERFACE_AUDIT.md)
+now prove x<12/5, D>0 and E_L>0 for every actual smaller-short bridge.
+All central and outer scale signs needed for this contraction are
+proved and separately audited. The actual root and norm floor are
+combined before any scalar comparison; no artificial endpoint
+inherits the original period's competitive cap or physical cost.
 
-The [uniform short-pairing lemma](MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
-now proves D>=0 implies E_L>0, with an
-[independent review](MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md).
-It removes the old outer-margin cutoff on this entire branch; any
-nonpositive-pairing point must have x>12/5 and D<0. The negative-diagonal
-root domain and the terminal cost signs remain open.
+The [angle barrier](MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md) now
+excludes clipping and the upper critical angle on the actual domain.
+Its decreasing-score conclusion still needs the lower-shear
+implication. The accepted
+[conditional Casimir floor](MIXED_SMALLER_SHORT_SMALL_SHAPE_CASIMIR_FLOOR.md)
+gives Gamma_actual>183/1000 if 2<=x<=15/7 and beta/x-1<=1/19;
+those sharper actual shape bounds are not yet proved. The final
+physical-cost exclusion is still open, and H-S remains the sole
+unclosed exclusion gate.
 
 **Latest hand progress:** the [small-forward-minimum hand proof](SMALL_FORWARD_MINIMUM_HAND_PROOF.md)
 replaces the hard H5 coefficient table by an integral estimate and an

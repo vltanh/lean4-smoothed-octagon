@@ -243,8 +243,10 @@ E0<0 gives the correct direction when replacing 1-D/Q by its lower
 bound. Both later substitutions also increase the expression.
 Independent reconstruction verifies the derivative numerator N,
 the final polynomial P, and both positive expansions in z=5x-12.
-Thus the entire zero-scale face is strictly negative. The three
-positive-scale faces remain explicit, unproved sign obligations.
+Thus the entire zero-scale face is strictly negative. The subsequent
+positive-scale signs and their exhaustive assembly are now accepted
+in the [large-ratio hand theorem](MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md)
+and its linked reviews.
 
 ## 9. Global upper bounds for the exact short shape
 
@@ -271,3 +273,108 @@ already keeps the branch below it. This covers the whole ordered
 continuation and proves both upper bounds without a scale or root
 hypothesis. The resulting rational beta strip is a restriction on
 the original exact short shape.
+
+## 10. The positive-integral incoming lower bound
+
+A separate reviewer accepts the
+[incoming lower-bound theorem](MIXED_SMALLER_SHORT_INCOMING_NORM_LOWER_BOUND.md).
+Both orthogonality identities for P are exact. The displayed
+factorization of Q-theta^2 P proves the full positive remainder
+identity by direct integration. On 0<theta<1/2, theta^4, Q^{-2}
+and the remainder integral are positive and increasing; its
+derivative is therefore strictly positive. Applying 1+theta*d/dtheta
+has the correct inequality direction and gives exactly the rational
+J2 printed in the statement.
+
+The change of variables on [1,x] gives the stated positive prefactor.
+On the tail, s+x<=beta+x gives a lower bound for the reciprocal
+square, in the required direction. The first remainder is strict for
+x>1, including beta=x. The reviewer checked every identity and the
+differentation-under-the-integral justification, and accepts the
+lemma without a scale, second-secant or cost assumption.
+
+## 11. The uniform incoming floor
+
+The [uniform floor theorem](MIXED_SMALLER_SHORT_UNIFORM_INCOMING_FLOOR.md)
+is accepted for every 1<x<=9 and beta>=x. Its logarithm majorant
+follows from the positive atanh series and has a strict remainder
+for every positive series argument. Independent reconstruction of
+the original rational secant verifies identity (3) and all five
+displayed coefficient polynomials.
+
+The last three polynomials have the stated square lower bounds.
+The proof of F3 splits only at t=1, using a decreasing quadratic
+on the first interval and a positive derivative on the second.
+The expansion of 8F4+F3 at t=1 is exact; both signs follow from
+the displayed square and the elementary v^3<=v^2 comparison.
+Affinity in z then proves the paired first two terms positive on
+the full z interval. Thus the sign is a complete hand argument;
+no upper beta bound or second-secant equality was used.
+
+## 12. Increasing scale after tau reaches two
+
+The [tau-two scale theorem](MIXED_SMALLER_SHORT_ROOT_FLOOR_TAU_TWO_SCALE.md)
+is accepted on its full stated domain. The uniform incoming floor
+gives H<=76/35, and H>=2 implies S>8 and u>77/100. These are
+necessary restrictions on the unchanged incoming norm, established
+before the scalar comparison.
+
+The exact derivative is the quadratic (5) in the signed quantity
+delta*q. Completing its square is valid for both diagonal signs.
+Its coefficient in a^2 is nonpositive, so the two a endpoints give
+a uniform lower bound. At a=0, the H concavity and the q quadratic
+alternatives cover both H ranges, including q=0. The partial
+derivatives used at the large-H endpoint have the stated signs,
+and its rational value is exactly 18514271/92438500.
+
+At a=1, a nonpositive quadratic coefficient in q gives the endpoints
+by concavity. If it is positive, the threshold u0 gives a negative
+q derivative at 1/7. The affine numerator identity (18) and the
+negative threshold value (19) were independently reconstructed.
+Increasing u decreases that numerator, so the derivative stays
+negative on the whole interval. This covers the alternative sign
+without an unjustified convex-endpoint claim.
+
+The final q=1/7 expression is concave in u. Both printed quartic
+identities and their rational values at S=17/5 agree with a fresh
+reconstruction. Their derivatives after division by S^2 are positive
+for every S>=17/5, giving the full endpoint signs. Therefore G2'>0
+for 0<q<=1/7, with no T>=2 hypothesis. Crossing T=2 is a scalar
+upper comparison only. The separate direct 2d<1 estimate in
+Section 4 of the floor-weighted note justifies the subsequent
+incoming-norm substitution even after such a crossing.
+
+## 13. The central tau-two sign
+
+The [central tau-two theorem](MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN.md)
+is accepted. Its incoming ceiling follows from the existing cubic
+bound after the displayed tail-square inequality; the two elementary
+x ranges prove the entire polynomial Pt positive. The central alpha
+enlargement and the standalone tau-two incoming substitution have the
+stated directions, including when T<2.
+
+The rational beta partial fractions have the printed quadratic
+coefficient and both residues. The monotonicity of d1 in alpha,
+the bounds 4/9 and 2/5, and the two cases for A* prove strict beta
+convexity on the whole enlarged domain. There is no presumption
+that the enlarged shape itself satisfies the equal secants.
+
+A fresh reconstruction from the original rational G2 agrees with
+the complete numerator identity (11)--(12). Substituting the two
+beta endpoints independently gives degree at most 18 in X and
+at most seven in A; the lower beta endpoint has degree six in A,
+so its seventh coefficients are zero. The full constant-row
+factorization (15), all four quadratic lower bounds, all twelve
+middle-row negative norms, all three tail linear identities, and
+all three tail-norm bounds agree exactly for both endpoints.
+Each norm includes every coefficient in its specified group.
+
+The four quadratic minima are strictly positive. The middle-row
+norms are less than one, and the tail norms are less than their
+positive linear terms. These signs prove the entire two-variable
+polynomials positive on X>=0 and 0<=A<=1, including their
+boundaries. The original common denominator is positive, so the
+conclusion is precisely G2<0. The finite identities and rational
+bounds printed in the theorem supply the hand proof; their
+independent symbolic reconstruction was a transcription audit,
+not an executable premise.

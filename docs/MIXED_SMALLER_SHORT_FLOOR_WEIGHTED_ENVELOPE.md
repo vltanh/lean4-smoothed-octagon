@@ -202,6 +202,15 @@ may be substituted into G_*, with the geometry and root parameter
 fixed. This statement is a scalar comparison, not a transport of any
 incident ceiling after the substitution.
 
+The same positivity holds at tau=2 for every 0<q<=1/7, even if
+the later scalar scale motion passes T=2. For D>=0 the bounds just
+proved give 2d<=4/7<1 when x>=5/2, and 2d<=102/175<1 on
+12/5<=x<=5/2. Thus the proof of (11) at tau=2 uses these direct
+bounds instead of tau<=T. The D<0 argument is unchanged. This
+justifies the incoming-norm substitution at the endpoints reached by
+the [tau-two scale theorem](MIXED_SMALLER_SHORT_ROOT_FLOOR_TAU_TWO_SCALE.md)
+without assigning them a physical outer arc.
+
 ## 5. The zero-scale endpoint is strictly negative
 
 Keep the actual shape and its fixed incoming norm u. At fixed

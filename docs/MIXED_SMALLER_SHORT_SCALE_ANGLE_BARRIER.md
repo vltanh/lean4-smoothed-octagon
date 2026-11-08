@@ -3,8 +3,10 @@
 Date: 2026-11-08 UTC. Hand lemma, accepted in the
 [independent short-lemma review](MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md),
 Section 6.
-This is a conditional shape lemma. It does not establish the actual
-bound x<=12/5 or close the smaller-short exclusion.
+This is a shape lemma. Its actual x<=12/5 hypothesis is now supplied
+by the [large-ratio theorem](MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md).
+The lower-shear condition in Sections 4--5 remains an additional
+unproved actual restriction; the smaller-short exclusion is still open.
 
 Use the notation of the
 [shear and cost reduction](MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md).
@@ -366,9 +368,10 @@ Using J<=3/2 and 21/8<=c<=3 in (21) now gives the strict bound
 
 The strict last sign follows from R>0 and (17). This proves the
 conditional monotonicity claim. To apply it to an actual short bridge,
-one must still prove the actual bound x<=12/5 and (20), or supply a
-different argument locating the initial point after the lower critical
-angle. Neither obligation is discharged by this note.
+one must still prove (20), or the weaker condition in Section 5,
+or supply a different argument locating the initial point after the
+lower critical angle. The required x<=12/5 bound is now proved by
+the separate large-ratio theorem.
 
 ## 5. The sufficient shear threshold can be reduced to 5A/2
 

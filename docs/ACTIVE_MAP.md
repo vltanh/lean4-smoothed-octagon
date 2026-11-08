@@ -25,20 +25,21 @@ reverse-successor hand theorem, it closes all of H-N. The only remaining
 mixed exclusion is H-S; final hand-only assembly remains conditional
 on that short-case proof.
 
-For the current H-S route, read the
-[global short upper order](MIXED_SMALLER_SHORT_GLOBAL_UPPER_ORDER.md),
-[floor-weighted envelope](MIXED_SMALLER_SHORT_FLOOR_WEIGHTED_ENVELOPE.md),
-[combined scale endpoints](MIXED_SMALLER_SHORT_ROOT_FLOOR_SCALE.md),
-and [conditional angle barrier](MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md).
-Their [independent review](MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md)
-accepts the proved reductions. The positive-scale domain signs and
-the final cost exclusion remain open.
+For the current H-S route, start with the
+[large-ratio hand exclusion](MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md)
+and its [interface review](MIXED_SMALLER_SHORT_LARGE_RATIO_INTERFACE_AUDIT.md).
+They prove x<12/5 and D,E_L>0 on the entire actual short domain.
+The central tau-two sign, central duration signs and outer-scale signs
+are all accepted; their separate algebraic reviews are linked from
+the theorem. Thus the negative-diagonal and nonpositive-pairing
+alternatives are closed.
 
-For the short outer-floor sign, use the
-[uniform positive-pairing theorem](MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
-and [independent review](MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md).
-It covers every D>=0 point of the retained exact short geometry;
-the nonpositive-pairing remainder must have x>12/5 and D<0.
+Next read the [angle barrier](MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md)
+and [conditional small-shape Casimir floor](MIXED_SMALLER_SHORT_SMALL_SHAPE_CASIMIR_FLOOR.md).
+The former still requires a lower-shear implication for decreasing
+score; the latter assumes additional shape bounds not yet derived
+for every actual bridge. The final physical-cost exclusion remains
+open.
 
 The accepted next hand results are the [nonshort duration gap](MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md),
 [forward reductions](HAND_FORWARD_LEMMAS.md), and
