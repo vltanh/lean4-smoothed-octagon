@@ -2,6 +2,21 @@
 
 Date: 2026-11-08 UTC.
 
+**Next-work authority:** [HAND_ONLY_COMPLETION_PLAN](HAND_ONLY_COMPLETION_PLAN.md)
+defines the detailed finite S0–S7 and A1 subgates. S0 (x<12/5,
+D,E_L>0) is closed; S1–S7 and A1 remain unchecked. No post-head
+suggestions of x>2, x<13/6, a root-to-shear implication or a conditional
+physical-cost contradiction are accepted *pushed* hand theorems.
+
+**Immediate mathematical gap:** the accepted conditional Casimir
+floor requires 2<=x<=15/7 and delta=beta/x-1<=1/19, so x<13/6 alone
+would not cover [15/7,13/6). This strip needs a separate exclusion,
+a stronger actual ratio bound, or a proved extension of the applicable
+Casimir and cost inequalities. Also Gamma_actual>183/1000 alone does
+not contradict the competitive cap Gamma_actual<9193/50000; the
+physical completion-cost comparison is essential.
+
+
 ## Goal and baseline
 
 The current user request is to find a hand proof of the sharp
