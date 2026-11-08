@@ -2,9 +2,9 @@
 
 Date: 2026-11-08 UTC. **Authoritative accepted state.**
 
-All short-case scalar mathematics S0--S6 is now proved and separately
-reviewed. The remaining work is final acceptance of the complete
-actual-period H-S assembly and its global H-A consequence. See the
+H-F, both H-N successors and the complete H-S theorem are now proved
+and separately reviewed. The remaining work is final acceptance of
+the global H-A consequence. See the
 [finite gate record](HAND_ONLY_COMPLETION_PLAN.md).
 
 ## Whole-period gates
@@ -13,8 +13,8 @@ actual-period H-S assembly and its global H-A consequence. See the
 |---|---|
 | H-F | Closed by the [all-forward hand theorem](HAND_FORWARD_PERIOD_EXCLUSION.md) and [norm audit](HAND_FORWARD_NORM_AUDIT.md). Both historical forward covers have been replaced. |
 | H-N | Closed for both actual successors by the [forward theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md) and [review](MIXED_NONSHORT_FORWARD_HAND_AUDIT.md), and the [reverse theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md) and [review](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md). |
-| H-S | All mathematical inputs S0--S6 accepted. Final actual-period assembly and independent scope acceptance are being completed. |
-| H-A | The global dependency chain has a [conditional hand review](HAND_GLOBAL_DEPENDENCY_AUDIT.md). Final sign-off follows acceptance of H-S. |
+| H-S | Closed by the [hand period theorem](MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md), [period audit](MIXED_SMALLER_SHORT_HAND_PERIOD_AUDIT.md) and [separate scope audit](MIXED_SMALLER_SHORT_HAND_PERIOD_SCOPE_AUDIT.md). Every scalar input and actual-period boundary is covered. |
+| H-A | All exclusion inputs are now accepted. Final global dependency and equality sign-off is being completed. |
 
 These are uniform whole-period results. No growing word-length
 catalogue, local six-window replacement or percentage completion

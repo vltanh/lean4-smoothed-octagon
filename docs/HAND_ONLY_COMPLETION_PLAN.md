@@ -4,7 +4,7 @@ Date: 2026-11-08 UTC. **Authoritative accepted state.** Read with
 [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md) and
 [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md).
 
-**All scalar mathematics S0--S6 is now proved and independently
+**All short-case gates S0--S7 and H-S are now proved and independently
 reviewed.** The lower-ratio theorem and the extended original-Casimir
 floor supply the two inputs that were missing from the final short
 argument. The actual smaller-short domain satisfies
@@ -15,8 +15,9 @@ argument. The actual smaller-short domain satisfies
 \]
 The actual root supplies the necessary negative physical shear, and
 the accepted completion-cost theorem gives the strict original-period
-contradiction on this entire domain. Final acceptance of the complete
-H-S assembly and the global H-A chain is the only remaining work.
+contradiction on this entire domain. The complete H-S theorem has two
+separate actual-period reviews. Final acceptance of the global H-A
+chain is the only remaining work.
 
 ## 1. Actual object and preserved scope
 
@@ -80,10 +81,12 @@ is used through its proved physical and cotangent symmetry.
   S1--S5 now supply every caller hypothesis. Lowering the original
   kappa and continuing the explicit scalar score have independently
   proved comparison directions; no physical cap is transported.
-- [ ] **S7 -- Final H-S actual-period acceptance.**
-  Sign off the complete smaller-short theorem and separate
-  scalar/dependency and actual-period interface reviews, including
-  ties, delta=0, the seam and the one whole-period completion budget.
+- [x] **S7 -- Complete H-S actual-period exclusion.**
+  [Hand period theorem](MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md),
+  [period audit](MIXED_SMALLER_SHORT_HAND_PERIOD_AUDIT.md) and
+  [separate scope audit](MIXED_SMALLER_SHORT_HAND_PERIOD_SCOPE_AUDIT.md)
+  accept the original common covector, ties, delta=0, genuine seam
+  and the one whole-period completion budget.
 - [ ] **A1 -- Final H-A acceptance.**
   Sign off the global hand assembly: finiteness before normality,
   all uniform period classes, direct \(N\le5\) terminal count,

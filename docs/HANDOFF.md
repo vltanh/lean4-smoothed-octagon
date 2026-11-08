@@ -10,10 +10,11 @@ in older notes describe earlier stages.
 
 ## Accepted mathematical state
 
-H-F and both H-N successors are complete by hand. Every mathematical
-input S0--S6 for H-S is now also proved and independently reviewed.
-The remaining work is final acceptance of the assembled H-S theorem
-and its global H-A consequence.
+H-F, both H-N successors and H-S are complete by hand. The
+[short-period theorem](MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md)
+has an accepted [period audit](MIXED_SMALLER_SHORT_HAND_PERIOD_AUDIT.md)
+and [separate scope audit](MIXED_SMALLER_SHORT_HAND_PERIOD_SCOPE_AUDIT.md).
+The remaining work is final global H-A acceptance.
 
 The [lower-ratio theorem](MIXED_SMALLER_SHORT_LOWER_RATIO_HAND_EXCLUSION.md)
 now proves x>2 using the original covector's corrected Casimir
@@ -39,10 +40,10 @@ cost contradiction, including zero displacement.
 
 ## Concrete remaining work
 
-Complete S7 and A1 acceptance. Review the complete short theorem
-against the original common covector, first switches, unequal
-positive factors, equal-turn symmetry, twisted endpoints and single
-whole-period completion budget. Then sign off the global chain:
+Complete A1 acceptance. The short theorem's original common covector,
+first switches, unequal positive factors, equal-turn symmetry,
+twisted endpoints and single whole-period completion budget have
+passed two separate reviews. Sign off the global chain:
 finite representation before normality; uniform all-forward,
 all-reverse and both mixed alternatives; direct terminal count;
 arbitrary measurable competitors; affine equality of the original
