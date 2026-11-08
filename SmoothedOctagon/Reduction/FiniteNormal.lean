@@ -19,8 +19,8 @@ period with fewer than `10^56` pieces whose state stays in the compact domain `�
 The proof is the chain of the proof notes (inventory A2, §2.9), each link a module of
 `SmoothedOctagon/Reduction/`:
 
-1. the compact domain (`COMPACT_DOMAIN_SOURCE_AUDIT`, from Hales–Vajjha, Theorem 5.0.2, here the
-   hypothesis `Cited.HalesVajjha.Theorem5_0_2`): the state of a global minimizer stays in `𝔥**`
+1. the compact domain (`COMPACT_DOMAIN_SOURCE_AUDIT`, from Hales–Vajjha, Theorem 5.0.2, proved in
+   `SmoothedPolygons` as `theorem5_0_2`): the state of a global minimizer stays in `𝔥**`
    (`Reduction.inCompactDomain_of_isReinhardtMinimizer`, `CompactDomain.lean`);
 2. the Pontryagin lift of a global minimizer (`exists_isPontryaginExtremal_of_isReinhardtMinimizer`
    in `SmoothedPolygons`, through the maximum principle of `OptimalControl`);
@@ -50,14 +50,14 @@ open SmoothedPolygons Set
 `VERTEX_WORD_REDUCTION` and `GLOBAL_NORMALITY`). A global minimizer `(T, u, g, X)`, rebased at a time
 `s ∈ [0, T)`, is a normal vertex period `P` with the same terminal time and cost, still a global
 minimizer, with state in `𝔥**` and finitely many pieces. -/
-theorem finiteNormalRepresentation (h502 : Cited.HalesVajjha.Theorem5_0_2)
-    {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2} (hmin : IsReinhardtMinimizer T u g X) :
+theorem finiteNormalRepresentation {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2}
+    (hmin : IsReinhardtMinimizer T u g X) :
     ∃ (P : NormalPeriod) (s : ℝ), P.T = T ∧ 0 ≤ s ∧ s < T ∧
       (∀ t ∈ Icc 0 T, P.g t = rebaseFrame T g s t ∧ P.X t = twistedState T X (s + t)) ∧
       P.cost = reinhardtCost T X ∧ IsReinhardtMinimizer P.T P.u P.g P.X ∧
       P.InCompactDomain := by
   -- 1. the compact domain and the cost budget
-  have hK := Reduction.inCompactDomain_of_isReinhardtMinimizer h502 hmin
+  have hK := Reduction.inCompactDomain_of_isReinhardtMinimizer hmin
   have hcost := Reduction.cost_le_octagonCost hmin
   -- 2. a Pontryagin lift, normal or abnormal
   obtain ⟨Λ₁, ΛR, lam, hext⟩ := exists_isPontryaginExtremal_of_isReinhardtMinimizer hmin
@@ -74,6 +74,6 @@ theorem finiteNormalRepresentation (h502 : Cited.HalesVajjha.Theorem5_0_2)
     (Reduction.lam_lt_zero_of_vertexRepresentation hmin' hext' ρ)
   exact ⟨⟨T, Reduction.rebaseControl T u s, rebaseFrame T g s, Reduction.rebaseState T X s,
     Λ₁'', ΛR'', hext'', ρ⟩, s, rfl, hs0, hsT, fun _ _ ↦ ⟨rfl, rfl⟩, hcost', hmin',
-    Reduction.inCompactDomain_of_isReinhardtMinimizer h502 hmin'⟩
+    Reduction.inCompactDomain_of_isReinhardtMinimizer hmin'⟩
 
 end SmoothedOctagon

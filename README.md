@@ -84,19 +84,19 @@ remains.
 
 The main theorem is proved in Lean from the stages below
 ([`LowerBound.lean`](SmoothedOctagon/LowerBound.lean), [`Main.lean`](SmoothedOctagon/Main.lean)),
-under two named hypotheses:
+under one named hypothesis, `Certificates.IntervalCovers`: three interval-arithmetic covers used by
+case M2 (the smaller-short cover and the two forward-endpoint covers), stated exactly as the C++
+programs certify them, until their hand replacements are done. Case F and the other parts of M2
+already follow hand arguments.
 
-- `Cited.HalesVajjha.Theorem5_0_2`: Hales and Vajjha's compactness theorem (Theorem 5.0.2 of
-  their book), until its formalization in lean4-smoothed-polygon is complete;
-- `Certificates.IntervalCovers`: three interval-arithmetic covers used by case M2 (the
-  smaller-short cover and the two forward-endpoint covers), stated exactly as the C++ programs
-  certify them, until their hand replacements are done. Case F and the other parts of M2 already
-  follow hand arguments.
+Hales and Vajjha's compactness theorem (Theorem 5.0.2 of their book) is no longer a hypothesis: it
+is proved in lean4-smoothed-polygon (`SmoothedPolygons.theorem5_0_2`) and applied to a global
+minimizer in [`Reduction/CompactDomain.lean`](SmoothedOctagon/Reduction/CompactDomain.lean).
 
 | Stage | Lean | State |
 | --- | --- | --- |
 | Foundations: realization and reverse comparison | [`Foundations/`](SmoothedOctagon/Foundations) | proved |
-| Compact domain, PMP lift, clearance, edge bound, finitely many switches, rebasing, normality | [`Reduction/`](SmoothedOctagon/Reduction) | proved, given Theorem 5.0.2 |
+| Compact domain, PMP lift, clearance, edge bound, finitely many switches, rebasing, normality | [`Reduction/`](SmoothedOctagon/Reduction) | proved |
 | Sign partition | [`Period/Partition.lean`](SmoothedOctagon/Period/Partition.lean) | proved |
 | Cases R and M3 | [`Exclusion/`](SmoothedOctagon/Exclusion) | proved |
 | Case M1 | [`Exclusion/ShortRuns.lean`](SmoothedOctagon/Exclusion/ShortRuns.lean) | proved |
@@ -142,7 +142,7 @@ SmoothedOctagon/
   Certificates/                the remaining interval covers (hypotheses, to be replaced)
   Bridge/                      translation, affine maps and the octagon in the Challenge's terms
   LowerBound.lean, Main.lean   the assembly
-Cited/HalesVajjha/             Theorem 5.0.2 of Hales–Vajjha (hypothesis)
+Cited/HalesVajjha/             Definition 5.0.1 of Hales–Vajjha (the compact domain)
 docs/                          the informal proof notes (ChatGPT Pro), prior work, figures
 scripts/figures/               the numeric model of the octagon and the figure generator
 ```

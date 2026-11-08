@@ -52,6 +52,7 @@ The proof is organized by stage:
 * `Certificates/`: the interval covers used by cases F and M2, named hypotheses until their hand
   replacements are complete.
 
-`Cited/` holds the one result from the literature that is not yet formalized, Hales–Vajjha's
-Theorem 5.0.2, as a named hypothesis.
+`Cited/` holds Hales–Vajjha's Definition 5.0.1 of the compact domain `𝔥**`. Their Theorem 5.0.2
+is proved in `lean4-smoothed-polygon` (`SmoothedPolygons.theorem5_0_2`) and bridged in
+`Reduction/CompactDomain.lean`.
 -/
