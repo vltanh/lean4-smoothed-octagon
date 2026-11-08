@@ -16,7 +16,7 @@ generated coefficient tables remain an open hand-proof dependency.
 
 | Priority | Requested sign | Replacement status |
 |---|---|---|
-| N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | Open; first priority. For a simpler eligible residual, [shape monotonicity](NONSHORT_LOW_T_SHAPE.md), the [unit face `h=1/4`](NONSHORT_LOW_T_UNIT_FACE.md), and the [outer-gap face `j=5h/7`](NONSHORT_LOW_T_OUTER_FACE.md) are proved. The reduction in `h` and the maximum-duration face remain open. |
+| N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | Open; first priority. For a simpler eligible residual, [shape monotonicity](NONSHORT_LOW_T_SHAPE.md), the [unit face `h=1/4`](NONSHORT_LOW_T_UNIT_FACE.md), and the [outer-gap face `j=5h/7`](NONSHORT_LOW_T_OUTER_FACE.md) are proved. The [higher-derivative bounds](NONSHORT_LOW_T_CURVATURE.md) and [initial derivative](NONSHORT_LOW_T_INITIAL_DERIVATIVE.md) support the remaining reduction in `h`; that reduction and the maximum-duration face remain open. |
 | N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | **Complete hand replacement.** The [fourth-derivative proof](NONSHORT_LOW_RATIO_LINK.md) closes the original sign using the base quadratic, monotonicity, and factored remainder. The largest expanded identity has 41 monomials and degree eight. Lean integration remains open. |
 | N3 | `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`, `k=1+j` | Open. The new [low-t shape derivative](NONSHORT_LOW_T_SHAPE.md) would remove this endpoint dependency once its different unit-shape residual is proved positive throughout N1's domain. |
 | N4a | `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13), `k=29t²/4` | Open. |
@@ -96,6 +96,25 @@ in `q` is greater than 500 throughout that face. An independent review
 checked the original affine source, all sixteen coefficient polynomials,
 the seven derivative identities, the fourteen boundary values, and the
 remaining sign comparisons.
+
+The [higher-derivative note](NONSHORT_LOW_T_CURVATURE.md) proves
+`H^3 S>0`, positive lower-face second derivatives, and `H^4 S>500000`
+on explicit rectangles containing the required comparison segments.
+It differentiates the three source products before expanding any
+coefficient, and then reduces their signs one variable at a time.
+Its largest printed cleared coefficient is 73,815,815,160; the derivative
+and sign identities have degree at most seven. An independent review
+reconstructed the source and checked all 77 printed polynomials.
+
+The [initial derivative proof](NONSHORT_LOW_T_INITIAL_DERIVATIVE.md)
+gives `H S>=68` at `h=1/4` on an enlarged domain containing both the
+actual initial face and the outer comparison's base. It first decreases
+in `y`, then uses a separate negative directional second derivative
+to reduce the resulting line to two scalar endpoints. Every expanded
+identity has at most nine monomials and degree eight; the largest
+cleared coefficient is 492,759,115,600. These derivative lemmas are not
+counted as a complete reduction in `h` until the remaining transport
+argument is proved.
 
 The [N2 base quadratic](NONSHORT_LOW_RATIO.md) is greater than 4 on its
 full domain; its three square identities each have 21 monomials and total
