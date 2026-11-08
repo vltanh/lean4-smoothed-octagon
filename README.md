@@ -101,7 +101,7 @@ under two named hypotheses:
 | Cases R and M3 | [`Exclusion/`](SmoothedOctagon/Exclusion) | proved |
 | Case M1 | [`Exclusion/ShortRuns.lean`](SmoothedOctagon/Exclusion/ShortRuns.lean) | proved |
 | Case F | [`Exclusion/Forward.lean`](SmoothedOctagon/Exclusion/Forward.lean) | proved, without interval covers |
-| Case M2 | [`Exclusion/Nonshort.lean`](SmoothedOctagon/Exclusion/Nonshort.lean) | proved from three interval covers, except two lemmas in progress |
+| Case M2 | [`Exclusion/Nonshort.lean`](SmoothedOctagon/Exclusion/Nonshort.lean) | proved, from three interval covers |
 | Terminal comparison | [`Terminal/`](SmoothedOctagon/Terminal) | proved |
 | Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) | proved |
 | The Challenge's statements | [`Main.lean`](SmoothedOctagon/Main.lean) | proved from the above |
