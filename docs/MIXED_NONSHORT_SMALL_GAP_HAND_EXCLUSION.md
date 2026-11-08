@@ -159,14 +159,13 @@ floor, event factor and common covector. The physical cost cap is used
 only for \(\Gamma_{\rm actual}\). No closure, cost cap or extra switch
 is assigned to an artificial trajectory.
 
-It remains to exclude actual windows with
-\[
-t<1/3\quad\hbox{or}\quad j>1/30.
-\]
-Proving \(t\ge1/3\) and \(j\le1/30\) for every remaining actual
-forward window would suffice. Neither statement follows merely from
-the scalar domain used here. Until those domain obligations are closed,
-H-N-forward stays open.
+The independently reviewed
+[low-ratio theorem](MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md) now
+proves t>1/3 for every actual remaining forward window. Thus the exact
+remaining domain obligation for this route is j>1/30: a proof that
+actual data have j<=1/30 would complete H-N-forward. This restriction
+does not follow merely from the scalar domain used here. Until that
+obligation is closed, H-N-forward stays open.
 
 ## 5. Independent interface review
 
@@ -177,4 +176,5 @@ monotonicity cover the whole comparison interval and prove positivity
 before squaring. It also checked the strict inequalities in (8)--(11),
 the unchanged incoming floor, and that the competitive cap is used
 only at the actual norm. The review accepts this restricted exclusion
-and leaves the two stated domain obligations open.
+and originally left the two domain obligations open. The later
+low-ratio theorem closes the t obligation; the j obligation remains.

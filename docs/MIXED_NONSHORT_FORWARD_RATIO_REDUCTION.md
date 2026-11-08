@@ -2,8 +2,10 @@
 
 Date: 2026-11-07 UTC. Hand reduction, accepted in the
 [endpoint audit](HAND_ENDPOINT_REDUCTIONS_AUDIT.md), Section 17.
-The final unit-shape sign in Section 6 is not proved here.
-In particular this note does not yet claim \(t>1/3\).
+The final unit-shape sign in Section 6 is now proved by the
+[low-ratio hand exclusion](MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md),
+with its [independent audit](MIXED_NONSHORT_LOW_RATIO_HAND_AUDIT.md).
+Together these notes establish \(t>1/3\) for the actual forward case.
 
 This gives a scalar reduction for the forward-next eligibility condition
 \(\mathcal T_*\ge3/4\). It preserves the incoming floor at its original
@@ -381,5 +383,8 @@ Equivalently set \(j=ha\), with \(a,z\in[0,1]\).
 
 A sufficient remaining hand theorem is positivity of the single
 rational function G from (11) on (21).
-That sign is not proved in this note.
-No numerical observation is needed for any reduction above.
+The [low-ratio hand theorem](MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md)
+now proves a stronger sign on an enlarged q interval, using the sharper
+positive-integral secant bound. Its [audit](MIXED_NONSHORT_LOW_RATIO_HAND_AUDIT.md)
+accepts the complete hand implication t>1/3. No numerical observation
+is needed for these reductions or that final sign.

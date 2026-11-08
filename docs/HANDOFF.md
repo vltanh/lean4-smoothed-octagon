@@ -154,7 +154,10 @@ The [forward ratio reduction](MIXED_NONSHORT_FORWARD_RATIO_REDUCTION.md)
 now proves the common strict t>1/4 and reduces the proposed t>1/3
 forward exclusion to one explicit rational sign at k=1.
 Both have [independent acceptance](HAND_ENDPOINT_REDUCTIONS_AUDIT.md).
-That final rational sign, and consequently t>1/3, remain unproved.
+That final rational sign is now closed by the
+[low-ratio hand theorem](MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md)
+and its [independent audit](MIXED_NONSHORT_LOW_RATIO_HAND_AUDIT.md),
+so every remaining actual forward window has t>1/3.
 
 
 The [short corrected-cap scale theorem](MIXED_SMALLER_SHORT_CORRECTED_CAP_SCALE.md)
@@ -335,3 +338,13 @@ check the domains, signs and endpoints. A separate
 is also proved by hand. Establishing the actual t and j restrictions,
 or excluding their complementary domain, remains necessary; H-N-forward
 is not yet closed.
+
+
+The [complete low-ratio hand exclusion](MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md)
+now proves t>1/3 in the nonshort forward case, with a dedicated
+[independent audit](MIXED_NONSHORT_LOW_RATIO_HAND_AUDIT.md). Its proof
+reduces to a positive quadratic in j, an explicit positive discriminant,
+and a bounded higher-order remainder. Combined with the small-gap
+Casimir theorem, the only remaining domain obligation for this route
+is to exclude actual j>1/30 (a proof of j<=1/30 would suffice).
+The complete H-S exclusion remains open separately.
