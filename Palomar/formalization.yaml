@@ -18,8 +18,9 @@ project:
     hyperbolas, each asymptotic to the next two side lines, with greatest packing density
     delta_oct = (8 - 4 sqrt 2 - log 2)/(2 sqrt 2 - 1) = 0.902414..., and Reinhardt conjectured
     that no centrally symmetric convex disk packs worse. The conjecture has been open since 1934;
-    Thomas Hales recast it as an optimal control problem on SL2(R) (2011, 2017), and Hales and
-    Koundinya Vajjha studied that problem in Packings of Smoothed Polygons (2024).
+    Thomas Hales cast it as a problem of Bolza in the calculus of variations (2011) and then as an
+    optimal control problem on SL2(R) (2017), and Hales and Koundinya Vajjha studied that problem
+    in Packings of Smoothed Polygons (2024).
 
 
     This entry proves the conjecture with its equality case. Every centrally symmetric convex disk
@@ -122,9 +123,9 @@ sources:
     location: "Acta Scientiarum Mathematicarum (Szeged) 12 A (1950), 62-67"
     relationship: background
     note: >-
-      Densest packings of a centrally symmetric convex disk by congruent copies are lattice
-      packings, so Reinhardt's lattice problem is the problem for all packings. Proved in
-      lean4-smoothed-polygon.
+      No packing of a centrally symmetric convex disk by congruent copies is denser than its
+      densest lattice packing, so Reinhardt's lattice problem is the problem for all packings.
+      Proved in lean4-smoothed-polygon.
     author_endorsement: n/a
 
 related_formalizations:
@@ -149,10 +150,12 @@ status:
     density at least (8 - 4 sqrt 2 - log 2)/(2 sqrt 2 - 1)); its equality case (equality if and
     only if the disk is the image of the smoothed octagon under an invertible affine map); and that
     the smoothed octagon, as Reinhardt described it, is a centrally symmetric convex disk of that
-    greatest packing density. The library also proves the control form: every admissible trajectory
-    of Hales's problem, with any measurable control, costs at least sqrt 12 times that density, and
-    the octagon's trajectory attains it. The formalization is unconditional; its foundations are
-    proved in the pinned libraries lean4-smoothed-polygon and lean4-optimal-control.
+    greatest packing density. These three statements are the ones Comparator checks. The library
+    also proves, outside the Challenge, the control form: every admissible trajectory of Hales's
+    problem, with any measurable control, costs at least sqrt 12 times that density, and the
+    octagon's trajectory attains it (SmoothedOctagon.reinhardt_cost, SmoothedOctagon.octagon_area).
+    The formalization is unconditional; its foundations are proved in the pinned libraries
+    lean4-smoothed-polygon and lean4-optimal-control.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: []
@@ -201,8 +204,9 @@ automation:
 fidelity:
   divergences: >-
     (1) The plane is Fin 2 -> R with Lebesgue measure. A convex disk is a compact convex set with
-    nonempty interior; a disk is centrally symmetric if some point c has 2c - x in K for every x in
-    K. These are Hales and Vajjha's conventions, copied from lean4-smoothed-polygon.
+    nonempty interior, as in Hales and Vajjha. A disk is centrally symmetric if some point c has
+    2c - x in K for every x in K; Hales and Vajjha fix the centre at the origin, so this is the
+    same notion up to translation, which changes no packing density.
     (2) The greatest packing density is Hales and Vajjha's Definition 2.1.1: the supremum of the
     densities of the packings of the plane by congruent copies of K (images under an orthogonal
     map followed by a translation, so reflections are allowed), over the packings whose density,
@@ -216,14 +220,27 @@ fidelity:
     packing density delta_oct; the library proves that it is a linear image of the octagon that
     Hales defines by its trajectory.
     (4) The constant is written (8 - 4 sqrt 2 - log 2)/(2 sqrt 2 - 1), equal to the usual
-    (8 - sqrt 32 - ln 2)/(sqrt 8 - 1).
+    (8 - sqrt 32 - ln 2)/(sqrt 8 - 1). In the Challenge's normalisation (inradius 1) the smoothed
+    octagon has area 16 - 8 sqrt 2 - 2 log 2; Hales's octagon, defined by its trajectory, is a
+    linear image of it with area sqrt 12 times the density, and density does not depend on the
+    normalisation.
+    (5) Junk values of Lean's conventions are never reached: the set whose supremum defines the
+    greatest packing density contains 0 (the empty packing) and is bounded by 1, since the covered
+    fraction of every disk is at most 1; so the upper density is finite and the real number it is
+    converted to is its value.
 
 review:
   status: "agent-reviewed"
   reviewers:
     - "Challenge: a Claude Opus 5.5 sub-agent, separate from the writing agents, compared every definition and theorem of the Challenge with Reinhardt's, Mahler's and Hales and Vajjha's statements"
   notes: >-
-    No person has reviewed the proofs, the statements or the definitions. Lean's kernel checks the
+    No person has reviewed the proofs, the statements or the definitions. The Challenge review
+    found the statements faithful: it compared the packing definitions with the text of Hales and
+    Vajjha's Definition 2.1.1, checked the edge cases of the definitions (the supremum, the
+    conversion to a real number, countability of packings, the modular indices of the octagon's
+    sides), and checked numerically that smoothedOctagon is convex, centrally symmetric and
+    invariant under rotation by pi/4, that each arc touches its two sides, and that its density is
+    0.90241418299715727... Its documentation corrections are made. Lean's kernel checks the
     formal proofs, and Comparator checks that the Solution proves the Challenge's statements with
     the standard axioms only, under Lean's kernel and an independent one. The informal notes and
     their own reviews are AI-written and are not evidence for the result.
