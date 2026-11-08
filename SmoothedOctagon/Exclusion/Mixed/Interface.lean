@@ -2,16 +2,19 @@ module
 
 public import SmoothedOctagon.Period.Costate
 public import SmoothedOctagon.Exclusion.Mixed.Scalar
+public import SmoothedOctagon.Exclusion.Mixed.Wire
 
 /-!
 # Case M2: the covector calculus, as an interface
 
-**To be replaced by `Period/Elliptic.lean`.** The facts of `MIXED_GLOBAL_COSTATE_ELLIPTIC` (CE) and
-`MIXED_GLOBAL_SMALL_FORWARD_MINIMUM` (SFM) §2 that case M2 uses, about the primary multiplier of a
-normal vertex period, collected in the structure `NormalPeriod.M2Calculus`; its existence
-`NormalPeriod.m2_calculus` is the one `sorry` of this module (being proved in `Period/Elliptic.lean`
-from the boundary identity `∂J/∂a_i = tr(U V_i)` (CE (8)), the cost–Casimir bound and the angle
-density bound). Everything else in case M2 is derived from it.
+The facts of `MIXED_GLOBAL_COSTATE_ELLIPTIC` (CE) and `MIXED_GLOBAL_SMALL_FORWARD_MINIMUM` (SFM) §2
+that case M2 uses, about the primary multiplier of a normal vertex period, collected in the
+structure `NormalPeriod.M2Calculus`. Its existence `NormalPeriod.m2_calculus` is proved from
+`Period/Elliptic.lean` (through `Exclusion/Forward/Wire` and `Exclusion/Mixed/Wire`) with
+`M i = CostateCycle.Mloc i`, `Γ = gam2 0`: the boundary identity `∂J/∂a_i = tr(U V_i)` (CE (8)),
+the turn secants, the switching inequalities, the missing-control inequality and the spectral
+cost–Casimir bound. The lower Casimir bound `cas_gt` is `NormalPeriod.ifc_cas_gt`, which is still
+`sorry` (it needs the whole-period angle winding). Everything else in case M2 is derived from it.
 
 ## Conventions (CE §§2-4, inventory E2 §1.4)
 
@@ -130,9 +133,74 @@ structure M2Calculus (P : NormalPeriod) where
   cas_gt : P.IsCompetitive → P.InCompactDomain → P.rep.IsMixed → 27 / 256 < Γ
 
 /-- **The covector calculus exists** (CE Theorem and §§2-4, SFM §2, the cost–Casimir bound,
-`MIXED_GLOBAL_REVERSE_ANGLE_DENSITY` §3). To be replaced by `Period/Elliptic.lean`. -/
+`MIXED_GLOBAL_REVERSE_ANGLE_DENSITY` §3), with `M = Mloc` and `Γ = gam2 0`. -/
 theorem m2_calculus (P : NormalPeriod) : Nonempty P.M2Calculus := by
-  sorry
+  set C := P.costateCycle with hC
+  have hA : ∀ i, C.m2A i = C.Amat i := fun i ↦ rfl
+  have hnorm : ∀ i, C.m2Norm C.Mloc i = 8 * C.swd i := fun i ↦ by
+    unfold CostateCycle.m2Norm
+    split_ifs with h
+    · exact C.ifc_norm_fwd h
+    · rcases C.lab_cases i with h' | h'
+      · exact absurd h' h
+      · exact C.ifc_norm_rev h'
+  have hsgn : ∀ i, (C.m2Fwd (i - 1) ↔ C.m2Fwd i) → C.sgn (i - 1) = C.sgn i := by
+    intro i h
+    simp only [CostateCycle.sgn]
+    by_cases h1 : C.m2Fwd i
+    · have h0 := h.2 h1
+      simp only [CostateCycle.m2Fwd] at h0 h1
+      simp only [h0, h1, ↓reduceIte]
+    · have h0 : ¬ C.m2Fwd (i - 1) := fun h' ↦ h1 (h.1 h')
+      simp only [CostateCycle.m2Fwd] at h0 h1
+      simp only [h0, h1, ↓reduceIte]
+  have hturn : ∀ i, ¬ (C.m2Fwd (i - 1) ↔ C.m2Fwd i) → C.sgn (i - 1) = -C.sgn i := by
+    intro i h
+    simp only [CostateCycle.sgn]
+    by_cases h1 : C.m2Fwd i
+    · have h0 : ¬ C.m2Fwd (i - 1) := fun h' ↦ h ⟨fun _ ↦ h1, fun _ ↦ h'⟩
+      simp only [CostateCycle.m2Fwd] at h0 h1
+      simp only [h0, h1, ↓reduceIte]
+    · have h0 : C.m2Fwd (i - 1) := by
+        by_contra h'; exact h ⟨fun h'' ↦ absurd h'' h', fun h'' ↦ absurd h'' h1⟩
+      simp only [CostateCycle.m2Fwd] at h0 h1
+      simp only [h0, h1, ↓reduceIte]; norm_num
+  have hin : ∀ i, C.m2Fwd (i - 1) → C.lab i = C.lab (i - 1) + 1 := fun i h ↦ by
+    have := h; simp only [CostateCycle.m2Fwd, sub_add_cancel] at this; exact this
+  refine ⟨⟨C.Mloc, C.gam2 0, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩⟩
+  · intro i
+    simp [CostateCycle.Mloc, triY, Matrix.trace_fin_two]
+    ring
+  · intro i
+    rw [C.det_Mloc, C.gam2_eq]
+  · intro i
+    rw [hA, Matrix.inv_eq_left_inv (C.Ainv_Amat i), C.Mloc_succ]
+  · intro i h
+    rw [hnorm, hnorm, ifc_m2Stat_eq]
+    exact C.ifc_stat_M (hsgn i h)
+  · intro i h
+    rw [hnorm, hnorm]
+    exact C.ifc_turn_sec (hturn i h)
+  · intro i h
+    rw [hnorm, ifc_m2g_eq]
+    have := C.swd_fwd (k := i) h
+    linarith
+  · intro i h
+    rw [hnorm, ifc_m2g_eq]
+    rcases C.lab_cases i with h' | h'
+    · exact absurd h' h
+    · have := C.swd_rev h'
+      linarith
+  · intro i h1 h2
+    rw [hnorm, ifc_m2F_eq (C.one_lt_q i)]
+    exact C.ifc_floor_in (hin i h1) h2
+  · intro i h1 h2
+    rw [hnorm, ifc_m2F_eq (C.one_lt_q i)]
+    exact C.ifc_floor_out (hin i h1) h2
+  · intro i h
+    exact C.ifc_mc (hin i h)
+  · exact fun hc ↦ P.ifc_cas_lt hc
+  · exact fun hc hD hmix ↦ P.ifc_cas_gt hc hD hmix
 
 end NormalPeriod
 
