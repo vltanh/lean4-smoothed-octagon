@@ -10,7 +10,7 @@ caller, and expanded-identity sizes have been checked. A numerical probe
 or a large alternative coefficient expansion does not close a row.
 The previous archived hand-proof acceptance does not establish that the
 requested signs meet this stricter standard. Completed rows below have
-their own source, caller and size reviews; the two S2 rows remain open.
+their own source, caller and size reviews; only the central S2.1 row remains open.
 
 ## Already formalized signs, in requested priority order
 
@@ -39,7 +39,7 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 | S1.3 | `MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_SIGN` (7) | **Complete hand replacement on the unchanged domain.** The [two-shape proof](SHORT_SCALE_OUTER_LARGE_RATIO.md) retains all three original tests. A four-term cubic comparison handles the large shapes; beta convexity and two derivatives handle the boundary strip. The largest expanded identities have 44 monomials and degree eight. Both original duration and scale callers are preserved. |
 | S1.4 | `MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN` (3) and `MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES` (5) | **Complete hand replacement.** The [tau-two proof](SHORT_DURATION_CENTRAL_TAU_TWO.md) and [two duration-face proofs](SHORT_DURATION_CENTRAL_UPPER_FACES.md) share a [lower beta face](SHORT_DURATION_CENTRAL_LOWER_FACE.md). Four constant beta slopes, positive second derivatives and three slanted edges replace the large endpoint expansions. All three original strict signs, norm ceilings and callers are preserved. |
 | S2.1 | `MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN` (5) | Open. |
-| S2.2 | `MIXED_SMALLER_SHORT_OUTER_RATIO_HAND_SIGN` (11)--(18) | Open. |
+| S2.2 | `MIXED_SMALLER_SHORT_OUTER_RATIO_HAND_SIGN` (11)--(18) | **Complete hand caller replacement.** The [outer-ratio assembly](SHORT_RATIO_OUTER_COMPLETE.md) uses reciprocal-shape convexity, beta monotonicity at the lower shape, and three terminal families. It retains the actual condition `a<=x`, both original incoming ceilings and both duration tests. The lower terminal has margins `1/5000` and `1/1000`, with one split at `x=9/4`. All expanded identities have degree at most eight and at most 35 monomials. |
 | S3.1 | `MIXED_SMALLER_SHORT_DISPLACEMENT_OUTER_FACE` (7)--(21) | **Complete hand caller replacement.** The [outer displacement proof](SHORT_DISPLACEMENT_OUTER_COMPLETE.md) retains the actual lower beta order, bounds the two multipliers, and uses reciprocal-shape convexity with three terminal families. The comparison covers either sign of the norm residual and preserves the original duration and scale caller. Expanded identities have at most 39 monomials and degree eight. |
 | S3.2 | `MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_FACE`, Section 2 (4)--(10) | **Complete hand caller replacement for the requested shape derivative.** The [central displacement proof](SHORT_DISPLACEMENT_CENTRAL_SHAPE.md) groups the exact-log derivative using two correlated transport bounds. A convex quadratic proves both negative signs on the actual comparison path and reaches the original endpoint. The source's separate beta lemma and Section 3 endpoint signs remain dependencies. |
 | S4 | `MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES` (4)--(30) | **Complete hand caller replacement.** The [six-sign assembly](SHORT_CASIMIR_COMPLETE.md) uses small derivative identities, a moving-norm comparison, two boundary concavity arguments and six elementary terminal terms. Five signs retain their original full domains; W3 is proved at `e=13/5`, exactly after the caller's W2 comparison. The original actual Casimir floor and all three endpoint margins are preserved. |
@@ -48,8 +48,8 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 These are the finite requested obligations. The three corrections below
 are recorded separately and are not counted as polynomial replacements.
 
-Eight of the ten H-S replacement rows are now complete: S1.1, S1.2,
-S1.3, S1.4, S3.1, S3.2, S4 and S6. Only S2.1 and S2.2 remain open. This count
+Nine of the ten H-S replacement rows are now complete: S1.1, S1.2,
+S1.3, S1.4, S2.2, S3.1, S3.2, S4 and S6. Only S2.1 remains open. This count
 describes completed rows, not equal amounts of remaining effort, and
 does not claim completion of H-S or Lean integration.
 

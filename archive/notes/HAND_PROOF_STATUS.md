@@ -2,7 +2,8 @@
 
 **Correction after the lighter-proof request (8 November 2026).** The
 acceptance recorded below is historical. The requested S1 replacements
-are now separately reviewed; the two S2 ratio replacements remain open.
+and the outer S2.2 ratio replacement are now separately reviewed;
+only the central S2.1 replacement remains open.
 H-S and its dependent global hand conclusion therefore remain open
 under the requested standard. Three reported interface gaps are repaired in
 [the errata](../../docs/lighter-proofs/HS_ERRATA.md). The
