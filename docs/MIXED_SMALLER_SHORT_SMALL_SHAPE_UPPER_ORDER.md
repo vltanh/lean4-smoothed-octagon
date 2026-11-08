@@ -2,14 +2,16 @@
 
 Date: 2026-11-08 UTC. Hand lemma, accepted in the
 [independent short-lemma review](MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md),
-Section 5. The bounds on x and delta in the statement are hypotheses
+Section 5, with its extension to x<=13/6 accepted in the
+[extended-shape review](MIXED_SMALLER_SHORT_EXTENDED_SHAPE_AUDIT.md).
+The bounds on x and delta in the statement are hypotheses
 here; this note does not derive them from the outer reverse root.
 
 ## 1. Statement and exact continuation
 
 Suppose
 \[
-1<x\le\frac{15}{7},\qquad
+1<x\le\frac{13}{6},\qquad
 1\le\alpha<x\le\beta\le\alpha x,
 \qquad
 u=\operatorname{Sec}(1,x,\beta)
@@ -122,7 +124,7 @@ Q(z,h)={}&z^2(-26z^3-24z^2+64z+64)\\
 \]
 The domain and contact condition give
 \[
-0<z\le\frac87,\qquad 0\le h\le\frac1{20},
+0<z\le\frac76,\qquad 0\le h\le\frac1{20},
 \qquad h<\frac{z}{z+3}.
 \tag{9}
 \]
@@ -131,9 +133,9 @@ In particular q(x+2)-3>0. It remains to prove Q>0.
 ## 4. A short lower bound for the polynomial
 
 The three brackets multiplying h^3,h^4,h^5 in (8) are positive
-on 0<=z<=8/7. For the latter two, use
-\(87-65z\ge89/7>0\) and
-\(165-81z^2\ge2901/49>0\). They can therefore be discarded
+on 0<=z<=7/6. For the latter two, use
+\(87-65z\ge67/6>0\) and
+\(165-81z^2\ge219/4>0\). They can therefore be discarded
 in a lower bound.
 
 Discarding the positive part of the h coefficient and using h<=1/20
@@ -154,10 +156,10 @@ The final inequality follows because
 \(96(z+2)/(z+3)^2\) decreases for z>=0 and equals 64/3 at zero.
 
 The last coefficient of (8) is nonnegative for 0<=z<=1. For
-1<=z<=8/7 it satisfies
+1<=z<=7/6 it satisfies
 \[
 2(z-1)(z^2-18z-15)
-\ge-\frac{498}{49}>-12.
+\ge-2\cdot\frac16\cdot36=-12.
 \]
 Since 0<=h<=1 and h<z/(z+3), this gives the convenient uniform bound
 \[
@@ -171,11 +173,11 @@ Q(z,h)\ge z^2J(z),\qquad
 J(z)=\frac{100}{3}+49z-\frac{148}{5}z^2-26z^3.
 \tag{13}
 \]
-Here J''(z)=-296/5-156z<0. Hence J is concave, and on [0,8/7]
+Here J''(z)=-296/5-156z<0. Hence J is concave, and on [0,7/6]
 it is bounded below by the smaller of its endpoint values:
 \[
 J(0)=\frac{100}{3}>0,\qquad
-J(8/7)=\frac{61028}{5145}>0.
+J(7/6)=\frac{4819}{540}>0.
 \tag{14}
 \]
 Thus Q>0. Equations (7)--(9) prove P>0 and the required derivative

@@ -1,135 +1,130 @@
-# Hand-only completion: finite, auditable handoff
+# Hand-only completion: finite acceptance record
 
-Date: 2026-11-08 UTC. **Authoritative next-work plan.** Read with
+Date: 2026-11-08 UTC. **Authoritative accepted state.** Read with
 [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md) and
 [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md).
-This note records the accepted pushed branch, not unreviewed drafts.
 
-**Accepted actual-domain contraction:** S0 and S2 are closed.
-Every retained actual smaller-short bridge has `x<13/6`, `D>0`,
-and `E_L>0`. The [sharp upper-ratio theorem](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_EXCLUSION.md)
-and its [independent actual-period review](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_AUDIT.md)
-exclude both scale faces, all durations and every equality boundary.
-S2 does not assume the still-open lower-ratio conclusion `x>2`.
-
-**Accepted conditional remainder:** the
-[displacement theorem](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
-and [review](MIXED_SMALLER_SHORT_DISPLACEMENT_FACE_AUDIT.md) prove
-`delta<1/19` on `2<=x<=13/6`. The
-[root-to-shear theorem](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
-and [review](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR_AUDIT.md)
-prove the required negative shear when also `13/5<=eta<=3`.
-The [physical-cost theorem](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md)
-and [review](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_AUDIT.md) prove the
-strict original-period contradiction on that same shape domain,
-provided `Gamma_actual>1829/10000`.
-
-**Immediate remaining mathematics:** S1 must exclude `x<=2`.
-S4 must extend the original Casimir floor through `x<13/6`, with
-an accepted upper-order bound on that whole strip. Once these two
-inputs are established, apply the already accepted conditional
-S3/S5/S6 theorems, then complete S7 and A1. H-S and H-A remain open.
-
-## 0. Executive status and exact target
-
-**Not yet a complete hand proof.** The computationally assisted sharp cost/equality theorem is complete under its declared external inputs and arithmetic trust boundary. The replacement hand proof has closed **H-F** (all-forward) and **H-N** (both nonshort successors). Its terminal count and global dependency chain have a conditional hand audit. The only unproved *whole-period exclusion class* is **H-S**, the smaller-short mixed bridge; **H-A** (final global hand-only audit) must be signed off after H-S.
-
-H-S must exclude the following actual object, not a rectangular surrogate: an eligible competitive finite **normal** mixed minimizing period with at least six positive pieces, at a globally minimal active reverse centre, with the chosen **smaller adjacent turn** lying on a **short forward run**. Keep the actual twisted seam, equal-turn tie, two positive factors, genuine first events at the incoming and outgoing switches, one original common PMP covector, and the **whole-period** competitive cost/Casimir budget.
-
-Once H-S is proved with that scope, [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md) gives the conditional bridge to the sharp cost theorem and affine equality for the original disk. It is **not** permissible to call this done from the earlier finite interval cover.
-
-## 1. Exact short-bridge starting point: facts already pushed
-
-Write the actual short shape as
-
+**All scalar mathematics S0--S6 is now proved and independently
+reviewed.** The lower-ratio theorem and the extended original-Casimir
+floor supply the two inputs that were missing from the final short
+argument. The actual smaller-short domain satisfies
 \[
-1\le\alpha<x\le\beta\le\alpha x,\qquad
-\operatorname{Sec}(1,x,\beta)=\operatorname{Sec}(\alpha,\beta,x)=u,
-\qquad \delta=\beta/x-1\ge0.
+2<x<13/6,\quad 0\le\delta=\beta/x-1<1/19,\quad
+\alpha=1+\eta\delta,\quad13/5\le\eta\le3,
+\quad\Gamma_{\rm actual}>1829/10000.
 \]
+The actual root supplies the necessary negative physical shear, and
+the accepted completion-cost theorem gives the strict original-period
+contradiction on this entire domain. Final acceptance of the complete
+H-S assembly and the global H-A chain is the only remaining work.
 
-Use the physical reverse-centre scale \(\rho\), outer scale \(q=\rho_A<1/7\), original descending outer root \(2<\tau<T\), residual \(R_\tau(t,v)=0\), outgoing norm \(w>3/4\), and original normal covector. See [SIX_VARIABLE_REDUCTION](MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION.md) for the precise definitions and actual-to-scalar map.
+## 1. Actual object and preserved scope
 
-* **Closed S0 (pushed and independently reviewed).** [LARGE_RATIO_HAND_EXCLUSION](MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md) gives \(x<12/5\); [POSITIVE_DIAGONAL_PAIRING](MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md) then gives \(D>0,E_L>0\) for every actual remaining bridge. The proof combines the actual root with its actual outgoing norm floor *before* moving to scalar boundaries. Do not reopen the already excluded negative-diagonal or nonpositive-pairing alternatives.
-* **Closed shape inputs.** [STRONG_ORDER](MIXED_SMALLER_SHORT_STRONG_ORDER.md) proves
-  \(\alpha\ge\beta/x+4(x+1)(\beta-x)/(7x+1)\).
-  [GLOBAL_UPPER_ORDER](MIXED_SMALLER_SHORT_GLOBAL_UPPER_ORDER.md) proves
-  \(\alpha\le\beta/x+9(\beta-x)/8\) on \(x<12/5\).
-  Their domains are broader than the final small-shape strip.
-* **Closed conditional angle machinery.** [SCALE_ANGLE_BARRIER](MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md) eliminates clipping and the upper critical angle for \(x\le12/5\). Its *scale-score monotonicity*, however, still assumes \(h<0\) and \(-hR\ge(5/2)A\); Section 5 also gives the sufficient rationalized target \(\bar hR+13A/3<0\), \(\bar h=\sqrt3h\). Neither condition has been proved for all actual remaining bridges in the pushed branch.
-* **Closed conditional Casimir machinery.** [SMALL_SHAPE_CASIMIR_FLOOR](MIXED_SMALLER_SHORT_SMALL_SHAPE_CASIMIR_FLOOR.md) gives
-  \(\Gamma_{\rm actual}>183/1000\) **only when**
-  \(2\le x\le15/7,\ 0\le\delta\le1/19\). This is a lower bound on the *original* covector; it is not by itself a contradiction with the competitive upper cap \(\Gamma_{\rm actual}<9193/50000\). It must enter a strictly positive **physical completion-cost defect**. The theorem's own proof uses its exact interval and cannot be silently extended.
+H-S concerns an eligible competitive finite **normal** mixed minimizing
+period with at least six positive pieces, at a globally minimal active
+reverse centre, with the chosen smaller adjacent turn on a short
+forward run. The two exact secants, original descending first root,
+genuine incident norms and common covector belong to that period.
 
-### Critical interval mismatch
+Preserve the actual state/frame/costate twist, free initial state,
+positive durations, unequal factors, equal-turn choices and original
+whole-period cost/Casimir budget. Scalar comparisons do not acquire
+unproved physical closure, an actual root, a competitive cap or a
+separate outgoing norm floor. Reflection combined with time reversal
+is used through its proved physical and cotangent symmetry.
 
-A proposed improved ratio \(2<x<13/6\) is **not** enough to invoke the accepted Casimir floor, since
+## 2. Finite gate record
 
-\[
-\frac{15}{7}<\frac{13}{6},\qquad
-[15/7,13/6)\ \text{is an uncovered strip}.
-\]
+- [x] **S0 -- Broad actual contraction.**
+  [Large-ratio theorem](MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md)
+  and [positive diagonal/pairing](MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md):
+  \(x<12/5,\ D>0,\ E_L>0\). Its scalar and
+  [actual-period review](MIXED_SMALLER_SHORT_LARGE_RATIO_INTERFACE_AUDIT.md)
+  cover both scale faces and every duration.
+- [x] **S1 -- Strict lower ratio.**
+  [Lower-ratio theorem](MIXED_SMALLER_SHORT_LOWER_RATIO_HAND_EXCLUSION.md)
+  and [review](MIXED_SMALLER_SHORT_LOWER_RATIO_HAND_AUDIT.md):
+  \(x>2\). The sharper corrected-cap reduction, central face and
+  three outer shape alternatives all have separate hand proofs
+  and reviews. The equality \(x=2\) is strictly excluded.
+- [x] **S2 -- Strict upper ratio.**
+  [Sharp upper-ratio theorem](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_EXCLUSION.md)
+  and [review](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_AUDIT.md):
+  \(x<13/6\). This proof is independent of S1 and the small gap.
+- [x] **S3 -- Strict displacement bound.**
+  [Displacement theorem](MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md)
+  and [review](MIXED_SMALLER_SHORT_DISPLACEMENT_FACE_AUDIT.md):
+  \(\delta<1/19\). S1/S2 now supply its actual interval
+  \(2\le x\le13/6\); the equality face is included.
+- [x] **S4 -- Entire remaining interval covered.**
+  [Extended upper order](MIXED_SMALLER_SHORT_SMALL_SHAPE_UPPER_ORDER.md),
+  [extended Casimir floor](MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_FLOOR.md),
+  [six derivative signs](MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES.md)
+  and [review](MIXED_SMALLER_SHORT_EXTENDED_SHAPE_AUDIT.md):
+  \(\alpha\le1+3\delta\) and
+  \(\Gamma_{\rm actual}>1829/10000\) on the whole
+  \([2,13/6]\times[0,1/19]\) domain. The former gap
+  \([15/7,13/6]\) is covered explicitly. The old \(183/1000\)
+  floor and its extracted coefficient groups are unnecessary.
+- [x] **S5 -- Original root gives the physical shear.**
+  [Root-to-shear theorem](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
+  and [review](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR_AUDIT.md):
+  \(q>(29/30)q_c\) and \(\sqrt3hR+13A/3<0\), hence
+  \(h<0,\ -hR>5A/2\). The strong lower order and S4 give
+  \(13/5\le\eta\le3\). At delta=0, alpha=1 and no division
+  by delta is needed.
+- [x] **S6 -- Strict original-period cost contradiction.**
+  [Physical-cost theorem](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md)
+  and [review](MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_AUDIT.md):
+  the original period has \(C_{\rm period}>A_{\rm oct}\).
+  S1--S5 now supply every caller hypothesis. Lowering the original
+  kappa and continuing the explicit scalar score have independently
+  proved comparison directions; no physical cap is transported.
+- [ ] **S7 -- Final H-S actual-period acceptance.**
+  Sign off the complete smaller-short theorem and separate
+  scalar/dependency and actual-period interface reviews, including
+  ties, delta=0, the seam and the one whole-period completion budget.
+- [ ] **A1 -- Final H-A acceptance.**
+  Sign off the global hand assembly: finiteness before normality,
+  all uniform period classes, direct \(N\le5\) terminal count,
+  arbitrary measurable competitors and affine equality of the
+  original disk. Keep the external geometric/PMP premises explicit.
 
-Therefore proving \(2<x<13/6\) and \(\delta<1/19\) would still **not** close H-S. Explicitly discharge this strip by one of: a stronger actual bound \(x\le15/7\); a hand extension of both the Casimir and physical-cost lemmas through \(x<13/6\); or a separate direct root/cost exclusion of the strip. A new estimate cannot be called global unless its proved domain covers every actual point.
+## 3. The accepted dependency order
 
-## 2. Next finite gates (close in order unless an earlier uniform theorem subsumes them)
+The lower and upper ratio arguments use the broad exact short
+ordering, original first root and original competitive period.
+Neither assumes the small gap, small-shape floor or final cost
+comparison. Once both ratios are established, S3 supplies the gap.
+The strong lower order and extended upper order give the eta range;
+S4 supplies the floor of the original Casimir. S5 then connects
+the actual root to the physical shear, and S6 contradicts the
+original full-period competitive budget.
 
-The boxes indicate accepted proof obligations, not expected effort. Each closed gate requires a self-contained displayed derivation plus a separate source/domain/sign audit; a conjectural estimate or numerical probe does not tick the box.
+The old bound \(15/7\) is strictly below \(13/6\). The extended
+proof is therefore indispensable to this route; silently applying
+the older floor would leave a real interval gap. The new derivative
+proof replaces all six old coefficient-group premises on the full
+extended domain. Its small explicit product majorants have
+displayed elementary sign bounds.
 
-- [x] **S0 — Contract the actual short domain.** \(x<12/5,\ D>0,\ E_L>0\). Existing large-ratio theorem and interface audit; no additional task.
-- [ ] **S1 — Exclude \(x\le2\) on actual root data.** Show \(x>2\) from the two *equal* secants, original incoming norm, original outer root and outgoing floor. First simplify at the lower-ratio face; write explicit derivative/endpoint signs and treat \(x=2\). Deliver a new hand theorem and independent scope/sign audit.
-- [x] **S2 — Sharpen the upper ratio with an actual-to-scalar proof.** The [sharp upper-ratio theorem](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_EXCLUSION.md) and its [separate review](MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_AUDIT.md) prove `x<13/6` for every actual retained bridge. The variable-floor comparison, both scale faces, all durations and equality boundaries are covered without S1 or a small-gap hypothesis.
-- [ ] **S3 — Bound the short shape displacement.** Target \(\delta<1/19\), including the equality face \(\delta=1/19\), using the original equal-secant continuation and outer-root/outgoing-floor inequality. Prefer a monotone barrier/contact argument in \(\delta\) and a finite rational endpoint sign; if that fails, use the physical-cost budget to exclude \(\delta\ge1/19\) directly. Do not assume the small-shape upper-order or Casimir lemmas to prove their own hypotheses. Prove all \(\beta=x\) / \(\delta=0\) degeneracies where used.
-- [ ] **S4 — Cover the entire remaining ratio strip.** Verify an actual \(x\le15/7\) bound, **or** extend the exact upper-order, corrected-Casimir and score inequalities to \(13/6\), **or** close \(15/7\le x<13/6\) by its own root/cost contradiction. Give a precise union-of-domains identity; do not handwave \(13/6\) into \(15/7\).
-- [ ] **S5 — Connect the actual outer root to the necessary shear regime.** Derive \(h<0\) and \(-hR\ge5A/2\), or the stronger rationalized \(\bar hR+13A/3<0\), from *actual* root/transversality and shape information. Then invoke the already proved angle-barrier score monotonicity. If the implication is false anywhere in the necessary domain, retain that complementary branch and exclude it by an alternative cost/angle bound instead of discarding it.
-- [ ] **S6 — Strict completion-cost contradiction on the fully covered domain.** Use the original physical two-turn cost \(C_{\rm br}\) from [SHEAR_COST_REDUCTION](MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md), the original Casimir lower bound as appropriate, the maximal-angle envelope from [ROOT_AND_ANGLE_REDUCTION](MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION.md), and the original full-period budget. In the notation of that reduction,
-  \[
-  \mathcal F(\kappa)=C_{\rm br}+(\kappa+\tfrac32)
-   \max\{0,\pi/3-\Theta(3u/[2\kappa U(r)])\},
-  \qquad \mathcal F(\kappa_{\rm actual})\le A_{\rm oct}.
-  \]
-  Prove a **strict opposite inequality** on the established actual shape/scale/root domain, or produce an equivalent hand contradiction. If using \(\Gamma_{\rm actual}>183/1000\), show why it permits replacing \(\kappa_{\rm actual}\) in \(\mathcal F\) while retaining the direction; do not confuse this lower floor with the strict competitive **upper** cap. The scale endpoint, any surviving stationary angle, and every equality boundary must be handled by explicit analytic signs. This is the decisive missing theorem; no conditional cost lemma alone closes it.
-- [ ] **S7 — Assemble the H-S actual-period exclusion and audit.** State an unqualified theorem excluding every actual competitive smaller-short bridge. Record the exact sequence \(S0\rightarrow S1\rightarrow\cdots\rightarrow S6\), or the shorter proven substitute; include switch signs, actual common covector, unequal factors, ties and reflection/reversal, positive durations, twisted seam, Casimir and cost budgets. Commission independent audits of (i) scalar signs and endpoints, and (ii) actual-period interface/no illicit cap or cost transport. Only then tick H-S.
-- [ ] **A1 — Close H-A once, not piecemeal.** Update [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md) and [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md) after H-S is accepted. Recheck finiteness **before** normality; all-forward, reverse, mixed-short, both mixed-nonshort successors; direct \(N\le5\) terminal count; arbitrary measurable admissible competitors; and affine equality of the *original* disk. Verify that every invoked lemma is analytic, with no retained executable cover/sign table. State separately the still-external geometric/PMP results and the fact that no Lean/kernel checking has been performed.
+## 4. Acceptance and preservation rules
 
-### Most efficient dependency path
+Every gate has a stated actual domain, explicit algebraic or analytic
+sign proof and separate scope/sign review. Numerical exploration
+and symbolic reconstruction may check discovery and transcription;
+no executable cover, numerical optimization or unexplained large
+coefficient minimum is an indispensable premise.
 
-**Immediate work:** finish S1 and S4 in parallel. The uniform upper
-ratio is already proved. The displacement, root-to-shear and physical
-cost theorems have accepted conditional proofs on their common shape
-strip. Once S1 and S4 supply their remaining actual inputs, apply
-those theorems and write S7/A1 with the original-period interface.
+The completed computational baseline remains preserved in
+[GLOBAL_COST_EQUALITY_ASSEMBLY](GLOBAL_COST_EQUALITY_ASSEMBLY.md)
+and its [independent audit](GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md).
+The hand argument replaces its indispensable computational exclusions,
+rather than relabeling them.
 
-
-**Stop rule:** if a purported boundary sign fails, save the exact failure, its domain and a candidate replacement theorem before changing direction. Do not introduce a new infinite family of word or parameter cells. The whole short bridge is one finite exclusion class with the gates above.
-
-## 3. Unpushed leads and proof provenance
-
-The old unpushed lower- and upper-ratio drafts used aggregate claims
-about tens of thousands of coefficients. They are historical discovery
-leads, not accepted hand-proof premises. S2 is now supplied by the
-explicit central and outer proofs linked above. The displacement,
-root-to-shear and physical-cost theorems likewise have new accepted
-hand proofs. S1 and the extended Casimir signs still require their
-own completed arguments; do not revive the old minimum tables as
-substitutes for them.
-
-For exploratory calculation, symbolic/numerical tools may help identify factorization, failure points and short analytic bounds. The published mathematical deduction must stand without code execution, interval verification, numerical optimization or unexplained coefficient-list certification. Prefer a short monotonicity, convexity, factorization or integral argument.
-
-## 4. Read/commit order and acceptance discipline
-
-1. Start here and in [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md); read [LARGE_RATIO_HAND_EXCLUSION](MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md) plus its [interface audit](MIXED_SMALLER_SHORT_LARGE_RATIO_INTERFACE_AUDIT.md). Then open the [six-variable](MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION.md), [scale-angle](MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md), [small-shape Casimir](MIXED_SMALLER_SHORT_SMALL_SHAPE_CASIMIR_FLOOR.md), and [physical cost](MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md) notes.
-2. For each S-gate create one focused theorem file and a separate audit (or an explicit honest blocker note). Put a one-line result, domain, dependency list and counterexample/failure analysis at the top. Do **not** fold an unproved global claim into a conditional lemma.
-3. Commit each verified lemma/audit pair promptly to the existing PR branch. Update this checklist and the short entry in [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md) **in the same commit** when a gate changes. Use a descriptive message with [skip ci]. Do not run Lean, Lake, typechecking or CI.
-4. Keep the completed computer-assisted result and legacy index intact as baseline/diagnostics, but **never use them as indispensable hand-proof premises**. New worker entry points are this file, [HANDOFF](HANDOFF.md) and the finite ledger, not historical NEXT WORKER text.
-5. At handoff report the **pushed commit SHA**, precisely which boxes closed, and the single next concrete inequality or endpoint sign. Do not give a percent complete or suggest the final mixed-short theorem is automatic from the number of remaining classes.
-
-## 5. Completion standard
-
-H-S is closed only by a uniform hand argument on the **actual** short-bridge domain, including every boundary and actual-to-scalar interface. H-A is closed only by a full analytic dependency chain yielding
-
-\[
-C\ge\sqrt{12}\,\frac{8-4\sqrt2-\log2}{2\sqrt2-1}
-\]
-
-for every original admissible competitor, and equality exactly for affine images of the concrete smoothed octagon, conditional **only** on the explicitly identified external standard geometric/PMP theorems. The existing computational theorem is not relabeled. Lean formalization and kernel verification remain separately deferred.
+No Lean, Lake, typechecking or CI is authorized. Leave existing
+Lean sources and dependency pins untouched. Commit and push reviewed
+mathematical increments with [skip ci]. The final acceptance must
+state the external classical geometric/PMP inputs and distinguish
+internal mathematical review from external peer review and kernel
+verification.
