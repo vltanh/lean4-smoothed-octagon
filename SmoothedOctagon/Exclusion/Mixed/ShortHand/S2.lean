@@ -1,6 +1,10 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs02.Common
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S2Defs
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2Central
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2Small
+public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2Large
 
 /-!
 # Hand proof of the smaller-short case, gate S2: `x < 13/6`
@@ -30,16 +34,6 @@ the incoming coefficient (`hs2_uslope`) and the face ceilings (`hs2_central_ceil
 namespace SmoothedOctagon
 
 open Set Real
-
-/-- The central ceiling `u_C(x, β) = 3/4 + (680(x - 1)³ + 3S²(β - x))/(9600S²(β - 1))`
-(`RATIO_SIGN_HAND_GAP` (4), `CENTRAL_RATIO_HAND_SIGN` (3)). -/
-noncomputable def hsUC (x be : ℝ) : ℝ :=
-  3 / 4 + (680 * (x - 1) ^ 3 + 3 * (1 + x) ^ 2 * (be - x)) / (9600 * (1 + x) ^ 2 * (be - 1))
-
-/-- The outer ceiling `u_s(x, β) = 3/4 + (17(x - 1)³/(240S²) + (β - x)/1200)/(β - 1)`
-(`OUTER_RATIO_HAND_SIGN` (9)). -/
-noncomputable def hsUs (x be : ℝ) : ℝ :=
-  3 / 4 + (17 * (x - 1) ^ 3 / (240 * (1 + x) ^ 2) + (be - x) / 1200) / (be - 1)
 
 /-- The `u`-slope in scalar form (`VARIABLE_FLOOR_REDUCTION` (8)-(9)). -/
 private theorem hs2_slope_pos {S lam d z ri : ℝ} (hS : 0 < S) (hS2 : S ≤ 17 / 5) (hl0 : 0 < lam)
@@ -829,7 +823,7 @@ theorem hs2_central_sign {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 
     (hτT : τ * hsQc x al ≤ hsRA al be) :
     hsF x be al (hsUC x be) (hsQc x al) τ (log (τ * hsQc x al / hsRA al be))
       (2 - 7 * τ * hsQc x al / (4 * hsRA al be)) < 0 := by
-  sorry
+  apply hs2_central_sign_proof <;> assumption
 
 /-- **The outer sharp-ratio face, small `α`** (`OUTER_RATIO_HAND_SIGN` §§4-5, (13), (16); inventory
 HS-S2 R24): for `13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ 3/2`, `α ≤ x`, `x(x + 2) ≤ 6α²`, the strip of
@@ -841,7 +835,7 @@ theorem hs2_outer_sign_small {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤
     (hτT : τ ≤ 7 * hsRA al be) :
     hsF x be al (hsUs x be) (1 / 7) τ (log (τ * (1 / 7) / hsRA al be))
       (2 - 7 * τ * (1 / 7) / (4 * hsRA al be)) < 0 := by
-  sorry
+  apply hs2_outer_sign_small_proof <;> assumption
 
 /-- **The outer sharp-ratio face, large `α`** (`OUTER_RATIO_HAND_SIGN` §6, (18); inventory HS-S2
 R24): for `13/6 ≤ x ≤ 12/5`, `3/2 ≤ α ≤ x`, the strip of `hs2_central_sign`, `q = 1/7`,
@@ -852,7 +846,7 @@ theorem hs2_outer_sign_large {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤
     (hτT : τ ≤ 7 * hsRA al be) :
     hsF x be al (hsVbar x) (1 / 7) τ (log (τ * (1 / 7) / hsRA al be))
       (2 - 7 * τ * (1 / 7) / (4 * hsRA al be)) < 0 := by
-  sorry
+  apply hs2_outer_sign_large_proof <;> assumption
 
 /-! ### Gate S2 -/
 
