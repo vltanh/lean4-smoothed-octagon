@@ -29,11 +29,26 @@ in force.
 | H-F | Uniform exclusion of all-forward periods through stationary norm bounds and a Casimir inequality | Closed by the [complete hand theorem](HAND_FORWARD_PERIOD_EXCLUSION.md) and [scalar audit](HAND_FORWARD_NORM_AUDIT.md). Both former forward covers are replaced. |
 | H-S | Exclusion when the smaller turn at a minimum reverse centre has a short forward run | Open. The separate opposite-norm floor face is now excluded by hand. Three remaining root/cost boundary faces still need analytic exclusions. |
 | H-N | Exclusion when that smaller turn has a nonshort forward run, for either actual successor sign | Reverse successor closed by the [complete hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md) and [audit](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md). The common low-a region is excluded by the [hand theorem](MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md), so a>1/2. Forward-successor endpoint signs remain open. The old small-parameter coefficient argument is bypassed by the strict duration-ratio gap. |
-| H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Open. In particular, distinguish supplementary identity checks from indispensable executable sign checks. |
+| H-A | Audit and assemble a dependency chain using only hand arguments and the declared external geometric/PMP results | Conditional global review complete in [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md). A direct [terminal hand count](HAND_TERMINAL_COVERAGE.md) removes word enumeration. Final acceptance remains open until H-S and H-N-forward and their actual-period interfaces close. |
 
 These are uniform period classes. They are not a plan to enumerate more
 word lengths or replay larger covers. An alternative hand argument may
 replace an entire class without reproducing the old scalar domain.
+
+### Terminal coverage and global dependency review
+
+The [terminal hand count](HAND_TERMINAL_COVERAGE.md) classifies every
+actual minimizing period with at most five pieces directly. The twist
+gives `sum epsilon = 1 mod 3`; R removes all-reverse periods and M3
+makes each mixed reverse run have two switches. Thus the only surviving
+terminal words are the four-piece `0120` and five-piece `01020`, whose
+analytic cost comparisons are already proved. No terminal enumerator is
+needed. The [global hand review](HAND_GLOBAL_DEPENDENCY_AUDIT.md)
+checks the finite-before-normal order, all-forward and mixed interfaces,
+arbitrary competitors and original-disk affine equality. On that stated
+dependency spine, the remaining indispensable computational exclusions
+are precisely H-S and H-N-forward. This conditional audit does not
+supply either missing mathematical sign.
 
 ### Completed all-forward gate and other hand prerequisites
 

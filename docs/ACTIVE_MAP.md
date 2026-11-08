@@ -10,6 +10,11 @@ The active request is a proof without computer assistance. Read the
 reading path describes the completed computer-assisted baseline; its
 interval covers are not premises of the requested new proof.
 
+The [global hand dependency review](HAND_GLOBAL_DEPENDENCY_AUDIT.md)
+gives the conditional final chain and its external inputs. Its
+[terminal counting proof](HAND_TERMINAL_COVERAGE.md) removes the last
+word-enumeration dependency. H-S and H-N-forward remain open.
+
 The accepted next hand results are the [nonshort duration gap](MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md),
 [forward reductions](HAND_FORWARD_LEMMAS.md), and
 [short-side root envelope](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md).

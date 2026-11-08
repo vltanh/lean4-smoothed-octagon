@@ -2,6 +2,15 @@
 
 **Active request (2026-11-07): find a hand proof that does not depend on computer assistance.** The finite replacement ledger is [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md). New explicit inequalities are in [HAND_PROOF_REFINEMENTS](HAND_PROOF_REFINEMENTS.md). That goal is not yet complete: the interval exclusions below are the completed computational baseline, not hand-only premises. Preserve the baseline and replace its indispensable computational dependencies by readable arguments.
 
+**Current continuation:** the [terminal hand count](HAND_TERMINAL_COVERAGE.md)
+now replaces terminal word enumeration by the actual twist congruence
+and the two-switch reverse-run theorem. The
+[global hand dependency review](HAND_GLOBAL_DEPENDENCY_AUDIT.md)
+accepts the assembly conditional on the two remaining mixed exclusions:
+H-S and H-N-forward. It identifies no additional indispensable executable
+exclusion in the stated global spine. Final hand-only acceptance remains
+open until those two mathematical gaps and their interfaces close.
+
 **Latest hand progress:** the [small-forward-minimum hand proof](SMALL_FORWARD_MINIMUM_HAND_PROOF.md)
 replaces the hard H5 coefficient table by an integral estimate and an
 elementary cubic sign argument, with an

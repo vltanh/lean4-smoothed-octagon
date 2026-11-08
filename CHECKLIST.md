@@ -69,6 +69,11 @@ closed computer-assisted gates below do not close these new obligations.
   is proved for t>=1/3 and p*q/(1+x)>=4/7; applicability is still open.
 - [ ] Full short-side exclusion, the nonshort forward successor, and the
   final hand-only assembly still need proofs.
+- [x] [Direct terminal hand coverage](docs/HAND_TERMINAL_COVERAGE.md)
+  uses the twist congruence and reverse-run length to leave only `0120`
+  and `01020`; no terminal word enumerator is needed. The
+  [global dependency review](docs/HAND_GLOBAL_DEPENDENCY_AUDIT.md)
+  accepts the retained assembly conditional on the two mixed exclusions.
 
 ## Baseline proof checkpoints
 
