@@ -1,130 +1,73 @@
-# Active proof ledger — five finite whole-period cases
+# Accepted hand-proof ledger
 
-**Authoritative continuation:** [detailed finite hand-only completion plan](docs/HAND_ONLY_COMPLETION_PLAN.md), with the [source-map handoff](docs/HANDOFF.md) and [proof status](docs/HAND_PROOF_STATUS.md). The long earlier progress ledgers and abandoned targets are archived, not silently deleted.
+Date: 2026-11-08 UTC. **The hand proof is complete under the explicit
+external classical geometric/PMP inputs.** Start with the
+[final theorem](docs/HAND_COST_EQUALITY_THEOREM.md),
+[status](docs/HAND_PROOF_STATUS.md), and
+[complete acceptance record](docs/HAND_ONLY_COMPLETION_PLAN.md).
 
-**Hand-only short-case microgates:** S0 closed (x<12/5, D,E_L>0);
-S1 x>2; S2 upper ratio; S3 delta<1/19; S4 uncovered
-15/7<=x<13/6 strip; S5 root-to-shear; S6 physical-cost sign;
-S7 actual H-S assembly; A1 final global audit — all after S0 are
-still open until committed and independently audited. The
-computer-assisted baseline below is not a substitute.
+## Completed hand gates
 
-## Active goal: proof without computer assistance
+- [x] **Foundations:** the original measurable-control comparison,
+  all-control compact domain, actual twisted PMP lift, singular
+  clearance, finite vertex representation, and same-lift normality.
+  The [finite-period review](docs/HAND_FINITE_PERIOD_ASSEMBLY_AUDIT.md)
+  checks the required order.
+- [x] **H-F:** [all-forward hand exclusion](docs/HAND_FORWARD_PERIOD_EXCLUSION.md),
+  with [norm review](docs/HAND_FORWARD_NORM_AUDIT.md).
+- [x] **H-N, next switch forward:**
+  [hand exclusion](docs/MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md)
+  and [review](docs/MIXED_NONSHORT_FORWARD_HAND_AUDIT.md).
+- [x] **H-N, next switch reverse:**
+  [hand exclusion](docs/MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md)
+  and [review](docs/MIXED_NONSHORT_REVERSE_HAND_AUDIT.md).
+- [x] **H-S:** [complete smaller-short theorem](docs/MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md),
+  [period review](docs/MIXED_SMALLER_SHORT_HAND_PERIOD_AUDIT.md), and
+  [scope review](docs/MIXED_SMALLER_SHORT_HAND_PERIOD_SCOPE_AUDIT.md).
+- [x] **Terminal count:** [direct twisted-label count](docs/HAND_TERMINAL_COVERAGE.md)
+  leaves only \(0120\) and \(01020\); the
+  [analytic comparisons](docs/SMALL_PERIOD_COST_EQUALITY_AUDIT.md)
+  prove unique four-piece equality and strict five-piece excess.
+- [x] **H-A:** [global theorem](docs/HAND_COST_EQUALITY_THEOREM.md),
+  [dependency audit](docs/HAND_GLOBAL_DEPENDENCY_AUDIT.md), and
+  [final inequality/equality review](docs/HAND_GLOBAL_EQUALITY_FINAL_AUDIT.md)
+  cover arbitrary original measurable competitors and affine equality
+  of the original disk.
 
-The user has requested a hand proof beyond the completed computational
-baseline below. [HAND_PROOF_STATUS](docs/HAND_PROOF_STATUS.md) is the finite
-replacement ledger: H-F and H-N are closed by hand. H-S is the sole
-remaining exclusion; final assembly H-A is conditional on H-S. The [new hand refinements](docs/HAND_PROOF_REFINEMENTS.md) strengthen
-the Casimir cap, reverse-centre scale and forward successor norm. The
-closed computer-assisted gates below do not close these new obligations.
+## Completed smaller-short gates
 
-- [x] Hand replacement of the nonshort small-parameter corner:
-  [strict duration-ratio gap](docs/MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md),
-  independently reviewed, gives `(d-a)/(a+c)>1/10`.
-- [x] Accepted conditional [forward reductions](docs/HAND_FORWARD_LEMMAS.md)
-  and [short-side root envelope](docs/MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md).
-- [x] The shared hard small-forward-minimum face has a complete
-  [integral/cubic hand proof](docs/SMALL_FORWARD_MINIMUM_HAND_PROOF.md).
-- [x] Both forward neighbor ratios are below 4/3 by the
-  [integral proof](docs/HAND_FORWARD_NEIGHBOR_INTEGRAL.md) and
-  [asymmetric completion](docs/HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND.md).
-- [x] The smaller-nonshort case satisfies
-  [t<2/5](docs/MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION.md) and
-  [a<4/5](docs/MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND.md) by hand.
-- [x] The [short opposite-norm floor](docs/MIXED_SMALLER_SHORT_NONPOSITIVE_FLOOR.md)
-  is redundant by hand; the root comparison retains three other faces.
-- [x] The [reverse order lower face](docs/MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION.md)
-  is excluded by hand, including ties; the unit face is also now closed.
-- [x] A reviewed [fixed outer-norm deformation](docs/MIXED_SMALLER_SHORT_OUTER_FLOOR_DEFORMATION.md)
-  further reduces the nonnegative-pairing short face, with its remaining
-  endpoint signs explicit.
-- [x] The [uniform all-forward hand theorem](docs/HAND_FORWARD_PERIOD_EXCLUSION.md),
-  with [independent norm audit](docs/HAND_FORWARD_NORM_AUDIT.md), replaces
-  both forward covers. The actual norm bounds imply a strict Casimir
-  contradiction.
-- [x] Both [short stationary slacks](docs/MIXED_SMALLER_SHORT_SLACK_RETENTION.md)
-  persist along the first root comparison; all three terminal faces
-  retain these actual necessary inequalities.
-- [x] The [common low-scale domain](docs/MIXED_NONSHORT_LOW_SCALE_DOMAIN_REDUCTION.md)
-  has t<7/20 and x>3/13. The [forward scale-Casimir comparison](docs/MIXED_NONSHORT_FORWARD_SHAPE_CASIMIR.md)
-  retains the stronger next-norm floor through a proved endpoint reduction.
-- [x] The [unit-shape hand theorem](docs/MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION.md)
-  excludes the reverse k_min=1 face and the common low-scale d<=c part,
-  with a [dedicated independent audit](docs/MIXED_NONSHORT_UNIT_SHAPE_HAND_AUDIT.md).
-- [x] The [complete nonshort reverse hand theorem](docs/MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md)
-  excludes all three lower-shape cases, with an
-  [independent audit](docs/MIXED_NONSHORT_REVERSE_HAND_AUDIT.md).
-  Its common-order corollary gives a<=r<c<=b*<d and q<(1+x)/(2t+x)
-  without a successor-sign assumption.
-- [x] Conditional [incident-ceiling Casimir sign](docs/MIXED_NONSHORT_CEILING_CASIMIR_HAND_BOUND.md)
-  is proved on 1/3<=t<=2/5 and 1<=k<=51/50, with an independent
-  endpoint audit. This older conditional lemma is optional in the
-  completed forward route.
-- [x] The [common low-scale hand theorem](docs/MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION.md)
-  proves a>1/2 uniformly, with its [independent audit](docs/MIXED_NONSHORT_LOW_SCALE_HAND_AUDIT.md).
-  Both lower shape faces are excluded by the explicit quartic sign proof.
-- [x] The [short corrected envelope cap](docs/MIXED_SMALLER_SHORT_CORRECTED_ENVELOPE_CAP.md)
-  has the uniform hand constant 1/7 and a fixed-geometry necessary score.
-  The [normalized-root residual](docs/MIXED_SMALLER_SHORT_ENVELOPE_SCALE_MONOTONICITY.md)
-  is affine and strictly increasing in outer scale; its scope is independently audited.
-- [x] The [quantitative swap theorem](docs/MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND.md)
-  sharpens the first-event bound; the [forward ratio reduction](docs/MIXED_NONSHORT_FORWARD_RATIO_REDUCTION.md)
-  proves common t>1/4 and removes the shape variable from the proposed
-  t>1/3 gate. The final sign is now closed by the
-  [low-ratio hand theorem](docs/MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION.md)
-  and its [independent audit](docs/MIXED_NONSHORT_LOW_RATIO_HAND_AUDIT.md).
-- [x] The [short corrected cap](docs/MIXED_SMALLER_SHORT_CORRECTED_CAP_SCALE.md)
-  now decreases along the residual scale comparison. Its physical-score
-  comparison remains open. The [conditional forward monotonicity](docs/MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY.md)
-  is proved for t>=1/3 and p*q/(1+x)>=4/7; the completed forward
-  theorem now supplies both hypotheses.
-- [x] The [small-gap forward hand theorem](docs/MIXED_NONSHORT_SMALL_GAP_HAND_EXCLUSION.md)
-  excludes the actual domain t>=1/3, j<=1/30 by the reviewed chi bound,
-  event-factor elimination and scalar Casimir sign. The t>1/3 condition
-  is now proved, and the new large-gap signs give actual j<1/30.
-- [x] The [complete nonshort forward theorem](docs/MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md),
-  with its [independent audit](docs/MIXED_NONSHORT_FORWARD_HAND_AUDIT.md),
-  closes the forward successor and hence all of H-N.
-- [ ] Full short-side exclusion H-S and final hand-only assembly H-A
-  still need completion.
-- [x] [Direct terminal hand coverage](docs/HAND_TERMINAL_COVERAGE.md)
-  uses the twist congruence and reverse-run length to leave only `0120`
-  and `01020`; no terminal word enumerator is needed. The
-  [global dependency review](docs/HAND_GLOBAL_DEPENDENCY_AUDIT.md)
-  accepts the retained assembly conditional on H-S alone.
-- [x] [Uniform short pairing](docs/MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
-  proves D>=0 implies E_L>0, with a separate
-  [hand review](docs/MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md).
-  Together with the large-ratio theorem below, this now gives
-  D>0 and E_L>0 for every actual smaller-short bridge.
+| Gate | Accepted actual conclusion | Proof |
+|---|---|---|
+| S0 | \(x<12/5,\ D>0,\ E_L>0\) | [Large-ratio theorem](docs/MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md) and [positive pairing](docs/MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md) |
+| S1 | \(x>2\) | [Lower-ratio theorem](docs/MIXED_SMALLER_SHORT_LOWER_RATIO_HAND_EXCLUSION.md) |
+| S2 | \(x<13/6\) | [Sharp upper-ratio theorem](docs/MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_EXCLUSION.md) |
+| S3 | \(0\le\delta<1/19\) | [Displacement theorem](docs/MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION.md) |
+| S4 | \(\alpha\le1+3\delta,\ \Gamma_{\rm actual}>1829/10000\), including the strip beyond \(15/7\) | [Upper order](docs/MIXED_SMALLER_SHORT_SMALL_SHAPE_UPPER_ORDER.md), [extended floor](docs/MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_FLOOR.md), [six derivative signs](docs/MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES.md) |
+| S5 | Actual root gives \(h<0,\ -hR>5A/2\) | [Root-to-shear theorem](docs/MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md) |
+| S6 | Original full-period cost exceeds \(A_{\rm oct}\) | [Physical-cost theorem](docs/MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md) |
+| S7 | Uniform actual-period H-S exclusion | [Hand period theorem](docs/MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md) |
+| A1 | Complete global assembly | [Final theorem](docs/HAND_COST_EQUALITY_THEOREM.md) and [final reviews](docs/HAND_GLOBAL_DEPENDENCY_AUDIT.md) |
 
-- [x] The [strong exact short order](docs/MIXED_SMALLER_SHORT_STRONG_ORDER.md)
-  and [negative-diagonal scale monotonicity](docs/MIXED_SMALLER_SHORT_NEGATIVE_DIAGONAL_SCALE.md)
-  have [independent hand acceptance](docs/MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md).
-  The [scope audit](docs/HAND_REVERSE_CENTRE_SCALE_SCOPE_AUDIT.md)
-  confirms rho<1/7 at the outer reverse centre as well.
+Separate reviews for every scalar and actual-period gate are linked in
+[the acceptance record](docs/HAND_ONLY_COMPLETION_PLAN.md).
+All gates are closed. The original common covector, first switches,
+unequal positive durations, equal-turn choices, zero displacement,
+twisted seam and one whole-period budget are retained.
 
-Further accepted H-S reductions: the
-[global upper short order](docs/MIXED_SMALLER_SHORT_GLOBAL_UPPER_ORDER.md),
-[floor-weighted root envelope](docs/MIXED_SMALLER_SHORT_FLOOR_WEIGHTED_ENVELOPE.md),
-[combined scale alternative](docs/MIXED_SMALLER_SHORT_ROOT_FLOOR_SCALE.md),
-and [conditional angle barrier](docs/MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md).
-Their [hand review](docs/MIXED_SMALLER_SHORT_ORDER_AND_SCALE_AUDIT.md)
-accepts the stated reductions.
+Every indispensable sign is an explicit analytic inequality or
+finite algebraic identity with an elementary sign argument. Symbolic
+and numerical work may aid discovery and transcription; executable
+covers and unexplained coefficient minima are not proof premises.
+No Lean, Lake, typechecking or CI was run. Internal acceptance is
+distinct from external peer review and kernel verification.
 
-- [x] The [large-ratio hand theorem](docs/MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md)
-  proves x<12/5 for every actual smaller-short bridge. Its central
-  and outer boundary signs and complete actual-to-scalar interface
-  have independent reviews. This closes the D<=0 and E_L<=0
-  alternatives.
-- [x] The [conditional small-shape Casimir floor](docs/MIXED_SMALLER_SHORT_SMALL_SHAPE_CASIMIR_FLOOR.md)
-  proves Gamma_actual>183/1000 on 2<=x<=15/7 and beta/x-1<=1/19,
-  with an [independent review](docs/MIXED_SMALLER_SHORT_SMALL_SHAPE_CASIMIR_AUDIT.md).
-  These extra actual shape bounds remain unproved.
-- [ ] Derive the remaining actual shape and lower-shear restrictions,
-  and prove the final smaller-short physical-cost contradiction.
+## Historical computational baseline
 
-## Baseline proof checkpoints
+The remaining checklist records the earlier hand/computer-assisted
+proof. Its arithmetic results and receipts are preserved, but its
+executable exclusions are not premises of the hand route above.
+
+### Baseline proof checkpoints
 
 - [x] G1: actual twisted state/frame and costate interface, free initial state and required geometric/PMP inputs.
 - [x] G2: normalized singular clearance \(D>10^{-11}\).
@@ -143,7 +86,7 @@ accepts the stated reductions.
 - [x] Terminal cost/equality audit: arbitrary four-piece parameters, mixed five-piece strictness, complete terminal word coverage and original-disk equality transport independently reviewed; 72 exact checks replayed. The final global cost/equality assembly is complete and independently accepted.
 - [x] M2 nonshort boundary: regular five-variable charts, exact cancelled coefficients, and a uniform hand exclusion of `epsilon<=1/32`. A new scalar comparison reduces the boundary domain to two four-variable charts; the reverse-next exclusion is independently reviewed and replayed.
 
-## Completed finite proof gates
+### Historical completed finite proof gates
 
 - [x] **F1 / F2:** uniform pure-forward exclusion and independent completion audit. The whole-period rational cover has 20,999 nodes and zero unresolved boxes; the all-forward length catalogue is retired.
 - [x] **M2.0:** the smaller-turn **short** side is excluded by a complete audited 107,977-node directed cover; the **nonshort** epsilon corner `0<=epsilon<=1/32` is excluded by hand. The nonshort coefficient formulas and caller have a source/domain audit.
@@ -154,4 +97,4 @@ accepts the stated reductions.
 - [x] **G4:** the [global cost/equality theorem](docs/GLOBAL_COST_EQUALITY_ASSEMBLY.md) combines all five whole-period exclusions with the audited through-five comparison. It proves the sharp cost inequality for arbitrary admissible competitors and the affine equality classification of the original minimizing disk.
 - [x] **G5:** the [final independent dependency audit](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md) accepts the complete chain, external inputs, exact replay records, boundary cases and theorem scope. Lean/kernel verification remains deferred and is not claimed.
 
-**Current status:** R, M1, M2, M3, F, the global sharp cost inequality and affine uniqueness are closed at hand/computer-assisted level, with independent internal acceptance and the explicitly declared external inputs and arithmetic trust boundary. The old *local* L3 shortening lemma is false and is in [legacy](docs/legacy/INDEX.md). The \(N\le61\) theorem is not a plan for length-by-length enumeration. No Lean, Lake or CI.
+**Historical baseline status:** R, M1, M2, M3, F, the global sharp cost inequality and affine uniqueness are closed at hand/computer-assisted level, with independent internal acceptance and the explicitly declared external inputs and arithmetic trust boundary. The old *local* L3 shortening lemma is false and is in [legacy](docs/legacy/INDEX.md). The \(N\le61\) theorem is not a plan for length-by-length enumeration. No Lean, Lake or CI.

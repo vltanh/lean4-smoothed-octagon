@@ -1,4 +1,4 @@
-# Authoritative handoff -- final hand-proof assembly
+# Authoritative handoff -- hand proof complete
 
 Date: 2026-11-08 UTC.
 
@@ -10,11 +10,15 @@ in older notes describe earlier stages.
 
 ## Accepted mathematical state
 
-H-F, both H-N successors and H-S are complete by hand. The
+H-F, both H-N successors, H-S and H-A are complete by hand. The
 [short-period theorem](MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md)
 has an accepted [period audit](MIXED_SMALLER_SHORT_HAND_PERIOD_AUDIT.md)
 and [separate scope audit](MIXED_SMALLER_SHORT_HAND_PERIOD_SCOPE_AUDIT.md).
-The remaining work is final global H-A acceptance.
+The [final hand theorem](HAND_COST_EQUALITY_THEOREM.md),
+[global dependency audit](HAND_GLOBAL_DEPENDENCY_AUDIT.md),
+[finite-period review](HAND_FINITE_PERIOD_ASSEMBLY_AUDIT.md) and
+[inequality/equality review](HAND_GLOBAL_EQUALITY_FINAL_AUDIT.md)
+accept the complete global conclusion. No hand-proof gate remains open.
 
 The [lower-ratio theorem](MIXED_SMALLER_SHORT_LOWER_RATIO_HAND_EXCLUSION.md)
 now proves x>2 using the original covector's corrected Casimir
@@ -38,20 +42,23 @@ now have all their caller hypotheses. Their separate reviews accept
 the root-to-physical-scale implication and the strict original-period
 cost contradiction, including zero displacement.
 
-## Concrete remaining work
+## Final global acceptance
 
-Complete A1 acceptance. The short theorem's original common covector,
+A1 is accepted. The short theorem's original common covector,
 first switches, unequal positive factors, equal-turn symmetry,
 twisted endpoints and single whole-period completion budget have
-passed two separate reviews. Sign off the global chain:
+passed two separate reviews. The final global reviews accept:
 finite representation before normality; uniform all-forward,
 all-reverse and both mixed alternatives; direct terminal count;
 arbitrary measurable competitors; affine equality of the original
-disk. State the external classical geometric/PMP inputs explicitly.
+disk. The external classical geometric/PMP inputs are stated explicitly.
 
-No new scalar inequality or parameter cover is planned. The
+The hand-proof task is complete. The
 extended Casimir proof replaces the old coefficient-group premises
 rather than assuming their validity outside their original interval.
+Further mathematical changes should identify the affected theorem
+and receive a focused review. External peer review and Lean
+formalization remain separate activities, not unfinished hand gates.
 
 ## Preserved computational baseline
 

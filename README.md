@@ -1,93 +1,104 @@
-# Smoothed octagon: a hand and computer-assisted proof
+# Smoothed octagon: a hand proof
 
-**The hand/computer-assisted proof of the sharp Reinhardt cost bound and affine equality case is complete, with independent internal mathematical and source reviews.** All five sufficient whole-period cases, the terminal comparison and the final dependency audit are closed under the documented external geometric/PMP inputs and arithmetic execution trust boundary. Existing Lean drafts remain unverified; no Lean, Lake, typechecking or CI was run in this programme.
+**The hand proof of the sharp Reinhardt cost bound and affine equality
+case is complete under the explicitly declared classical geometric and
+maximum-principle inputs.** All uniform period exclusions and the final
+assembly have separate internal mathematical reviews. Start with the
+[final theorem](docs/HAND_COST_EQUALITY_THEOREM.md).
 
 ## Main result
 
 Let
-
 \[
 \delta_{\rm oct}=\frac{8-4\sqrt2-\log2}{2\sqrt2-1}.
 \]
-
-Every centrally symmetric planar convex disk K satisfies
-
+Every centrally symmetric planar convex disk \(K\) satisfies
 \[
 \delta(K)\ge\delta_{\rm oct},
 \]
+with equality precisely for the invertible affine images of the
+concrete smoothed octagon. The control formulation proves
+\(C\ge\sqrt{12}\,\delta_{\rm oct}\) for every trajectory in the original
+integral admissible class, including arbitrary measurable controls.
 
-with equality exactly for the affine images of the smoothed octagon.
-The control formulation proves \(C\ge\sqrt{12}\,\delta_{\rm oct}\) for
-every trajectory in the original integral admissible class, including
-measurable controls. The [final proof and equality argument](docs/GLOBAL_COST_EQUALITY_ASSEMBLY.md)
-state the quantifiers and explain the passage from actual minimizers to
-arbitrary competitors. The [independent dependency audit](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md)
-identifies the external inputs and every computational trust boundary.
+The [final theorem](docs/HAND_COST_EQUALITY_THEOREM.md) states the
+quantifiers, derives a finite normal minimizing representation in the
+required order, and transports equality back to the original disk.
+Its Section 7 lists the external mathematical premises. Internal
+review is distinct from external peer review and Lean kernel verification.
 
-## Read the completed proof
+## Read the completed argument
 
-1. [Authoritative handoff and completion record](docs/HANDOFF.md).
-2. [Global cost and affine equality theorem](docs/GLOBAL_COST_EQUALITY_ASSEMBLY.md), with its [independent audit](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md).
-3. [Uniform M2 theorem](docs/MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md), with its [whole-period audit](docs/MIXED_GLOBAL_NONSHORT_PERIOD_AUDIT.md).
-4. [Certificate replay guide](docs/CERTIFICATE_REPLAY.md), [finite gate ledger](CHECKLIST.md), and [active proof map](docs/ACTIVE_MAP.md).
+1. [Final cost and affine equality theorem](docs/HAND_COST_EQUALITY_THEOREM.md).
+2. [Global dependency audit](docs/HAND_GLOBAL_DEPENDENCY_AUDIT.md).
+3. [Finite representation and whole-period review](docs/HAND_FINITE_PERIOD_ASSEMBLY_AUDIT.md).
+4. [Unrestricted inequality and original-disk equality review](docs/HAND_GLOBAL_EQUALITY_FINAL_AUDIT.md).
+5. [Accepted status](docs/HAND_PROOF_STATUS.md), [finite gate record](docs/HAND_ONLY_COMPLETION_PLAN.md), and [source map](SOURCE_MAP.md).
 
-| Sufficient whole-period case | Accepted exclusion |
-| --- | --- |
-| R: entirely reverse | [Reverse-period theorem](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION.md) |
-| M3: forbidden mixed reverse runs | [Minimum structure](docs/MIXED_GLOBAL_MINIMUM_STRUCTURE.md) |
-| M1: all-short mixed | [Whole-period angle theorem](docs/MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION.md) |
-| F: entirely forward with at least six pieces | [Uniform forward theorem](docs/GLOBAL_FORWARD_PERIOD_EXCLUSION.md) |
-| M2: mixed with a nonshort forward run | [Uniform mixed theorem](docs/MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION.md) |
+The following exclusions are applied to an eligible competitive finite
+normal minimizing period with \(N\ge6\) positive pieces.
 
-These are assignments of complete minimizing periods. The proof uses
-neither growing word-length enumeration nor the refuted unconditional
-local L3 shortening assertion.
+| Complete-period class | Hand argument |
+|---|---|
+| Entirely reverse | [Reverse-period exclusion](docs/GLOBAL_REVERSE_PERIOD_EXCLUSION.md) |
+| Entirely forward, at least six positive pieces | [Forward hand theorem](docs/HAND_FORWARD_PERIOD_EXCLUSION.md), with [norm review](docs/HAND_FORWARD_NORM_AUDIT.md) |
+| Mixed: smaller adjacent turn on a short forward run | [Smaller-short hand theorem](docs/MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md), with [period review](docs/MIXED_SMALLER_SHORT_HAND_PERIOD_AUDIT.md) and [scope review](docs/MIXED_SMALLER_SHORT_HAND_PERIOD_SCOPE_AUDIT.md) |
+| Mixed: smaller adjacent turn on a nonshort run, next genuine switch forward | [Nonshort forward theorem](docs/MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md), with [review](docs/MIXED_NONSHORT_FORWARD_HAND_AUDIT.md) |
+| Mixed: smaller adjacent turn on a nonshort run, next genuine switch reverse | [Nonshort reverse theorem](docs/MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md), with [review](docs/MIXED_NONSHORT_REVERSE_HAND_AUDIT.md) |
 
-## The final M2 step
+The [mixed minimum-structure theorem](docs/MIXED_GLOBAL_MINIMUM_STRUCTURE.md)
+and [small-forward-minimum hand proof](docs/SMALL_FORWARD_MINIMUM_HAND_PROOF.md)
+justify the choice of centre. The smaller-turn split covers mixed
+periods even when both adjacent forward runs are short. These exclusions
+force \(N\le5\). The [direct terminal count](docs/HAND_TERMINAL_COVERAGE.md)
+leaves only \(0120\) and \(01020\); the
+[analytic terminal comparisons](docs/SMALL_PERIOD_COST_EQUALITY_AUDIT.md)
+give the unique four-piece equality and strict five-piece cost excess.
 
-At a global minimum reverse centre, choose the smaller adjacent turn.
-The smaller-short case has its accepted 107,977-node cover. For the
-nonshort case, a [scalar boundary comparison](docs/MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION.md)
-preserves the incident upper norm and decreases the transported outgoing
-norm. It reduces every original maximal chart to two four-variable
-charts, including the original delta0-maximal region.
+## The completed smaller-short step
 
-The reverse-next case is excluded by a complete 106,134-node cover.
-A common 74,772-node cover proves a>1/2. For the forward-next case,
-[Casimir concavity](docs/MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION.md)
-places the actual solution between two endpoints and forces at least
-one endpoint to satisfy the competitive cap. The [two endpoint covers](docs/MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION.md)
-exclude those alternatives in 37,940 and 60,976 nodes. All four new
-covers have independent mathematical/source audits and fresh complete
-replays, with zero pending or unresolved boxes.
+The actual short domain satisfies
+\[
+2<x<13/6,\qquad 0\le\delta=\beta/x-1<1/19,\qquad
+\alpha=1+\eta\delta,\quad13/5\le\eta\le3.
+\]
+The [extended Casimir floor](docs/MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_FLOOR.md)
+proves \(\Gamma_{\rm actual}>1829/10000\) throughout the required
+interval, including the former gap beyond \(15/7\). Its
+[six derivative signs](docs/MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES.md)
+have explicit product bounds and a separate
+[review](docs/MIXED_SMALLER_SHORT_EXTENDED_SHAPE_AUDIT.md).
 
-The original and replay logs, frozen source hashes, root domains and
-exact leaf accounting are retained with each receipt. To check their
-published record consistency:
+The [actual-root comparison](docs/MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
+then proves the required negative physical shear. The
+[completion-cost theorem](docs/MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION.md)
+makes the original full-period cost strictly greater than the octagon
+cost. The [whole-period theorem](docs/MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md)
+and its two reviews verify every caller hypothesis, equal-turn choices,
+zero displacement, positive unequal durations and the twisted seam.
 
-```sh
-python explorations/mixed_nonshort_boundary_records_verify.py
-```
+Every comparison retains the original common normal covector and one
+whole-period cost budget. Artificial scalar points receive no unproved
+physical closure, root, outgoing norm floor or competitive cap.
 
-The [replay guide](docs/CERTIFICATE_REPLAY.md) gives the C++ commands that
-re-execute the quantified covers and the symbolic checks supporting the
-hand reductions. A record verifier is separate from an arithmetic replay.
+## Proof standard and preserved computational baseline
 
-## Scope and repository organization
+The hand route uses explicit analytic inequalities, finite polynomial
+identities and elementary sign bounds. Symbolic or numerical calculations
+may check discovery and transcription; executing a cover or a sign script
+is not a premise. No growing word catalogue or refuted unconditional
+local-shortening assertion is used.
 
-The proof imports the explicitly identified geometric existence,
-balanced-boundary/area and compact-domain results, together with the
-standard Pontryagin principles. The [compact-domain source audit](docs/COMPACT_DOMAIN_SOURCE_AUDIT.md)
-checks the all-control margin normalization and exact density separation.
-Computer-assisted steps trust the reviewed C++ callers, directed
-MPFR/GMP arithmetic and execution platform. Internal review does not
-constitute external peer review or Lean kernel verification.
+The earlier [computer-assisted assembly](docs/GLOBAL_COST_EQUALITY_ASSEMBLY.md),
+[its independent audit](docs/GLOBAL_COMPLETION_INDEPENDENT_AUDIT.md), and
+[certificate replay records](docs/CERTIFICATE_REPLAY.md) remain preserved.
+Their arithmetic execution boundary is separate from the completed hand
+route. Historical notes may describe earlier open gates or superseded
+methods; the current reading path is [docs/ACTIVE_MAP.md](docs/ACTIVE_MAP.md).
 
-- `docs/`: active theorem and independent audit notes; [SOURCE_MAP.md](SOURCE_MAP.md) indexes dependencies.
-- `explorations/`: exact identity checkers, frozen cover callers, arithmetic headers, receipts and complete logs.
-- `docs/legacy/` and `explorations/legacy/`: historical plans, probes, rejected shortcuts and superseded local investigations. Their old status statements describe earlier stages.
-- `SmoothedOctagon/*.lean` and dependency pins: existing formalization drafts, untouched by this hand-proof completion.
+- docs/: theorem statements, explicit hand arguments and independent reviews.
+- explorations/: discovery calculations, transcription checks and historical frozen covers.
+- docs/legacy/ and explorations/legacy/: prior plans, rejected shortcuts and archived investigations.
+- SmoothedOctagon/*.lean and dependency pins: existing formalization drafts, unchanged.
 
-The old incomplete three-root nonshort runs are not premises of the
-completed boundary proof. The theoretical switch bound \(N<10^{56}\)
-is used for finite minimum selection and case coverage, not a catalogue.
+No Lean compilation, Lake, typechecking or CI was run in this completion.

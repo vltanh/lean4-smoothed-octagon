@@ -21,8 +21,9 @@ Section 3 of the same note is strict. Consequently every such global
 minimizer is the octagon trajectory after the indicated normalization.
 
 This theorem does **not** establish the hypothesis that every minimizer
-has at most five pieces. The missing mixed-period hand exclusions must
-supply that hypothesis separately. It replaces only the finite-word
+has at most five pieces. The completed uniform hand exclusions now
+supply that hypothesis in [the final assembly](HAND_COST_EQUALITY_THEOREM.md).
+This note replaces only the finite-word
 coverage in Section 1 of the terminal audit; no numerical or exhaustive
 word-generation calculation is needed for that coverage.
 

@@ -1,5 +1,12 @@
 # A corrected Casimir floor on a small short-shape domain
 
+**Current dependency role:** the completed hand route uses the
+[extended floor](MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_FLOOR.md) and
+[its six new derivative proofs](MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES.md).
+Only the analytic reductions in Sections 1--3 of this narrower note
+are retained. Its older extracted coefficient groups are not premises
+of the final hand argument.
+
 Date: 2026-11-08 UTC. Hand lemma accepted in the
 [independent Casimir review](MIXED_SMALLER_SHORT_SMALL_SHAPE_CASIMIR_AUDIT.md).
 The two small-shape restrictions in the theorem are hypotheses, not

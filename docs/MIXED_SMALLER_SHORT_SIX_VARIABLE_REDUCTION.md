@@ -1,5 +1,11 @@
 # Six-variable necessary domain for the smaller short bridge
 
+**Role in the completed hand proof:** only the hand-derived actual
+interface in Sections 1--5 is used by the
+[hand period exclusion](MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md).
+The computational exclusion and checker discussion retained below
+belong to the historical baseline and are not hand-proof premises.
+
 Date: 2026-11-07. Exact hand reduction. Its scalar exclusion is now
 complete; see [the theorem](MIXED_SMALLER_SHORT_PERIOD_EXCLUSION.md).
 The target is the M2 branch in which the smaller turn adjacent to a

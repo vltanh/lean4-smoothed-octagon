@@ -4,8 +4,10 @@ Date: 2026-11-08 UTC. **Authoritative accepted state.** Read with
 [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md) and
 [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md).
 
-**All short-case gates S0--S7 and H-S are now proved and independently
-reviewed.** The lower-ratio theorem and the extended original-Casimir
+**All gates S0--S7, H-F, H-N, H-S and H-A are closed.** The
+[complete hand theorem](HAND_COST_EQUALITY_THEOREM.md) and
+[final global audit](HAND_GLOBAL_DEPENDENCY_AUDIT.md) are accepted.
+The lower-ratio theorem and the extended original-Casimir
 floor supply the two inputs that were missing from the final short
 argument. The actual smaller-short domain satisfies
 \[
@@ -16,8 +18,9 @@ argument. The actual smaller-short domain satisfies
 The actual root supplies the necessary negative physical shear, and
 the accepted completion-cost theorem gives the strict original-period
 contradiction on this entire domain. The complete H-S theorem has two
-separate actual-period reviews. Final acceptance of the global H-A
-chain is the only remaining work.
+separate actual-period reviews. Independent final reviews accept
+finiteness before normality, the whole-period split, arbitrary
+measurable competitors, the terminal count and original-disk equality.
 
 ## 1. Actual object and preserved scope
 
@@ -87,11 +90,15 @@ is used through its proved physical and cotangent symmetry.
   [separate scope audit](MIXED_SMALLER_SHORT_HAND_PERIOD_SCOPE_AUDIT.md)
   accept the original common covector, ties, delta=0, genuine seam
   and the one whole-period completion budget.
-- [ ] **A1 -- Final H-A acceptance.**
-  Sign off the global hand assembly: finiteness before normality,
-  all uniform period classes, direct \(N\le5\) terminal count,
-  arbitrary measurable competitors and affine equality of the
-  original disk. Keep the external geometric/PMP premises explicit.
+- [x] **A1 -- Complete global hand assembly and H-A acceptance.**
+  [Final theorem](HAND_COST_EQUALITY_THEOREM.md),
+  [global dependency audit](HAND_GLOBAL_DEPENDENCY_AUDIT.md),
+  [finite-period review](HAND_FINITE_PERIOD_ASSEMBLY_AUDIT.md) and
+  [inequality/equality review](HAND_GLOBAL_EQUALITY_FINAL_AUDIT.md)
+  accept finiteness before normality, all uniform period classes,
+  the direct \(N\le5\) terminal count, arbitrary measurable
+  competitors and affine equality of the original disk. The external
+  geometric/PMP premises remain explicit.
 
 ## 3. The accepted dependency order
 
@@ -127,7 +134,7 @@ rather than relabeling them.
 
 No Lean, Lake, typechecking or CI is authorized. Leave existing
 Lean sources and dependency pins untouched. Commit and push reviewed
-mathematical increments with [skip ci]. The final acceptance must
-state the external classical geometric/PMP inputs and distinguish
+mathematical increments with [skip ci]. The final acceptance states
+the external classical geometric/PMP inputs and distinguishes
 internal mathematical review from external peer review and kernel
-verification.
+verification. No hand-proof gate remains open.

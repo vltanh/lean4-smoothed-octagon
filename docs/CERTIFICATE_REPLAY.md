@@ -1,5 +1,12 @@
 # Reproducing the arithmetic certificates
 
+**Historical computational baseline.** The completed
+[hand theorem](HAND_COST_EQUALITY_THEOREM.md) and
+[hand dependency audit](HAND_GLOBAL_DEPENDENCY_AUDIT.md) do not use
+the executable covers below as premises. This guide preserves the
+earlier baseline's frozen commands, logs, hashes and execution boundary.
+No certificate replay is required for the accepted hand argument.
+
 Date: 2026-11-07. Hand and computer-assisted proof workflow.
 No Lean, Lake, typechecking or CI is part of this workflow.
 

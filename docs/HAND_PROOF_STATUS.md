@@ -2,19 +2,21 @@
 
 Date: 2026-11-08 UTC. **Authoritative accepted state.**
 
-H-F, both H-N successors and the complete H-S theorem are now proved
-and separately reviewed. The remaining work is final acceptance of
-the global H-A consequence. See the
-[finite gate record](HAND_ONLY_COMPLETION_PLAN.md).
+**The hand proof is complete under its explicitly listed external
+classical geometric/PMP inputs.** H-F, both H-N successors, H-S and
+H-A are closed. The [final theorem](HAND_COST_EQUALITY_THEOREM.md)
+and [global dependency audit](HAND_GLOBAL_DEPENDENCY_AUDIT.md) have
+separate final reviews. See the
+[complete finite gate record](HAND_ONLY_COMPLETION_PLAN.md).
 
 ## Whole-period gates
 
-| Gate | Accepted result and remaining review |
+| Gate | Accepted result and review |
 |---|---|
 | H-F | Closed by the [all-forward hand theorem](HAND_FORWARD_PERIOD_EXCLUSION.md) and [norm audit](HAND_FORWARD_NORM_AUDIT.md). Both historical forward covers have been replaced. |
 | H-N | Closed for both actual successors by the [forward theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md) and [review](MIXED_NONSHORT_FORWARD_HAND_AUDIT.md), and the [reverse theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md) and [review](MIXED_NONSHORT_REVERSE_HAND_AUDIT.md). |
 | H-S | Closed by the [hand period theorem](MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md), [period audit](MIXED_SMALLER_SHORT_HAND_PERIOD_AUDIT.md) and [separate scope audit](MIXED_SMALLER_SHORT_HAND_PERIOD_SCOPE_AUDIT.md). Every scalar input and actual-period boundary is covered. |
-| H-A | All exclusion inputs are now accepted. Final global dependency and equality sign-off is being completed. |
+| H-A | Closed by the [global dependency audit](HAND_GLOBAL_DEPENDENCY_AUDIT.md), [finite-period review](HAND_FINITE_PERIOD_ASSEMBLY_AUDIT.md) and [inequality/equality review](HAND_GLOBAL_EQUALITY_FINAL_AUDIT.md). The unrestricted cost inequality and original-disk affine equality are accepted. |
 
 These are uniform whole-period results. No growing word-length
 catalogue, local six-window replacement or percentage completion
@@ -84,9 +86,9 @@ only 0120 and 01020. Their
 give the unique four-piece octagon equality case and strict
 five-piece cost excess. No terminal enumerator is required.
 
-## Exact completion standard
+## Exact accepted conclusion
 
-Final acceptance must yield
+The complete hand chain yields
 \[
 C\ge\sqrt{12}\,
 \frac{8-4\sqrt2-\log2}{2\sqrt2-1}
@@ -96,10 +98,12 @@ including measurable controls, and the corresponding density
 bound for every centrally symmetric planar convex disk, with
 equality exactly for affine images of the concrete smoothed octagon.
 
-The proof may use the explicitly identified classical geometric,
+The proof uses the explicitly identified classical geometric,
 packing-density and maximum-principle theorems. The original
-equality disk must remain the disk being classified throughout
+equality disk remains the disk being classified throughout
 the realization, rebase, state/frame uniqueness and affine transport.
+All required hand exclusions and interfaces are accepted; no
+mathematical gate in the stated hand route remains open.
 
 ## Proof standard and preserved baseline
 
