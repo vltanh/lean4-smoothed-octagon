@@ -1,38 +1,42 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LargeGapLink
+public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowRatio
 public import SmoothedOctagon.Exclusion.Mixed.FwdHand.HighRatioShape
 public import SmoothedOctagon.Exclusion.Mixed.FwdHand.HighRatioLower
+public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTUnit
+public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTShape
 
 /-!
 # Case M2, forward successor by hand: the gap is smaller than one thirtieth
 
 `MIXED_NONSHORT_FORWARD_HAND_EXCLUSION` §3 with `MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS`,
-`MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN`, `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN` and
+`docs/lighter-proofs/NONSHORT_LOW_T_CALLER.md` (PR #2) and
 `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION`: an actual forward window with `t ≥ 1/3` has
 `j = 2t + x - 1 < 1/30`.
 
 Suppose `j ≥ 1/30`. The integral derivative floor gives `x < 3/5` and `j < 5h/7` (`h = 1 - 2t`).
-* `1/3 ≤ t ≤ 3/8`: the multipliers `α = 27/4 - 3u - 24y + 16j`, `M = 1/4 - u + 6y + 24j`
-  (`u = 15(t - 1/3)`, `y = q - 1`) are positive and the combined residual
-  `αN + C_*(3/4 - 𝒯_*) + M(F - v)` is negative; its `v`-coefficient is negative (`fh_LGA_Cv`, the two
-  cases `α ≥ 2`, `α < 2` of (13)-(14)), so `v ↦ v_G`, `log q ↦ L₊`, `F ↦ F_ℓ` keep it negative;
-  concavity in `k` and the endpoint certificates `CertLGa` (`k = 1`), `CertLGb` (`k = 1 + j`)
-  give the opposite sign.
+* `1/3 ≤ t ≤ 3/8` (`NONSHORT_LOW_T_CALLER`): the multipliers `a = 7/2 - 10(q - 1) ≥ 11/16`,
+  `m = 8j + 8(q - 1) - 1/6 ≥ 1/10` (`nltAl`, `nltM`, `fh_LGN_mult`) make the combined residual
+  `aN + C_*(3/4 - 𝒯_*) + m(F - v)` negative at the actual window (`fh_window_comb`); its
+  `v`-coefficient is negative (`fh_LGN_Cv`, the cases `a ≥ 2`, `a < 2` of the shape note §1), so
+  `v ↦ v_G ≤ V_L`, `log q ↦ L₊`, `F ↦ F_ℓ` keep it negative; but it increases in the shape
+  (`nlt_shape_ge`, `FwdHand/LowTShape`) and is positive at `k = 1` (`nlt_unit_pos`,
+  `FwdHand/LowTUnit`).
 * `3/8 ≤ t < 2/5`: the same with `α = 4`, `M = 1`; the residual increases in the shape
   (`hrs_shape_lt`, `FwdHand/HighRatioShape`, PR-2 note `NONSHORT_HIGH_RATIO_SHAPE.md`), and it is
   positive at the lower endpoint `k = 29t²/4` (`hrl_lower_pos`, `FwdHand/HighRatioLower`, PR-2 notes
   `NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md`, `NONSHORT_HIGH_RATIO_LOWER_FACE.md`).
 
-Route: for `t ≤ 3/8` the shape monotonicity of the notes and the hand polynomial signs (low-t,
-upper-shape, `h = 1/4` reduction) are replaced by concavity in `k` and generated Bernstein
-certificates at the shape endpoints.
+Route: for `t ≤ 3/8` the multipliers of `MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (5) and the
+certificates at the two shape endpoints are replaced by the new multipliers of PR #2, whose
+necessary condition the actual window supplies through the general `fh_window_comb`; the old scalar
+core with the old multipliers is not re-proved.
 
 ## Main API
 
-* the links `fh_LGa_link`, `fh_LGb_link` (`FwdHand/LargeGapLink`).
 * `fh_LG_J`, `fh_LG_WD`, `fh_LG_W2Dek`: the estimates (9) of the multiplier note.
-* `fh_LGA_core`, `fh_LGB_core`; `fh_small_gap_j`: **`j < 1/30`** for an actual forward window.
+* `fh_LGN_mult`, `fh_LGN_Cv`, `fh_LGN_core`, `fh_LGB_core`; `fh_small_gap_j`: **`j < 1/30`** for an
+  actual forward window.
 -/
 
 @[expose] public section
@@ -164,26 +168,23 @@ theorem fh_LG_dom {t x : ℝ} (ht0 : 1 / 3 ≤ t) (hx : 0 < x)
     nlinarith [mul_le_mul_of_nonneg_left h (by positivity : (0 : ℝ) ≤ 12 * (x ^ 2 + 10 * x + 15))]
   linarith
 
-/-- **The large-gap multipliers are positive** (`MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (6)). -/
-theorem fh_LG_mult {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
-    (hq : 1 ≤ q) (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x) :
-    8 / 15 ≤ fhAlA t x q ∧ 1 / 20 ≤ fhMA t x q := by
-  unfold fhAlA fhMA
-  constructor
-  · -- `y ≤ (15/16)(h - j)`
-    have hy : (q - 1) * (4 * t + 2 * x - 1) ≤ 2 - 4 * t - x := by linarith
-    have hy' : 16 / 15 * (q - 1) ≤ (q - 1) * (4 * t + 2 * x - 1) := by
-      have : 16 / 15 ≤ 4 * t + 2 * x - 1 := by linarith
-      nlinarith
+/-- **The new multipliers are positive** (`NONSHORT_LOW_T_SHAPE` (5), `NONSHORT_LOW_T_CALLER` (9)):
+`a = 7/2 - 10(q - 1) ≥ 11/16` and `m = 8j + 8(q - 1) - 1/6 ≥ 1/10`, since `q - 1 ≤ 9/32`. -/
+theorem fh_LGN_mult {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (hj : 1 / 30 ≤ 2 * t + x - 1) (hq : 1 ≤ q)
+    (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x) : 11 / 16 ≤ nltAl q ∧ 1 / 10 ≤ nltM t x q := by
+  have hy : (q - 1) * (4 * t + 2 * x - 1) ≤ 2 - 4 * t - x := by linarith
+  have hy' : 16 / 15 * (q - 1) ≤ (q - 1) * (4 * t + 2 * x - 1) := by
+    have : 16 / 15 ≤ 4 * t + 2 * x - 1 := by linarith
     nlinarith
-  · nlinarith
+  unfold nltAl nltM
+  constructor <;> nlinarith
 
-/-- **The `v`-coefficient is negative for the multipliers `α`, `M`**
-(`MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (11)-(14)). -/
-theorem fh_LGA_Cv {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
+/-- **The `v`-coefficient is negative for the new multipliers** (`NONSHORT_LOW_T_SHAPE` §1, the
+cases `a ≥ 2` and `a < 2`). -/
+theorem fh_LGN_Cv {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hj4 : 2 * t + x - 1 < 1 / 4) (hk1 : 1 ≤ k) (hk : k ≤ 2 * t + x) (hq : 1 ≤ q)
     (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x) :
-    fhCv (fhAlA t x q) (fhMA t x q) t x k q < 0 := by
+    fhCv (nltAl q) (nltM t x q) t x k q < 0 := by
   have hx : 0 < x := by linarith
   have hW : 0 < 1 + x := by linarith
   have hq0 : 0 < q := by linarith
@@ -192,19 +193,21 @@ theorem fh_LGA_Cv {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 
     have : (t + x) * (1 + x) ≤ t + x * (x + 2) := by nlinarith
     have := mul_le_mul_of_nonneg_right hq hJ0
     linarith
-  obtain ⟨hα, hM⟩ := fh_LG_mult ht0 ht1 hj hq hqs
-  have hJ := fh_LG_J ht0 ht1 hj hq0.le hqs
-  have hle := fh_Cv_le (α := fhAlA t x q) (M := fhMA t x q) (t := t) (x := x) (k := k) (q := q)
+  obtain ⟨hα, hM⟩ := fh_LGN_mult ht0 hj hq hqs
+  have hJ := fh_LG_J ht0 (by linarith) hj hq0.le hqs
+  have hle := fh_Cv_le (α := nltAl q) (M := nltM t x q) (t := t) (x := x) (k := k) (q := q)
     (by linarith) (by linarith) hD (by positivity)
   have hNv := fh_Nv_le (t := t) (x := x) (k := k) (q := q) (by linarith) hx.le hq (by linarith)
   have hA : 0 < x * q * k := by positivity
   have hneg : 4 * q * (1 + x) ^ 2 * nhNv t x k q < 0 := by
     apply mul_neg_of_pos_of_neg (by positivity); linarith
-  have hMp : 0 < 4 * q * (1 + x) ^ 2 * fhMA t x q := by positivity
-  rcases le_or_gt 2 (fhAlA t x q) with h2 | h2
-  · -- `α ≥ 2`
-    have hWD := fh_LG_WD ht0 ht1 hj hq0.le hqs
-    have e1 : 4 * q * ((fhAlA t x q + 1) * (1 + x) ^ 2 - (t + x * (x + 2)) * q ^ 2) * nhNv t x k q ≤
+  have hMp : 0 < 4 * q * (1 + x) ^ 2 * nltM t x q := by
+    have : 0 < nltM t x q := by linarith
+    positivity
+  rcases le_or_gt 2 (nltAl q) with h2 | h2
+  · -- `a ≥ 2`
+    have hWD := fh_LG_WD ht0 (by linarith) hj hq0.le hqs
+    have e1 : 4 * q * ((nltAl q + 1) * (1 + x) ^ 2 - (t + x * (x + 2)) * q ^ 2) * nhNv t x k q ≤
         4 * q * (31 / 16 * (1 + x) ^ 2) * nhNv t x k q := by
       apply mul_le_mul_of_nonpos_right _ (by linarith)
       apply mul_le_mul_of_nonneg_left _ (by positivity)
@@ -218,11 +221,11 @@ theorem fh_LGA_Cv {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 
         4 * q * (1 + x) ^ 2 * (41 / 24) * (-nhNv t x k q) :=
       mul_le_mul_of_nonneg_left (by linarith) (by positivity)
     nlinarith
-  · -- `α < 2`: then `M > 3h + 1/48` and `qk(qJ - pW) < 3h`
-    have hW2 := fh_LG_W2Dek ht0 ht1 hj hj4 (by linarith) hk hq0.le hqs hD
-    have hM3 : 3 * (1 - 2 * t) + 1 / 48 < fhMA t x q := by
-      unfold fhAlA at h2; unfold fhMA; nlinarith
-    have e1 : 4 * q * ((fhAlA t x q + 1) * (1 + x) ^ 2 - (t + x * (x + 2)) * q ^ 2) * nhNv t x k q ≤ 0 := by
+  · -- `a < 2`: then `q - 1 > 3/20`, `m > 13/10 > 3h` and `qk(qJ - pW) < 3h`
+    have hW2 := fh_LG_W2Dek ht0 (by linarith) hj hj4 (by linarith) hk hq0.le hqs hD
+    have hM3 : 3 * (1 - 2 * t) + 3 / 10 < nltM t x q := by
+      unfold nltAl at h2; unfold nltM; linarith
+    have e1 : 4 * q * ((nltAl q + 1) * (1 + x) ^ 2 - (t + x * (x + 2)) * q ^ 2) * nhNv t x k q ≤ 0 := by
       apply mul_nonpos_of_nonneg_of_nonpos _ (by linarith)
       apply mul_nonneg (by positivity)
       nlinarith
@@ -232,7 +235,7 @@ theorem fh_LGA_Cv {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 
           4 * q * (1 + x) ^ 2 * (q * k * (q * (t + x * (x + 2)) - (t + x) * (1 + x))) := by ring
       rw [this]
       exact mul_le_mul_of_nonneg_left hW2.le (by positivity)
-    have : 4 * q * (1 + x) ^ 2 * (3 * (1 - 2 * t)) < 4 * q * (1 + x) ^ 2 * fhMA t x q :=
+    have : 4 * q * (1 + x) ^ 2 * (3 * (1 - 2 * t)) < 4 * q * (1 + x) ^ 2 * nltM t x q :=
       mul_lt_mul_of_pos_left (by linarith) (by positivity)
     nlinarith
 
@@ -294,42 +297,34 @@ theorem fh_LG_subst {α M t x k q v : ℝ} (ht : 0 < t) (hx : 0 < x) (ht1 : t < 
     positivity
   linarith
 
-/-- **The large-gap exclusion for `1/3 ≤ t ≤ 3/8`** (`MIXED_NONSHORT_FORWARD_HAND_EXCLUSION` §3.1). -/
-theorem fh_LGA_core {t x k q v : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hj : 1 / 30 ≤ 2 * t + x - 1)
+/-- **The large-gap exclusion for `1/3 ≤ t ≤ 3/8`** (`NONSHORT_LOW_T_CALLER` §§1-4) with the new
+multipliers: the negative combined residual of an actual window (premise `hcomb`, from
+`fh_window_comb`) contradicts the positive unit sign and the shape monotonicity. -/
+theorem fh_LGN_core {t x k q v : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hjh : 7 * x < 12 * (1 - 2 * t)) (hk1 : 1 ≤ k) (hko : k < 2 * t + x) (hq : 1 < q)
     (hqs : q * (4 * t + 2 * x - 1) < 1 + x) (hv : v = nhSecN t x)
-    (hcomb : fhComb (fhAlA t x q) (fhMA t x q) t x k q v (Real.log q)
+    (hcomb : fhComb (nltAl q) (nltM t x q) t x k q v (Real.log q)
       (m2F ((t + x) / (1 + x)) q) < 0) : False := by
   have hx : 0 < x := by linarith
-  have hW : 0 < 1 + x := by linarith
   have hq0 : 0 < q := by linarith
   have hj4 : 2 * t + x - 1 < 1 / 4 := by linarith
-  obtain ⟨hα, hM⟩ := fh_LG_mult ht0 (by linarith) hj hq.le hqs.le
-  have hCv := fh_LGA_Cv ht0 (by linarith) hj hj4 hk1 hko.le hq.le hqs.le
-  have hCL : fhCL (fhAlA t x q) t x k q ≤ 0 := by
+  obtain ⟨hα, hM⟩ := fh_LGN_mult ht0 hj hq.le hqs.le
+  have hJ := fh_LG_J ht0 (by linarith) hj hq0.le hqs.le
+  have hCv := fh_LGN_Cv ht0 ht1 hj hj4 hk1 hko.le hq.le hqs.le
+  have hCL : fhCL (nltAl q) t x k q ≤ 0 := by
     unfold fhCL
-    have hJ := fh_LG_J ht0 (by linarith) hj hq0.le hqs.le
     apply mul_nonpos_of_nonneg_of_nonpos _
       (nhNL_nonpos (by linarith) hx.le hq0.le (by linarith))
     apply mul_nonneg (by positivity); nlinarith
+  -- the rational substitutions (`NONSHORT_LOW_T_CALLER` §3): `G_n < 0` with `v_G`, then with `V_L`
   have hG := fh_LG_subst (by linarith) hx (by linarith) hq (by linarith) hv hCv hCL hcomb
-  have hy1 : (q - 1) * (1 + 2 * (2 * t + x - 1)) ≤ (1 - 2 * t) - (2 * t + x - 1) := by nlinarith
-  have hA : 0 < fhComb (fhAlA t x q) (fhMA t x q) t x 1 q (fhVG t x) (nhLp q) (nhFl t x q) := by
-    have h := fhCLGa_pos_y (1 - 2 * t) (2 * t + x - 1) (q - 1) (by linarith) (by linarith)
-      (by linarith) (by linarith) (by linarith) (by linarith) hy1
-    rw [← fh_LGa_link t x q hq0 hx] at h
-    exact pos_of_mul_pos_right h (by positivity)
-  have hB : 0 < fhComb (fhAlA t x q) (fhMA t x q) t x (2 * t + x) q (fhVG t x) (nhLp q) (nhFl t x q) := by
-    have h := fhCLGb_pos_y (1 - 2 * t) (2 * t + x - 1) (q - 1) (by linarith) (by linarith)
-      (by linarith) (by linarith) (by linarith) (by linarith) hy1
-    rw [← fh_LGb_link t x q hq0 hx] at h
-    exact pos_of_mul_pos_right h (by positivity)
-  have hD : (t + x) * (1 + x) ≤ q * (t + x * (x + 2)) := by
-    have hJ0 : 0 ≤ t + x * (x + 2) := by positivity
-    have : (t + x) * (1 + x) ≤ t + x * (x + 2) := by nlinarith
-    have := mul_le_mul_of_nonneg_right hq.le hJ0
-    linarith
-  have := fh_comb_pos_of_ends (by linarith) hq0.le hD hk1 hko.le hA hB
+  have e := fh_comb_sub_v (nltAl q) (nltM t x q) t x k q (fhVG t x) (hrlVL t x) (nhLp q) (nhFl t x q)
+  have hVG := hrl_VG_le_VL hx.le (by linarith : t ≤ 1)
+  have : 0 ≤ (fhVG t x - hrlVL t x) * fhCv (nltAl q) (nltM t x q) t x k q :=
+    mul_nonneg_of_nonpos_of_nonpos (by linarith) hCv.le
+  -- the shape reduction (`NONSHORT_LOW_T_SHAPE` (1)) and the unit sign (`NONSHORT_LOW_T_CALLER` (3))
+  have hs := nlt_shape_ge ht0 ht1 hj hjh.le hk1 hko.le hq.le hqs.le hJ
+  have hu := nlt_unit_pos ht0 ht1 hj hjh.le hq.le hqs.le
   linarith
 
 /-- **The large-gap exclusion for `3/8 ≤ t < 2/5`** (`MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION`). -/
@@ -373,8 +368,8 @@ theorem fh_small_gap_j (W : M2Window) (hF : W.ForwardNext) : 2 * W.nt + W.nx - 1
     have hden : 0 < 4 * W.nt + 2 * W.nx - 1 := by linarith
     rwa [lt_div_iff₀ hden] at this
   rcases le_total W.nt (3 / 8) with h38 | h38
-  · obtain ⟨hα, hM⟩ := fh_LG_mult ht0 ht1.le hj hq.le hqs.le
-    exact fh_LGA_core ht0 h38 hj hjh hk1.le hko hq hqs hv
+  · obtain ⟨hα, hM⟩ := fh_LGN_mult ht0 hj hq.le hqs.le
+    exact fh_LGN_core ht0 h38 hj hjh hk1.le hko hq hqs hv
       (fh_window_comb W hF (by linarith) (by linarith))
   · exact fh_LGB_core h38 ht1 hj hjh (nh_scale_k W) hko hq hqs hv
       (fh_window_comb W hF (by norm_num) zero_le_one)

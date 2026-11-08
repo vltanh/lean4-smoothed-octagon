@@ -14,7 +14,7 @@ abstract coefficients, so that the remaining identity is polynomial (checked by 
 ## Main API
 
 * `fh_comb_dec`: `fhComb(v, L, F) = fhComb(0, 0, 0) + v C_v + L C_L + F·4qW²M`.
-* `fh_clear_LR`, `fh_clear_LG`: the cleared forms.
+* `fh_clear_LR`: the cleared form of the low-ratio links.
 -/
 
 @[expose] public section
@@ -36,17 +36,6 @@ theorem fh_clear_LR {C0 Cv CL CF Nv NL W q R : ℝ} (hW : W ≠ 0) (hq : q ≠ 0
     W * q * (48 * (q + 1) * W * R * (C0 + Nv / (12 * R * W ^ 2 * (q + 1)) * Cv
       + NL / (6 * q * (q + 1)) * CL + 0 * CF)) =
       W * q * (48 * (q + 1) * W * R) * C0 + 4 * q * Nv * Cv + 8 * W ^ 2 * R * NL * CL := by
-  field_simp
-  ring
-
-/-- Clearing for the large-gap links (`v = N_v/(12RW²)`, `L = N_L/(6q(q + 1))`,
-`F = N_F/(6W²(q + 1))`). -/
-theorem fh_clear_LG {C0 Cv CL CF Nv NL NF W q R : ℝ} (hW : W ≠ 0) (hq : q ≠ 0) (hq1 : q + 1 ≠ 0)
-    (hR : R ≠ 0) :
-    W * q * (48 * (q + 1) * W * R * (C0 + Nv / (12 * R * W ^ 2) * Cv
-      + NL / (6 * q * (q + 1)) * CL + NF / (6 * W ^ 2 * (q + 1)) * CF)) =
-      W * q * (48 * (q + 1) * W * R) * C0 + 4 * q * (q + 1) * Nv * Cv + 8 * W ^ 2 * R * NL * CL
-        + 8 * q * R * NF * CF := by
   field_simp
   ring
 
