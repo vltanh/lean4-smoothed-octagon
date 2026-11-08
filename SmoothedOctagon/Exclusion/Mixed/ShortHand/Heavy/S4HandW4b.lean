@@ -5,17 +5,16 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW4c
 /-!
 # Gate S4, hand proof W4: the norm motion in the cost derivative
 
-`archive/lighter-proofs/SHORT_CASIMIR_BOUNDARY_DERIVATIVES.md` §§2-3. On the boundary
-`b = 20x/19`, `a` fixed, `r₀(x, a, u) = 2w - 1/2 + (u - 1)B/a + a/B - a²/K - E_L + log(2aB/K)` is
-affine in `u` with slope `ρ = (r₀)_u = B/a + (S³/K)(1 - 2D/K) + 2(D/K)(D/K - 1)`
-(`hl46W4_R0_affine`), and `∂_x ρ = ∂_u r_{0,x}^♭ = C(c, h)/(361aK³)` with the note's printed `C`
-(`hl46W4_rho_deriv`). Hence `r₀(x, a, U) = r₀(x, a, v) + (U - v)ρ` and
-`d/dx r₀(x, a, U) = f + (U' - v')ρ + (U - v)C/(361aK³) ≥ f`, `f = d/dx r₀(x, a, v(x))`, which is
-the comparison (4). Finally `f + 9/200 = N/(45125aC*²K³)` with the product source (5)
+On the boundary `b = 20x/19`, `a` fixed,
+`r₀(x, a, u) = 2w - 1/2 + (u - 1)B/a + a/B - a²/K - E_L + log(2aB/K)` is affine in `u` with slope
+`ρ = (r₀)_u = B/a + (S³/K)(1 - 2D/K) + 2(D/K)(D/K - 1)` (`hl46W4_R0_affine`), and
+`∂_x ρ = ∂_u r_{0,x}^♭ = C(c, h)/(361aK³)` with an explicit polynomial `C` (`hl46W4_rho_deriv`).
+Hence `r₀(x, a, U) = r₀(x, a, v) + (U - v)ρ` and
+`d/dx r₀(x, a, U) = f + (U' - v')ρ + (U - v)C/(361aK³) ≥ f`, `f = d/dx r₀(x, a, v(x))`. Finally
+`f + 9/200 = N/(45125aC*²K³)` with the eight-term product numerator `N` of `S4HandW4c`
 (`hl46W4_f_eq`), proved term by term against the derivative of `r₀(x, a, v(x))`.
 
-Route: `ρ > 0` is shown as `ρ = (B/a - 1/2) + S³(K - 2D)/K² + 2(D - K/2)²/K²` with `K > 2D`, instead
-of the note's `0 < D/K < 1/3`.
+`ρ > 0` follows from `ρ = (B/a - 1/2) + S³(K - 2D)/K² + 2(D - K/2)²/K²` and `K > 2D`.
 
 ## Main API
 
@@ -41,7 +40,7 @@ noncomputable def hl46W4rho (x a : ℝ) : ℝ :=
   2 * (hl46W4D x a ^ 2 - hl46W4D x a * (1 + x) ^ 3) / hl46W4K x a ^ 2 +
     (a + x * (1 + 1 / 19)) / a - (2 * hl46W4D x a - (1 + x) ^ 3) / hl46W4K x a
 
-/-- The note's `C(c, h)`. -/
+/-- The polynomial `C(c, h)` with `∂_x ρ = C(a - 1, x - 2)/(361aK³)`. -/
 noncomputable def hl46W4C (c h : ℝ) : ℝ :=
   1900 * c ^ 6 - 1083 * c ^ 5 * h ^ 2 - 4582 * c ^ 5 * h + 5485 * c ^ 5 - 6080 * c ^ 4 * h ^ 3 -
     82755 * c ^ 4 * h ^ 2 - 263110 * c ^ 4 * h - 219235 * c ^ 4 + 9766 * c ^ 3 * h ^ 4 +
@@ -125,7 +124,7 @@ theorem hl46W4_Q_deriv (x a : ℝ) : HasDerivAt (fun x => hl46W4Q x a) (hl46W4Qx
 theorem hl46W4_K_pos (x a : ℝ) (hx : 0 < x) : 0 < hl46W4K x a := by
   unfold hl46W4K; positivity
 
-/-- `∂_x ρ = C(a - 1, x - 2)/(361aK³)` (the note's coefficient of §2). -/
+/-- `∂_x ρ = C(a - 1, x - 2)/(361aK³)`. -/
 theorem hl46W4_rho_deriv {x a : ℝ} (hx : 0 < x) (ha : 0 < a) :
     HasDerivAt (fun x => hl46W4rho x a) (hl46W4C (a - 1) (x -
       2) / (361 * a * hl46W4K x a ^ 3)) x := by
@@ -171,7 +170,7 @@ theorem hl46W4_ell_deriv {x a : ℝ} (hx : 0 < x) (ha : 0 < a) :
     ring
   · rfl
 
-/-- The normalisation (5): `f + 9/200 = N/(45125aC*²K³)`. -/
+/-- The normalisation `f + 9/200 = N/(45125aC*²K³)`. -/
 theorem hl46W4_f_eq {x a : ℝ} (hx : 0 < x) (ha : 0 < a) :
     hl46W4f x a + 9 / 200 = hl46W4N x a / (45125 * a * hl46W4Cs x a ^ 2 * hl46W4K x a ^ 3) := by
   have hK0 := hl46W4_K_pos x a hx
@@ -184,8 +183,8 @@ theorem hl46W4_f_eq {x a : ℝ} (hx : 0 < x) (ha : 0 < a) :
   field_simp
   ring
 
-/-- `C > 0` on `1/8 ≤ c ≤ 1/6`, `h ≥ 0` (monomial rule; the note's `C_low` has positive
-coefficients). -/
+/-- `C > 0` on `1/8 ≤ c ≤ 1/6`, `h ≥ 0` (monomial rule: the resulting lower polynomial in
+`h` has positive coefficients). -/
 theorem hl46W4_C_pos {c h : ℝ} (hc : 1 / 8 ≤ c) (hc' : c ≤ 1 / 6) (hh : 0 ≤ h) :
     0 < hl46W4C c h := by
   have hc0 : 0 ≤ c := by linarith

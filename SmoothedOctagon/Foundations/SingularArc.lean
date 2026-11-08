@@ -19,8 +19,6 @@ The interval and the vanishing hypothesis remain explicit. No existence of a
 Pontryagin lift, exclusion of proper singular subarcs in a minimizer, or global cost
 lower bound is asserted. In particular, a nonunique maximizing edge is not
 identified with the full control-independent singular case.
-
-Source draft only: compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

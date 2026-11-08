@@ -232,7 +232,7 @@ private theorem costateRHS_continuousWithinAt {T : ℝ} {u : ℝ → Fin 3 → �
 /-! ### Commutators -/
 
 /-- For a traceless `X` with `det X = 1` and a traceless `A` with `tr(AX) = 0`, `[X, A] = 0`
-forces `A = 0` (QUANTITATIVE_REGULAR_SWITCH_BOUND (11): `[X, [X, A]] = -4A - 2⟨A, X⟩X`). -/
+forces `A = 0`, since `[X, [X, A]] = -4A - 2⟨A, X⟩X`. -/
 private theorem eq_zero_of_commutator_eq_zero {X A : Mat2} (hXtr : X.trace = 0)
     (hdet : X.det = 1) (hAtr : A.trace = 0) (hAX : traceForm A X = 0)
     (hc : X * A - A * X = 0) : A = 0 := by
@@ -305,17 +305,17 @@ theorem qrsb_ae_coord_eq_zero {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ �
 one vertex Hamiltonian `H_j` is negative on `(t₀, t₀ + δ)` and one `H_k` is negative on
 `(t₀ - δ, t₀)` (within `[0, T]`).
 
-If some `H_i(t₀) < 0`, continuity gives `j = k = i`. Otherwise the three vertex Hamiltonians tie
-at `t₀`, which forces `Λ_R(t₀) = 0` (Lemma 8.2.1,
-`hamiltonian_vertices_equal_iff_reducedCostate_eq_zero`) and `tr(A X) = 0`, `A = Λ₁ - (3/2)λJ`; `Q(t₀) > 0` gives `A ≠ 0`, so `b = [X, A] ≠ 0` with `b`
-traceless and `⊥ X`. The costate equation is continuous at `t₀` (its control-dependent part is
-`O(‖Λ_R‖)`), so `Λ_R'(t₀) = b`, and `h_i = ⟨Λ_R, Z_i⟩/⟨X, Z_i⟩` has derivative
-`c_i = ⟨b, Z_i⟩/⟨X, Z_i⟩` at `t₀`. Lemma 8.2.1 applied to `b` shows that the `c_i` are not all
-equal; with `c_k < c_j`, `H_j - H_k = h_k - h_j` changes sign at `t₀` from positive to negative.
+If some `H_i(t₀) < 0`, continuity gives `j = k = i`. Otherwise the three vertex Hamiltonians tie at
+`t₀`, which forces `Λ_R(t₀) = 0` (Hales–Vajjha, Lemma 8.2.1,
+`hamiltonian_vertices_equal_iff_reducedCostate_eq_zero`) and `tr(A X) = 0`, `A = Λ₁ - (3/2)λJ`;
+`Q(t₀) > 0` gives `A ≠ 0`, so `b = [X, A] ≠ 0` with `b` traceless and `⊥ X`. The costate equation is
+continuous at `t₀` (its control-dependent part is `O(‖Λ_R‖)`), so `Λ_R'(t₀) = b`, and
+`h_i = ⟨Λ_R, Z_i⟩/⟨X, Z_i⟩` has derivative `c_i = ⟨b, Z_i⟩/⟨X, Z_i⟩` at `t₀`. Lemma 8.2.1 applied to
+`b` shows that the `c_i` are not all equal; with `c_k < c_j`, `H_j - H_k = h_k - h_j` changes sign
+at `t₀` from positive to negative.
 
-Route: QUANTITATIVE_REGULAR_SWITCH_BOUND §§3-6 make this quantitative with three guard lines
-transported along the flow (its Cases II and III); qualitatively only Case II occurs at a tie,
-and the first-order expansion `Λ_R(t) = (t - t₀) b + o(t - t₀)` replaces the guard lines. -/
+The sign change at a tie comes from the first-order expansion `Λ_R(t) = (t - t₀) b + o(t - t₀)`.
+-/
 theorem qrsb_exists_excluded_vertex {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hK : ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t)) {t₀ : ℝ} (ht₀ : t₀ ∈ Icc 0 T)

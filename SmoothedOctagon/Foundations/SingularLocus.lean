@@ -20,7 +20,6 @@ The star inequalities make all denominator weights positive after negation.
 
 These are pointwise statements. They do not construct a Pontryagin lift of a
 minimizer, eliminate singular intervals, or bound the number of switches.
-Source draft only: compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

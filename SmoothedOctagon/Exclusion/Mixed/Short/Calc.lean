@@ -8,8 +8,8 @@ public import Mathlib.Analysis.Calculus.Deriv.Pow
 /-!
 # Case M2, smaller-short side: logarithm bounds and the turn secant as an average
 
-Real analysis shared by the smaller-short reduction (`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION`,
-`MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL` §§1-2, `MIXED_GLOBAL_SHORT_RUN_VARIATION` §1).
+Real analysis shared by the smaller-short reduction: monotonicity from a derivative sign,
+logarithm bounds, and the turn secant as the average of its integrand.
 
 ## Main API
 
@@ -24,8 +24,8 @@ Real analysis shared by the smaller-short reduction (`MIXED_SMALLER_SHORT_SIX_VA
 * `ss_sec_add`: additivity of `(P - A) Sec(A, B, P)` over adjacent intervals.
 * Monotonicity of `g_B` (`ss_gB_sub`): `ss_sec_gt_right`, `ss_sec_ge_right`, `ss_sec_le_left`
   (`[A, P] ⊆ (0, B]`), `ss_sec_le_right` (`[B, P]`).
-* `ss_sec_cross`: `Sec(a, B, C) < Sec(a, C, B)` for `a < B < C` (`MIXED_GLOBAL_SHORT_RUN_VARIATION`
-  (5)); `ss_V_le`: `Sec(a, C, C) ≤ 13/16` (`MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL` (5)).
+* `ss_sec_cross`: `Sec(a, B, C) < Sec(a, C, B)` for `a < B < C`; `ss_V_le`:
+  `Sec(a, C, C) ≤ 13/16`.
 -/
 
 @[expose] public section
@@ -120,8 +120,8 @@ theorem ss_log_ge_cubic {z : ℝ} (hz : 1 ≤ z) :
     field_simp
     ring
 
-/-- `log z ≤ (z - 1)(z² + 10z + 1)/(6z(z + 1))` for `z ≥ 1` (`MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL`
-(3); derivative `(z - 1)⁴/(6z²(z + 1)²)`). -/
+/-- `log z ≤ (z - 1)(z² + 10z + 1)/(6z(z + 1))` for `z ≥ 1` (derivative
+`(z - 1)⁴/(6z²(z + 1)²)`). -/
 theorem ss_log_le_pade3 {z : ℝ} (hz : 1 ≤ z) :
     Real.log z ≤ (z - 1) * (z ^ 2 + 10 * z + 1) / (6 * z * (z + 1)) := by
   have h := ss_le_of_deriv
@@ -290,8 +290,7 @@ theorem ss_sec_le_right {B P : ℝ} (hB : 0 < B) (hBP : B ≤ P) : m2Sec B B P �
     exact div_nonpos_of_nonpos_of_nonneg this (by positivity)
   linarith
 
-/-- **The equal-centre average comparison** (`MIXED_GLOBAL_SHORT_RUN_VARIATION` (5),
-`MIXED_GLOBAL_SHORT_BRIDGE_SCALE` §1): for `a < B < C`, `Sec(a, B, C) < Sec(a, C, B)`. Along
+/-- **The equal-centre average comparison**: for `a < B < C`, `Sec(a, B, C) < Sec(a, C, B)`. Along
 `t = a + s(C - a)`, `t' = a + s(B - a)` the integrands satisfy `g_B(t) < g_C(t')` for `s < 1`. -/
 theorem ss_sec_cross {a B C : ℝ} (ha : 0 < a) (haB : a < B) (hBC : B < C) :
     m2Sec a B C < m2Sec a C B := by
@@ -345,9 +344,8 @@ theorem ss_sec_cross {a B C : ℝ} (ha : 0 < a) (haB : a < B) (hBC : B < C) :
   rw [k1, k2, sub_div, sub_div]
   linarith
 
-/-- **The smaller-turn ceiling** (`MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL` (5), EQUAL_CENTRES (6)-(7)):
-`V(x) = Sec(1, x, x) < 3/2 - log 2 < 13/16`; here `Sec(a, C, C) ≤ 13/16` for `a < C`, from
-`log z ≥ 2w + (2/3)w³`. -/
+/-- **The smaller-turn ceiling**: `V(x) = Sec(1, x, x) < 3/2 - log 2 < 13/16`; here
+`Sec(a, C, C) ≤ 13/16` for `a < C`, from `log z ≥ 2w + (2/3)w³`. -/
 theorem ss_V_le {a C : ℝ} (ha : 0 < a) (haC : a < C) : m2Sec a C C ≤ 13 / 16 := by
   have hC : 0 < C := by linarith
   have hz : 1 ≤ (C + C) / (a + C) := by rw [le_div_iff₀ (by positivity)]; linarith

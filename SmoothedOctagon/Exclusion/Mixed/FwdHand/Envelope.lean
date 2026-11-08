@@ -7,14 +7,14 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.CertPn
 /-!
 # Case M2, forward successor by hand: the envelope Casimir sign
 
-`MIXED_NONSHORT_FORWARD_ENVELOPE_CASIMIR_SIGN`: on `1/3 ≤ t ≤ 2/5`, `0 ≤ j ≤ 1/30`,
+On `1/3 ≤ t ≤ 2/5`, `0 ≤ j ≤ 1/30`,
 `1 ≤ k ≤ 31/30` and `3/4 ≤ v ≤ V`,
 `𝒢 = B²{4vw_U - [h₁ + v - g]²}/(16s²) > 9193/50000` (`fh_envelope`).
 
 `N(v) = B²{4vw_U - [h₁ + v - g]²} = 4v(K₀ + vP_v) - (D₀ + D'v)²` (`fh_Nen_eq`) is a quadratic in `v`
 with `N'' = 2(4P_v - D'²) < 0` (`fh_Nen_concave`, arithmetic-geometric mean) and `N'(3/4) < 0`
 (certificate `CertEn`), so `N(v) ≥ N(V)`; and `N(V) > 16s²·9193/50000` (certificate `CertPn`).
-Route: the two coefficient-domination bounds of §§2-4 are generated Bernstein certificates.
+These two coefficient-domination bounds are generated Bernstein certificates.
 
 ## Main API
 
@@ -124,8 +124,7 @@ theorem fh_Pn_link (t x k : ℝ) (ht : 0 < t) (hx : 0 < x) :
   unfold fhCPnD0_0 fhCPnD0_1 fhCPnD0_2 fhCPnD0_3 fhCPnD0_4 fhCPnD0_5 fhCPnD0_6 fhCPnD0_7 fhCPnD0_8 fhCPnD0_9 fhCPnD0_10 fhCPnD0_11 fhCPnD0_12 fhCPnD0_13 fhCPnD1_0 fhCPnD1_1 fhCPnD1_2 fhCPnD1_3 fhCPnD1_4 fhCPnD1_5 fhCPnD1_6 fhCPnD1_7 fhCPnD1_8 fhCPnD1_9 fhCPnD1_10 fhCPnD1_11 fhCPnD1_12 fhCPnD1_13 fhCPnD2_0 fhCPnD2_1 fhCPnD2_2 fhCPnD2_3 fhCPnD2_4 fhCPnD2_5 fhCPnD2_6 fhCPnD2_7 fhCPnD2_8 fhCPnD2_9 fhCPnD2_10 fhCPnD2_11 fhCPnD2_12 fhCPnD2_13
   ring
 
-/-- **Concavity in the incoming norm** (`MIXED_NONSHORT_FORWARD_ENVELOPE_CASIMIR_SIGN` (6)):
-`4P_v < D'²` (arithmetic-geometric mean, `B > p²`). -/
+/-- **Concavity in the incoming norm**: `4P_v < D'²` (arithmetic-geometric mean, `B > p²`). -/
 theorem fh_Nen_concave {t x k : ℝ} (ht : 0 < t) (hx : 0 < x) (hk : t ^ 2 < k) :
     4 * fhPv t x k < fhDp t x k ^ 2 := by
   have hp : 0 < t + x := by linarith
@@ -149,7 +148,8 @@ theorem fh_Nen_concave {t x k : ℝ} (ht : 0 < t) (hx : 0 < x) (hk : t ^ 2 < k) 
   rw [hDp]
   nlinarith [sq_nonneg (a - b), mul_lt_mul_of_pos_left hab (by positivity : (0 : ℝ) < b)]
 
-/-- **The envelope Casimir sign** (`MIXED_NONSHORT_FORWARD_ENVELOPE_CASIMIR_SIGN` (5)). -/
+/-- **The envelope Casimir sign**: `𝒢 > 9193/50000` for `1/3 ≤ t ≤ 2/5`, `0 ≤ j ≤ 1/30`,
+`1 ≤ k ≤ 31/30` and `3/4 ≤ v ≤ V`. -/
 theorem fh_envelope {t x k v : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj0 : 0 ≤ 2 * t + x - 1)
     (hj1 : 2 * t + x - 1 ≤ 1 / 30) (hk0 : 1 ≤ k) (hk1 : k ≤ 31 / 30) (hv0 : 3 / 4 ≤ v)
     (hvV : v ≤ fhVq t x) :

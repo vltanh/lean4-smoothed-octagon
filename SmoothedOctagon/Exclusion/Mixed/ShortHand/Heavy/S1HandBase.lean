@@ -6,8 +6,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1CAux
 /-!
 # Gate S1 by hand: shared one-variable tools and the factored outer source
 
-Shared tools for the hand proofs of the two S1 faces (`archive/lighter-proofs/`
-`SHORT_OUTER_COMPLETE.md`, `SHORT_CENTRAL_COMPLETE.md` and the notes they cite).
+Shared tools for the hand proofs of the two S1 faces.
 
 * One-variable calculus: a function with nonpositive second derivative on `[p, q]` is at least
   `min (f p) (f q)` (`hl1_conc_min`); a function whose derivative is concave and positive at the
@@ -16,10 +15,10 @@ Shared tools for the hand proofs of the two S1 faces (`archive/lighter-proofs/`
 * The cubic logarithm majorant `ℓ(y) = 2s + (2/3)s³`, `s = (y - 1)/(y + 1)` (`hh1ell`): its
   derivatives `ℓ' = 8(y² + 1)/(y + 1)⁴`, `ℓ'' = -16(y² - y + 2)/(y + 1)⁵`,
   `ℓ''' = 16(3y² - 6y + 11)/(y + 1)⁶` and the comparisons `ℓ' ≤ 1/y`, `ℓ'' ≥ -1/y²` for
-  `0 < y ≤ 1` (`SHORT_OUTER_BETA` (8), `SHORT_OUTER_S_BETA` (5)).
-* The factored outer source (`SHORT_OUTER_S_BETA` (4)): `J = K E₀ + 2S - 1`, `M = K² - SK + S²`,
+  `0 < y ≤ 1`.
+* The factored outer source: `J = K E₀ + 2S - 1`, `M = K² - SK + S²`,
   `w = (M + uD² - DJ)/(49α⁴)`, `E_L = (2uD - J)/(7α²)`, `Γ_* = (4uM - J²)/(576α⁴)`, and the
-  residual form `R₁ = (α/B)(7w - 17/4) + (u - 1)B/α - E_L + ℓ(y) + 6/7` (`(14)`).
+  residual form `R₁ = (α/B)(7w - 17/4) + (u - 1)B/α - E_L + ℓ(y) + 6/7`.
 
 ## Main API
 
@@ -62,8 +61,7 @@ theorem hl1_conc_min {f f' f'' : ℝ → ℝ} {p q t : ℝ} (hpt : p ≤ t) (htq
     exact (min_le_right _ _).trans (by linarith)
 
 /-- **A concave derivative positive at the left end**: if `f'` has nonpositive derivative `f'''`
-on `[p, q]` (through `f''`) and `f'(p) > 0`, then `f ≥ min (f p) (f q)` on `[p, q]`
-(`SHORT_OUTER_S_TERMINAL` §1). -/
+on `[p, q]` (through `f''`) and `f'(p) > 0`, then `f ≥ min (f p) (f q)` on `[p, q]`. -/
 theorem hl1_dconc_min {f f' f'' f''' : ℝ → ℝ} {p q t : ℝ} (hpt : p ≤ t) (htq : t ≤ q)
     (h1 : ∀ s ∈ Icc p q, HasDerivAt f (f' s) s) (h2 : ∀ s ∈ Icc p q, HasDerivAt f' (f'' s) s)
     (h3 : ∀ s ∈ Icc p q, HasDerivAt f'' (f''' s) s) (h4 : ∀ s ∈ Icc p q, f''' s ≤ 0)
@@ -112,7 +110,7 @@ theorem hl1_conc3 {f : ℝ → ℝ} {u1 u u2 κ : ℝ} (h1 : u1 ≤ u) (h2 : u �
   have := mul_neg_of_pos_of_neg h12 (sub_neg.2 (not_le.mp hc))
   linarith
 
-/-- The outer `F₀` is a concave quadratic in the norm (`SHORT_OUTER_BETA` §6). -/
+/-- The outer `F₀` is a concave quadratic in the norm. -/
 theorem hl1o_F0_u3 (x a b u1 u2 : ℝ) : ∀ s, (u2 - u1) * hh1oF0 x a b s -
     (u2 - s) * hh1oF0 x a b u1 - (s - u1) * hh1oF0 x a b u2 =
       (1 + x) ^ 2 * hh1oK a ^ 2 / (576 * a ^ 4) * (s - u1) * (u2 - s) * (u2 - u1) := by
@@ -120,7 +118,7 @@ theorem hl1o_F0_u3 (x a b u1 u2 : ℝ) : ∀ s, (u2 - u1) * hh1oF0 x a b s -
   simp only [hh1oF0, hh1oR2, hh1ow, hh1oEL, hh1oG, hh1oE]
   ring
 
-/-- The outer `F₁` is a concave quadratic in the norm (`SHORT_OUTER_BETA` §6). -/
+/-- The outer `F₁` is a concave quadratic in the norm. -/
 theorem hl1o_F1_u3 (x a b u1 u2 : ℝ) : ∀ s, (u2 - u1) * hh1oF1 x a b s -
     (u2 - s) * hh1oF1 x a b u1 - (s - u1) * hh1oF1 x a b u2 =
       (1 + x) ^ 2 * hh1oK a ^ 2 / (576 * a ^ 4) * (s - u1) * (u2 - s) * (u2 - u1) := by
@@ -223,10 +221,10 @@ theorem hl1_ell2_nonpos {y : ℝ} (hy : -1 < y) : hl1ell2 y ≤ 0 := by
 
 /-! ### The factored outer source -/
 
-/-- `J = K E₀ + 2S - 1` (`SHORT_OUTER_S_BETA` (4)). -/
+/-- `J = K E₀ + 2S - 1`. -/
 noncomputable def hl1oJ (x a u : ℝ) : ℝ := hh1oK a * hsE0 x u + 2 * (1 + x) - 1
 
-/-- `M = K² - SK + S²` (`SHORT_OUTER_S_BETA` (4)). -/
+/-- `M = K² - SK + S²`. -/
 noncomputable def hl1oM (x a : ℝ) : ℝ := hh1oK a ^ 2 - (1 + x) * hh1oK a + (1 + x) ^ 2
 
 theorem hl1o_w {x a b u : ℝ} (hx : 0 < x) (ha : a ≠ 0) :
@@ -250,7 +248,7 @@ theorem hl1o_G {x a u : ℝ} (hx : 0 < x) (ha : a ≠ 0) :
   field_simp
   ring
 
-/-- **The residual form of `F₁`** (`SHORT_OUTER_S_BETA` (14)):
+/-- **The residual form of `F₁`**:
 `F₁ = Γ_* - c[(α/B)(7w - 17/4) + (u - 1)B/α - E_L + ℓ(y) + 6/7] - g`. -/
 theorem hl1o_F1_R1 {x a b u : ℝ} (ha : a ≠ 0) (hab : a + b ≠ 0) :
     hh1oF1 x a b u = hh1oG x a u - 7 / 96 * (a / (a + b) * (7 * hh1ow x a b u - 17 / 4) +

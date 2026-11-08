@@ -5,8 +5,8 @@ public import SmoothedOctagon.Exclusion.ShortRun.Wind.Main
 /-!
 # The winding of the costate-metric angles over a whole period
 
-`MIXED_GLOBAL_PROJECTIVE_WINDING` for an arbitrary normal period (any sign word), in the form used
-by `MIXED_GLOBAL_REVERSE_ANGLE_DENSITY` (9): with the continuous angle `κ` of
+The projective winding of an arbitrary normal period (any sign word), in the form used by the
+angle-density bound (`Density/Bound`): with the continuous angle `κ` of
 `Exclusion/ShortRun/Wind` (`wd_kap`, for `L = Q K`), every piece `n` carries an incoming and an
 outgoing base vector (`cg_inB`, `cg_outB`: the physical directions of the switch vectors
 `y_{n-1}`, `y_n`, up to sign and positive factors), and the increments `δ_n = κ_n(out) - κ_n(in)`
@@ -14,7 +14,7 @@ sum to exactly `π/3` over one period (`cg_winding`). At a turn `δ_n = 0` (`cg_
 `cg_turn_rf`); at a reverse centre `- -` the costate angle is `π/3 + δ_n` (`cg_angle_mm`, which is
 `wd_centre`) and at a forward piece `+ +` it is `π/3 - δ_n` (`cg_angle_pp`).
 
-Route: the generalization of `wd_winding_aux` from the all-short word to every word. The base
+The proof extends `wd_winding_aux` from the all-short word to every word. The base
 vectors of a piece are eigenvectors of its tangent factor (`cg_eig_inB`, `cg_eig_outB`), so `κ` is
 constant along the piece (`wd_track_piece`); consecutive pieces share their switch direction
 (`cg_link`), and the seam gains the `π/3` of the competitive frame (`wd_seam`, `cg_seam_vec`).

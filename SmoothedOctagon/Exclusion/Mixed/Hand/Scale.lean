@@ -10,19 +10,18 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Order
 The Casimir lower bound at the reverse centre `a` of an actual window, with the competitive cap
 `γ² < 9193/50000` (`M2Window.cas_lt`):
 
-* `nh_a_sq`: `a² < 2/3` (`HAND_PROOF_REFINEMENTS` §2);
-* `nh_scale_of_t`: if `t ≤ 2/5`, then `a < 4/5` (`MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND`).
+* `nh_a_sq`: `a² < 2/3`;
+* `nh_scale_of_t`: if `t ≤ 2/5`, then `a < 4/5`.
 
 In the centre coordinates `r = a/(a + b)`, `t = a/(a + c)`, `ρ = a²/(a² + 4)` (`ρ < rt`),
 `γ² = (4uv - E²)/(16(1 - ρ)²)` (`nh_window_cas`). Lowering both incident norms to a floor `μ`
 (`nh_lower_norms`) and raising both ratios to a cap `ζ` (`nh_psi_mono`) gives
 `γ² ≥ (4μ² - B(ρ)²)/(16(1 - ρ)²)` with `B(ρ) = 1 - ρ + log ρ + 2ψ_μ(ζ)`; the cleared comparison
-`φ(ρ) = 4μ² - B(ρ)² - 16·cap·(1 - ρ)²` is increasing (`nh_phi_mono`; Route: its derivative
-`2(1 - ρ)(16 cap - B/ρ)` replaces the derivative of the quotient) and positive at the left end of
-the excluded interval. For `a < 4/5` the floor is `μ = 94/125` (`nh_turn_floor`, Route: the
-explicit rational relaxation of `f_η(q)` with a discriminant in place of the square root of
-`EXPLICIT_TURN_NORM_FLOOR`), and the excluded interval is `ρ ∈ [4/29, 3/20)` (the window's
-`a² < 12/17` in place of `ρ < 1/7`).
+`φ(ρ) = 4μ² - B(ρ)² - 16·cap·(1 - ρ)²` is increasing (`nh_phi_mono`: its derivative is
+`2(1 - ρ)(16 cap - B/ρ)`) and positive at the left end of the excluded interval. For `a < 4/5` the
+floor is `μ = 94/125` (`nh_turn_floor`: with `log q < L₊(q)` the turn secant minus `94/125` is
+bounded below by a quadratic in `q` with negative discriminant), and the excluded interval is
+`ρ ∈ [4/29, 3/20)` (from the window's `a² < 12/17`).
 -/
 
 @[expose] public section
@@ -121,7 +120,7 @@ theorem nh_phi34_mono {y y' : ℝ} (hy : 0 < y) (hyy : y ≤ y') :
       positivity
   exact hmono (Set.left_mem_Icc.2 hyy) (Set.right_mem_Icc.2 hyy) hyy
 
-/-- The lower diagonal bound (`MIXED_REVERSE_CENTRE_SCALE_BOUND` (7)): at the norm floor `3/4`,
+/-- The lower diagonal bound: at the norm floor `3/4`,
 `E₀ ≥ 1 + ρ - 1/(8ρ)` for `ρ < rt`, `r, t < 1/2`. -/
 theorem nh_E0_lower {r t ρ : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hr2 : r < 1 / 2) (ht2 : t < 1 / 2)
     (hρ0 : 0 < ρ) (hρrt : ρ < r * t) (hρ1 : ρ < 1 / 4) :
@@ -216,8 +215,9 @@ theorem nh_turn_disc (η : ℝ) (h0 : (3 / 5) ≤ η) (h1 : η ≤ 1) :
     0 < -((6 + 6 * η ^ 2 - 10 * η - 6 * (94 / 125)) ^ 2 - 4 * (6 - η - 6 * (94 / 125)) * (6 * η ^ 2 - η)) := by
   exact nh_turn_disc_l0 η h0 h1
 
-/-- **The turn floor** (Route for `EXPLICIT_TURN_NORM_FLOOR` (3)): for a turn with
-`η = B/(A + B) ≥ 3/5` and `A < P`, `Sec(A, B, P) > 94/125`. -/
+/-- **The turn floor**: for a turn with `η = B/(A + B) ≥ 3/5` and `A < P`,
+`Sec(A, B, P) > 94/125`. In `q = (P + B)/(A + B)`, `Sec = 1 + η²/q - η log q/(q - 1)`; the bound
+`log q < L₊(q)` leaves a quadratic in `q` whose discriminant is negative (`nh_turn_disc`). -/
 theorem nh_turn_floor {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hAP : A < P) (hη : 3 / 5 ≤ B / (A + B)) :
     94 / 125 < m2Sec A B P := by
   have hAB : 0 < A + B := by linarith
@@ -319,7 +319,7 @@ theorem nh_log_five_thirds : (1 / 2 : ℝ) < Real.log (5 / 3) := by
   norm_num at this ⊢
   linarith
 
-/-- **The sharpened central scale** `a² < 2/3` (`HAND_PROOF_REFINEMENTS` §2). -/
+/-- **The sharpened central scale** `a² < 2/3`. -/
 theorem nh_a_sq (W : M2Window) : W.a ^ 2 < 2 / 3 := by
   obtain ⟨hr0, ht0, hrt, ht2, hρ0, hρrt, hρ3, hUr, hUt, hE, hEb⟩ := nh_window_centre W
   set r := W.a / (W.a + W.b) with hr
@@ -401,7 +401,7 @@ theorem nh_a_sq (W : M2Window) : W.a ^ 2 < 2 / 3 := by
     rw [lt_div_iff₀ (by positivity)]; linarith
   linarith
 
-/-- **The conditional scale bound** (`MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND`): if
+/-- **The conditional scale bound**: if
 `t = a/(a + c) ≤ 2/5`, then `a < 4/5`. -/
 theorem nh_scale_of_t (W : M2Window) (ht25 : W.a / (W.a + W.c) ≤ 2 / 5) : W.a < 4 / 5 := by
   obtain ⟨hr0, ht0, hrt, ht2, hρ0, hρrt, hρ3, hUr, hUt, hE, hEb⟩ := nh_window_centre W

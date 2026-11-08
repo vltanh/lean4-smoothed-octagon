@@ -9,21 +9,18 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Order
 /-!
 # Case M2, forward successor by hand: the necessary conditions of an actual window
 
-`MIXED_NONSHORT_FORWARD_HAND_EXCLUSION` §1, for an actual window `W` with a forward successor, in
-the normalized coordinates `t, x, k, q` (`M2Window.nt`, …):
+For an actual window `W` with a forward successor, in the normalized coordinates `t, x, k, q`
+(`M2Window.nt`, …):
 
-* `fh_window_tStar`: the boundary next norm `𝒯_* ≥ 3/4` (`MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION`
-  (4)-(6): `𝒯` decreases along the root set and `w* < w`);
+* `fh_window_tStar`: the boundary next norm `𝒯_* ≥ 3/4` (`𝒯` decreases along the root set and
+  `w* < w`);
 * `fh_window_TP`: `4qW² C_*(3/4 - 𝒯_*) ≤ 0` in cleared form, through the exact transport
-  identity `𝒯_* = 𝒯_U + e(Je² - 1)N/(tW²DE²)` (`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` (4));
-* `fh_window_comb`: **the combined residual is negative**, `fhComb α M < 0` for `α > 0`, `M ≥ 0`
-  (`MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (7)-(8));
-* `fh_window_order`: `k < 2t + x` (the common order of `MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §5,
-  from `nh_reverse_core`);
-* `fh_window_quarter`: `t > 1/4` (`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` (1), from
-  `nh_low_unit`);
+  identity `𝒯_* = 𝒯_U + e(Je² - 1)N/(tW²DE²)`;
+* `fh_window_comb`: **the combined residual is negative**, `fhComb α M < 0` for `α > 0`, `M ≥ 0`;
+* `fh_window_order`: `k < 2t + x` (the common order, from `nh_reverse_core`);
+* `fh_window_quarter`: `t > 1/4` (from `nh_low_unit`);
 * `fh_window_T`: `t < T(x)`, and `fh_window_x_lt_one`: `x < 1`, `fh_window_four`: `4t + x < 2`;
-* `fh_window_swap`: `q < W/(4t + 2x - 1)` (`MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND` (7)).
+* `fh_window_swap`: `q < W/(4t + 2x - 1)` (the quantitative swap bound).
 -/
 
 @[expose] public section
@@ -68,9 +65,8 @@ theorem fh_window_coords (W : M2Window) :
     nlinarith [hq']
   exact ⟨hT, ht, hx, hk, hq, ha, hc, hd, hK, hQ, hZ, rfl⟩
 
-/-- **The boundary next norm is at least `3/4`** (`MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION`
-(4)-(6)): on the root set `𝒯` is affine in `w` with negative slope, `w* < w`, and the actual next
-norm is at least `g_r(s) ≥ 3/4`. -/
+/-- **The boundary next norm is at least `3/4`**: on the root set `𝒯` is affine in `w` with negative
+slope, `w* < w`, and the actual next norm is at least `g_r(s) ≥ 3/4`. -/
 theorem fh_window_tStar (W : M2Window) (hF : W.ForwardNext) : 3 / 4 ≤ W.tStar := by
   obtain ⟨-, hroot, -, hlt⟩ := m2_comparison W
   obtain ⟨s, has, -, -, hts, -, -⟩ := hF
@@ -144,7 +140,7 @@ theorem fh_E_D_pos {t x k q : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x) (hk :
       apply div_pos (mul_pos hx (by linarith)) hW
     linarith
 
-/-- **The cleared next-norm condition** (`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` (4)-(5)):
+/-- **The cleared next-norm condition**:
 `4qW² C_*(3/4 - 𝒯_*) = fhTP + 4q(W² - Jq²)N ≤ 0`. -/
 theorem fh_window_TP (W : M2Window) (hF : W.ForwardNext) :
     fhTP W.nt W.nx W.nk W.nq W.v +
@@ -200,8 +196,7 @@ theorem fh_window_TP (W : M2Window) (hF : W.ForwardNext) :
     positivity
   nlinarith
 
-/-- **The combined residual is negative at an actual forward window**
-(`MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (7)-(8)): for `α > 0`, `M ≥ 0`,
+/-- **The combined residual is negative at an actual forward window**: for `α > 0`, `M ≥ 0`,
 `αN + C_*(3/4 - 𝒯_*) + M(F_{p/W}(q) - v) < 0`, in the cleared form `fhComb`. -/
 theorem fh_window_comb (W : M2Window) (hF : W.ForwardNext) {α M : ℝ} (hα : 0 < α) (hM : 0 ≤ M) :
     fhComb α M W.nt W.nx W.nk W.nq W.v (Real.log W.nq)
@@ -219,8 +214,7 @@ theorem fh_window_comb (W : M2Window) (hF : W.ForwardNext) {α M : ℝ} (hα : 0
     positivity
   nlinarith
 
-/-- **The common order** `k < 2t + x` (`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §5): otherwise
-the scalar reverse exclusion gives `N > 0`. -/
+/-- **The common order** `k < 2t + x`: otherwise the scalar reverse exclusion gives `N > 0`. -/
 theorem fh_window_order (W : M2Window) : W.nk < 2 * W.nt + W.nx := by
   obtain ⟨ht, -, hx, hk1, hq, hqW, hv, hvU, -, hF, -⟩ := nh_window_basic W
   by_contra h
@@ -235,7 +229,8 @@ theorem fh_window_T (W : M2Window) :
   obtain ⟨-, ht2, hx, -, -, -, hv, -, hg, -, -⟩ := nh_window_basic W
   exact nh_t_lt_T (by linarith) hx hv hg
 
-/-- **The common ratio exceeds one quarter** (`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` (1)). -/
+/-- **The common ratio exceeds one quarter**: for `t ≤ 1/4` the unit-shape sign `nh_low_unit`
+gives `N₁ > 0`, and `N` increases with the shape, contradicting `N < 0`. -/
 theorem fh_window_quarter (W : M2Window) : 1 / 4 < W.nt := by
   obtain ⟨ht, -, hx, hk1, hq, -, hv, hvU, -, hF, -⟩ := nh_window_basic W
   have ho := fh_window_order W
@@ -259,7 +254,7 @@ theorem fh_window_x_lt_one (W : M2Window) : W.nx < 1 := by
   norm_num at this
   linarith
 
-/-- `4t + x < 2` (`MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND` §2): `T(x) < (2 - x)/4` on `(0, 1]`. -/
+/-- `4t + x < 2`: `T(x) < (2 - x)/4` on `(0, 1]`. -/
 theorem fh_window_four (W : M2Window) : 4 * W.nt + W.nx < 2 := by
   have hT := fh_window_T W
   have hx1 := fh_window_x_lt_one W
@@ -275,8 +270,8 @@ theorem fh_window_four (W : M2Window) : 4 * W.nt + W.nx < 2 := by
     by_contra h; push Not at h; nlinarith
   linarith
 
-/-- **The quantitative swap bound** (`MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND` (7)):
-`q < W/(4t + 2x - 1)`. -/
+/-- **The quantitative swap bound**: `q < W/(4t + 2x - 1)`, from the stronger secant comparison
+`fh_sec_swap_q` and the incoming floor. -/
 theorem fh_window_swap (W : M2Window) : W.nq < (1 + W.nx) / (4 * W.nt + 2 * W.nx - 1) := by
   obtain ⟨ht, ht2, hx, hk1, hq, hqW, hv, -, -, hF, -⟩ := nh_window_basic W
   have ho := fh_window_order W

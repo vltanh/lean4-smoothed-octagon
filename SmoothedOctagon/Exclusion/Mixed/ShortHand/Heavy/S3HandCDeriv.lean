@@ -5,23 +5,22 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S3Leaves
 /-!
 # Gate S3, the central face by hand: the shape derivative
 
-Hand proof of the leaf `hs3_central_alpha` (`DISPLACEMENT_CENTRAL_FACE` §2), first part:
-the derivative of the two central tests along the central boundary, following
-`archive/lighter-proofs/SHORT_DISPLACEMENT_CENTRAL_SHAPE.md` §1 (identity (3)).
+Proof of the leaf `hs3_central_alpha`, first part: the derivative of the two central tests along
+the central boundary.
 
 Along `b = x + B(a - 1)`, `B = 25x/(15x + 36)`, at `q = q_c = a²/K`, `K = x(x + 2) + a²`, the
 transport is `w = λ²v + d²u - dλE`, `E_L = 2du - λE` with `λ = S²/K`, `d = D/K`, `S = 1 + x`,
 `E = S(u - 1) + 3/S - 1/S²`, `v = 1 - 1/S + 1/S²` (`hl3c_ELs`, `hl3c_Ws`). With `L = 2a/K`,
 `A = 1 + 2B + (x - B - Bx)/a`, `u_b = -(x - 1)(g - 1/5808)/(b - 1)²`, the chain rule gives
 `q' = L(1 - q)`, `λ' = -Lλ`, `d' = LA - Ld`, `u' = Bu_b`, `p' = (x - B)/(a + b)²`, and the test
-`F_i = J + n_i(w - 3/4)` has derivative `hl3cH x a n_i N_i` (the note's (3)), `N_i = n_i'`.
+`F_i = J + n_i(w - 3/4)` has derivative `hl3cH x a n_i N_i`, `N_i = n_i'`.
 The identity is assembled from these small chain-rule pieces; no cleared numerator is expanded.
 
 ## Main API
 
 * Path quantities `hl3cK`, `hl3cB`, `hl3cE`, `hl3cv`, `hl3cW`, `hl3cEL`, `hl3cp`, `hl3cu`, `hl3clam`,
   `hl3cd`, `hl3cL`, `hl3cA`, `hl3cub`, `hl3cz`, `hl3cy`, `hl3cn0`, `hl3cn1`, `hl3cN0`, `hl3cN1`.
-* `hl3cH x a n N`: the derivative (3).
+* `hl3cH x a n N`: the shape derivative.
 * `hl3c_hasDerivAt_F0`, `hl3c_hasDerivAt_F1`: `F_i(x, a, b(x, a), ū(x, b(x, a)), q_c(x, a))` has
   derivative `hl3cH x a n_i N_i` at every `a > 1`.
 -/
@@ -92,7 +91,7 @@ noncomputable def hl3cN0 (x a : ℝ) : ℝ :=
 noncomputable def hl3cN1 (x a : ℝ) : ℝ :=
   -(hl3cp x a / hsQc x a) * hl3cz x a - 20 / (5 * a - 1) ^ 2
 
-/-- **The shape derivative** (the note's (3)) of `F = J + n(w - 3/4)` with `n' = N`. -/
+/-- **The shape derivative** of `F = J + n(w - 3/4)` with `n' = N`. -/
 noncomputable def hl3cH (x a n N : ℝ) : ℝ :=
   (x - hl3cB x) / a ^ 2 * (1 - hl3cp x a + hl3cp x a ^ 2 - hl3cu x a) +
     2 * (1 - hsQc x a) ^ 2 / a +
@@ -124,7 +123,8 @@ theorem hl3c_Ws (x be al u : ℝ) (hx : 0 < x) (hal : 0 < al) :
   field_simp
   ring
 
-/-- The central tests in the note's form. -/
+/-- The central tests in the path quantities: `J + n(w - 3/4)` with `p`, `u`, `E_L`, `w` along the
+central boundary. -/
 theorem hl3c_F_eq (x a n : ℝ) (hx : 0 < x) (ha : 0 < a) :
     hs3Fn x (hs3b x a) a (hl3cu x a) (hsQc x a) n (log (2 * hsQc x a / hl3cp x a)) =
       (hl3cu x a - 1) / hl3cp x a + hl3cp x a + 1 - hsQc x a -
@@ -389,7 +389,7 @@ theorem hl3c_hd_J (hx : 1 < x) (ha : 1 < a) :
   field_simp
   ring
 
-/-- **The shape derivative** (the note's (3)), for any duration weight `n` with `n' = N`. -/
+/-- **The shape derivative**, for any duration weight `n` with `n' = N`. -/
 theorem hl3c_hasDerivAt {nF : ℝ → ℝ} {N : ℝ} (hx : 1 < x) (ha : 1 < a) (hn : HasDerivAt nF N a) :
     HasDerivAt (fun s => (hl3cu x s - 1) / hl3cp x s + hl3cp x s + 1 - hsQc x s -
         hl3cEL x (hl3clam x s) (hl3cd x s) (hl3cu x s) + log (2 * hsQc x s / hl3cp x s) +

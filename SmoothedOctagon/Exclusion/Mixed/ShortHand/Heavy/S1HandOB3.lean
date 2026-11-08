@@ -5,25 +5,23 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOB2
 /-!
 # Gate S1 by hand, outer face, branch B: the test `F₀`
 
-`SHORT_OUTER_BETA_LOW_SHAPE`, `SHORT_OUTER_ALPHA_LOW_SHAPE`, `SHORT_OUTER_LOW_SHAPE_TERMINAL`.
 On `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `6α² ≥ x(x + 2)`, `x ≤ β ≤ x + (10/13)(α - 1)`,
 `u_f ≤ u ≤ u_ℓ(x, β)`:
 
 * norm concavity at the actual point reduces `u` to the two curves `u_f(x)`, `u_ℓ(x, β)`;
 * `β ↦ F₀` decreases with slope `≤ -7/5120` at a fixed norm (`hl1o_F0_bmono`), and along the ceiling
-  `u_ℓ(x, β)` as well: `(F₀)_u ≥ -1/6` on the capped strip (`(8)-(15)`; `(F₀)_u` is affine
-  decreasing in `u` and concave in `β`) and `0 ≤ -(u_ℓ)_β ≤ 15/1992` (`(16)-(17)`); so `C = 10/13`;
+  `u_ℓ(x, β)` as well: `(F₀)_u ≥ -1/6` on the capped strip (`(F₀)_u` is affine
+  decreasing in `u` and concave in `β`) and `0 ≤ -(u_ℓ)_β ≤ 15/1992`; so `C = 10/13`;
 * at `C = 10/13`, `α ↦ F₀` increases at a fixed norm: in the reciprocal shape
   `g′(r) ≤ P′(r) + ce/Z² - (399/400)ce/Z ≤ -1/400` (`ℓ′(y) ≥ (1 - (5/23)⁴)/y`, and
   `P′ = Σ i pᵢ r^{i-1}` decreases in `u ≥ 3/4`); along the ceiling the norm motion costs at most
-  `(1/4)(15/1992)(10/13)` per unit of `α` since `(F₀)_u ≤ Γ_u ≤ 1/4` (`(17)`, `(23)`); so
-  `α = α_*(x)`, `1` on `x ≤ 5/3`, `(45x + 22)/97` on `x ≥ 5/3` (`(3)`, `(26)`);
+  `(1/4)(15/1992)(10/13)` per unit of `α` since `(F₀)_u ≤ Γ_u ≤ 1/4`; so
+  `α = α_*(x)`, `1` on `x ≤ 5/3`, `(45x + 22)/97` on `x ≥ 5/3`;
 * the four terminal curves are positive.
 
-Route: the shape derivative is bounded through the reciprocal-shape form at the single slope
-`C = 10/13` (two-variable signs in `(x, r)`), instead of the `C`-concavity and the quadratic
-`H` of `SHORT_OUTER_ALPHA_LOW_SHAPE` §1; the terminal curves are cleared and bounded termwise, instead
-of the `x`-monotonicity and the grid evaluation at `x = 2` of `SHORT_OUTER_LOW_SHAPE_TERMINAL`.
+The shape derivative is bounded through the reciprocal-shape form at the single slope
+`C = 10/13` (two-variable signs in `(x, r)`), and the terminal curves are cleared and bounded
+termwise.
 
 ## Main API
 
@@ -55,7 +53,8 @@ theorem hl1o_Gu_diff {x a u u' : ℝ} (hx : 0 < x) (ha : 0 < a) :
   simp only [hh1oGu, hh1oE]
   ring
 
-/-- `(F₀)_u ≥ -1/6` on the capped strip (`SHORT_OUTER_BETA_LOW_SHAPE` (8)). -/
+/-- `(F₀)_u ≥ -1/6` on the capped strip: `(F₀)_u` is concave in `β` and at least `-1/6` at
+`β = x` and `β = αx` (at `u = 19/25`, where it is smallest). -/
 theorem hl1o_B_F0u_ge {x a b u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a) (ha2 : a ≤ 6 / 5)
     (hcap : x * (x + 2) ≤ 6 * a ^ 2) (hxb : x ≤ b) (hbx : b ≤ a * x) (hu : u ≤ 19 / 25) :
     -(1 / 6) ≤ hh1oGu x a u - 7 / 96 * hh1oR2u x a b := by
@@ -129,7 +128,7 @@ theorem hl1o_B_F0u_ge {x a b u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 
   have := le_trans (le_min hend1 hend2) hm
   linarith
 
-/-- `(F₀)_u ≤ 1/4` on the strip for `u ≥ 3/4` (`SHORT_OUTER_ALPHA_LOW_SHAPE` (17)-(20)). -/
+/-- `(F₀)_u ≤ 1/4` on the strip for `u ≥ 3/4`: `Γ_u ≤ Γ_u(3/4) ≤ 1/4` and `(R₂)_u ≥ 0`. -/
 theorem hl1o_B_F0u_le {x a b u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a) (ha2 : a ≤ 6 / 5)
     (hxb : x ≤ b) (hu : 3 / 4 ≤ u) : hh1oGu x a u - 7 / 96 * hh1oR2u x a b ≤ 1 / 4 := by
   have hx0 : 0 < x := by linarith

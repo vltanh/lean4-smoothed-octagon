@@ -7,12 +7,11 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Order
 /-!
 # Case M2 by hand: the scalar reverse exclusion
 
-`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §4: every point of the necessary domain (12)
-`0 < t < 2/5`, `x > 0`, `k ≥ max{1, 2t + x, 29t²/4}`, `k < 2t + 2x + x²`, `x < 7/3 - (10/3)t`,
-`1 < q < W/p`, `v = Sec(t, 1 - t, t + x) ≤ U(t)`, `v ≥ F_{p/W}(q)` has `N_k > 0`. The three
-exhaustive cases lower `k` (shape monotonicity, `nhN_mono_k`) to the unit face (`nh_unit_shape`),
-the order face (`nh_order_face`, with `q ≤ W/(2t + x)` from `nh_q_le_order`) or the scale strip
-(`nh_strip`).
+Every point of the necessary domain `0 < t < 2/5`, `x > 0`, `k ≥ max{1, 2t + x, 29t²/4}`,
+`k < 2t + 2x + x²`, `x < 7/3 - (10/3)t`, `1 < q < W/p`, `v = Sec(t, 1 - t, t + x) ≤ U(t)`,
+`v ≥ F_{p/W}(q)` has `N_k > 0`. The three exhaustive cases lower `k` (shape monotonicity,
+`nhN_mono_k`) to the unit face (`nh_unit_shape`), the order face (`nh_order_face`, with
+`q ≤ W/(2t + x)` from `nh_q_le_order`) or the scale strip (`nh_strip`).
 
 ## Main API
 
@@ -23,7 +22,7 @@ the order face (`nh_order_face`, with `q ≤ W/(2t + x)` from `nh_q_le_order`) o
 
 namespace SmoothedOctagon
 
-/-- **The scalar reverse exclusion** (`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §4). -/
+/-- **The scalar reverse exclusion**: every point of the necessary domain has `N_k > 0`. -/
 theorem nh_reverse_core {t x k q v : ℝ} (ht : 0 < t) (ht2 : t < 2 / 5) (hx : 0 < x) (hk1 : 1 ≤ k)
     (hko : 2 * t + x ≤ k) (hks : 29 / 4 * t ^ 2 ≤ k) (hgap : k < 2 * t + 2 * x + x ^ 2)
     (hdur : x < 7 / 3 - 10 / 3 * t) (hq : 1 < q) (hqW : q < (1 + x) / (t + x))

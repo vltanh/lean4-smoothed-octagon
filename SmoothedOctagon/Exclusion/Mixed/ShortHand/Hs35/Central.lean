@@ -6,8 +6,8 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Interface
 # Gate S3, the central face: β-monotonicity, the log majorant and the endpoint signs
 
 Helper module for `ShortHand/S3.lean` (leaves `hs3_beta_mono`, `hs3_log_maj`,
-`hs3_central_endpoint`; `DISPLACEMENT_CENTRAL_BETA`, `DISPLACEMENT_CENTRAL_FACE` (11)-(13);
-inventory HS-S3 R29-R32, R35, R36). The module cannot import `S3.lean`, so it carries copies of
+`hs3_central_endpoint`).
+The module cannot import `S3.lean`, so it carries copies of
 the S3 definitions with identical bodies (`hs35Fn = hs3Fn`, `hs35F0 = hs3F0`, `hs35F1 = hs3F1`,
 `hs35UCB = hsUCB`, `hs35amin = hs3amin`); the S3 leaves follow by definitional unfolding.
 
@@ -49,10 +49,10 @@ noncomputable def hs35amin (x : ℝ) : ℝ := (15 * x + 511) / 475
 
 /-! ### The rational log majorant -/
 
-/-- **The rational log majorant** (`DISPLACEMENT_CENTRAL_FACE` (11); inventory HS-S3 R35): for
-`0 < y ≤ 6/7`, `log y ≤ -40153/180000 + 2(5y - 4)/(5y + 4)`.
-Route: `log t - 2(5t - 4)/(5t + 4)` has derivative `(5t - 4)²/(t(5t + 4)²) ≥ 0`, so it is at most
-its value at `6/7`, and `log(7/6) ≥ 2/13 + 2/(3·13³)` (`ss_log_ge_cubic`). -/
+/-- **The rational log majorant**: for `0 < y ≤ 6/7`,
+`log y ≤ -40153/180000 + 2(5y - 4)/(5y + 4)`.
+The difference `log t - 2(5t - 4)/(5t + 4)` has derivative `(5t - 4)²/(t(5t + 4)²) ≥ 0`, so it
+is at most its value at `6/7`, and `log(7/6) ≥ 2/13 + 2/(3·13³)` (`ss_log_ge_cubic`). -/
 theorem hs35_log_maj {y : ℝ} (hy : 0 < y) (hy7 : y ≤ 6 / 7) :
     log y ≤ -40153 / 180000 + 2 * (5 * y - 4) / (5 * y + 4) := by
   have h := ss_le_of_deriv (f := fun t => Real.log t - 2 * (5 * t - 4) / (5 * t + 4))
@@ -118,7 +118,7 @@ private theorem hs35k_lamS (hx : 2 ≤ x) (hqc : 6 * al ^ 2 ≤ x * (x + 2)) :
     20 * (x * (x + 2) + al ^ 2) ≤ 7 * (1 + x) ^ 3 := by
   nlinarith [mul_nonneg (sub_nonneg.2 hx) (sub_nonneg.2 hx)]
 
-/-- `E_L ≤ 5/16` at `u = 3/4` (`DISPLACEMENT_CENTRAL_BETA` (11)). -/
+/-- `E_L ≤ 5/16` at `u = 3/4`. -/
 private theorem hs35k_EL0 (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hqc : 6 * al ^ 2 ≤ x * (x + 2))
     (hb : 20 * x / 19 ≤ be) :
     4 * (6 * hsDg x be al + (1 + x) ^ 3 - 12 * (1 + x) + 4) ≤ 5 * (x * (x + 2) + al ^ 2) := by
@@ -179,7 +179,7 @@ private theorem hs35k_EL_diff (b₁ b₂ u q : ℝ) :
   unfold hsELs hsA3 hsDg
   ring
 
-/-- The test is affine in `u` (`DISPLACEMENT_WEIGHT_REDUCTION` (14)). -/
+/-- The test is affine in `u`. -/
 private theorem hs35k_u_aff (u₁ u₂ q n ℓ : ℝ) :
     hs35Fn x be al u₂ q n ℓ - hs35Fn x be al u₁ q n ℓ =
       (u₂ - u₁) * (1 / hsRA al be + (1 + x) -
@@ -222,7 +222,7 @@ private theorem hs35k_P0 {h z : ℝ} (hh : 0 ≤ h) (hh6 : h ≤ 1 / 6) (hz : 0 
     mul_nonneg (mul_nonneg hh3 hz) hz', mul_nonneg (mul_nonneg hh3 hz) hh', pow_nonneg hh 5,
     pow_nonneg hh 4, mul_nonneg hh3 hz, mul_nonneg hh2 hz, mul_nonneg hh hz, pow_nonneg hz 4]
 
-/-- `K²(31/40 - w)` at `u = 3/4`, `β = 20x/19` (`DISPLACEMENT_CENTRAL_BETA` (13)-(15)). -/
+/-- `K²(31/40 - w)` at `u = 3/4`, `β = 20x/19`. -/
 private theorem hs35k_P0' (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) :
     0 ≤ 31 / 40 * (x * (x + 2) + al ^ 2) ^ 2 - ((1 + x) ^ 4 - (1 + x) ^ 3 + (1 + x) ^ 2) -
@@ -234,8 +234,8 @@ private theorem hs35k_P0' (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 �
   unfold hsDg
   ring
 
-/-- **`w_* ≤ 31/40`** at `q = q_c` (`DISPLACEMENT_CENTRAL_BETA` (13)-(15)).
-Route: `w_*` decreases in `u` and in `β`; the corner `u = 3/4`, `β = 20x/19` is a two-variable
+/-- **`w_* ≤ 31/40`** at `q = q_c`.
+`w_*` decreases in `u` and in `β`; the corner `u = 3/4`, `β = 20x/19` is a two-variable
 polynomial with positive constant term. -/
 private theorem hs35k_W_le (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : 20 * x / 19 ≤ be)
@@ -276,8 +276,8 @@ private theorem hs35k_W_le (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 �
     linarith [p1, p2, hP]
   exact le_of_mul_le_mul_right key (by positivity)
 
-/-- **The incoming coefficient** `2u - nE_{L,*} ≥ 3793/8400` (`DISPLACEMENT_CENTRAL_BETA`
-(11)-(12)), for `u ≥ 3/4 + 13/2000` and `3 ≤ n ≤ 53/15`. -/
+/-- **The incoming coefficient** `2u - nE_{L,*} ≥ 3793/8400`, for `u ≥ 3/4 + 13/2000` and
+`3 ≤ n ≤ 53/15`. -/
 private theorem hs35k_c (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : 20 * x / 19 ≤ be) {u n : ℝ}
     (hu : 3 / 4 + 13 / 2000 ≤ u) (hn : 3 ≤ n)
@@ -307,7 +307,7 @@ private theorem hs35k_c (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ 
     linarith [p1, p2, p3, p4, p5]
   exact le_of_mul_le_mul_right key hK
 
-/-- **`c_u ≤ 13/3`** (`DISPLACEMENT_CENTRAL_BETA` (20)). -/
+/-- **`c_u ≤ 13/3`**. -/
 private theorem hs35k_cu (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : 20 * x / 19 ≤ be) (hb2 : be ≤ 2 * al)
     (hb3 : be ≤ x + 5 * x * (al - 1) / 13) {n : ℝ} (hn : 3 ≤ n) :
@@ -493,7 +493,7 @@ private theorem hs35k_Gc (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) :
     mul_le_mul_of_nonneg_left hh6 hh, mul_le_mul_of_nonneg_left hh6 (pow_nonneg hh 2),
     mul_le_mul_of_nonneg_left hh6 (pow_nonneg hh 3)]
 
-/-- `ū ≥ 3/4 + 13/2000` (`DISPLACEMENT_CENTRAL_BETA` (6)). -/
+/-- `ū ≥ 3/4 + 13/2000`. -/
 private theorem hs35k_u_lo (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hqc : 6 * al ^ 2 ≤ x * (x + 2))
     (hb : x ≤ be) (hb3 : be ≤ x + 5 * x * (al - 1) / 13) : 3 / 4 + 13 / 2000 ≤ hs35UCB x be := by
   have h1 := hs35k_al_le hx hqc
@@ -504,7 +504,7 @@ private theorem hs35k_u_lo (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hqc : 6 * al ^ 2
   rw [add_le_add_iff_left, le_div_iff₀ hb1]
   nlinarith
 
-/-- `ū` decreases in `β` with slope above `-7/1000` (`DISPLACEMENT_CENTRAL_BETA` (6)). -/
+/-- `ū` decreases in `β` with slope above `-7/1000`. -/
 private theorem hs35k_u_diff (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) {b₁ b₂ : ℝ}
     (hb : 20 * x / 19 ≤ b₁) (hbb : b₁ ≤ b₂) :
     hs35UCB x b₂ ≤ hs35UCB x b₁ ∧ hs35UCB x b₁ - hs35UCB x b₂ ≤ 7 / 1000 * (b₂ - b₁) := by
@@ -546,10 +546,10 @@ private theorem hs35k_logstep (hx : 0 < x) (hal : 1 ≤ al) {b₁ b₂ : ℝ} (h
     field_simp; ring
   linarith
 
-/-- **The β-step at fixed incoming norm** (`DISPLACEMENT_CENTRAL_BETA` (18)-(21) in secant form):
+/-- **The β-step at fixed incoming norm** (in secant form):
 for `u ≥ 3/4 + 13/2000` the test increases by at least `(91/3000)(β₂ - β₁)`.
-Route: exact secant identities (`w_*` quadratic and `E_{L,*}` affine in `β`) and
-`log(s₂/s₁) ≥ 2(s₂ - s₁)/(s₂ + s₁)` replace the β-derivative. -/
+The proof uses exact secant identities (`w_*` quadratic and `E_{L,*}` affine in `β`) and
+`log(s₂/s₁) ≥ 2(s₂ - s₁)/(s₂ + s₁)`. -/
 private theorem hs35k_stepA (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) {b₁ b₂ : ℝ} (hb : 20 * x / 19 ≤ b₁) (hbb : b₁ ≤ b₂)
     (hb2 : b₂ ≤ 2 * al) (hb3 : b₂ ≤ x + 5 * x * (al - 1) / 13) {u N₁ N₂ : ℝ}
@@ -641,13 +641,13 @@ private theorem hs35k_core (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 �
   rw [← hB] at hm
   linarith
 
-/-- **β-monotonicity on the central face** (`DISPLACEMENT_CENTRAL_BETA` (4), (18)-(21);
-inventory HS-S3 R30-R32): on `2 ≤ x ≤ 13/6`, `α ≥ 108/95`, `6α² ≤ x(x + 2)`, for
-`20x/19 ≤ β₁ ≤ β₂ ≤ min{2α, x + 5x(α - 1)/13}`, `F_i(x, α, β₁; ū) ≤ F_i(x, α, β₂; ū)` at `q = q_c`.
-Route: secant form of the notes' β-derivative bound: the `u`-step `c_u(ū₂ - ū₁) ≥ -(91/3000)Δβ`
-(`c_u ≤ 13/3`, `ū_β ≥ -7/1000`) and the β-step at fixed `u` (`≥ (91/3000)Δβ`, from
-`-d_β ≥ 7/40`, `2u - nE_L ≥ 3793/8400`, `w ≤ 31/40`, `|Δn| ≤ (5/6)Δβ`, `p - p² ≥ 2/9` and
-`log(s₂/s₁) ≥ 2(s₂ - s₁)/(s₂ + s₁)`), no mean-value theorem. -/
+/-- **β-monotonicity on the central face**: on
+`2 ≤ x ≤ 13/6`, `α ≥ 108/95`, `6α² ≤ x(x + 2)`, for `20x/19 ≤ β₁ ≤ β₂ ≤ min{2α, x + 5x(α - 1)/13}`,
+`F_i(x, α, β₁; ū) ≤ F_i(x, α, β₂; ū)` at `q = q_c`.
+The β-derivative bound is used in secant form: the `u`-step
+`c_u(ū₂ - ū₁) ≥ -(91/3000)Δβ` (`c_u ≤ 13/3`, `ū_β ≥ -7/1000`) and the β-step at fixed `u`
+(`≥ (91/3000)Δβ`, from `-d_β ≥ 7/40`, `2u - nE_L ≥ 3793/8400`, `w ≤ 31/40`, `|Δn| ≤ (5/6)Δβ`,
+`p - p² ≥ 2/9` and `log(s₂/s₁) ≥ 2(s₂ - s₁)/(s₂ + s₁)`). -/
 theorem hs35_beta_mono {x al be₁ be₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : 20 * x / 19 ≤ be₁) (hbb : be₁ ≤ be₂)
     (hb2 : be₂ ≤ 2 * al) (hb2' : be₂ ≤ x + 5 * x * (al - 1) / 13) :
@@ -685,7 +685,7 @@ private theorem hs35k_W_div {al be : ℝ} (hx : 0 < x) (hal : 1 ≤ al) (u : ℝ
         hsDg x be al * ((1 + x) ^ 3 * (u - 1) + 3 * (1 + x) - 1)) / (x * (x + 2) + al ^ 2) ^ 2 :=
   eq_div_of_mul_eq (by positivity) (hs35k_W_eq hx hal u)
 
-/-- The numerator `N₀` of `-F̄₀` in `h = x - 2` (`DISPLACEMENT_CENTRAL_FACE` (12)). -/
+/-- The numerator `N₀` of `-F̄₀` in `h = x - 2`. -/
 private noncomputable def hs35kN0 (h : ℝ) : ℝ :=
   2413534919007629868137070688732034410098588 - 26254301047758970029152099025587912698031754 * h
     + 70210600598363805662951295893340160342087806 * h ^ 2
@@ -705,7 +705,7 @@ private noncomputable def hs35kN0 (h : ℝ) : ℝ :=
     + 526347440193952489082215283692382812500 * h ^ 16
     + 3679624501492989173967224121093750000 * h ^ 17
 
-/-- The numerator `N₁` of `-F̄₁` in `h = x - 2` (`DISPLACEMENT_CENTRAL_FACE` (12)). -/
+/-- The numerator `N₁` of `-F̄₁` in `h = x - 2`. -/
 private noncomputable def hs35kN1 (h : ℝ) : ℝ :=
   1066695320050756620827029638308435448 - 11554078212748962290130793009859116224 * h
     + 43895838980852054366148716751111284496 * h ^ 2
@@ -740,7 +740,7 @@ private theorem hs35k_N1 {h : ℝ} (hh : 0 ≤ h) : 0 < hs35kN1 h := by
     pow_nonneg hh 9, pow_nonneg hh 10, pow_nonneg hh 11, pow_nonneg hh 12, pow_nonneg hh 13,
     pow_nonneg hh 14, pow_nonneg hh 15]
 
-/-- The denominator `D*` of the endpoint identities (`DISPLACEMENT_CENTRAL_FACE` (12)). -/
+/-- The denominator `D*` of the endpoint identities. -/
 private noncomputable def hs35kDs (x : ℝ) : ℝ :=
   21780000 * x * (x + 1) * (15 * x + 416) * (15 * x + 511) * (20 * x - 19) * (515 * x + 511) *
     (13 * x ^ 2 + 14 * x + 3) * (490325 * x ^ 2 + 2287310 * x + 1827847)
@@ -842,10 +842,10 @@ private theorem hs35k_end1 (hx : 2 ≤ x) :
     ring
   linarith
 
-/-- **The central endpoint signs** (`DISPLACEMENT_CENTRAL_FACE` (12)-(13); inventory HS-S3 R36):
-for `2 ≤ x ≤ 13/6`, at `α = a_min(x)`, `β = 20x/19`, `q = q_c`, `u = ū`: `F₀ < 0`, `F₁ < 0`.
+/-- **The central endpoint signs**: for `2 ≤ x ≤ 13/6`, at
+`α = a_min(x)`, `β = 20x/19`, `q = q_c`, `u = ū`: `F₀ < 0`, `F₁ < 0`.
 After the log majorant `hs35_log_maj` (`y = 2q_c/r_A ≤ 6/7`), `-F̄ᵢ = Nᵢ(x - 2)/(D*Q^{3-i})` with
-the notes' integer polynomials `N₀`, `N₁` (one univariate identity each), and `Nᵢ(h) > 0` for
+the integer polynomials `N₀`, `N₁` (one univariate identity each), and `Nᵢ(h) > 0` for
 `h ≥ 0` (a cubic sum of squares plus nonnegative higher terms). -/
 theorem hs35_central_endpoint {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) :
     hs35F0 x (20 * x / 19) (hs35amin x) (hs35UCB x (20 * x / 19)) (hsQc x (hs35amin x)) < 0 ∧

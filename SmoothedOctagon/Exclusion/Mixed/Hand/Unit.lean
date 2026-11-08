@@ -6,18 +6,18 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.CertUnit
 /-!
 # Case M2 by hand: the unit-shape exclusion
 
-`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION`. On the face `k = 1`, for
+On the face `k = 1`, for
 `0 < t ≤ 13/35`, `0 < x ≤ 1 - 2t`, `1 < 2t + 2x + x²`, `q > 1`, the exact incoming secant
 `v = Sec(t, 1 - t, t + x)` with its missing-control floor `v ≥ F_{p/W}(q)` gives `N > 0`.
 After the relaxations `v ↦ v̄`, `log q ↦ L₊` and the subtraction of `(q - 1)(v̄ - F_ℓ)`, the
-cleared residual is the cubic `P = C₀ + C₁y + C₂y² + C₃y³` in `y = q - 1` (§2, `nhU_P_eq`),
-positive by the six coefficient signs (7) (§3, `nh_cubic_pos`), which are proved by the generated
-certificates of `Hand/CertUnit` (Route: in place of the hand estimates of §§4-8).
+cleared residual is the cubic `P = C₀ + C₁y + C₂y² + C₃y³` in `y = q - 1` (`nhU_P_eq`),
+positive by six coefficient signs (`nh_cubic_pos`), which are proved by the generated
+certificates of `Hand/CertUnit`.
 
 ## Main API
 
 * `nhUC0`, …, `nhUC3`; `nhU_P_eq`.
-* `nh_cubic_pos`: the univariate reduction of §3.
+* `nh_cubic_pos`: the univariate reduction (six coefficient signs give a positive cubic).
 * `nhU_signs`: the six signs on the unit-shape domain.
 * `nhU_poly_pos`: `P(t, x, y) > 0` on the domain, for every `y ≥ 0` (only the shape inequalities
   are used: no norm floor).
@@ -28,23 +28,24 @@ certificates of `Hand/CertUnit` (Route: in place of the hand estimates of §§4-
 
 namespace SmoothedOctagon
 
-/-- The coefficient of `y^0` in the unit-shape cubic `P` (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` (6)). -/
+/-- The coefficient of `y^0` in the unit-shape cubic `P`. -/
 noncomputable def nhUC0 (t x : ℝ) : ℝ :=
   48 * x ^ 2 + 104 * x ^ 3 + 76 * x ^ 4 + 20 * x ^ 5 - 192 * t * x ^ 2 - 480 * t * x ^ 3 - 464 * t * x ^ 4 - 232 * t * x ^ 5 - 68 * t * x ^ 6 - 12 * t * x ^ 7 + 240 * t ^ 2 * x ^ 2 + 648 * t ^ 2 * x ^ 3 + 700 * t ^ 2 * x ^ 4 + 404 * t ^ 2 * x ^ 5 + 136 * t ^ 2 * x ^ 6 + 24 * t ^ 2 * x ^ 7 - 96 * t ^ 3 * x ^ 2 - 272 * t ^ 3 * x ^ 3 - 312 * t ^ 3 * x ^ 4 - 192 * t ^ 3 * x ^ 5 - 68 * t ^ 3 * x ^ 6 - 12 * t ^ 3 * x ^ 7
 
-/-- The coefficient of `y^1` in the unit-shape cubic `P` (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` (6)). -/
+/-- The coefficient of `y^1` in the unit-shape cubic `P`. -/
 noncomputable def nhUC1 (t x : ℝ) : ℝ :=
   -48 * x + 128 * x ^ 2 + 416 * x ^ 3 + 378 * x ^ 4 + 146 * x ^ 5 + 20 * x ^ 6 + 240 * t * x - 152 * t * x ^ 2 - 1460 * t * x ^ 3 - 2176 * t * x ^ 4 - 1652 * t * x ^ 5 - 726 * t * x ^ 6 - 174 * t * x ^ 7 - 16 * t * x ^ 8 - 384 * t ^ 2 * x - 504 * t ^ 2 * x ^ 2 + 540 * t ^ 2 * x ^ 3 + 1762 * t ^ 2 * x ^ 4 + 1842 * t ^ 2 * x ^ 5 + 1000 * t ^ 2 * x ^ 6 + 276 * t ^ 2 * x ^ 7 + 28 * t ^ 2 * x ^ 8 + 192 * t ^ 3 * x + 528 * t ^ 3 * x ^ 2 + 504 * t ^ 3 * x ^ 3 + 36 * t ^ 3 * x ^ 4 - 336 * t ^ 3 * x ^ 5 - 294 * t ^ 3 * x ^ 6 - 102 * t ^ 3 * x ^ 7 - 12 * t ^ 3 * x ^ 8
 
-/-- The coefficient of `y^2` in the unit-shape cubic `P` (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` (6)). -/
+/-- The coefficient of `y^2` in the unit-shape cubic `P`. -/
 noncomputable def nhUC2 (t x : ℝ) : ℝ :=
   -72 * x + 124 * x ^ 2 + 474 * x ^ 3 + 456 * x ^ 4 + 190 * x ^ 5 + 30 * x ^ 6 - 48 * t + 336 * t * x + 224 * t * x ^ 2 - 1400 * t * x ^ 3 - 3068 * t * x ^ 4 - 3026 * t * x ^ 5 - 1690 * t * x ^ 6 - 540 * t * x ^ 7 - 90 * t * x ^ 8 - 6 * t * x ^ 9 + 144 * t ^ 2 - 312 * t ^ 2 * x - 1476 * t ^ 2 * x ^ 2 - 1662 * t ^ 2 * x ^ 3 - 280 * t ^ 2 * x ^ 4 + 940 * t ^ 2 * x ^ 5 + 854 * t ^ 2 * x ^ 6 + 294 * t ^ 2 * x ^ 7 + 36 * t ^ 2 * x ^ 8 - 96 * t ^ 3 - 144 * t ^ 3 * x + 168 * t ^ 3 * x ^ 2 + 476 * t ^ 3 * x ^ 3 + 204 * t ^ 3 * x ^ 4 - 276 * t ^ 3 * x ^ 5 - 334 * t ^ 3 * x ^ 6 - 132 * t ^ 3 * x ^ 7 - 18 * t ^ 3 * x ^ 8
 
-/-- The coefficient of `y^3` in the unit-shape cubic `P` (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` (6)). -/
+/-- The coefficient of `y^3` in the unit-shape cubic `P`. -/
 noncomputable def nhUC3 (t x : ℝ) : ℝ :=
   -8 * x + 76 * x ^ 2 + 182 * x ^ 3 + 157 * x ^ 4 + 63 * x ^ 5 + 10 * x ^ 6 - 8 * t + 164 * t * x + 234 * t * x ^ 2 - 233 * t * x ^ 3 - 848 * t * x ^ 4 - 931 * t * x ^ 5 - 528 * t * x ^ 6 - 160 * t * x ^ 7 - 23 * t * x ^ 8 - t * x ^ 9 + 88 * t ^ 2 + 12 * t ^ 2 * x - 402 * t ^ 2 * x ^ 2 - 543 * t ^ 2 * x ^ 3 - 31 * t ^ 2 * x ^ 4 + 456 * t ^ 2 * x ^ 5 + 394 * t ^ 2 * x ^ 6 + 135 * t ^ 2 * x ^ 7 + 17 * t ^ 2 * x ^ 8 - 48 * t ^ 3 - 88 * t ^ 3 * x + 84 * t ^ 3 * x ^ 2 + 342 * t ^ 3 * x ^ 3 + 306 * t ^ 3 * x ^ 4 + 54 * t ^ 3 * x ^ 5 - 66 * t ^ 3 * x ^ 6 - 38 * t ^ 3 * x ^ 7 - 6 * t ^ 3 * x ^ 8
 
-/-- **The cleared unit-shape cubic** (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` (5)-(6)). -/
+/-- **The cleared unit-shape cubic**: at `k = 1`,
+`6(q + 1)W²X³(N(v̄, L₊(q)) - (q - 1)(v̄ - F_ℓ)) = C₀ + C₁y + C₂y² + C₃y³` with `y = q - 1`. -/
 theorem nhU_P_eq {t x q : ℝ} (hx : 0 < x) (hq : 0 < q) :
     6 * (q + 1) * (1 + x) ^ 2 * (x + 2) ^ 3 *
       (nhN t x 1 q (nhVbar t x) (nhLp q) - (q - 1) * (nhVbar t x - nhFl t x q)) =
@@ -98,7 +99,7 @@ theorem nhU_dom {f : ℝ → ℝ → ℝ} {t x : ℝ} (ht : 0 < t) (ht' : t ≤ 
   · exact hb x _ h1 h2 (by linarith) (by linarith) (by nlinarith)
   · exact hc x _ h2 (by linarith) (by linarith) (by linarith) (by linarith)
 
-/-- **The six signs** (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` (7)) on the unit-shape domain. -/
+/-- **The six signs** on the unit-shape domain. -/
 theorem nhU_signs {t x : ℝ} (ht : 0 < t) (ht' : t ≤ 13 / 35) (hx : 0 < x) (hxt : x ≤ 1 - 2 * t)
     (hgap : 1 < 2 * t + 2 * x + x ^ 2) :
     0 < nhUC0 t x ∧ 0 < 20 * x * nhUC1 t x + 3 * nhUC0 t x ∧
@@ -115,8 +116,8 @@ theorem nhU_signs {t x : ℝ} (ht : 0 < t) (ht' : t ≤ 13 / 35) (hx : 0 < x) (h
   · rw [nhU_J4]; exact mul_pos hx2 (nhU_dom ht ht' hx hxt hgap nhUJr4_pos_a nhUJr4_pos_b nhUJr4_pos_c)
   · rw [nhU_J5]; exact mul_pos hx2 (nhU_dom ht ht' hx hxt hgap nhUJr5_pos_a nhUJr5_pos_b nhUJr5_pos_c)
 
-/-- **The univariate reduction** (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` §3): the six signs
-force the cubic `C₀ + C₁y + C₂y² + C₃y³` to be positive for every `y ≥ 0`. -/
+/-- **The univariate reduction**: the six signs force the cubic `C₀ + C₁y + C₂y² + C₃y³` to be
+positive for every `y ≥ 0`. -/
 theorem nh_cubic_pos {c0 c1 c2 c3 x y : ℝ} (hx : 0 < x) (hy : 0 ≤ y) (h0 : 0 < c0)
     (h1 : 0 < 20 * x * c1 + 3 * c0) (h2 : 0 < 53 * c0 + 20 * x ^ 2 * c2)
     (h3 : 0 < 24 * x ^ 3 * c3 + 12 * x ^ 2 * c2 - c0)
@@ -178,7 +179,7 @@ theorem nhU_poly_pos {t x q : ℝ} (ht : 0 < t) (ht' : t ≤ 13 / 35) (hx : 0 < 
     positivity
   exact pos_of_mul_pos_right hc hpos.le
 
-/-- **The unit-shape theorem** (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION`, Theorem): on the face
+/-- **The unit-shape theorem**: on the face
 `k = 1`, with the exact incoming secant and its missing-control floor, `N > 0`. -/
 theorem nh_unit_shape {t x q v : ℝ} (ht : 0 < t) (ht' : t ≤ 13 / 35) (hx : 0 < x)
     (hxt : x ≤ 1 - 2 * t) (hgap : 1 < 2 * t + 2 * x + x ^ 2) (hq : 1 < q) (hv : v = nhSecN t x)

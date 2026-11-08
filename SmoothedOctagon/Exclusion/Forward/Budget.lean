@@ -7,20 +7,23 @@ public import Mathlib.Analysis.Convex.Deriv
 /-!
 # Case F: the exterior-factor budget
 
-`HAND_FORWARD_LEMMAS` §3 with `GLOBAL_FORWARD_LINEAR_BUDGET` (LINBUD) and
-`GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET` (BUDGET) (6)-(8).
+Four exterior ratios in `[1, U]` with sum at least `(5U + 1)/3` push the cost above `A_oct`. Since
+`G(a, ·)` is concave on `[a, 4/a]`, the excess over three ratios equal to `1` may be concentrated on
+one ratio; the resulting one-variable inequality, after the logarithm bound `L₊`, is a polynomial
+sign on `[11/5, 3]`.
 
 ## Main API
 
 * `ff_Gbb`, `ff_hasDerivAt_Gb_right`: `∂²G/∂b²`.
-* `ff_Gbb_neg`: `G_bb(a, b) < 0` for `a² ≥ 4/3`, `a ≤ b`, `ab ≤ 4` (BUDGET (7)), through
+* `ff_Gbb_neg`: `G_bb(a, b) < 0` for `a² ≥ 4/3`, `a ≤ b`, `ab ≤ 4`, through
   `G_abb = 2a(b - a)/(a + b)³ ≥ 0` and the two boundary values `G_bb(b, b)`, `G_bb(4/b, b)`.
 * `ff_G_concaveOn`: `G(a, ·)` is concave on `[a, 4/a]`.
 * `ff_four_concave`: four ratios in `[1, M]` with sum at least `σ`, `σ - 3 ∈ (1, M]`, for an
   increasing concave function: the sum is at least `3φ(1) + φ(σ - 3)`.
-* `ff_log_div_le`: `log(N/M) ≤ 2(N - M)/(N + M) + (N - M)³/(6NM(N + M))` (LINBUD `L₊`).
-* `ff_linbud_poly`: the degree-eleven sign LINBUD (5)-(7), from its positive Bernstein form on
-  `[11/5, 3]` (equivalent to the twelve positive coefficients of LINBUD (7)).
+* `ff_log_div_le`: `log(N/M) ≤ 2(N - M)/(N + M) + (N - M)³/(6NM(N + M))` (the bound `L₊`).
+* `ff_linbud_poly`: a degree-eleven polynomial sign on `[11/5, 3]`, from its twelve positive
+  Bernstein coefficients.
+* `ff_linbud`: the linear budget `2 ḡ(x*) + 5 ḡ(1) > (2501/1384) U`.
 * `ff_budget_g`: the one-variable budget contradiction.
 -/
 
@@ -32,7 +35,7 @@ open Real Set
 
 /-! ### The second derivative of `G` -/
 
-/-- `∂²G/∂b²` (BUDGET (6)). -/
+/-- `∂²G/∂b²`. -/
 noncomputable def ff_Gbb (a b : ℝ) : ℝ :=
   Real.log (b ^ 2 + 4) - 2 * Real.log (a + b) + (a ^ 2 + b ^ 2) / (a + b) ^ 2 - 4 * b / (a + b) +
     5 * b ^ 2 / (b ^ 2 + 4) - 2 * b ^ 4 / (b ^ 2 + 4) ^ 2
@@ -122,7 +125,8 @@ theorem ff_Gbb_edge_neg {b : ℝ} (hb : 0 < b) : ff_Gbb (4 / b) b < 0 := by
   have := Real.log_lt_sub_one_of_pos hρ0 hρ1
   linarith
 
-/-- **`G_bb < 0`** (BUDGET (7)): for `a² ≥ 4/3`, `a ≤ b` and `ab ≤ 4`. -/
+/-- **`G_bb < 0`** for `a² ≥ 4/3`, `a ≤ b` and `ab ≤ 4`: `G_bb(·, b)` increases (`G_abb ≥ 0`), and
+it is negative at `b` when `b ≤ 2` and at `4/b` when `b ≥ 2`. -/
 theorem ff_Gbb_neg {a b : ℝ} (ha : 0 < a) (ha2 : 4 / 3 ≤ a ^ 2) (hab : a ≤ b) (hab4 : a * b ≤ 4) :
     ff_Gbb a b < 0 := by
   have hb : 0 < b := by linarith
@@ -154,9 +158,9 @@ theorem ff_G_concaveOn {a : ℝ} (ha : 0 < a) (ha2 : 4 / 3 ≤ a ^ 2) :
 
 /-! ### Four ratios with a fixed sum -/
 
-/-- **Concentration of the excess** (HAND_FORWARD_LEMMAS §3; LINBUD (4)): for `φ` increasing and
-concave on `[1, M]`, four points of `[1, M]` with sum at least `σ`, where `x* = σ - 3 ∈ (1, M]`,
-have `φ(x₁) + φ(x₂) + φ(x₃) + φ(x₄) ≥ 3φ(1) + φ(x*)`. -/
+/-- **Concentration of the excess**: for `φ` increasing and concave on `[1, M]`, four points of
+`[1, M]` with sum at least `σ`, where `x* = σ - 3 ∈ (1, M]`, have
+`φ(x₁) + φ(x₂) + φ(x₃) + φ(x₄) ≥ 3φ(1) + φ(x*)`. -/
 theorem ff_four_concave {φ : ℝ → ℝ} {M σ x₁ x₂ x₃ x₄ : ℝ} (hmono : MonotoneOn φ (Icc 1 M))
     (hconc : ConcaveOn ℝ (Icc 1 M) φ) (hs1 : 1 < σ - 3) (hsM : σ - 3 ≤ M)
     (h1 : x₁ ∈ Icc 1 M) (h2 : x₂ ∈ Icc 1 M) (h3 : x₃ ∈ Icc 1 M) (h4 : x₄ ∈ Icc 1 M)
@@ -204,7 +208,7 @@ theorem ff_four_concave {φ : ℝ → ℝ} {M σ x₁ x₂ x₃ x₄ : ℝ} (hmo
 
 /-! ### The logarithm bound and the one-variable sign -/
 
-/-- LINBUD's `L₊`: `log(N/M) ≤ 2(N - M)/(N + M) + (N - M)³/(6NM(N + M))` for `0 < M ≤ N`. -/
+/-- The bound `L₊`: `log(N/M) ≤ 2(N - M)/(N + M) + (N - M)³/(6NM(N + M))` for `0 < M ≤ N`. -/
 theorem ff_log_div_le {N M : ℝ} (hM : 0 < M) (hMN : M ≤ N) :
     Real.log (N / M) ≤ 2 * (N - M) / (N + M) + (N - M) ^ 3 / (6 * N * M * (N + M)) := by
   have hN : 0 < N := by linarith
@@ -222,8 +226,8 @@ theorem ff_log_div_le {N M : ℝ} (hM : 0 < M) (hMN : M ≤ N) :
 /-- `L₊(N, M) = 2(N - M)/(N + M) + (N - M)³/(6NM(N + M))`. -/
 noncomputable def ff_Lp (N M : ℝ) : ℝ := 2 * (N - M) / (N + M) + (N - M) ^ 3 / (6 * N * M * (N + M))
 
-/-- `g_U(x) = 3x - U - ½ log((1+x)²/(1+U)) - (x²/2) log((1+x)²/(x²+U))` (LINBUD (2)), bounded
-below through `L₊` (both arguments at least one on `x ≥ 1`, `U ≤ 1 + 2x`). -/
+/-- `g_U(x) = 3x - U - ½ log((1+x)²/(1+U)) - (x²/2) log((1+x)²/(x²+U))`, bounded below through `L₊`
+(both arguments at least one on `x ≥ 1`, `U ≤ 1 + 2x`). -/
 theorem ff_g_ge {U x : ℝ} (hU : 0 < U) (hx : 1 ≤ x) (hUx : U ≤ 1 + 2 * x) :
     3 * x - U - ff_Lp ((1 + x) ^ 2) (1 + U) / 2 - x ^ 2 / 2 * ff_Lp ((1 + x) ^ 2) (x ^ 2 + U) ≤
       ff_g2 U 1 x := by
@@ -242,7 +246,8 @@ theorem ff_g_ge {U x : ℝ} (hU : 0 < U) (hx : 1 ≤ x) (hUx : U ≤ 1 + 2 * x) 
   norm_num
   nlinarith
 
-/-- **The degree-eleven sign** (LINBUD (5)-(7)) in Bernstein form on `[11/5, 3]`. -/
+/-- **The degree-eleven sign** on `[11/5, 3]`: in the Bernstein basis of `U - 11/5`, `3 - U` every
+coefficient is positive. -/
 theorem ff_linbud_poly {U : ℝ} (h1 : 11 / 5 ≤ U) (h2 : U ≤ 3) :
     0 < -40726562500 * U ^ 11 + 470881062500 * U ^ 10 - 2223832039375 * U ^ 9 +
       5063584175625 * U ^ 8 - 2598819110385 * U ^ 7 - 17757000919599 * U ^ 6 +
@@ -279,7 +284,9 @@ theorem ff_linbud_poly {U : ℝ} (h1 : 11 / 5 ≤ U) (h2 : U ≤ 3) :
       8770761083984375 / 64 * x ^ 11 := by positivity
     linarith
 
-/-- LINBUD (5): `2 ḡ(x*) + 5 ḡ(1) > (2501/1384) U` on `[11/5, 3]`, `x* = (5U - 8)/3`. -/
+/-- **The linear budget**: `2 ḡ(x*) + 5 ḡ(1) > (2501/1384) U` on `[11/5, 3]`, `x* = (5U - 8)/3`,
+with `ḡ` the lower bound of `g_U` through `L₊`; clearing the positive denominator gives the
+degree-eleven sign. -/
 theorem ff_linbud {U : ℝ} (h1 : 11 / 5 ≤ U) (h2 : U ≤ 3) :
     2501 / 1384 * U < 2 * (3 * ((5 * U - 8) / 3) - U - ff_Lp ((1 + (5 * U - 8) / 3) ^ 2) (1 + U) / 2 -
       ((5 * U - 8) / 3) ^ 2 / 2 * ff_Lp ((1 + (5 * U - 8) / 3) ^ 2) (((5 * U - 8) / 3) ^ 2 + U)) +
@@ -311,9 +318,8 @@ theorem ff_linbud {U : ℝ} (h1 : 11 / 5 ≤ U) (h2 : U ≤ 3) :
   rw [← key] at hp
   exact pos_of_mul_pos_left hp hden.le
 
-/-- **The one-variable budget contradiction** (HAND_FORWARD_LEMMAS §3 and
-GLOBAL_FORWARD_LINEAR_BUDGET (4)-(7)): on `11/5 < U < 3`, four ratios in `[1, U]` with sum at
-least `(5U + 1)/3` give `(√3/U){2g(P) + 2g(z) + 2g(w) + 2g(D) - g(1)} > A_oct`, where
+/-- **The one-variable budget contradiction**: on `11/5 < U < 3`, four ratios in `[1, U]` with sum
+at least `(5U + 1)/3` give `(√3/U){2g(P) + 2g(z) + 2g(w) + 2g(D) - g(1)} > A_oct`, where
 `g(x) = g2(U, 1, x)`. -/
 theorem ff_budget_g {U P z w D : ℝ} (hU : 11 / 5 < U) (hU3 : U < 3) (hP : 1 ≤ P) (hP' : P ≤ U)
     (hz : 1 ≤ z) (hz' : z ≤ U) (hw : 1 ≤ w) (hw' : w ≤ U) (hD : 1 ≤ D) (hD' : D ≤ U)

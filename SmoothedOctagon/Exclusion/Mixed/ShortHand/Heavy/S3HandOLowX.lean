@@ -5,8 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandOLowC
 /-!
 # Gate S3, the outer face by hand: the two lower-shape curves
 
-Hand proof of the leaf `hs3_outer_face`, fourth part: `SHORT_DISPLACEMENT_OUTER_TERMINALS.md` §2 with
-the polynomials of `SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA.md` §2. Along the slope `C = 19x/50`
+Proof of the leaf `hs3_outer_face`, fourth part. Along the slope `C = 19x/50`
 at the lower shape `r_* = 13/(5S)`, `R_n = p + Vd + 1/z - 56/(5z + 14)` with `p = P_n(r_*)`,
 `d = A_n(r_*)`, `V = U(r_*) - 3/4`, `z = Z(r_*)`. For `n = 25/8` and `n = 7/2`, the derivatives
 satisfy `p' < -41/200` (resp. `-23/100`), `d' < 19/4` (resp. `26/5`), `0 < d < 18/5`,

@@ -7,15 +7,14 @@ public import SmoothedOctagon.Exclusion.MinimumStructure
 /-!
 # Case M2: reverse centres and their scale bound
 
-`MIXED_REVERSE_CENTRE_SCALE_BOUND` (RCSB) and `MIXED_REVERSE_CENTRE_PHASE_BOUND` §1. At a centre
-`k` of a reverse run (switches `k - 2` forward, `k - 1`, `k` reverse, `k + 1` forward) of a mixed
-normal vertex period, the covector calculus gives the scalar data of an `M2Centre`: the turn
-secants of the neighbouring turns, the reverse switching inequalities, centre stationarity and the
-Gram determinant, with `Γ` the squared Casimir of the period. If `Γ < 23/125`, then
-`ρ = a²/(a² + 4) < 3/20`, i.e. `a² < 12/17` (RCSB (1)): lowering both incident norms to `3/4`
-(RCSB (5)-(6)), then raising both neighbour ratios to `1/2` (RCSB (7)-(8)) gives
-`γ² > G(ρ) = (9/4 - B(ρ)²)/(16(1 - ρ)²)`, `B(ρ) = 1 - ρ + log(4ρ)` (RCSB (9)), increasing on
-`[3/20, 1/4)` with `G(3/20) > 23/125` (RCSB (10)-(13)).
+At a centre `k` of a reverse run (switches `k - 2` forward, `k - 1`, `k` reverse, `k + 1`
+forward) of a mixed normal vertex period, the covector calculus gives the scalar data of an
+`M2Centre`: the turn secants of the neighbouring turns, the reverse switching inequalities, centre
+stationarity and the Gram determinant, with `Γ` the squared Casimir of the period. If
+`Γ < 23/125`, then `ρ = a²/(a² + 4) < 3/20`, i.e. `a² < 12/17`: lowering both incident norms to
+`3/4`, then raising both neighbour ratios to `1/2` gives
+`γ² > G(ρ) = (9/4 - B(ρ)²)/(16(1 - ρ)²)`, `B(ρ) = 1 - ρ + log(4ρ)`, and a rational lower bound
+of `G` exceeds `23/125` on `[3/20, 1/4)`.
 
 ## Main API
 
@@ -42,8 +41,8 @@ theorem m2E_mul {a p n : ℝ} (ui uo : ℝ) (ha : 0 < a) (hp : 0 < p) (hn : 0 < 
   field_simp
   ring
 
-/-- **The data of a reverse centre** (RCSB (2)-(3), from CE (2), (14), (15), (17) and
-`MIXED_GLOBAL_MINIMUM_STRUCTURE` (19)). -/
+/-- **The data of a reverse centre**, from the factor formulas, centre stationarity, the turn
+secants, the reverse switching inequalities and the reverse run `k - 1, k` of the period. -/
 theorem m2_centre (P : NormalPeriod) (K : P.M2Calculus) (hmix : P.rep.IsMixed) {k : ℤ}
     (h2 : P.costateCycle.m2Fwd (k - 2)) (h1 : ¬ P.costateCycle.m2Fwd (k - 1))
     (h0 : ¬ P.costateCycle.m2Fwd k) (h3 : P.costateCycle.m2Fwd (k + 1)) :
@@ -139,7 +138,7 @@ private lemma m2_mono_of_deriv {f f' : ℝ → ℝ} {x y : ℝ} (hx : 0 < x) (hx
   exact hmono (Set.mem_Ici.2 le_rfl) (Set.mem_Ici.2 hxy) hxy
 
 /-- `y ↦ y - 1/(4y) - log y` is nondecreasing on `(0, ∞)` (its derivative is
-`(2y - 1)²/(4y²)`, RCSB (7)). -/
+`(2y - 1)²/(4y²)`). -/
 private lemma m2_phi_mono {y y' : ℝ} (hy : 0 < y) (hyy : y ≤ y') :
     y - 1 / 4 * y⁻¹ - Real.log y ≤ y' - 1 / 4 * y'⁻¹ - Real.log y' := by
   refine m2_mono_of_deriv (f := fun z => z - 1 / 4 * z⁻¹ - Real.log z)
@@ -150,7 +149,7 @@ private lemma m2_phi_mono {y y' : ℝ} (hy : 0 < y) (hyy : y ≤ y') :
   field_simp
   ring
 
-/-- `log x ≤ 2(x - 1)/(x + 1)` for `0 < x ≤ 1` (RCSB (10)). -/
+/-- `log x ≤ 2(x - 1)/(x + 1)` for `0 < x ≤ 1`. -/
 private lemma m2_log_le_pade {x : ℝ} (hx : 0 < x) (hx1 : x ≤ 1) :
     Real.log x ≤ 2 * (x - 1) / (x + 1) := by
   have h := m2_mono_of_deriv (f := fun z => Real.log z - 2 * (z - 1) / (z + 1))
@@ -172,7 +171,7 @@ theorem m2g_ge {a b : ℝ} (h : 0 < a + b) : 3 / 4 ≤ m2g a b := by
   rw [le_div_iff₀ (by positivity)]
   nlinarith [sq_nonneg (a - b)]
 
-/-- **Every turn secant is at least `3/4`** (CE (16)): the average of
+/-- **Every turn secant is at least `3/4`**: it is the average of
 `g_B = 3/4 + (x - B)²/(4(B + x)²)`. -/
 theorem m2Sec_ge {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hP : 0 < P) : 3 / 4 ≤ m2Sec A B P := by
   wlog hlt : A < P generalizing A P
@@ -204,7 +203,7 @@ theorem m2Sec_ge {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hP : 0 < P) : 3 / 4 �
   field_simp
   ring
 
-/-- The rational separation RCSB (12)-(13): on `[3/20, 1/4)`,
+/-- The rational separation: on `[3/20, 1/4)`,
 `(9/4 - B̂²)/(16(1 - ρ)²) ≥ 23/125`, `B̂ = (-4ρ² + 11ρ - 1)/(4ρ + 1)`, cleared of denominators. -/
 private lemma m2_scale_poly {ρ : ℝ} (h0 : 3 / 20 ≤ ρ) (h1 : ρ < 1 / 4) :
     368 * (1 - ρ) ^ 2 * (4 * ρ + 1) ^ 2 ≤
@@ -216,7 +215,7 @@ private lemma m2_scale_poly {ρ : ℝ} (h0 : 3 / 20 ≤ ρ) (h1 : ρ < 1 / 4) :
   have h3 : 0 ≤ s ^ 3 * (75496 / 5 - 7888 * s) := mul_nonneg (pow_nonneg hs0 3) (by linarith)
   nlinarith
 
-/-- RCSB (6): lowering both norms to `3/4` lowers `4uv - E²`, when `E < 3r/2`, `E < 3t/2`. -/
+/-- Lowering both norms to `3/4` lowers `4uv - E²`, when `E < 3r/2`, `E < 3t/2`. -/
 private lemma m2_lower_norms {r t u v E E0 : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hu : 3 / 4 ≤ u)
     (hv : 3 / 4 ≤ v) (hEr : E < 3 / 2 * r) (hEt : E < 3 / 2 * t)
     (hEE0 : E = E0 + (u - 3 / 4) / r + (v - 3 / 4) / t) :
@@ -239,8 +238,8 @@ private lemma m2_lower_norms {r t u v E E0 : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (h
     rw [hEE0]; ring
   linarith
 
-/-- RCSB (7)-(8), (10): at the lower norm corner, `0 < E₀ ≤ B̂(ρ)` for `3/20 ≤ ρ < rt`,
-`r, t < 1/2`. -/
+/-- At the lower norm corner, `0 < E₀ ≤ B̂(ρ)` for `3/20 ≤ ρ < rt`, `r, t < 1/2` (raise both
+neighbour ratios to `1/2`, then use `log x ≤ 2(x - 1)/(x + 1)`). -/
 private lemma m2_E0_bounds {r t ρ : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hr2 : r < 1 / 2)
     (ht2 : t < 1 / 2) (hρrt : ρ < r * t) (hρ : 3 / 20 ≤ ρ) :
     0 < 1 + r + t - ρ + Real.log (ρ / (r * t)) - 1 / 4 * r⁻¹ - 1 / 4 * t⁻¹ ∧
@@ -284,7 +283,7 @@ private lemma m2_E0_bounds {r t ρ : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hr2 : r <
     rw [e4] at h4
     linarith
 
-/-- **The reverse-centre scale bound** (RCSB (1)). -/
+/-- **The reverse-centre scale bound**: a centre with `Γ < 23/125` has `a² < 12/17`. -/
 theorem m2_scale (D : M2Centre) (hcap : D.Γ < 23 / 125) : D.a ^ 2 < 12 / 17 := by
   obtain ⟨pp, p, a, n, nn, u, v, E, Γ, ha, hap, han, hpp, hnn, hfac, hu, hv, hule, hvle, hE,
     hΓ⟩ := D
@@ -322,7 +321,7 @@ theorem m2_scale (D : M2Centre) (hcap : D.Γ < 23 / 125) : D.a ^ 2 < 12 / 17 := 
   generalize a ^ 2 / (a ^ 2 + 4) = ρ at *
   have hρ1 : ρ < 1 / 4 := by
     have := mul_lt_mul'' hr2 ht2 hr0.le ht0.le; linarith
-  -- RCSB (5): `E < 3r/2`, `E < 3t/2`
+  -- `E < 3r/2`, `E < 3t/2`
   have hℓ1 : -ρ + Real.log (ρ / (r * t)) < -(r * t) := by
     have hx : 0 < ρ / (r * t) := by positivity
     have hl := Real.log_le_sub_one_of_pos hx

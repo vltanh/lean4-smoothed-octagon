@@ -9,18 +9,17 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW5
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW6
 
 /-!
-# Heavy leaf `hs4_floor_box`: the hand proof
+# The leaf `hs4_floor_box`: the hand proof
 
-`archive/lighter-proofs/SHORT_CASIMIR_COMPLETE.md` (replacing `EXTENDED_CASIMIR_DERIVATIVES`
-(4)-(30); `EXTENDED_CASIMIR_FLOOR` (9)-(10); inventory HS-S4 R20-R22). On the closed box
+The original-Casimir floor `Φ, Ψ > 1829/10000` at the central scale. On the closed box
 `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`, write `α = 1 + eδ` with `13/5 ≤ e ≤ 3`
-(any such `e` at `δ = 0`, where `α = 1`). The note's caller order (§2):
+(any such `e` at `δ = 0`, where `α = 1`). The six comparisons are applied in this order:
 
 * `Φ`: W1 raises `δ` to `1/19`, W4 raises `x` to `13/6`, W5 raises `e` to `3`;
 * `Ψ`: W2 lowers `e` to `13/5`, W3 raises `x` to `13/6`, W6 (concavity in `δ`) leaves the two ends
   `δ = 0`, `δ = 1/19`;
 
-and the three scalar endpoints (§3, `hl46_s4_ends`) exceed `1829/10000`.
+and the three scalar endpoints (`hl46_s4_ends`) exceed `1829/10000`.
 
 ## Main API
 
@@ -31,8 +30,7 @@ and the three scalar endpoints (§3, `hl46_s4_ends`) exceed `1829/10000`.
 
 namespace SmoothedOctagon
 
-/-- **The extended original-Casimir floor at the central scale** (`EXTENDED_CASIMIR_DERIVATIVES`
-(4)-(31), `EXTENDED_CASIMIR_FLOOR` (9)-(10); inventory HS-S4 R20-R22): on the closed box
+/-- **The extended original-Casimir floor at the central scale**: on the closed box
 `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`, `β = x(1 + δ)`, with `u = ū(x, β)`:
 `Φ > 1829/10000` and `Ψ > 1829/10000`. -/
 theorem hs4_floor_box_proof {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)

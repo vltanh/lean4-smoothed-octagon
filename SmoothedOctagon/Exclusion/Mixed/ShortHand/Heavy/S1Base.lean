@@ -3,17 +3,16 @@ module
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Basic
 
 /-!
-# Gate S1, heavy faces: the face functions and the duration reduction
+# Gate S1, terminal faces: the face functions and the duration reduction
 
 Shared definitions for the two terminal face signs of gate S1 (`hs1_central_face`,
-`hs1_outer_face`; `LOW_RATIO_CENTRAL_HAND_SIGN`, `LOW_RATIO_OUTER_HAND_SIGN`; inventory HS-S01
-D-R5-D-R7). On a face the upper envelope `Γ_*`, `w_*`, `E_{L,*}` have closed transport forms
-(`λ`, `d = λρD`, `v = U(ρS)`, `E = E₀ + ρ(2S - 1)`):
+`hs1_outer_face`). On a face the upper envelope `Γ_*`,
+`w_*`, `E_{L,*}` have closed transport forms (`λ`, `d = λρD`, `v = U(ρS)`, `E = E₀ + ρ(2S - 1)`):
 
 * central face `q = q_c` (`ρ = 1/S²`): `λ = S²/K`, `d = D/K`, `K = x(x + 2) + α²`;
 * outer face `q = 1/7` (`ρ = 1/(6α² + 1)`): `λ = K/(7α²)`, `d = D/(7α²)`, `K = 6α² + 1`.
 
-The two duration tests (`hs_dur_max` with the cubic log ceiling `hh1ell`, D-R6, D-R7) are
+The two duration tests (`hs_dur_max` with the cubic log ceiling `hh1ell`) are
 `F₀ = Γ - c R̄₂ - g` and `F₁ = F₀ - c(T - 2)(w - 3/4)`, `R̄₂ = 2w - 1/2 + (u - 1)/r_A + r_A - q - E_L
 + ℓ(2/T)`, `T = r_A/q`, `c = 7/96`, `g = 9193/50000`.
 
@@ -88,8 +87,7 @@ noncomputable def hh1cF1 (x a b u : ℝ) : ℝ :=
 
 /-! ### The duration reduction -/
 
-/-- **The duration reduction** (`LOW_RATIO_CENTRAL_HAND_SIGN` (5)-(7), (24); inventory HS-S01
-D-R6, D-R7): for `2 ≤ τ ≤ T`,
+/-- **The duration reduction**: for `2 ≤ τ ≤ T`,
 `Γ - (7/96)((w - 1)τ + 1/τ + κ + log(τ/T)) - g ≥ min(F₀, F₁)` with
 `F₀ = Γ - (7/96)(2w - 3/2 + κ + ℓ(2/T)) - g`, `F₁ = F₀ - (7/96)(T - 2)(w - 3/4)`. -/
 theorem hh1_tau_red {G w κ T τ : ℝ} (h2 : 2 ≤ τ) (hτ : τ ≤ T) :
@@ -111,7 +109,7 @@ theorem hh1_tau_red {G w κ T τ : ℝ} (h2 : 2 ≤ τ) (hτ : τ ≤ T) :
     refine (min_le_left _ _).trans ?_
     nlinarith
 
-/-- **The central face in transport form** (inventory HS-S01 D-R5(a)): for `x > 0`, `α ≥ 1`,
+/-- **The central face in transport form**: for `x > 0`, `α ≥ 1`,
 `Γ_*(q_c) = hh1cG`, `w_*(q_c) = hh1cw`, `E_{L,*}(q_c) = hh1cEL`. -/
 theorem hh1c_env {x a b u : ℝ} (hx : 0 < x) (ha : 1 ≤ a) :
     hsGs x a u (hsQc x a) = hh1cG x u ∧ hsWs x b a u (hsQc x a) = hh1cw x a b u ∧
@@ -140,7 +138,7 @@ theorem hh1c_env {x a b u : ℝ} (hx : 0 < x) (ha : 1 ≤ a) :
     field_simp
     ring
 
-/-- **The central duration reduction** (`LOW_RATIO_CENTRAL_HAND_SIGN` (5)-(7)): for `x > 0`,
+/-- **The central duration reduction**: for `x > 0`,
 `α ≥ 1`, `β > 0`, `2 ≤ τ` and `τ q_c ≤ r_A`:
 `Γ_*(q_c) - (7/96)R*_τ(q_c) - 9193/50000 ≥ min(F₀, F₁)`. -/
 theorem hh1c_face_red {x a b u τ : ℝ} (hx : 0 < x) (ha : 1 ≤ a) (hb : 0 < b) (hτ : 2 ≤ τ)

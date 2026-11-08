@@ -7,10 +7,9 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandSmallNorm
 # S2 hand signs: the lower-shape terminal in the leaf's coordinates
 
 On the curve `α = a_f(x)`, `c = c_+(x) = (24x + 51)/128`, `u = u_s`, `r = r_f = 84/(36x + 25)`,
-the outer test with a constant multiplier `n` is the closed-form function `R_n` of `S2HandTerm`
-(`archive/lighter-proofs/SHORT_RATIO_OUTER_TERMINAL_AF.md` (7)-(11)); with `m₀ ≥ n`, `w < 3/4`
-(`SHORT_RATIO_OUTER_BETA` (9)) and `H₁ - H₀ = (2Z - 7)(Z - 4)(w - 3/4)/(4Z)` (`TERMINAL_AF` (2)-(5))
-both outer tests are negative there.
+the outer test with a constant multiplier `n` is the closed-form function `R_n` of `S2HandTerm`;
+with `m₀ ≥ n`, `w ≤ 3/4` and `H₁ - H₀ = (2Z - 7)(Z - 4)(w - 3/4)/(4Z) ≤ 0` both outer tests are
+negative there.
 
 ## Main API
 
@@ -24,7 +23,7 @@ namespace SmoothedOctagon
 
 open Real Set
 
-/-- On the curve, `u_s - 3/4 = V(r_f)` (`TERMINAL_AF` (11)). -/
+/-- On the curve, `u_s - 3/4 = V(r_f)`. -/
 theorem hl2_link_V {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
     hsUs (7 / (3 * r) - 25 / 36) ((7 / (3 * r) - 25 / 36) +
       (24 * (7 / (3 * r) - 25 / 36) + 51) / 128 * (1 / r - 1)) = 3 / 4 + hl2Vc r := by
@@ -68,7 +67,7 @@ theorem hl2_link {n CA CL q0 q1 : ℝ} {As Ls Qs : ℝ → ℝ} {r V : ℝ} (h0 
   unfold hl2Ht hl2Lg
   rw [← hrat V, hZ]
 
-/-- The rational part of the closed form, `n = 63 / 25` (`TERMINAL_ALGEBRA` §1). -/
+/-- The rational part of the closed form, `n = 63 / 25`. -/
 theorem hl2_rat_h {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) (V : ℝ) :
     6 / 7 + (3 / 4 + V - 1) * hl2Zr (7 / (3 * r) - 25 / 36)
         ((24 * (7 / (3 * r) - 25 / 36) + 51) / 128) r + 1 / hl2Zr (7 / (3 * r) - 25 / 36)
@@ -96,7 +95,7 @@ theorem hl2_rat_h {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) (V : ℝ) :
   field_simp
   ring
 
-/-- The rational part of the closed form, `n = 49 / 20` (`TERMINAL_ALGEBRA` §1). -/
+/-- The rational part of the closed form, `n = 49 / 20`. -/
 theorem hl2_rat_l {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) (V : ℝ) :
     6 / 7 + (3 / 4 + V - 1) * hl2Zr (7 / (3 * r) - 25 / 36)
         ((24 * (7 / (3 * r) - 25 / 36) + 51) / 128) r + 1 / hl2Zr (7 / (3 * r) - 25 / 36)
@@ -129,7 +128,9 @@ theorem hl2_Ht_m (m n x c u r : ℝ) :
     hl2Ht m x c u r - hl2Ht n x c u r = (m - n) * (hl2Wr x c u r / 49 - 3 / 4) := by
   unfold hl2Ht; ring
 
-/-- **The lower-shape terminal** in the curve coordinate `r = r_f` (`TERMINAL_AF` (22)). -/
+/-- **The lower-shape terminal** in the curve coordinate `r = r_f`: the multiplier
+`m₀ = 4 - Z/2` is at least `n = 63/25` (`x ≤ 9/4`) or `n = 49/20` (`x ≥ 9/4`) and `w ≤ 3/4`, so
+`H₀ ≤ R_n < 0`; and `H₁ - H₀ = (2Z - 7)(Z - 4)(w - 3/4)/(4Z) ≤ 0` for `2 ≤ Z ≤ 7/2`. -/
 theorem hl2_term_r {r : ℝ} (h0 : 420 / 557 ≤ r) (h1 : r ≤ 84 / 103) :
     hl2H0 (7 / (3 * r) - 25 / 36) ((24 * (7 / (3 * r) - 25 / 36) + 51) / 128)
         (hsUs (7 / (3 * r) - 25 / 36) ((7 / (3 * r) - 25 / 36) +

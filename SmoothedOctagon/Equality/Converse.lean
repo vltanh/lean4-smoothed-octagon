@@ -8,9 +8,8 @@ public import SmoothedOctagon.Bridge.Density
 
 An invertible linear map carries lattice packings to lattice packings and scales area and
 covolume by the same factor, so it preserves the greatest lattice packing density; Fejes Tóth's
-theorem identifies lattice and general packing densities for centrally symmetric convex disks
-(`GLOBAL_COST_EQUALITY_ASSEMBLY` §6). Orientation-reversing maps are covered too: congruent copies
-include reflections.
+theorem identifies lattice and general packing densities for centrally symmetric convex disks.
+Orientation-reversing maps are covered too: congruent copies include reflections.
 -/
 
 @[expose] public section

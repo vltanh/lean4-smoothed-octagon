@@ -6,16 +6,15 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S6HandJet
 /-!
 # Gate S6, hand proof: the score in cancelled form and its concavity in `R`
 
-`archive/lighter-proofs/SHORT_COST_CONCAVITY.md` §§1-3 (replacing `SMALL_SHAPE_COST_EXCLUSION`
-(20)-(31)). With `t = T(R, d, e) = N/B`, `v = 4u_q - 3`, `z = Z_U` and
-`h = H/J` (`H = 4 + 2(e + 1)d - (e - 1)d(R + 1/R)`, `J = 3B² + N²`), the polynomial bound is
-(note (2), (16))
+With `t = T(R, d, e) = N/B`,
+`v = 4u_q - 3`, `z = Z_U` and `h = H/J` (`H = 4 + 2(e + 1)d - (e - 1)d(R + 1/R)`,
+`J = 3B² + N²`), the polynomial bound is
 
 `𝓑 = k(R) + k(t) + v(g(R) + g(t)) - z(p(R) + p(t))/8 + vz(q(R) + q(t))/8 - κ F h²`,
 
 `κ = 161(e - 1)²d²/(432(2 + 11d))`, `F = (1 - R)²(1 + R)(3 - R)` (`hl46_S6F_eq`). On
 `1/3 ≤ R ≤ 7/19`, `0 ≤ d ≤ 1/19`, `13/5 ≤ e ≤ 3` its second `R`-derivative is negative
-(note (12)-(20); the jets are composed with `HL46J`), so the minimum over `R` is at an end
+(the jets are composed with `HL46J`), so the minimum over `R` is at an end
 (`hl46_S6F_concave`).
 
 ## Main API
@@ -40,10 +39,10 @@ noncomputable def hl46Bd (e d r : ℝ) : ℝ := 2 + (e + 1 - (e - 1) * r) * d
 /-- `N = 2R + ((e + 1)R - (e - 1))d`. -/
 noncomputable def hl46Nd (e d r : ℝ) : ℝ := 2 * r + ((e + 1) * r - (e - 1)) * d
 
-/-- `t_R = (2 + 2d)(2 + 2ed)/B²` (note (9)). -/
+/-- `t_R = (2 + 2d)(2 + 2ed)/B²`. -/
 noncomputable def hl46t1 (e d r : ℝ) : ℝ := (2 + 2 * d) * (2 + 2 * e * d) / hl46Bd e d r ^ 2
 
-/-- `t_RR = 2(e - 1)d t_R/B` (note (9)). -/
+/-- `t_RR = 2(e - 1)d t_R/B`. -/
 noncomputable def hl46t2 (e d r : ℝ) : ℝ :=
   2 * (e - 1) * d * ((2 + 2 * d) * (2 + 2 * e * d)) / hl46Bd e d r ^ 3
 
@@ -61,7 +60,7 @@ noncomputable def hl46Qn1 (d r : ℝ) : ℝ := 2 * r - (1 + 2 * r) * d / 2 + 19 
 
 noncomputable def hl46Qn2 (d _r : ℝ) : ℝ := 2 - d + 19 * d ^ 2 / 42
 
-/-- `v = 4u_q - 3` (note (1)). -/
+/-- `v = 4u_q - 3`. -/
 noncomputable def hl46v (d r : ℝ) : ℝ := 4 * (hl46Hf r * hl46Qn d r)
 
 noncomputable def hl46v1 (d r : ℝ) : ℝ := 4 * (hl46Hf1 r * hl46Qn d r + hl46Hf r * hl46Qn1 d r)
@@ -69,27 +68,27 @@ noncomputable def hl46v1 (d r : ℝ) : ℝ := 4 * (hl46Hf1 r * hl46Qn d r + hl46
 noncomputable def hl46v2 (d r : ℝ) : ℝ :=
   4 * (hl46Hf2 r * hl46Qn d r + 2 * (hl46Hf1 r * hl46Qn1 d r) + hl46Hf r * hl46Qn2 d r)
 
-/-- `z_R = z₀' + d/(1 - R)²`, `z₀' = -4R - 8 + 72/(3 - R)²` (note §2.3). -/
+/-- `z_R = z₀' + d/(1 - R)²`, `z₀' = -4R - 8 + 72/(3 - R)²`. -/
 noncomputable def hl46z1 (d r : ℝ) : ℝ := -4 * r - 8 + 72 / (3 - r) ^ 2 + d / (1 - r) ^ 2
 
-/-- `z_RR = -4 + 144/(3 - R)³ + 2d/(1 - R)³` (note §2.3). -/
+/-- `z_RR = -4 + 144/(3 - R)³ + 2d/(1 - R)³`. -/
 noncomputable def hl46z2 (d r : ℝ) : ℝ := -4 + 144 / (3 - r) ^ 3 + 2 * d / (1 - r) ^ 3
 
-/-- `F = (1 - R)²(1 + R)(3 - R)` (note (16)). -/
+/-- `F = (1 - R)²(1 + R)(3 - R)`. -/
 noncomputable def hl46cF (r : ℝ) : ℝ := 3 - 4 * r - 2 * r ^ 2 + 4 * r ^ 3 - r ^ 4
 
 noncomputable def hl46cF1 (r : ℝ) : ℝ := -4 - 4 * r + 12 * r ^ 2 - 4 * r ^ 3
 
 noncomputable def hl46cF2 (r : ℝ) : ℝ := -4 + 24 * r - 12 * r ^ 2
 
-/-- `H = 4 + 2(e + 1)d - (e - 1)d(R + 1/R)` (note (16)). -/
+/-- `H = 4 + 2(e + 1)d - (e - 1)d(R + 1/R)`. -/
 noncomputable def hl46H (e d r : ℝ) : ℝ := 4 + 2 * (e + 1) * d - (e - 1) * d * (r + 1 / r)
 
 noncomputable def hl46H1 (e d r : ℝ) : ℝ := (e - 1) * d * (1 / r ^ 2 - 1)
 
 noncomputable def hl46H2 (e d r : ℝ) : ℝ := -(2 * (e - 1) * d / r ^ 3)
 
-/-- `J = 3B² + N²` (note (16)). -/
+/-- `J = 3B² + N²`. -/
 noncomputable def hl46Jd (e d r : ℝ) : ℝ := 3 * hl46Bd e d r ^ 2 + hl46Nd e d r ^ 2
 
 noncomputable def hl46J1 (e d r : ℝ) : ℝ :=
@@ -108,10 +107,11 @@ noncomputable def hl46h2 (e d r : ℝ) : ℝ :=
     hl46H e d r * hl46J2 e d r / hl46Jd e d r ^ 2 +
     2 * (hl46H e d r * hl46J1 e d r ^ 2) / hl46Jd e d r ^ 3
 
-/-- `κ = 161(e - 1)²d²/(432(2 + 11d))` (note (16)). -/
+/-- `κ = 161(e - 1)²d²/(432(2 + 11d))`. -/
 noncomputable def hl46kap (e d : ℝ) : ℝ := 161 * (e - 1) ^ 2 * d ^ 2 / (432 * (2 + 11 * d))
 
-/-- **The score in cancelled form** (note (2), (16)). -/
+/-- **The score in cancelled form**
+`k(R) + k(t) + v(g(R) + g(t)) - z(p(R) + p(t))/8 + vz(q(R) + q(t))/8 - κ F h²`. -/
 noncomputable def hl46S6F (e d r : ℝ) : ℝ :=
   hl46k r + hl46k (hs6T r d e) + hl46v d r * (hl46g r + hl46g (hs6T r d e)) -
     1 / 8 * (hs6ZU r d * (hl46p r + hl46p (hs6T r d e))) +
@@ -127,7 +127,7 @@ theorem hl46_B_pos {e d r : ℝ} (hd : 0 ≤ d) (he : 1 ≤ e) (hr : r ≤ 1) : 
 
 theorem hl46_T_eq (e d r : ℝ) : hs6T r d e = hl46Nd e d r / hl46Bd e d r := rfl
 
-/-- Note (2): the cancelled decomposition, in independent `R, T, d, u`. -/
+/-- The cancelled decomposition, in independent `R, T, d, u`. -/
 theorem hl46_B_decomp {R T d u : ℝ} (hZ : hs6ZL R d ≠ 0) :
     hs6B R T d u = hl46k R + hl46k T + (4 * u - 3) * (hl46g R + hl46g T) -
       1 / 8 * (hs6ZU R d * (hl46p R + hl46p T)) +
@@ -139,7 +139,7 @@ theorem hl46_B_decomp {R T d u : ℝ} (hZ : hs6ZL R d ≠ 0) :
   field_simp
   ring
 
-/-- Note (16): the radical correction in factored form. -/
+/-- The radical correction in factored form `κ F h²`. -/
 theorem hl46_corr_eq {e d r : ℝ} (hd : 0 ≤ d) (he : 1 ≤ e) (hr0 : 0 < r) (hr : r < 1) :
     161 / 54 * ((r ^ 2 - hs6T r d e ^ 2) / (3 + hs6T r d e ^ 2)) ^ 2 / (8 * hs6ZL r d) =
       hl46kap e d * (hl46cF r * (hl46h e d r * hl46h e d r)) := by
@@ -163,7 +163,8 @@ theorem hl46_corr_eq {e d r : ℝ} (hd : 0 ≤ d) (he : 1 ≤ e) (hr0 : 0 < r) (
   field_simp
   ring
 
-/-- **The cancelled form of the polynomial bound** (note (2), (16)). -/
+/-- **The cancelled form of the polynomial bound**: `𝓑(u_q; R, T(R, d, e), d)` equals the
+cancelled score `hl46S6F e d R`. -/
 theorem hl46_S6F_eq {e d r : ℝ} (hd : 0 ≤ d) (he : 1 ≤ e) (hr0 : 0 < r) (hr : r < 1) :
     hs6B r (hs6T r d e) d (hs6uq r d) = hl46S6F e d r := by
   have hZ : hs6ZL r d ≠ 0 := by
@@ -178,7 +179,7 @@ theorem hl46_S6F_eq {e d r : ℝ} (hd : 0 ≤ d) (he : 1 ≤ e) (hr0 : 0 < r) (h
   unfold hl46S6F
   ring
 
-/-! ### Jets in `R` (note (7), (9), §2.3, (17)) -/
+/-! ### Jets in `R` -/
 
 theorem hl46_T_jet {e d r : ℝ} (hB : hl46Bd e d r ≠ 0) :
     HL46J (fun y => hs6T y d e) (hl46t1 e d) (hl46t2 e d) r := by
@@ -325,14 +326,13 @@ theorem hl46_h_jet {e d r : ℝ} (hr : 0 < r) (hJ : hl46Jd e d r ≠ 0) :
     field_simp
     ring
 
-/-! ### Bounds on the box (note (8), (10), (11), (17), (18)) -/
+/-! ### Bounds on the box -/
 
 section Box
 
 variable {e d r : ℝ}
 
-/-- The shape facts on the box: `9/31 ≤ t ≤ R`, `1 ≤ t_R ≤ 17/16`, `0 ≤ t_RR ≤ 17/152`
-(note (10)). -/
+/-- The shape facts on the box: `9/31 ≤ t ≤ R`, `1 ≤ t_R ≤ 17/16`, `0 ≤ t_RR ≤ 17/152`. -/
 theorem hl46_T_bounds (he : 13 / 5 ≤ e) (he' : e ≤ 3) (hd : 0 ≤ d) (hd' : d ≤ 1 / 19)
     (hr : 1 / 3 ≤ r) (hr' : r ≤ 7 / 19) :
     9 / 31 ≤ hs6T r d e ∧ hs6T r d e ≤ r ∧ 1 ≤ hl46t1 e d r ∧ hl46t1 e d r ≤ 17 / 16 ∧
@@ -412,7 +412,7 @@ theorem hl46_Hf_jet (r : ℝ) (hr : 0 ≤ r) : HL46J hl46Hf hl46Hf1 hl46Hf2 r :=
     field_simp
     ring
 
-/-- The incoming norm on the box (note (8)): `0 ≤ v ≤ 1/20`, `0 ≤ v_R ≤ 21/100`,
+/-- The incoming norm on the box: `0 ≤ v ≤ 1/20`, `0 ≤ v_R ≤ 21/100`,
 `0 ≤ v_RR ≤ 1/2`. -/
 theorem hl46_v_bounds (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (hr : 1 / 3 ≤ r) (hr' : r ≤ 7 / 19) :
     0 ≤ hl46v d r ∧ hl46v d r ≤ 1 / 20 ∧ 0 ≤ hl46v1 d r ∧ hl46v1 d r ≤ 21 / 100 ∧
@@ -488,7 +488,7 @@ theorem hl46_v_bounds (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (hr : 1 / 3 ≤ r) (hr
     have h3 := mul_le_mul b1 q6 (by linarith) (by norm_num)
     linarith
 
-/-- The central shape function on the box (note (11)): `1/10 ≤ z ≤ 1/5`, `3/4 ≤ z_R ≤ 16/15`,
+/-- The central shape function on the box: `1/10 ≤ z ≤ 1/5`, `3/4 ≤ z_R ≤ 16/15`,
 `7/2 ≤ z_RR ≤ 13/3`. -/
 theorem hl46_z_bounds (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (hr : 1 / 3 ≤ r) (hr' : r ≤ 7 / 19) :
     1 / 10 ≤ hs6ZU r d ∧ hs6ZU r d ≤ 1 / 5 ∧ 3 / 4 ≤ hl46z1 d r ∧ hl46z1 d r ≤ 16 / 15 ∧
@@ -583,7 +583,7 @@ theorem hl46_h_abs {H H1 H2 J J1 J2 : ℝ} (hH : 4 ≤ H) (hH' : H ≤ 22 / 5)
     norm_num at a b c
     linarith
 
-/-- The radical correction's factors on the box (note (17), (18)): `0 ≤ h ≤ 11/30`,
+/-- The radical correction's factors on the box: `0 ≤ h ≤ 11/30`,
 `h_R ≤ 2/25`, `h_RR ≥ -1`. -/
 theorem hl46_h_bounds (he : 13 / 5 ≤ e) (he' : e ≤ 3) (hd : 0 ≤ d) (hd' : d ≤ 1 / 19)
     (hr : 1 / 3 ≤ r) (hr' : r ≤ 7 / 19) :
@@ -680,7 +680,7 @@ theorem hl46_h_bounds (he : 13 / 5 ≤ e) (he' : e ≤ 3) (hd : 0 ≤ d) (hd' : 
 
 end Box
 
-/-! ### Concavity in `R` (note (12)-(20)) -/
+/-! ### Concavity in `R` -/
 
 /-- `p(a) ≥ 1/40` for `a ≥ 9/31` and `p(a) ≥ 1/28` for `a ≥ 1/3`. -/
 theorem hl46_p_lower {a : ℝ} (ha : 9 / 31 ≤ a) : 1 / 40 ≤ hl46p a ∧ (1 / 3 ≤ a → 1 / 28 ≤ hl46p a) := by
@@ -690,7 +690,7 @@ theorem hl46_p_lower {a : ℝ} (ha : 9 / 31 ≤ a) : 1 / 40 ≤ hl46p a ∧ (1 /
   · rw [le_div_iff₀ h3]; nlinarith
   · rw [le_div_iff₀ h3]; nlinarith
 
-/-- `F` and its derivatives on `[1/3, 7/19]` (note (17)). -/
+/-- `F` and its derivatives on `[1/3, 7/19]`: `0 ≤ F ≤ 33/20`, `-5 ≤ F' ≤ 0`, `F'' ≥ 0`. -/
 theorem hl46_cF_bounds {r : ℝ} (hr : 1 / 3 ≤ r) (hr' : r ≤ 7 / 19) :
     0 ≤ hl46cF r ∧ hl46cF r ≤ 33 / 20 ∧ -5 ≤ hl46cF1 r ∧ hl46cF1 r ≤ 0 ∧ 0 ≤ hl46cF2 r := by
   have e1 : hl46cF r = (1 - r) ^ 2 * ((1 + r) * (3 - r)) := by unfold hl46cF; ring
@@ -780,7 +780,7 @@ theorem hl46_grpC {κ F F1 F2 h h1 h2 : ℝ} (hκ : 0 ≤ κ) (hκ' : κ ≤ 1 /
     linarith
   nlinarith
 
-/-- **Concavity in `R`** (note (12)-(20)): on `0 ≤ d ≤ 1/19`, `13/5 ≤ e ≤ 3`, the minimum of the
+/-- **Concavity in `R`**: on `0 ≤ d ≤ 1/19`, `13/5 ≤ e ≤ 3`, the minimum of the
 cancelled score over `R ∈ [1/3, 7/19]` is at an end. -/
 theorem hl46_S6F_concave {e d c r : ℝ} (he : 13 / 5 ≤ e) (he' : e ≤ 3) (hd : 0 ≤ d)
     (hd' : d ≤ 1 / 19) (h1 : c < hl46S6F e d (1 / 3)) (h2 : c < hl46S6F e d (7 / 19))

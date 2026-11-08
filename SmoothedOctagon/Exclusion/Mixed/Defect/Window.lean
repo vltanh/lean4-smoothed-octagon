@@ -5,10 +5,9 @@ public import SmoothedOctagon.Exclusion.Mixed.Defect.Frame
 /-!
 # Case M2, smaller-short window: the window defect of a two-piece window
 
-`GLOBAL_SPECTRAL_COST_CASIMIR` (13) on the window of the two pieces `k`, `k + 1` (switch `k → k + 1`
-forward) of a competitive normal period with negative elliptic `Λ₁(0)`, with the endpoint traces of
-`GLOBAL_ENDPOINT_DEFECT_TEST` (1) read in rotated triangular coordinates
-(`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (5)-(8), inventory E1 R14-R16).
+The spectral cost bound on the window of the two pieces `k`, `k + 1` (switch `k → k + 1` forward)
+of a competitive normal period with negative elliptic `Λ₁(0)`, with the endpoint traces read in
+rotated triangular coordinates.
 
 The window angle is `θ = Θ(τ_{k+2}) - Θ(τ_k)` for the continuous polar angle `Θ` of
 `NormalPeriod.df_angle`; the whole period turns by exactly `π/3` (the cost cap excludes the other
@@ -469,8 +468,7 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
               3 * (∫ r in s..P.T, scb_rho (P.X r)) := by linarith
         _ = P.cost := by rw [hcost, ← a2, ← a1]; ring
 
-/-- **The window defect of the two pieces `k`, `k + 1`** (any `k : ℤ`, switch `k` forward;
-GLOBAL_SPECTRAL_COST_CASIMIR (13), MIXED_GENERAL_SHORT_DEFECT_INTERFACE (7)-(9)). -/
+/-- **The window defect of the two pieces `k`, `k + 1`** (any `k : ℤ`, switch `k` forward). -/
 theorem df_window (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P.Λ₁ 0) 1 0 < 0)
     (hN : 3 ≤ P.N) (k : ℤ) (hf : P.costateCycle.m2Fwd k) :
     ∃ θ ρw : ℝ, 0 < θ ∧ θ < π / 3 ∧ 4 ≤ ρw ∧

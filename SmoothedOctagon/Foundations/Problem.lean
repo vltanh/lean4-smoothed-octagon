@@ -14,13 +14,9 @@ admissibility, its exact density, and the existence of a worst disk come from th
 
 `ReinhardtConjecture` asserts global minimality among all centrally symmetric convex disks,
 using the greatest density of packings by congruent copies. `AffineRigidity` records the separate
-uniqueness assertion. Neither assertion is proved here. Instead, the theorems below identify
-equivalent closure criteria and prove the candidate's upper bound on the minimax density.
-
-The lower-bound direction remains the research problem. In particular, being a Pontryagin
-extremal, or being best within a family of smoothed polygons, does not discharge that direction.
-
-Status: source-level Lean draft; compilation and kernel validation have not been run.
+uniqueness assertion. They are proved in `LowerBound` (`reinhardtConjecture`) and
+`Equality/Transport` (`worstDisk_eq_linear_image`). The theorems below give equivalent forms of
+the lower bound and prove the candidate's upper bound on the minimax density.
 -/
 
 @[expose] public section
@@ -42,13 +38,13 @@ def ReinhardtConjecture : Prop := IsWorstDisk octagon
 
 /-- The separate rigidity assertion: every worst disk is an invertible linear image of the
 smoothed octagon. Since `IsCCSDisk` centers disks at the origin, linear images express affine
-equivalence after centering. This proposition is a target, with no proof supplied here. -/
+equivalence after centering. -/
 def AffineRigidity : Prop :=
   ∀ K : Set (Fin 2 → ℝ), IsWorstDisk K →
     ∃ A : (Fin 2 → ℝ) ≃ₗ[ℝ] (Fin 2 → ℝ), K = A '' octagon
 
 /-- The two mathematical targets together: global minimality and uniqueness up to affine
-equivalence. No theorem in this initial development asserts this proposition. -/
+equivalence. -/
 def FullReinhardtConjecture : Prop := ReinhardtConjecture ∧ AffineRigidity
 
 /-- The concrete candidate satisfies all conditions of an upstream balanced pair. -/

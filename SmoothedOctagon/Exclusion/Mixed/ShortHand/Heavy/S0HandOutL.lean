@@ -5,19 +5,15 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0HandOut
 /-!
 # Hand proof of the smaller-short case, gate S0: the outer face, large shapes
 
-`archive/lighter-proofs/SHORT_SCALE_OUTER_LARGE_RATIO.md` §3 (algebra in
-`SHORT_SCALE_OUTER_LARGE_SHAPES_ALGEBRA.md`). For `(2x + 3)/5 ≤ α ≤ x` the incoming norm is raised
-to `u_b = (x + 74)/100`; then each cleared numerator (`hl0NoT`, `hl0No8`, `hl0No2` at `U = x + 74`,
-`V = 100`) is a cubic in `β`, computed in Lean from its source formula (`hl0FLT`, …; never
-printed). On `β ∈ [x + (3/5)(α - 1), x + (3/2)(α - 1)]`
-the four-term cubic identity (13) (`hl0_cubic_pos`, `hl0_cubic_list`) reduces its sign to four coefficients
+For `(2x + 3)/5 ≤ α ≤ x` the incoming norm is raised to `u_b = (x + 74)/100`; then each cleared
+numerator (`hl0NoT`, `hl0No8`, `hl0No2` at `U = x + 74`, `V = 100`) is a cubic in `β`, computed in
+Lean from its factored formula (`hl0FLT`, …; never printed). On
+`β ∈ [x + (3/5)(α - 1), x + (3/2)(α - 1)]` the four-term cubic identity (`hl0_cubic_pos`,
+`hl0_cubic_list`) reduces its sign to four coefficients
 `C_j = κ s_j P_j(α - (2x + 3)/5, x - 2)` (`hl0PT0_eq`, …, the twelve printed `P_{ij}`, verified
-against the Lean definitions), and each `P_{ij}` is positive by one sign change in `A` (the note's
-(15)-(16): `hl0_sc2`, `hl0_sc3`, `hl0_sc4`), its coefficient signs and its value at `A = 3(X + 1)/5`
+against the Lean definitions), and each `P_{ij}` is positive by one sign change in `A`
+(`hl0_sc2`, `hl0_sc3`, `hl0_sc4`), its coefficient signs and its value at `A = 3(X + 1)/5`
 on `2/5 ≤ X ≤ 7` by the coefficient bound after a Taylor shift on at most three fixed pieces.
-
-Route: the coefficient signs use the coefficient bound (`hl0Cov`) instead of the note's monomial
-rule (15), and the endpoint uses `P(3(X + 1)/5, X)` directly instead of its factor `E_{ij}`.
 
 ## Main API
 
@@ -28,7 +24,7 @@ rule (15), and the endpoint uses `P(3(X + 1)/5, X)` directly instead of its fact
 
 namespace SmoothedOctagon
 
-/-- **The four-term cubic identity** (note (13)): a cubic positive at both ends, with positive
+/-- **The four-term cubic identity**: a cubic positive at both ends, with positive
 inner control values `f(p) + (q - p)f'(p)/3`, `f(q) - (q - p)f'(q)/3`, is positive on `[p, q]`. -/
 theorem hl0_cubic_pos {m0 m1 m2 m3 p q y : ℝ} (hpq : p < q) (hpy : p ≤ y) (hyq : y ≤ q)
     (h0 : 0 < m0 + m1 * p + m2 * p ^ 2 + m3 * p ^ 3)
@@ -217,7 +213,7 @@ theorem hl0_sc4 {l0 l1 l2 l3 l4 l5 : List ℝ} {X A : ℝ} (hX : 2 / 5 ≤ X) (h
   nlinarith [k0, k1, k2, k3, k4]
 
 /-- The large-shape numerator of the `T` test (`u = u_b`) as a polynomial in `β` (outer variable;
-the inner lists are constants in `x`, `α`), computed from the source formula (note §3, (11)). -/
+the inner lists are constants in `x`, `α`), computed from the factored formula. -/
 noncomputable def hl0FLT (x a : ℝ) : List (List ℝ) :=
   hl0NoL 56 4 56 392 336 (-189) 2352 [[x + 1]] [[a]] (hl0Add2 [[a]] [[0], [1]]) [[x + 74]] [[100]]
     (hl0cD [[x]] [[a]] [[0], [1]])
@@ -233,7 +229,7 @@ theorem hl0FLT_link (x a b : ℝ) :
 theorem hl0FLT_len (x a : ℝ) : (hl0FLT x a).length ≤ 4 := by
   simp [hl0FLT, hl0NoL, hl0WoNL, hl0LoNL, hl0cD, hl0Mul2, hl0Mul, hl0Smul2, hl0Add2, hl0Add, hl0Smul]
 
-/-- `P_{T0}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{T0}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0PT0 : List (List ℝ) :=
   [[(8272169647 / 3125), (34792853996 / 3125), (51652903569 / 3125), (7576318836 / 625), (3193514912 / 625), (4135166942 / 3125), (582672406 / 3125), (12284444 / 3125), (-996624 / 625)],
@@ -261,7 +257,7 @@ theorem hl0PT0_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- `P_{T1}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{T1}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0PT1 : List (List ℝ) :=
   [[(3505517212 / 3125), (14204427068 / 3125), (4069023192 / 625), (14347640244 / 3125), (1175319692 / 625), (1536480092 / 3125), (227936548 / 3125), (1006384 / 625), (-2213856 / 3125)],
@@ -289,7 +285,7 @@ theorem hl0PT1_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- `P_{T2}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{T2}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0PT2 : List (List ℝ) :=
   [[(723565562 / 3125), (2815564672 / 3125), (3848846622 / 3125), (2561003652 / 3125), (200103892 / 625), (265719712 / 3125), (42728192 / 3125), (1008352 / 3125), (-488448 / 3125)],
@@ -317,7 +313,7 @@ theorem hl0PT2_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- `P_{T3}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{T3}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0PT3 : List (List ℝ) :=
   [[(145736248 / 3125), (540981356 / 3125), (693216852 / 3125), (419699664 / 3125), (29957288 / 625), (40951088 / 3125), (7572016 / 3125), (197312 / 3125), (-107136 / 3125)],
@@ -345,7 +341,7 @@ theorem hl0PT3_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- **The large shapes, `T` test** (note §3): the cleared numerator at `u = u_b` is positive for
+/-- **The large shapes, `T` test**: the cleared numerator at `u = u_b` is positive for
 `(2x + 3)/5 ≤ α ≤ x` and `x + (3/5)(α - 1) ≤ β ≤ x + (3/2)(α - 1)`. -/
 theorem hl0_largeT {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ham : (2 * x + 3) / 5 ≤ a)
     (hax : a ≤ x) (hb : x + 3 / 5 * (a - 1) ≤ b) (hb' : b ≤ x + 3 / 2 * (a - 1)) :
@@ -360,7 +356,7 @@ theorem hl0_largeT {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ham : (2 *
   · rw [hl0PT3_eq]; have := hl0PT3_pos (by linarith) (by linarith) hA hAm; positivity
 
 /-- The large-shape numerator of the `8` test (`u = u_b`) as a polynomial in `β` (outer variable;
-the inner lists are constants in `x`, `α`), computed from the source formula (note §3, (11)). -/
+the inner lists are constants in `x`, `α`), computed from the factored formula. -/
 noncomputable def hl0FL8 (x a : ℝ) : List (List ℝ) :=
   hl0NoL 1008 72 896 7056 5922 (-2618) 36848 [[x + 1]] [[a]] (hl0Add2 [[a]] [[0], [1]]) [[x + 74]] [[100]]
     (hl0cD [[x]] [[a]] [[0], [1]])
@@ -376,7 +372,7 @@ theorem hl0FL8_link (x a b : ℝ) :
 theorem hl0FL8_len (x a : ℝ) : (hl0FL8 x a).length ≤ 4 := by
   simp [hl0FL8, hl0NoL, hl0WoNL, hl0LoNL, hl0cD, hl0Mul2, hl0Mul, hl0Smul2, hl0Add2, hl0Add, hl0Smul]
 
-/-- `P_{80}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{80}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0P80 : List (List ℝ) :=
   [[(73504174968 / 3125), (292590795899 / 3125), (418268818186 / 3125), (60170506309 / 625), (25294686578 / 625), (33102952198 / 3125), (4726694814 / 3125), (95719436 / 3125), (-8411856 / 625)],
@@ -404,7 +400,7 @@ theorem hl0P80_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- `P_{81}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{81}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0P81 : List (List ℝ) :=
   [[(30669086394 / 3125), (23508877078 / 625), (161570652742 / 3125), (111339429026 / 3125), (9096962744 / 625), (12102627124 / 3125), (367044468 / 625), (39020432 / 3125), (-18688224 / 3125)],
@@ -432,7 +428,7 @@ theorem hl0P81_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- `P_{82}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{82}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0P82 : List (List ℝ) :=
   [[(12453349716 / 3125), (45699775424 / 3125), (11904229628 / 625), (38339803112 / 3125), (2977846376 / 625), (4074649456 / 3125), (680530464 / 3125), (3106624 / 625), (-8249088 / 3125)],
@@ -460,7 +456,7 @@ theorem hl0P82_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- `P_{83}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{83}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0P83 : List (List ℝ) :=
   [[(2461839408 / 3125), (8562904696 / 3125), (10300108472 / 3125), (5886458224 / 3125), (409934128 / 625), (594669248 / 3125), (118484256 / 3125), (3010432 / 3125), (-1810176 / 3125)],
@@ -488,7 +484,7 @@ theorem hl0P83_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- **The large shapes, `8` test** (note §3): the cleared numerator at `u = u_b` is positive for
+/-- **The large shapes, `8` test**: the cleared numerator at `u = u_b` is positive for
 `(2x + 3)/5 ≤ α ≤ x` and `x + (3/5)(α - 1) ≤ β ≤ x + (3/2)(α - 1)`. -/
 theorem hl0_large8 {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ham : (2 * x + 3) / 5 ≤ a)
     (hax : a ≤ x) (hb : x + 3 / 5 * (a - 1) ≤ b) (hb' : b ≤ x + 3 / 2 * (a - 1)) :
@@ -503,7 +499,7 @@ theorem hl0_large8 {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ham : (2 *
   · rw [hl0P83_eq]; have := hl0P83_pos (by linarith) (by linarith) hA hAm; positivity
 
 /-- The large-shape numerator of the `2` test (`u = u_b`) as a polynomial in `β` (outer variable;
-the inner lists are constants in `x`, `α`), computed from the source formula (note §3, (11)). -/
+the inner lists are constants in `x`, `α`), computed from the factored formula. -/
 noncomputable def hl0FL2 (x a : ℝ) : List (List ℝ) :=
   hl0NoL 504 180 0 3528 2268 7903 (-3528) [[x + 1]] [[a]] (hl0Add2 [[a]] [[0], [1]]) [[x + 74]] [[100]]
     (hl0cD [[x]] [[a]] [[0], [1]])
@@ -519,7 +515,7 @@ theorem hl0FL2_link (x a b : ℝ) :
 theorem hl0FL2_len (x a : ℝ) : (hl0FL2 x a).length ≤ 4 := by
   simp [hl0FL2, hl0NoL, hl0WoNL, hl0LoNL, hl0cD, hl0Mul2, hl0Mul, hl0Smul2, hl0Add2, hl0Add, hl0Smul]
 
-/-- `P_{20}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{20}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0P20 : List (List ℝ) :=
   [[(18899726811 / 3125), (61073422028 / 3125), (78915560957 / 3125), (11467090408 / 625), (5154135896 / 625), (7223316346 / 3125), (1113711958 / 3125), (34221132 / 3125), (-1966032 / 625)],
@@ -547,7 +543,7 @@ theorem hl0P20_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- `P_{21}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{21}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0P21 : List (List ℝ) :=
   [[(38454442932 / 3125), (120202539076 / 3125), (150734863744 / 3125), (21508313708 / 625), (9677503132 / 625), (13981570652 / 3125), (2296803236 / 3125), (78379344 / 3125), (-4538592 / 625)],
@@ -575,7 +571,7 @@ theorem hl0P21_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- `P_{22}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{22}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0P22 : List (List ℝ) :=
   [[(1518518874 / 625), (22750486568 / 3125), (27258468854 / 3125), (18796872596 / 3125), (336323236 / 125), (507195512 / 625), (456527248 / 3125), (17744544 / 3125), (-5215104 / 3125)],
@@ -603,7 +599,7 @@ theorem hl0P22_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- `P_{23}(A, X)` (large-shape appendix), grouped by powers of `A = α - (2x + 3)/5`, with
+/-- `P_{23}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
 noncomputable def hl0P23 : List (List ℝ) :=
   [[(57947736 / 125), (817765436 / 625), (181183108 / 125), (580373456 / 625), (50533736 / 125), (16388096 / 125), (17161936 / 625), (6336 / 5), (-238464 / 625)],
@@ -631,7 +627,7 @@ theorem hl0P23_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hl0_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
     (hl0_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [hl0Slant, hl0Cov, hl0Shift, hl0Add, hl0Smul, hl0Low, hl0Neg]))
 
-/-- **The large shapes, `2` test** (note §3): the cleared numerator at `u = u_b` is positive for
+/-- **The large shapes, `2` test**: the cleared numerator at `u = u_b` is positive for
 `(2x + 3)/5 ≤ α ≤ x` and `x + (3/5)(α - 1) ≤ β ≤ x + (3/2)(α - 1)`. -/
 theorem hl0_large2 {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ham : (2 * x + 3) / 5 ≤ a)
     (hax : a ≤ x) (hb : x + 3 / 5 * (a - 1) ≤ b) (hb' : b ≤ x + 3 / 2 * (a - 1)) :

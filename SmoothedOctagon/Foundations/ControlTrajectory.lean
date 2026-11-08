@@ -23,8 +23,7 @@ Absolute continuity then turns the almost-everywhere state equation into the
 entrywise integral equations required by `IsStateTrajectory`.
 
 This is a forward realization theorem. Control optimality additionally needs a
-reverse comparison with arbitrary admissible controls. Source draft only;
-compilation and kernel validation have not been run.
+reverse comparison with arbitrary admissible controls.
 -/
 
 @[expose] public section
@@ -489,7 +488,7 @@ theorem balanced_determinantClock_isStateTrajectory {K : Set (Fin 2 → ℝ)}
 /-- A balanced disk in circle representation supplies a genuine state trajectory
 over one sixth of the determinant-clock period, with identity initial frame.
 
-This theorem does not yet identify the terminal frame: that additionally uses the
+This theorem does not identify the terminal frame: that additionally uses the
 cyclic successor construction, not merely full-period boundary exhaustiveness. -/
 theorem balanced_exists_stateTrajectory {K : Set (Fin 2 → ℝ)}
     {σ : ZMod 6 → ℝ → Fin 2 → ℝ} {tf : ℝ} (hbal : IsBalancedPair K σ tf)

@@ -9,7 +9,7 @@ public import Mathlib.Tactic.LinearCombination
 /-!
 # The four-piece density on the quarter circle
 
-The four-piece density (FLH (9)) is
+The four-piece density is
 `δ(a, b) = [4s(s - 1) + 2(1 + a)(1 - b) log a + 2(1 - a)(1 + b) log b]/((s - 1)(s + 3))`,
 `s = a + b`, on the open quarter circle `a, b > 0`, `a² + b² = 1`. Its minimum is
 `δ(1/√2, 1/√2) = (8 - 4√2 - log 2)/(2√2 - 1)`, attained only at `a = b`.
@@ -18,11 +18,11 @@ The four-piece density (FLH (9)) is
 * `ra_weight_le`: hence `(2b + c)(1 - a) log b ≤ (2a + c)(1 - b) log a` for `0 < b ≤ a < 1`.
 * `ra_four_density`: the minimum and its equality case.
 
-Route: FLH §5 proves `f'(s) < 0` through the integral representation (12) of `H(s)` and a
-decreasing-weight comparison. Here the variable is `b` (with `a = √(1 - b²)`), and the sign of
-`H` is the monotonicity of `x ↦ (2x + c) log x/(1 - x)`, `c = 2 + 2ab`: indeed
-`H = (s - 1)² [(2b + c) log b/(1 - b) - (2a + c) log a/(1 - a)]/(a - b)`. That monotonicity
-follows from `log x ≥ (x - x⁻¹)/2`; no integral is needed.
+By symmetry `b ≤ a`, so `b ∈ (0, √2/2]` and `a = √(1 - b²)`. The density `ψ(b) = δ(a, b)` is
+strictly decreasing there (`psi_strictAntiOn`). The sign of its derivative is that of
+`H = (s - 1)² [(2b + c) log b/(1 - b) - (2a + c) log a/(1 - a)]/(a - b)`, `c = 2 + 2ab`, which is
+fixed by the monotonicity of `x ↦ (2x + c) log x/(1 - x)`. That monotonicity follows from
+`log x ≥ (x - x⁻¹)/2`.
 -/
 
 @[expose] public section
@@ -82,7 +82,7 @@ theorem ra_weight_le {a b c : ℝ} (hc : 2 ≤ c) (hb : 0 < b) (hba : b ≤ a) (
   rw [div_le_div_iff₀ (by linarith) (by linarith)] at h
   linarith
 
-/-- The four-piece density expression (FLH (9)). -/
+/-- The four-piece density expression. -/
 private noncomputable def fd (a b : ℝ) : ℝ :=
   (4 * (a + b) * (a + b - 1) + 2 * (1 + a) * (1 - b) * Real.log a +
     2 * (1 - a) * (1 + b) * Real.log b) / ((a + b - 1) * (a + b + 3))
@@ -267,7 +267,7 @@ private lemma fd_core {a b : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ^ 2 + b ^ 2
     rw [show 1 - (√2 / 2) ^ 2 = (√2 / 2) ^ 2 by rw [sqrt2_half_sq]; norm_num]
     exact Real.sqrt_sq sqrt2_half_pos.le
 
-/-- **The four-piece density on the quarter circle** (FLH §5): for `a, b > 0`, `a² + b² = 1`,
+/-- **The four-piece density on the quarter circle**: for `a, b > 0`, `a² + b² = 1`,
 `δ(a, b) ≥ (8 - 4√2 - log 2)/(2√2 - 1)`, with equality only at `a = b`. -/
 theorem ra_four_density {a b : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 = 1) :
     (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) ≤

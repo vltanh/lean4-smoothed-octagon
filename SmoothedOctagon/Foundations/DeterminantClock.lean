@@ -21,8 +21,7 @@ This constructs the change of parameter assumed in that upstream proposition. It
 also proves that a positive contact successor with the sixfold period relation is
 conjugated to translation by one sixth of the new full period. Constructing the
 actual successor, the measurable control, terminal conditions, and control
-optimality belong to separate results. Source draft only; compilation and kernel
-validation have not been run.
+optimality belong to separate results.
 -/
 
 @[expose] public section

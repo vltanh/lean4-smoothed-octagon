@@ -6,20 +6,19 @@ public import SmoothedOctagon.Exclusion.Forward.Edge
 /-!
 # Case F: the all-forward cycle and its global-minimum window
 
-Period-level facts of `HAND_FORWARD_PERIOD_EXCLUSION` §§1-2 that follow from the costate cycle
-alone (no Pontryagin identity).
+Period-level facts of the all-forward case that follow from the costate cycle alone (no Pontryagin
+identity).
 
 ## Main API
 
-* `NormalPeriod.ff_N_mod_three`: every switch forward forces `N ≡ 1 (mod 3)`
-  (GLOBAL_STRUCTURE_FORWARD_ELLIPTIC: `N = 3k + 1`).
+* `NormalPeriod.ff_N_mod_three`: every switch forward forces `N ≡ 1 (mod 3)`.
 * For a cycle with every switch forward (`hF : ∀ k, lab (k + 1) = lab k + 1`):
   `CostateCycle.ff_m_prev` (`m_k(i_k - 1) = a_{k-1}`), `ff_m_next`
   (`m_k(i_k + 1) = (4 - a_{k-1} a_k)/(a_{k-1} + a_k)`), `ff_act_mul_lt` (`a_{k-1} a_k < 4`),
   `ff_q_eq` (`q_k = (a_{k-1} + a_k)(a_k + a_{k+1})/(a_k² + 4)`).
-* `CostateCycle.ff_rawCost`: the raw cost is `∑_{j<N} G(a_j, a_{j+1})` (MGCE (3)).
+* `CostateCycle.ff_rawCost`: the raw cost is `∑_{j<N} G(a_j, a_{j+1})`.
 * `ff_sum_shift`: a sum over one period of a periodic function may start anywhere.
-* `ff_seven_le`: the seven-entry lower bound (HFPE §2): at a global minimum `a = f m` with
+* `ff_seven_le`: the seven-entry lower bound: at a global minimum `a = f m` with
   `N ≥ 7`, `∑_{j<N} G(f_j, f_{j+1}) ≥ G(a, p) + G(p, b) + G(b, a) + G(a, c) + G(c, d) + G(d, a) +
   (n + 1) G(a, a)` with `n = N - 7`.
 -/
@@ -158,7 +157,7 @@ private lemma ff_arc_eq (k : ℤ) :
   field_simp
   ring
 
-/-- **The cost as a sum of edge functions** (MGCE (3)): `rawCost = ∑_{j<N} G(a_j, a_{j+1})`. -/
+/-- **The cost as a sum of edge functions**: `rawCost = ∑_{j<N} G(a_j, a_{j+1})`. -/
 theorem ff_rawCost : C.toCycle.rawCost = ∑ j ∈ Finset.range N, ff_G (C.act j) (C.act (j + 1)) := by
   rw [Term.Cycle.rawCost]
   have e : ∀ j ∈ Finset.range N, C.toCycle.arc (j : ℤ) =
@@ -195,10 +194,9 @@ theorem ff_sum_shift {N : ℕ} (g : ℤ → ℝ) (hper : ∀ k, g (k + N) = g k)
   | succ i ih => rw [step, ih]
   | pred i ih => rw [← ih, ← step, sub_add_cancel]
 
-/-- **The seven-entry lower bound** (HAND_FORWARD_PERIOD_EXCLUSION §2,
-GLOBAL_FORWARD_CENTERED_SYSTEM (22)). For an `N`-periodic positive sequence with consecutive
-products below `4`, `N ≥ 7`, and a global minimum `a = f m`, lowering every margin outside the
-window `(p, b, a, c, d) = (f (m-2), …, f (m+2))` to `a` gives
+/-- **The seven-entry lower bound.** For an `N`-periodic positive sequence with consecutive products
+below `4`, `N ≥ 7`, and a global minimum `a = f m`, lowering every margin outside the window
+`(p, b, a, c, d) = (f (m-2), …, f (m+2))` to `a` gives
 `∑_{j<N} G(f_j, f_{j+1}) ≥ G(a,p) + G(p,b) + G(b,a) + G(a,c) + G(c,d) + G(d,a) + (n+1) G(a,a)`,
 `n = N - 7`. -/
 theorem ff_seven_le {N : ℕ} (f : ℤ → ℝ) (hper : ∀ k, f (k + N) = f k) (hpos : ∀ k, 0 < f k)

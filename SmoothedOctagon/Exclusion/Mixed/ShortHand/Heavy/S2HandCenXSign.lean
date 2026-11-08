@@ -5,22 +5,20 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenXDefs
 /-!
 # S2 hand signs: the central x comparison, the seven polynomial signs
 
-`archive/lighter-proofs/SHORT_RATIO_CENTRAL_X.md` §3 and §5-§6, in cleared form. With
-`X = x - 13/6 ∈ [0, 7/30]`, `A = 4/3 - a ∈ [0, 1/3]` (16), each statement below is a polynomial in
-`(X, A)` once the atoms `S, K, B, D, D_x, ℓ, U, V` are substituted; `linarith` expands it and the
-termwise rule (35) of the note applies: every term of total degree at most two is kept, a term
-of total degree at least three is discarded when it has the favourable sign and is otherwise
-bounded by its value at the far corner times `A²/(1/3)²` (when its `A`-degree is at least two)
-or `X²/(7/30)²` (`hl2cx_box`). The resulting quadratic has the required sign on the rectangle
-by `A² ≤ A/3`, `XA ≤ X/3` and the nonnegativity of `X, A, X², XA, A²`.
+The signs used by the central x comparison, in cleared form. With `X = x - 13/6 ∈ [0, 7/30]`,
+`A = 4/3 - a ∈ [0, 1/3]`, each statement below is a polynomial in `(X, A)` once the atoms
+`S, K, B, D, D_x, ℓ, U, V` are substituted; `linarith` expands it and a termwise rule applies:
+every term of total degree at most two is kept, a term of total degree at least three is
+discarded when it has the favourable sign and is otherwise bounded by its value at the far corner
+times `A²/(1/3)²` (when its `A`-degree is at least two) or `X²/(7/30)²` (`hl2cx_box`). The
+resulting quadratic has the required sign on the rectangle by `A² ≤ A/3`, `XA ≤ X/3` and the
+nonnegativity of `X, A, X², XA, A²`.
 
-Route: the note proves `R₀, R₁ < 0` by degree-eight Taylor polynomials `Z₀, Z₁` and a
-geometric-series remainder (§5-§6), and the signs of `C`, `C_x` by the shape bounds (14)-(24).
-Here the exact cleared numerators `N₀ = aB²K⁴R₀` (134 monomials, degree 17), `N₁ = aB²K³R₁`
-(99 monomials, degree 14) and the cleared coefficients `M_v, M_u` are bounded directly by the
-termwise rule (35); no coefficient table is printed, the polynomials are the products of the
-primitives (26)-(27) and are expanded by `linarith` itself. The resulting quadratic bounds are
-`N₀ ≤ -1501.7 + 3100.7A + 2203.5A² - 17392X - 37078XA - 67329X²` and
+The exact cleared numerators `N₀ = aB²K⁴R₀` (134 monomials, degree 17), `N₁ = aB²K³R₁`
+(99 monomials, degree 14) and the cleared coefficients `M_v, M_u` are bounded directly by this
+termwise rule; no coefficient table is printed, the polynomials are the products of the
+primitives of `S2HandCenXDefs` and are expanded by `linarith` itself. The resulting quadratic
+bounds are `N₀ ≤ -1501.7 + 3100.7A + 2203.5A² - 17392X - 37078XA - 67329X²` and
 `N₁ ≤ -274.4 + 281.6A + 967.6A² - 2068X - 315XA - 4942X²` (coefficients rounded). The two
 numerator signs raise `maxRecDepth` to 2000 for the normalization inside `linarith`.
 
@@ -28,8 +26,8 @@ numerator signs raise `maxRecDepth` to 2000 for the normalization inside `linari
 
 * `hl2cx_N0_neg`, `hl2cx_N1_neg`: `R₀(U, V) < 0`, `R₁(U, V) < 0` in cleared form.
 * `hl2cx_Mv0_pos`, `hl2cx_Mu0_pos`, `hl2cx_Mv1_pos`, `hl2cx_Mu1_pos`: the incoming coefficients
-  `C` and `C_x` of both tests are positive (23)-(24).
-* `hl2cx_Z_pos`: `Z = 2SB - ℓK > 0`, so `T_x > 0` (22).
+  `C` and `C_x` of both tests are positive.
+* `hl2cx_Z_pos`: `Z = 2SB - ℓK > 0`, so `T_x > 0`.
 -/
 
 @[expose] public section
@@ -39,7 +37,7 @@ namespace SmoothedOctagon
 open Real Set
 
 set_option maxRecDepth 2000 in
-/-- **`N₀ < 0`** (`SHORT_RATIO_CENTRAL_X` §6, cleared form): `aB²K⁴R₀(U, V) < 0`. -/
+/-- **`N₀ < 0`** (cleared form): `aB²K⁴R₀(U, V) < 0`. -/
 theorem hl2cx_N0_neg {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
     (ha2 : a ≤ 4 / 3) :
     hl2cxN0 a (hl2cxl a) (1 + x) (hl2cK x a) (a + hl2cbp x a) (hsDg x (hl2cbp x a) a)
@@ -82,7 +80,7 @@ theorem hl2cx_N0_neg {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 
     mul_nonneg (sub_nonneg.2 hX') (sub_nonneg.2 hA')]
 
 set_option maxRecDepth 2000 in
-/-- **`N₁ < 0`** (`SHORT_RATIO_CENTRAL_X` §6, cleared form): `aB²K³R₁(U, V) < 0`. -/
+/-- **`N₁ < 0`** (cleared form): `aB²K³R₁(U, V) < 0`. -/
 theorem hl2cx_N1_neg {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
     (ha2 : a ≤ 4 / 3) :
     hl2cxN1 a (hl2cxl a) (1 + x) (hl2cK x a) (a + hl2cbp x a) (hsDg x (hl2cbp x a) a)
@@ -118,7 +116,7 @@ theorem hl2cx_N1_neg {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 
     mul_nonneg hX (sub_nonneg.2 hA'), mul_nonneg hA (sub_nonneg.2 hA'),
     mul_nonneg hX (sub_nonneg.2 hX'), mul_nonneg (sub_nonneg.2 hX') (sub_nonneg.2 hA')]
 
-/-- `C > 0` for the first test (`SHORT_RATIO_CENTRAL_X` (23), cleared form). -/
+/-- `C > 0` for the first test (cleared form). -/
 theorem hl2cx_Mv0_pos {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
     (ha2 : a ≤ 4 / 3) :
     0 < hl2cxMv0 a (1 + x) (hl2cK x a) (a + hl2cbp x a) (hsDg x (hl2cbp x a) a) := by
@@ -144,7 +142,7 @@ theorem hl2cx_Mv0_pos {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha :
     mul_nonneg hA (sub_nonneg.2 hA'), mul_nonneg hX (sub_nonneg.2 hX'),
     mul_nonneg (sub_nonneg.2 hX') (sub_nonneg.2 hA')]
 
-/-- `C_x > 0` for the first test (`SHORT_RATIO_CENTRAL_X` (24), cleared form). -/
+/-- `C_x > 0` for the first test (cleared form). -/
 theorem hl2cx_Mu0_pos {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
     (ha2 : a ≤ 4 / 3) :
     0 < hl2cxMu0 a (hl2cxl a) (1 + x) (hl2cK x a) (a + hl2cbp x a) (hsDg x (hl2cbp x a) a)
@@ -172,7 +170,7 @@ theorem hl2cx_Mu0_pos {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha :
     mul_nonneg hX (sub_nonneg.2 hA'), mul_nonneg hA (sub_nonneg.2 hA'),
     mul_nonneg hX (sub_nonneg.2 hX'), mul_nonneg (sub_nonneg.2 hX') (sub_nonneg.2 hA')]
 
-/-- `C > 0` for the second test (`SHORT_RATIO_CENTRAL_X` (23), cleared form). -/
+/-- `C > 0` for the second test (cleared form). -/
 theorem hl2cx_Mv1_pos {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
     (ha2 : a ≤ 4 / 3) :
     0 < hl2cxMv1 a (1 + x) (hl2cK x a) (a + hl2cbp x a) (hsDg x (hl2cbp x a) a) := by
@@ -195,7 +193,7 @@ theorem hl2cx_Mv1_pos {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha :
     mul_nonneg hA hA, mul_nonneg hX (sub_nonneg.2 hA'), mul_nonneg hA (sub_nonneg.2 hA'),
     mul_nonneg hX (sub_nonneg.2 hX'), mul_nonneg (sub_nonneg.2 hX') (sub_nonneg.2 hA')]
 
-/-- `C_x > 0` for the second test (`SHORT_RATIO_CENTRAL_X` (24), cleared form). -/
+/-- `C_x > 0` for the second test (cleared form). -/
 theorem hl2cx_Mu1_pos {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
     (ha2 : a ≤ 4 / 3) :
     0 < hl2cxMu1 a (hl2cxl a) (1 + x) (hl2cK x a) (a + hl2cbp x a) (hsDg x (hl2cbp x a) a)
@@ -225,7 +223,7 @@ theorem hl2cx_Mu1_pos {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha :
     mul_nonneg hX (sub_nonneg.2 hA'), mul_nonneg hA (sub_nonneg.2 hA'),
     mul_nonneg hX (sub_nonneg.2 hX'), mul_nonneg (sub_nonneg.2 hX') (sub_nonneg.2 hA')]
 
-/-- `Z > 0`, so `T_x > 0` (`SHORT_RATIO_CENTRAL_X` (22)). -/
+/-- `Z > 0`, so `T_x > 0`. -/
 theorem hl2cx_Z_pos {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
     (ha2 : a ≤ 4 / 3) :
     0 < hl2cxZ (hl2cxl a) (1 + x) (hl2cK x a) (a + hl2cbp x a) := by

@@ -5,16 +5,15 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW3d
 /-!
 # Gate S4, hand proof W3 (e): the normalized cost numerator is positive
 
-`archive/lighter-proofs/SHORT_CASIMIR_RATIO_DERIVATIVE.md` §3, (8). For fixed `x`, every atom of
-the numerator `N = (781250/3)n` (`a, B, K, D, v, E, B_x, D_x, E_x`) is a polynomial of degree at
-most two in `d`; their second-order jets in `d` are composed by the product rule
-(`HL46J`) before any expansion, and the resulting second derivative is the note's
-`N_dd = P(d, x - 2)` (`hl46_w3_n_jet`). The monomial rule gives `P > 0` (the note's `P_low`),
+For fixed `x`, every atom of the numerator `N = (781250/3)n` (`a, B, K, D, v, E, B_x, D_x, E_x`) is
+a polynomial of degree at most two in `d`; their second-order jets in `d` are composed by the
+product rule (`HL46J`) before any expansion, and the resulting second derivative is the explicit
+polynomial `N_dd = P(d, x - 2)` (`hl46_w3_n_jet`). The monomial rule gives `P > 0`,
 `N_d(2 + h, 0) > 0` and `N(2 + h, 0) > 0`, hence `N_d > 0` and `N(x, d) ≥ N(x, 0) > 0`
 (`hl46_w3_n_pos`), i.e. `f > -1/25`.
 
-Route: `N(2 + h, 0) > 0` is read off directly by the monomial rule (only its `h⁷`, `h⁸`
-coefficients are positive), instead of the note's concavity and two endpoint values.
+`N(2 + h, 0) > 0` is read off directly by the monomial rule (only its `h⁷`, `h⁸` coefficients
+are positive).
 
 ## Main API
 
@@ -27,7 +26,7 @@ namespace SmoothedOctagon
 
 open Set
 
-/-- The note's `N_dd = P(d, h)` (§3). -/
+/-- The polynomial `N_dd = P(d, h)`. -/
 noncomputable def hl46W3P (d h : ℝ) : ℝ :=
   -11995620 * d ^ 6 * h ^ 2 - 110359704 * d ^ 6 * h - 172736928 * d ^ 6 + 36678915 * d ^ 5 * h ^ 3 +
     (488636967 / 2) * d ^ 5 * h ^ 2 + 1247667512 * d ^ 5 * h + (6590962651 / 5) * d ^ 5 -
@@ -43,18 +42,18 @@ noncomputable def hl46W3P (d h : ℝ) : ℝ :=
     (477120125 / 3) * h ^ 4 + (1984816000 / 3) * h ^ 3 + (7777127875 / 6) * h ^ 2 +
     (3847984625 / 3) * h + 611261375
 
-/-- The note's `N_d(2 + h, 0)` (§3). -/
+/-- The polynomial `N_d(2 + h, 0)`. -/
 noncomputable def hl46W3Nd0 (h : ℝ) : ℝ :=
   28125 * h ^ 8 + (383125 / 3) * h ^ 7 - 1931875 * h ^ 6 - 16751875 * h ^ 5 - (86249375 / 2) * h ^ 4 -
     18388125 * h ^ 3 + 78990000 * h ^ 2 + (344264375 / 3) * h + (311725625 / 6)
 
-/-- The note's `N(2 + h, 0)` (§3). -/
+/-- The polynomial `N(2 + h, 0)`. -/
 noncomputable def hl46W3N0 (h : ℝ) : ℝ :=
   (28125 / 2) * h ^ 8 + (143750 / 3) * h ^ 7 - (4009375 / 3) * h ^ 6 - (36331250 / 3) * h ^ 5 -
     (126812500 / 3) * h ^ 4 - (214831250 / 3) * h ^ 3 - 56421875 * h ^ 2 - 12618750 * h +
     (8746875 / 2)
 
-/-- `P > 0`: discard positive `d`-terms and put `d = 1/19` in the negative ones (note's `P_low`). -/
+/-- `P > 0`: discard positive `d`-terms and put `d = 1/19` in the negative ones. -/
 theorem hl46_w3_P_pos {d h : ℝ} (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (hh : 0 ≤ h) : 0 < hl46W3P d h := by
   unfold hl46W3P
   linarith [mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hd hd' 6) (pow_nonneg hh 2),
@@ -147,7 +146,7 @@ theorem hl46_w3_qjet (c0 c1 c2 d : ℝ) :
 theorem hl46_w3_cjet (c d : ℝ) : HL46J (fun _ => c) (fun _ => 0) (fun _ => 0) d :=
   ⟨hasDerivAt_const d c, hasDerivAt_const d 0⟩
 
-/-- **The second-order `d`-jet of `n`** (note (8)): the product rule on the atoms, then
+/-- **The second-order `d`-jet of `n`**: the product rule on the atoms, then
 `N_dd = (781250/3)n_dd = P(d, x - 2)` and `N_d(x, 0) = N_d(2 + h, 0)`. -/
 theorem hl46_w3_n_jet (x : ℝ) : ∃ n₁ n₂ : ℝ → ℝ, (∀ d, HL46J (fun d => hl46W3n x d) n₁ n₂ d) ∧
     (∀ d, 781250 / 3 * n₂ d = hl46W3P d (x - 2)) ∧ 781250 / 3 * n₁ 0 = hl46W3Nd0 (x - 2) := by
@@ -213,13 +212,13 @@ theorem hl46_w3_n_jet (x : ℝ) : ∃ n₁ n₂ : ℝ → ℝ, (∀ d, HL46J (fu
   · unfold hl46W3Nd0 hl46W3E hl46W3Ex hh46S4P hl46W3v hl46W3B hl46W3K hl46W3D hsDg hl46W3Dx
     ring
 
-/-- The note's boundary source: `N(x, 0) = N(2 + h, 0)`. -/
+/-- The boundary value: `N(x, 0) = N(2 + h, 0)`. -/
 theorem hl46_w3_n0 (x : ℝ) : 781250 / 3 * hl46W3n x 0 = hl46W3N0 (x - 2) := by
   unfold hl46W3n hl46W3TxC hl46W3TC hl46W3Tx hl46W3T hl46W3N0 hl46W3E hl46W3Ex hh46S4P hl46W3v
     hl46W3B hl46W3K hl46W3D hsDg hl46W3Dx
   ring
 
-/-- **`N > 0`** (note §3): `N_dd = P > 0` and `N_d(x, 0) > 0` give `N_d > 0`, so
+/-- **`N > 0`**: `N_dd = P > 0` and `N_d(x, 0) > 0` give `N_d > 0`, so
 `N(x, d) ≥ N(x, 0) > 0`. -/
 theorem hl46_w3_n_pos {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) :
     0 < hl46W3n x d := by

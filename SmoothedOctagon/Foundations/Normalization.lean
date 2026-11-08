@@ -12,10 +12,9 @@ The six standard contacts are edge midpoints, not a claim about the hexagon's ve
 
 In normal position, every critical hexagon has contact determinant `√3 / 2` and area
 `2 * √3`. Every boundary point belongs to a normalized contact multi-point. Selecting
-these multi-points continuously and obtaining a balanced boundary curve remain separate
-obligations; no curve regularity or admissible control trajectory is asserted here.
-
-Status: source-level Lean draft; compilation and kernel validation have not been run.
+these multi-points continuously and obtaining a balanced boundary curve are done in
+`BoundaryTrace` and `BalancedReduction`; no curve regularity or admissible control trajectory is
+asserted here.
 -/
 
 @[expose] public section

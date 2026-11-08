@@ -6,28 +6,23 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.PolyDeriv
 /-!
 # Case M2, forward successor by hand: the low-ratio coefficient signs
 
-The sign half of the hand proof of `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10) at `k = 1`
-(PR-2 notes `docs/lighter-proofs/NONSHORT_LOW_RATIO.md`, `NONSHORT_LOW_RATIO_MONOTONICITY.md`,
-`NONSHORT_LOW_RATIO_REMAINDER.md`, `NONSHORT_LOW_RATIO_LINK.md` §5; branch
-`proof/lighter-signs`). With `h = 1 - 2t`, `j = 2t + x - 1`, `y = q - 1`, the cleared residual
-is `∑ᵢ C̃ᵢ(h, y) jⁱ` (`FwdHand/LowRatioHand`); here that sum is shown positive for
-`1/3 ≤ h ≤ 1/2`, `0 ≤ y ≤ h`, `j ≥ 0`.
+The coefficient signs of the low-ratio unit-shape residual at `k = 1`. With `h = 1 - 2t`,
+`j = 2t + x - 1`, `y = q - 1`, the cleared residual is `∑ᵢ C̃ᵢ(h, y) jⁱ` (`FwdHand/LowRatioHand`);
+here that sum is shown positive for `1/3 ≤ h ≤ 1/2`, `0 ≤ y ≤ h`, `j ≥ 0`.
 
-* The quadratic part is `h³w³(𝒜₀ + β𝒜₁ + wβ²𝒜₂)`, `β = j/(hw)` (link note (29)). Each `𝒜ᵢ`
-  increases in `h` (`lrh_A0_ge`, …: `∂_h𝒜ᵢ = Eᵢ/2 ≥ 0`, monotonicity note (1)-(18)), and at
-  `h = 1/3` the base quadratic exceeds `4` (`lrh_base`: base note (1), with the error identities
-  (4) and the square identities (7)-(9)).
-* `C̃₃, …, C̃₁₀ ≥ 0` from the factored forms and the monomial bounds of their univariate factors
-  (remainder note §§2-3).
+* The quadratic part is `h³w³(𝒜₀ + β𝒜₁ + wβ²𝒜₂)`, `β = j/(hw)`. Each `𝒜ᵢ` increases in `h`
+  (`lrh_A0_ge`, …: `∂_h𝒜ᵢ = Eᵢ/2 ≥ 0`), and at `h = 1/3` the base quadratic exceeds `4`
+  (`lrh_base`: three error identities against comparison polynomials `A, B, C`, and Bernstein forms
+  of `A + βB + β²C - 4` in `z`).
+* `C̃₃, …, C̃₁₀ ≥ 0` from the factored forms and the monomial bounds of their univariate factors.
 
-Route: the lower bounds of `U₀₂, U₀₃, U₁₂, U₁₃, U₂₀, U₂₁, U₂₂` use their Taylor coefficients at
-`h = 1/3` (all nonnegative beyond the constant), in place of the note's second-derivative
-arguments (4)-(11); the `h⁹` terms stay inside `C̃₁` (`𝒜₁` of monotonicity note (19)) instead of
-being split off as `h⁹L₉`; only `C̃₃, C̃₄ ≥ 0` is used, not the margins `700`, `3900`.
+The lower bounds of `U₀₂, U₀₃, U₁₂, U₁₃, U₂₀, U₂₁, U₂₂` use their Taylor coefficients at
+`h = 1/3` (all nonnegative beyond the constant); the `h⁹` terms stay inside `C̃₁` (and `𝒜₁`); for
+`C̃₃` and `C̃₄` only nonnegativity is used.
 
 ## Main API
 
-* the printed factors `lrhBᵢₙ`, `lrhPᵢₙ`, `lrhUᵢₙ`, `lrhSᵢ`, `lrha0`, …, `lrhQC`; `lrhA0`, …,
+* the univariate factors `lrhBᵢₙ`, `lrhPᵢₙ`, `lrhUᵢₙ`, `lrhSᵢ`, `lrha0`, …, `lrhQC`; `lrhA0`, …,
   `lrhE0`, …; `lrhC0`, …, `lrhC10`.
 * `lrh_base`, `lrh_A0_ge`, `lrh_A1_ge`, `lrh_A2_ge`, `lrh_quad_pos`;
   `lrh_sum_pos`: **`∑ᵢ C̃ᵢ jⁱ > 0`**.
@@ -37,459 +32,462 @@ being split off as `h⁹L₉`; only `C̃₃, C̃₄ ≥ 0` is used, not the marg
 
 namespace SmoothedOctagon
 
-/-! ### The printed univariate factors -/
+/-! ### The univariate factors -/
 
-/-- `B_{00}(h)` of the PR-2 notes. -/
+/-- `B_{00}(h)`, a univariate factor of `C̃₀` and `𝒜₀`. -/
 noncomputable def lrhB00 (h : ℝ) : ℝ :=
   -1860 + 2570 * h + 9766 * h ^ (2 : ℕ) + 6540 * h ^ (3 : ℕ) + 1008 * h ^ (4 : ℕ)
 
-/-- `B_{01}(h)` of the PR-2 notes. -/
+/-- `B_{01}(h)`, a univariate factor of `C̃₀` and `𝒜₀`. -/
 noncomputable def lrhB01 (h : ℝ) : ℝ :=
   4020 - 6440 * h + 3929 * h ^ (2 : ℕ) + 42003 * h ^ (3 : ℕ) + 38424 * h ^ (4 : ℕ) + 11076 * h ^ (5 : ℕ) + 1008 * h ^ (6 : ℕ)
 
-/-- `B_{02}(h)` of the PR-2 notes. -/
+/-- `B_{02}(h)`, a univariate factor of `C̃₀` and `𝒜₀`. -/
 noncomputable def lrhB02 (h : ℝ) : ℝ :=
   -4860 - 2970 * h - 22149 * h ^ (2 : ℕ) - 2496 * h ^ (3 : ℕ) + 74854 * h ^ (4 : ℕ) + 78347 * h ^ (5 : ℕ) + 26922 * h ^ (6 : ℕ) + 2952 * h ^ (7 : ℕ)
 
-/-- `B_{03}(h)` of the PR-2 notes. -/
+/-- `B_{03}(h)`, a univariate factor of `C̃₀` and `𝒜₀`. -/
 noncomputable def lrhB03 (h : ℝ) : ℝ :=
   -1380 + 940 * h + 11318 * h ^ (2 : ℕ) - 20921 * h ^ (3 : ℕ) - 24625 * h ^ (4 : ℕ) + 49257 * h ^ (5 : ℕ) + 68533 * h ^ (6 : ℕ) + 27134 * h ^ (7 : ℕ) + 3264 * h ^ (8 : ℕ)
 
-/-- `B_{04}(h)` of the PR-2 notes. -/
+/-- `B_{04}(h)`, a univariate factor of `C̃₀` and `𝒜₀`. -/
 noncomputable def lrhB04 (h : ℝ) : ℝ :=
   -4740 + 16160 * h + 55824 * h ^ (2 : ℕ) + 19838 * h ^ (3 : ℕ) - 32254 * h ^ (4 : ℕ) - 6242 * h ^ (5 : ℕ) + 21486 * h ^ (6 : ℕ) + 11984 * h ^ (7 : ℕ) + 1608 * h ^ (8 : ℕ)
 
-/-- `B_{05}(h)` of the PR-2 notes. -/
+/-- `B_{05}(h)`, a univariate factor of `C̃₀` and `𝒜₀`. -/
 noncomputable def lrhB05 (h : ℝ) : ℝ :=
   -3960 + 16440 * h + 54756 * h ^ (2 : ℕ) + 34662 * h ^ (3 : ℕ) - 15206 * h ^ (4 : ℕ) - 19306 * h ^ (5 : ℕ) - 2315 * h ^ (6 : ℕ) + 1811 * h ^ (7 : ℕ) + 330 * h ^ (8 : ℕ)
 
-/-- `B_{06}(h)` of the PR-2 notes. -/
+/-- `B_{06}(h)`, a univariate factor of `C̃₀` and `𝒜₀`. -/
 noncomputable def lrhB06 (h : ℝ) : ℝ :=
   -600 + 5720 * h + 17120 * h ^ (2 : ℕ) + 12368 * h ^ (3 : ℕ) - 3058 * h ^ (4 : ℕ) - 6760 * h ^ (5 : ℕ) - 2251 * h ^ (6 : ℕ) - 93 * h ^ (7 : ℕ) + 18 * h ^ (8 : ℕ)
 
-/-- `B_{07}(h)` of the PR-2 notes. -/
+/-- `B_{07}(h)`, a univariate factor of `C̃₀` and `𝒜₀`. -/
 noncomputable def lrhB07 (h : ℝ) : ℝ :=
   -360 - 240 * h + 516 * h ^ (2 : ℕ) + 360 * h ^ (3 : ℕ) - 144 * h ^ (4 : ℕ) - 120 * h ^ (5 : ℕ) - 12 * h ^ (6 : ℕ)
 
-/-- `B_{10}(h)` of the PR-2 notes. -/
+/-- `B_{10}(h)`, a univariate factor of `C̃₁` and `𝒜₁`. -/
 noncomputable def lrhB10 (h : ℝ) : ℝ :=
   -720 - 7780 * h + 17094 * h ^ (2 : ℕ) + 58240 * h ^ (3 : ℕ) + 43434 * h ^ (4 : ℕ) + 9612 * h ^ (5 : ℕ) + 432 * h ^ (6 : ℕ)
 
-/-- `B_{11}(h)` of the PR-2 notes. -/
+/-- `B_{11}(h)`, a univariate factor of `C̃₁` and `𝒜₁`. -/
 noncomputable def lrhB11 (h : ℝ) : ℝ :=
   3000 + 1950 * h - 45830 * h ^ (2 : ℕ) + 58853 * h ^ (3 : ℕ) + 296430 * h ^ (4 : ℕ) + 276717 * h ^ (5 : ℕ) + 95736 * h ^ (6 : ℕ) + 12852 * h ^ (7 : ℕ) + 432 * h ^ (8 : ℕ)
 
-/-- `B_{12}(h)` of the PR-2 notes. -/
+/-- `B_{12}(h)`, a univariate factor of `C̃₁` and `𝒜₁`. -/
 noncomputable def lrhB12 (h : ℝ) : ℝ :=
   -14760 - 38280 * h - 67107 * h ^ (2 : ℕ) - 128528 * h ^ (3 : ℕ) + 130659 * h ^ (4 : ℕ) + 606701 * h ^ (5 : ℕ) + 580936 * h ^ (6 : ℕ) + 221237 * h ^ (7 : ℕ) + 33270 * h ^ (8 : ℕ)
 
-/-- `B_{13}(h)` of the PR-2 notes. -/
+/-- `B_{13}(h)`, a univariate factor of `C̃₁` and `𝒜₁`. -/
 noncomputable def lrhB13 (h : ℝ) : ℝ :=
   -26090 + 70056 * h + 197151 * h ^ (2 : ℕ) + 457 * h ^ (3 : ℕ) - 6473 * h ^ (4 : ℕ) + 406129 * h ^ (5 : ℕ) + 490144 * h ^ (6 : ℕ) + 210010 * h ^ (7 : ℕ) + 33264 * h ^ (8 : ℕ)
 
-/-- `B_{14}(h)` of the PR-2 notes. -/
+/-- `B_{14}(h)`, a univariate factor of `C̃₁` and `𝒜₁`. -/
 noncomputable def lrhB14 (h : ℝ) : ℝ :=
   -21670 + 265968 * h + 673800 * h ^ (2 : ℕ) + 344090 * h ^ (3 : ℕ) - 190550 * h ^ (4 : ℕ) - 103404 * h ^ (5 : ℕ) + 113432 * h ^ (6 : ℕ) + 82418 * h ^ (7 : ℕ) + 14364 * h ^ (8 : ℕ)
 
-/-- `B_{15}(h)` of the PR-2 notes. -/
+/-- `B_{15}(h)`, a univariate factor of `C̃₁` and `𝒜₁`. -/
 noncomputable def lrhB15 (h : ℝ) : ℝ :=
   -7500 + 225732 * h + 570762 * h ^ (2 : ℕ) + 352498 * h ^ (3 : ℕ) - 139977 * h ^ (4 : ℕ) - 209647 * h ^ (5 : ℕ) - 49376 * h ^ (6 : ℕ) + 7787 * h ^ (7 : ℕ) + 2427 * h ^ (8 : ℕ)
 
-/-- `B_{16}(h)` of the PR-2 notes. -/
+/-- `B_{16}(h)`, a univariate factor of `C̃₁` and `𝒜₁`. -/
 noncomputable def lrhB16 (h : ℝ) : ℝ :=
   2300 + 67140 * h + 162036 * h ^ (2 : ℕ) + 106516 * h ^ (3 : ℕ) - 38155 * h ^ (4 : ℕ) - 69897 * h ^ (5 : ℕ) - 24205 * h ^ (6 : ℕ) - 1657 * h ^ (7 : ℕ) + 114 * h ^ (8 : ℕ)
 
-/-- `B_{17}(h)` of the PR-2 notes. -/
+/-- `B_{17}(h)`, a univariate factor of `C̃₁` and `𝒜₁`. -/
 noncomputable def lrhB17 (h : ℝ) : ℝ :=
   -360 - 3000 * h - 1092 * h ^ (2 : ℕ) + 4794 * h ^ (3 : ℕ) + 2652 * h ^ (4 : ℕ) - 1668 * h ^ (5 : ℕ) - 1200 * h ^ (6 : ℕ) - 126 * h ^ (7 : ℕ)
 
-/-- `B_{20}(h)` of the PR-2 notes. -/
+/-- `B_{20}(h)`, a univariate factor of `C̃₂` and `𝒜₂`. -/
 noncomputable def lrhB20 (h : ℝ) : ℝ :=
   4140 - 7620 * h - 16404 * h ^ (2 : ℕ) + 58692 * h ^ (3 : ℕ) + 89088 * h ^ (4 : ℕ) + 31248 * h ^ (5 : ℕ) + 2592 * h ^ (6 : ℕ)
 
-/-- `B_{21}(h)` of the PR-2 notes. -/
+/-- `B_{21}(h)`, a univariate factor of `C̃₂` and `𝒜₂`. -/
 noncomputable def lrhB21 (h : ℝ) : ℝ :=
   -1020 + 21780 * h - 58914 * h ^ (2 : ℕ) - 94500 * h ^ (3 : ℕ) + 319626 * h ^ (4 : ℕ) + 559212 * h ^ (5 : ℕ) + 287076 * h ^ (6 : ℕ) + 58104 * h ^ (7 : ℕ) + 3456 * h ^ (8 : ℕ)
 
-/-- `B_{22}(h)` of the PR-2 notes. -/
+/-- `B_{22}(h)`, a univariate factor of `C̃₂` and `𝒜₂`. -/
 noncomputable def lrhB22 (h : ℝ) : ℝ :=
   -69330 - 38967 * h - 134046 * h ^ (2 : ℕ) - 28145 * h ^ (3 : ℕ) + 801370 * h ^ (4 : ℕ) + 1181276 * h ^ (5 : ℕ) + 633062 * h ^ (6 : ℕ) + 141564 * h ^ (7 : ℕ) + 8496 * h ^ (8 : ℕ)
 
-/-- `B_{23}(h)` of the PR-2 notes. -/
+/-- `B_{23}(h)`, a univariate factor of `C̃₂` and `𝒜₂`. -/
 noncomputable def lrhB23 (h : ℝ) : ℝ :=
   -35562 + 617251 * h + 751883 * h ^ (2 : ℕ) + 58120 * h ^ (3 : ℕ) + 313793 * h ^ (4 : ℕ) + 840895 * h ^ (5 : ℕ) + 552800 * h ^ (6 : ℕ) + 132804 * h ^ (7 : ℕ) + 7272 * h ^ (8 : ℕ)
 
-/-- `B_{24}(h)` of the PR-2 notes. -/
+/-- `B_{24}(h)`, a univariate factor of `C̃₂` and `𝒜₂`. -/
 noncomputable def lrhB24 (h : ℝ) : ℝ :=
   96574 + 1457524 * h + 1892122 * h ^ (2 : ℕ) + 83240 * h ^ (3 : ℕ) - 722248 * h ^ (4 : ℕ) - 91608 * h ^ (5 : ℕ) + 166850 * h ^ (6 : ℕ) + 51438 * h ^ (7 : ℕ) + 2196 * h ^ (8 : ℕ)
 
-/-- `B_{25}(h)` of the PR-2 notes. -/
+/-- `B_{25}(h)`, a univariate factor of `C̃₂` and `𝒜₂`. -/
 noncomputable def lrhB25 (h : ℝ) : ℝ :=
   105396 + 1075590 * h + 1426392 * h ^ (2 : ℕ) + 65394 * h ^ (3 : ℕ) - 716286 * h ^ (4 : ℕ) - 318393 * h ^ (5 : ℕ) - 13182 * h ^ (6 : ℕ) + 6807 * h ^ (7 : ℕ) + 126 * h ^ (8 : ℕ)
 
-/-- `B_{26}(h)` of the PR-2 notes. -/
+/-- `B_{26}(h)`, a univariate factor of `C̃₂` and `𝒜₂`. -/
 noncomputable def lrhB26 (h : ℝ) : ℝ :=
   37820 + 278958 * h + 371896 * h ^ (2 : ℕ) + 9338 * h ^ (3 : ℕ) - 212931 * h ^ (4 : ℕ) - 102230 * h ^ (5 : ℕ) - 10287 * h ^ (6 : ℕ) + 252 * h ^ (7 : ℕ)
 
-/-- `B_{27}(h)` of the PR-2 notes. -/
+/-- `B_{27}(h)`, a univariate factor of `C̃₂` and `𝒜₂`. -/
 noncomputable def lrhB27 (h : ℝ) : ℝ :=
   -2400 - 6882 * h + 7536 * h ^ (2 : ℕ) + 10380 * h ^ (3 : ℕ) - 3564 * h ^ (4 : ℕ) - 4506 * h ^ (5 : ℕ) - 564 * h ^ (6 : ℕ)
 
-/-- `P_{04}(h)` of the PR-2 notes. -/
+/-- `P_{04}(h)`, a univariate factor of `E₀`. -/
 noncomputable def lrhP04 (h : ℝ) : ℝ :=
   -4740 + 32320 * h + 167472 * h ^ (2 : ℕ) + 79352 * h ^ (3 : ℕ) - 161270 * h ^ (4 : ℕ) - 37452 * h ^ (5 : ℕ) + 150402 * h ^ (6 : ℕ) + 95872 * h ^ (7 : ℕ) + 14472 * h ^ (8 : ℕ)
 
-/-- `P_{05}(h)` of the PR-2 notes. -/
+/-- `P_{05}(h)`, a univariate factor of `E₀`. -/
 noncomputable def lrhP05 (h : ℝ) : ℝ :=
   -7920 + 49320 * h + 219024 * h ^ (2 : ℕ) + 173310 * h ^ (3 : ℕ) - 91236 * h ^ (4 : ℕ) - 135142 * h ^ (5 : ℕ) - 18520 * h ^ (6 : ℕ) + 16299 * h ^ (7 : ℕ) + 3300 * h ^ (8 : ℕ)
 
-/-- `P_{06}(h)` of the PR-2 notes. -/
+/-- `P_{06}(h)`, a univariate factor of `E₀`. -/
 noncomputable def lrhP06 (h : ℝ) : ℝ :=
   -1800 + 22880 * h + 85600 * h ^ (2 : ℕ) + 74208 * h ^ (3 : ℕ) - 21406 * h ^ (4 : ℕ) - 54080 * h ^ (5 : ℕ) - 20259 * h ^ (6 : ℕ) - 930 * h ^ (7 : ℕ) + 198 * h ^ (8 : ℕ)
 
-/-- `P_{14}(h)` of the PR-2 notes. -/
+/-- `P_{14}(h)`, a univariate factor of `E₁`. -/
 noncomputable def lrhP14 (h : ℝ) : ℝ :=
   -43340 + 797904 * h + 2695200 * h ^ (2 : ℕ) + 1720450 * h ^ (3 : ℕ) - 1143300 * h ^ (4 : ℕ) - 723828 * h ^ (5 : ℕ) + 907456 * h ^ (6 : ℕ) + 741762 * h ^ (7 : ℕ) + 143640 * h ^ (8 : ℕ)
 
-/-- `P_{15}(h)` of the PR-2 notes. -/
+/-- `P_{15}(h)`, a univariate factor of `E₁`. -/
 noncomputable def lrhP15 (h : ℝ) : ℝ :=
   -22500 + 902928 * h + 2853810 * h ^ (2 : ℕ) + 2114988 * h ^ (3 : ℕ) - 979839 * h ^ (4 : ℕ) - 1677176 * h ^ (5 : ℕ) - 444384 * h ^ (6 : ℕ) + 77870 * h ^ (7 : ℕ) + 26697 * h ^ (8 : ℕ)
 
-/-- `P_{16}(h)` of the PR-2 notes. -/
+/-- `P_{16}(h)`, a univariate factor of `E₁`. -/
 noncomputable def lrhP16 (h : ℝ) : ℝ :=
   9200 + 335700 * h + 972216 * h ^ (2 : ℕ) + 745612 * h ^ (3 : ℕ) - 305240 * h ^ (4 : ℕ) - 629073 * h ^ (5 : ℕ) - 242050 * h ^ (6 : ℕ) - 18227 * h ^ (7 : ℕ) + 1368 * h ^ (8 : ℕ)
 
-/-- `P_{24}(h)` of the PR-2 notes. -/
+/-- `P_{24}(h)`, a univariate factor of `E₂`. -/
 noncomputable def lrhP24 (h : ℝ) : ℝ :=
   289722 + 5830096 * h + 9460610 * h ^ (2 : ℕ) + 499440 * h ^ (3 : ℕ) - 5055736 * h ^ (4 : ℕ) - 732864 * h ^ (5 : ℕ) + 1501650 * h ^ (6 : ℕ) + 514380 * h ^ (7 : ℕ) + 24156 * h ^ (8 : ℕ)
 
-/-- `P_{25}(h)` of the PR-2 notes. -/
+/-- `P_{25}(h)`, a univariate factor of `E₂`. -/
 noncomputable def lrhP25 (h : ℝ) : ℝ :=
   421584 + 5377950 * h + 8558352 * h ^ (2 : ℕ) + 457758 * h ^ (3 : ℕ) - 5730288 * h ^ (4 : ℕ) - 2865537 * h ^ (5 : ℕ) - 131820 * h ^ (6 : ℕ) + 74877 * h ^ (7 : ℕ) + 1512 * h ^ (8 : ℕ)
 
-/-- `P_{26}(h)` of the PR-2 notes. -/
+/-- `P_{26}(h)`, a univariate factor of `E₂`. -/
 noncomputable def lrhP26 (h : ℝ) : ℝ :=
   189100 + 1673748 * h + 2603272 * h ^ (2 : ℕ) + 74704 * h ^ (3 : ℕ) - 1916379 * h ^ (4 : ℕ) - 1022300 * h ^ (5 : ℕ) - 113157 * h ^ (6 : ℕ) + 3024 * h ^ (7 : ℕ)
 
-/-- `P_{30}(h)` of the PR-2 notes. -/
+/-- `P_{30}(h)`, a univariate factor of `C̃₃`. -/
 noncomputable def lrhP30 (h : ℝ) : ℝ :=
   750 + 2735 * h - 5619 * h ^ (2 : ℕ) - 833 * h ^ (3 : ℕ) + 18639 * h ^ (4 : ℕ) + 11844 * h ^ (5 : ℕ) + 1620 * h ^ (6 : ℕ)
 
-/-- `P_{31}(h)` of the PR-2 notes. -/
+/-- `P_{31}(h)`, a univariate factor of `C̃₃`. -/
 noncomputable def lrhP31 (h : ℝ) : ℝ :=
   8705 + 32414 * h - 38975 * h ^ (2 : ℕ) - 51137 * h ^ (3 : ℕ) + 231183 * h ^ (4 : ℕ) + 424449 * h ^ (5 : ℕ) + 268647 * h ^ (6 : ℕ) + 72306 * h ^ (7 : ℕ) + 6048 * h ^ (8 : ℕ)
 
-/-- `P_{32}(h)` of the PR-2 notes. -/
+/-- `P_{32}(h)`, a univariate factor of `C̃₃`. -/
 noncomputable def lrhP32 (h : ℝ) : ℝ :=
   -72759 + 74553 * h + 160411 * h ^ (2 : ℕ) + 412787 * h ^ (3 : ℕ) + 1338365 * h ^ (4 : ℕ) + 1800478 * h ^ (5 : ℕ) + 1148415 * h ^ (6 : ℕ) + 338190 * h ^ (7 : ℕ) + 29232 * h ^ (8 : ℕ)
 
-/-- `P_{33}(h)` of the PR-2 notes. -/
+/-- `P_{33}(h)`, a univariate factor of `C̃₃`. -/
 noncomputable def lrhP33 (h : ℝ) : ℝ :=
   225967 + 1979598 * h + 2750577 * h ^ (2 : ℕ) + 849874 * h ^ (3 : ℕ) + 45928 * h ^ (4 : ℕ) + 832220 * h ^ (5 : ℕ) + 873028 * h ^ (6 : ℕ) + 297504 * h ^ (7 : ℕ) + 24696 * h ^ (8 : ℕ)
 
-/-- `P_{34}(h)` of the PR-2 notes. -/
+/-- `P_{34}(h)`, a univariate factor of `C̃₃`. -/
 noncomputable def lrhP34 (h : ℝ) : ℝ :=
   338793 + 2000238 * h + 2548635 * h ^ (2 : ℕ) + 261460 * h ^ (3 : ℕ) - 1142100 * h ^ (4 : ℕ) - 495097 * h ^ (5 : ℕ) + 52254 * h ^ (6 : ℕ) + 49671 * h ^ (7 : ℕ) + 3654 * h ^ (8 : ℕ)
 
-/-- `P_{35}(h)` of the PR-2 notes. -/
+/-- `P_{35}(h)`, a univariate factor of `C̃₃`. -/
 noncomputable def lrhP35 (h : ℝ) : ℝ :=
   510006 + 2740780 * h + 3366742 * h ^ (2 : ℕ) + 73942 * h ^ (3 : ℕ) - 1950176 * h ^ (4 : ℕ) - 1012247 * h ^ (5 : ℕ) - 124034 * h ^ (6 : ℕ) + 7281 * h ^ (7 : ℕ) + 378 * h ^ (8 : ℕ)
 
-/-- `P_{36}(h)` of the PR-2 notes. -/
+/-- `P_{36}(h)`, a univariate factor of `C̃₃`. -/
 noncomputable def lrhP36 (h : ℝ) : ℝ :=
   135850 + 669914 * h + 790444 * h ^ (2 : ℕ) - 56276 * h ^ (3 : ℕ) - 542205 * h ^ (4 : ℕ) - 264504 * h ^ (5 : ℕ) - 31721 * h ^ (6 : ℕ) + 66 * h ^ (7 : ℕ)
 
-/-- `P_{37}(h)` of the PR-2 notes. -/
+/-- `P_{37}(h)`, a univariate factor of `C̃₃`. -/
 noncomputable def lrhP37 (h : ℝ) : ℝ :=
   -919 - 1994 * h + 1078 * h ^ (2 : ℕ) + 3773 * h ^ (3 : ℕ) + 1975 * h ^ (4 : ℕ) + 235 * h ^ (5 : ℕ)
 
-/-- `P_{40}(h)` of the PR-2 notes. -/
+/-- `P_{40}(h)`, a univariate factor of `C̃₄`. -/
 noncomputable def lrhP40 (h : ℝ) : ℝ :=
   5035 + 5478 * h - 12439 * h ^ (2 : ℕ) + 5742 * h ^ (3 : ℕ) + 16992 * h ^ (4 : ℕ) + 4320 * h ^ (5 : ℕ)
 
-/-- `P_{41}(h)` of the PR-2 notes. -/
+/-- `P_{41}(h)`, a univariate factor of `C̃₄`. -/
 noncomputable def lrhP41 (h : ℝ) : ℝ :=
   63013 + 145269 * h + 5447 * h ^ (2 : ℕ) - 51105 * h ^ (3 : ℕ) + 240828 * h ^ (4 : ℕ) + 394548 * h ^ (5 : ℕ) + 191808 * h ^ (6 : ℕ) + 24192 * h ^ (7 : ℕ)
 
-/-- `P_{42}(h)` of the PR-2 notes. -/
+/-- `P_{42}(h)`, a univariate factor of `C̃₄`. -/
 noncomputable def lrhP42 (h : ℝ) : ℝ :=
   66595 + 595624 * h + 709256 * h ^ (2 : ℕ) + 304978 * h ^ (3 : ℕ) + 397461 * h ^ (4 : ℕ) + 727438 * h ^ (5 : ℕ) + 428664 * h ^ (6 : ℕ) + 57456 * h ^ (7 : ℕ)
 
-/-- `P_{43}(h)` of the PR-2 notes. -/
+/-- `P_{43}(h)`, a univariate factor of `C̃₄`. -/
 noncomputable def lrhP43 (h : ℝ) : ℝ :=
   770791 + 3237631 * h + 2512262 * h ^ (2 : ℕ) - 671793 * h ^ (3 : ℕ) - 1009965 * h ^ (4 : ℕ) + 219446 * h ^ (5 : ℕ) + 345204 * h ^ (6 : ℕ) + 47880 * h ^ (7 : ℕ)
 
-/-- `P_{44}(h)` of the PR-2 notes. -/
+/-- `P_{44}(h)`, a univariate factor of `C̃₄`. -/
 noncomputable def lrhP44 (h : ℝ) : ℝ :=
   759057 + 2649927 * h + 1602452 * h ^ (2 : ℕ) - 1128401 * h ^ (3 : ℕ) - 1229630 * h ^ (4 : ℕ) - 224572 * h ^ (5 : ℕ) + 42861 * h ^ (6 : ℕ) + 6930 * h ^ (7 : ℕ)
 
-/-- `P_{45}(h)` of the PR-2 notes. -/
+/-- `P_{45}(h)`, a univariate factor of `C̃₄`. -/
 noncomputable def lrhP45 (h : ℝ) : ℝ :=
   1017184 + 3297010 * h + 1674623 * h ^ (2 : ℕ) - 1755821 * h ^ (3 : ℕ) - 1635636 * h ^ (4 : ℕ) - 347735 * h ^ (5 : ℕ) - 7167 * h ^ (6 : ℕ) + 630 * h ^ (7 : ℕ)
 
-/-- `P_{46}(h)` of the PR-2 notes. -/
+/-- `P_{46}(h)`, a univariate factor of `C̃₄`. -/
 noncomputable def lrhP46 (h : ℝ) : ℝ :=
   244734 + 742340 * h + 292703 * h ^ (2 : ℕ) - 488049 * h ^ (3 : ℕ) - 369017 * h ^ (4 : ℕ) - 58619 * h ^ (5 : ℕ) - 780 * h ^ (6 : ℕ)
 
-/-- `P_{47}(h)` of the PR-2 notes. -/
+/-- `P_{47}(h)`, a univariate factor of `C̃₄`. -/
 noncomputable def lrhP47 (h : ℝ) : ℝ :=
   -759 + 436 * h + 3435 * h ^ (2 : ℕ) + 2440 * h ^ (3 : ℕ) + 360 * h ^ (4 : ℕ)
 
-/-- `P_{50}(h)` of the PR-2 notes. -/
+/-- `P_{50}(h)`, a univariate factor of `C̃₅`. -/
 noncomputable def lrhP50 (h : ℝ) : ℝ :=
   2045 + 274 * h - 2501 * h ^ (2 : ℕ) + 1194 * h ^ (3 : ℕ) + 1080 * h ^ (4 : ℕ)
 
-/-- `P_{51}(h)` of the PR-2 notes. -/
+/-- `P_{51}(h)`, a univariate factor of `C̃₅`. -/
 noncomputable def lrhP51 (h : ℝ) : ℝ :=
   33401 + 66473 * h - 1933 * h ^ (2 : ℕ) - 61825 * h ^ (3 : ℕ) + 14408 * h ^ (4 : ℕ) + 47196 * h ^ (5 : ℕ) + 10080 * h ^ (6 : ℕ)
 
-/-- `P_{52}(h)` of the PR-2 notes. -/
+/-- `P_{52}(h)`, a univariate factor of `C̃₅`. -/
 noncomputable def lrhP52 (h : ℝ) : ℝ :=
   284044 + 1267299 * h + 1354250 * h ^ (2 : ℕ) - 231982 * h ^ (3 : ℕ) - 767868 * h ^ (4 : ℕ) + 134635 * h ^ (5 : ℕ) + 359718 * h ^ (6 : ℕ) + 70560 * h ^ (7 : ℕ)
 
-/-- `P_{53}(h)` of the PR-2 notes. -/
+/-- `P_{53}(h)`, a univariate factor of `C̃₅`. -/
 noncomputable def lrhP53 (h : ℝ) : ℝ :=
   1189999 + 4187845 * h + 3415677 * h ^ (2 : ℕ) - 1421207 * h ^ (3 : ℕ) - 2664028 * h ^ (4 : ℕ) - 604022 * h ^ (5 : ℕ) + 239184 * h ^ (6 : ℕ) + 57960 * h ^ (7 : ℕ)
 
-/-- `P_{54}(h)` of the PR-2 notes. -/
+/-- `P_{54}(h)`, a univariate factor of `C̃₅`. -/
 noncomputable def lrhP54 (h : ℝ) : ℝ :=
   943067 + 2881934 * h + 1835589 * h ^ (2 : ℕ) - 1373857 * h ^ (3 : ℕ) - 1813517 * h ^ (4 : ℕ) - 519067 * h ^ (5 : ℕ) + 3549 * h ^ (6 : ℕ) + 8190 * h ^ (7 : ℕ)
 
-/-- `P_{55}(h)` of the PR-2 notes. -/
+/-- `P_{55}(h)`, a univariate factor of `C̃₅`. -/
 noncomputable def lrhP55 (h : ℝ) : ℝ :=
   386159 + 1084357 * h + 549849 * h ^ (2 : ℕ) - 631562 * h ^ (3 : ℕ) - 663211 * h ^ (4 : ℕ) - 178757 * h ^ (5 : ℕ) - 10645 * h ^ (6 : ℕ) + 210 * h ^ (7 : ℕ)
 
-/-- `P_{56}(h)` of the PR-2 notes. -/
+/-- `P_{56}(h)`, a univariate factor of `C̃₅`. -/
 noncomputable def lrhP56 (h : ℝ) : ℝ :=
   86727 + 221153 * h + 72618 * h ^ (2 : ℕ) - 162432 * h ^ (3 : ℕ) - 126063 * h ^ (4 : ℕ) - 23153 * h ^ (5 : ℕ) - 594 * h ^ (6 : ℕ)
 
-/-- `P_{57}(h)` of the PR-2 notes. -/
+/-- `P_{57}(h)`, a univariate factor of `C̃₅`. -/
 noncomputable def lrhP57 (h : ℝ) : ℝ :=
   50 + 1639 * h + 1776 * h ^ (2 : ℕ) + 347 * h ^ (3 : ℕ)
 
-/-- `P_{60}(h)` of the PR-2 notes. -/
+/-- `P_{60}(h)`, a univariate factor of `C̃₆`. -/
 noncomputable def lrhP60 (h : ℝ) : ℝ :=
   268 - 163 * h - 156 * h ^ (2 : ℕ) + 108 * h ^ (3 : ℕ)
 
-/-- `P_{61}(h)` of the PR-2 notes. -/
+/-- `P_{61}(h)`, a univariate factor of `C̃₆`. -/
 noncomputable def lrhP61 (h : ℝ) : ℝ :=
   7958 + 10532 * h - 9131 * h ^ (2 : ℕ) - 10567 * h ^ (3 : ℕ) + 3762 * h ^ (4 : ℕ) + 2016 * h ^ (5 : ℕ)
 
-/-- `P_{62}(h)` of the PR-2 notes. -/
+/-- `P_{62}(h)`, a univariate factor of `C̃₆`. -/
 noncomputable def lrhP62 (h : ℝ) : ℝ :=
   195401 + 527630 * h + 142618 * h ^ (2 : ℕ) - 447188 * h ^ (3 : ℕ) - 241443 * h ^ (4 : ℕ) + 55950 * h ^ (5 : ℕ) + 27720 * h ^ (6 : ℕ)
 
-/-- `P_{63}(h)` of the PR-2 notes. -/
+/-- `P_{63}(h)`, a univariate factor of `C̃₆`. -/
 noncomputable def lrhP63 (h : ℝ) : ℝ :=
   1128619 + 2548891 * h + 400113 * h ^ (2 : ℕ) - 2008759 * h ^ (3 : ℕ) - 1111828 * h ^ (4 : ℕ) + 3996 * h ^ (5 : ℕ) + 44856 * h ^ (6 : ℕ)
 
-/-- `P_{64}(h)` of the PR-2 notes. -/
+/-- `P_{64}(h)`, a univariate factor of `C̃₆`. -/
 noncomputable def lrhP64 (h : ℝ) : ℝ :=
   738348 + 1419620 * h + 15555 * h ^ (2 : ℕ) - 1127405 * h ^ (3 : ℕ) - 564117 * h ^ (4 : ℕ) - 44415 * h ^ (5 : ℕ) + 6174 * h ^ (6 : ℕ)
 
-/-- `P_{65}(h)` of the PR-2 notes. -/
+/-- `P_{65}(h)`, a univariate factor of `C̃₆`. -/
 noncomputable def lrhP65 (h : ℝ) : ℝ :=
   815314 + 1363151 * h - 204114 * h ^ (2 : ℕ) - 1124336 * h ^ (3 : ℕ) - 476434 * h ^ (4 : ℕ) - 46647 * h ^ (5 : ℕ) + 378 * h ^ (6 : ℕ)
 
-/-- `P_{66}(h)` of the PR-2 notes. -/
+/-- `P_{66}(h)`, a univariate factor of `C̃₆`. -/
 noncomputable def lrhP66 (h : ℝ) : ℝ :=
   164589 + 220226 * h - 104804 * h ^ (2 : ℕ) - 198254 * h ^ (3 : ℕ) - 51289 * h ^ (4 : ℕ) - 1956 * h ^ (5 : ℕ)
 
-/-- `P_{67}(h)` of the PR-2 notes. -/
+/-- `P_{67}(h)`, a univariate factor of `C̃₆`. -/
 noncomputable def lrhP67 (h : ℝ) : ℝ :=
   321 + 707 * h + 206 * h ^ (2 : ℕ)
 
-/-- `P_{70}(h)` of the PR-2 notes. -/
+/-- `P_{70}(h)`, a univariate factor of `C̃₇`. -/
 noncomputable def lrhP70 (h : ℝ) : ℝ :=
   17 - 6 * h
 
-/-- `P_{71}(h)` of the PR-2 notes. -/
+/-- `P_{71}(h)`, a univariate factor of `C̃₇`. -/
 noncomputable def lrhP71 (h : ℝ) : ℝ :=
   9055 + 3222 * h - 12343 * h ^ (2 : ℕ) - 1350 * h ^ (3 : ℕ) + 2016 * h ^ (4 : ℕ)
 
-/-- `P_{72}(h)` of the PR-2 notes. -/
+/-- `P_{72}(h)`, a univariate factor of `C̃₇`. -/
 noncomputable def lrhP72 (h : ℝ) : ℝ :=
   278995 + 384097 * h - 232237 * h ^ (2 : ℕ) - 375241 * h ^ (3 : ℕ) - 29694 * h ^ (4 : ℕ) + 27216 * h ^ (5 : ℕ)
 
-/-- `P_{73}(h)` of the PR-2 notes. -/
+/-- `P_{73}(h)`, a univariate factor of `C̃₇`. -/
 noncomputable def lrhP73 (h : ℝ) : ℝ :=
   83054 + 97195 * h - 65819 * h ^ (2 : ℕ) - 90166 * h ^ (3 : ℕ) - 12429 * h ^ (4 : ℕ) + 2709 * h ^ (5 : ℕ)
 
-/-- `P_{74}(h)` of the PR-2 notes. -/
+/-- `P_{74}(h)`, a univariate factor of `C̃₇`. -/
 noncomputable def lrhP74 (h : ℝ) : ℝ :=
   366984 + 353231 * h - 294555 * h ^ (2 : ℕ) - 325325 * h ^ (3 : ℕ) - 51465 * h ^ (4 : ℕ) + 2898 * h ^ (5 : ℕ)
 
-/-- `P_{75}(h)` of the PR-2 notes. -/
+/-- `P_{75}(h)`, a univariate factor of `C̃₇`. -/
 noncomputable def lrhP75 (h : ℝ) : ℝ :=
   353458 + 264973 * h - 295267 * h ^ (2 : ℕ) - 250699 * h ^ (3 : ℕ) - 38031 * h ^ (4 : ℕ) + 126 * h ^ (5 : ℕ)
 
-/-- `P_{76}(h)` of the PR-2 notes. -/
+/-- `P_{76}(h)`, a univariate factor of `C̃₇`. -/
 noncomputable def lrhP76 (h : ℝ) : ℝ :=
   58723 + 21049 * h - 54001 * h ^ (2 : ℕ) - 23113 * h ^ (3 : ℕ) - 1218 * h ^ (4 : ℕ)
 
-/-- `P_{77}(h)` of the PR-2 notes. -/
+/-- `P_{77}(h)`, a univariate factor of `C̃₇`. -/
 noncomputable def lrhP77 (h : ℝ) : ℝ :=
   119 + 69 * h
 
-/-- `P_{81}(h)` of the PR-2 notes. -/
+/-- `P_{81}(h)`, a univariate factor of `C̃₈`. -/
 noncomputable def lrhP81 (h : ℝ) : ℝ :=
   335 + 144 * h - 72 * h ^ (2 : ℕ)
 
-/-- `P_{82}(h)` of the PR-2 notes. -/
+/-- `P_{82}(h)`, a univariate factor of `C̃₈`. -/
 noncomputable def lrhP82 (h : ℝ) : ℝ :=
   12812 + 4377 * h - 13406 * h ^ (2 : ℕ) - 4521 * h ^ (3 : ℕ) + 954 * h ^ (4 : ℕ)
 
-/-- `P_{83}(h)` of the PR-2 notes. -/
+/-- `P_{83}(h)`, a univariate factor of `C̃₈`. -/
 noncomputable def lrhP83 (h : ℝ) : ℝ :=
   56167 + 13983 * h - 53365 * h ^ (2 : ℕ) - 17055 * h ^ (3 : ℕ) + 1494 * h ^ (4 : ℕ)
 
-/-- `P_{84}(h)` of the PR-2 notes. -/
+/-- `P_{84}(h)`, a univariate factor of `C̃₈`. -/
 noncomputable def lrhP84 (h : ℝ) : ℝ :=
   109011 + 15983 * h - 95129 * h ^ (2 : ℕ) - 28335 * h ^ (3 : ℕ) + 774 * h ^ (4 : ℕ)
 
-/-- `P_{85}(h)` of the PR-2 notes. -/
+/-- `P_{85}(h)`, a univariate factor of `C̃₈`. -/
 noncomputable def lrhP85 (h : ℝ) : ℝ :=
   29855 + 263 * h - 23477 * h ^ (2 : ℕ) - 6167 * h ^ (3 : ℕ) + 6 * h ^ (4 : ℕ)
 
-/-- `P_{86}(h)` of the PR-2 notes. -/
+/-- `P_{86}(h)`, a univariate factor of `C̃₈`. -/
 noncomputable def lrhP86 (h : ℝ) : ℝ :=
   5201 + 3072 * h + 207 * h ^ (2 : ℕ)
 
-/-- `P_{91}(h)` of the PR-2 notes. -/
+/-- `P_{91}(h)`, a univariate factor of `C̃₉`. -/
 noncomputable def lrhP91 (h : ℝ) : ℝ :=
   25 - 6 * h
 
-/-- `P_{92}(h)` of the PR-2 notes. -/
+/-- `P_{92}(h)`, a univariate factor of `C̃₉`. -/
 noncomputable def lrhP92 (h : ℝ) : ℝ :=
   1417 + 787 * h - 78 * h ^ (2 : ℕ)
 
-/-- `P_{93}(h)` of the PR-2 notes. -/
+/-- `P_{93}(h)`, a univariate factor of `C̃₉`. -/
 noncomputable def lrhP93 (h : ℝ) : ℝ :=
   783 + 397 * h - 15 * h ^ (2 : ℕ)
 
-/-- `P_{94}(h)` of the PR-2 notes. -/
+/-- `P_{94}(h)`, a univariate factor of `C̃₉`. -/
 noncomputable def lrhP94 (h : ℝ) : ℝ :=
   16871 + 7989 * h - 90 * h ^ (2 : ℕ)
 
-/-- `P_{95}(h)` of the PR-2 notes. -/
+/-- `P_{95}(h)`, a univariate factor of `C̃₉`. -/
 noncomputable def lrhP95 (h : ℝ) : ℝ :=
   983 + 421 * h
 
-/-- `P_{96}(h)` of the PR-2 notes. -/
+/-- `P_{96}(h)`, a univariate factor of `C̃₉`. -/
 noncomputable def lrhP96 (h : ℝ) : ℝ :=
   161 + 15 * h
 
-/-- `S_{0}(h)` of the PR-2 notes. -/
+/-- `S_{0}(h)`, a univariate factor of `E₀`. -/
 noncomputable def lrhS0 (h : ℝ) : ℝ :=
   150 + 120 * h - 301 * h ^ (2 : ℕ) - 240 * h ^ (3 : ℕ) + 108 * h ^ (4 : ℕ) + 100 * h ^ (5 : ℕ) + 11 * h ^ (6 : ℕ)
 
-/-- `S_{1}(h)` of the PR-2 notes. -/
+/-- `S_{1}(h)`, a univariate factor of `E₁`. -/
 noncomputable def lrhS1 (h : ℝ) : ℝ :=
   150 + 1500 * h + 637 * h ^ (2 : ℕ) - 3196 * h ^ (3 : ℕ) - 1989 * h ^ (4 : ℕ) + 1390 * h ^ (5 : ℕ) + 1100 * h ^ (6 : ℕ) + 126 * h ^ (7 : ℕ)
 
-/-- `S_{2}(h)` of the PR-2 notes. -/
+/-- `S_{2}(h)`, a univariate factor of `E₂`. -/
 noncomputable def lrhS2 (h : ℝ) : ℝ :=
   2400 + 8029 * h - 10048 * h ^ (2 : ℕ) - 15570 * h ^ (3 : ℕ) + 5940 * h ^ (4 : ℕ) + 8261 * h ^ (5 : ℕ) + 1128 * h ^ (6 : ℕ)
 
-/-- `U_{00}(h)` of the PR-2 notes. -/
+/-- `U_{00}(h)`, a univariate factor of `E₀`. -/
 noncomputable def lrhU00 (h : ℝ) : ℝ :=
   2570 + 19532 * h + 19620 * h ^ (2 : ℕ) + 4032 * h ^ (3 : ℕ)
 
-/-- `U_{01}(h)` of the PR-2 notes. -/
+/-- `U_{01}(h)`, a univariate factor of `E₀`. -/
 noncomputable def lrhU01 (h : ℝ) : ℝ :=
   -6440 + 7858 * h + 126009 * h ^ (2 : ℕ) + 153696 * h ^ (3 : ℕ) + 55380 * h ^ (4 : ℕ) + 6048 * h ^ (5 : ℕ)
 
-/-- `U_{02}(h)` of the PR-2 notes. -/
+/-- `U_{02}(h)`, a univariate factor of `E₀`. -/
 noncomputable def lrhU02 (h : ℝ) : ℝ :=
   -2970 - 44298 * h - 7488 * h ^ (2 : ℕ) + 299416 * h ^ (3 : ℕ) + 391735 * h ^ (4 : ℕ) + 161532 * h ^ (5 : ℕ) + 20664 * h ^ (6 : ℕ)
 
-/-- `U_{03}(h)` of the PR-2 notes. -/
+/-- `U_{03}(h)`, a univariate factor of `E₀`. -/
 noncomputable def lrhU03 (h : ℝ) : ℝ :=
   940 + 22636 * h - 62763 * h ^ (2 : ℕ) - 98500 * h ^ (3 : ℕ) + 246285 * h ^ (4 : ℕ) + 411198 * h ^ (5 : ℕ) + 189938 * h ^ (6 : ℕ) + 26112 * h ^ (7 : ℕ)
 
-/-- `U_{10}(h)` of the PR-2 notes. -/
+/-- `U_{10}(h)`, a univariate factor of `E₁`. -/
 noncomputable def lrhU10 (h : ℝ) : ℝ :=
   -7780 + 34188 * h + 174720 * h ^ (2 : ℕ) + 173736 * h ^ (3 : ℕ) + 48060 * h ^ (4 : ℕ) + 2592 * h ^ (5 : ℕ)
 
-/-- `U_{11}(h)` of the PR-2 notes. -/
+/-- `U_{11}(h)`, a univariate factor of `E₁`. -/
 noncomputable def lrhU11 (h : ℝ) : ℝ :=
   1950 - 91660 * h + 176559 * h ^ (2 : ℕ) + 1185720 * h ^ (3 : ℕ) + 1383585 * h ^ (4 : ℕ) + 574416 * h ^ (5 : ℕ) + 89964 * h ^ (6 : ℕ) + 3456 * h ^ (7 : ℕ)
 
-/-- `U_{12}(h)` of the PR-2 notes. -/
+/-- `U_{12}(h)`, a univariate factor of `E₁`. -/
 noncomputable def lrhU12 (h : ℝ) : ℝ :=
   -38280 - 134214 * h - 385584 * h ^ (2 : ℕ) + 522636 * h ^ (3 : ℕ) + 3033505 * h ^ (4 : ℕ) + 3485616 * h ^ (5 : ℕ) + 1548659 * h ^ (6 : ℕ) + 266160 * h ^ (7 : ℕ) + 9720 * h ^ (8 : ℕ)
 
-/-- `U_{13}(h)` of the PR-2 notes. -/
+/-- `U_{13}(h)`, a univariate factor of `E₁`. -/
 noncomputable def lrhU13 (h : ℝ) : ℝ :=
   -26090 + 140112 * h + 591453 * h ^ (2 : ℕ) + 1828 * h ^ (3 : ℕ) - 32365 * h ^ (4 : ℕ) + 2436774 * h ^ (5 : ℕ) + 3431008 * h ^ (6 : ℕ) + 1680080 * h ^ (7 : ℕ) + 299376 * h ^ (8 : ℕ)
 
-/-- `U_{20}(h)` of the PR-2 notes. -/
+/-- `U_{20}(h)`, a univariate factor of `E₂`. -/
 noncomputable def lrhU20 (h : ℝ) : ℝ :=
   -7620 - 32808 * h + 176076 * h ^ (2 : ℕ) + 356352 * h ^ (3 : ℕ) + 156240 * h ^ (4 : ℕ) + 15552 * h ^ (5 : ℕ)
 
-/-- `U_{21}(h)` of the PR-2 notes. -/
+/-- `U_{21}(h)`, a univariate factor of `E₂`. -/
 noncomputable def lrhU21 (h : ℝ) : ℝ :=
   21780 - 117828 * h - 283500 * h ^ (2 : ℕ) + 1278504 * h ^ (3 : ℕ) + 2796060 * h ^ (4 : ℕ) + 1722456 * h ^ (5 : ℕ) + 406728 * h ^ (6 : ℕ) + 27648 * h ^ (7 : ℕ)
 
-/-- `U_{22}(h)` of the PR-2 notes. -/
+/-- `U_{22}(h)`, a univariate factor of `E₂`. -/
 noncomputable def lrhU22 (h : ℝ) : ℝ :=
   -69330 - 77934 * h - 402138 * h ^ (2 : ℕ) - 112580 * h ^ (3 : ℕ) + 4006850 * h ^ (4 : ℕ) + 7087656 * h ^ (5 : ℕ) + 4431434 * h ^ (6 : ℕ) + 1132512 * h ^ (7 : ℕ) + 76464 * h ^ (8 : ℕ)
 
-/-- `U_{23}(h)` of the PR-2 notes. -/
+/-- `U_{23}(h)`, a univariate factor of `E₂`. -/
 noncomputable def lrhU23 (h : ℝ) : ℝ :=
   -71124 * h + 1851753 * h ^ (2 : ℕ) + 3007532 * h ^ (3 : ℕ) + 290600 * h ^ (4 : ℕ) + 1882758 * h ^ (5 : ℕ) + 5886265 * h ^ (6 : ℕ) + 4422400 * h ^ (7 : ℕ) + 1195236 * h ^ (8 : ℕ)
 
-/-- The base-quadratic polynomial `a₀(z)` (`NONSHORT_LOW_RATIO` (2)-(3)). -/
+/-- The base-quadratic polynomial `a₀(z) = 𝒜₀(1/3, z)`. -/
 noncomputable def lrha0 (z : ℝ) : ℝ :=
   (1514 / 9) + (19741 / 9) * z - (864913 / 243) * z ^ (2 : ℕ) - (632434 / 2187) * z ^ (3 : ℕ) + (7868156 / 6561) * z ^ (4 : ℕ) + (9424115 / 19683) * z ^ (5 : ℕ) + (437189 / 6561) * z ^ (6 : ℕ) - (45152 / 59049) * z ^ (7 : ℕ)
 
-/-- The base-quadratic polynomial `a₁(z)` (`NONSHORT_LOW_RATIO` (2)-(3)). -/
+/-- The base-quadratic polynomial `a₁(z) = 𝒜₁(1/3, z)`. -/
 noncomputable def lrha1 (z : ℝ) : ℝ :=
   (17812 / 27) + (689290 / 243) * z - (37970326 / 2187) * z ^ (2 : ℕ) + (7854788 / 2187) * z ^ (3 : ℕ) + (166227560 / 19683) * z ^ (4 : ℕ) + (51599650 / 19683) * z ^ (5 : ℕ) + (50122106 / 177147) * z ^ (6 : ℕ) - (51824 / 19683) * z ^ (7 : ℕ)
 
-/-- The base-quadratic polynomial `a₂(z)` (`NONSHORT_LOW_RATIO` (2)-(3)). -/
+/-- The base-quadratic polynomial `a₂(z) = 𝒜₂(1/3, z)`. -/
 noncomputable def lrha2 (z : ℝ) : ℝ :=
   (14324 / 9) + (115918 / 81) * z - (30095420 / 2187) * z ^ (2 : ℕ) + (3564514 / 243) * z ^ (3 : ℕ) + (286749662 / 19683) * z ^ (4 : ℕ) + (24894044 / 6561) * z ^ (5 : ℕ) + (20583334 / 59049) * z ^ (6 : ℕ) - (429568 / 177147) * z ^ (7 : ℕ)
 
-/-- The base-quadratic polynomial `A(z)` (`NONSHORT_LOW_RATIO` (2)-(3)). -/
+/-- The comparison polynomial `A(z)` of the base quadratic (`a₀ > A` on `[0, 1]`). -/
 noncomputable def lrhQA (z : ℝ) : ℝ :=
   168 + 2193 * z - 3560 * z ^ (2 : ℕ) - 290 * z ^ (3 : ℕ) + 1199 * z ^ (4 : ℕ) + 478 * z ^ (5 : ℕ) + 65 * z ^ (6 : ℕ)
 
-/-- The base-quadratic polynomial `B(z)` (`NONSHORT_LOW_RATIO` (2)-(3)). -/
+/-- The comparison polynomial `B(z)` of the base quadratic (`a₁ ≥ B` on `[0, 1]`). -/
 noncomputable def lrhQB (z : ℝ) : ℝ :=
   659 + 2836 * z - 17362 * z ^ (2 : ℕ) + 3591 * z ^ (3 : ℕ) + 8445 * z ^ (4 : ℕ) + 2621 * z ^ (5 : ℕ) + 280 * z ^ (6 : ℕ)
 
-/-- The base-quadratic polynomial `C(z)` (`NONSHORT_LOW_RATIO` (2)-(3)). -/
+/-- The comparison polynomial `C(z)` of the base quadratic (`4a₂/3 ≥ C` on `[0, 1]`). -/
 noncomputable def lrhQC (z : ℝ) : ℝ :=
   2122 + 1908 * z - 18349 * z ^ (2 : ℕ) + 19558 * z ^ (3 : ℕ) + 19424 * z ^ (4 : ℕ) + 5058 * z ^ (5 : ℕ) + 461 * z ^ (6 : ℕ)
 
 /-! ### The coefficient functions -/
 
-/-- `𝒜_0(h, z)` (`NONSHORT_LOW_RATIO_MONOTONICITY` (19)). -/
+/-- `𝒜_0(h, z)`, a coefficient function of the quadratic part
+`h³w³(𝒜₀ + β𝒜₁ + wβ²𝒜₂)` (`y = hz`). -/
 noncomputable def lrhA0 (h z : ℝ) : ℝ :=
   (lrhB00 h + z * lrhB01 h + z ^ (2 : ℕ) * lrhB02 h + z ^ (3 : ℕ) * lrhB03 h + h * z ^ (4 : ℕ) * lrhB04 h + h ^ (2 : ℕ) * z ^ (5 : ℕ) * lrhB05 h + h ^ (3 : ℕ) * z ^ (6 : ℕ) * lrhB06 h + h ^ (5 : ℕ) * z ^ (7 : ℕ) * lrhB07 h) / 2
 
-/-- `𝒜_1(h, z)` (`NONSHORT_LOW_RATIO_MONOTONICITY` (19)). -/
+/-- `𝒜_1(h, z)`, a coefficient function of the quadratic part
+`h³w³(𝒜₀ + β𝒜₁ + wβ²𝒜₂)` (`y = hz`). -/
 noncomputable def lrhA1 (h z : ℝ) : ℝ :=
   (lrhB10 h + z * lrhB11 h + z ^ (2 : ℕ) * (1080 * h ^ (9 : ℕ) + lrhB12 h) + h * z ^ (3 : ℕ) * (936 * h ^ (9 : ℕ) + lrhB13 h) + h ^ (2 : ℕ) * z ^ (4 : ℕ) * (288 * h ^ (9 : ℕ) + lrhB14 h) + h ^ (3 : ℕ) * z ^ (5 : ℕ) * (18 * h ^ (9 : ℕ) + lrhB15 h) + h ^ (4 : ℕ) * z ^ (6 : ℕ) * lrhB16 h + h ^ (5 : ℕ) * z ^ (7 : ℕ) * lrhB17 h) / 2
 
-/-- `𝒜_2(h, z)` (`NONSHORT_LOW_RATIO_MONOTONICITY` (19)). -/
+/-- `𝒜_2(h, z)`, a coefficient function of the quadratic part
+`h³w³(𝒜₀ + β𝒜₁ + wβ²𝒜₂)` (`y = hz`). -/
 noncomputable def lrhA2 (h z : ℝ) : ℝ :=
   (lrhB20 h + z * lrhB21 h + h * z ^ (2 : ℕ) * lrhB22 h + h ^ (2 : ℕ) * z ^ (3 : ℕ) * lrhB23 h + h ^ (3 : ℕ) * z ^ (4 : ℕ) * lrhB24 h + h ^ (4 : ℕ) * z ^ (5 : ℕ) * lrhB25 h + h ^ (5 : ℕ) * z ^ (6 : ℕ) * lrhB26 h + h ^ (6 : ℕ) * z ^ (7 : ℕ) * lrhB27 h) / 2
 
-/-- `E_0 = 2∂_h𝒜_0` (`NONSHORT_LOW_RATIO_MONOTONICITY` (2)). -/
+/-- `E_0 = 2∂_h𝒜_0`. -/
 noncomputable def lrhE0 (h z : ℝ) : ℝ :=
   lrhU00 h + z * lrhU01 h + z ^ (2 : ℕ) * lrhU02 h + z ^ (3 : ℕ) * lrhU03 h + z ^ (4 : ℕ) * lrhP04 h + h * z ^ (5 : ℕ) * lrhP05 h + h ^ (2 : ℕ) * z ^ (6 : ℕ) * lrhP06 h - 12 * h ^ (4 : ℕ) * z ^ (7 : ℕ) * lrhS0 h
 
-/-- `E_1 = 2∂_h𝒜_1` (`NONSHORT_LOW_RATIO_MONOTONICITY` (2)). -/
+/-- `E_1 = 2∂_h𝒜_1`. -/
 noncomputable def lrhE1 (h z : ℝ) : ℝ :=
   lrhU10 h + z * lrhU11 h + z ^ (2 : ℕ) * lrhU12 h + z ^ (3 : ℕ) * (lrhU13 h + 9360 * h ^ (9 : ℕ)) + h * z ^ (4 : ℕ) * (lrhP14 h + 3168 * h ^ (9 : ℕ)) + h ^ (2 : ℕ) * z ^ (5 : ℕ) * (lrhP15 h + 216 * h ^ (9 : ℕ)) + h ^ (3 : ℕ) * z ^ (6 : ℕ) * lrhP16 h - 12 * h ^ (4 : ℕ) * z ^ (7 : ℕ) * lrhS1 h
 
-/-- `E_2 = 2∂_h𝒜_2` (`NONSHORT_LOW_RATIO_MONOTONICITY` (2)). -/
+/-- `E_2 = 2∂_h𝒜_2`. -/
 noncomputable def lrhE2 (h z : ℝ) : ℝ :=
   lrhU20 h + z * lrhU21 h + z ^ (2 : ℕ) * lrhU22 h + z ^ (3 : ℕ) * (lrhU23 h + 72720 * h ^ (9 : ℕ)) + h ^ (2 : ℕ) * z ^ (4 : ℕ) * lrhP24 h + h ^ (3 : ℕ) * z ^ (5 : ℕ) * lrhP25 h + h ^ (4 : ℕ) * z ^ (6 : ℕ) * lrhP26 h - 6 * h ^ (5 : ℕ) * z ^ (7 : ℕ) * lrhS2 h
 
-/-- `C̃_0(h, y)`, the coefficient of `j^0` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_0(h, y)`, the coefficient of `j^0` in the collected polynomial. -/
 noncomputable def lrhC0 (h y : ℝ) : ℝ :=
   ((1 + h) ^ (3 : ℕ) * h ^ (3 : ℕ) * lrhB00 h / 2) +
     ((1 + h) ^ (3 : ℕ) * h ^ (2 : ℕ) * lrhB01 h / 2) * y +
@@ -500,7 +498,7 @@ noncomputable def lrhC0 (h y : ℝ) : ℝ :=
     ((1 + h) ^ (3 : ℕ) * lrhB06 h / 2) * y ^ (6 : ℕ) +
     ((1 + h) ^ (3 : ℕ) * h * lrhB07 h / 2) * y ^ (7 : ℕ)
 
-/-- `C̃_1(h, y)`, the coefficient of `j^1` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_1(h, y)`, the coefficient of `j^1` in the collected polynomial. -/
 noncomputable def lrhC1 (h y : ℝ) : ℝ :=
   ((1 + h) ^ (2 : ℕ) * h ^ (2 : ℕ) * lrhB10 h / 2) +
     ((1 + h) ^ (2 : ℕ) * h * lrhB11 h / 2) * y +
@@ -511,7 +509,7 @@ noncomputable def lrhC1 (h y : ℝ) : ℝ :=
     ((1 + h) ^ (2 : ℕ) * lrhB16 h / 2) * y ^ (6 : ℕ) +
     ((1 + h) ^ (2 : ℕ) * lrhB17 h / 2) * y ^ (7 : ℕ)
 
-/-- `C̃_2(h, y)`, the coefficient of `j^2` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_2(h, y)`, the coefficient of `j^2` in the collected polynomial. -/
 noncomputable def lrhC2 (h y : ℝ) : ℝ :=
   ((1 + h) ^ (2 : ℕ) * h * lrhB20 h / 2) +
     ((1 + h) ^ (2 : ℕ) * lrhB21 h / 2) * y +
@@ -522,7 +520,7 @@ noncomputable def lrhC2 (h y : ℝ) : ℝ :=
     ((1 + h) ^ (2 : ℕ) * lrhB26 h / 2) * y ^ (6 : ℕ) +
     ((1 + h) ^ (2 : ℕ) * lrhB27 h / 2) * y ^ (7 : ℕ)
 
-/-- `C̃_3(h, y)`, the coefficient of `j^3` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_3(h, y)`, the coefficient of `j^3` in the collected polynomial. -/
 noncomputable def lrhC3 (h y : ℝ) : ℝ :=
   (2 * (h + 1) ^ (2 : ℕ) * lrhP30 h) +
     ((h + 1) * lrhP31 h) * y +
@@ -533,7 +531,7 @@ noncomputable def lrhC3 (h y : ℝ) : ℝ :=
     ((h + 1) * lrhP36 h / 2) * y ^ (6 : ℕ) +
     (3 * (h + 1) * (1 - h) * lrhP37 h) * y ^ (7 : ℕ)
 
-/-- `C̃_4(h, y)`, the coefficient of `j^4` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_4(h, y)`, the coefficient of `j^4` in the collected polynomial. -/
 noncomputable def lrhC4 (h y : ℝ) : ℝ :=
   ((h + 1) ^ (2 : ℕ) * lrhP40 h) +
     ((h + 1) * lrhP41 h / 2) * y +
@@ -544,7 +542,7 @@ noncomputable def lrhC4 (h y : ℝ) : ℝ :=
     ((h + 1) * lrhP46 h / 2) * y ^ (6 : ℕ) +
     (3 * (h + 1) * (1 - h) * lrhP47 h) * y ^ (7 : ℕ)
 
-/-- `C̃_5(h, y)`, the coefficient of `j^5` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_5(h, y)`, the coefficient of `j^5` in the collected polynomial. -/
 noncomputable def lrhC5 (h y : ℝ) : ℝ :=
   (3 * (h + 1) ^ (2 : ℕ) * lrhP50 h) +
     (3 * (h + 1) * lrhP51 h / 2) * y +
@@ -555,7 +553,7 @@ noncomputable def lrhC5 (h y : ℝ) : ℝ :=
     (3 * lrhP56 h / 2) * y ^ (6 : ℕ) +
     (3 * (h + 1) * (1 - h) * lrhP57 h) * y ^ (7 : ℕ)
 
-/-- `C̃_6(h, y)`, the coefficient of `j^6` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_6(h, y)`, the coefficient of `j^6` in the collected polynomial. -/
 noncomputable def lrhC6 (h y : ℝ) : ℝ :=
   (12 * (h + 1) ^ (2 : ℕ) * lrhP60 h) +
     (6 * (h + 1) * lrhP61 h) * y +
@@ -566,7 +564,7 @@ noncomputable def lrhC6 (h y : ℝ) : ℝ :=
     (lrhP66 h / 2) * y ^ (6 : ℕ) +
     (3 * (h + 1) * (1 - h) * lrhP67 h) * y ^ (7 : ℕ)
 
-/-- `C̃_7(h, y)`, the coefficient of `j^7` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_7(h, y)`, the coefficient of `j^7` in the collected polynomial. -/
 noncomputable def lrhC7 (h y : ℝ) : ℝ :=
   (36 * (h + 1) ^ (2 : ℕ) * (1 - h) * lrhP70 h) +
     (3 * (h + 1) * lrhP71 h) * y +
@@ -577,7 +575,7 @@ noncomputable def lrhC7 (h y : ℝ) : ℝ :=
     (lrhP76 h / 2) * y ^ (6 : ℕ) +
     (3 * (h + 1) * (1 - h) * lrhP77 h) * y ^ (7 : ℕ)
 
-/-- `C̃_8(h, y)`, the coefficient of `j^8` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_8(h, y)`, the coefficient of `j^8` in the collected polynomial. -/
 noncomputable def lrhC8 (h y : ℝ) : ℝ :=
   (24 * (h + 1) * (1 - h) * lrhP81 h) * y +
     (4 * lrhP82 h) * y ^ (2 : ℕ) +
@@ -587,7 +585,7 @@ noncomputable def lrhC8 (h y : ℝ) : ℝ :=
     ((1 - h) * lrhP86 h) * y ^ (6 : ℕ) +
     (30 * (h + 1) * (1 - h)) * y ^ (7 : ℕ)
 
-/-- `C̃_9(h, y)`, the coefficient of `j^9` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_9(h, y)`, the coefficient of `j^9` in the collected polynomial. -/
 noncomputable def lrhC9 (h y : ℝ) : ℝ :=
   (36 * (h + 1) * (1 - h) * lrhP91 h) * y +
     (6 * (1 - h) * lrhP92 h) * y ^ (2 : ℕ) +
@@ -596,7 +594,7 @@ noncomputable def lrhC9 (h y : ℝ) : ℝ :=
     (6 * (1 - h) * lrhP95 h) * y ^ (5 : ℕ) +
     (2 * (1 - h) * lrhP96 h) * y ^ (6 : ℕ)
 
-/-- `C̃_10(h, y)`, the coefficient of `j^10` (`NONSHORT_LOW_RATIO_LINK` (21), `NONSHORT_LOW_RATIO_REMAINDER` §1). -/
+/-- `C̃_10(h, y)`, the coefficient of `j^10` in the collected polynomial. -/
 noncomputable def lrhC10 (h y : ℝ) : ℝ :=
   (432 * (1 - h)) * y ^ (2 : ℕ) +
     (1080 * (1 - h)) * y ^ (3 : ℕ) +
@@ -622,332 +620,332 @@ theorem lrh_hb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) :
     | (have := l 7; norm_num at this ⊢; linarith) | (have := u 7; norm_num at this ⊢; linarith)
     | (have := l 8; norm_num at this ⊢; linarith) | (have := u 8; norm_num at this ⊢; linarith)
 
-/-- `P04 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P04 > 0` by monomial bounds. -/
 theorem lrh_P04_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP04 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP04; linarith only [h1, l2, l3, l6, l7, l8, u4, u5]
 
-/-- `P05 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P05 > 0` by monomial bounds. -/
 theorem lrh_P05_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP05 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP05; linarith only [h1, l2, l3, l7, l8, u4, u5, u6]
 
-/-- `P06 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P06 > 0` by monomial bounds. -/
 theorem lrh_P06_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP06 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP06; linarith only [h1, l2, l3, l8, u4, u5, u6, u7]
 
-/-- `P14 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P14 > 0` by monomial bounds. -/
 theorem lrh_P14_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP14 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP14; linarith only [h1, l2, l3, l6, l7, l8, u4, u5]
 
-/-- `P15 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P15 > 0` by monomial bounds. -/
 theorem lrh_P15_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP15 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP15; linarith only [h1, l2, l3, l7, l8, u4, u5, u6]
 
-/-- `P16 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P16 > 0` by monomial bounds. -/
 theorem lrh_P16_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP16 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP16; linarith only [h1, l2, l3, l8, u4, u5, u6, u7]
 
-/-- `P24 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P24 > 0` by monomial bounds. -/
 theorem lrh_P24_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP24 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP24; linarith only [h1, l2, l3, l6, l7, l8, u4, u5]
 
-/-- `P25 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P25 > 0` by monomial bounds. -/
 theorem lrh_P25_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP25 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP25; linarith only [h1, l2, l3, l7, l8, u4, u5, u6]
 
-/-- `P26 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P26 > 0` by monomial bounds. -/
 theorem lrh_P26_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP26 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP26; linarith only [h1, l2, l3, l7, u4, u5, u6]
 
-/-- `P30 > 400` by monomial bounds (PR-2 notes). -/
+/-- `P30 > 400` by monomial bounds. -/
 theorem lrh_P30_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 400 < lrhP30 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP30; linarith only [h1, l4, l5, l6, u2, u3]
 
-/-- `P31 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P31 > 0` by monomial bounds. -/
 theorem lrh_P31_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP31 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP31; linarith only [h1, l4, l5, l6, l7, l8, u2, u3]
 
-/-- `P32 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P32 > 0` by monomial bounds. -/
 theorem lrh_P32_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP32 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP32; linarith only [h1, l2, l3, l4, l5, l6, l7, l8]
 
-/-- `P33 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P33 > 0` by monomial bounds. -/
 theorem lrh_P33_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP33 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP33; linarith only [h1, l2, l3, l4, l5, l6, l7, l8]
 
-/-- `P34 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P34 > 0` by monomial bounds. -/
 theorem lrh_P34_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP34 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP34; linarith only [h1, l2, l3, l6, l7, l8, u4, u5]
 
-/-- `P35 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P35 > 0` by monomial bounds. -/
 theorem lrh_P35_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP35 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP35; linarith only [h1, l2, l3, l7, l8, u4, u5, u6]
 
-/-- `P36 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P36 > 0` by monomial bounds. -/
 theorem lrh_P36_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP36 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP36; linarith only [h1, l2, l7, u3, u4, u5, u6]
 
-/-- `P37 > -2000` by monomial bounds (PR-2 notes). -/
+/-- `P37 > -2000` by monomial bounds. -/
 theorem lrh_P37_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : (-2000 : ℝ) < lrhP37 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP37; linarith only [h2, l2, l3, l4, l5]
 
-/-- `P40 > 4000` by monomial bounds (PR-2 notes). -/
+/-- `P40 > 4000` by monomial bounds. -/
 theorem lrh_P40_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 4000 < lrhP40 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP40; linarith only [h1, l3, l4, l5, u2]
 
-/-- `P41 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P41 > 0` by monomial bounds. -/
 theorem lrh_P41_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP41 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP41; linarith only [h1, l2, l4, l5, l6, l7, u3]
 
-/-- `P42 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P42 > 0` by monomial bounds. -/
 theorem lrh_P42_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP42 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP42; linarith only [h1, l2, l3, l4, l5, l6, l7]
 
-/-- `P43 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P43 > 0` by monomial bounds. -/
 theorem lrh_P43_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP43 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP43; linarith only [h1, l2, l5, l6, l7, u3, u4]
 
-/-- `P44 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P44 > 0` by monomial bounds. -/
 theorem lrh_P44_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP44 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP44; linarith only [h1, l2, l6, l7, u3, u4, u5]
 
-/-- `P45 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P45 > 0` by monomial bounds. -/
 theorem lrh_P45_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP45 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP45; linarith only [h1, l2, l7, u3, u4, u5, u6]
 
-/-- `P46 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P46 > 0` by monomial bounds. -/
 theorem lrh_P46_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP46 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP46; linarith only [h1, l2, u3, u4, u5, u6]
 
-/-- `P47 > -200` by monomial bounds (PR-2 notes). -/
+/-- `P47 > -200` by monomial bounds. -/
 theorem lrh_P47_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : (-200 : ℝ) < lrhP47 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP47; linarith only [h1, l2, l3, l4]
 
-/-- `P50 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P50 > 0` by monomial bounds. -/
 theorem lrh_P50_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP50 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP50; linarith only [h1, l3, l4, u2]
 
-/-- `P51 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P51 > 0` by monomial bounds. -/
 theorem lrh_P51_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP51 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP51; linarith only [h1, l4, l5, l6, u2, u3]
 
-/-- `P52 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P52 > 0` by monomial bounds. -/
 theorem lrh_P52_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP52 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP52; linarith only [h1, l2, l5, l6, l7, u3, u4]
 
-/-- `P53 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P53 > 0` by monomial bounds. -/
 theorem lrh_P53_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP53 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP53; linarith only [h1, l2, l6, l7, u3, u4, u5]
 
-/-- `P54 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P54 > 0` by monomial bounds. -/
 theorem lrh_P54_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP54 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP54; linarith only [h1, l2, l6, l7, u3, u4, u5]
 
-/-- `P55 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P55 > 0` by monomial bounds. -/
 theorem lrh_P55_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP55 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP55; linarith only [h1, l2, l7, u3, u4, u5, u6]
 
-/-- `P56 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P56 > 0` by monomial bounds. -/
 theorem lrh_P56_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP56 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP56; linarith only [h1, l2, u3, u4, u5, u6]
 
-/-- `P57 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P57 > 0` by monomial bounds. -/
 theorem lrh_P57_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP57 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP57; linarith only [h1, l2, l3]
 
-/-- `P60 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P60 > 0` by monomial bounds. -/
 theorem lrh_P60_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP60 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP60; linarith only [h2, l3, u2]
 
-/-- `P61 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P61 > 0` by monomial bounds. -/
 theorem lrh_P61_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP61 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP61; linarith only [h1, l4, l5, u2, u3]
 
-/-- `P62 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P62 > 0` by monomial bounds. -/
 theorem lrh_P62_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP62 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP62; linarith only [h1, l2, l5, l6, u3, u4]
 
-/-- `P63 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P63 > 0` by monomial bounds. -/
 theorem lrh_P63_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP63 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP63; linarith only [h1, l2, l5, l6, u3, u4]
 
-/-- `P64 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P64 > 0` by monomial bounds. -/
 theorem lrh_P64_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP64 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP64; linarith only [h1, l2, l6, u3, u4, u5]
 
-/-- `P65 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P65 > 0` by monomial bounds. -/
 theorem lrh_P65_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP65 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP65; linarith only [h1, l6, u2, u3, u4, u5]
 
-/-- `P66 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P66 > 0` by monomial bounds. -/
 theorem lrh_P66_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP66 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP66; linarith only [h1, u2, u3, u4, u5]
 
-/-- `P67 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P67 > 0` by monomial bounds. -/
 theorem lrh_P67_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP67 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP67; linarith only [h1, l2]
 
-/-- `P70 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P70 > 0` by monomial bounds. -/
 theorem lrh_P70_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP70 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP70; linarith only [h2]
 
-/-- `P71 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P71 > 0` by monomial bounds. -/
 theorem lrh_P71_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP71 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP71; linarith only [h1, l4, u2, u3]
 
-/-- `P72 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P72 > 0` by monomial bounds. -/
 theorem lrh_P72_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP72 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP72; linarith only [h1, l5, u2, u3, u4]
 
-/-- `P73 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P73 > 0` by monomial bounds. -/
 theorem lrh_P73_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP73 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP73; linarith only [h1, l5, u2, u3, u4]
 
-/-- `P74 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P74 > 0` by monomial bounds. -/
 theorem lrh_P74_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP74 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP74; linarith only [h1, l5, u2, u3, u4]
 
-/-- `P75 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P75 > 0` by monomial bounds. -/
 theorem lrh_P75_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP75 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP75; linarith only [h1, l5, u2, u3, u4]
 
-/-- `P76 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P76 > 0` by monomial bounds. -/
 theorem lrh_P76_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP76 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP76; linarith only [h1, u2, u3, u4]
 
-/-- `P77 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P77 > 0` by monomial bounds. -/
 theorem lrh_P77_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP77 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP77; linarith only [h1]
 
-/-- `P81 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P81 > 0` by monomial bounds. -/
 theorem lrh_P81_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP81 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP81; linarith only [h1, u2]
 
-/-- `P82 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P82 > 0` by monomial bounds. -/
 theorem lrh_P82_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP82 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP82; linarith only [h1, l4, u2, u3]
 
-/-- `P83 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P83 > 0` by monomial bounds. -/
 theorem lrh_P83_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP83 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP83; linarith only [h1, l4, u2, u3]
 
-/-- `P84 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P84 > 0` by monomial bounds. -/
 theorem lrh_P84_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP84 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP84; linarith only [h1, l4, u2, u3]
 
-/-- `P85 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P85 > 0` by monomial bounds. -/
 theorem lrh_P85_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP85 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP85; linarith only [h1, l4, u2, u3]
 
-/-- `P86 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P86 > 0` by monomial bounds. -/
 theorem lrh_P86_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP86 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP86; linarith only [h1, l2]
 
-/-- `P91 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P91 > 0` by monomial bounds. -/
 theorem lrh_P91_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP91 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP91; linarith only [h2]
 
-/-- `P92 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P92 > 0` by monomial bounds. -/
 theorem lrh_P92_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP92 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP92; linarith only [h1, u2]
 
-/-- `P93 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P93 > 0` by monomial bounds. -/
 theorem lrh_P93_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP93 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP93; linarith only [h1, u2]
 
-/-- `P94 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P94 > 0` by monomial bounds. -/
 theorem lrh_P94_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP94 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP94; linarith only [h1, u2]
 
-/-- `P95 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P95 > 0` by monomial bounds. -/
 theorem lrh_P95_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP95 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP95; linarith only [h1]
 
-/-- `P96 > 0` by monomial bounds (PR-2 notes). -/
+/-- `P96 > 0` by monomial bounds. -/
 theorem lrh_P96_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 < lrhP96 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhP96; linarith only [h1]
 
-/-- `U00 ≥ 11000` by monomial bounds (`NONSHORT_LOW_RATIO_MONOTONICITY` (3)-(11)). -/
+/-- `U00 ≥ 11000` by monomial bounds. -/
 theorem lrh_U00_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 11000 ≤ lrhU00 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhU00; linarith only [h1, l2, l3]
 
-/-- `U01 ≥ 0` by monomial bounds (`NONSHORT_LOW_RATIO_MONOTONICITY` (3)-(11)). -/
+/-- `U01 ≥ 0` by monomial bounds. -/
 theorem lrh_U01_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 ≤ lrhU01 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhU01; linarith only [h1, l2, l3, l4, l5]
 
-/-- `U10 ≥ 30000` by monomial bounds (`NONSHORT_LOW_RATIO_MONOTONICITY` (3)-(11)). -/
+/-- `U10 ≥ 30000` by monomial bounds. -/
 theorem lrh_U10_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 30000 ≤ lrhU10 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhU10; linarith only [h1, l2, l3, l4, l5]
 
-/-- `U11 ≥ 0` by monomial bounds (`NONSHORT_LOW_RATIO_MONOTONICITY` (3)-(11)). -/
+/-- `U11 ≥ 0` by monomial bounds. -/
 theorem lrh_U11_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 0 ≤ lrhU11 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhU11; linarith only [h2, l2, l3, l4, l5, l6, l7]
 
-/-- `U23 ≥ 100000` by monomial bounds (`NONSHORT_LOW_RATIO_MONOTONICITY` (3)-(11)). -/
+/-- `U23 ≥ 100000` by monomial bounds. -/
 theorem lrh_U23_lb {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : 100000 ≤ lrhU23 h := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhU23; linarith only [h2, l2, l3, l4, l5, l6, l7, l8]
@@ -1001,22 +999,22 @@ theorem lrh_U22_lb {h : ℝ} (h1 : 1 / 3 ≤ h) : (-60000 : ℝ) ≤ lrhU22 h :=
   have : 0 ≤ (186657242 / 243) * (h - 1 / 3) + (17109052 / 3) * (h - 1 / 3) ^ (2 : ℕ) + (456153716 / 27) * (h - 1 / 3) ^ (3 : ℕ) + (222655360 / 9) * (h - 1 / 3) ^ (4 : ℕ) + 18751644 * (h - 1 / 3) ^ (5 : ℕ) + 7311850 * (h - 1 / 3) ^ (6 : ℕ) + 1336416 * (h - 1 / 3) ^ (7 : ℕ) + 76464 * (h - 1 / 3) ^ (8 : ℕ) := by positivity
   rw [e]; linarith
 
-/-- `S0 < 221` (`NONSHORT_LOW_RATIO_MONOTONICITY` (12)). -/
+/-- `S0 < 221` by monomial bounds. -/
 theorem lrh_S0_ub {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : lrhS0 h ≤ 221 := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhS0; linarith only [h2, l2, l3, u4, u5, u6]
 
-/-- `S1 < 1121` (`NONSHORT_LOW_RATIO_MONOTONICITY` (12)). -/
+/-- `S1 < 1121` by monomial bounds. -/
 theorem lrh_S1_ub {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : lrhS1 h ≤ 1121 := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhS1; linarith only [h2, l3, l4, u2, u5, u6, u7]
 
-/-- `S2 < 7062` (`NONSHORT_LOW_RATIO_MONOTONICITY` (12)). -/
+/-- `S2 < 7062` by monomial bounds. -/
 theorem lrh_S2_ub {h : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) : lrhS2 h ≤ 7062 := by
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := lrh_hb h1 h2
   unfold lrhS2; linarith only [h2, l2, l3, u4, u5, u6]
 
-/-! ### The three `h`-derivatives are positive (`NONSHORT_LOW_RATIO_MONOTONICITY` §§1-4) -/
+/-! ### The three `h`-derivatives are positive -/
 
 theorem lrh_E0_nonneg {h z : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) (hz0 : 0 ≤ z) (hz1 : z ≤ 1) :
     0 ≤ lrhE0 h z := by
@@ -1072,7 +1070,7 @@ theorem lrh_E1_nonneg {h z : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) (hz0 : 0
     have := mul_le_mul_of_nonneg_left s1 (by positivity : (0 : ℝ) ≤ h ^ (4 : ℕ)); linarith
   have t7 : z ^ (7 : ℕ) * (h ^ (4 : ℕ) * lrhS1 h) ≤ z ^ (7 : ℕ) * (1121 / 16) :=
     mul_le_mul_of_nonneg_left c7 (by positivity)
-  -- `100000z³ - 60000z² = 100000(z - 2/5)²(z + 1/5) - 3200` (`NONSHORT_LOW_RATIO_MONOTONICITY` (16))
+  -- `100000z³ - 60000z² = 100000(z - 2/5)²(z + 1/5) - 3200`
   have sq : 0 ≤ (z - 2 / 5) ^ (2 : ℕ) * (z + 1 / 5) := by positivity
   unfold lrhE1
   linarith
@@ -1107,7 +1105,7 @@ theorem lrh_E2_nonneg {h z : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) (hz0 : 0
   unfold lrhE2
   linarith
 
-/-! ### Monotonicity in `h` (`NONSHORT_LOW_RATIO_MONOTONICITY` (18)) -/
+/-! ### Monotonicity in `h` -/
 
 /-- A function with nonnegative derivative on `[1/3, 1/2]` is larger at `h` than at `1/3`. -/
 theorem lrh_mono_of_deriv {f f' : ℝ → ℝ} (hd : ∀ s, HasDerivAt f (f' s) s)
@@ -1189,9 +1187,10 @@ theorem lrh_A2_ge {h z : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) (hz0 : 0 ≤
   have e : lrhA2 (1 / 3) z = lrha2 z := by unfold lrhA2 lrha2 lrhB20 lrhB21 lrhB22 lrhB23 lrhB24 lrhB25 lrhB26 lrhB27; ring
   rw [e] at key; exact key
 
-/-! ### The base quadratic (`NONSHORT_LOW_RATIO` (1)) -/
+/-! ### The base quadratic -/
 
-/-- The three error identities (`NONSHORT_LOW_RATIO` (4)): `a₀ > A`, `a₁ ≥ B`, `4a₂/3 ≥ C`. -/
+/-- The three error identities: `a₀ > A`, `a₁ ≥ B`, `4a₂/3 ≥ C` on `[0, 1]` (each difference is a
+polynomial with nonnegative coefficients in `z` and `1 - z`). -/
 theorem lrh_base_err {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ 1) :
     0 < lrha0 z - lrhQA z ∧ 0 ≤ lrha1 z - lrhQB z ∧ 0 < 4 / 3 * lrha2 z - lrhQC z := by
   have hz : 0 ≤ 1 - z := by linarith
@@ -1213,7 +1212,8 @@ theorem lrh_base_err {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ 1) :
       + 528174 * z ^ (5 : ℕ) + 287435 * z ^ (6 : ℕ) + 1718272 * z ^ (6 : ℕ) * (1 - z) := by positivity
   refine ⟨by linarith, by linarith, by linarith⟩
 
-/-- `Q(z, β) = A + βB + β²C ≥ 4` and `C ≥ 0` on `[0, 1]` (`NONSHORT_LOW_RATIO` (7)-(9)). -/
+/-- `Q(z, β) = A + βB + β²C ≥ 4` and `C ≥ 0` on `[0, 1]`, by Bernstein forms in `z` on `[0, 1/2]`,
+`[1/2, 3/4]` and `[3/4, 1]` whose coefficients are nonnegative for `β ≥ 0`. -/
 theorem lrh_Q_ge {z β : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ 1) (hb : 0 ≤ β) :
     4 ≤ lrhQA z + β * lrhQB z + β ^ (2 : ℕ) * lrhQC z ∧ 0 ≤ lrhQC z := by
   rcases le_total z (1 / 2) with hA | hA
@@ -1248,7 +1248,7 @@ theorem lrh_Q_ge {z β : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ 1) (hb : 0 ≤ β) :
     have p2 : 0 ≤ 36499165 * (4 * z - 3) ^ (0 : ℕ) * (1 - (4 * z - 3)) ^ (6 : ℕ) + 268991712 * (4 * z - 3) ^ (1 : ℕ) * (1 - (4 * z - 3)) ^ (5 : ℕ) + 826844240 * (4 * z - 3) ^ (2 : ℕ) * (1 - (4 * z - 3)) ^ (4 : ℕ) + 1354494080 * (4 * z - 3) ^ (3 : ℕ) * (1 - (4 * z - 3)) ^ (3 : ℕ) + 1245522944 * (4 * z - 3) ^ (4 : ℕ) * (1 - (4 * z - 3)) ^ (2 : ℕ) + 609005568 * (4 * z - 3) ^ (5 : ℕ) * (1 - (4 * z - 3)) ^ (1 : ℕ) + 123625472 * (4 * z - 3) ^ (6 : ℕ) * (1 - (4 * z - 3)) ^ (0 : ℕ) := by positivity
     constructor <;> linarith
 
-/-- **The base quadratic** (`NONSHORT_LOW_RATIO` (1)): `a₀ + βa₁ + (4/3)β²a₂ > 4`, and `a₂ > 0`. -/
+/-- **The base quadratic**: `a₀ + βa₁ + (4/3)β²a₂ > 4`, and `a₂ > 0`. -/
 theorem lrh_base {z β : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ 1) (hb : 0 ≤ β) :
     4 < lrha0 z + β * lrha1 z + 4 / 3 * β ^ (2 : ℕ) * lrha2 z ∧ 0 < lrha2 z := by
   obtain ⟨f0, f1, f2⟩ := lrh_base_err hz0 hz1
@@ -1259,7 +1259,7 @@ theorem lrh_base {z β : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ 1) (hb : 0 ≤ β) :
   · linarith
   · linarith
 
-/-! ### The higher coefficients (`NONSHORT_LOW_RATIO_REMAINDER` §3) -/
+/-! ### The higher coefficients -/
 
 theorem lrh_C3_nonneg {h y : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) (hy0 : 0 ≤ y) (hy : y ≤ h) :
     0 ≤ lrhC3 h y := by
@@ -1396,9 +1396,10 @@ theorem lrh_C10_nonneg {h y : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) (hy0 : 
   unfold lrhC10
   positivity
 
-/-! ### The sign of the collected polynomial (`NONSHORT_LOW_RATIO_LINK` §5) -/
+/-! ### The sign of the collected polynomial -/
 
-/-- The quadratic Taylor part is positive (`NONSHORT_LOW_RATIO_LINK` (29)). -/
+/-- The quadratic Taylor part `C̃₀ + C̃₁j + C̃₂j²` is positive: with `y = hz` it is
+`h³w³(𝒜₀ + β𝒜₁ + wβ²𝒜₂)`, bounded below through `lrh_A0_ge`, …, and `lrh_base`. -/
 theorem lrh_quad_pos {h y j : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) (hy0 : 0 ≤ y) (hy : y ≤ h)
     (hj : 0 ≤ j) : 0 < lrhC0 h y + lrhC1 h y * j + lrhC2 h y * j ^ (2 : ℕ) := by
   have hh : 0 < h := by linarith
@@ -1435,7 +1436,7 @@ theorem lrh_quad_pos {h y j : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) (hy0 : 
       + (β * (h * (1 + h))) ^ (2 : ℕ) * lrhA2 h z := by linarith
   exact mul_pos (by positivity) k5
 
-/-- **The collected polynomial is positive** (`NONSHORT_LOW_RATIO_LINK` (4)), for `1/3 ≤ h ≤ 1/2`,
+/-- **The collected polynomial is positive**, for `1/3 ≤ h ≤ 1/2`,
 `0 ≤ y ≤ h`, `j ≥ 0`. -/
 theorem lrh_sum_pos {h y j : ℝ} (h1 : 1 / 3 ≤ h) (h2 : h ≤ 1 / 2) (hy0 : 0 ≤ y) (hy : y ≤ h)
     (hj : 0 ≤ j) :

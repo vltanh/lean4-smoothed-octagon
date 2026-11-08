@@ -5,11 +5,10 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandOCurv
 /-!
 # Gate S3, the outer face by hand: the lower shape increases with the beta slope
 
-Hand proof of the leaf `hs3_outer_face`, third part: `SHORT_DISPLACEMENT_OUTER_TERMINALS.md` §1 with
-the polynomials of `SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA.md` §1. At the lower shape
+Proof of the leaf `hs3_outer_face`, third part. At the lower shape
 `r_* = 13/(5S)` (`α = a_* = 5(x + 1)/13`) and `5/2 ≤ n ≤ 7/2`, `3/5 ≤ C ≤ 5/6`:
 `(P_n)_C > -53/2000`, `(A_n)_C > 0`, `A_n < 4`, `U_C > -3/4000` and `f(Z) ≥ f(3)`, so
-`(R_n)_C > 3487/45414000 > 0` (the note's (2)). The `C`-derivatives of the quartics are explicit:
+`(R_n)_C > 3487/45414000 > 0`. The `C`-derivatives of the quartics are explicit:
 every coefficient is quadratic in `C`, so its second-order Taylor expansion in `C` is exact
 (`hl3_hd_quad`).
 
@@ -120,9 +119,12 @@ theorem hl3o_hdC_G (hH : t + (x - t - 1) * r ≠ 0) (hZ : 0 < 1 + t + (x - t) * 
 
 end DerivC
 
-/-! ### The printed polynomials (`SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA` §1) -/
+/-! ### The printed polynomials, in `h = x - 2`, `v = C - 3/5`
 
-/-- The polynomial `Il` of `SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA` §1. -/
+Each pair (`l` at `n = 5/2`, `h` at `n = 7/2`) clears one bound at the lower shape `r_*`; see
+`hl3o_I_id`, `hl3o_J_id`, `hl3o_K_id`, `hl3o_L_id`. -/
+
+/-- The polynomial `Il` of the bound `(P_n)_C > -53/2000` (`hl3o_I_id`, `n = 5/2`). -/
 noncomputable def hl3oIl (h v : ℝ) : ℝ :=
     h ^ 6 * (-120000) +
     h ^ 5 * (384000 * v - 317715) +
@@ -132,7 +134,7 @@ noncomputable def hl3oIl (h v : ℝ) : ℝ :=
     h * (2365440 * v + 1102949) +
     (348480 * v + 1560683)
 
-/-- The polynomial `Ih` of `SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA` §1. -/
+/-- The polynomial `Ih` of the bound `(P_n)_C > -53/2000` (`hl3o_I_id`, `n = 7/2`). -/
 noncomputable def hl3oIh (h v : ℝ) : ℝ :=
     h ^ 6 * (-120000) +
     h ^ 5 * (384000 * v - 382425) +
@@ -142,7 +144,7 @@ noncomputable def hl3oIh (h v : ℝ) : ℝ :=
     h * (2365440 * v - 2079001) +
     (348480 * v + 367553)
 
-/-- The polynomial `Jl` of `SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA` §1. -/
+/-- The polynomial `Jl` of the bound `(A_n)_C > 0` (`hl3o_J_id`, `n = 5/2`). -/
 noncomputable def hl3oJl (h v : ℝ) : ℝ :=
     h ^ 5 * (30000) +
     h ^ 4 * (32000 * v + 474275) +
@@ -151,7 +153,7 @@ noncomputable def hl3oJl (h v : ℝ) : ℝ :=
     h * (62480 * v + 3510138) +
     (9680 * v + 866868)
 
-/-- The polynomial `Jh` of `SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA` §1. -/
+/-- The polynomial `Jh` of the bound `(A_n)_C > 0` (`hl3o_J_id`, `n = 7/2`). -/
 noncomputable def hl3oJh (h v : ℝ) : ℝ :=
     h ^ 5 * (30000) +
     h ^ 4 * (32000 * v + 457525) +
@@ -160,7 +162,7 @@ noncomputable def hl3oJh (h v : ℝ) : ℝ :=
     h * (62480 * v + 3025188) +
     (9680 * v + 732768)
 
-/-- The polynomial `Kl` of `SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA` §1. -/
+/-- The polynomial `Kl` of the bound `A_n < 4` (`hl3o_K_id`, `n = 5/2`). -/
 noncomputable def hl3oKl (h v : ℝ) : ℝ :=
     h ^ 5 * (-300000 * v - 1128750) +
     h ^ 4 * (-160000 * v ^ 2 - 4742750 * v - 15059525) +
@@ -169,7 +171,7 @@ noncomputable def hl3oKl (h v : ℝ) : ℝ :=
     h * (-312400 * v ^ 2 - 35101380 * v - 63325164) +
     (-48400 * v ^ 2 - 8668680 * v + 20686266)
 
-/-- The polynomial `Kh` of `SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA` §1. -/
+/-- The polynomial `Kh` of the bound `A_n < 4` (`hl3o_K_id`, `n = 7/2`). -/
 noncomputable def hl3oKh (h v : ℝ) : ℝ :=
     h ^ 5 * (-300000 * v - 1053750) +
     h ^ 4 * (-160000 * v ^ 2 - 4575250 * v - 13686025) +
@@ -178,7 +180,7 @@ noncomputable def hl3oKh (h v : ℝ) : ℝ :=
     h * (-312400 * v ^ 2 - 30251880 * v - 38743464) +
     (-48400 * v ^ 2 - 7327680 * v + 28537866)
 
-/-- The polynomial `L` of `SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA` §1. -/
+/-- The polynomial `L` of the bound `U_C > -3/4000` (`hl3o_L_id`). -/
 noncomputable def hl3oL (h v : ℝ) : ℝ :=
     h ^ 4 * (65625 * v ^ 2 + 420000 * v - 5828000) +
     h ^ 3 * (405000 * v ^ 2 + 2796750 * v - 17297600) +
@@ -264,7 +266,7 @@ theorem hl3o_L_id (hx : 2 ≤ x) (hC : 0 ≤ C) :
   rw [← hBd]
   ring
 
-/-- **The lower shape increases with the slope** (the note's (1)-(2)): `(R_n)_C > 0` at `r_*`. -/
+/-- **The lower shape increases with the slope**: `(R_n)_C > 0` at `r_*`. -/
 theorem hl3o_GC_pos (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' : C ≤ 5 / 6) (hn : 5 / 2 ≤ n)
     (hn' : n ≤ 7 / 2) : 0 < hl3oGC x C n (13 / (5 * (x + 1))) := by
   have hx0 : 0 < x := by linarith
@@ -349,7 +351,8 @@ theorem hl3o_GC_pos (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' 
     mul_le_mul (by linarith) hf (by norm_num) (by linarith)
   linarith
 
-/-- **The two lower-shape tests are bounded by the slope `19x/50`** (the note's §1). -/
+/-- **The lower-shape tests increase with the slope**: `G(x, C, n, r_*) ≤ G(x, C', n, r_*)` for
+`3/5 ≤ C ≤ C' ≤ 5/6`; in particular they are bounded by their values at `C' = 19x/50`. -/
 theorem hl3o_low_mono {C' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hCC : C ≤ C')
     (hC' : C' ≤ 5 / 6) (hn : 5 / 2 ≤ n) (hn' : n ≤ 7 / 2) :
     hl3oG x C n (13 / (5 * (x + 1))) ≤ hl3oG x C' n (13 / (5 * (x + 1))) := by

@@ -5,18 +5,17 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW3b
 /-!
 # Gate S4, hand proof W3 (c): the norm coefficient of the cost and its `x`-slope
 
-`archive/lighter-proofs/SHORT_CASIMIR_RATIO_DERIVATIVE.md` §2, (5)-(6). On the shape curve at
-`e = 13/5` (`a = 1 + 13d/5`, `B = a + x(1 + d)`, `K = x(x + 2) + a²`,
+On the shape curve at `e = 13/5` (`a = 1 + 13d/5`, `B = a + x(1 + d)`, `K = x(x + 2) + a²`,
 `D = a² + 2ab + 1 + 2x - 2bx`, `b = x(1 + d)`), the cost `r₁` is affine in the norm with
 coefficient `ρ = (r₁)_u = T_u/(aBK)`,
 
 `T_u = B²K + aB(S³ - 2D) + D(D - S³) = B((B - a)K + a(K - 2D)) + S³(aB - D) + D² > 0`
 
-(note (5): `D < aB`, `2D < K`). Its `x`-derivative along `b = x(1 + d)` is
-`ρ_x = q/(aB²K²)` with `q = (T_u)_x BK - T_u(B_x K + BK_x)` (`Q = 78125q`, note (6)); the
+(by `D < aB`, `2D < K`). Its `x`-derivative along `b = x(1 + d)` is
+`ρ_x = q/(aB²K²)` with `q = (T_u)_x BK - T_u(B_x K + BK_x)` (`Q = 78125q`); the
 first and second `x`-derivatives of `T_u` are taken by the chain rule in the atoms
 `B, K, D, S³` before any expansion (`hl46_w3_Tu_deriv`, `hl46_w3_Tu1_deriv`). Then
-`78125q_x = J(d, x - 2)` and `78125q(2) = Q(2, d)` are the note's printed polynomials, both
+`78125q_x = J(d, x - 2)` and `78125q(2) = Q(2, d)` are explicit polynomials, both
 positive by the monomial rule (discard positive `d`-terms, `d ≤ 1/19` in the negative ones), so
 `q > 0` and `ρ_x > 0`.
 
@@ -89,7 +88,7 @@ theorem hl46_w3_S1_dx (x : ℝ) : HasDerivAt (fun x : ℝ => 3 * (1 + x) ^ 2) (6
   push_cast
   ring
 
-/-- Elementary bounds on the curve (note (5)): `1 ≤ a ≤ B`, `0 < K`, `2D < K`, `D ≤ aB`. -/
+/-- Elementary bounds on the curve: `1 ≤ a ≤ B`, `0 < K`, `2D < K`, `D ≤ aB`. -/
 theorem hl46_w3_curve {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) :
     1 ≤ 1 + 13 / 5 * d ∧ 1 + 13 / 5 * d ≤ hl46W3B x d ∧ 0 < hl46W3K x d ∧
       2 * hl46W3D x d < hl46W3K x d ∧ hl46W3D x d ≤ (1 + 13 / 5 * d) * hl46W3B x d := by
@@ -143,7 +142,7 @@ theorem hl46_w3_Tu1_deriv {fB fK fD fS fB1 fK1 fD1 fS1 : ℝ → ℝ} {a B2 K2 D
   push_cast
   ring
 
-/-- `T_u > 0`: `T_u = B(B - a)K + Ba(K - 2D) + S³(aB - D) + D²` (note (5)). -/
+/-- `T_u > 0`: `T_u = B(B - a)K + Ba(K - 2D) + S³(aB - D) + D²`. -/
 theorem hl46_w3_Tu_pos {a B K D S3 : ℝ} (ha : 0 < a) (hB : a ≤ B) (hK0 : 0 < K) (hK : 2 * D < K)
     (hD : D ≤ a * B) (hS : 0 ≤ S3) : 0 < hl46W3Tu a B K D S3 := by
   have e : hl46W3Tu a B K D S3 =
@@ -182,7 +181,7 @@ noncomputable def hl46W3q (x d : ℝ) : ℝ :=
   hl46W3Tu1C x d * hl46W3B x d * hl46W3K x d -
     hl46W3TuC x d * ((1 + d) * hl46W3K x d + hl46W3B x d * (2 * x + 2))
 
-/-- The note's `J(d, h) = Q_x` (§2). -/
+/-- The polynomial `J(d, h) = Q_x`. -/
 noncomputable def hl46W3J (d h : ℝ) : ℝ :=
   7140250 * d ^ 7 * h + 32845150 * d ^ 7 - 32955000 * d ^ 6 * h ^ 2 - 185097250 * d ^ 6 * h -
     165543950 * d ^ 6 + 13097500 * d ^ 5 * h ^ 3 - 20660250 * d ^ 5 * h ^ 2 - 460863000 * d ^ 5 * h -
@@ -197,7 +196,7 @@ noncomputable def hl46W3J (d h : ℝ) : ℝ :=
     2187500 * h ^ 6 + 38437500 * h ^ 5 + 281250000 * h ^ 4 + 1076875000 * h ^ 3 + 2250937500 * h ^ 2 +
     2419687500 * h + 1040625000
 
-/-- The note's `Q(2, d)` (§2). -/
+/-- The polynomial `Q(2, d)`. -/
 noncomputable def hl46W3Q2 (d : ℝ) : ℝ :=
   51409800 * d ^ 7 - 48773400 * d ^ 6 - 288842125 * d ^ 5 + 529878375 * d ^ 4 +
     1501150625 * d ^ 3 + 1867559375 * d ^ 2 + 1316312500 * d + 367031250
@@ -211,7 +210,7 @@ theorem hl46_w3_Tu1C_deriv (x d : ℝ) : HasDerivAt (fun x => hl46W3Tu1C x d) (h
     (hl46_w3_B_dx x d) (hl46_w3_K_dx x d) (hl46_w3_D_dx x d) (hl46_w3_S3_dx x)
     (hasDerivAt_const x (1 + d)) (hl46_w3_K1_dx x) (hl46_w3_Dx_dx x d) (hl46_w3_S1_dx x)
 
-/-- Note (6): `78125 q_x = J(d, x - 2)`; the source is differentiated before expansion. -/
+/-- `78125 q_x = J(d, x - 2)`; the source is differentiated before expansion. -/
 theorem hl46_w3_q_deriv (x d : ℝ) : HasDerivAt (fun x => hl46W3q x d) (hl46W3J d (x - 2) / 78125) x := by
   have hB := hl46_w3_B_dx x d
   have hK := hl46_w3_K_dx x d
@@ -223,14 +222,14 @@ theorem hl46_w3_q_deriv (x d : ℝ) : HasDerivAt (fun x => hl46W3q x d) (hl46W3J
     hl46W3D hl46W3Dx hsDg
   ring
 
-/-- Note (6): `78125 q(2, d) = Q(2, d)`. -/
+/-- `78125 q(2, d) = Q(2, d)`. -/
 theorem hl46_w3_q2 (d : ℝ) : hl46W3q 2 d = hl46W3Q2 d / 78125 := by
   unfold hl46W3q hl46W3Q2 hl46W3TuC hl46W3Tu1C hl46W3Tu hl46W3Tu1 hl46W3B hl46W3K hl46W3D
     hl46W3Dx hsDg
   ring
 
 /-- `J > 0`: discard the positive `d`-terms and put `d = 1/19` in the negative ones; the
-remaining polynomial in `h` has positive coefficients (the note's `J_low`). -/
+remaining polynomial in `h` has positive coefficients. -/
 theorem hl46_w3_J_pos {d h : ℝ} (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (hh : 0 ≤ h) : 0 < hl46W3J d h := by
   unfold hl46W3J
   linarith [
@@ -307,7 +306,7 @@ theorem hl46_w3_rho_deriv {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 
   field_simp
   ring
 
-/-- Note (5): `ρ > 0`. -/
+/-- `ρ > 0`. -/
 theorem hl46_w3_rho_pos {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) :
     0 < hl46W3rho x d := by
   obtain ⟨ha, haB, hK, hKD, hD⟩ := hl46_w3_curve hx hx' hd hd'
@@ -315,7 +314,7 @@ theorem hl46_w3_rho_pos {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 
   exact div_pos (hl46_w3_Tu_pos (by linarith) haB hK hKD hD (by positivity))
     (mul_pos (mul_pos (by linarith) (by linarith)) hK)
 
-/-- Note (6): `ρ_x ≥ 0`. -/
+/-- `ρ_x ≥ 0`. -/
 theorem hl46_w3_rho_deriv_nonneg {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d)
     (hd' : d ≤ 1 / 19) :
     0 ≤ hl46W3q x d / ((1 + 13 / 5 * d) * hl46W3B x d ^ 2 * hl46W3K x d ^ 2) := by

@@ -5,19 +5,15 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Bern
 /-!
 # Case M2 by hand: generated sign certificates for the low-scale faces
 
-The quartic `Q = P₀ + P₁y + ⋯ + P₄y⁴` of `MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION` (7) on the unit
-face `k = 1` (`nhLU0`, …, `nhLU4`) and on the high-ratio face `k = 2t + 1/2` (`nhLH0`, …,
-`nhLH4`), and Bernstein certificates (generated; every identity is checked by `ring`) for the six
-signs (9) `J₀ = P₀`, `J₁ = P₁ + 2P₀`, `J₂ = P₂ + 48P₀`, `J₃ = P₃ + 4P₂`, `J₄ = P₃ - P₀`,
-`J₅ = P₄ - P₀`:
+The cleared low-scale quartic `Q = P₀ + P₁y + ⋯ + P₄y⁴` on the unit face `k = 1` (`nhLU0`, …,
+`nhLU4`) and on the high-ratio face `k = 2t + 1/2` (`nhLH0`, …, `nhLH4`), and Bernstein
+certificates (generated; every identity is checked by `ring`) for the six signs `J₀ = P₀`,
+`J₁ = P₁ + 2P₀`, `J₂ = P₂ + 48P₀`, `J₃ = P₃ + 4P₂`, `J₄ = P₃ - P₀`, `J₅ = P₄ - P₀`:
 
 * unit face (`nhLUJ i`, `nhLUJ_dom i`): `1/2 < x ≤ 7/3`, `0 ≤ t ≤ 1/4`, `x ≥ 1 - 2t`,
   `3(x + 2)³t ≤ -2x³ - x² + 10x + 12` (i.e. `t ≤ T(x)`); for `x ≥ 1` the constraint `t ≤ T(x)` is
   used through `T(x) ≤ T(x_a)` on subintervals `[x_a, x_b]` (`nh_T_anti`);
 * high-ratio face (`nhLHJ i`, `nhLHJ_dom i`): `1/4 ≤ t ≤ 7/20`, `1/2 ≤ x ≤ 1`.
-
-Route: in place of the hand estimates of §§4-7 and of
-`MIXED_NONSHORT_LOW_SCALE_HIGH_RATIO_DERIVATIVE`.
 -/
 
 @[expose] public section

@@ -8,8 +8,7 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.Envelope
 /-!
 # Case M2, forward successor by hand: the small-gap Casimir contradiction
 
-`MIXED_NONSHORT_SMALL_GAP_HAND_EXCLUSION` and `MIXED_NONSHORT_FORWARD_HAND_EXCLUSION` §4. An actual
-forward window has `t > 1/3` (`fh_low_ratio`) and `0 < j < 1/30` (`fh_small_gap_j`), hence
+An actual forward window has `t > 1/3` (`fh_low_ratio`) and `0 < j < 1/30` (`fh_small_gap_j`), hence
 `χ > 4/7` (`fh_chi_core`). On the first-event stationary line the squared Casimir `Γ` decreases on
 `[3/4, ∞)` (`fh_cas_slope`, `fh_gam_anti`), and `3/4 ≤ w_actual < w_U`, so
 `γ² = Γ(w_actual) ≥ Γ(w_U)`. At `w_U` the diagonal is positive and, by the factor elimination
@@ -26,7 +25,7 @@ forward window has `t > 1/3` (`fh_low_ratio`) and `0 < j < 1/30` (`fh_small_gap_
 
 namespace SmoothedOctagon
 
-/-- The diagonal at the envelope norm (`MIXED_NONSHORT_SMALL_GAP_HAND_EXCLUSION` (9)):
+/-- The diagonal at the envelope norm:
 `H_d(w_U) = B (h₁ + (log q + α(q - 1) + β(1/q - 1)))`. -/
 theorem fh_Hd_wU {t x k q v L : ℝ} (ht : 0 < t) (hx : 0 < x) (hk : 0 < k) (hq : 0 < q) :
     fhHd t x k q v L (fhwU t x k v) = (k + 2 * t * x + x ^ 2) *
@@ -38,9 +37,8 @@ theorem fh_Hd_wU {t x k q v L : ℝ} (ht : 0 < t) (hx : 0 < x) (hk : 0 < k) (hq 
   field_simp
   ring
 
-/-- **The envelope Casimir exceeds the cap** (`MIXED_NONSHORT_SMALL_GAP_HAND_EXCLUSION` (9)-(11)):
-on the small-gap domain, with `χ ≥ 4/7`, `t ≤ r ≤ p`, the incoming floor and `v ∈ [3/4, min(1, V)]`,
-`Γ(w_U) > 9193/50000`, and `2v - eH_d(w_U)/p < 0`. -/
+/-- **The envelope Casimir exceeds the cap**: on the small-gap domain, with `χ ≥ 4/7`, `t ≤ r ≤ p`,
+the incoming floor and `v ∈ [3/4, min(1, V)]`, `Γ(w_U) > 9193/50000`, and `2v - eH_d(w_U)/p < 0`. -/
 theorem fh_gam_wU {t x k q v : ℝ} (ht : 1 / 3 ≤ t) (ht2 : t ≤ 2 / 5) (hj0 : 0 < 2 * t + x - 1)
     (hj1 : 2 * t + x - 1 ≤ 1 / 30) (hk1 : 1 ≤ k) (hk2 : k ≤ 31 / 30) (hq : 1 < q)
     (hr0 : t ≤ q * (k + 2 * t * x + x ^ 2) / (1 + x) - (t + x))
@@ -107,7 +105,8 @@ theorem fh_smallgap_core {t x k q v w : ℝ} (ht : 1 / 3 ≤ t) (ht2 : t ≤ 2 /
   have hGU := fh_gam_wU ht ht2 hj0 hj1 hk1 hk2 hq hr0 hr1 hχ hv34 hv1 hvV hFl (by linarith)
   linarith
 
-/-- **The forward successor is excluded** (`MIXED_NONSHORT_FORWARD_HAND_EXCLUSION`). -/
+/-- **The forward successor is excluded**: no actual smaller-nonshort window has a forward
+successor. -/
 theorem fh_small_gap (W : M2Window) (hF : W.ForwardNext) : False := by
   have ht := fh_low_ratio W hF
   have hj1 := fh_small_gap_j W hF

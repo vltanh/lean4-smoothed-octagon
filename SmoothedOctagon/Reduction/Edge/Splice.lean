@@ -7,12 +7,12 @@ public import SmoothedOctagon.Period.Twist
 # Edge competitors and the splice
 
 An admissible pair of the edge system (`System.lean`) is an actual Reinhardt segment: its state is
-`e4_edgeX (a, c, s)`, its frame `g₀ h(a₀/c₀, 0)⁻¹ h(a/c, s)` (MEPB (9)-(10)), its control
-`(0, v, 1 - v)`, and its cost the edge cost (MEPB (12), in physical time). Replacing the segment
-`[t₀, t₁]` of an admissible trajectory by any segment with the same end states and end frames, and
-translating the rest in time, gives an admissible trajectory whose cost changes by the difference
-of the segment costs. Hence the edge segment of a global minimizer is a (global, so strong local)
-minimizer of the edge problem with fixed end points and free time.
+`e4_edgeX (a, c, s)`, its frame `g₀ h(a₀/c₀, 0)⁻¹ h(a/c, s)`, its control `(0, v, 1 - v)`, and its
+cost the edge cost (in physical time). Replacing the segment `[t₀, t₁]` of an admissible trajectory
+by any segment with the same end states and end frames, and translating the rest in time, gives an
+admissible trajectory whose cost changes by the difference of the segment costs. Hence the edge
+segment of a global minimizer is a (global, so strong local) minimizer of the edge problem with
+fixed end points and free time.
 
 Main API:
 

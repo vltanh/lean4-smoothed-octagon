@@ -8,8 +8,8 @@ public import SmoothedOctagon.Exclusion.ShortRun.Scalar
 # Case M1: the scalar data at the centres
 
 For a normal period with the sign pattern `(− − +)^m` (switches `k₀ + 3j`, `k₀ + 3j + 1` reverse,
-`k₀ + 3j + 2` forward), the centre piece `k₀ + 3j + 1` carries the scalar data `m1_CentreData` of
-MGSRAE (3)-(6), read off its costate cycle `C = P.costateCycle`:
+`k₀ + 3j + 2` forward), the centre piece `k₀ + 3j + 1` carries the scalar data `m1_CentreData`, read
+off its costate cycle `C = P.costateCycle`:
 
 `r = a/(a + p)`, `t = a/(a + n)`, `ρ = a²/(a² + 4)`, `u = 8 d_{c-1}`, `v = 8 d_c`, `E = 16 e_c`,
 `γ² = C.gam2 0` (with `a, p, n` the active margins of pieces `c, c - 1, c + 1`).
@@ -59,7 +59,8 @@ noncomputable def m1_v (c : ℤ) : ℝ := 8 * P.costateCycle.swd c
 /-- `E = 16 e_c`. -/
 noncomputable def m1_E (c : ℤ) : ℝ := 16 * P.costateCycle.cre c
 
-/-- **The centre data** (MGSRAE (3)-(6)) at every centre of a period with the pattern. -/
+/-- **The centre data** at every centre of a period with the pattern: the bounds on `r, t, ρ, u, v`,
+the stationarity identity for `E` and the Gram identity for `γ²`. -/
 theorem m1_centreData {k₀ : ℤ} (hpat : P.m1_IsPattern k₀) (j : ℤ) :
     m1_CentreData (P.costateCycle.gam2 0) (P.m1_r (m1_centre k₀ j)) (P.m1_t (m1_centre k₀ j))
       (P.m1_ρ (m1_centre k₀ j)) (P.m1_u (m1_centre k₀ j)) (P.m1_v (m1_centre k₀ j))

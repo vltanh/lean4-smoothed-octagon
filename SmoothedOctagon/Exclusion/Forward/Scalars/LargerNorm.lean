@@ -5,13 +5,13 @@ public import SmoothedOctagon.Exclusion.Forward.Scalars.Canon
 /-!
 # Case F scalars: the larger-norm residual
 
-`HAND_FORWARD_LARGER_NORM_HAND_PROOF`: on the symmetric domain CONDITIONAL_NORM_BOUNDS (31), the
+On the symmetric domain `1 ≤ z = w ≤ 4/3`, `1 + 6z/5 ≤ U < 3`, `S²/Z ≤ h ≤ S(5U - 2 - 3z)/(3Z)`, the
 larger-norm residual `𝓔_v = r - nL(z, h) - m/64` is negative.
 
 ## Main API
 
 * `fs_resV_canon`: `𝓔_v` is a canonical function of the exterior factor (`fs_cf`).
-* `fs_P_nonneg`: the concavity polynomial (HAND_FORWARD_LEMMAS (2)-(5)).
+* `fs_P_nonneg`: the concavity polynomial is nonnegative.
 * `fs_V_E_neg`, `fs_V_T_neg`: the two tangent values in the coordinates `a = (z - 1)/(z + 1)`,
   `t = I - 1`.
 * `fs_resV_neg`: the sign.
@@ -52,8 +52,8 @@ theorem fs_resV_canon {U z h : ℝ} (hU : 0 < U) (hz : 0 < z) (hh : 0 < h) (hh1 
   field_simp
   ring
 
-/-- The concavity polynomial `P(s) = (U - z)s²(2zs - S) + Zs - 2zS ≥ 0` for `s ≥ S²/Z`
-(HAND_FORWARD_LEMMAS (2)-(5)). -/
+/-- The concavity polynomial `P(s) = (U - z)s²(2zs - S) + Zs - 2zS ≥ 0` for `s ≥ S²/Z`; it controls
+the sign of the second derivative of `𝓔_v` in `h`. -/
 theorem fs_P_nonneg {U z s : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 4 / 3) (hU : 1 + 6 * z / 5 ≤ U) (hU3 : U ≤ 3)
     (hs : (1 + z) ^ 2 / (z ^ 2 + U) ≤ s) :
     0 ≤ (U - z) * s ^ 2 * (2 * z * s - (1 + z)) + (z ^ 2 + U) * s - 2 * z * (1 + z) := by
@@ -214,8 +214,7 @@ theorem fs_V_NE {a t : ℝ} (hx0 : 0 ≤ a) (hx1 : a ≤ 1 / 7)
     positivity
   linarith
 
-/-- The tangent base value `𝓔_v(I) < 0` (LARGER_NORM (3), first sign), in the coordinates
-`a = (z - 1)/(z + 1)`, `t = I - 1`. -/
+/-- The tangent base value `𝓔_v(I) < 0`, in the coordinates `a = (z - 1)/(z + 1)`, `t = I - 1`. -/
 theorem fs_V_E_neg {a t : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1 / 7) (ht0 : 0 < t) (ht1 : t ≤ 1 / 4) :
     (-(16) * a ^ (4:ℕ) * t - (16) * a ^ (4:ℕ) + (16) * a ^ (3:ℕ) * t ^ (3:ℕ) + (31) * a ^ (3:ℕ) * t ^ (2:ℕ) + (78) * a ^ (3:ℕ) * t + (63) * a ^ (3:ℕ) + (48) * a ^ (2:ℕ) * t ^ (3:ℕ) - (31) * a ^ (2:ℕ) * t ^ (2:ℕ) - (29) * a ^ (2:ℕ) * t - (78) * a ^ (2:ℕ) + (48) * a * t ^ (3:ℕ) + (18) * a * t ^ (2:ℕ) + a * t + (31) * a + (16) * t ^ (3:ℕ) + (80) * t ^ (2:ℕ) - (34) * t) / (32 * (1 - a) ^ 2) + (a ^ (3:ℕ) * t + a ^ (3:ℕ) - (3) * a ^ (2:ℕ) * t ^ (2:ℕ) - (6) * a ^ (2:ℕ) * t - (5) * a ^ (2:ℕ) + (3) * a * t + (3) * a - t ^ (2:ℕ) - (2) * t + (1)) / (1 - a) ^ 2 * Real.log (1 + t) +
       (1 - a + 2 * t) * (1 - a * (1 + t)) / (1 - a) * Real.log (1 - a * (1 + t)) < 0 := by
@@ -364,7 +363,7 @@ theorem fs_V_NT {a t : ℝ} (hx0 : 0 ≤ a) (hx1 : a ≤ 1 / 7)
     positivity
   linarith
 
-/-- The tangent value at the cost endpoint (LARGER_NORM (3), second sign). -/
+/-- The tangent value at the cost endpoint is negative. -/
 theorem fs_V_T_neg {a t : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1 / 7) (ht0 : 0 < t) (ht1 : t ≤ 1 / 4) :
     (-(64) * a ^ (5:ℕ) * t ^ (4:ℕ) - (222) * a ^ (5:ℕ) * t ^ (3:ℕ) - (234) * a ^ (5:ℕ) * t ^ (2:ℕ) - (90) * a ^ (5:ℕ) * t - (14) * a ^ (5:ℕ) - (240) * a ^ (4:ℕ) * t ^ (4:ℕ) - (431) * a ^ (4:ℕ) * t ^ (3:ℕ) - (225) * a ^ (4:ℕ) * t ^ (2:ℕ) - (85) * a ^ (4:ℕ) * t - (51) * a ^ (4:ℕ) - (544) * a ^ (3:ℕ) * t ^ (4:ℕ) - (738) * a ^ (3:ℕ) * t ^ (3:ℕ) + (97) * a ^ (3:ℕ) * t ^ (2:ℕ) + (490) * a ^ (3:ℕ) * t + (359) * a ^ (3:ℕ) - (832) * a ^ (2:ℕ) * t ^ (4:ℕ) - (539) * a ^ (2:ℕ) * t ^ (3:ℕ) + (665) * a ^ (2:ℕ) * t ^ (2:ℕ) + (21) * a ^ (2:ℕ) * t - (511) * a ^ (2:ℕ) - (672) * a * t ^ (4:ℕ) - (170) * a * t ^ (3:ℕ) - (29) * a * t ^ (2:ℕ) - (302) * a * t + (219) * a - (208) * t ^ (4:ℕ) - (160) * t ^ (3:ℕ) + (26) * t ^ (2:ℕ) - (34) * t - (2)) / (96 * (1 - a) ^ 3 * (1 + t)) + ((6) * a ^ (4:ℕ) * t ^ (2:ℕ) + (9) * a ^ (4:ℕ) * t + (3) * a ^ (4:ℕ) + (9) * a ^ (3:ℕ) * t ^ (2:ℕ) + (13) * a ^ (3:ℕ) * t + (10) * a ^ (3:ℕ) + (17) * a ^ (2:ℕ) * t ^ (2:ℕ) - (5) * a ^ (2:ℕ) * t - (28) * a ^ (2:ℕ) + (3) * a * t ^ (2:ℕ) - (17) * a * t + (14) * a + (5) * t ^ (2:ℕ) + (1)) / (3 * (1 - a) ^ 3) * Real.log (1 + t) +
       (1 - a * (1 + t)) * (-(4) * a ^ (2:ℕ) * t - a ^ (2:ℕ) - (6) * a * t - (6) * a - (10) * t + (7)) / (3 * (1 - a) ^ 2) * Real.log (1 - a * (1 + t)) < 0 := by
@@ -392,11 +391,10 @@ theorem fs_V_T_neg {a t : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1 / 7) (ht0 : 0 < t)
 
 /-! ### The sign -/
 
-/-- **The symmetric larger-norm sign** (HAND_FORWARD_LARGER_NORM_HAND_PROOF): `𝓔_v < 0` on the
-symmetric domain. Route: as in the note, concavity in `h` reduces to the two tangent values; these are
-bounded through the Padé bound for `log I` and the cubic bound for `log(1 - aI)`, and the resulting
-polynomials in `a = (z - 1)/(z + 1)`, `t = I - 1` are signed by Bernstein expansions on
-`[0, 1/7] × [0, 1/4]` (instead of the note's coefficient tables). -/
+/-- **The symmetric larger-norm sign**: `𝓔_v < 0` on the symmetric domain. Concavity in `h` reduces
+to the two tangent values; these are bounded through the Padé bound for `log I` and the cubic bound
+for `log(1 - aI)`, and the resulting polynomials in `a = (z - 1)/(z + 1)`, `t = I - 1` are signed by
+Bernstein expansions on `[0, 1/7] × [0, 1/4]`. -/
 theorem fs_resV_neg {U z h : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 4 / 3) (hU : 1 + 6 * z / 5 ≤ U)
     (hU3 : U < 3) (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h)
     (hhu : h ≤ (1 + z) * (5 * U - 2 - 3 * z) / (3 * (z ^ 2 + U))) : ff_resV U z z h < 0 := by

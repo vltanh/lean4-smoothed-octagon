@@ -15,8 +15,7 @@ with the upstream boundary lemmas. Every parametrization hypothesis is discharge
 actual worst disk; no smooth curve or arclength change of parameter is assumed to exist.
 
 The result is a reduction of the geometric minimax problem to the balanced area problem.
-It does not compare the resulting minimizer with the octagon. Source draft only: Lean
-compilation and kernel validation have not been run.
+It does not compare the resulting minimizer with the octagon.
 -/
 
 @[expose] public section

@@ -7,8 +7,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Envelope
 
 At `u = 3/4` the slope inequalities `κH(2S - 1) < 3α²L(p)` reduce, with `p = α/(α + β₀ + k)`, to
 explicit polynomial identities in `z = α - 1`, `y = x - α`, `k ≥ 0` with nonnegative coefficients
-(`CORRECTED_CAP_SCALE` (5)-(7) for `κ = 4`, `β₀ = x`; `SHARP_LOW_RATIO_CORRECTED_CAP` (18)-(19) for
-`κ = 7`, `β₀ = x(9x + 8α)/(9x + 8)`).
+(for `κ = 4`, `β₀ = x` and for `κ = 7`, `β₀ = x(9x + 8α)/(9x + 8)`).
 
 ## Main API
 
@@ -34,7 +33,8 @@ private theorem hs14_ccs_id {z y k al x : ℝ} (hz : 0 ≤ z) (hy : 0 ≤ y) (hk
   field_simp
   ring
 
-/-- **The lower norm endpoint of the slope inequality at `β = x`** (`CORRECTED_CAP_SCALE` (5)-(7)). -/
+/-- **The lower norm endpoint of the slope inequality at `β = x`**: `4H(2S - 1) < 3α²L(p)` at
+`u = 3/4`, `0 < p ≤ α/(α + x)`. -/
 theorem hs14_bot_ccs {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x) (hp : 0 < p)
     (hpr : p ≤ al / (al + x)) :
     4 * ((1 + x) * (m2U (1 / (1 + x)) - 3 / 4)) * (2 * (1 + x) - 1) <
@@ -84,8 +84,8 @@ private theorem hs14_sharp_id {z y k al x : ℝ} (hz : 0 ≤ z) (hy : 0 ≤ y) (
   field_simp
   ring
 
-/-- **The lower norm endpoint of the sharper slope at `β₀ = x(9x + 8α)/(9x + 8)`**
-(`SHARP_LOW_RATIO_CORRECTED_CAP` (18)-(19)). -/
+/-- **The lower norm endpoint of the sharper slope at `β₀ = x(9x + 8α)/(9x + 8)`**:
+`7H(2S - 1) < 3α²L(p)` at `u = 3/4`, `0 < p ≤ α/(α + β₀)`. -/
 theorem hs14_bot_sharp {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x) (hp : 0 < p)
     (hpr : p ≤ al / (al + x * (9 * x + 8 * al) / (9 * x + 8))) :
     7 * ((1 + x) * (m2U (1 / (1 + x)) - 3 / 4)) * (2 * (1 + x) - 1) <

@@ -5,26 +5,24 @@ public import SmoothedOctagon.Period.Defs
 /-!
 # Shared definitions of the reduction to a finite normal period
 
-The objects through which the sub-results of `SmoothedOctagon/Reduction/` talk to each other
-(inventory A2, §§1, 2.9). Everything lives in the namespace `SmoothedOctagon.Reduction`.
+The objects through which the sub-results of `SmoothedOctagon/Reduction/` talk to each other.
+Everything lives in the namespace `SmoothedOctagon.Reduction`.
 
 Main API:
 
 * `twistedControl T u`, `rebaseControl T u s`, `rebaseState T X s`: the twisted extension of a
   control from `[0, T]` to `t ≥ 0` (on `[nT, (n + 1)T)` the control `u(t - nT)` with its coordinates
   shifted `n` times, so the vertex `e_i` becomes `e_{i+n}` and `Z_{v(t+T)} = R⁻¹ Z_{v(t)} R`), and
-  the control and state rebased at time `s`, `û(t) = v(s + t)`, `X̂(t) = Y(s + t)`
-  (VERTEX_WORD_REDUCTION, Lemma 1). The rebased frame is `rebaseFrame` of `Period/Defs.lean`.
+  the control and state rebased at time `s`, `û(t) = v(s + t)`, `X̂(t) = Y(s + t)`. The rebased
+  frame is `rebaseFrame` of `Period/Defs.lean`.
 * `IsPiecewiseVertex u a b n`: on `[a, b]` the control is a.e. a concatenation of `n` constant
   vertex pieces of positive length (neighbouring labels may coincide: nothing is merged).
-* `EdgeBound T u`: property (E4) of MEASURABLE_EDGE_PMP_BOUND: on every subinterval of `[0, T]`
-  on which one coordinate of the control vanishes a.e., the control is a concatenation of at most
-  four vertex pieces.
+* `EdgeBound T u`: the edge property (E4): on every subinterval of `[0, T]` on which one coordinate
+  of the control vanishes a.e., the control is a concatenation of at most four vertex pieces.
 * `frobSq`, `covectorNormSq`, `singularGapSq`: the squared Frobenius norm of a `2 × 2` matrix, the
-  squared norm `‖𝒫‖² = λ² + ‖Λ₁‖² + ‖Λ_R‖²` of the extended covector `𝒫 = (λ, Λ₁, Λ_R)`
-  (SINGULAR_COST_BUDGET (6)), and the squared distance
-  `Q² = ‖A‖² + ‖W‖² = ‖Λ₁ - (3/2)λJ‖² + ‖Λ_R‖²` of the costate from the singular locus
-  `Λ₁ = (3/2)λJ`, `Λ_R = 0` (SINGULAR_COST_BUDGET (34)).
+  squared norm `‖𝒫‖² = λ² + ‖Λ₁‖² + ‖Λ_R‖²` of the extended covector `𝒫 = (λ, Λ₁, Λ_R)`, and the
+  squared distance `Q² = ‖A‖² + ‖W‖² = ‖Λ₁ - (3/2)λJ‖² + ‖Λ_R‖²` of the costate from the singular
+  locus `Λ₁ = (3/2)λJ`, `Λ_R = 0`.
 -/
 
 @[expose] public section
@@ -60,10 +58,9 @@ def IsPiecewiseVertex (u : ℝ → Fin 3 → ℝ) (a b : ℝ) (n : ℕ) : Prop :
   ∃ (τ : ℕ → ℝ) (l : ℕ → Fin 3), τ 0 = a ∧ τ n = b ∧ (∀ k < n, τ k < τ (k + 1)) ∧
     ∀ k < n, ∀ᵐ t, t ∈ Ioo (τ k) (τ (k + 1)) → u t = vertex (l k)
 
-/-- Property (E4) of a control on `[0, T]` (MEASURABLE_EDGE_PMP_BOUND, Theorem): whenever one
-coordinate `u_j` vanishes a.e. on a subinterval `(t₀, t₁)` of `[0, T]` (the trajectory runs along
-the edge of the simplex opposite `e_j`), the control is a.e. a concatenation of at most four
-constant vertex pieces on `[t₀, t₁]`. -/
+/-- The edge property (E4) of a control on `[0, T]`: whenever one coordinate `u_j` vanishes a.e. on
+a subinterval `(t₀, t₁)` of `[0, T]` (the trajectory runs along the edge of the simplex opposite
+`e_j`), the control is a.e. a concatenation of at most four constant vertex pieces on `[t₀, t₁]`. -/
 def EdgeBound (T : ℝ) (u : ℝ → Fin 3 → ℝ) : Prop :=
   ∀ t₀ t₁ : ℝ, 0 ≤ t₀ → t₀ < t₁ → t₁ ≤ T → ∀ j : Fin 3,
     (∀ᵐ t, t ∈ Ioo t₀ t₁ → u t j = 0) → ∃ n ≤ 4, IsPiecewiseVertex u t₀ t₁ n
@@ -74,13 +71,12 @@ def EdgeBound (T : ℝ) (u : ℝ → Fin 3 → ℝ) : Prop :=
 noncomputable def frobSq (M : Mat2) : ℝ := M 0 0 ^ 2 + M 0 1 ^ 2 + M 1 0 ^ 2 + M 1 1 ^ 2
 
 /-- The squared norm `‖𝒫‖² = λ² + ‖Λ₁‖_F² + ‖Λ_R‖_F²` of the extended covector
-`𝒫 = (λ, Λ₁, Λ_R)` (SINGULAR_COST_BUDGET (6), QUANTITATIVE_REGULAR_SWITCH_BOUND (6); there
-`W = Λ_R`). -/
+`𝒫 = (λ, Λ₁, Λ_R)`. -/
 noncomputable def covectorNormSq (lam : ℝ) (Λ₁ ΛR : Mat2) : ℝ := lam ^ 2 + frobSq Λ₁ + frobSq ΛR
 
 /-- The squared distance `Q² = ‖A‖_F² + ‖W‖_F²` of the costate from the singular locus, with
-`A = Λ₁ - (3/2)λJ` and `W = Λ_R` (SINGULAR_COST_BUDGET (34); the clearance of
-SINGULAR_COST_BUDGET (6) is `D² = ‖X - J‖_F² + Q² ≥ Q²`). -/
+`A = Λ₁ - (3/2)λJ` and `W = Λ_R`. It is a lower bound for the clearance `D`,
+`D² = ‖X - J‖_F² + Q² ≥ Q²`. -/
 noncomputable def singularGapSq (lam : ℝ) (Λ₁ ΛR : Mat2) : ℝ :=
   frobSq (Λ₁ - (3 / 2 * lam) • J) + frobSq ΛR
 

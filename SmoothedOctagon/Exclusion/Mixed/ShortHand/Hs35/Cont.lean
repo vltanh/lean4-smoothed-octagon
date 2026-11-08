@@ -5,31 +5,24 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Envelope
 /-!
 # Hand proof of the smaller-short case, gate S3: the `τ = 2` continuation
 
-`MIXED_SMALLER_SHORT_DISPLACEMENT_SCALE_CONTINUATION` (1)-(5), with
-`DISPLACEMENT_WEIGHT_REDUCTION` §6 (22)-(23); inventory HS-S3 R15, R23-R28. On the domain
-`2 ≤ x ≤ 13/6`, `11/10 ≤ α ≤ x ≤ β`, `1/3 ≤ r_A`, `3/4 ≤ u ≤ 19/25`, `0 < D < 3α²`, the weighted
-face value `G*_2(q) = hsF x β α u q 2 (log(2q/r_A)) (4(4 - 6q/r_A)/(5α - 1))` is strictly
-increasing in the scale `q ∈ (0, 1/7]`.
+On the domain `2 ≤ x ≤ 13/6`, `11/10 ≤ α ≤ x ≤ β`, `1/3 ≤ r_A`, `3/4 ≤ u ≤ 19/25`,
+`0 < D < 3α²`, the weighted face value
+`G*_2(q) = hsF x β α u q 2 (log(2q/r_A)) (4(4 - 6q/r_A)/(5α - 1))` is strictly increasing in the
+scale `q ∈ (0, 1/7]`.
 
 The proof: `G*_2(q)` is a cubic polynomial in `q` plus `log(2q/r_A)`, and
-`q(G*_2)'(q) = 1 - K₁q + K₂q² - 3NA₂q³` (`DISPLACEMENT_SCALE_CONTINUATION` (2)). In the Bernstein
-basis of `[0, 1/7]` its coefficients are `1, B₁, B₂, B₃` ((3)-(4)); `B₁ > 0` is the direct bound
-`K₁ < 21` (§2). Each of `B₂, B₃` is affine in `u` and in `v = 1/r_A` and a convex quadratic in
-`Δ = D/α²` ((7)), so it is positive once its `Δ`-discriminant is negative at the four corners
-`u ∈ {3/4, 19/25}`, `v ∈ {1 + 2/α, 3}` (`p = r_A ∈ {α/(α + 2), 1/3}`). Each corner discriminant,
+`q(G*_2)'(q) = 1 - K₁q + K₂q² - 3NA₂q³`. In the Bernstein basis of `[0, 1/7]` its coefficients
+are `1, B₁, B₂, B₃`; `B₁ > 0` is the direct bound `K₁ < 21`. Each of `B₂, B₃` is affine in `u`
+and in `v = 1/r_A` and a convex quadratic in `Δ = D/α²`, so it is positive once its
+`Δ`-discriminant is negative at the four corners `u ∈ {3/4, 19/25}`, `v ∈ {1 + 2/α, 3}`
+(`p = r_A ∈ {α/(α + 2), 1/3}`). Each corner discriminant,
 cleared of `S²α⁴(5α - 1)²` (`S²α⁶(5α - 1)²` at `v = 1 + 2/α`), is an integer polynomial `P(α, S)`
 with a positive Bernstein form in `S ∈ [3, 19/6]` whose coefficients are polynomials in
-`10α - 11 ≥ 0` with nonnegative coefficients (the four corners at `u = 19/25` are the notes'
-cases A-D of (17)).
-
-Route: the notes reduce `B₂, B₃` by completing the square in `Δ` (10), concavity in `1/p` (11)
-and monotonicity in `u` ((12)-(16)); here the reduction is by bilinearity in `(u, 1/p)` before
-completing the square (four more corner polynomials, at `u = 3/4`, no derivative in `u`), and the
-signs are certified by Bernstein forms in `(S, α)` instead of the termwise argument (18)-(19).
+`10α - 11 ≥ 0` with nonnegative coefficients.
 
 ## Main API
 
-* `hs35_tau2_cont`: the statement of `hs3_tau2_cont` (S3).
+* `hs35_tau2_cont`: the statement of `hs3_tau2_cont` (gate S3).
 -/
 
 @[expose] public section
@@ -52,9 +45,9 @@ private noncomputable def hs35cA (a S : ℝ) : ℝ :=
 private noncomputable def hs35cK (a S u : ℝ) : ℝ :=
   (1 - 1 / a ^ 2) * hs35cH S u + (2 * S - 1) / a ^ 2
 
-/-! ### The Bernstein coefficients `B₂`, `B₃` in the notes' variables
+/-! ### The Bernstein coefficients `B₂`, `B₃`
 
-The table of `DISPLACEMENT_SCALE_CONTINUATION` §3: `B_i = c₀ + c₁A₁ + c₂A₂ + c₃A₃` with
+The coefficients of `B_i = c₀ + c₁A₁ + c₂A₂ + c₃A₃`, with
 `M = 16/k`, `N = 24v/k`, `k = 5a - 1`, `v = 1/r_A`. -/
 
 private noncomputable def t2c0 (a v : ℝ) : ℝ := 1 - 2 * (1 + 6 * v / (5 * a - 1)) / 21
@@ -68,7 +61,7 @@ private noncomputable def t3c2 (a v : ℝ) : ℝ :=
   (4 + 32 / (5 * a - 1)) / 49 - 72 / 343 * (v / (5 * a - 1))
 
 /-- A coefficient `B_i = c₀ + c₁A₁ + c₂A₂ + c₃A₃` of the Bernstein form, with
-`A₁ = B - ΔH`, `A₂ = A - ΔK + uΔ²`, `A₃ = 2uΔ - K` (`DISPLACEMENT_SCALE_CONTINUATION` (7)). -/
+`A₁ = B - ΔH`, `A₂ = A - ΔK + uΔ²`, `A₃ = 2uΔ - K`. -/
 private noncomputable def qB (c0 c1 c2 c3 a S u Δ : ℝ) : ℝ :=
   c0 + c1 * (hs35cB a S - Δ * hs35cH S u) + c2 * (hs35cA a S - Δ * hs35cK a S u + u * Δ ^ 2) +
     c3 * (2 * u * Δ - hs35cK a S u)
@@ -854,7 +847,7 @@ private theorem B3_pos {a S u v Δ : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (h
     (qB_pos (mul_pos (hc2 _ le_rfl) (by norm_num)) (disc_b3_19_3 ha hS hS2))
   all_goals (unfold qB t3c0 t3c1 t3c2 hs35cK hs35cH; ring)
 
-/-- **`B₁ > 0`** (`DISPLACEMENT_SCALE_CONTINUATION` §2: `K₁ < 21`). -/
+/-- **`B₁ > 0`** (from `K₁ < 21`). -/
 private theorem B1_pos {a S u v Δ : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS2 : S ≤ 19 / 6)
     (hu' : u ≤ 19 / 25) (hv' : v ≤ 3) (hΔ : 0 < Δ) (hΔ3 : Δ < 3) :
     0 < 1 + -((2 + 16 / (5 * a - 1)) * (hs35cB a S - Δ * hs35cH S u) + 1 +
@@ -909,7 +902,7 @@ private theorem B1_pos {a S u v Δ : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (h
 /-! ### The τ = 2 face -/
 
 /-- The cubic `q(G*₂)'(q) = 1 + c₁q + 2c₂q² + 3c₃q³` is positive on `(0, 1/7]` when its
-Bernstein coefficients `B₁, B₂, B₃` (`DISPLACEMENT_SCALE_CONTINUATION` (3)-(4)) are. -/
+Bernstein coefficients `B₁, B₂, B₃` are. -/
 private theorem cubic_pos {c1 c2 c3 z : ℝ} (hz : 0 < z) (hz7 : z ≤ 1 / 7)
     (hB1 : 0 < 1 + c1 / 21) (hB2 : 0 < 1 + 2 * c1 / 21 + 2 * c2 / 147)
     (hB3 : 0 < 1 + c1 / 7 + 2 * c2 / 49 + 3 * c3 / 343) :
@@ -922,14 +915,13 @@ private theorem cubic_pos {c1 c2 c3 z : ℝ} (hz : 0 < z) (hz7 : z ≤ 1 / 7)
   have h7 : 0 ≤ 1 - 7 * z := by linarith
   positivity
 
-/-- **The `τ = 2` continuation** (`DISPLACEMENT_SCALE_CONTINUATION` (1)-(19); inventory HS-S3
-R23-R28): for `2 ≤ x ≤ 13/6`, `11/10 ≤ α ≤ x ≤ β`, `1/3 ≤ r_A`, `3/4 ≤ u ≤ 19/25`,
-`0 < D < 3α²`, `G*_2(q) = R*_2(q) + m(2q/r_A)(w_*(q) - 3/4)` is strictly increasing on `(0, 1/7]`.
-Route: the cubic `q(G*₂)'` is written in the Bernstein basis of `[0, 1/7]`; `B₂, B₃` are affine
+/-- **The `τ = 2` continuation**: for `2 ≤ x ≤ 13/6`,
+`11/10 ≤ α ≤ x ≤ β`, `1/3 ≤ r_A`, `3/4 ≤ u ≤ 19/25`, `0 < D < 3α²`,
+`G*_2(q) = R*_2(q) + m(2q/r_A)(w_*(q) - 3/4)` is strictly increasing on `(0, 1/7]`.
+The cubic `q(G*₂)'` is written in the Bernstein basis of `[0, 1/7]`; `B₂, B₃` are affine
 in `u` and in `1/r_A` and convex quadratics in `Δ`, so their positivity reduces to a negative
 `Δ`-discriminant at the four corners `u ∈ {3/4, 19/25}`, `r_A ∈ {1/3, α/(α + 2)}` (eight
-two-variable polynomials, each with a positive Bernstein form in `S` on `[3, 19/6]`); this
-replaces the notes' concavity in `1/p` and monotonicity in `u`. -/
+two-variable polynomials, each with a positive Bernstein form in `S` on `[3, 19/6]`). -/
 theorem hs35_tau2_cont {x be al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 11 / 10 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hrA : 1 / 3 ≤ hsRA al be) (hu : 3 / 4 ≤ u) (hu' : u ≤ 19 / 25)
     (hD : 0 < hsDg x be al) (hD3 : hsDg x be al < 3 * al ^ 2) (hq₁ : 0 < q₁) (hq : q₁ < q₂)
@@ -955,7 +947,7 @@ theorem hs35_tau2_cont {x be al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 1
   have hΔ3 : hsDg x be al / al ^ 2 < 3 := by rw [div_lt_iff₀ (by positivity)]; linarith
   have hS : 3 ≤ 1 + x := by linarith
   have hS2 : 1 + x ≤ 19 / 6 := by linarith
-  -- the coefficients in the notes' variables
+  -- the coefficients in the variables `B`, `A`, `H`, `K`, `Δ`
   have hA1 : hsA1 x be al u = hs35cB al (1 + x) - hsDg x be al / al ^ 2 * hs35cH (1 + x) u := by
     unfold hsA1 hsE0 hs35cB hs35cH; ring
   have hA2 : hsA2 x be al u = hs35cA al (1 + x) - hsDg x be al / al ^ 2 * hs35cK al (1 + x) u +

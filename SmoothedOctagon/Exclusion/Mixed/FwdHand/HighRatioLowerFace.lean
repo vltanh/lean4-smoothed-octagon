@@ -5,17 +5,16 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.PolyDeriv
 /-!
 # Case M2, forward successor by hand: the high-ratio lower shape, terminal face `h = 1/4`
 
-`docs/lighter-proofs/NONSHORT_HIGH_RATIO_LOWER_FACE.md` (PR #2, branch `proof/lighter-signs`): at
-`t = 3/8`, `k₀ = 29t²/4`, the normalized residual `P(x, y) = ∑ Cᵢ(x) yⁱ`
+At `t = 3/8`, `k₀ = 29t²/4`, the normalized residual `P(x, y) = ∑ Cᵢ(x) yⁱ`
 (`96q(q + 1)W³D G_{4,L}`, `q = 1 + y`) satisfies `P ≥ 13/4` for `17/60 ≤ x ≤ 3/7`,
-`0 ≤ y ≤ (1 - 2x)/(1 + 4x)` (`hrl_face`). As in the note: `C₂, …, C₆ < 0` gives concavity in `y`
-and the upper face `b(x) = 467/960 - x` (F3); `C₀ > 20` by convexity of `R` (F4); and along the line
-`F(x) = P(x, b(x))`, `F⁽⁹⁾ < 0` is integrated with the endpoint jets (F8) (`hrl_F_ge`).
+`0 ≤ y ≤ (1 - 2x)/(1 + 4x)` (`hrl_face`). On this face `y ≤ b(x) = 467/960 - x`, and the signs
+`C₂, …, C₆ < 0` (concavity in `y`) reduce `P(x, y) ≥ 13/4` to `C₀ > 20` (by convexity of `R`) and
+`P(x, b(x)) ≥ 13/4`; along the line, `F(x) = P(x, b(x))` has `F⁽⁹⁾ < 0`, which is integrated with
+the exact endpoint jets of `F` (`hrl_F_ge`).
 
-Route: `F` is expanded as a univariate polynomial of degree `14` (`hrlFL0`, its derivatives
-`hrlFL1`, …, `hrlFL9`) and the jets (F8) are exact rational evaluations, in place of the note's
-ninth-derivative formula (F5)-(F7) and its rounded Horner chains; `F⁽⁹⁾ < 0` and `C₂ < 0` use
-Taylor coefficients at `x = 17/60` in place of (F6) and (F2).
+`F` is expanded as a univariate polynomial of degree `14` (`hrlFL0`, its derivatives `hrlFL1`, …,
+`hrlFL9`) and the jets are exact rational evaluations; `F⁽⁹⁾ < 0` and `C₂ < 0` use Taylor
+coefficients at `x = 17/60`.
 
 ## Main API
 
@@ -26,33 +25,33 @@ Taylor coefficients at `x = 17/60` in place of (F6) and (F2).
 
 namespace SmoothedOctagon
 
-/-! ### The face coefficients (`NONSHORT_HIGH_RATIO_LOWER_FACE` §1) -/
+/-! ### The face coefficients -/
 
-/-- `C_0(x)` of `NONSHORT_HIGH_RATIO_LOWER_FACE` §1 (`t = 3/8`, `k₀ = 261/256`). -/
+/-- The coefficient `C_0(x)` of the face residual (`t = 3/8`, `k₀ = 261/256`). -/
 noncomputable def hrlCF0 (x : ℝ) : ℝ :=
   -(74732415 / 65536) * x + (1238140495 / 262144) * x ^ (2 : ℕ) + (635549755 / 262144) * x ^ (3 : ℕ) - (2542125 / 256) * x ^ (4 : ℕ) - (4381125 / 512) * x ^ (5 : ℕ) - (3825 / 2) * x ^ (6 : ℕ)
 
-/-- `C_1(x)` of `NONSHORT_HIGH_RATIO_LOWER_FACE` §1 (`t = 3/8`, `k₀ = 261/256`). -/
+/-- The coefficient `C_1(x)` of the face residual (`t = 3/8`, `k₀ = 261/256`). -/
 noncomputable def hrlCF1 (x : ℝ) : ℝ :=
   -(44839449 / 65536) + (591967515 / 262144) * x + (16856367297 / 524288) * x ^ (2 : ℕ) - (2481472989 / 524288) * x ^ (3 : ℕ) - (3434657649 / 32768) * x ^ (4 : ℕ) - (105946215 / 1024) * x ^ (5 : ℕ) - (2167215 / 64) * x ^ (6 : ℕ) - 1965 * x ^ (7 : ℕ)
 
-/-- `C_2(x)` of `NONSHORT_HIGH_RATIO_LOWER_FACE` §1 (`t = 3/8`, `k₀ = 261/256`). -/
+/-- The coefficient `C_2(x)` of the face residual (`t = 3/8`, `k₀ = 261/256`). -/
 noncomputable def hrlCF2 (x : ℝ) : ℝ :=
   (145359519 / 131072) + (6313406737 / 524288) * x + (10322714837 / 524288) * x ^ (2 : ℕ) - (11554797201 / 65536) * x ^ (3 : ℕ) - (31332968633 / 65536) * x ^ (4 : ℕ) - (116601189 / 256) * x ^ (5 : ℕ) - (24615003 / 128) * x ^ (6 : ℕ) - 33540 * x ^ (7 : ℕ) - 2448 * x ^ (8 : ℕ)
 
-/-- `C_3(x)` of `NONSHORT_HIGH_RATIO_LOWER_FACE` §1 (`t = 3/8`, `k₀ = 261/256`). -/
+/-- The coefficient `C_3(x)` of the face residual (`t = 3/8`, `k₀ = 261/256`). -/
 noncomputable def hrlCF3 (x : ℝ) : ℝ :=
   (10753107 / 8192) - (264165151 / 65536) * x - (19730788975 / 262144) * x ^ (2 : ℕ) - (100902544067 / 262144) * x ^ (3 : ℕ) - (3063148985 / 4096) * x ^ (4 : ℕ) - (1418453067 / 2048) * x ^ (5 : ℕ) - (20825019 / 64) * x ^ (6 : ℕ) - (146475 / 2) * x ^ (7 : ℕ) - 6528 * x ^ (8 : ℕ)
 
-/-- `C_4(x)` of `NONSHORT_HIGH_RATIO_LOWER_FACE` §1 (`t = 3/8`, `k₀ = 261/256`). -/
+/-- The coefficient `C_4(x)` of the face residual (`t = 3/8`, `k₀ = 261/256`). -/
 noncomputable def hrlCF4 (x : ℝ) : ℝ :=
   -(144402831 / 65536) - (7396491861 / 262144) * x - (3879209205 / 32768) * x ^ (2 : ℕ) - (84147940983 / 262144) * x ^ (3 : ℕ) - (16553778615 / 32768) * x ^ (4 : ℕ) - (460321809 / 1024) * x ^ (5 : ℕ) - (14389761 / 64) * x ^ (6 : ℕ) - (464265 / 8) * x ^ (7 : ℕ) - 5712 * x ^ (8 : ℕ)
 
-/-- `C_5(x)` of `NONSHORT_HIGH_RATIO_LOWER_FACE` §1 (`t = 3/8`, `k₀ = 261/256`). -/
+/-- The coefficient `C_5(x)` of the face residual (`t = 3/8`, `k₀ = 261/256`). -/
 noncomputable def hrlCF5 (x : ℝ) : ℝ :=
   -(127147563 / 65536) - (4463664003 / 262144) * x - (28149980355 / 524288) * x ^ (2 : ℕ) - (56966436693 / 524288) * x ^ (3 : ℕ) - (4717837395 / 32768) * x ^ (4 : ℕ) - (246960519 / 2048) * x ^ (5 : ℕ) - (7970421 / 128) * x ^ (6 : ℕ) - (140175 / 8) * x ^ (7 : ℕ) - 1836 * x ^ (8 : ℕ)
 
-/-- `C_6(x)` of `NONSHORT_HIGH_RATIO_LOWER_FACE` §1 (`t = 3/8`, `k₀ = 261/256`). -/
+/-- The coefficient `C_6(x)` of the face residual (`t = 3/8`, `k₀ = 261/256`). -/
 noncomputable def hrlCF6 (x : ℝ) : ℝ :=
   -(26376921 / 131072) - (746579511 / 524288) * x - (1484996355 / 524288) * x ^ (2 : ℕ) - (233133111 / 65536) * x ^ (3 : ℕ) - (208980465 / 65536) * x ^ (4 : ℕ) - (1996137 / 1024) * x ^ (5 : ℕ) - (67263 / 64) * x ^ (6 : ℕ) - (1575 / 4) * x ^ (7 : ℕ) - 51 * x ^ (8 : ℕ)
 
@@ -60,7 +59,7 @@ noncomputable def hrlCF6 (x : ℝ) : ℝ :=
 noncomputable def hrlP (x y : ℝ) : ℝ :=
   hrlCF0 x * y ^ (0 : ℕ) + hrlCF1 x * y ^ (1 : ℕ) + hrlCF2 x * y ^ (2 : ℕ) + hrlCF3 x * y ^ (3 : ℕ) + hrlCF4 x * y ^ (4 : ℕ) + hrlCF5 x * y ^ (5 : ℕ) + hrlCF6 x * y ^ (6 : ℕ)
 
-/-- `R(x)` with `C₀ = -5xR/262144` (face note §3). -/
+/-- `R(x)` with `C₀ = -5xR/262144`. -/
 noncomputable def hrlRf (x : ℝ) : ℝ :=
   59785932 - 247628099 * x - 127109951 * x ^ (2 : ℕ) + 520627200 * x ^ (3 : ℕ) + 448627200 * x ^ (4 : ℕ) + 100270080 * x ^ (5 : ℕ)
 
@@ -244,7 +243,7 @@ theorem hrl_sb {s : ℝ} (h1 : 0 ≤ s) (h2 : s ≤ (61 / 420)) :
     | (have := l 7; norm_num at this ⊢; linarith) | (have := u 7; norm_num at this ⊢; linarith)
     | (have := l 8; norm_num at this ⊢; linarith) | (have := u 8; norm_num at this ⊢; linarith)
 
-/-- `F⁽⁹⁾ < 0` on `[17/60, 3/7]` (face note (F6)). -/
+/-- `F⁽⁹⁾ < 0` on `[17/60, 3/7]`. -/
 theorem hrl_F9_neg {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : lrhHorner hrlFL9 x < 0 := by
   obtain ⟨s, rfl⟩ : ∃ s, x = s + 17 / 60 := ⟨x - 17 / 60, by ring⟩
   have hs0 : 0 ≤ s := by linarith
@@ -290,7 +289,7 @@ theorem hrl_jet10 : 19 ≤ lrhHorner hrlFL1 (11 / 30) := by
 theorem hrl_jet11 : lrhHorner hrlFL1 (11 / 30) ≤ 21 := by
   simp only [hrlFL1, lrhHorner]; norm_num
 
-/-- **The line face** (face note §6): `F(x) = P(x, 467/960 - x) ≥ 13/4` on `[17/60, 3/7]`. -/
+/-- **The line face**: `F(x) = P(x, 467/960 - x) ≥ 13/4` on `[17/60, 3/7]`. -/
 theorem hrl_F_ge {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : 13 / 4 ≤ lrhHorner hrlFL0 x := by
   -- `F⁽⁸⁾` decreases, so `F⁽⁷⁾` (concave) is positive
   have a8 : ∀ u v, 17 / 60 ≤ u → u ≤ v → v ≤ 3 / 7 → lrhHorner hrlFL8 v ≤ lrhHorner hrlFL8 u :=
@@ -374,7 +373,7 @@ theorem hrl_F_ge {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : 13 / 4 ≤ 
     have := left (2 / 5) (by norm_num) le_rfl
     linarith
 
-/-- `C₀ > 20` on `[17/60, 3/7]` (face note (F4)): `R` is convex with `R < -5·10⁶` at both ends. -/
+/-- `C₀ > 20` on `[17/60, 3/7]`: `R` is convex with `R < -5·10⁶` at both ends. -/
 theorem hrl_CF0_gt {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : 20 < hrlCF0 x := by
   have hR2 : ∀ s, 17 / 60 ≤ s → s ≤ 3 / 7 → 0 ≤ lrhHorner hrlRL2 s := fun s h1 h2 => by
     simp only [hrlRL2, lrhHorner]; nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ s) (by linarith : (0 : ℝ) ≤ s)]
@@ -394,7 +393,7 @@ theorem hrl_CF0_gt {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : 20 < hrlC
   have : (20 : ℝ) * 262144 < 5 * x * 5000000 := by nlinarith
   rw [lt_div_iff₀ (by norm_num)]; nlinarith
 
-/-- `C₂ < 0` on `x ≥ 17/60` (face note §2): `-524288C₂` has positive Taylor coefficients at `17/60`. -/
+/-- `C₂ < 0` on `x ≥ 17/60`: `-524288C₂` has positive Taylor coefficients at `17/60`. -/
 theorem hrl_CF2_neg {x : ℝ} (h1 : 17 / 60 ≤ x) : hrlCF2 x < 0 := by
   obtain ⟨s, rfl⟩ : ∃ s, x = s + 17 / 60 := ⟨x - 17 / 60, by ring⟩
   have hs : 0 ≤ s := by linarith
@@ -418,8 +417,9 @@ theorem hrl_CF6_neg {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : hrlCF6 x
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := hrl_xb h1 h2
   unfold hrlCF6; linarith only [h1, l2, l3, l4, l5, l6, l7, l8]
 
-/-- **The terminal face** (`NONSHORT_HIGH_RATIO_LOWER_FACE` (F1)): `P(x, y) ≥ 13/4` for
-`17/60 ≤ x ≤ 3/7`, `0 ≤ y`, `y(1 + 4x) ≤ 1 - 2x`. -/
+/-- **The terminal face**: `P(x, y) ≥ 13/4` for `17/60 ≤ x ≤ 3/7`, `0 ≤ y`, `y(1 + 4x) ≤ 1 - 2x`.
+Since `y ≤ b = 467/960 - x` and `C₂, …, C₆ < 0`, `P(x, y)b ≥ (b - y)C₀ + yP(x, b)`, and both
+`C₀ > 20` and `P(x, b) ≥ 13/4`. -/
 theorem hrl_face {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 : 0 ≤ y)
     (hy : y * (1 + 4 * x) ≤ 1 - 2 * x) : 13 / 4 ≤ hrlP x y := by
   have c0 := hrl_CF0_gt h1 h2
@@ -433,7 +433,7 @@ theorem hrl_face {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 : 0 �
   obtain ⟨b, hb⟩ : ∃ b, b = 467 / 960 - x := ⟨_, rfl⟩
   rw [← hb] at hF
   have hb0 : 0 < b := by rw [hb]; linarith
-  -- `y ≤ b` (face note (F3))
+  -- `y ≤ b`
   have hyb : y ≤ b := by
     have : (1 - 2 * x) ≤ b * (1 + 4 * x) := by rw [hb]; nlinarith
     have h4 : 0 < 1 + 4 * x := by linarith

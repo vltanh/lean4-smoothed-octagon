@@ -5,8 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW3a
 /-!
 # Gate S4, hand proof W3 (b): the Casimir part of the ratio derivative
 
-`archive/lighter-proofs/SHORT_CASIMIR_RATIO_DERIVATIVE.md` §1, (4). With `S = 1 + x`,
-`X = x(x + 2)`, `M = S²(S² - S + 1)`, `E = S³(u - 1) + 3S - 1`, the Casimir
+With `S = 1 + x`, `X = x(x + 2)`, `M = S²(S² - S + 1)`, `E = S³(u - 1) + 3S - 1`, the Casimir
 `Γ = (4Mu - E²)/(16X²)` has the partial derivatives
 
 `Γ_x = ((4M_x u - 2EE_x)X - 4S(4Mu - E²))/(16X³)`, `Γ_u = (2M - ES³)/(8X²)`
@@ -15,19 +14,16 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW3a
 `757/1000 ≤ u ≤ 19/25`:
 
 * `Γ_x ≤ -17/2000`: `16X³(Γ_x + 17/2000) = -g₁(h)/625 + (2/25)(u - 19/25)G₁(h)
-  - 2S⁵(X - 2)(u - 19/25)²`, where `G₁ = 200X³Γ_xu(x, 19/25)` is the polynomial of
-  `SHORT_CASIMIR_BOUNDARY_DERIVATIVES.md` §1 and
+  - 2S⁵(X - 2)(u - 19/25)²`, where `G₁ = 200X³Γ_xu(x, 19/25)` is a polynomial in `h` and
   `g₁ = 72h⁷ + 1427h⁶ + 11862h⁵ + 51380h⁴ + 119190h³ + 138936h² + 63616h + 256`
   `= 10000X³(-Γ_x(x, 19/25) - 17/2000)`, `h = x - 2`, all coefficients positive;
-* `0 ≤ Γ_u ≤ 41/200`: `8X²Γ_u = 32X²/25 + P_Γ(h)/25 + (19/25 - u)S⁶` with the `P_Γ` of
-  `SHORT_CASIMIR_FIRST_DERIVATIVES.md` §2, and
+* `0 ≤ Γ_u ≤ 41/200`: `8X²Γ_u = 32X²/25 + P_Γ(h)/25 + (19/25 - u)S⁶` with a polynomial
+  `P_Γ` in `h`, and
   `8X²(41/200 - Γ_u) = g₂(h)/1000 + (u - 757/1000)S⁶`,
   `g₂ = 17813 - 73854h - 148965h² - 98540h³ - 30165h⁴ - 4374h⁵ - 243h⁶ > 0` for `h ≤ 1/6`.
 
-Route: the note bounds `Γ_x` by its corner value `Γ_x(2, 19/25) = -171/20000` through
-`Γ_xx < 0`; here the one-variable polynomial `g₁` gives the slightly weaker uniform bound
-`-17/2000` directly (the final margin of W3 absorbs the difference), and `Γ_u` is bounded at
-`u = 757/1000` by the one-variable `g₂` instead of the corner `x = 13/6`.
+Both bounds are one-variable signs in `h`: `g₁` gives the uniform bound `Γ_x ≤ -17/2000`, and
+`g₂` bounds `Γ_u` at `u = 757/1000`.
 
 ## Main API
 

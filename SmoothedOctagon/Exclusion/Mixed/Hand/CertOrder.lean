@@ -5,12 +5,11 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Bern
 /-!
 # Case M2 by hand: generated sign certificate for the reverse order face
 
-The polynomial `P(h, s)` of `MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION` (13)-(14)
-(`h = 1 - 2t`, `s = k - 1`, on the face `k = 2t + x`), positive on the domain (11)
-`1/5 < h < 1`, `0 ≤ s < 4/3`, `h + s > 1/4`, covered by the pieces
-`h ∈ [1/5, 1/4], s ∈ [1/4 - h, 4/3]` and `h ∈ [1/4, 1], s ∈ [0, 4/3]`. Bernstein-form
+The cleared polynomial `P(h, s)` of the reverse order face `k = 2t + x` (`h = 1 - 2t`,
+`s = k - 1`), positive on the domain `1/5 < h < 1`, `0 ≤ s < 4/3`, `h + s > 1/4`, covered by the
+pieces `h ∈ [1/5, 1/4], s ∈ [1/4 - h, 4/3]` and `h ∈ [1/4, 1], s ∈ [0, 4/3]`. Bernstein-form
 certificates of degree seven in `s` with univariate Bernstein bounds for the coefficients
-(generated; every identity is checked by `ring`). Route: in place of the hand estimates (15)-(18).
+(generated; every identity is checked by `ring`).
 
 ## Main API
 
@@ -21,7 +20,7 @@ certificates of degree seven in `s` with univariate Bernstein bounds for the coe
 
 namespace SmoothedOctagon
 
-/-- The order-face polynomial `P(h, s)` (`MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION` (13)). -/
+/-- The order-face polynomial `P(h, s)`. -/
 noncomputable def nhOP (h s : ℝ) : ℝ :=
   16 * s ^ 3 + 40 * s ^ 4 + 40 * s ^ 5 + 18 * s ^ 6 + 2 * s ^ 7 + 48 * h * s ^ 2 + 216 * h * s ^ 3 + 316 * h * s ^ 4 + 184 * h * s ^ 5 + 29 * h * s ^ 6 - 4 * h * s ^ 7 + 144 * h ^ 2 * s ^ 2 + 396 * h ^ 2 * s ^ 3 + 268 * h ^ 2 * s ^ 4 - 70 * h ^ 2 * s ^ 5 - 108 * h ^ 2 * s ^ 6 - 20 * h ^ 2 * s ^ 7 - 16 * h ^ 3 + 8 * h ^ 3 * s + 420 * h ^ 3 * s ^ 2 + 824 * h ^ 3 * s ^ 3 + 510 * h ^ 3 * s ^ 4 + 117 * h ^ 3 * s ^ 5 + 46 * h ^ 3 * s ^ 6 + 16 * h ^ 3 * s ^ 7 - 8 * h ^ 4 + 404 * h ^ 4 * s + 1718 * h ^ 4 * s ^ 2 + 2440 * h ^ 4 * s ^ 3 + 1643 * h ^ 4 * s ^ 4 + 638 * h ^ 4 * s ^ 5 + 136 * h ^ 4 * s ^ 6 + 6 * h ^ 4 * s ^ 7 + 152 * h ^ 5 + 1416 * h ^ 5 * s + 3455 * h ^ 5 * s ^ 2 + 3562 * h ^ 5 * s ^ 3 + 1833 * h ^ 5 * s ^ 4 + 471 * h ^ 5 * s ^ 5 + 39 * h ^ 5 * s ^ 6 + 404 * h ^ 6 + 2100 * h ^ 6 * s + 3498 * h ^ 6 * s ^ 2 + 2558 * h ^ 6 * s ^ 3 + 873 * h ^ 6 * s ^ 4 + 108 * h ^ 6 * s ^ 5 + 478 * h ^ 7 + 1677 * h ^ 7 * s + 1946 * h ^ 7 * s ^ 2 + 942 * h ^ 7 * s ^ 3 + 165 * h ^ 7 * s ^ 4 + 319 * h ^ 8 + 776 * h ^ 8 * s + 594 * h ^ 8 * s ^ 2 + 150 * h ^ 8 * s ^ 3 + 127 * h ^ 9 + 203 * h ^ 9 * s + 81 * h ^ 9 * s ^ 2 + 29 * h ^ 10 + 24 * h ^ 10 * s + 3 * h ^ 11
 

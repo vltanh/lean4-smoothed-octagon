@@ -7,19 +7,18 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenXDeriv
 /-!
 # S2 hand signs: the central x comparison
 
-`archive/lighter-proofs/SHORT_RATIO_CENTRAL_X.md`: on `13/6 ≤ x ≤ 12/5`, `1 ≤ a ≤ 4/3`, along the
-curve `b = b_+(x, a)`, `u = u_C(x, b)`, both duration-tangent tests `F₀(t)`, `F₁(t)` (`t ≥ 2`
-fixed) are nonincreasing in `x`, so they are at most their values at `x = 13/6` (§1 (4)-(6)).
+On `13/6 ≤ x ≤ 12/5`, `1 ≤ a ≤ 4/3`, along the curve `b = b_+(x, a)`, `u = u_C(x, b)`, both
+duration-tangent tests `F₀(t)`, `F₁(t)` (`t ≥ 2` fixed) are nonincreasing in `x`, so they are at
+most their values at `x = 13/6`.
 
 The total x-derivative of `F₀` is `R₀(u, u_x)` and that of `F₁` is `R₁(u, u_x) + φ(t)T_x`,
-`φ(t) = (t - 1)/t² - 1/4 ≤ 0`, `T_x = Z/(aB²) > 0` (`S2HandCenXDeriv`, (25), (28)). Both `R_i`
-are affine in `(u, u_x)` with positive coefficients `C`, `C_x` (`hl2cx_R0_aff`, (23)-(24)), so
-`u ≤ U`, `u_x ≤ V` (`S2HandCenXNorm`, (8)) give `R_i(u, u_x) ≤ R_i(U, V) < 0`
+`φ(t) = (t - 1)/t² - 1/4 ≤ 0`, `T_x = Z/(aB²) > 0` (`S2HandCenXDeriv`). Both `R_i`
+are affine in `(u, u_x)` with positive coefficients `C`, `C_x` (`hl2cx_R0_aff`), so
+`u ≤ U`, `u_x ≤ V` (`S2HandCenXNorm`) give `R_i(u, u_x) ≤ R_i(U, V) < 0`
 (`S2HandCenXSign`).
 
-Route: as in `S2HandCenXSign`, the signs of `R_i(U, V)`, `C`, `C_x` are proved on their exact
-cleared numerators by the termwise rule (35), instead of the note's degree-eight Taylor
-polynomials with a geometric remainder (§5-§6) and its shape bounds (14)-(24).
+The signs of `R_i(U, V)`, `C`, `C_x` are proved in `S2HandCenXSign` on their exact cleared
+numerators by a termwise bound of their monomials.
 
 ## Main API
 
@@ -34,8 +33,7 @@ namespace SmoothedOctagon
 
 open Real Set
 
-/-- **The total x-derivative of `F₀`** along `b = b_+(x, a)`, `u = u_C` (`SHORT_RATIO_CENTRAL_X`
-(25), (28)). -/
+/-- **The total x-derivative of `F₀`** along `b = b_+(x, a)`, `u = u_C`: `R₀(u, u_x)`. -/
 theorem hl2cx_F0_deriv {t a y : ℝ} (ht : t ≠ 0) (ha : a ≠ 0) (hB : a + hl2cbp y a ≠ 0)
     (hK0 : hl2cK y a ≠ 0) (hS : 1 + y ≠ 0) (hL : hl2cxLb y a ≠ 0) :
     HasDerivAt (fun z => hl2cF0 t z a (hl2cbp z a) (hsUC z (hl2cbp z a)))
@@ -58,8 +56,7 @@ theorem hl2cx_F0_deriv {t a y : ℝ} (ht : t ≠ 0) (ha : a ≠ 0) (hB : a + hl2
   unfold hl2cxR0 hl2cxDx
   ring
 
-/-- **The total x-derivative of `F₁`** along `b = b_+(x, a)`, `u = u_C` (`SHORT_RATIO_CENTRAL_X`
-(5)-(6), (25), (28)): `R₁ + φ(t)Z/(aB²)`. -/
+/-- **The total x-derivative of `F₁`** along `b = b_+(x, a)`, `u = u_C`: `R₁ + φ(t)Z/(aB²)`. -/
 theorem hl2cx_F1_deriv {t a y : ℝ} (ht : t ≠ 0) (ha : a ≠ 0) (hB : a + hl2cbp y a ≠ 0)
     (hK0 : hl2cK y a ≠ 0) (hS : 1 + y ≠ 0) (hL : hl2cxLb y a ≠ 0) :
     HasDerivAt (fun z => hl2cF1 t z a (hl2cbp z a) (hsUC z (hl2cbp z a)))
@@ -97,7 +94,8 @@ theorem hl2cx_pos {z a : ℝ} (hz : 13 / 6 ≤ z) (ha : 1 ≤ a) :
     have : 0 < z := by linarith
     positivity
 
-/-- **`G_x ≤ R₀(U, V) < 0`** (`SHORT_RATIO_CENTRAL_X` (4), (25), (28)). -/
+/-- **`G_x ≤ R₀(U, V) < 0`**: `R₀` is affine in `(u, u_x)` with positive coefficients, and
+`u ≤ U`, `u_x ≤ V`. -/
 theorem hl2cx_R0_nonpos {z a : ℝ} (hz : 13 / 6 ≤ z) (hz2 : z ≤ 12 / 5) (ha : 1 ≤ a)
     (ha2 : a ≤ 4 / 3) :
     hl2cxR0 a (hl2cxl a) (1 + z) (hl2cK z a) (a + hl2cbp z a) (hsDg z (hl2cbp z a) a)
@@ -119,7 +117,8 @@ theorem hl2cx_R0_nonpos {z a : ℝ} (hz : 13 / 6 ≤ z) (hz2 : z ≤ 12 / 5) (ha
   have h3 := neg_of_mul_neg_right hN (by positivity)
   linarith
 
-/-- **`H_x ≤ R₁(U, V) < 0`** (`SHORT_RATIO_CENTRAL_X` (4), (25), (28)). -/
+/-- **`H_x ≤ R₁(U, V) < 0`**: `R₁` is affine in `(u, u_x)` with positive coefficients, and
+`u ≤ U`, `u_x ≤ V`. -/
 theorem hl2cx_R1_nonpos {z a : ℝ} (hz : 13 / 6 ≤ z) (hz2 : z ≤ 12 / 5) (ha : 1 ≤ a)
     (ha2 : a ≤ 4 / 3) :
     hl2cxR1 a (hl2cxl a) (1 + z) (hl2cK z a) (a + hl2cbp z a) (hsDg z (hl2cbp z a) a)
@@ -142,7 +141,7 @@ theorem hl2cx_R1_nonpos {z a : ℝ} (hz : 13 / 6 ≤ z) (hz2 : z ≤ 12 / 5) (ha
   have h3 := neg_of_mul_neg_right hN (by positivity)
   linarith
 
-/-- **The x comparison** (`SHORT_RATIO_CENTRAL_X` (4)-(6)): along `b = b_+(x, a)`, `u = u_C`, both
+/-- **The x comparison**: along `b = b_+(x, a)`, `u = u_C`, both
 duration-tangent tests at `t ≥ 2` are at most their values at `x = 13/6`. -/
 theorem hl2c_xmono {t x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3)
     (ht : 2 ≤ t) (ht2 : t ≤ 8 / 3) :

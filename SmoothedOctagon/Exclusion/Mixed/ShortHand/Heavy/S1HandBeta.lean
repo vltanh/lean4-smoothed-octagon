@@ -5,13 +5,13 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandBase
 /-!
 # Gate S1 by hand: the outer `F₁` as a function of `B = α + β`
 
-`SHORT_OUTER_BETA` §§2-5 and `SHORT_OUTER_BETA_WIDE_NORM`: with `η = x - α`,
+With `η = x - α`,
 `D₀ = (α + 1)(2x + 1 - α)` the transport numerator is `D = D₀ - 2ηB`, so `w = w₀ + w₁B + w₂B²` is
 quadratic in `B` and
 `F₁ = Γ_* - c[A₀ + A₁B + α(7w₀ - 17/4)/B + ℓ(2B/(7α))] - g` (`hl1o_F1_B`), with the
 division coefficient `w₀ = (M + uD₀² - D₀J)/(49α⁴)` (the formal value at `β = -α`).
 The bracket `φ(B) = A₀ + A₁B + γ/B + ℓ(kB)` is convex when `2γ ≥ B` and `0 < kB ≤ 1`, by
-`ℓ'' ≥ -1/y²` (`SHORT_OUTER_BETA` (7)-(9)). Hence `β ↦ F₁` is concave (`hl1o_F1_bmin`) and its
+`ℓ'' ≥ -1/y²`. Hence `β ↦ F₁` is concave (`hl1o_F1_bmin`) and its
 increments are controlled by the right-end derivative (`hl1_phi_incr`).
 
 ## Main API
@@ -30,7 +30,7 @@ open Set Real
 /-- `D₀ = (α + 1)(2x + 1 - α)`, the value of `D` at `β = -α`. -/
 noncomputable def hl1oD0 (x a : ℝ) : ℝ := (a + 1) * (2 * x + 1 - a)
 
-/-- The division coefficient `w₀ = (M + uD₀² - D₀J)/(49α⁴)` (`SHORT_OUTER_BETA` (4)). -/
+/-- The division coefficient `w₀ = (M + uD₀² - D₀J)/(49α⁴)`. -/
 noncomputable def hl1ow0 (x a u : ℝ) : ℝ :=
   (hl1oM x a + u * hl1oD0 x a ^ 2 - hl1oD0 x a * hl1oJ x a u) / (49 * a ^ 4)
 
@@ -42,7 +42,8 @@ noncomputable def hl1oA0 (x a u : ℝ) : ℝ :=
 /-- `A₁ = 7αw₂ + (u - 1)/α + 4uη/(7α²) = 4ux(x - α)/(7α³) + (u - 1)/α`. -/
 noncomputable def hl1oA1 (x a u : ℝ) : ℝ := 4 * u * x * (x - a) / (7 * a ^ 3) + (u - 1) / a
 
-/-- **The `B`-form of `F₁`** (`SHORT_OUTER_BETA` (6)). -/
+/-- **The `B`-form of `F₁`**: `F₁ = Γ_* - c[A₀ + A₁B + α(7w₀ - 17/4)/B + ℓ(2B/(7α))] - g`,
+`B = α + β`. -/
 theorem hl1o_F1_B {x a b u : ℝ} (hx : 0 < x) (ha : 0 < a) (hab : 0 < a + b) :
     hh1oF1 x a b u = hh1oG x a u - 7 / 96 * (hl1oA0 x a u + hl1oA1 x a u * (a + b) +
       a * (7 * hl1ow0 x a u - 17 / 4) / (a + b) + hh1ell (2 / (7 * a) * (a + b))) - 9193 / 50000 := by
@@ -137,7 +138,7 @@ theorem hl1_phi_incr {p q γ k B1 B2 s t : ℝ} (hB1 : 0 < B1) (hk : 0 < k) (hkB
       linarith)
   linarith
 
-/-- **Concavity of `β ↦ F₁`** (`SHORT_OUTER_BETA` (3), `SHORT_OUTER_BETA_WIDE_NORM` (13)): if
+/-- **Concavity of `β ↦ F₁`**: if
 `2α(7w₀ - 17/4) ≥ α + β₂` and `2(α + β₂) ≤ 7α`, then `F₁(β) ≥ min (F₁(β₁), F₁(β₂))` on
 `[β₁, β₂]`, `α + β₁ > 0`. -/
 theorem hl1o_F1_bmin {x a b1 b b2 u : ℝ} (hx : 0 < x) (ha : 0 < a) (hb1 : 0 < a + b1)

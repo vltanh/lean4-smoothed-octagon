@@ -5,18 +5,18 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW1c
 /-!
 # W1, part d: `Φ_b < -9/500`, `Φ_u > -7/10` and the incoming upper value
 
-`archive/lighter-proofs/SHORT_CASIMIR_FIRST_DERIVATIVES.md` (4)-(6), (9), (10). On the containing
-rectangle (2):
+On the containing rectangle `2 ≤ x ≤ 13/6`, `1 ≤ a ≤ 22/19`, `x ≤ b ≤ 20x/19`, `3/4 ≤ u ≤ 19/25`:
 
 * `(R₀)_b` is affine in `u` with slope `1/a + 4η(S³ + K - 2D)/K² > 0`, and
-  `(R₀)_b(b) - (R₀)_b(x) = (b - x)(12η²/K² - (bx - a²)/(B²(a + x)²))` at `u = 3/4` (the note's
-  `(R₀)_{bb} > 0` in integrated form), with `12η²/K² ≥ 3/40 ≥ 1/20 ≥ (bx - a²)/(B²(a + x)²)`;
-  so `Φ_b ≤ Φ_b(x, a, x, 3/4)`, and (10) `-9/500 - Φ_b(x, a, x, 3/4) = P_b/(3500a(a + x)²K²)` with
-  the printed `P_b > 0` (monomial rule, `L_b > 2560`) gives `Φ_b < -9/500` (`hl46_w1_Pb_le`);
-* (9): `Γ_u - 4/25 = (P_Γ(h) + 25S⁶(19/25 - u))/(200X²) ≥ 0` and
+  `(R₀)_b(b) - (R₀)_b(x) = (b - x)(12η²/K² - (bx - a²)/(B²(a + x)²))` at `u = 3/4` (the
+  convexity `(R₀)_{bb} > 0` in integrated form), with
+  `12η²/K² ≥ 3/40 ≥ 1/20 ≥ (bx - a²)/(B²(a + x)²)`; so `Φ_b ≤ Φ_b(x, a, x, 3/4)`, and
+  `-9/500 - Φ_b(x, a, x, 3/4) = P_b/(3500a(a + x)²K²)` with the explicit polynomial `P_b > 0`
+  (monomial rule, lower bound `2560`) gives `Φ_b < -9/500` (`hl46_w1_Pb_le`);
+* `Γ_u - 4/25 = (P_Γ(h) + 25S⁶(19/25 - u))/(200X²) ≥ 0` and
   `(R₀)_u = B/a + C(1 - 2z) - 2z(1 - z) < 33/10 + (19/6)(41/50) - 3/25`, so `Φ_u > -7/10`
   (`hl46_w1_Pu_ge`);
-* (4), (5): on `b = x(1 + d)` the incoming upper value `ū` has
+* on `b = x(1 + d)` the incoming upper value `ū` has
   `u_d = (xd²(3(x - 1) + 2xd)/48 - xJ)/(x - 1 + xd)²`, `-9/500 ≤ u_d ≤ 0`, and
   `3/4 ≤ ū ≤ 19/25` (`hl46_w1_ubar`).
 
@@ -32,7 +32,7 @@ namespace SmoothedOctagon
 
 open Real
 
-/-- The printed polynomial `P_b(c, h)` of note (10). -/
+/-- The polynomial `P_b(c, h)` with `-9/500 - Φ_b(x, a, x, 3/4) = P_b/(3500a(a + x)²K²)`. -/
 noncomputable def hl46W1PbP (c h : ℝ) : ℝ :=
   -63 * c ^ 7 - 126 * c ^ 6 * h + 682 * c ^ 6 - 189 * c ^ 5 * h ^ 2 + 5986 * c ^ 5 * h +
     19655 * c ^ 5 + 248 * c ^ 4 * h ^ 3 - 1836 * c ^ 4 * h ^ 2 + 23280 * c ^ 4 * h +
@@ -55,7 +55,7 @@ theorem hl46_w1_PbP_pos {c h : ℝ} (hc0 : 0 ≤ c) (hc : c ≤ 3 / 19) (hh : 0 
     m 2 0, m 1 6, m 1 5, m 1 1, m 1 0, p 6 0, p 5 0, n 6 0, n 5 1, n 5 0, n 4 3, n 4 1, n 4 0,
     n 3 4, n 3 0, n 1 4, n 1 3, n 1 2, n 0 4, n 0 3, n 0 2, n 0 1]
 
-/-- The two lower faces of `Φ_b`, note (6). -/
+/-- The reduction of `Φ_b` to its lower faces `u = 3/4`, `b = x`. -/
 theorem hl46_w1_Pb_diff (x be al u : ℝ) (hx : 0 < x) (hal : 0 < al) (hbe : 0 < be) :
     hl46W1Pb x be al u - hl46W1Pb x x al (3 / 4) =
       -((u - 3 / 4) * (1 / al + 4 * (x - al) * ((1 + x) ^ 3 + (x * (x + 2) + al ^ 2) -
@@ -69,7 +69,7 @@ theorem hl46_w1_Pb_diff (x be al u : ℝ) (hx : 0 < x) (hal : 0 < al) (hbe : 0 <
   field_simp
   ring
 
-/-- Note (10). -/
+/-- `-9/500 - Φ_b(x, a, x, 3/4) = P_b(a - 1, x - 2)/(3500a(a + x)²K²)`. -/
 theorem hl46_w1_Pb_src {x al : ℝ} (hx : 0 < x) (hal : 0 < al) :
     (-9 / 500 - hl46W1Pb x x al (3 / 4)) * (3500 * al * (al + x) ^ 2 * (x * (x + 2) + al ^ 2) ^ 2) =
       hl46W1PbP (al - 1) (x - 2) := by
@@ -126,7 +126,7 @@ theorem hl46_w1_Pb_le {x be al u : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha 
     linarith
   linarith
 
-/-- Note (9): `Φ_u > -7/10` on the containing rectangle. -/
+/-- `Φ_u > -7/10` on the containing rectangle. -/
 theorem hl46_w1_Pu_ge {x be al u : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha : 1 ≤ al)
     (ha' : al ≤ 22 / 19) (hb : x ≤ be) (hb' : be ≤ 20 * x / 19) (hu' : u ≤ 19 / 25) :
     -7 / 10 ≤ hl46W1Pu x be al u := by
@@ -184,7 +184,7 @@ theorem hl46_w1_Pu_ge {x be al u : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha 
 
 /-! ### The incoming upper value on the curve -/
 
-/-- `u_d`, note (4). -/
+/-- `u_d`, the `d`-derivative of `ū(x, x(1 + d))`. -/
 noncomputable def hl46W1ud (x d : ℝ) : ℝ :=
   (x * d ^ 2 * (3 * (x - 1) + 2 * x * d) / 48 - x * (2 * (x - 1) ^ 3 / ((x + 1) * (35 * x + 13)))) /
     (x - 1 + x * d) ^ 2
@@ -206,7 +206,7 @@ theorem hl46_w1_ud_deriv {x d : ℝ} (hx : 1 < x) (hd : 0 ≤ d) :
   field_simp
   ring
 
-/-- Notes (4), (5) and the range of `ū`: `-9/500 ≤ u_d ≤ 0` and `3/4 ≤ ū ≤ 19/25`. -/
+/-- The range of `u_d` and of `ū`: `-9/500 ≤ u_d ≤ 0` and `3/4 ≤ ū ≤ 19/25`. -/
 theorem hl46_w1_ud_bounds {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d)
     (hd' : d ≤ 1 / 19) : -9 / 500 ≤ hl46W1ud x d ∧ hl46W1ud x d ≤ 0 := by
   have hZ : 0 < (x + 1) * (35 * x + 13) := by positivity

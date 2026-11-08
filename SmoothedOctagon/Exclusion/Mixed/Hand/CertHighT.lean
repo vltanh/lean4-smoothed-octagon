@@ -5,13 +5,12 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Bern
 /-!
 # Case M2 by hand: generated sign certificates for the high-ratio exclusion
 
-On the face `k = 7t²` (`MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION` §3), the cleared cubic
-`P = C₀ + C₁y + C₂y² + C₃y³` (`nhTC0`, …, `nhTC3`) has `C₀, C₁, C₃ > 0` on `2/5 ≤ t ≤ 1/2`, `1/7 ≤ x ≤ 1/3`, and on the four `x`-rows
-`[1/7, 1/5]`, `[1/5, 3/10]`, `[3/10, 8/25]`, `[8/25, 1/3]` the bounds `C₁ > b`, `C₂ > -M`,
-`C₃ > c` with `(b, M, c) = (9/10, 1, 20)`, `(3/2, 10, 26)`, `(17/10, 13, 38)`, `(3/2, 31/2, 41)`,
-all with `4bc > M²`. Bernstein certificates (generated;
-every identity is checked by `ring`). Route: in place of the coefficient monotonicity (10) and the
-interval table of §4.
+On the face `k = 7t²` of the high-ratio exclusion `t < 2/5`, the cleared cubic
+`P = C₀ + C₁y + C₂y² + C₃y³` (`nhTC0`, …, `nhTC3`) has `C₀, C₁, C₃ > 0` on `2/5 ≤ t ≤ 1/2`,
+`1/7 ≤ x ≤ 1/3`, and on the four `x`-rows `[1/7, 1/5]`, `[1/5, 3/10]`, `[3/10, 8/25]`,
+`[8/25, 1/3]` the bounds `C₁ > b`, `C₂ > -M`, `C₃ > c` with `(b, M, c) = (9/10, 1, 20)`,
+`(3/2, 10, 26)`, `(17/10, 13, 38)`, `(3/2, 31/2, 41)`, all with `4bc > M²`. Bernstein
+certificates (generated; every identity is checked by `ring`).
 
 ## Main API
 

@@ -6,19 +6,18 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Gap
 /-!
 # Case M2, forward successor by hand: the actual Casimir on the first-event stationary line
 
-`MIXED_NONSHORT_SMALL_GAP_HAND_EXCLUSION` §2 and `MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY`. In the
-normalized coordinates, the first-event root equation makes the diagonal at `d` an affine function
-of the outgoing norm `w`, `H_d(w) = (B/p)(Wv + Zw - S_d)` (`fhHd`, `Z = qB/W`, `S_d` the normalized
-cost derivative `fhSd`), and the actual squared Casimir is `Γ(w) = (4B²vw - H_d(w)²)/(16s²)`
-(`fhGam`, `s = k - t²`).
+In the normalized coordinates, the first-event root equation makes the diagonal at `d` an affine
+function of the outgoing norm `w`, `H_d(w) = (B/p)(Wv + Zw - S_d)` (`fhHd`, `Z = qB/W`, `S_d` the
+normalized cost derivative `fhSd`), and the actual squared Casimir is
+`Γ(w) = (4B²vw - H_d(w)²)/(16s²)` (`fhGam`, `s = k - t²`).
 
 ## Main API
 
 * `fh_window_cas`: `γ² = Γ(w_actual)`; `fh_window_wU`: `w_actual < w_U` (the central upper envelope
-  `fhwU`, `MIXED_NONSHORT_UPPER_ENVELOPE_GAP` Lemma 1); `fh_window_w34`: `w_actual ≥ 3/4`.
+  `fhwU`); `fh_window_w34`: `w_actual ≥ 3/4`.
 * `fh_gam_anti`: `Γ` decreases between two norms where `2v - eH_d/p ≤ 0`.
-* `fh_cas_slope`: **the stationary monotonicity** `2v - eH_d(w)/p < 0` for `w ≥ 3/4`
-  (`MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY` (5)), under `t ≥ 1/3`, `χ = pe ≥ 4/7`,
+* `fh_cas_slope`: **the stationary monotonicity** `2v - eH_d(w)/p < 0` for `w ≥ 3/4`,
+  under `t ≥ 1/3`, `χ = pe ≥ 4/7`,
   `t ≤ r ≤ p`, `j < 1/4` and the incoming floor.
 -/
 
@@ -46,8 +45,7 @@ noncomputable def fhwU (t x k v : ℝ) : ℝ :=
   (k ^ 2 - k * t + t ^ 2 + (k / t * (v - 1 + t ^ 2) + t * (2 - t)) * (x * (x + 2))
     + v * (x * (x + 2)) ^ 2) / (k + 2 * t * x + x ^ 2) ^ 2
 
-/-- **The actual squared Casimir on the stationary line** (`MIXED_NONSHORT_SMALL_GAP_HAND_EXCLUSION`
-(7)). -/
+/-- **The actual squared Casimir on the stationary line**: `γ² = Γ(w_actual)`. -/
 theorem fh_window_cas (W : M2Window) :
     m2Cas W.a W.u W.v W.h = fhGam W.nt W.nx W.nk W.nq W.v (Real.log W.nq) W.w := by
   obtain ⟨hT, ht, hx, hk, hq, ha, hc, hd, hK, hQ, hZ, hqd⟩ := fh_window_coords W
@@ -98,8 +96,9 @@ theorem fh_window_cas (W : M2Window) :
         ring
     _ = _ := by rw [hT4]; field_simp; ring
 
-/-- **The actual outgoing norm is below the central upper envelope**
-(`MIXED_NONSHORT_UPPER_ENVELOPE_GAP`, Lemma 1): `w_actual < w_U`. -/
+/-- **The actual outgoing norm is below the central upper envelope**: `w_actual < w_U`. The
+transported norm increases with the central incident norm, so `w ≤ w_U(b)`, and `w_U(b) < w_U(b*)`
+at the boundary margin. -/
 theorem fh_window_wU (W : M2Window) : W.w < fhwU W.nt W.nx W.nk W.v := by
   obtain ⟨hT, ht, hx, hk, hq, ha, hc, hd, hK, hQ, hZ, hqd⟩ := fh_window_coords W
   have ha0 := W.a_pos
@@ -173,9 +172,9 @@ theorem fh_gam_anti {t x k q v L w1 w2 : ℝ} (hB : 0 < k + 2 * t * x + x ^ 2) (
     mul_nonpos_of_nonneg_of_nonpos (by have := sub_nonneg.2 hw; positivity) (by linarith)
   linarith
 
-/-- The scalar core of the stationary monotonicity (`MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY`
-(11)): with `A = Z/p ∈ [15/11, 2]`, `χ ≥ 4/7`, `A > 2χ`, `v, w ≥ 3/4` and the floor bound
-`L ≥ 1 + χ - (1 - v)/χ`, the slope `2v - AL - A²(w - 1) - (1 - χ)` is negative. -/
+/-- The scalar core of the stationary monotonicity: with `A = Z/p ∈ [15/11, 2]`, `χ ≥ 4/7`,
+`A > 2χ`, `v, w ≥ 3/4` and the floor bound `L ≥ 1 + χ - (1 - v)/χ`, the slope
+`2v - AL - A²(w - 1) - (1 - χ)` is negative. -/
 theorem fh_slope_core {A χ v L w : ℝ} (hA0 : 15 / 11 ≤ A) (hA1 : A ≤ 2) (hχ : 4 / 7 ≤ χ)
     (hAχ : 2 * χ < A) (hv : 3 / 4 ≤ v) (hw : 3 / 4 ≤ w) (hL : 1 + χ - (1 - v) / χ ≤ L) :
     2 * v - A * L - A ^ 2 * (w - 1) - (1 - χ) < 0 := by
@@ -202,9 +201,8 @@ theorem fh_slope_core {A χ v L w : ℝ} (hA0 : 15 / 11 ≤ A) (hA1 : A ≤ 2) (
     by_contra hc; push Not at hc; nlinarith
   nlinarith
 
-/-- **The stationary monotonicity** (`MIXED_NONSHORT_FORWARD_CASIMIR_MONOTONICITY` (5)): on the
-small-gap domain, with `t ≤ r ≤ p` (`r = Z - p`), `χ = pq/W ≥ 4/7` and the incoming floor,
-`2v - eH_d(w)/p < 0` for every `w ≥ 3/4`. -/
+/-- **The stationary monotonicity**: on the small-gap domain, with `t ≤ r ≤ p` (`r = Z - p`),
+`χ = pq/W ≥ 4/7` and the incoming floor, `2v - eH_d(w)/p < 0` for every `w ≥ 3/4`. -/
 theorem fh_cas_slope {t x k q v w : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj0 : 0 < 2 * t + x - 1)
     (hj4 : 2 * t + x - 1 < 1 / 4) (hk : 1 ≤ k) (hq : 1 < q)
     (hr0 : t ≤ q * (k + 2 * t * x + x ^ 2) / (1 + x) - (t + x))

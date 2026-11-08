@@ -7,8 +7,7 @@ public import SmoothedOctagon.Exclusion.Mixed.Short.Centre
 /-!
 # Case M2, smaller-short side: the window data in the cover's coordinates
 
-`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION` §§1-5 (inventory E1 R1-R26). For the scalar data
-`D : M2Short` of a smaller-short window, `D.ss_pt` is the point
+For the scalar data `D : M2Short` of a smaller-short window, `D.ss_pt` is the point
 `(r, δ, α, ρ, v, E) = (a/(a + C), B/C - 1, A/a, a²/(a² + 4), v, E)` of the cover; its derived
 quantities are those of the window (`ss_pt_u`: the cover's `u` is the actual common turn norm,
 `ss_pt_ua`, `ss_pt_w`, `ss_pt_EL`, `ss_pt_gam`, ...).

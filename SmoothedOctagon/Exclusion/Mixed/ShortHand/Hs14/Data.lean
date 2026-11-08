@@ -15,7 +15,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Cap
 * `HsData.hs14_EL_cap`: `E_L ≤ 3q - J_A` at the actual outer root (`hs14_root_cap`).
 * `HsData.hs14_cap_data`: if every derivative ratio along the envelope path is at most `c`, i.e.
   `2ub + e ≤ 8c(1 - q)²(1 + τb)` for `b = λs - d`, `s ∈ [t₀, t]`, `e ≤ E_L` (with `1 + τb > 0`
-  available), then `Γ_*(q) - cR*_τ(q) ≤ Γ_actual` (`CORRECTED_ENVELOPE_CAP` (5)-(9)).
+  available), then `Γ_*(q) - cR*_τ(q) ≤ Γ_actual`.
 -/
 
 @[expose] public section
@@ -24,14 +24,14 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- `R*_τ(q) = Φ_p(q)` with `p = τq` (`ENVELOPE_SCALE_MONOTONICITY` (4), `hs_phi_eq`). -/
+/-- `R*_τ(q) = Φ_p(q)` with `p = τq` (`hs_phi_eq`). -/
 theorem hs14_Rs_phi {x be al u q τ : ℝ} (hq : 0 < q) (hτ : 0 < τ) :
     hsRs x be al u q τ = hsPhi x be al u (τ * q) 0 q := by
   rw [← hs_phi_eq (by positivity) hq]
   unfold hsRs
   rw [mul_div_cancel_right₀ τ hq.ne']
 
-/-- **The duration maximum** (`LOWER_RATIO_HAND_EXCLUSION` (6), `hs_dur_max`): for `q > 0` and
+/-- **The duration maximum** (`hs_dur_max`): for `q > 0` and
 `2 ≤ τ`, `τq ≤ r_A`, `R*_τ(q) ≤ max{R*_2(q), R*_2(q) + (r_A/q - 2)(w_*(q) - 3/4)}`. -/
 theorem hs14_Rs_dur {x be al u q τ : ℝ} (hq : 0 < q) (hτ : 2 ≤ τ)
     (hτT : τ * q ≤ hsRA al be) :
@@ -73,12 +73,13 @@ theorem hs14_q_pos : 0 < H.q := by
   have := H.hs14_lam_pos; have := H.one_le_al; have := H.rho_pos
   unfold HsData.q hsQ; positivity
 
-/-- `E_L ≤ 3q - J_A` at the actual outer root (`SHARP_LOW_RATIO_CORRECTED_CAP` (3)). -/
+/-- `E_L ≤ 3q - J_A` at the actual outer root (`hs14_root_cap`). -/
 theorem hs14_EL_cap : H.EL ≤ 3 * H.q - (m2U (hsRA H.al H.be) - H.u) / hsRA H.al H.be :=
   hs14_root_cap H.hs14_rA_pos H.hs14_rA_lt.le H.two_lt_τ.le H.hs14_q_pos H.τ_lt.le H.w_le H.root
 
-/-- **The corrected envelope cap for the actual data** (`CORRECTED_ENVELOPE_CAP` (5)-(9),
-inventory HS-S01 C15, HS-S4 R12). -/
+/-- **The corrected envelope cap for the actual data**: if every derivative ratio along the
+envelope path is at most `c`, then `Γ_*(q) - cR*_τ(q) ≤ Γ_actual` (`hs14_cap` in scale
+coordinates). -/
 theorem hs14_cap_data {c : ℝ}
     (hrat : ∀ s ∈ Icc (H.rho * (1 + H.x)) H.t, ∀ e ≤ H.EL,
       0 < 1 + H.τ * (hsLam H.al H.rho * s - hsLam H.al H.rho * H.rho * hsDg H.x H.be H.al) →

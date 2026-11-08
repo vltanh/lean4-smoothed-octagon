@@ -6,23 +6,23 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTInit
 /-!
 # Case M2, forward successor by hand: the low-`t` circuit increases in `h`
 
-`docs/lighter-proofs/NONSHORT_LOW_T_H_REDUCTION.md` (PR #2, branch `proof/lighter-signs`): on the
-low-`t` unit domain (H2) the circuit `S` satisfies `𝓗S = ∂_hS > 0` (H1) (`nlt_HS_pos`).
+On the low-`t` unit domain `1/4 ≤ h ≤ 1/3`, `1/30 ≤ j ≤ 5h/7`, `0 ≤ y`, `y(1 + 2j) ≤ h - j`, the
+circuit `S` satisfies `𝓗S = ∂_hS > 0` (`nlt_HS_pos`).
 
 With `u = j + 1/4`, `r = h - 1/4`, the jets `Pᵢ = 𝓗^{i+1}S(3/8, u, 1 + y)` (`nltP0`, `nltP1`, `nltP2`)
-and `𝓗⁴S ≥ 500000` give the cubic Taylor bound `𝓗S ≥ T(u, y, r)` (H4) (`nltT`, `nlt_taylor3`), and
-`T` increases in `r` (H5) since `P₁, P₂ > 0`. At `r₀ = max(0, A, B)` (H3) (`nltAA`, `nltBB`):
+and `𝓗⁴S ≥ 500000` give the cubic Taylor bound `𝓗S ≥ T(u, y, r)` (`nltT`, `nlt_taylor3`), and
+`T` increases in `r` since `P₁, P₂ > 0`. Let `A`, `B` be the values of `r` on the
+maximum-duration face and on the outer face (`nltAA`, `nltBB`); at `r₀ = max(0, A, B)`:
 
 * `r₀ = 0`: `T = P₀ ≥ 68`;
-* `r₀ = B`: `T_B` increases in `u` (H16)-(H19), and `T_B(3/7, y) = P₀(3/7, y)` (`nlt_TB_pos`);
-* `r₀ = A`: `f = ∂_uT_A` increases in `u` (H7)-(H11) and is positive at the left ends of the four
-  pieces (H12)-(H13), so `T_A` decreases to `A = 0` (where `T_A = P₀`) or to `u = 17/60` (H14)
+* `r₀ = B`: `T_B` increases in `u`, and `T_B(3/7, y) = P₀(3/7, y)` (`nlt_TB_pos`);
+* `r₀ = A`: `f = ∂_uT_A` increases in `u` and is positive at the left ends `u = 17/60, 1/3, 3/8,
+  2/5` of four pieces, so `T_A` decreases to `A = 0` (where `T_A = P₀`) or to `u = 17/60`
   (`nlt_TA_pos`).
 
-Route: the polynomials `T_A`, `T_B` are written by their coefficient lists in `u` (`nltTAL0`, …,
-`nltTBL0`, …) and differentiated by `nltDer`; the one-variable signs (H9)-(H10), (H13)-(H14) and
-(H16)-(H18) use termwise monomial bounds after a shift, in place of the notes' rounded polynomials
-and fourth-derivative arguments.
+The polynomials `T_A`, `T_B` are written by their coefficient lists in `u` (`nltTAL0`, …,
+`nltTBL0`, …) and differentiated by `nltDer`; the one-variable signs use termwise monomial bounds
+after a shift.
 
 ## Main API
 
@@ -44,14 +44,14 @@ noncomputable def nltP1 (u y : ℝ) : ℝ := nltE0 u + nltE1 u * y + nltE2 u * y
 /-- `P₂(u, y) = 𝓗³S(3/8, u, 1 + y)`. -/
 noncomputable def nltP2 (u y : ℝ) : ℝ := nltR0 u + nltR1 u * y + nltR2 u * y ^ 2 + nltR3 u * y ^ 3 + nltR4 u * y ^ 4 + nltR5 u * y ^ 5 + nltR6 u * y ^ 6
 
-/-- The cubic Taylor polynomial `T(u, y, r)` (H4). -/
+/-- The cubic Taylor polynomial `T(u, y, r)`. -/
 noncomputable def nltT (u y r : ℝ) : ℝ :=
   nltP0 u y + r * nltP1 u y + r ^ 2 / 2 * nltP2 u y + 250000 / 3 * r ^ 3
 
-/-- `A = (2u + 1/2)y + u - 1/2` (H3): the value of `r` on the maximum-duration face. -/
+/-- `A = (2u + 1/2)y + u - 1/2`: the value of `r` on the maximum-duration face. -/
 noncomputable def nltAA (u y : ℝ) : ℝ := (2 * u + 1 / 2) * y + u - 1 / 2
 
-/-- `B = (7u - 3)/5` (H3): the value of `r` on the outer face `j = 5h/7`. -/
+/-- `B = (7u - 3)/5`: the value of `r` on the outer face `j = 5h/7`. -/
 noncomputable def nltBB (u : ℝ) : ℝ := (7 * u - 3) / 5
 
 /-- The coefficients in `u` of the `y^0`-coefficient of `T_A(u, y) = T(u, y, A)`. -/
@@ -128,7 +128,7 @@ theorem nlt_TB_eq (u y : ℝ) : nltT u y (nltBB u) = lrhHorner nltTBL0 u + lrhHo
   unfold nltBB nltT nltP0 nltP1 nltP2 nltc0 nltE0 nltR0 nltc1 nltE1 nltR1 nltc2 nltE2 nltR2 nltc3 nltE3 nltR3 nltc4 nltE4 nltR4 nltc5 nltE5 nltR5 nltc6 nltE6 nltR6
   ring
 
-/-- `f(17/60, y)` (`NONSHORT_LOW_T_H_REDUCTION` (H12)-(H13)). -/
+/-- `f(17/60, y)`. -/
 noncomputable def nltTf0 (y : ℝ) : ℝ := -(189067602987059 / 12960000000) - (863472482267471057 / 13996800000000) * y + (345247434030947767 / 345600000000) * y ^ 2 + (1676344178235480701 / 777600000000) * y ^ 3 - (111542218618066560623 / 27993600000000) * y ^ 4 - (1690139489775707911 / 116640000000) * y ^ 5 - (14437903334035305763 / 1399680000000) * y ^ 6 - (10486537924083811 / 21870000000) * y ^ 7 + (218819204969 / 2109375) * y ^ 8
 
 /-- `nltTf0 > 0` on `[1/7, 9/32]`. -/
@@ -157,7 +157,7 @@ theorem nltTf0_pos {y : ℝ} (h1 : (1 / 7) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < nl
 theorem nlt_Tf0_eq (y : ℝ) : lrhHorner (nltDer nltTAL0) ((17 / 60)) + lrhHorner (nltDer nltTAL1) ((17 / 60)) * y + lrhHorner (nltDer nltTAL2) ((17 / 60)) * y ^ 2 + lrhHorner (nltDer nltTAL3) ((17 / 60)) * y ^ 3 + lrhHorner (nltDer nltTAL4) ((17 / 60)) * y ^ 4 + lrhHorner (nltDer nltTAL5) ((17 / 60)) * y ^ 5 + lrhHorner (nltDer nltTAL6) ((17 / 60)) * y ^ 6 + lrhHorner (nltDer nltTAL7) ((17 / 60)) * y ^ 7 + lrhHorner (nltDer nltTAL8) ((17 / 60)) * y ^ 8 = nltTf0 y := by
   simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, lrhHorner]; unfold nltTf0; ring
 
-/-- `f(1/3, y)` (`NONSHORT_LOW_T_H_REDUCTION` (H12)-(H13)). -/
+/-- `f(1/3, y)`. -/
 noncomputable def nltTf1 (y : ℝ) : ℝ := -(57347207 / 3456) + (14207375041 / 559872) * y + (44964461615 / 31104) * y ^ 2 + (163866466549 / 62208) * y ^ 3 - (1696801885331 / 279936) * y ^ 4 - (4085253960133 / 186624) * y ^ 5 - (4547921528399 / 279936) * y ^ 6 - (649091264443 / 559872) * y ^ 7 + (40043437 / 288) * y ^ 8
 
 /-- `nltTf1 > 0` on `[1/10, 9/32]`. -/
@@ -186,7 +186,7 @@ theorem nltTf1_pos {y : ℝ} (h1 : (1 / 10) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
 theorem nlt_Tf1_eq (y : ℝ) : lrhHorner (nltDer nltTAL0) ((1 / 3)) + lrhHorner (nltDer nltTAL1) ((1 / 3)) * y + lrhHorner (nltDer nltTAL2) ((1 / 3)) * y ^ 2 + lrhHorner (nltDer nltTAL3) ((1 / 3)) * y ^ 3 + lrhHorner (nltDer nltTAL4) ((1 / 3)) * y ^ 4 + lrhHorner (nltDer nltTAL5) ((1 / 3)) * y ^ 5 + lrhHorner (nltDer nltTAL6) ((1 / 3)) * y ^ 6 + lrhHorner (nltDer nltTAL7) ((1 / 3)) * y ^ 7 + lrhHorner (nltDer nltTAL8) ((1 / 3)) * y ^ 8 = nltTf1 y := by
   simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, lrhHorner]; unfold nltTf1; ring
 
-/-- `f(3/8, y)` (`NONSHORT_LOW_T_H_REDUCTION` (H12)-(H13)). -/
+/-- `f(3/8, y)`. -/
 noncomputable def nltTf2 (y : ℝ) : ℝ := -(3992152639 / 262144) + (1639082844005 / 12582912) * y + (16282036832083 / 8388608) * y ^ 2 + (19939497698075 / 6291456) * y ^ 3 - (72123188257463 / 8388608) * y ^ 4 - (4030800139625 / 131072) * y ^ 5 - (49061211085111 / 2097152) * y ^ 6 - (1089892292917 / 524288) * y ^ 7 + (5750717175 / 32768) * y ^ 8
 
 /-- `nltTf2 > 0` on `[1/13, 9/32]`. -/
@@ -215,7 +215,7 @@ theorem nltTf2_pos {y : ℝ} (h1 : (1 / 13) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
 theorem nlt_Tf2_eq (y : ℝ) : lrhHorner (nltDer nltTAL0) ((3 / 8)) + lrhHorner (nltDer nltTAL1) ((3 / 8)) * y + lrhHorner (nltDer nltTAL2) ((3 / 8)) * y ^ 2 + lrhHorner (nltDer nltTAL3) ((3 / 8)) * y ^ 3 + lrhHorner (nltDer nltTAL4) ((3 / 8)) * y ^ 4 + lrhHorner (nltDer nltTAL5) ((3 / 8)) * y ^ 5 + lrhHorner (nltDer nltTAL6) ((3 / 8)) * y ^ 6 + lrhHorner (nltDer nltTAL7) ((3 / 8)) * y ^ 7 + lrhHorner (nltDer nltTAL8) ((3 / 8)) * y ^ 8 = nltTf2 y := by
   simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, lrhHorner]; unfold nltTf2; ring
 
-/-- `f(2/5, y)` (`NONSHORT_LOW_T_H_REDUCTION` (H12)-(H13)). -/
+/-- `f(2/5, y)`. -/
 noncomputable def nltTf3 (y : ℝ) : ℝ := -(383235073981 / 30000000) + (63359240015503 / 300000000) * y + (346361941782133 / 150000000) * y ^ 2 + (1069605737483113 / 300000000) * y ^ 3 - (1588656570673987 / 150000000) * y ^ 4 - (150339126748113 / 4000000) * y ^ 5 - (289096484049999 / 10000000) * y ^ 6 - (2265298149147 / 800000) * y ^ 7 + (251164949061 / 1250000) * y ^ 8
 
 /-- `nltTf3 > 0` on `[1/19, 9/32]`. -/
@@ -244,35 +244,35 @@ theorem nltTf3_pos {y : ℝ} (h1 : (1 / 19) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
 theorem nlt_Tf3_eq (y : ℝ) : lrhHorner (nltDer nltTAL0) ((2 / 5)) + lrhHorner (nltDer nltTAL1) ((2 / 5)) * y + lrhHorner (nltDer nltTAL2) ((2 / 5)) * y ^ 2 + lrhHorner (nltDer nltTAL3) ((2 / 5)) * y ^ 3 + lrhHorner (nltDer nltTAL4) ((2 / 5)) * y ^ 4 + lrhHorner (nltDer nltTAL5) ((2 / 5)) * y ^ 5 + lrhHorner (nltDer nltTAL6) ((2 / 5)) * y ^ 6 + lrhHorner (nltDer nltTAL7) ((2 / 5)) * y ^ 7 + lrhHorner (nltDer nltTAL8) ((2 / 5)) * y ^ 8 = nltTf3 y := by
   simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, lrhHorner]; unfold nltTf3; ring
 
-/-- The `z^0`-jet of `∂_u f` at `u = 1/4 + z` (`NONSHORT_LOW_T_H_REDUCTION` (H8)). -/
+/-- The `z^0`-jet of `∂_u f` at `u = 1/4 + z`. -/
 noncomputable def nltJ0 (y : ℝ) : ℝ :=
   -(85655269 / 768) + (3126835277 / 3072) * y + (38999517259 / 6144) * y ^ 2 + (3357334927 / 512) * y ^ 3 - (155306828053 / 6144) * y ^ 4 - (184515278499 / 2048) * y ^ 5 - (4516495117 / 64) * y ^ 6 - (399650479 / 64) * y ^ 7 + (16929375 / 32) * y ^ 8
 
-/-- The `z^1`-jet of `∂_u f` at `u = 1/4 + z` (`NONSHORT_LOW_T_H_REDUCTION` (H8)). -/
+/-- The `z^1`-jet of `∂_u f` at `u = 1/4 + z`. -/
 noncomputable def nltJ1 (y : ℝ) : ℝ :=
   (133705125 / 128) + (1305556149 / 128) * y + (17602707453 / 512) * y ^ 2 + (10467260171 / 256) * y ^ 3 - (106068972927 / 512) * y ^ 4 - (198549592863 / 256) * y ^ 5 - (83218058445 / 128) * y ^ 6 - (763296675 / 8) * y ^ 7 + (42742413 / 16) * y ^ 8
 
-/-- The `z^2`-jet of `∂_u f` at `u = 1/4 + z` (`NONSHORT_LOW_T_H_REDUCTION` (H8)). -/
+/-- The `z^2`-jet of `∂_u f` at `u = 1/4 + z`. -/
 noncomputable def nltJ2 (y : ℝ) : ℝ :=
   (9874107 / 4) + (477341415 / 16) * y + (4347934533 / 32) * y ^ 2 + (1256712285 / 8) * y ^ 3 - (31650491913 / 32) * y ^ 4 - (98795578155 / 32) * y ^ 5 - 2490829701 * y ^ 6 - (13996998405 / 32) * y ^ 7 + (21806217 / 4) * y ^ 8
 
-/-- The `z^3`-jet of `∂_u f` at `u = 1/4 + z` (`NONSHORT_LOW_T_H_REDUCTION` (H8)). -/
+/-- The `z^3`-jet of `∂_u f` at `u = 1/4 + z`. -/
 noncomputable def nltJ3 (y : ℝ) : ℝ :=
   6180660 + (163202595 / 2) * y + (1404269535 / 4) * y ^ 2 + (933288745 / 4) * y ^ 3 - (19139951175 / 8) * y ^ 4 - (12119687955 / 2) * y ^ 5 - (9097406775 / 2) * y ^ 6 - 833758770 * y ^ 7 + 6096900 * y ^ 8
 
-/-- The `z^4`-jet of `∂_u f` at `u = 1/4 + z` (`NONSHORT_LOW_T_H_REDUCTION` (H8)). -/
+/-- The `z^4`-jet of `∂_u f` at `u = 1/4 + z`. -/
 noncomputable def nltJ4 (y : ℝ) : ℝ :=
   8032875 + (390864435 / 4) * y + (3165902505 / 8) * y ^ 2 + (367020225 / 2) * y ^ 3 - (19733227695 / 8) * y ^ 4 - (44550777975 / 8) * y ^ 5 - 3939806790 * y ^ 6 - (1420536135 / 2) * y ^ 7 + 4297860 * y ^ 8
 
-/-- The `z^5`-jet of `∂_u f` at `u = 1/4 + z` (`NONSHORT_LOW_T_H_REDUCTION` (H8)). -/
+/-- The `z^5`-jet of `∂_u f` at `u = 1/4 + z`. -/
 noncomputable def nltJ5 (y : ℝ) : ℝ :=
   3089646 + 40777548 * y + (371707077 / 2) * y ^ 2 + 123635673 * y ^ 3 - (1939232631 / 2) * y ^ 4 - 2179444701 * y ^ 5 - 1491518322 * y ^ 6 - 254376276 * y ^ 7 + 2017008 * y ^ 8
 
-/-- The `z^6`-jet of `∂_u f` at `u = 1/4 + z` (`NONSHORT_LOW_T_H_REDUCTION` (H8)). -/
+/-- The `z^6`-jet of `∂_u f` at `u = 1/4 + z`. -/
 noncomputable def nltJ6 (y : ℝ) : ℝ :=
   239904 + 5870872 * y + 32315892 * y ^ 2 + 28311696 * y ^ 3 - 139971244 * y ^ 4 - 319873092 * y ^ 5 - 213077536 * y ^ 6 - 34071184 * y ^ 7 + 411264 * y ^ 8
 
-/-- The `z^7`-jet of `∂_u f` at `u = 1/4 + z` (`NONSHORT_LOW_T_H_REDUCTION` (H8)). -/
+/-- The `z^7`-jet of `∂_u f` at `u = 1/4 + z`. -/
 noncomputable def nltJ7 (y : ℝ) : ℝ :=
   308448 * y + 947376 * y ^ 2 - 1674432 * y ^ 3 - 9848304 * y ^ 4 - 14100480 * y ^ 5 - 8372160 * y ^ 6 - 1762560 * y ^ 7
 
@@ -282,7 +282,7 @@ theorem nlt_g_jet (z y : ℝ) : lrhHorner (nltDer (nltDer nltTAL0)) (1 / 4 + z) 
   unfold nltJ0 nltJ1 nltJ2 nltJ3 nltJ4 nltJ5 nltJ6 nltJ7
   ring
 
-/-- A jet sign (`NONSHORT_LOW_T_H_REDUCTION` (H9)). -/
+/-- A jet sign: `J_1`. -/
 noncomputable def nltJb1 (y : ℝ) : ℝ := nltJ1 y
 
 /-- `nltJb1 > 0` on `[1/19, 9/32]`. -/
@@ -308,7 +308,7 @@ theorem nltJb1_pos {y : ℝ} (h1 : (1 / 19) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A jet sign (`NONSHORT_LOW_T_H_REDUCTION` (H9)). -/
+/-- A jet sign: `J_2`. -/
 noncomputable def nltJb2 (y : ℝ) : ℝ := nltJ2 y
 
 /-- `nltJb2 > 0` on `[1/19, 9/32]`. -/
@@ -334,7 +334,7 @@ theorem nltJb2_pos {y : ℝ} (h1 : (1 / 19) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A jet sign (`NONSHORT_LOW_T_H_REDUCTION` (H9)). -/
+/-- A jet sign: `J_3`. -/
 noncomputable def nltJb3 (y : ℝ) : ℝ := nltJ3 y
 
 /-- `nltJb3 > 0` on `[1/19, 9/32]`. -/
@@ -360,7 +360,7 @@ theorem nltJb3_pos {y : ℝ} (h1 : (1 / 19) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A jet sign (`NONSHORT_LOW_T_H_REDUCTION` (H9)). -/
+/-- A jet sign: `J_4`. -/
 noncomputable def nltJb4 (y : ℝ) : ℝ := nltJ4 y
 
 /-- `nltJb4 > 0` on `[1/19, 9/32]`. -/
@@ -386,7 +386,7 @@ theorem nltJb4_pos {y : ℝ} (h1 : (1 / 19) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A jet sign (`NONSHORT_LOW_T_H_REDUCTION` (H9)). -/
+/-- A jet sign: `J_5`. -/
 noncomputable def nltJb5 (y : ℝ) : ℝ := nltJ5 y
 
 /-- `nltJb5 > 0` on `[1/19, 9/32]`. -/
@@ -412,7 +412,7 @@ theorem nltJb5_pos {y : ℝ} (h1 : (1 / 19) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A jet sign (`NONSHORT_LOW_T_H_REDUCTION` (H9)). -/
+/-- A jet sign: `J_6`. -/
 noncomputable def nltJb6 (y : ℝ) : ℝ := nltJ6 y
 
 /-- `nltJb6 > 0` on `[1/19, 9/32]`. -/
@@ -438,7 +438,7 @@ theorem nltJb6_pos {y : ℝ} (h1 : (1 / 19) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A jet sign (`NONSHORT_LOW_T_H_REDUCTION` (H9)). -/
+/-- A jet sign: `J_7`. -/
 noncomputable def nltJb7 (y : ℝ) : ℝ := nltJ7 y
 
 /-- `nltJb7 > 0` on `[1/19, 9/32]`. -/
@@ -462,7 +462,7 @@ theorem nltJb7_pos {y : ℝ} (h1 : (1 / 19) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7]
 
 
-/-- The leading jet bound (`NONSHORT_LOW_T_H_REDUCTION` (H10)-(H11)). -/
+/-- The leading jet bound `J₀ + J₁/30`. -/
 noncomputable def nltJb0 (y : ℝ) : ℝ := nltJ0 y + nltJ1 y / 30
 
 /-- `nltJb0 > 0` on `[1/19, 9/32]`. -/
@@ -488,7 +488,7 @@ theorem nltJb0_pos {y : ℝ} (h1 : (1 / 19) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- `T_A(17/60, y)` (`NONSHORT_LOW_T_H_REDUCTION` (H14)). -/
+/-- `T_A(17/60, y)`. -/
 noncomputable def nltTq (y : ℝ) : ℝ := (2850256052094343 / 1555200000000) - (14986767725456749631 / 839808000000000) * y - (3643095336976133221 / 186624000000000) * y ^ 2 + (64447961101503848429 / 139968000000000) * y ^ 3 - (511850166184543236329 / 1679616000000000) * y ^ 4 - (7669519894759794287 / 4478976000000) * y ^ 5 - (3012099691707234173 / 2624400000000) * y ^ 6 - (199803439512859 / 8201250000) * y ^ 7 + (1344872325172 / 94921875) * y ^ 8
 
 /-- `nltTq > 0` on `[13/64, 9/32]`. -/
@@ -517,56 +517,56 @@ theorem nltTq_pos {y : ℝ} (h1 : (13 / 64) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
 theorem nlt_Tq_eq (y : ℝ) : lrhHorner nltTAL0 (17 / 60) + lrhHorner nltTAL1 (17 / 60) * y + lrhHorner nltTAL2 (17 / 60) * y ^ 2 + lrhHorner nltTAL3 (17 / 60) * y ^ 3 + lrhHorner nltTAL4 (17 / 60) * y ^ 4 + lrhHorner nltTAL5 (17 / 60) * y ^ 5 + lrhHorner nltTAL6 (17 / 60) * y ^ 6 + lrhHorner nltTAL7 (17 / 60) * y ^ 7 + lrhHorner nltTAL8 (17 / 60) * y ^ 8 = nltTq y := by
   simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, lrhHorner]; unfold nltTq; ring
 
-/-- `U_0(u)` of `NONSHORT_LOW_T_H_REDUCTION` (H15). -/
+/-- `U_0(u)`: the `u`-derivative of the `y^0`-coefficient of `T_B`. -/
 noncomputable def nltU0 (u : ℝ) : ℝ :=
   (61451961 / 800) - (244136781 / 400) * u + (288955339 / 400) * u ^ 2 + (178526227 / 400) * u ^ 3 + (30173563 / 80) * u ^ 4 + (17840823 / 10) * u ^ 5 + (22013397 / 25) * u ^ 6 + (1679328 / 25) * u ^ 7
 
 theorem nlt_U_eq0 (u : ℝ) : lrhHorner (nltDer nltTBL0) u = nltU0 u := by
   simp only [nltTBL0, nltDer, nltDerAux, lrhHorner]; unfold nltU0; ring
 
-/-- `U_1(u)` of `NONSHORT_LOW_T_H_REDUCTION` (H15). -/
+/-- `U_1(u)`: the `u`-derivative of the `y^1`-coefficient of `T_B`. -/
 noncomputable def nltU1 (u : ℝ) : ℝ :=
   -(110194151 / 1600) - (25291101 / 800) * u + (86262489 / 160) * u ^ 2 - (2486010049 / 800) * u ^ 3 + (3431817 / 160) * u ^ 4 + (1195862907 / 100) * u ^ 5 + (172971519 / 25) * u ^ 6 + (30269456 / 25) * u ^ 7 + (1889244 / 25) * u ^ 8
 
 theorem nlt_U_eq1 (u : ℝ) : lrhHorner (nltDer nltTBL1) u = nltU1 u := by
   simp only [nltTBL1, nltDer, nltDerAux, lrhHorner]; unfold nltU1; ring
 
-/-- `U_2(u)` of `NONSHORT_LOW_T_H_REDUCTION` (H15). -/
+/-- `U_2(u)`: the `u`-derivative of the `y^2`-coefficient of `T_B`. -/
 noncomputable def nltU2 (u : ℝ) : ℝ :=
   (40983299 / 600) + (709057637 / 400) * u - (963507471 / 800) * u ^ 2 - (354117588 / 25) * u ^ 3 - (1842852919 / 160) * u ^ 4 + (211620201 / 50) * u ^ 5 + (45000361 / 4) * u ^ 6 + (78674288 / 25) * u ^ 7 - (1754298 / 25) * u ^ 8
 
 theorem nlt_U_eq2 (u : ℝ) : lrhHorner (nltDer nltTBL2) u = nltU2 u := by
   simp only [nltTBL2, nltDer, nltDerAux, lrhHorner]; unfold nltU2; ring
 
-/-- `U_3(u)` of `NONSHORT_LOW_T_H_REDUCTION` (H15). -/
+/-- `U_3(u)`: the `u`-derivative of the `y^3`-coefficient of `T_B`. -/
 noncomputable def nltU3 (u : ℝ) : ℝ :=
   (4545323 / 150) + (837305953 / 800) * u + (2361568841 / 400) * u ^ 2 + (26286922649 / 800) * u ^ 3 - (1199783523 / 160) * u ^ 4 - (9587420751 / 100) * u ^ 5 - (530095573 / 10) * u ^ 6 - (197505008 / 25) * u ^ 7 - (2159136 / 5) * u ^ 8
 
 theorem nlt_U_eq3 (u : ℝ) : lrhHorner (nltDer nltTBL3) u = nltU3 u := by
   simp only [nltTBL3, nltDer, nltDerAux, lrhHorner]; unfold nltU3; ring
 
-/-- `U_4(u)` of `NONSHORT_LOW_T_H_REDUCTION` (H15). -/
+/-- `U_4(u)`: the `u`-derivative of the `y^4`-coefficient of `T_B`. -/
 noncomputable def nltU4 (u : ℝ) : ℝ :=
   -(69676949 / 800) - (568575099 / 200) * u + (289218753 / 40) * u ^ 2 + (3109324163 / 50) * u ^ 3 + (249052181 / 20) * u ^ 4 - (5777582229 / 50) * u ^ 5 - (294285411 / 4) * u ^ 6 - (302415336 / 25) * u ^ 7 - 404838 * u ^ 8
 
 theorem nlt_U_eq4 (u : ℝ) : lrhHorner (nltDer nltTBL4) u = nltU4 u := by
   simp only [nltTBL4, nltDer, nltDerAux, lrhHorner]; unfold nltU4; ring
 
-/-- `U_5(u)` of `NONSHORT_LOW_T_H_REDUCTION` (H15). -/
+/-- `U_5(u)`: the `u`-derivative of the `y^5`-coefficient of `T_B`. -/
 noncomputable def nltU5 (u : ℝ) : ℝ :=
   -(53679249 / 1600) - (1708508289 / 800) * u - (163305051 / 400) * u ^ 2 + (14966563273 / 800) * u ^ 3 + (1403903137 / 160) * u ^ 4 - (5140679427 / 200) * u ^ 5 - (761285903 / 50) * u ^ 6 - (52026284 / 25) * u ^ 7 - (539784 / 5) * u ^ 8
 
 theorem nlt_U_eq5 (u : ℝ) : lrhHorner (nltDer nltTBL5) u = nltU5 u := by
   simp only [nltTBL5, nltDer, nltDerAux, lrhHorner]; unfold nltU5; ring
 
-/-- `U_6(u)` of `NONSHORT_LOW_T_H_REDUCTION` (H15). -/
+/-- `U_6(u)`: the `u`-derivative of the `y^6`-coefficient of `T_B`. -/
 noncomputable def nltU6 (u : ℝ) : ℝ :=
   -(445233 / 80) - (1033998 / 25) * u - (10268763 / 400) * u ^ 2 + (17799707 / 200) * u ^ 3 + (9057747 / 40) * u ^ 4 + (3201168 / 25) * u ^ 5 + (2792174 / 25) * u ^ 6 + (923712 / 25) * u ^ 7
 
 theorem nlt_U_eq6 (u : ℝ) : lrhHorner (nltDer nltTBL6) u = nltU6 u := by
   simp only [nltTBL6, nltDer, nltDerAux, lrhHorner]; unfold nltU6; ring
 
-/-- A bound (H16) of `NONSHORT_LOW_T_H_REDUCTION`. -/
+/-- A coefficient bound for `∂_uT_B`: `U_0`. -/
 noncomputable def nltUb0 (u : ℝ) : ℝ := nltU0 u
 
 /-- `nltUb0 > 20000` on `[3/7, 41/84]`. -/
@@ -590,7 +590,7 @@ theorem nltUb0_pos {u : ℝ} (h1 : (3 / 7) ≤ u) (h2 : u ≤ (41 / 84)) : 20000
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7]
 
 
-/-- A bound (H16) of `NONSHORT_LOW_T_H_REDUCTION`. -/
+/-- A coefficient bound for `∂_uT_B`: `U_1`. -/
 noncomputable def nltUb1 (u : ℝ) : ℝ := nltU1 u
 
 /-- `nltUb1 > -20000` on `[3/7, 41/84]`. -/
@@ -616,7 +616,7 @@ theorem nltUb1_pos {u : ℝ} (h1 : (3 / 7) ≤ u) (h2 : u ≤ (41 / 84)) : (-200
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A bound (H16) of `NONSHORT_LOW_T_H_REDUCTION`. -/
+/-- A coefficient bound for `∂_uT_B`: `U_2`. -/
 noncomputable def nltUb2 (u : ℝ) : ℝ := nltU2 u
 
 /-- `nltUb2 > -1600000` on `[3/7, 41/84]`. -/
@@ -642,7 +642,7 @@ theorem nltUb2_pos {u : ℝ} (h1 : (3 / 7) ≤ u) (h2 : u ≤ (41 / 84)) : (-160
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A bound (H16) of `NONSHORT_LOW_T_H_REDUCTION`. -/
+/-- A coefficient bound for `∂_uT_B`: `U_3`. -/
 noncomputable def nltUb3 (u : ℝ) : ℝ := nltU3 u
 
 /-- `nltUb3 > 0` on `[3/7, 41/84]`. -/
@@ -668,7 +668,7 @@ theorem nltUb3_pos {u : ℝ} (h1 : (3 / 7) ≤ u) (h2 : u ≤ (41 / 84)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A bound (H16) of `NONSHORT_LOW_T_H_REDUCTION`. -/
+/-- A coefficient bound for `∂_uT_B`: `U_4`. -/
 noncomputable def nltUb4 (u : ℝ) : ℝ := nltU4 u
 
 /-- `nltUb4 > 0` on `[3/7, 41/84]`. -/
@@ -694,7 +694,7 @@ theorem nltUb4_pos {u : ℝ} (h1 : (3 / 7) ≤ u) (h2 : u ≤ (41 / 84)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A bound (H16) of `NONSHORT_LOW_T_H_REDUCTION`. -/
+/-- A coefficient bound for `∂_uT_B`: `U_5`. -/
 noncomputable def nltUb5 (u : ℝ) : ℝ := nltU5 u
 
 /-- `nltUb5 > 0` on `[3/7, 41/84]`. -/
@@ -720,7 +720,7 @@ theorem nltUb5_pos {u : ℝ} (h1 : (3 / 7) ≤ u) (h2 : u ≤ (41 / 84)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A bound (H16) of `NONSHORT_LOW_T_H_REDUCTION`. -/
+/-- A coefficient bound for `∂_uT_B`: `U_6`. -/
 noncomputable def nltUb6 (u : ℝ) : ℝ := nltU6 u
 
 /-- `nltUb6 > -20000` on `[3/7, 41/84]`. -/
@@ -744,7 +744,7 @@ theorem nltUb6_pos {u : ℝ} (h1 : (3 / 7) ≤ u) (h2 : u ≤ (41 / 84)) : (-200
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7]
 
 
-/-- `T` increases in `r ≥ 0` (H5) when `P₁, P₂ > 0`. -/
+/-- `T` increases in `r ≥ 0` when `P₁, P₂ > 0`. -/
 theorem nlt_T_mono {u y r r0 : ℝ} (h1 : 0 < nltP1 u y) (h2 : 0 < nltP2 u y) (hr0 : 0 ≤ r0)
     (hr : r0 ≤ r) : nltT u y r0 ≤ nltT u y r := by
   have e : nltT u y r - nltT u y r0 = (r - r0) * (nltP1 u y + (r + r0) / 2 * nltP2 u y
@@ -755,7 +755,7 @@ theorem nlt_T_mono {u y r r0 : ℝ} (h1 : 0 < nltP1 u y) (h2 : 0 < nltP2 u y) (h
       + 250000 / 3 * (r ^ 2 + r * r0 + r0 ^ 2)) := mul_nonneg (by linarith) (by linarith)
   linarith
 
-/-- The enlargement (I3) of `NONSHORT_LOW_T_INITIAL_DERIVATIVE`: `y(1 + 4u) ≤ 1 - 2u` implies
+/-- The enlargement of the domain of `nlt_P0_pos`: `y(1 + 4u) ≤ 1 - 2u` implies
 `y ≤ 3931/8640 - 8u/9` for `17/60 ≤ u ≤ 3/7`. -/
 theorem nlt_b_ge {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 3 / 7) (hy : y * (1 + 4 * u) ≤ 1 - 2 * u) :
     y ≤ 3931 / 8640 - 8 / 9 * u := by
@@ -768,7 +768,7 @@ theorem nlt_b_ge {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 3 / 7) (hy : y * (
   have := mul_lt_mul_of_pos_right hc h4
   nlinarith
 
-/-- `∂_u f ≥ 0` on `[17/60, 41/84] × [1/19, 9/32]` (`NONSHORT_LOW_T_H_REDUCTION` (H7)-(H11)). -/
+/-- `∂_u f ≥ 0` on `[17/60, 41/84] × [1/19, 9/32]`. -/
 theorem nlt_g_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 1 / 19 ≤ y)
     (hy2 : y ≤ 9 / 32) : 0 ≤ lrhHorner (nltDer (nltDer nltTAL0)) u + lrhHorner (nltDer (nltDer nltTAL1)) u * y + lrhHorner (nltDer (nltDer nltTAL2)) u * y ^ 2 + lrhHorner (nltDer (nltDer nltTAL3)) u * y ^ 3 + lrhHorner (nltDer (nltDer nltTAL4)) u * y ^ 4 + lrhHorner (nltDer (nltDer nltTAL5)) u * y ^ 5 + lrhHorner (nltDer (nltDer nltTAL6)) u * y ^ 6 + lrhHorner (nltDer (nltDer nltTAL7)) u * y ^ 7 + lrhHorner (nltDer (nltDer nltTAL8)) u * y ^ 8 := by
   obtain ⟨z, rfl⟩ : ∃ z, u = 1 / 4 + z := ⟨u - 1 / 4, by ring⟩
@@ -793,7 +793,7 @@ theorem nlt_g_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 1
   have k7 := mul_nonneg j7.le (pow_nonneg zz 7)
   linarith
 
-/-- `f = ∂_uT_A > 0` where `A ≥ 0` (`NONSHORT_LOW_T_H_REDUCTION` (H12)-(H13)). -/
+/-- `f = ∂_uT_A > 0` where `A ≥ 0`. -/
 theorem nlt_f_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 1 / 19 ≤ y)
     (hy2 : y ≤ 9 / 32) (hA : 1 - 2 * u ≤ y * (1 + 4 * u)) : 0 < lrhHorner (nltDer nltTAL0) u + lrhHorner (nltDer nltTAL1) u * y + lrhHorner (nltDer nltTAL2) u * y ^ 2 + lrhHorner (nltDer nltTAL3) u * y ^ 3 + lrhHorner (nltDer nltTAL4) u * y ^ 4 + lrhHorner (nltDer nltTAL5) u * y ^ 5 + lrhHorner (nltDer nltTAL6) u * y ^ 6 + lrhHorner (nltDer nltTAL7) u * y ^ 7 + lrhHorner (nltDer nltTAL8) u * y ^ 8 := by
   have hd : ∀ w, HasDerivAt (fun w => lrhHorner (nltDer nltTAL0) w + lrhHorner (nltDer nltTAL1) w * y + lrhHorner (nltDer nltTAL2) w * y ^ 2 + lrhHorner (nltDer nltTAL3) w * y ^ 3 + lrhHorner (nltDer nltTAL4) w * y ^ 4 + lrhHorner (nltDer nltTAL5) w * y ^ 5 + lrhHorner (nltDer nltTAL6) w * y ^ 6 + lrhHorner (nltDer nltTAL7) w * y ^ 7 + lrhHorner (nltDer nltTAL8) w * y ^ 8) (lrhHorner (nltDer (nltDer nltTAL0)) w + lrhHorner (nltDer (nltDer nltTAL1)) w * y + lrhHorner (nltDer (nltDer nltTAL2)) w * y ^ 2 + lrhHorner (nltDer (nltDer nltTAL3)) w * y ^ 3 + lrhHorner (nltDer (nltDer nltTAL4)) w * y ^ 4 + lrhHorner (nltDer (nltDer nltTAL5)) w * y ^ 5 + lrhHorner (nltDer (nltDer nltTAL6)) w * y ^ 6 + lrhHorner (nltDer (nltDer nltTAL7)) w * y ^ 7 + lrhHorner (nltDer (nltDer nltTAL8)) w * y ^ 8) w := fun w => (((((((((nlt_hasDerivAt_horner (nltDer nltTAL0) w).add ((nlt_hasDerivAt_horner (nltDer nltTAL1) w).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer nltTAL2) w).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer nltTAL3) w).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer nltTAL4) w).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer nltTAL5) w).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer nltTAL6) w).mul_const (y ^ 6))).add ((nlt_hasDerivAt_horner (nltDer nltTAL7) w).mul_const (y ^ 7))).add ((nlt_hasDerivAt_horner (nltDer nltTAL8) w).mul_const (y ^ 8)))
@@ -828,7 +828,7 @@ theorem nlt_f_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 1
     have := mono (2 / 5) (by norm_num) c3
     linarith
 
-/-- **The maximum-duration branch** (`NONSHORT_LOW_T_H_REDUCTION` §§2, 4): `T_A > 0` where `A ≥ 0`,
+/-- **The maximum-duration branch**: `T_A > 0` where `A ≥ 0`,
 `17/60 ≤ u ≤ 41/84`, `1/19 ≤ y ≤ 9/32`. -/
 theorem nlt_TA_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 1 / 19 ≤ y)
     (hy2 : y ≤ 9 / 32) (hA : 0 ≤ nltAA u y) : 0 < nltT u y (nltAA u y) := by
@@ -864,7 +864,7 @@ theorem nlt_TA_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 
     rw [← nlt_Tq_eq] at p
     linarith
 
-/-- **The outer branch** (`NONSHORT_LOW_T_H_REDUCTION` §§3, 4): `T_B > 0` for `3/7 ≤ u ≤ 41/84`,
+/-- **The outer branch**: `T_B > 0` for `3/7 ≤ u ≤ 41/84`,
 `0 ≤ y ≤ 2/31`. -/
 theorem nlt_TB_pos {u y : ℝ} (h1 : 3 / 7 ≤ u) (h2 : u ≤ 41 / 84) (hy0 : 0 ≤ y) (hy1 : y ≤ 2 / 31) :
     0 < nltT u y (nltBB u) := by
@@ -901,7 +901,7 @@ theorem nlt_TB_pos {u y : ℝ} (h1 : 3 / 7 ≤ u) (h2 : u ≤ 41 / 84) (hy0 : 0 
     rw [e]; unfold nltP0; linarith
   linarith
 
-/-- Case bounds for `y` in the three branches of `NONSHORT_LOW_T_H_REDUCTION` §4. -/
+/-- Case bounds for `y` in the three branches `r₀ = 0`, `r₀ = A`, `r₀ = B`. -/
 theorem nlt_case_y19 {u y : ℝ} (u1 : 17 / 60 ≤ u) (cA : 0 ≤ ((1 + 4 * u) * y - (1 - 2 * u)) / 2)
     (cAB : (7 * u - 3) / 5 ≤ ((1 + 4 * u) * y - (1 - 2 * u)) / 2) : 1 / 19 ≤ y := by
   by_contra hc; push Not at hc
@@ -920,7 +920,7 @@ theorem nlt_case_y231b {u y : ℝ} (u1 : 17 / 60 ≤ u) (u2 : u ≤ 41 / 84)
   by_contra hc; push Not at hc
   nlinarith [mul_pos (sub_pos.2 hc) (by linarith : (0 : ℝ) < 1 + 4 * u)]
 
-/-- **`𝓗S > 0`** (`NONSHORT_LOW_T_H_REDUCTION` (H1)) on the low-`t` unit domain (H2):
+/-- **`𝓗S > 0`** on the low-`t` unit domain:
 `1/4 ≤ h ≤ 1/3`, `1/30 ≤ j ≤ 5h/7`, `0 ≤ y`, `y(1 + 2j) ≤ h - j`. -/
 theorem nlt_HS_pos {h j y : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j1 : 1 / 30 ≤ j)
     (j2 : j ≤ 5 / 7 * h) (hy0 : 0 ≤ y) (hy : y * (1 + 2 * j) ≤ h - j) : 0 < lrhHorner (nltDer (nltL0 j)) h + lrhHorner (nltDer (nltL1 j)) h * y + lrhHorner (nltDer (nltL2 j)) h * y ^ 2 + lrhHorner (nltDer (nltL3 j)) h * y ^ 3 + lrhHorner (nltDer (nltL4 j)) h * y ^ 4 + lrhHorner (nltDer (nltL5 j)) h * y ^ 5 + lrhHorner (nltDer (nltL6 j)) h * y ^ 6 := by
@@ -934,7 +934,7 @@ theorem nlt_HS_pos {h j y : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j1 : 1 /
   have hAw : nltAA (j + 1 / 4) y = ((1 + 4 * (j + 1 / 4)) * y - (1 - 2 * (j + 1 / 4))) / 2 := by
     unfold nltAA; ring
   have hBw : nltBB (j + 1 / 4) = (7 * (j + 1 / 4) - 3) / 5 := rfl
-  -- the cubic Taylor bound (H4)
+  -- the cubic Taylor bound
   have hT : nltT (j + 1 / 4) y (h - 1 / 4) ≤ lrhHorner (nltDer (nltL0 j)) h + lrhHorner (nltDer (nltL1 j)) h * y + lrhHorner (nltDer (nltL2 j)) h * y ^ 2 + lrhHorner (nltDer (nltL3 j)) h * y ^ 3 + lrhHorner (nltDer (nltL4 j)) h * y ^ 4 + lrhHorner (nltDer (nltL5 j)) h * y ^ 5 + lrhHorner (nltDer (nltL6 j)) h * y ^ 6 := by
     have hd0 : ∀ s, HasDerivAt (fun s => lrhHorner (nltDer (nltL0 j)) s + lrhHorner (nltDer (nltL1 j)) s * y + lrhHorner (nltDer (nltL2 j)) s * y ^ 2 + lrhHorner (nltDer (nltL3 j)) s * y ^ 3 + lrhHorner (nltDer (nltL4 j)) s * y ^ 4 + lrhHorner (nltDer (nltL5 j)) s * y ^ 5 + lrhHorner (nltDer (nltL6 j)) s * y ^ 6) (lrhHorner (nltDer (nltDer (nltL0 j))) s + lrhHorner (nltDer (nltDer (nltL1 j))) s * y + lrhHorner (nltDer (nltDer (nltL2 j))) s * y ^ 2 + lrhHorner (nltDer (nltDer (nltL3 j))) s * y ^ 3 + lrhHorner (nltDer (nltDer (nltL4 j))) s * y ^ 4 + lrhHorner (nltDer (nltDer (nltL5 j))) s * y ^ 5 + lrhHorner (nltDer (nltDer (nltL6 j))) s * y ^ 6) s := fun s => (((((((nlt_hasDerivAt_horner (nltDer (nltL0 j)) s).add ((nlt_hasDerivAt_horner (nltDer (nltL1 j)) s).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer (nltL2 j)) s).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer (nltL3 j)) s).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer (nltL4 j)) s).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer (nltL5 j)) s).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer (nltL6 j)) s).mul_const (y ^ 6)))
     have hd1 : ∀ s, HasDerivAt (fun s => lrhHorner (nltDer (nltDer (nltL0 j))) s + lrhHorner (nltDer (nltDer (nltL1 j))) s * y + lrhHorner (nltDer (nltDer (nltL2 j))) s * y ^ 2 + lrhHorner (nltDer (nltDer (nltL3 j))) s * y ^ 3 + lrhHorner (nltDer (nltDer (nltL4 j))) s * y ^ 4 + lrhHorner (nltDer (nltDer (nltL5 j))) s * y ^ 5 + lrhHorner (nltDer (nltDer (nltL6 j))) s * y ^ 6) (lrhHorner (nltDer (nltDer (nltDer (nltL0 j)))) s + lrhHorner (nltDer (nltDer (nltDer (nltL1 j)))) s * y + lrhHorner (nltDer (nltDer (nltDer (nltL2 j)))) s * y ^ 2 + lrhHorner (nltDer (nltDer (nltDer (nltL3 j)))) s * y ^ 3 + lrhHorner (nltDer (nltDer (nltDer (nltL4 j)))) s * y ^ 4 + lrhHorner (nltDer (nltDer (nltDer (nltL5 j)))) s * y ^ 5 + lrhHorner (nltDer (nltDer (nltDer (nltL6 j)))) s * y ^ 6) s := fun s => (((((((nlt_hasDerivAt_horner (nltDer (nltDer (nltL0 j))) s).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL1 j))) s).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL2 j))) s).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL3 j))) s).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL4 j))) s).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL5 j))) s).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL6 j))) s).mul_const (y ^ 6)))

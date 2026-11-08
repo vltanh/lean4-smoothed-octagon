@@ -5,14 +5,15 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandBase
 /-!
 # S2 hand signs: the lower-shape terminal curve, definitions
 
-The exact-log terminal function of `archive/lighter-proofs/SHORT_RATIO_OUTER_TERMINAL_AF.md` on
-the curve `α = a_f(x) = (36x + 25)/84`, `c = c_+(x) = (24x + 51)/128`, `u = u_s`, in the
-coordinate `r = 1/a_f` (§2 (7)-(10)): with a constant multiplier `n ∈ {49/20, 63/25}`,
-`R_n = L_n + V A_n + Q_n + 1/Z + log(2Z/7)`, `V = u_s - 3/4 = 1/1200 + (2/75)F(85q² - 1)`
-(§3 (11)), `F = r(84 - 61r)/K`, `q = (84 - 61r)/(84 + 11r)`, `Z = J/(1152r)`,
-`K = 504 + 2493r - 2261r²`, `J = 504 + 3645r - 1109r²`; the numerators of `A_n`, `L_n`, `Q_n`
-are those of `SHORT_RATIO_OUTER_TERMINAL_ALGEBRA.md` §1. This file gives the definitions and
-the first two derivatives of every component and of `R_n`.
+The exact-log terminal function on the curve `α = a_f(x) = (36x + 25)/84`,
+`c = c_+(x) = (24x + 51)/128`, `u = u_s`, in the coordinate `r = 1/a_f`: with a constant
+multiplier `n ∈ {49/20, 63/25}`, the outer test is
+`R_n = L_n + V A_n + Q_n + 1/Z + log(2Z/7)`, `V = u_s - 3/4 = 1/1200 + (2/75)F(85q² - 1)`,
+`F = r(84 - 61r)/K`, `q = (84 - 61r)/(84 + 11r)`, `Z = J/(1152r)`,
+`K = 504 + 2493r - 2261r²`, `J = 504 + 3645r - 1109r²`, where `A_n = A/(C_A r²)`,
+`L_n = L/(C_L r²)` and `Q_n = Q/(q₀r + q₁)` have explicit polynomial numerators `A`, `L`, `Q`
+in `r`. This file gives the definitions and the first two derivatives of every component and of
+`R_n`.
 
 ## Main API
 
@@ -71,87 +72,87 @@ theorem hl2_hd_quad (p q k r : ℝ) :
   · funext s; ring
   · ring
 
-/-- `Asl` numerator (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The numerator of `A_n`, `n = 49/20`. -/
 noncomputable def hl2Asl (r : ℝ) : ℝ :=
   10553281375 * r ^ 6 - 103680325518 * r ^ 5 + 332580904767 * r ^ 4 - 411951691728 * r ^ 3 -
     142211039040 * r ^ 2 + 377902651392 * r + 53258010624
 
-/-- `Asl` first derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The first derivative of the numerator of `A_n`, `n = 49/20`. -/
 noncomputable def hl2Asl1 (r : ℝ) : ℝ :=
   63319688250 * r ^ 5 - 518401627590 * r ^ 4 + 1330323619068 * r ^ 3 - 1235855075184 * r ^ 2 -
     284422078080 * r + 377902651392
 
-/-- `Asl` second derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The second derivative of the numerator of `A_n`, `n = 49/20`. -/
 noncomputable def hl2Asl2 (r : ℝ) : ℝ :=
   316598441250 * r ^ 4 - 2073606510360 * r ^ 3 + 3990970857204 * r ^ 2 - 2471710150368 * r -
     284422078080
 
-/-- `Lsl` numerator (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The numerator of `L_n`, `n = 49/20`. -/
 noncomputable def hl2Lsl (r : ℝ) : ℝ :=
   8904843871 * r ^ 6 - 62623679118 * r ^ 5 + 267084640575 * r ^ 4 - 350015430096 * r ^ 3 +
     204186495168 * r ^ 2 - 60228790272 * r - 12290310144
 
-/-- `Lsl` first derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The first derivative of the numerator of `L_n`, `n = 49/20`. -/
 noncomputable def hl2Lsl1 (r : ℝ) : ℝ :=
   53429063226 * r ^ 5 - 313118395590 * r ^ 4 + 1068338562300 * r ^ 3 - 1050046290288 * r ^ 2 +
     408372990336 * r - 60228790272
 
-/-- `Lsl` second derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The second derivative of the numerator of `L_n`, `n = 49/20`. -/
 noncomputable def hl2Lsl2 (r : ℝ) : ℝ :=
   267145316130 * r ^ 4 - 1252473582360 * r ^ 3 + 3205015686900 * r ^ 2 - 2100092580576 * r +
     408372990336
 
-/-- `Qsl` numerator (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The numerator of `Q_n`, `n = 49/20`. -/
 noncomputable def hl2Qsl (r : ℝ) : ℝ :=
   250523 * r ^ 5 - 1486275 * r ^ 4 + 2522154 * r ^ 3 - 8748306 * r ^ 2 + 6114096 * r + 1016064
 
-/-- `Qsl` first derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The first derivative of the numerator of `Q_n`, `n = 49/20`. -/
 noncomputable def hl2Qsl1 (r : ℝ) : ℝ :=
   1252615 * r ^ 4 - 5945100 * r ^ 3 + 7566462 * r ^ 2 - 17496612 * r + 6114096
 
-/-- `Qsl` second derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The second derivative of the numerator of `Q_n`, `n = 49/20`. -/
 noncomputable def hl2Qsl2 (r : ℝ) : ℝ :=
   5010460 * r ^ 3 - 17835300 * r ^ 2 + 15132924 * r - 17496612
 
-/-- `Ash` numerator (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The numerator of `A_n`, `n = 63/25`. -/
 noncomputable def hl2Ash (r : ℝ) : ℝ :=
   1507611625 * r ^ 6 - 14811475074 * r ^ 5 + 47383333641 * r ^ 4 - 58001053104 * r ^ 3 -
     21418395840 * r ^ 2 + 53324199936 * r + 7608287232
 
-/-- `Ash` first derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The first derivative of the numerator of `A_n`, `n = 63/25`. -/
 noncomputable def hl2Ash1 (r : ℝ) : ℝ :=
   9045669750 * r ^ 5 - 74057375370 * r ^ 4 + 189533334564 * r ^ 3 - 174003159312 * r ^ 2 -
     42836791680 * r + 53324199936
 
-/-- `Ash` second derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The second derivative of the numerator of `A_n`, `n = 63/25`. -/
 noncomputable def hl2Ash2 (r : ℝ) : ℝ :=
   45228348750 * r ^ 4 - 296229501480 * r ^ 3 + 568600003692 * r ^ 2 - 348006318624 * r -
     42836791680
 
-/-- `Lsh` numerator (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The numerator of `L_n`, `n = 63/25`. -/
 noncomputable def hl2Lsh (r : ℝ) : ℝ :=
   1272120553 * r ^ 6 - 8946239874 * r ^ 5 + 38058322185 * r ^ 4 - 49565800368 * r ^ 3 +
     28885149504 * r ^ 2 - 8489650176 * r - 1755758592
 
-/-- `Lsh` first derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The first derivative of the numerator of `L_n`, `n = 63/25`. -/
 noncomputable def hl2Lsh1 (r : ℝ) : ℝ :=
   7632723318 * r ^ 5 - 44731199370 * r ^ 4 + 152233288740 * r ^ 3 - 148697401104 * r ^ 2 +
     57770299008 * r - 8489650176
 
-/-- `Lsh` second derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The second derivative of the numerator of `L_n`, `n = 63/25`. -/
 noncomputable def hl2Lsh2 (r : ℝ) : ℝ :=
   38163616590 * r ^ 4 - 178924797480 * r ^ 3 + 456699866220 * r ^ 2 - 297394802208 * r +
     57770299008
 
-/-- `Qsh` numerator (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The numerator of `Q_n`, `n = 63/25`. -/
 noncomputable def hl2Qsh (r : ℝ) : ℝ :=
   35789 * r ^ 5 - 212325 * r ^ 4 + 358662 * r ^ 3 - 1249758 * r ^ 2 + 863568 * r + 145152
 
-/-- `Qsh` first derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The first derivative of the numerator of `Q_n`, `n = 63/25`. -/
 noncomputable def hl2Qsh1 (r : ℝ) : ℝ :=
   178945 * r ^ 4 - 849300 * r ^ 3 + 1075986 * r ^ 2 - 2499516 * r + 863568
 
-/-- `Qsh` second derivative (`SHORT_RATIO_OUTER_TERMINAL_ALGEBRA` §1). -/
+/-- The second derivative of the numerator of `Q_n`, `n = 63/25`. -/
 noncomputable def hl2Qsh2 (r : ℝ) : ℝ :=
   715780 * r ^ 3 - 2547900 * r ^ 2 + 2151972 * r - 2499516
 
@@ -223,7 +224,7 @@ noncomputable def hl2Kc (r : ℝ) : ℝ := 504 + 2493 * r - 2261 * r ^ 2
 /-- `J = 504 + 3645r - 1109r²`, `Z = J/(1152r)`. -/
 noncomputable def hl2Jc (r : ℝ) : ℝ := 504 + 3645 * r - 1109 * r ^ 2
 
-/-- `F = r(84 - 61r)/K` (`TERMINAL_AF` (11)). -/
+/-- `F = r(84 - 61r)/K`. -/
 noncomputable def hl2Fc (r : ℝ) : ℝ := (84 * r - 61 * r ^ 2) / hl2Kc r
 
 noncomputable def hl2Fcd (r : ℝ) : ℝ :=
@@ -234,14 +235,14 @@ noncomputable def hl2Fcdd (r : ℝ) : ℝ :=
     2 * (2493 - 4522 * r) * ((84 - 122 * r) * hl2Kc r - (84 * r - 61 * r ^ 2) * (2493 - 4522 * r))) /
     hl2Kc r ^ 3
 
-/-- `q = (84 - 61r)/(84 + 11r)` (`TERMINAL_AF` (11)). -/
+/-- `q = (84 - 61r)/(84 + 11r)`. -/
 noncomputable def hl2qc (r : ℝ) : ℝ := (84 - 61 * r) / (84 + 11 * r)
 
 noncomputable def hl2qcd (r : ℝ) : ℝ := -6048 / (84 + 11 * r) ^ 2
 
 noncomputable def hl2qcdd (r : ℝ) : ℝ := 133056 / (84 + 11 * r) ^ 3
 
-/-- `V = u_s - 3/4 = 1/1200 + (2/75)F(85q² - 1)` (`TERMINAL_AF` (11)). -/
+/-- `V = u_s - 3/4 = 1/1200 + (2/75)F(85q² - 1)`. -/
 noncomputable def hl2Vc (r : ℝ) : ℝ := 1 / 1200 + 2 / 75 * hl2Fc r * (85 * hl2qc r ^ 2 - 1)
 
 noncomputable def hl2Vcd (r : ℝ) : ℝ :=
@@ -268,7 +269,7 @@ noncomputable def hl2Lgd (r : ℝ) : ℝ := (3645 - 2218 * r) / hl2Jc r - 1 / r
 noncomputable def hl2Lgdd (r : ℝ) : ℝ :=
   (-2218 * hl2Jc r - (3645 - 2218 * r) ^ 2) / hl2Jc r ^ 2 + 1 / r ^ 2
 
-/-- The terminal function `R_n` (`TERMINAL_AF` (9)) for numerators `As`, `Ls`, `Qs` with
+/-- The terminal function `R_n` for numerators `As`, `Ls`, `Qs` with
 denominators `CA r²`, `CL r²`, `q₀r + q₁`. -/
 noncomputable def hl2Rc (CA CL q0 q1 : ℝ) (As Ls Qs : ℝ → ℝ) (r : ℝ) : ℝ :=
   Ls r / (CL * r ^ 2) + hl2Vc r * (As r / (CA * r ^ 2)) + Qs r / (q0 * r + q1) + hl2Zi r + hl2Lg r

@@ -5,8 +5,7 @@ public import SmoothedOctagon.Exclusion.Forward.Scalar
 /-!
 # Case F: the edge function
 
-Monotonicity of the edge function `G` (GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET (5)-(8),
-HAND_FORWARD_LEMMAS (20)).
+Monotonicity and the rectangle inequality of the edge function `G`.
 
 ## Main API
 
@@ -40,7 +39,7 @@ theorem ff_le_of_deriv {f f' : ℝ → ℝ} {lo hi : ℝ} (hlh : lo ≤ hi)
     f lo ≤ f hi :=
   ff_monotoneOn_Icc hd h0 ⟨le_rfl, hlh⟩ ⟨hlh, le_rfl⟩ hlh
 
-/-- `∂G/∂b` (GLOBAL_STRUCTURE_FORWARD_MINIMUM_BUDGET). -/
+/-- `∂G/∂b`. -/
 noncomputable def ff_Gb (a b : ℝ) : ℝ :=
   3 * a - 2 * b * Real.log (a + b) - (a ^ 2 + b ^ 2) / (a + b) + b * Real.log (b ^ 2 + 4) +
     b ^ 3 / (b ^ 2 + 4)
@@ -124,8 +123,8 @@ theorem ff_Gb_mono_left {a a' b : ℝ} (ha : 0 < a) (hb : 0 < b) (haa : a ≤ a'
   · have hx : 0 < x := by linarith [hx.1]
     positivity
 
-/-- **The rectangle inequality** (HAND_FORWARD_LEMMAS (20)): for `x, y ≥ a > 0`,
-`G(x, y) ≥ G(x, a) + G(a, y) - G(a, a)`. -/
+/-- **The rectangle inequality**: for `x, y ≥ a > 0`, `G(x, y) ≥ G(x, a) + G(a, y) - G(a, a)`, since
+the mixed derivative `G_ab = 2(a² + ab + b²)/(a + b)²` is positive. -/
 theorem ff_G_rect {a x y : ℝ} (ha : 0 < a) (hx : a ≤ x) (hy : a ≤ y) :
     ff_G x a + ff_G a y - ff_G a a ≤ ff_G x y := by
   have := ff_le_of_deriv (f := fun t ↦ ff_G x t - ff_G a t) (f' := fun t ↦ ff_Gb x t - ff_Gb a t)

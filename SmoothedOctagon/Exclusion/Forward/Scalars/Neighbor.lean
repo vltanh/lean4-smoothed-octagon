@@ -6,9 +6,9 @@ public import SmoothedOctagon.Exclusion.Forward.Reduce
 /-!
 # Case F scalars: the neighbour residual
 
-`HAND_FORWARD_NEIGHBOR_INTEGRAL`, `HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND`, reduced by
-`HAND_FORWARD_LEMMAS` §1: the neighbour residual `𝓔 = αA - B - nF_{z/S}(h) - mF_{w/T}(T²/W)` is negative
-on the comparison domain with `w ≥ 4/3`.
+The neighbour residual `𝓔 = αA - B - nF_{z/S}(h) - mF_{w/T}(T²/W)` is negative on the comparison
+domain with `w ≥ 4/3`. Lowering the larger neighbour reduces this to two faces, the symmetric face
+`w = z ≥ 4/3` and the asymmetric face `w = 4/3 ≥ z`.
 
 ## Main API
 
@@ -31,8 +31,8 @@ open Real Set
 
 /-! ### The canonical form of the neighbour residual -/
 
-/-- Constant coefficient of `𝓔` (GLOBAL_FORWARD_NEIGHBOR_CONTRACTION (4)) as a canonical function of
-`h`, with `A`, `q`, `V = F_{w/T}(T²/W)` as atoms. -/
+/-- Constant coefficient of `𝓔` as a canonical function of `h`, with `A`, `q`, `V = F_{w/T}(T²/W)`
+as atoms. -/
 noncomputable def fs_N0 (U z A V q : ℝ) : ℝ :=
   -(1 + U) * z * A / (z ^ 2 + U) - 1 + z ^ 2 / (1 + z) - z ^ 3 / (z ^ 2 + U) +
     (1 + z) ^ 2 * (U - z) / (z ^ 2 + U) + (1 + U) ^ 2 * V / ((1 + z) * (z ^ 2 + U)) * q * z
@@ -64,7 +64,7 @@ theorem fs_resN_canon {U z w h : ℝ} (hU : 0 < U) (hz : 0 < z) (hh : 0 < h) (hh
   field_simp
   ring
 
-/-- The concavity polynomial `P(s) ≥ 0` for `s ≥ S²/Z`, `1 ≤ z ≤ 5/3` (HAND_FORWARD_LEMMAS (2)-(5)). -/
+/-- The concavity polynomial `P(s) ≥ 0` for `s ≥ S²/Z`, `1 ≤ z ≤ 5/3`. -/
 theorem fs_P_nonneg' {U z s : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 5 / 3) (hU : 1 + 6 * z / 5 ≤ U) (hU3 : U ≤ 3)
     (hs : (1 + z) ^ 2 / (z ^ 2 + U) ≤ s) :
     0 ≤ (U - z) * s ^ 2 * (2 * z * s - (1 + z)) + (z ^ 2 + U) * s - 2 * z * (1 + z) := by
@@ -963,7 +963,7 @@ theorem fs_NS_Tval {U z : ℝ} (hz : 4 / 3 ≤ z) (hU : 1 + 6 * z / 5 ≤ U) (hU
   subst hd
   ring
 
-/-- **The symmetric neighbour face** (HAND_FORWARD_NEIGHBOR_INTEGRAL §3: `w = z ≥ 4/3`). -/
+/-- **The symmetric neighbour face** `w = z ≥ 4/3`: the residual is negative. -/
 theorem fs_resN_sym {U z h : ℝ} (hz : 4 / 3 ≤ z) (hU : 1 + 6 * z / 5 ≤ U) (hU3 : U < 3)
     (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h)
     (hhu : h ≤ (1 + z) * (5 * U - 2 - 3 * z) / (3 * (z ^ 2 + U))) : ff_resN U z z h < 0 := by
@@ -1043,7 +1043,7 @@ theorem fs_NA_Tval {U z : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 4 / 3) (hU : 9 / 5 + 
   field_simp
   ring
 
-/-- **The asymmetric neighbour face** (HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND: `w = 4/3 ≥ z`). -/
+/-- **The asymmetric neighbour face** `w = 4/3 ≥ z`: the residual is negative. -/
 theorem fs_resN_asym {U z h : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 4 / 3) (hU : 9 / 5 + 3 * z / 5 ≤ U)
     (hU3 : U < 3) (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h)
     (hhu : h ≤ (1 + z) * (5 * U - 2 - 3 * (4 / 3)) / (3 * (z ^ 2 + U))) :
@@ -1175,8 +1175,8 @@ theorem fs_F_mono_x {x x' r : ℝ} (hx : 1 / 2 ≤ x) (hxx : x ≤ x') (hr : 1 <
     apply mul_nonneg (mul_nonneg (by linarith) (by linarith)); linarith
   nlinarith
 
-/-- **The reduction of the larger neighbour** (MIXED_GLOBAL_SMALL_FORWARD_MINIMUM §3 (16), in
-difference form): `𝓔` does not increase when `w` is lowered to `w' ∈ [1, w]`, provided `q(w') ≥ 1`. -/
+/-- **The reduction of the larger neighbour**, in difference form: `𝓔` does not decrease when `w` is
+lowered to `w' ∈ [1, w]`, provided `w < U < 2w' + 1` and `q(w') ≥ 1`. -/
 theorem fs_resN_le {U z w w' h : ℝ} (hU : 0 < U) (hz : 0 < z) (hw' : 1 ≤ w') (hww : w' ≤ w)
     (hwU : w < U) (hU2 : U < 2 * w' + 1) (hq : 1 ≤ ff_q U z w') (hh : 1 ≤ h) :
     ff_resN U z w h ≤ ff_resN U z w' h := by
@@ -1227,11 +1227,10 @@ theorem fs_resN_le {U z w w' h : ℝ} (hU : 0 < U) (hz : 0 < z) (hw' : 1 ≤ w')
 
 /-! ### The neighbour sign -/
 
-/-- **The neighbour sign** (HAND_FORWARD_NEIGHBOR_INTEGRAL, HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND,
-HAND_FORWARD_LEMMAS §1). Route: after lowering `w` to `max(z, 4/3)`, the residual is concave in `h`
-on both faces (LEMMAS (2)-(5)), so its tangent at `h = S²/Z` bounds it; the two tangent values (at
+/-- **The neighbour sign.** After lowering `w` to `max(z, 4/3)`, the residual is concave in `h` on
+both faces (`fs_N_conc`), so its tangent at `h = S²/Z` bounds it; the two tangent values (at
 `S²/Z` and at the cost endpoint) are signed through Padé/two-term logarithm bounds and Bernstein
-expansions, instead of the notes' integral bounds, cubic `P` and the margin `F_w(q) < -1/3000`. -/
+expansions. -/
 theorem fs_resN_neg {U z w h : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U < 3) (hz : 1 ≤ z) (hzw : z ≤ w)
     (hw : 4 / 3 ≤ w) (hzw' : z + w ≤ 5 * (U - 1) / 3) (hh1 : 1 < h)
     (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h) (_hhu : h ≤ (1 + z) / z)

@@ -7,11 +7,11 @@ public import Mathlib.Analysis.Calculus.Deriv.Mul
 /-!
 # Derivatives of explicit polynomials and one-variable sign propagation
 
-Small calculus helpers for the hand proofs of `docs/lighter-proofs/` (PR #2): a polynomial is
-written by its coefficient list in Horner form (`lrhHorner`), whose derivative is again explicit
-(`lrhHornerD`, `lrh_hasDerivAt_horner`); then the sign of a derivative on an interval is
-propagated to the function (`hrl_mono`, `hrl_anti`) and a function with antitone derivative that
-is positive at both ends is positive in between (`hrl_concave_pos`).
+Small calculus helpers for the one-variable sign arguments: a polynomial is written by its
+coefficient list in Horner form (`lrhHorner`), whose derivative is again explicit (`lrhHornerD`,
+`lrh_hasDerivAt_horner`); then the sign of a derivative on an interval is propagated to the
+function (`hrl_mono`, `hrl_anti`) and a function with antitone derivative that is positive at both
+ends is positive in between (`hrl_concave_pos`).
 
 ## Main API
 

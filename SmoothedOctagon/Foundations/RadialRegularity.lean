@@ -24,9 +24,8 @@ parametrization. Its orientation is certified by the exact identity
 
 Upstream Lemma 2.2.5 supplies the unique-support hypothesis for every actual worst disk.
 This closes the initial regular-parametrization hypothesis in upstream Lemma 2.4.2; arclength
-reparametrization and the resulting Lipschitz derivatives remain separate steps.
-
-Status: source-level Lean draft; compilation and kernel validation have not been run.
+reparametrization and the resulting Lipschitz derivatives are handled in `ArcLength` and
+`BalancedReduction`.
 -/
 
 @[expose] public section

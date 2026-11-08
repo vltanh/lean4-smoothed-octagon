@@ -3,7 +3,7 @@ module
 public import SmoothedOctagon.Reduction.Defs
 
 /-!
-# Abnormal vertex sequences: the word argument of GLOBAL_NORMALITY
+# Abnormal vertex sequences: the word argument for normality
 
 This module is pure real algebra. It isolates what an abnormal (`λ = 0`) Pontryagin lift of a
 finite vertex trajectory leaves at the switching times, written in the coordinates
@@ -17,9 +17,9 @@ and the coordinates `α = μ(a)` of `a = -XΛ₁X` move by `gnL i q²`; the vert
 `H_j = (2α_j + β_j)/p_j`, and `⟨b, X⟩ = 0` reads `∑_{j ≠ l} β_j m_l = 0`
 (`Normal/Bridge.lean` derives all of this from `IsPontryaginExtremal`).
 
-Route: the four-arc matrix algebra of GLOBAL_NORMALITY §§2-5 (certificate C2) is replaced by these
-coordinates, in which every transport is the margin map. The backward reading of GN (19) is not
-needed: both triple-tie implications follow from one forward identity (`GnSeq.bounce`).
+In these coordinates every transport is the margin map, and both triple-tie implications (a
+bounce `i, j, i` forces `H_j = 0` at both of its ends) follow from one forward identity
+(`GnSeq.bounce`).
 
 ## Main API
 
@@ -29,16 +29,17 @@ needed: both triple-tie implications follow from one forward identity (`GnSeq.bo
   (`v_i + v_j ↦ (v_i + v_j) ρ`, `ρ = gnRho i j q ∈ {q, q⁻¹}`), `gnRho_sq`, `gnRho_pos`,
   `gnRho_ne_one`, `gnRho_add_one`, `gnRho_add_two`, `gnRho_succ_add_two`, `gnRho_add_two_succ`;
   `gn_perp_rel` (the form `∑_{j ≠ l} v_j m_l` in relabeled coordinates).
-* `gn_core_forward`, `gn_core_reverse`: the scalar cores of GN (15)-(16).
+* `gn_core_forward`, `gn_core_reverse`: the scalar cores of the exclusion of three equal switch
+  signs (`+ + +` and `- - -`).
 * `GnSeq`: an abstract abnormal sequence indexed by the switching times `k : ℕ` (labels, factors,
   margins, `α`, `β`, transports, `⟨b, X⟩ = 0`, `H_{i_k} = 0`, `H_j ≤ 0`, nontriviality).
 * `GnSeq.sig k j = 2 α_j + β_j` (the vertex Hamiltonian times the margin `p_j`);
   `GnSeq.sig_succ_lab`, `GnSeq.α_pair`, `GnSeq.β_pair`, `GnSeq.sig_succ`, `GnSeq.sig_all`.
-* `GnSeq.no_double_tie` (GN §5): no piece has triple ties at both ends.
+* `GnSeq.no_double_tie`: no piece has triple ties at both ends.
 * `GnSeq.bounce`: for labels `i, j, i` on pieces `k, k+1, k+2`, `H_j` vanishes at the start of
-  piece `k` and at the end of piece `k + 2` (GN (18)-(19)).
-* `GnSeq.not_three` (GN (17)): no three consecutive equal switch signs.
-* `GnSeq.lab_add_two`, `GnSeq.false_of_twist` (GN §6): signs alternate, so no abnormal sequence
+  piece `k` and at the end of piece `k + 2`.
+* `GnSeq.not_three`: no three consecutive equal switch signs.
+* `GnSeq.lab_add_two`, `GnSeq.false_of_twist`: signs alternate, so no abnormal sequence
   satisfies the twist `i_{k+N} = i_k + 1`.
 -/
 
@@ -316,7 +317,9 @@ private theorem gn_eq_zero_of_mul {x ρ : ℝ} (hρ0 : ρ ≠ 0) (hρ1 : ρ - 1 
     · exact absurd h hρ0
   · exact absurd h hρ1
 
-/-- **No piece joins two triple ties** (GLOBAL_NORMALITY §5). -/
+/-- **No piece joins two triple ties**. If every vertex Hamiltonian vanishes at both ends of piece
+`k`, the transport of the pair sums `α_i + α_j`, `β_i + β_j` by factors `ρ ≠ 0, 1` forces them to
+vanish; then `⟨b, X⟩ = 0` gives `α_i = 0`, so `α = β = 0`, against nontriviality. -/
 theorem no_double_tie (k : ℕ) (h0 : ∀ j, S.sig k j = 0) (h1 : ∀ j, S.sig (k + 1) j = 0) :
     False := by
   set i := S.lab k with hi
@@ -362,9 +365,8 @@ theorem no_double_tie (k : ℕ) (h0 : ∀ j, S.sig k j = 0) (h1 : ∀ j, S.sig (
   · exact h hα
   · exact h hβ
 
-/-- **A bounce forces ties at both ends** (GLOBAL_NORMALITY (18)-(19)). If pieces `k, k+1, k+2`
-carry the labels `i, j, i`, then `H_j` vanishes at the start of piece `k` and at the end of piece
-`k + 2`. -/
+/-- **A bounce forces ties at both ends**. If pieces `k, k+1, k+2` carry the labels `i, j, i`, then
+`H_j` vanishes at the start of piece `k` and at the end of piece `k + 2`. -/
 theorem bounce (k : ℕ) (h : S.lab (k + 2) = S.lab k) :
     S.sig k (S.lab (k + 1)) = 0 ∧ S.sig (k + 3) (S.lab (k + 1)) = 0 := by
   set i := S.lab k with hi
@@ -414,10 +416,9 @@ theorem bounce (k : ℕ) (h : S.lab (k + 2) = S.lab k) :
   · unfold sig; linarith
   · unfold sig; linarith
 
-/-- **No three consecutive equal switch signs** (GLOBAL_NORMALITY (17)). If `i_{k+2} ≠ i_k` and
-`i_{k+3} ≠ i_{k+1}`, the switches `k, k+1, k+2` all go forward or all go backward; the two
-missing-vertex inequalities at `τ_{k+1}`, `τ_{k+2}` then force triple ties at both ends of
-piece `k + 1`. -/
+/-- **No three consecutive equal switch signs**. If `i_{k+2} ≠ i_k` and `i_{k+3} ≠ i_{k+1}`, the
+switches `k, k+1, k+2` all go forward or all go backward; the two missing-vertex inequalities at
+`τ_{k+1}`, `τ_{k+2}` then force triple ties at both ends of piece `k + 1`. -/
 theorem not_three (k : ℕ) (h1 : S.lab (k + 2) ≠ S.lab k) (h2 : S.lab (k + 3) ≠ S.lab (k + 1)) :
     False := by
   set j := S.lab (k + 1) with hj
@@ -530,8 +531,8 @@ theorem lab_add_two {k : ℕ} (hk : 1 ≤ k) : S.lab (k + 2) = S.lab k := by
     · exact S.not_three (k + 1) hne hb
   · exact S.not_three k ha hne
 
-/-- **No abnormal sequence closes under the twist** (GLOBAL_NORMALITY §6). Signs alternate from
-the second switch on, so `i_{1+2n} = i_1`; but the twist gives `i_{1+2N} = i_1 + 2`. -/
+/-- **No abnormal sequence closes under the twist**. Signs alternate from the second switch on, so
+`i_{1+2n} = i_1`; but the twist gives `i_{1+2N} = i_1 + 2`. -/
 theorem false_of_twist {N : ℕ} (htw : ∀ k, S.lab (k + N) = S.lab k + 1) : False := by
   have h2 : ∀ n, S.lab (1 + 2 * n) = S.lab 1 := by
     intro n

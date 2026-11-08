@@ -13,8 +13,6 @@ public import SmoothedOctagon.Terminal.Comparison
 /-!
 # The sharp lower bound
 
-`GLOBAL_COST_EQUALITY_ASSEMBLY` §§2–5.
-
 1. A global minimizer of the control problem, rebased at a switch, is a competitive normal vertex
    period in the compact domain with finitely many pieces (`finiteNormalRepresentation`).
 2. If it had six or more pieces, its cyclic sign sequence would be in one of the classes R, F, M3,

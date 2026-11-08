@@ -10,7 +10,7 @@ public import Mathlib.Analysis.Complex.ExponentialBounds
 * `ff_octagonCost_lt`: `A_oct < 3.1268` (`A_oct ≈ 3.126049`).
 * `ff_octagonCost_lt'`: `A_oct < 2501/800`; `ff_octagonCost_gt`: `A_oct > 3.126`.
 * `ff_gam2_cap`: from the spectral bound `C ≥ (π/3)(κ + 3/2)` and `C ≤ A_oct`,
-  `γ² = κ²/12 < 23/125` (HAND_PROOF_REFINEMENTS §1, with the weaker constant `23/125`).
+  `γ² = κ²/12 < 23/125`.
 -/
 
 @[expose] public section
@@ -39,7 +39,7 @@ theorem ff_octagonCost_lt : octagonCost < 3.1268 := by
     mul_le_mul_of_nonneg_right h12.le hN
   nlinarith
 
-/-- `A_oct < 2501/800 = 3.12625` (GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD (3)). -/
+/-- `A_oct < 2501/800 = 3.12625`. -/
 theorem ff_octagonCost_lt' : octagonCost < 2501 / 800 := by
   have h12 : √12 < 3.4641017 := by
     rw [Real.sqrt_lt' (by norm_num)]; norm_num
@@ -77,8 +77,9 @@ theorem ff_octagonCost_gt : 3.126 < octagonCost := by
     mul_le_mul_of_nonneg_right h12.le (by linarith)
   nlinarith
 
-/-- **The competitive Casimir cap** (HAND_PROOF_REFINEMENTS §1): if `x = κ² > 0` and the cost `c`
-satisfies `(π/3)(κ + 3/2) ≤ c ≤ A_oct`, then `γ² = x/12 < 23/125`. -/
+/-- **The competitive Casimir cap**: if `x = κ² > 0` and the cost `c` satisfies
+`(π/3)(κ + 3/2) ≤ c ≤ A_oct`, then `γ² = x/12 < 23/125`, since `A_oct < 3.1268` and `π > 3.141592`
+force `κ < 1.4859`. -/
 theorem ff_gam2_cap {x c : ℝ} (hx : 0 < x) (h : π / 3 * (√x + 3 / 2) ≤ c)
     (hc : c ≤ octagonCost) : x / 12 < 23 / 125 := by
   have hA := ff_octagonCost_lt

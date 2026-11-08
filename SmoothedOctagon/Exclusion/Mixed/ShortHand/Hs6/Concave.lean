@@ -8,10 +8,10 @@ public import Mathlib.Analysis.Calculus.Deriv.Inv
 /-!
 # Gate S6 helper: concavity of the polynomial bound in the angle coordinate
 
-`MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION` (16)-(18); inventory HS-S567 S6.5. At fixed
-`R`, `d` and incoming norm `u ≥ 3/4`, the polynomial bound `𝓑(u; R, T, d)` is concave in the angle
-coordinate `T` on `[9/31, 7/19]`: it is `f(T) + Z_U g(T) - (c/(8Z_L))((R² - T²)/(3 + T²))²` plus a
-constant, with `f'' < 0`, `g'' < 0` and the last square convex.
+At fixed `R`, `d` and incoming norm `u ≥ 3/4`, the polynomial bound `𝓑(u; R, T, d)` is concave in
+the angle coordinate `T` on `[9/31, 7/19]`: it is
+`f(T) + Z_U g(T) - (c/(8Z_L))((R² - T²)/(3 + T²))²` plus a constant, with `f'' < 0`, `g'' < 0`
+and the last square convex.
 
 ## Main API
 
@@ -94,8 +94,8 @@ theorem hs6_d_sq' (R T : ℝ) :
   field_simp
   ring
 
-/-- **Concavity of the polynomial bound in `T`** (`SMALL_SHAPE_COST_EXCLUSION` (16)-(18); inventory
-HS-S567 S6.5): for `1/3 ≤ R ≤ 7/19`, `u ≥ 3/4`, `Z_U ≥ 0`, `Z_L > 0`, the bound
+/-- **Concavity of the polynomial bound in `T`**: for
+`1/3 ≤ R ≤ 7/19`, `u ≥ 3/4`, `Z_U ≥ 0`, `Z_L > 0`, the bound
 `𝓑(T) = L(R) + L(T) - (b₁R + b₂T)/2 - (b₁ + b₂)Z_U/8 - c((3 + R²)/(3 + T²) - 1)²/(8Z_L)`,
 `b₁ = 1 - u/((3 + R²)/4)`, `b₂ = 1 - u/((3 + T²)/4)`, is concave on `[9/31, 7/19]`. -/
 theorem hs6_B_concaveOn {R u ZU ZL : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19) (hu : 3 / 4 ≤ u)

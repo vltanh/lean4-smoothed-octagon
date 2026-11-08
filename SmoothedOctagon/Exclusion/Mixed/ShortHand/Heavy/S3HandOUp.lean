@@ -5,13 +5,12 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandOCurv
 /-!
 # Gate S3, the outer face by hand: the upper shape `α = x`
 
-Hand proof of the leaf `hs3_outer_face`, seventh part: `SHORT_DISPLACEMENT_OUTER_TERMINALS.md` §4
-with `SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA.md` §4. At `r = 1/x`, the lower slope
-`C ≥ 8x/(9x + 8)` gives `ū - 3/4 ≤ 238/30381 < 1/125` (the note's (10)); with `A_n > 1` the norm is
+Proof of the leaf `hs3_outer_face`, seventh part. At `r = 1/x`, the lower slope
+`C ≥ 8x/(9x + 8)` gives `ū - 3/4 ≤ 238/30381 < 1/125`; with `A_n > 1` the norm is
 raised to `379/500` and the logarithm constant to `16/9`. The resulting bound `H_n(x, C)` is
-`ψ(Z) + const` with `ψ(z) = -121z/500 + 1/z - 56/(5z + 14)` decreasing (`f(z) < 121/500`, (11)), so the
-lower slope is extremal; `H_n` increases in `n` (`w(379/500) > 3/4`, (12)); and
-`H_{7/2}(x, 8x/(9x + 8)) = W(h)/(63000x³S(9x + 8)(13x + 4)(32x + 19)) < 0` ((13)).
+`ψ(Z) + const` with `ψ(z) = -121z/500 + 1/z - 56/(5z + 14)` decreasing (`f(z) < 121/500`), so the
+lower slope is extremal; `H_n` increases in `n` (`w(379/500) > 3/4`); and
+`H_{7/2}(x, 8x/(9x + 8)) = W(h)/(63000x³S(9x + 8)(13x + 4)(32x + 19)) < 0`.
 
 ## Main API
 
@@ -46,7 +45,7 @@ section Up
 
 variable {x C n : ℝ}
 
-/-- `ū - 3/4 = V(1/x) = c(C + 2)/(C + 1) < 1/125` for `C ≥ 8x/(9x + 8)` (the note's (10)). -/
+/-- `ū - 3/4 = V(1/x) = c(C + 2)/(C + 1) < 1/125` for `C ≥ 8x/(9x + 8)`. -/
 theorem hl3o_V_up (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 8 * x / (9 * x + 8) ≤ C) :
     hl3oV x C (1 / x) ≤ 1 / 125 := by
   have hx0 : 0 < x := by linarith
@@ -81,7 +80,7 @@ theorem hl3o_Hup_affine (hx : 0 < x) (C₁ C₂ : ℝ) :
   field_simp
   ring
 
-/-- The `n`-slope of `H_n` is `w(379/500) - 3/4 = (w₁₉(h) + S³(6x - 1)/5)/(4900x³)` (the note's (12)). -/
+/-- The `n`-slope of `H_n` is `w(379/500) - 3/4 = (w₁₉(h) + S³(6x - 1)/5)/(4900x³)`. -/
 theorem hl3o_Hup_n (hx : 0 < x) :
     hl3oHup x C (7 / 2) - hl3oHup x C n = (7 / 2 - n) *
       ((144 * (x - 2) ^ 4 + 1585 * (x - 2) ^ 3 + 5414 * (x - 2) ^ 2 + 7516 * (x - 2) + 3728 +
@@ -93,7 +92,7 @@ theorem hl3o_Hup_n (hx : 0 < x) :
   field_simp
   ring
 
-/-- `H_{7/2}(x, 8x/(9x + 8)) = W(h)/(63000x³S(9x + 8)(13x + 4)(32x + 19))` (the note's (13)). -/
+/-- `H_{7/2}(x, 8x/(9x + 8)) = W(h)/(63000x³S(9x + 8)(13x + 4)(32x + 19))`. -/
 theorem hl3o_W_id (hx : 0 < x) :
     hl3oHup x (8 * x / (9 * x + 8)) (7 / 2) *
       (63000 * x ^ 3 * (x + 1) * (9 * x + 8) * (13 * x + 4) * (32 * x + 19)) =
@@ -117,7 +116,7 @@ theorem hl3o_W_id (hx : 0 < x) :
   field_simp
   ring
 
-/-- **The upper shape** (`SHORT_DISPLACEMENT_OUTER_TERMINALS` §4): `R_n(x, x, C) < 0`. -/
+/-- **The upper shape**: `R_n(x, x, C) < 0`. -/
 theorem hl3o_up (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 8 * x / (9 * x + 8) ≤ C) (hC' : C ≤ 5 / 6)
     (hn : 5 / 2 ≤ n) (hn' : n ≤ 7 / 2) : hl3oG x C n (1 / x) < 0 := by
   have hx0 : 0 < x := by linarith

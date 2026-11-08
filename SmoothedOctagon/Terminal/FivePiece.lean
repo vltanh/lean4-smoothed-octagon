@@ -6,18 +6,18 @@ public import SmoothedOctagon.Terminal.Analysis.FiveEnvelope
 /-!
 # Terminal comparison: five mixed pieces
 
-`legacy/FIVE_ARC_PROGRESS`. A closed cycle with the word `0 1 0 2 0` has factors
-`(P(u), Q(u), r, Q(v), P(v))`, `P(t) = (1 + t²)/(2t)`, `Q(t) = (1 + t²)/(1 - t²)`,
-`r = 4uv/((1 - u²)(1 - v²)) > 1`, for `u, v ∈ (0, 1)` with `u + v + uv > 1` (tangent closure,
-FAP (4)-(7)), initial margins `(2/√N)(A, d, B)` with `d = (1 - u)(1 - v)`, `N = d(4 - d)`,
-`A = (1 + u)(1 - v)`, `B = (1 - u)(1 + v)` (state closure, FAP (8)-(11)), and raw cost
-`8 δ(u, v)`, `δ(u, v) = [2(d + 2) - (d/2)(F(u) + F(v))]/(4 - d)` (FAP (17)-(18)). The strict
-inequality `δ(u, v) > δ_oct` is FAP (19)-(25).
+A closed cycle with the word `0 1 0 2 0` has factors `(P(u), Q(u), r, Q(v), P(v))`,
+`P(t) = (1 + t²)/(2t)`, `Q(t) = (1 + t²)/(1 - t²)`, `r = 4uv/((1 - u²)(1 - v²)) > 1`, for
+`u, v ∈ (0, 1)` with `u + v + uv > 1` (tangent closure), initial margins `(2/√N)(A, d, B)` with
+`d = (1 - u)(1 - v)`, `N = d(4 - d)`, `A = (1 + u)(1 - v)`, `B = (1 - u)(1 + v)` (state closure),
+and raw cost `8 δ(u, v)`, `δ(u, v) = [2(d + 2) - (d/2)(F(u) + F(v))]/(4 - d)`. The strict
+inequality `δ(u, v) > δ_oct` follows from the envelope bound on `F(u) + F(v)` and from
+`d < d* = (2 - √2)²`.
 
-* `Term.fiveF`, `Term.fiveDensity`, `Term.fivePiece_density_gt` (FAP (23)-(25)), from
-  `Term.fiveEnvelope` (FAP (19)-(22): `F(t) + 2 log(1 - t) ≤ F(t*) + 2 log(1 - t*)`, proved as
-  `ra_five_envelope` in `Terminal/Analysis/FiveEnvelope`).
-* `Term.Cycle.five_param` (closure, forced state and cost algebra, FAP (4)-(18)),
+* `Term.fiveF`, `Term.fiveDensity`, `Term.fivePiece_density_gt`, from `Term.fiveEnvelope`
+  (`F(t) + 2 log(1 - t) ≤ F(t*) + 2 log(1 - t*)`, proved as `ra_five_envelope` in
+  `Terminal/Analysis/FiveEnvelope`).
+* `Term.Cycle.five_param` (closure, forced state and cost algebra),
   `Term.Cycle.five_rawCost_gt`.
 -/
 
@@ -29,18 +29,17 @@ namespace Term
 
 open SmoothedPolygons
 
-/-- `F(t) = ((1+t)/(1-t))² log((1+t²)/(2t)) + t⁻² log((1+t²)/(1-t²)) + log(2t/(1-t²))`
-(FAP (17)). -/
+/-- `F(t) = ((1+t)/(1-t))² log((1+t²)/(2t)) + t⁻² log((1+t²)/(1-t²)) + log(2t/(1-t²))`. -/
 noncomputable def fiveF (t : ℝ) : ℝ :=
   ((1 + t) / (1 - t)) ^ 2 * Real.log ((1 + t ^ 2) / (2 * t)) +
     Real.log ((1 + t ^ 2) / (1 - t ^ 2)) / t ^ 2 + Real.log (2 * t / (1 - t ^ 2))
 
-/-- The density `δ(u, v)` of the mixed five-piece family (FAP (18)). -/
+/-- The density `δ(u, v)` of the mixed five-piece family. -/
 noncomputable def fiveDensity (u v : ℝ) : ℝ :=
   (2 * ((1 - u) * (1 - v) + 2) - (1 - u) * (1 - v) / 2 * (fiveF u + fiveF v)) /
     (4 - (1 - u) * (1 - v))
 
-/-- **The envelope** (FAP (19)-(22)): `F(t) + 2 log(1 - t) ≤ F(t*) + 2 log(1 - t*)`,
+/-- **The envelope**: `F(t) + 2 log(1 - t) ≤ F(t*) + 2 log(1 - t*)`,
 `t* = √2 - 1`, `F(t*) = (3 + 2√2) log 2`. -/
 theorem fiveEnvelope {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
     fiveF t + 2 * Real.log (1 - t) ≤ (3 + 2 * √2) * Real.log 2 + 2 * Real.log (2 - √2) :=
@@ -52,7 +51,7 @@ private lemma five_sqrt32 : √32 = 4 * √2 := by
 private lemma five_sqrt8 : √8 = 2 * √2 := by
   rw [show (8 : ℝ) = 2 ^ 2 * 2 by norm_num, Real.sqrt_mul (by norm_num), Real.sqrt_sq (by norm_num)]
 
-/-- `d = (1 - u)(1 - v) < d* = (2 - √2)²` when `u + v + uv > 1` (FAP §6). -/
+/-- `d = (1 - u)(1 - v) < d* = (2 - √2)²` when `u + v + uv > 1`. -/
 private lemma five_d_lt {u v : ℝ} (hu0 : 0 < u) (hu1 : u < 1) (hv0 : 0 < v) (hv1 : v < 1)
     (huv : 1 < u + v + u * v) : (1 - u) * (1 - v) < (2 - √2) ^ 2 := by
   have hx : 0 < 1 - u := by linarith
@@ -93,9 +92,11 @@ private lemma five_boundary :
   field_simp
   ring
 
-/-- **The five-piece density inequality** (FAP (23)-(25)): `δ(u, v) > δ_oct`.
-Route: the monotonicity of the bound `B(d)` is replaced by the tangent-line inequality
-`d log d ≥ d log d* + d - d*`. -/
+/-- **The five-piece density inequality**: `δ(u, v) > δ_oct`. The envelope bound for `F(u)` and
+`F(v)` gives `δ(u, v) ≥ B(d) = [2d + 4 - K d + d log(d/d*)]/(4 - d)` with `d = (1 - u)(1 - v)`,
+`K = (3 + 2√2) log 2` and `d* = (2 - √2)²`. The tangent-line inequality
+`d log d ≥ d log d* + d - d*`, the value `B(d*) = δ_oct` and the gap `3 + δ_oct < K` then give
+`B(d) > δ_oct`, since `d < d*`. -/
 theorem fivePiece_density_gt {u v : ℝ} (hu0 : 0 < u) (hu1 : u < 1) (hv0 : 0 < v) (hv1 : v < 1)
     (huv : 1 < u + v + u * v) : octagonDensity < fiveDensity u v := by
   have hx : 0 < 1 - u := by linarith
@@ -168,7 +169,7 @@ theorem five_closure {p q r s z : ℝ} (hp : 1 < p) (hq : 1 < q) (hr : 1 < r) (h
     · linarith
     · linarith
 
-/-- The twist residuals of the word `0 1 0 2 0` (FAP (8)-(11)), as polynomials. -/
+/-- The twist residuals of the word `0 1 0 2 0`, as polynomials. -/
 private lemma five_key {u v x0 x1 x2 m11 m12 m20 m22 m31 m32 m40 m41 m50 m51 : ℝ}
     (hu0 : 0 < u) (hu1 : u < 1) (hv0 : 0 < v) (hv1 : v < 1)
     (s0g : m11 = (x0 + x1) * ((1 + u ^ 2) / (2 * u)) - x0)
@@ -206,7 +207,7 @@ private lemma rawArc_smul (l X Y Z q : ℝ) :
       l ^ 2 * (X * ((X + Y) * (q - 1) + (X + Z) * (1 - q⁻¹)) - X ^ 2 * Real.log q) := by
   unfold rawArc; ring
 
-/-- The algebraic part of the five-piece cost (FAP (16)). -/
+/-- The algebraic part of the five-piece cost. -/
 private lemma five_alg {u v : ℝ} (hu0 : 0 < u) (hu1 : u < 1) (hv0 : 0 < v) (hv1 : v < 1) :
     (2 * ((1 + u) * (1 - v))) * (((2 * ((1 + u) * (1 - v))) + (2 * ((1 - u) * (1 - v)))) * (((1 + u ^ 2) / (2 * u)) - 1) + ((2 * ((1 + u) * (1 - v))) + (2 * ((1 - u) * (1 + v)))) * (1 - ((1 + u ^ 2) / (2 * u))⁻¹)) +
       (2 * ((1 - u) * (1 - v)) / u) * (((2 * ((1 - u) * (1 - v)) / u) + (2 * (u - 1) * (u ^ 2 * v - u ^ 2 - 2 * u * v - 2 * u - v + 1) / (u ^ 2 + 1))) * (((1 + u ^ 2) / (1 - u ^ 2)) - 1) + ((2 * ((1 - u) * (1 - v)) / u) + (2 * ((1 + u) * (1 - v)))) * (1 - ((1 + u ^ 2) / (1 - u ^ 2))⁻¹)) +
@@ -227,7 +228,7 @@ private lemma five_alg {u v : ℝ} (hu0 : 0 < u) (hu1 : u < 1) (hv0 : 0 < v) (hv
   field_simp
   ring
 
-/-- The logarithmic part of the five-piece cost (FAP (16)-(17)). -/
+/-- The logarithmic part of the five-piece cost. -/
 private lemma five_log {u v : ℝ} (hu0 : 0 < u) (hu1 : u < 1) (hv0 : 0 < v) (hv1 : v < 1) :
     (2 * ((1 + u) * (1 - v))) ^ 2 * Real.log ((1 + u ^ 2) / (2 * u)) +
       (2 * ((1 - u) * (1 - v)) / u) ^ 2 * Real.log ((1 + u ^ 2) / (1 - u ^ 2)) +
@@ -359,7 +360,7 @@ private lemma five_R {r q s u v : ℝ} (hr : 0 < r) (hu0 : 0 < u) (hu1 : u < 1) 
 
 namespace Cycle
 
-/-- Tangent closure of `0 1 0 2 0` (FAP (4)-(7)): the factors are `(P(u), Q(u), r, Q(v), P(v))`. -/
+/-- Tangent closure of `0 1 0 2 0`: the factors are `(P(u), Q(u), r, Q(v), P(v))`. -/
 private lemma five_factors (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1) (h2 : c.lab 2 = 0)
     (h3 : c.lab 3 = 2) (h4 : c.lab 4 = 0) :
     ∃ u v : ℝ, 0 < u ∧ u < 1 ∧ 0 < v ∧ v < 1 ∧ 1 < u + v + u * v ∧ c.q 0 = ((1 + u ^ 2) / (2 * u)) ∧
@@ -389,7 +390,7 @@ private lemma five_factors (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1) (
     linarith
   exact ⟨u, v, hu0, hu1, hv0, hv1, huv, hq0, hq1, hq2, hq3, hq4⟩
 
-/-- State closure of `0 1 0 2 0` (FAP (8)-(11)): the initial margins are `(2/√N)(A, d, B)`. -/
+/-- State closure of `0 1 0 2 0`: the initial margins are `(2/√N)(A, d, B)`. -/
 private lemma five_margins (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1) (h2 : c.lab 2 = 0)
     (h3 : c.lab 3 = 2) (h4 : c.lab 4 = 0) {u v : ℝ} (hu0 : 0 < u) (hu1 : u < 1)
     (hv0 : 0 < v) (hv1 : v < 1) (hq0 : c.q 0 = ((1 + u ^ 2) / (2 * u))) (hq1 : c.q 1 = ((1 + u ^ 2) / (1 - u ^ 2)))
@@ -517,7 +518,10 @@ private lemma five_rawCost (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1) (
 
 
 
-/-- **The mixed five-piece cycles** (FAP (4)-(18)). -/
+/-- **The mixed five-piece cycles**: a closed cycle with the word `0 1 0 2 0` has raw cost
+`8 δ(u, v)` for some `u, v ∈ (0, 1)` with `u + v + uv > 1`. Tangent closure gives the factors
+(`five_factors`), state closure the initial margins (`five_margins`), and the cost is summed piece
+by piece (`five_rawCost`, `five_cost`). -/
 theorem five_param (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1) (h2 : c.lab 2 = 0)
     (h3 : c.lab 3 = 2) (h4 : c.lab 4 = 0) :
     ∃ u v : ℝ, 0 < u ∧ u < 1 ∧ 0 < v ∧ v < 1 ∧ 1 < u + v + u * v ∧

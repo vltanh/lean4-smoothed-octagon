@@ -8,27 +8,25 @@ public import SmoothedOctagon.Exclusion.Forward.Core
 /-!
 # Case F: no competitive entirely forward period with six or more pieces
 
-`GLOBAL_FORWARD_PERIOD_EXCLUSION`, in the hand form `HAND_FORWARD_PERIOD_EXCLUSION` (HFPE). A
-competitive normal vertex period with every switch forward has at most five pieces (with the twist,
-`N ≡ 1 mod 3`, so `N = 4`: the octagon's word).
+A competitive normal vertex period with every switch forward has at most five pieces (with the
+twist, `N ≡ 1 mod 3`, so `N = 4`: the octagon's word).
 
-Route (HFPE): `N ≡ 1 (mod 3)` gives `N ≥ 7` (`NormalPeriod.ff_N_mod_three`). At a global minimum
+Proof: `N ≡ 1 (mod 3)` gives `N ≥ 7` (`NormalPeriod.ff_N_mod_three`). At a global minimum
 `a = a_m` of the active margins, the window `(p, b, a, c, d) = (a_{m-2}, …, a_{m+2})` carries
 * the factors and strict-star products of the costate cycle (`Forward/Window.lean`),
 * the seven-entry cost bound (`ff_seven_le`, `CostateCycle.ff_rawCost`, `cost_eq_rawCost`),
 * the three stationarity rows, the two exterior floors and the Gram identity of the normal
-  multiplier (`Forward/Interface.lean`, to be supplied by `Period/Elliptic`),
+  multiplier (`Forward/Interface.lean`, from `Period/Elliptic`),
 * the competitive Casimir cap `γ² < 23/125` (`NormalPeriod.ff_cost_casimir`, `ff_gam2_cap`).
-These form an `ff_Win`, which the scalar argument of `Forward/Core.lean` excludes. No interval
-cover is used.
+These form an `ff_Win`, which the scalar argument of `Forward/Core.lean` excludes.
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
 
-/-- **Case F** (`GLOBAL_FORWARD_PERIOD_EXCLUSION`). No competitive normal vertex period with at least
-six pieces has every switch forward. -/
+/-- **Case F.** No competitive normal vertex period with at least six pieces has every switch
+forward. -/
 theorem forward_exclusion (P : NormalPeriod)
     (hc : P.IsCompetitive) (hF : P.rep.AllForward) (hN : 6 ≤ P.N) : False := by
   set C := P.costateCycle with hC

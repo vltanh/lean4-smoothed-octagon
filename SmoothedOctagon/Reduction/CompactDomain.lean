@@ -7,17 +7,13 @@ public import SmoothedPolygons.Ch5.Theorem502
 /-!
 # The compact domain along a global minimizer
 
-COMPACT_DOMAIN_SOURCE_AUDIT (main theorem and §§1, 4) and GLOBAL_MINIMIZER_COMPACTNESS (3)
-(inventory A2, §2.2, `CDSA:Main`, `CDSA:§1`, `CDSA:§4`, `GMC:(3)`). The state of every global
-minimizer stays in the compact domain `𝔥**` of Hales–Vajjha, Definition 5.0.1. This module is the
-bridge to Hales–Vajjha's Theorem 5.0.2, proved in `SmoothedPolygons` as
-`SmoothedPolygons.theorem5_0_2` (`Ch5/Theorem502.lean`): extend the minimizer cyclically to a
-global trajectory `(G, Y)` of the same cost (`exists_cyclic_extension_of_isReinhardtAdmissible`),
-whose frame contacts `σ_j(t) = G(t) s_j*` bound a balanced disk at every time
+The state of every global minimizer stays in the compact domain `𝔥**` of Hales–Vajjha, Definition
+5.0.1. This module is the bridge to Hales–Vajjha's Theorem 5.0.2, proved in `SmoothedPolygons` as
+`SmoothedPolygons.theorem5_0_2` (`Ch5/Theorem502.lean`): extend the minimizer cyclically to a global
+trajectory `(G, Y)` of the same cost (`exists_cyclic_extension_of_isReinhardtAdmissible`), whose
+frame contacts `σ_j(t) = G(t) s_j*` bound a balanced disk at every time
 (`lowCost_cyclicFrame_isBalancedPair`), with `Y = G⁻¹G'` and `Y = Φ ∘ z`, `z` in `𝔥*`, everywhere;
 then apply Theorem 5.0.2 in the contrapositive: leaving `𝔥**` would make the cost exceed `A_oct`.
-Route: the notes' repaired proof of Theorem 5.0.2 (sector reduction, `CDSA:§§2-3`) is replaced by
-the one in `SmoothedPolygons`.
 
 Main API:
 
@@ -28,8 +24,8 @@ Main API:
 * `exists_mem_starDomain_eq_Φ`: a star state is `Φ(z)` with `z ∈ 𝔥*`.
 * `inCompactDomain_of_isReinhardtMinimizer`: the state of a global minimizer stays in `𝔥**`.
 * `margin_eq_two_mul_ρ`, `two_div_fifteen_le_margin`: on traceless states `p₀ = 2ρ₂`,
-  `p₁ = 2ρ₁`, `p₂ = 2ρ₀`; on `𝔥**` every margin is at least `2/15` (`CDSA:§1`).
-* `frobSq_lt_of_inCompactDomain`: on `𝔥**`, `‖X‖_F² < 81` (`GMC:(3)`, `‖X‖_F < √(2869/36) < 9`).
+  `p₁ = 2ρ₁`, `p₂ = 2ρ₀`; on `𝔥**` every margin is at least `2/15`.
+* `frobSq_lt_of_inCompactDomain`: on `𝔥**`, `‖X‖_F² < 81` (`‖X‖_F < √(2869/36) < 9`).
 -/
 
 @[expose] public section
@@ -144,9 +140,8 @@ theorem exists_mem_starDomain_eq_Φ {X : Mat2} (hX : IsStarState X) :
 
 /-! ### The compact domain from Theorem 5.0.2 -/
 
-/-- **The compact domain** (COMPACT_DOMAIN_SOURCE_AUDIT, main theorem, from Hales–Vajjha,
-Theorem 5.0.2, `SmoothedPolygons.theorem5_0_2`). The state of every global minimizer stays in `𝔥**`
-at every time of `[0, T]`.
+/-- **The compact domain** (from Hales–Vajjha, Theorem 5.0.2, `SmoothedPolygons.theorem5_0_2`).
+The state of every global minimizer stays in `𝔥**` at every time of `[0, T]`.
 
 Proof: the cyclic extension `(G, Y)` of the minimizer
 (`exists_cyclic_extension_of_isReinhardtAdmissible`) agrees with `(g, X)` on `[0, T]`, has the
@@ -191,8 +186,8 @@ theorem inCompactDomain_of_isReinhardtMinimizer {T : ℝ} {u : ℝ → Fin 3 →
   rw [volume_real_smoothedPolygonDisk_one, hcosteq] at hlt
   linarith
 
-/-- **Margin dictionary** (COMPACT_DOMAIN_SOURCE_AUDIT §1): on traceless matrices
-`p₀ = 2ρ₂`, `p₁ = 2ρ₁`, `p₂ = 2ρ₀`, i.e. `p_i = 2ρ_{2-i}`. -/
+/-- **Margin dictionary**: on traceless matrices `p₀ = 2ρ₂`, `p₁ = 2ρ₁`, `p₂ = 2ρ₀`, i.e.
+`p_i = 2ρ_{2-i}`. Both sides are linear in the entries; the identity is checked by expansion. -/
 theorem margin_eq_two_mul_ρ {X : Mat2} (hX : X.trace = 0) :
     margin 0 X = 2 * ρ₂ X ∧ margin 1 X = 2 * ρ₁ X ∧ margin 2 X = 2 * ρ₀ X := by
   have h11 : X 1 1 = -X 0 0 := by rw [Matrix.trace_fin_two] at hX; linarith
@@ -203,8 +198,8 @@ theorem margin_eq_two_mul_ρ {X : Mat2} (hX : X.trace = 0) :
     Fin.sum_univ_two, ρ₀, ρ₁, ρ₂, h11, Matrix.vecMul, dotProduct] <;> field_simp <;> ring_nf <;>
     simp [h3] <;> ring
 
-/-- **Margins on `𝔥**`** (COMPACT_DOMAIN_SOURCE_AUDIT §1, inventory A2 §1.3): every margin, active
-or not, of a state in `𝔥**` is at least `2/15`. -/
+/-- **Margins on `𝔥**`**: every margin, active or not, of a state in `𝔥**` is at least `2/15`,
+since `p_i = 2ρ_{2-i}` and `𝔥**` excludes the neighbourhoods `ρ_k < 1/15` of the edges. -/
 theorem two_div_fifteen_le_margin {X : Mat2} (hX : Cited.HalesVajjha.InCompactDomain X)
     (i : Fin 3) : 2 / 15 ≤ margin i X := by
   obtain ⟨x, y, rfl, hmem⟩ := hX
@@ -219,8 +214,8 @@ theorem two_div_fifteen_le_margin {X : Mat2} (hX : Cited.HalesVajjha.InCompactDo
   · simp only [Fin.mk_one, Fin.isValue]; rw [e1]; linarith
   · simp only [Fin.reduceFinMk, Fin.isValue]; rw [e2]; linarith
 
-/-- The cusp computation of GLOBAL_MINIMIZER_COMPACTNESS (3): with `a = 1/√3 - |x|`, the star
-condition gives `a/√3 < y²`, and then `y ≤ 1/5` would put `(x, y)` inside a cusp disk. -/
+/-- The cusp computation: with `a = 1/√3 - |x|`, the star condition gives `a/√3 < y²`, and then
+`y ≤ 1/5` would put `(x, y)` inside a cusp disk. -/
 private lemma cusp_aux {q a y : ℝ} (hq2 : q ^ 2 = 1 / 3) (hq : 0 < q) (ha : 0 < a) (hy : 0 < y)
     (hy5 : y ≤ 1 / 5) (h1 : a * q < y ^ 2) (hc : 8 / 27 * y ≤ a ^ 2 + y ^ 2) : False := by
   have h2 : a < 3 * q * y ^ 2 := by
@@ -243,9 +238,8 @@ private lemma cusp_aux {q a y : ℝ} (hq2 : q ^ 2 = 1 / 3) (hq : 0 < q) (ha : 0 
     exact lt_of_mul_lt_mul_left this hy.le
   linarith
 
-/-- **State bound on `𝔥**`** (GLOBAL_MINIMIZER_COMPACTNESS (3), inventory A2 §1.3): a state in
-`𝔥**` has `‖X‖_F² < 81`. (On `𝔥**`, `y > 1/5` by the two cusp disks, `|x/y| < 5/√3`,
-`(x² + y²)/y < 37/6`, so `‖X‖_F² < 2869/36`.) -/
+/-- **State bound on `𝔥**`**: a state in `𝔥**` has `‖X‖_F² < 81`. (On `𝔥**`, `y > 1/5` by the two
+cusp disks, `|x/y| < 5/√3`, `(x² + y²)/y < 37/6`, so `‖X‖_F² < 2869/36`.) -/
 theorem frobSq_lt_of_inCompactDomain {X : Mat2} (hX : Cited.HalesVajjha.InCompactDomain X) :
     frobSq X < 81 := by
   obtain ⟨x, y, rfl, hmem⟩ := hX

@@ -16,7 +16,6 @@ inequality extends by translation invariance of Lebesgue measure.
 Only the actual integral-form `IsReinhardtAdmissible` hypotheses are used. The
 extension agrees with both original states throughout the closed segment and
 preserves its exact cost. No simplicity or convex boundary is assumed here.
-Source draft only: compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

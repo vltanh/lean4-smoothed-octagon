@@ -129,9 +129,9 @@ theorem margin_conj_pow (n : ℕ) (X : Mat2) (j : Fin 3) :
 theorem Rpow_inv (n : ℕ) : (R ^ n)⁻¹ = R⁻¹ ^ n :=
   Matrix.inv_eq_left_inv (poly_Rinvpow_mul_Rpow n)
 
-/-- **Identification with the smoothed octagon** (`SMALL_PERIOD_COST_EQUALITY_AUDIT` §4): a normal
-period with four forward pieces, all factors `√2` and the octagon's initial margins is, after the
-relabeling `C = R^r`, the smoothed octagon's trajectory on `[0, t_f]`, and `T = t_f`. -/
+/-- **Identification with the smoothed octagon**: a normal period with four forward pieces, all
+factors `√2` and the octagon's initial margins is, after the relabeling `C = R^r`, the smoothed
+octagon's trajectory on `[0, t_f]`, and `T = t_f`. -/
 theorem octagon_identification (P : NormalPeriod) (hN : P.N = 4) (hq : ∀ k, P.factor k = √2)
     (hfwd : ∀ k, P.rep.label (k + 1) = P.rep.label k + 1)
     (h0 : margin (P.rep.label 0) (P.X 0) = octActive)

@@ -8,8 +8,8 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1Base
 The partial derivatives of the central tests `hh1cF0`, `hh1cF1` (with the logarithm in place of
 the cubic ceiling `ℓ`; the difference `ℓ - log` is handled separately), written in the transport
 atoms `S = 1 + x`, `K`, `λ = hh1cL`, `d = hh1cd`, `v`, `E`, `w`, `q`, `T`, `B = α + β`.
-They are the quantities of the derivative claims of `LOW_RATIO_CENTRAL_HAND_SIGN` (18)-(23)
-(inventory HS-S01 D-R11-D-R13); each is a small rational function.
+They are the quantities whose signs control the central face; each is a small rational
+function.
 
 ## Main API
 

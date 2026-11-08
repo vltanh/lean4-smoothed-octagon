@@ -5,9 +5,9 @@ public import SmoothedOctagon.Period.Elliptic
 /-!
 # Case M1: the sign pattern `(− − +)^m`
 
-`MIXED_GLOBAL_SHORT_RUN_PERIOD` (1)-(2). A class-M1 vertex representation (mixed, every maximal
-reverse run of length two, every maximal forward run of length one) has `N = 3m` pieces with the
-cyclic sign word `(− − +)^m`, and the label twist forces `m ≡ 2 (mod 3)`.
+A class-M1 vertex representation (mixed, every maximal reverse run of length two, every maximal
+forward run of length one) has `N = 3m` pieces with the cyclic sign word `(− − +)^m`, and the label
+twist forces `m ≡ 2 (mod 3)`.
 
 ## Main API
 
@@ -115,7 +115,9 @@ theorem m1_step (h : ρ.ClassM1) {k : ℤ} (hf : ρ.IsForward k) (hr : ρ.IsReve
     rw [show k + 4 = k + 3 + ((1 : ℕ) : ℤ) by push_cast; ring]; exact this
   exact ⟨hr2, hf3, hr4⟩
 
-/-- **The sign pattern of class M1** (MGSRP (1)-(2)). -/
+/-- **The sign pattern of class M1.** The switch word is `(− − +)^m` with `N = 3m`; each block of
+three switches lowers the label by one, and the twist raises it by one over the period, so
+`m ≡ 2 (mod 3)`. -/
 theorem m1_pattern (h : ρ.ClassM1) :
     ∃ (k₀ : ℤ) (m : ℕ), 0 < m ∧ ρ.N = 3 * m ∧ m % 3 = 2 ∧
       ∀ j : ℤ, ρ.IsReverse (k₀ + 3 * j) ∧ ρ.IsReverse (k₀ + 3 * j + 1) ∧

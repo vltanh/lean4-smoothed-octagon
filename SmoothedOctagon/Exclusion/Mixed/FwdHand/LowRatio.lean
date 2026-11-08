@@ -8,18 +8,13 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.CertLRb
 /-!
 # Case M2, forward successor by hand: the duration ratio exceeds one third
 
-`MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` with `MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` §§2-3: an
-actual forward window has `t > 1/3`. Suppose `1/4 < t ≤ 1/3`. The combined residual
+An actual forward window has `t > 1/3`. Suppose `1/4 < t ≤ 1/3`. The combined residual
 `F = (7 - Je²)N + C_*(3/4 - 𝒯_U)` (`fhComb 6 0`) is negative (`fh_window_comb`); its
 `v`-coefficient is negative (`fh_LR_Cv`, from `Je² ≤ 10/3`, `WD/x ≤ 9/4`) and its `log q`
 coefficient is nonpositive, so raising `v` to `v̂ = v_G + ρ(v_G - F_ℓ)` (`ρ = (3/4)(q + 2t + x - 1)`)
 and `log q` to `L₊` keeps it negative. It is a concave quadratic in `k` (`fh_comb_pos_of_ends`), and
 both shape endpoints `k = 1`, `k = 2t + x` have positive residual (the hand proof `lrh_unit_pos`
 of `FwdHand/LowRatioHand`, and the certificate `CertLRb`), a contradiction.
-
-Route: the shape monotonicity `Ĝ_k > 0` of the notes (§5 of the ratio reduction) is replaced by
-concavity in `k` and a second endpoint certificate at `k = 2t + x`; the unit-shape sign (10) at
-`k = 1` is the hand proof of the PR-2 notes `docs/lighter-proofs/NONSHORT_LOW_RATIO*.md`.
 
 ## Main API
 
@@ -32,8 +27,7 @@ concavity in `k` and a second endpoint certificate at `k = 2t + x`; the unit-sha
 
 namespace SmoothedOctagon
 
-/-- The low-ratio effective norm `v̂ = v_G + ρ(v_G - F_ℓ)`, `ρ = (3/4)(q + 2t + x - 1)`
-(`MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (4)). -/
+/-- The low-ratio effective norm `v̂ = v_G + ρ(v_G - F_ℓ)`, `ρ = (3/4)(q + 2t + x - 1)`. -/
 noncomputable def fhVhat (t x q : ℝ) : ℝ :=
   fhVG t x + 3 / 4 * (q + 2 * t + x - 1) * (fhVG t x - nhFl t x q)
 
@@ -54,7 +48,7 @@ theorem fh_LRb_link (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
   unfold fhComb fhCv fhCL fhTPv fhTP fhKt fhHt fhE0 nhN nhNv nhNL
   ring
 
-/-- `Je² ≤ 10/3` on the low-ratio domain (`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` (8)). -/
+/-- `Je² ≤ 10/3` on the low-ratio domain. -/
 theorem fh_LR_J {t x q : ℝ} (ht1 : t ≤ 1 / 3) (hx1 : x ≤ 1) (hx : 0 < x) (ho : 1 ≤ 2 * t + x)
     (hq : 0 ≤ q) (hqo : q * (2 * t + x) ≤ 1 + x) :
     (t + x * (x + 2)) * q ^ 2 ≤ 10 / 3 * (1 + x) ^ 2 := by
@@ -63,7 +57,7 @@ theorem fh_LR_J {t x q : ℝ} (ht1 : t ≤ 1 / 3) (hx1 : x ≤ 1) (hx : 0 < x) (
   have h3 := mul_le_mul_of_nonneg_left h2 (sq_nonneg q)
   nlinarith
 
-/-- `WD/x ≤ 9/4` on the low-ratio domain (`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` (8)). -/
+/-- `WD/x ≤ 9/4` on the low-ratio domain. -/
 theorem fh_LR_WD {t x q : ℝ} (ht0 : 1 / 4 ≤ t) (ht1 : t ≤ 1 / 3) (hx0 : 1 - 2 * t ≤ x)
     (hx : 0 < x) (hq : 0 ≤ q) (hqo : q * (2 * t + x) ≤ 1 + x) :
     q * (t + x * (x + 2)) - (t + x) * (1 + x) ≤ 9 / 4 * x := by
@@ -91,8 +85,8 @@ theorem fh_LR_WD {t x q : ℝ} (ht0 : 1 / 4 ≤ t) (ht1 : t ≤ 1 / 3) (hx0 : 1 
     linarith
   exact le_of_mul_le_mul_left h7 ho0
 
-/-- **The `v`-coefficient is negative** on the low-ratio domain
-(`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` (8)-(9)). -/
+/-- **The `v`-coefficient is negative** on the low-ratio domain, by `Je² ≤ 10/3` and
+`WD/x ≤ 9/4`. -/
 theorem fh_LR_Cv {t x k q : ℝ} (ht0 : 1 / 4 ≤ t) (ht1 : t ≤ 1 / 3) (hx0 : 1 - 2 * t ≤ x)
     (hx1 : x ≤ 1) (hk : 1 ≤ k) (hq : 1 ≤ q) (hqo : q * (2 * t + x) ≤ 1 + x) :
     fhCv 6 0 t x k q < 0 := by
@@ -132,7 +126,8 @@ theorem fh_LR_Cv {t x k q : ℝ} (ht0 : 1 / 4 ≤ t) (ht1 : t ≤ 1 / 3) (hx0 : 
       = 17 / 12 * (4 * q * (1 + x) ^ 2 * nhNv t x k q) := by ring
   linarith
 
-/-- **The low-ratio scalar exclusion** (`MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION`). -/
+/-- **The low-ratio scalar exclusion**: for `1/4 < t ≤ 1/3`, `1 ≤ k < 2t + x`, the swap bound and
+the incoming floor, the combined residual `fhComb 6 0` cannot be negative. -/
 theorem fh_lowRatio_core {t x k q v F : ℝ} (ht0 : 1 / 4 < t) (ht1 : t ≤ 1 / 3) (hk1 : 1 ≤ k)
     (hko : k < 2 * t + x) (h4 : 4 * t + x < 2) (hx1 : x < 1) (hq : 1 < q)
     (hqs : q * (4 * t + 2 * x - 1) < 1 + x) (hv : v = nhSecN t x)
@@ -188,7 +183,7 @@ theorem fh_lowRatio_core {t x k q v F : ℝ} (ht0 : 1 / 4 < t) (ht1 : t ≤ 1 / 
   have := fh_comb_pos_of_ends (by linarith) hq0.le hD hk1 hko.le hA hB
   linarith
 
-/-- **The duration ratio exceeds one third** (`MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (1)). -/
+/-- **The duration ratio exceeds one third**: an actual forward window has `t > 1/3`. -/
 theorem fh_low_ratio (W : M2Window) (hF : W.ForwardNext) : 1 / 3 < W.nt := by
   by_contra h
   push Not at h

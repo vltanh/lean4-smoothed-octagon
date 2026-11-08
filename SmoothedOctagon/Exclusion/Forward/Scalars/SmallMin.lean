@@ -5,23 +5,24 @@ public import SmoothedOctagon.Exclusion.Forward.Scalars.Neighbor
 /-!
 # Case F scalars: the small forward minimum
 
-`SMALL_FORWARD_MINIMUM_HAND_PROOF`, `MIXED_GLOBAL_SMALL_FORWARD_MINIMUM` §§1-5 and
-`HAND_H5_INTEGRAL_RATIONAL_BOUND`: at a forward window whose centre is a minimum of the five margins,
-`a² > 4/3`, i.e. `U < 3`.
+At a forward window whose centre is a minimum of the five margins, `a² > 4/3`, i.e. `U < 3`.
 
-Route: the notes' argument, with three changes. The larger neighbour is lowered by a difference
-comparison (`fs_res_le`) instead of the derivative (16); all three faces use one integral bound
-(`fs_res_integral`, NEIGHBOR_INTEGRAL (9)) with the exact values at `h = 1` (`fs_res_one`,
-`fs_res_slope`); the signs of `R₀, …, R₃` (H5 (12)) are proved by Bernstein expansions in
-`μ = m/v`, `v` instead of the hand coefficient bounds.
+Suppose `U ≥ 3`. The left row makes the residual `𝓔 = αA - B - nF_{z/S}(h) - mV` nonnegative for
+every admissible opposite floor `V ≤ v`. The larger neighbour is lowered by a difference comparison
+(`fs_res_le`) to one of three comparison faces: `q = 1` when `S² ≤ K`; `w = z` with `U ≥ 2z + 1`
+(the low face); `w = z` with `U < 2z + 1` (the hard face). On each face `𝓔 < 0`. All three faces use
+one integral bound (`fs_res_integral`) with the exact values at `h = 1` (`fs_res_one`,
+`fs_res_slope`). On the hard face the bound is a rational envelope whose sign reduces to a cubic
+`P > 0`; the coefficients `R₀, …, R₃` of `(2 - m)³P` in `p = U - 3` are signed by Bernstein
+expansions in `μ = m/v`, `v`.
 
 ## Main API
 
 * `fs_res U z w h V`: the residual `αA - B - nF_{z/S}(h) - mV` with a free opposite floor `V`;
   `fs_res_canon`, `fs_res_integral`, `fs_res_one`, `fs_res_slope`, `fs_res_le`.
 * `fs_Fw w q`: the central logarithmic term; `fs_Fw_nonpos_le`, `fs_Fw_hard` (`F(q) ≤ 0`).
-* `fs_H5P`, `fs_H5P_pos`: the cubic of H5 (10) is positive; `fs_hardB`, `fs_hard_alg`: the rational
-  envelope (H5 (3)) is negative.
+* `fs_H5P`, `fs_H5P_pos`: the cubic `P` is positive; `fs_hardB`, `fs_hard_alg`: the rational
+  envelope of the hard face is negative.
 * `fs_face_q1`, `fs_face_low`, `fs_face_hard`: the three comparison faces.
 * `fs_U_lt_three`: `W.U < 3` for every `ff_Dim` window.
 -/
@@ -34,8 +35,7 @@ open Real Set
 
 /-! ### The residual with a free opposite floor -/
 
-/-- The residual `𝓔 = αA - B - nF_{z/S}(h) - mV` with a free opposite floor `V`
-(MIXED_GLOBAL_SMALL_FORWARD_MINIMUM (15)). -/
+/-- The residual `𝓔 = αA - B - nF_{z/S}(h) - mV` with a free opposite floor `V`. -/
 noncomputable def fs_res (U z w h V : ℝ) : ℝ :=
   ff_alpha U z h * ff_A U z w - ff_B U z h - ff_n U z h * ff_F (z / (1 + z)) h - ff_m U z w h * V
 
@@ -56,10 +56,10 @@ theorem fs_res_canon {U z w h V : ℝ} (hU : 0 < U) (hz : 0 < z) (hh : 0 < h) (h
   field_simp
   ring
 
-/-- `F_w(q) = (q - 1)/T + y(1 - 1/q) - log q` (HAND_FORWARD_NEIGHBOR_INTEGRAL (2)). -/
+/-- The central logarithmic term `F_w(q) = (q - 1)/T + y(1 - 1/q) - log q`. -/
 noncomputable def fs_Fw (w q : ℝ) : ℝ := (q - 1) / (1 + w) + w / (1 + w) * (1 - 1 / q) - Real.log q
 
-/-- The value at `h = 1` of the canonical form (NEIGHBOR_INTEGRAL (7)). -/
+/-- The value at `h = 1` of the canonical form. -/
 theorem fs_res_one {U z w V : ℝ} (hU : 0 < U) (hz : 0 < z) (hw : 0 < w) :
     fs_N0 U z (ff_A U z w) V (ff_q U z w) + fs_N1 U z (ff_A U z w) V (ff_q U z w) +
       -(z ^ 2 * (U - z) / (z ^ 2 + U)) + z ^ 2 * (1 + z) / (z ^ 2 + U) =
@@ -78,7 +78,7 @@ theorem fs_res_one {U z w V : ℝ} (hU : 0 < U) (hz : 0 < z) (hw : 0 < w) :
   field_simp
   ring
 
-/-- The slope at `h = 1` of the canonical form (NEIGHBOR_INTEGRAL (8)). -/
+/-- The slope at `h = 1` of the canonical form. -/
 theorem fs_res_slope {U z w V : ℝ} (hU : 0 < U) (hz : 0 < z) (hw : 0 < w) :
     fs_N1 U z (ff_A U z w) V (ff_q U z w) + 2 * -(z ^ 2 * (U - z) / (z ^ 2 + U)) -
       z ^ 2 * (1 + z) / (z ^ 2 + U) + z + z * (1 + z) * (U - z) / (z ^ 2 + U) =
@@ -98,8 +98,8 @@ theorem fs_res_slope {U z w V : ℝ} (hU : 0 < U) (hz : 0 < z) (hw : 0 < w) :
   field_simp
   ring
 
-/-- **The integral bound** (NEIGHBOR_INTEGRAL (9), SMALL_FORWARD_MINIMUM_HAND_PROOF (7)):
-`𝓔(h) ≤ 𝓔(1) + e𝓔'(1) + z²d e²/(2h) - z f(h)`, `d = S²/Z - 1`, `e = h - 1`. -/
+/-- **The integral bound**: `𝓔(h) ≤ 𝓔(1) + e𝓔'(1) + z²d e²/(2h) - z f(h)`, `d = S²/Z - 1`,
+`e = h - 1`, by the second-order comparison of canonical functions (`fs_cf_nonneg`). -/
 theorem fs_res_integral {U z w h V : ℝ} (hz : 1 ≤ z) (hzU : z ≤ U) (hh : 1 < h) :
     fs_res U z w h V ≤
       (fs_N0 U z (ff_A U z w) V (ff_q U z w) + fs_N1 U z (ff_A U z w) V (ff_q U z w) +
@@ -146,7 +146,7 @@ theorem fs_res_integral {U z w h V : ℝ} (hz : 1 ≤ z) (hzU : z ≤ U) (hh : 1
     have : 0 ≤ z * (U - z) * (s - 1) := mul_nonneg (mul_nonneg hz0.le (by linarith)) (by linarith)
     nlinarith
 
-/-! ### The central logarithmic term (SMALL_FORWARD_MINIMUM_HAND_PROOF §2) -/
+/-! ### The central logarithmic term -/
 
 theorem fs_hasDerivAt_Fw (w : ℝ) {q : ℝ} (hq : 0 < q) (hw : 0 < 1 + w) :
     HasDerivAt (fs_Fw w) ((q - 1) * (q - w) / ((1 + w) * q ^ 2)) q := by
@@ -248,7 +248,7 @@ theorem fs_Fw_S {z : ℝ} (hz : 3 ≤ z) : fs_Fw z (1 + z) ≤ 0 := by
     have : 0 ≤ (S - 1) * (S - 2) := mul_nonneg (by linarith) (by linarith)
     positivity
 
-/-- **`F(q) ≤ 0` on the hard face** (SMALL_FORWARD_MINIMUM_HAND_PROOF (4)): for `U ≥ 3`, `1 ≤ z < U`. -/
+/-- **`F(q) ≤ 0` on the hard face**: for `U ≥ 3`, `1 ≤ z < U`. -/
 theorem fs_Fw_hard {U z : ℝ} (hU : 3 ≤ U) (hzU : z < U) (hz : 1 ≤ z) :
     fs_Fw z ((1 + z) * (1 + z) / (1 + U)) ≤ 0 := by
   have hK : 0 < 1 + U := by linarith
@@ -277,7 +277,7 @@ theorem fs_Fw_hard {U z : ℝ} (hU : 3 ≤ U) (hzU : z < U) (hz : 1 ≤ z) :
     · exact le_trans (fs_Fw_mono hz hqz.le hq4) (fs_Fw_quarter hz hz3)
     · exact le_trans (fs_Fw_mono hz hqz.le hqS) (fs_Fw_S hz3)
 
-/-! ### The cubic `P` (H5 (10)-(19)) -/
+/-! ### The cubic `P` -/
 
 theorem fs_H5_R3 {m v : ℝ} (hm : 0 ≤ m) (hmv : m ≤ v) (hv1 : v ≤ 1) :
     0 ≤ -(3) * m ^ (2:ℕ) * v - (3) * m ^ (2:ℕ) - (3) * m * v ^ (2:ℕ) + (6) * m + (6) * v := by
@@ -488,14 +488,15 @@ theorem fs_H5_R0 {m v : ℝ} (hm : 0 ≤ m) (hmv : m ≤ v) (hv1 : v ≤ 1) (hv 
   have h4 : 0 < v ^ 3 * ((6) * m ^ (6:ℕ) * v - (4) * m ^ (6:ℕ) - m ^ (5:ℕ) * v ^ (3:ℕ) - (32) * m ^ (5:ℕ) * v + (56) * m ^ (5:ℕ) + (6) * m ^ (4:ℕ) * v ^ (3:ℕ) - (12) * m ^ (4:ℕ) * v ^ (2:ℕ) + (40) * m ^ (4:ℕ) * v - (224) * m ^ (4:ℕ) - (20) * m ^ (3:ℕ) * v ^ (3:ℕ) - (112) * m ^ (3:ℕ) * v + (256) * m ^ (3:ℕ) + (40) * m ^ (2:ℕ) * v ^ (3:ℕ) + (128) * m ^ (2:ℕ) * v - (48) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (32) * v ^ (3:ℕ)) := by linarith
   exact pos_of_mul_pos_right h4 (pow_pos hv 3).le
 
-/-- The cubic `P` of HAND_H5_INTEGRAL_RATIONAL_BOUND (10), with `l = λ`. -/
+/-- The cubic `P` in `v` that controls the rational envelope of the hard face, with `l = λ`. -/
 noncomputable def fs_H5P (z l v : ℝ) : ℝ :=
   (z + l) ^ 2 * v ^ 3 - 3 * z * (1 - l) * (1 + z) * (z + l) * v ^ 2 +
     ((1 + l) * (1 - l) * (1 + z) * z * (3 * (z - 1) + (1 - l)) - 6 * (z + l) * (z - l) * (1 - z * l)) * v +
     (1 + l) * (1 - l) * (1 + z) * (3 * (z - 1) + (1 - l)) * (z - l)
 
-/-- **`P > 0`** (H5_INTEGRAL_RATIONAL_BOUND §§3-4): `(2 - m)³P = R₀ + R₁p + R₂p² + R₃p³`,
-`m = 1 - λ`, `p = (2 - m)z - (2 + m) = U - 3`. -/
+/-- **`P > 0`**: `(2 - m)³P = R₀ + R₁p + R₂p² + R₃p³`, `m = 1 - λ`,
+`p = (2 - m)z - (2 + m) = U - 3`, with `R₀ > 0` and `R₁, R₂, R₃ ≥ 0` by their Bernstein expansions.
+-/
 theorem fs_H5P_pos {z l v : ℝ} (hl0 : 0 < l) (hl1 : l < 1) (hvm : 1 - l ≤ v) (hv1 : v ≤ 1)
     (hv0 : 0 < v) (hp : 0 ≤ (1 + l) * z - (3 - l)) : 0 < fs_H5P z l v := by
   obtain ⟨m, rfl⟩ : ∃ m, l = 1 - m := ⟨1 - l, by ring⟩
@@ -520,17 +521,18 @@ theorem fs_H5P_pos {z l v : ℝ} (hl0 : 0 < l) (hl1 : l < 1) (hvm : 1 - l ≤ v)
   exact pos_of_mul_pos_right hpos (by have : 0 < 2 - m := by linarith
                                       positivity)
 
-/-! ### The hard face: the rational envelope (HAND_H5_INTEGRAL_RATIONAL_BOUND) -/
+/-! ### The hard face: the rational envelope -/
 
-/-- The rational envelope `𝓑` of H5_INTEGRAL_RATIONAL_BOUND (3), in the quantities `S, Z, K, q, x, d`. -/
+/-- The rational envelope `𝓑` of the integral bound on the hard face (logarithms replaced by Padé
+bounds), in the quantities `S, Z, K, q, x, d`. -/
 noncomputable def fs_hardB (S Z K q x d h z : ℝ) : ℝ :=
   (h - 1) * (S * K / Z) * x * (q - 1) * (q / S - x) / q -
     K ^ 2 / (S * Z) * (q - 1 + (h - 1) * (S * q - 1)) *
       (x * (x - 1 / 2) * d + x * d ^ 2 / (3 * (d + 2))) +
     z ^ 2 * d * (h - 1) ^ 2 / (2 * h) - z * (h - 1) ^ 3 / (3 * h * (h + 1))
 
-/-- **The H5 integral bound is negative** (H5_INTEGRAL_RATIONAL_BOUND, Theorem), in the coordinates
-`m = 1 - λ = (2z + 1 - U)/S`: `Z = S(S - m)`, `K = S(2 - m)`, `q = S/(2 - m)`, `d = m/(S - m)`. -/
+/-- **The rational envelope is negative**, in the coordinates `m = 1 - λ = (2z + 1 - U)/S`:
+`Z = S(S - m)`, `K = S(2 - m)`, `q = S/(2 - m)`, `d = m/(S - m)`. -/
 theorem fs_hard_alg {z m h : ℝ} (hz : 1 ≤ z) (hm0 : 0 < m) (hm1 : m < 1)
     (hp : 3 ≤ 2 * z + 1 - m * (1 + z)) (hhl : (1 + z) / (1 + z - m) ≤ h) (hhu : h ≤ (1 + z) / z)
     (hh1 : 1 < h) (hq : 1 ≤ (1 + z) / (2 - m)) :
@@ -610,7 +612,7 @@ theorem fs_hard_alg {z m h : ℝ} (hz : 1 ≤ z) (hm0 : 0 < m) (hm1 : m < 1)
 /-! ### The three comparison faces -/
 
 /-- `Δ = F_x(I) - (1 - x + x²) ≥ Δ₀ = x(x - 1/2)d + xd²/(3(d + 2))`, `d = I - 1`
-(NEIGHBOR_INTEGRAL (6), from the Padé bound). -/
+(from the Padé bound). -/
 theorem fs_Delta_ge {x I : ℝ} (hx : 0 ≤ x) (hI : 1 < I) :
     x * (x - 1 / 2) * (I - 1) + x * (I - 1) ^ 2 / (3 * ((I - 1) + 2)) ≤
       ff_F x I - (1 - x + x ^ 2) := by
@@ -632,7 +634,7 @@ theorem fs_Delta_ge {x I : ℝ} (hx : 0 ≤ x) (hI : 1 < I) :
       1 + x ^ 2 * I - (x * (I + 1) / 2 - x * (I - 1) ^ 2 / (3 * (I + 1))) - (1 - x + x ^ 2) := by ring
   linarith
 
-/-- **The hard face** (SMALL_FORWARD_MINIMUM_HAND_PROOF): `w = z`, `U ≥ 3`, `S² ≥ K`, `H = S²/Z > 1`. -/
+/-- **The hard face** `w = z`, `U ≥ 3`, `S² ≥ K`, `H = S²/Z > 1`: the residual is negative. -/
 theorem fs_face_hard {U z h : ℝ} (hU : 3 ≤ U) (hUz : U < 2 * z + 1) (hzU : z < U) (hz : 1 ≤ z)
     (hq : 1 + U ≤ (1 + z) ^ 2) (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h) (hhu : h ≤ (1 + z) / z)
     (hh1 : 1 < h) : fs_res U z z h (ff_F (z / (1 + z)) ((1 + z) ^ 2 / (z ^ 2 + U))) < 0 := by
@@ -707,7 +709,7 @@ theorem fs_face_hard {U z h : ℝ} (hU : 3 ≤ U) (hUz : U < 2 * z + 1) (hzU : z
       _ ≤ h := hhl
   · rw [← e3]; exact hq1
 
-/-- **The low face** (MIXED_GLOBAL_SMALL_FORWARD_MINIMUM §5): `w = z`, `S² ≥ K`, `H = S²/Z ≤ 1`. -/
+/-- **The low face** `w = z`, `S² ≥ K`, `H = S²/Z ≤ 1`: the residual is negative. -/
 theorem fs_face_low {U z h : ℝ} (hzU : z < U) (hz : 1 ≤ z) (hq : 1 + U ≤ (1 + z) ^ 2)
     (hlow : 2 * z + 1 ≤ U) (hh1 : 1 < h) :
     fs_res U z z h (1 - z / (1 + z) + (z / (1 + z)) ^ 2) < 0 := by
@@ -751,8 +753,8 @@ theorem fs_face_low {U z h : ℝ} (hzU : z < U) (hz : 1 ≤ z) (hq : 1 + U ≤ (
   simp only [e0, mul_zero, sub_zero] at hInt
   nlinarith [mul_pos hz0 hpos]
 
-/-- **The zero-central-factor face** (MIXED_GLOBAL_SMALL_FORWARD_MINIMUM §4): `q = 1`,
-`w = K/S - 1`, opposite floor `1 - y + y²`. -/
+/-- **The zero-central-factor face** `q = 1`, `w = K/S - 1`, opposite floor `1 - y + y²`: the
+residual is negative. -/
 theorem fs_face_q1 {U z h : ℝ} (hzU : z < U) (hz : 1 ≤ z) (hq : (1 + z) ^ 2 ≤ 1 + U) (hh1 : 1 < h) :
     fs_res U z ((1 + U) / (1 + z) - 1) h
       (1 - ((1 + U) / (1 + z) - 1) / (1 + ((1 + U) / (1 + z) - 1)) +
@@ -789,8 +791,8 @@ theorem fs_face_q1 {U z h : ℝ} (hzU : z < U) (hz : 1 ≤ z) (hq : (1 + z) ^ 2 
 
 /-! ### Lowering the larger neighbour and the whole-window statement -/
 
-/-- **Lowering the larger neighbour** (MIXED_GLOBAL_SMALL_FORWARD_MINIMUM §3 (16), difference form):
-with `B(w) = 1 - y + y² ≤ V` and `V' ≤ V`, `𝓔(w, V) ≤ 𝓔(w', V')` for `1 ≤ w' ≤ w` and `q(w') ≥ 1`. -/
+/-- **Lowering the larger neighbour**, in difference form: with `B(w) = 1 - y + y² ≤ V` and
+`V' ≤ V`, `𝓔(w, V) ≤ 𝓔(w', V')` for `1 ≤ w' ≤ w` and `q(w') ≥ 1`. -/
 theorem fs_res_le {U z w w' h V V' : ℝ} (hU : 0 < U) (hz : 0 < z) (hw' : 1 ≤ w') (hww : w' ≤ w)
     (hq : 1 ≤ ff_q U z w') (hh : 1 ≤ h) (hVB : 1 - w / (1 + w) + (w / (1 + w)) ^ 2 ≤ V)
     (hVV : V' ≤ V) : fs_res U z w h V ≤ fs_res U z w' h V' := by
@@ -927,8 +929,8 @@ theorem fs_U_lt_three_le (W : ff_Dim) (hzw : W.z ≤ W.w) : W.U < 3 := by
       have hneg := fs_face_hard hU3 hhard hzU hz hSK hhl hhu hh1
       linarith
 
-/-- **The small forward minimum** (SMALL_FORWARD_MINIMUM_HAND_PROOF; MIXED_GLOBAL_SMALL_FORWARD_MINIMUM
-§§1-5): at a forward window whose centre is a minimum of the five margins, `U < 3`. -/
+/-- **The small forward minimum**: at a forward window whose centre is a minimum of the five
+margins, `U < 3`. -/
 theorem fs_U_lt_three (W : ff_Dim) : W.U < 3 := by
   rcases le_total W.z W.w with h | h
   · exact fs_U_lt_three_le W h

@@ -13,7 +13,6 @@ of unity.
 
 This constructs the global continuous multi-curve. It does not assert differentiability or a
 balanced pair. Those require the separate regular parametrization and arclength arguments.
-The source has not been compiled or kernel-checked.
 -/
 
 @[expose] public section
@@ -168,8 +167,8 @@ lemma criticalBoundaryTrace_circleRepresentation (hG : rein_Good K) (hS : rein_S
 /-- A normalized actual worst disk admits a global continuous normalized multi-curve with
 common period `2π`, simple boundary traversal on each period, and the prescribed initial points.
 
-No boundary curve is assumed in the hypotheses. The missing analytic upgrade to a balanced
-pair is deliberately separate from this topological construction. -/
+No boundary curve is assumed in the hypotheses. The analytic upgrade to a balanced pair is
+separate from this topological construction (`BalancedReduction`). -/
 theorem exists_continuous_normalized_boundary_trace (hK : IsWorstDisk K) (hS : rein_Std K) :
     ∃ σ : ZMod 6 → ℝ → Fin 2 → ℝ,
       (∀ j, Continuous (σ j)) ∧

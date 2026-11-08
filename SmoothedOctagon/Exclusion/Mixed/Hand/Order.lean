@@ -7,13 +7,11 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Secant
 # Case M2 by hand: order bounds from the actual norm floors
 
 * `nh_q_le_order`: on `k ≥ 2t + x`-type data, the incoming floor and the swapped secant order give
-  `q ≤ W/(2t + x)` (`MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION` (1); `MIXED_NONSHORT_REVERSE_HAND_EXCLUSION`
-  (14)).
-* `nh_reverse_order`: **the reverse order bound** `d ≤ b*` (`MIXED_NONSHORT_REVERSE_ORDER_BOUND`
-  (7)), i.e. `k ≥ 2t + x` (`nh_reverse_order_k`), for a reverse successor.
+  `q ≤ W/(2t + x)`.
+* `nh_reverse_order`: **the reverse order bound** `d ≤ b*`, i.e. `k ≥ 2t + x`
+  (`nh_reverse_order_k`), for a reverse successor.
 * `nh_log_one_add_gt3`: three atanh terms for `log(1 + x)`.
-* `nh_window_dur`: **the duration bound** `d < 7c/3`
-  (`MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON` (1)), i.e. `x < 7/3 - (10/3)t`
+* `nh_window_dur`: **the duration bound** `d < 7c/3`, i.e. `x < 7/3 - (10/3)t`
   (`nh_window_dur_x`).
 -/
 
@@ -21,7 +19,7 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Secant
 
 namespace SmoothedOctagon
 
-/-- **The order-face factor interval** (`MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION` (1)): with
+/-- **The order-face factor interval**: with
 `2t + x ≥ 1`, the incoming floor `F_{p/W}(q) ≤ v = Sec(t, 1 - t, t + x)` and `1 < q < W/p` force
 `q ≤ W/(2t + x)`. -/
 theorem nh_q_le_order {t x q v : ℝ} (ht : 0 < t) (ht2 : t < 1 / 2) (hx : 0 < x)
@@ -50,7 +48,7 @@ theorem nh_q_le_order {t x q v : ℝ} (ht : 0 < t) (ht2 : t < 1 / 2) (hx : 0 < x
     (by linarith) (by linarith)
   linarith
 
-/-- **The reverse order bound** (`MIXED_NONSHORT_REVERSE_ORDER_BOUND` (7)): a reverse successor
+/-- **The reverse order bound**: a reverse successor
 forces `d ≤ b* = K/(a + c) - a`. -/
 theorem nh_reverse_order (W : M2Window) (hR : W.ReverseNext) : W.d ≤ W.bStar := by
   obtain ⟨A, haA, hAd, hAdr, hw, hwle⟩ := hR
@@ -173,7 +171,7 @@ theorem nh_log_ten_thirds : (119 / 100 : ℝ) < Real.log (10 / 3) := by
   norm_num at this ⊢
   linarith
 
-/-- **The duration bound** `d < 7c/3` (`MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON` (1)). -/
+/-- **The duration bound** `d < 7c/3`. -/
 theorem nh_window_dur (W : M2Window) : 3 * W.d < 7 * W.c := by
   have ha := W.a_pos
   have hc : 0 < W.c := by linarith [W.a_lt_c]

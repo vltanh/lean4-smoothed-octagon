@@ -5,12 +5,12 @@ public import SmoothedOctagon.Exclusion.Mixed.Scalar
 /-!
 # Case M2: the algebra of the smaller-nonshort window
 
-`MIXED_SMALLER_TURN_CONTINUATION` (CONT) (8), (10), (14), (16) and inventory E2 §1.4, as identities
-between real numbers. In the centre frame the multiplier is `[[h, y₀], [z₀, -h]]` with
+The transports of the multiplier through the smaller-nonshort window, as identities between real
+numbers. In the centre frame the multiplier is `[[h, y₀], [z₀, -h]]` with
 `u = 8 z₀/S²`, `v = -8 y₀/(q_a² T²)` and `q_a = K/(ST)` (`S = b + a`, `T = a + c`, `K = a² + 4`);
 transport through the reverse switch after `a` and the forward switch after `c` (factors
 `q_c = W/T`, `q_d = WZ/Q`) gives the frame of `d`, whose diagonal is `h_d` and whose outgoing norm
-is `w` (CONT (10)); one more forward transport gives the next norm `t` (CONT (14), (16)).
+is `w`; one more forward transport gives the next norm `t`.
 
 ## Main API
 
@@ -24,7 +24,7 @@ is `w` (CONT (10)); one more forward transport gives the next norm `t` (CONT (14
 
 namespace SmoothedOctagon
 
-/-- CONT (10): the diagonal of the frame of `d`. -/
+/-- The diagonal of the frame of `d`. -/
 theorem wx_alg_hd {a b c d h y0 qm q1 : ℝ} (ha : 0 < a) (hc : 0 < c)
     (hqm : qm = (a ^ 2 + 4) / ((b + a) * (a + c))) (hq1 : q1 = (c + d) / (a + c)) :
     q1 ^ 2 * -(y0 / qm ^ 2) + (h + y0 / qm ^ 2) =
@@ -35,7 +35,7 @@ theorem wx_alg_hd {a b c d h y0 qm q1 : ℝ} (ha : 0 < a) (hc : 0 < c)
   field_simp
   ring
 
-/-- CONT (10): the outgoing norm of `d`. -/
+/-- The outgoing norm of `d`. -/
 theorem wx_alg_w {a b c d r h y0 z0 qm q1 q2 : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hd : 0 < d) (hr : 0 < r)
     (hqm : qm = (a ^ 2 + 4) / ((b + a) * (a + c))) (hq1 : q1 = (c + d) / (a + c))
@@ -49,7 +49,7 @@ theorem wx_alg_w {a b c d r h y0 z0 qm q1 q2 : ℝ} (ha : 0 < a) (hb : 0 < b) (h
   field_simp
   ring
 
-/-- CONT (14), (16): the norm of a forward switch after `r`, to an active margin `s`. -/
+/-- The norm of a forward switch after `r`, to an active margin `s`. -/
 theorem wx_alg_t {c d r s v w X2 Z2 q2 q3 : ℝ} (hc : 0 < c) (hd : 0 < d) (hr : 0 < r)
     (hs : 0 < s) (hq2 : q2 = (c + d) * (d + r) / (d ^ 2 + 4))
     (hq3 : q3 = (d + r) * (r + s) / (r ^ 2 + 4)) (hw : w = 8 * q2 ^ 2 * Z2 / (d + r) ^ 2) :
@@ -59,7 +59,7 @@ theorem wx_alg_t {c d r s v w X2 Z2 q2 q3 : ℝ} (hc : 0 < c) (hd : 0 < d) (hr :
   field_simp
   ring
 
-/-- CONT (8): the squared Casimir in the centre frame. -/
+/-- The squared Casimir in the centre frame. -/
 theorem wx_alg_cas {a b c h y0 z0 qm : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hqm : qm = (a ^ 2 + 4) / ((b + a) * (a + c))) :
     h * -h - y0 * z0 = m2Cas a (8 * z0 / (b + a) ^ 2) (-8 * y0 / (qm ^ 2 * (a + c) ^ 2)) h := by

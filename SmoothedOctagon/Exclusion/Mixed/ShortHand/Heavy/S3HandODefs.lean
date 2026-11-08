@@ -5,14 +5,12 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S3Leaves
 /-!
 # Gate S3, the outer face by hand: the reciprocal-shape decomposition
 
-Hand proof of the leaf `hs3_outer_face` (`DISPLACEMENT_OUTER_FACE` (4)-(21)), first part,
-following `archive/lighter-proofs/SHORT_DISPLACEMENT_OUTER_COMPLETE.md` and
-`SHORT_DISPLACEMENT_OUTER_RECIPROCAL.md` §1. At `q = 1/7`, with the beta slope
+Proof of the leaf `hs3_outer_face`, first part. At `q = 1/7`, with the beta slope
 `β = x + C(α - 1)`, `r = 1/α` and a constant duration weight `n`, the rational outer test
 `R_n = J + n(w - 3/4)` (the logarithm replaced by its rational majorant) is
-`R_n = P_n(r) + (u - 3/4)A_n(r) + 1/Z - 56/K` (`hl3o_decomp`, the note's (5)), where
-`49A_i = nα_i + β_i`, `49SB_i = nγ_i + δ_i`, `P_i = 3A_i/4 + B_i` are printed in
-`SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA.md` §1, `Z = 1 + C + (x - C)r`, `K = 5Z + 14`. The
+`R_n = P_n(r) + (u - 3/4)A_n(r) + 1/Z - 56/K` (`hl3o_decomp`), where
+`49A_i = nα_i + β_i`, `49SB_i = nγ_i + δ_i`, `P_i = 3A_i/4 + B_i` with the coefficient polynomials
+`hl3oα0`, …, `hl3oδ2` printed below, `Z = 1 + C + (x - C)r`, `K = 5Z + 14`. The
 incoming ceiling is `ū = 3/4 + V(r)`, `V = c + c(x - 1)r/(C + (x - C - 1)r)`,
 `c = (x - 1)²/(S(35x + 13))` (`hl3o_UO`).
 
@@ -111,7 +109,7 @@ noncomputable def hl3oV (x C r : ℝ) : ℝ := hl3oc x + hl3oc x * (x - 1) * r /
 noncomputable def hl3oPhi (x C r : ℝ) : ℝ :=
   1 / (1 + C + (x - C) * r) - 56 / (5 * (1 + C + (x - C) * r) + 14)
 
-/-- **The outer test in reciprocal shape** `R_n = P_n + V·A_n + Φ` (the note's (5) at `u = ū`). -/
+/-- **The outer test in reciprocal shape** `R_n = P_n + V·A_n + Φ` at `u = ū`. -/
 noncomputable def hl3oG (x C n r : ℝ) : ℝ := hl3oP x C n r + hl3oV x C r * hl3oA x C n r + hl3oPhi x C r
 
 /-- `f(z) = -1/z² + 280/(5z + 14)²`, so that `Φ' = (x - C)f(Z)`. -/
@@ -134,7 +132,8 @@ noncomputable def hl3oG2 (x C n r : ℝ) : ℝ :=
 
 /-! ### The decomposition -/
 
-/-- **The reciprocal-shape decomposition** (`SHORT_DISPLACEMENT_OUTER_RECIPROCAL` (3)-(5)). -/
+/-- **The reciprocal-shape decomposition** `R_n = P_n(r) + (u - 3/4)A_n(r) + 1/Z - 56/K`, one
+polynomial identity in `x, C, n, u, r`. -/
 theorem hl3o_decomp {x C a u n : ℝ} (hx : 0 < x) (ha : 0 < a) (hC : 0 ≤ C) (hCx : C ≤ x) :
     hs3Fn x (x + C * (a - 1)) a u (1 / 7) n
         (319847 / 180000 - 56 * a / (19 * a + 5 * (x + C * (a - 1)))) =

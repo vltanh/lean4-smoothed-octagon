@@ -7,8 +7,6 @@ public import SmoothedOctagon.LowerBound
 /-!
 # The equality case
 
-`GLOBAL_COST_EQUALITY_ASSEMBLY` §6 and `MINIMIZER_WINDOW_AUDIT` §6.
-
 * A worst disk is a linear image of the smoothed octagon. Normalize the worst disk, realize it by
   its own boundary trajectory (a global control minimizer by the reverse comparison), rebase and
   relabel it to the octagon's trajectory by the terminal equality, and transport the six contact

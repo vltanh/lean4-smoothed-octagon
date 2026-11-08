@@ -5,18 +5,18 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW1a
 /-!
 # W1, part b: the normalized shape source `N` and its boundary jets
 
-`archive/lighter-proofs/SHORT_CASIMIR_FIRST_DERIVATIVES.md` §3.2. On the upper faces
-`b = 20x/19`, `u = 19/25` the normalized source is
-`N(x, a) = 3325a²(19a + 20x)²K³Φ_a(x, a, 20x/19, 19/25)`. The note prints its boundary jets
-`N(2, a) = V(a)`, `N_x(2, a) = W(a)` and its second derivative `-N_xx = P_N(c, h)`
-(`c = a - 1`, `h = x - 2`). Integrating `P_N = Σ_j π_j(c) h^j` twice in `h`,
+On the upper faces `b = 20x/19`, `u = 19/25` the normalized source is
+`N(x, a) = 3325a²(19a + 20x)²K³Φ_a(x, a, 20x/19, 19/25)`, with boundary jets
+`N(2, a) = V(a)`, `N_x(2, a) = W(a)` and second derivative `-N_xx = P_N(c, h)`
+(`c = a - 1`, `h = x - 2`), all written out as explicit polynomials. Integrating
+`P_N = Σ_j π_j(c) h^j` twice in `h`,
 
 `N = V(a) + W(a)h - h²Q(c, h)`, `Q = Σ_j π_j(c) h^j/((j + 1)(j + 2))`,
 
 an identity of polynomials of degree ten in two variables (`hl46_w1_N_taylor`), proved from the
-source form `hl46W1Nsrc` (`hl46_w1_Pa_src`). The monomial rule of the note (§3: discard the
-positive terms containing `c`, bound `c^i` by `(3/19)^i` in the negative ones) applied to the
-printed `P_N`, `-W(1 + c)`, `V'(1 + c)` gives `Q ≥ 1100000000 + 1770000000h`,
+source form `hl46W1Nsrc` (`hl46_w1_Pa_src`). The monomial rule (discard the positive terms
+containing `c`, bound `c^i` by `(3/19)^i` in the negative ones) applied to `P_N`, `-W(1 + c)`,
+`V'(1 + c)` gives `Q ≥ 1100000000 + 1770000000h`,
 `-W(1 + c) > 172000000`, `V'(1 + c) > 0`.
 
 ## Main API
@@ -49,7 +49,7 @@ noncomputable def hl46W1Nsrc (x be al u : ℝ) : ℝ :=
           (2 * hsDg x be al * u - hh46S4P x u) * (2 * al))) +
     al * (al + be) * (x * (x + 2) + al ^ 2) ^ 2 * (x * (x + 2) * (2 * al + be) - al ^ 2 * be)
 
-/-- `V(a) = N(2, a)` (note §3.2, printed). -/
+/-- `V(a) = N(2, a)`. -/
 noncomputable def hl46W1V (a : ℝ) : ℝ :=
   1010800 * a ^ 8 + 7782704 * a ^ 7 - 67738240 * a ^ 6 - 224073888 * a ^ 5 + 174466560 * a ^ 4 +
     959667200 * a ^ 3 - 202055680 * a ^ 2 - 575897600 * a - 196608000
@@ -59,13 +59,13 @@ noncomputable def hl46W1V1 (a : ℝ) : ℝ :=
   8086400 * a ^ 7 + 54478928 * a ^ 6 - 406429440 * a ^ 5 - 1120369440 * a ^ 4 +
     697866240 * a ^ 3 + 2879001600 * a ^ 2 - 404111360 * a - 575897600
 
-/-- `W(a) = N_x(2, a)` (note §3.2, printed). -/
+/-- `W(a) = N_x(2, a)`. -/
 noncomputable def hl46W1W (a : ℝ) : ℝ :=
   505400 * a ^ 8 + 8976170 * a ^ 7 - 80987040 * a ^ 6 - 435736672 * a ^ 5 + 226700800 * a ^ 4 +
     2482515200 * a ^ 3 - 346757120 * a ^ 2 - 1871667200 * a - 737280000
 
-/-- `Q = Σ_j π_j(c)h^j/((j + 1)(j + 2))`, where `P_N = -N_xx = Σ_j π_j(c)h^j` is the printed
-degree-eight polynomial of note §3.2 (its coefficients grouped by powers of `h`). -/
+/-- `Q = Σ_j π_j(c)h^j/((j + 1)(j + 2))`, where `P_N = -N_xx = Σ_j π_j(c)h^j` is a polynomial of
+degree eight (its coefficients grouped by powers of `h`). -/
 noncomputable def hl46W1Q (c h : ℝ) : ℝ :=
   (-5372896 * c ^ 7 + 17904608 * c ^ 6 + 842261304 * c ^ 5 + 3719761880 * c ^ 4 +
       1853070800 * c ^ 3 - 8463256816 * c ^ 2 - 6417881512 * c + 3430692024) / 2 +
@@ -105,7 +105,7 @@ theorem hl46_w1_mon {c h γ : ℝ} (hc0 : 0 ≤ c) (hc : c ≤ γ) (hh : 0 ≤ h
 theorem hl46_w1_nn {c h : ℝ} (hc0 : 0 ≤ c) (hh : 0 ≤ h) (i j : ℕ) : 0 ≤ c ^ i * h ^ j := by
   positivity
 
-/-- The monomial rule on `P_N` (note §3.2, `L_N(h) > 0`), integrated twice. -/
+/-- The monomial rule on `P_N` (its lower polynomial in `h` is positive), integrated twice. -/
 theorem hl46_w1_Q_ge {c h : ℝ} (hc0 : 0 ≤ c) (hc : c ≤ 3 / 19) (hh : 0 ≤ h) :
     1100000000 + 1770000000 * h ≤ hl46W1Q c h := by
   have m := hl46_w1_mon hc0 hc hh
@@ -116,7 +116,7 @@ theorem hl46_w1_Q_ge {c h : ℝ} (hc0 : 0 ≤ c) (hc : c ≤ 3 / 19) (hh : 0 ≤
     n 4 3, n 3 3, n 2 3, n 1 3, n 4 4, n 3 4, n 2 4, n 1 4, n 3 5, n 2 5, n 1 5,
     n 2 6, n 1 6, n 0 2, n 0 3, n 0 4, n 0 5, n 0 6, n 0 7]
 
-/-- `-W(1 + c) > 172000000` (note §3.2, `L_W > 172746439`). -/
+/-- `-W(1 + c) > 172000000` (the monomial rule gives the lower bound `172746439`). -/
 theorem hl46_w1_W_neg {a : ℝ} (ha : 1 ≤ a) (ha' : a ≤ 22 / 19) : hl46W1W a ≤ -172000000 := by
   have hc0 : 0 ≤ a - 1 := by linarith
   have hc : a - 1 ≤ 3 / 19 := by linarith
@@ -133,7 +133,7 @@ theorem hl46_w1_W_neg {a : ℝ} (ha : 1 ≤ a) (ha' : a ≤ 22 / 19) : hl46W1W a
     linarith [m 8 0, m 7 0, m 2 0, m 1 0, n 6 0, n 5 0, n 4 0, n 3 0]
   linarith
 
-/-- `V'(1 + c) > 0` (note §3.2, `L_V > 0`). -/
+/-- `V'(1 + c) > 0` (by the monomial rule). -/
 theorem hl46_w1_V1_pos {a : ℝ} (ha : 1 ≤ a) (ha' : a ≤ 22 / 19) : 0 < hl46W1V1 a := by
   have hc0 : 0 ≤ a - 1 := by linarith
   have hc : a - 1 ≤ 3 / 19 := by linarith

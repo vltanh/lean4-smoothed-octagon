@@ -108,7 +108,6 @@ import all SmoothedOctagon.Exclusion.Mixed.Hand.Strip
 import all SmoothedOctagon.Exclusion.Mixed.Hand.Unit
 import all SmoothedOctagon.Exclusion.Mixed.Interface
 import all SmoothedOctagon.Exclusion.Mixed.Location
-import all SmoothedOctagon.Exclusion.Mixed.LowScaleHand
 import all SmoothedOctagon.Exclusion.Mixed.NonshortScalar
 import all SmoothedOctagon.Exclusion.Mixed.Reflection
 import all SmoothedOctagon.Exclusion.Mixed.ReverseHand

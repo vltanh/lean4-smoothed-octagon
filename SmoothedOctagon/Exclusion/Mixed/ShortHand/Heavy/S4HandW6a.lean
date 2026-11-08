@@ -5,10 +5,9 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandDefs
 /-!
 # Gate S4, hand proof of W6: third-order jets and the terminal source
 
-`archive/lighter-proofs/SHORT_CASIMIR_TERMINAL_CONCAVITY.md` §§1-3. On the terminal line
-`x = 13/6`, `e = 13/5`, put `r = 13d` (`0 ≤ r ≤ 13/19`). Then `Ψ = G(u) - (r₁ + log y)/7` with
-the incoming value `u(r) = (r² - 7r + 6133)/8112 + v/(r + 7)`, `v = 160867/6319248` (note (3)),
-the Casimir quadratic `G` (note (4)) and the partial-fraction form (note (7), (10))
+On the terminal line `x = 13/6`, `e = 13/5`, put `r = 13d` (`0 ≤ r ≤ 13/19`). Then
+`Ψ = G(u) - (r₁ + log y)/7` with the incoming value `u(r) = (r² - 7r + 6133)/8112 + v/(r + 7)`,
+`v = 160867/6319248`, the Casimir quadratic `G` in `u` and the partial-fraction form
 
 `r₁ = -56/33 + 25u/66 + (α_A u + β_A)/A + (α_B u + β_B)/B + (n - mu)/K`,
 `y = 12AB/K`, `A = r + 5`, `B = 11r + 95`, `K = 36r² + 360r + 9025`.
@@ -177,7 +176,7 @@ theorem hl46_j3_logK {x : ℝ} (hx : 0 ≤ x) :
 
 /-! ### The incoming value and the source -/
 
-/-- `u(r) = (r² - 7r + 6133)/8112 + v/(r + 7)`, `v = 160867/6319248` (note (3)). -/
+/-- `u(r) = (r² - 7r + 6133)/8112 + v/(r + 7)`, `v = 160867/6319248`. -/
 noncomputable def hl46W6U (r : ℝ) : ℝ := (r ^ 2 - 7 * r + 6133) / 8112 + 160867 / 6319248 / (r + 7)
 
 noncomputable def hl46W6U1 (r : ℝ) : ℝ := (2 * r - 7) / 8112 - 160867 / 6319248 / (r + 7) ^ 2
@@ -212,7 +211,7 @@ theorem hl46_j3_U {x : ℝ} (hx : 0 ≤ x) : HL46J3 hl46W6U hl46W6U1 hl46W6U2 hl
     field_simp
     ring
 
-/-- **The terminal source** (note (10)): `Ψ` on `x = 13/6`, `e = 13/5` as a function of `r = 13d`. -/
+/-- **The terminal source**: `Ψ` on `x = 13/6`, `e = 13/5` as a function of `r = 13d`. -/
 noncomputable def hl46W6F (r : ℝ) : ℝ :=
   -47045881 / 60840000 * (hl46W6U r * hl46W6U r) + 83616986 / 60840000 * hl46W6U r -
     1 / 7 * (25 / 66 * hl46W6U r +
@@ -223,7 +222,7 @@ noncomputable def hl46W6F (r : ℝ) : ℝ :=
       (log (1 * r + 5) + log (11 * r + 95) - log (hl46W6K r))) +
     (-25230529 / 60840000 - 1 / 7 * (-56 / 33 + log 12))
 
-/-- **The source identities** (note (3), (4), (6)-(10)): on `0 ≤ r`, `Ψ(13/6, r/13, 13/5)` is
+/-- **The source identities**: on `0 ≤ r`, `Ψ(13/6, r/13, 13/5)` is
 `hl46W6F r`. -/
 theorem hl46_w6_eq {r : ℝ} (hr : 0 ≤ r) : hl46PsiC (13 / 6) (r / 13) (13 / 5) = hl46W6F r := by
   have hu : hsUbar (13 / 6) (13 / 6 * (1 + r / 13)) = hl46W6U r := by

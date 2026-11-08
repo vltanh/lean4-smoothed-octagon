@@ -8,7 +8,7 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.CertHighT
 /-!
 # Case M2 by hand: the high-ratio exclusion `t < 2/5`
 
-`MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION`. If `t ≥ 2/5`, the sharpened scale `a² < 2/3`
+If `t ≥ 2/5`, the sharpened scale `a² < 2/3`
 (`nh_a_sq`) gives `k > 7t²`; `t < T(x)` gives `x < 1/3` and the centre gap gives `x > 1/7`.
 Lowering `k` to `7t²`, the cleared cubic `P = C₀ + C₁y + C₂y² + C₃y³` is positive: `C₀ > 0` and,
 on each of the four `x`-rows, `C₁ > b`, `C₂ > -M`, `C₃ > c` with `4bc > M²`
@@ -81,7 +81,7 @@ theorem nhT_poly_pos {t x y : ℝ} (ht0 : 2 / 5 ≤ t) (ht1 : t ≤ 1 / 2) (hx0 
     exact nh_row_cubic (b := 3 / 2) (M := 31 / 2) (c := 41) hy h0 (by linarith) (by linarith)
       (by linarith) (by norm_num) (by norm_num)
 
-/-- **The high-ratio exclusion** (`MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION`): `t < 2/5`. -/
+/-- **The high-ratio exclusion**: `t < 2/5`. -/
 theorem nh_high_t' (W : M2Window) : W.nt < 2 / 5 := by
   obtain ⟨ht, ht2, hx, hk1, hq, hqW, hv, hvU, hg, hF, hak⟩ := nh_window_basic W
   by_contra hcon

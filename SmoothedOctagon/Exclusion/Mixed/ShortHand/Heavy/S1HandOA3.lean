@@ -5,12 +5,11 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOA1
 /-!
 # Gate S1 by hand, outer face, branch A: the test `F₀`
 
-`SHORT_OUTER_LARGE_SHAPE_REDUCTION` §§6-7, `SHORT_OUTER_UPPER_SHAPE_TERMINAL` §§1-2,
-`SHORT_OUTER_A_F0_TERMINAL`. On `3/2 ≤ x ≤ 2`, `6/5 ≤ α ≤ x`, `24/43 ≤ C ≤ 10/13`:
+On `3/2 ≤ x ≤ 2`, `6/5 ≤ α ≤ x`, `24/43 ≤ C ≤ 10/13`:
 
 * norm concavity reduces `u` to `3/4`, `19/25`;
 * at these norms the reciprocal-shape curvature of `F₀` is at most `M₀ + 7/648 < 0` for every
-  `C` of the interval (`p₄ ≤ 0`, `4p₄/x + p₃ ≤ 0`, `(e/Z)²(1 - 2/Z) ≤ 4/27`; `(A16)-(A25)`), so
+  `C` of the interval (`p₄ ≤ 0`, `4p₄/x + p₃ ≤ 0`, `(e/Z)²(1 - 2/Z) ≤ 4/27`), so
   `α ∈ {6/5, x}`;
 * at `α = 6/5`, `F₀` decreases in `β` (`hl1o_F0_bmono`): raise `C` to `10/13`;
 * at `α = x`, `w` and `E_L` do not depend on `β`: `F₀ = Ψ(x, u) - c[(u - 1)Z + 1/Z + ℓ(2Z/7)]`
@@ -18,9 +17,8 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOA1
   (`-1/4 - 1/Z² + 1/Z = -(Z - 2)²/(4Z²)`), so `C = 24/43`;
 * the three terminal curves are positive.
 
-Route: the curvature bound `M₀ < -7/648` is proved for all `C` at once by a two-variable sign in
-`(x, C)`, instead of the endpoint interpolation `(A23)-(A24)`; the terminal curves are cleared and
-bounded termwise instead of the concavity in `x` of the terminal notes.
+The curvature bound `M₀ < -7/648` is proved for all `C` at once by a two-variable sign in
+`(x, C)`; the terminal curves are cleared and bounded termwise.
 
 ## Main API
 
@@ -48,7 +46,7 @@ theorem hl1o_F0_diag (x b u : ℝ) :
   rw [hw, hE]
   ring
 
-/-- The numerator of `-(M₀ + 7/648)` at `u = 3 / 4`, `x = 3/2 + t`, `C = 24/43 + c` (`SHORT_OUTER_LARGE_SHAPE_REDUCTION` (A20)-(A24)). -/
+/-- The numerator of `-(M₀ + 7/648)` at `u = 3 / 4`, `x = 3/2 + t`, `C = 24/43 + c`. -/
 noncomputable def hl1PM0f (t c : ℝ) : ℝ :=
   -1 / 56 * t ^ 7 + 1 / 56 * t ^ 6 * c ^ 2 + 177 / 2408 * t ^ 6 * c - 713113 / 4970112 * t ^ 6 + 9 / 56 * t ^ 5 * c ^ 2 + 9773 / 14448 * t ^ 5 * c - 1654391 / 4970112 * t ^ 5 + 127 / 224 * t ^ 4 * c ^ 2 + 2453 / 1032 * t ^ 4 * c + 57716417 / 536772096 * t ^ 4 + 111 / 112 * t ^ 3 * c ^ 2 + 113969 / 28896 * t ^ 3 * c + 397245365 / 268386048 * t ^ 3 + 799 / 896 * t ^ 2 * c ^ 2 + 346267 / 115584 * t ^ 2 * c + 648060017 / 306726912 * t ^ 2 + 345 / 896 * t * c ^ 2 + 51739 / 77056 * t * c + 781763813 / 715696128 * t + 225 / 3584 * c ^ 2 - 12015 / 77056 * c + 132171779 / 954261504
 
@@ -92,7 +90,7 @@ theorem hl1o_A_M0_f {x C : ℝ} (hx : 3 / 2 ≤ x) :
   ring
 
 
-/-- The numerator of `-(M₀ + 7/648)` at `u = 19 / 25`, `x = 3/2 + t`, `C = 24/43 + c` (`SHORT_OUTER_LARGE_SHAPE_REDUCTION` (A20)-(A24)). -/
+/-- The numerator of `-(M₀ + 7/648)` at `u = 19 / 25`, `x = 3/2 + t`, `C = 24/43 + c`. -/
 noncomputable def hl1PM0v (t c : ℝ) : ℝ :=
   -3 / 175 * t ^ 7 + 19 / 1050 * t ^ 6 * c ^ 2 + 332 / 4515 * t ^ 6 * c - 12925001 / 97072500 * t ^ 6 + 57 / 350 * t ^ 5 * c ^ 2 + 12167 / 18060 * t ^ 5 * c - 26458363 / 97072500 * t ^ 5 + 2413 / 4200 * t ^ 4 * c ^ 2 + 141507 / 60200 * t ^ 4 * c + 1533048569 / 5241915000 * t ^ 4 + 703 / 700 * t ^ 3 * c ^ 2 + 46341 / 12040 * t ^ 3 * c + 236286556 / 131047875 * t ^ 3 + 15181 / 16800 * t ^ 2 * c ^ 2 + 340791 / 120400 * t ^ 2 * c + 4086026311 / 1677412800 * t ^ 2 + 437 / 1120 * t * c ^ 2 + 51369 / 96320 * t * c + 17701291 / 13978440 * t + 57 / 896 * c ^ 2 - 7713 / 38528 * c + 2662853 / 14910336
 
@@ -316,7 +314,7 @@ theorem hl1o_A_F065v {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ))
     rw [hid]; exact div_pos (by linarith) hD
   linarith
 
-/-- `φ(Z) = -Z/4 + 1/Z + ℓ(2Z/7)` decreases for `Z ≥ 2` (`SHORT_OUTER_LARGE_SHAPE_REDUCTION` §7). -/
+/-- `φ(Z) = -Z/4 + 1/Z + ℓ(2Z/7)` decreases for `Z ≥ 2`. -/
 theorem hl1_phiZ_anti {Z1 Z2 : ℝ} (h1 : 2 ≤ Z1) (h12 : Z1 ≤ Z2) :
     -(Z2 / 4) + 1 / Z2 + hh1ell (2 * Z2 / 7) ≤ -(Z1 / 4) + 1 / Z1 + hh1ell (2 * Z1 / 7) := by
   have key := ss_le_of_deriv (f := fun Z => -(-(Z / 4) + 1 / Z + hh1ell (2 * Z / 7)))
@@ -343,7 +341,7 @@ theorem hl1_phiZ_anti {Z1 Z2 : ℝ} (h1 : 2 ≤ Z1) (h12 : Z1 ≤ Z2) :
       linarith)
   linarith
 
-/-- **Reciprocal-shape concavity of `F₀` on the large shapes** (`(A25)`). -/
+/-- **Reciprocal-shape concavity of `F₀` on the large shapes**. -/
 theorem hl1o_A_recip0 {x a C u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha : 6 / 5 ≤ a) (hax : a ≤ x)
     (hC0 : 24 / 43 ≤ C) (hC1 : C ≤ 10 / 13) (hu : u = 3 / 4 ∨ u = 19 / 25) :
     min (hh1oF0 x x (x + C * (x - 1)) u) (hh1oF0 x (6 / 5) (x + C * (6 / 5 - 1)) u) ≤

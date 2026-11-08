@@ -14,10 +14,9 @@ radial-hull theorem supplies convexity. High costs are handled by the existing
 octagon. No geometric reconstruction or comparison hypothesis remains.
 
 Consequently an actual worst disk has a globally cost-minimizing control
-realization. The remaining universal control lower bound is equivalent to the
-original geometric conjecture. This equivalence does not prove that lower bound
-or classify the minimizers. Source draft: compilation and kernel validation have
-not been run.
+realization, and the universal control lower bound is equivalent to the original
+geometric conjecture. The lower bound itself is proved in `LowerBound`
+(`controlLowerBound`).
 -/
 
 @[expose] public section
@@ -127,8 +126,8 @@ theorem controlMinimizer_balanced_worstDisk {T : ℝ} {u : ℝ → Fin 3 → ℝ
     ⟨hbal.1, hdensity.trans (controlMinimizer_density_eq_minimax hmin)⟩
   exact ⟨K, σ, hK, hbal, hcirc, harea⟩
 
-/-- The remaining universal control inequality, including all terminal times
-and arbitrary measurable simplex controls. It is still an open proposition. -/
+/-- The universal control inequality, including all terminal times and arbitrary measurable
+simplex controls. It is proved in `LowerBound` (`controlLowerBound`). -/
 def ControlLowerBound : Prop :=
   ∀ (T : ℝ) (u : ℝ → Fin 3 → ℝ) (g X : ℝ → Mat2),
     IsReinhardtAdmissible T u g X → volume.real octagon ≤ reinhardtCost T X

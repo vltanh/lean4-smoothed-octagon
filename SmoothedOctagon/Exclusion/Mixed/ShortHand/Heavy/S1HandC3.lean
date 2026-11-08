@@ -5,21 +5,18 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandC2
 /-!
 # Gate S1 by hand, central face: the shape step
 
-`SHORT_CENTRAL_SHAPE_F0`, `SHORT_CENTRAL_SHAPE_F1`.
-
 * First test: along `β₊ = x + (10/13)(α - 1)` at a fixed norm, `(r₀)_α + (10/13)(r₀)_β ≥ 1/40 + 2/625`
   below the tangent chord `α_U` of the cap (affine in `u`; two-variable signs at `u = 3/4, 19/25`),
   so `F₀` decreases with slope `≤ -c/40`; along the ceiling `u_ℓ(x, β₊)` the norm motion costs at
-  most `(1/5)(15/1992)(10/13)` per unit (`SHAPE_F0` (1), (6)): `hl1c_F0_astep`.
+  most `(1/5)(15/1992)(10/13)` per unit: `hl1c_F0_astep`.
 * Second test at `u = 19/25`: `F₁(x, α, β₊, 19/25) = Γ - c φ(α) - g` with
-  `φ = N/V + ℓ(Y/K)`, `V = αBK`, `Y = 2αB` (`SHAPE_F1` (1)-(3)); `φ″ ≥ (N/V)″ + (log y)″ - (1/625)y″/y`
+  `φ = N/V + ℓ(Y/K)`, `V = αBK`, `Y = 2αB`; `φ″ ≥ (N/V)″ + (log y)″ - (1/625)y″/y`
   (`ℓ″ ≥ -1/y²`, `yℓ′(y) = 1 - ε ≥ 624/625`, `y″ ≥ 0`) and `V³((N/V)″ + (log y)″)` is the curvature
-  circuit of `(2)`, at least `V³/500` below the cap; so `φ` is convex and
+  circuit, at least `V³/700` below the cap (`Heavy/S1HandC3b`); so `φ` is convex and
   `F₁(α) ≥ min(F₁(1), F₁(α_c))`: `hl1c_F1_conc`.
 
-Route: below the cap the circuit is positive, so the third derivative `P_aaa` and the endpoint jets
-of `SHAPE_F1` §§2-4 are not needed, and the slope of the first test is bounded below the tangent
-chord directly instead of by the cap division `(3)` of `SHAPE_F0`.
+The convexity uses only the positivity of the circuit below the cap, and the slope of the first
+test is bounded below the tangent chord `α_U` directly.
 
 ## Main API
 
@@ -79,7 +76,7 @@ theorem hl1_qphi_hasDerivAt {N N1 N2 V V1 V2 Y Y1 Y2 K K1 K2 : ℝ → ℝ} {t :
 
 /-! ### The central circuit -/
 
-/-- `N` of `SHORT_CENTRAL_SHAPE_F1` (1) at `u = 19/25`, as a quartic in the shape `t`. -/
+/-- The numerator `N` of `φ = N/V + ℓ(Y/K)` at `u = 19/25`, as a quartic in the shape `t`. -/
 noncomputable def hl1cN (x t : ℝ) : ℝ :=
   (-12 / 25 * x ^ 5 + 3197 / 1300 * x ^ 4 - 88 / 25 * x ^ 3 + 17933 / 4225 * x ^ 2 - 1746 / 4225 * x) +
     (-42 / 325 * x ^ 4 + 79 / 65 * x ^ 3 + 51 / 169 * x ^ 2 - 808 / 325 * x + 12 / 65) * t +
@@ -109,7 +106,7 @@ noncomputable def hl1cY (x t : ℝ) : ℝ := 2 * t * hl1cB x t
 noncomputable def hl1cY1 (x t : ℝ) : ℝ := 2 * hl1cB x t + 2 * t * (23 / 13)
 noncomputable def hl1cY2 (_x _t : ℝ) : ℝ := 4 * (23 / 13)
 
-/-- Numerator of `(r₀)_α + (10/13)(r₀)_β - 1/40 - 2/625` along `β₊`, `u = 3/4` (`SHORT_CENTRAL_SHAPE_F0` (2)-(6)). -/
+/-- Numerator of `(r₀)_α + (10/13)(r₀)_β - 1/40 - 2/625` along `β₊`, `u = 3/4`. -/
 noncomputable def hl1cPafx (x a : ℝ) : ℝ :=
   169 / 4 * x ^ 9 + 171171 / 5000 * x ^ 8 * a ^ 2 + 637 / 2 * x ^ 8 * a + 156 * x ^ 8 + 3276591 / 2500 * x ^ 7 * a ^ 3 + 1809343 / 2500 * x ^ 7 * a ^ 2 + 1421 * x ^ 7 * a - 3 * x ^ 7 + 68004003 / 16250 * x ^ 6 * a ^ 4 - 96495453 / 8125 * x ^ 6 * a ^ 3 + 128315339 / 16250 * x ^ 6 * a ^ 2 + 13916 / 13 * x ^ 6 * a - 5216 / 13 * x ^ 6 + 94713299 / 32500 * x ^ 5 * a ^ 5 - 1083499013 / 32500 * x ^ 5 * a ^ 4 + 280050743 / 16250 * x ^ 5 * a ^ 3 + 80916993 / 8125 * x ^ 5 * a ^ 2 - 28616 / 13 * x ^ 5 * a + 60 / 13 * x ^ 5 - 53439151 / 32500 * x ^ 4 * a ^ 6 - 837610673 / 105625 * x ^ 4 * a ^ 5 - 1138569553 / 105625 * x ^ 4 * a ^ 4 + 5343318911 / 211250 * x ^ 4 * a ^ 3 - 152691762 / 21125 * x ^ 4 * a ^ 2 - 21560 / 13 * x ^ 4 * a + 4800 / 13 * x ^ 4 - 36690451 / 32500 * x ^ 3 * a ^ 7 + 16720038761 / 422500 * x ^ 3 * a ^ 6 - 6597328228 / 105625 * x ^ 3 * a ^ 5 + 3144298419 / 105625 * x ^ 3 * a ^ 4 - 111316857 / 21125 * x ^ 3 * a ^ 3 - 10239316 / 4225 * x ^ 3 * a ^ 2 + 19600 / 13 * x ^ 3 * a - 2000 / 13 * x ^ 3 - 61899 / 1250 * x ^ 2 * a ^ 8 + 2537269446 / 105625 * x ^ 2 * a ^ 7 - 3901444863 / 211250 * x ^ 2 * a ^ 6 - 305582848 / 21125 * x ^ 2 * a ^ 5 + 41164226 / 4225 * x ^ 2 * a ^ 4 + 347210 / 169 * x ^ 2 * a ^ 3 - 263400 / 169 * x ^ 2 * a ^ 2 - 42159 / 2500 * x * a ^ 9 - 166150182 / 105625 * x * a ^ 8 + 1222932027 / 42250 * x * a ^ 7 - 197103887 / 4225 * x * a ^ 6 + 4716935 / 169 * x * a ^ 5 - 1195160 / 169 * x * a ^ 4 + 35900 / 169 * x * a ^ 3 + 2000 / 13 * x * a ^ 2 - 74589 / 5000 * a ^ 10 + 3243 / 250 * a ^ 9 + 21008523 / 4225 * a ^ 8 - 2371819 / 338 * a ^ 7 + 342970 / 169 * a ^ 6 + 93850 / 169 * a ^ 5 - 3000 / 13 * a ^ 4
 
@@ -192,7 +189,7 @@ theorem hl1cPafx_eq (x a : ℝ) : hl1cPafx x a = hl1cPafs (x - 41 / 25) ((1013 *
   unfold hl1cPafx hl1cPafs
   ring
 
-/-- Numerator of `(r₀)_α + (10/13)(r₀)_β - 1/40 - 2/625` along `β₊`, `u = 19/25` (`SHORT_CENTRAL_SHAPE_F0` (2)-(6)). -/
+/-- Numerator of `(r₀)_α + (10/13)(r₀)_β - 1/40 - 2/625` along `β₊`, `u = 19/25`. -/
 noncomputable def hl1cPavx (x a : ℝ) : ℝ :=
   1014 / 25 * x ^ 9 + 163371 / 5000 * x ^ 8 * a ^ 2 + 7813 / 25 * x ^ 8 * a + 3744 / 25 * x ^ 8 + 3143841 / 2500 * x ^ 7 * a ^ 3 + 1763443 / 2500 * x ^ 7 * a ^ 2 + 34858 / 25 * x ^ 7 * a - 72 / 25 * x ^ 7 + 65264853 / 16250 * x ^ 6 * a ^ 4 - 98650478 / 8125 * x ^ 6 * a ^ 3 + 64231657 / 8125 * x ^ 6 * a ^ 2 + 341368 / 325 * x ^ 6 * a - 125184 / 325 * x ^ 6 + 90858999 / 32500 * x ^ 5 * a ^ 5 - 1113045763 / 32500 * x ^ 5 * a ^ 4 + 144040934 / 8125 * x ^ 5 * a ^ 3 + 80967018 / 8125 * x ^ 5 * a ^ 2 - 701968 / 325 * x ^ 5 * a + 288 / 65 * x ^ 5 - 51378351 / 32500 * x ^ 4 * a ^ 6 - 1811141271 / 211250 * x ^ 4 * a ^ 5 - 2157453481 / 211250 * x ^ 4 * a ^ 4 + 2696606868 / 105625 * x ^ 4 * a ^ 3 - 155013362 / 21125 * x ^ 4 * a ^ 2 - 105776 / 65 * x ^ 4 * a + 4608 / 13 * x ^ 4 - 35288601 / 32500 * x ^ 3 * a ^ 7 + 16994847361 / 422500 * x ^ 3 * a ^ 6 - 6689775753 / 105625 * x ^ 3 * a ^ 5 + 3251392219 / 105625 * x ^ 3 * a ^ 4 - 120171412 / 21125 * x ^ 3 * a ^ 3 - 9903796 / 4225 * x ^ 3 * a ^ 2 + 19232 / 13 * x ^ 3 * a - 1920 / 13 * x ^ 3 - 61899 / 1250 * x ^ 2 * a ^ 8 + 2588807271 / 105625 * x ^ 2 * a ^ 7 - 2014533544 / 105625 * x ^ 2 * a ^ 6 - 294030758 / 21125 * x ^ 2 * a ^ 5 + 40470178 / 4225 * x ^ 2 * a ^ 4 + 1717008 / 845 * x ^ 2 * a ^ 3 - 261504 / 169 * x ^ 2 * a ^ 2 - 42159 / 2500 * x * a ^ 9 - 675246853 / 422500 * x * a ^ 8 + 619782871 / 21125 * x * a ^ 7 - 200001351 / 4225 * x * a ^ 6 + 24101608 / 845 * x * a ^ 5 - 6220768 / 845 * x * a ^ 4 + 47264 / 169 * x * a ^ 3 + 1920 / 13 * x * a ^ 2 - 74589 / 5000 * a ^ 10 + 3243 / 250 * a ^ 9 + 42612171 / 8450 * a ^ 8 - 30300328 / 4225 * a ^ 7 + 1835856 / 845 * a ^ 6 + 83696 / 169 * a ^ 5 - 2880 / 13 * a ^ 4
 

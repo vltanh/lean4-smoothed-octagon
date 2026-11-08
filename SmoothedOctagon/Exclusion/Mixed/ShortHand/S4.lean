@@ -10,13 +10,12 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4Hand
 /-!
 # Hand proof of the smaller-short case, gate S4: `α ≤ 1 + 3δ` and `Γ > 1829/10000`
 
-`MIXED_SMALLER_SHORT_SMALL_SHAPE_UPPER_ORDER` (U) and `MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_FLOOR`
-(F) with `SMALL_SHAPE_CASIMIR_FLOOR` §§1-3, `EXTENDED_CASIMIR_DERIVATIVES`; inventory HS-S4
-(R1-R23). On `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`: (U) is `hs_small_upper_order`; for (F), the corrected
-envelope cap with constant `1/7` (`HsData.hs4_cap_env`), the scale moves (`hs4_scale_dec_p`,
-`hs4_tau2_dec`) to the central scale `q_c`, the duration maximum (`hs_dur_max`), the norm
-substitution `u ↦ ū` (`hs4_u_dec`) and the central-scale floor `min{Φ, Ψ}(ū) > 1829/10000`
-(`hs4_floor_box`, heavy).
+Gate S4 proves the small-shape upper order (U) `α ≤ 1 + 3δ` and the extended Casimir floor (F)
+`Γ > 1829/10000`. On `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`: (U) is `hs_small_upper_order`; for (F), the
+corrected envelope cap with constant `1/7` (`HsData.hs4_cap_env`), the scale moves
+(`hs4_scale_dec_p`, `hs4_tau2_dec`) to the central scale `q_c`, the duration maximum (`hs_dur_max`),
+the norm substitution `u ↦ ū` (`hs4_u_dec`) and the central-scale floor `min{Φ, Ψ}(ū) > 1829/10000`
+(`hs4_floor_box`).
 
 ## Main API
 
@@ -24,12 +23,10 @@ substitution `u ↦ ū` (`hs4_u_dec`) and the central-scale floor `min{Φ, Ψ}(�
   residual), `Hs14/Slope` (lower norm endpoints of the slope inequalities), `Hs14/Cap` and
   `Hs14/Data` (the corrected envelope cap), `Hs14/Ratio` (the ratio `7/96` on the order strip).
 
-* `hs4Phi`, `hs4Psi`: `Φ = Γ_*(q_c) - R*_2(q_c)/7`, `Ψ = Φ - (T - 2)(w_*(q_c) - 3/4)/7`
-  (`SMALL_SHAPE_CASIMIR_FLOOR` (10)-(11)).
-* Stable: `HsData.hs4_cap_env`, `hs4_scale_dec_p`, `hs4_tau2_dec`, `hs4_u_dec`, `hs4_ubar_box`.
-* Heavy: `hs4_floor_box` (`EXTENDED_CASIMIR_DERIVATIVES` (4)-(31), `EXTENDED_CASIMIR_FLOOR` (10)),
-  proved by hand in `Heavy/S4Hand*` (`archive/lighter-proofs/SHORT_CASIMIR_COMPLETE.md`: the six
-  derivative signs W1-W6 and three scalar endpoints).
+* `hs4Phi`, `hs4Psi`: `Φ = Γ_*(q_c) - R*_2(q_c)/7`, `Ψ = Φ - (T - 2)(w_*(q_c) - 3/4)/7`.
+* `HsData.hs4_cap_env`, `hs4_scale_dec_p`, `hs4_tau2_dec`, `hs4_u_dec`, `hs4_ubar_box`.
+* `hs4_floor_box`, proved by hand in `Heavy/S4Hand*` (the six derivative signs W1-W6 and three
+  scalar endpoints).
 * Gate: `HsData.s4`, `M2Short.hs_S4`.
 -/
 
@@ -39,12 +36,12 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- **The fixed-`p` scale move** (`ENVELOPE_SCALE_MONOTONICITY` (5)-(10), `CORRECTED_CAP_SCALE` (1),
-(8)-(10); inventory HS-S4 R13, R14, R17(a)): for `x > 1`, `1 ≤ α < x ≤ β`, `0 < p ≤ r_A`,
+/-- **The fixed-`p` scale move**: for `x > 1`, `1 ≤ α < x ≤ β`, `0 < p ≤ r_A`,
 `3/4 ≤ u ≤ min{U(1/(1 + x)), U(r_A)}`, `q ↦ Γ_*(q) - (C(p) + qL(p))/7` is strictly decreasing on
-`(0, 1/6]` (`L > 0`, `∂_q Γ_* < (27/200)L`). Status: stable.
-Route: increments instead of derivatives (`hs14_Gs_inc`); slope (1) by `hs14_slope_gen` with the
-identity (5) (`hs14_bot_ccs`) and `hs14_Lp_top_pos` (monotone in `A₃`, no discriminant identity). -/
+`(0, 1/6]` (`L > 0`, `∂_q Γ_* < (27/200)L`).
+Proof: the monotonicity in `q` by increments (`hs14_Gs_inc`); the slope inequality
+`4H(2S - 1) < 3α²L` by `hs14_slope_gen` with its lower norm endpoint at `β = x` (`hs14_bot_ccs`)
+and `hs14_Lp_top_pos` (monotone in `A₃`). -/
 theorem hs4_scale_dec_p {x be al u p q₁ q₂ : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al < x)
     (hxb : x ≤ be) (hp : 0 < p) (hpr : p ≤ hsRA al be) (hu : 3 / 4 ≤ u)
     (hur : u ≤ m2U (1 / (1 + x))) (hurA : u ≤ m2U (hsRA al be)) (hq₁ : 0 < q₁) (hq : q₁ < q₂)
@@ -52,7 +49,7 @@ theorem hs4_scale_dec_p {x be al u p q₁ q₂ : ℝ} (hx : 1 < x) (hal : 1 ≤ 
     hsGs x al u q₂ - hsPhi x be al u p 0 q₂ / 7 < hsGs x al u q₁ - hsPhi x be al u p 0 q₁ / 7 := by
   have hal0 : 0 < al := by linarith
   have hS : 0 < 1 + x := by linarith
-  -- the slope inequality `4H(2S - 1) < 3α²L` (`CORRECTED_CAP_SCALE` (1))
+  -- the slope inequality `4H(2S - 1) < 3α²L`
   have hpx : p ≤ al / (al + x) := by
     refine hpr.trans ?_
     unfold hsRA; exact div_le_div_of_nonneg_left hal0.le (by linarith) (by linarith)
@@ -89,7 +86,7 @@ theorem hs4_scale_dec_p {x be al u p q₁ q₂ : ℝ} (hx : 1 < x) (hal : 1 ≤ 
   have : 27 / 200 * L * (q₂ - q₁) ≤ (q₂ - q₁) * L / 7 := by nlinarith
   linarith
 
-/-- `C₀ = 1 + 2A₁ + A₃ ≤ 5` on the small box (`EXTENDED_CASIMIR_FLOOR` §1, inventory HS-S4 R15):
+/-- `C₀ = 1 + 2A₁ + A₃ ≤ 5` on the small box:
 `C₀ = 2 + 3ε + εE₀ + 2Δ(E₀ + u)`, `E₀ < 0 < E₀ + u`, `D ≤ S`, `2S(E₀ + u) ≤ 13/5`. -/
 private theorem hs4_C0_le {x be al u : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal1 : 1 ≤ al) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 31 / 40) (hDS : hsDg x be al ≤ 1 + x) :
@@ -137,10 +134,9 @@ private theorem hs4_C0_le {x be al u : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) 
     linarith
   linarith
 
-/-- **The `τ = 2` scale move** (`ROOT_FLOOR_SCALE` (6), (9); `EXTENDED_CASIMIR_FLOOR` §1 (4)-(5);
-inventory HS-S4 R15-R17(b)): on `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`, `β = x(1 + δ)`,
-`3/4 ≤ u ≤ 31/40`, `u ≤ U(1/(1 + x))`: `q ↦ Γ_*(q) - R*_2(q)/7` is strictly decreasing on `(0, 1/6]`
-(`(R*_2)' > 1`, `(Γ_*)_q < 11/100`). Status: stable.
+/-- **The `τ = 2` scale move**: on `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`,
+`β = x(1 + δ)`, `3/4 ≤ u ≤ 31/40`, `u ≤ U(1/(1 + x))`: `q ↦ Γ_*(q) - R*_2(q)/7` is strictly
+decreasing on `(0, 1/6]` (`(R*_2)' > 1`, `(Γ_*)_q < 11/100`).
 Proof: `C₀ ≤ 5` (`hs4_C0_le`), `A₂ > 0` (`hs_A2_pos`), `hs14_Rs2_inc`; `hs14_Gs_inc`. -/
 theorem hs4_tau2_dec {x δ al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) (hu : 3 / 4 ≤ u)
@@ -200,7 +196,7 @@ theorem hs4_tau2_dec {x δ al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 
     nlinarith [mul_pos hq0 hA2])
   linarith
 
-/-- `D ≤ S` on the small box (`SMALL_SHAPE_CASIMIR_FLOOR` (6)). -/
+/-- `D ≤ S` on the small box. -/
 private theorem hs4_D_le_S {x be al : ℝ} (hx : 2 ≤ x) (hal1 : 1 ≤ al) (hal22 : al ≤ 22 / 19)
     (hxb : x ≤ be) : hsDg x be al ≤ 1 + x := by
   unfold hsDg
@@ -209,9 +205,8 @@ private theorem hs4_D_le_S {x be al : ℝ} (hx : 2 ≤ x) (hal1 : 1 ≤ al) (hal
   have h2 : al ^ 2 + x - 2 * x ^ 2 + 2 * x * al ≤ 0 := by nlinarith
   nlinarith
 
-/-- The shape bounds of the small box used by `hs4_u_dec` (`SMALL_SHAPE_CASIMIR_FLOOR` (6),
-`EXTENDED_CASIMIR_FLOOR` (4)): `3D ≤ Σ ≤ S³ ≤ (19/6)Σ`, `19α ≤ 11(α + β)`,
-`2α(α + β) ≤ Σ ≤ (19/6)α(α + β)`, `Σ = x(x + 2) + α²`. -/
+/-- The shape bounds of the small box used by `hs4_u_dec`: `3D ≤ Σ ≤ S³ ≤ (19/6)Σ`,
+`19α ≤ 11(α + β)`, `2α(α + β) ≤ Σ ≤ (19/6)α(α + β)`, `Σ = x(x + 2) + α²`. -/
 private theorem hs4_shape {x be al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal1 : 1 ≤ al)
     (hal22 : al ≤ 22 / 19) (hxb : x ≤ be) (hb130 : be ≤ 130 / 57) (hDS : hsDg x be al ≤ 1 + x) :
     3 * hsDg x be al ≤ x * (x + 2) + al ^ 2 ∧ x * (x + 2) + al ^ 2 ≤ (1 + x) ^ 3 ∧
@@ -299,8 +294,8 @@ private theorem hs4_Gqc_inc {x al u u' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6
   rw [show (1 + x) * ((x - 1) ^ 2 / (4 * (1 + x))) = (x - 1) ^ 2 / 4 by field_simp] at this
   exact this
 
-/-- The final sign of the `u`-slopes of `Φ`, `Ψ` (`SMALL_SHAPE_CASIMIR_FLOOR` §3, inventory HS-S4
-R19): `7/4 - R_u < 0` and `7/4 - R_u - (T - 2)w_u < 0`, `R_u = 1/r_A + C(1 - 2z) - 2z(1 - z)`,
+/-- The final sign of the `u`-slopes of `Φ`, `Ψ`:
+`7/4 - R_u < 0` and `7/4 - R_u - (T - 2)w_u < 0`, `R_u = 1/r_A + C(1 - 2z) - 2z(1 - z)`,
 `w_u = z² - zC`. -/
 private theorem hs4_u_comb {d rA z C τ' : ℝ} (hd : 0 ≤ d) (hz3 : z ≤ 1 / 3) (hC1 : 1 ≤ C)
     (hC19 : C ≤ 19 / 6) (hrA : 30 / 11 ≤ rA) (hT0 : 0 ≤ τ') (hT1 : τ' ≤ 7 / 6) :
@@ -317,10 +312,9 @@ private theorem hs4_u_comb {d rA z C τ' : ℝ} (hd : 0 ≤ d) (hz3 : z ≤ 1 / 
   · nlinarith [mul_le_mul_of_nonneg_left hRu hd]
   · nlinarith [mul_le_mul_of_nonneg_left hRu' hd]
 
-/-- **`Φ`, `Ψ` decrease in `u`** (`SMALL_SHAPE_CASIMIR_FLOOR` §3, `EXTENDED_CASIMIR_FLOOR` §2;
-inventory HS-S4 R19): on the box of `hs4_tau2_dec`, for `3/4 ≤ u ≤ u' ≤ 31/40`:
-`Φ(u') ≤ Φ(u)` and `Ψ(u') ≤ Ψ(u)`. Status: stable.
-Route: coarser constants than R19: `Γ_*(u') - Γ_*(u) ≤ (u' - u)/4` at `q_c` (`hs4_Gqc_inc`), and
+/-- **`Φ`, `Ψ` decrease in `u`**: on the box of `hs4_tau2_dec`, for `3/4 ≤ u ≤ u' ≤ 31/40`:
+`Φ(u') ≤ Φ(u)` and `Ψ(u') ≤ Ψ(u)`.
+Proof: `Γ_*(u') - Γ_*(u) ≤ (u' - u)/4` at `q_c` (`hs4_Gqc_inc`), and
 `R_u = 1/r_A + C(1 - 2z) - 2z(1 - z)` with `1/r_A ≥ 30/11`, `z ≤ 1/3`, `1 ≤ C ≤ 19/6`,
 `0 ≤ T - 2 ≤ 7/6` (`hs4_shape`, `hs4_u_comb`). -/
 theorem hs4_u_dec {x δ al u u' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1 / 19)
@@ -372,8 +366,8 @@ theorem hs4_u_dec {x δ al u u' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ 
   · unfold hs4Phi; linarith
   · unfold hs4Psi hs4Phi; linarith
 
-/-- **The incoming majorant on the box** (`INCOMING_NORM_BOUND` (2); inventory HS-S4 R9): for
-`2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`: `ū(x, x(1 + δ)) < 31/40`. Status: stable. -/
+/-- **The incoming majorant on the box**: for
+`2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`: `ū(x, x(1 + δ)) < 31/40`. -/
 theorem hs4_ubar_box {x δ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1 / 19) :
     hsUbar x (x * (1 + δ)) < 31 / 40 := by
   unfold hsUbar
@@ -397,19 +391,18 @@ theorem hs4_ubar_box {x δ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 �
     nlinarith
   linarith
 
-/-- **The extended original-Casimir floor at the central scale** (`EXTENDED_CASIMIR_DERIVATIVES`
-(4)-(31), `EXTENDED_CASIMIR_FLOOR` (9)-(10); inventory HS-S4 R20-R22): on the closed box
+/-- **The extended original-Casimir floor at the central scale**: on the closed box
 `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`, `β = x(1 + δ)`, with `u = ū(x, β)`:
-`Φ > 1829/10000` and `Ψ > 1829/10000`. Status: heavy, by hand (`Heavy/S4Hand`: W1-W6 of
-`SHORT_CASIMIR_COMPLETE`, then three scalar endpoints). -/
+`Φ > 1829/10000` and `Ψ > 1829/10000`. Proved in `Heavy/S4Hand` (the six derivative signs
+W1-W6, then three scalar endpoints). -/
 theorem hs4_floor_box {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1 / 19)
     (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
     1829 / 10000 < hs4Phi x (x * (1 + δ)) al (hsUbar x (x * (1 + δ))) ∧
       1829 / 10000 < hs4Psi x (x * (1 + δ)) al (hsUbar x (x * (1 + δ))) := by
   apply hs4_floor_box_proof <;> assumption
 
-/-- **The ratio bound with constant `1/7`** (`CORRECTED_ENVELOPE_CAP` (6)-(7), inventory HS-S4
-R12): `2ub + e ≤ (8/7)(1 - q)²(1 + τb)` when `e ≤ 3q`, `u ≤ 13/16`, `q < 3/20`, `τ > 2`,
+/-- **The ratio bound with constant `1/7`**:
+`2ub + e ≤ (8/7)(1 - q)²(1 + τb)` when `e ≤ 3q`, `u ≤ 13/16`, `q < 3/20`, `τ > 2`,
 `τq < 1/2`, `1 + τb > 0`. -/
 private theorem hs4_ratio {u q τ b e : ℝ} (hu : 3 / 4 ≤ u) (hu13 : u ≤ 13 / 16) (hq0 : 0 < q)
     (hq : q < 3 / 20) (hτ : 2 < τ) (hτq : τ * q < 1 / 2) (he : e ≤ 3 * q) (hB : 0 < 1 + τ * b) :
@@ -424,7 +417,7 @@ private theorem hs4_ratio {u q τ b e : ℝ} (hu : 3 / 4 ≤ u) (hu13 : u ≤ 13
     nlinarith
   exact le_of_mul_le_mul_left h3 hτ0
 
-/-- `0 < q_c ≤ 1/6` and `2q_c ≤ r_A` on the small box (`SMALL_SHAPE_CASIMIR_FLOOR` (6)). -/
+/-- `0 < q_c ≤ 1/6` and `2q_c ≤ r_A` on the small box. -/
 private theorem hs4_qc {x be al : ℝ} (hx : 2 ≤ x) (hal1 : 1 ≤ al) (hal22 : al ≤ 22 / 19)
     (hxb : x ≤ be) (hb130 : be ≤ 130 / 57) :
     0 < hsQc x al ∧ hsQc x al ≤ 1 / 6 ∧ 2 * hsQc x al ≤ hsRA al be := by
@@ -444,11 +437,11 @@ namespace HsData
 
 variable (H : HsData)
 
-/-- **The corrected envelope cap with constant `1/7`** (`CORRECTED_ENVELOPE_CAP` (4)-(9); inventory
-HS-S4 R10-R12): for actual data, `Γ_actual ≥ Γ_*(q) - R*_τ(q)/7` at the actual `q`, `τ`, shape and
-`u` (ratio `(2ub + E_L)/(8(1 - q)²(1 + τb)) < u/(4τ(1 - q)²) < 1/7` from `E_L ≤ 3q`, `u ≤ 13/16`,
-`q < 3/20`; two-segment monotonicity as in `hs1_cap_env`). Status: stable.
-Route: `HsData.hs14_cap_data` with the ratio bound `hs4_ratio` (`u ≤ 13/16` from `ss_V_le`,
+/-- **The corrected envelope cap with constant `1/7`**: for actual data,
+`Γ_actual ≥ Γ_*(q) - R*_τ(q)/7` at the actual `q`, `τ`, shape and `u` (ratio
+`(2ub + E_L)/(8(1 - q)²(1 + τb)) < u/(4τ(1 - q)²) < 1/7` from `E_L ≤ 3q`, `u ≤ 13/16`, `q < 3/20`;
+two-segment monotonicity as in `hs1_cap_env`).
+Proof: `HsData.hs14_cap_data` with the ratio bound `hs4_ratio` (`u ≤ 13/16` from `ss_V_le`,
 `q < 3/20` from `q_lt`, `E_L ≤ 3q` from `hs14_EL_cap`). -/
 theorem hs4_cap_env : hsGs H.x H.al H.u H.q - hsRs H.x H.be H.al H.u H.q H.τ / 7 ≤ H.Γ := by
   have hEL : H.EL ≤ 3 * H.q := by
@@ -462,13 +455,12 @@ theorem hs4_cap_env : hsGs H.x H.al H.u H.q - hsRs H.x H.be H.al H.u H.q H.τ / 
     hs4_ratio H.u_ge_34 hu13 H.hs14_q_pos H.q_lt H.two_lt_τ hτq (he.trans hEL) hB)
   linarith
 
-/-- **Gate S4** (`SMALL_SHAPE_UPPER_ORDER` (1), `EXTENDED_CASIMIR_FLOOR` (2); inventory HS-S4 R7, R23):
-on `2 ≤ x ≤ 13/6`, `δ ≤ 1/19`: `α ≤ 1 + 3δ` and `Γ > 1829/10000`.
-Proof plan: (U) `hs_small_upper_order`; (F) `strong_box` and (U) give the box; `hs4_cap_env`;
+/-- **Gate S4**: on `2 ≤ x ≤ 13/6`, `δ ≤ 1/19`: `α ≤ 1 + 3δ` and `Γ > 1829/10000`.
+Proof: (U) `hs_small_upper_order`; (F) `strong_box` and (U) give the box; `hs4_cap_env`;
 `p = τq`, `q ≤ q_c` (`q_le_qc`), `q ≤ p/2`; `hs4_scale_dec_p` (`hs_phi_eq`) to `min{q_c, p/2}`, then
 `hs4_tau2_dec` to `q_c` (`hsQc ≤ 1/6`); `hs_dur_max` at `q_c` gives `Γ ≥ min{Φ, Ψ}(u)`;
 `hs4_u_dec` with `hs_sec_le_ubar`, `hs4_ubar_box`; `hs4_floor_box`.
-Status: assembly (proved from the leaves above, with `hs14_Rs_phi`, `hs14_Rs_dur`). -/
+The proof also uses `hs14_Rs_phi` (`R*_τ = Φ_p`) and `hs14_Rs_dur`. -/
 theorem s4 (h1 : 2 ≤ H.x) (h2 : H.x ≤ 13 / 6) (h3 : H.δ ≤ 1 / 19) :
     H.al ≤ 1 + 3 * H.δ ∧ 1829 / 10000 < H.Γ := by
   have hx := H.one_lt_x

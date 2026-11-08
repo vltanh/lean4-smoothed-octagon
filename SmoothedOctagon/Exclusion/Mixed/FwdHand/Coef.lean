@@ -5,8 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.Basic
 /-!
 # Case M2, forward successor by hand: the affine structure of the combined residual
 
-`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` §§3, 5 and `MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS`
-§§4-5. The combined residual `fhComb α M t x k q v L F` is affine in the incoming norm `v`, in the
+The combined residual `fhComb α M t x k q v L F` is affine in the incoming norm `v`, in the
 logarithm `L` and in the floor `F`, and a concave quadratic in the shape `k` with leading
 coefficient `-tq⁴(qJ - pW)`.
 
@@ -55,8 +54,8 @@ theorem fh_comb_sub_F (α M t x k q v L F F' : ℝ) :
     fhComb α M t x k q v L F - fhComb α M t x k q v L F' = (F - F') * (4 * q * (1 + x) ^ 2 * M) := by
   unfold fhComb; ring
 
-/-- **Concavity in the shape** (`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` (6)): the exact three-point
-identity of a quadratic with leading coefficient `-tq⁴(qJ - pW)`. -/
+/-- **Concavity in the shape**: the exact three-point identity of a quadratic with leading
+coefficient `-tq⁴(qJ - pW)`. -/
 theorem fh_comb_concave (α M t x q v L F k k1 k2 : ℝ) :
     (k2 - k1) * fhComb α M t x k q v L F =
       (k2 - k) * fhComb α M t x k1 q v L F + (k - k1) * fhComb α M t x k2 q v L F
@@ -106,8 +105,8 @@ theorem fh_Nv_le {t x k q : ℝ} (ht : 0 ≤ t) (hx : 0 ≤ x) (hq : 1 ≤ q) (h
     linarith
   linarith
 
-/-- **The coefficient bound** (`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` (7)-(9)): the transport
-contribution to the `v`-coefficient is at most `4q²W²k(qJ - pW)`. -/
+/-- **The coefficient bound**: the transport contribution to the `v`-coefficient is at most
+`4q²W²k(qJ - pW)`. -/
 theorem fh_Cv_le {α M t x k q : ℝ} (ht : 0 ≤ t) (hk : 0 ≤ k)
     (hD : (t + x) * (1 + x) ≤ q * (t + x * (x + 2))) (hxx : 0 ≤ x * (x + 2)) :
     fhCv α M t x k q ≤ 4 * q * ((α + 1) * (1 + x) ^ 2 - (t + x * (x + 2)) * q ^ 2) * nhNv t x k q

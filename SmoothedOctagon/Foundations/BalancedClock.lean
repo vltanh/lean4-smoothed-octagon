@@ -16,8 +16,6 @@ The global velocity bound comes from the periodic frame and the Lipschitz normal
 Thus no additional smoothness or Lipschitz hypothesis on the inverse clock is introduced.
 The resulting balanced pair can be used in the upstream exact area formula once the cyclic
 contact shift is supplied by the separate cyclic-clock construction.
-
-Source draft only: compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

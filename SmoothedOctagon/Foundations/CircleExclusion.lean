@@ -15,8 +15,6 @@ Every full control minimizer has cost strictly below `π`, by comparison with
 the already constructed low-cost admissible competitor. Consequently its
 state differs from `J` somewhere in `(0,T)`. This excludes only an entirely
 circular trajectory; it says nothing about proper circular subarcs.
-
-Source draft only: Lean compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

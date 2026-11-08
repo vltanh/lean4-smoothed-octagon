@@ -5,10 +5,9 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Link
 /-!
 # Case M2, forward successor by hand: the normalized boundary root and next norm
 
-`MIXED_NONSHORT_FORWARD_RATIO_REDUCTION` §2. In the normalized coordinates of
-`MIXED_NONSHORT_SHAPE_MONOTONICITY` (`t, x, k, q`, `e = q/W`, `J = t + Y`, `D = eJ - p`,
-`E = e²B + 1 - 2pe`), with the central margin at its boundary value `b* = K/T - a` and a free
-central incident norm `u`:
+In the normalized coordinates `t = a/T`, `x = (d - a)/T`, `k = K/T²`, `q = WZ/Q` (with `e = q/W`,
+`J = t + Y`, `D = eJ - p`, `E = e²B + 1 - 2pe`), with the central margin at its boundary value
+`b* = K/T - a` and a free central incident norm `u`:
 
 * `fhHn` (`16 h/T²`), `fhwn` (the transported norm), `fhRn` (the root function `R_d/T`) and
   `fhTn` (the next transported norm `𝒯`), all affine in `u`;
@@ -64,8 +63,7 @@ noncomputable def fhKt (t x k v : ℝ) : ℝ :=
 noncomputable def fhE0 (t x k q : ℝ) : ℝ :=
   q ^ 2 * (k + 2 * t * x + x ^ 2) + (1 + x) ^ 2 - 2 * (t + x) * q * (1 + x)
 
-/-- **The cleared transport part** `4qW² C_*(3/4 - 𝒯_U)`, `C_* = tW²DE²/e`
-(`MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (24)):
+/-- **The cleared transport part** `4qW² C_*(3/4 - 𝒯_U)`, `C_* = tW²DE²/e`:
 `(qJ - pW){3tE₀² - 4tvW⁴ + 4q²W²(tH_U + 2tvY) - 4q⁴ tB²w_U}`. -/
 noncomputable def fhTP (t x k q v : ℝ) : ℝ :=
   (q * (t + x * (x + 2)) - (t + x) * (1 + x)) *
@@ -73,9 +71,9 @@ noncomputable def fhTP (t x k q v : ℝ) : ℝ :=
       + 4 * q ^ 2 * (1 + x) ^ 2 * (fhHt t k v + 2 * t * v * (x * (x + 2)))
       - 4 * q ^ 4 * fhKt t x k v)
 
-/-- **The combined residual** `4qW²[(α + 1 - Je²)N + C_*(3/4 - 𝒯_U) + M(F - v)]`
-(`MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (8), cleared by `4qW²`), with the floor value `F` and
-the logarithm `L` as free arguments. -/
+/-- **The combined residual** `4qW²[(α + 1 - Je²)N + C_*(3/4 - 𝒯_U) + M(F - v)]` (the multiplier
+combination, cleared by `4qW²`), with the floor value `F` and the logarithm `L` as free
+arguments. -/
 noncomputable def fhComb (α M t x k q v L F : ℝ) : ℝ :=
   4 * q * ((α + 1) * (1 + x) ^ 2 - (t + x * (x + 2)) * q ^ 2) * nhN t x k q v L
     + fhTP t x k q v + 4 * q * (1 + x) ^ 2 * M * (F - v)

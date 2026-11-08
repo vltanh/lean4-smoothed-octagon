@@ -8,8 +8,6 @@ public import SmoothedOctagon.Exclusion.ShortRun.Gap.Core
 /-!
 # Case M1: the reverse-centre angle gap
 
-`MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION` (1), (3)-(19): the scalar part.
-
 At a reverse centre of a mixed normal period, with `r = a/(a + p)`, `t = a/(a + n)`,
 `ρ = a²/(a² + 4)`, `u = 8 d_-`, `v = 8 d_+`, `E = 16 e` and `γ² = det U`, the data satisfy
 (`m1_CentreData`): `0 < r, t < 1/2`, `0 < ρ < r t`, `3/4 ≤ u ≤ U(r)`, `3/4 ≤ v ≤ U(t)`
@@ -21,7 +19,7 @@ At a reverse centre of a mixed normal period, with `r = a/(a + p)`, `t = a/(a + 
 
 * `m1_CentreData`: the scalar data of a reverse centre.
 * `m1_angle_gap`: under the competitive cap `γ² ≤ 97969/529200`, `E < (3/5) √(uv)`, i.e. the
-  centre angle `φ = arccos(E/(2√(uv)))` has `cos φ < 3/10` (MGSRAE (1)).
+  centre angle `φ = arccos(E/(2√(uv)))` has `cos φ < 3/10`.
 * `m1_cos_two_pi_div_five`: `cos(2π/5) = (√5 - 1)/4 > 3/10`; `m1_arccos_gt`: `arccos c > 2π/5`
   for `c < 3/10`.
 -/
@@ -32,7 +30,8 @@ namespace SmoothedOctagon
 
 open Real
 
-/-- **The scalar data of a reverse centre** (MGSRAE (3)-(6)). -/
+/-- **The scalar data of a reverse centre**: the ranges of `r, t, ρ, u, v`, the stationarity
+identity for `E` and the Gram identity for `γ²`. -/
 structure m1_CentreData (γ2 r t ρ u v E : ℝ) : Prop where
   r_pos : 0 < r
   r_lt : r < 1 / 2
@@ -47,14 +46,13 @@ structure m1_CentreData (γ2 r t ρ u v E : ℝ) : Prop where
   stat : E = 1 + r + t - ρ + Real.log (ρ / (r * t)) - (1 - u) / r - (1 - v) / t
   gram : 16 * (1 - ρ) ^ 2 * γ2 = 4 * u * v - E ^ 2
 
-/-- **The reverse-centre angle gap** (MGSRAE (1)): under the competitive Casimir cap, the centre
-angle has `cos φ = E/(2√(uv)) < 3/10`.
+/-- **The reverse-centre angle gap**: under the competitive Casimir cap, the centre angle has
+`cos φ = E/(2√(uv)) < 3/10`.
 
-Route: instead of the notes' fixed-angle path with an implicit `ρ` (MGSRAE (8)-(19)), each factor
-is moved to its boundary `u = U(r')` at fixed `u` (`ag_phi_le`), the two factors are merged at fixed
-`uv` by the superadditivity of `σ(x) = -x - log(1 - x)` in `x²` (`ag_sigma_superadd`), and the
-remaining two-variable inequality is closed by tangent lines of `log`, an S-procedure multiplier and
-concavity in `z = 4ρ/(1 - S)` (`ag_core`). -/
+Each factor is moved to its boundary `u = U(r')` at fixed `u` (`ag_phi_le`), the two factors are
+merged at fixed `uv` by the superadditivity of `σ(x) = -x - log(1 - x)` in `x²`
+(`ag_sigma_superadd`), and the remaining two-variable inequality is closed by tangent lines of
+`log`, an S-procedure multiplier and concavity in `z = 4ρ/(1 - S)` (`ag_core`). -/
 theorem m1_angle_gap {γ2 r t ρ u v E : ℝ} (h : m1_CentreData γ2 r t ρ u v E)
     (hcap : γ2 ≤ 97969 / 529200) : E < 3 / 5 * √(u * v) := by
   by_contra hlt

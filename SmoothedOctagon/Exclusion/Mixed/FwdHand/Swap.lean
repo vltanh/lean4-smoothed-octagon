@@ -5,29 +5,29 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Basic
 /-!
 # Case M2, forward successor by hand: the quantitative swapped-secant bound
 
-`MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND` §1. In the coordinates `t = (1 - h)/2`,
+In the coordinates `t = (1 - h)/2`,
 `c = (1 + h)/2`, `p = c + j` with `0 < j < h ≤ 1/2`,
 `Sec(t, c, p) < Sec(t + p - c, p, c)`: after the rational logarithm bounds the difference is
-`j𝒫/(6(1 + j)³AC(A + C)(h + j))` (`A = 1 + 2j`, `C = 1 + h + j`) with the polynomial `𝒫` of (4),
-positive by the termwise estimate (6).
+`j𝒫/(6(1 + j)³AC(A + C)(h + j))` (`A = 1 + 2j`, `C = 1 + h + j`) with the cleared polynomial `𝒫`
+(`fhSwapP`), positive by a termwise estimate.
 
 ## Main API
 
-* `fhSwapP`, `fh_swapP_pos`: the polynomial (4) and its sign (6).
-* `fh_sec_swap_q`: **the stronger secant comparison** (1).
+* `fhSwapP`, `fh_swapP_pos`: the polynomial `𝒫` and its sign.
+* `fh_sec_swap_q`: **the stronger secant comparison**.
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
 
-/-- The cleared numerator (4) of `MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND`. -/
+/-- The cleared numerator `𝒫` of the swapped-secant difference. -/
 noncomputable def fhSwapP (h j : ℝ) : ℝ :=
   2 * (1 + h) * (3 * (1 + j) ^ 2 + j ^ 2) * (1 + 2 * j) * (1 + h + j) * ((1 + 2 * j) + (1 + h + j))
     - (1 + 2 * h + j) * (1 + j) ^ 3 * ((1 + h + j) ^ 2 + 10 * (1 + h + j) * (1 + 2 * j) + (1 + 2 * j) ^ 2)
     + 3 * (h + j) * (1 - h ^ 2 + 2 * j) * (1 + j) ^ 3 * ((1 + 2 * j) + (1 + h + j))
 
-/-- **The sign (6)**: `𝒫 ≥ h²/4 + h(2 + 3h/4)j + (67/16)j³ + j⁴/8 > 0` for `0 < j < h ≤ 1/2`. -/
+/-- **The sign of `𝒫`**: `𝒫 ≥ h²/4 + h(2 + 3h/4)j + (67/16)j³ + j⁴/8 > 0` for `0 < j < h ≤ 1/2`. -/
 theorem fh_swapP_pos {h j : ℝ} (hh : h ≤ 1 / 2) (hj : 0 < j) (hjh : j < h) : 0 < fhSwapP h j := by
   have h0 : 0 < h := by linarith
   have e : fhSwapP h j = h ^ 2 * (2 - 2 * h - 3 * h ^ 2) + h * (2 + 9 * h - 12 * h ^ 2 - 9 * h ^ 3) * j
@@ -77,7 +77,7 @@ theorem fh_swapP_pos {h j : ℝ} (hh : h ≤ 1 / 2) (hj : 0 < j) (hjh : j < h) :
   have a6 : 0 ≤ 14 * h * j ^ 4 := by positivity
   nlinarith [mul_pos h0 hj]
 
-/-- **The stronger secant comparison** (`MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND` (1)): with
+/-- **The stronger secant comparison**: with
 `t = (1 - h)/2`, `c = (1 + h)/2`, `p = c + j`, `0 < j < h ≤ 1/2`:
 `Sec(t, c, p) < Sec(t + p - c, p, c)`. -/
 theorem fh_sec_swap_q {h j : ℝ} (hh : h ≤ 1 / 2) (hj : 0 < j) (hjh : j < h) :

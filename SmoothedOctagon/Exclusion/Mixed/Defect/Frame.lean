@@ -16,7 +16,7 @@ are `triFactor 0`, `triFactor 1`, `J` is `df_Jt = triY (2/√3, 2/√3, 2/√3)`
 ## Main API
 
 * `df_zc_prod`: `4 z(B M) conj z(B) = (tr M + tr(J Λ̂ M)) + i (tr(Λ̂ M) - tr(J M))` for
-  `det B = 1`, `Λ̂ = -B⁻¹ J B` (`GLOBAL_ENDPOINT_DEFECT_TEST` (1)).
+  `det B = 1`, `Λ̂ = -B⁻¹ J B`.
 * `df_Jt`; `df_W`, `df_Wi`, `df_W_conj_*`, `df_trace_conj`, `df_rot_*`: the rotated triangular
   coordinates.
 * `NormalPeriod.df_U` (`df_U_trace`), `df_mu`, `df_Mloc`, `df_Λ`: the multiplier at a switch
@@ -33,7 +33,7 @@ open SmoothedPolygons Real Set Reduction
 /-- `J` in triangular coordinates: `triY (2/√3, 2/√3, 2/√3)`. -/
 noncomputable def df_Jt : Mat2 := triY fun _ ↦ 2 / √3
 
-/-- **The endpoint product** (`GLOBAL_ENDPOINT_DEFECT_TEST` (1)): for `det B = 1` and
+/-- **The endpoint product**: for `det B = 1` and
 `Λ̂ = -B⁻¹ J B`, `4 z(BM) conj z(B) = (tr M + tr(J Λ̂ M)) + i (tr(Λ̂ M) - tr(J M))`. -/
 theorem df_zc_prod {Bm M : Mat2} (hB : Bm.det = 1) :
     4 * (scb_zc (Bm * M) * (starRingEnd ℂ) (scb_zc Bm)).re =

@@ -9,32 +9,27 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTShape
 /-!
 # Case M2, forward successor by hand: the gap is smaller than one thirtieth
 
-`MIXED_NONSHORT_FORWARD_HAND_EXCLUSION` §3 with `MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS`,
-`docs/lighter-proofs/NONSHORT_LOW_T_CALLER.md` (PR #2) and
-`MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION`: an actual forward window with `t ≥ 1/3` has
-`j = 2t + x - 1 < 1/30`.
+An actual forward window with `t ≥ 1/3` has `j = 2t + x - 1 < 1/30`.
 
 Suppose `j ≥ 1/30`. The integral derivative floor gives `x < 3/5` and `j < 5h/7` (`h = 1 - 2t`).
-* `1/3 ≤ t ≤ 3/8` (`NONSHORT_LOW_T_CALLER`): the multipliers `a = 7/2 - 10(q - 1) ≥ 11/16`,
+* `1/3 ≤ t ≤ 3/8`: the multipliers `a = 7/2 - 10(q - 1) ≥ 11/16`,
   `m = 8j + 8(q - 1) - 1/6 ≥ 1/10` (`nltAl`, `nltM`, `fh_LGN_mult`) make the combined residual
   `aN + C_*(3/4 - 𝒯_*) + m(F - v)` negative at the actual window (`fh_window_comb`); its
-  `v`-coefficient is negative (`fh_LGN_Cv`, the cases `a ≥ 2`, `a < 2` of the shape note §1), so
+  `v`-coefficient is negative (`fh_LGN_Cv`, in the two cases `a ≥ 2` and `a < 2`), so
   `v ↦ v_G ≤ V_L`, `log q ↦ L₊`, `F ↦ F_ℓ` keep it negative; but it increases in the shape
   (`nlt_shape_ge`, `FwdHand/LowTShape`) and is positive at `k = 1` (`nlt_unit_pos`,
   `FwdHand/LowTUnit`).
 * `3/8 ≤ t < 2/5`: the same with `α = 4`, `M = 1`; the residual increases in the shape
-  (`hrs_shape_lt`, `FwdHand/HighRatioShape`, PR-2 note `NONSHORT_HIGH_RATIO_SHAPE.md`), and it is
-  positive at the lower endpoint `k = 29t²/4` (`hrl_lower_pos`, `FwdHand/HighRatioLower`, PR-2 notes
-  `NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md`, `NONSHORT_HIGH_RATIO_LOWER_FACE.md`).
+  (`hrs_shape_lt`, `FwdHand/HighRatioShape`), and it is positive at the lower endpoint
+  `k = 29t²/4` (`hrl_lower_pos`, `FwdHand/HighRatioLower`).
 
-Route: for `t ≤ 3/8` the multipliers of `MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (5) and the
-certificates at the two shape endpoints are replaced by the new multipliers of PR #2, whose
-necessary condition the actual window supplies through the general `fh_window_comb`; the old scalar
-core with the old multipliers is not re-proved.
+For `t ≤ 3/8` the actual window supplies the necessary condition with the multipliers `a`, `m`
+through the general `fh_window_comb`.
 
 ## Main API
 
-* `fh_LG_J`, `fh_LG_WD`, `fh_LG_W2Dek`: the estimates (9) of the multiplier note.
+* `fh_LG_J`, `fh_LG_WD`, `fh_LG_W2Dek`: the bounds `Je² ≤ 17/16`, `WD/x ≤ 41/24` and
+  `W²Dek < 3h` on the large-gap domain.
 * `fh_LGN_mult`, `fh_LGN_Cv`, `fh_LGN_core`, `fh_LGB_core`; `fh_small_gap_j`: **`j < 1/30`** for an
   actual forward window.
 -/
@@ -43,7 +38,7 @@ core with the old multipliers is not re-proved.
 
 namespace SmoothedOctagon
 
-/-- `Je² ≤ 17/16` on the large-gap domain (`MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (9)). -/
+/-- `Je² ≤ 17/16` on the large-gap domain. -/
 theorem fh_LG_J {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hq : 0 ≤ q) (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x) :
     (t + x * (x + 2)) * q ^ 2 ≤ 17 / 16 * (1 + x) ^ 2 := by
@@ -72,7 +67,7 @@ theorem fh_LG_D1 {t x q : ℝ} (hq : 0 ≤ q) (hJ0 : 0 ≤ t + x * (x + 2))
   rw [e]
   nlinarith
 
-/-- `WD/x ≤ 41/24`, i.e. `qJ - pW ≤ (41/24)x` (`MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (9)). -/
+/-- `WD/x ≤ 41/24`, i.e. `qJ - pW ≤ (41/24)x`, on the large-gap domain. -/
 theorem fh_LG_WD {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hq : 0 ≤ q) (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x) :
     q * (t + x * (x + 2)) - (t + x) * (1 + x) ≤ 41 / 24 * x := by
@@ -104,7 +99,7 @@ theorem fh_LG_cubic {j : ℝ} (hj0 : 0 ≤ j) (hj4 : j < 1 / 4) :
       17 / 27 + 116 / 27 * j + (8 / 3 - 5 * j - j ^ 2) * j ^ 2 := by ring
   nlinarith
 
-/-- `W²Dek < 3h`, i.e. `qk(qJ - pW) < 3h` (`MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (9)). -/
+/-- `W²Dek < 3h`, i.e. `qk(qJ - pW) < 3h`, on the large-gap domain with `j < 1/4`. -/
 theorem fh_LG_W2Dek {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hj4 : 2 * t + x - 1 < 1 / 4) (hk0 : 0 ≤ k) (hk : k ≤ 2 * t + x) (hq : 0 ≤ q)
     (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x)
@@ -150,8 +145,7 @@ theorem fh_LG_W2Dek {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj 
     rw [← e1, ← e3]; rw [e2] at m3'; linarith
   exact lt_of_mul_lt_mul_left m4 (by positivity)
 
-/-- **The integral domain bounds** (`MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` (3)): if
-`t ≥ 1/3` and `t < T_G(x)`, then `x < 3/5` and `7x < 12h`. -/
+/-- **The integral domain bounds**: if `t ≥ 1/3` and `t < T_G(x)`, then `x < 3/5` and `7x < 12h`. -/
 theorem fh_LG_dom {t x : ℝ} (ht0 : 1 / 3 ≤ t) (hx : 0 < x)
     (hTG : 12 * (x ^ 2 + 10 * x + 15) * t < 90 - 19 * x ^ 2) :
     x < 3 / 5 ∧ 7 * x < 12 * (1 - 2 * t) := by
@@ -168,8 +162,8 @@ theorem fh_LG_dom {t x : ℝ} (ht0 : 1 / 3 ≤ t) (hx : 0 < x)
     nlinarith [mul_le_mul_of_nonneg_left h (by positivity : (0 : ℝ) ≤ 12 * (x ^ 2 + 10 * x + 15))]
   linarith
 
-/-- **The new multipliers are positive** (`NONSHORT_LOW_T_SHAPE` (5), `NONSHORT_LOW_T_CALLER` (9)):
-`a = 7/2 - 10(q - 1) ≥ 11/16` and `m = 8j + 8(q - 1) - 1/6 ≥ 1/10`, since `q - 1 ≤ 9/32`. -/
+/-- **The low-`t` multipliers are positive**: `a = 7/2 - 10(q - 1) ≥ 11/16` and
+`m = 8j + 8(q - 1) - 1/6 ≥ 1/10`, since `q - 1 ≤ 9/32`. -/
 theorem fh_LGN_mult {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (hj : 1 / 30 ≤ 2 * t + x - 1) (hq : 1 ≤ q)
     (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x) : 11 / 16 ≤ nltAl q ∧ 1 / 10 ≤ nltM t x q := by
   have hy : (q - 1) * (4 * t + 2 * x - 1) ≤ 2 - 4 * t - x := by linarith
@@ -179,8 +173,8 @@ theorem fh_LGN_mult {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (hj : 1 / 30 ≤ 2 * t + x
   unfold nltAl nltM
   constructor <;> nlinarith
 
-/-- **The `v`-coefficient is negative for the new multipliers** (`NONSHORT_LOW_T_SHAPE` §1, the
-cases `a ≥ 2` and `a < 2`). -/
+/-- **The `v`-coefficient is negative for the low-`t` multipliers**, in the two cases `a ≥ 2`
+(with `WD/x ≤ 41/24`) and `a < 2` (with `m > 3h` and `W²Dek < 3h`). -/
 theorem fh_LGN_Cv {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hj4 : 2 * t + x - 1 < 1 / 4) (hk1 : 1 ≤ k) (hk : k ≤ 2 * t + x) (hq : 1 ≤ q)
     (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x) :
@@ -239,8 +233,7 @@ theorem fh_LGN_Cv {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hj : 
       mul_lt_mul_of_pos_left (by linarith) (by positivity)
     nlinarith
 
-/-- **The `v`-coefficient is negative for the constant multipliers `4`, `1`**
-(`MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (5)). -/
+/-- **The `v`-coefficient is negative for the constant multipliers `4`, `1`**. -/
 theorem fh_LGB_Cv {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hk1 : 1 ≤ k) (hq : 1 ≤ q) (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x) :
     fhCv 4 1 t x k q < 0 := by
@@ -297,9 +290,9 @@ theorem fh_LG_subst {α M t x k q v : ℝ} (ht : 0 < t) (hx : 0 < x) (ht1 : t < 
     positivity
   linarith
 
-/-- **The large-gap exclusion for `1/3 ≤ t ≤ 3/8`** (`NONSHORT_LOW_T_CALLER` §§1-4) with the new
-multipliers: the negative combined residual of an actual window (premise `hcomb`, from
-`fh_window_comb`) contradicts the positive unit sign and the shape monotonicity. -/
+/-- **The large-gap exclusion for `1/3 ≤ t ≤ 3/8`** with the low-`t` multipliers: the negative
+combined residual of an actual window (premise `hcomb`, from `fh_window_comb`) contradicts the
+positive unit sign and the shape monotonicity. -/
 theorem fh_LGN_core {t x k q v : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hjh : 7 * x < 12 * (1 - 2 * t)) (hk1 : 1 ≤ k) (hko : k < 2 * t + x) (hq : 1 < q)
     (hqs : q * (4 * t + 2 * x - 1) < 1 + x) (hv : v = nhSecN t x)
@@ -316,18 +309,20 @@ theorem fh_LGN_core {t x k q v : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (h
     apply mul_nonpos_of_nonneg_of_nonpos _
       (nhNL_nonpos (by linarith) hx.le hq0.le (by linarith))
     apply mul_nonneg (by positivity); nlinarith
-  -- the rational substitutions (`NONSHORT_LOW_T_CALLER` §3): `G_n < 0` with `v_G`, then with `V_L`
+  -- the rational substitutions: `G_n < 0` with `v_G`, then with `V_L`
   have hG := fh_LG_subst (by linarith) hx (by linarith) hq (by linarith) hv hCv hCL hcomb
   have e := fh_comb_sub_v (nltAl q) (nltM t x q) t x k q (fhVG t x) (hrlVL t x) (nhLp q) (nhFl t x q)
   have hVG := hrl_VG_le_VL hx.le (by linarith : t ≤ 1)
   have : 0 ≤ (fhVG t x - hrlVL t x) * fhCv (nltAl q) (nltM t x q) t x k q :=
     mul_nonneg_of_nonpos_of_nonpos (by linarith) hCv.le
-  -- the shape reduction (`NONSHORT_LOW_T_SHAPE` (1)) and the unit sign (`NONSHORT_LOW_T_CALLER` (3))
+  -- the shape reduction (`nlt_shape_ge`) and the unit sign (`nlt_unit_pos`)
   have hs := nlt_shape_ge ht0 ht1 hj hjh.le hk1 hko.le hq.le hqs.le hJ
   have hu := nlt_unit_pos ht0 ht1 hj hjh.le hq.le hqs.le
   linarith
 
-/-- **The large-gap exclusion for `3/8 ≤ t < 2/5`** (`MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION`). -/
+/-- **The large-gap exclusion for `3/8 ≤ t < 2/5`** with the constant multipliers `4`, `1`: the
+negative combined residual of an actual window (premise `hcomb`) contradicts its positivity at the
+lower endpoint `k = 29t²/4` and the shape monotonicity. -/
 theorem fh_LGB_core {t x k q v : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hjh : 7 * x < 12 * (1 - 2 * t)) (hks : 29 / 4 * t ^ 2 < k) (hko : k < 2 * t + x) (hq : 1 < q)
     (hqs : q * (4 * t + 2 * x - 1) < 1 + x) (hv : v = nhSecN t x)
@@ -344,16 +339,17 @@ theorem fh_LGB_core {t x k q v : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj 
       (nhNL_nonpos (by linarith) hx.le hq0.le (by linarith))
     apply mul_nonneg (by positivity); nlinarith
   have hG := fh_LG_subst (by linarith) hx (by linarith) hq zero_le_one hv hCv hCL hcomb
-  -- the lower endpoint `k₀ = 29t²/4`: `NONSHORT_HIGH_RATIO_LOWER_REDUCTION` and `…_LOWER_FACE`
+  -- the lower endpoint `k₀ = 29t²/4` (`hrl_lower_pos`)
   have hA : 0 < fhComb 4 1 t x (29 / 4 * t ^ 2) q (fhVG t x) (nhLp q) (nhFl t x q) :=
     hrl_lower_pos ht0 ht1 hj hjh hq.le hqs.le
       (fh_LGB_Cv (by linarith) ht1.le hj (by nlinarith) hq.le hqs.le)
-  -- the shape monotonicity of `NONSHORT_HIGH_RATIO_SHAPE` replaces the upper endpoint `k = 1 + j`
+  -- the shape monotonicity (`hrs_shape_lt`)
   have := hrs_shape_lt ht0 ht1 hj hjh hks hko hq.le hqs.le
     (fh_LG_J (by linarith) ht1.le hj hq0.le hqs.le) (fh_LG_WD (by linarith) ht1.le hj hq0.le hqs.le)
   linarith
 
-/-- **The gap is smaller than one thirtieth** (`MIXED_NONSHORT_FORWARD_HAND_EXCLUSION` (11)). -/
+/-- **The gap is smaller than one thirtieth**: an actual forward window has `j = 2t + x - 1 < 1/30`
+(from `t > 1/3`, by the two large-gap exclusions). -/
 theorem fh_small_gap_j (W : M2Window) (hF : W.ForwardNext) : 2 * W.nt + W.nx - 1 < 1 / 30 := by
   by_contra hj
   push Not at hj

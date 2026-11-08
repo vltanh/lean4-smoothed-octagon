@@ -5,7 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.Short.Window
 /-!
 # Case M2, smaller-short window: the algebra of the window-defect field
 
-`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (4)-(7) (inventory E1 R13-R15), as identities of real
+The window cost and the endpoint traces of the window-defect field, as identities of real
 algebra at the window point `pt = (a/(a + C), B/C - 1, A/a, a²/(a² + 4), v, E)` of the cover
 `Certificates.SmallerShort`.
 
@@ -16,9 +16,8 @@ The window is read in the rotated triangular coordinates of its first piece (lab
 frame is `M = -X_s T₁ T₂ X_t`, the costate is `Λ = -√12 X_s U X_s` with `U` the multiplier in the
 frame of the first piece, and `J` is `triY (2/√3, 2/√3, 2/√3)`.
 
-Route: the notes' relative frame `M = D₃ (P F Q⁻¹) D₃⁻¹` and costate `(1 - ρ) C₀ V C₀⁻¹` come from
-a script; here the cover's `m = P F Q⁻¹` is the conjugate `D M D⁻¹`, `D = [[-1, 2], [1, 0]]`, of the
-library's triangular frame (`df_alg_m`), the cover's `H = [[h₁₁, h₁₂], [h₂₁, -h₁₁]]` is
+The cover's `m = P F Q⁻¹` is the conjugate `D M D⁻¹`, `D = [[-1, 2], [1, 0]]`, of the
+triangular frame (`df_alg_m`), the cover's `H = [[h₁₁, h₁₂], [h₂₁, -h₁₁]]` is
 `-4 (1 - ρ)² R D (X_s U X_s) D⁻¹ R`, `R = diag(1, -1)` (`df_alg_h`), and the endpoint traces follow
 (`df_alg_traces`). The window cost is `df_alg_cost` (both turn secants eliminate the logarithms).
 
@@ -149,7 +148,7 @@ theorem df_alg_h {u : ℝ} (ha : 0 < a) (hC : 0 < C) {U : Mat2}
 
 end Point
 
-/-- **The endpoint traces** (`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (6)-(7), E1 R15): at the window
+/-- **The endpoint traces**: at the window
 point, `𝒜 = T_κ (tr M + tr(J Λ M)/κ)` and `√3 ℬ = T_κ (tr(Λ M)/κ - tr(J M))`. -/
 theorem df_alg_traces {a C B A v E u : ℝ} (ha : 0 < a) (hC : 0 < C) (hB : 0 < B) (hA : 0 < A)
     {U : Mat2}
@@ -216,7 +215,7 @@ theorem df_alg_traces {a C B A v E u : ℝ} (ha : 0 < a) (hC : 0 < C) (hB : 0 < 
     simp only [hs2]
     ring
 
-/-- **The window cost** (`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (4), E1 R13): with both turn
+/-- **The window cost**: with both turn
 secants `u = Sec(a, C, B) = Sec(C, B, A)`, the raw costs of the two turns `C`, `B` give the cover's
 `C_br`. -/
 theorem df_alg_cost {a C B A n v E u : ℝ} (ha : 0 < a) (hC : 0 < C) (hB : 0 < B) (hA : 0 < A)

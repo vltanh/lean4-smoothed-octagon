@@ -6,20 +6,21 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.CertLow
 /-!
 # Case M2 by hand: the low-scale region `k ≥ 17t²`
 
-`MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION` with `MIXED_NONSHORT_LOW_SCALE_DOMAIN_REDUCTION`. On the
-necessary domain with `k ≥ 17t²` (that is, `a ≤ 1/2`), `N_k > 0`:
+On the necessary domain with `k ≥ 17t²` (that is, `a ≤ 1/2`), `N_k > 0`:
 
-* `t < T(x) = (-2x³ - x² + 10x + 12)/(3(x + 2)³)` from `v ≥ g_c(d)` and `v < v̄` (identity (2));
-* `t < 7/20` (domain reduction §1);
+* `t < T(x) = (-2x³ - x² + 10x + 12)/(3(x + 2)³)` from `v ≥ g_c(d)` and `v < v̄` (the identity
+  `nh_vbar_sub_g`);
+* `t < 7/20`: for `t ≥ 7/20`, `17t² ≤ k < 2t + 2x + x²` gives `x > 8/15`, and `T` is decreasing
+  with `T(8/15) < 7/20`;
 * if `k ≥ 2t + x`, the scalar reverse exclusion `nh_reverse_core` applies (its other hypotheses
-  hold here); otherwise `k < 2t + x` (the common order of `MIXED_NONSHORT_REVERSE_HAND_EXCLUSION`
-  §5) and `k` is lowered to the unit face `k = 1` (`t ≤ 1/4`) or to the high-ratio face
-  `k = 2t + 1/2` (`t ≥ 1/4`), where the quartic `Q` of (7) is positive by the six signs (9)
-  (`nh_quartic_pos`, certificates `Hand/CertLow`).
+  hold here); otherwise `k < 2t + x`, and by shape monotonicity `k` is lowered to the unit face
+  `k = 1` (`t ≤ 1/4`) or to the high-ratio face `k = 2t + 1/2` (`t ≥ 1/4`), where the cleared
+  quartic `Q = P₀ + P₁y + ⋯ + P₄y⁴` is positive by six coefficient signs (`nh_quartic_pos`,
+  certificates `Hand/CertLow`).
 
 ## Main API
 
-* `nh_quartic_pos`: the univariate reduction of §3.
+* `nh_quartic_pos`: the univariate reduction (six coefficient signs give a positive quartic).
 * `nh_low_unit`, `nh_low_kh`: the two faces.
 * `nh_vbar_sub_g`, `nh_low_t`: `t < T(x)` and `t < 7/20`.
 * `nh_low_core`: **the scalar low-scale exclusion**.
@@ -29,8 +30,9 @@ necessary domain with `k ≥ 17t²` (that is, `a ≤ 1/2`), `N_k > 0`:
 
 namespace SmoothedOctagon
 
-/-- **The univariate reduction** (`MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION` §3): the six signs (9)
-force the quartic to be positive for every `y ≥ 0`. -/
+/-- **The univariate reduction**: the six signs `P₀ > 0`, `P₁ + 2P₀ > 0`, `P₂ + 48P₀ > 0`,
+`P₃ + 4P₂ > 0`, `P₃ - P₀ > 0`, `P₄ - P₀ > 0` force the quartic `P₀ + P₁y + ⋯ + P₄y⁴` to be positive
+for every `y ≥ 0`. -/
 theorem nh_quartic_pos {P0 P1 P2 P3 P4 y : ℝ} (hy : 0 ≤ y) (h0 : 0 < P0) (h1 : 0 < P1 + 2 * P0)
     (h2 : 0 < P2 + 48 * P0) (h3 : 0 < P3 + 4 * P2) (h4 : 0 < P3 - P0) (h5 : 0 < P4 - P0) :
     0 < P0 + P1 * y + P2 * y ^ 2 + P3 * y ^ 3 + P4 * y ^ 4 := by
@@ -106,7 +108,7 @@ theorem nh_low_relax {t x k q v : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x) (
   rw [hv]
   exact (nh_secN_lt_vbar hx ht1).le
 
-/-- **The unit low-scale face** (`MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION` (3)): for
+/-- **The unit low-scale face**: for
 `0 < t ≤ 1/4`, `1/2 < x ≤ 7/3`, `x ≥ 1 - 2t`, `t ≤ T(x)`, `N(1) > 0`. -/
 theorem nh_low_unit {t x q v : ℝ} (ht : 0 < t) (ht1 : t ≤ 1 / 4) (hx0 : 1 / 2 < x) (hx1 : x ≤ 7 / 3)
     (hxt : 1 - 2 * t ≤ x) (hT : 3 * (x + 2) ^ 3 * t ≤ -2 * x ^ 3 - x ^ 2 + 10 * x + 12)
@@ -131,7 +133,7 @@ theorem nh_low_unit {t x q v : ℝ} (ht : 0 < t) (ht1 : t ≤ 1 / 4) (hx0 : 1 / 
   rw [nhLU_P_eq hx (by linarith)]
   exact hQ
 
-/-- **The high-ratio low-scale face** (`MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION` (4)): for
+/-- **The high-ratio low-scale face**: for
 `1/4 ≤ t ≤ 7/20`, `1/2 ≤ x ≤ 1`, `N(2t + 1/2) > 0`. -/
 theorem nh_low_kh {t x q v : ℝ} (ht0 : 1 / 4 ≤ t) (ht1 : t ≤ 7 / 20) (hx0 : 1 / 2 ≤ x)
     (hx1 : x ≤ 1) (hq : 1 < q) (hv : v = nhSecN t x) (hF : m2F ((t + x) / (1 + x)) q ≤ v) :
@@ -155,7 +157,7 @@ theorem nh_low_kh {t x q v : ℝ} (ht0 : 1 / 4 ≤ t) (ht1 : t ≤ 7 / 20) (hx0 
   rw [nhLH_P_eq hx (by linarith)]
   exact hQ
 
-/-- `v̄ - g = (1 - t)x(N(x) - 3X³t)/(3W²X³)` (`MIXED_NONSHORT_LOW_SCALE_DOMAIN_REDUCTION` (4)). -/
+/-- `v̄ - g = (1 - t)x(N(x) - 3X³t)/(3W²X³)`, `N(x) = -2x³ - x² + 10x + 12`. -/
 theorem nh_vbar_sub_g {t x : ℝ} (hx : 0 < x) :
     (nhVbar t x - (1 - (1 - t) * (t + x) / (1 + x) ^ 2)) * (3 * (1 + x) ^ 2 * (x + 2) ^ 3) =
       (1 - t) * x * (-2 * x ^ 3 - x ^ 2 + 10 * x + 12 - 3 * (x + 2) ^ 3 * t) := by
@@ -180,8 +182,7 @@ theorem nh_t_lt_T {t x v : ℝ} (ht1 : t < 1) (hx : 0 < x) (hv : v = nhSecN t x)
   have := pos_of_mul_pos_right h1 h2.le
   linarith
 
-/-- **The scalar low-scale exclusion** (`MIXED_NONSHORT_LOW_SCALE_HAND_EXCLUSION`): on the
-necessary domain with `k ≥ 17t²`, `N_k > 0`. -/
+/-- **The scalar low-scale exclusion**: on the necessary domain with `k ≥ 17t²`, `N_k > 0`. -/
 theorem nh_low_core {t x k q v : ℝ} (ht : 0 < t) (ht2 : t < 1 / 2) (hx : 0 < x) (hk1 : 1 ≤ k)
     (hk17 : 17 * t ^ 2 ≤ k) (hgap : k < 2 * t + 2 * x + x ^ 2) (hdur : x < 7 / 3 - 10 / 3 * t)
     (hq : 1 < q) (hqW : q < (1 + x) / (t + x)) (hv : v = nhSecN t x) (hvU : v ≤ 1 - t + t ^ 2)

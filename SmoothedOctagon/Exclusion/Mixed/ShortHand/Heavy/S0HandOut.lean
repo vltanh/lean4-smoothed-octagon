@@ -5,26 +5,25 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0HandCen
 /-!
 # Hand proof of the smaller-short case, gate S0: the outer face, forms and reductions
 
-`archive/lighter-proofs/SHORT_SCALE_OUTER_LARGE_RATIO.md` §§1-2 and §4 (PR #2 row S1.3). At the
-outer scale `q = 1/7` the floor-weighted face value is
+At the outer scale `q = 1/7` the floor-weighted face value is
 `hl0Go S α B u D τ ℓ = (w - 1)τ + 1/τ + (u - 1)B/α + α/B + 6/7 - E_L + ℓ + (w - 3/4)/2` with
 `w = W/(49α⁴)`, `E_L = L/(7α²)`, `W = C₀ - DP₀ + uD(D - Q₀)`, `L = u(2D - Q₀) - P₀`,
-`M₀ = 6α² + 1`, `Q₀ = M₀S`, `P₀ = M₀(1/S - S) + 2S - 1`, `C₀ = M₀² - M₀S + S²` (the note's (3);
-`hl0_out_F`). The three tests are `τ = T = 7r_A`, `8T/9` and `2` (`hl0OT`, `hl0O8`, `hl0O2`).
+`M₀ = 6α² + 1`, `Q₀ = M₀S`, `P₀ = M₀(1/S - S) + 2S - 1`, `C₀ = M₀² - M₀S + S²`
+(`hl0_out_F`). The three tests are `τ = T = 7r_A`, `8T/9` and `2` (`hl0OT`, `hl0O8`, `hl0O2`).
 
-* **Incoming monotonicity** (note §1; `FLOOR_WEIGHTED_ENVELOPE` §4): the coefficient of `u` is
+* **Incoming monotonicity**: the coefficient of `u` is
   `(τ + 1/2)d(d - λS) + 1/r_A - 2d + λS > 0` (`hl0_Cu_pos`, with `d ≤ 51/175`, `λS ≤ 10`,
   `1/r_A ≥ 7/3`, `τ ≤ 3`), so `ū` may be raised (`hl0_OT_mono`, …).
-* **Two majorants** (note §2): `ū ≤ u_b = (x + 74)/100` (`hl0_ubar_le_ub`) and, on the strip
-  `α ≤ m = (2x + 3)/5`, `ū ≤ û` (`hl0_ubar_le_uhat`), from the note's (7) and (9).
-* **Beta convexity on the strip** (note §4): with `u = û` each test is
+* **Two majorants**: `ū ≤ u_b = (x + 74)/100` (`hl0_ubar_le_ub`) and, on the strip
+  `α ≤ m = (2x + 3)/5`, `ū ≤ û` (`hl0_ubar_le_uhat`), both from the common step `hl0_ubar_step`.
+* **Beta convexity on the strip**: with `u = û` each test is
   `kη² + lη + m + r/η + s/(η + α + 1)` (`hl0_pfo_T`, `hl0_pfo_2`); the generalised chord bound
   `hl0_chord2` lets the pole at `β = -α` absorb the negative residue at `β = 1`, from
   `U_T > -5/2`, `U₂ > 0` and `R_T > x²/3` (`hl0_strip_chord_T`, …).
 
-Route: the residue signs (20) are proved by the uniform coefficient bound (`hl0Cov2`) on the strip
-coordinates `X = x - 12/5`, `A = α - α_f(x)` instead of the note's polynomials (22)-(26), and
-`R_T > x²/3` directly at `u = û(-α)` (no monotonicity in `u` at `β = -α`).
+The residue signs `U_T > -5/2`, `U₂ > 0` are proved by the uniform coefficient bound (`hl0Cov2`) on
+the strip
+coordinates `X = x - 12/5`, `A = α - α_f(x)`, and `R_T > x²/3` directly at `u = û(-α)`.
 
 ## Main API
 
@@ -130,12 +129,12 @@ theorem hl0_cov2_pos (P : List (List ℝ)) (HA e : ℝ) :
 
 /-! ### The outer face value -/
 
-/-- `W = C₀ - DP₀ + uD(D - Q₀)` (the note's (3), `w = W/(49α⁴)`). -/
+/-- `W = C₀ - DP₀ + uD(D - Q₀)`, so that `w = W/(49α⁴)`. -/
 noncomputable def hl0Wo (S a u D : ℝ) : ℝ :=
   (6 * a ^ 2 + 1) ^ 2 - (6 * a ^ 2 + 1) * S + S ^ 2 + D ^ 2 * u -
     D * ((6 * a ^ 2 + 1) * (S * (u - 1) + 1 / S) + 2 * S - 1)
 
-/-- `L = 2Du - N₀` (the note's (3), `E_L = L/(7α²)`). -/
+/-- `L = 2Du - N₀`, so that `E_L = L/(7α²)`. -/
 noncomputable def hl0Lo (S a u D : ℝ) : ℝ :=
   2 * D * u - ((6 * a ^ 2 + 1) * (S * (u - 1) + 1 / S) + 2 * S - 1)
 
@@ -156,7 +155,7 @@ theorem hl0_ELs_o {x a b u : ℝ} (hx : 0 < x) (ha : 0 < a) :
   field_simp
   ring
 
-/-- **The outer face value** of `hsF` at `q = 1/7` (the note's (3)). -/
+/-- **The outer face value** of `hsF` at `q = 1/7`. -/
 theorem hl0_out_F {x a b u τ ℓ : ℝ} (hx : 0 < x) (ha : 0 < a) (hB : 0 < a + b) :
     hsF x b a u (1 / 7) τ ℓ (1 / 2) = hl0Go (x + 1) a (a + b) u (hsDg x b a) τ ℓ := by
   unfold hsF
@@ -165,7 +164,7 @@ theorem hl0_out_F {x a b u τ ℓ : ℝ} (hx : 0 < x) (ha : 0 < a) (hB : 0 < a +
   field_simp
   ring
 
-/-- The outer `τ = T` test (`OUTER_SCALE_LARGE_RATIO_SIGN` (7)), with incoming norm `u`. -/
+/-- The outer `τ = T = 7r_A` test at `q = 1/7`, with incoming norm `u`. -/
 noncomputable def hl0OT (x a b u : ℝ) : ℝ := hsF x b a u (1 / 7) (7 * hsRA a b) 0 (1 / 2)
 /-- The outer `τ = 8T/9` test. -/
 noncomputable def hl0O8 (x a b u : ℝ) : ℝ :=
@@ -177,7 +176,7 @@ noncomputable def hl0O2 (x a b u : ℝ) : ℝ :=
 /-! ### Incoming monotonicity -/
 
 /-- The coefficient of `u`: `(τ + 1/2)d(d - λS) + B/α - 2d + λS`, `d = D/(7α²)`,
-`λS = M₀S/(7α²)` (`FLOOR_WEIGHTED_ENVELOPE` (10)). -/
+`λS = M₀S/(7α²)`. -/
 noncomputable def hl0Cu (S a B D τ : ℝ) : ℝ :=
   (τ + 1 / 2) * (D / (7 * a ^ 2)) * (D / (7 * a ^ 2) - (6 * a ^ 2 + 1) * S / (7 * a ^ 2)) + B / a -
     2 * (D / (7 * a ^ 2)) + (6 * a ^ 2 + 1) * S / (7 * a ^ 2)
@@ -232,7 +231,7 @@ theorem hl0_T_le {a b : ℝ} (ha : 0 < a) (hb43 : 4 * a ≤ 3 * b) : 7 * hsRA a 
 theorem hl0_T_pos {a b : ℝ} (ha : 0 < a) (hb : 0 < b) : 0 < 7 * hsRA a b := by
   unfold hsRA; positivity
 
-/-- **Raising the incoming norm** (note §1): each outer test increases with `u`. -/
+/-- **Raising the incoming norm**: each outer test increases with `u`. -/
 theorem hl0_O_mono {x a b u u' τ ℓ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
     (hax : a ≤ x) (hxb : x ≤ b) (hb43 : 4 * a ≤ 3 * b) (hτ : 0 < τ) (hτ3 : τ ≤ 3) (hu : u ≤ u') :
     hsF x b a u (1 / 7) τ ℓ (1 / 2) ≤ hsF x b a u' (1 / 7) τ ℓ (1 / 2) := by
@@ -262,7 +261,7 @@ theorem hl0_O2_mono {x a b u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha :
     hl0O2 x a b u ≤ hl0O2 x a b u' :=
   hl0_O_mono hx hx9 ha hax hxb hb43 (by norm_num) (by norm_num) hu
 
-/-! ### Two incoming majorants (note §2) -/
+/-! ### Two incoming majorants -/
 
 /-- The common step: `ū ≤ 3/4 + v(x - 1 + κδ)/(β - 1)` once `δ²SM ≤ 96κ x²(x - 1)²`
 (`v = 2(x - 1)²/(SM)`, `δ = β - x`). -/
@@ -304,7 +303,7 @@ theorem hl0_delta_sq {x a b t : ℝ} (hx : 0 < x) (hxb : x ≤ b) (hat : a - 1 �
   have := mul_le_mul h2 h2 h0 (h0.trans h2)
   nlinarith
 
-/-- **`ū ≤ u_b = (x + 74)/100`** on the whole outer domain (note (6)-(7)). -/
+/-- **`ū ≤ u_b = (x + 74)/100`** on the whole outer domain. -/
 theorem hl0_ubar_le_ub {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hax : a ≤ x)
     (hxb : x ≤ b) (hb : b ≤ x + x * (7 * x + 1) * (a - 1) / (4 * x ^ 2 + 11 * x + 1)) :
     hsUbar x b ≤ (x + 74) / 100 := by
@@ -333,7 +332,7 @@ theorem hl0_ubar_le_ub {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hax : 
     nlinarith [sq_nonneg (35 * x - 76)]
   linarith
 
-/-- **`ū ≤ û`** on the strip `α ≤ (2x + 3)/5` (note (8)-(9)). -/
+/-- **`ū ≤ û`** on the strip `α ≤ (2x + 3)/5`. -/
 theorem hl0_ubar_le_uhat {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (ham : a ≤ (2 * x + 3) / 5) (hxb : x ≤ b)
     (hb : b ≤ x + x * (7 * x + 1) * (a - 1) / (4 * x ^ 2 + 11 * x + 1)) :

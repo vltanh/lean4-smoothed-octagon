@@ -7,7 +7,7 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 /-!
 # Case M2: the root function along the central margin
 
-Inventory E2, entries 7 and 21a. Hold `a, c, d, r, v` fixed and move the central margin `b`.
+Hold `a, c, d, r, v` fixed and move the central margin `b`.
 With `K = a² + 4`, `T = a + c`, `Q = d² + 4`, `Z = d + r`, `Y = m2Y a c d`, the root function
 with central stationarity imposed is affine in `u` and in `C_a = m2Stat b a c`:
 `R_d(u; b) = α + β u + γ ((a + b) u + T v - C_a)` (`ch_root_lin`), with slope
@@ -18,7 +18,7 @@ with central stationarity imposed is affine in `u` and in `C_a = m2Stat b a c`:
 * `ch_strictAntiOn`: a function with negative derivative on `(x₀, x₁)` and a derivative on
   `[x₀, x₁]` is strictly decreasing there.
 * `ch_hasDerivAt_stat`: `∂_b m2Stat b a c = U(a/(a + b))`.
-* `chα`, `chβ`, `chγ`, `chRu`; `ch_root_lin`; `ch_Ru_neg` (CONT (19)-(20)).
+* `chα`, `chβ`, `chγ`, `chRu`; `ch_root_lin`; `ch_Ru_neg`: `R_u < 0`.
 * `chG b = R_d(U(a/(a + b)); b)` with `ch_hasDerivAt_G`: `G' = R_u a (b - a)/(a + b)³`.
 * `chH b`, the central diagonal on the root curve, with `ch_hasDerivAt_H`:
   `H' = -(K/(16a)) β G/R_u²`; `ch_h_of_root`: at a root, `m2h = chH`.
@@ -53,7 +53,7 @@ theorem ch_strictMonoOn {f f' : ℝ → ℝ} {x₀ x₁ : ℝ}
   rw [(hd x (Set.Ioo_subset_Icc_self hx)).deriv]
   exact hpos x hx
 
-/-- `∂_b m2Stat b a c = U(a/(a + b))` (CONT §5: `dC_a/db = U(a/S)`). -/
+/-- `∂_b m2Stat b a c = U(a/(a + b))`, i.e. `dC_a/db = U(a/S)`. -/
 theorem ch_hasDerivAt_stat {a c b : ℝ} (hab : 0 < a + b) (hac : 0 < a + c) :
     HasDerivAt (fun x => m2Stat x a c) (m2U (a / (a + b))) b := by
   have hK : 0 < a ^ 2 + 4 := by positivity
@@ -99,7 +99,7 @@ noncomputable def chα (a c d r v : ℝ) : ℝ :=
   m2Stat c d r - (c + d) * v - (d + r) * v * m2Y a c d ^ 2 / (d ^ 2 + 4) ^ 2
     + 2 * d * v * m2Y a c d / (d ^ 2 + 4)
 
-/-- The slope `R_u(b) = β + γ (a + b)` (CONT (19)). -/
+/-- The slope `R_u(b) = β + γ (a + b)`. -/
 noncomputable def chRu (a b c d r : ℝ) : ℝ := chβ a d r + chγ a c d r * (a + b)
 
 /-- The root function with central stationarity imposed, in affine form. -/
@@ -128,7 +128,7 @@ theorem ch_Ru_eq {a b c d r : ℝ} (ha : a ≠ 0) :
   field_simp
   ring
 
-/-- **The sign of the root coefficient** (CONT (19)-(20), inventory E2 entry 7): for `0 < a < d`,
+/-- **The sign of the root coefficient**: for `0 < a < d`,
 `c > 0`, `q > 1` and `0 < S T ≤ K`, `R_u < 0`. -/
 theorem ch_Ru_neg {a b c d r : ℝ} (ha : 0 < a) (hc : 0 < c) (had : a < d)
     (hq : d ^ 2 + 4 < (c + d) * (d + r)) (hS : 0 < a + b) (hST : (a + b) * (a + c) ≤ a ^ 2 + 4) :
@@ -155,11 +155,11 @@ theorem ch_Ru_neg {a b c d r : ℝ} (ha : 0 < a) (hc : 0 < c) (had : a < d)
       < 0 := by rw [key]; linarith
   exact neg_of_mul_neg_right this hW.le
 
-/-- `G(b) = R_d(U(a/(a + b)); b)` (inventory E2, entry 21a). -/
+/-- `G(b) = R_d(U(a/(a + b)); b)`, the root function along the incident ceiling. -/
 noncomputable def chG (a c d r v b : ℝ) : ℝ :=
   m2Root a c d r (m2U (a / (a + b))) v (m2h a b c (m2U (a / (a + b))) v)
 
-/-- **`G' = R_u a (b - a)/(a + b)³`** (inventory E2, entry 21a). -/
+/-- **`G' = R_u a (b - a)/(a + b)³`**. -/
 theorem ch_hasDerivAt_G {a c d r v b : ℝ} (ha : 0 < a) (hab : 0 < a + b) (hac : 0 < a + c) :
     HasDerivAt (chG a c d r v) (chRu a b c d r * (a * (b - a) / (a + b) ^ 3)) b := by
   have hfun : chG a c d r v = fun x => chα a c d r v + chβ a d r * m2U (a / (a + x)) +
@@ -183,7 +183,8 @@ noncomputable def chH (a c d r v b : ℝ) : ℝ :=
     ((chβ a d r * ((a + c) * v) - (a + b) * chα a c d r v - chβ a d r * m2Stat b a c) /
       chRu a b c d r)
 
-/-- **`H' = -(K/(16a)) β G/R_u²`** (inventory E2, entry 21a, in the form `dh/db`). -/
+/-- **`H' = -(K/(16a)) β G/R_u²`**, the derivative `dh/db` of the central diagonal on the root
+curve. -/
 theorem ch_hasDerivAt_H {a c d r v b : ℝ} (ha : 0 < a) (hab : 0 < a + b) (hac : 0 < a + c)
     (hR : chRu a b c d r ≠ 0) :
     HasDerivAt (chH a c d r v)

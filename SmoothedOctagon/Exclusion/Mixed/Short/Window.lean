@@ -7,19 +7,17 @@ public import SmoothedOctagon.Exclusion.Mixed.Short.Residual
 /-!
 # Case M2, smaller-short side: the covector algebra of the short window
 
-`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION` (11), `MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (M)
-(inventory E1 R19, R24), on the frames `M i` of the covector calculus
-(`NormalPeriod.M2Calculus`). In the centre frame `M m = [[h, y₀], [z₀, -h]]` of a reverse centre
-`a` (`v = 8z₀/(b + a)²`, `u = -8y₀/(q_a²(a + C)²)`, `E = 16h/K_a`), transport through the reverse
-switch after `a`, the forward switch after the turn `C` and the reverse switch after the turn `B`
-(factors `q_a = K_a/((b + a)(a + C))`, `(C + B)/(a + C)`, `(C + B)/(B + A)`) gives the frame of the
-outer centre `A`.
+The transport of the covector between the two reverse centres of a short window, on the frames `M i`
+of the covector calculus (`NormalPeriod.M2Calculus`). In the centre frame
+`M m = [[h, y₀], [z₀, -h]]` of a reverse centre `a` (`v = 8z₀/(b + a)²`, `u = -8y₀/(q_a²(a + C)²)`,
+`E = 16h/K_a`), transport through the reverse switch after `a`, the forward switch after the turn
+`C` and the reverse switch after the turn `B` (factors `q_a = K_a/((b + a)(a + C))`,
+`(C + B)/(a + C)`, `(C + B)/(B + A)`) gives the frame of the outer centre `A`.
 
-Route: the "exact same-lift transport" formulas for `w` and `E_L` (E1 R24, derived in no note)
-and the middle-switch slack `N_mid` (E1 R19, (M); the notes' three-sentence omitted-control
-argument) are here identities of this transport: `w = λ²v + d²u - dλE`, `E_L = 2du - λE`
-(`ss_alg_wEL`), and the missing control `G_L ≥ 0` at the forward switch `C → B`
-(`M2Calculus.mc_fwd`) equals `(K_a²/4) N_mid` (`ss_alg_mid`).
+The same-lift transport formulas for `w` and `E_L` and the middle-switch slack `N_mid` are
+identities of this transport: `w = λ²v + d²u - dλE`, `E_L = 2du - λE` (`ss_alg_wEL`), and the
+missing control `G_L ≥ 0` at the forward switch `C → B` (`M2Calculus.mc_fwd`) equals
+`(K_a²/4) N_mid` (`ss_alg_mid`).
 
 ## Main API
 
@@ -35,7 +33,8 @@ namespace SmoothedOctagon
 
 open Certificates.SmallerShort
 
-/-- **The same-lift transport to the outer centre** (SIX_VARIABLE (11), inventory E1 R24). -/
+/-- **The same-lift transport to the outer centre**: with `λ = K_a/K_A`, the norm `w` and the
+pairing `E_L` at `A` are `w = λ²v + d²u - dλE` and `E_L = 2du - λE`. -/
 theorem ss_alg_wEL {a b C B A Pf h y0 z0 qm q1 q2 q3 : ℝ} (ha : 0 < a) (hb : 0 < b) (hC : 0 < C)
     (hB : 0 < B) (hA : 0 < A) (hPf : 0 < Pf)
     (hqm : qm = (a ^ 2 + 4) / ((b + a) * (a + C))) (hq1 : q1 = (C + B) / (a + C))
@@ -69,8 +68,8 @@ theorem ss_alg_wEL {a b C B A Pf h y0 z0 qm q1 q2 q3 : ℝ} (ha : 0 < a) (hb : 0
   have : 0 < A + Pf := by positivity
   constructor <;> (field_simp; ring)
 
-/-- **The middle-switch slack** (`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (M), inventory E1 R19):
-the missing control at the forward switch `C → B`, read in the frame of `B`, is `(K_a²/4) N_mid`. -/
+/-- **The middle-switch slack**: the missing control at the forward switch `C → B`, read in the
+frame of `B`, is `(K_a²/4) N_mid`. -/
 theorem ss_alg_mid {a b C B h y0 z0 qm q1 : ℝ} (ha : 0 < a) (hb : 0 < b) (hC : 0 < C)
     (hB : 0 < B)
     (hqm : qm = (a ^ 2 + 4) / ((b + a) * (a + C))) (hq1 : q1 = (C + B) / (a + C))
@@ -126,7 +125,7 @@ theorem ss_point_u {a C B al ρ v E : ℝ} (ha : 0 < a) (hC : 0 < C) (hB : 0 < B
     field_simp
   exact congrArg (fun z => 1 + z - C / (a + C) * logDiv ((B + C) / (a + C))) e
 
-/-- **Centre stationarity and the Gram determinant at a reverse centre** (CE (14); the core of
+/-- **Centre stationarity and the Gram determinant at a reverse centre** (the core of
 `m2_centre`): with `E = 16 (M k)₀₀/K_k`, `E = m2E a_k a_{k-1} a_{k+1} n_{k-1} n_k` and
 `Γ = m2Gam a_k n_{k-1} n_k E`. -/
 theorem ss_centre_frame (P : NormalPeriod) (K : P.M2Calculus) {k : ℤ}

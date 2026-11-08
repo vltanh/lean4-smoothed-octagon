@@ -5,21 +5,21 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOS2
 /-!
 # Gate S1 by hand, outer face: shared reductions of the large and small shape branches
 
-* The quartic and cubic division coefficients factor (`SHORT_OUTER_LARGE_SHAPE_REDUCTION` (A15)):
+* The quartic and cubic division coefficients factor:
   with `L = S - d₂ = x(2e - 1)`, `H = A₀ - uS ≥ (2x - 3)(3x - 2)/(25S)` (`u ≤ 19/25`),
   `W₄ = L(H + uL) > 0` and `4W₄/x + W₃ = H(4L/x - d₁) + uL(4L/x - 2d₁) > 0`
   (`hl1o_W4_pos`, `hl1o_W43_pos`); hence `b₃ ≤ 0`, `p₄ ≤ 0`, `4p₄/x + p₃ ≤ 0`.
-* `E_L ≤ 1/2` on `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `β ≥ x`, `u ≥ 3/4` (`SHORT_OUTER_BETA_LOW_SHAPE`
-  §1, `P_E > 0`), the lower bound `(R₂)_β ≥ 83/4200` and the strict decrease of `β ↦ F₀`
-  with slope `≤ -7/5120` (`§2`, (6)-(7)): `hl1o_EL_half`, `hl1o_R2b_ge`, `hl1o_F0_bderiv`,
+* `E_L ≤ 1/2` on `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `β ≥ x`, `u ≥ 3/4` (`E_L` increases
+  as `β` and `u` decrease, and `1/2 - E_L` at `β = x`, `u = 3/4` has the positive numerator `P_E`),
+  the lower bound `(R₂)_β ≥ 83/4200` and the strict decrease of `β ↦ F₀` with slope
+  `≤ -7/5120`: `hl1o_EL_half`, `hl1o_R2b_ge`, `hl1o_F0_bderiv`,
   `hl1o_F0_bmono`.
-* The large-shape norm interval and the division coefficient at `u₊ = (6x + 443)/600`
-  (`SHORT_OUTER_LARGE_SHAPE_REDUCTION` (A5)-(A7)): `u₋ ≤ u_f`, `u_v ≤ u₊`, and
+* The large-shape norm interval and the division coefficient at `u₊ = (6x + 443)/600`:
+  `u₋ ≤ u_f`, `u_v ≤ u₊`, and
   `w₀(x, α, u) > (19 + 2x)/28` for `u ≤ u₊` (`hl1o_A_w0`).
 
-Route: the division-coefficient bound at the large shape is proved directly at the affine norm
-`u₊` (a two-variable sign), instead of through `u₀` and the shape derivative `(11)-(16)` of
-`SHORT_OUTER_BETA`.
+The division-coefficient bound at the large shape is proved directly at the affine norm `u₊`
+(a two-variable sign).
 
 ## Main API
 
@@ -34,7 +34,7 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- `P_E(6/5 - c, 3/2 + z)` (`SHORT_OUTER_BETA_LOW_SHAPE` (4)-(5)). -/
+/-- `P_E(6/5 - c, 3/2 + z)`, where `E_L(x, α, x, 3/4) = 1/2 - P_E(α, x)/(28α²(1 + x))`. -/
 noncomputable def hl1PE2 (c z : ℝ) : ℝ :=
   -6 * c ^ 2 * z ^ 2 - 22 * c ^ 2 * z + 13 / 2 * c ^ 2 + 132 / 5 * c * z ^ 2 + 504 / 5 * c * z + 147 / 5 * c + 12 * z ^ 3 + 949 / 25 * z ^ 2 + 118 / 25 * z + 61 / 100
 
@@ -187,7 +187,8 @@ theorem hl1_eps_le {y : ℝ} (h0 : 9 / 14 ≤ y) (h1 : y ≤ 1) : hh1eps y ≤ (
   rw [e]
   exact pow_le_pow_left₀ t0 t1 4
 
-/-- `E_L ≤ 1/2` (`SHORT_OUTER_BETA_LOW_SHAPE` §1). -/
+/-- `E_L < 1/2`: `E_L` is at most its value at `β = x`, `u = 3/4`, which is `1/2` minus a
+positive multiple of `P_E`. -/
 theorem hl1o_EL_half {x a b u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a) (ha2 : a ≤ 6 / 5)
     (hxb : x ≤ b) (hu0 : 3 / 4 ≤ u) : hh1oEL x a b u < 1 / 2 := by
   have ha : 0 < a := by linarith
@@ -221,7 +222,7 @@ theorem hl1o_EL_half {x a b u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1
     div_pos (by linarith) (by positivity)
   linarith
 
-/-- `(R₂)_β ≥ 83/4200` (`SHORT_OUTER_BETA_LOW_SHAPE` (6)-(7)). -/
+/-- `(R₂)_β ≥ 83/4200`. -/
 theorem hl1o_R2b_ge {x a b u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a) (ha2 : a ≤ 6 / 5)
     (hxb : x ≤ b) (hbx : b ≤ a * x) (hu0 : 3 / 4 ≤ u) : 83 / 4200 ≤ hh1oR2b x a b u := by
   have ha : 0 < a := by linarith
@@ -263,7 +264,7 @@ theorem hl1o_R2b_ge {x a b u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 
     nlinarith [mul_nonneg (sub_nonneg.2 hx) (sub_nonneg.2 hx2)]
   linarith
 
-/-- **The beta derivative of `F₀`** (`SHORT_OUTER_BETA_LOW_SHAPE` (7)): the derivative of
+/-- **The beta derivative of `F₀`**: the derivative of
 `β ↦ F₀(x, α, β, u)` given by `hh1o_F0_hasDerivAt` is at most `-7/5120`. -/
 theorem hl1o_F0_bderiv {x a b u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a)
     (ha2 : a ≤ 6 / 5) (hxb : x ≤ b) (hbx : b ≤ a * x) (hu0 : 3 / 4 ≤ u) :

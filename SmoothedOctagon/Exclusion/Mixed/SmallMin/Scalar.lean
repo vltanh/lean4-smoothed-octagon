@@ -8,12 +8,12 @@ public import SmoothedOctagon.Exclusion.Forward.Core
 `fs_U_lt_three` (`Exclusion/Forward/Scalars/SmallMin.lean`) proves `U < 3` for a case-F window
 `ff_Dim`, but uses only its rows `rowL`, `rowR`, its floors and its order conditions, not the
 seven-entry cost bound or the Casimir cap (which a case-M2 window does not supply). This module
-restates it on the window data that SFM actually needs.
+restates it on the window data of a case-M2 small forward minimum.
 
 ## Main API
 
 * `sf_Dim`: the dimensionless window `(U, z, w, P, D, u, v)` with the order conditions, the left
-  and right rows (SFM (7)-(8)) and the two exterior floors (SFM (11)); `sf_Dim.swap`.
+  and right rows and the two exterior floors; `sf_Dim.swap`.
 * `sf_Dim.U_lt_three`: `U < 3` (the proof of `fs_U_lt_three`, verbatim).
 * `sf_Win`: the physical window `(p, b, a, c, d, u, v)` with `a ≤ p, b, c, d`, the strict stars,
   the three factors `> 1`, the rows and the floors; `sf_Win.toDim`.
@@ -26,8 +26,8 @@ namespace SmoothedOctagon
 
 open Real
 
-/-- **The dimensionless small-minimum window** (SFM (2)-(11)): the fields of `ff_Dim` that the small
-forward minimum (`fs_U_lt_three`) uses. -/
+/-- **The dimensionless small-minimum window**: the fields of `ff_Dim` that the small forward
+minimum (`fs_U_lt_three`) uses. -/
 structure sf_Dim where
   U : ℝ
   z : ℝ
@@ -187,7 +187,7 @@ theorem U_lt_three_le (hzw : W.z ≤ W.w) : W.U < 3 := by
       have hneg := fs_face_hard hU3 hhard hzU hz hSK hhl hhu hh1
       linarith
 
-/-- **The small forward minimum** (SMALL_FORWARD_MINIMUM_HAND_PROOF; SFM §§1-5): `U < 3`. -/
+/-- **The small forward minimum**: `U < 3`. -/
 theorem U_lt_three : W.U < 3 := by
   rcases le_total W.z W.w with h | h
   · exact W.U_lt_three_le h
@@ -195,10 +195,10 @@ theorem U_lt_three : W.U < 3 := by
 
 end sf_Dim
 
-/-- **The physical small-minimum window** (SFM (1)-(11)): five consecutive active margins
+/-- **The physical small-minimum window**: five consecutive active margins
 `(p, b, a, c, d)` with `a` their minimum, the strict stars of the four switches, the three factors
-`h, q, k > 1`, the left and right rows (SFM (7)-(8)) in the norms `u = 8 d_{-1}`, `v = 8 d_0`, and
-the exterior floors (SFM (11)). -/
+`h, q, k > 1`, the left and right rows in the norms `u = 8 d_{-1}`, `v = 8 d_0`, and
+the exterior floors. -/
 structure sf_Win where
   a : ℝ
   p : ℝ

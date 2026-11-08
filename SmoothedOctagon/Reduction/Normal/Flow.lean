@@ -17,9 +17,9 @@ On a vertex piece with label `i` the state, `a` and `b` satisfy `f' = κ [P, f]`
 `P = -S_i / p_i` and `κ = 1, 2, 1` (for `b` this uses that the active Hamiltonian vanishes); then
 their coordinates are transported by the one-arc map `gnL i` of `Normal/Word.lean`
 (`gnMu_flow`), because `[S_i, S_{i+1}] = 2 (S_i + S_{i+1})` gives
-`(μ_i + μ_{i±1})' = ±2κ/p_i (μ_i + μ_{i±1})`. This is the right-trivialized adjoint transport of
-GLOBAL_NORMALITY §1 (`(a, b)` are the conserved covector `(α, β)` read in the moving frame), written
-in the coordinates of the margin map.
+`(μ_i + μ_{i±1})' = ±2κ/p_i (μ_i + μ_{i±1})`. This is the right-trivialized adjoint transport
+(`(a, b)` are the conserved covector `(α, β)` read in the moving frame), written in the coordinates
+of the margin map.
 
 ## Main API
 

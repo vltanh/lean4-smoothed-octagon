@@ -8,7 +8,7 @@ public import External.Pontryagin
 
 On an edge of the control simplex (`u₀ = 0`, rotated there by relabeling), a star state
 `X = [[a, b], [c, -a]]` (`det X = 1`, so `b = -(1 + a²)/c`) is determined by `(a, c)`, and the
-frame by `x = a/c` and `s = ∫ c` (MEPB (9); here `x = a/c`, `y = 1/c`, `s` = MEPB's `s`). With
+frame, up to a constant left factor, by `x = a/c` and `s = ∫ c` (the frame `h(x, s)` below). With
 `u = (0, v, 1 - v)`, `v ∈ [0, 1]`, `α = (2v - 1)/√3`, the state equation `X' = [P_u, X]` reads
 
   `a' = c/(c - 3αa)`, `c' = 3αc/(c - 3αa)`, `s' = c`,
@@ -56,7 +56,7 @@ def e4_edgeDomain : Set (ℝ × ℝ × ℝ) :=
 noncomputable def e4_edgeX (z : ℝ × ℝ × ℝ) : Mat2 :=
   !![z.1, -(1 + z.1 ^ 2) / z.2.1; z.2.1, -z.1]
 
-/-- The frame `h(x, s) = [[1, -x], [s, 1 - s x]]`, `x = a/c` (MEPB (9)). -/
+/-- The frame `h(x, s) = [[1, -x], [s, 1 - s x]]`, `x = a/c`. -/
 noncomputable def e4_edgeFrame (z : ℝ × ℝ × ℝ) : Mat2 :=
   !![1, -(z.1 / z.2.1); z.2.2, 1 - z.2.2 * (z.1 / z.2.1)]
 

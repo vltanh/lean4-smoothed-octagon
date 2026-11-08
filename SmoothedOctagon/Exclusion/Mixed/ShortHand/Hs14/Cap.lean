@@ -7,14 +7,12 @@ public import SmoothedOctagon.Exclusion.Mixed.Short.Centre
 /-!
 # Gates S1/S4 helpers: the corrected envelope cap
 
-`MIXED_SMALLER_SHORT_CORRECTED_ENVELOPE_CAP` (5)-(9), `SHARP_LOW_RATIO_CORRECTED_CAP` (4), (16);
-inventory HS-S01 C15, HS-S4 R12: two-segment monotonicity of `Γ - cR_τ` along the opposite-turn
-path `(t, v) → (t, U(t)) → (t₀, U(t₀))`, `t₀ = ρ(1 + x)`.
+Two-segment monotonicity of `Γ - cR_τ` along the opposite-turn path
+`(t, v) → (t, U(t)) → (t₀, U(t₀))`, `t₀ = ρ(1 + x)`, under a bound `c` on the derivative ratio.
 
 ## Main API
 
-* `hs14_root_cap`: the retained root bound `E_L ≤ 3q - J_A`, `J_A = (U(r_A) - u)/r_A`
-  (`SHARP_LOW_RATIO_CORRECTED_CAP` (3)).
+* `hs14_root_cap`: the retained root bound `E_L ≤ 3q - J_A`, `J_A = (U(r_A) - u)/r_A`.
 
 * `hs14_cap`: if at every `s ∈ [t₀, t]` and every pairing `E' ≥ E(t, v)` the derivative ratio
   satisfies `λ(2us - E') ≤ 8cλ²(1 - ρ)²B_τ(s)`, then
@@ -27,8 +25,8 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- **The retained incoming deficit at the outer root** (`SHARP_LOW_RATIO_CORRECTED_CAP` (3);
-`ss_E_le_three` with the incoming norm at its ceiling `U(r_A)`). -/
+/-- **The retained incoming deficit at the outer root** (`ss_E_le_three` with the incoming norm
+at its ceiling `U(r_A)`). -/
 theorem hs14_root_cap {rA τ q u w EL : ℝ} (hrA : 0 < rA) (hrA2 : rA ≤ 1 / 2) (hτ : 2 ≤ τ)
     (hq : 0 < q) (hτq : τ * q ≤ rA) (hw : w ≤ m2U (1 / τ))
     (hEL : EL = (w - 1) * τ + 1 / τ + (u - 1) / rA + rA + 1 - q + log (τ * q / rA)) :
@@ -69,7 +67,9 @@ private theorem hs14_Eb_deriv {x rho u s : ℝ} (hx : 0 < 1 + x) (hρ : 0 < rho)
   · funext s; unfold hsE m2U; simp only [Pi.add_apply]; ring
   · ring
 
-/-- **The corrected envelope cap** (`CORRECTED_ENVELOPE_CAP` (5)-(9); inventory HS-S01 C15). -/
+/-- **The corrected envelope cap**: if at every `s ∈ [t₀, t]` and every pairing `E' ≥ E(t, v)`
+the derivative ratio satisfies `λ(2us - E') ≤ 8cλ²(1 - ρ)²B_τ(s)`, then
+`Γ(t₀, U(t₀)) - cR_τ(t₀, U(t₀)) ≤ Γ(t, v) - cR_τ(t, v)`. -/
 theorem hs14_cap {x be al rho u τ t v c : ℝ} (hx : 1 < x) (hρ : 0 < rho)
     (hρ1 : rho < 1) (ht0 : rho * (1 + x) ≤ t) (htr : t ≤ 1 / (1 + x)) (hv : v ≤ m2U t)
     (hratio : ∀ s ∈ Icc (rho * (1 + x)) t, ∀ E', hsE x rho u t v ≤ E' →

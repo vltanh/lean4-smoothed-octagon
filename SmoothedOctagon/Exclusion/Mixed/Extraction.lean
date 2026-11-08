@@ -11,62 +11,61 @@ public import SmoothedOctagon.Exclusion.Mixed.Defect.Field
 /-!
 # Case M2: the scalar windows of an actual period
 
-`MIXED_SMALLER_TURN_CONTINUATION` (CONT) §§1-3, `MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION` §3 and
-`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION` §1 (inventory E1 R10-R26). Let `m` be a global minimum
-of the active margins at a reverse centre (`m2_min_centre`), oriented (`m2_reflect`) so that the
-smaller adjacent turn `c = a_{m+1} ≤ b = a_{m-1}` is outgoing. The switch `m + 2` after the turn is
+Let `m` be a global minimum of the active margins at a reverse centre (`m2_min_centre`), oriented
+(`m2_reflect`) so that the smaller adjacent turn `c = a_{m+1} ≤ b = a_{m-1}` is outgoing. The
+switch `m + 2` after the turn is
 
 * forward (nonshort side): the pieces `m - 2, …, m + 3` carry the `M2Window`
-  `0(p), 1(b), 0(a), 2(c), 0(d), 1(r)` (CONT (1)), and the switch `m + 3` gives
-  `M2Window.ForwardNext` or `M2Window.ReverseNext` (CONT (15)-(18));
+  `0(p), 1(b), 0(a), 2(c), 0(d), 1(r)`, and the switch `m + 3` gives
+  `M2Window.ForwardNext` or `M2Window.ReverseNext`;
 * reverse (short side): the pieces `m - 2, …, m + 4` carry the `M2Short` window.
 
 Ingredients, all on the costate cycle of the period and its covector calculus
 (`NormalPeriod.M2Calculus`):
 
-* the factor formulas CE (2) from the margin transports of `Term.Cycle` (`m_act`, `m_grow`,
+* the factor formulas from the margin transports of `Term.Cycle` (`m_act`, `m_grow`,
   `m_decr`, `m_quad`): `q = s_- s_+/K` (`++`), `K/(s_- s_+)` (`--`), `s_+/s_-` (`-+`),
   `s_- / s_+` (`+-`), and strict star `a_i a_{i+1} < 4` at every switch;
 * the compact domain at the switching times (`Reduction.two_div_fifteen_le_margin` for every
-  margin, the pair sums `> 1/2` and margins `< 8` of `MIXED_NONSHORT_BLOWUP_REDUCTION` §1 from
-  `y ≤ 9/2`);
+  margin, and the pair sums `> 1/2` and margins `< 8` from the height bound `y ≤ 9/2`);
 * the strict centre minima (`reverseRun_two_and_centre_min`) and three-arc log-concavity
   (`CostateCycle.three_arc`);
 * the transports of the calculus (`M2Calculus.transport`): the centre frame
-  `M m = [[h, -K²v/(8S²)], [S²u/8, -h]]` (CONT (8)), `M (m + 2) = U_d` with `h_d = h + vY/8` and
-  `w = (uK² + 16hY + vY²)/Q²` (CONT (10)), and the next norm `t` (CONT (14), (16)), independent
-  of the next margin; in the short window the Gram transport `w = λ²v + d²u - dλE`,
-  `E_L = 2du - λE` to the outer centre (E1 R24);
-* stationarity at the centre and at `d` (CONT (9), (11)), the turn secants, the switching
-  inequalities and the missing-control floors (CONT (6)-(7), (12));
+  `M m = [[h, -K²v/(8S²)], [S²u/8, -h]]`, `M (m + 2) = U_d` with `h_d = h + vY/8` and
+  `w = (uK² + 16hY + vY²)/Q²`, and the next norm `t`, independent of the next margin; in the
+  short window the Gram transport `w = λ²v + d²u - dλE`, `E_L = 2du - λE` to the outer centre;
+* stationarity at the centre and at `d`, the turn secants, the switching inequalities and the
+  missing-control floors;
 * the Casimir bounds (`M2Calculus.cas_lt`, `cas_gt`) and the scale bound (`m2_centre`,
   `m2_scale`);
-* for the short window, the middle missing-control slack and the two-turn window-defect inequality
-  (`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (M), (A), (8)-(9)).
+* for the short window, the middle missing-control slack and the two-turn window-defect
+  inequality.
 
 The short window uses `Mixed/Short/Window`: the same-lift transport to the outer centre
 (`ss_alg_wEL`) and the middle slack `N_mid = (4/K_a²) G_L` from the missing control
 `M2Calculus.mc_fwd` at the forward switch `C → B` (`ss_alg_mid`), the centre frames
-(`ss_centre_frame`) and the cover's `u`, `β`, `x` at the window point (`ss_point_*`). The
-window-defect field (`M2Short.defect`, GLOBAL_SPECTRAL_COST_CASIMIR (13) on the two-turn window,
-with the endpoint traces of `MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (5)-(7) and the modulus filter
-(A)) is `NormalPeriod.df_defect` (`Mixed/Defect/`): the window angle of the costate frame
-(`df_window`) and the cover's traces identified with the rotated triangular frames
-(`df_alg_traces`, `df_alg_cost`).
+(`ss_centre_frame`) and the reduced coordinates `u`, `β`, `x` at the window point
+(`ss_point_*`). The window-defect field (`M2Short.defect`: the spectral cost–Casimir inequality on
+the two-turn window, with its endpoint traces and the modulus filter) is `NormalPeriod.df_defect`
+(`Mixed/Defect/`): the window angle of the costate frame (`df_window`) and the traces of
+`Certificates.SmallerShort.Point` identified with the rotated triangular frames (`df_alg_traces`,
+`df_alg_cost`).
 
 Helpers (usable for both windows): `Mixed/Extract/Compact` (`NormalPeriod.wx_m_ge`,
 `wx_half_le_m_add`, `wx_m_le`: the compact-domain bounds on the switch margins),
 `Mixed/Extract/Transport` (`CostateCycle.wx_next_fwd`, `wx_next_rev`: the transports entry by
 entry) and `Mixed/Extract/WindowAlg` (`wx_alg_hd`, `wx_alg_w`, `wx_alg_t`, `wx_alg_cas`: the
-identities of CONT (8), (10), (14)). In `M2Window.ReverseNext` the bound `A ≥ a` is global
-minimality itself; that `A` is a reverse centre is not needed.
+window identities for `h_d`, `w`, `t` and `γ²`). In `M2Window.ReverseNext` the bound `A ≥ a` is
+global minimality itself; that `A` is a reverse centre is not needed.
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
 
-/-- **The smaller-nonshort window** (CONT §§1-3). -/
+/-- **The smaller-nonshort window**: at a global minimum `m` at a reverse centre with the smaller
+turn outgoing and the switch `m + 2` forward, the pieces `m - 2, …, m + 3` carry an `M2Window`,
+with `ForwardNext` or `ReverseNext` according to the switch `m + 3`. -/
 theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDomain)
     (h : P.rep.ClassM2) (hN : 6 ≤ P.N) {m : ℤ}
     (hm : ∀ k, P.costateCycle.act m ≤ P.costateCycle.act k)
@@ -83,7 +82,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
   have hmix : P.rep.IsMixed := h.1
   have hact : ∀ j, P.activeMargin j = P.costateCycle.act j := fun j =>
     (P.costateCycle_m_lab j).symm
-  -- the strict centre minima (MGMS (19))
+  -- the strict centre minima
   have hrev : ∀ j, ¬ P.costateCycle.m2Fwd j → P.rep.IsReverse j := fun j hj =>
     (P.rep.m2_fwd_or_rev j).resolve_left hj
   have hrun : P.rep.IsReverseRun (m - 1) 2 := by
@@ -97,7 +96,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
   obtain ⟨-, hap, hab, hac, had⟩ := reverseRun_two_and_centre_min P hmix hrun
   simp only [hact, show m - 1 + 1 = m by ring, show m - 1 - 1 = m - 2 by ring,
     show m - 1 + 2 = m + 1 by ring, show m - 1 + 3 = m + 2 by ring] at hap hab hac had
-  -- the reverse-centre scale bound (RCSB (1))
+  -- the reverse-centre scale bound
   obtain ⟨D, -, -, hDa, -, -, hDΓ⟩ := m2_centre P K hmix h2 h1 h0 h3
   have hsc := m2_scale D (by rw [hDΓ]; linarith [K.cas_lt hc])
   rw [hDa] at hsc
@@ -113,7 +112,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
   have h1' : ¬ P.costateCycle.m2Fwd (m + 1 - 1) := by rw [add_sub_cancel_right]; exact h0
   have h3' : P.costateCycle.m2Fwd (m + 2 - 1) := by rw [show m + 2 - 1 = m + 1 by ring]; exact h3
   have h4' : P.costateCycle.m2Fwd (m + 3 - 1) := by rw [show m + 3 - 1 = m + 2 by ring]; exact h4
-  -- factors (CE (2))
+  -- factors
   have qm := P.costateCycle.m2_factor_rr h1 h0
   have q1 := P.costateCycle.m2_factor_rf h1' h3
   rw [add_sub_cancel_right, show m + 1 + 1 = m + 2 by ring] at q1
@@ -134,7 +133,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
         (P.costateCycle.act (m + 2) + P.costateCycle.act (m + 3)) /
           (P.costateCycle.act (m + 2) ^ 2 + 4) := by
     rw [eq_div_iff (by positivity)]; exact q2
-  -- strict star (CE §1)
+  -- strict star
   have st_pb := P.costateCycle.m2_star (m - 1)
   have st_ab := P.costateCycle.m2_star m
   have st_ac := P.costateCycle.m2_star (m + 1)
@@ -144,7 +143,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
   rw [add_sub_cancel_right] at st_ac
   rw [show m + 2 - 1 = m + 1 by ring] at st_cd
   rw [show m + 3 - 1 = m + 2 by ring] at st_dr
-  -- the compact domain (`MIXED_NONSHORT_BLOWUP_REDUCTION` (2), (2a))
+  -- the compact domain
   have hmc := fun k j => P.wx_m_ge hK k j
   have third_cd := P.costateCycle.m2_third_fwd h3'
   rw [show m + 2 - 1 = m + 1 by ring] at third_cd
@@ -163,7 +162,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
   have a_ge : 2 / 15 ≤ P.costateCycle.act m := hmc m _
   have d_le : P.costateCycle.act (m + 2) ≤ 8 := P.wx_m_le hK (m + 2) _
   have r_le : P.costateCycle.act (m + 3) ≤ 8 := P.wx_m_le hK (m + 3) _
-  -- three-arc log-concavity on `a, c, d` (MGMS (12))
+  -- three-arc log-concavity on `a, c, d`
   have hlog := P.costateCycle.three_arc m (by
     rw [show m + 2 = m + 1 + 1 by ring,
       show P.costateCycle.lab (m + 1 + 1) = P.costateCycle.lab (m + 1) + 1 from h3,
@@ -196,7 +195,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
     rw [sec_b.1, ← sec_b.2]
   rw [hv1] at fge_cd fl_in stat_d
   rw [hu2] at fge_pb
-  -- the frames (CONT (8), (10), E2 §1.4)
+  -- the frames
   have tr0 := K.trace_eq m
   rw [Matrix.trace_fin_two] at tr0
   have e11 : K.M m 1 1 = -K.M m 0 0 := by linarith
@@ -269,7 +268,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
     have := mul_le_mul_of_nonneg_right m_dr
       (show 0 ≤ P.costateCycle.act (m + 2) + P.costateCycle.act (m + 3) by positivity)
     linarith
-  · -- the next switch is forward (CONT (16))
+  · -- the next switch is forward
     have h5' : P.costateCycle.m2Fwd (m + 4 - 1) := by
       rw [show m + 4 - 1 = m + 3 by ring]; exact h5
     have q3 := P.costateCycle.m2_factor_ff h4' h5
@@ -289,7 +288,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
     rw [show m + 3 - 1 = m + 2 by ring] at fl_in'
     have fl_out' := K.floor_out (m + 3) h4' h5
     rw [show m + 3 + 1 = m + 4 by ring] at fl_out'
-    -- the next norm `t` (CONT (14))
+    -- the next norm `t`
     have tr2 := K.trace_eq (m + 2)
     rw [Matrix.trace_fin_two] at tr2
     have e11' : K.M (m + 2) 1 1 = -K.M (m + 2) 0 0 := by linarith
@@ -319,7 +318,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
       have := mul_lt_mul_of_pos_right q31
         (show 0 < P.costateCycle.act (m + 3) ^ 2 + 4 by positivity)
       linarith, fge_rs.trans_eq ht, fl_in', fl_out'.trans_eq ht⟩
-  · -- the next switch is reverse (CONT (17)-(18))
+  · -- the next switch is reverse
     have q3 := P.costateCycle.m2_factor_fr h4' h5
     rw [show m + 3 - 1 = m + 2 by ring, show m + 3 + 1 = m + 4 by ring] at q3
     have q31 := P.costateCycle.one_lt_q (m + 3)
@@ -341,7 +340,8 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
       (show 0 < P.costateCycle.act (m + 3) + P.costateCycle.act (m + 4) by positivity)
     linarith
 
-/-- **The smaller-short window** (`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION` §1, E1 R10-R26). -/
+/-- **The smaller-short window**: at a global minimum `m` at a reverse centre with the smaller
+turn outgoing and the switch `m + 2` reverse, the pieces `m - 2, …, m + 4` carry an `M2Short`. -/
 theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDomain)
     (h : P.rep.ClassM2) (hN : 6 ≤ P.N) {m : ℤ}
     (hm : ∀ k, P.costateCycle.act m ≤ P.costateCycle.act k)
@@ -403,7 +403,7 @@ theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InComp
   have h3' : Y.m2Fwd (m + 2 - 1) := by rw [show m + 2 - 1 = m + 1 by ring]; exact h3
   have h4' : ¬ Y.m2Fwd (m + 3 - 1) := by rw [show m + 3 - 1 = m + 2 by ring]; exact h4
   have h5' : ¬ Y.m2Fwd (m + 4 - 1) := by rw [show m + 4 - 1 = m + 3 by ring]; exact h5
-  -- factors (CE (2))
+  -- factors
   have qm := Y.m2_factor_rr h1 h0
   have q1 := Y.m2_factor_rf h1' h3
   rw [add_sub_cancel_right, show m + 1 + 1 = m + 2 by ring] at q1
@@ -435,7 +435,7 @@ theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InComp
   rw [show m + 2 - 1 = m + 1 by ring] at st_CB
   rw [show m + 3 - 1 = m + 2 by ring] at st_BA
   rw [show m + 4 - 1 = m + 3 by ring] at st_APf
-  -- the turn secants (CE (15))
+  -- the turn secants
   have sec_b := K.secant (m - 1)
     (by rw [show m - 1 - 1 = m - 2 by ring]; exact fun e => h1 (e.1 h2))
   rw [show m - 1 - 1 = m - 2 by ring, sub_add_cancel] at sec_b
@@ -450,7 +450,7 @@ theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InComp
   have hu1 : Y.m2Norm K.M (m + 1) = Y.m2Norm K.M m := by rw [sec_C.2, ← sec_C.1]
   have hu2 : Y.m2Norm K.M (m + 2) = Y.m2Norm K.M m := by rw [sec_B.2, ← sec_B.1, hu1]
   have hv2 : Y.m2Norm K.M (m - 2) = Y.m2Norm K.M (m - 1) := by rw [sec_b.1, ← sec_b.2]
-  -- the switching inequalities (CE (17))
+  -- the switching inequalities
   have fge_pb := K.fwd_ge (m - 2) h2
   rw [show m - 2 + 1 = m - 1 by ring, hv2] at fge_pb
   have rle_b := K.rev_le (m - 1) h1
@@ -467,7 +467,7 @@ theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InComp
   obtain ⟨cfA_E, cfA_Γ⟩ := ss_centre_frame P K (k := m + 3) h4' h5
   rw [show m + 3 - 1 = m + 2 by ring, show m + 3 + 1 = m + 4 by ring, hu2] at cfA_E
   rw [show m + 3 - 1 = m + 2 by ring, hu2] at cfA_Γ
-  -- the scale bounds (RCSB (1))
+  -- the scale bounds
   obtain ⟨Da, -, -, hDa, -, -, hDaΓ⟩ := m2_centre P K h.1 h2 h1 h0 h3
   have hsc := m2_scale Da (by rw [hDaΓ]; linarith [K.cas_lt hc])
   rw [hDa] at hsc
@@ -500,7 +500,7 @@ theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InComp
   obtain ⟨hwt, hELt⟩ := ss_alg_wEL a0 b0 c0 B0 A0 P0 hqm hq1 hq2 hq3 x1 y1 z1 w1 x2 y2 z2 w2 x3 y3
   rw [← hv', ← hu', ← hw'] at hwt
   rw [← hu'] at hELt
-  -- the middle slack (`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (M))
+  -- the middle slack
   have hGL := K.mc_fwd (m + 2) h3'
   rw [show m + 2 - 1 = m + 1 by ring] at hGL
   rw [ss_alg_mid a0 b0 c0 B0 hqm hq1 x1 y1 z1 w1 x2 y2 z2, ← hv', ← hu'] at hGL

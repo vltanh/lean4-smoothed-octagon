@@ -27,7 +27,6 @@ densities. No regularity of a contact map is assumed.
 
 This module supplies the geometric cyclic lift. A clock whose density transforms covariantly
 under that lift can turn it into translation by one sixth of the new full period.
-Compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

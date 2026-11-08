@@ -6,9 +6,9 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Basic
 /-!
 # Case M2 by hand: the normalized data of an actual window
 
-The normalized coordinates of `MIXED_NONSHORT_SHAPE_MONOTONICITY` for an actual smaller-nonshort
-window `W : M2Window`: `t = a/T`, `x = (d - a)/T`, `k = K/T²`, `q = WZ/Q` (`T = a + c`,
-`K = a² + 4`), and the necessary conditions they satisfy without any successor assumption.
+The normalized coordinates of an actual smaller-nonshort window `W : M2Window`: `t = a/T`,
+`x = (d - a)/T`, `k = K/T²`, `q = WZ/Q` (`T = a + c`, `K = a² + 4`), and the necessary conditions
+they satisfy without any successor assumption.
 
 ## Main API
 
@@ -39,7 +39,7 @@ noncomputable def nq : ℝ := (W.c + W.d) * (W.d + W.r) / (W.d ^ 2 + 4)
 
 end M2Window
 
-/-- The normalized residual `R` (`MIXED_NONSHORT_SHAPE_MONOTONICITY`): with `W = 1 + x`,
+/-- The normalized residual `R`: with `W = 1 + x`,
 `p = t + x`, `Y = x(x + 2)`, `B = k + 2tx + x²`, `Z = qB/W`,
 `R = (1 - t) + Z - p²/W - p²/Z + p³/B - pL - Wv - Z w_U + p(H₀ + 2vY)/B`. -/
 noncomputable def nhR (t x k q v L : ℝ) : ℝ :=

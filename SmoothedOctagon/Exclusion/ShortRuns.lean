@@ -7,17 +7,15 @@ public import SmoothedOctagon.Exclusion.ShortRun.TwoCentre
 /-!
 # Case M1: no competitive all-short mixed period
 
-`MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION`, with its two-centre base `MIXED_GLOBAL_SHORT_RUN_PERIOD`.
 A competitive normal vertex period whose cyclic sign word is `(− − +)^m` does not exist: the
-whole-period winding identity (`MIXED_GLOBAL_PROJECTIVE_WINDING`) and the angle budget of a
-competitive period (`MIXED_GLOBAL_REVERSE_ANGLE_DENSITY`) are incompatible.
+whole-period winding identity of the centre angles and the lower bound on each centre angle of a
+competitive period are incompatible.
 
-The proof (MGSRAE §4): the word is `(− − +)^m` with `m ≡ 2 (mod 3)` (`m1_pattern`); the normal
-multiplier is elliptic (`NormalPeriod.gam2_pos_of_mixed`) and, the period being competitive, its
-Casimir is capped (`NormalPeriod.gam2_le_cap`); at every centre the scalar data
-(`NormalPeriod.m1_centreData`) and the cap give `cos φ_j < 3/10` (`m1_angle_gap`), so
-`φ_j > 2π/5`; for `m ≥ 5` this contradicts `∑ φ_j = (m + 1)π/3` (`m1_winding`), and `m = 2` is
-excluded by its cost (`m1_two_centre`).
+The proof: the word is `(− − +)^m` with `m ≡ 2 (mod 3)` (`m1_pattern`); the normal multiplier is
+elliptic (`NormalPeriod.gam2_pos_of_mixed`) and, the period being competitive, its Casimir is capped
+(`NormalPeriod.gam2_le_cap`); at every centre the scalar data (`NormalPeriod.m1_centreData`) and the
+cap give `cos φ_j < 3/10` (`m1_angle_gap`), so `φ_j > 2π/5`; for `m ≥ 5` this contradicts
+`∑ φ_j = (m + 1)π/3` (`m1_winding`), and `m = 2` is excluded by its cost (`m1_two_centre`).
 -/
 
 @[expose] public section
@@ -26,8 +24,8 @@ namespace SmoothedOctagon
 
 open Real
 
-/-- **Case M1** (`MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION`). No competitive normal vertex period has
-mixed signs with every reverse run of length two and every forward run of length one. -/
+/-- **Case M1.** No competitive normal vertex period has mixed signs with every reverse run of
+length two and every forward run of length one. -/
 theorem shortRuns_exclusion (P : NormalPeriod) (hc : P.IsCompetitive) (h : P.rep.ClassM1) :
     False := by
   obtain ⟨k₀, m, hm0, hN, hm3, hpat⟩ := P.rep.m1_pattern h

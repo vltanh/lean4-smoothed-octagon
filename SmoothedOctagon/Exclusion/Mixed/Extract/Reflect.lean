@@ -5,7 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.Extract.Reverse
 /-!
 # The reflected, time-reversed normal period
 
-`MIXED_GLOBAL_MINIMUM_STRUCTURE` (MGMS) §§1-3. For a normal vertex period `P` on `[0, T]` put
+For a normal vertex period `P` on `[0, T]` put
 
 * `u'(t) = σ u(T - t)` (the components `1` and `2` exchanged),
 * `g'(t) = S R⁻¹ g(T - t) S`, `X'(t) = -S X(T - t) S`,
@@ -87,7 +87,7 @@ namespace NormalPeriod
 
 variable (P : NormalPeriod)
 
-/-- **The reflected extremal** (MGMS §§1-3). -/
+/-- **The reflected extremal**. -/
 theorem wx_refl_extremal :
     IsPontryaginExtremal P.T (fun t ↦ wx_reflControl (P.u (P.T - t)))
       (fun t ↦ reflS * R⁻¹ * P.g (P.T - t) * reflS) (fun t ↦ wx_rev (P.X (P.T - t)))
@@ -154,7 +154,7 @@ theorem wx_refl_extremal :
     rw [wx_hamiltonian_refl, ← wx_reflControl_reflControl v, wx_hamiltonian_refl]
     exact hle _ (wx_reflControl_mem hv)
 
-/-- **The reflected, time-reversed normal period** (MGMS §§1-3). -/
+/-- **The reflected, time-reversed normal period**. -/
 noncomputable def wx_refl : NormalPeriod where
   T := P.T
   u t := wx_reflControl (P.u (P.T - t))

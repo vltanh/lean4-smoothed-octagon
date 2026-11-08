@@ -6,20 +6,18 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Basic
 # Case M2 by hand: comparisons of turn secants
 
 The secant `Sec(A, B, P)` (`m2Sec`) is the average of `g_B(s) = m2g B s` over `[A, P]`; with the
-antiderivative `G_B(s) = s - B log(B + s) - B²/(B + s)` (`nhG`) every comparison of
-`MIXED_NONSHORT_REVERSE_ORDER_BOUND` §1 reduces to a monotonicity statement.
+antiderivative `G_B(s) = s - B log(B + s) - B²/(B + s)` (`nhG`) every comparison of secants used
+for the reverse order bound reduces to a monotonicity statement.
 
 ## Main API
 
 * `nhG`, `nh_hasDerivAt_G`, `nh_sec_eq_G`; `nh_m2g_sub` (`g_B(s₁) - g_B(s₂)`).
 * `nh_G_sub_lt`, `nh_G_sub_gt`: an average of `g_B` below/above a bound of the integrand.
-* `nh_sec_swap`: **the swapped secant order** `Sec(a, c, d) < Sec(a, d, c)` for `0 < a ≤ c < d`
-  (`MIXED_NONSHORT_REVERSE_ORDER_BOUND` (1)).
-* `nh_sec_start`: `z ↦ Sec(z, d, c)` is strictly decreasing on `(0, c]` for `c ≤ d` (ibid. (3)).
-* `nh_m2F_eq_sec`: `F_{P/(P+C)}(q) = Sec((P + C)/q - P, P, C)` (ibid. (5)).
+* `nh_sec_swap`: **the swapped secant order** `Sec(a, c, d) < Sec(a, d, c)` for `0 < a ≤ c < d`.
+* `nh_sec_start`: `z ↦ Sec(z, d, c)` is strictly decreasing on `(0, c]` for `c ≤ d`.
+* `nh_m2F_eq_sec`: `F_{P/(P+C)}(q) = Sec((P + C)/q - P, P, C)`.
 * `nh_sec_le_of_rev`: `Sec(A, r, d) ≤ g_r(A)`, `a ≤ A ≤ r` give `Sec(A, r, d) ≤ Sec(a, r, d)`.
-* `nh_sec_zero_gt`: `Sec(0, c, d) > v` when `v = Sec(a, c, d) ≤ g_c(a)`, `0 < a < c`, `a < d`
-  (`MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON` §1).
+* `nh_sec_zero_gt`: `Sec(0, c, d) > v` when `v = Sec(a, c, d) ≤ g_c(a)`, `0 < a < c`, `a < d`.
 * `nh_secN_eq`: the normalized secant is `Sec(t, 1 - t, t + x)`.
 -/
 
@@ -100,7 +98,7 @@ theorem nh_G_sub_gt {B z P c : ℝ} (hz : 0 < B + z) (hzP : z < P)
   linarith
 
 /-- The pointwise comparison behind the swapped order: `g_d(α) > g_c(β)` when `dβ > cα` and
-`αβ < cd` (`MIXED_NONSHORT_REVERSE_ORDER_BOUND` (2)). -/
+`αβ < cd`. -/
 theorem nh_m2g_cross {c d α β : ℝ} (hc : 0 < c) (hd : 0 < d) (hα : 0 < α) (hβ : 0 < β)
     (h1 : c * α < d * β) (h2 : α * β < c * d) : m2g c β < m2g d α := by
   have e : m2g d α - m2g c β = (d * β - c * α) * (c * d - α * β) / ((α + d) ^ 2 * (β + c) ^ 2) := by
@@ -109,8 +107,7 @@ theorem nh_m2g_cross {c d α β : ℝ} (hc : 0 < c) (hd : 0 < d) (hα : 0 < α) 
     apply div_pos (mul_pos (by linarith) (by linarith)); positivity
   linarith
 
-/-- **The swapped secant order** (`MIXED_NONSHORT_REVERSE_ORDER_BOUND` (1)):
-`Sec(a, c, d) < Sec(a, d, c)` for `0 < a ≤ c < d`. -/
+/-- **The swapped secant order**: `Sec(a, c, d) < Sec(a, d, c)` for `0 < a ≤ c < d`. -/
 theorem nh_sec_swap {a c d : ℝ} (ha : 0 < a) (hac : a ≤ c) (hcd : c < d) :
     m2Sec a c d < m2Sec a d c := by
   have hc : 0 < c := by linarith
@@ -175,7 +172,7 @@ theorem nh_sec_swap {a c d : ℝ} (ha : 0 < a) (hac : a ≤ c) (hcd : c < d) :
       nh_sec_eq_G ha.le hd hc.le (ne_of_lt h)]
     linarith
 
-/-- **Starting-point monotonicity** (`MIXED_NONSHORT_REVERSE_ORDER_BOUND` (3)): for
+/-- **Starting-point monotonicity**: for
 `0 < z₁ < z₂ ≤ c ≤ d`, `Sec(z₂, d, c) < Sec(z₁, d, c)`. -/
 theorem nh_sec_start {z1 z2 c d : ℝ} (hz1 : 0 < z1) (h12 : z1 < z2) (h2c : z2 ≤ c) (hcd : c ≤ d) :
     m2Sec z2 d c < m2Sec z1 d c := by
@@ -208,7 +205,7 @@ theorem nh_sec_start {z1 z2 c d : ℝ} (hz1 : 0 < z1) (h12 : z1 < z2) (h2c : z2 
     rw [e1]
     nlinarith
 
-/-- **The missing-control floor as a secant** (`MIXED_NONSHORT_REVERSE_ORDER_BOUND` (5)):
+/-- **The missing-control floor as a secant**:
 `F_{P/(P+C)}(q) = Sec((P + C)/q - P, P, C)`. -/
 theorem nh_m2F_eq_sec {P C q : ℝ} (hP : 0 < P) (hC : 0 < C) (hq : 1 < q) :
     m2F (P / (P + C)) q = m2Sec ((P + C) / q - P) P C := by
@@ -230,7 +227,7 @@ theorem nh_m2F_eq_sec {P C q : ℝ} (hP : 0 < P) (hC : 0 < C) (hq : 1 < q) :
   field_simp
   ring
 
-/-- The reverse successor's secant comparison (`MIXED_SMALLER_TURN_CONTINUATION` (18)): if
+/-- The reverse successor's secant comparison: if
 `Sec(A, r, d) ≤ g_r(A)` with `0 < a ≤ A ≤ r`, `A < d`, then `Sec(A, r, d) ≤ Sec(a, r, d)`. -/
 theorem nh_sec_le_of_rev {a A r d : ℝ} (ha : 0 < a) (haA : a ≤ A) (hAr : A ≤ r) (hAd : A < d)
     (hle : m2Sec A r d ≤ m2g r A) : m2Sec A r d ≤ m2Sec a r d := by
@@ -266,8 +263,8 @@ theorem nh_sec_le_of_rev {a A r d : ℝ} (ha : 0 < a) (haA : a ≤ A) (hAr : A �
     field_simp; ring
   nlinarith
 
-/-- `Sec(0, c, d) > v` when `v = Sec(a, c, d) ≤ g_c(a)`, `0 < a < c`, `a < d`
-(`MIXED_NONSHORT_REVERSE_EXACT_SHAPE_COMPARISON` §1). -/
+/-- `Sec(0, c, d) > v` when `v = Sec(a, c, d) ≤ g_c(a)`, `0 < a < c`, `a < d`: the average of
+`g_c` over `[0, a]` exceeds `g_c(a) ≥ v`. -/
 theorem nh_sec_zero_gt {a c d : ℝ} (ha : 0 < a) (hac : a < c) (had : a < d)
     (hv : m2Sec a c d ≤ m2g a c) : m2Sec a c d < m2Sec 0 c d := by
   have hc : 0 < c := by linarith

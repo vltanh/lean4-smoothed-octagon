@@ -6,8 +6,7 @@ public import SmoothedOctagon.Exclusion.Mixed.Extract.Reflect
 /-!
 # Case M2: the reflection and time-reversal symmetry
 
-`MIXED_GLOBAL_MINIMUM_STRUCTURE` §§1-3 (MGMS), `MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION` §3,
-`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` §1. The reflection `S = diag(1, -1)` combined with the
+The reflection `S = diag(1, -1)` combined with the
 reversal of time, `g ↦ S R⁻¹ g(T - t) S`, `X ↦ -S X(T - t) S`, `Λ ↦ -S Λ(T - t) S`, maps a normal
 vertex period to a normal vertex period with the same cost (`S J S = -J`), the same compact-domain
 property (`𝔥**` is symmetric under `x ↦ -x`), the pieces in reverse order (piece `k` of the image
@@ -27,7 +26,7 @@ carried along. The switch signs are read in reverse order and are not negated.
 
 namespace SmoothedOctagon
 
-/-- **The reflected period** (MGMS §§1-3). Every normal vertex period has a reflected,
+/-- **The reflected period**. Every normal vertex period has a reflected,
 time-reversed image: a normal vertex period with the same number of pieces and the same cost, in
 `𝔥**` if the original is, whose labels are `c - i_{-1-k}` for a constant `c` and whose active
 margins are `a_{-1-k}`. -/

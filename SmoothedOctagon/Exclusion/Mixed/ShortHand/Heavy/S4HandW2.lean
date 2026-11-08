@@ -5,19 +5,17 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW2c
 /-!
 # Gate S4, hand proof W2: `Ψ` increases in the shape parameter `e` on the curve
 
-`archive/lighter-proofs/SHORT_CASIMIR_FIRST_DERIVATIVES.md` §§1, 4-5, the second sign
-`Ψ_e/(xd) > 0` of (1). On the actual shape curve `a = 1 + ed`, `b = x(1 + d)`, `u = ū(x, b)`, only
-`a` depends on `e`, so it suffices that `a ↦ Ψ(x, a, b, u)` is nondecreasing on `[1, 22/19]`.
-By `S4HandW2a`-`S4HandW2c`, with `c = a - 1`, `h = x - 2`, `z = b - x ≥ 0`,
+The sign proved is `Ψ_e/(xd) > 0`. On the actual shape curve `a = 1 + ed`, `b = x(1 + d)`,
+`u = ū(x, b)`, only `a` depends on `e`, so it suffices that `a ↦ Ψ(x, a, b, u)` is nondecreasing on
+`[1, 22/19]`. By `S4HandW2a`-`S4HandW2c`, with `c = a - 1`, `h = x - 2`, `z = b - x ≥ 0`,
 
 `28a²B²K²Ψ_a = (P_* + T₁z + T₂z² + T₃z³) + (4u - 3)(U₀ + U₁z + U₂z² + U₃z³) > 0`
 
-for `u ≥ 3/4` (`U_i > 0` is note (12)-(13), `P_* > 19` is note (14)). The incoming norm
-`ū(x, x(1 + d))` lies in `[3/4, 19/25]` (note §1 (4)-(5), `hl46_w2_ubar_mem`); only `ū ≥ 3/4` is
-used.
+for `u ≥ 3/4` (`U_i > 0` and `P_* > 19` are proved in `S4HandW2c`). The incoming norm
+`ū(x, x(1 + d))` lies in `[3/4, 19/25]` (`hl46_w2_ubar_mem`); only `ū ≥ 3/4` is used.
 
-Route: the note's reduction of `b` to `x` (`Ψ_ab > 0` at `u = 3/4`, its `J`-identity) is replaced
-by the positivity of the `z`-coefficients `T₁, T₂, T₃` of the same numerator (`S4HandW2b`).
+The dependence on `b` is controlled by the positivity of the `z`-coefficients `T₁, T₂, T₃` of
+the same numerator (`S4HandW2b`).
 
 ## Main API
 
@@ -31,7 +29,7 @@ namespace SmoothedOctagon
 
 open Set
 
-/-- Note §1 (4)-(5): on `b = x(1 + d)` the incoming upper norm `ū(x, b)` lies in `[3/4, 19/25]`:
+/-- On `b = x(1 + d)` the incoming upper norm `ū(x, b)` lies in `[3/4, 19/25]`:
 `2(x - 1)²/((x + 1)(35x + 13)) ≤ 1/103` and `(b - x)³/(48x²) ≤ (b - 1)/100000`. -/
 theorem hl46_w2_ubar_mem {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d)
     (hd' : d ≤ 1 / 19) :
@@ -71,7 +69,7 @@ theorem hl46_w2_ubar_mem {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0
       linarith
     linarith
 
-/-- **W2** (`SHORT_CASIMIR_FIRST_DERIVATIVES` §§4-5): `Ψ` increases in `e` on the curve. -/
+/-- **W2**: `Ψ` increases in `e` on the curve. -/
 theorem hl46_W2 {x d e₁ e₂ : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d) (hd' : d ≤ 1 / 19)
     (h1 : 13 / 5 ≤ e₁) (h12 : e₁ ≤ e₂) (h2 : e₂ ≤ 3) : hl46PsiC x d e₁ ≤ hl46PsiC x d e₂ := by
   have hu := (hl46_w2_ubar_mem hx hx' hd hd').1

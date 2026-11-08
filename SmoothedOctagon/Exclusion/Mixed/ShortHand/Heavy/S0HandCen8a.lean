@@ -5,15 +5,14 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0HandCen
 /-!
 # Hand proof of the smaller-short case, gate S0: the `τ = 8T/9` test at the upper faces (rows 0, 1)
 
-`archive/lighter-proofs/SHORT_DURATION_CENTRAL_UPPER_FACES.md` (algebra in `SHORT_DURATION_CENTRAL_UPPER_ALGEBRA.md`). The upper beta endpoint is enlarged to a
-constant slope `c_j` on each `x`-interval; the cleared numerator (`hl0N8`) there is a polynomial
-of degree ten in `(x, α)`, computed in Lean from its factored source formula (`hl0FNc`; it is never
-printed). On each rectangle `∂²_x N > 0` (the coefficient bound, the note's (6)-(8)), `∂_x N > 0` and
-`N > 0` on the left edge `x = l_j` (the note's (9)-(11)).
+The upper beta endpoint is enlarged to a constant slope
+`c_j` on each `x`-interval; the cleared numerator (`hl0N8`) there is a polynomial of degree ten in
+`(x, α)`, computed in Lean from its factored formula (`hl0FNc`; it is never printed). On each
+rectangle `∂²_x N > 0` (the coefficient bound `hl0Low2`), `∂_x N > 0` and `N > 0` on the
+left edge `x = l_j`.
 
-Route: the edge polynomials are taken exactly at `x = l_j` (no Taylor bound at `x = 2`), and every
-one-variable sign uses the coefficient bound after a Taylor shift on a few fixed pieces (`hl0Cov`)
-instead of the midpoint quadratic bound.
+The edge polynomials are taken exactly at `x = l_j`, and every one-variable sign uses the
+coefficient bound after a Taylor shift on a few fixed pieces (`hl0Cov`).
 
 ## Main API
 
@@ -25,7 +24,7 @@ instead of the midpoint quadratic bound.
 namespace SmoothedOctagon
 
 /-- Row 0 of the `τ = 8T/9` test: the cleared numerator at `β = x + (7 / 8)(α - 1)` as a list in `X = x - (12 / 5)`,
-`A = α - 1`, computed from the source formula. -/
+`A = α - 1`, computed from the factored formula. -/
 noncomputable def hl0U8_0 : List (List ℝ) :=
   hl0FNc 72 36 64 72 72 (-81) (-37) 72 64 (-72) [[(12 / 5)], [1]] [[1, 1]] [[(12 / 5), (7 / 8)], [1]]
 
@@ -53,7 +52,7 @@ theorem hl0U8_0_neg {x a : ℝ} (hx : (12 / 5) ≤ x) (hxh : x ≤ (5 / 2)) (ha 
     (hl0_cov_pos _ _ _ _ h3) (by linarith) (by linarith) (by linarith) (by linarith)
 
 /-- Row 1 of the `τ = 8T/9` test: the cleared numerator at `β = x + 1(α - 1)` as a list in `X = x - (5 / 2)`,
-`A = α - 1`, computed from the source formula. -/
+`A = α - 1`, computed from the factored formula. -/
 noncomputable def hl0U8_1 : List (List ℝ) :=
   hl0FNc 72 36 64 72 72 (-81) (-37) 72 64 (-72) [[(5 / 2)], [1]] [[1, 1]] [[(5 / 2), 1], [1]]
 

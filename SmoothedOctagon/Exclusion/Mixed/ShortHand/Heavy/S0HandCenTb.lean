@@ -5,15 +5,14 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0HandCen
 /-!
 # Hand proof of the smaller-short case, gate S0: the `τ = T` test at the upper faces (rows 2, 3)
 
-`archive/lighter-proofs/SHORT_DURATION_CENTRAL_UPPER_FACES.md` (algebra in `SHORT_DURATION_CENTRAL_UPPER_ALGEBRA.md`). The upper beta endpoint is enlarged to a
-constant slope `c_j` on each `x`-interval; the cleared numerator (`hl0NT`) there is a polynomial
-of degree ten in `(x, α)`, computed in Lean from its factored source formula (`hl0FNc`; it is never
-printed). On each rectangle `∂²_x N > 0` (the coefficient bound, the note's (6)-(8)), `∂_x N > 0` and
-`N > 0` on the left edge `x = l_j` (the note's (9)-(11)).
+The upper beta endpoint is enlarged to a constant slope
+`c_j` on each `x`-interval; the cleared numerator (`hl0NT`) there is a polynomial of degree ten in
+`(x, α)`, computed in Lean from its factored formula (`hl0FNc`; it is never printed). On each
+rectangle `∂²_x N > 0` (the coefficient bound `hl0Low2`), `∂_x N > 0` and `N > 0` on the
+left edge `x = l_j`.
 
-Route: the edge polynomials are taken exactly at `x = l_j` (no Taylor bound at `x = 2`), and every
-one-variable sign uses the coefficient bound after a Taylor shift on a few fixed pieces (`hl0Cov`)
-instead of the midpoint quadratic bound.
+The edge polynomials are taken exactly at `x = l_j`, and every one-variable sign uses the
+coefficient bound after a Taylor shift on a few fixed pieces (`hl0Cov`).
 
 ## Main API
 
@@ -25,7 +24,7 @@ instead of the midpoint quadratic bound.
 namespace SmoothedOctagon
 
 /-- Row 2 of the `τ = T` test: the cleared numerator at `β = x + (6 / 5)(α - 1)` as a list in `X = x - 3`,
-`A = α - 1`, computed from the source formula. -/
+`A = α - 1`, computed from the factored formula. -/
 noncomputable def hl0UT_2 : List (List ℝ) :=
   hl0FNc 8 4 8 8 8 (-8) (-5) 8 8 (-8) [[3], [1]] [[1, 1]] [[3, (6 / 5)], [1]]
 
@@ -53,7 +52,7 @@ theorem hl0UT_2_neg {x a : ℝ} (hx : 3 ≤ x) (hxh : x ≤ 5) (ha : 1 ≤ a)
     (hl0_cov_pos _ _ _ _ h3) (by linarith) (by linarith) (by linarith) (by linarith)
 
 /-- Row 3 of the `τ = T` test: the cleared numerator at `β = x + (3 / 2)(α - 1)` as a list in `X = x - 5`,
-`A = α - 1`, computed from the source formula. -/
+`A = α - 1`, computed from the factored formula. -/
 noncomputable def hl0UT_3 : List (List ℝ) :=
   hl0FNc 8 4 8 8 8 (-8) (-5) 8 8 (-8) [[5], [1]] [[1, 1]] [[5, (3 / 2)], [1]]
 

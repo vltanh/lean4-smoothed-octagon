@@ -6,24 +6,21 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.Secant
 /-!
 # Case M2, forward successor by hand: the high-ratio residual increases in the shape
 
-`docs/lighter-proofs/NONSHORT_HIGH_RATIO_SHAPE.md` (PR #2, branch `proof/lighter-signs`), which
-reconstructs §2 of `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION`: on the high-ratio large-gap
-domain (`3/8 ≤ t < 2/5`, `j = 2t + x - 1 ≥ 1/30`, `7x < 12h`, `1 ≤ q`, `q(1 + 2j) ≤ 1 + x`) the
-combined residual `fhComb 4 1 … (fhVG t x) (nhLp q) (nhFl t x q)` increases in the shape `k` on
-`[1, 1 + j]`. The caller `fh_LGB_core` then needs only its lower shape endpoint `k = 29t²/4`, and
-the upper-face certificate (`k = 1 + j`) is no longer used.
+On the high-ratio large-gap domain (`3/8 ≤ t < 2/5`, `j = 2t + x - 1 ≥ 1/30`, `7x < 12h`, `1 ≤ q`,
+`q(1 + 2j) ≤ 1 + x`) the combined residual `fhComb 4 1 … (fhVG t x) (nhLp q) (nhFl t x q)`
+increases in the shape `k` on `[1, 1 + j]`. The caller `fh_LGB_core` then needs only its lower
+shape endpoint `k = 29t²/4`.
 
 The residual is quadratic in `k`, so `F(k) - F(k₀) = (k - k₀) ∂_kF((k + k₀)/2)` exactly
 (`hrs_comb_sub_k`). The shape derivative `∂_kF = hrsK` is affine in `v`, `L` and `k`
-(`hrs_K_dec`); its `v`-slope is negative (`hrs_Kv_neg`, note (6)), its `L`-slope and `k`-slope are
-nonpositive (note (7), (9)), and `v_G < U(t)`, `L₊ ≤ q - 1` (note §3). At `v = U(t)`, `L = q - 1`,
-`k = 1 + j` it equals `2tq²(d₀ + d₁y + d₂y² + d₃y³)` (note (11), via the four coefficient
-identities (13) `hrs_d0_eq`, …), which is positive (note §6).
+(`hrs_K_dec`); its `v`-slope is negative (`hrs_Kv_neg`), its `L`-slope and `k`-slope are
+nonpositive, and `v_G < U(t)`, `L₊ ≤ q - 1` (`hrs_VG_lt_U`, `hrs_Lp_le`). At `v = U(t)`,
+`L = q - 1`, `k = 1 + j` it equals `2tq²(d₀ + d₁y + d₂y² + d₃y³)`, `y = q - 1` (`hrs_K_end`, via
+the four coefficient identities `hrs_d_eq`), which is positive (`hrs_cubic_pos`).
 
-Route: the note's bounds `Je² < 15/16`, `(qJ - pW)/x ≤ 25/16` are replaced by the weaker bounds
-`Je² ≤ 17/16`, `(qJ - pW)/x ≤ 41/24` that the caller already has (`fh_LG_J`, `fh_LG_WD`, passed as
-hypotheses), which suffice for (6); and the derivative is integrated through the exact midpoint
-identity of a quadratic.
+The bounds `Je² ≤ 17/16`, `(qJ - pW)/x ≤ 41/24` that the caller already has (`fh_LG_J`,
+`fh_LG_WD`, passed as hypotheses) suffice for the sign of the `v`-slope, and the derivative is
+integrated through the exact midpoint identity of a quadratic.
 
 ## Main API
 
@@ -59,7 +56,7 @@ noncomputable def hrsKL (α t x q : ℝ) : ℝ :=
   4 * q * ((α + 1) * (1 + x) ^ (2 : ℕ) - (t + x * (x + 2)) * q ^ (2 : ℕ))
     * (-(t * (t + x) * (1 + x) * q))
 
-/-- The `k`-coefficient of `hrsK` (note (9)): `-2tq⁴(qJ - pW)`. -/
+/-- The `k`-coefficient of `hrsK`: `-2tq⁴(qJ - pW)`. -/
 noncomputable def hrsKk (t x q : ℝ) : ℝ :=
   (q * (t + x * (x + 2)) - (t + x) * (1 + x)) * (-(2 * t * q ^ (4 : ℕ)))
 
@@ -83,46 +80,50 @@ theorem hrs_K_dec (α t x k k' q v v' L L' : ℝ) :
   unfold hrsK hrsKv hrsKL hrsKk hrsTk nhA fhE0
   ring
 
-/-! ### The endpoint derivative (note §5) -/
+/-! ### The endpoint derivative
 
-/-- `A₀` of note (10). -/
+At `v = U(t)`, `L = q - 1`, `k = 1 + j` and with `y = q - 1`: `nhA = tq(A₀ + A₁y)`,
+`hrsTk = 2tq²(b₀ + b₁y + b₂y²)`, `5W² - Jq² = e₀ + e₁y + e₂y²` and `qJ - pW = r₀ + r₁y`. -/
+
+/-- The coefficient `A₀` of `nhA` at the endpoint. -/
 noncomputable def hrsA0 (t x : ℝ) : ℝ := t * x ^ (2 : ℕ) - t ^ (2 : ℕ) * x ^ (2 : ℕ)
-/-- `A₁` of note (10). -/
+/-- The coefficient `A₁` of `nhA` at the endpoint. -/
 noncomputable def hrsA1 (t x : ℝ) : ℝ := 2 * x ^ (2 : ℕ) + x - 2 * t * x ^ (2 : ℕ) - t * x
-/-- `b₀` of note (10). -/
+/-- The coefficient `b₀` of `hrsTk` at the endpoint. -/
 noncomputable def hrsb0 (t x : ℝ) : ℝ := 1 - 2 * t - x
-/-- `b₁` of note (10). -/
+/-- The coefficient `b₁` of `hrsTk` at the endpoint. -/
 noncomputable def hrsb1 (t x : ℝ) : ℝ := -8 * t * x ^ (2 : ℕ) - 10 * t * x - 6 * t + 4 * x ^ (2 : ℕ)
-/-- `b₂` of note (10). -/
+/-- The coefficient `b₂` of `hrsTk` at the endpoint. -/
 noncomputable def hrsb2 (t x : ℝ) : ℝ := 5 * x ^ (2 : ℕ) + 3 * x - 4 * t * x ^ (2 : ℕ) - 2 * t * x
-/-- `e₀` of note (10). -/
+/-- The coefficient `e₀` of `5W² - Jq²`. -/
 noncomputable def hrse0 (t x : ℝ) : ℝ := 5 - t + 8 * x + 4 * x ^ (2 : ℕ)
-/-- `e₁` of note (10). -/
+/-- The coefficient `e₁` of `5W² - Jq²`. -/
 noncomputable def hrse1 (t x : ℝ) : ℝ := -2 * t - 4 * x - 2 * x ^ (2 : ℕ)
-/-- `e₂` of note (10). -/
+/-- The coefficient `e₂` of `5W² - Jq²`. -/
 noncomputable def hrse2 (t x : ℝ) : ℝ := -t - 2 * x - x ^ (2 : ℕ)
-/-- `r₀` of note (10). -/
+/-- The coefficient `r₀` of `qJ - pW`. -/
 noncomputable def hrsr0 (t x : ℝ) : ℝ := x - t * x
-/-- `r₁` of note (10). -/
+/-- The coefficient `r₁` of `qJ - pW`. -/
 noncomputable def hrsr1 (t x : ℝ) : ℝ := t + 2 * x + x ^ (2 : ℕ)
 
-/-- `d₀` of note (12). -/
+/-- The coefficient `d₀` of the endpoint cubic `d₀ + d₁y + d₂y² + d₃y³`. -/
 noncomputable def hrsd0 (t x : ℝ) : ℝ :=
   x * (1 - t) * (1 - 2 * t + (-2 * t ^ (2 : ℕ) + 10 * t - 1) * x + 16 * t * x ^ (2 : ℕ)
     + 8 * t * x ^ (3 : ℕ))
-/-- `d₁` of note (12). -/
+/-- The coefficient `d₁` of the endpoint cubic. -/
 noncomputable def hrsd1 (t x : ℝ) : ℝ :=
   t - 2 * t ^ (2 : ℕ) + (12 - 23 * t + 8 * t ^ (2 : ℕ)) * x
     + (35 - 52 * t + 10 * t ^ (2 : ℕ) + 4 * t ^ (3 : ℕ)) * x ^ (2 : ℕ)
     + (43 - 60 * t + 16 * t ^ (2 : ℕ)) * x ^ (3 : ℕ) + (16 - 20 * t + 4 * t ^ (2 : ℕ)) * x ^ (4 : ℕ)
-/-- `d₂` of note (12). -/
+/-- The coefficient `d₂` of the endpoint cubic. -/
 noncomputable def hrsd2 (t x : ℝ) : ℝ :=
   -6 * t ^ (2 : ℕ) + (-16 * t - 6 * t ^ (2 : ℕ)) * x + (-5 - 27 * t + 2 * t ^ (3 : ℕ)) * x ^ (2 : ℕ)
     + (-7 - 19 * t + 8 * t ^ (2 : ℕ)) * x ^ (3 : ℕ) + (-4 - 2 * t + 2 * t ^ (2 : ℕ)) * x ^ (4 : ℕ)
-/-- `d₃` of note (12). -/
+/-- The coefficient `d₃` of the endpoint cubic. -/
 noncomputable def hrsd3 (t x : ℝ) : ℝ := x * (1 + x) * (t + x ^ (2 : ℕ) + 2 * x)
 
-/-- The four coefficient identities (note (13)). -/
+/-- The four coefficient identities: `d₀, …, d₃` are the coefficients of
+`2(e₀ + e₁y + e₂y²)(A₀ + A₁y) + (r₀ + r₁y)(b₀ + b₁y + b₂y²)`. -/
 theorem hrs_d_eq (t x : ℝ) :
     hrsd0 t x = 2 * hrse0 t x * hrsA0 t x + hrsr0 t x * hrsb0 t x ∧
     hrsd1 t x = 2 * (hrse0 t x * hrsA1 t x + hrse1 t x * hrsA0 t x) + hrsr0 t x * hrsb1 t x
@@ -133,7 +134,7 @@ theorem hrs_d_eq (t x : ℝ) :
   unfold hrsd0 hrsd1 hrsd2 hrsd3 hrse0 hrse1 hrse2 hrsA0 hrsA1 hrsr0 hrsr1 hrsb0 hrsb1 hrsb2
   refine ⟨?_, ?_, ?_, ?_⟩ <;> ring
 
-/-- **The endpoint derivative** (note (11)): at `v = U(t)`, `L = q - 1`, `k = 1 + j`,
+/-- **The endpoint derivative**: at `v = U(t)`, `L = q - 1`, `k = 1 + j`,
 `∂_kF = 2tq²(d₀ + d₁y + d₂y² + d₃y³)`, `y = q - 1`. -/
 theorem hrs_K_end (t x q : ℝ) :
     hrsK 4 t x (2 * t + x) q (1 - t + t ^ (2 : ℕ)) (q - 1) =
@@ -155,7 +156,8 @@ theorem hrs_K_end (t x q : ℝ) :
   linear_combination (-(2 * t * q ^ (2 : ℕ))) *
     (c0 + (q - 1) * c1 + (q - 1) ^ (2 : ℕ) * c2 + (q - 1) ^ (3 : ℕ) * c3)
 
-/-- **The endpoint cubic is positive** (note §6) for `3/8 ≤ t ≤ 2/5`, `x ≥ 1/5`, `0 ≤ y ≤ 1/4`. -/
+/-- **The endpoint cubic is positive** for `3/8 ≤ t ≤ 2/5`, `x ≥ 1/5`, `0 ≤ y ≤ 1/4`: `d₀ > 0`,
+`d₃ ≥ 0`, `d₂ ≤ 0` and `4d₁ + d₂ > 0`. -/
 theorem hrs_cubic_pos {t x y : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t ≤ 2 / 5) (hx : 1 / 5 ≤ x)
     (hy0 : 0 ≤ y) (hy1 : y ≤ 1 / 4) :
     0 < hrsd0 t x + hrsd1 t x * y + hrsd2 t x * y ^ (2 : ℕ) + hrsd3 t x * y ^ (3 : ℕ) := by
@@ -176,7 +178,7 @@ theorem hrs_cubic_pos {t x y : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t ≤ 2 / 5) (hx 
         + (5 + 27 * t - 2 * t ^ (3 : ℕ)) * x ^ (2 : ℕ) + (7 + 19 * t - 8 * t ^ (2 : ℕ)) * x ^ (3 : ℕ)
         + (4 + 2 * t - 2 * t ^ (2 : ℕ)) * x ^ (4 : ℕ) := by positivity
     unfold hrsd2; linarith
-  -- `4d₁ + d₂ > 0` (note (14))
+  -- `4d₁ + d₂ > 0`
   have c0 : 0 ≤ 4 * t - 14 * t ^ (2 : ℕ) + 16 / 25 := by nlinarith
   have c1 : 0 ≤ (48 - 108 * t + 26 * t ^ (2 : ℕ) - 224 / 25) * x :=
     mul_nonneg (by nlinarith) hx0.le
@@ -193,9 +195,9 @@ theorem hrs_cubic_pos {t x y : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t ≤ 2 / 5) (hx 
   have e3 : 0 ≤ hrsd3 t x * y ^ (3 : ℕ) := mul_nonneg d3 (by positivity)
   nlinarith
 
-/-! ### Signs of the slopes (note §§3-4) -/
+/-! ### Signs of the slopes -/
 
-/-- `v_G < U(t)` on the high-ratio large-gap domain (note §3). -/
+/-- `v_G < U(t)` on the high-ratio large-gap domain. -/
 theorem hrs_VG_lt_U {t x : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t ≤ 2 / 5) (hx : 1 / 5 ≤ x)
     (hjh : 7 * x < 12 * (1 - 2 * t)) : fhVG t x < 1 - t + t ^ (2 : ℕ) := by
   have hx0 : 0 < x := by linarith
@@ -217,7 +219,7 @@ theorem hrs_VG_lt_U {t x : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t ≤ 2 / 5) (hx : 1 
     rw [e]; apply div_pos (mul_pos (mul_pos (by linarith) hx0) hN); positivity
   linarith
 
-/-- `L₊(q) ≤ q - 1` for `q ≥ 1` (note (4)). -/
+/-- `L₊(q) ≤ q - 1` for `q ≥ 1`. -/
 theorem hrs_Lp_le {q : ℝ} (hq : 1 ≤ q) : nhLp q ≤ q - 1 := by
   have hq0 : 0 < q := by linarith
   have e : q - 1 - nhLp q = (q - 1) ^ (2 : ℕ) * (5 * q + 1) / (6 * q * (q + 1)) := by
@@ -225,7 +227,8 @@ theorem hrs_Lp_le {q : ℝ} (hq : 1 ≤ q) : nhLp q ≤ q - 1 := by
   have : 0 ≤ q - 1 - nhLp q := by rw [e]; positivity
   linarith
 
-/-- **The `v`-slope of the shape derivative is negative** (note (6)). -/
+/-- **The `v`-slope of the shape derivative is negative**, given `Je² ≤ 17/16` and
+`qJ - pW ≤ 41x/24`. -/
 theorem hrs_Kv_neg {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hq : 1 ≤ q)
     (hJ : (t + x * (x + 2)) * q ^ 2 ≤ 17 / 16 * (1 + x) ^ 2)
@@ -269,7 +272,8 @@ theorem hrs_Kv_neg {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1
   unfold hrsKv
   nlinarith
 
-/-- **The shape increases the high-ratio residual** (note (1) integrated on `[29t²/4, k]`): on the
+/-- **The shape increases the high-ratio residual** (the shape derivative integrated on
+`[29t²/4, k]` by the midpoint identity): on the
 high-ratio large-gap domain, `fhComb 4 1` at the shape `k` exceeds its value at `k₀ = 29t²/4`. -/
 theorem hrs_shape_lt {t x k q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hjh : 7 * x < 12 * (1 - 2 * t)) (hks : 29 / 4 * t ^ (2 : ℕ) < k) (hko : k < 2 * t + x)

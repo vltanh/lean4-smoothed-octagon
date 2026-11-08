@@ -5,18 +5,16 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Interface
 /-!
 # Hand proof of the smaller-short case, gate S5: the root forces a negative physical shear
 
-`MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR` (2)-(34), with `OUTER_ENVELOPE`,
-`ENVELOPE_SCALE_MONOTONICITY` §1, `ROOT_INCOMING_MONOTONICITY`, `INCOMING_NORM_BOUND`; inventory
-HS-S567 Part II (E.1-E.6, S5.1-S5.10). On the small-shape domain: the actual outer root
-(`HsData.root_zero`) and the envelope (`hs_env_weighted`, `m = 0`) give `𝓡(u; p, q) ≥ 0` at
-`p = τq`; the incoming monotonicity (`hs5_u_mono`) and the rational majorant `û`
-(`hs5_Vbar_le_uhat`) give `𝓡(û; p, q) ≥ 0`; this contradicts `hs5_residual_neg` unless
-`q > q_b = (29/30)q_c`; and `q > q_b` forces `√3hR + 13A/3 < 0` (`hs5_shear_sign`).
+On the small-shape domain: the actual outer root (`HsData.root_zero`) and the envelope
+(`hs_env_weighted`, `m = 0`) give `𝓡(u; p, q) ≥ 0` at `p = τq`; the incoming monotonicity
+(`hs5_u_mono`) and the rational majorant `û` (`hs5_Vbar_le_uhat`) give `𝓡(û; p, q) ≥ 0`; this
+contradicts `hs5_residual_neg` unless `q > q_b = (29/30)q_c`; and `q > q_b` forces
+`√3hR + 13A/3 < 0` (`hs5_shear_sign`).
 
 ## Main API
 
-* `hsUhat5` (`û = 755/996 + (x - 2)/100`), `hs5J2`, `hs5Jt` (the face values of S5.6).
-* Stable: `hs5_Vbar_le_uhat`, `hs5_u_mono`, `hs5_log_tangent`, `hs5_J_neg`, `hs5_residual_neg`,
+* `hsUhat5` (`û = 755/996 + (x - 2)/100`), `hs5J2`, `hs5Jt` (the face values `J₂`, `J_τ`).
+* `hs5_Vbar_le_uhat`, `hs5_u_mono`, `hs5_log_tangent`, `hs5_J_neg`, `hs5_residual_neg`,
   `hs5_shear_sign`.
 * Gate: `HsData.s5`, `M2Short.hs_S5`.
 -/
@@ -27,10 +25,10 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- The rational majorant `û = 755/996 + (x - 2)/100` (`SMALL_SHAPE_ROOT_SHEAR` (5)). -/
+/-- The rational majorant `û = 755/996 + (x - 2)/100`. -/
 noncomputable def hsUhat5 (x : ℝ) : ℝ := 755 / 996 + (x - 2) / 100
 
-/-- The face value at `p = 2q_b` with the second log tangent (`SMALL_SHAPE_ROOT_SHEAR` (15)):
+/-- The face value at `p = 2q_b` with the second log tangent:
 `J₂ = E₀ + (û - 1)/r_A + r_A + 277/1000 + q_b(5/(2r_A) - 2A₁ - 1 - A₃) + 2q_b²A₂` at `u = û`,
 `q_b = (29/30)q_c`. -/
 noncomputable def hs5J2 (x be al : ℝ) : ℝ :=
@@ -39,7 +37,7 @@ noncomputable def hs5J2 (x be al : ℝ) : ℝ :=
       hsA3 x be al (hsUhat5 x)) +
     2 * (29 / 30 * hsQc x al) ^ 2 * hsA2 x be al (hsUhat5 x)
 
-/-- The face value at `p = τ r_A` with `log τ ≤ τ - 1` (`SMALL_SHAPE_ROOT_SHEAR` (16)):
+/-- The face value at `p = τ r_A` with `log τ ≤ τ - 1`:
 `J_τ = E₀ + (û - 1)/r_A + r_A + τ - τr_A A₁ + q_b(τr_A A₂ + 1/(τr_A) - 1 - A₃)`. -/
 noncomputable def hs5Jt (x be al τ : ℝ) : ℝ :=
   hsE0 x (hsUhat5 x) + (hsUhat5 x - 1) / hsRA al be + hsRA al be + τ -
@@ -62,11 +60,10 @@ private theorem mono3 {s w n : ℝ} {i j k i' j' k' : ℕ} (hs0 : 0 ≤ s) (hs1 
 private theorem nn3 {s w n : ℝ} {i j k : ℕ} (hs0 : 0 ≤ s) (hw0 : 0 ≤ w) (hn0 : 0 ≤ n) :
     0 ≤ s ^ i * w ^ j * n ^ k := by positivity
 
-/-! ### Private helpers: the numerators of `J₂`, `J_τ` (`SMALL_SHAPE_ROOT_SHEAR` (19)-(22)) -/
+/-! ### Private helpers: the numerators of `J₂`, `J_τ` -/
 
 /-- `D_u = 24900S`, `N_u = (18875 + 249t)S` (`û = N_u/D_u`), `E = S(N_u - D_u) + 24900`
-(`E₀ = E/D_u`), `A₁ = N₁/(α²D_u)`, `A₂ = N₂/(α⁴D_u)`, `A₃ = N₃/(α²D_u)` (`SMALL_SHAPE_ROOT_SHEAR`
-(19)). -/
+(`E₀ = E/D_u`), `A₁ = N₁/(α²D_u)`, `A₂ = N₂/(α⁴D_u)`, `A₃ = N₃/(α²D_u)`. -/
 private noncomputable def s5Du (x : ℝ) : ℝ := 24900 * (1 + x)
 private noncomputable def s5Nu (x : ℝ) : ℝ := (18875 + 249 * (x - 2)) * (1 + x)
 private noncomputable def s5E (x : ℝ) : ℝ := (1 + x) * (s5Nu x - s5Du x) + 24900
@@ -82,13 +79,13 @@ private noncomputable def s5C (x al : ℝ) : ℝ := x * (x + 2) + al ^ 2
 private noncomputable def s5N0 (x be al : ℝ) : ℝ :=
   1000 * al * (al + be) * s5E x + 1000 * (al + be) ^ 2 * (s5Nu x - s5Du x) +
     1000 * al ^ 2 * s5Du x + 277 * al * (al + be) * s5Du x
-/-- `P₂` of (20): `J₂ = -P₂/(2000αBD_uC²)`. -/
+/-- The numerator `P₂` of `J₂`: `J₂ = -P₂/(2000αBD_uC²)`. -/
 private noncomputable def s5P2 (x be al : ℝ) : ℝ :=
   -(2 * s5N0 x be al * s5C x al ^ 2 +
     1000 * (29 / 30) * (5 * al ^ 2 * (al + be) ^ 2 * s5Du x * s5C x al -
       2 * al * (al + be) * s5C x al * (2 * s5N1 x be al + s5N3 x be al + al ^ 2 * s5Du x)) +
     4000 * (29 / 30) ^ 2 * al * (al + be) * s5N2 x be al)
-/-- `P_τ` of (21): `J_τ = -P_τ/(αBD_uC)`. -/
+/-- The numerator `P_τ` of `J_τ`: `J_τ = -P_τ/(αBD_uC)`. -/
 private noncomputable def s5PT (x be al τ : ℝ) : ℝ :=
   -(al * (al + be) * s5C x al * s5E x + (al + be) ^ 2 * s5C x al * (s5Nu x - s5Du x) +
     al ^ 2 * s5C x al * s5Du x + τ * al * (al + be) * s5C x al * s5Du x -
@@ -124,7 +121,7 @@ private theorem s5_A3_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) :
   field_simp
   ring
 
-/-- (22), first half: `J₂ = -P₂/(2000αBD_uC²)`. -/
+/-- The identity `J₂ = -P₂/(2000αBD_uC²)`. -/
 private theorem s5_J2_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) (hb : 0 < al + be) :
     hs5J2 x be al = -s5P2 x be al / (2000 * al * (al + be) * s5Du x * s5C x al ^ 2) := by
   have hC : 0 < s5C x al := by unfold s5C; positivity
@@ -137,7 +134,7 @@ private theorem s5_J2_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) (hb : 0 < a
   field_simp
   ring
 
-/-- (22), second half: `J_τ = -P_τ/(αBD_uC)`. -/
+/-- The identity `J_τ = -P_τ/(αBD_uC)`. -/
 private theorem s5_Jt_eq {x be al τ : ℝ} (hx : 0 < x) (hal : 0 < al) (hb : 0 < al + be)
     (hτ : 0 < τ) :
     hs5Jt x be al τ = -s5PT x be al τ / (al * (al + be) * s5Du x * s5C x al) := by
@@ -156,9 +153,8 @@ private theorem s5_Jt_eq {x be al τ : ℝ} (hx : 0 < x) (hal : 0 < al) (hb : 0 
 With `x = 2 + s/6`, `α = 1 + c`, `β = x(1 + vc)`, `v = 5/13 - 2n/39 ∈ [1/3, 5/13]`, and
 `c = 3w/19` (for `P₂`) or `c = 3(1 - w)/19` (for `P_θ`, `P₁`), each numerator times a positive
 rational is a polynomial in `s, w, n ∈ [0, 1]` whose negative monomials are absorbed by smaller
-positive monomials (`mono3`); the certificate is an exact `linear_combination`.
-Route: the notes' convexity in `β` and the two `β` endpoints are replaced by the parameter
-`v ∈ [1/3, 5/13]` of the whole `β` interval. -/
+positive monomials (`mono3`); the certificate is an exact `linear_combination`. The parameter
+`v ∈ [1/3, 5/13]` covers the whole `β` interval at once. -/
 
 private theorem s5P2_pos_id {s w n : ℝ} :
     ((5425149211635816/5 : ℚ) : ℝ) * s5P2 (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3
@@ -1176,9 +1172,9 @@ private theorem s5PT1_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0
     exact hp
   exact lt_of_mul_lt_mul_left h0 hL.le
 
-/-- **`V̄ ≤ û`** (`SMALL_SHAPE_ROOT_SHEAR` (5)-(6); inventory HS-S567 S5.1): for `2 ≤ x ≤ 13/6`,
+/-- **`V̄ ≤ û`**: for `2 ≤ x ≤ 13/6`,
 `V̄(x) ≤ 755/996 + (x - 2)/100` (difference `t(8715t² + 4012t + 1)/(24900(3 + t)(35t + 83))`,
-`t = x - 2`). Status: stable. -/
+`t = x - 2`). -/
 theorem hs5_Vbar_le_uhat {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) : hsVbar x ≤ hsUhat5 x := by
   have _hx2 := hx2
   unfold hsVbar hsUhat5
@@ -1190,14 +1186,13 @@ theorem hs5_Vbar_le_uhat {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) : hsVbar 
     linarith [mul_nonneg ht (mul_nonneg ht ht), mul_nonneg ht ht]
   linarith
 
-/-- The `u`-slope of `𝓡(u; p, q) = C(p) + qL(p)` (`ROOT_INCOMING_MONOTONICITY` (3)), bilinear in
-`(p, q)`. -/
+/-- The `u`-slope of `𝓡(u; p, q) = C(p) + qL(p)`, bilinear in `(p, q)`. -/
 private noncomputable def s5sl (x be al p q : ℝ) : ℝ :=
   (1 + x) + (al + be) / al - p * (hsDg x be al / al ^ 2) * (1 + x) +
     q * (p * ((hsDg x be al / al ^ 2) ^ 2 + hsDg x be al / al ^ 2 * (1 - 1 / al ^ 2) * (1 + x)) -
       2 * (hsDg x be al / al ^ 2) - (1 - 1 / al ^ 2) * (1 + x))
 
-/-- The four corner values of the slope (`ROOT_INCOMING_MONOTONICITY` (4)-(8)). -/
+/-- The four corner values of the slope. -/
 private theorem s5sl_corners {x be al : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb : x ≤ be) :
     0 ≤ s5sl x be al 0 0 ∧ 0 ≤ s5sl x be al 0 (1 / 7) ∧ 0 ≤ s5sl x be al (al / (al + be)) 0 ∧
@@ -1231,10 +1226,9 @@ private theorem s5sl_corners {x be al : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax 
   refine ⟨by positivity, div_nonneg ?_ (by positivity), div_nonneg ?_ (by positivity),
     div_nonneg ?_ (by positivity)⟩ <;> ring_nf <;> positivity
 
-/-- **The residual is monotone in the incoming norm** (`ROOT_INCOMING_MONOTONICITY` (2)-(8);
-inventory HS-S567 E.5): for `x > 1`, `1 ≤ α ≤ x ≤ β`, `0 < q ≤ 1/7`, `0 < p ≤ r_A`,
-`𝓡(u; p, q) = C(p) + qL(p)` is nondecreasing in `u` (bilinear corner check of the slope).
-Status: stable. -/
+/-- **The residual is monotone in the incoming norm**: for `x > 1`, `1 ≤ α ≤ x ≤ β`, `0 < q ≤ 1/7`,
+`0 < p ≤ r_A`, `𝓡(u; p, q) = C(p) + qL(p)` is nondecreasing in `u` (bilinear corner check of the
+slope). -/
 theorem hs5_u_mono {x be al p q u u' : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb : x ≤ be) (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hp : 0 < p) (hpr : p ≤ hsRA al be)
     (huu : u ≤ u') : hsPhi x be al u p 0 q ≤ hsPhi x be al u' p 0 q := by
@@ -1271,8 +1265,8 @@ theorem hs5_u_mono {x be al p q u u' : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax :
   have := mul_nonneg (sub_nonneg.2 huu) hsl
   linarith
 
-/-- **The second log tangent** (`SMALL_SHAPE_ROOT_SHEAR` (11); inventory HS-S567 S5.4): for `y > 0`,
-`log y < 5y/4 - 1223/1000` (`log(5/4) > 488/2187`). Status: stable. -/
+/-- **The second log tangent**: for `y > 0`,
+`log y < 5y/4 - 1223/1000` (`log(5/4) > 488/2187`). -/
 theorem hs5_log_tangent {y : ℝ} (hy : 0 < y) : log y < 5 * y / 4 - 1223 / 1000 := by
   have h1 := Real.log_le_sub_one_of_pos (show 0 < 5 / 4 * y by positivity)
   have h2 : Real.log (5 / 4 * y) = Real.log (5 / 4) + Real.log y :=
@@ -1281,7 +1275,7 @@ theorem hs5_log_tangent {y : ℝ} (hy : 0 < y) : log y < 5 * y / 4 - 1223 / 1000
   norm_num at h3
   linarith
 
-/-- The parameters `(s, c, n) ∈ [0, 1] × [0, 3/19] × [0, 1]` of the enlarged domain (9):
+/-- The parameters `(s, c, n) ∈ [0, 1] × [0, 3/19] × [0, 1]` of the enlarged domain of `hs5_J_neg`:
 `x = 2 + s/6`, `α = 1 + c`, `β = x(1 + vc)`, `v = 5/13 - 2n/39`. -/
 private theorem s5_param {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
     (hal' : al ≤ 22 / 19) (hb : x * (1 + (al - 1) / 3) ≤ be)
@@ -1312,11 +1306,9 @@ private theorem s5_param {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ha
     · field_simp
       ring
 
-/-- **The three face values are negative** (`SMALL_SHAPE_ROOT_SHEAR` (15)-(27); inventory HS-S567
-S5.6-S5.8): on the enlarged domain (9) `2 ≤ x ≤ 13/6`, `1 ≤ α ≤ 22/19`,
-`x(1 + (α - 1)/3) ≤ β ≤ x(1 + 5(α - 1)/13)`: `J₂ < 0`, `J_θ < 0` (`θ = 223/250`), `J₁ < 0`
-(convexity in `β`, then six polynomial signs). Status: stable.
-Route: no convexity in `β`; the numerators `P₂, P_θ, P₁` of (20)-(22) are positive on the whole
+/-- **The three face values are negative**: on the enlarged domain `2 ≤ x ≤ 13/6`, `1 ≤ α ≤ 22/19`,
+`x(1 + (α - 1)/3) ≤ β ≤ x(1 + 5(α - 1)/13)`: `J₂ < 0`, `J_θ < 0` (`θ = 223/250`), `J₁ < 0`.
+Proof: the numerators `P₂, P_θ, P₁` of `J₂, J_θ, J₁` are positive on the whole
 parameter box `(t, c, v)` by three monomial-absorption certificates (`s5P2_pos`, `s5PTth_pos`,
 `s5PT1_pos`). -/
 theorem hs5_J_neg {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al) (hal' : al ≤ 22 / 19)
@@ -1378,7 +1370,7 @@ private theorem s5_inv_conv {a b c p₁ p₂ p : ℝ} (hc : 0 ≤ c) (hp₁ : 0 
   have := mul_nonneg (sub_nonneg.2 hlt.le) (not_lt.mp hcon)
   linarith
 
-/-- The face `p = 2q'`, `0 < q' ≤ q_b` (`SMALL_SHAPE_ROOT_SHEAR` §4): with the second tangent the
+/-- The face `p = 2q'`, `0 < q' ≤ q_b`: with the second tangent the
 residual is below a convex quadratic in `q'`, negative at `q' = 0` and at `q' = q_b` (`J₂`). -/
 private theorem s5_face_p2q {X a1 a2 a3 r qb q' : ℝ} (hX : X < -7 / 10) (ha2 : 0 < a2)
     (hr0 : 0 < r) (hqb : 0 < qb) (hq'0 : 0 < q') (hcase : q' ≤ qb)
@@ -1472,7 +1464,7 @@ private theorem s5_face_qb_high {X a1 a2 a3 r qb p : ℝ} (hr0 : 0 < r) (hqb : 0
   have := s5_inv_conv hqb.le hθ hpθ hpr hh1 hh2
   linarith
 
-/-- The abstract residual argument of `SMALL_SHAPE_ROOT_SHEAR` §§4-5 in the coordinates
+/-- The abstract residual argument in the coordinates
 `X = E₀ + (û - 1)/r + r`, `a_i = A_i(û)`, `r = r_A`, `q_b`: the `q = 0` face, the `p = 2q` face
 and the `q = q_b` face; the residual is affine in `q`. -/
 private theorem s5_resid_abstract {X a1 a2 a3 r qb p q : ℝ} (hX : X < -7 / 10) (ha1 : 3 / 2 < a1)
@@ -1518,10 +1510,9 @@ private theorem s5_resid_abstract {X a1 a2 a3 r qb p q : ℝ} (hX : X < -7 / 10)
     · exact s5_face_qb_low hr0 hqb (by linarith) hpθ hJ2 hJθ
     · exact s5_face_qb_high hr0 hqb hpθ.le hpr hJθ hJ1
 
-/-- **The residual at `û` is negative below `q_b`** (`SMALL_SHAPE_ROOT_SHEAR` (9)-(27); inventory
-HS-S567 S5.3-S5.8): on domain (9), for `0 ≤ q ≤ q_b = (29/30)q_c`, `0 < p`, `2q ≤ p ≤ r_A`:
-`𝓡(û; p, q) < 0` (`hs_A2_pos`; the `q = 0` face; affine in `q`; faces `q = q_b`, `p = 2q` through
-`hs5_log_tangent` and `hs5_J_neg`). Status: stable. -/
+/-- **The residual at `û` is negative below `q_b`**: on the enlarged domain of `hs5_J_neg`, for
+`0 ≤ q ≤ q_b = (29/30)q_c`, `0 < p`, `2q ≤ p ≤ r_A`: `𝓡(û; p, q) < 0` (`hs_A2_pos`; the `q = 0`
+face; affine in `q`; faces `q = q_b`, `p = 2q` through `hs5_log_tangent` and `hs5_J_neg`). -/
 theorem hs5_residual_neg {x al be p q : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
     (hal' : al ≤ 22 / 19) (hb : x * (1 + (al - 1) / 3) ≤ be) (hb' : be ≤ x * (1 + 5 * (al - 1) / 13))
     (hq : 0 ≤ q) (hqb : q ≤ 29 / 30 * hsQc x al) (hp : 0 < p) (hpq : 2 * q ≤ p)
@@ -1625,13 +1616,13 @@ theorem hs5_residual_neg {x al be p q : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6)
   rw [ePhi]
   exact s5_resid_abstract hX hA1 hA2 hr6 hqb0 hq hqb hp hpq hpr hJ2 hJθ hJ1
 
-/-! ### Private helpers: the shear polynomials (`SMALL_SHAPE_ROOT_SHEAR` (29)-(34)) -/
+/-! ### Private helpers: the shear polynomials -/
 
-/-- `W = (βx - α)m`, `m = (8x² + 8x - 3)α + (3x² - 8x - 8)β` (29). -/
+/-- `W = (βx - α)m`, `m = (8x² + 8x - 3)α + (3x² - 8x - 8)β`. -/
 private noncomputable def s5W (x be al : ℝ) : ℝ :=
   (be * x - al) * ((8 * x ^ 2 + 8 * x - 3) * al + (3 * x ^ 2 - 8 * x - 8) * be)
 
-/-- `V = α²W + 3K_xK_AQ₀(x - 1)` (29). -/
+/-- `V = α²W + 3K_xK_AQ₀(x - 1)`. -/
 private noncomputable def s5V (x be al : ℝ) : ℝ :=
   al ^ 2 * s5W x be al +
     3 * (x ^ 2 + x + 1) * (al ^ 2 + al * be + be ^ 2) * (2 * be * x - x - al * be) * (x - 1)
@@ -1876,8 +1867,9 @@ private theorem s5Pi_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 
     exact hp
   exact lt_of_mul_lt_mul_left h0 hL.le
 
-/-- `Π = 29V - 30WC > 0` on the domain (1) (`SMALL_SHAPE_ROOT_SHEAR` (31)-(34); parameters
-`x = 2 + s/6`, `δ = w/19`, `α = 1 + (3 - 2n/5)δ`, `s, w, n ∈ [0, 1]`). -/
+/-- `Π = 29V - 30WC > 0` on the small-shape box `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`,
+`13δ/5 ≤ α - 1 ≤ 3δ` (parameters `x = 2 + s/6`, `δ = w/19`, `α = 1 + (3 - 2n/5)δ`,
+`s, w, n ∈ [0, 1]`). -/
 private theorem s5_Pi_pos {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
     0 < 29 * s5V x (x * (1 + δ)) al - 30 * s5W x (x * (1 + δ)) al * (x * (x + 2) + al ^ 2) := by
@@ -1897,12 +1889,12 @@ private theorem s5_Pi_pos {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (h
   rw [show 2 + 6 * (x - 2) / 6 = x by ring, show 19 * δ / 19 = δ by ring, ← han] at h
   exact h
 
-/-- **The shear sign above `q_b`** (`SMALL_SHAPE_ROOT_SHEAR` (28)-(34), (2)-(3); inventory HS-S567
-S5.10, including the missing `m > 0`): on `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`,
+/-- **The shear sign above `q_b`**: on
+`2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`,
 `β = x(1 + δ)`, for `0 < ρ < 1` with `q = α²λρ > (29/30)q_c`: `√3·h·R + 13A/3 < 0`
-(`(1 - q)(√3hR + 13A/3) = F - Gq`, `Π = 29V - 30WC > 0`). Status: stable.
-Route: `Π > 0` by an exact monomial-absorption certificate on the parameter cube (`s5Pi_pos`)
-instead of the linear bounds (32)-(34); `W > 0` from `m > 0` as in the inventory. -/
+(`(1 - q)(√3hR + 13A/3) = F - Gq`, `Π = 29V - 30WC > 0`).
+Proof: `Π > 0` by an exact monomial-absorption certificate on the parameter cube (`s5Pi_pos`);
+`W > 0` from `m > 0`. -/
 theorem hs5_shear_sign {x δ al rho : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) (hρ : 0 < rho)
     (hρ1 : rho < 1) (hq : 29 / 30 * hsQc x al < hsQ al rho) :
@@ -2000,14 +1992,12 @@ namespace HsData
 
 variable (H : HsData)
 
-/-- **Gate S5** (`SMALL_SHAPE_ROOT_SHEAR` (2)-(3), `HAND_PERIOD_EXCLUSION` (6)-(7); inventory HS-S567
-S5.9, S5.10, S7.3): on the small-shape domain, `q > (29/30)q_c`, `√3hR + 13A/3 < 0`, hence `h < 0`
+/-- **Gate S5**: on the small-shape domain, `q > (29/30)q_c`, `√3hR + 13A/3 < 0`, hence `h < 0`
 and `-hR > 5A/2` (`13/(3√3) > 5/2`, `A ≥ 0`, `R > 0`).
-Proof plan: if `q ≤ q_b`: `root_zero`, `hs_env_weighted` (`m = 0`, `hs_B_pos`), `hs_env_scale`,
+Proof: if `q ≤ q_b`: `root_zero`, `hs_env_weighted` (`m = 0`, `hs_B_pos`), `hs_env_scale`,
 `hs_phi_eq` give `0 ≤ 𝓡(u; τq, q)`; `hs5_u_mono` with `u_le_V`, `hs_V_le_Vbar`,
 `hs5_Vbar_le_uhat`; contradiction with `hs5_residual_neg` (`2q < p = τq < r_A`). Then
-`hs5_shear_sign`.
-Status: assembly (to be proved from the leaves above). -/
+`hs5_shear_sign`. -/
 theorem s5 (hS : H.SmallShape) :
     29 / 30 * hsQc H.x H.al < H.q ∧
       √3 * hsShear H.x H.be H.al H.rho * hsRr H.x + 13 / 3 * hsAn H.x H.be H.al < 0 ∧
@@ -2022,7 +2012,7 @@ theorem s5 (hS : H.SmallShape) :
   have hxb : H.x ≤ H.be := H.x_le_be
   have hρ := H.rho_pos
   have hρ1 : H.rho < 1 := by linarith [H.rho_le]
-  -- (2) first part: the scale lower bound `q > q_b`
+  -- the scale lower bound `q > q_b`
   have hq : 29 / 30 * hsQc H.x H.al < hsQ H.al H.rho := by
     by_contra hcon
     have hqb := not_lt.mp hcon
@@ -2072,11 +2062,11 @@ theorem s5 (hS : H.SmallShape) :
     have h2 := hs5_residual_neg hx hx2 hal (by linarith) hδx hδx' hq0.le hqb (by positivity)
       h2τ hτT.le
     linarith
-  -- (2) second part: the shear sign
+  -- the shear sign
   have hsh : √3 * hsShear H.x H.be H.al H.rho * hsRr H.x + 13 / 3 * hsAn H.x H.be H.al < 0 := by
     rw [hbe]
     exact hs5_shear_sign hx hx2 hδ0 hδ1 (by linarith) (by linarith) hρ hρ1 hq
-  -- (3)
+  -- `h < 0` and `-hR > 5A/2`
   have hA : 0 ≤ hsAn H.x H.be H.al := by
     unfold hsAn
     have h1 : 0 ≤ H.be * H.x - H.al := by
@@ -2107,9 +2097,9 @@ theorem s5 (hS : H.SmallShape) :
 
 end HsData
 
-/-- **Gate S5 for the actual window** (`HAND_PERIOD_EXCLUSION` (6)-(7)): on the small-shape domain,
+/-- **Gate S5 for the actual window**: on the small-shape domain,
 `q > (29/30)q_c`, `√3hR + 13A/3 < 0`, `h < 0`, `-hR > 5A/2`, with the physical shear
-`h = hsShear (C/a) (B/a) (A/a) ρ` (inventory HS-S567 §0.1, in the margins). -/
+`h = hsShear (C/a) (B/a) (A/a) ρ`. -/
 theorem M2Short.hs_S5 (D : M2Short) (h1 : 2 ≤ D.C / D.a) (h2 : D.C / D.a ≤ 13 / 6)
     (h3 : 0 ≤ D.B / D.C - 1) (h4 : D.B / D.C - 1 ≤ 1 / 19)
     (h5 : 1 + 13 / 5 * (D.B / D.C - 1) ≤ D.A / D.a) (h6 : D.A / D.a ≤ 1 + 3 * (D.B / D.C - 1)) :

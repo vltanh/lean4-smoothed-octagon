@@ -5,8 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandOLowC
 /-!
 # Gate S3, the outer face by hand: the middle shape `α = 5/4`
 
-Hand proof of the leaf `hs3_outer_face`, sixth part: `SHORT_DISPLACEMENT_OUTER_TERMINALS.md` §3 with
-`SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA.md` §3. At `r = 4/5`, `n = 5/2`: since `A_n > 1`, the norm
+Proof of the leaf `hs3_outer_face`, sixth part. At `r = 4/5`, `n = 5/2`: since `A_n > 1`, the norm
 is raised to `19/25` (`V ≤ 1/100`) and the logarithm constant to `16/9`; the resulting bound
 `M(x, C)` has `153125S(C + 4x + 5)²(C + 4x + 19)²M_C = Q(h, C)` with positive coefficients, so
 `M(x, C) ≤ M(x, 5/6) = N(h)/(11025000S(24x + 35)(24x + 119)) < 0`.
@@ -22,7 +21,8 @@ namespace SmoothedOctagon
 
 open Real Set
 
-/-- The polynomial `Q(h, C)` of the companion's §3. -/
+/-- The polynomial `Q(h, C) = 153125S(C + 4x + 5)²(C + 4x + 19)²M_C`, `h = x - 2`, with positive
+coefficients. -/
 noncomputable def hl3oQ (h C : ℝ) : ℝ :=
   h ^ 8 * (1245184) +
     h ^ 7 * (1556480 * C + 31551488) +
@@ -78,7 +78,7 @@ theorem hl3o_M56_id (hx : 0 < x) :
   field_simp
   ring
 
-/-- **The middle shape** (`SHORT_DISPLACEMENT_OUTER_TERMINALS` §3): `R_{5/2}(x, 5/4, C) < 0`. -/
+/-- **The middle shape**: `R_{5/2}(x, 5/4, C) < 0`. -/
 theorem hl3o_mid (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' : C ≤ 5 / 6) :
     hl3oG x C (5 / 2) (4 / 5) < 0 := by
   have hx0 : 0 < x := by linarith

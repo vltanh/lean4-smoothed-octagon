@@ -14,9 +14,9 @@ small-minimum window `sf_Win` of a costate cycle at such a run.
 
 ## Main API
 
-* `CostateCycle.sf_rows`: the left and right rows SFM (7)-(8) at the piece `m`
+* `CostateCycle.sf_rows`: the left and right rows at the piece `m`
   (from `ifc_stat_w` at `m - 1, m, m + 1`, `ifc_w_rel` at `m, m + 1`, `factor_pp`).
-* `CostateCycle.sf_floors`: the exterior floors SFM (11) (`ifc_floor_out` at `m - 1`,
+* `CostateCycle.sf_floors`: the exterior floors (`ifc_floor_out` at `m - 1`,
   `ifc_floor_in` at `m + 1`).
 * `CostateCycle.sf_window`: the window `sf_Win` at `m` when `a_m` is the minimum of the five
   margins; `CostateCycle.sf_act_sq_gt`: then `a_m² > 4/3`.
@@ -42,7 +42,7 @@ private theorem sf_labs {m : ℤ} (hf2 : C.m2Fwd (m - 2)) (hf1 : C.m2Fwd (m - 1)
   · rw [sub_add_cancel] at hf1; exact hf1
   · rw [add_sub_cancel_right]; exact hf0
 
-/-- **The left and right rows at a run of four forward switches** (SFM (7)-(8)): the case-F rows
+/-- **The left and right rows at a run of four forward switches**: the case-F rows
 `ff_rows` with the all-forward hypothesis replaced by the four switches `m - 2, …, m + 1`. -/
 theorem sf_rows {m : ℤ} (hf2 : C.m2Fwd (m - 2)) (hf1 : C.m2Fwd (m - 1)) (hf0 : C.m2Fwd m)
     (hf3 : C.m2Fwd (m + 1)) :
@@ -79,7 +79,7 @@ theorem sf_rows {m : ℤ} (hf2 : C.m2Fwd (m - 2)) (hf1 : C.m2Fwd (m - 1)) (hf0 :
   exact (ifc_rows_alg (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) fL f0
     fR rL rR sL s0 sR).2
 
-/-- **The two exterior floors at a run of four forward switches** (SFM (11)): `ff_floors` with the
+/-- **The two exterior floors at a run of four forward switches**: `ff_floors` with the
 all-forward hypothesis replaced by the four switches `m - 2, …, m + 1`. -/
 theorem sf_floors {m : ℤ} (hf2 : C.m2Fwd (m - 2)) (hf1 : C.m2Fwd (m - 1)) (hf0 : C.m2Fwd m)
     (hf3 : C.m2Fwd (m + 1)) :
@@ -168,7 +168,7 @@ noncomputable def sf_window {m : ℤ} (hf2 : C.m2Fwd (m - 2)) (hf1 : C.m2Fwd (m 
   floorL := (C.sf_floors hf2 hf1 hf0 hf3).1
   floorR := (C.sf_floors hf2 hf1 hf0 hf3).2
 
-/-- **No small forward minimum on a costate cycle** (SFM Theorem): at a run of four forward switches
+/-- **No small forward minimum on a costate cycle**: at a run of four forward switches
 whose central margin is the minimum of the five margins, `a_m² > 4/3`. -/
 theorem sf_act_sq_gt {m : ℤ} (hf2 : C.m2Fwd (m - 2)) (hf1 : C.m2Fwd (m - 1))
     (hf0 : C.m2Fwd m) (hf3 : C.m2Fwd (m + 1))

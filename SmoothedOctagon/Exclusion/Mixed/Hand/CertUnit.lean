@@ -6,13 +6,12 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Bern
 # Case M2 by hand: generated sign certificates for the unit shape
 
 Bernstein-form certificates (generated; every identity is checked by `ring`) for the six signs
-`J₀ = C₀`, `J₁, …, J₄`, `J_*` of `MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` (7), in the coordinates
-`(x, s)`, `s = 1 - 2t - x`, after division by `x²`. The domain
+`J₀ = C₀`, `J₁, …, J₄`, `J_*` that exclude the unit shape `k = 1`, in the coordinates `(x, s)`,
+`s = 1 - 2t - x`, after division by `x²`. The domain
 `0 < t ≤ 13/35, 0 < x ≤ 1 - 2t, 1 < 2t + 2x + x²` is covered by the three pieces
 `x ∈ [3/25, 9/35], s ∈ [9/35 - x, x + x²]`; `x ∈ [9/35, 2/5], s ∈ [0, x + x²]`;
 `x ∈ [2/5, 1], s ∈ [0, 1 - x]`. On each piece the polynomial is written in Bernstein form of degree
 three in `s` with polynomial coefficients in `x`, each positive by a univariate Bernstein bound.
-Route: replaces the hand estimates of §§4-8 of that note by these certificates.
 
 ## Main API
 

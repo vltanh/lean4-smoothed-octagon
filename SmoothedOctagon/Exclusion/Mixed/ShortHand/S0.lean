@@ -6,25 +6,21 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0Hand
 /-!
 # Hand proof of the smaller-short case, gate S0: `x < 12/5`, `D > 0`, `E_L > 0`
 
-`MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION` (1)-(2) and
-`MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING` (2); inventory HS-S01 Parts M, A, B (M10-M18,
-A1-A23, B1-B10). The large-ratio exclusion: assuming `x ≥ 12/5`, the actual root gives `G*_τ ≥ 0` for
-the floor-weighted envelope `G = R_τ + ½(w - 3/4)` (`hs_env_weighted` with `m = 1/2`); the scale
-moves (`hs0_endpoint_alt`, `hs0_G_zero_neg`, `hs0_tau_two`) push it to a face `q = q_c ≤ 1/7` or
-`q = 1/7 ≤ q_c`; the norm substitution (`hs0_uslope`, `hs_sec_le_ubar`, `hs0_ubar_le_uhat`) and
-the three duration tests (`hs_dur_three`) reduce to the face signs `hs0_central_tau_two`,
-`hs0_central_duration`, `hs0_outer_tests` (heavy).
+This module proves `x < 12/5` (the large-ratio exclusion), then `D > 0` and `E_L > 0` (the positive
+diagonal and pairing). Assuming `x ≥ 12/5`, the actual root gives `G*_τ ≥ 0` for the floor-weighted
+envelope `G = R_τ + ½(w - 3/4)` (`hs_env_weighted` with `m = 1/2`); the scale moves
+(`hs0_endpoint_alt`, `hs0_G_zero_neg`, `hs0_tau_two`) push it to a face `q = q_c ≤ 1/7` or
+`q = 1/7 ≤ q_c`; the norm substitution (`hs0_uslope`, `hs_sec_le_ubar`, `hs0_ubar_le_uhat`) and the
+three duration tests (`hs_dur_three`) reduce to the face signs `hs0_central_tau_two`,
+`hs0_central_duration`, `hs0_outer_tests`.
 
 ## Main API
 
 * Shape leaves: `hs0_al_be` (`α/β < 3/4`), `hs0_DQ_le` (`D/Q ≤ 3(1 + x)²/(7x²)`),
   `hs0_face_alpha`, `hs0_ubar_le_uhat`, `hs0_D_pos`, `hs0_pairing`.
 * Scale leaves: `hs0_uslope`, `hs0_endpoint_alt`, `hs0_G_zero_neg`, `hs0_tau_two`.
-* Heavy face signs: `hs0_central_tau_two` (`CENTRAL_TAU_TWO_SIGN` (3)), `hs0_central_duration`
-  (`CENTRAL_DURATION_FACES` (5)), `hs0_outer_tests` (`OUTER_SCALE_LARGE_RATIO_SIGN` (7)), proved by
-  hand in `Heavy/S0Hand*` (`archive/lighter-proofs/SHORT_DURATION_CENTRAL_TAU_TWO.md`,
-  `SHORT_DURATION_CENTRAL_UPPER_FACES.md`, `SHORT_DURATION_CENTRAL_LOWER_FACE.md`,
-  `SHORT_SCALE_OUTER_LARGE_RATIO.md`).
+* Face signs: `hs0_central_tau_two`, `hs0_central_duration`, `hs0_outer_tests`, proved by hand in
+  `Heavy/S0Hand*`.
 * Gate: `HsData.s0`, `M2Short.hs_S0`.
 -/
 
@@ -36,12 +32,9 @@ open Set Real
 
 /-! ### Shape leaves -/
 
-/-- **`α/β < 3/4`** (`FLOOR_WEIGHTED_ENVELOPE` (5); inventory HS-S01 A7): for `x ≥ 12/5`,
-`1 ≤ α < x ≤ β` with equal secants, `4α < 3β` (upper bound of `Sec(α, β, x)` by its value at `α`,
-lower bound of `Sec(1, x, β)` by the tangent bound of `1/y²`).
-Route: the lower bound of `Sec(1, x, β)` uses the Padé bound `ss_log_le_pade3` on `V(x)`,
-`V - 3/4 ≥ (x - 1)²/(6(1 + x)(3x + 1))`, instead of the tangent bound of `1/y²`.
-Status: stable. -/
+/-- **`α/β < 3/4`**: for `x ≥ 12/5`, `1 ≤ α < x ≤ β` with equal secants, `4α < 3β` (upper bound of
+`Sec(α, β, x)` by its value at `α`; lower bound of `Sec(1, x, β)` from the Padé bound
+`ss_log_le_pade3` on `V(x)`, `V - 3/4 ≥ (x - 1)²/(6(1 + x)(3x + 1))`). -/
 theorem hs0_al_be {x al be : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al < x) (hxb : x ≤ be)
     (heq : m2Sec 1 x be = m2Sec al be x) : 4 * al < 3 * be := by
   by_contra hcon
@@ -97,8 +90,8 @@ theorem hs0_al_be {x al be : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al
   rw [← mul_div_assoc, div_mul_eq_mul_div, div_lt_iff₀ (by positivity)] at key
   nlinarith [sq_nonneg (x - 12 / 5), mul_nonneg (sub_nonneg.2 hx) (sq_nonneg (x - 12 / 5))]
 
-/-- **The diagonal ratio** (`FLOOR_WEIGHTED_ENVELOPE` (9); inventory HS-S01 A8): for `x ≥ 12/5`,
-`1 ≤ α ≤ x ≤ β`, `4α ≤ 3β`: `D ≤ (3(1 + x)²/(7x²))·α(α + β)`. Status: stable. -/
+/-- **The diagonal ratio**: for `x ≥ 12/5`, `1 ≤ α ≤ x ≤ β`, `4α ≤ 3β`:
+`D ≤ (3(1 + x)²/(7x²))·α(α + β)`. -/
 theorem hs0_DQ_le {x al be : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x) (hxb : x ≤ be)
     (h43 : 4 * al ≤ 3 * be) : hsDg x be al ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2) * (al * (al + be)) := by
   have hx0 : 0 < x := by linarith
@@ -133,9 +126,8 @@ theorem hs0_DQ_le {x al be : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al
         mul_nonneg (mul_nonneg hx0.le (sub_nonneg.2 hax)) hq.le]
     nlinarith [mul_nonneg (neg_nonneg.2 hsl) (by linarith : (0 : ℝ) ≤ be - 4 * al / 3)]
 
-/-- **The face α-bounds** (`LARGE_RATIO_HAND_EXCLUSION` (16), (18); inventory HS-S01 A22, B3, B4):
-for `x > 0`, `α ≥ 0`: `6α² ≤ x(x + 2) → α ≤ (5x + 4)/12`; and for `x ≥ 12/5`:
-`x(x + 2) ≤ 6α² → (22x + 20)/55 ≤ α`. Status: stable. -/
+/-- **The face α-bounds**: for `x > 0`, `α ≥ 0`: `6α² ≤ x(x + 2) → α ≤ (5x + 4)/12`; and for
+`x ≥ 12/5`: `x(x + 2) ≤ 6α² → (22x + 20)/55 ≤ α`. -/
 theorem hs0_face_alpha {x al : ℝ} (hx : 0 < x) (hal : 0 ≤ al) :
     (6 * al ^ 2 ≤ x * (x + 2) → al ≤ (5 * x + 4) / 12) ∧
       (12 / 5 ≤ x → x * (x + 2) ≤ 6 * al ^ 2 → (22 * x + 20) / 55 ≤ al) := by
@@ -149,9 +141,8 @@ theorem hs0_face_alpha {x al : ℝ} (hx : 0 < x) (hal : 0 ≤ al) :
     push Not at hc
     nlinarith [mul_le_mul hc.le hc.le hal (by positivity)]
 
-/-- **`ū ≤ û` on the central face domain** (`CENTRAL_TAU_TWO_SIGN` §2 (6)-(7); inventory HS-S01 A4,
-B5): for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12`, `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`,
-`ū(x, β) ≤ û(x, β)` (`P_t(x) > 0`). Status: stable. -/
+/-- **`ū ≤ û` on the central face domain**: for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12`,
+`x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`, `ū(x, β) ≤ û(x, β)` (`P_t(x) > 0`). -/
 theorem hs0_ubar_le_uhat {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -214,17 +205,15 @@ theorem hs0_ubar_le_uhat {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha
     · positivity
   linarith
 
-/-- **The positive diagonal** (`POSITIVE_DIAGONAL_PAIRING` (7)-(8); inventory HS-S01 M13, route
-`D ≥ αD₀`): for `1 < x ≤ 12/5`, `1 ≤ α ≤ x ≤ β ≤ αx`, `D ≥ D₀ = 2 + 4x - 2x² ≥ 2/25`.
-Status: stable. -/
+/-- **The positive diagonal** (from `D ≥ αD₀`): for `1 < x ≤ 12/5`, `1 ≤ α ≤ x ≤ β ≤ αx`,
+`D ≥ D₀ = 2 + 4x - 2x² ≥ 2/25`. -/
 theorem hs0_D_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb : x ≤ be) (hb : be ≤ al * x) :
     2 + 4 * x - 2 * x ^ 2 ≤ hsDg x be al ∧ 2 / 25 ≤ hsDg x be al := by
   exact hs02_D_pos hx hx2 hal hax hb
 
-/-- **The positive pairing sign** (`POSITIVE_DIAGONAL_PAIRING` (9)-(11); inventory HS-S01 M14, affine
-route in `ρ`): for `1 < x ≤ 12/5`, `0 ≤ ρ ≤ 1/(1 + x)²`, `D ≥ 2 + 4x - 2x²`, `3/4 ≤ u ≤ u₀(x)`:
-`F₂ = E_* - 2ρDu = S(u - 1) + 1/S + ρ(2S - 1) - 2ρDu < 0`. Status: stable. -/
+/-- **The positive pairing sign** (affine in `ρ`): for `1 < x ≤ 12/5`, `0 ≤ ρ ≤ 1/(1 + x)²`,
+`D ≥ 2 + 4x - 2x²`, `3/4 ≤ u ≤ u₀(x)`: `F₂ = E_* - 2ρDu = S(u - 1) + 1/S + ρ(2S - 1) - 2ρDu < 0`. -/
 theorem hs0_pairing {x rho D u : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hρ : 0 ≤ rho)
     (hρr : rho ≤ 1 / (1 + x) ^ 2) (hD : 2 + 4 * x - 2 * x ^ 2 ≤ D) (hu : 3 / 4 ≤ u)
     (hu0 : u ≤ hsU0 x) : hsE0 x u + rho * (2 * (1 + x) - 1) - 2 * rho * D * u < 0 := by
@@ -294,7 +283,7 @@ theorem hs0_pairing {x rho D u : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hρ : 0
 
 /-! ### Scale leaves -/
 
-/-- Sign of the `u`-slope in scalar form (`FLOOR_WEIGHTED_ENVELOPE` (10)-(11)). -/
+/-- Sign of the `u`-slope in scalar form. -/
 private theorem hs0_slope_pos {S q ε Δ ri τ : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10) (hε : 0 ≤ ε)
     (hε1 : ε ≤ 1) (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hri : 2 < ri) (hτ : 2 ≤ τ)
     (hτd : 0 ≤ Δ → τ * (q * Δ) < 1) (hΔ : Δ ≤ 51 / 25) (hΔ2 : 7 / 2 ≤ S → Δ ≤ 2) :
@@ -349,11 +338,9 @@ private theorem hs0_slope_pos {S q ε Δ ri τ : ℝ} (hS : 17 / 5 ≤ S) (hS10 
       mul_le_mul_of_nonneg_left (by nlinarith) (by positivity)
     nlinarith [sq_nonneg d]
 
-/-- **The incoming coefficient** (`FLOOR_WEIGHTED_ENVELOPE` (10)-(11), `LARGE_RATIO_HAND_EXCLUSION`
-(11); inventory HS-S01 A9, B6): for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ x ≤ β`, `α < β`, `D < α(α + β)`,
+/-- **The incoming coefficient**: for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ x ≤ β`, `α < β`, `D < α(α + β)`,
 `0 < q ≤ 1/7`, and either `2 ≤ τ ≤ T = r_A/q` or `τ = 2`, the floor-weighted face value is
-nondecreasing in `u` (it is affine with slope `1/r_A + λS - 2d + (τ + ½)d(d - λS) > 0`).
-Status: stable. -/
+nondecreasing in `u` (it is affine with slope `1/r_A + λS - 2d + (τ + ½)d(d - λS) > 0`). -/
 theorem hs0_uslope {x be al q τ ℓ u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hab : al < be) (hDQ : hsDg x be al < al * (al + be))
     (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hτ : (2 ≤ τ ∧ τ * q ≤ hsRA al be) ∨ τ = 2) (huu : u ≤ u') :
@@ -447,9 +434,8 @@ private theorem hs0_P0 {S u : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) (hu : 3 / 4 
     ring
   linarith
 
-/-- The completed-square numerator of the `A₂ < 0` slope bound (`ROOT_FLOOR_SCALE` (15)-(22)),
-multiplied by `S²`, is positive on `5 ≤ S ≤ 10`, `3/4 ≤ u ≤ 13/16`, `0 ≤ a ≤ 11/45`
-(concave in `a` and, at `a = 11/45`, in `u`). -/
+/-- The completed-square numerator of the `A₂ < 0` slope bound, multiplied by `S²`, is positive on
+`5 ≤ S ≤ 10`, `3/4 ≤ u ≤ 13/16`, `0 ≤ a ≤ 11/45` (concave in `a` and, at `a = 11/45`, in `u`). -/
 private theorem hs0_P_pos {S u a : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 13 / 16) (ha0 : 0 ≤ a) (ha : a ≤ 11 / 45) :
     0 < -9*S^4*a^2*u^2/16 + 9*S^4*a^2*u/8 - 9*S^4*a^2/16 + 3*S^4*a*u^2/8 - 3*S^4*a/8 -
@@ -495,7 +481,7 @@ private theorem hs0_P_pos {S u a : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) (hu : 3
   · have := mul_pos (by linarith : (0 : ℝ) < 45 * a / 11) hP1pos
     linarith
 
-/-- `16S²(K̄² - 3𝒜) < 0` for `17/5 ≤ S ≤ 5`, `0 ≤ z < 11/5` (`ROOT_FLOOR_SCALE` (10)). -/
+/-- `16S²(K̄² - 3𝒜) < 0` for `17/5 ≤ S ≤ 5`, `0 ≤ z < 11/5`. -/
 private theorem hs0_Kbar {S z : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S ≤ 5) (hz0 : 0 ≤ z)
     (hz : z < 11 / 5) : S ^ 4 - 56 * S ^ 2 + 16 + 2 * (7 * S ^ 2 - 4) * z + z ^ 2 < 0 := by
   have h1 : 0 ≤ (25 - S ^ 2) * (S ^ 2 - 289 / 25) := mul_nonneg (by nlinarith) (by nlinarith)
@@ -504,7 +490,7 @@ private theorem hs0_Kbar {S z : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S ≤ 5) (hz0 : 
   have h3 : z ^ 2 ≤ 11 / 5 * z := by nlinarith
   nlinarith
 
-/-- The completed-square numerator in polynomial form (`ROOT_FLOOR_SCALE` (12)-(15)). -/
+/-- The completed-square numerator in polynomial form. -/
 private theorem hs0_eP {S u a H : ℝ} (hS : S ≠ 0) (hH : H = S * (1 - u) - 1 / S) :
     S ^ 2 * (3 * u * (3 / 4 * ((1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2) + 1 +
       ((1 - a) * H + (2 * S - 1) * a) - (1 - a) - S * a / 2) -
@@ -515,7 +501,7 @@ private theorem hs0_eP {S u a H : ℝ} (hS : S ≠ 0) (hH : H = S * (1 - u) - 1 
       17*S^2*u/8 + S^2/8 + 9*S*a^2/8 - 3*S*a/8 - 2*S*u - 9*a^2/16 + 3*a/8 - 1/16 := by
   rw [hH]; field_simp; ring
 
-/-- For `S ≤ 5` and `z < 11/5`, `A₂ ≥ 𝒜 - K̄²/3 > 0` (`ROOT_FLOOR_SCALE` (8)-(10)). -/
+/-- For `S ≤ 5` and `z < 11/5`, `A₂ ≥ 𝒜 - K̄²/3 > 0`. -/
 private theorem hs0_A2_pos_small {S u a Δ H : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S ≤ 5) (hu : 3 / 4 ≤ u)
     (ha0 : 0 < a) (ha1 : a ≤ 1) (hΔ : 0 < Δ) (hz' : (S - 2) ^ 2 * a < 11 / 5)
     (hHb : H ≤ S / 4 - 1 / S) :
@@ -546,10 +532,9 @@ private theorem hs0_A2_pos_small {S u a Δ H : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S
     linarith
   linarith
 
-/-- **Negative `A₂` gives a positive slope** (`ROOT_FLOOR_SCALE` (8)-(22); inventory HS-S01
-A13-A15): with `a = α⁻²`, `Δ = D/α²`, `E₀ = S(u - 1) + 1/S`, if `A₂ < 0` then
-`(3/4)A₂ + 1 - A₃ - A₁/2 > 0`. The hypothesis `hz` is `D > 0 ⇒ (x - 1)² < (11/5)α²`.
-Route: the cap `z < 11/5` (instead of `z < 2`) avoids `√2`; then `S > 5`, `a < 11/45`. -/
+/-- **Negative `A₂` gives a positive slope**: with `a = α⁻²`, `Δ = D/α²`, `E₀ = S(u - 1) + 1/S`, if
+`A₂ < 0` then `(3/4)A₂ + 1 - A₃ - A₁/2 > 0`. The hypothesis `hz` is `D > 0 ⇒ (x - 1)² < (11/5)α²`.
+The cap `z < 11/5` avoids `√2`; then `S > 5`, `a < 11/45`. -/
 private theorem hs0_A2neg {S u a Δ : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 13 / 16) (ha0 : 0 < a) (ha1 : a ≤ 1) (hz : 0 < Δ → (S - 2) ^ 2 * a < 11 / 5)
     (hA2 : (1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2 + Δ ^ 2 * u +
@@ -622,7 +607,7 @@ private theorem hs0_A2neg {S u a Δ : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10)
     rw [e3]; positivity
   exact pos_of_mul_pos_right this (by linarith)
 
-/-- `D > 0` forces `(x - 1)² < (11/5)α²` (`ROOT_FLOOR_SCALE` (7), with the rational cap `11/5`). -/
+/-- `D > 0` forces `(x - 1)² < (11/5)α²` (with the rational cap `11/5`). -/
 private theorem hs0_z_lt {x be al : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hxb : x ≤ be)
     (hD : 0 < hsDg x be al) : (x - 1) ^ 2 < 11 / 5 * al ^ 2 := by
   by_contra h
@@ -637,14 +622,12 @@ private theorem hs0_z_lt {x be al : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (h
   nlinarith [mul_le_mul hal' hal' (by linarith) (by nlinarith),
     mul_le_mul_of_nonneg_right hal' (by linarith : (0 : ℝ) ≤ 2 * x)]
 
-/-- **The endpoint alternative at fixed `p`** (`ROOT_FLOOR_SCALE` (3)-(23); inventory HS-S01
-A12-A16): on `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ x ≤ β`, `3/4 ≤ u ≤ 13/16`, `0 < p ≤ r_A`, `0 ≤ q_m ≤ p/2`,
-the floor-weighted scale polynomial `𝒢(q) = Φ(q)` (`m = 1/2`) satisfies
-`𝒢(q) ≤ max{𝒢(0), 𝒢(q_m)}` on `[0, q_m]` (convex if `A₂ ≥ 0`; increasing, slope `> 1/10`, if
-`A₂ < 0`).
-Route: `D > 0 ⇒ (x - 1)² < (11/5)α²` replaces `z < 2` (no `√2`), so `A₂ < 0` forces `S > 5`,
-`α⁻² ≤ 11/45`; the slope bound is taken at `p = 1/2` (decreasing in `p`).
-Status: stable. -/
+/-- **The endpoint alternative at fixed `p`**: on `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ x ≤ β`,
+`3/4 ≤ u ≤ 13/16`, `0 < p ≤ r_A`, `0 ≤ q_m ≤ p/2`, the floor-weighted scale polynomial `𝒢(q) = Φ(q)`
+(`m = 1/2`) satisfies `𝒢(q) ≤ max{𝒢(0), 𝒢(q_m)}` on `[0, q_m]` (convex if `A₂ ≥ 0`; increasing,
+slope `> 1/10`, if `A₂ < 0`).
+With the cap `D > 0 ⇒ (x - 1)² < (11/5)α²` (no `√2`), `A₂ < 0` forces `S > 5`, `α⁻² ≤ 11/45`;
+the slope bound is taken at `p = 1/2` (decreasing in `p`). -/
 theorem hs0_endpoint_alt {x be al u p qm q : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hp : 0 < p)
     (hpr : p ≤ hsRA al be) (hqm : 0 ≤ qm) (hqmp : qm ≤ p / 2) (hq : 0 ≤ q) (hqq : q ≤ qm) :
@@ -697,7 +680,7 @@ theorem hs0_endpoint_alt {x be al u p qm q : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x �
     rw [e]; exact mul_nonneg (by linarith) (by linarith)
   exact le_max_of_le_right (by linarith)
 
-/-- `FLOOR_WEIGHTED_ENVELOPE` (18): the value at `r_A = 3/7` is `-P(x)/(168x²(x + 1)(35x + 13))`. -/
+/-- The value at `r_A = 3/7` is `-P(x)/(168x²(x + 1)(35x + 13))`. -/
 private theorem hs0_N37 {x : ℝ} (hx : 12 / 5 ≤ x) :
     (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * ((1 + x) * (hsVbar x - 1) + 1 / (1 + x)) +
       7 / 3 * (hsVbar x - 1) + 9 / 8 - 3 / 7 * (1 + (x - 1) / x ^ 2) < 0 := by
@@ -717,7 +700,7 @@ private theorem hs0_N37 {x : ℝ} (hx : 12 / 5 ≤ x) :
   rw [e]
   exact div_neg_of_neg_of_pos (by linarith) (by positivity)
 
-/-- `FLOOR_WEIGHTED_ENVELOPE` (17): `(49/9)(1 - V̄) ≥ 1 + (x - 1)/x²` for `x ≥ 12/5`. -/
+/-- `(49/9)(1 - V̄) ≥ 1 + (x - 1)/x²` for `x ≥ 12/5`. -/
 private theorem hs0_Nd {x : ℝ} (hx : 12 / 5 ≤ x) :
     1 + (x - 1) / x ^ 2 ≤ 49 / 9 * (1 - hsVbar x) := by
   have hx0 : 0 < x := by linarith
@@ -735,7 +718,7 @@ private theorem hs0_Nd {x : ℝ} (hx : 12 / 5 ≤ x) :
   have : 0 ≤ 49 / 9 * (1 - hsVbar x) - (1 + (x - 1) / x ^ 2) := by rw [e]; positivity
   linarith
 
-/-- `M₀ = E₀ + (u - 1)/r_A + r_A + 1/8 < 0` (`FLOOR_WEIGHTED_ENVELOPE` (14)). -/
+/-- `M₀ = E₀ + (u - 1)/r_A + r_A + 1/8 < 0`. -/
 private theorem hs0_M0_neg {x u r : ℝ} (hx : 12 / 5 ≤ x) (hu' : u ≤ 13 / 16) (hr0 : 0 < r)
     (hrA : r ≤ 3 / 7) : hsE0 x u + (u - 1) / r + r + 1 / 8 < 0 := by
   have hS : 0 < 1 + x := by linarith
@@ -747,8 +730,7 @@ private theorem hs0_M0_neg {x u r : ℝ} (hx : 12 / 5 ≤ x) (hu' : u ≤ 13 / 1
   have h3 : -(3 / 16) / r = -(3 / 16 / r) := by ring
   linarith
 
-/-- `M(r_A) = E₀(1 - D/Q) + (u - 1)/r_A + 9/8 - r_A - (x - 1)/Q < 0` (`FLOOR_WEIGHTED_ENVELOPE`
-(15)-(18)); `Qi = 1/Q`, `k = D/Q`. -/
+/-- `M(r_A) = E₀(1 - D/Q) + (u - 1)/r_A + 9/8 - r_A - (x - 1)/Q < 0`; `Qi = 1/Q`, `k = D/Q`. -/
 private theorem hs0_Mr_neg {x u r vb k Qi : ℝ} (hx : 12 / 5 ≤ x) (hu' : u ≤ 13 / 16)
     (huV : u ≤ vb) (hr0 : 0 < r) (hrA : r ≤ 3 / 7) (hrQ : r / x ^ 2 ≤ Qi)
     (hk : k ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2))
@@ -799,9 +781,9 @@ private theorem hs0_Mr_neg {x u r vb k Qi : ℝ} (hx : 12 / 5 ≤ x) (hu' : u �
   have e : r * (1 + (x - 1) / x ^ 2) = r + r * (x - 1) / x ^ 2 := by ring
   linarith only [e, h1, h2, h3, h4, h5, hN]
 
-/-- **The zero-scale endpoint is negative** (`FLOOR_WEIGHTED_ENVELOPE` (12)-(18); inventory HS-S01
-A17): for `x ≥ 12/5`, `1 ≤ α ≤ x ≤ β`, `r_A ≤ 3/7`, `D ≤ (3(1 + x)²/(7x²))·α(α + β)`,
-`3/4 ≤ u ≤ 13/16`, `u ≤ V̄(x)` and `0 < p ≤ r_A`: `𝒢(0) = C(p) + 1/8 < 0`. Status: stable. -/
+/-- **The zero-scale endpoint is negative**: for `x ≥ 12/5`, `1 ≤ α ≤ x ≤ β`, `r_A ≤ 3/7`,
+`D ≤ (3(1 + x)²/(7x²))·α(α + β)`, `3/4 ≤ u ≤ 13/16`, `u ≤ V̄(x)` and `0 < p ≤ r_A`:
+`𝒢(0) = C(p) + 1/8 < 0`. -/
 theorem hs0_G_zero_neg {x be al u p : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb : x ≤ be) (hrA : hsRA al be ≤ 3 / 7)
     (hDQ : hsDg x be al ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2) * (al * (al + be))) (hu : 3 / 4 ≤ u)
@@ -845,8 +827,8 @@ theorem hs0_G_zero_neg {x be al u p : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) 
     mul_neg_of_pos_of_neg hp0 hMr'
   linarith only [e2, hlog, h1, h2]
 
-/-- `N₀(0) = 20u - (2u - 5H/2)² > 0` (`ROOT_FLOOR_TAU_TWO_SCALE` §4); for `H ≥ 2` the incoming
-floor supplies `u ≥ 77/100`, `H ≤ 76/35`. -/
+/-- `N₀(0) = 20u - (2u - 5H/2)² > 0`; for `H ≥ 2` the incoming floor supplies `u ≥ 77/100`,
+`H ≤ 76/35`. -/
 private theorem hs0_N00 {u H : ℝ} (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hH0 : 0 ≤ H)
     (hH2 : 2 ≤ H → 77 / 100 ≤ u ∧ H ≤ 76 / 35) :
     0 < -25 * H ^ 2 / 4 + 10 * H * u - 4 * u ^ 2 + 20 * u := by
@@ -861,13 +843,13 @@ private theorem hs0_N00 {u H : ℝ} (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hH
     nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ 2 * u - 5 * H / 2 + 38 / 7 - 2 * u)
       (by linarith : (0 : ℝ) ≤ 5 * H / 2 - 2 * u)]
 
-/-- `N₀(1/7) > 0` (`ROOT_FLOOR_TAU_TWO_SCALE` §5). -/
+/-- `N₀(1/7) > 0`. -/
 private theorem hs0_N017 {u H : ℝ} (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hH0 : 0 ≤ H)
     (hH : H ≤ 12 / 5) : 0 < -625 * H ^ 2 / 196 + 10 * H * u - 4 * u ^ 2 + 240 * u / 49 := by
   nlinarith [mul_nonneg hH0 (sub_nonneg.2 hH), mul_nonneg (sub_nonneg.2 hu) (sub_nonneg.2 hu'),
     mul_nonneg hH0 (sub_nonneg.2 hu)]
 
-/-- `N₀(s) > 0` on `0 ≤ s ≤ 1/7` from the two endpoints (`ROOT_FLOOR_TAU_TWO_SCALE` §5). -/
+/-- `N₀(s) > 0` on `0 ≤ s ≤ 1/7` from the two endpoints. -/
 private theorem hs0_N0s {s u H : ℝ} (hs : 0 ≤ s) (hs7 : s ≤ 1 / 7) (hu : 3 / 4 ≤ u)
     (h0 : 0 < -25 * H ^ 2 / 4 + 10 * H * u - 4 * u ^ 2 + 20 * u)
     (h7 : 0 < -625 * H ^ 2 / 196 + 10 * H * u - 4 * u ^ 2 + 240 * u / 49) :
@@ -899,7 +881,7 @@ private theorem hs0_N0s {s u H : ℝ} (hs : 0 ≤ s) (hs7 : s ≤ 1 / 7) (hu : 3
     have := mul_nonneg (sub_nonneg.2 hs7) this
     linarith
 
-/-- `S²N₁(1/7) > 0` (`ROOT_FLOOR_TAU_TWO_SCALE` §7 (20)-(21); concave in `u`). -/
+/-- `S²N₁(1/7) > 0` (concave in `u`). -/
 private theorem hs0_N117 {S u : ℝ} (hS : 17 / 5 ≤ S) (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) :
     0 < -225 * S ^ 4 / 196 - 75 * S ^ 3 / 49 + 475 * S ^ 2 / 98 + 25 * S / 7 +
       u ^ 2 * (-25 * S ^ 4 / 4 - 10 * S ^ 3 - 4 * S ^ 2) +
@@ -929,8 +911,7 @@ private theorem hs0_N117 {S u : ℝ} (hS : 17 / 5 ≤ S) (hu : 3 / 4 ≤ u) (hu'
   · have := mul_pos (by linarith : (0 : ℝ) < 1 - 16 * (u - 3 / 4)) pa; linarith
   · have := mul_pos (by linarith : (0 : ℝ) < 16 * (u - 3 / 4)) pb; linarith
 
-/-- `N₁(s) > 0` on `0 ≤ s ≤ 1/7` (`ROOT_FLOOR_TAU_TWO_SCALE` §6): concave in `s`, or convex with
-`N₁'(1/7) < 0`. -/
+/-- `N₁(s) > 0` on `0 ≤ s ≤ 1/7`: concave in `s`, or convex with `N₁'(1/7) < 0`. -/
 private theorem hs0_N1s {s S u H : ℝ} (hs : 0 ≤ s) (hs7 : s ≤ 1 / 7) (hS : 17 / 5 ≤ S)
     (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hH : H = S * (1 - u) - 1 / S)
     (h0 : 0 < -25 * H ^ 2 / 4 + 10 * H * u - 4 * u ^ 2 + 20 * u) :
@@ -992,9 +973,8 @@ private theorem hs0_N1s {s S u H : ℝ} (hs : 0 ≤ s) (hs7 : s ≤ 1 / 7) (hS :
     have := mul_nonneg (sub_nonneg.2 hs7) this
     linarith
 
-/-- **The `τ = 2` slope** (`ROOT_FLOOR_TAU_TWO_SCALE` (2)-(21); inventory HS-S01 A18-A19): with
-`a = α⁻²`, `Δ = D/α²`, `H = -E₀`, the incoming floor `u ≥ 3/4 + (S - 2)²/(28S²)` and
-`0 ≤ σ ≤ 1/7`, `σG₂'(σ) = 1 - σ(5A₁/2 + 1 + A₃) + 5σ²A₂ > 0`. -/
+/-- **The `τ = 2` slope**: with `a = α⁻²`, `Δ = D/α²`, `H = -E₀`, the incoming floor
+`u ≥ 3/4 + (S - 2)²/(28S²)` and `0 ≤ σ ≤ 1/7`, `σG₂'(σ) = 1 - σ(5A₁/2 + 1 + A₃) + 5σ²A₂ > 0`. -/
 private theorem hs0_Psi_pos {S u a Δ σ H : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10)
     (hu' : u ≤ 13 / 16) (hf : 3 / 4 + (S - 2) ^ 2 / (28 * S ^ 2) ≤ u) (ha0 : 0 ≤ a)
     (ha1 : a ≤ 1) (hσ : 0 ≤ σ) (hσ7 : σ ≤ 1 / 7) (hH : H = S * (1 - u) - 1 / S) :
@@ -1067,14 +1047,12 @@ private theorem hs0_Psi_pos {S u a Δ σ H : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S 
     · have := mul_pos (by linarith : (0 : ℝ) < a) hN1; linarith
   exact pos_of_mul_pos_right hpos (by linarith)
 
-/-- **The `τ = 2` face can be pushed** (`ROOT_FLOOR_TAU_TWO_SCALE` (2)-(21); inventory HS-S01 A18,
-A19): for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ x ≤ β`, the *actual* `u = Sec(1, x, β) ≤ 13/16` (the uniform
-floor `hs_sec_gt_floor` is essential), `G₂(q) = R*_2 + ½(w_* - 3/4)` is strictly increasing on
-`(0, 1/7]`.
-Route: no derivative: `log(q₂/q₁) ≥ 2(q₂ - q₁)/(q₂ + q₁)` (`ss_log_ge_pade`) reduces the increment
-to `σG₂'(σ) > 0` at the midpoint `σ`; the two quadratics in `σ` (`α⁻² = 0, 1`) are handled by a
-convex/concave case split instead of §§5-6.
-Status: stable. -/
+/-- **The `τ = 2` face can be pushed**: for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ x ≤ β`, the *actual*
+`u = Sec(1, x, β) ≤ 13/16` (the uniform floor `hs_sec_gt_floor` is essential),
+`G₂(q) = R*_2 + ½(w_* - 3/4)` is strictly increasing on `(0, 1/7]`.
+The bound `log(q₂/q₁) ≥ 2(q₂ - q₁)/(q₂ + q₁)` (`ss_log_ge_pade`) reduces the increment to
+`σG₂'(σ) > 0` at the midpoint `σ`, with no derivative; the two quadratics in `σ` (`α⁻² = 0, 1`) are
+handled by a convex/concave case split. -/
 theorem hs0_tau_two {x be al u q₁ q₂ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hu : u = m2Sec 1 x be) (hu' : u ≤ 13 / 16) (hq₁ : 0 < q₁)
     (hq : q₁ < q₂) (hq₂ : q₂ ≤ 1 / 7) :
@@ -1138,13 +1116,12 @@ theorem hs0_tau_two {x be al u q₁ q₂ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤
     exact mul_pos (mul_pos (by linarith) (by positivity)) hΨ
   linarith
 
-/-! ### Heavy face signs -/
+/-! ### Face signs -/
 
-/-- **The central face, `τ = 2` test** (`CENTRAL_TAU_TWO_SIGN` (3); inventory HS-S01 B7): on
-`Dom_c` (`12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12`, `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`),
-at `q = q_c`, `u = û(x, β)`, `T = r_A/q_c`: `F(2, 5/(2T) - 11/9) < 0` for the floor-weighted face
-value. Status: heavy, by hand (`Heavy/S0HandCen*`: beta convexity, the lower face and four
-upper faces, `SHORT_DURATION_CENTRAL_TAU_TWO`). -/
+/-- **The central face, `τ = 2` test**: on `Dom_c` (`12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12`,
+`x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`), at `q = q_c`, `u = û(x, β)`, `T = r_A/q_c`:
+`F(2, 5/(2T) - 11/9) < 0` for the floor-weighted face value. Proved in `Heavy/S0HandCen*` (beta
+convexity, the lower face and four upper faces). -/
 theorem hs0_central_tau_two {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -1152,10 +1129,9 @@ theorem hs0_central_tau_two {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) 
       (5 / (2 * (hsRA al be / hsQc x al)) - 11 / 9) (1 / 2) < 0 := by
   apply hs0_central_tau_two_proof <;> assumption
 
-/-- **The central face, `τ = T` and `τ = 8T/9` tests** (`CENTRAL_DURATION_FACES` (5); inventory
-HS-S01 B8): on `Dom_c`, at `q = q_c`, `u = û`, `T = r_A/q_c`: `F(T, 0) < 0` and
-`F(8T/9, -1/9) < 0` (no condition `cT ≥ 2`). Status: heavy, by hand (`Heavy/S0HandCen*`: beta
-convexity, the lower face and four upper faces, `SHORT_DURATION_CENTRAL_UPPER_FACES`). -/
+/-- **The central face, `τ = T` and `τ = 8T/9` tests**: on `Dom_c`, at `q = q_c`, `u = û`,
+`T = r_A/q_c`: `F(T, 0) < 0` and `F(8T/9, -1/9) < 0` (no condition `cT ≥ 2`). Proved in
+`Heavy/S0HandCen*` (beta convexity, the lower face and four upper faces). -/
 theorem hs0_central_duration {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -1164,12 +1140,11 @@ theorem hs0_central_duration {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
         0 := by
   apply hs0_central_duration_proof <;> assumption
 
-/-- **The outer face, three tests** (`OUTER_SCALE_LARGE_RATIO_SIGN` (7); inventory HS-S01 B9): on
-`Dom_o` (`12/5 ≤ x ≤ 9`, `(22x + 20)/55 ≤ α ≤ x`,
+/-- **The outer face, three tests**: on `Dom_o` (`12/5 ≤ x ≤ 9`, `(22x + 20)/55 ≤ α ≤ x`,
 `x + 4x(α - 1)/(5x + 4) ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`), at `q = 1/7`, `u = ū(x, β)`,
-`T = 7r_A`: `F(T, 0) < 0`, `F(8T/9, -1/9) < 0`, `F(2, 5/(2T) - 11/9) < 0`. Status: heavy, by hand
-(`Heavy/S0HandOut*`: the cubic comparison on the large shapes, beta convexity and five faces on the
-strip, `SHORT_SCALE_OUTER_LARGE_RATIO`). -/
+`T = 7r_A`: `F(T, 0) < 0`, `F(8T/9, -1/9) < 0`, `F(2, 5/(2T) - 11/9) < 0`. Proved in
+`Heavy/S0HandOut*` (the cubic comparison on the large shapes, beta convexity and five faces on the
+strip). -/
 theorem hs0_outer_tests {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (hal : (22 * x + 20) / 55 ≤ al) (hax : al ≤ x)
     (hb : x + 4 * x * (al - 1) / (5 * x + 4) ≤ be)
@@ -1183,7 +1158,7 @@ theorem hs0_outer_tests {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
 
 /-- One face of gate S0: the floor-weighted value at a face scale `q_f ≤ 1/7` with a duration
 `τ ∈ [2, T]` (or `τ = 2`), after raising `u` to a ceiling `u_c`, is bounded by the largest of the
-three duration tests (`LARGE_RATIO_HAND_EXCLUSION` §§4-5; inventory HS-S01 A21, A23 steps 6-7). -/
+three duration tests. -/
 private theorem hs0_face_step {x be al u uc qf τs T : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (hal : 1 ≤ al) (hax : al ≤ x) (hxb : x ≤ be) (hab : al < be)
     (hDQ : hsDg x be al < al * (al + be)) (hq : 0 < qf) (hq7 : qf ≤ 1 / 7) (hτs : 2 ≤ τs)
@@ -1215,8 +1190,7 @@ namespace HsData
 
 variable (H : HsData)
 
-/-- **The large-ratio exclusion** (`LARGE_RATIO_HAND_EXCLUSION` §§2-6; inventory HS-S01 A23, B10):
-`x ≥ 12/5` is impossible. -/
+/-- **The large-ratio exclusion**: `x ≥ 12/5` is impossible. -/
 private theorem hs0_large (hx : 12 / 5 ≤ H.x) : False := by
   have hx1 := H.one_lt_x
   have hx0 : 0 < H.x := by linarith
@@ -1323,17 +1297,15 @@ private theorem hs0_large (hx : 12 / 5 ≤ H.x) : False := by
     have := max_lt ho.2.2 (max_lt ho.2.1 ho.1)
     linarith
 
-/-- **Gate S0** (`LARGE_RATIO_HAND_EXCLUSION` (1)-(2), `POSITIVE_DIAGONAL_PAIRING` (2); inventory
-HS-S01 M18): `x < 12/5`, `D > 0`, `E_L > 0`.
-Proof plan: if `x ≥ 12/5`: `root_zero`, `w_ge` and `hs_env_weighted` (`m = 1/2`, factor positivity
+/-- **Gate S0**: `x < 12/5`, `D > 0`, `E_L > 0`.
+Proof: if `x ≥ 12/5`: `root_zero`, `w_ge` and `hs_env_weighted` (`m = 1/2`, factor positivity
 `hs_B_pos_weighted`) give `0 ≤ G*_τ(q)`; `hs0_al_be`, `hs0_DQ_le` give `r_A < 3/7`, `D/Q < 1`; `hs_phi_eq`,
 `q_le_qc`, `q_lt_seventh`, `hs0_endpoint_alt`, `hs0_G_zero_neg` (with `u_le_V`, `hs_V_le_Vbar`),
 `hs0_tau_two` move to a face; `hs0_uslope` with `hs_sec_le_ubar`, `hs0_ubar_le_uhat`; `hs_dur_three`;
 `hs0_face_alpha`, `strong_order`, `upper_order_54` place the shape in `Dom_c`/`Dom_o`; contradiction
 with `hs0_central_tau_two`, `hs0_central_duration`, `hs0_outer_tests`. Then `hs0_D_pos` (with
 `be_le_al_x`) and `EL_eq`, `hs_E_le_env`, `hs0_pairing` (with `hs_V_le_U0`, `u_le_V`) give
-`D > 0`, `E_L = λ(2ρDu - E) > 0`.
-Status: assembly (to be proved from the leaves above). -/
+`D > 0`, `E_L = λ(2ρDu - E) > 0`. -/
 theorem s0 : H.x < 12 / 5 ∧ 0 < hsDg H.x H.be H.al ∧ 0 < H.EL := by
   have hx1 := H.one_lt_x
   have hxlt : H.x < 12 / 5 := by

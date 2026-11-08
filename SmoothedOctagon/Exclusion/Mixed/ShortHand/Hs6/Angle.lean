@@ -5,22 +5,21 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Basic
 /-!
 # Gate S6 helper: the angle bound at the normalized point
 
-`MIXED_SMALLER_SHORT_ROOT_AND_ANGLE_REDUCTION` (14)-(21) with `MIXED_GENERAL_SHORT_DEFECT_INTERFACE`
-(5)-(7); inventory HS-S567 AC.1, AB1, AB2. The window's endpoint traces `𝒜 = Point.AA`,
-`ℬ = Point.BB` at the normalized point `⟨1/(1 + x), β/x - 1, α, ρ, v, E⟩` are compared with the
-fixed lower row `(n, √3μ)`, `μ = βx - α`, `n = (2x + 1)α + (x + 2)β`, of the relative frame.
+The window's endpoint traces `𝒜 = Point.AA`, `ℬ = Point.BB` at the normalized point
+`⟨1/(1 + x), β/x - 1, α, ρ, v, E⟩` are compared with the fixed lower row `(n, √3μ)`, `μ = βx - α`,
+`n = (2x + 1)α + (x + 2)β`, of the relative frame.
 
-Route (inventory HS-S567 §5, risk 1): instead of one large rational identity, the frame `m` and the
-costate are rotated by `O' = [[x + 2, -√3x], [√3x, x + 2]]` (`O'ᵀO' = 4K_x`). The traces become a
-bilinear identity in the rotated entries (`hs6_rot_traces`, 172 monomials, atoms `m_ij`, `h_ij`),
-and the point enters only through four short facts: the lower row (`hs6_rot_lower`), the shear row
-(`hs6_rot_shear`), `det m = 1` (`hs6_m_det`, from `det P = -2U`, `det F = 1`,
-`det Q⁻¹ = -1/(2U)`) and the costate in the rotated basis with its Casimir (`hs6_rot_costate`).
-The angle-circle comparison is replaced by the quadratic-in-`ξ` supporting-line bound `hs6_ab2`.
+The frame `m` and the costate are rotated by `O' = [[x + 2, -√3x], [√3x, x + 2]]` (`O'ᵀO' = 4K_x`).
+The traces become a bilinear identity in the rotated entries (`hs6_rot_traces`, 172 monomials, atoms
+`m_ij`, `h_ij`), and the point enters only through four short facts: the lower row
+(`hs6_rot_lower`), the shear row (`hs6_rot_shear`), `det m = 1` (`hs6_m_det`, from `det P = -2U`,
+`det F = 1`, `det Q⁻¹ = -1/(2U)`) and the costate in the rotated basis with its Casimir
+(`hs6_rot_costate`). The angle comparison is the quadratic-in-`ξ` supporting-line bound `hs6_ab2`.
 
 ## Main API
 
-* `hs6_pt_coords`, `hs6_m_closed`, `hs6_m_det`: the cover's coordinates and frame at the point.
+* `hs6_pt_coords`, `hs6_m_closed`, `hs6_m_det`: the coordinates and frame of `Point` at the
+  normalized point.
 * `hs6Rb1`, `hs6Rb2`, `hs6Ra1`, `hs6Ra2`, `hs6Rk1`, `hs6Rk2`, `hs6Rk3`, `hs6_rot_traces`.
 * `hs6_rot_lower`, `hs6_rot_shear`, `hs6_rot_costate`, `hs6_ab2`.
 * `hs6_angle_core`: `√3 cos δ (nℬ - μ𝒜) - sin δ (n𝒜 + 3μℬ) ≤ 0` when
@@ -37,7 +36,8 @@ section Closed
 
 variable {x be al ρ v E : ℝ}
 
-/-- The cover's derived coordinates at the normalized point `⟨1/(1 + x), β/x - 1, α, ρ, v, E⟩`. -/
+/-- The derived coordinates of `Point` at the normalized point
+`⟨1/(1 + x), β/x - 1, α, ρ, v, E⟩`. -/
 theorem hs6_pt_coords (hx : 1 < x) :
     (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).x = x ∧
     (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).be = be ∧
@@ -52,7 +52,7 @@ theorem hs6_pt_coords (hx : 1 < x) :
     rw [Point.be, hx']; field_simp; ring
   refine ⟨hx', hb', by rw [Point.S, hx'], by rw [Point.A, hb'], by rw [Point.B, hb', hx'], rfl⟩
 
-/-- **The cover's frame `m = P F Q⁻¹` in closed form** at the normalized point (common
+/-- **The frame `m = P F Q⁻¹` of `Point` in closed form** at the normalized point (common
 denominator `2(α + β)(1 - ρ)(1 + x)`). -/
 theorem hs6_m_closed (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
     (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00 =
@@ -144,7 +144,7 @@ noncomputable def hs6Rk2 (x h11 h12 h21 : ℝ) : ℝ :=
 noncomputable def hs6Rk3 (x h11 h12 h21 : ℝ) : ℝ :=
   6 * h11 * x * (x + 2) + h12 * (x + 2) ^ 2 - 9 * h21 * x ^ 2
 
-/-- **The rotated trace identity** (`ROOT_AND_ANGLE_REDUCTION` (18) at the matrix level): with
+/-- **The rotated trace identity** (at the matrix level): with
 `𝒜 = T_κ tr m + h₁₂m₁₁ - h₁₁(m₀₁ + 3m₁₀) - 3h₂₁m₀₀` and
 `ℬ = h₁₁(m₁₁ - m₀₀) + h₁₂m₁₀ + h₂₁m₀₁ + (T_κ/3)(3m₁₀ - m₀₁)` (`Point.AA`, `Point.BB`), the rotated
 entries `a₁ = √3·hs6Ra1`, `a₂ = hs6Ra2`, `Δ = a₂b₁ - a₁b₂`, `σ = (a₁b₁ + a₂b₂)/√3`,
@@ -180,8 +180,8 @@ theorem hs6_rot_traces (x m00 m01 m10 m11 h11 h12 h21 Tk : ℝ) :
   unfold hs6Ra1 hs6Ra2 hs6Rb1 hs6Rb2 hs6Rk1 hs6Rk2 hs6Rk3
   refine ⟨by ring, by ring, by ring, by ring⟩
 
-/-- **The supporting line for every costate** (`ROOT_AND_ANGLE_REDUCTION` (19)-(21), real form;
-inventory HS-S567 AB2): with `t = c + k₁`, `k₁ > 0`, `k₁k₃ = c² + k₂²` (`det = 1`), `sin δ > 0` and
+/-- **The supporting line for every costate** (real form):
+with `t = c + k₁`, `k₁ > 0`, `k₁k₃ = c² + k₂²` (`det = 1`), `sin δ > 0` and
 `A² + h² ≤ (K_s sin δ + h cos δ)²`, `K_s = A + 2 + 2c/k₁`:
 `cos δ (k₂A - th) - sin δ (t(1 + A) + k₂h + c + k₃) ≤ 0`. The left side times `4k₁ sin δ` is
 `-(2k₂ sin δ - k₁(A cos δ - h sin δ))² - (k₁K_s sin δ + k₁h cos δ)² + k₁²(A² + h²)`. -/
@@ -211,7 +211,7 @@ section Point
 
 variable {x be al ρ v E u : ℝ}
 
-/-- **The fixed lower row** (`SHEAR_COST_REDUCTION` (2)): at the normalized point,
+/-- **The fixed lower row**: at the normalized point,
 `a₁/√3 = 2S(βx - α)/(α + β)` and `a₂ = 2S((2x + 1)α + (x + 2)β)/(α + β)`. -/
 theorem hs6_rot_lower (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
     hs6Ra1 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00
@@ -232,7 +232,7 @@ theorem hs6_rot_lower (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) 
   unfold hs6Ra1 hs6Ra2
   constructor <;> field_simp <;> ring
 
-/-- **The shear row** (`SHEAR_COST_REDUCTION` (5)-(6)): at the normalized point,
+/-- **The shear row**: at the normalized point,
 `(βx - α)b₁ + ((2x + 1)α + (x + 2)β)b₂/√3 = 8SK_xK_A η/(α + β)` with `η = h/√3`,
 `h` the physical shear (`hsShear`). -/
 theorem hs6_rot_shear (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
@@ -258,9 +258,9 @@ theorem hs6_rot_shear (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) 
   field_simp
   ring
 
-/-- **The costate in the rotated basis** (`ROOT_AND_ANGLE_REDUCTION` (14)-(16)): at the normalized
-point with incoming norm `u`, `k₁ = 12uS²(1 - ρ)²`, `k₂/√3 = 4(1 - ρ)(uSW - EK_x)` with
-`W = 1 - x + ρS(2x + 1)`, and `-(h₂₁h₁₂ + h₁₁²) = (4uv - E²)(1 - ρ)²`. -/
+/-- **The costate in the rotated basis**: at the normalized point with incoming norm `u`,
+`k₁ = 12uS²(1 - ρ)²`, `k₂/√3 = 4(1 - ρ)(uSW - EK_x)` with `W = 1 - x + ρS(2x + 1)`, and
+`-(h₂₁h₁₂ + h₁₁²) = (4uv - E²)(1 - ρ)²`. -/
 theorem hs6_rot_costate (hx : 1 < x)
     (hu : (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).u = u) :
     hs6Rk1 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h11
@@ -280,13 +280,12 @@ theorem hs6_rot_costate (hx : 1 < x)
   unfold hs6Rk1 hs6Rk2
   refine ⟨?_, ?_, ?_⟩ <;> field_simp <;> ring
 
-/-- **The angle inequality at the normalized point** (`ROOT_AND_ANGLE_REDUCTION` (18)-(21),
-`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (7); inventory HS-S567 AB1-AB2): if
+/-- **The angle inequality at the normalized point**: if
 `√(A² + h²) ≤ K_κ sin δ + h cos δ` with `K_κ = A + 2 + 2κ/J₀`, `J₀ = 3u/(2U₁)`, `sin δ > 0`, then
 `√3 cos δ (n ℬ - μ 𝒜) - sin δ (n 𝒜 + 3μ ℬ) ≤ 0`, where `μ = βx - α`, `n = (2x + 1)α + (x + 2)β`
 (so `(n, √3μ)` is the direction of the fixed lower row, angle `ψ`).
-Route: the angle-circle comparison of the notes is replaced by the rotated trace identity
-`hs6_rot_traces` and the quadratic-in-`ξ` bound `hs6_ab2`. -/
+The proof uses the rotated trace identity `hs6_rot_traces` and the quadratic-in-`ξ` bound
+`hs6_ab2`. -/
 theorem hs6_angle_core (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1)
     (hu0 : 0 < u) (hu : (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).u = u)
     (hk : 0 < (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).kap) {δ : ℝ} (hs : 0 < sin δ)

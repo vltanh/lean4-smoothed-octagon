@@ -5,14 +5,14 @@ public import SmoothedOctagon.Exclusion.Forward.Log
 /-!
 # Case F: the conditional Casimir theorem
 
-`HAND_FORWARD_CONDITIONAL_NORM_BOUNDS` §2: two small norm increments force `γ² > 23/125`.
+Two small norm increments force `γ² > 23/125`.
 
-Route: as in the note, the exact central offset `E₀ = e₀ - Φ` is replaced by `e₀` (`0 < E₀ ≤ e₀`),
-the bracket decreases in both increments (CNB (7)) and is concave along the edge
-`δu + δv = 1/35`, so it suffices to treat the vertices `A = (1/35, 0)` and `B = (29/2240, 1/64)`.
-At `B` the note's estimate (14) is replaced by the cruder `(c - b)S + bT ≤ (c - b)(S + T) + (2b - c)T`
-(resp. `≤ (7/3)c`). The four resulting one-variable inequalities are quartic polynomial signs on
-`[11/5, 13/5]` and `[13/5, 3]`, proved from their positive Bernstein coefficients.
+The exact central offset `E₀ = e₀ - Φ` is replaced by `e₀` (`0 < E₀ ≤ e₀`), the bracket decreases in
+both increments and is concave along the edge `δu + δv = 1/35`, so it suffices to treat the vertices
+`A = (1/35, 0)` and `B = (29/2240, 1/64)`. At `B` the estimate
+`(c - b)S + bT ≤ (c - b)(S + T) + (2b - c)T` (resp. `≤ (7/3)c`) is used. The four resulting
+one-variable inequalities are quartic polynomial signs on `[11/5, 13/5]` and `[13/5, 3]`, proved
+from their positive Bernstein coefficients.
 
 ## Main API
 
@@ -105,7 +105,8 @@ private lemma ff_vB2 {U : ℝ} (h1 : 13 / 5 ≤ U) (h2 : U ≤ 3) :
     mul_nonneg (mul_nonneg hx hx) (mul_nonneg hx hy), mul_nonneg (mul_nonneg hx hx) (mul_nonneg hy hy),
     mul_nonneg (mul_nonneg hx hy) (mul_nonneg hy hy), mul_nonneg (mul_nonneg hy hy) (mul_nonneg hy hy)]
 
-/-- The bracket `Q(x, y) = 4(3/4 + x)(3/4 + y) - (e + Sx + Ty)²` of CONDITIONAL_NORM_BOUNDS (6). -/
+/-- The Gram bracket `Q(x, y) = 4(3/4 + x)(3/4 + y) - (e + Sx + Ty)²`, with `E` replaced by its
+upper bound `e + Sx + Ty`. -/
 private noncomputable def ffQ (e S T x y : ℝ) : ℝ := 4 * (3 / 4 + x) * (3 / 4 + y) - (e + S * x + T * y) ^ 2
 
 /-- The core of the conditional Casimir theorem, with `e = e₀`, `S`, `T` as free variables. -/
@@ -213,9 +214,9 @@ private lemma ff_cas_core {U e S T du dv E : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U <
   have := mul_le_mul_of_nonneg_left hq hK2.le
   linarith
 
-/-- **The conditional Casimir theorem** (HAND_FORWARD_CONDITIONAL_NORM_BOUNDS §2): on
-`11/5 ≤ U < 3`, `1 ≤ z ≤ w ≤ 4/3`, `z + w ≤ 5(U - 1)/3`, nonnegative norm increments with
-`δu + δv ≤ 1/35` and `δv ≤ 1/64`, and `E = e₀ - Φ + Sδu + Tδv`, the Casimir exceeds `23/125`. -/
+/-- **The conditional Casimir theorem**: on `11/5 ≤ U < 3`, `1 ≤ z ≤ w ≤ 4/3`, `z + w ≤ 5(U - 1)/3`,
+nonnegative norm increments with `δu + δv ≤ 1/35` and `δv ≤ 1/64`, and `E = e₀ - Φ + Sδu + Tδv`, the
+Casimir exceeds `23/125`. -/
 theorem ff_casimir_lower {U z w du dv E : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U < 3) (hz : 1 ≤ z)
     (hzw : z ≤ w) (hw : w ≤ 4 / 3) (hzw' : z + w ≤ 5 * (U - 1) / 3) (hdu : 0 ≤ du) (hdv : 0 ≤ dv)
     (hsum : du + dv ≤ 1 / 35) (hdv' : dv ≤ 1 / 64)

@@ -5,19 +5,17 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW2a
 /-!
 # Gate S4, hand proof W2 (b): the cleared numerator of `Ψ_a` in the shifted variables
 
-`archive/lighter-proofs/SHORT_CASIMIR_FIRST_DERIVATIVES.md` §§4-5. With `c = a - 1`, `h = x - 2`,
-`z = b - x`, the numerator `V = -7a²B²K²Ψ_a` of `S4HandW2a` is affine in the norm `u`
-(`hl46_w2_V_affine`, the `u`-coefficient `hl46W2V1` being `-7a²B²K²Ψ_au`), and
+With `c = a - 1`, `h = x - 2`, `z = b - x`, the numerator `V = -7a²B²K²Ψ_a` of `S4HandW2a` is affine
+in the norm `u` (`hl46_w2_V_affine`, the `u`-coefficient `hl46W2V1` being `-7a²B²K²Ψ_au`), and
 
-* `7a²B²K²Ψ_au = U₀ + U₁z + U₂z² + U₃z³` (note (12), first identity; `hl46_w2_V1_eq`),
+* `7a²B²K²Ψ_au = U₀ + U₁z + U₂z² + U₃z³` (`hl46_w2_V1_eq`),
 * `28a²B²K²Ψ_a(x, a, b, 3/4) = P_* + T₁z + T₂z² + T₃z³` (`hl46_w2_V_eq34`), whose
-  `z⁰` coefficient is the note's `P_*` of (14) (the value at `b = x`).
+  `z⁰` coefficient `P_*` is the value at `b = x`.
 
 Together: `-4V = (P_* + T₁z + T₂z² + T₃z³) + (4u - 3)(U₀ + U₁z + U₂z² + U₃z³)` (`hl46_w2_V_eq`).
 
-Route: the note reduces `b` to `x` by `Ψ_ab > 0` at `u = 3/4` (its `J`-identity in (12)); here the
-`z`-coefficients `T₁, T₂, T₃` of the same numerator at `u = 3/4` are displayed instead and shown
-positive by the note's monomial rule (`S4HandW2c`), which makes the beta derivative unnecessary.
+The dependence on `b` is controlled by the `z`-coefficients `T₁, T₂, T₃` of the same numerator at
+`u = 3/4`, which are displayed and shown positive by the monomial rule (`S4HandW2c`).
 The two identities are polynomial identities in `c, h, z` of total degree at most eight with 111
 and 108 monomials.
 
@@ -32,7 +30,7 @@ and 108 monomials.
 
 namespace SmoothedOctagon
 
-/-- `P_*(c, h)`, the printed polynomial of note (14) (the `z⁰` coefficient). -/
+/-- `P_*(c, h)`, the `z⁰` coefficient. -/
 noncomputable def hl46W2Ps (c h : ℝ) : ℝ :=
   -c ^ 6 * h - 2 * c ^ 6 + 2 * c ^ 5 * h ^ 2 + 2 * c ^ 5 * h - 4 * c ^ 5 + 3 * c ^ 4 * h ^ 4 +
     12 * c ^ 4 * h ^ 3 + 51 * c ^ 4 * h ^ 2 + 138 * c ^ 4 * h + 120 * c ^ 4 - 6 * c ^ 3 * h ^ 5 -
@@ -66,7 +64,7 @@ noncomputable def hl46W2T3 (c h : ℝ) : ℝ :=
     68 * c * h ^ 2 + 192 * c * h + 108 * c + 11 * h ^ 4 + 108 * h ^ 3 + 414 * h ^ 2 + 684 * h +
     399
 
-/-- `U₀(c, h)`, printed in note §4. -/
+/-- `U₀(c, h)`. -/
 noncomputable def hl46W2U0 (c h : ℝ) : ℝ :=
   4 * c ^ 5 * h ^ 2 + 20 * c ^ 5 * h + 24 * c ^ 5 - 3 * c ^ 4 * h ^ 4 - 37 * c ^ 4 * h ^ 3 -
     113 * c ^ 4 * h ^ 2 - 81 * c ^ 4 * h + 42 * c ^ 4 + 6 * c ^ 3 * h ^ 5 + 74 * c ^ 3 * h ^ 4 +
@@ -77,7 +75,7 @@ noncomputable def hl46W2U0 (c h : ℝ) : ℝ :=
     2 * h ^ 8 + 49 * h ^ 7 + 504 * h ^ 6 + 2853 * h ^ 5 + 9704 * h ^ 4 + 20219 * h ^ 3 +
     25032 * h ^ 2 + 16655 * h + 4470
 
-/-- `U₁(c, h)`, printed in note §4. -/
+/-- `U₁(c, h)`. -/
 noncomputable def hl46W2U1 (c h : ℝ) : ℝ :=
   4 * c ^ 5 * h + 8 * c ^ 5 - 3 * c ^ 4 * h ^ 3 - 41 * c ^ 4 * h ^ 2 - 91 * c ^ 4 * h - 39 * c ^ 4 +
     4 * c ^ 3 * h ^ 4 + 56 * c ^ 3 * h ^ 3 + 176 * c ^ 3 * h ^ 2 + 264 * c ^ 3 * h + 220 * c ^ 3 +
@@ -86,14 +84,14 @@ noncomputable def hl46W2U1 (c h : ℝ) : ℝ :=
     4744 * c * h ^ 3 + 10808 * c * h ^ 2 + 12266 * c * h + 5568 * c + 4 * h ^ 7 + 93 * h ^ 6 +
     876 * h ^ 5 + 4413 * h ^ 4 + 12884 * h ^ 3 + 21815 * h ^ 2 + 19868 * h + 7535
 
-/-- `U₂(c, h)`, printed in note §4. -/
+/-- `U₂(c, h)`. -/
 noncomputable def hl46W2U2 (c h : ℝ) : ℝ :=
   2 * c ^ 5 - 9 * c ^ 4 * h - 8 * c ^ 4 - 2 * c ^ 3 * h ^ 3 - 18 * c ^ 3 * h ^ 2 - 66 * c ^ 3 * h -
     54 * c ^ 3 + 6 * c ^ 2 * h ^ 4 + 98 * c ^ 2 * h ^ 3 + 424 * c ^ 2 * h ^ 2 + 706 * c ^ 2 * h +
     430 * c ^ 2 + 22 * c * h ^ 4 + 306 * c * h ^ 3 + 1294 * c * h ^ 2 + 2214 * c * h + 1364 * c +
     2 * h ^ 6 + 49 * h ^ 5 + 432 * h ^ 4 + 1900 * h ^ 3 + 4468 * h ^ 2 + 5363 * h + 2586
 
-/-- `U₃(c, h)`, printed in note §4. -/
+/-- `U₃(c, h)`. -/
 noncomputable def hl46W2U3 (c h : ℝ) : ℝ :=
   c ^ 4 - 8 * c ^ 3 * h - 12 * c ^ 3 + 14 * c ^ 2 * h ^ 2 + 36 * c ^ 2 * h + 22 * c ^ 2 +
     28 * c * h ^ 2 + 96 * c * h + 84 * c + 5 * h ^ 4 + 52 * h ^ 3 + 210 * h ^ 2 + 372 * h + 241
@@ -101,7 +99,7 @@ noncomputable def hl46W2U3 (c h : ℝ) : ℝ :=
 noncomputable def hl46W2Tz (c h z : ℝ) : ℝ :=
   hl46W2Ps c h + z * (hl46W2T1 c h + z * (hl46W2T2 c h + z * hl46W2T3 c h))
 
-/-- `U₀ + U₁z + U₂z² + U₃z³ = 7a²B²K²Ψ_au` (note (12)). -/
+/-- `U₀ + U₁z + U₂z² + U₃z³ = 7a²B²K²Ψ_au`. -/
 noncomputable def hl46W2Uz (c h z : ℝ) : ℝ :=
   hl46W2U0 c h + z * (hl46W2U1 c h + z * (hl46W2U2 c h + z * hl46W2U3 c h))
 
@@ -130,7 +128,7 @@ theorem hl46_w2_V_eq34 (c h z : ℝ) :
     hl46W2T3
   ring
 
-/-- Note (12), first identity: `-V_u = 7a²B²K²Ψ_au = U₀ + U₁z + U₂z² + U₃z³`. -/
+/-- `-V_u = 7a²B²K²Ψ_au = U₀ + U₁z + U₂z² + U₃z³`. -/
 theorem hl46_w2_V1_eq (c h z : ℝ) :
     hl46W2V1 (2 + h) (2 + h + z) (1 + c) = -hl46W2Uz c h z := by
   unfold hl46W2V1 hsDg hl46W2Uz hl46W2U0 hl46W2U1 hl46W2U2 hl46W2U3

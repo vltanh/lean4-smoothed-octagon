@@ -9,26 +9,25 @@ public import Mathlib.Tactic.Ring
 /-!
 # Hand proof of the smaller-short case, gate S0: elementary sign tools
 
-Tools for the hand arguments of `archive/lighter-proofs/SHORT_DURATION_CENTRAL_TAU_TWO.md`,
-`SHORT_DURATION_CENTRAL_UPPER_FACES.md`, `SHORT_DURATION_CENTRAL_LOWER_FACE.md` and
-`SHORT_SCALE_OUTER_LARGE_RATIO.md` (PR #2 rows S1.3, S1.4).
+Tools for the sign arguments of gate S0: the central-face tests at `τ = 2`, `τ = T` and
+`τ = 8T/9`, the lower face `β = x`, and the outer large-ratio tests.
 
 * **Beta convexity** (`hl0_chord`): a function `k y² + l y + m + r/(y - p) + s/(y - q)` with
   `k ≥ 0`, `s ≥ 0` and `k(b₀ - p)³ + r ≥ 0` lies below its chord on `[b₀, b₁]` (both poles to the
-  left); this is the residue argument of the notes (strict convexity reduces `β` to its two ends).
+  left); this is a residue argument, and the convexity reduces `β` to its two ends.
 * **Coefficient lists** (polynomials written in Horner form, `lrhHorner`): sum `hl0Add`, scalar
   multiple `hl0Smul`, Taylor shift `hl0Shift` (`lrhHorner (hl0Shift m p) t = lrhHorner p (m + t)`),
   derivative `hl0D` (`= lrhHornerD`), and their bivariate versions (`hl0H2`: an outer polynomial in
   `X` whose coefficients are polynomials in `A`; `hl0Add2`, `hl0D2`, the restriction `hl0Eval` to a
   fixed `X`, and the restriction `hl0Slant` to a line `X = αA + β`).
-* **The elementary coefficient bound** (the notes' rule (6)): on `0 ≤ A ≤ H`, a polynomial is at least
+* **The elementary coefficient bound**: on `0 ≤ A ≤ H`, a polynomial is at least
   its constant term plus its negative terms evaluated at `H` (`hl0Low`, `hl0_low_le`); the bivariate
   version bounds every coefficient of `X` first (`hl0Low2`, `hl0_low2_le`). With the Taylor shift it
   gives the sign of a one-variable polynomial on any interval (`hl0_pos_of_shift`) and on a fixed
   cover of an interval (`hl0Cov`, `hl0_cov_pos`); for an unbounded outer variable, a positive
   constant and nonnegative higher bounded coefficients suffice (`hl0PosL`, `hl0_pos_unb`).
 * **Products** (`hl0Mul`, `hl0Mul2`, `hl0Smul2`): the expanded numerators are computed inside Lean
-  from their factored source formulas, never printed.
+  from their factored formulas, never printed.
 * **Coordinate changes** of bivariate lists: outer Taylor shift `hl0Shift2`, inner shift
   (`hl0_H2_shift_inner`), the shear `X = Y + αA` (`hl0Shear`), and the inner derivative
   (`hl0_hasDerivAt2_inner`); monotonicity in either variable (`hl0_mono_X`, `hl0_mono_A`).
@@ -164,7 +163,7 @@ noncomputable def hl0Neg (H : ℝ) : List ℝ → ℝ
   | [] => 0
   | c :: p => min c 0 + H * hl0Neg H p
 
-/-- **The coefficient bound** (rule (6) of the notes): `c₀ + ∑_{k ≥ 1} min(cₖ, 0) Hᵏ`. -/
+/-- **The coefficient bound** `c₀ + ∑_{k ≥ 1} min(cₖ, 0) Hᵏ`. -/
 noncomputable def hl0Low (H : ℝ) : List ℝ → ℝ
   | [] => 0
   | c :: p => c + H * hl0Neg H p

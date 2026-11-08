@@ -7,8 +7,7 @@ public import Mathlib.Analysis.Complex.ExponentialBounds
 /-!
 # Case M2, smaller-short side: the window point satisfies every residual of the cover
 
-`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION` §§2-6 and inventory E1 §3.1 ("necessity" column):
-for the data `D : M2Short` of a smaller-short window, the point `D.ss_pt` lies in the root box `B₀`
+For the data `D : M2Short` of a smaller-short window, the point `D.ss_pt` lies in the root box `B₀`
 (`ss_box_*`) and every residual `f₀, …, f₂₇` is nonnegative (`ss_f0`, …, `ss_f27`).
 
 ## Main API
@@ -44,7 +43,7 @@ private lemma ss_octagonCost_lt : octagonCost < 2501 / 800 := by
     mul_le_mul_of_nonneg_right h12.le hN
   nlinarith
 
-/-- **The centred angle** (SIX_VARIABLE (19)): `arctan(√3 Y/X) = π/6 + arctan s`,
+/-- **The centred angle**: `arctan(√3 Y/X) = π/6 + arctan s`,
 `s = (3Y - X)/(√3(X + Y))`, for `X, Y > 0`. -/
 theorem ss_arctan_split {X Y : ℝ} (hX : 0 < X) (hY : 0 < Y) :
     arctan (√3 * Y / X) = π / 6 + arctan ((3 * Y - X) / (√3 * (X + Y))) := by
@@ -86,7 +85,7 @@ theorem ss_box_v : 3 / 4 ≤ D.v ∧ D.v ≤ 1 := by
   have := D.ss_t_le
   nlinarith
 
-/-- `E² < 13/4 - 16(17/20)²(27/256) < (23/16)²` (SIX_VARIABLE (5)). -/
+/-- `E² < 13/4 - 16(17/20)²(27/256) < (23/16)²`. -/
 theorem ss_E_sq : D.E ^ 2 < (23 / 16) ^ 2 := by
   have hρ := D.ss_box_rho
   have hv := D.ss_box_v

@@ -5,10 +5,9 @@ public import SmoothedOctagon.Exclusion.Mixed.Frames
 /-!
 # Case M2: one-arc transports of the multiplier, entry by entry
 
-`MIXED_SMALLER_TURN_CONTINUATION` (10), (16) and inventory E2 §1.4. The transport
-`M (i + 1) = A_i⁻¹ (M i) A_i` of the covector calculus, with `A_i = T₀(q) R⁻¹` after a forward
-switch and `A_i = T₀(q) R` after a reverse one (triangular `R = [[0, 1], [-1, 1]]`), written out
-entry by entry.
+The transport `M (i + 1) = A_i⁻¹ (M i) A_i` of the covector calculus, with `A_i = T₀(q) R⁻¹` after
+a forward switch and `A_i = T₀(q) R` after a reverse one (triangular `R = [[0, 1], [-1, 1]]`),
+written out entry by entry.
 
 ## Main API
 

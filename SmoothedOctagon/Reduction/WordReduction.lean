@@ -5,17 +5,15 @@ public import SmoothedOctagon.Reduction.Defs
 /-!
 # Reduced vertex words: merging, and rebasing at a genuine switch
 
-VERTEX_WORD_REDUCTION §2 and SWITCHING_WORDS (inventory A2, §1.6 "word", §2.1, §2.9 (2)).
-A control that is a.e. a concatenation of `n` vertex pieces on `[0, T]` has, after extending it
-by the twist (labels go up by one per period), deleting nothing (all pieces have positive length)
-and merging equal neighbours, also across the twisted seam, a cyclically reduced word with
-`1 ≤ N ≤ n` letters per period. Rebased at one of its genuine switches, the control has a
-`VertexRepresentation` with `N` pieces.
+A control that is a.e. a concatenation of `n` vertex pieces on `[0, T]` has, after extending it by
+the twist (labels go up by one per period), deleting nothing (all pieces have positive length) and
+merging equal neighbours, also across the twisted seam, a cyclically reduced word with `1 ≤ N ≤ n`
+letters per period. Rebased at one of its genuine switches, the control has a `VertexRepresentation`
+with `N` pieces.
 
-Route: no optimality and no PMP is used. In particular the existence of a genuine switch does not
-need SWITCHING_WORDS (fixed-edge exclusion): the twist adds `+1` to the labels per period, so the
-increments `i_{k+1} - i_k` of one period sum to `1 ≠ 0` in `ℤ/3`, and some increment is nonzero.
-Nor is `N ≥ 4` (VERTEX_WORD_REDUCTION, Theorem 3) needed by the target.
+No optimality and no PMP is used. A genuine switch exists by the twist alone: the twist adds `+1`
+to the labels per period, so the increments `i_{k+1} - i_k` of one period sum to `1 ≠ 0` in `ℤ/3`,
+and some increment is nonzero.
 
 Main API:
 
@@ -240,11 +238,10 @@ private theorem exists_vertexRepresentation {T : ℝ} {w : ℝ → Fin 3 → ℝ
     rw [e1, e2, e3]
     exact hae k hkN'
 
-/-- **Merging and rebasing at a genuine switch** (VERTEX_WORD_REDUCTION §2; inventory A2, §2.9 (2)).
-If on `[0, T]` the control is a.e. a concatenation of `n` vertex pieces, there is a time
-`s ∈ [0, T)` such that the rebased control `û(t) = v(s + t)` (twisted extension `v`) has a vertex
-representation (distinct neighbouring labels, also across the twisted seam) with at most `n`
-pieces.
+/-- **Merging and rebasing at a genuine switch**. If on `[0, T]` the control is a.e. a concatenation
+of `n` vertex pieces, there is a time `s ∈ [0, T)` such that the rebased control `û(t) = v(s + t)`
+(twisted extension `v`) has a vertex representation (distinct neighbouring labels, also across the
+twisted seam) with at most `n` pieces.
 
 Proof outline: extend the pieces to a bi-infinite sequence by the twist, `τ_{k+n} = τ_k + T`,
 `l_{k+n} = l_k + 1`. The boundaries `τ_k` with `l_k ≠ l_{k-1}` (genuine switches) form a set that
@@ -254,7 +251,7 @@ the common labels of the merged runs; there are `N ≤ n` of them per period, ne
 `û = e_{label}` a.e. on each merged piece (a finite union of the original pieces up to their
 endpoints, a null set).
 
-Route: the genuine switch `s = τ_{k₀}` is chosen first, with `k₀ < n`; the `n` pieces of
+Concretely, the genuine switch `s = τ_{k₀}` is chosen first, with `k₀ < n`; the `n` pieces of
 `[s, s + T]` are merged by a left-to-right scan that keeps the first and the last label, so the
 seam condition of the reduced word is exactly the genuine switch at `s`; the reduced word is then
 extended to `ℤ` by the twist. -/

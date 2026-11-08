@@ -5,12 +5,12 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW2b
 /-!
 # Gate S4, hand proof W2 (c): positivity of the coefficients by the monomial rule
 
-`archive/lighter-proofs/SHORT_CASIMIR_FIRST_DERIVATIVES.md` §3 (the convention), §4 (`U₀, …, U₃`)
-and §5 (`P_*`, `L_*(h) > 19`). On `0 ≤ c ≤ 3/19`, `0 ≤ h ≤ 1/6`: discard the positive terms
+The polynomials are `U₀, …, U₃` and `P_*` of `S4HandW2b`. On `0 ≤ c ≤ 3/19`, `0 ≤ h ≤ 1/6`:
+discard the positive terms
 containing `c`, replace `c^i` by `(3/19)^i` in the negative ones (`hl46_w2_cm`), then discard the
 nonconstant positive terms of the resulting polynomial in `h` and use `h^j ≤ (1/6)^j` in its
 negative ones (`hl46_w2_hm`). Each step is one `linarith` over the monomials of one displayed
-polynomial. The same rule proves `T₁, T₂, T₃ > 0` (route of `S4HandW2b`).
+polynomial. The same rule proves `T₁, T₂, T₃ > 0` (used in `S4HandW2b`).
 
 ## Main API
 
@@ -36,7 +36,7 @@ theorem hl46_w2_cp {c h : ℝ} (hc : 0 ≤ c) (hh : 0 ≤ h) (i j : ℕ) : 0 ≤
 theorem hl46_w2_hm {h : ℝ} (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) (j : ℕ) : h ^ j ≤ (1 / 6) ^ j :=
   pow_le_pow_left₀ hh hh' j
 
-/-- `P_*(c, h) > 19` (note §5, `L_*(h) > 19`). -/
+/-- `P_*(c, h) > 19` (the lower polynomial in `h` after the first step exceeds `19`). -/
 theorem hl46_w2_Ps_pos {c h : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
     19 < hl46W2Ps c h := by
   have cm := hl46_w2_cm hc hc' hh
@@ -85,7 +85,7 @@ theorem hl46_w2_T3_pos {c h : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0 �
   linarith [cm 4 0, cm 3 1, cm 3 0, cp 2 2, cp 2 1, cm 2 0, cp 1 2, cp 1 1, cp 1 0, hp 1, hm 1,
     hp 2, hm 2, hp 3, hm 3, hp 4, hm 4]
 
-/-- `U₀(c, h) > 0` (note §4, `L_{U0}(h) > 4469`). -/
+/-- `U₀(c, h) > 0` (the lower polynomial in `h` exceeds `4469`). -/
 theorem hl46_w2_U0_pos {c h : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
     0 < hl46W2U0 c h := by
   have cm := hl46_w2_cm hc hc' hh
@@ -98,7 +98,7 @@ theorem hl46_w2_U0_pos {c h : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0 �
     cp 1 7, cp 1 6, cp 1 5, cp 1 4, cp 1 3, cp 1 2, cp 1 1, cp 1 0, hp 1, hm 1, hp 2, hm 2, hp 3,
     hm 3, hp 4, hm 4, hp 5, hm 5, hp 6, hm 6, hp 7, hm 7, hp 8, hm 8]
 
-/-- `U₁(c, h) > 0` (note §4, `L_{U1}(h) > 7533`). -/
+/-- `U₁(c, h) > 0` (the lower polynomial in `h` exceeds `7533`). -/
 theorem hl46_w2_U1_pos {c h : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
     0 < hl46W2U1 c h := by
   have cm := hl46_w2_cm hc hc' hh
@@ -111,7 +111,7 @@ theorem hl46_w2_U1_pos {c h : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0 �
     cp 1 2, cp 1 1, cp 1 0, hp 1, hm 1, hp 2, hm 2, hp 3, hm 3, hp 4, hm 4, hp 5, hm 5, hp 6,
     hm 6, hp 7, hm 7]
 
-/-- `U₂(c, h) > 0` (note §4, `L_{U2}(h) > 2584`). -/
+/-- `U₂(c, h) > 0` (the lower polynomial in `h` exceeds `2584`). -/
 theorem hl46_w2_U2_pos {c h : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
     0 < hl46W2U2 c h := by
   have cm := hl46_w2_cm hc hc' hh
@@ -123,7 +123,7 @@ theorem hl46_w2_U2_pos {c h : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0 �
     cp 2 1, cp 2 0, cp 1 4, cp 1 3, cp 1 2, cp 1 1, cp 1 0, hp 1, hm 1, hp 2, hm 2, hp 3, hm 3,
     hp 4, hm 4, hp 5, hm 5, hp 6, hm 6]
 
-/-- `U₃(c, h) > 0` (note §4, `L_{U3}(h) > 239`). -/
+/-- `U₃(c, h) > 0` (the lower polynomial in `h` exceeds `239`). -/
 theorem hl46_w2_U3_pos {c h : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
     0 < hl46W2U3 c h := by
   have cm := hl46_w2_cm hc hc' hh
@@ -147,7 +147,7 @@ theorem hl46_w2_Tz_pos {c h z : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0
   have := mul_nonneg hz e1
   linarith
 
-/-- `U₀ + U₁z + U₂z² + U₃z³ ≥ 0` for `z ≥ 0` (note (12): `Ψ_au > 0`). -/
+/-- `U₀ + U₁z + U₂z² + U₃z³ ≥ 0` for `z ≥ 0`, hence `Ψ_au ≥ 0`. -/
 theorem hl46_w2_Uz_nonneg {c h z : ℝ} (hc : 0 ≤ c) (hc' : c ≤ 3 / 19) (hh : 0 ≤ h)
     (hh' : h ≤ 1 / 6) (hz : 0 ≤ z) : 0 ≤ hl46W2Uz c h z := by
   have h0 := hl46_w2_U0_pos hc hc' hh hh'

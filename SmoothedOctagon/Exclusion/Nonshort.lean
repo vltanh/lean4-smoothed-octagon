@@ -8,15 +8,13 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Assembly
 /-!
 # Case M2: no competitive mixed period with a nonshort forward run
 
-`MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION`. Take the global minimum of the active margins; in class M2
-it sits at the centre of a reverse run (`MIXED_GLOBAL_MINIMUM_STRUCTURE`,
-`MIXED_GLOBAL_SMALL_FORWARD_MINIMUM`). Choose the smaller adjacent turn. If the forward run on that
-side is short, `MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION` applies; otherwise the next switch is forward
-or reverse (`MIXED_SMALLER_TURN_CONTINUATION`), and both alternatives are excluded after the scalar
-boundary comparison (`MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION`,
-`MIXED_NONSHORT_LOW_A_BOUNDARY_EXCLUSION`, `MIXED_NONSHORT_FORWARD_BOUNDARY_REDUCTION`,
-`MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION`, with the hand corner
-`MIXED_NONSHORT_SMALL_PARAMETER_EXCLUSION`). Every scalar exclusion is proved by hand.
+Take the global minimum of the active margins; in class M2 it sits at the centre of a reverse run
+(by the strict centre minimum of reverse runs and the small-forward-minimum theorem). Choose the
+smaller adjacent turn. If the forward run on that side is short, the smaller-short window is
+excluded directly; otherwise the next switch is forward or reverse, and both alternatives are
+excluded by scalar inequalities on the window: a comparison with the boundary of the admissible
+region, then separate exclusions of the reverse successor, of the forward successor at low scale
+(`a ≤ 1/2`) and at higher scale, and of a small-parameter corner.
 
 The proof (modules `Exclusion/Mixed/*`):
 
@@ -24,11 +22,9 @@ The proof (modules `Exclusion/Mixed/*`):
 2. `m2_reflect` (`Mixed/Reflection`): if the incoming turn is the smaller one, pass to the
    reflected, time-reversed period, in which it is outgoing (`m2_reflect_classM2`).
 3. `m2_window`, `m2_short_window` (`Mixed/Extraction`): the scalar window of the chosen turn.
-4. `m2_nonshort_scalar` (`Mixed/NonshortScalar`): the reverse successor by hand
-   (`m2_reverse_hand`, replacing Cert-REV), the forward successor by the hand low-scale theorem
-   (`m2_lowScale_hand`, replacing Cert-LOWA) and the hand forward theorem (`m2_forward_hand`,
-   replacing Cert-FWD0, Cert-FWD1); `m2_short_exclusion_hand` (`Mixed/ShortHand/Assembly`): the
-   smaller-short window by the hand gates S0-S6, replacing its interval cover.
+4. `m2_nonshort_scalar` (`Mixed/NonshortScalar`): the reverse successor by `m2_reverse_hand`, the
+   forward successor by `m2_forward_hand`; `m2_short_exclusion_hand` (`Mixed/ShortHand/Assembly`):
+   the smaller-short window by the steps S0-S6 of `Mixed/ShortHand`.
 -/
 
 @[expose] public section
@@ -51,9 +47,8 @@ private theorem m2_oriented (P : NormalPeriod)
   · obtain ⟨D, -⟩ := m2_short_window P hc hK h hN hm h2 h1 h0 h3 hcb h4
     exact m2_short_exclusion_hand D
 
-/-- **Case M2** (`MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION`). No competitive normal vertex period with
-state in `𝔥**` and at least six pieces has mixed signs, every reverse run of length two, and a
-forward run of length at least two. -/
+/-- **Case M2.** No competitive normal vertex period with state in `𝔥**` and at least six pieces has
+mixed signs, every reverse run of length two, and a forward run of length at least two. -/
 theorem nonshort_exclusion (P : NormalPeriod)
     (hc : P.IsCompetitive) (hK : P.InCompactDomain) (h : P.rep.ClassM2) (hN : 6 ≤ P.N) :
     False := by

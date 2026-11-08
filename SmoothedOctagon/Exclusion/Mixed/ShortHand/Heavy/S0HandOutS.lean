@@ -5,18 +5,18 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0HandOut
 /-!
 # Hand proof of the smaller-short case, gate S0: the outer face, beta convexity on the strip
 
-`archive/lighter-proofs/SHORT_SCALE_OUTER_LARGE_RATIO.md` §4. On the strip
+On the strip
 `(22x + 20)/55 ≤ α ≤ (2x + 3)/5` with `u = û = u_∞ + J/(β - 1)`, each outer test is
 `kη² + lη + m + r/η + s/(η + α + 1)` in `η = β - 1` (`hl0_pfo_g`, `hl0_pfo_2`): `k = q₀, q₀, 5q₀`,
 `r = J·U_i` (`U_i` the coefficient of `u` at `β = 1`) and `s = R_i` (`R_T = α(7w₋ - 6)`,
-`R₈ = (8/9)R_T + α/9`, `R₂ = α`). The note's (20), `U_T > -5/2`, `U₂ > 0`, `R_T > x²/3`
-(`hl0_strip_rT`, `hl0_strip_r2`, `hl0_strip_sT`), give the convexity (21) through `hl0_chord2`, with
+`R₈ = (8/9)R_T + α/9`, `R₂ = α`). The residue signs `U_T > -5/2`, `U₂ > 0`, `R_T > x²/3`
+(`hl0_strip_rT`, `hl0_strip_r2`, `hl0_strip_sT`) give the convexity margin
+`k + min(r, 0)/(β₀ - 1)³ + s/B₁³ ≥ 0` (`hl0_strip_hk`) of `hl0_chord2`, with
 `β - 1 ≥ x - 1` and `B ≤ 2x` on the strip (`hl0_strip_chord_T`, `_8`, `_2`).
 
-Route: the three residue signs are proved by the coefficient bound on the strip coordinates
+The three residue signs are proved by the coefficient bound on the strip coordinates
 `X = x - 12/5`, `A = α - (22x + 20)/55` (`hl0QTf`, `hl0Q2f`, `hl0SRf`, their lists computed in
-Lean; one split at `x = 57/10`)
-instead of the note's (22)-(26), and `R_T > x²/3` directly at the continued value `û(-α)`.
+Lean; one split at `x = 57/10`), and `R_T > x²/3` directly at the continued value `û(-α)`.
 
 ## Main API
 
@@ -199,15 +199,15 @@ theorem hl0_O2s_pf {x a b : ℝ} (hx : 1 < x) (ha : 0 < a) (hb : 1 < b) :
   unfold hl0ok2 hl0ol2 hl0om2 hl0or2
   ring
 
-/-! ### The residue signs on the strip (note (20)) -/
+/-! ### The residue signs on the strip -/
 
 /-- `98α⁴(U_T + 5/2) = (14αc + c²)(c² - Q₀) + 98α³c - 14α²(2c² - Q₀) + 245α⁴`, `c = α + 1`,
-`Q₀ = M₀S` (the note's (18), (22)). -/
+`Q₀ = M₀S`. -/
 noncomputable def hl0QTf (x a : ℝ) : ℝ :=
   (14 * a * (a + 1) + (a + 1) ^ 2) * ((a + 1) ^ 2 - (6 * a ^ 2 + 1) * (x + 1)) + 98 * a ^ 3 * (a + 1) -
     14 * a ^ 2 * (2 * (a + 1) ^ 2 - (6 * a ^ 2 + 1) * (x + 1)) + 245 * a ^ 4
 
-/-- `98α⁴U₂ = 5c²(c² - Q₀) + 98α³c - 14α²(2c² - Q₀)` (the note's (18), (22)). -/
+/-- `98α⁴U₂ = 5c²(c² - Q₀) + 98α³c - 14α²(2c² - Q₀)`. -/
 noncomputable def hl0Q2f (x a : ℝ) : ℝ :=
   5 * (a + 1) ^ 2 * ((a + 1) ^ 2 - (6 * a ^ 2 + 1) * (x + 1)) + 98 * a ^ 3 * (a + 1) -
     14 * a ^ 2 * (2 * (a + 1) ^ 2 - (6 * a ^ 2 + 1) * (x + 1))
@@ -381,7 +381,7 @@ theorem hl0_osd8 (x a : ℝ) (ha : a ≠ 0) : hl0osd x a (56 / 9) = 8 / 9 * hl0o
 
 /-! ### The chord bounds on the strip -/
 
-/-- The convexity margin (21): `k + min(r, 0)/(β₀ - 1)³ + s/B₁³ ≥ 0` once `r ≥ -(5/2)J`,
+/-- The convexity margin: `k + min(r, 0)/(β₀ - 1)³ + s/B₁³ ≥ 0` once `r ≥ -(5/2)J`,
 `s ≥ σ ≥ 0`, `β₀ - 1 ≥ x - 1`, `B₁ ≤ 2x` and `σ/(2x)³ ≥ (5/2)J/(x - 1)³`. -/
 theorem hl0_strip_hk {k r s J σ x b₀ B₁ : ℝ} (hk : 0 ≤ k) (hJ : 0 ≤ J) (hx1 : 0 < x - 1)
     (hb₀ : x - 1 ≤ b₀) (hB₁ : 0 < B₁) (hB₁x : B₁ ≤ 2 * x) (hr : -(5 / 2) * J ≤ r) (hs : σ ≤ s)
@@ -412,7 +412,8 @@ theorem hl0_J_ratio {x : ℝ} (hx : 1 < x) :
   have : (x + 1) * (35 * x + 13) ≠ 0 := by nlinarith
   unfold hl0J; field_simp
 
-/-- **Beta convexity on the strip, `τ = T`** (note (21)). -/
+/-- **Beta convexity on the strip, `τ = T`**: the test is at most the larger of its values at
+`β = x + (3/5)(α - 1)` and at `β₁` (`hl0_chord2`). -/
 theorem hl0_strip_chord_T {x a b b₁ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (ha : (22 * x + 20) / 55 ≤ a) (ham : a ≤ (2 * x + 3) / 5) (hb : x + 3 / 5 * (a - 1) ≤ b)
     (hbb : b ≤ b₁) (hb₁ : b₁ + a ≤ 2 * x) :
@@ -441,7 +442,8 @@ theorem hl0_strip_chord_T {x a b b₁ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     field_simp; ring
   linarith
 
-/-- **Beta convexity on the strip, `τ = 8T/9`** (note (21)). -/
+/-- **Beta convexity on the strip, `τ = 8T/9`**: the test is at most the larger of its values at
+`β = x + (3/5)(α - 1)` and at `β₁` (`hl0_chord2`). -/
 theorem hl0_strip_chord_8 {x a b b₁ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (ha : (22 * x + 20) / 55 ≤ a) (ham : a ≤ (2 * x + 3) / 5) (hb : x + 3 / 5 * (a - 1) ≤ b)
     (hbb : b ≤ b₁) (hb₁ : b₁ + a ≤ 2 * x) :
@@ -471,7 +473,8 @@ theorem hl0_strip_chord_8 {x a b b₁ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     field_simp; ring
   linarith
 
-/-- **Beta convexity on the strip, `τ = 2`** (note (21)). -/
+/-- **Beta convexity on the strip, `τ = 2`**: the test is at most the larger of its values at
+`β = x + (3/5)(α - 1)` and at `β₁` (`hl0_chord2`). -/
 theorem hl0_strip_chord_2 {x a b b₁ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (ha : (22 * x + 20) / 55 ≤ a) (ham : a ≤ (2 * x + 3) / 5) (hb : x + 3 / 5 * (a - 1) ≤ b)
     (hbb : b ≤ b₁) :
@@ -495,7 +498,7 @@ theorem hl0_horner_zero (l : List ℝ) : lrhHorner l 0 = hl0Low 0 l := by
   | nil => simp [lrhHorner, hl0Low]
   | cons c p => simp [lrhHorner, hl0Low]
 
-/-- **A strip face** (note §5): a positive `A`-derivative on the rectangle `0 ≤ X ≤ W`,
+/-- **A strip face**: a positive `A`-derivative on the rectangle `0 ≤ X ≤ W`,
 `0 ≤ A ≤ 13/55` (`A = α - α_f(x)`) and a positive value on the lower edge `A = 0` (`α = α_f(x)`)
 give positivity. -/
 theorem hl0_strip_face (P : List (List ℝ)) {W : ℝ} (hd : 0 < hl0Low2 (13 / 55) W (P.map hl0D))

@@ -5,8 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandC4
 /-!
 # Gate S1 by hand: the central low-ratio face
 
-`hs1_central_face_proof` proves the leaf `hs1_central_face` (`LOW_RATIO_CENTRAL_HAND_SIGN` (6);
-inventory HS-S01 D-R15) by the hand argument of `archive/lighter-proofs/SHORT_CENTRAL_COMPLETE.md`.
+`hs1_central_face_proof` proves the leaf `hs1_central_face`.
 The duration reduction `hh1c_face_red` leaves `F₀`, `F₁` (cubic majorant). On the central face
 (`x ≥ 41/25`, `1 ≤ α ≤ α_c = √(x(x + 2)/6)`, strip `x + (α - 1)/2 ≤ β ≤ β₊ = x + (10/13)(α - 1)`,
 `3/4 ≤ u ≤ u_ℓ(x, β) ≤ 19/25`):
@@ -14,9 +13,9 @@ The duration reduction `hh1c_face_red` leaves `F₀`, `F₁` (cubic majorant). O
 * `F₁`: the norm rises to `19/25`, `β` to `β₊` (`S1HandC1`, `S1HandC2`), `F₁` is concave in `α`
   along `β₊` (`S1HandC4`), and its two ends are the univariate face `α = 1` and the cap `α = α_c`;
 * `F₀`: the norm rises to the ceiling `u_ℓ(x, β)`, `β` to `β₊` along it, and `α` to the cap along
-  `(β₊, u_ℓ)` (`hl1c_F0_astep_ul`, `SHORT_CENTRAL_SHAPE_F0` (1));
+  `(β₊, u_ℓ)` (`hl1c_F0_astep_ul`);
 * at the cap `K = 7α²` the central and outer transports coincide (`hl1c_cap`), so the outer
-  branch-B signs `hl1o_B_F0`, `hl1o_B_F1` close both tests (`SHORT_CENTRAL_COMPLETE` §2).
+  branch-B signs `hl1o_B_F0`, `hl1o_B_F1` close both tests.
 
 ## Main API
 
@@ -97,7 +96,7 @@ theorem hl1c_fa_id {x t u : ℝ} (hx : 41 / 25 ≤ x) (ht : 1 ≤ t) (hu : u = 3
     push Not at h
     exact absurd (hreg h.1) (not_lt.mpr h.2)
 
-/-- The slope of the first test along `β₊` at a fixed norm (`SHORT_CENTRAL_SHAPE_F0` (6)). -/
+/-- The slope of the first test along `β₊` at a fixed norm. -/
 theorem hl1c_fa_ge {x t u : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (ht : 1 ≤ t)
     (htU : t ≤ (1013 * x + 676) / 2340) (hu0 : 3 / 4 ≤ u) (hu1 : u ≤ 19 / 25) :
     1 / 40 + 2 / 625 ≤ hh1cR2a x t (x + 10 / 13 * (t - 1)) u +
@@ -168,7 +167,7 @@ theorem hl1c_F0_astep {x a1 a2 u : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (h1
       nlinarith)
   linarith
 
-/-- **`α ↦ F₀` along `(β₊, u_ℓ(x, β₊))` decreases** to the cap (`SHORT_CENTRAL_SHAPE_F0` (1)). -/
+/-- **`α ↦ F₀` along `(β₊, u_ℓ(x, β₊))` decreases** to the cap. -/
 theorem hl1c_F0_astep_ul {x a1 a2 : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (h1 : 1 ≤ a1)
     (h12 : a1 ≤ a2) (h2U : a2 ≤ (1013 * x + 676) / 2340) (h2 : a2 ≤ 7 / 6) :
     hh1cF0 x a2 (x + 10 / 13 * (a2 - 1)) (hsUl x (x + 10 / 13 * (a2 - 1))) ≤

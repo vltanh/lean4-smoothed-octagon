@@ -7,12 +7,12 @@ public import Mathlib.Analysis.Convex.Deriv
 /-!
 # Case M2 by hand: the reverse order face `k = 2t + x`
 
-`MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION`, in the strengthened form of
-`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §1: for `0 < t < 2/5`, `x > 1/4`, `k = 2t + x ≥ 1`,
-`x < 7/3 - (10/3)t`, the exact incoming secant `v` and `1 < q ≤ W/k`, `N(k) > 0`. On this face
-`B = Wk` and `R(q) = α + βq + γ/q - p log q` is concave on `[1, W/k]` (`nh_concave_min`), so it
-suffices to check the two endpoints: `R(1) > 0` by the exact identity (5) and the polynomial (7),
-`R(W/k) > 0` by the rational relaxation (13) and the certificate `nhOP_pos_a`, `nhOP_pos_b`.
+For `0 < t < 2/5`, `x > 1/4`, `k = 2t + x ≥ 1`, `x < 7/3 - (10/3)t`, the exact incoming secant `v`
+and `1 < q ≤ W/k`, `N(k) > 0`. On this face `B = Wk` and `R(q) = α + βq + γ/q - p log q` is
+concave on `[1, W/k]` (`nh_concave_min`), so it suffices to check the two endpoints: `R(1) > 0`
+from `v < v̄` and an exact identity whose cubic factor is positive (`nh_order_P7_pos`), and
+`R(W/k) > 0` from the rational relaxations `v < v̄`, `log q < L₊(q)` and the certificate
+`nhOP_pos_a`, `nhOP_pos_b`.
 The bound `q ≤ W/k` (from the incoming floor and the swapped secant order) is a hypothesis here.
 
 ## Main API
@@ -82,8 +82,8 @@ theorem nh_concave_min {α β γ p q0 q1 q : ℝ} (hq0 : 0 < q0) (hp : 0 ≤ p)
   exact hconc.min_le_of_mem_Icc (Set.left_mem_Icc.2 (hq.1.trans hq.2))
     (Set.right_mem_Icc.2 (hq.1.trans hq.2)) hq
 
-/-- The polynomial (7) of `MIXED_NONSHORT_REVERSE_ORDER_FACE_REDUCTION`, positive for
-`0 < t < 1/2`, `0 < x < 5/2`. -/
+/-- The cubic factor of the order-face residual at `q = 1`, positive for `0 < x < 5/2` and every
+`t`. -/
 theorem nh_order_P7_pos {t x : ℝ} (hx : 0 < x) (hx2 : x < 5 / 2) :
     0 < t * (3 * t - 1) * x ^ 3 + (18 * t ^ 2 - 15 * t + 5) * x ^ 2
       + (36 * t ^ 2 - 40 * t + 14) * x + (24 * t ^ 2 - 32 * t + 12) := by
@@ -115,7 +115,7 @@ theorem nh_order_R_form {t x q v L : ℝ} (ht : 0 < t) (hx : 0 < x) (_hk : 0 < 2
   field_simp
   ring
 
-/-- **The order-face lemma** (`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §1). -/
+/-- **The order-face lemma**: on the face `k = 2t + x`, `N > 0` for `1 < q ≤ W/k`. -/
 theorem nh_order_face {t x q v : ℝ} (ht : 0 < t) (ht2 : t < 2 / 5) (hx : 1 / 4 < x)
     (hk : 1 ≤ 2 * t + x) (hdur : x < 7 / 3 - 10 / 3 * t) (hv : v = nhSecN t x) (hq : 1 < q)
     (hqk : q ≤ (1 + x) / (2 * t + x)) : 0 < nhN t x (2 * t + x) q v (Real.log q) := by

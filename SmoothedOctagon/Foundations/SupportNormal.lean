@@ -19,8 +19,6 @@ without assuming a differentiable boundary parametrization.
 `exists_continuous_radial_support` provides the input for differentiating the radial gauge
 by squeezing its slopes between supporting linear functions. The final gauge-domination
 inequality is proved for every vector, including zero.
-
-Status: source-level Lean draft; compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

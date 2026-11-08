@@ -19,7 +19,6 @@ gives a `C¹` frame, including one-sided derivatives at the endpoints.
 
 All regularity is derived from `IsStateTrajectory`; no continuity or
 differentiability of its measurable control is added as a hypothesis.
-Compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

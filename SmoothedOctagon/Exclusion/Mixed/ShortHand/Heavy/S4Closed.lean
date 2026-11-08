@@ -3,9 +3,9 @@ module
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S4Defs
 
 /-!
-# Heavy leaf `hs4_floor_box`: closed forms of `Φ` and `Ψ` at the central scale
+# The leaf `hs4_floor_box`: closed forms of `Φ` and `Ψ` at the central scale
 
-`SMALL_SHAPE_CASIMIR_FLOOR` (10)-(12), inventory HS-S4 R18. At `q = q_c = α²/Σ`,
+At `q = q_c = α²/Σ`,
 `Σ = x(x + 2) + α²`, the scale `ρ(q_c) = 1/S²` (`S = 1 + x`), and with
 `P = S³(u - 1) + 3S - 1` (`= S²E_c`), `D = α² + 2αβ + 1 + 2x - 2βx`, `A = α + β`:
 

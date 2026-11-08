@@ -7,24 +7,22 @@ public import Mathlib.Analysis.Calculus.Deriv.MeanValue
 /-!
 # Case M2 by hand: the normalized incident-upper residual
 
-The normalized residual of `MIXED_NONSHORT_SHAPE_MONOTONICITY` and
-`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` (1): in the coordinates `t = a/T`, `x = (d - a)/T`,
-`k = K/T²`, `q = WZ/Q` (`T = a + c`), with `W = 1 + x`, `X = x + 2`, `p = t + x`, `Y = x X`,
-`B = k + 2tx + x²`, the residual `R = R_d(U*; b*)/T` and its positive multiple `N = tBqW R`.
-`N` is a polynomial in `t, x, k, q, v` and `L = log q` (`nhN`, checked against the notes' formula
-by exact symbolic expansion), affine in `k`, `v` and `L`.
+The normalized residual of a smaller-nonshort window: in the coordinates `t = a/T`,
+`x = (d - a)/T`, `k = K/T²`, `q = WZ/Q` (`T = a + c`), with `W = 1 + x`, `X = x + 2`, `p = t + x`,
+`Y = x X`, `B = k + 2tx + x²`, the residual `R = R_d(U*; b*)/T` and its positive multiple
+`N = tBqW R`. `N` is a polynomial in `t, x, k, q, v` and `L = log q` (`nhN`; its identity with the
+window residual is `nh_link_N` in `Hand/Link`), affine in `k`, `v` and `L`.
 
 ## Main API
 
 * `nhN t x k q v L`; its `v`-, `L`- and `k`-coefficients `nhNv`, `nhNL`, `nhA`, and the affine
   identities `nhN_sub_v`, `nhN_sub_L`, `nhN_sub_k`.
-* `nhA_pos`, `nhN_mono_k`: **shape monotonicity** (`MIXED_NONSHORT_SHAPE_MONOTONICITY`): `N` is
-  strictly increasing in `k` when `v ≤ U(t)` and `L < q - 1`.
+* `nhA_pos`, `nhN_mono_k`: **shape monotonicity**: `N` is strictly increasing in `k` when
+  `v ≤ U(t)` and `L < q - 1`.
 * `nhNv_nonpos`, `nhNL_nonpos`: the signs of the `v`- and `log q`-coefficients.
 * The rational relaxations: `nhVbar` (`v̄`), `nhLp` (`L₊`), `nhFl` (`F_ℓ`), `nhSecN` (the exact
   normalized secant); `nh_log_one_add_gt`, `nh_log_lt_Lp`, `nh_secN_lt_vbar`, `nh_m2F_gt_Fl`.
-* `nh_N_pos_of_relax`: the comparison `N ≥ N̄ ≥ N̄ - m (v̄ - F_ℓ)` used by every hand sign
-  (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` §2).
+* `nh_N_pos_of_relax`: the comparison `N ≥ N̄ ≥ N̄ - m (v̄ - F_ℓ)` used by every hand sign.
 * `nh_strictMonoOn_Ici`: strict monotonicity from a positive derivative on `[a, ∞)`.
 -/
 
@@ -32,8 +30,8 @@ by exact symbolic expansion), affine in `k`, `v` and `L`.
 
 namespace SmoothedOctagon
 
-/-- **The normalized residual** `N = tBqW R` (`MIXED_NONSHORT_SHAPE_MONOTONICITY`), as a polynomial
-in `t, x, k, q, v` and `L = log q`. -/
+/-- **The normalized residual** `N = tBqW R`, as a polynomial in `t, x, k, q, v` and
+`L = log q`. -/
 noncomputable def nhN (t x k q v L : ℝ) : ℝ :=
   -t * (t + x) ^ 2 * (1 + x) ^ 2
     - t * (2 * t ^ 3 * x + 5 * t ^ 2 * x ^ 2 - 2 * t ^ 2 * x - 2 * t ^ 2 + 2 * t * x ^ 3
@@ -59,7 +57,7 @@ noncomputable def nhNv (t x k q : ℝ) : ℝ :=
 noncomputable def nhNL (t x k q : ℝ) : ℝ :=
   -(q * t * (t + x) * (1 + x) * (k + 2 * t * x + x ^ 2))
 
-/-- The coefficient of `k` in `N` (`MIXED_NONSHORT_SHAPE_MONOTONICITY`, `A`). -/
+/-- The coefficient `A` of `k` in `N`. -/
 noncomputable def nhA (t x q v L : ℝ) : ℝ :=
   (t ^ 3 * x + t ^ 2 * x ^ 2 - 2 * t ^ 2 * x - t ^ 2 - t * x ^ 2 - x ^ 2 - x) * q
     + (-t ^ 2 * x ^ 2 + 2 * t ^ 2 * x + t ^ 2 + 2 * t * x ^ 2 + x ^ 2 + 2 * x) * q ^ 2
@@ -79,7 +77,7 @@ theorem nhN_sub_k (t x k k' q v L : ℝ) :
     nhN t x k q v L = nhN t x k' q v L + (k - k') * nhA t x q v L := by
   unfold nhN nhA; ring
 
-/-- The `v`-coefficient is negative when `k ≥ 2t` (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` §2). -/
+/-- The `v`-coefficient is negative when `k ≥ 2t`. -/
 theorem nhNv_nonpos {t x k q : ℝ} (ht : 0 ≤ t) (hx : 0 ≤ x) (hq : 1 ≤ q) (hk : 2 * t ≤ k) :
     nhNv t x k q ≤ 0 := by
   unfold nhNv
@@ -102,8 +100,8 @@ theorem nhNL_nonpos {t x k q : ℝ} (ht : 0 ≤ t) (hx : 0 ≤ x) (hq : 0 ≤ q)
   have : 0 ≤ q * t * (t + x) * (1 + x) * (k + 2 * t * x + x ^ 2) := by positivity
   linarith
 
-/-- **Shape monotonicity** (`MIXED_NONSHORT_SHAPE_MONOTONICITY`): with `v ≤ U(t)` and
-`log q < q - 1`, `A > qtx(1 - t)[(q - 1)(2x + 1) + tx] > 0`. -/
+/-- **Shape monotonicity**: with `v ≤ U(t)` and `log q < q - 1`,
+`A > qtx(1 - t)[(q - 1)(2x + 1) + tx] > 0`. -/
 theorem nhA_pos {t x q v L : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x) (hq : 1 ≤ q)
     (hv : v ≤ 1 - t + t ^ 2) (hL : L < q - 1) : 0 < nhA t x q v L := by
   have e : nhA t x q v L = q * t * x * (1 - t) * ((q - 1) * (2 * x + 1) + t * x)
@@ -148,8 +146,7 @@ theorem nh_strictMonoOn_Ici {f f' : ℝ → ℝ} {a : ℝ} (hd : ∀ z, a ≤ z 
     rw [(hd z (le_of_lt hz)).deriv]
     exact hpos z hz
 
-/-- The two-term atanh lower bound `log(1 + x) > 2x/X + 2x³/(3X³)`, `X = x + 2`
-(`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` (4)). -/
+/-- The two-term atanh lower bound `log(1 + x) > 2x/X + 2x³/(3X³)`, `X = x + 2`. -/
 theorem nh_log_one_add_gt {x : ℝ} (hx : 0 < x) :
     2 * x / (x + 2) + 2 * x ^ 3 / (3 * (x + 2) ^ 3) < Real.log (1 + x) := by
   have hmono := nh_strictMonoOn_Ici (a := 0)
@@ -180,7 +177,7 @@ theorem nh_log_one_add_gt {x : ℝ} (hx : 0 < x) :
 /-- The rational upper bound `L₊(q) = (q - 1)(q² + 10q + 1)/(6q(q + 1))` for `log q`. -/
 noncomputable def nhLp (q : ℝ) : ℝ := (q - 1) * (q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))
 
-/-- `log q < L₊(q)` for `q > 1` (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` (4)). -/
+/-- `log q < L₊(q)` for `q > 1`. -/
 theorem nh_log_lt_Lp {q : ℝ} (hq : 1 < q) : Real.log q < nhLp q := by
   have hmono := nh_strictMonoOn_Ici (a := 1) (f := fun z => nhLp z - Real.log z)
     (f' := fun z => (z - 1) ^ 4 / (6 * z ^ 2 * (z + 1) ^ 2)) (fun z hz => ?_) (fun z hz => by
@@ -260,7 +257,7 @@ theorem nh_m2F_gt_Fl {t x q : ℝ} (hq : 1 < q) (hp : 0 < t + x) (hx : 0 < 1 + x
     exact mul_lt_mul_of_pos_left hL (by positivity)
   linarith
 
-/-- **The relaxation comparison** (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` §2): if
+/-- **The relaxation comparison**: if
 `v ≤ v̄`, `L ≤ L̄`, the `v`- and `L`-coefficients are nonpositive, `F_ℓ ≤ v`, `m ≥ 0` and
 `N(v̄, L̄) - m(v̄ - F_ℓ) > 0`, then `N(v, L) > 0`. -/
 theorem nh_N_pos_of_relax {t x k q v L vb Lb Fl m : ℝ} (hv : v ≤ vb) (hL : L ≤ Lb)

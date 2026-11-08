@@ -5,25 +5,23 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOB1
 /-!
 # Gate S1 by hand, outer face, branch B: signs for the test `F₀`
 
-`SHORT_OUTER_BETA_LOW_SHAPE`, `SHORT_OUTER_ALPHA_LOW_SHAPE`, `SHORT_OUTER_LOW_SHAPE_TERMINAL`.
 On `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `6α² ≥ x(x + 2)`, `x ≤ β ≤ x + (10/13)(α - 1)`,
 `u_f ≤ u ≤ u_ℓ(x, β)`:
 
 * norm concavity at the actual point reduces `u` to the two curves `u_f(x)`, `u_ℓ(x, β)`;
 * `β ↦ F₀` decreases with slope `≤ -7/5120` at a fixed norm (`hl1o_F0_bmono`), and along the ceiling
-  `u_ℓ(x, β)` as well: `(F₀)_u ≥ -1/6` on the capped strip (`(8)-(15)`; `(F₀)_u` is affine
-  decreasing in `u` and concave in `β`) and `0 ≤ -(u_ℓ)_β ≤ 15/1992` (`(16)-(17)`); so `C = 10/13`;
+  `u_ℓ(x, β)` as well: `(F₀)_u ≥ -1/6` on the capped strip (`(F₀)_u` is affine
+  decreasing in `u` and concave in `β`) and `0 ≤ -(u_ℓ)_β ≤ 15/1992`; so `C = 10/13`;
 * at `C = 10/13`, `α ↦ F₀` increases at a fixed norm: in the reciprocal shape
   `g′(r) ≤ P′(r) + ce/Z² - (399/400)ce/Z ≤ -1/400` (`ℓ′(y) ≥ (1 - (5/23)⁴)/y`, and
   `P′ = Σ i pᵢ r^{i-1}` decreases in `u ≥ 3/4`); along the ceiling the norm motion costs at most
-  `(1/4)(15/1992)(10/13)` per unit of `α` since `(F₀)_u ≤ Γ_u ≤ 1/4` (`(17)`, `(23)`); so
-  `α = α_*(x)`, `1` on `x ≤ 5/3`, `(45x + 22)/97` on `x ≥ 5/3` (`(3)`, `(26)`);
+  `(1/4)(15/1992)(10/13)` per unit of `α` since `(F₀)_u ≤ Γ_u ≤ 1/4`; so
+  `α = α_*(x)`, `1` on `x ≤ 5/3`, `(45x + 22)/97` on `x ≥ 5/3`;
 * the four terminal curves are positive.
 
-Route: the shape derivative is bounded through the reciprocal-shape form at the single slope
-`C = 10/13` (two-variable signs in `(x, r)`), instead of the `C`-concavity and the quadratic
-`H` of `SHORT_OUTER_ALPHA_LOW_SHAPE` §1; the terminal curves are cleared and bounded termwise, instead
-of the `x`-monotonicity and the grid evaluation at `x = 2` of `SHORT_OUTER_LOW_SHAPE_TERMINAL`.
+The shape derivative is bounded through the reciprocal-shape form at the single slope
+`C = 10/13` (two-variable signs in `(x, r)`), and the terminal curves are cleared and bounded
+termwise.
 
 ## Main API
 
@@ -41,7 +39,7 @@ open Set Real
 noncomputable def hl1oPd (x C u r : ℝ) : ℝ :=
   hl1p1 x C u + 2 * hl1p2 x C u * r + 3 * hl1p3 x C u * r ^ 2 + 4 * hl1p4 x C u * r ^ 3
 
-/-- Numerator of `h(β = X) + 1/6` at `x = 3/2 + t`, `α = 1 + s` (`SHORT_OUTER_BETA_LOW_SHAPE` (9)-(15)). -/
+/-- Numerator of `(F₀)_u + 1/6` at `u = 19/25`, `β = x`, `x = 3/2 + t`, `α = 1 + s`. -/
 noncomputable def hl1PhX1 (t s : ℝ) : ℝ :=
   -1 / 84 * t ^ 4 - 1 / 28 * t ^ 3 * s ^ 2 - 1 / 21 * t ^ 3 * s - 11 / 168 * t ^ 3 + 3 / 100 * t ^ 2 * s ^ 4 + 109 / 700 * t ^ 2 * s ^ 3 + 223 / 4200 * t ^ 2 * s ^ 2 - 91 / 600 * t ^ 2 * s - 111 / 700 * t ^ 2 + 59 / 560 * t * s ^ 4 + 1751 / 3360 * t * s ^ 3 + 97 / 210 * t * s ^ 2 - 131 / 1120 * t * s - 37 / 180 * t + 5 / 16 * s ^ 4 + 591 / 448 * s ^ 3 + 403 / 224 * s ^ 2 + 59 / 64 * s + 1 / 8
 
@@ -67,7 +65,7 @@ theorem hl1PhX1_pos {t s : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ (1 / 4 : ℝ)) (hs0
     mul_le_mul_of_nonneg_left ht1 (by positivity : (0 : ℝ) ≤ t ^ 2 * s ^ 2),
     mul_le_mul_of_nonneg_left ht1 (by positivity : (0 : ℝ) ≤ t ^ 3)]
 
-/-- Numerator of `h(β = X) + 1/6` at `x = 7/4 + t`, `α = 4x/7 + s`. -/
+/-- Numerator of `(F₀)_u + 1/6` at `u = 19/25`, `β = x`, `x = 7/4 + t`, `α = 4x/7 + s`. -/
 noncomputable def hl1PhX2 (t s : ℝ) : ℝ :=
   192 / 60025 * t ^ 6 + 192 / 8575 * t ^ 5 * s + 508 / 16807 * t ^ 5 + 72 / 1225 * t ^ 4 * s ^ 2 + 12098 / 60025 * t ^ 4 * s + 592787 / 5042100 * t ^ 4 + 12 / 175 * t ^ 3 * s ^ 3 + 16019 / 34300 * t ^ 3 * s ^ 2 + 49431 / 60025 * t ^ 3 * s + 117709 / 480200 * t ^ 3 + 3 / 100 * t ^ 2 * s ^ 4 + 2111 / 4900 * t ^ 2 * s ^ 3 + 708227 / 411600 * t ^ 2 * s ^ 2 + 368923 / 205800 * t ^ 2 * s + 17561 / 58800 * t ^ 2 + 337 / 2800 * t * s ^ 4 + 6481 / 4704 * t * s ^ 3 + 701663 / 235200 * t * s ^ 2 + 2089 / 1050 * t * s + 291233 / 1411200 * t + 477 / 1400 * s ^ 4 + 98059 / 67200 * s ^ 3 + 12271 / 6400 * s ^ 2 + 9883 / 11200 * s + 101011 / 1612800
 
@@ -99,7 +97,7 @@ theorem hl1PhX2_pos {t s : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ (1 / 4 : ℝ)) (hs0
     (by positivity : (0 : ℝ) ≤ t ^ 5 * s),
     (by positivity : (0 : ℝ) ≤ t ^ 6)]
 
-/-- Numerator of `h(β = AX) + 1/6` at `x = 3/2 + t`, `α = 1 + s` (`SHORT_OUTER_BETA_LOW_SHAPE` (9)-(15)). -/
+/-- Numerator of `(F₀)_u + 1/6` at `u = 19/25`, `β = αx`, `x = 3/2 + t`, `α = 1 + s`. -/
 noncomputable def hl1PhAX1 (t s : ℝ) : ℝ :=
   -1 / 84 * t ^ 4 * s ^ 2 - 1 / 42 * t ^ 4 * s - 1 / 84 * t ^ 4 - 1 / 84 * t ^ 3 * s ^ 3 - 3 / 28 * t ^ 3 * s ^ 2 - 9 / 56 * t ^ 3 * s - 11 / 168 * t ^ 3 + 113 / 2100 * t ^ 2 * s ^ 4 + 101 / 1050 * t ^ 2 * s ^ 3 - 877 / 4200 * t ^ 2 * s ^ 2 - 1133 / 2800 * t ^ 2 * s - 111 / 700 * t ^ 2 + 569 / 3360 * t * s ^ 4 + 673 / 1680 * t * s ^ 3 - 103 / 3360 * t * s ^ 2 - 501 / 1120 * t * s - 37 / 180 * t + 159 / 448 * s ^ 4 + 69 / 56 * s ^ 3 + 47 / 32 * s ^ 2 + 47 / 64 * s + 1 / 8
 
@@ -128,7 +126,7 @@ theorem hl1PhAX1_pos {t s : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ (1 / 4 : ℝ)) (hs
     mul_le_mul_of_nonneg_left hs1 (by positivity : (0 : ℝ) ≤ t ^ 4),
     mul_le_mul_of_nonneg_left hs1 (by positivity : (0 : ℝ) ≤ t ^ 4 * s)]
 
-/-- Numerator of `h(β = AX) + 1/6` at `x = 7/4 + t`, `α = 4x/7 + s`. -/
+/-- Numerator of `(F₀)_u + 1/6` at `u = 19/25`, `β = αx`, `x = 7/4 + t`, `α = 4x/7 + s`. -/
 noncomputable def hl1PhAX2 (t s : ℝ) : ℝ :=
   -156 / 420175 * t ^ 6 + 894 / 60025 * t ^ 5 * s - 110 / 7203 * t ^ 5 + 7523 / 102900 * t ^ 4 * s ^ 2 + 3709 / 51450 * t ^ 4 * s - 146571 / 1680700 * t ^ 4 + 1633 / 14700 * t ^ 3 * s ^ 3 + 6101 / 14700 * t ^ 3 * s ^ 2 + 311519 / 1440600 * t ^ 3 * s - 44133 / 240100 * t ^ 3 + 113 / 2100 * t ^ 2 * s ^ 4 + 643 / 1200 * t ^ 2 * s ^ 3 + 1034429 / 823200 * t ^ 2 * s ^ 2 + 164239 / 274400 * t ^ 2 * s - 10127 / 78400 * t ^ 2 + 157 / 800 * t * s ^ 4 + 12815 / 9408 * t * s ^ 3 + 167621 / 78400 * t * s ^ 2 + 583 / 600 * t * s + 59183 / 1411200 * t + 26921 / 67200 * s ^ 4 + 179843 / 134400 * s ^ 3 + 111077 / 76800 * s ^ 2 + 79921 / 134400 * s + 101011 / 1612800
 
@@ -182,7 +180,7 @@ theorem hl1PGu_pos {t s : ℝ} (ht0 : 0 ≤ t) (ht1 : t ≤ (1 / 2 : ℝ)) (hs0 
     mul_le_mul_of_nonneg_left hs1 (by positivity : (0 : ℝ) ≤ t ^ 2 * s ^ 2),
     mul_le_mul_of_nonneg_left hs1 (by positivity : (0 : ℝ) ≤ t ^ 2 * s ^ 3)]
 
-/-- `-∂_u P′(x, 3/4, r)` at `C = 10/13`, `x = 3/2 + t`, `r = 5/6 + s` (`SHORT_OUTER_ALPHA_LOW_SHAPE` (12)-(13)). -/
+/-- `-∂_u P′(x, 3/4, r)` at `C = 10/13`, `x = 3/2 + t`, `r = 5/6 + s`. -/
 noncomputable def hl1PdA (t s : ℝ) : ℝ :=
   1 / 21 * t ^ 4 * s ^ 3 + 5 / 42 * t ^ 4 * s ^ 2 + 25 / 252 * t ^ 4 * s + 125 / 4536 * t ^ 4 + 11 / 78 * t ^ 3 * s ^ 3 + 367 / 1092 * t ^ 3 * s ^ 2 + 2213 / 6552 * t ^ 3 * s + 2185 / 16848 * t ^ 3 + 24329 / 340704 * t ^ 2 * s ^ 3 + 125605 / 681408 * t ^ 2 * s ^ 2 + 2091641 / 4088448 * t ^ 2 * s + 24388837 / 73592064 * t ^ 2 - 19651 / 340704 * t * s ^ 3 - 9233 / 97344 * t * s ^ 2 + 292451 / 584064 * t * s + 37865641 / 73592064 * t - 21487 / 1362816 * s ^ 3 - 1433 / 29952 * s ^ 2 + 3287825 / 16353792 * s + 6510961 / 22643712
 

@@ -5,25 +5,24 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOuter
 /-!
 # Gate S1 by hand, central face: the norm and beta reductions
 
-`SHORT_CENTRAL_REDUCTION`, `SHORT_CENTRAL_NORM_MONOTONICITY`. On the central face
+On the central face
 (`x(x + 2) ≥ 6α²`, so `x ≥ √7 - 1 > 41/25` and `α ≤ α_U(x) = (1013x + 676)/2340`), with the
 order strip `x + (α - 1)/2 ≤ β ≤ x + (10/13)(α - 1)`:
 
 * both tests are concave quadratics in `u`, with `(F₀)_u ≤ (F₁)_u` (`T ≥ 2`, `w_u ≤ 0`) and
   `(F₁)_u(3/4) = Ψ = Γ_u - cH < 0`, where `H = α′B/(αK) + η′/(αK) + γ′/(αKB)` increases in `B`
-  (`α′ > 0`, `γ′ = D₀(D₀ - S³) < 0`; `NORM_MONOTONICITY` (2)-(3)), so `Ψ ≤ Ψ(x + (α - 1)/2) < 0`;
+  (`α′ > 0`, `γ′ = D₀(D₀ - S³) < 0`), so `Ψ ≤ Ψ(x + (α - 1)/2) < 0`;
   hence both tests decrease in `u ≥ 3/4` (`hl1c_F1_ustep`, `hl1c_F0_ustep`);
-* `(F₀)_u ≥ -1/5` for `u ≤ 19/25` (concave in `β`, two endpoint signs; `REDUCTION` (2));
+* `(F₀)_u ≥ -1/5` for `u ≤ 19/25` (concave in `β`, two endpoint signs);
 * `(r₀)_β ≥ 1/40 + 1/1000` (increasing in `β` by `B³ ≥ 27α²(β - α)`, `18α(x - α) > K`, and in `u`;
-  `REDUCTION` (3), sign `P₀`) and `(r₁)_β ≥ 1/40 + 1/1000` at `u = 19/25`
+  sign `P₀`) and `(r₁)_β ≥ 1/40 + 1/1000` at `u = 19/25`
   (`(r₁)_β = (u - 1)/α + 4uηx/(αK) + 1/B - Q₀/B²` with `Q₀ ≥ 3α/2 ≥ B/2`, sign `P₁`, `P_Q`);
   hence `F₀` decreases in `β` along the ceiling `u_ℓ(x, β)` (`|(u_ℓ)_β| ≤ 15/1992`) and `F₁`
   decreases in `β` at `u = 19/25` (`hl1c_F0_bstep`, `hl1c_F1_bstep`).
 
-Route: the two-variable signs are bounded termwise on boxes in `(x, α)` (or below the tangent
-chord `α_U` of the cap) instead of the shape derivative `P_a` and the univariate residual of
-`NORM_MONOTONICITY` §§3-5; the cubic logarithm majorant of the Lean tests is kept, its defect
-`ε(y) ≤ 1/625` absorbed by the `1/1000` slack.
+The two-variable signs are bounded termwise on boxes in `(x, α)` (or below the tangent chord `α_U`
+of the cap). The tests use the cubic logarithm majorant, whose defect `ε(y) ≤ 1/625` is absorbed
+by the `1/1000` slack.
 
 ## Main API
 
@@ -37,12 +36,12 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- `Q₀ = (α²K + M + uD₀² - D₀E - 3K²/4)/(αK)` (`SHORT_CENTRAL_REDUCTION` §2). -/
+/-- `Q₀ = (α²K + M + uD₀² - D₀E - 3K²/4)/(αK)` -/
 noncomputable def hl1cQ0 (x a u : ℝ) : ℝ :=
   (a ^ 2 * hh1cK x a + (1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1) + u * hl1oD0 x a ^ 2 -
     hl1oD0 x a * ((1 + x) ^ 3 * (u - 1) + 3 * (1 + x) - 1) - 3 / 4 * hh1cK x a ^ 2) / (a * hh1cK x a)
 
-/-- `(r₁)_β = (u - 1)/α + 4uηx/(αK) + 1/B - Q₀/B²` (`SHORT_CENTRAL_REDUCTION` §2). -/
+/-- `(r₁)_β = (u - 1)/α + 4uηx/(αK) + 1/B - Q₀/B²`. -/
 noncomputable def hl1cR1bf (x a b u : ℝ) : ℝ :=
   (u - 1) / a + 4 * u * (x - a) * x / (a * hh1cK x a) + 1 / (a + b) - hl1cQ0 x a u / (a + b) ^ 2
 
@@ -58,7 +57,7 @@ theorem hl1c_R1b_eq {x a b u : ℝ} (hx : 0 < x) (ha : 0 < a) (hab : 0 < a + b) 
   field_simp
   ring
 
-/-- Numerator of `-Ψ(x, α, x + (α - 1)/2)` (`SHORT_CENTRAL_NORM_MONOTONICITY` (2)-(7)). -/
+/-- Numerator of `-Ψ(x, α, x + (α - 1)/2)`. -/
 noncomputable def hl1cPphix (x a : ℝ) : ℝ :=
   -1 / 16 * x ^ 11 * a + 7 / 24 * x ^ 11 - 3 / 32 * x ^ 10 * a ^ 2 - 19 / 32 * x ^ 10 * a + 35 / 12 * x ^ 10 - 1 / 8 * x ^ 9 * a ^ 3 - 23 / 32 * x ^ 9 * a ^ 2 - 155 / 96 * x ^ 9 * a + 133 / 16 * x ^ 9 - 3 / 16 * x ^ 8 * a ^ 4 - 15 / 16 * x ^ 8 * a ^ 3 - 373 / 192 * x ^ 8 * a ^ 2 + 115 / 96 * x ^ 8 * a + 427 / 192 * x ^ 8 - 1 / 16 * x ^ 7 * a ^ 5 - 151 / 96 * x ^ 7 * a ^ 4 - 179 / 96 * x ^ 7 * a ^ 3 - 367 / 96 * x ^ 7 * a ^ 2 + 405 / 32 * x ^ 7 * a - 91 / 4 * x ^ 7 - 3 / 32 * x ^ 6 * a ^ 6 - 11 / 32 * x ^ 6 * a ^ 5 - 19 / 4 * x ^ 6 * a ^ 4 + 175 / 96 * x ^ 6 * a ^ 3 - 517 / 96 * x ^ 6 * a ^ 2 + 56 / 3 * x ^ 6 * a - 231 / 8 * x ^ 6 - 9 / 16 * x ^ 5 * a ^ 6 - 1 / 2 * x ^ 5 * a ^ 5 - 389 / 96 * x ^ 5 * a ^ 4 + 827 / 96 * x ^ 5 * a ^ 3 + 121 / 48 * x ^ 5 * a ^ 2 + 187 / 48 * x ^ 5 * a - 7 * x ^ 5 - 191 / 192 * x ^ 4 * a ^ 6 + 13 / 48 * x ^ 4 * a ^ 5 + 1105 / 192 * x ^ 4 * a ^ 4 + 137 / 32 * x ^ 4 * a ^ 3 + 1123 / 96 * x ^ 4 * a ^ 2 - 231 / 32 * x ^ 4 * a + 7 / 12 * x ^ 4 + 7 / 48 * x ^ 3 * a ^ 6 + 25 / 48 * x ^ 3 * a ^ 5 + 491 / 48 * x ^ 3 * a ^ 4 - 33 / 8 * x ^ 3 * a ^ 3 + 73 / 24 * x ^ 3 * a ^ 2 - 35 / 24 * x ^ 3 * a + 131 / 96 * x ^ 2 * a ^ 6 - 31 / 96 * x ^ 2 * a ^ 5 + 5 / 2 * x ^ 2 * a ^ 4 - 59 / 48 * x ^ 2 * a ^ 3 - 3 / 8 * x ^ 2 * a ^ 2 + 1 / 8 * x ^ 2 * a + 9 / 16 * x * a ^ 6 - 1 / 4 * x * a ^ 5 - 3 / 8 * x * a ^ 4 + 1 / 8 * x * a ^ 3 - 3 / 32 * a ^ 6 + 1 / 32 * a ^ 5
 
@@ -159,7 +158,7 @@ theorem hl1cPphi_id {x a : ℝ} (hx : 41 / 25 ≤ x) (ha : 1 ≤ a) :
   subst hBq
   ring
 
-/-- Numerator of `(F₀)_u(19/25) + 1/5` at `β = x + (α - 1)/2` (`SHORT_CENTRAL_REDUCTION` (2)). -/
+/-- Numerator of `(F₀)_u(19/25) + 1/5` at `β = x + (α - 1)/2`. -/
 noncomputable def hl1cPu0x (x a : ℝ) : ℝ :=
   3 / 100 * x ^ 10 * a - 31 / 480 * x ^ 9 * a - 7 / 96 * x ^ 9 + 3 / 50 * x ^ 8 * a ^ 3 + 7 / 48 * x ^ 8 * a ^ 2 - 9023 / 4800 * x ^ 8 * a - 35 / 64 * x ^ 8 + 559 / 800 * x ^ 7 * a ^ 3 + 35 / 24 * x ^ 7 * a ^ 2 - 9397 / 2400 * x ^ 7 * a - 35 / 24 * x ^ 7 + 3 / 100 * x ^ 6 * a ^ 5 + 1231 / 300 * x ^ 6 * a ^ 3 + 245 / 96 * x ^ 6 * a ^ 2 + 577 / 160 * x ^ 6 * a - 35 / 24 * x ^ 6 + 9 / 50 * x ^ 5 * a ^ 5 - 49 / 96 * x ^ 5 * a ^ 4 + 4867 / 480 * x ^ 5 * a ^ 3 - 119 / 48 * x ^ 5 * a ^ 2 + 14561 / 1200 * x ^ 5 * a + 119 / 960 * x ^ 4 * a ^ 5 - 301 / 192 * x ^ 4 * a ^ 4 + 1351 / 160 * x ^ 4 * a ^ 3 - 259 / 48 * x ^ 4 * a ^ 2 + 109 / 24 * x ^ 4 * a + 7 / 12 * x ^ 4 - 199 / 240 * x ^ 3 * a ^ 5 - 7 / 48 * x ^ 3 * a ^ 4 - 367 / 300 * x ^ 3 * a ^ 3 + 7 / 6 * x ^ 3 * a ^ 2 - 23 / 300 * x ^ 3 * a - 59 / 48 * x ^ 2 * a ^ 5 + 91 / 48 * x ^ 2 * a ^ 4 - 1307 / 600 * x ^ 2 * a ^ 3 + 7 / 12 * x ^ 2 * a ^ 2 + 3 / 25 * x ^ 2 * a - 39 / 200 * x * a ^ 5 + 3 / 25 * x * a ^ 3 + 3 / 100 * a ^ 5
 
@@ -329,7 +328,7 @@ theorem hl1cPu1_id {x a : ℝ} (hx : 41 / 25 ≤ x) (ha : 1 ≤ a) :
   field_simp
   ring
 
-/-- Numerator of `(r₀)_β - 1/40 - 1/1000` at `β = x`, `u = 3/4` (`SHORT_CENTRAL_REDUCTION` (3), `P₀`). -/
+/-- Numerator of `(r₀)_β - 1/40 - 1/1000` at `β = x`, `u = 3/4` (`P₀`). -/
 noncomputable def hl1cPb0x (x a : ℝ) : ℝ :=
   -513 / 500 * x ^ 6 * a - 1 / 4 * x ^ 6 - 263 / 250 * x ^ 5 * a ^ 2 + 3099 / 250 * x ^ 5 * a - x ^ 5 + 461 / 500 * x ^ 4 * a ^ 3 - 479 / 500 * x ^ 4 * a ^ 2 + 612 / 125 * x ^ 4 * a - x ^ 4 + 112 / 125 * x ^ 3 * a ^ 4 - 3276 / 125 * x ^ 3 * a ^ 3 + 99 / 125 * x ^ 3 * a ^ 2 + 3 * x ^ 3 * a - 39 / 500 * x ^ 2 * a ^ 5 - 1979 / 500 * x ^ 2 * a ^ 4 - 138 / 125 * x ^ 2 * a ^ 3 - 13 / 250 * x * a ^ 6 + 3849 / 250 * x * a ^ 5 - 4 * x * a ^ 4 - x * a ^ 3 - 13 / 500 * a ^ 7 + 11 / 4 * a ^ 6 - a ^ 4
 
@@ -394,7 +393,7 @@ theorem hl1cPb0_id {x a : ℝ} (hx : 41 / 25 ≤ x) (ha : 1 ≤ a) :
   field_simp
   ring
 
-/-- Numerator of `(r₁)_β - 1/40 - 1/1000` at `β = x`, `u = 19/25` (`SHORT_CENTRAL_REDUCTION` (3), `P₁`). -/
+/-- Numerator of `(r₁)_β - 1/40 - 1/1000` at `β = x`, `u = 19/25` (`P₁`). -/
 noncomputable def hl1cPb1x (x a : ℝ) : ℝ :=
   -253 / 500 * x ^ 4 * a + 207 / 100 * x ^ 4 + 47 / 250 * x ^ 3 * a ^ 2 + 517 / 250 * x ^ 3 * a - 54 / 25 * x ^ 3 - 13 / 250 * x ^ 2 * a ^ 3 - 1111 / 250 * x ^ 2 * a ^ 2 - 12 / 25 * x ^ 2 * a - 1 / 5 * x ^ 2 - 13 / 250 * x * a ^ 4 + 117 / 250 * x * a ^ 3 + 82 / 25 * x * a ^ 2 + 12 / 25 * x * a - 6 / 25 * x - 13 / 500 * a ^ 5 - 1 / 4 * a ^ 4 - 6 / 25 * a ^ 2
 
@@ -442,7 +441,7 @@ theorem hl1cPb1_id {x a : ℝ} (hx : 41 / 25 ≤ x) (ha : 1 ≤ a) :
   field_simp
   ring
 
-/-- Numerator of `Q₀ - 3α/2` at `u = 19/25` (`SHORT_CENTRAL_REDUCTION` §2, `P_Q`). -/
+/-- Numerator of `Q₀ - 3α/2` at `u = 19/25` (`P_Q`). -/
 noncomputable def hl1cPQx (x a : ℝ) : ℝ :=
   12 / 25 * x ^ 4 * a + 73 / 100 * x ^ 4 - 6 / 25 * x ^ 3 * a ^ 2 + 36 / 25 * x ^ 3 * a + 42 / 25 * x ^ 3 + 8 / 25 * x ^ 2 * a ^ 2 + 38 / 25 * x ^ 2 * a + 1 / 5 * x ^ 2 - 76 / 25 * x * a ^ 3 - 119 / 25 * x * a ^ 2 - 12 / 25 * x * a + 6 / 25 * x - 49 / 100 * a ^ 4 + 6 / 25 * a ^ 2
 

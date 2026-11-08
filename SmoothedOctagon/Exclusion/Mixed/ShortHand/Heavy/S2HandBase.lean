@@ -6,19 +6,17 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S2Defs
 # S2 hand signs: shared reductions
 
 Shared scalar steps for the hand proofs of the three S2 face signs (`hs2_central_sign`,
-`hs2_outer_sign_small`, `hs2_outer_sign_large`), following `archive/lighter-proofs/`
-`SHORT_RATIO_CENTRAL_COMPLETE.md` and `SHORT_RATIO_OUTER_COMPLETE.md`.
+`hs2_outer_sign_small`, `hs2_outer_sign_large`).
 
 ## Main API
 
-* `hl2_strip_c`: the strip coordinate `β = x + c(α - 1)`, `5/8 ≤ c ≤ 7/8`
-  (`SHORT_RATIO_OUTER_COMPLETE` (7)).
+* `hl2_strip_c`: the strip coordinate `β = x + c(α - 1)`, `5/8 ≤ c ≤ 7/8`.
 * `hl2_hsF_face`: the face value `hsF` with `ℓ = log(τq/r_A)`, `m = 2 - 7τq/(4r_A)` is
   `G(τ) = (w - 1)τ + 1/τ + c + log(τk) + (2 - 7τk/4)(w - 3/4)`, `k = q/r_A`.
 * `hl2_tau_outer`: for `2 ≤ τ ≤ 1/k`, `G(τ) ≤ max(G(2), G(2) + (1/k - 2)A)`,
-  `A = (1 - 7k/4)(w - 3/4)` (`SHORT_RATIO_OUTER_COMPLETE` (5)).
+  `A = (1 - 7k/4)(w - 3/4)`.
 * `hl2_le_max_of_deriv2`: a function with nonnegative second derivative on `[a, b]` is at most
-  the larger endpoint value (the convexity step of the notes).
+  the larger endpoint value.
 * Logarithm bounds: `hl2_log_le_quad` (`log y ≤ (y - 1) - (y - 1)²/2`, `0 < y ≤ 1`),
   `hl2_log_le_cubic` (`log y ≤ (y - 1) - (y - 1)²/2 + (y - 1)³/3`, `y > 0`).
 -/
@@ -29,8 +27,7 @@ namespace SmoothedOctagon
 
 open Real Set
 
-/-- The strip coordinate: `β = x + c(α - 1)` with `5/8 ≤ c ≤ 7/8` (`SHORT_RATIO_OUTER_COMPLETE`
-(7)). -/
+/-- The strip coordinate: `β = x + c(α - 1)` with `5/8 ≤ c ≤ 7/8`. -/
 theorem hl2_strip_c {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 < al)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -68,7 +65,7 @@ theorem hl2_hsF_face (x be al u q τ : ℝ) :
   rw [this]
   ring
 
-/-- **Duration elimination, outer form** (`SHORT_RATIO_OUTER_COMPLETE` (5)): for `2 ≤ τ ≤ 1/k`,
+/-- **Duration elimination, outer form**: for `2 ≤ τ ≤ 1/k`,
 `G(τ) ≤ max(G(2), G(2) + (1/k - 2)A)`, `A = (1 - 7k/4)(w - 3/4)`. -/
 theorem hl2_tau_outer {W c k τ : ℝ} (hk : 0 < k) (h2 : 2 ≤ τ) (hτ : τ * k ≤ 1) :
     (W - 1) * τ + 1 / τ + c + log (τ * k) + (2 - 7 * τ * k / 4) * (W - 3 / 4) ≤
@@ -115,8 +112,8 @@ theorem hl2_le_max_of_deriv2 {f f' f'' : ℝ → ℝ} {a b r : ℝ} (har : a ≤
     have : f r ≤ f a := by linarith
     exact this.trans (le_max_left _ _)
 
-/-- `log y ≤ (y - 1) - (y - 1)²/2` for `0 < y ≤ 1` (`SHORT_RATIO_OUTER_OTHER_TERMINALS` (3); the
-difference has derivative `-(y - 1)²/y ≤ 0`). -/
+/-- `log y ≤ (y - 1) - (y - 1)²/2` for `0 < y ≤ 1` (the difference has derivative
+`-(y - 1)²/y ≤ 0`). -/
 theorem hl2_log_le_quad {y : ℝ} (hy : 0 < y) (hy1 : y ≤ 1) :
     log y ≤ (y - 1) - (y - 1) ^ 2 / 2 := by
   have h := ss_le_of_deriv (f := fun s : ℝ => log s - ((s - 1) - (s - 1) ^ 2 / 2))
@@ -136,8 +133,8 @@ theorem hl2_log_le_quad {y : ℝ} (hy : 0 < y) (hy1 : y ≤ 1) :
   field_simp
   ring
 
-/-- `log y ≤ (y - 1) - (y - 1)²/2 + (y - 1)³/3` for `y > 0` (`SHORT_RATIO_OUTER_TERMINAL_AF` (20);
-the difference has derivative `(y - 1)³/y`). -/
+/-- `log y ≤ (y - 1) - (y - 1)²/2 + (y - 1)³/3` for `y > 0` (the difference has derivative
+`(y - 1)³/y`). -/
 theorem hl2_log_le_cubic {y : ℝ} (hy : 0 < y) :
     log y ≤ (y - 1) - (y - 1) ^ 2 / 2 + (y - 1) ^ 3 / 3 := by
   have hd : ∀ s : ℝ, 0 < s → HasDerivAt

@@ -6,9 +6,8 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW3e
 /-!
 # Gate S4, hand proof W3: at `e = 13/5`, `Ψ` decreases in `x`
 
-`archive/lighter-proofs/SHORT_CASIMIR_RATIO_DERIVATIVE.md` (1). At fixed `d ∈ [0, 1/19]`, on the
-shape curve `a = 1 + 13d/5`, `b = x(1 + d)`, `u = U(x) = ū(x, b)`, write
-(`hl46_w3_psi_eq`, note (7))
+At fixed `d ∈ [0, 1/19]`, on the shape curve `a = 1 + 13d/5`, `b = x(1 + d)`, `u = U(x) = ū(x, b)`,
+write (`hl46_w3_psi_eq`)
 
 `Ψ = Γ(x, U) - (F(x) + (U - v)ρ)/7`,
 
@@ -17,9 +16,8 @@ where `F = r₁(x, v)` is the cost along the lower norm `v` and `ρ = (r₁)_u`.
 `Γ_x + Γ_u U' - (f + (U' - 9/1000)ρ + (U - v)ρ_x)/7`
 
 with `Γ_x ≤ -17/2000`, `0 ≤ Γ_u ≤ 41/200` (`S4HandW3b`), `9/1000 ≤ U' ≤ 1/100`, `U ≥ v`
-(`S4HandW3a`), `ρ > 0`, `ρ_x ≥ 0` (`S4HandW3c`, note (5)-(6)) and `f > -1/25` (`S4HandW3d`,
-`S4HandW3e`, note (8)), so it is at most `-17/2000 + 41/20000 + 1/175 < 0`
-(the note's `-11/14000` uses the sharper corner value `-171/20000` of `Γ_x`).
+(`S4HandW3a`), `ρ > 0`, `ρ_x ≥ 0` (`S4HandW3c`) and `f > -1/25` (`S4HandW3d`,
+`S4HandW3e`), so it is at most `-17/2000 + 41/20000 + 1/175 < 0`.
 
 ## Main API
 
@@ -32,7 +30,7 @@ namespace SmoothedOctagon
 
 open Set
 
-/-- **W3** (`SHORT_CASIMIR_RATIO_DERIVATIVE`): at `e = 13/5`, `Ψ` decreases in `x`. -/
+/-- **W3**: at `e = 13/5`, `Ψ` decreases in `x`. -/
 theorem hl46_W3 {d x₁ x₂ : ℝ} (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (h1 : 2 ≤ x₁) (h12 : x₁ ≤ x₂)
     (h2 : x₂ ≤ 13 / 6) : hl46PsiC x₂ d (13 / 5) ≤ hl46PsiC x₁ d (13 / 5) := by
   have hanti := hl46_anti_of (a := 2) (b := 13 / 6)

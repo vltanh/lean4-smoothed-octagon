@@ -6,19 +6,18 @@ public import SmoothedOctagon.Terminal.Analysis.FourDensity
 /-!
 # Terminal comparison: four pieces
 
-`legacy/FOUR_LINK_HAND_PROOF`. A closed cycle with the octagon word `2 0 1 2` has factors
-`(1/a, 1/b, 1/a, 1/b)` with `a, b > 0`, `a² + b² = 1` (tangent closure), initial margins
-`(A, B, C)/√N` with `A = 2(s - 1)`, `B = 2(1 - a + b)`, `C = 2(1 + a - b)`, `s = a + b`,
-`N = (s - 1)(s + 3)` (state closure), and raw cost `8 δ(a, b)`,
-`δ(a, b) = [4s(s - 1) + 2(1 + a)(1 - b) log a + 2(1 - a)(1 + b) log b]/N` (FLH (9)).
-The density inequality `δ(a, b) ≥ δ_oct`, with equality only at `a = b`, is FLH §5.
+A closed cycle with the octagon word `2 0 1 2` has factors `(1/a, 1/b, 1/a, 1/b)` with `a, b > 0`,
+`a² + b² = 1` (tangent closure), initial margins `(A, B, C)/√N` with `A = 2(s - 1)`,
+`B = 2(1 - a + b)`, `C = 2(1 + a - b)`, `s = a + b`, `N = (s - 1)(s + 3)` (state closure), and raw
+cost `8 δ(a, b)`, `δ(a, b) = [4s(s - 1) + 2(1 + a)(1 - b) log a + 2(1 - a)(1 + b) log b]/N`. The
+density inequality `δ(a, b) ≥ δ_oct`, with equality only at `a = b`, is proved in
+`Terminal/Analysis/FourDensity`.
 
 * `Term.four_closure`: the tangent closure of the word `2 0 1 2` forces `r = p`, `z = q`,
-  `p²q² = p² + q²` (FLH (4)).
+  `p²q² = p² + q²`.
 * `Term.Cycle.four_param`: the parametrization of a four-piece cycle (closure, forced state, cost).
 * `Term.fourDensity`, `Term.fourPiece_density_ge`, `Term.fourPiece_density_eq`: the density
-  inequality and its equality case (FLH §5), from `ra_four_density`
-  (`Terminal/Analysis/FourDensity`).
+  inequality and its equality case, from `ra_four_density` (`Terminal/Analysis/FourDensity`).
 * `Term.Cycle.four_rawCost_ge`: `8 δ_oct ≤ rawCost`.
 -/
 
@@ -30,7 +29,7 @@ namespace Term
 
 open SmoothedPolygons
 
-/-- The density `δ(a, b)` of the four-piece family (FLH (9)). -/
+/-- The density `δ(a, b)` of the four-piece family. -/
 noncomputable def fourDensity (a b : ℝ) : ℝ :=
   (4 * (a + b) * (a + b - 1) + 2 * (1 + a) * (1 - b) * Real.log a +
     2 * (1 - a) * (1 + b) * Real.log b) / ((a + b - 1) * (a + b + 3))
@@ -39,9 +38,8 @@ private lemma octagonDensity_eq_four :
     octagonDensity = (8 - 4 * √2 - Real.log 2) / (2 * √2 - 1) := by
   rw [octagonDensity, ra_sqrt32, ra_sqrt8]
 
-/-- **The four-piece density inequality** (FLH §5): `δ(a, b) ≥ δ_oct` on the quarter circle.
-Route: the sign of FLH's `H(s)` comes from the monotonicity of `x ↦ (2x + c) log x/(1 - x)`,
-`c = 2 + 2ab`, instead of the integral representation (12) (see `ra_four_density`). -/
+/-- **The four-piece density inequality**: `δ(a, b) ≥ δ_oct` on the quarter circle. It reduces to
+the monotonicity of `x ↦ (2x + c) log x/(1 - x)`, `c = 2 + 2ab` (see `ra_four_density`). -/
 theorem fourPiece_density_ge {a b : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 = 1) :
     octagonDensity ≤ fourDensity a b := by
   rw [octagonDensity_eq_four]
@@ -57,7 +55,7 @@ private lemma tm_entries {M : Mat2} (h : M = triR) :
     M 0 0 = 0 ∧ M 0 1 = 1 ∧ M 1 0 = -1 ∧ M 1 1 = 1 := by
   subst h; simp [triR]
 
-/-- Tangent closure for the octagon word `2 0 1 2` (FLH (4)). -/
+/-- Tangent closure for the octagon word `2 0 1 2`. -/
 theorem four_closure {p q r z : ℝ} (hp : 1 < p) (hq : 1 < q) (hr : 1 < r) (hz : 1 < z)
     (h : triFactor 2 p * (triFactor 0 q * (triFactor 1 r * triFactor 2 z)) = triR) :
     r = p ∧ z = q ∧ p ^ 2 * q ^ 2 = p ^ 2 + q ^ 2 := by
@@ -98,8 +96,8 @@ theorem four_closure {p q r z : ℝ} (hp : 1 < p) (hq : 1 < q) (hr : 1 < r) (hz 
   subst hpr
   exact ⟨rfl, rfl, by linarith⟩
 
-/-- State closure for the octagon word, linear part (FLH (7)): the twist forces
-`C x₀ = A x₂` and `C x₁ = B x₂`. -/
+/-- State closure for the octagon word, linear part: the twist forces `C x₀ = A x₂` and
+`C x₁ = B x₂`. -/
 private lemma four_lin {a b x0 x1 x2 m10 m11 m12 m21 m22 m32 m41 m42 : ℝ}
     (ha : 0 < a) (hb : 0 < b) (hs : 1 < a + b)
     (s0g : m10 = (x2 + x0) * a⁻¹ - x2) (s0d : m11 = (x2 + x1) * a - x2) (s0a : m12 = x2)
@@ -142,7 +140,7 @@ private lemma four_lin {a b x0 x1 x2 m10 m11 m12 m21 m22 m32 m41 m42 : ℝ}
       linarith
     · linarith
 
-/-- State closure for the octagon word, scale (FLH (7)): with the quadric, the initial margins are
+/-- State closure for the octagon word, scale: with the quadric, the initial margins are
 `(A, B, C)/√N`. -/
 private lemma four_scale {a b x0 x1 x2 : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 = 1)
     (ha1 : a < 1) (hb1 : b < 1) (hs : 1 < a + b) (hx2pos : 0 < x2)
@@ -186,7 +184,7 @@ private lemma four_arc {a l A B C : ℝ} (ha : a ≠ 0) (hCA : C + A = 4 * a) (h
   field_simp
   ring
 
-/-- The four-piece raw cost (FLH (9)). -/
+/-- The four-piece raw cost. -/
 private lemma four_cost {a b l : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 = 1)
     (hl : l ^ 2 * ((a + b - 1) * (a + b + 3)) = 1) (hN : 0 < (a + b - 1) * (a + b + 3)) :
     rawArc (l * (2 * (1 + a - b))) (l * (2 * (a + b - 1))) (l * (2 * (1 - a + b))) a⁻¹ +
@@ -202,9 +200,9 @@ private lemma four_cost {a b l : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ^ 2 + b
 
 namespace Cycle
 
-/-- **The four-piece cycles** (FLH (4), (7), (9)): tangent closure forces the factors
-`(1/a, 1/b, 1/a, 1/b)` with `a² + b² = 1`, state closure forces the initial margins
-`(A, B, C)/√N`, and the raw cost is `8 δ(a, b)`. -/
+/-- **The four-piece cycles**: tangent closure forces the factors `(1/a, 1/b, 1/a, 1/b)` with
+`a² + b² = 1`, state closure forces the initial margins `(A, B, C)/√N`, and the raw cost is
+`8 δ(a, b)`. -/
 theorem four_param (c : Cycle 4) (h0 : c.lab 0 = 2) (h1 : c.lab 1 = 0) (h2 : c.lab 2 = 1)
     (h3 : c.lab 3 = 2) :
     ∃ a b : ℝ, 0 < a ∧ 0 < b ∧ a ^ 2 + b ^ 2 = 1 ∧

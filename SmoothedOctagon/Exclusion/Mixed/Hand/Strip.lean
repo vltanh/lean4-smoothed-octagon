@@ -6,10 +6,9 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.CertStrip
 /-!
 # Case M2 by hand: the reverse scale strip `k = 29t²/4`
 
-`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §§2-3: on `13/35 ≤ t ≤ 2/5`, `0 < x ≤ 9/35` with the
-centre gap `29t²/4 < 2t + 2x + x²`, the exact incoming secant and its floor give `N(29t²/4) > 0`.
-Route: the cleared cubic `P_{29t²/4}` satisfies the six signs of the unit shape directly
-(`Hand/CertStrip`), so the comparison with the unit shape at `t₀ = 13/35` is not needed.
+On `13/35 ≤ t ≤ 2/5`, `0 < x ≤ 9/35` with the centre gap `29t²/4 < 2t + 2x + x²`, the exact
+incoming secant and its floor give `N(29t²/4) > 0`: the cleared cubic `P_{29t²/4}` satisfies the
+six signs of the unit shape (`Hand/CertStrip`), so it is positive for every `y ≥ 0`.
 
 ## Main API
 
@@ -73,7 +72,7 @@ theorem nhS_signs {t x : ℝ} (ht0 : 13 / 35 ≤ t) (ht1 : t ≤ 2 / 5) (hx : 0 
   · rw [e4]; exact mul_pos hx2 (nhSJr4_pos0 t x ht0 ht1 hxl hx1 g)
   · rw [e5]; exact mul_pos hx2 (nhSJr5_pos0 t x ht0 ht1 hxl hx1 g)
 
-/-- **The scale strip** (`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §§2-3): `N(29t²/4) > 0`. -/
+/-- **The scale strip**: `N(29t²/4) > 0`. -/
 theorem nh_strip {t x q v : ℝ} (ht0 : 13 / 35 ≤ t) (ht1 : t ≤ 2 / 5) (hx : 0 < x)
     (hx1 : x ≤ 9 / 35) (hgap : 29 / 4 * t ^ 2 < 2 * t + 2 * x + x ^ 2) (hq : 1 < q)
     (hv : v = nhSecN t x) (hF : m2F ((t + x) / (1 + x)) q ≤ v) :

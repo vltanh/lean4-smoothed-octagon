@@ -5,15 +5,14 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.PolyDeriv
 /-!
 # Case M2, forward successor by hand: small tools for the low-`t` large-gap signs
 
-Elementary one-variable tools for the hand proofs of `docs/lighter-proofs/NONSHORT_LOW_T_*.md`
-(PR #2, branch `proof/lighter-signs`):
+Elementary one-variable tools for the hand proofs of the low-`t` signs:
 
 * `nlt_pw`: `z^(k+1) ≤ w z^k` on `0 ≤ z ≤ w`, the step of every termwise monomial bound on an
   interval (a negative monomial is absorbed into the next lower power);
 * `nlt_lo`, `nlt_hi`: monomial comparisons `aʳ xˢ ≤ tʳ xˢ ≤ bʳ xˢ` on `a ≤ t ≤ b`;
 * `nlt_taylor3`: the cubic Taylor lower bound from a lower bound of the third derivative;
 * `nlt_unimodal`: if `f'''' ≥ 0` on `[0, Y]`, `f''(0) ≤ 0` and `f'(Y) ≤ 0`, then `f` is at least
-  the smaller endpoint value on `[0, Y]` (`NONSHORT_LOW_T_CURVATURE` §4);
+  the smaller endpoint value on `[0, Y]`;
 * `nlt_poly6_chord`: a sextic with `c₃, c₄, c₅ ≤ 0 ≤ c₆` and `c₂ + 5Y⁴c₆ ≤ 0` lies above its chord
   on `[0, Y]`.
 
@@ -76,7 +75,7 @@ theorem nlt_taylor3 {f f1 f2 f3 : ℝ → ℝ} {a b c : ℝ} (hd0 : ∀ s, HasDe
     zero_div, mul_zero, add_zero, sub_zero] at this
   linarith
 
-/-- **A unimodal bound** (`NONSHORT_LOW_T_CURVATURE` §4): if `f'''' ≥ 0` on `[0, Y]`,
+/-- **A unimodal bound**: if `f'''' ≥ 0` on `[0, Y]`,
 `f''(0) ≤ 0` and `f'(Y) ≤ 0`, then `f'` changes sign at most once (from `+` to `-`) on `[0, Y]`,
 so `f(y) ≥ min (f 0) (f Y)` there. -/
 theorem nlt_unimodal {f f1 f2 f3 f4 : ℝ → ℝ} {Y : ℝ} (hd0 : ∀ s, HasDerivAt f (f1 s) s)

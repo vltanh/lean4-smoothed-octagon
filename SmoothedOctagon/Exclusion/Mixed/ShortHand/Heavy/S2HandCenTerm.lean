@@ -5,23 +5,21 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenTermPoly
 /-!
 # S2 hand signs: the central terminal signs
 
-`archive/lighter-proofs/SHORT_RATIO_CENTRAL_TERMINALS.md`: at the terminal curve `x = 13/6`,
-`β = b_+(13/6, a) = (309a + 523)/384`, `1 ≤ a ≤ 4/3`, with the original incoming norm
-`u = hsUC(13/6, β)` and the tangent point `t = max(2, 20/3 - 4a)` of
-`SHORT_RATIO_CENTRAL_COMPLETE` (6), both duration-tangent tests `F₀`, `F₁` are negative.
+At the terminal curve `x = 13/6`, `β = b_+(13/6, a) = (309a + 523)/384`, `1 ≤ a ≤ 4/3`, with the
+original incoming norm `u = hsUC(13/6, β)` and the tangent point `t = max(2, 20/3 - 4a)`, both
+duration-tangent tests `F₀`, `F₁` are negative.
 
-The logarithm is raised to the quadratic `Q` of (8) (`log(4/5) ≤ -488/2187` from two terms of
-`2 artanh(1/9)`; the difference `log y - [Q(y) + 488/2187 + log(4/5)]` has derivative
-`(y - 4/5)(y - 5/4)/y`, so `log y ≤ Q(y)` on `0 < y ≤ 5/4`, which contains `y = tk` by (6)-(7)).
+The logarithm is raised to the quadratic `Q(y) = -488/2187 + 5/4(y - 4/5) - (y - 4/5)²/2`
+(`log(4/5) ≤ -488/2187` from two terms of `2 artanh(1/9)`; the difference
+`log y - [Q(y) + 488/2187 + log(4/5)]` has derivative `(y - 4/5)(y - 5/4)/y`, so `log y ≤ Q(y)` on
+`0 < y ≤ 5/4`, which contains `y = tk` by `hl2ct_y`).
 The resulting rational functions of `a` are written exactly as `N/(c·Den)` with `Den > 0`, and the
 numerators `N` are negative by `S2HandCenTermPoly`.
 
-Route: the notes' affine norm chords (5) (with the `u`-monotonicity of the tests) and the
-eighth-order Taylor polynomials with the power-series tail bound (9)-(22) are replaced by keeping
-the exact incoming norm, clearing denominators exactly (`R`, `h`, `k` first, each verified by
-`field_simp; ring`), and signing the four numerators (degree 13, 11, 9, 7) by the termwise rule
-with absorption in a shifted variable (one split, at `a = 9/8`, for `N_{L0}`; square completion
-for `N_{L1}`). Only strict negativity is proved, not the margin `-1/6000` of (2).
+The exact incoming norm is kept throughout: the denominators are cleared exactly (`R`, `h`, `k`
+first, each verified by `field_simp; ring`), and the four numerators (degree 13, 11, 9, 7) are
+signed by a termwise bound with absorption in a shifted variable (one split, at `a = 9/8`, for
+`N_{L0}`; square completion for `N_{L1}`). Only strict negativity is proved.
 
 ## Main API
 
@@ -49,12 +47,12 @@ noncomputable def hl2ctNh (a : ℝ) : ℝ :=
   18583422609446676 * a ^ 5 - 3987170728505064 * a ^ 4 - 77678538804803259 * a ^ 3 -
     32529602748928311 * a ^ 2 + 81426588498399963 * a + 36098659585101035
 
-/-- `b_+(13/6, a) = (309a + 523)/384` (`SHORT_RATIO_CENTRAL_TERMINALS` (1)). -/
+/-- `b_+(13/6, a) = (309a + 523)/384`. -/
 theorem hl2ct_b (a : ℝ) : hl2cbp (13 / 6) a = (309 * a + 523) / 384 := by
   unfold hl2cbp; ring
 
-/-- The incoming ceiling on the terminal curve (`SHORT_RATIO_CENTRAL_TERMINALS` (3):
-`u_g = 2401/3200 + 225659/(54150(309a + 139))`). -/
+/-- The incoming ceiling on the terminal curve:
+`u_g = 2401/3200 + 225659/(54150(309a + 139))`. -/
 theorem hl2ct_u {a : ℝ} (ha : 0 < a) : hsUC (13 / 6) ((309 * a + 523) / 384) =
     7 * (114783921 * a + 53697359) / (3465600 * (309 * a + 139)) := by
   unfold hsUC
@@ -107,8 +105,7 @@ theorem hl2ct_h {a : ℝ} (ha : 0 < a) :
   ring
 
 
-/-- The quadratic logarithm majorant `Q(y) = -488/2187 + 5/4(y - 4/5) - (y - 4/5)²/2`
-(`SHORT_RATIO_CENTRAL_TERMINALS` (8)). -/
+/-- The quadratic logarithm majorant `Q(y) = -488/2187 + 5/4(y - 4/5) - (y - 4/5)²/2`. -/
 noncomputable def hl2ctQ (y : ℝ) : ℝ :=
   -(488 / 2187) + 5 / 4 * (y - 4 / 5) - (y - 4 / 5) ^ 2 / 2
 
@@ -191,7 +188,7 @@ theorem hl2ct_log45 : log (4 / 5) ≤ -(488 / 2187) := by
   norm_num at h
   linarith
 
-/-- `log y ≤ Q(y)` for `0 < y ≤ 5/4` (`SHORT_RATIO_CENTRAL_TERMINALS` (8)): the difference
+/-- `log y ≤ Q(y)` for `0 < y ≤ 5/4`: the difference
 `g(y) = log y - 5/4(y - 4/5) + (y - 4/5)²/2` has `g' = (y - 4/5)(y - 5/4)/y`, so it is largest at
 `y = 4/5`. -/
 theorem hl2ct_log_le {y : ℝ} (hy : 0 < y) (hy1 : y ≤ 5 / 4) : log y ≤ hl2ctQ y := by
@@ -244,7 +241,7 @@ theorem hl2ct_y {a : ℝ} (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3) :
   · rw [max_eq_left (by linarith)]
     nlinarith [mul_nonneg (sub_nonneg.2 ha2) ha0.le]
 
-/-- **The four terminal signs** (`SHORT_RATIO_CENTRAL_TERMINALS` (2), strict negativity): at
+/-- **The four terminal signs** (strict negativity): at
 `x = 13/6`, `β = b_+(13/6, a)`, the original incoming norm and the tangent point
 `t = max(2, 20/3 - 4a)`, both duration-tangent tests are negative for `1 ≤ a ≤ 4/3`. -/
 theorem hl2c_term {a : ℝ} (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3) :

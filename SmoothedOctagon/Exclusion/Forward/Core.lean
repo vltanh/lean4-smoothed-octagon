@@ -13,28 +13,24 @@ public import SmoothedOctagon.Exclusion.Forward.Scalars.SmallMin
 /-!
 # Case F: the scalar exclusion
 
-`HAND_FORWARD_PERIOD_EXCLUSION` (HFPE) §§2-5 on the window data `ff_Dim`: no window of an
-all-forward competitive normal period with `N ≥ 7` exists (`ff_Dim.elim`, `ff_Win.elim`).
+No window `ff_Dim` of an all-forward competitive normal period with `N ≥ 7` exists (`ff_Dim.elim`,
+`ff_Win.elim`).
 
-## The chain (HFPE)
+## The chain
 
-1. `ff_Dim.U_lt_three`: `a² > 4/3` (SMALL_FORWARD_MINIMUM_HAND_PROOF, with
-   MIXED_GLOBAL_SMALL_FORWARD_MINIMUM §§3-5 and HAND_H5_INTEGRAL_RATIONAL_BOUND;
-   `Forward/Scalars/SmallMin.lean`).
+1. `ff_Dim.U_lt_three`: `a² > 4/3` (the small forward minimum, `Forward/Scalars/SmallMin.lean`).
 2. `ff_Dim.cost_seven`: `G(a, a) ≥ 0`, so the seven-entry bound holds without extra copies.
-3. `ff_Dim.eleven_fifths_lt`: `a² < 20/11` (GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD (8)).
-4. `ff_Dim.budget`: `P + z + w + D < (5U + 1)/3` (HFPE (6)), from the rectangle inequality
-   `ff_G_rect` and `ff_budget_g` (`Forward/Budget.lean`).
-5. `ff_Dim.neighbor`: `w < 4/3` when `z ≤ w` (HFPE (7)), from the left row, the floors and the
-   neighbour sign `ff_resN_neg` (HAND_FORWARD_NEIGHBOR_INTEGRAL, HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND;
-   `Forward/Scalars/Neighbor.lean`).
-6. `ff_Dim.norms`: `δu + δv < 1/35` and `δv < 1/64` when `z ≤ w` (HFPE (16)), from the centered
-   row (`ff_r_eq`), the floors (`ff_F_eq_L`, `ff_F_mono`), `m > n` (`ff_m_sub_n_pos`), the
-   reductions `ff_resS_le_sym`, `ff_resV_le_sym` (`Forward/Reduce.lean`) and the symmetric signs
-   `ff_resS_neg` (HAND_FORWARD_SYMMETRIC_SUM_REDUCTION, _HIGH_D), `ff_resV_neg`
-   (HAND_FORWARD_LARGER_NORM_HAND_PROOF; `Forward/Scalars/SumSym.lean`, `LargerNorm.lean`).
-7. `ff_casimir_lower` (`Forward/Casimir.lean`): the two norm bounds give `γ² > 23/125`
-   (HAND_FORWARD_CONDITIONAL_NORM_BOUNDS §2), contradicting the cap `γ² ≤ 23/125`.
+3. `ff_Dim.eleven_fifths_lt`: `a² < 20/11`.
+4. `ff_Dim.budget`: `P + z + w + D < (5U + 1)/3`, from the rectangle inequality `ff_G_rect` and
+   `ff_budget_g` (`Forward/Budget.lean`).
+5. `ff_Dim.neighbor`: `w < 4/3` when `z ≤ w`, from the left row, the floors and the neighbour sign
+   `ff_resN_neg` (`Forward/Scalars/Neighbor.lean`).
+6. `ff_Dim.norms`: `δu + δv < 1/35` and `δv < 1/64` when `z ≤ w`, from the centered row
+   (`ff_r_eq`), the floors (`ff_F_eq_L`, `ff_F_mono`), `m > n` (`ff_m_sub_n_pos`), the reductions
+   `ff_resS_le_sym`, `ff_resV_le_sym` (`Forward/Reduce.lean`) and the symmetric signs
+   `ff_resS_neg`, `ff_resV_neg` (`Forward/Scalars/SumSym.lean`, `LargerNorm.lean`).
+7. `ff_casimir_lower` (`Forward/Casimir.lean`): the two norm bounds give `γ² > 23/125`,
+   contradicting the cap `γ² ≤ 23/125`.
 
 `ff_Win.toDim` converts the physical window to its dimensionless form.
 -/
@@ -47,8 +43,7 @@ open Real
 
 /-! ### Exact identities -/
 
-/-- `L` is the floor minus `3/4` (GLOBAL_FORWARD_CENTERED_SYSTEM (8)):
-`F_{z/S}(h) = 3/4 + L(z, h)` for `h ≠ 1`. -/
+/-- `L` is the floor minus `3/4`: `F_{z/S}(h) = 3/4 + L(z, h)` for `h ≠ 1`. -/
 theorem ff_F_eq_L {z h : ℝ} (hz : 0 < z) (hh : h ≠ 1) (hh0 : 0 < h) :
     ff_F (z / (1 + z)) h = 3 / 4 + ff_L z h := by
   have hh1 : h - 1 ≠ 0 := sub_ne_zero.2 hh
@@ -57,8 +52,7 @@ theorem ff_F_eq_L {z h : ℝ} (hz : 0 < z) (hh : h ≠ 1) (hh0 : 0 < h) :
   field_simp
   ring
 
-/-- The centered left row (GLOBAL_FORWARD_CENTERED_SYSTEM (10)-(11)):
-`αA - B = (3/4)(n + m) + r`. -/
+/-- The centered left row: `αA - B = (3/4)(n + m) + r`. -/
 theorem ff_r_eq {U z w h : ℝ} (hU : 0 < U) (hz : 0 < z) (hw : 0 < w) (hh : 0 < h) :
     ff_alpha U z h * ff_A U z w - ff_B U z h =
       3 / 4 * (ff_n U z h + ff_m U z w h) + ff_r U z w h := by
@@ -80,8 +74,7 @@ theorem ff_r_eq {U z w h : ℝ} (hU : 0 < U) (hz : 0 < z) (hw : 0 < w) (hh : 0 <
   field_simp
   ring
 
-/-- The centered central row (GLOBAL_FORWARD_CENTERED_SYSTEM (9)):
-`(3/4)(S + T) - A = e₀ - Φ`. -/
+/-- The centered central row: `(3/4)(S + T) - A = e₀ - Φ`. -/
 theorem ff_A_eq {U z w : ℝ} (hU : 0 < U) (hz : 0 < z) (hw : 0 < w) :
     3 / 4 * ((1 + z) + (1 + w)) - ff_A U z w = ff_e0 U - ff_Phi U z w := by
   have hS : 0 < 1 + z := by linarith
@@ -100,8 +93,8 @@ theorem ff_A_eq {U z w : ℝ} (hU : 0 < U) (hz : 0 < z) (hw : 0 < w) :
   field_simp
   ring
 
-/-- The positive coefficient difference (CONDITIONAL_NORM_BOUNDS (23)):
-`m - n > 0` on `U < 3`, `1 ≤ z ≤ w`, `h ≥ 1`. -/
+/-- The positive coefficient difference: `m - n > 0` on `U < 3`, `1 ≤ z ≤ w`, `h ≥ 1`, since
+`S Z (m - n)` is `K(ST - K) > 0` plus `(h - 1)` times a nonnegative quantity. -/
 theorem ff_m_sub_n_pos {U z w h : ℝ} (hU : 0 < U) (hU3 : U < 3) (hz : 1 ≤ z) (hzw : z ≤ w)
     (hh : 1 ≤ h) : 0 < ff_m U z w h - ff_n U z h := by
   have hS : 2 ≤ 1 + z := by linarith
@@ -131,8 +124,7 @@ theorem ff_m_sub_n_pos {U z w h : ℝ} (hU : 0 < U) (hU3 : U < 3) (hz : 1 ≤ z)
     nlinarith
   exact pos_of_mul_pos_right hpos hSZ.le
 
-/-- The floor increases in the factor: `F_x(r) ≤ F_x(r')` for `1/2 ≤ x`, `1 < r ≤ r'`
-(MIXED_GLOBAL_SMALL_FORWARD_MINIMUM (13)). -/
+/-- The floor increases in the factor: `F_x(r) ≤ F_x(r')` for `1/2 ≤ x`, `1 < r ≤ r'`. -/
 theorem ff_F_mono {x r r' : ℝ} (hx : 1 / 2 ≤ x) (hr : 1 < r) (hrr : r ≤ r') :
     ff_F x r ≤ ff_F x r' := by
   refine ff_le_of_deriv (f := ff_F x)
@@ -162,21 +154,18 @@ theorem ff_F_mono {x r r' : ℝ} (hx : 1 / 2 ≤ x) (hr : 1 < r) (hrr : r ≤ r'
 
 /-! ### The scalar signs -/
 
-/-- **The neighbour sign** (HAND_FORWARD_NEIGHBOR_INTEGRAL §3 (symmetric face) and
-HAND_FORWARD_ASYMMETRIC_NEIGHBOR_BOUND (asymmetric face), reduced by HAND_FORWARD_LEMMAS §1): on
-`11/5 ≤ U < 3`, `1 ≤ z ≤ w`, `w ≥ 4/3`, `z + w ≤ 5(U - 1)/3` and `S²/Z ≤ h ≤ min(S/z, h_c)`,
-`h_c = S(5U - 2 - 3w)/(3Z)`, the neighbour residual is negative.
-Route (`fs_resN_neg`): after lowering `w`, concavity in `h` and the tangent at `S²/Z` replace the
-notes' integral bound, cubic and margin `F_w(q) < -1/3000`; the tangent values are signed by
-Padé/two-term logarithm bounds and Bernstein expansions. -/
+/-- **The neighbour sign**: on `11/5 ≤ U < 3`, `1 ≤ z ≤ w`, `w ≥ 4/3`, `z + w ≤ 5(U - 1)/3` and
+`S²/Z ≤ h ≤ min(S/z, h_c)`, `h_c = S(5U - 2 - 3w)/(3Z)`, the neighbour residual is negative. Proof
+(`fs_resN_neg`): after lowering `w`, the residual is concave in `h` and is bounded by its tangent at
+`S²/Z`; the tangent values are signed by Padé/two-term logarithm bounds and Bernstein expansions. -/
 theorem ff_resN_neg {U z w h : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U < 3) (hz : 1 ≤ z) (hzw : z ≤ w)
     (hw : 4 / 3 ≤ w) (hzw' : z + w ≤ 5 * (U - 1) / 3) (hh1 : 1 < h)
     (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h) (hhu : h ≤ (1 + z) / z)
     (hhc : h ≤ (1 + z) * (5 * U - 2 - 3 * w) / (3 * (z ^ 2 + U))) : ff_resN U z w h < 0 :=
   fs_resN_neg hU hU3 hz hzw hw hzw' hh1 hhl hhu hhc
 
-/-- **Reduction of the sum residual to equal neighbours** (CONDITIONAL_NORM_BOUNDS §4 (29)):
-`𝓔_Σ` does not increase with the larger neighbour `w`. -/
+/-- **Reduction of the sum residual to equal neighbours**: `𝓔_Σ` does not increase with the larger
+neighbour `w`. -/
 theorem ff_resS_le_sym {U z w h : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U < 3) (hz : 1 ≤ z) (hzw : z ≤ w)
     (hw : w ≤ 4 / 3) (hh : 1 < h) : ff_resS U z w h ≤ ff_resS U z z h := by
   have hU0 : 0 < U := by linarith
@@ -184,26 +173,25 @@ theorem ff_resS_le_sym {U z w h : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U < 3) (hz : 1
     (ff_m_sub_n_pos hU0 hU3 hz le_rfl hh.le).le
     (fun w' hw' ↦ ff_r_eq hU0 (by linarith) hw' (by linarith))
 
-/-- **Reduction of the larger-norm residual to equal neighbours** (CONDITIONAL_NORM_BOUNDS §4
-(30)). -/
+/-- **Reduction of the larger-norm residual to equal neighbours**: `𝓔_v` does not increase with the
+larger neighbour `w`. -/
 theorem ff_resV_le_sym {U z w h : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U < 3) (hz : 1 ≤ z) (hzw : z ≤ w)
     (hw : w ≤ 4 / 3) (hh : 1 < h) : ff_resV U z w h ≤ ff_resV U z z h := by
   have hU0 : 0 < U := by linarith
   exact ff_resV_le_sym' hU0 hz hzw hw hh (fun w' hw' ↦ ff_r_eq hU0 (by linarith) hw' (by linarith))
 
-/-- **The symmetric sum sign** (HAND_FORWARD_SYMMETRIC_SUM_REDUCTION, HAND_FORWARD_SYMMETRIC_SUM_HIGH_D):
-`𝓔_Σ < 0` on the symmetric domain CONDITIONAL_NORM_BOUNDS (31).
-Route (`fs_resS_neg`): the Padé envelope `Ψ(τ)`, `τ = H/h`, is concave (`A₀ ≤ 0`); its tangent at
-the cost endpoint gives two values signed by logarithm bounds and Bernstein expansions (no `D` split). -/
+/-- **The symmetric sum sign**: `𝓔_Σ < 0` on the symmetric domain `1 ≤ z ≤ 4/3`, `1 + 6z/5 ≤ U < 3`,
+`S²/Z ≤ h ≤ S(5U - 2 - 3z)/(3Z)`. Proof (`fs_resS_neg`): the Padé envelope `Ψ(τ)`, `τ = H/h`, is
+concave (`A₀ ≤ 0`); its tangent at the cost endpoint gives two values signed by logarithm bounds and
+Bernstein expansions. -/
 theorem ff_resS_neg {U z h : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 4 / 3) (hU : 1 + 6 * z / 5 ≤ U) (hU3 : U < 3)
     (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h)
     (hhu : h ≤ (1 + z) * (5 * U - 2 - 3 * z) / (3 * (z ^ 2 + U))) : ff_resS U z z h < 0 :=
   fs_resS_neg hz hz' hU hU3 hhl hhu
 
-/-- **The symmetric larger-norm sign** (HAND_FORWARD_LARGER_NORM_HAND_PROOF): `𝓔_v < 0` on the
-symmetric domain CONDITIONAL_NORM_BOUNDS (31).
-Route (`fs_resV_neg`): the notes' concavity and two tangent values, signed by logarithm bounds and
-Bernstein expansions instead of the coefficient tables. -/
+/-- **The symmetric larger-norm sign**: `𝓔_v < 0` on the symmetric domain `1 ≤ z ≤ 4/3`,
+`1 + 6z/5 ≤ U < 3`, `S²/Z ≤ h ≤ S(5U - 2 - 3z)/(3Z)`. Proof (`fs_resV_neg`): concavity in `h` and
+the two tangent values, signed by logarithm bounds and Bernstein expansions. -/
 theorem ff_resV_neg {U z h : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 4 / 3) (hU : 1 + 6 * z / 5 ≤ U) (hU3 : U < 3)
     (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h)
     (hhu : h ≤ (1 + z) * (5 * U - 2 - 3 * z) / (3 * (z ^ 2 + U))) : ff_resV U z z h < 0 :=
@@ -215,11 +203,10 @@ namespace ff_Dim
 
 variable (W : ff_Dim)
 
-/-- **The small forward minimum** (SMALL_FORWARD_MINIMUM_HAND_PROOF; MIXED_GLOBAL_SMALL_FORWARD_MINIMUM
-§§1-5; HAND_H5_INTEGRAL_RATIONAL_BOUND): at a forward window whose centre is a minimum of the
-five margins, `a² > 4/3`, i.e. `U < 3`.
-Route (`fs_U_lt_three`): the notes' faces and H5 integral bound, with a difference form of the
-neighbour reduction and Bernstein signs for `R₀, …, R₃`. -/
+/-- **The small forward minimum**: at a forward window whose centre is a minimum of the five
+margins, `a² > 4/3`, i.e. `U < 3`. Proof (`fs_U_lt_three`): the three comparison faces, with the
+rational envelope of the integral bound on the hard face, a difference comparison for lowering the
+larger neighbour and Bernstein signs for `R₀, …, R₃`. -/
 theorem U_lt_three : W.U < 3 := fs_U_lt_three W
 
 theorem U_pos : 0 < W.U := by rw [W.U_eq]; have := W.a_pos; positivity
@@ -302,8 +289,8 @@ theorem n_nonneg : 0 ≤ ff_n W.U W.z (ff_hd W.U W.z W.P) := by
   apply div_nonneg _ W.Z_pos.le
   apply mul_nonneg (mul_nonneg (by positivity) (by linarith [W.z_lt])); linarith [W.one_lt_h]
 
-/-- The cost restriction on the left factor: `h ≤ S(5U - 2 - 3w)/(3Z)` (HFPE (12)), from the
-budget and `k ≥ T²/W`. -/
+/-- The cost restriction on the left factor: `h ≤ S(5U - 2 - 3w)/(3Z)`, from the budget and
+`k ≥ T²/W`. -/
 theorem h_le_c (hbud : W.P + W.z + W.w + W.D < (5 * W.U + 1) / 3) :
     ff_hd W.U W.z W.P ≤ (1 + W.z) * (5 * W.U - 2 - 3 * W.w) / (3 * (W.z ^ 2 + W.U)) := by
   have hm := W.h_mul
@@ -314,9 +301,8 @@ theorem h_le_c (hbud : W.P + W.z + W.w + W.D < (5 * W.U + 1) / 3) :
     rw [← hm]; field_simp
   nlinarith [W.one_le_D]
 
-/-- **The upper threshold** `a² < 20/11`, i.e. `U > 11/5` (GLOBAL_STRUCTURE_FORWARD_MINIMUM_THRESHOLD
-(8)): otherwise each of the seven edges is at least `G(a₀, a₀)`, `a₀² = 20/11`, and
-`(7√3/4) G(a₀, a₀) > A_oct`. -/
+/-- **The upper threshold** `a² < 20/11`, i.e. `U > 11/5`: otherwise each of the seven edges is at
+least `G(a₀, a₀)`, `a₀² = 20/11`, and `(7√3/4) G(a₀, a₀) > A_oct`. -/
 theorem eleven_fifths_lt : 11 / 5 < W.U := by
   by_contra hcon
   push Not at hcon
@@ -369,7 +355,8 @@ theorem eleven_fifths_lt : 11 / 5 < W.U := by
     le_trans (mul_le_mul_of_nonneg_left hsum (by positivity)) h7
   nlinarith
 
-/-- **The exterior-factor budget** (HFPE (6)): `P + z + w + D < (5U + 1)/3`. -/
+/-- **The exterior-factor budget**: `P + z + w + D < (5U + 1)/3`. Otherwise the seven-entry cost
+bound, the rectangle inequality and `ff_budget_g` give a cost above `A_oct`. -/
 theorem budget : W.P + W.z + W.w + W.D < (5 * W.U + 1) / 3 := by
   by_contra hcon
   push Not at hcon
@@ -401,7 +388,8 @@ theorem budget : W.P + W.z + W.w + W.D < (5 * W.U + 1) / 3 := by
     nlinarith
   nlinarith
 
-/-- **The neighbour bound** (HFPE (7)): with `z ≤ w`, `w < 4/3`. -/
+/-- **The neighbour bound**: with `z ≤ w`, `w < 4/3`. Otherwise the left row and the floors give a
+nonnegative neighbour residual, against `ff_resN_neg`. -/
 theorem neighbor (hzw : W.z ≤ W.w) : W.w < 4 / 3 := by
   by_contra hcon
   push Not at hcon
@@ -429,7 +417,9 @@ theorem neighbor (hzw : W.z ≤ W.w) : W.w < 4 / 3 := by
   have := ff_resN_neg hU1.le hU3 W.one_le_z hzw hcon hzw' W.one_lt_h W.h_ge W.h_le (W.h_le_c hbud)
   linarith
 
-/-- **The two norm bounds** (HFPE (16)): with `z ≤ w`, `δu + δv < 1/35` and `δv < 1/64`. -/
+/-- **The two norm bounds**: with `z ≤ w`, `δu + δv < 1/35` and `δv < 1/64`. Otherwise the centered
+row and the floors make the sum or the larger-norm residual nonnegative, against `ff_resS_neg` and
+`ff_resV_neg` after the reductions to equal neighbours. -/
 theorem norms (hzw : W.z ≤ W.w) : (W.u - 3 / 4) + (W.v - 3 / 4) < 1 / 35 ∧ W.v - 3 / 4 < 1 / 64 := by
   have hU3 := W.U_lt_three
   have hU1 := W.eleven_fifths_lt

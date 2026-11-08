@@ -10,29 +10,27 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S6Hand
 /-!
 # Hand proof of the smaller-short case, gate S6: the completion cost is too large
 
-`MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION` (1)-(31), with `SHEAR_COST_REDUCTION`,
-`ROOT_AND_ANGLE_REDUCTION` §§3-5, `SCALE_ANGLE_BARRIER` §§4-5, `CENTRAL_COST_SHAPE_BOUNDS`;
-inventory HS-S567 Part III (SH.1-SH.5, AC.1, AB1, AB2, AL, CS.1-CS.3, SB.1-SB.3, S6.1-S6.8), on its
-recommended route (no critical-angle classification; the barrier is applied pointwise along the
-continuation in the angle `δ`). On the small-shape domain with `Γ > 1829/10000`, `h < 0`,
-`-hR > 5A/2`: the window cost plus completion `C_br + (κ + 3/2)(π/3 - θ_br)` is at least the
-central-scale score `𝓕_c` (`HsData.hs6_continuation`), `𝓕_c > cπ/3 + √3𝓑(u_q) - 1/800000`
-(`hs6_Fc_gt`), `𝓑(u_q) > b*` (`hs6_B_concave`, `hs6_B_endpoint`, heavy), and the constants
-(`hs6_constants`) give `> A_oct`, contradicting the window defect.
+The window cost plus completion is compared with the central-scale score through a shear-cost
+reduction, an angle barrier and bounds on the central shape; the barrier is applied pointwise
+along the continuation in the angle `δ`. On the small-shape domain
+with `Γ > 1829/10000`, `h < 0`, `-hR > 5A/2`: the window cost plus completion
+`C_br + (κ + 3/2)(π/3 - θ_br)` is at least the central-scale score `𝓕_c`
+(`HsData.hs6_continuation`), `𝓕_c > cπ/3 + √3𝓑(u_q) - 1/800000` (`hs6_Fc_gt`), `𝓑(u_q) > b*`
+(`hs6_B_concave`, `hs6_B_endpoint`), and the constants (`hs6_constants`) give `> A_oct`,
+contradicting the window defect.
 
 ## Main API
 
 * Central-scale objects: `hs6J0`, `hs6K`, `hs6psi`, `hs6Z`, `hs6omega`, `hs6Cc`, `hs6Fc`; the
   polynomial bound `hs6B` with `hs6uq`, `hs6ZU`, `hs6ZL`, `hs6T`, `hs6L`; `hs6bstar`.
-* Stable scalar leaves: `hs6_kappa`, `hs6_shape`, `hs6_u_bounds`, `hs6_central_shear`,
+* Scalar leaves: `hs6_kappa`, `hs6_shape`, `hs6_u_bounds`, `hs6_central_shear`,
   `hs6_tangent_inv`, `hs6_tangent_anti`, `hs6_score_deriv`, `hs6_barrier_sin`, `hs6_barrier`,
   `hs6_Fc_gt`, `hs6_T_eq`, `hs6_B_concave`, `hs6_constants`.
-* Stable actual-data leaves: `HsData.hs6_angle` (AL), `HsData.hs6_continuation` (S6.2).
-* Heavy: `hs6_B_endpoint` (`SMALL_SHAPE_COST_EXCLUSION` (20)-(31)), proved by hand in
-  `Heavy/S6Hand*` (`archive/lighter-proofs/SHORT_COST_CONCAVITY.md`).
+* Actual-data leaves: `HsData.hs6_angle`, `HsData.hs6_continuation`.
+* `hs6_B_endpoint` (the two endpoint polynomials), proved by hand in `Heavy/S6Hand*`.
 * Gate: `HsData.s6`, `M2Short.hs_S6`.
-* Helper modules: `Hs6.Angle` (the rotated trace identity, AB1-AB2), `Hs6.Concave` (concavity of
-  `𝓑` in `T`, S6.5), `Hs6.Shear` (the central shear bounds, CS.3).
+* Helper modules: `Hs6.Angle` (the rotated trace identity), `Hs6.Concave` (concavity of `𝓑` in
+  `T`), `Hs6.Shear` (the central shear bounds).
 -/
 
 @[expose] public section
@@ -43,19 +41,17 @@ open Set Real Certificates.SmallerShort
 
 /-! ### Scalar leaves -/
 
-/-- **Lowering `κ`** (`SMALL_SHAPE_COST_EXCLUSION` §2; inventory HS-S567 S6.1):
-`12·1829/10000 - (40/27)² = 23/1822500 > 0`, so `Γ > 1829/10000 ⇒ √(12Γ) > 40/27`.
-Status: stable. -/
+/-- **Lowering `κ`**:
+`12·1829/10000 - (40/27)² = 23/1822500 > 0`, so `Γ > 1829/10000 ⇒ √(12Γ) > 40/27`. -/
 theorem hs6_kappa {Γ : ℝ} (hΓ : 1829 / 10000 < Γ) : 40 / 27 < √(12 * Γ) := by
   rw [Real.lt_sqrt (by norm_num)]
   linarith
 
-/-- **The angle coordinates** (`CENTRAL_COST_SHAPE_BOUNDS` (3)-(4); inventory HS-S567 CS.1): on
+/-- **The angle coordinates**: on
 `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`, `β = x(1 + δ)`: `1/3 ≤ R ≤ 7/19`,
 `9/31 ≤ T_s ≤ R`, `0 ≤ A < 1/100`, and `(βx - α)((x + 2)α + (2x + 1)β)/(S²K_A) = R + (1 + A)T_s`.
-Status: stable.
-Route: `A = (R² - T²)/(3 + T²) ≤ (R² - T_min²)/3` with `T ≥ T_min = (10x - 11)/(10x + 11)` and one
-quartic in `x` (`3(x + 1)²(10x + 11)² - 400x(10x² - 11) > 0`), instead of the monotone `a(x)`. -/
+Proof: `A = (R² - T²)/(3 + T²) ≤ (R² - T_min²)/3` with `T ≥ T_min = (10x - 11)/(10x + 11)` and one
+quartic in `x` (`3(x + 1)²(10x + 11)² - 400x(10x² - 11) > 0`). -/
 theorem hs6_shape {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1 / 19)
     (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
     1 / 3 ≤ hsRr x ∧ hsRr x ≤ 7 / 19 ∧ 9 / 31 ≤ hsTs al (x * (1 + δ)) ∧
@@ -112,10 +108,9 @@ theorem hs6_shape {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 �
     field_simp
     ring
 
-/-- The Padé-type logarithm majorant behind the incoming floor (`CENTRAL_COST_SHAPE_BOUNDS`
-(7)-(8)): `log(1 + R) < R(3R⁴ + 80R³ + 320R² + 480R + 240)/(30(R + 1)(R + 2)³)` for `R > 0`
-(derivative of the difference `R⁶/(10(R + 1)²(R + 2)⁴)`).
-Route: replaces the integral representation of `V(x) - 3/4` in the notes. -/
+/-- The Padé-type logarithm majorant behind the incoming floor:
+`log(1 + R) < R(3R⁴ + 80R³ + 320R² + 480R + 240)/(30(R + 1)(R + 2)³)` for `R > 0` (derivative of the
+difference `R⁶/(10(R + 1)²(R + 2)⁴)`). -/
 private lemma hs6_log_lt {R : ℝ} (hR : 0 < R) :
     log (1 + R) < R * (3 * R ^ 4 + 80 * R ^ 3 + 320 * R ^ 2 + 480 * R + 240) /
       (30 * (R + 1) * (R + 2) ^ 3) := by
@@ -153,10 +148,9 @@ private lemma hs6_log_lt {R : ℝ} (hR : 0 < R) :
   field_simp
   ring
 
-/-- **The incoming norm, two-sided** (`CENTRAL_COST_SHAPE_BOUNDS` (5)-(8); inventory HS-S567 CS.2):
-on the box of `hs6_shape`, `u_q(R, δ) < Sec(1, x, β) ≤ 3/4 + R²/12`. Status: stable.
-Route: the floor uses the Padé-type majorant `hs6_log_lt` of `log(1 + R)` (derivative of the
-difference `R⁶/(10(R + 1)²(R + 2)⁴)`) instead of the integral representation of `V - 3/4`. -/
+/-- **The incoming norm, two-sided**: on the box of
+`hs6_shape`, `u_q(R, δ) < Sec(1, x, β) ≤ 3/4 + R²/12`. The floor uses the Padé-type majorant
+`hs6_log_lt` of `log(1 + R)` (derivative of the difference `R⁶/(10(R + 1)²(R + 2)⁴)`). -/
 theorem hs6_u_bounds {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1 / 19)
     (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
     hs6uq (hsRr x) δ < m2Sec 1 x (x * (1 + δ)) ∧
@@ -245,10 +239,9 @@ theorem hs6_u_bounds {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 
       linarith only [h2, h3]
     exact le_of_mul_le_mul_left h1 (by linarith only [hbe1])
 
-/-- **The central shear bounds** (`CENTRAL_COST_SHAPE_BOUNDS` (9)-(13); inventory HS-S567 CS.3): on the
-box of `hs6_shape`, `1/9 ≤ Z_L ≤ Z ≤ Z_U < 1/5`. Status: stable.
-Route: `Z_U - Z` and `Z - Z_L` are `d·N/D` exactly, with explicit numerators bounded on the box
-(`Hs6.Shear`), instead of the Taylor bound in `d` and the concavity in `η` of the notes. -/
+/-- **The central shear bounds**: on the box of `hs6_shape`,
+`1/9 ≤ Z_L ≤ Z ≤ Z_U < 1/5`. Proof: `Z_U - Z` and `Z - Z_L` are `d·N/D` exactly, with explicit
+numerators bounded on the box (`Hs6.Shear`). -/
 theorem hs6_central_shear {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
     1 / 9 ≤ hs6ZL (hsRr x) δ ∧ hs6ZL (hsRr x) δ ≤ hs6Z x (x * (1 + δ)) al ∧
@@ -364,10 +357,9 @@ private lemma hs6_K_sub_pos {A K δ : ℝ} (hA : 0 ≤ A) (hK : A < K) (h0 : 0 <
   · linarith [mul_le_mul_of_nonneg_right hDK hc, mul_pos hK0 (sub_pos.2 hc1)]
   · linarith [mul_nonneg hD0 (neg_nonneg.2 hc.le)]
 
-/-- **The tangent curve inverts the half-angle formula** (`SHEAR_COST_REDUCTION` (8)-(10)(c);
-inventory HS-S567 SH.4): for `A ≥ 0`, `K > A`, `𝒟 = √(K² - A²)` and `h < 0`, the angle
-`δ = 2 arctan((√(h² + A²) - h)/(K + 𝒟))` lies in `(0, π)` and `(K cos δ - 𝒟)/sin δ = h`.
-Status: stable. -/
+/-- **The tangent curve inverts the half-angle formula**:
+for `A ≥ 0`, `K > A`, `𝒟 = √(K² - A²)` and `h < 0`, the angle
+`δ = 2 arctan((√(h² + A²) - h)/(K + 𝒟))` lies in `(0, π)` and `(K cos δ - 𝒟)/sin δ = h`. -/
 theorem hs6_tangent_inv {A K h : ℝ} (hA : 0 ≤ A) (hK : A < K) (hh : h < 0) :
     0 < 2 * arctan ((√(h ^ 2 + A ^ 2) - h) / (K + √(K ^ 2 - A ^ 2))) ∧
       2 * arctan ((√(h ^ 2 + A ^ 2) - h) / (K + √(K ^ 2 - A ^ 2))) < π ∧
@@ -395,9 +387,9 @@ theorem hs6_tangent_inv {A K h : ℝ} (hA : 0 ≤ A) (hK : A < K) (hh : h < 0) :
   field_simp
   linear_combination key'
 
-/-- **The tangent curve is decreasing** (`SHEAR_COST_REDUCTION` (10)(a)-(b); inventory HS-S567 SH.4):
+/-- **The tangent curve is decreasing**:
 for `A ≥ 0`, `K > A`, `h̃(δ) = (K cos δ - 𝒟)/sin δ` is strictly decreasing on `(0, π)`
-(`h̃' = (𝒟 cos δ - K)/sin²δ < 0`), and `K sin δ + h̃(δ) cos δ = √(h̃(δ)² + A²)`. Status: stable. -/
+(`h̃' = (𝒟 cos δ - K)/sin²δ < 0`), and `K sin δ + h̃(δ) cos δ = √(h̃(δ)² + A²)`. -/
 theorem hs6_tangent_anti {A K δ₁ δ₂ : ℝ} (hA : 0 ≤ A) (hK : A < K) (h1 : 0 < δ₁) (h12 : δ₁ < δ₂)
     (h2 : δ₂ < π) :
     (K * cos δ₂ - √(K ^ 2 - A ^ 2)) / sin δ₂ < (K * cos δ₁ - √(K ^ 2 - A ^ 2)) / sin δ₁ ∧
@@ -422,9 +414,9 @@ theorem hs6_tangent_anti {A K δ₁ δ₂ : ℝ} (hA : 0 ≤ A) (hK : A < K) (h1
   · obtain ⟨e1, e2⟩ := hs6_tangent_sqrt hA hK h1 (by linarith)
     rw [e1, e2]
 
-/-- **The score derivative** (`SHEAR_COST_REDUCTION` (11)-(13); inventory HS-S567 SH.5): for
+/-- **The score derivative**: for
 `A ≥ 0`, `K > A`, `J₀, c` real and `0 < δ < π`, `F̃(δ) = -J₀h̃(δ) - cδ` has derivative
-`(J₀√(h̃(δ)² + A²) - c sin δ)/sin δ`. Status: stable. -/
+`(J₀√(h̃(δ)² + A²) - c sin δ)/sin δ`. -/
 theorem hs6_score_deriv {A K J₀ c δ : ℝ} (hA : 0 ≤ A) (hK : A < K) (h0 : 0 < δ) (hπ : δ < π) :
     HasDerivAt (fun s => -J₀ * ((K * cos s - √(K ^ 2 - A ^ 2)) / sin s) - c * s)
       ((J₀ * √(((K * cos δ - √(K ^ 2 - A ^ 2)) / sin δ) ^ 2 + A ^ 2) - c * sin δ) / sin δ) δ := by
@@ -436,11 +428,11 @@ theorem hs6_score_deriv {A K J₀ c δ : ℝ} (hA : 0 ≤ A) (hK : A < K) (h0 : 
   field_simp
   ring
 
-/-- **The barrier criterion** (`SCALE_ANGLE_BARRIER` (21); inventory HS-S567 SB.2): with
+/-- **The barrier criterion**: with
 `0 ≤ b₁ < 1`, `A ≥ 0`, `b₂ = b₁ - (1 - b₁)A`, `c > 3/2`, `3(b₁ + b₂)/2 < c`, `J₀ = 3(1 - b₁)/2`,
 `K = A + 2 + 2(c - 3/2)/J₀`, `H > 0` and `δ = 2 arctan((√(H² + A²) + H)/(K + √(K² - A²)))`: if
 `Q_c(H²) = J₀²H⁴ + (-3c(b₁ + b₂) + (9/2)(b₁² + b₂²))H² + A²(c - 3(b₁ + b₂)/2)² < 0` then
-`J₀√(H² + A²) < c sin δ`. Status: stable. -/
+`J₀√(H² + A²) < c sin δ`. -/
 theorem hs6_barrier_sin {b₁ A c H : ℝ} (hb₁ : 0 ≤ b₁) (hb₁1 : b₁ < 1) (hA : 0 ≤ A) (hc : 3 / 2 < c)
     (hcb : 3 * (b₁ + (b₁ - (1 - b₁) * A)) / 2 < c) (hH : 0 < H)
     (hQ : (3 * (1 - b₁) / 2) ^ 2 * (H ^ 2) ^ 2 +
@@ -503,8 +495,8 @@ theorem hs6_barrier_sin {b₁ A c H : ℝ} (hb₁ : 0 ≤ b₁) (hb₁1 : b₁ <
     rw [mul_assoc c, hsin]; linarith
   exact lt_of_mul_lt_mul_right this hKH.le
 
-/-- The barrier quotient `Q = Q_c(H²)/H²` with `A = tH`, `v = b₁` (`SCALE_ANGLE_BARRIER` (25),
-expanded): `(9/4)(1 - v)²H² - 6cv + 9v² + 3(1 - v)tH(c - 3v) + (9/2)(1 - v)²t²H² +
+/-- The barrier quotient `Q = Q_c(H²)/H²` with `A = tH`, `v = b₁`, expanded:
+`(9/4)(1 - v)²H² - 6cv + 9v² + 3(1 - v)tH(c - 3v) + (9/2)(1 - v)²t²H² +
 (t(c - 3v + (3/2)(1 - v)tH))²`. -/
 private noncomputable def hs6Qb (v t H c : ℝ) : ℝ :=
   9 / 4 * (1 - v) ^ 2 * H ^ 2 - 6 * c * v + 9 * v ^ 2 + 3 * (1 - v) * t * H * (c - 3 * v) +
@@ -533,11 +525,11 @@ private lemma hs6Qbv_neg {m t H c : ℝ} (hm : m ≤ 1) (ht : 0 ≤ t) (hH : 0 �
       2 * t ^ 2 * (e + 3 / 2 * a * t * H) * (3 + 3 / 2 * t * H) := by positivity
   linarith
 
-/-- **The barrier lemma** (`SCALE_ANGLE_BARRIER` (24)-(30); inventory HS-S567 SB.3): for
+/-- **The barrier lemma**: for
 `0 < R ≤ 7/17`, `v₀ = 2R²/(3(3 + R²)) ≤ b₁ ≤ 49/916`, `0 ≤ A ≤ R²/3`, `b₂ = b₁ - (1 - b₁)A ≥ 0`,
-`21/8 ≤ c ≤ 3`, `0 < H < 7R²/6`, `HR ≥ 5A/2`: `Q_c(H²) < 0`. Status: stable.
-Route: as in the notes, but every term of the `v`-derivative of `Q` is nonpositive outright, so the
-step `v ↦ v₀` needs neither `b₂ ≥ 0` nor `A ≤ R²/3` (both hypotheses are unused). -/
+`21/8 ≤ c ≤ 3`, `0 < H < 7R²/6`, `HR ≥ 5A/2`: `Q_c(H²) < 0`. Every term of the `v`-derivative of
+`Q` is nonpositive, so the step `v ↦ v₀` needs neither `b₂ ≥ 0` nor `A ≤ R²/3` (both hypotheses are
+unused). -/
 theorem hs6_barrier {R b₁ A c H : ℝ} (hR : 0 < R) (hR7 : R ≤ 7 / 17)
     (hb₁ : 2 * R ^ 2 / (3 * (3 + R ^ 2)) ≤ b₁) (hb₁' : b₁ ≤ 49 / 916) (hA : 0 ≤ A)
     (hA' : A ≤ R ^ 2 / 3) (hb₂ : 0 ≤ b₁ - (1 - b₁) * A) (hc : 21 / 8 ≤ c) (hc' : c ≤ 3) (hH : 0 < H)
@@ -633,7 +625,8 @@ theorem hs6_barrier {R b₁ A c H : ℝ} (hR : 0 < R) (hR7 : R ≤ 7 / 17)
   linarith
 
 /-- The cost-shear identity in the atoms of `HsData.hs6_continuation`: with `J₀ = 3u/(2U₁)` and
-`Z = 2U₁Q₀w₀ - P`, `C_br = C_c + J₀h_c - J₀h_a` (`SHEAR_COST_REDUCTION` (7) at the two scales). -/
+`Z = 2U₁Q₀w₀ - P`, `C_br = C_c + J₀h_c - J₀h_a` (the cost-shear identity `C = H₀ - J₀h` at the two
+scales). -/
 private lemma hs6_cost_id {u M Q w w0 P E Z J : ℝ} (hM : M ≠ 0) (hJ : J = 3 * u / (2 * M))
     (hZ : Z = 2 * M * Q * w0 - P) :
     √3 * (w * u * Q + E) =
@@ -646,7 +639,7 @@ private lemma hs6_cost_id {u M Q w w0 P E Z J : ℝ} (hM : M ≠ 0) (hJ : J = 3 
   field_simp
   ring
 
-/-- **The continuation core** (`SHEAR_COST_REDUCTION` (10)-(13) on the recommended route): for
+/-- **The continuation core**: for
 `0 ≤ A < K` and shears `h_c < h_a < 0`, if `J₀√(h² + A²) < c sin δ(h)` for every `h ∈ [h_c, h_a]`,
 then `δ_a = δ(h_a)` and `δ_c = δ(h_c)` satisfy `0 < δ_a < δ_c` and the score
 `F̃(δ) = -J₀h̃(δ) - cδ` decreases from `δ_a` to `δ_c`: `-J₀h_c - cδ_c ≤ -J₀h_a - cδ_a`. -/
@@ -704,7 +697,7 @@ private lemma hs6_cont_core {A K J₀ c ha hc : ℝ} (hA : 0 ≤ A) (hK : A < K)
   linarith
 
 /-- The alternating `arctan` majorant: `arctan y ≤ y - y³/3 + y⁵/5` for `y ≥ 0`
-(`SMALL_SHAPE_COST_EXCLUSION` (13); derivative of the difference `y⁶/(1 + y²)`). -/
+(derivative of the difference `y⁶/(1 + y²)`). -/
 private lemma hs6_arctan_quintic {y : ℝ} (hy : 0 ≤ y) : arctan y ≤ y - y ^ 3 / 3 + y ^ 5 / 5 := by
   have h := ss_le_of_deriv (f := fun t => t - t ^ 3 / 3 + t ^ 5 / 5 - arctan t)
     (f' := fun t => t ^ 6 / (1 + t ^ 2)) hy (fun t _ => ?_) (fun t _ => by positivity)
@@ -719,7 +712,7 @@ private lemma hs6_arctan_quintic {y : ℝ} (hy : 0 ≤ y) : arctan y ≤ y - y ^
   push_cast
   ring
 
-/-- **The central angle bound** (`SMALL_SHAPE_COST_EXCLUSION` (9)): for `0 ≤ A < 1/100`, `K > 4`,
+/-- **The central angle bound**: for `0 ≤ A < 1/100`, `K > 4`,
 `H > 0`: `2 arctan((√(H² + A²) + H)/(K + √(K² - A²))) ≤ (150001/150000)(2H + A²/(2H))/K`. -/
 private lemma hs6_omega_le {A K H : ℝ} (hA : 0 ≤ A) (hA1 : A < 1 / 100) (hK : 4 < K) (hH : 0 < H) :
     2 * arctan ((√(H ^ 2 + A ^ 2) + H) / (K + √(K ^ 2 - A ^ 2))) ≤
@@ -771,10 +764,10 @@ private lemma hs6_An_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) (hbe : 0 < b
   field_simp
   ring
 
-/-- **The central score against the polynomial bound** (`SMALL_SHAPE_COST_EXCLUSION` (6)-(15);
-inventory HS-S567 S6.3, S6.4): on the box of `hs6_shape`, for `u_q(R, δ) ≤ u ≤ 3/4 + R²/12` with
-`u ≤ U₂ = (3 + T_s²)/4`: `𝓕_c(u) > cπ/3 + √3·𝓑(u_q; R, T_s, δ) - 1/800000` (cancellation (8), the
-bound (9)-(11) on `ω_c`, the `arctan` majorant, `𝓑_u > 0`). Status: stable. -/
+/-- **The central score against the polynomial bound**: on the box of `hs6_shape`, for
+`u_q(R, δ) ≤ u ≤ 3/4 + R²/12` with `u ≤ U₂ = (3 + T_s²)/4`:
+`𝓕_c(u) > cπ/3 + √3·𝓑(u_q; R, T_s, δ) - 1/800000` (the cancellation `J₀K = 2c - 3b/2`, the central
+angle bound `hs6_omega_le` on `ω_c`, the quintic `arctan` majorant, `𝓑_u > 0`). -/
 theorem hs6_Fc_gt {x δ al u : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1 / 19)
     (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) (hu : hs6uq (hsRr x) δ ≤ u)
     (hu' : u ≤ 3 / 4 + hsRr x ^ 2 / 12) (hu2 : u ≤ (3 + hsTs al (x * (1 + δ)) ^ 2) / 4) :
@@ -982,8 +975,8 @@ theorem hs6_Fc_gt {x δ al u : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0
     linarith only [hL, hBq]
   linarith only [hψc, hωK, hexc, s2, s3]
 
-/-- The angle coordinate on the box in the variables `(R, δ, η)` (`SMALL_SHAPE_COST_EXCLUSION` (21)):
-for `x > 1`, `δ ≥ 0`, `T_s(1 + ηδ, x(1 + δ)) = hs6T R δ η`, `R = (x - 1)/(x + 1)`. Status: stable. -/
+/-- The angle coordinate on the box in the variables `(R, δ, η)`:
+for `x > 1`, `δ ≥ 0`, `T_s(1 + ηδ, x(1 + δ)) = hs6T R δ η`, `R = (x - 1)/(x + 1)`. -/
 theorem hs6_T_eq {x δ η : ℝ} (hx : 1 < x) (hδ : 0 ≤ δ) (hη : 0 ≤ η) :
     hsTs (1 + η * δ) (x * (1 + δ)) = hs6T (hsRr x) δ η := by
   have hx1 : 0 < x + 1 := by linarith
@@ -994,9 +987,9 @@ theorem hs6_T_eq {x δ η : ℝ} (hx : 1 < x) (hδ : 0 ≤ δ) (hη : 0 ≤ η) 
     congr 1 <;> field_simp <;> ring
   rw [h2, div_div_div_cancel_right₀ hx1.ne', hsTs, mul_div_mul_left _ _ (two_ne_zero)]
 
-/-- **Concavity in `T` removes `η`** (`SMALL_SHAPE_COST_EXCLUSION` (16)-(19); inventory HS-S567
-S6.5): for `1/3 ≤ R ≤ 7/19`, `0 ≤ δ ≤ 1/19`, `13/5 ≤ η ≤ 3`: `𝓑(u_q; R, T(η), δ) ≥
-min{𝓑(u_q; R, T(13/5), δ), 𝓑(u_q; R, T(3), δ)}`. Status: stable. -/
+/-- **Concavity in `T` removes `η`**:
+for `1/3 ≤ R ≤ 7/19`, `0 ≤ δ ≤ 1/19`, `13/5 ≤ η ≤ 3`: `𝓑(u_q; R, T(η), δ) ≥
+min{𝓑(u_q; R, T(13/5), δ), 𝓑(u_q; R, T(3), δ)}`. -/
 theorem hs6_B_concave {R δ η : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (hη : 13 / 5 ≤ η) (hη' : η ≤ 3) :
     min (hs6B R (hs6T R δ (13 / 5)) δ (hs6uq R δ)) (hs6B R (hs6T R δ 3) δ (hs6uq R δ)) ≤
@@ -1058,17 +1051,16 @@ theorem hs6_B_concave {R δ η : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19) (h
   rw [min_comm]
   exact h
 
-/-- **The two endpoint polynomials** (`SMALL_SHAPE_COST_EXCLUSION` (20)-(31); inventory HS-S567
-S6.6, S6.7): for `1/3 ≤ R ≤ 7/19`, `0 ≤ δ ≤ 1/19` and `e ∈ {13/5, 3}`:
-`𝓑(u_q; R, T(e), δ) > b*`. Status: heavy, by hand (`Heavy/S6Hand`: concavity in `R`, then
-monotonicity in `δ`, `SHORT_COST_CONCAVITY`). -/
+/-- **The two endpoint polynomials**:
+for `1/3 ≤ R ≤ 7/19`, `0 ≤ δ ≤ 1/19` and `e ∈ {13/5, 3}`: `𝓑(u_q; R, T(e), δ) > b*`. Proved by
+hand in `Heavy/S6Hand` (concavity in `R`, then monotonicity in `δ`). -/
 theorem hs6_B_endpoint {R δ e : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (he : e = 13 / 5 ∨ e = 3) :
     hs6bstar < hs6B R (hs6T R δ e) δ (hs6uq R δ) := by
   apply hs6_B_endpoint_proof <;> assumption
 
-/-- **The constants** (`SMALL_SHAPE_COST_EXCLUSION` §7; inventory HS-S567 S6.8):
-`A_oct < 3126055/10⁶`, `π > 314159265/10⁸`, `√3 > 989/571`. Status: stable. -/
+/-- **The constants**:
+`A_oct < 3126055/10⁶`, `π > 314159265/10⁸`, `√3 > 989/571`. -/
 theorem hs6_constants :
     octagonCost < 3126055 / 1000000 ∧ (314159265 / 100000000 : ℝ) < π ∧ (989 / 571 : ℝ) < √3 := by
   refine ⟨?_, by linarith [Real.pi_gt_d20], by rw [Real.lt_sqrt (by norm_num)]; norm_num⟩
@@ -1124,12 +1116,10 @@ private lemma hs6_pt_cost : H.pt.cost = √3 * (H.rho * H.u / (1 - H.rho) *
   rw [Point.cost, H.hs6_pt_u, Point.S, Point.A, H.hs6_pt_x, H.hs6_pt_be]
   rfl
 
-/-- **The angle bound at `κ₀`** (`ROOT_AND_ANGLE_REDUCTION` (14)-(25), `MIXED_GENERAL_SHORT_DEFECT_INTERFACE`
-(5)-(8); inventory HS-S567 AC.1, AB1, AB2, AL): for actual data with `40/27 ≤ κ = pt.kap`,
+/-- **The angle bound at `κ₀`**: for actual data with `40/27 ≤ κ = pt.kap`,
 `K = A + 2 + 2κ₀/J₀`, `h` the actual shear, and `0 < δ < π/2 - ψ` with
-`K sin δ + h cos δ ≥ √(A² + h²)`: `θ_br = arctan(√3ℬ/𝒜) ≤ ψ + δ`. Status: stable.
-Route: the angle-circle comparison is replaced by the rotated trace identity and the
-quadratic-in-`ξ` bound of `Hs6.Angle` (`hs6_angle_core`), as the inventory recommends. -/
+`K sin δ + h cos δ ≥ √(A² + h²)`: `θ_br = arctan(√3ℬ/𝒜) ≤ ψ + δ`. Proof: the rotated trace
+identity and the quadratic-in-`ξ` bound of `Hs6.Angle` (`hs6_angle_core`). -/
 theorem hs6_angle (hκ : 40 / 27 ≤ H.pt.kap) {δ : ℝ} (hδ : 0 < δ)
     (hδψ : δ < π / 2 - hs6psi H.x H.be H.al)
     (hsup : √(hsAn H.x H.be H.al ^ 2 + hsShear H.x H.be H.al H.rho ^ 2) ≤
@@ -1234,15 +1224,13 @@ theorem hs6_angle (hκ : 40 / 27 ≤ H.pt.kap) {δ : ℝ} (hδ : 0 < δ)
         arctan_le_arctan_iff.2 htan
     _ = hs6psi H.x H.be H.al + δ := arctan_tan (by linarith) (by linarith)
 
-/-- **The continuation to the central scale** (`SMALL_SHAPE_COST_EXCLUSION` (3)-(5); inventory HS-S567
-S6.1, S6.2, recommended route): on the small-shape domain, with `Γ > 1829/10000`, `h < 0`,
+/-- **The continuation to the central scale**:
+on the small-shape domain, with `Γ > 1829/10000`, `h < 0`,
 `-hR > 5A/2`: `C_br + (κ + 3/2)(π/3 - θ_br) ≥ 𝓕_c(u)` (`hs6_kappa`, `hs6_angle` at `δ_a = δ(h)`,
 `hs6_tangent_inv`, `hs6_tangent_anti`, the cost-shear identity `C_br = H₀ - J₀h`, `hs6_score_deriv`
 with `hs6_barrier_sin`, `hs6_barrier` pointwise on `[δ_a, δ_c]` (`hs6_shape`, `hs6_u_bounds`,
-`hs6_central_shear`, `q_le_qc`)). Status: stable.
-Route: the inventory's recommended route (no critical-angle classification; the barrier holds
-pointwise along `[δ_a, δ_c]` because `H ≤ H_c = Z/√3 < 7R²/6`), via `hs6_cont_core`; the outer
-cap `ρ_A < 1/7` is not used. -/
+`hs6_central_shear`, `q_le_qc`)). The barrier holds pointwise along `[δ_a, δ_c]` because
+`H ≤ H_c = Z/√3 < 7R²/6` (`hs6_cont_core`); the outer cap `ρ_A < 1/7` is not used. -/
 theorem hs6_continuation (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ)
     (hh : hsShear H.x H.be H.al H.rho < 0)
     (hhR : 5 / 2 * hsAn H.x H.be H.al < -hsShear H.x H.be H.al H.rho * hsRr H.x) :
@@ -1475,12 +1463,11 @@ theorem hs6_continuation (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ)
   rw [hFc, hcost]
   linarith only [hstep, hθ, hF]
 
-/-- **Gate S6** (`SMALL_SHAPE_COST_EXCLUSION` (2); inventory HS-S567 S6.8): on the small-shape domain,
+/-- **Gate S6**: on the small-shape domain,
 with `Γ > 1829/10000`, `h < 0`, `-hR > 5A/2`: `C_br + (κ + 3/2)(π/3 - θ_br) > A_oct`.
-Proof plan: `hs6_continuation`; `hs6_Fc_gt` (with `hs6_u_bounds`, `u_le_rA`); `hs6_T_eq`,
+Proof: `hs6_continuation`; `hs6_Fc_gt` (with `hs6_u_bounds`, `u_le_rA`); `hs6_T_eq`,
 `hs6_B_concave`, `hs6_B_endpoint` give `𝓑(u_q) > b* > 0`; `hs6_constants`:
-`cπ/3 + √3𝓑 - 1/800000 > cπ₀/3 + ℓb* - 1/800000 = A₀ > A_oct`.
-Status: assembly (to be proved from the leaves above). -/
+`cπ/3 + √3𝓑 - 1/800000 > cπ₀/3 + ℓb* - 1/800000 = A₀ > A_oct`. -/
 theorem s6 (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ) (hh : hsShear H.x H.be H.al H.rho < 0)
     (hhR : 5 / 2 * hsAn H.x H.be H.al < -hsShear H.x H.be H.al H.rho * hsRr H.x) :
     octagonCost < H.pt.cost + (H.pt.kap + 3 / 2) * (π / 3 - arctan (√3 * H.pt.BB / H.pt.AA)) := by
@@ -1533,7 +1520,7 @@ theorem s6 (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ) (hh : hsShear H.x H.b
 
 end HsData
 
-/-- **Gate S6 for the actual window** (`SMALL_SHAPE_COST_EXCLUSION` (2)): on the small-shape
+/-- **Gate S6 for the actual window**: on the small-shape
 domain, with `Γ > 1829/10000`, `h < 0`, `-hR > 5A/2`, the window cost and completion exceed
 `A_oct`. -/
 theorem M2Short.hs_S6 (D : M2Short) (h1 : 2 ≤ D.C / D.a) (h2 : D.C / D.a ≤ 13 / 6)

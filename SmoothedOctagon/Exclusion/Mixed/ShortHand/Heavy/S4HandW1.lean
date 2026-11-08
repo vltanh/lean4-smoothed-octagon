@@ -5,12 +5,12 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW1d
 /-!
 # W1: `Φ` decreases in `d` along the actual shape curve
 
-`archive/lighter-proofs/SHORT_CASIMIR_FIRST_DERIVATIVES.md` §§1-3 (`-Φ_d > 27/5000`). On the
-curve `a = 1 + ed`, `b = x(1 + d)`, `u = ū(x, b)` the point stays in the containing rectangle (2),
-where `Φ_u ≥ -7/10` (9), `Φ_b ≤ -9/500` (6), (10), `Φ_a ≤ 3/500` (11), and
-`0 ≤ ū(d₁) - ū(d₂) ≤ (9/500)(d₂ - d₁)` (4), (5). Route: instead of the chain rule along the curve,
-the difference `Φ(d₂) - Φ(d₁)` is split into a `u`-step, a `b`-step and an `a`-step, each a
-one-variable monotonicity on the rectangle (`S4HandW1d`, `S4HandW1c`), with total at most
+The bound is `-Φ_d > 27/5000`. On the curve `a = 1 + ed`, `b = x(1 + d)`, `u = ū(x, b)` the point
+stays in the containing rectangle `2 ≤ x ≤ 13/6`, `1 ≤ a ≤ 22/19`, `x ≤ b ≤ 20x/19`,
+`3/4 ≤ u ≤ 19/25`, where `Φ_u ≥ -7/10`, `Φ_b ≤ -9/500`, `Φ_a ≤ 3/500`, and
+`0 ≤ ū(d₁) - ū(d₂) ≤ (9/500)(d₂ - d₁)`. The difference `Φ(d₂) - Φ(d₁)` is split
+into a `u`-step, a `b`-step and an `a`-step, each a one-variable monotonicity on the rectangle
+(`S4HandW1d`, `S4HandW1c`), with total at most
 `(d₂ - d₁)(7/10 · 9/500 - 9x/500 + 3e/500) ≤ -(27/5000)(d₂ - d₁)`.
 
 ## Main API
@@ -22,7 +22,7 @@ one-variable monotonicity on the rectangle (`S4HandW1d`, `S4HandW1c`), with tota
 
 namespace SmoothedOctagon
 
-/-- **W1** (`SHORT_CASIMIR_FIRST_DERIVATIVES` §§1-3): `Φ` decreases in `d` on the curve. -/
+/-- **W1**: `Φ` decreases in `d` on the curve. -/
 theorem hl46_W1 {x e d₁ d₂ : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (he : 13 / 5 ≤ e) (he' : e ≤ 3)
     (h0 : 0 ≤ d₁) (h12 : d₁ ≤ d₂) (h2 : d₂ ≤ 1 / 19) : hl46PhiC x d₂ e ≤ hl46PhiC x d₁ e := by
   obtain ⟨hu12, hud, hu2, hu1⟩ := hl46_w1_ubar hx hx' h0 h12 h2

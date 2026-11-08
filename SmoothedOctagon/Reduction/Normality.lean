@@ -6,18 +6,16 @@ public import SmoothedOctagon.Reduction.Normal.Bridge
 /-!
 # Normality of closed finite vertex extremals
 
-GLOBAL_NORMALITY, Theorem and Corollary (inventory A2, §2.7 `GN:Thm`, `GN:Cor`; local lemmas
-`GN:(3)`, `GN:(4),(6)`, `GN:(9)-(16)`, `GN:(17)`, `GN:(18)-(19)`, `GN:§5`; certificate C2 of §3).
 A Pontryagin extremal whose control has a finite vertex representation (distinct neighbouring
 labels, also across the twisted seam) has a nonzero cost multiplier; by positive homogeneity of
 `IsPontryaginExtremal` it can be rescaled to `λ = -1`.
 
 Main API:
 
-* `lam_lt_zero_of_vertexRepresentation`: `λ < 0` (GN, Theorem).
+* `lam_lt_zero_of_vertexRepresentation`: `λ < 0`.
 * `traceForm_smul_left`, `isIntegralCurve_smul`, `hamiltonian_smul`: homogeneity of the trace
   form, of Carathéodory solutions and of the Hamiltonian.
-* `isPontryaginExtremal_smul`: `(Λ₁, Λ_R, λ) ↦ (cΛ₁, cΛ_R, cλ)` for `c > 0` (GN, Corollary).
+* `isPontryaginExtremal_smul`: `(Λ₁, Λ_R, λ) ↦ (cΛ₁, cΛ_R, cλ)` for `c > 0`.
 * `exists_normal_lift`: a lift with `λ < 0` rescales to `λ = -1`.
 -/
 
@@ -27,28 +25,19 @@ namespace SmoothedOctagon.Reduction
 
 open SmoothedPolygons MeasureTheory Set
 
-/-- **Closed finite vertex extremals are normal** (GLOBAL_NORMALITY, Theorem). If a global
-minimizer `(T, u, g, X)` carries a Pontryagin lift `(Λ₁, Λ_R, λ)` and its control has a finite
-vertex representation, then `λ < 0`.
+/-- **Closed finite vertex extremals are normal**. If a global minimizer `(T, u, g, X)` carries a
+Pontryagin lift `(Λ₁, Λ_R, λ)` and its control has a finite vertex representation, then `λ < 0`.
 
-The notes' argument does not use minimality (nor a cost budget, rank, or `N ≥ 6`); the hypothesis
-`hmin` is available for a different route. Proof outline (GN §§1-6): suppose `λ = 0`. Extend the
-lift by the twist (`remark6_6_1`) and read the bi-infinite word `i_{j+N} = i_j + 1`,
-`i_{j+1} ≠ i_j` from a genuine switch; its switch signs are `N`-periodic. The abnormal covector
-pulled back through the endpoint submersion (GN (3)) annihilates the duration columns of every arc
-and is `≤ 0` on missing-vertex needles at internal switches (GN (4), (6)); the exact four-arc
-algebra (GN (9)-(16), certificate C2) shows: no three consecutive equal signs (GN (17)); `σσ`
-flanked by `-σ` forces triple ties at both ends of the middle arc (GN (18)-(19)), which no arc can
-have (GN §5).
-Hence the signs alternate, `i_{j+2} = i_j`, only two labels occur; but the label set is invariant
-under `+1`.
-
-Route: the endpoint covector, needle variations and the four-arc matrix algebra (certificate C2) are
-replaced by the coordinates `μ_j(a)`, `μ_j(b)` of `a = -XΛ₁X`, `b = Λ_R + 2Λ₁ + ⟨Λ₁, X⟩X`, which
-every vertex piece transports by the one-arc margin map (`Normal/Flow.lean`, `gn_piece`); the
-missing-vertex inequalities are the maximum condition at the switching times, and GN (17)-(19), §5
-and §6 become scalar lemmas on the resulting sequence (`Normal/Word.lean`). Both triple-tie
-implications follow from one forward identity (`GnSeq.bounce`); no backward reading is used. -/
+Minimality is not used (nor a cost budget, rank, or `N ≥ 6`): the hypothesis `hmin` is unused.
+Proof: suppose `λ = 0`. Extend the lift by the twist (`remark6_6_1`) and read the bi-infinite word
+`i_{j+N} = i_j + 1`, `i_{j+1} ≠ i_j` from a genuine switch; its switch signs are `N`-periodic. Every
+vertex piece transports the coordinates `μ_j(a)`, `μ_j(b)` of `a = -XΛ₁X`,
+`b = Λ_R + 2Λ₁ + ⟨Λ₁, X⟩X` by the one-arc margin map (`Normal/Flow.lean`, `gn_piece`), and the
+maximum condition at the switching times gives the missing-vertex inequalities. Scalar lemmas on the
+resulting sequence (`Normal/Word.lean`) show: no three consecutive equal signs; `σσ` flanked by `-σ`
+forces triple ties at both ends of the middle arc, which no arc can have. Both triple-tie
+implications follow from one forward identity (`GnSeq.bounce`). Hence the signs alternate,
+`i_{j+2} = i_j`, only two labels occur; but the label set is invariant under `+1`. -/
 theorem lam_lt_zero_of_vertexRepresentation {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hmin : IsReinhardtMinimizer T u g X)
     (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) (ρ : VertexRepresentation T u) : lam < 0 := by
@@ -81,8 +70,8 @@ theorem hamiltonian_smul (c lam : ℝ) (Λ₁ ΛR X : Mat2) (v : Fin 3 → ℝ) 
   simp only [hamiltonian, e, traceForm_smul_left]
   ring
 
-/-- **Positive homogeneity** (GLOBAL_NORMALITY, Corollary): a Pontryagin lift scaled by `c > 0`
-is a Pontryagin lift. -/
+/-- **Positive homogeneity**: a Pontryagin lift scaled by `c > 0` is a Pontryagin lift. The
+state and costate equations are linear in the costate, and the Hamiltonian is scaled by `c`. -/
 theorem isPontryaginExtremal_smul {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2} {lam : ℝ}
     (h : IsPontryaginExtremal T u g X Λ₁ ΛR lam) {c : ℝ} (hc : 0 < c) :
     IsPontryaginExtremal T u g X (fun t ↦ c • Λ₁ t) (fun t ↦ c • ΛR t) (c * lam) := by
@@ -113,8 +102,8 @@ theorem isPontryaginExtremal_smul {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ�
     rw [hamiltonian_smul, hamiltonian_smul]
     exact mul_le_mul_of_nonneg_left (hmax v hv) hc.le
 
-/-- **Rescaling to `λ = -1`** (GLOBAL_NORMALITY, Corollary): a Pontryagin lift with `λ < 0`,
-divided by `-λ`, is a normal lift with `λ = -1`. -/
+/-- **Rescaling to `λ = -1`**: a Pontryagin lift with `λ < 0`, divided by `-λ`, is a normal lift
+with `λ = -1`. -/
 theorem exists_normal_lift {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2} {lam : ℝ}
     (h : IsPontryaginExtremal T u g X Λ₁ ΛR lam) (hlam : lam < 0) :
     ∃ Λ₁' ΛR' : ℝ → Mat2, IsPontryaginExtremal T u g X Λ₁' ΛR' (-1) := by

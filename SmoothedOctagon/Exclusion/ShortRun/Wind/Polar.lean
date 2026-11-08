@@ -14,12 +14,11 @@ For a frame `g ∈ SL₂(ℝ)` write `z(g) = (g₀₀ + g₁₁)/2 + i (g₁₀ 
 principal argument is a canonical angle from `u` to `g u`.
 
 For a competitive normal period (`cost ≤ A_oct < π`) the polar angle `Φ` of `z(g(t))` has a
-continuous choice on `[0, T]` with `Φ(T) - Φ(0) = π/3` exactly (`wd_polar`). Route: the low-cost
-winding theorem (`lowCost_reflectedFirstRow_angle`, on the cyclic extension of the frame) fixes the
+continuous choice on `[0, T]` with `Φ(T) - Φ(0) = π/3` exactly (`wd_polar`). The low-cost winding
+theorem (`lowCost_reflectedFirstRow_angle`, on the cyclic extension of the frame) fixes the
 continuous angle of the reflected first row `r = (g₀₀, -g₀₁)` at `π/3`; since
 `Re(r · conj z) = (g₀₀² + g₀₁² + 1)/2 > 0`, the angles of `r` and `z` stay within `π/2` of each
-other, and both `r` and `z` equal `e^{iπ/3}` at `t = T`. This replaces the universal-cover argument
-of `MIXED_GLOBAL_PROJECTIVE_WINDING` §1.
+other, and both `r` and `z` equal `e^{iπ/3}` at `t = T`.
 
 ## Main API
 

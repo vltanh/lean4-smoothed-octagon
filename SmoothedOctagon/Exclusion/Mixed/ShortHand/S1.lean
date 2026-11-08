@@ -11,11 +11,10 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOuter
 /-!
 # Hand proof of the smaller-short case, gate S1: `x > 2`
 
-`MIXED_SMALLER_SHORT_LOWER_RATIO_HAND_EXCLUSION`; inventory HS-S01 Parts C, D (C1-C24, D-R1-D-R22,
-M19). Assuming `1 < x ≤ 2`: the corrected envelope cap `Γ_actual ≥ Γ_* - (7/96)R*_τ`
-(`HsData.hs1_cap_env`, from the retained root bound `hs1_root_cap` and the derivative ratio
-`hs1_ratio`), the scale motions at fixed `p` and at `τ = 2` (`hs1_scale_dec`, `hs1_tau2_dec`) reach
-a face `q = q_c ≤ 1/7` or `q = 1/7 ≤ q_c`, where the terminal face signs (heavy)
+This module excludes `1 < x ≤ 2`. Assuming it, the corrected envelope cap
+`Γ_actual ≥ Γ_* - (7/96)R*_τ` (`HsData.hs1_cap_env`, from the retained root bound `hs1_root_cap` and
+the derivative ratio `hs1_ratio`), the scale motions at fixed `p` and at `τ = 2` (`hs1_scale_dec`,
+`hs1_tau2_dec`) reach a face `q = q_c ≤ 1/7` or `q = 1/7 ≤ q_c`, where the terminal face signs
 `hs1_central_face`, `hs1_outer_face` give `Γ_* - (7/96)R*_τ > 9193/50000`, contradicting `cas_lt`.
 
 ## Main API
@@ -24,12 +23,12 @@ a face `q = q_c ≤ 1/7` or `q = 1/7 ≤ q_c`, where the terminal face signs (he
   residual), `Hs14/Slope` (lower norm endpoints of the slope inequalities), `Hs14/Cap` and
   `Hs14/Data` (the corrected envelope cap), `Hs14/Ratio` (the ratio `7/96` on the order strip).
 
-* `hs1_root_cap` (`SHARP_LOW_RATIO_CORRECTED_CAP` (3)), `hs1_ratio` (`(4)-(15)`),
-  `hs1_slope` (`(17)-(19)`), `hs1_scale_dec` (`(20)`), `hs1_tau2_dec` (`(21)-(26)`),
-  `hs1_u_ell` (`LOW_RATIO_CENTRAL_HAND_SIGN` (16)-(17)).
-* `HsData.hs1_cap_env` (`SHARP_LOW_RATIO_CORRECTED_CAP` (16), `CORRECTED_ENVELOPE_CAP` (8)-(9)).
-* Heavy: `hs1_central_face` (`LOW_RATIO_CENTRAL_HAND_SIGN` (6)), `hs1_outer_face`
-  (`LOW_RATIO_OUTER_HAND_SIGN` §6).
+* `hs1_root_cap` (the retained root bound), `hs1_ratio` (the derivative ratio `7/96`),
+  `hs1_slope` (the sharper slope), `hs1_scale_dec` (the fixed-`p` decrease), `hs1_tau2_dec` (the
+  `τ = 2` decrease), `hs1_u_ell` (the β-dependent ceiling).
+* `HsData.hs1_cap_env` (the corrected envelope cap).
+* Terminal face signs, proved in `Heavy/S1HandCentral` and `Heavy/S1HandOuter`:
+  `hs1_central_face`, `hs1_outer_face`.
 * Gate: `HsData.s1`, `M2Short.hs_S1`.
 -/
 
@@ -39,24 +38,22 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- **The retained incoming deficit at the actual root** (`SHARP_LOW_RATIO_CORRECTED_CAP` (3);
-inventory HS-S01 C10): if `0 < r_A < 1/2`, `τ > 2`, `0 < q`, `τq < r_A`, `u ≤ U(r_A)`,
-`w ≤ U(1/τ)` and `E_L = (w - 1)τ + 1/τ + (u - 1)/r_A + r_A + 1 - q + log(τq/r_A)`, then
-`E_L ≤ 3q - J_A`, `J_A = (U(r_A) - u)/r_A` (`ss_E_le_three` with the norm `U(r_A)`).
-Status: stable. -/
+/-- **The retained incoming deficit at the actual root**: if `0 < r_A < 1/2`, `τ > 2`, `0 < q`,
+`τq < r_A`, `u ≤ U(r_A)`, `w ≤ U(1/τ)` and
+`E_L = (w - 1)τ + 1/τ + (u - 1)/r_A + r_A + 1 - q + log(τq/r_A)`, then `E_L ≤ 3q - J_A`,
+`J_A = (U(r_A) - u)/r_A` (`ss_E_le_three` with the norm `U(r_A)`). -/
 theorem hs1_root_cap {rA τ q u w EL : ℝ} (hrA : 0 < rA) (hrA2 : rA < 1 / 2) (hτ : 2 < τ)
     (hq : 0 < q) (hτq : τ * q < rA) (hu : u ≤ m2U rA) (hw : w ≤ m2U (1 / τ))
     (hEL : EL = (w - 1) * τ + 1 / τ + (u - 1) / rA + rA + 1 - q + log (τ * q / rA)) :
     EL ≤ 3 * q - (m2U rA - u) / rA :=
   hs14_root_cap hrA hrA2.le hτ.le hq hτq.le hw hEL
 
-/-- **The derivative ratio is at most `7/96`** (`SHARP_LOW_RATIO_CORRECTED_CAP` (4)-(15); inventory
-HS-S01 C11, C13, C14): for `1 < x ≤ 2`, `1 ≤ α < x ≤ β`, `D > 0`, `3/4 ≤ u ≤ u₀(x)`, `u ≤ U(r_A)`,
-`ρ > 0`, `q = α²λρ ≤ 1/7`, `2 ≤ τ`, `τq < r_A`, `0 < t ≤ 1/(1 + x)`, `b = λt - d` with
-`1 + τb > 0`, and any `E_L ≤ 3q - J_A`: `2ub + E_L ≤ (7/12)(1 - q)²(1 + τb)`, i.e.
-`Γ_v/(R_τ)_v = (2ub + E_L)/(8(1 - q)²(1 + τb)) ≤ 7/96`. Status: stable.
-The order strip `x + (8/17)(α - 1) ≤ β ≤ x + (4/5)(α - 1)` (`SHARP_LOW_RATIO_CORRECTED_CAP` (13),
-from the strong and 9/8 orders) is a hypothesis, as in the notes' proof (13)-(15). -/
+/-- **The derivative ratio is at most `7/96`**: for `1 < x ≤ 2`, `1 ≤ α < x ≤ β`, `D > 0`,
+`3/4 ≤ u ≤ u₀(x)`, `u ≤ U(r_A)`, `ρ > 0`, `q = α²λρ ≤ 1/7`, `2 ≤ τ`, `τq < r_A`,
+`0 < t ≤ 1/(1 + x)`, `b = λt - d` with `1 + τb > 0`, and any `E_L ≤ 3q - J_A`:
+`2ub + E_L ≤ (7/12)(1 - q)²(1 + τb)`, i.e. `Γ_v/(R_τ)_v = (2ub + E_L)/(8(1 - q)²(1 + τb)) ≤ 7/96`.
+The order strip `x + (8/17)(α - 1) ≤ β ≤ x + (4/5)(α - 1)` (from the strong and `9/8` orders) is a
+hypothesis. -/
 theorem hs1_ratio {x be al u rho τ t EL : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
     (hax : al < x) (hxb : x ≤ be) (hD : 0 < hsDg x be al) (hu : 3 / 4 ≤ u) (hu0 : u ≤ hsU0 x)
     (hurA : u ≤ m2U (hsRA al be)) (hρ : 0 < rho) (hq7 : hsQ al rho ≤ 1 / 7) (hτ : 2 ≤ τ)
@@ -69,12 +66,10 @@ theorem hs1_ratio {x be al u rho τ t EL : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (ha
         (1 + τ * (hsLam al rho * t - hsLam al rho * rho * hsDg x be al)) :=
   hs14_ratio_strip hx hx2 hal hax hxb hD hu hu0 hurA hρ hq7 hτ hτq ht htr hB hEL hlo hhi
 
-/-- **The sharper slope** (`SHARP_LOW_RATIO_CORRECTED_CAP` (17)-(19), `CORRECTED_CAP_SCALE` (1)-(7);
-inventory HS-S01 C7, C8, C16): for `1 < x ≤ 2`, `1 ≤ α ≤ x`, `β ≥ x + 8x(α - 1)/(9x + 8)`,
+/-- **The sharper slope**: for `1 < x ≤ 2`, `1 ≤ α ≤ x`, `β ≥ x + 8x(α - 1)/(9x + 8)`,
 `0 < p ≤ α/(α + β)`, `3/4 ≤ u ≤ U(1/S)`: `3α²L(p) > 7J(2S - 1)`, `J = S[U(1/S) - u]`.
-Status: stable.
-Route: `hs14_slope_gen` (lower `β`, affine in `u`) with the identity (18) (`hs14_bot_sharp`); the upper
-norm endpoint by `hs14_Lp_top_pos` (monotone in `A₃`, no discriminant identity). -/
+Proof: `hs14_slope_gen` (lower `β`, affine in `u`) with the identity `hs14_bot_sharp`; the
+upper norm endpoint by `hs14_Lp_top_pos` (monotone in `A₃`). -/
 theorem hs1_slope {x be al u p : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al ≤ x)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be) (hp : 0 < p) (hpr : p ≤ hsRA al be)
     (hu : 3 / 4 ≤ u) (huS : u ≤ m2U (1 / (1 + x))) :
@@ -92,9 +87,9 @@ theorem hs1_slope {x be al u p : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ 
     exact div_le_div_of_nonneg_left hal0.le (by positivity) (by linarith)
   exact hs14_slope_gen hx hal hax hxb0 hb hp hpr hu huS (hs14_bot_sharp hx hal hax hp hpr')
 
-/-- **The fixed-`p` decrease** (`SHARP_LOW_RATIO_CORRECTED_CAP` (20); inventory HS-S01 C9, C17):
-under the hypotheses of `hs1_slope`, `q ↦ Γ_*(q) - (7/96)R*_{p/q}(q)` is strictly decreasing on
-`(0, 1/7]` (`∂_q Γ_* ≤ J(2S - 1)/(8α²(1 - q)²) < (7/96)L(p)`). Status: stable. -/
+/-- **The fixed-`p` decrease**: under the hypotheses of `hs1_slope`,
+`q ↦ Γ_*(q) - (7/96)R*_{p/q}(q)` is strictly decreasing on `(0, 1/7]`
+(`∂_q Γ_* ≤ J(2S - 1)/(8α²(1 - q)²) < (7/96)L(p)`). -/
 theorem hs1_scale_dec {x be al u p q₁ q₂ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
     (hax : al ≤ x) (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be) (hp : 0 < p)
     (hpr : p ≤ hsRA al be) (hu : 3 / 4 ≤ u) (huS : u ≤ m2U (1 / (1 + x))) (hq₁ : 0 < q₁)
@@ -133,10 +128,10 @@ theorem hs1_scale_dec {x be al u p q₁ q₂ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2)
     rw [hL]; unfold hsPhi; ring
   nlinarith
 
-/-! ### The `τ = 2` slope (`SHARP_LOW_RATIO_CORRECTED_CAP` (21)-(25)) -/
+/-! ### The `τ = 2` slope -/
 
 /-- `F(1/7, 1) > 1/7` in the cleared form `4u/7 < G₁(1/7)`, `G₁ = 4uF(·, 1)`, on
-`3/4 ≤ u ≤ u₀` (`SHARP_LOW_RATIO_CORRECTED_CAP` (25): concave in `u`, two endpoint values). -/
+`3/4 ≤ u ≤ u₀` (concave in `u`, two endpoint values). -/
 private theorem hs1_G1_seventh {S u : ℝ} (hS : 2 < S) (hu : 3 / 4 ≤ u)
     (hu0 : u ≤ 3 / 4 + (S - 2) ^ 2 / (12 * S ^ 2)) :
     4 * u / 7 < 4 * u * (1 - 2 * (1 / 7) + 4 * S ^ 2 * (1 / 7) ^ 2) -
@@ -180,8 +175,7 @@ private theorem hs1_G1_seventh {S u : ℝ} (hS : 2 < S) (hu : 3 / 4 ≤ u)
   rw [hgu] at this
   linarith
 
-/-- `F(q, 1) > 1/7` for `0 < q ≤ 1/7` (`SHARP_LOW_RATIO_CORRECTED_CAP` (24)-(25): convex in `q`
-with negative slope at `1/7`). -/
+/-- `F(q, 1) > 1/7` for `0 < q ≤ 1/7` (convex in `q` with negative slope at `1/7`). -/
 private theorem hs1_G1_pos {S u q : ℝ} (hS : 2 < S) (hS3 : S ≤ 3) (hu : 3 / 4 ≤ u)
     (hu0 : u ≤ 3 / 4 + (S - 2) ^ 2 / (12 * S ^ 2)) (hq7 : q ≤ 1 / 7) :
     4 * u / 7 < 4 * u * (1 - 2 * q + 4 * S ^ 2 * q ^ 2) -
@@ -212,7 +206,7 @@ private theorem hs1_G1_pos {S u q : ℝ} (hS : 2 < S) (hS3 : S ≤ 3) (hu : 3 / 
     nlinarith
   linarith
 
-/-- `F(q, 0) > 1/7` (`SHARP_LOW_RATIO_CORRECTED_CAP` (23)). -/
+/-- `F(q, 0) > 1/7`. -/
 private theorem hs1_G0_pos {u q h : ℝ} (hu : 3 / 4 ≤ u) (hu41 : u ≤ 41 / 54) (hq : 0 < q)
     (hq7 : q ≤ 1 / 7) (hh0 : 0 ≤ h) (hh : h ≤ 5 / 12) :
     4 * u / 7 < 4 * u * (1 - (2 + (3 - h)) * q + 4 * q ^ 2) - (u - h + 2 * h * q) ^ 2 := by
@@ -225,9 +219,9 @@ private theorem hs1_G0_pos {u q h : ℝ} (hu : 3 / 4 ≤ u) (hu41 : u ≤ 41 / 5
     apply mul_le_mul_of_nonneg_left _ (by linarith); nlinarith
   nlinarith
 
-/-- **`q(R*_2)' > q`** (`SHARP_LOW_RATIO_CORRECTED_CAP` (21)-(22)): with `a = α⁻²`, `ε = 1 - a`,
-`h = -E₀`, `X = qΔ`, `1 - [2 + ε(3 - h)]q + 4Aq² + 4uX² - [2(u - h) + 4K₀q]X > q` (complete the
-square in `X`; concave in `a`; the endpoint signs `hs1_G0_pos`, `hs1_G1_pos`). -/
+/-- **`q(R*_2)' > q`**: with `a = α⁻²`, `ε = 1 - a`, `h = -E₀`, `X = qΔ`,
+`1 - [2 + ε(3 - h)]q + 4Aq² + 4uX² - [2(u - h) + 4K₀q]X > q` (complete the square in `X`; concave in
+`a`; the endpoint signs `hs1_G0_pos`, `hs1_G1_pos`). -/
 private theorem hs1_phi_gt {S u q a X h : ℝ} (hS : 2 < S) (hS3 : S ≤ 3) (hu : 3 / 4 ≤ u)
     (hu0 : u ≤ 3 / 4 + (S - 2) ^ 2 / (12 * S ^ 2)) (hq : 0 < q) (hq7 : q ≤ 1 / 7) (ha : 0 ≤ a)
     (ha1 : a ≤ 1) (hh : h = S * (1 - u) - 1 / S) :
@@ -297,9 +291,8 @@ private theorem hs1_phi_gt {S u q a X h : ℝ} (hS : 2 < S) (hS3 : S ≤ 3) (hu 
     linarith
   exact lt_of_mul_lt_mul_left key (by linarith)
 
-/-- **The `τ = 2` decrease** (`SHARP_LOW_RATIO_CORRECTED_CAP` (21)-(26); inventory HS-S01 C18, C19):
-for `1 < x ≤ 2`, `α ≥ 1`, `β ≥ x`, `3/4 ≤ u ≤ u₀(x)`, `q ↦ Γ_*(q) - (7/96)R*_2(q)` is strictly
-decreasing on `(0, 1/7]` (`q·R*_2' > 1/7 ≥ q`). Status: stable.
+/-- **The `τ = 2` decrease**: for `1 < x ≤ 2`, `α ≥ 1`, `β ≥ x`, `3/4 ≤ u ≤ u₀(x)`,
+`q ↦ Γ_*(q) - (7/96)R*_2(q)` is strictly decreasing on `(0, 1/7]` (`q·R*_2' > 1/7 ≥ q`).
 Proof: `hs1_phi_gt` (square completion in `X = qΔ`, concavity in `a = α⁻²`, endpoint signs
 `hs1_G0_pos`, `hs1_G1_pos`) and `hs14_Rs2_inc`; `Γ_*` increment by `hs14_Gs_inc`. -/
 theorem hs1_tau2_dec {x be al u q₁ q₂ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
@@ -317,7 +310,7 @@ theorem hs1_tau2_dec {x be al u q₁ q₂ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (h
       rw [add_comm x 1]
       exact div_le_div_of_nonneg_left (by positivity) (by positivity) (by nlinarith)
     unfold hsU0 at hu0; linarith
-  -- the increment of `Γ_*` (`SHARP_LOW_RATIO_CORRECTED_CAP` (26))
+  -- the increment of `Γ_*`
   have hG := hs14_Gs_inc (by linarith) hal huS hq₁.le hq.le (by linarith : q₂ < 1)
   have hH0 : 0 ≤ (1 + x) * (m2U (1 / (1 + x)) - u) := mul_nonneg hS.le (by linarith)
   have hH : (1 + x) * (m2U (1 / (1 + x)) - u) ≤ 1 / 12 := by
@@ -342,7 +335,7 @@ theorem hs1_tau2_dec {x be al u q₁ q₂ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (h
     nlinarith
   have hG2 : hsGs x al u q₂ - hsGs x al u q₁ ≤ 5 / 96 * (49 / 36 * (q₂ - q₁)) :=
     hG.trans (mul_le_mul hc hd (div_nonneg (by linarith) (by nlinarith)) (by norm_num))
-  -- the residual slope `(R*_2)' > 1` (`SHARP_LOW_RATIO_CORRECTED_CAP` (21)-(25))
+  -- the residual slope `(R*_2)' > 1`
   have hrA : 0 < hsRA al be := by unfold hsRA; apply div_pos <;> linarith
   have hR := hs14_Rs2_inc hrA hq₁ hq (fun q hq' => by
     have hq0 : 0 < q := hq₁.trans hq'.1
@@ -366,9 +359,8 @@ theorem hs1_tau2_dec {x be al u q₁ q₂ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (h
     exact this)
   nlinarith
 
-/-- **The β-dependent ceiling** (`LOW_RATIO_CENTRAL_HAND_SIGN` (16)-(17); inventory HS-S01 D-R10):
-for `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`:
-`ū(x, β) ≤ u_ℓ(x, β)`. Status: stable. -/
+/-- **The β-dependent ceiling**: for `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`,
+`x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`: `ū(x, β) ≤ u_ℓ(x, β)`. -/
 theorem hs1_u_ell {x al be : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hal' : al ≤ 6 / 5)
     (hxb : x ≤ be) (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
     hsUbar x be ≤ hsUl x be := by
@@ -417,12 +409,12 @@ theorem hs1_u_ell {x al be : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (hal : 1 �
     div_nonneg (mul_nonneg hbx (by linarith)) (by positivity)
   linarith
 
-/-! ### Heavy terminal face signs -/
+/-! ### Terminal face signs -/
 
-/-- **The central low-ratio face** (`LOW_RATIO_CENTRAL_HAND_SIGN` (6); inventory HS-S01 D-R15): for
-`1 < x ≤ 2`, `1 ≤ α`, `6α² ≤ x(x + 2)` (`q_c ≤ 1/7`), the strip
-`x + 8x(α - 1)/(9x + 8) ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`, `3/4 ≤ u ≤ u_ℓ(x, β)` and
-every `τ ∈ [2, T]`, `T = r_A/q_c`: `Γ_*(q_c) - (7/96)R*_τ(q_c) > 9193/50000`. Status: heavy. -/
+/-- **The central low-ratio face**: for `1 < x ≤ 2`, `1 ≤ α`, `6α² ≤ x(x + 2)` (`q_c ≤ 1/7`), the
+strip `x + 8x(α - 1)/(9x + 8) ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`, `3/4 ≤ u ≤ u_ℓ(x, β)` and
+every `τ ∈ [2, T]`, `T = r_A/q_c`: `Γ_*(q_c) - (7/96)R*_τ(q_c) > 9193/50000`. Proved in
+`Heavy/S1HandCentral`. -/
 theorem hs1_central_face {x al be u τ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) (hu : 3 / 4 ≤ u)
@@ -430,10 +422,10 @@ theorem hs1_central_face {x al be u τ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal 
     9193 / 50000 < hsGs x al u (hsQc x al) - 7 / 96 * hsRs x be al u (hsQc x al) τ := by
   apply hs1_central_face_proof <;> assumption
 
-/-- **The outer low-ratio face** (`LOW_RATIO_OUTER_HAND_SIGN` §6; inventory HS-S01 D-R22): for
-`1 < x ≤ 2`, `1 ≤ α ≤ x`, `x ≤ β ≤ αx`, `x(x + 2) ≤ 6α²` (`q_c ≥ 1/7`), the strip of
-`hs1_central_face`, `u_f(x) ≤ u ≤ V̄(x)` with `u ≤ u_ℓ(x, β)` when `x ≥ 3/2` and `α ≤ 6/5`, and every
-`τ ∈ [2, 7r_A]`: `Γ_*(1/7) - (7/96)R*_τ(1/7) > 9193/50000`. Status: heavy. -/
+/-- **The outer low-ratio face**: for `1 < x ≤ 2`, `1 ≤ α ≤ x`, `x ≤ β ≤ αx`, `x(x + 2) ≤ 6α²`
+(`q_c ≥ 1/7`), the strip of `hs1_central_face`, `u_f(x) ≤ u ≤ V̄(x)` with `u ≤ u_ℓ(x, β)` when
+`x ≥ 3/2` and `α ≤ 6/5`, and every `τ ∈ [2, 7r_A]`: `Γ_*(1/7) - (7/96)R*_τ(1/7) > 9193/50000`.
+Proved in `Heavy/S1HandOuter`. -/
 theorem hs1_outer_face {x al be u τ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb : x ≤ be) (hbx : be ≤ al * x) (hqc : x * (x + 2) ≤ 6 * al ^ 2)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
@@ -443,9 +435,8 @@ theorem hs1_outer_face {x al be u τ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 
     9193 / 50000 < hsGs x al u (1 / 7) - 7 / 96 * hsRs x be al u (1 / 7) τ := by
   apply hs1_outer_face_proof <;> assumption
 
-/-- **`D > 0` on the S1 range** (inventory HS-S01 C12; route: `β ≤ αx` and the quadratic
-`(1 + 2x)α² - 2x²α + (1 + 2x)` with negative discriminant for `x < 1 + √2`, instead of the
-positive-diagonal theorem). -/
+/-- **`D > 0` on the S1 range** (from `β ≤ αx` and the quadratic `(1 + 2x)α² - 2x²α + (1 + 2x)`,
+which has negative discriminant for `x < 1 + √2`). -/
 private theorem hs1_D_pos {x be al : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hax : al ≤ x)
     (hbx : be ≤ al * x) : 0 < hsDg x be al := by
   unfold hsDg
@@ -463,8 +454,8 @@ private theorem hs1_D_pos {x be al : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hax : al
     exact pos_of_mul_pos_right this (by linarith)
   nlinarith
 
-/-- **The order strip** (`SHARP_LOW_RATIO_CORRECTED_CAP` (2)): the strong lower order and the
-upper order `9/8` give `x + 8x(α - 1)/(9x + 8) ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`. -/
+/-- **The order strip**: the strong lower order and the upper order `9/8` give
+`x + 8x(α - 1)/(9x + 8) ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`. -/
 private theorem hs1_strip {x be al : ℝ} (hx : 1 < x)
     (hso : be / x + hsKs x * (be - x) ≤ al) (huo : al ≤ be / x + 9 / 8 * (be - x)) :
     x + 8 * x * (al - 1) / (9 * x + 8) ≤ be ∧
@@ -495,14 +486,13 @@ namespace HsData
 
 variable (H : HsData)
 
-/-- **The corrected envelope cap** (`SHARP_LOW_RATIO_CORRECTED_CAP` (16), `CORRECTED_ENVELOPE_CAP`
-(5)-(9); inventory HS-S01 C1-C4, C15): for actual data with `x ≤ 2`,
+/-- **The corrected envelope cap**: for actual data with `x ≤ 2`,
 `Γ_actual ≥ Γ_*(q) - (7/96)R*_τ(q)` at the actual `q`, `τ`, shape and `u` (two-segment monotonicity
 of `Γ - (7/96)R_τ`: the `v`-segment by concavity, the `t`-segment along `v = U(t)`, both from
 `hs1_ratio` with `hs1_root_cap`, `hs_B_pos`; endpoint values `root_zero`, `hs_env_scale`).
-Status: stable.
-Route: the generic two-segment lemma `HsData.hs14_cap_data`; the ratio bound is `hs14_ratio_strip`
-(`hs1_ratio` plus the strip (13), obtained from `strong_order`, `upper_order_98`), not `hs1_ratio`. -/
+Proof: the generic two-segment lemma `HsData.hs14_cap_data`, with the ratio bound
+`hs14_ratio_strip` (`hs1_ratio` plus the order strip, obtained from `strong_order`,
+`upper_order_98`). -/
 theorem hs1_cap_env (hx2 : H.x ≤ 2) :
     hsGs H.x H.al H.u H.q - 7 / 96 * hsRs H.x H.be H.al H.u H.q H.τ ≤ H.Γ := by
   have hx := H.one_lt_x
@@ -530,16 +520,14 @@ theorem hs1_cap_env (hx2 : H.x ≤ 2) :
     linarith)
   exact h
 
-/-- **Gate S1** (`LOWER_RATIO_HAND_EXCLUSION`; inventory HS-S01 M19, C20, C24): `x > 2`.
-Proof plan: if `x ≤ 2`: `hs1_cap_env`; with `p = τq` (`q ≤ p/2`, `p < r_A`), raise `q` at fixed `p`
+/-- **Gate S1**: `x > 2`.
+Proof: if `x ≤ 2`: `hs1_cap_env`; with `p = τq` (`q ≤ p/2`, `p < r_A`), raise `q` at fixed `p`
 to `min{q_c, 1/7, p/2}` (`hs1_scale_dec`, `hs_phi_eq`; strip from `strong_order`,
 `upper_order_98`), then at `τ = 2` to `min{q_c, 1/7}` (`hs1_tau2_dec`; `hs_V_le_U0`, `u_le_V`); on
 the central face (`hs_qc_le_iff`) `hs1_central_face` with `u ≤ ū ≤ u_ℓ` (`hs_sec_le_ubar`,
 `hs1_u_ell`; `x ≥ 23/14`, `α ≤ 1351/1170`), on the outer face `hs1_outer_face` with
 `hs_sec_gt_floor`, `hs_V_le_Vbar`, `hs1_u_ell`; this gives `Γ > 9193/50000`, contradicting
-`cas_lt`.
-Status: assembly (proved from the leaves above; the terminal faces cover the full duration range,
-so no duration maximum is needed). -/
+`cas_lt`. The terminal faces cover the full duration range, so no duration maximum is needed. -/
 theorem s1 : 2 < H.x := by
 
   by_contra hcon

@@ -17,8 +17,6 @@ The upstream local-convexity theorem supplies convexity from the actual a.e.
 curvature and Lipschitz derivative data. No simple curve or convex disk is assumed.
 The hypotheses describe a global cyclic smooth extension; constructing that
 extension from an integral-admissible trajectory is a separate analytic step.
-
-Source draft only: compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

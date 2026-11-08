@@ -5,21 +5,19 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOA1
 /-!
 # Gate S1 by hand, outer face, branch B: the test `F₁`
 
-`SHORT_OUTER_RECIPROCAL_LOW_SHAPE`, `SHORT_OUTER_BETA_WIDE_NORM`,
-`SHORT_OUTER_RECIPROCAL_RESIDUE`, `SHORT_OUTER_UPPER_SHAPE_TERMINAL`,
-`SHORT_OUTER_LOW_SHAPE_F1_TERMINAL`. On `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `6α² ≥ x(x + 2)`,
+On `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `6α² ≥ x(x + 2)`,
 `1/2 ≤ C ≤ 10/13`, `3/4 ≤ u ≤ 19/25`:
 
-* `w₀ > 6/7` (`SHORT_OUTER_BETA_WIDE_NORM` (6)-(10)), so `β ↦ F₁` is concave and `C ∈ {1/2, 10/13}`;
+* `w₀ > 6/7` (its value at `u = 19/25` minus `6/7` has a positive numerator, and `w₀` decreases
+  in `u`), so `β ↦ F₁` is concave and `C ∈ {1/2, 10/13}`;
 * norm concavity gives `u ∈ {3/4, 19/25}`;
 * the reciprocal-shape curvature is at most `5b₃ + 2b₂ + 21/800 < 0` on `r ∈ [5/6, 1]`
-  (`(9)-(11)`, residue `Q < 0`), so `α` is `6/5` or the lower shape `α_*(x) = 1` (`x ≤ 5/3`),
-  `(6x + 3)/13` (`x ≥ 5/3`, below the cap by `(13)`);
+  (residue `Q < 0`), so `α` is `6/5` or the lower shape `α_*(x) = 1` (`x ≤ 5/3`),
+  `(6x + 3)/13` (`x ≥ 5/3`, below the cap);
 * the terminal curves are positive.
 
-Route: the residue, curvature and terminal signs are univariate signs in `x`, each cleared and
-bounded termwise, instead of the partial-fraction derivative sources and the grid evaluation of
-`SHORT_OUTER_LOW_SHAPE_F1_TERMINAL`.
+The residue, curvature and terminal signs are univariate signs in `x`, each cleared and bounded
+termwise.
 
 ## Main API
 
@@ -32,7 +30,7 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- `N(3/2 + z, 6/5 - c)/1225` (`SHORT_OUTER_BETA_WIDE_NORM` (6)-(8)). -/
+/-- `N(3/2 + z, 6/5 - c)/1225`, where `w₀(x, α, 19/25) - 6/7 = N/(1225α⁴(x + 1))`. -/
 noncomputable def hl1PwN (c z : ℝ) : ℝ :=
   -36 / 1225 * c ^ 4 * z ^ 2 - 311 / 1225 * c ^ 4 * z - 23 / 70 * c ^ 4 - 72 / 1225 * c ^ 3 * z ^ 3 - 1096 / 6125 * c ^ 3 * z ^ 2 + 5534 / 6125 * c ^ 3 * z + 1992 / 1225 * c ^ 3 + 2036 / 6125 * c ^ 2 * z ^ 3 + 6572 / 4375 * c ^ 2 * z ^ 2 - 7086 / 30625 * c ^ 2 * z - 32961 / 12250 * c ^ 2 - 2608 / 4375 * c * z ^ 3 - 451326 / 153125 * c * z ^ 2 - 334686 / 153125 * c * z + 82989 / 61250 * c + 7631 / 21875 * z ^ 3 + 2783533 / 1531250 * z ^ 2 + 6328071 / 3062500 * z + 253971 / 1225000
 
@@ -821,7 +819,7 @@ theorem hl1o_B_T1_v {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (5 / 3 : �
     rw [hid]; exact div_pos (by linarith) hD
   linarith
 
-/-- `w₀ > 6/7` on the small shapes (`SHORT_OUTER_BETA_WIDE_NORM` (10)). -/
+/-- `w₀ > 6/7` on the small shapes. -/
 theorem hl1o_B_w0 {x a u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a) (ha2 : a ≤ 6 / 5)
     (hu : u ≤ 19 / 25) : 6 / 7 < hl1ow0 x a u := by
   have ha0 : 0 < a := by linarith
@@ -839,7 +837,7 @@ theorem hl1o_B_w0 {x a u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ 
   have h3 : 0 < hl1PwN (6 / 5 - a) (x - 3 / 2) / (a ^ 4 * (x + 1)) := div_pos hP (by positivity)
   linarith
 
-/-- **Reciprocal-shape concavity of `F₁` on the small shapes** (`(10)`). -/
+/-- **Reciprocal-shape concavity of `F₁` on the small shapes**. -/
 theorem hl1o_B_recip {x a aS C u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (haS1 : 1 ≤ aS) (haS : aS ≤ a)
     (ha2 : a ≤ 6 / 5) (hC0 : 1 / 2 ≤ C) (hC1 : C ≤ 10 / 13) (hu0 : 3 / 4 ≤ u) (hu1 : u ≤ 19 / 25)
     (hQ : hl1Q1 x C u < 0) (hM : 2 * hl1b2 x C u + 5 * hl1b3 x C u < -21 / 800) :

@@ -11,28 +11,25 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0HandOutF2a
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0HandOutF2b
 
 /-!
-# Hand proof of the smaller-short case, gate S0: the three heavy face signs
+# Hand proof of the smaller-short case, gate S0: the three face signs
 
 The leaves `hs0_central_tau_two`, `hs0_central_duration` and `hs0_outer_tests` of gate S0, proved
-with their exact statements as `*_proof` by the hand arguments of `archive/lighter-proofs/`
-(PR #2 rows S1.3, S1.4):
+with their exact statements as `*_proof`:
 
-* `SHORT_DURATION_CENTRAL_TAU_TWO.md` (with `SHORT_DURATION_CENTRAL_LOWER_FACE.md`) for
-  `CENTRAL_TAU_TWO_SIGN` (3): beta convexity, the lower face `β = x` and four upper faces
+* the central `τ = 2` test: beta convexity, the lower face `β = x` and four upper faces
   (`hl0_central_two`, `Heavy/S0HandCen*`);
-* `SHORT_DURATION_CENTRAL_UPPER_FACES.md` (with the lower face) for `CENTRAL_DURATION_FACES` (5)
-  (`hl0_central_T`, `hl0_central_8`);
-* `SHORT_SCALE_OUTER_LARGE_RATIO.md` for `OUTER_SCALE_LARGE_RATIO_SIGN` (7): incoming monotonicity
-  and the two majorants (`Heavy/S0HandOut`), the cubic comparison on the large shapes
-  `α ≥ (2x + 3)/5` (`Heavy/S0HandOutL`), beta convexity and five faces on the strip
-  (`Heavy/S0HandOutS`, `Heavy/S0HandOutF*`); assembled here (`hl0_outer_T`, `hl0_outer_8`,
-  `hl0_outer_2`).
+* the central `τ = T` and `τ = 8T/9` tests, by the same faces (`hl0_central_T`, `hl0_central_8`);
+* the three outer tests at `q = 1/7`: incoming monotonicity and the two majorants
+  (`Heavy/S0HandOut`), the cubic comparison on the large shapes `α ≥ (2x + 3)/5`
+  (`Heavy/S0HandOutL`), beta convexity and five faces on the strip (`Heavy/S0HandOutS`,
+  `Heavy/S0HandOutF*`); assembled here (`hl0_outer_T`, `hl0_outer_8`, `hl0_outer_2`).
 
-The expanded numerators are computed inside Lean from their factored source formulas by products of
-coefficient lists (`hl0Mul2`; never printed), every identity between a source formula and its list is
-proved generically (`ring` on at most seven atoms) and every sign by the uniform coefficient bound of
-the notes (rule (6)) evaluated by `norm_num`. The only printed polynomials are the twelve `P_{ij}` of
-the large-shape appendix; there is no generated certificate or coefficient table.
+The expanded numerators are computed inside Lean from their factored formulas by products of
+coefficient lists (`hl0Mul2`; never printed), every identity between a factored formula and its
+list is proved generically (`ring` on at most seven atoms) and every sign by the uniform
+coefficient bound `hl0Low` (constant term plus the negative terms at the upper end) evaluated by
+`norm_num`. The only printed polynomials are the twelve `P_{ij}` of the large-shape comparison;
+there is no generated certificate or coefficient table.
 
 ## Main API
 
@@ -43,8 +40,7 @@ the large-shape appendix; there is no generated certificate or coefficient table
 
 namespace SmoothedOctagon
 
-/-- **The central face, `τ = 2` test** (`CENTRAL_TAU_TWO_SIGN` (3); inventory HS-S01 B7): the
-statement of `hs0_central_tau_two`. -/
+/-- **The central face, `τ = 2` test**: the statement of `hs0_central_tau_two`. -/
 theorem hs0_central_tau_two_proof {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -52,8 +48,8 @@ theorem hs0_central_tau_two_proof {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x �
       (5 / (2 * (hsRA al be / hsQc x al)) - 11 / 9) (1 / 2) < 0 :=
   hl0_central_two hx hx9 hal hal' hxb hb
 
-/-- **The central face, `τ = T` and `τ = 8T/9` tests** (`CENTRAL_DURATION_FACES` (5); inventory
-HS-S01 B8): the statement of `hs0_central_duration`. -/
+/-- **The central face, `τ = T` and `τ = 8T/9` tests**: the statement of
+`hs0_central_duration`. -/
 theorem hs0_central_duration_proof {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -140,7 +136,7 @@ theorem hl0_outer_gen {G : ℝ → ℝ → ℝ → ℝ → ℝ} {x a b : ℝ} (h
     have := hlarge ham.le hb0 hb32
     linarith
 
-/-- **The outer `τ = T` test** (`OUTER_SCALE_LARGE_RATIO_SIGN` (7)). -/
+/-- **The outer `τ = T` test** at `u = ū(x, β)`, from the three cases of `hl0_outer_gen`. -/
 theorem hl0_outer_T {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : (22 * x + 20) / 55 ≤ a)
     (hax : a ≤ x) (hb : x + 4 * x * (a - 1) / (5 * x + 4) ≤ b)
     (hb' : b ≤ x + x * (7 * x + 1) * (a - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -160,7 +156,7 @@ theorem hl0_outer_T {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : (22
     · linarith [max_lt h0 (hl0ST_3_neg h1 h2 hal ham)]
     · linarith [max_lt h0 (hl0ST_4_neg h1 h2 hal ham)]
 
-/-- **The outer `τ = 8T/9` test** (`OUTER_SCALE_LARGE_RATIO_SIGN` (7)). -/
+/-- **The outer `τ = 8T/9` test** at `u = ū(x, β)`, from the three cases of `hl0_outer_gen`. -/
 theorem hl0_outer_8 {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : (22 * x + 20) / 55 ≤ a)
     (hax : a ≤ x) (hb : x + 4 * x * (a - 1) / (5 * x + 4) ≤ b)
     (hb' : b ≤ x + x * (7 * x + 1) * (a - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -180,7 +176,7 @@ theorem hl0_outer_8 {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : (22
     · linarith [max_lt h0 (hl0S8_3_neg h1 h2 hal ham)]
     · linarith [max_lt h0 (hl0S8_4_neg h1 h2 hal ham)]
 
-/-- **The outer `τ = 2` test** (`OUTER_SCALE_LARGE_RATIO_SIGN` (7)). -/
+/-- **The outer `τ = 2` test** at `u = ū(x, β)`, from the three cases of `hl0_outer_gen`. -/
 theorem hl0_outer_2 {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : (22 * x + 20) / 55 ≤ a)
     (hax : a ≤ x) (hb : x + 4 * x * (a - 1) / (5 * x + 4) ≤ b)
     (hb' : b ≤ x + x * (7 * x + 1) * (a - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -200,8 +196,7 @@ theorem hl0_outer_2 {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : (22
     · linarith [max_lt h0 (hl0S2_3_neg h1 h2 hal ham)]
     · linarith [max_lt h0 (hl0S2_4_neg h1 h2 hal ham)]
 
-/-- **The outer face, three tests** (`OUTER_SCALE_LARGE_RATIO_SIGN` (7); inventory HS-S01 B9): the
-statement of `hs0_outer_tests`. -/
+/-- **The outer face, three tests**: the statement of `hs0_outer_tests`. -/
 theorem hs0_outer_tests_proof {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (hal : (22 * x + 20) / 55 ≤ al) (hax : al ≤ x)
     (hb : x + 4 * x * (al - 1) / (5 * x + 4) ≤ be)

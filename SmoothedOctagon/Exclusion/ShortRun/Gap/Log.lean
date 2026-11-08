@@ -87,7 +87,7 @@ theorem ag_sigma_superadd {a b c : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hc : 0 �
   rw [← add_div]
   exact div_le_div_of_nonneg_right (by nlinarith) hn.le
 
-/-- **One reverse-switch factor at its boundary** (MGSRAE (4)-(5)): for `0 < r < 1/2` and
+/-- **One reverse-switch factor at its boundary**: for `0 < r < 1/2` and
 `3/4 ≤ u ≤ U(r)`, with `s = √(4u - 3)` (so `u = U((1 - s)/2)`), the term
 `r - log r - (1 - u)/r` is at most its value `σ(s) + log 2` at `r = (1 - s)/2`. -/
 theorem ag_phi_le {r u : ℝ} (hr0 : 0 < r) (hr : r < 1 / 2) (hu : 3 / 4 ≤ u)

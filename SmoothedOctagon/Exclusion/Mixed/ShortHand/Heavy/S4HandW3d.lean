@@ -5,22 +5,21 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW3c
 /-!
 # Gate S4, hand proof W3 (d): the cost along the lower norm and its normalized numerator
 
-`archive/lighter-proofs/SHORT_CASIMIR_RATIO_DERIVATIVE.md` §§2-3, (7)-(8). With
-`E = S³(u - 1) + 3S - 1`, `M = S²(S² - S + 1)`, `W = M + uD² - DE`, the cost bracket of `Ψ` is
+With `E = S³(u - 1) + 3S - 1`, `M = S²(S² - S + 1)`, `W = M + uD² - DE`, the cost bracket of `Ψ` is
 `r₁ = T/(aBK) + log(2aB/K)`,
 
 `T = (u - 1)B²K + a²K + aBK - a³B - aB(2uD - E) + W - 3K²/4`
 
 (an identity in the atoms `a, B, K, D, E, M, u`, `hl46_w3_r1_atoms`). As `E` is affine in `u`
 with slope `S³`, `r₁(u) = r₁(v) + (u - v)ρ`, `ρ = T_u/(aBK)` (`hl46_w3_psi_split`), which is the
-form in which note (7) compares the norm curve `U` with the lower norm `v`.
+form in which the norm curve `U` is compared with the lower norm `v`.
 
 Along `b = x(1 + d)`, `u = v(x, d)` (`a` fixed), the cost `F = r₁(x, v)` has derivative
 `f = n/(aB²K²) - 1/25` (`hl46_w3_F_deriv`), where
 
 `n = T_x BK - T(B_x K + BK_x) + aBK(KB_x - BK_x) + aB²K²/25`
 
-and `T_x` is the chain rule in the atoms (`v_x = 9/1000`). The note's numerator (8) is
+and `T_x` is the chain rule in the atoms (`v_x = 9/1000`). The normalized numerator is
 `N = (10/3)AC²H²(f + 1/25) = (781250/3)n` (`A = 5a`, `C = 5B`, `H = 25K`).
 
 ## Main API
@@ -107,10 +106,10 @@ noncomputable def hl46W3n (x d : ℝ) : ℝ :=
       (hl46W3K x d * (1 + d) - hl46W3B x d * (2 * x + 2)) +
     (1 + 13 / 5 * d) * hl46W3B x d ^ 2 * hl46W3K x d ^ 2 / 25
 
-/-- The note's normalized numerator (8): `N = (10/3)AC²H²(f + 1/25) = (781250/3)n`. -/
+/-- The normalized numerator `N = (10/3)AC²H²(f + 1/25) = (781250/3)n`. -/
 noncomputable def hl46W3N (x d : ℝ) : ℝ := 781250 / 3 * hl46W3n x d
 
-/-- `Ψ` on the shape curve, split at the lower norm (note (7)). -/
+/-- `Ψ` on the shape curve, split at the lower norm. -/
 theorem hl46_w3_psi_eq {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d) (hd' : d ≤ 1 / 19)
     (u : ℝ) :
     hh46S4PsiC x (x * (1 + d)) (1 + 13 / 5 * d) u =

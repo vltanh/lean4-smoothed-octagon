@@ -7,14 +7,13 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandOuter
 /-!
 # Gate S3: the displacement bound `δ < 1/19`
 
-`MIXED_SMALLER_SHORT_DISPLACEMENT_HAND_EXCLUSION`. The leaves are in `S3Leaves.lean`; the central
-and outer face signs (`DISPLACEMENT_CENTRAL_FACE` §2, `DISPLACEMENT_OUTER_FACE`) are the hand proofs
-`hs3_central_alpha_proof` (`Heavy/S3HandCentral.lean`, after
-`archive/lighter-proofs/SHORT_DISPLACEMENT_CENTRAL_SHAPE.md`) and `hs3_outer_face_proof`
-(`Heavy/S3HandOuter.lean`, after `archive/lighter-proofs/SHORT_DISPLACEMENT_OUTER_COMPLETE.md`).
-Both are stated on the actual caller's shapes: the central sign keeps the central cap
-`6α² ≤ x(x + 2)` (instead of `α ≤ 89/72`), the outer sign keeps `x(x + 2) ≤ 6α²` and the lower
-short-order slope `g ≥ 8/(9x + 8)` (instead of `α ≥ a₀(x)`, `g ≥ 1/4`).
+On `2 ≤ x ≤ 13/6` a displacement `δ = β/x - 1 ≥ 1/19` is excluded: the weighted envelope is
+nonnegative at the actual root, the scale reduction carries a nonnegative duration test to the scale
+`q* = min{q_c, 1/7}`, and the central or outer face sign contradicts it. The leaves are in
+`S3Leaves.lean`; the central and outer face signs are the hand proofs `hs3_central_alpha_proof`
+(`Heavy/S3HandCentral.lean`) and `hs3_outer_face_proof` (`Heavy/S3HandOuter.lean`). Both are stated
+on the caller's shapes: the central sign assumes the central cap `6α² ≤ x(x + 2)`, the outer sign
+assumes `x(x + 2) ≤ 6α²` and the lower short-order slope `g ≥ 8/(9x + 8)`.
 
 ## Main API
 
@@ -29,7 +28,7 @@ open Set Real
 
 /-! ### Gate S3 -/
 
-/-- `D > 0` on the S3 domain (inventory HS-S3 R9(e); replaces the S0 positive diagonal):
+/-- `D > 0` on the S3 domain:
 `D ≥ 5α² - 4αx + 1 + 2x ≥ 6 - 2x` from `β < 2α`. -/
 private lemma hs3_D_pos {x be al : ℝ} (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
     (hax : al ≤ x) (hb2 : be < 2 * al) : 0 < hsDg x be al := by
@@ -38,7 +37,7 @@ private lemma hs3_D_pos {x be al : ℝ} (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
   have h2 : 0 ≤ (al - 1) * (5 * al + 5 - 4 * x) := mul_nonneg (by linarith) (by linarith)
   nlinarith
 
-/-- `V̄(x) ≤ 19/25` on `2 ≤ x ≤ 13/6` (inventory HS-S3 R9(d)). -/
+/-- `V̄(x) ≤ 19/25` on `2 ≤ x ≤ 13/6`. -/
 private lemma hs3_Vbar_le {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) : hsVbar x ≤ 19 / 25 := by
   rw [hsVbar]
   have : 2 * (x - 1) ^ 2 / ((x + 1) * (35 * x + 13)) ≤ 1 / 100 := by
@@ -46,8 +45,8 @@ private lemma hs3_Vbar_le {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) : hsVbar
     nlinarith
   linarith
 
-/-- The duration weight at `τ = 2` stays below `T + 1` (`DISPLACEMENT_WEIGHT_REDUCTION` (13):
-`kT² - (k + 16)T + 24 > 0`, discriminant `k² - 64k + 256 < 0` for `9/2 ≤ k ≤ 59/6`). -/
+/-- The duration weight at `τ = 2` stays below `T + 1` (`kT² - (k + 16)T + 24 > 0`, with
+discriminant `k² - 64k + 256 < 0` for `9/2 ≤ k ≤ 59/6`). -/
 private lemma hs3_n0_le {k T : ℝ} (hk : 9 / 2 ≤ k) (hk' : k ≤ 59 / 6) (hT : 0 < T) :
     2 + 4 * (4 - 3 * (2 / T)) / k ≤ T + 1 := by
   have hk0 : 0 < k := by linarith
@@ -58,9 +57,8 @@ private lemma hs3_n0_le {k T : ℝ} (hk : 9 / 2 ≤ k) (hk' : k ≤ 59 / 6) (hT 
   have h5 : 0 ≤ (k - 9 / 2) * (59 / 6 - k) := mul_nonneg (by linarith) (by linarith)
   nlinarith
 
-/-- The central boundary stays in the central-beta domain (`DISPLACEMENT_CENTRAL_FACE` §1):
-for `α > a_min(x)` and `6α² ≤ x(x + 2)`: `b(x, α) ≤ 2α`, `b(x, α) ≤ x + 5x(α - 1)/13` and
-`α ≤ (5x + 4)/12 ≤ 89/72`. -/
+/-- The central boundary stays in the central-beta domain: for `α > a_min(x)` and `6α² ≤ x(x + 2)`:
+`b(x, α) ≤ 2α`, `b(x, α) ≤ x + 5x(α - 1)/13` and `α ≤ (5x + 4)/12 ≤ 89/72`. -/
 private lemma hs3_b_facts {x al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hamin : hs3amin x < al)
     (h6 : 6 * al ^ 2 ≤ x * (x + 2)) :
     hs3b x al ≤ 2 * al ∧ hs3b x al ≤ x + 5 * x * (al - 1) / 13 ∧ al ≤ 89 / 72 := by
@@ -114,8 +112,7 @@ private lemma hs3_gate_us {x be al u ub qs : ℝ} (h1 : 2 ≤ x) (h2 : x ≤ 13 
     hs3_uslope h1 h2 (by linarith) hax hxb hD0 hDQ hD3 hqs0 hqs7 hrA13 (by positivity)
       (by linarith) hub⟩
 
-/-- **The scale reduction** (`DISPLACEMENT_HAND_EXCLUSION`, `DISPLACEMENT_WEIGHT_REDUCTION` §§4-5,
-`DISPLACEMENT_SCALE_CONTINUATION` §6): if the weighted envelope `Φ` at the actual normalized
+/-- **The scale reduction**: if the weighted envelope `Φ` at the actual normalized
 duration `p = τq` is nonnegative at the actual scale `q` and negative at `0`, then at every scale
 `q* ∈ [q, 1/7]` one of the duration tests is nonnegative. -/
 private lemma hs3_gate_max {x be al u q τ qs : ℝ} (h1 : 2 ≤ x) (h2 : x ≤ 13 / 6) (hal1 : 1 ≤ al)
@@ -162,8 +159,9 @@ private lemma hs3_gate_max {x be al u q τ qs : ℝ} (h1 : 2 ≤ x) (h2 : x ≤ 
     rw [div_mul_cancel₀ _ hqs0.ne', hm] at hd
     linarith
 
-/-- **The central face** `q* = q_c ≤ 1/7` (`DISPLACEMENT_CENTRAL_FACE` §4; inventory HS-S3 R37):
-`F_i(u) ≤ F_i(ū(x, β)) ≤ F_i(ū(x, b), b) < 0`. -/
+/-- **The central face** `q* = q_c ≤ 1/7`: both duration tests are negative,
+`F_i(u) ≤ F_i(ū(x, β)) ≤ F_i(ū(x, b), b) < 0`, by the central ceiling, the monotonicity in `β` and
+the central sign `hs3_central_alpha_proof`. -/
 private lemma hs3_gate_central {x be al u : ℝ} (h1 : 2 ≤ x) (h2 : x ≤ 13 / 6) (hal1 : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hδ : 1 / 19 ≤ be / x - 1)
     (hQ : 1 + ((4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) + 1 / 23) * (be / x - 1) ≤ al)
@@ -192,7 +190,8 @@ private lemma hs3_gate_central {x be al u : ℝ} (h1 : 2 ≤ x) (h2 : x ≤ 13 /
   have := max_lt (hu0.trans_lt (hβ0.trans_lt hF0)) (hu1.trans_lt (hβ1.trans_lt hF1))
   linarith
 
-/-- **The outer face** `q* = 1/7 < q_c` (`DISPLACEMENT_OUTER_FACE` §6; inventory HS-S3 R44). -/
+/-- **The outer face** `q* = 1/7 < q_c`: both duration tests are negative, by the outer ceiling and
+the outer sign `hs3_outer_face_proof` on the enclosing outer domain. -/
 private lemma hs3_gate_outer {x be al u : ℝ} (h1 : 2 ≤ x) (h2 : x ≤ 13 / 6) (hal1 : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hδ : 1 / 19 ≤ be / x - 1)
     (hU : x * (9 * x + 8 * al) / (9 * x + 8) ≤ be)
@@ -275,9 +274,9 @@ private lemma hs3_q_pos : 0 < hsQ H.al H.rho := by
   have := H.one_le_al
   exact mul_pos (mul_pos (by positivity) hLam) H.rho_pos
 
-/-- **The weighted envelope at the actual root** (`DISPLACEMENT_WEIGHT_REDUCTION` §2, §4; inventory
-HS-S3 R11, R13): `0 ≤ Φ(q)` at `p = τq`, `m = 4(4 - 3p/r_A)/(5α - 1)` (`root_zero`, `w ≥ 3/4`,
-`hs_env_weighted` with `hs3_B_pos`, `hs_env_scale`, `hs_phi_eq`). -/
+/-- **The weighted envelope at the actual root**: `0 ≤ Φ(q)` at `p = τq`,
+`m = 4(4 - 3p/r_A)/(5α - 1)` (`root_zero`, `w ≥ 3/4`, `hs_env_weighted` with `hs3_B_pos`,
+`hs_env_scale`, `hs_phi_eq`). -/
 private lemma hs3_env (h1 : 2 ≤ H.x) :
     0 ≤ hsPhi H.x H.be H.al H.u (H.τ * hsQ H.al H.rho)
       (4 * (4 - 3 * (H.τ * hsQ H.al H.rho / hsRA H.al H.be)) / (5 * H.al - 1)) (hsQ H.al H.rho) := by
@@ -322,16 +321,15 @@ private lemma hs3_env (h1 : 2 ≤ H.x) :
   unfold hsF at henv ⊢
   linarith
 
-/-- **Gate S3** (`DISPLACEMENT_HAND_EXCLUSION`; inventory HS-S3 R45): for `2 ≤ x ≤ 13/6`,
+/-- **Gate S3**: for `2 ≤ x ≤ 13/6`,
 `δ < 1/19`.
-Proof plan: if `δ ≥ 1/19`: `strong_order`, `upper_order_98`, `hs_quad_order`, `hs3_shape`,
+Proof: if `δ ≥ 1/19`: `strong_order`, `upper_order_98`, `hs_quad_order`, `hs3_shape`,
 `hs_D_lt_Q`, `u_le_V`, `hs_V_le_Vbar` give the shape bounds; `root_zero`, `w_ge`,
 `hs_env_weighted` (`hs3_B_pos`) give `0 ≤ G*_τ`; `hs_phi_eq`, `hs_A2_pos`, `hs_phi_convex_max`,
 `hs3_zero_neg`, `q_le_qc`, `q_lt_seventh`, `hs3_tau2_cont` reach `q*`; `hs3_dur`, `hs3_uslope`; then
 the central face (`hs_qc_le_iff`, `hs3_central_straight`, `hs3_central_ceiling`, `hs3_beta_mono`,
 `hs3_central_alpha`) or the outer face (`hs3_outer_enclose`, `hs3_outer_ceiling`, `hs3_outer_face`)
-contradicts.
-Status: assembly (to be proved from the leaves above). -/
+contradicts. -/
 theorem s3 (h1 : 2 ≤ H.x) (h2 : H.x ≤ 13 / 6) : H.δ < 1 / 19 := by
   by_contra hcon
   have hδ : 1 / 19 ≤ H.be / H.x - 1 := not_lt.mp hcon

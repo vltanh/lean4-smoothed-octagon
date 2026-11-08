@@ -5,17 +5,17 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandODefs
 /-!
 # Gate S3, the outer face by hand: convexity in reciprocal shape
 
-Hand proof of the leaf `hs3_outer_face`, second part: `SHORT_DISPLACEMENT_OUTER_RECIPROCAL.md`
-§§2-4 with the polynomials of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA.md` §§2-3. On the
+Proof of the leaf `hs3_outer_face`, second part. On the
 rectangle `2 ≤ x ≤ 13/6`, `3/5 ≤ C ≤ 5/6`, `1/x ≤ r ≤ 7/8`, `5/2 ≤ n ≤ 7/2`:
-`P_n'' > 2/5` (the boundary values (7) and the leading coefficient (6)), `1 < A_n < 5`, `A_n' > 0`,
-`A_n'' > -1` ((9)-(12)), `0 < V < 1/100`, `V' > 0`, `|V''| < 1/125` ((13)-(14)) and
-`[1/Z - 56/K]'' > -1/10` ((16)), so `G'' > 1/4 > 0` ((17)). Hence `G < 0` between two shapes where
+`P_n'' > 2/5` (from its value and slope at `r = 1/x` and the leading coefficient), `1 < A_n < 5`,
+`A_n' > 0`, `A_n'' > -1`, `0 < V < 1/100`, `V' > 0`, `|V''| < 1/125` and
+`[1/Z - 56/K]'' > -1/10`, so `G'' > 1/4 > 0`. Hence `G < 0` between two shapes where
 it is negative (`hl3o_neg_between`).
 
-Each printed polynomial `Q(h, v)`, `h = x - 2`, `v = C - 3/5`, is positive by the companions' rule
+Each printed polynomial `Q(h, v)`, `h = x - 2`, `v = C - 3/5`, is positive by a box rule
 (the tactic `hl3_box`): within each power of `h` its `v`-monomials are bounded with `v ≤ 7/30`,
-then each power of `h` with `0 ≤ hⁱ ≤ 6⁻ⁱ`.
+then each power of `h` with `0 ≤ hⁱ ≤ 6⁻ⁱ`. The values at `n = 5/2` and `n = 7/2` give every
+`n ∈ [5/2, 7/2]` by linear interpolation (`hl3_interp`).
 
 ## Main API
 
@@ -42,7 +42,7 @@ theorem hl3_mono2 {h v : ℝ} (hh : 0 ≤ h) (hv : 0 ≤ v) (hv7 : v ≤ 7 / 30)
   exact mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hv hv7 j) (by positivity)
 
 set_option hygiene false in
-/-- The sign of a printed polynomial in `0 ≤ h ≤ 1/6`, `0 ≤ v ≤ 7/30` (the companions' rule): within
+/-- The sign of a printed polynomial in `0 ≤ h ≤ 1/6`, `0 ≤ v ≤ 7/30` (the box rule): within
 each power of `h`, the `v`-monomials are bounded by `v ≤ 7/30`; then each power of `h` by
 `0 ≤ hⁱ ≤ 6⁻ⁱ`. It needs hypotheses `hh : 0 ≤ h`, `hh6 : h ≤ 1/6`, `hv : 0 ≤ v`, `hv7 : v ≤ 7/30`. -/
 macro "hl3_box" : tactic => `(tactic| linarith
@@ -62,23 +62,23 @@ macro "hl3_box" : tactic => `(tactic| linarith
       (hl3_mono2 hh hv hv7 5 2).2, (hl3_mono2 hh hv hv7 6 1).1, (hl3_mono2 hh hv hv7 6 1).2,
       (hl3_mono2 hh hv hv7 6 2).1, (hl3_mono2 hh hv hv7 6 2).2])
 
-/-! ### The printed polynomials (`SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3) -/
+/-! ### The printed polynomials, in `h = x - 2`, `v = C - 3/5` -/
 
-/-- The polynomial `T` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `T`: `P_n'''(1/x) = 3n(x - 1)T(h, v)/(1225S)` (`hl3o_T_id`). -/
 noncomputable def hl3oT (h v : ℝ) : ℝ :=
     h ^ 3 * (300 * v + 480) +
     h ^ 2 * (-300 * v ^ 2 + 1315 * v + 2922) +
     h * (-1500 * v ^ 2 + 750 * v + 5215) +
     (-1800 * v ^ 2 - 1285 * v + 2677)
 
-/-- The polynomial `B` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `B`: `A_3 + 4A_4/x = 2nB(h, v)/1225` (`hl3o_B_id`). -/
 noncomputable def hl3oBq (h v : ℝ) : ℝ :=
     h ^ 3 * (100 * v + 160) +
     h ^ 2 * (-100 * v ^ 2 + 205 * v + 534) +
     h * (-300 * v ^ 2 - 60 * v + 397) +
     (-200 * v ^ 2 - 65 * v + 33)
 
-/-- The polynomial `Vl` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `Vl`: `980xS(P_{5/2}''(1/x) - 2/5) = Vl(h, v)` (`hl3o_Vl_id`). -/
 noncomputable def hl3oVl (h v : ℝ) : ℝ :=
     h ^ 5 * (-300) +
     h ^ 4 * (300 * v ^ 2 + 1260 * v - 1812) +
@@ -87,7 +87,7 @@ noncomputable def hl3oVl (h v : ℝ) : ℝ :=
     h * (5100 * v ^ 2 + 22580 * v + 7667) +
     (1800 * v ^ 2 + 7130 * v + 2238)
 
-/-- The polynomial `Vh` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `Vh`: `700xS(P_{7/2}''(1/x) - 2/5) = Vh(h, v)` (`hl3o_Vh_id`). -/
 noncomputable def hl3oVh (h v : ℝ) : ℝ :=
     h ^ 5 * (-300) +
     h ^ 4 * (300 * v ^ 2 + 1260 * v - 2052) +
@@ -96,7 +96,7 @@ noncomputable def hl3oVh (h v : ℝ) : ℝ :=
     h * (5100 * v ^ 2 + 26420 * v + 1791) +
     (1800 * v ^ 2 + 10010 * v + 278)
 
-/-- The polynomial `El` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `El`: `245x(A_{5/2}''(1/x) + 1) = El(h, v)` (`hl3o_El_id`). -/
 noncomputable def hl3oEl (h v : ℝ) : ℝ :=
     h ^ 4 * (300) +
     h ^ 3 * (100 * v ^ 2 + 20 * v + 2656) +
@@ -104,7 +104,7 @@ noncomputable def hl3oEl (h v : ℝ) : ℝ :=
     h * (500 * v ^ 2 - 4170 * v + 6338) +
     (200 * v ^ 2 - 3630 * v + 1200)
 
-/-- The polynomial `Eh` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `Eh`: `175x(A_{7/2}''(1/x) + 1) = Eh(h, v)` (`hl3o_Eh_id`). -/
 noncomputable def hl3oEh (h v : ℝ) : ℝ :=
     h ^ 4 * (300) +
     h ^ 3 * (100 * v ^ 2 + 20 * v + 2576) +
@@ -112,7 +112,7 @@ noncomputable def hl3oEh (h v : ℝ) : ℝ :=
     h * (500 * v ^ 2 - 3850 * v + 5760) +
     (200 * v ^ 2 - 3310 * v + 892)
 
-/-- The polynomial `Fl` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `Fl`: `7840(A_{5/2}''(7/8) + 1) = Fl(h, v)` (`hl3o_Fl_id`). -/
 noncomputable def hl3oFl (h v : ℝ) : ℝ :=
     h ^ 4 * (14700) +
     h ^ 3 * (-12600 * v + 80790) +
@@ -120,7 +120,7 @@ noncomputable def hl3oFl (h v : ℝ) : ℝ :=
     h * (400 * v ^ 2 - 94530 * v + 137933) +
     (-400 * v ^ 2 - 74100 * v + 23034)
 
-/-- The polynomial `Fh` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `Fh`: `5600(A_{7/2}''(7/8) + 1) = Fh(h, v)` (`hl3o_Fh_id`). -/
 noncomputable def hl3oFh (h v : ℝ) : ℝ :=
     h ^ 4 * (14700) +
     h ^ 3 * (-12600 * v + 80790) +
@@ -128,7 +128,7 @@ noncomputable def hl3oFh (h v : ℝ) : ℝ :=
     h * (400 * v ^ 2 - 91970 * v + 131149) +
     (-400 * v ^ 2 - 68980 * v + 18106)
 
-/-- The polynomial `Gl` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `Gl`: `245x²(A_{5/2}'(1/x) - 1) = Gl(h, v)` (`hl3o_Gl_id`). -/
 noncomputable def hl3oGl (h v : ℝ) : ℝ :=
     h ^ 4 * (150 * v + 240) +
     h ^ 3 * (1290 * v + 2159) +
@@ -136,7 +136,7 @@ noncomputable def hl3oGl (h v : ℝ) : ℝ :=
     h * (3690 * v + 5494) +
     (1005 * v + 673)
 
-/-- The polynomial `Gh` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `Gh`: `35x²(A_{7/2}'(1/x) - 1) = Gh(h, v)` (`hl3o_Gh_id`). -/
 noncomputable def hl3oGh (h v : ℝ) : ℝ :=
     h ^ 4 * (30 * v + 48) +
     h ^ 3 * (250 * v + 405) +
@@ -144,7 +144,7 @@ noncomputable def hl3oGh (h v : ℝ) : ℝ :=
     h * (730 * v + 938) +
     (225 * v + 85)
 
-/-- The polynomial `Hl` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `Hl`: `2007040(5 - A_{5/2}(7/8)) = Hl(h, v)` (`hl3o_Hl_id`). -/
 noncomputable def hl3oHl (h v : ℝ) : ℝ :=
     h ^ 4 * (-240100) +
     h ^ 3 * (-68600 * v - 1993810) +
@@ -152,7 +152,7 @@ noncomputable def hl3oHl (h v : ℝ) : ℝ :=
     h * (-8400 * v ^ 2 - 730570 * v - 8863063) +
     (-3600 * v ^ 2 - 667820 * v + 3642234)
 
-/-- The polynomial `Hh` of `SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §3. -/
+/-- The polynomial `Hh`: `1433600(5 - A_{7/2}(7/8)) = Hh(h, v)` (`hl3o_Hh_id`). -/
 noncomputable def hl3oHh (h v : ℝ) : ℝ :=
     h ^ 4 * (-240100) +
     h ^ 3 * (-68600 * v - 1993810) +
@@ -207,13 +207,13 @@ theorem hl3oHh_pos {h v : ℝ} (hh : 0 ≤ h) (hh6 : h ≤ 1 / 6) (hv : 0 ≤ v)
     0 < hl3oHh h v := by
   unfold hl3oHh; hl3_box
 
-/-! ### The boundary identities (`SHORT_DISPLACEMENT_OUTER_CURVATURE_ALGEBRA` §2) -/
+/-! ### The boundary identities -/
 
 section Identities
 
 variable {x C n : ℝ}
 
-/-- `P_n'''(1/x) = 3n(x - 1)T(h, v)/(1225S)` (the companion's (2)). -/
+/-- `P_n'''(1/x) = 3n(x - 1)T(h, v)/(1225S)`. -/
 theorem hl3o_T_id (hx : 0 < x) :
     (6 * hl3oPc3 x C n + 24 * hl3oPc4 x C n * (1 / x)) * (1225 * (x + 1)) =
       3 * n * (x - 1) * hl3oT (x - 2) (C - 3 / 5) := by
@@ -222,7 +222,7 @@ theorem hl3o_T_id (hx : 0 < x) :
   field_simp
   ring
 
-/-- `A_3 + 4A_4/x = 2nB(h, v)/1225` (the companion's (2)). -/
+/-- `A_3 + 4A_4/x = 2nB(h, v)/1225`. -/
 theorem hl3o_B_id (hx : 0 < x) :
     (hl3oAc3 x C n + 4 * hl3oAc4 x C n / x) * 1225 = 2 * n * hl3oBq (x - 2) (C - 3 / 5) := by
   unfold hl3oAc3 hl3oAc4 hl3oα3 hl3oα4 hl3oBq
@@ -287,7 +287,8 @@ theorem hl3o_Hh_id : (5 - hl3oA x C (7 / 2) (7 / 8)) * 1433600 = hl3oHh (x - 2) 
     hl3oβ1 hl3oβ2 hl3oHh
   ring
 
-/-- The leading coefficient (the note's (6)). -/
+/-- The leading coefficient of `P_n`:
+`nx(2(x - C) - 1)/49 · ((3/4)(2x(x - C - 1) - 1) + (x² + x + 1)/S)`. -/
 theorem hl3o_lead_id (hx : 0 < x) :
     hl3oPc4 x C n = n * x * (2 * (x - C) - 1) / 49 *
       (3 / 4 * (2 * x * (x - C - 1) - 1) + (x ^ 2 + x + 1) / (x + 1)) := by
@@ -296,7 +297,7 @@ theorem hl3o_lead_id (hx : 0 < x) :
   field_simp
   ring
 
-/-- `A_n(1/x)` decreases in `n` (the note's (11)). -/
+/-- `A_n(1/x)` decreases in `n`. -/
 theorem hl3o_An_id (hx : 0 < x) :
     hl3oA x C n (1 / x) = hl3oA x C (7 / 2) (1 / x) + (7 / 2 - n) * (x + 1) ^ 3 * (6 * x - 1) /
       (49 * x ^ 3) := by
@@ -305,7 +306,7 @@ theorem hl3o_An_id (hx : 0 < x) :
   field_simp
   ring
 
-/-- `14x³(A_{7/2}(1/x) - 1) = 14Cx²(x - 1) + 6h⁴ + 53h³ + 153h² + 163h + 43` (the note's (11)). -/
+/-- `14x³(A_{7/2}(1/x) - 1) = 14Cx²(x - 1) + 6h⁴ + 53h³ + 153h² + 163h + 43`. -/
 theorem hl3o_A72_id (hx : 0 < x) :
     (hl3oA x C (7 / 2) (1 / x) - 1) * (14 * x ^ 3) = 14 * C * x ^ 2 * (x - 1) +
       (6 * (x - 2) ^ 4 + 53 * (x - 2) ^ 3 + 153 * (x - 2) ^ 2 + 163 * (x - 2) + 43) := by
@@ -429,7 +430,8 @@ section Rect
 
 variable {x C n r : ℝ}
 
-/-- `P_n'' > 2/5` for `r ≥ 1/x` (the note's (6)-(8)). -/
+/-- `P_n'' > 2/5` for `r ≥ 1/x`, from its value and its slope at `r = 1/x` and the leading
+coefficient. -/
 theorem hl3o_P2_gt (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' : C ≤ 5 / 6) (hn : 5 / 2 ≤ n)
     (hn' : n ≤ 7 / 2) (hr : 1 / x ≤ r) : 2 / 5 < hl3oP2 x C n r := by
   have hx0 : 0 < x := by linarith
@@ -485,7 +487,7 @@ theorem hl3o_P2_gt (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' :
   have : 0 ≤ 12 * hl3oPc4 x C n * (r - 1 / x) ^ 2 := by positivity
   linarith
 
-/-- `A_n'' > -1` on `[1/x, 7/8]` (the note's (9)-(10)). -/
+/-- `A_n'' > -1` on `[1/x, 7/8]`. -/
 theorem hl3o_A2_gt (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' : C ≤ 5 / 6) (hn : 5 / 2 ≤ n)
     (hn' : n ≤ 7 / 2) (hr : 1 / x ≤ r) (hr' : r ≤ 7 / 8) : -1 < hl3oA2 x C n r := by
   have hx0 : 0 < x := by linarith
@@ -568,7 +570,7 @@ theorem hl3o_A2_gt (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' :
         mul_lt_mul_of_pos_left hA1 (by linarith)
       linarith
 
-/-- `1 < A_n < 5`, `A_n' > 0` on `[1/x, 7/8]` (the note's (9)-(12)). -/
+/-- `1 < A_n < 5`, `A_n' > 0` on `[1/x, 7/8]`. -/
 theorem hl3o_A_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' : C ≤ 5 / 6) (hn : 5 / 2 ≤ n)
     (hn' : n ≤ 7 / 2) (hr : 1 / x ≤ r) (hr' : r ≤ 7 / 8) :
     1 < hl3oA x C n r ∧ hl3oA x C n r < 5 ∧ 0 < hl3oA1 x C n r := by
@@ -642,7 +644,7 @@ theorem hl3o_A_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' :
   · linarith [hmono (1 / x) r le_rfl hr hr']
   · linarith [hmono r (7 / 8) hr hr' le_rfl]
 
-/-- `H = C + (x - C - 1)r ≥ 4/5` and `23/10 ≤ Z ≤ 3` on the rectangle (the note's (2)). -/
+/-- `H = C + (x - C - 1)r ≥ 4/5` and `23/10 ≤ Z ≤ 3` on the rectangle. -/
 theorem hl3o_HZ (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' : C ≤ 5 / 6)
     (hr : 1 / x ≤ r) (hr' : r ≤ 7 / 8) :
     4 / 5 ≤ C + (x - C - 1) * r ∧ 23 / 10 ≤ 1 + C + (x - C) * r ∧ 1 + C + (x - C) * r ≤ 3 := by
@@ -653,7 +655,7 @@ theorem hl3o_HZ (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' : C 
   · nlinarith [mul_le_mul_of_nonneg_left hxr (by linarith : (0 : ℝ) ≤ x - C)]
   · nlinarith [mul_le_mul_of_nonneg_left hr' (by linarith : (0 : ℝ) ≤ x - C)]
 
-/-- `0 ≤ V ≤ 2c ≤ 1/100`, `V' ≥ 0`, `V'' ≥ -1/125` (the note's (13)-(14)). -/
+/-- `0 ≤ V ≤ 2c ≤ 1/100`, `V' ≥ 0`, `V'' ≥ -1/125`. -/
 theorem hl3o_V_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' : C ≤ 5 / 6)
     (hr : 1 / x ≤ r) (hr' : r ≤ 7 / 8) :
     0 ≤ hl3oV x C r ∧ hl3oV x C r ≤ 1 / 100 ∧ 0 ≤ hl3oV1 x C r ∧ -(1 / 125) ≤ hl3oV2 x C r := by
@@ -699,7 +701,7 @@ theorem hl3o_V_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' :
     rw [neg_le_neg_iff, div_le_iff₀ (by positivity)]
     nlinarith
 
-/-- `[1/Z - 56/K]'' = (x - C)²f'(Z) > -1/10` (the note's (16)). -/
+/-- `[1/Z - 56/K]'' = (x - C)²f'(Z) > -1/10`. -/
 theorem hl3o_Phi2_gt (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' : C ≤ 5 / 6)
     (hr : 1 / x ≤ r) (hr' : r ≤ 7 / 8) :
     -(1 / 10) < (x - C) ^ 2 * hl3of1 (1 + C + (x - C) * r) := by
@@ -711,7 +713,7 @@ theorem hl3o_Phi2_gt (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC'
     mul_le_mul_of_nonpos_right he h2.le
   nlinarith
 
-/-- **Uniform convexity** `G'' > 0` on the rectangle (the note's (17)). -/
+/-- **Uniform convexity** `G'' > 0` on the rectangle, from the bounds above. -/
 theorem hl3o_G2_pos (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' : C ≤ 5 / 6)
     (hn : 5 / 2 ≤ n) (hn' : n ≤ 7 / 2) (hr : 1 / x ≤ r) (hr' : r ≤ 7 / 8) : 0 < hl3oG2 x C n r := by
   have hP := hl3o_P2_gt hx hx2 hC hC' hn hn' hr
@@ -726,7 +728,7 @@ theorem hl3o_G2_pos (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C) (hC' 
   have e3 : hl3oV x C r * (-1) ≤ hl3oV x C r * hl3oA2 x C n r := mul_le_mul_of_nonneg_left hA2.le hV0
   linarith
 
-/-- **Negative between two negative shapes** (the note's §3): for `1/x ≤ r₁ ≤ r ≤ r₂ ≤ 7/8`. -/
+/-- **Negative between two negative shapes** (by convexity): for `1/x ≤ r₁ ≤ r ≤ r₂ ≤ 7/8`. -/
 theorem hl3o_neg_between {r₁ r₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hC : 3 / 5 ≤ C)
     (hC' : C ≤ 5 / 6) (hn : 5 / 2 ≤ n) (hn' : n ≤ 7 / 2) (h1 : 1 / x ≤ r₁) (h2 : r₂ ≤ 7 / 8)
     (hr : r ∈ Icc r₁ r₂) (hg1 : hl3oG x C n r₁ < 0) (hg2 : hl3oG x C n r₂ < 0) :

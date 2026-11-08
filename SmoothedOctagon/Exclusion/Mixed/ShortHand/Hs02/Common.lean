@@ -6,8 +6,8 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Interface
 # Hand proof of the smaller-short case: shared helpers of gates S0 and S2
 
 Scalar identities on the face value `hsF` and the comparison chain from the actual outer root to
-the scale polynomial, shared by `ShortHand.S0` (`LARGE_RATIO_HAND_EXCLUSION`) and `ShortHand.S2`
-(`SHARP_RATIO_HAND_EXCLUSION`).
+the scale polynomial, shared by `ShortHand.S0` (the large-ratio gate) and `ShortHand.S2` (the
+sharp-ratio gate).
 
 ## Main API
 
@@ -15,11 +15,9 @@ the scale polynomial, shared by `ShortHand.S0` (`LARGE_RATIO_HAND_EXCLUSION`) an
 * `hs02_F_ell_mono`: `hsF` increases in the log value `ℓ`.
 * `hs02_F_dur`: the three duration tests (`hs_dur_three`) in terms of `hsF`.
 * `hs02_rA_A1`: `r_A·A₁ = 2r_A + (x - 1)/Q + (D/Q)E₀`.
-* `hs02_D_pos`: `D ≥ 2 + 4x - 2x² ≥ 2/25` on `1 < x ≤ 12/5`, `β ≤ αx`
-  (`POSITIVE_DIAGONAL_PAIRING` (7)-(8)).
+* `hs02_D_pos`: `D ≥ 2 + 4x - 2x² ≥ 2/25` on `1 < x ≤ 12/5`, `β ≤ αx`.
 * `HsData.hs02_root_phi`: for a floor weight `m ≥ 0` with a positive factor `B_{τ+m}`, the actual
-  root gives `0 ≤ Φ(q)` at `p = τq` (`OUTER_ENVELOPE`, `FLOOR_WEIGHTED_ENVELOPE` §1,
-  `ENVELOPE_SCALE_MONOTONICITY` (1)-(4)).
+  root gives `0 ≤ Φ(q)` at `p = τq` (the weighted outer envelope in scale coordinates).
 * `HsData.hs02_strip_up`, `HsData.hs02_strip_54`, `HsData.hs02_strip_98`: the β-strips of the
   strong lower order and the two upper orders.
 * `HsData.hs02_u_le_1316`: `u ≤ 13/16`.
@@ -32,8 +30,7 @@ namespace SmoothedOctagon
 open Set Real
 
 /-- The `u`-increment of the face value: `hsF` is affine in `u` with slope
-`(τ + m)d(d - λS) + 1/r_A + λS - 2d`, `d = qD/α²`, `λ = 1 - (1 - α⁻²)q`
-(`FLOOR_WEIGHTED_ENVELOPE` (10), `VARIABLE_FLOOR_REDUCTION` (8)). -/
+`(τ + m)d(d - λS) + 1/r_A + λS - 2d`, `d = qD/α²`, `λ = 1 - (1 - α⁻²)q`. -/
 theorem hs02_F_u_sub (x be al u u' q τ ℓ m : ℝ) :
     hsF x be al u' q τ ℓ m - hsF x be al u q τ ℓ m = (u' - u) *
       ((τ + m) * (q * (hsDg x be al / al ^ 2)) * (q * (hsDg x be al / al ^ 2) -
@@ -48,7 +45,7 @@ theorem hs02_F_ell_mono {x be al u q τ ℓ ℓ' m : ℝ} (h : ℓ ≤ ℓ') :
   unfold hsF
   linarith
 
-/-- **The three duration tests for `hsF`** (`LARGE_RATIO_HAND_EXCLUSION` (15)): for
+/-- **The three duration tests for `hsF`**: for
 `2 ≤ τ ≤ T`, `F(τ, log(τ/T)) ≤ max{F(2, 5/(2T) - 11/9), F(8T/9, -1/9), F(T, 0)}`. -/
 theorem hs02_F_dur {x be al u q m T τ : ℝ} (h2 : 2 ≤ τ) (hτ : τ ≤ T) :
     hsF x be al u q τ (log (τ / T)) m ≤
@@ -75,7 +72,7 @@ theorem hs02_rA_A1 {x be al u : ℝ} (hal : 0 < al) (hbe : 0 < be) :
   field_simp
   ring
 
-/-- **The positive diagonal** (`POSITIVE_DIAGONAL_PAIRING` (7)-(8); route `D ≥ αD₀`): for
+/-- **The positive diagonal** (from `D ≥ αD₀`): for
 `1 < x ≤ 12/5`, `1 ≤ α ≤ x ≤ β ≤ αx`, `D ≥ 2 + 4x - 2x² ≥ 2/25`. -/
 theorem hs02_D_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al) (hax : al ≤ x)
     (hb : be ≤ al * x) :
@@ -121,9 +118,10 @@ theorem hs02_two_q : 2 * H.q < hsRA H.al H.be := by
 theorem hs02_u_le_1316 : H.u ≤ 13 / 16 :=
   H.u_le_V.trans (ss_V_le one_pos H.one_lt_x)
 
-/-- **The comparison chain** (`OUTER_ENVELOPE`, `FLOOR_WEIGHTED_ENVELOPE` §1,
-`ENVELOPE_SCALE_MONOTONICITY` (1)-(4)): for a floor weight `m ≥ 0` with `B_{τ+m} > 0` on
-`[t₀, t]`, the actual root gives `0 ≤ Φ(q)` at `p = τq`. -/
+/-- **The comparison chain**: for a floor weight `m ≥ 0` with `B_{τ+m} > 0` on `[t₀, t]`, the
+actual root gives `0 ≤ Φ(q)` at `p = τq`. The weighted outer envelope `hs_env_weighted` at the root
+`R_τ = 0` with `w ≥ 3/4` is rewritten in the scale coordinates (`hs_env_scale`) and identified with
+`Φ` (`hs_phi_eq`). -/
 theorem hs02_root_phi {m : ℝ} (hm : 0 ≤ m)
     (hB : ∀ s ∈ Icc (H.rho * (1 + H.x)) H.t,
       0 < 1 + (H.τ + m) * (hsLam H.al H.rho * s - hsLam H.al H.rho * H.rho * hsDg H.x H.be H.al)) :
@@ -161,7 +159,7 @@ theorem hs02_root_phi {m : ℝ} (hm : 0 ≤ m)
   rw [e]
   linarith
 
-/-- The strong-order strip: `β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)` (`STRONG_ORDER` (1)). -/
+/-- The strong-order strip: `β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`. -/
 theorem hs02_strip_up :
     H.be ≤ H.x + H.x * (7 * H.x + 1) * (H.al - 1) / (4 * H.x ^ 2 + 11 * H.x + 1) := by
   have h := H.strong_order
@@ -182,7 +180,7 @@ theorem hs02_strip_up :
     rw [le_div_iff₀ hR]; linarith
   linarith
 
-/-- The `5/4`-order strip: `β ≥ x + 4x(α - 1)/(5x + 4)` (`GLOBAL_UPPER_ORDER` (2)). -/
+/-- The `5/4`-order strip: `β ≥ x + 4x(α - 1)/(5x + 4)`. -/
 theorem hs02_strip_54 : H.x + 4 * H.x * (H.al - 1) / (5 * H.x + 4) ≤ H.be := by
   have h := H.upper_order_54
   have hx0 : 0 < H.x := by linarith [H.one_lt_x]
@@ -197,7 +195,7 @@ theorem hs02_strip_54 : H.x + 4 * H.x * (H.al - 1) / (5 * H.x + 4) ≤ H.be := b
     rw [div_le_iff₀ (by positivity)]; linarith
   linarith
 
-/-- The `9/8`-order strip: `β ≥ x + 8x(α - 1)/(9x + 8)` (`GLOBAL_UPPER_ORDER` (3)). -/
+/-- The `9/8`-order strip: `β ≥ x + 8x(α - 1)/(9x + 8)`. -/
 theorem hs02_strip_98 (hx5 : H.x ≤ 5) : H.x + 8 * H.x * (H.al - 1) / (9 * H.x + 8) ≤ H.be := by
   have h := H.upper_order_98 hx5
   have hx0 : 0 < H.x := by linarith [H.one_lt_x]

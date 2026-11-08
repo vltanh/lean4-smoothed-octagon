@@ -10,10 +10,10 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.HighT
 The three actual-window bounds used by the hand exclusions, and their normalized forms
 (proved in `Hand/Gap`, `Hand/HighT`, `Hand/Scale`).
 
-* `nh_centre_gap`: `d² + 2cd > 4` (`MIXED_NONSHORT_UPPER_ENVELOPE_GAP`, Lemma 2), i.e.
-  `k < 2t + 2x + x²` (`nh_centre_gap_k`).
-* `nh_high_t`: `t = a/(a + c) < 2/5` (`MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION`).
-* `nh_scale_lt`: `a < 4/5` (`MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND`), i.e. `k > 29t²/4`
+* `nh_centre_gap`: `d² + 2cd > 4` (Lemma 2 of `Hand/Gap`), i.e. `k < 2t + 2x + x²`
+  (`nh_centre_gap_k`).
+* `nh_high_t`: `t = a/(a + c) < 2/5` (the high-ratio exclusion of `Hand/HighT`).
+* `nh_scale_lt`: `a < 4/5` (the conditional scale bound of `Hand/Scale`), i.e. `k > 29t²/4`
   (`nh_scale_k`).
 -/
 
@@ -21,13 +21,13 @@ The three actual-window bounds used by the hand exclusions, and their normalized
 
 namespace SmoothedOctagon
 
-/-- **The centre gap** `d² + 2cd > 4` (`MIXED_NONSHORT_UPPER_ENVELOPE_GAP`, Lemma 2). -/
+/-- **The centre gap** `d² + 2cd > 4` (`nh_centre_gap'`). -/
 theorem nh_centre_gap (W : M2Window) : 4 < W.d ^ 2 + 2 * W.c * W.d := nh_centre_gap' W
 
-/-- **The high-ratio exclusion** `t < 2/5` (`MIXED_NONSHORT_HIGH_T_HAND_EXCLUSION`). -/
+/-- **The high-ratio exclusion** `t < 2/5` (`nh_high_t'`). -/
 theorem nh_high_t (W : M2Window) : W.nt < 2 / 5 := nh_high_t' W
 
-/-- **The nonshort scale** `a < 4/5` (`MIXED_NONSHORT_CONDITIONAL_SCALE_BOUND` with
+/-- **The nonshort scale** `a < 4/5` (the conditional scale bound `nh_scale_of_t` with
 `nh_high_t`). -/
 theorem nh_scale_lt (W : M2Window) : W.a < 4 / 5 := nh_scale_of_t W (nh_high_t' W).le
 

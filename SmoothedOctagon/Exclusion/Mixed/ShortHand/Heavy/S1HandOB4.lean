@@ -5,25 +5,23 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOB3
 /-!
 # Gate S1 by hand, outer face, branch B: the test `F₀`
 
-`SHORT_OUTER_BETA_LOW_SHAPE`, `SHORT_OUTER_ALPHA_LOW_SHAPE`, `SHORT_OUTER_LOW_SHAPE_TERMINAL`.
 On `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `6α² ≥ x(x + 2)`, `x ≤ β ≤ x + (10/13)(α - 1)`,
 `u_f ≤ u ≤ u_ℓ(x, β)`:
 
 * norm concavity at the actual point reduces `u` to the two curves `u_f(x)`, `u_ℓ(x, β)`;
 * `β ↦ F₀` decreases with slope `≤ -7/5120` at a fixed norm (`hl1o_F0_bmono`), and along the ceiling
-  `u_ℓ(x, β)` as well: `(F₀)_u ≥ -1/6` on the capped strip (`(8)-(15)`; `(F₀)_u` is affine
-  decreasing in `u` and concave in `β`) and `0 ≤ -(u_ℓ)_β ≤ 15/1992` (`(16)-(17)`); so `C = 10/13`;
+  `u_ℓ(x, β)` as well: `(F₀)_u ≥ -1/6` on the capped strip (`(F₀)_u` is affine
+  decreasing in `u` and concave in `β`) and `0 ≤ -(u_ℓ)_β ≤ 15/1992`; so `C = 10/13`;
 * at `C = 10/13`, `α ↦ F₀` increases at a fixed norm: in the reciprocal shape
   `g′(r) ≤ P′(r) + ce/Z² - (399/400)ce/Z ≤ -1/400` (`ℓ′(y) ≥ (1 - (5/23)⁴)/y`, and
   `P′ = Σ i pᵢ r^{i-1}` decreases in `u ≥ 3/4`); along the ceiling the norm motion costs at most
-  `(1/4)(15/1992)(10/13)` per unit of `α` since `(F₀)_u ≤ Γ_u ≤ 1/4` (`(17)`, `(23)`); so
-  `α = α_*(x)`, `1` on `x ≤ 5/3`, `(45x + 22)/97` on `x ≥ 5/3` (`(3)`, `(26)`);
+  `(1/4)(15/1992)(10/13)` per unit of `α` since `(F₀)_u ≤ Γ_u ≤ 1/4`; so
+  `α = α_*(x)`, `1` on `x ≤ 5/3`, `(45x + 22)/97` on `x ≥ 5/3`;
 * the four terminal curves are positive.
 
-Route: the shape derivative is bounded through the reciprocal-shape form at the single slope
-`C = 10/13` (two-variable signs in `(x, r)`), instead of the `C`-concavity and the quadratic
-`H` of `SHORT_OUTER_ALPHA_LOW_SHAPE` §1; the terminal curves are cleared and bounded termwise, instead
-of the `x`-monotonicity and the grid evaluation at `x = 2` of `SHORT_OUTER_LOW_SHAPE_TERMINAL`.
+The shape derivative is bounded through the reciprocal-shape form at the single slope
+`C = 10/13` (two-variable signs in `(x, r)`), and the terminal curves are cleared and bounded
+termwise.
 
 ## Main API
 

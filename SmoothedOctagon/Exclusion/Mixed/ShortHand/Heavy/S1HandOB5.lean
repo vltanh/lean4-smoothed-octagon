@@ -5,25 +5,23 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOB4
 /-!
 # Gate S1 by hand, outer face, branch B: the test `F₀`
 
-`SHORT_OUTER_BETA_LOW_SHAPE`, `SHORT_OUTER_ALPHA_LOW_SHAPE`, `SHORT_OUTER_LOW_SHAPE_TERMINAL`.
 On `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `6α² ≥ x(x + 2)`, `x ≤ β ≤ x + (10/13)(α - 1)`,
 `u_f ≤ u ≤ u_ℓ(x, β)`:
 
 * norm concavity at the actual point reduces `u` to the two curves `u_f(x)`, `u_ℓ(x, β)`;
 * `β ↦ F₀` decreases with slope `≤ -7/5120` at a fixed norm (`hl1o_F0_bmono`), and along the ceiling
-  `u_ℓ(x, β)` as well: `(F₀)_u ≥ -1/6` on the capped strip (`(8)-(15)`; `(F₀)_u` is affine
-  decreasing in `u` and concave in `β`) and `0 ≤ -(u_ℓ)_β ≤ 15/1992` (`(16)-(17)`); so `C = 10/13`;
+  `u_ℓ(x, β)` as well: `(F₀)_u ≥ -1/6` on the capped strip (`(F₀)_u` is affine
+  decreasing in `u` and concave in `β`) and `0 ≤ -(u_ℓ)_β ≤ 15/1992`; so `C = 10/13`;
 * at `C = 10/13`, `α ↦ F₀` increases at a fixed norm: in the reciprocal shape
   `g′(r) ≤ P′(r) + ce/Z² - (399/400)ce/Z ≤ -1/400` (`ℓ′(y) ≥ (1 - (5/23)⁴)/y`, and
   `P′ = Σ i pᵢ r^{i-1}` decreases in `u ≥ 3/4`); along the ceiling the norm motion costs at most
-  `(1/4)(15/1992)(10/13)` per unit of `α` since `(F₀)_u ≤ Γ_u ≤ 1/4` (`(17)`, `(23)`); so
-  `α = α_*(x)`, `1` on `x ≤ 5/3`, `(45x + 22)/97` on `x ≥ 5/3` (`(3)`, `(26)`);
+  `(1/4)(15/1992)(10/13)` per unit of `α` since `(F₀)_u ≤ Γ_u ≤ 1/4`; so
+  `α = α_*(x)`, `1` on `x ≤ 5/3`, `(45x + 22)/97` on `x ≥ 5/3`;
 * the four terminal curves are positive.
 
-Route: the shape derivative is bounded through the reciprocal-shape form at the single slope
-`C = 10/13` (two-variable signs in `(x, r)`), instead of the `C`-concavity and the quadratic
-`H` of `SHORT_OUTER_ALPHA_LOW_SHAPE` §1; the terminal curves are cleared and bounded termwise, instead
-of the `x`-monotonicity and the grid evaluation at `x = 2` of `SHORT_OUTER_LOW_SHAPE_TERMINAL`.
+The shape derivative is bounded through the reciprocal-shape form at the single slope
+`C = 10/13` (two-variable signs in `(x, r)`), and the terminal curves are cleared and bounded
+termwise.
 
 ## Main API
 
@@ -41,7 +39,8 @@ open Set Real
 
 /-! ### The beta motion along the ceiling -/
 
-/-- **`β ↦ F₀(x, α, β, u_ℓ(x, β))` decreases** (`SHORT_OUTER_BETA_LOW_SHAPE` (17)). -/
+/-- **`β ↦ F₀(x, α, β, u_ℓ(x, β))` decreases**: the `β`-slope at a fixed norm is at most
+`-7/5120`, and the norm motion adds at most `(15/1992)(1/6)`. -/
 theorem hl1o_F0_bmono_ul {x a b1 b2 : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a)
     (ha2 : a ≤ 6 / 5) (hcap : x * (x + 2) ≤ 6 * a ^ 2) (hb1 : x ≤ b1) (hb12 : b1 ≤ b2)
     (hb2 : b2 ≤ a * x) : hh1oF0 x a b2 (hsUl x b2) ≤ hh1oF0 x a b1 (hsUl x b1) := by
@@ -127,8 +126,9 @@ theorem hl1_Ul_mv {x b1 b2 : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hb1 : x ≤ b1) 
     (fun t ht => by have := (hh1_Ul_deriv_bounds hx hx2 (by linarith [ht.1] : x ≤ t)).2; linarith)
   constructor <;> linarith
 
-/-- **`α ↦ F₀` along the ceiling** `u_ℓ(x, x + (10/13)(α - 1))` increases
-(`SHORT_OUTER_ALPHA_LOW_SHAPE` (23)). -/
+/-- **`α ↦ F₀` along the ceiling** `u_ℓ(x, x + (10/13)(α - 1))` increases: the
+shape slope at a fixed norm gains at least `(1/400)(25/36)` per unit of `α`, and the norm motion
+costs at most `(1/4)(15/1992)(10/13)`. -/
 theorem hl1o_B_amono_ul {x a1 a2 : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (h1 : 1 ≤ a1) (h12 : a1 ≤ a2)
     (h2 : a2 ≤ 6 / 5) :
     hh1oF0 x a1 (x + 10 / 13 * (a1 - 1)) (hsUl x (x + 10 / 13 * (a1 - 1))) ≤
@@ -167,7 +167,9 @@ theorem hl1o_B_amono_ul {x a1 a2 : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (h1 :
 
 /-! ### Assembly -/
 
-/-- **Branch B, `F₀ > 0`** (`SHORT_OUTER_LOW_SHAPE_TERMINAL` (1)). -/
+/-- **Branch B, `F₀ > 0`**: by concavity in `u`, the beta and shape motions at the floor
+`u_f(x)` and along the ceiling `u_ℓ` reach the lower shape `α_*(x)`, where the terminal curves are
+positive. -/
 theorem hl1o_B_F0 {x a b u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a) (ha2 : a ≤ 6 / 5)
     (hcap : x * (x + 2) ≤ 6 * a ^ 2) (hxb : x ≤ b) (hb : b ≤ x + 10 / 13 * (a - 1))
     (hu : hsUf x ≤ u) (hul : u ≤ hsUl x b) : 0 < hh1oF0 x a b u := by

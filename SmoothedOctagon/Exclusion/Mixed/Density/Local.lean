@@ -5,20 +5,19 @@ public import SmoothedOctagon.Exclusion.ShortRun.Centre
 /-!
 # The local angle facts of a mixed period
 
-The three local inputs of `MIXED_GLOBAL_REVERSE_ANGLE_DENSITY` §3, at the pieces with equal
-incident signs of a mixed normal period:
+The local inputs of the angle-density bound, at the pieces with equal incident signs of a mixed
+normal period:
 
 * `NormalPeriod.cg_centreData`: every reverse centre (switches `c - 2, c - 1, c, c + 1` signed
-  `+ - - +`) carries the scalar data `m1_CentreData` of MGSRAE (3)-(6), so the angle gap
+  `+ - - +`) carries the scalar data `m1_CentreData`, so the angle gap
   `m1_angle_gap` (`cos φ < 3/10`) applies to it. This is `NormalPeriod.m1_centreData` without the
   all-short pattern: its proof only reads the four switches around the centre.
 * `CostateCycle.cg_pp_bound`: at a forward piece `+ +`, `e ≥ 0` or `4 e² ≤ d_- d_+` (the angle is
-  at most `2π/3`). Route: instead of forward acuteness `e > 0` (GLOBAL_STRUCTURE_FORWARD_ACUTE, a
-  concave triangle minimization), the weaker bound needed here follows from the lower bound
-  `e ≥ X = (-1 + 2r + 2t - ρ + log q)/16` (MGCE (21)), `ρ < r`, and the polynomial inequality
+  at most `2π/3`). It follows from the lower bound `e ≥ X = (-1 + 2r + 2t - ρ + log q)/16`,
+  `ρ < r`, and the polynomial inequality
   `(1 - r - 2t)² ≤ (1 - r + r²)(1 - t + t²)` (`cg_pp_scalar`).
 * `cg_good`: the Gram identity `d_- d_+ - e² = γ²/K²` with `d_± ≥ 3/32` and `4 e² ≤ d_- d_+`
-  gives `γ² > 27/256` (MGRAD (10)).
+  gives `γ² > 27/256`.
 * `cg_arccos_lt`, `cg_arccos_gt`: `arccos x < π/3` for `x > 1/2`, `arccos x > 2π/3` for
   `x < -1/2`.
 -/
@@ -29,7 +28,7 @@ namespace SmoothedOctagon
 
 open Real
 
-/-- **The Gram bound** (MGRAD (10)): `d_- d_+ - e² = γ²/K²`, `d_± ≥ 3/32`, `K = a² + 4`, `a > 0`
+/-- **The Gram bound**: `d_- d_+ - e² = γ²/K²`, `d_± ≥ 3/32`, `K = a² + 4`, `a > 0`
 and `4 e² ≤ d_- d_+` give `γ² > 27/256`. -/
 theorem cg_good {γ2 a dm dp e : ℝ} (ha : 0 < a) (hdm : 3 / 32 ≤ dm) (hdp : 3 / 32 ≤ dp)
     (hgram : dm * dp - e ^ 2 = γ2 / (a ^ 2 + 4) ^ 2) (h4 : 4 * e ^ 2 ≤ dm * dp) :
@@ -173,7 +172,7 @@ namespace NormalPeriod
 
 variable (P : NormalPeriod)
 
-/-- **The centre data at any reverse centre of a mixed period** (MGSRAE (3)-(6)): the switches
+/-- **The centre data at any reverse centre of a mixed period**: the switches
 `c - 2, c - 1, c, c + 1` are `+ - - +`. -/
 theorem cg_centreData (hmix : P.rep.IsMixed) {c : ℤ} (hf2 : P.rep.IsForward (c - 2))
     (hr1 : P.rep.IsReverse (c - 1)) (hr0 : P.rep.IsReverse c) (hf1 : P.rep.IsForward (c + 1)) :

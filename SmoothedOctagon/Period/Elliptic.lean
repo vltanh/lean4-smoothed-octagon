@@ -6,20 +6,21 @@ public import SmoothedOctagon.Reduction.Clearance.Budget
 /-!
 # The normal multiplier of a costate cycle: switch norms, stationarity, ellipticity, Casimir
 
-`MIXED_GLOBAL_COSTATE_ELLIPTIC` (MGCE) §§1-6, `GLOBAL_COST_CASIMIR` (4)-(5) and the Euler identity
-of `MIXED_GLOBAL_SHORT_RUN_PERIOD` (13)-(15), on a `CostateCycle` (`Period/Costate.lean`) and on a
-`NormalPeriod`, in the margin coordinates of the library. Shared by cases M1, M2 and F.
+The normal multiplier `U` of a `CostateCycle` (`Period/Costate.lean`) and of a `NormalPeriod`, in
+the margin coordinates of the library: switch norms and stationarity at the switches, the signed
+action and its Euler identity, the global frame, ellipticity of mixed periods, and the
+cost–Casimir inequality. Shared by cases M1, M2 and F.
 
-## Conventions (checked against the code, MGCE and inventory C §1.12)
+## Conventions
 
 * Triangular coordinates are `X ↦ C X C⁻¹`, `C = Term.triC = [[√3, 1], [√3, -1]]`
   (`det C = -2√3 < 0`: orientation reversing). Margins: `p_j(X) = tr(D_j (C X C⁻¹))`,
   `D_j = R^{-j} D₀ R^j`, `D₀ = diag(-1, 1)`, `R = Term.triR = [[0, 1], [-1, 1]]`; a traceless matrix
   is `triY p = ½ [[-p₀, p₀ + p₂], [-p₀ - p₁, p₀]]` of its margins (`el_triY_margin`).
-* The notes' margins `p_j` are `margin j` (= `2 ρ_{2-j}` of SmoothedPolygons). `λ = -1`.
+* The margins `p_j` are `margin j` (= `2 ρ_{2-j}` of SmoothedPolygons). `λ = -1`.
 * `J = C/√12 = rawCost/8` (`cost = (√3/4) rawCost`); `8J = ∑ ε_k G(a_k, a_{k+1})`.
-* `γ² = det U = det Λ₁ / 12` (`NormalPeriod.det_Λ₁_zero`), `κ = √(12 γ²)`; the notes' `u = 8d`,
-  `E = 16e` are not used here (only in `Exclusion/ShortRun`).
+* `γ² = det U = det Λ₁ / 12` (`NormalPeriod.det_Λ₁_zero`), `κ = √(12 γ²)`; the rescaled variables
+  `u = 8d`, `E = 16e` are used only in `Exclusion/ShortRun`.
 
 ## The local normal multiplier
 
@@ -34,21 +35,21 @@ margins `μ_j = -α_j/(2√3) - (p₀ + p₁ + p₂) p_j / 4 + 1/2` at a switch 
 
 ## Local identities (all proved from the costate transport, no first variation)
 
-* `stationarity`: `J_{a_k} = tr(U V_k)` (MGCE (8)) in the form
+* `stationarity`: `J_{a_k} = tr(U V_k)` in the form
   `2(ε_{k-1} s_{k-1} d_{k-1} + ε_k s_k d_k - (ε_{k-1}+ε_k) a_k e_k) = (ε_{k-1} G_a(a_k,a_{k-1})
-  + ε_k G_a(a_k,a_{k+1}))/8`. Route: the vanishing new Hamiltonian at the end of piece `k` equals
+  + ε_k G_a(a_k,a_{k+1}))/8`. Proof: the vanishing new Hamiltonian at the end of piece `k` equals
   `4√3 ε_k (a_k + a_{k+1}) (tr(U V_k) - J_{a_k})` exactly (`el_stat_pp/mm/mp/pm`).
-* `swd_fwd`, `swd_rev`: `ε = +1 ⇒ d ≥ j/2`, `ε = -1 ⇒ d ≤ j/2` (MGCE (17); `elJ`).
-* `turn_secant`, `turn_swd_ge` (`d ≥ 3/32` at a turn, MGCE (15)-(16)); `gram_pp`, `gram_mm`
-  (MGCE (14)); `centre_stat` (MGSRAE (5)); `centre_factor`, `factor_pp/mp/pm`;
-  `cre_pos_pp`, `cre_neg_mm` (MGCE (22)-(23)).
-* `arc_eq`, `rawCost_eq` (MGCE (3), `elG`, `elF1`, `elF2`), `euler_sum` (MGSRP (14)-(15)),
-  `next_centre_local` (MGSRP (9)).
+* `swd_fwd`, `swd_rev`: `ε = +1 ⇒ d ≥ j/2`, `ε = -1 ⇒ d ≤ j/2` (`elJ`).
+* `turn_secant`, `turn_swd_ge` (`d ≥ 3/32` at a turn); `gram_pp`, `gram_mm` (Gram identities);
+  `centre_stat` (stationarity at a centre); `centre_factor`, `factor_pp/mp/pm`; `cre_pos_pp`,
+  `cre_neg_mm` (signs of the cross pairings when `γ² ≤ 0`).
+* `arc_eq`, `rawCost_eq` (`elG`, `elF1`, `elF2`: the signed action), `euler_sum` (its Euler
+  identity), `next_centre_local` (the three-factor recurrence).
 
 ## The global frame
 
 `Amat k = T₀(q_k) R^{-ε_k}`, `pre n = A₀ ⋯ A_{n-1}` (`pre_preInv`, `det_pre`),
-`Mloc k = P_k⁻¹ U P_k` (`Mloc_succ`, `Mloc_pre`), **`pre_N`: `P_N = ±1`** (MGCE (7), from the
+`Mloc k = P_k⁻¹ U P_k` (`Mloc_succ`, `Mloc_pre`), **`pre_N`: `P_N = ±1`** (from the
 tangent closure), switch vectors `yv n = P_n (outgoing vector)` with `yv_norm` (`yᵀSy = d`),
 `yv_pair` (pairing and Wronskian with the next one), `cross_pp`, `cross_mm`, `outv_turn`,
 `yv_add_N` (`y_{N+n} = P_N y_n`), `S = Sloc 0 = -J₀ U` (`Sloc_symm`).
@@ -56,12 +57,12 @@ tangent closure), switch vectors `yv n = P_n (outgoing vector)` with `yv_norm` (
 ## Ellipticity and the cost–Casimir inequality
 
 * `NormalPeriod.rev_run`, `swd_ge_of_mixed`, `centre_min`: run structure of a mixed period.
-* **`NormalPeriod.gam2_pos_of_mixed`**: `γ² > 0` for every mixed normal period (MGCE (1), §§5-6;
-  the projective argument uses `el_three_gram`).
+* **`NormalPeriod.gam2_pos_of_mixed`**: `γ² > 0` for every mixed normal period (the projective
+  argument uses `el_three_gram`).
 * `NormalPeriod.Λ₁_zero_neg`: `γ² > 0`, `S₀₀ > 0` ⇒ `Λ₁(0)₁₀ < 0` (negative elliptic; the
   triangular change reverses orientation, `el_ell_sign`).
 * **`NormalPeriod.cost_casimir`**: `C ≥ 4πκ/(2κ + 3)` for negative elliptic `Λ₁(0)`
-  (GLOBAL_COST_CASIMIR (4); `el_winding`, `el_negEll_repr`).
+  (`el_winding`, `el_negEll_repr`).
 * **`NormalPeriod.gam2_le_cap`**: competitive, `γ² > 0`, `d₀ > 0` ⇒ `γ² ≤ 97969/529200`.
 -/
 
@@ -101,19 +102,19 @@ theorem el_quad_rot (f : Fin 3 → ℝ) (i : Fin 3) :
     ring
 
 /-- `∂G/∂a` of the signed action `G(a, b) = 3ab - 4 - (a² + b²) log(a + b) + ½ a² log(a² + 4)
-+ ½ b² log(b² + 4)` (MGCE (3)); equivalently `a (2 f(1 + b/a) + h(1 + 4/a²))` (MGCE (4)). -/
++ ½ b² log(b² + 4)`; equivalently `a (2 f(1 + b/a) + h(1 + 4/a²))`. -/
 noncomputable def elGa (a b : ℝ) : ℝ :=
   3 * b - 2 * a * Real.log (a + b) - (a ^ 2 + b ^ 2) / (a + b) + a * Real.log (a ^ 2 + 4) +
     a ^ 3 / (a ^ 2 + 4)
 
-/-- `f(t) = t - 1/t - log t` (MGCE §1). -/
+/-- `f(t) = t - 1/t - log t`. -/
 noncomputable def elF (t : ℝ) : ℝ := t - t⁻¹ - Real.log t
 
 /-- The switching threshold `j = (a² + ab + b²) / (4 (a + b)²)` of a switch between active margins
-`a, b` (MGCE (17)). -/
+`a, b`. -/
 noncomputable def elJ (a b : ℝ) : ℝ := (a ^ 2 + a * b + b ^ 2) / (4 * (a + b) ^ 2)
 
-/-! ### The stationarity identities (MGCE (8), in local form) -/
+/-! ### The stationarity identities (in local form) -/
 
 theorem el_stat_pp {a b c q n x0 x1 x2 y0 y1 y2 : ℝ} (ha : 0 < a) (hc : 0 < c) (hq : 0 < q)
     (hb : b = (a ^ 2 + 4) / (a + c) - a) (hn : n = (a + b) * q - a)
@@ -243,10 +244,10 @@ theorem el_stat_pm {a b c q n x0 x2 y0 y1 y2 : ℝ} (ha : 0 < a) (hc : 0 < c) (h
 
 
 
-/-! ### The signed action (MGCE (3)) -/
+/-! ### The signed action -/
 
 /-- The signed action `G(a, b) = 3ab - 4 - (a² + b²) log(a + b) + ½ a² log(a² + 4)
-+ ½ b² log(b² + 4)` (MGCE (3)). -/
++ ½ b² log(b² + 4)`. -/
 noncomputable def elG (a b : ℝ) : ℝ :=
   3 * a * b - 4 - (a ^ 2 + b ^ 2) * Real.log (a + b) + a ^ 2 / 2 * Real.log (a ^ 2 + 4) +
     b ^ 2 / 2 * Real.log (b ^ 2 + 4)
@@ -265,8 +266,8 @@ theorem elF1_add_elF2 {a b : ℝ} (hab : a + b ≠ 0) : elF1 a b + elF2 a b = el
   field_simp
   ring
 
-/-- The Euler identity of the signed action: `(a ∂_a + b ∂_b) G = 2G + 16/(a² + 4) + 16/(b² + 4)`
-(MGSRP (14)). -/
+/-- The Euler identity of the signed action:
+`(a ∂_a + b ∂_b) G = 2G + 16/(a² + 4) + 16/(b² + 4)`. -/
 theorem elGa_euler {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
     a * elGa a b + b * elGa b a = 2 * elG a b + 16 / (a ^ 2 + 4) + 16 / (b ^ 2 + 4) := by
   simp only [elGa, elG, show b + a = a + b by ring]
@@ -414,7 +415,7 @@ theorem el_decr_start {a c q Y B : ℝ} (hq : 1 < q) (hYB : 2 * Y + B = 0)
 
 /-! ### The turn secant bound -/
 
-/-- `G_a(a, b) - G_a(a, c) = 2a (f(1 + b/a) - f(1 + c/a))` (MGCE (4)). -/
+/-- `G_a(a, b) - G_a(a, c) = 2a (f(1 + b/a) - f(1 + c/a))`. -/
 theorem elGa_sub {a b c : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c) :
     elGa a b - elGa a c = 2 * a * (elF (1 + b / a) - elF (1 + c / a)) := by
   have e1 : 1 + b / a = (a + b) / a := by field_simp
@@ -578,7 +579,7 @@ theorem elRp_R_elRm (i : Fin 3) :
       Matrix.one_fin_two]
 
 
-/-! ### The projective lemma for a nonelliptic form (MGCE §6) -/
+/-! ### The projective lemma for a nonelliptic form -/
 
 /-- For a symmetric `S` with `det S ≤ 0` and three vectors of positive `S`-norm, the product of
 the three pairings is positive (the Gram determinant of three plane vectors vanishes). -/
@@ -609,7 +610,7 @@ theorem el_three_gram {S : Mat2} (hsym : S 0 1 = S 1 0) (hdet : S.det ≤ 0)
   have hp : 0 < d0 * d * d' := by positivity
   nlinarith
 
-/-- The local lower bound `X` of the cross pairing (MGCE (21)):
+/-- The local lower bound `X` of the cross pairing:
 `(s_- j_- + s_+ j_+ - 𝒞)/(4a) = (-1 + 2a(1/s_- + 1/s_+) - a²/K + log(s_- s_+/K))/16`. -/
 theorem el_cross_bound {a p n : ℝ} (ha : 0 < a) (hp : 0 < p) (hn : 0 < n) :
     ((a + p) * (elJ p a / 2) + (a + n) * (elJ a n / 2) - (elGa a p + elGa a n) / 16) / (2 * a) =
@@ -725,7 +726,7 @@ theorem mu_add (k : ℤ) (j : Fin 3) : C.mu (k + N) j = C.mu k (j - 1) := by
 /-- The sign `ε_k = ±1` of the switch from piece `k` to piece `k + 1`. -/
 noncomputable def sgn (k : ℤ) : ℝ := if C.lab (k + 1) = C.lab k + 1 then 1 else -1
 
-/-- `w_k = -μ_{i_k}` on piece `k` (`tr(U Z_k) = 2 (M_k)₁₁` of the notes). -/
+/-- `w_k = -μ_{i_k}` on piece `k` (`tr(U Z_k)`, which is `2 (Mloc k)₀₀`). -/
 noncomputable def wt (k : ℤ) : ℝ := -C.mu k (C.lab k)
 
 /-- The switch norm `d_k = y_kᵀ S y_k` of the switch after piece `k`. -/
@@ -754,8 +755,7 @@ theorem act_pred (k : ℤ) : C.act (k - 1) = C.m k (C.lab (k - 1)) := by
 theorem wt_pred (k : ℤ) : C.wt (k - 1) = -C.mu k (C.lab (k - 1)) := by
   have := C.mu_act (k - 1); rw [sub_add_cancel] at this; simp only [wt, this]
 
-/-- **The boundary identity `J_{a_k} = tr(U V_k)`** (MGCE (8), (5), (6)), in local form: on every
-piece `k`,
+/-- **The boundary identity `J_{a_k} = tr(U V_k)`**, in local form: on every piece `k`,
 `2 (ε_{k-1} s_{k-1} d_{k-1} + ε_k s_k d_k - (ε_{k-1} + ε_k) a_k e_k)
   = (ε_{k-1} G_a(a_k, a_{k-1}) + ε_k G_a(a_k, a_{k+1})) / 8`. -/
 theorem stationarity (k : ℤ) :
@@ -961,7 +961,7 @@ theorem swd_sub_fwd {k : ℤ} (h : C.lab (k + 1) = C.lab k + 1) :
   field_simp
   el_ring
 
-/-- **The weak switching inequality at a reverse switch** (MGCE (17)): `d_k ≤ j_k/2`. -/
+/-- **The weak switching inequality at a reverse switch**: `d_k ≤ j_k/2`. -/
 theorem swd_rev {k : ℤ} (h : C.lab (k + 1) = C.lab k - 1) :
     C.swd k ≤ elJ (C.act k) (C.act (k + 1)) / 2 := by
   have hk : C.lab k = C.lab (k + 1) + 1 := by rw [h, sub_add_cancel]
@@ -979,7 +979,7 @@ theorem swd_rev {k : ℤ} (h : C.lab (k + 1) = C.lab k - 1) :
       (4 * √3 * (C.act k + C.act (k + 1)) ^ 2) ≤ 0 := div_nonpos_of_nonpos_of_nonneg hY hd.le
   linarith
 
-/-- **The weak switching inequality at a forward switch** (MGCE (17)): `d_k ≥ j_k/2`. -/
+/-- **The weak switching inequality at a forward switch**: `d_k ≥ j_k/2`. -/
 theorem swd_fwd {k : ℤ} (h : C.lab (k + 1) = C.lab k + 1) :
     elJ (C.act k) (C.act (k + 1)) / 2 ≤ C.swd k := by
   have hk : C.lab k = C.lab (k + 1) - 1 := by rw [h, add_sub_cancel_right]
@@ -1049,7 +1049,7 @@ theorem turn_swd_pm {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
   field_simp
   ring
 
-/-- **The turn secant** (MGCE (15)): at a turn `k`, with `p = a_{k-1}`, `n = a_{k+1}`,
+/-- **The turn secant**: at a turn `k`, with `p = a_{k-1}`, `n = a_{k+1}`,
 `16 (n - p) d_k = G_a(a_k, n) - G_a(a_k, p)` and `d_{k-1} = d_k`. -/
 theorem turn_secant {k : ℤ} (hturn : C.sgn (k - 1) = -C.sgn k) :
     C.swd (k - 1) = C.swd k ∧
@@ -1070,7 +1070,7 @@ theorem turn_secant {k : ℤ} (hturn : C.sgn (k - 1) = -C.sgn k) :
     unfold sgn; split_ifs <;> simp
   rcases hs with hs | hs <;> rw [hs] at hst <;> linarith
 
-/-- **Gram identity at a centre `- -`** (MGCE (14)): `d_{k-1} d_k - e_k² = γ²/K_k²`. -/
+/-- **Gram identity at a centre `- -`**: `d_{k-1} d_k - e_k² = γ²/K_k²`. -/
 theorem gram_mm {k : ℤ} (hin : C.lab k = C.lab (k - 1) - 1)
     (hout : C.lab (k + 1) = C.lab k - 1) :
     C.swd (k - 1) * C.swd k - C.cre k ^ 2 = C.gam2 k / (C.act k ^ 2 + 4) ^ 2 := by
@@ -1094,7 +1094,7 @@ theorem gram_mm {k : ℤ} (hin : C.lab k = C.lab (k - 1) - 1)
   field_simp
   ring
 
-/-- **Gram identity at a forward same-sign piece `+ +`** (MGCE (14)). -/
+/-- **Gram identity at a forward same-sign piece `+ +`**: `d_{k-1} d_k - e_k² = γ²/K_k²`. -/
 theorem gram_pp {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
     (hout : C.lab (k + 1) = C.lab k + 1) :
     C.swd (k - 1) * C.swd k - C.cre k ^ 2 = C.gam2 k / (C.act k ^ 2 + 4) ^ 2 := by
@@ -1118,7 +1118,7 @@ theorem gram_pp {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
   field_simp
   ring
 
-/-- **The turn bound** (MGCE (16)): at a turn the switch norm is at least `3/32`. -/
+/-- **The turn bound**: at a turn the switch norm is at least `3/32`. -/
 theorem turn_swd_ge {k : ℤ} (hturn : C.sgn (k - 1) = -C.sgn k) : 3 / 32 ≤ C.swd k := by
   obtain ⟨-, hsec⟩ := C.turn_secant hturn
   have ek : k - 1 + 1 = k := by ring
@@ -1166,10 +1166,9 @@ theorem turn_swd_ge {k : ℤ} (hturn : C.sgn (k - 1) = -C.sgn k) : 3 / 32 ≤ C.
       linarith
     nlinarith
 
-/-- **Centre stationarity** (MGSRAE (5)). At a centre `k` (both incident switches reverse), with
-`a = a_k`, `p = a_{k-1}`, `n = a_{k+1}`, `r = a/(a + p)`, `t = a/(a + n)`, `ρ = a²/(a² + 4)`,
-`u = 8 d_{k-1}`, `v = 8 d_k`, `E = 16 e_k`:
-`E = 1 + r + t - ρ + log(ρ/(r t)) - (1 - u)/r - (1 - v)/t`. -/
+/-- **Centre stationarity**. At a centre `k` (both incident switches reverse), with `a = a_k`,
+`p = a_{k-1}`, `n = a_{k+1}`, `r = a/(a + p)`, `t = a/(a + n)`, `ρ = a²/(a² + 4)`, `u = 8 d_{k-1}`,
+`v = 8 d_k`, `E = 16 e_k`: `E = 1 + r + t - ρ + log(ρ/(r t)) - (1 - u)/r - (1 - v)/t`. -/
 theorem centre_stat {k : ℤ} (hin : C.lab k = C.lab (k - 1) - 1)
     (hout : C.lab (k + 1) = C.lab k - 1) :
     16 * C.cre k = 1 + C.act k / (C.act k + C.act (k - 1)) + C.act k / (C.act k + C.act (k + 1)) -
@@ -1221,7 +1220,7 @@ theorem centre_factor {k : ℤ} (hin : C.lab k = C.lab (k - 1) - 1)
   simp only [act]
   field_simp
 
-/-! ### The frame of piece `k` and the global prefix frame (MGCE §2) -/
+/-! ### The frame of piece `k` and the global prefix frame -/
 
 /-- `A_k = T₀(q_k) R^{-ε_k}`. -/
 noncomputable def Amat (k : ℤ) : Mat2 :=
@@ -1337,7 +1336,7 @@ theorem Mloc_pre (n : ℕ) : C.Mloc n = C.preInv n * C.Mloc 0 * C.pre n := by
     rw [Nat.cast_succ, C.Mloc_succ, ih]
     simp only [pre, preInv, Matrix.mul_assoc]
 
-/-- **The full frame monodromy** (MGCE (7)): `P_N = σ I`, `σ = ±1`. -/
+/-- **The full frame monodromy**: `P_N = σ I`, `σ = ±1`. -/
 theorem pre_N : C.pre N = 1 ∨ C.pre N = -1 := by
   have hpm : ∀ s : ℝ, (s = 1 ∨ s = -1) → ∀ s' : ℝ, (s' = 1 ∨ s' = -1) → (s * s' = 1 ∨ s * s' = -1) := by
     rintro s (rfl | rfl) s' (rfl | rfl) <;> norm_num
@@ -1394,7 +1393,7 @@ theorem pre_N : C.pre N = 1 ∨ C.pre N = -1 := by
   · right; rw [neg_smul, one_smul] at hfin; rw [← neg_neg (C.pre N), ← hfin]
   · left; rw [neg_smul, one_smul, neg_inj] at hfin; exact hfin.symm
 
-/-! ### The switch vectors (MGCE (11)-(13)) -/
+/-! ### The switch vectors -/
 
 /-- `s_k = a_k + a_{k+1}`. -/
 noncomputable def sw (k : ℤ) : ℝ := C.act k + C.act (k + 1)
@@ -1524,8 +1523,8 @@ theorem outv_rev {k : ℤ} (hout : C.lab (k + 1) = C.lab k - 1) :
     rw [hout]; generalize C.lab k = i; revert i; decide
   simp only [outv]; exact ite_eq_right hne
 
-/-- **The cross pairing at a same-sign piece** (MGCE (12)): `y_{k-1}ᵀ S y_k = e_k`, and the
-Wronskian `det(y_{k-1}, y_k) = ε/K_k` (MGCE (13)). -/
+/-- **The cross pairing at a same-sign piece**: `y_{k-1}ᵀ S y_k = e_k`, and the Wronskian
+`det(y_{k-1}, y_k) = ε/K_k`. -/
 theorem cross_pp {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
     (hout : C.lab (k + 1) = C.lab k + 1) :
     elQ (C.Sloc k) (C.inc k) (C.outv k) = C.cre k ∧
@@ -1567,7 +1566,7 @@ theorem cross_mm {k : ℤ} (hin : C.lab k = C.lab (k - 1) - 1)
     field_simp
     linear_combination hf'
 
-/-- At a turn the two switch vectors are opposite (MGCE (13)). -/
+/-- At a turn the two switch vectors are opposite. -/
 theorem outv_turn {k : ℤ} (hturn : C.sgn (k - 1) = -C.sgn k) : C.outv k = -C.inc k := by
   have ek : k - 1 + 1 = k := by ring
   rcases C.lab_cases (k - 1) with hin | hin <;> rw [ek] at hin <;>
@@ -1587,8 +1586,8 @@ theorem outv_turn {k : ℤ} (hturn : C.sgn (k - 1) = -C.sgn k) : C.outv k = -C.i
 
 /-! ### The global switch vectors -/
 
-/-- The switch vector `y_n = P_n (outgoing vector of piece n)` after piece `n` in the global frame
-(MGCE (11)). -/
+/-- The switch vector `y_n = P_n (outgoing vector of piece n)` after piece `n` in the global
+frame. -/
 noncomputable def yv (n : ℕ) : Fin 2 → ℝ := C.pre n *ᵥ C.outv n
 
 theorem yv_eq_inc (n : ℕ) : C.pre (n + 1) *ᵥ C.inc ((n + 1 : ℕ) : ℤ) = C.yv n := by
@@ -1645,12 +1644,12 @@ theorem pre_add_N (n : ℕ) : C.pre (N + n) = C.pre N * C.pre n := by
     congr 2
     rw [show ((N + n : ℕ) : ℤ) = (n : ℤ) + N by push_cast; ring, C.Amat_add]
 
-/-- **The switch vectors close up to the sign of the monodromy** (MGCE (11)). -/
+/-- **The switch vectors close up to the monodromy**: `y_{N+n} = P_N y_n`. -/
 theorem yv_add_N (n : ℕ) : C.yv (N + n) = C.pre N *ᵥ C.yv n := by
   rw [yv, C.pre_add_N, ← Matrix.mulVec_mulVec, yv,
     show ((N + n : ℕ) : ℤ) = (n : ℤ) + N by push_cast; ring, C.outv_add]
 
-/-! ### The cross pairings of a nonelliptic multiplier (MGCE §5) -/
+/-! ### The cross pairings of a nonelliptic multiplier -/
 
 theorem elJ_ge (a b : ℝ) (ha : 0 < a) (hb : 0 < b) : 3 / 16 ≤ elJ a b := by
   simp only [elJ]
@@ -1667,7 +1666,8 @@ private theorem cre_eq_same {k : ℤ} (hs : C.sgn (k - 1) = C.sgn k) :
   have h1 : C.sgn k = 1 ∨ C.sgn k = -1 := by unfold sgn; split_ifs <;> simp
   rcases h1 with h1 | h1 <;> rw [h1] at hst <;> field_simp <;> linarith
 
-/-- **MGCE (22)**: if `γ² ≤ 0`, the cross pairing of a forward same-sign piece is positive. -/
+/-- **Positive cross pairing**: if `γ² ≤ 0`, the cross pairing of a forward same-sign piece is
+positive. -/
 theorem cre_pos_pp {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
     (hout : C.lab (k + 1) = C.lab k + 1) (hgam : C.gam2 k ≤ 0) : 0 < C.cre k := by
   have ha := C.act_pos k
@@ -1729,8 +1729,8 @@ theorem cre_pos_pp {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
   have : C.cre k ≤ -(3 / 32) := by nlinarith
   linarith [mul_add (2 * C.act k) (1 / (C.act k + C.act (k - 1))) (1 / (C.act k + C.act (k + 1)))]
 
-/-- **MGCE (23)**: if `γ² ≤ 0`, the cross pairing at a centre with a strict minimum and switch
-norms at least `3/32` is negative. -/
+/-- **Negative cross pairing**: if `γ² ≤ 0`, the cross pairing at a centre with a strict minimum and
+switch norms at least `3/32` is negative. -/
 theorem cre_neg_mm {k : ℤ} (hin : C.lab k = C.lab (k - 1) - 1)
     (hout : C.lab (k + 1) = C.lab k - 1) (hmp : C.act k < C.act (k - 1))
     (hmn : C.act k < C.act (k + 1)) (hd1 : 3 / 32 ≤ C.swd (k - 1)) (hd2 : 3 / 32 ≤ C.swd k)
@@ -1786,7 +1786,7 @@ theorem sgn_cases (k : ℤ) : C.sgn k = 1 ∨ C.sgn k = -1 := by
   unfold sgn; split_ifs <;> simp
 
 /-- The cost of piece `k` split at its two switches: `arc_k = ε_k F₁(a_k, a_{k+1})
-+ ε_{k-1} F₂(a_{k-1}, a_k)` (MGCE (3)). -/
++ ε_{k-1} F₂(a_{k-1}, a_k)`. -/
 theorem arc_eq (k : ℤ) :
     C.arc k = C.sgn k * elF1 (C.act k) (C.act (k + 1)) +
       C.sgn (k - 1) * elF2 (C.act (k - 1)) (C.act k) := by
@@ -1882,7 +1882,7 @@ theorem el_sum_shift (f : ℤ → ℝ) (hf : ∀ k, f (k + N) = f k) :
   push_cast at h h'
   linarith
 
-/-- **The signed action** (MGCE (3)): the raw cost of the cycle is `8 J = ∑ ε_k G(a_k, a_{k+1})`. -/
+/-- **The signed action**: the raw cost of the cycle is `8 J = ∑ ε_k G(a_k, a_{k+1})`. -/
 theorem rawCost_eq :
     C.rawCost = ∑ k ∈ Finset.range N, C.sgn k * elG (C.act k) (C.act (k + 1)) := by
   simp only [Term.Cycle.rawCost]
@@ -1896,7 +1896,7 @@ theorem rawCost_eq :
   refine Finset.sum_congr rfl fun k _ ↦ ?_
   rw [← mul_add, elF1_add_elF2 (by linarith [C.act_pos k, C.act_pos (k + 1)])]
 
-/-- **The Euler identity** (MGSRP (14)-(15)): over one period,
+/-- **The Euler identity**: over one period, a weighted sum of the stationarity identities gives
 `8 ∑ (ε_{k-1} + ε_k) e_k = C_raw/4 + 2 ∑ (ε_{k-1} + ε_k)/K_k`. -/
 theorem euler_sum :
     8 * ∑ k ∈ Finset.range N, (C.sgn ((k : ℤ) - 1) + C.sgn k) * C.cre k =
@@ -1995,10 +1995,10 @@ theorem euler_sum :
     rw [← Finset.sum_add_distrib]; exact Finset.sum_congr rfl fun k _ ↦ by ring
   linarith [e1, e1', e2, hsum]
 
-/-! ### The all-short recurrence (MGSRP (6)-(9)) -/
+/-! ### The all-short recurrence -/
 
-/-- **The three-factor recurrence** (MGSRP (9)), in the frame of a centre `n`: with the word
-`- - + - -` around the pieces `n, …, n + 3` (centres `n`, `n + 3`, turns `n + 1`, `n + 2`),
+/-- **The three-factor recurrence**, in the frame of a centre `n`: with the word `- - + - -` around
+the pieces `n, …, n + 3` (centres `n`, `n + 3`, turns `n + 1`, `n + 2`),
 `K_{n+3} A_n A_{n+1} A_{n+2} y = -K_n y⁻ + D y⁺`, where `y⁻, y⁺` are the incoming and outgoing
 vectors of piece `n`, `y` the outgoing vector of piece `n + 3`, and
 `D = s_n² + s_{n+2}² - s_{n+1}²`. -/
@@ -2062,7 +2062,7 @@ end CostateCycle
 
 
 
-/-! ### The polar angle of a frame (GLOBAL_COST_CASIMIR (16)-(20)) -/
+/-! ### The polar angle of a frame -/
 
 section Winding
 
@@ -2075,7 +2075,7 @@ theorem el_zc_mul_R (M : Mat2) :
   apply Complex.ext <;>
     simp [scb_zc, R, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
 
-/-- **The polar-angle bound** (GLOBAL_COST_CASIMIR (16)-(20), as in SINGULAR_COST_BUDGET (16)):
+/-- **The polar-angle bound** (the argument of `scb_winding`, for a frame not starting at `I`):
 for a frame path `B' = B X` with star states, `det B = 1` and `B(T) = B(0) R`,
 `∫₀ᵀ (ρ(X) + ρ(B X B⁻¹)) ≥ 2π/3`. -/
 theorem el_winding {T : ℝ} (hT : 0 < T) {B X : ℝ → Mat2}
@@ -2351,8 +2351,8 @@ namespace NormalPeriod
 variable (P : NormalPeriod)
 
 
-/-- **Every reverse switch of a mixed period lies in a run of exactly two** (MGMS §7): it is the
-first (`+ - - +` from `k - 1`) or the second (`+ - - +` from `k - 2`) switch of its run. -/
+/-- **Every reverse switch of a mixed period lies in a run of exactly two**: it is the first
+(`+ - - +` from `k - 1`) or the second (`+ - - +` from `k - 2`) switch of its run. -/
 theorem rev_run (hmix : P.rep.IsMixed) {k : ℤ} (hk : P.rep.IsReverse k) :
     (P.rep.IsForward (k - 1) ∧ P.rep.IsReverse (k + 1) ∧ P.rep.IsForward (k + 2)) ∨
       (P.rep.IsForward (k - 2) ∧ P.rep.IsReverse (k - 1) ∧ P.rep.IsForward (k + 1)) := by
@@ -2414,7 +2414,7 @@ theorem rev_run (hmix : P.rep.IsMixed) {k : ℤ} (hk : P.rep.IsReverse k) :
     have := hj; rw [h0] at this
     rw [show k - 2 = k - 1 - ((1 : ℕ) : ℤ) by push_cast; ring]; exact this
 
-/-- In a mixed period every switch norm is at least `3/32` (MGCE (19)). -/
+/-- In a mixed period every switch norm is at least `3/32`. -/
 theorem swd_ge_of_mixed (hmix : P.rep.IsMixed) (k : ℤ) : 3 / 32 ≤ P.costateCycle.swd k := by
   set C := P.costateCycle
   rcases P.rep.el_fwd_or_rev k with hf | hr
@@ -2462,8 +2462,8 @@ theorem centre_min (hmix : P.rep.IsMixed) {k : ℤ} (h1 : P.rep.IsReverse (k - 1
         · rw [show k - 1 - 1 + 1 = k - 1 by ring] at hf'; exact P.rep.el_not_fwd_rev _ ⟨hf', h1⟩
       · rw [sub_add_cancel] at hf; exact P.rep.el_not_fwd_rev _ ⟨hf, h2⟩
 
-/-- **Negative ellipticity, mixed periods** (MGCE (1)): the normal multiplier of a mixed normal
-vertex period has `γ² = det U = det Λ₁ / 12 > 0`. -/
+/-- **Negative ellipticity, mixed periods**: the normal multiplier of a mixed normal vertex period
+has `γ² = det U = det Λ₁ / 12 > 0`. -/
 theorem gam2_pos_of_mixed (hmix : P.rep.IsMixed) : 0 < P.costateCycle.gam2 0 := by
   set C := P.costateCycle with hC
   by_contra hcon
@@ -2669,9 +2669,9 @@ theorem det_Λ₁_zero : (P.Λ₁ 0).det = 12 * P.costateCycle.gam2 0 := by
   rw [det_triY] at hd
   rw [CostateCycle.gam2, hd, P.det_Ucal]; ring
 
-/-- **The orientation of the multiplier** (MGCE §6): if `S = -J₀ U` has a positive diagonal entry
-`S₀₀ > 0` and `γ² > 0`, then `Λ₁(0)` is negative elliptic (`Λ₁(0)₁₀ < 0`); the triangular
-coordinates reverse orientation. -/
+/-- **The orientation of the multiplier**: if `S = -J₀ U` has a positive diagonal entry `S₀₀ > 0`
+and `γ² > 0`, then `Λ₁(0)` is negative elliptic (`Λ₁(0)₁₀ < 0`); the triangular coordinates reverse
+orientation. -/
 theorem Λ₁_zero_neg (hpos : 0 < P.costateCycle.gam2 0) (hS : 0 < P.costateCycle.Sloc 0 0 0) :
     (P.Λ₁ 0) 1 0 < 0 := by
   set C := P.costateCycle
@@ -2735,8 +2735,8 @@ theorem Λ₁_zero_neg (hpos : 0 < P.costateCycle.gam2 0) (hS : 0 < P.costateCyc
   by_contra h; push Not at h; nlinarith
 
 open Reduction in
-/-- **The cost–Casimir inequality** (GLOBAL_COST_CASIMIR (4)). If `Λ₁(0)` is negative elliptic
-with Casimir `κ = √(det Λ₁)`, then `C ≥ 4πκ/(2κ + 3)`. -/
+/-- **The cost–Casimir inequality**. If `Λ₁(0)` is negative elliptic with Casimir `κ = √(det Λ₁)`,
+then `C ≥ 4πκ/(2κ + 3)`. -/
 theorem cost_casimir (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P.Λ₁ 0) 1 0 < 0) :
     4 * Real.pi * √(P.Λ₁ 0).det / (2 * √(P.Λ₁ 0).det + 3) ≤ P.cost := by
   have hΛtr := (P.extremal.2.2.2.2.2.2.2.1 0 ⟨le_rfl, P.T_pos.le⟩).1
@@ -2814,9 +2814,9 @@ theorem cost_casimir (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P.Λ₁ 0) 1 0 < 0) :
   field_simp at this
   nlinarith [Real.pi_pos]
 
-/-- **The competitive Casimir cap** (GLOBAL_COST_CASIMIR (5), MGSRAE (7)). If `γ² > 0` and the
-first switch norm is positive (so `S = -J₀U` is positive definite and `Λ₁` negative elliptic),
-then a competitive period has `γ² ≤ 97969/529200`. -/
+/-- **The competitive Casimir cap**. If `γ² > 0` and the first switch norm is positive (so
+`S = -J₀U` is positive definite and `Λ₁` negative elliptic), then a competitive period has
+`γ² ≤ 97969/529200`. -/
 theorem gam2_le_cap (hc : P.IsCompetitive) (hpos : 0 < P.costateCycle.gam2 0)
     (hd : 0 < P.costateCycle.swd 0) : P.costateCycle.gam2 0 ≤ 97969 / 529200 := by
   set C := P.costateCycle

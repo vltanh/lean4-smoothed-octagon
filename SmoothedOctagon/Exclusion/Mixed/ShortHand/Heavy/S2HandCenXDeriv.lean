@@ -5,7 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenXDefs
 /-!
 # S2 hand signs: the central x comparison, the chain rule
 
-`archive/lighter-proofs/SHORT_RATIO_CENTRAL_X.md` §4 (28): for differentiable `b(x)`, `u(x)`
+The chain rule along the central curve: for differentiable `b(x)`, `u(x)`
 (slopes `ℓ`, `u_x`), with `a` fixed, the total x-derivatives of the pieces of the duration-tangent
 tests `F₀`, `F₁` (`hl2cF0`, `hl2cF1`), in the atoms `S = 1 + x`, `K`, `B = a + b`, `D`,
 `D_x = 2 + 2ℓ(a - x) - 2b`: with `h = w - 3/4 = H₀/K²` and `k = aB/K`,
@@ -16,8 +16,8 @@ tests `F₀`, `F₁` (`hl2cF0`, `hl2cF1`), in the atoms `S = 1 + x`, `K`, `B = a
 * `((1/k + 1/4)h)_x = G₁H₁/(aBK²) + C₁H₀/(aB²K³)` (`hl2cx_d_gh1`),
 * `(1/k)_x = Z/(aB²)`, `Z = 2SB - ℓK` (`hl2cx_d_T`).
 
-Here `H₀, H₁, P_a, …` are the primitives (26)-(27) with the norm `u(x)` and the speed `u_x`
-in place of the majorants `U`, `V`; every identity is checked in the abstract atoms.
+Here `H₀, H₁, P_a, …` are the primitives of `S2HandCenXDefs` with the norm `u(x)` and the speed
+`u_x` in place of the majorants `U`, `V`; every identity is checked in the abstract atoms.
 -/
 
 @[expose] public section
@@ -80,7 +80,7 @@ theorem hl2cx_d_k {a y l : ℝ} {b : ℝ → ℝ} (hb : HasDerivAt b l y) (hK0 :
     ((hb.const_add a).const_mul a).fun_div (hl2cx_d_K a y) hK0
   exact h
 
-/-- **`(ℛ + log(tk))_x = P_a/a + P_b/B² - P₁/K + P₂/K²`** (`SHORT_RATIO_CENTRAL_X` (28)). -/
+/-- **`(ℛ + log(tk))_x = P_a/a + P_b/B² - P₁/K + P₂/K²`**. -/
 theorem hl2cx_d_Rlog {t a y l up : ℝ} {b u : ℝ → ℝ} (hb : HasDerivAt b l y)
     (hu : HasDerivAt u up y) (ha : a ≠ 0) (hB : a + b y ≠ 0) (hK0 : hl2cK y a ≠ 0) (ht : t ≠ 0) :
     HasDerivAt (fun z => hl2cR z a (b z) (u z) + log (t * hl2ck z a (b z)))
@@ -109,7 +109,7 @@ theorem hl2cx_d_Rlog {t a y l up : ℝ} {b u : ℝ → ℝ} (hb : HasDerivAt b l
   field_simp
   ring
 
-/-- **`((4 - 7k/2)h)_x = G₀H₁/K³ + C₀H₀/K⁴`** (`SHORT_RATIO_CENTRAL_X` (28)). -/
+/-- **`((4 - 7k/2)h)_x = G₀H₁/K³ + C₀H₀/K⁴`**. -/
 theorem hl2cx_d_gh0 {a y l up : ℝ} {b u : ℝ → ℝ} (hb : HasDerivAt b l y)
     (hu : HasDerivAt u up y) (hK0 : hl2cK y a ≠ 0) :
     HasDerivAt (fun z => (4 - 7 * hl2ck z a (b z) / 2) * (hl2cw z a (b z) (u z) - 3 / 4))
@@ -132,7 +132,7 @@ theorem hl2cx_d_gh0 {a y l up : ℝ} {b u : ℝ → ℝ} (hb : HasDerivAt b l y)
   field_simp
   ring
 
-/-- **`((1/k + 1/4)h)_x = G₁H₁/(aBK²) + C₁H₀/(aB²K³)`** (`SHORT_RATIO_CENTRAL_X` (28)). -/
+/-- **`((1/k + 1/4)h)_x = G₁H₁/(aBK²) + C₁H₀/(aB²K³)`**. -/
 theorem hl2cx_d_gh1 {a y l up : ℝ} {b u : ℝ → ℝ} (hb : HasDerivAt b l y)
     (hu : HasDerivAt u up y) (ha : a ≠ 0) (hB : a + b y ≠ 0) (hK0 : hl2cK y a ≠ 0) :
     HasDerivAt (fun z => (1 / hl2ck z a (b z) + 1 / 4) * (hl2cw z a (b z) (u z) - 3 / 4))
@@ -159,7 +159,7 @@ theorem hl2cx_d_gh1 {a y l up : ℝ} {b u : ℝ → ℝ} (hb : HasDerivAt b l y)
   field_simp
   ring
 
-/-- **`(Tφ)_x = φZ/(aB²)`**, `T = 1/k`, `Z = 2SB - ℓK` (`SHORT_RATIO_CENTRAL_X` (14), (22)). -/
+/-- **`(Tφ)_x = φZ/(aB²)`**, `T = 1/k`, `Z = 2SB - ℓK`. -/
 theorem hl2cx_d_T {a y l φ : ℝ} {b : ℝ → ℝ} (hb : HasDerivAt b l y) (ha : a ≠ 0)
     (hB : a + b y ≠ 0) (hK0 : hl2cK y a ≠ 0) :
     HasDerivAt (fun z => 1 / hl2ck z a (b z) * φ)

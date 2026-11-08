@@ -14,29 +14,26 @@ public import SmoothedPolygons.Ch6.MatrixExtremal
 # From a global minimizer to a finite normal period
 
 Every global minimizer of the Reinhardt control problem, rebased at a switch, is a normal vertex
-period with fewer than `10^56` pieces whose state stays in the compact domain `𝔥**`.
+period with finitely many pieces whose state stays in the compact domain `𝔥**`.
 
-The proof is the chain of the proof notes (inventory A2, §2.9), each link a module of
-`SmoothedOctagon/Reduction/`:
+The proof is a chain, each link a module of `SmoothedOctagon/Reduction/`:
 
-1. the compact domain (`COMPACT_DOMAIN_SOURCE_AUDIT`, from Hales–Vajjha, Theorem 5.0.2, proved in
-   `SmoothedPolygons` as `theorem5_0_2`): the state of a global minimizer stays in `𝔥**`
+1. the compact domain (from Hales–Vajjha, Theorem 5.0.2, proved in `SmoothedPolygons` as
+   `theorem5_0_2`): the state of a global minimizer stays in `𝔥**`
    (`Reduction.inCompactDomain_of_isReinhardtMinimizer`, `CompactDomain.lean`);
 2. the Pontryagin lift of a global minimizer (`exists_isPontryaginExtremal_of_isReinhardtMinimizer`
    in `SmoothedPolygons`, through the maximum principle of `OptimalControl`);
 3. the singular clearance `‖𝒫(t)‖ ≤ 251 Q(t)` (so `D > 10⁻¹¹` for normalized lifts) and the
-   projective bounds `10⁻⁸ < ‖𝒫(t)‖/‖𝒫(0)‖ < 10⁸` (`SINGULAR_COST_BUDGET`,
-   `SingularClearance.lean`);
-4. the edge bound (E4) (`MEASURABLE_EDGE_PMP_BOUND`, `EdgeBound.lean`);
-5. finitely many switches (`QUANTITATIVE_REGULAR_SWITCH_BOUND`, `SwitchCount.lean`; only
-   finiteness is used, not the explicit bound `N < 10^56`);
+   projective bounds `10⁻⁸ < ‖𝒫(t)‖/‖𝒫(0)‖ < 10⁸` (`SingularClearance.lean`);
+4. the edge bound (E4) (`EdgeBound.lean`);
+5. finitely many switches (`SwitchCount.lean`);
 6. merging equal neighbours, also across the twisted seam, and rebasing at a genuine switch
-   (`VERTEX_WORD_REDUCTION`, `WordReduction.lean`); the rebased minimizer is a global minimizer with
-   the same cost (`VERTEX_WORD_REDUCTION`, Lemma 1, `Rebase.lean`);
-7. normality, `λ ≠ 0`, rescaled to `λ = -1` (`GLOBAL_NORMALITY`, `Normality.lean`).
+   (`WordReduction.lean`); the rebased minimizer is a global minimizer with the same cost
+   (`Rebase.lean`);
+7. normality, `λ ≠ 0`, rescaled to `λ = -1` (`Normality.lean`).
 
-Route: steps 2, 7 and 1 are applied directly to the rebased minimizer, which is itself a global
-minimizer, so no costate is transported through the rebasing.
+Steps 2, 7 and 1 are applied to the rebased minimizer, which is itself a global minimizer, so no
+costate is transported through the rebasing.
 -/
 
 @[expose] public section
@@ -45,11 +42,10 @@ namespace SmoothedOctagon
 
 open SmoothedPolygons Set
 
-/-- **Finite normal representation of a global minimizer** (the conjunction delivered by
-`SINGULAR_COST_BUDGET`, `MEASURABLE_EDGE_PMP_BOUND`, `QUANTITATIVE_REGULAR_SWITCH_BOUND`,
-`VERTEX_WORD_REDUCTION` and `GLOBAL_NORMALITY`). A global minimizer `(T, u, g, X)`, rebased at a time
-`s ∈ [0, T)`, is a normal vertex period `P` with the same terminal time and cost, still a global
-minimizer, with state in `𝔥**` and finitely many pieces. -/
+/-- **Finite normal representation of a global minimizer**, by the chain of the module description.
+A global minimizer `(T, u, g, X)`, rebased at a time `s ∈ [0, T)`, is a normal vertex period `P`
+with the same terminal time and cost, still a global minimizer, with state in `𝔥**` and finitely
+many pieces. -/
 theorem finiteNormalRepresentation {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2}
     (hmin : IsReinhardtMinimizer T u g X) :
     ∃ (P : NormalPeriod) (s : ℝ), P.T = T ∧ 0 ≤ s ∧ s < T ∧

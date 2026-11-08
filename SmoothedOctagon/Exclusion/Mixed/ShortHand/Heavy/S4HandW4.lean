@@ -6,12 +6,11 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW4b
 /-!
 # Gate S4, hand proof W4: `Φ` decreases in `x` on the boundary `d = 1/19`
 
-`archive/lighter-proofs/SHORT_CASIMIR_BOUNDARY_DERIVATIVES.md` §§1-3 (the fourth sign of (1)).
 At fixed `e`, `a = 1 + e/19`, write `Φ = Γ(x, U) - [r₀(x, a, v) + (U - v)ρ]/7`
 (`hl46W4_R0_affine`). Its derivative is
 `[Γ_x + Γ_u U'] - [f + (U' - 9/1000)ρ + (U - v)C/(361aK³)]/7`
-with `Γ_x + Γ_u U' < -7/1000` (note (3), `hl46W4_Gamma_slope`), `f > -9/200` (§3, `N > 0`),
-`U' > 9/1000`, `U > v`, `ρ > 0`, `C > 0` (§2, comparison (4)). Hence `Φ_x < -1/1750 < 0`.
+with `Γ_x + Γ_u U' < -7/1000` (`hl46W4_Gamma_slope`), `f > -9/200` (from `N > 0`),
+`U' > 9/1000`, `U > v`, `ρ > 0`, `C > 0` (`S4HandW4b`). Hence `Φ_x < -1/1750 < 0`.
 
 ## Main API
 
@@ -24,7 +23,7 @@ namespace SmoothedOctagon
 
 open Set
 
-/-- **W4** (`SHORT_CASIMIR_BOUNDARY_DERIVATIVES` §§1-3): at `d = 1/19`, `Φ` decreases in `x`. -/
+/-- **W4**: at `d = 1/19`, `Φ` decreases in `x`. -/
 theorem hl46_W4 {e x₁ x₂ : ℝ} (he : 13 / 5 ≤ e) (he' : e ≤ 3) (h1 : 2 ≤ x₁) (h12 : x₁ ≤ x₂)
     (h2 : x₂ ≤ 13 / 6) : hl46PhiC x₂ (1 / 19) e ≤ hl46PhiC x₁ (1 / 19) e := by
   set a := 1 + e * (1 / 19) with ha_def
@@ -57,10 +56,10 @@ theorem hl46_W4 {e x₁ x₂ : ℝ} (he : 13 / 5 ≤ e) (he' : e ≤ 3) (h1 : 2 
   obtain ⟨hUv, hU19, hUs⟩ := hl46W4_U_bounds hx hx'
   obtain ⟨hp, hp'⟩ := hl46W4_U1_bounds hx hx'
   have hv : hl46W4v x = 757 / 1000 + 9 / 1000 * (x - 2) := rfl
-  -- (3): the Casimir slope
+  -- the Casimir slope
   have hG := hl46W4_Gamma_slope (u := hsUbar x (x * (1 + 1 / 19))) (p := hl46W4U1 x) hx hx'
     (by linarith) hU19.le (fun h => (hUs h).le) (by linarith) hp'.le
-  -- §3: `f > -9/200`
+  -- `f > -9/200`
   have hf : -9 / 200 < hl46W4f x a := by
     have e := hl46W4_f_eq hx0 ha0
     have hN := hl46W4_N_pos hx hx' ha ha'
@@ -68,7 +67,7 @@ theorem hl46_W4 {e x₁ x₂ : ℝ} (he : 13 / 5 ≤ e) (he' : e ≤ 3) (h1 : 2 
     have hK := hl46W4_K_pos x a hx0
     have : 0 < hl46W4N x a / (45125 * a * hl46W4Cs x a ^ 2 * hl46W4K x a ^ 3) := by positivity
     linarith
-  -- (4): the two positive coefficients
+  -- the two positive coefficients
   have hr := hl46W4_rho_pos hx (by linarith) ha'
   have hC : 0 < hl46W4C (a - 1) (x - 2) / (361 * a * hl46W4K x a ^ 3) := by
     have := hl46W4_C_pos (c := a - 1) (h := x - 2) (by linarith) (by linarith) (by linarith)

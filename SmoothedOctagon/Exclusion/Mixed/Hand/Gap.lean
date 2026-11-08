@@ -6,19 +6,19 @@ public import SmoothedOctagon.Exclusion.Mixed.Comparison
 /-!
 # Case M2 by hand: the centre gap `d² + 2cd > 4`
 
-`MIXED_NONSHORT_UPPER_ENVELOPE_GAP`, Lemmas 1 and 2. Raising the incoming norm `u` to the ceiling
-`U(a/S)` and then the central margin `b` to `b* = K/T - a` strictly raises the transported norm
-(Lemma 1; Route: the monotonicity in `b` is proved from `log y ≤ y - 1` instead of the derivative
-formula (1)). The incoming secant is below the chord average `V_ch` (chord identity), the
-envelope is increasing in `v`, and if `e = 4 - d² - 2cd ≥ 0` the cleared identity (5) puts the
-envelope at `V_ch` strictly below `g_d(r₀) ≤ g_d(r) ≤ w`, `r₀ = Q/W - d`: a contradiction.
+Lemma 1: raising the incoming norm `u` to the ceiling `U(a/S)` and then the central margin `b`
+to `b* = K/T - a` strictly raises the transported norm; the monotonicity in `b` is proved from
+`log y ≤ y - 1`. Lemma 2: `d² + 2cd > 4`. The incoming secant is below the chord average `V_ch`
+(chord identity), the envelope is increasing in `v`, and if `e = 4 - d² - 2cd ≥ 0` the cleared
+envelope identity puts the envelope at `V_ch` strictly below `g_d(r₀) ≤ g_d(r) ≤ w`,
+`r₀ = Q/W - d`: a contradiction.
 
 ## Main API
 
 * `nh_w_mono_u`: the transported norm is affine increasing in `u`.
 * `nh_wU_lt_star`: Lemma 1, `w_U(b) < w_U(b*)`.
 * `nh_sec_lt_chord`: `Sec(a, c, d) < (g_c(a) + g_c(d))/2` when `ad < c²`.
-* `nh_gap_identity`: identity (5).
+* `nh_gap_identity`: the cleared envelope identity.
 * `nh_centre_gap'`: Lemma 2, `d² + 2cd > 4`.
 -/
 
@@ -106,7 +106,7 @@ theorem nh_wU_lt_star {a b c d v : ℝ} (ha : 0 < a) (hab : a < b) (hc : 0 < c) 
   nlinarith
 
 /-- **The chord bound**: for `0 < a < d` with `ad < c²`, the secant lies strictly below the chord
-average, `Sec(a, c, d) < (g_c(a) + g_c(d))/2` (`MIXED_NONSHORT_UPPER_ENVELOPE_GAP`, Lemma 2). -/
+average, `Sec(a, c, d) < (g_c(a) + g_c(d))/2`. -/
 theorem nh_sec_lt_chord {a c d : ℝ} (ha : 0 < a) (hc : 0 < c) (had : a < d) (hlc : a * d < c ^ 2) :
     m2Sec a c d < (m2g c a + m2g c d) / 2 := by
   have hd : 0 < d := by linarith
@@ -150,7 +150,7 @@ theorem nh_sec_lt_chord {a c d : ℝ} (ha : 0 < a) (hc : 0 < c) (had : a < d) (h
   rw [e] at this
   linarith
 
-/-- **The cleared envelope identity** (`MIXED_NONSHORT_UPPER_ENVELOPE_GAP` (5)): with `x = d - a`,
+/-- **The cleared envelope identity**: with `x = d - a`,
 `e = 4 - d² - 2cd`, `Q²(w_{U,ch} - g_d(r₀)) = -(cx/(2aT²W²))(P₀(x) + e P_e(x))`. -/
 theorem nh_gap_identity {a c d : ℝ} (ha : 0 < a) (hc : 0 < c) (hd : 0 < d) :
     let T := a + c
@@ -186,7 +186,7 @@ theorem nh_gap_identity {a c d : ℝ} (ha : 0 < a) (hc : 0 < c) (hd : 0 < d) :
   field_simp
   ring
 
-/-- **Lemma 2** (`MIXED_NONSHORT_UPPER_ENVELOPE_GAP`): `d² + 2cd > 4`. -/
+/-- **Lemma 2** (the centre gap): `d² + 2cd > 4`. -/
 theorem nh_centre_gap' (W : M2Window) : 4 < W.d ^ 2 + 2 * W.c * W.d := by
   have ha := W.a_pos
   have hc : 0 < W.c := by linarith [W.a_lt_c]

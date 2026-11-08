@@ -5,14 +5,13 @@ public import SmoothedOctagon.Exclusion.Forward.Log
 /-!
 # Case F: both norm residuals reduce to equal neighbours
 
-`HAND_FORWARD_CONDITIONAL_NORM_BOUNDS` §4: at fixed `U, z, h`, the residuals `𝓔_Σ` and `𝓔_v` do not
-increase with the larger neighbour `w ∈ [z, 4/3]`.
+At fixed `U, z, h`, the residuals `𝓔_Σ` and `𝓔_v` do not increase with the larger neighbour
+`w ∈ [z, 4/3]`.
 
-Route: instead of the derivative identities CNB (29)-(30), the increments are compared directly:
-`m(w) - m(z) = α(w - z)` (`ff_m_sub_eq`), `A(w) - A(z) ≤ (w - z) B(t_w)` with
-`B(t_w) = 1 - 1/T + 1/T²` (`ff_A_sub_le`, `B` increases), and, for `𝓔_Σ`, the monotonicity of
-`V(w) = 3/4 + L(w, T²/W)` (CNB (28): each coefficient of `L` increases in `w`, `h f(h)/(h - 1)`
-increases in `h`, and `T²/W` increases in `w`) together with `V(w) ≥ B(t_w)`.
+The increments are compared directly: `m(w) - m(z) = α(w - z)` (`ff_m_sub_eq`),
+`A(w) - A(z) ≤ (w - z) B(t_w)` with `B(t_w) = 1 - 1/T + 1/T²` (`ff_A_sub_le`, `B` increases), and,
+for `𝓔_Σ`, the monotonicity of `V(w) = 3/4 + L(w, T²/W)` (each coefficient of `L` increases in `w`,
+`h f(h)/(h - 1)` increases in `h`, and `T²/W` increases in `w`) together with `V(w) ≥ B(t_w)`.
 
 ## Main API
 
@@ -88,7 +87,7 @@ theorem ff_L_mono_h {w h h' : ℝ} (hw : 1 ≤ w) (hh : 1 < h) (hhh : h ≤ h') 
     apply div_le_div_of_nonneg_right _ hw1.le; nlinarith
   linarith
 
-/-- `L(w, h)` increases in `w ≥ 1` (CONDITIONAL_NORM_BOUNDS (28)). -/
+/-- `L(w, h)` increases in `w ≥ 1`. -/
 theorem ff_L_mono_w {w w' h : ℝ} (hw : 1 ≤ w) (hww : w ≤ w') (hh : 1 < h) :
     ff_L w h ≤ ff_L w' h := by
   have hp0 : 0 ≤ ff_f h / (h - 1) := div_nonneg (ff_f_nonneg hh.le) (by linarith)
@@ -167,7 +166,7 @@ theorem ff_A_sub_le {U z w : ℝ} (hU : 0 < U) (hz : 1 ≤ z) (hzw : z ≤ w) :
     rw [hB, e1, e2]
     nlinarith [mul_nonneg (sub_nonneg.2 c1) (by linarith : (0 : ℝ) ≤ 1 - 1 / (1 + s) - 1 / (1 + w))]
 
-/-- `m(w) - m(z) = α(w - z)` (`m` is affine in `w`, CNB (27)). -/
+/-- `m(w) - m(z) = α(w - z)` (`m` is affine in `w`). -/
 theorem ff_m_sub_eq {U z w h : ℝ} (hU : 0 < U) (hz : 0 < z) :
     ff_m U z w h - ff_m U z z h = ff_alpha U z h * (w - z) := by
   have hZ : 0 < z ^ 2 + U := by positivity
@@ -193,7 +192,7 @@ private lemma ff_r_sub {U z w h : ℝ} (_hU : 0 < U) (hz : 0 < z) (hw : 0 < w) (
   have h2 := hr z hz
   linear_combination h2 - h1
 
-/-- **`𝓔_v` reduces to equal neighbours** (CONDITIONAL_NORM_BOUNDS (30)). -/
+/-- **`𝓔_v` reduces to equal neighbours**: `𝓔_v(w) ≤ 𝓔_v(z)` for `z ≤ w ≤ 4/3`. -/
 theorem ff_resV_le_sym' {U z w h : ℝ} (hU : 0 < U) (hz : 1 ≤ z) (hzw : z ≤ w)
     (hw : w ≤ 4 / 3) (hh : 1 < h)
     (hr : ∀ w' : ℝ, 0 < w' → ff_alpha U z h * ff_A U z w' - ff_B U z h =
@@ -219,7 +218,8 @@ theorem ff_resV_le_sym' {U z w h : ℝ} (hU : 0 < U) (hz : 1 ≤ z) (hzw : z ≤
   have h3 : 0 ≤ ff_alpha U z h * (w - z) := mul_nonneg hα.le (by linarith)
   nlinarith
 
-/-- **`𝓔_Σ` reduces to equal neighbours** (CONDITIONAL_NORM_BOUNDS (29)), given `m - n ≥ 0`. -/
+/-- **`𝓔_Σ` reduces to equal neighbours**: `𝓔_Σ(w) ≤ 𝓔_Σ(z)` for `z ≤ w ≤ 4/3`, given
+`m - n ≥ 0`. -/
 theorem ff_resS_le_sym' {U z w h : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U < 3) (hz : 1 ≤ z) (hzw : z ≤ w)
     (hw : w ≤ 4 / 3) (hh : 1 < h) (hmn : 0 ≤ ff_m U z z h - ff_n U z h)
     (hr : ∀ w' : ℝ, 0 < w' → ff_alpha U z h * ff_A U z w' - ff_B U z h =

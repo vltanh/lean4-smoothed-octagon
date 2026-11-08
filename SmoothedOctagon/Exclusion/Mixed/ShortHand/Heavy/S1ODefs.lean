@@ -7,8 +7,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1Base
 
 On the outer face `q = 1/7` (`ρ = 1/K`, `K = 6α² + 1`) the upper envelope has the transport form
 `λ = K/(7α²)`, `d = D/(7α²)`, `v = U(S/K)`, `E = S(u - 1) + 1/S + (2S - 1)/K`,
-`Γ_* = K²(4uv - E²)/(576α⁴)`, `T = 7r_A = 7α/(α + β)`, `y = 2/T = 2(α + β)/(7α)`
-(`LOW_RATIO_OUTER_HAND_SIGN` §3; inventory HS-S01 D-R5(b)).
+`Γ_* = K²(4uv - E²)/(576α⁴)`, `T = 7r_A = 7α/(α + β)`, `y = 2/T = 2(α + β)/(7α)`.
 
 ## Main API
 
@@ -90,7 +89,7 @@ theorem hh1o_env {x a b u : ℝ} (hx : 0 < x) (ha : 1 ≤ a) :
     field_simp
     ring
 
-/-- **The outer duration reduction** (`LOW_RATIO_OUTER_HAND_SIGN` (5)-(8)): for `x > 0`, `α ≥ 1`,
+/-- **The outer duration reduction**: for `x > 0`, `α ≥ 1`,
 `β > 0` and `2 ≤ τ ≤ 7r_A`: `Γ_*(1/7) - (7/96)R*_τ(1/7) - 9193/50000 ≥ min(F₀, F₁)`. -/
 theorem hh1o_face_red {x a b u τ : ℝ} (hx : 0 < x) (ha : 1 ≤ a) (hb : 0 < b) (hτ : 2 ≤ τ)
     (hτT : τ ≤ 7 * hsRA a b) :

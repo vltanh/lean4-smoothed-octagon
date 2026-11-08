@@ -6,29 +6,27 @@ public import SmoothedOctagon.Exclusion.Minimum.ThreeArc
 /-!
 # Case M3: reverse runs have exactly two switches
 
-`MIXED_GLOBAL_MINIMUM_STRUCTURE`. In a mixed normal vertex period every maximal run of reverse
-switches has exactly two switches, and the active margin of its centre piece is strictly smaller
-than the active margins of the two pieces on each side. The positive form is used again by cases F
-and M2; case M3 itself is the first half.
+In a mixed normal vertex period every maximal run of reverse switches has exactly two switches, and
+the active margin of its centre piece is strictly smaller than the active margins of the two pieces
+on each side. The positive form is used again by cases F and M2; case M3 itself is the first half.
 
-The proof is MGMS §6 on the costate cycle of the period (`NormalPeriod.costateCycle`): turn
-feasibility (16) and three-arc log-concavity (12) exclude a run minimum at either end of the run,
-and the reverse-four principle in its two interior positions (GRPE (1), MGMS (11)) excludes it in
-the interior of a run with at least three switches.
-
-Route: (11) and (12) are proved from exact identities of the explicit costate
-(`Exclusion/Reverse/Four.lean`, `Exclusion/Minimum/ThreeArc.lean`) instead of the reflection
-MGMS §§1-4 and the edge clock MGMS (13)-(14). Mixedness is not used: a maximal reverse run is
-bounded by forward switches by definition.
+The proof works on the costate cycle of the period (`NormalPeriod.costateCycle`): turn feasibility
+(`CostateCycle.turn_up`, `turn_down`) and three-arc log-concavity (`CostateCycle.three_arc`) exclude
+a run minimum at either end of the run, and the reverse-four principle in its two interior positions
+(`CostateCycle.reverse_four_third`, `reverse_four_second`) excludes it in the interior of a run with
+at least three switches. The reverse-four principle and three-arc log-concavity are proved from
+exact identities of the explicit costate (`Exclusion/Reverse/Four.lean`,
+`Exclusion/Minimum/ThreeArc.lean`). Mixedness is not used: a maximal reverse run is bounded by
+forward switches by definition.
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
 
-/-- **Reverse runs** (`MIXED_GLOBAL_MINIMUM_STRUCTURE`, Theorem). In a mixed normal vertex period, a
-maximal run of reverse switches `k, …, k + L - 1` has `L = 2`, and the centre piece `k + 1` has an
-active margin strictly smaller than those of the pieces `k - 1`, `k`, `k + 2` and `k + 3`. -/
+/-- **Reverse runs.** In a mixed normal vertex period, a maximal run of reverse switches
+`k, …, k + L - 1` has `L = 2`, and the centre piece `k + 1` has an active margin strictly smaller
+than those of the pieces `k - 1`, `k`, `k + 2` and `k + 3`. -/
 theorem reverseRun_two_and_centre_min (P : NormalPeriod) (hmix : P.rep.IsMixed) {k : ℤ} {L : ℕ}
     (h : P.rep.IsReverseRun k L) :
     L = 2 ∧ P.activeMargin (k + 1) < P.activeMargin (k - 1) ∧

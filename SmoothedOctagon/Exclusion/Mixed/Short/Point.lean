@@ -6,16 +6,15 @@ public import SmoothedOctagon.Certificates.SmallerShort
 /-!
 # Case M2, smaller-short side: the secant facts of a short bridge
 
-`MIXED_GLOBAL_SHORT_RUN_VARIATION` (4), `MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL` (5),
-`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION` §6 (inventory E1 R3, R7, R21, R27(i)).
+The regular form of the secant, the bridge order `C ≤ B` and the smaller-turn norm cap
+`u ≤ 13/16` of a short bridge.
 
 ## Main API
 
 * `ss_sec_logDiv`: the regular form `Sec(A, B, P) = 1 + c²/q - c·logDiv(q)`, `q = (P + B)/(A + B)`,
   `c = B/(A + B)`, of the cover's `u` and `u_a`.
-* `ss_bridge_order`: `C ≤ B` for a short bridge with equal secants at a global minimum
-  (`MIXED_GLOBAL_SHORT_RUN_VARIATION` (4)).
-* `ss_u_le`: `u ≤ V(x) ≤ 13/16` (`MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL` (5)).
+* `ss_bridge_order`: `C ≤ B` for a short bridge with equal secants at a global minimum.
+* `ss_u_le`: `u ≤ V(x) ≤ 13/16`.
 * `ss_m2U_anti`: `U(s) = 1 - s + s²` decreases on `[0, 1/2]`.
 -/
 
@@ -25,7 +24,8 @@ namespace SmoothedOctagon
 
 open Certificates.SmallerShort
 
-/-- **The regular form of the secant** (SIX_VARIABLE §6). -/
+/-- **The regular form of the secant**: `Sec(A, B, P) = 1 + c²/q - c·logDiv(q)` with
+`q = (P + B)/(A + B)`, `c = B/(A + B)`. -/
 theorem ss_sec_logDiv {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hP : 0 < P) :
     m2Sec A B P = 1 + (B / (A + B)) ^ 2 / ((P + B) / (A + B)) -
       B / (A + B) * logDiv ((P + B) / (A + B)) := by
@@ -48,8 +48,7 @@ theorem ss_sec_logDiv {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hP : 0 < P) :
   have : P + B ≠ 0 := by positivity
   field_simp
 
-/-- **The bridge order** (`MIXED_GLOBAL_SHORT_RUN_VARIATION` (4), inventory E1 R21): at a short
-bridge `(a, C, B, A)` with `a ≤ A < B`, equal turn secants
+/-- **The bridge order**: at a short bridge `(a, C, B, A)` with `a ≤ A < B`, equal turn secants
 `u = Sec(a, C, B) = Sec(C, B, A)` and the reverse inequality `u ≤ g(B, A)` at `B → A`, the far turn
 is not smaller: `C ≤ B`. Otherwise `Sec(a, B, C) < Sec(a, C, B) = u` (`ss_sec_cross`), while
 adding `[a, A]`, where `g_B ≥ g_B(A) ≥ u`, to `Sec(A, B, C) = u` gives `Sec(a, B, C) ≥ u`. -/
@@ -75,10 +74,9 @@ theorem ss_bridge_order {a A B C u : ℝ} (ha : 0 < a) (haA : a ≤ A) (hAB : A 
   have h4 := ss_sec_cross ha (by linarith) hBC
   linarith
 
-/-- **The smaller-turn norm cap** (`MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL` (5), inventory E1 R7):
-for `a < C ≤ B`, `u = Sec(a, C, B)` and the forward inequality `g(C, B) ≤ u`, `u ≤ V ≤ 13/16`.
-Route: additivity of the secant integral (removing `[C, B]`, where `g_C ≤ g_C(B) ≤ u`) instead of
-the continuation path of R4. -/
+/-- **The smaller-turn norm cap**: for `a < C ≤ B`, `u = Sec(a, C, B)` and the forward
+inequality `g(C, B) ≤ u`, `u ≤ V ≤ 13/16`, by additivity of the secant integral (removing
+`[C, B]`, where `g_C ≤ g_C(B) ≤ u`). -/
 theorem ss_u_le {a B C u : ℝ} (ha : 0 < a) (haC : a < C) (hCB : C ≤ B) (hu : u = m2Sec a C B)
     (hge : m2g C B ≤ u) : u ≤ 13 / 16 := by
   have hC : 0 < C := by linarith
@@ -96,7 +94,7 @@ theorem ss_u_le {a B C u : ℝ} (ha : 0 < a) (haC : a < C) (hCB : C ≤ B) (hu :
   have := le_of_mul_le_mul_left h3 (by linarith)
   linarith
 
-/-- **Every secant is at least `3/4`** (SIX_VARIABLE §6: `g_B(t) = 3/4 + (t - B)²/(4(t + B)²)`). -/
+/-- **Every secant is at least `3/4`**, since `g_B(t) = 3/4 + (t - B)²/(4(t + B)²)`. -/
 theorem ss_sec_ge_34 {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hP : 0 < P) : 3 / 4 ≤ m2Sec A B P := by
   have key : ∀ {A P : ℝ}, 0 < A → A < P → 3 / 4 ≤ m2Sec A B P := fun {A P} hA hAP =>
     ss_sec_ge hA hB hAP fun t ht => by

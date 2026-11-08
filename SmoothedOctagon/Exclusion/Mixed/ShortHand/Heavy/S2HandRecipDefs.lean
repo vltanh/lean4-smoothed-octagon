@@ -5,16 +5,15 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandBase
 /-!
 # S2 hand signs: the outer tests in the reciprocal shape
 
-The two outer duration tests `H₀`, `H₁` of `archive/lighter-proofs/SHORT_RATIO_OUTER_COMPLETE.md`
-(6), written as functions of the reciprocal shape `r = 1/α` at fixed `x`, `c = (β - x)/(α - 1)`
-and incoming norm `u` (`SHORT_RATIO_OUTER_RECIPROCAL.md` §1, (5)-(7)), with their first three
-`r`-derivatives.
+The two outer duration tests `H₀`, `H₁` (the face value at `τ = 2` and the bound at the end of
+the duration range), written as functions of the reciprocal shape `r = 1/α` at fixed `x`,
+`c = (β - x)/(α - 1)` and incoming norm `u`, with their first three `r`-derivatives.
 
 ## Main API
 
 * `hl2Dr` (`D_r = D/α²`), `hl2Wr` (`W = 49w`), `hl2ELr` (`E_L`), `hl2Zr` (`Z = (α + β)/α`),
   `hl2Ht` (the test with multiplier `m`), `hl2H0` (`m₀ = 4 - Z/2`), `hl2H1` (`m₁ = 7/Z + 1/4`).
-* The quartic coefficients `hl2W0`-`hl2W4` (`RECIPROCAL` (6)) and `hl2Wr_eq`.
+* The quartic coefficients `hl2W0`-`hl2W4` of `W` in `r`, and `hl2Wr_eq`.
 * `hl2_face_H0`, `hl2_face_H1`: the two outer duration tests at `q = 1/7` are `hl2H0`, `hl2H1` at
   `r = 1/α`.
 * `hl2_hd_H0`, `hl2_hd_H0d1`, `hl2_hd_H0d2`, `hl2_hd_H1`, `hl2_hd_H1d1`, `hl2_hd_H1d2`: the
@@ -39,19 +38,19 @@ noncomputable def hl2J2 (x u : ℝ) : ℝ := hsE0 x u + 2 * (1 + x) - 1
 /-- `D_r = d₀ + d₁r + d₂r²`, `d₀ = 1 + 2c`. -/
 noncomputable def hl2Dr (x c r : ℝ) : ℝ := 1 + 2 * c + hl2d1 x c * r + hl2d2 x c * r ^ 2
 
-/-- `W = 49w` (`SHORT_RATIO_OUTER_RECIPROCAL` (5)). -/
+/-- `W = 49w`. -/
 noncomputable def hl2Wr (x c u r : ℝ) : ℝ :=
   (6 + r ^ 2) ^ 2 - (6 + r ^ 2) * (1 + x) * r ^ 2 + (1 + x) ^ 2 * r ^ 4 + u * hl2Dr x c r ^ 2 -
     hl2Dr x c r * ((6 + r ^ 2) * hsE0 x u + (2 * (1 + x) - 1) * r ^ 2)
 
-/-- `E_L = (2uD_r - 6E₀ - J₂r²)/7` (`SHORT_RATIO_OUTER_RECIPROCAL` (5)). -/
+/-- `E_L = (2uD_r - 6E₀ - J₂r²)/7`. -/
 noncomputable def hl2ELr (x c u r : ℝ) : ℝ :=
   (2 * u * hl2Dr x c r - 6 * hsE0 x u - hl2J2 x u * r ^ 2) / 7
 
 /-- `Z = d + er = (α + β)/α`, `d = 1 + c`, `e = x - c`. -/
 noncomputable def hl2Zr (x c r : ℝ) : ℝ := 1 + c + (x - c) * r
 
-/-- The outer test with multiplier `m` (`SHORT_RATIO_OUTER_RECIPROCAL` (7)). -/
+/-- The outer test with multiplier `m`. -/
 noncomputable def hl2Ht (m x c u r : ℝ) : ℝ :=
   6 / 7 + (u - 1) * hl2Zr x c r + 1 / hl2Zr x c r - hl2ELr x c u r +
     m * (hl2Wr x c u r / 49 - 3 / 4) + log (2 * hl2Zr x c r / 7)
@@ -62,7 +61,7 @@ noncomputable def hl2H0 (x c u r : ℝ) : ℝ := hl2Ht (4 - hl2Zr x c r / 2) x c
 /-- `H₁`, multiplier `7/Z + 1/4`. -/
 noncomputable def hl2H1 (x c u r : ℝ) : ℝ := hl2Ht (7 / hl2Zr x c r + 1 / 4) x c u r
 
-/-! ### The quartic coefficients (`SHORT_RATIO_OUTER_RECIPROCAL` (6)) -/
+/-! ### The quartic coefficients of `W` in `r` -/
 
 noncomputable def hl2W0 (x c u : ℝ) : ℝ := 36 + u * (1 + 2 * c) ^ 2 - 6 * (1 + 2 * c) * hsE0 x u
 
@@ -332,7 +331,7 @@ theorem hl2_RA {x c al be : ℝ} (hal : 0 < al) (hbe : be = x + c * (al - 1))
   rw [show 1 + c + (x - c) * (1 / al) = (al + (x + c * (al - 1))) / al by field_simp; ring,
     one_div_div]
 
-/-- **The first outer test** (`SHORT_RATIO_OUTER_COMPLETE` (6)): `G₂ = H₀(r)`, `r = 1/α`. -/
+/-- **The first outer test**: `G₂ = H₀(r)`, `r = 1/α`. -/
 theorem hl2_face_H0 {x c al be u : ℝ} (hal : 0 < al) (hbe : be = x + c * (al - 1))
     (hB : 0 < al + be) :
     (hsWs x be al u (1 / 7) - 1) * 2 + 1 / 2 +
@@ -352,7 +351,7 @@ theorem hl2_face_H0 {x c al be u : ℝ} (hal : 0 < al) (hbe : be = x + c * (al -
   field_simp
   ring
 
-/-- **The second outer test** (`SHORT_RATIO_OUTER_COMPLETE` (6)): `G₂ + (T - 2)A = H₁(r)`. -/
+/-- **The second outer test**: `G₂ + (T - 2)A = H₁(r)`. -/
 theorem hl2_face_H1 {x c al be u : ℝ} (hal : 0 < al) (hbe : be = x + c * (al - 1))
     (hB : 0 < al + be) :
     (hsWs x be al u (1 / 7) - 1) * 2 + 1 / 2 +

@@ -23,8 +23,6 @@ length over that period. Composition with the inverse gives Euclidean unit speed
 The Euclidean speed is written in coordinates: the norm instance on `Fin 2 → ℝ` is
 not used to define length. Surjectivity and differentiability of the inverse are
 proved from the stated regularity and periodicity assumptions, not assumed.
-
-Status: source-level Lean draft; compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

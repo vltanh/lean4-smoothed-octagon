@@ -7,13 +7,12 @@ public import Mathlib.Analysis.SpecialFunctions.Complex.Log
 /-!
 # The left-and-right angular identity and the winding bound
 
-SINGULAR_COST_BUDGET §2, equations (14)-(17) (inventory A2, §2.4, `SCB:(15)-(17)`). Write a frame
-`h = sI + tJ + uH + vK₀`, so `s + it = scb_zc h` and `s² + t² - u² - v² = det h = 1`. For an
-admissible trajectory `h' = hY` the `J` coefficients of `h⁻¹h'` and `h'h⁻¹` give
-`ρ + ρ_R = 2 Im(conj(z) z')` with `z = s + it`. The continuous logarithm
-`L(t) = ∫₀ᵗ z'/z` satisfies `z = exp L` (`z(0) = 1`), and `z(T) = e^{iπ/3}` because `h(T) = R`,
-so `Im L(T) ∈ π/3 + 2πℤ`; it is positive since `Im(z'/z) = (ρ + ρ_R)/(2|z|²) > 0`, hence at least
-`π/3`, and `|z| ≥ 1` gives `∫(ρ + ρ_R) ≥ 2 Im L(T) ≥ 2π/3`.
+Write a frame `h = sI + tJ + uH + vK₀`, so `s + it = scb_zc h` and `s² + t² - u² - v² = det h = 1`.
+For an admissible trajectory `h' = hY` the `J` coefficients of `h⁻¹h'` and `h'h⁻¹` give
+`ρ + ρ_R = 2 Im(conj(z) z')` with `z = s + it`. The continuous logarithm `L(t) = ∫₀ᵗ z'/z` satisfies
+`z = exp L` (`z(0) = 1`), and `z(T) = e^{iπ/3}` because `h(T) = R`, so `Im L(T) ∈ π/3 + 2πℤ`; it is
+positive since `Im(z'/z) = (ρ + ρ_R)/(2|z|²) > 0`, hence at least `π/3`, and `|z| ≥ 1` gives
+`∫(ρ + ρ_R) ≥ 2 Im L(T) ≥ 2π/3`.
 
 Main API:
 
@@ -21,8 +20,7 @@ Main API:
   `det M = 1`), `scb_angular` (the angular identity).
 * `scb_continuousOn_rho`, `scb_continuousOn_rhoR`: continuity of `ρ(Y)` and `ρ_R(h, Y)` along an
   admissible trajectory.
-* `scb_winding`: for an admissible `(T, u, h, Y)`, `2π/3 ≤ ∫₀ᵀ (ρ(Y) + ρ_R(h, Y))`
-  (SINGULAR_COST_BUDGET (16)).
+* `scb_winding`: for an admissible `(T, u, h, Y)`, `2π/3 ≤ ∫₀ᵀ (ρ(Y) + ρ_R(h, Y))`.
 -/
 
 @[expose] public section
@@ -42,14 +40,14 @@ theorem scb_zc_im (M : Mat2) : (scb_zc M).im = (M 1 0 - M 0 1) / 2 := by simp [s
 theorem scb_continuous_zc : Continuous scb_zc := by
   unfold scb_zc; fun_prop
 
-/-- `|z|² = s² + t² = 1 + u² + v² ≥ 1` when `det M = 1` (SINGULAR_COST_BUDGET (14)). -/
+/-- `|z|² = s² + t² = 1 + u² + v² ≥ 1` when `det M = 1`. -/
 theorem scb_zc_normSq_ge {M : Mat2} (hM : M.det = 1) : 1 ≤ Complex.normSq (scb_zc M) := by
   rw [Complex.normSq_apply, scb_zc_re, scb_zc_im]
   rw [Matrix.det_fin_two] at hM
   nlinarith [sq_nonneg (M 0 0 - M 1 1), sq_nonneg (M 0 1 + M 1 0)]
 
-/-- **The angular identity** (SINGULAR_COST_BUDGET (15)):
-`2(s t' - t s') = ρ(Y) det h + ρ_R(h, Y)` with `s + it = z(h)`, `s' + it' = z(hY)`. -/
+/-- **The angular identity**: `2(s t' - t s') = ρ(Y) det h + ρ_R(h, Y)` with `s + it = z(h)`,
+`s' + it' = z(hY)`, for traceless `Y`; both sides are expanded in the entries. -/
 theorem scb_angular (h : Mat2) {Y : Mat2} (hY : Y.trace = 0) :
     2 * ((scb_zc h).re * (scb_zc (h * Y)).im - (scb_zc h).im * (scb_zc (h * Y)).re) =
       scb_rho Y * h.det + scb_rhoR h Y := by
@@ -105,8 +103,8 @@ theorem scb_hasDerivAt_zc (hst : IsStateTrajectory T u h Y) {s : ℝ} (hs : s �
   exact (((hd 0 0).add (hd 1 1)).div_const 2).ofReal_comp.add
     ((((hd 1 0).sub (hd 0 1)).div_const 2).ofReal_comp.mul_const Complex.I)
 
-/-- **The winding bound** (SINGULAR_COST_BUDGET (16)). For an admissible trajectory
-(`h(0) = I`, `h(T) = R`), `∫₀ᵀ (ρ + ρ_R) ≥ 2π/3`. -/
+/-- **The winding bound**. For an admissible trajectory (`h(0) = I`, `h(T) = R`),
+`∫₀ᵀ (ρ + ρ_R) ≥ 2π/3`, by the continuous logarithm of `z(h)` as in the module description. -/
 theorem scb_winding (hadm : IsReinhardtAdmissible T u h Y) :
     2 * π / 3 ≤ ∫ s in (0 : ℝ)..T, (scb_rho (Y s) + scb_rhoR (h s) (Y s)) := by
   obtain ⟨hst, h0, hTR, -⟩ := hadm

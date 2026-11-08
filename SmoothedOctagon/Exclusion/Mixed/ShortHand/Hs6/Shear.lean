@@ -5,16 +5,15 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Basic
 /-!
 # Gate S6 helper: the central shear bounds
 
-`MIXED_SMALLER_SHORT_CENTRAL_COST_SHAPE_BOUNDS` (9)-(13); inventory HS-S567 CS.3. On
-`2 ≤ x ≤ 13/6`, `0 ≤ d ≤ 1/19`, `13/5 ≤ η ≤ 3`, `α = 1 + ηd`, `β = x(1 + d)`, the central shear
-`Z = 2U₁Q/(x(x + 2)) - R - (1 + A)T` satisfies `Z_L ≤ Z ≤ Z_U`.
+On `2 ≤ x ≤ 13/6`, `0 ≤ d ≤ 1/19`,
+`13/5 ≤ η ≤ 3`, `α = 1 + ηd`, `β = x(1 + d)`, the central shear `Z = 2U₁Q/(x(x + 2)) - R - (1 + A)T`
+satisfies `Z_L ≤ Z ≤ Z_U`.
 
-Route: instead of the second-derivative (Taylor) bound in `d` and the concavity in `η` of the notes,
-both differences are written exactly as `d·N/D` with `D > 0` and an explicit polynomial `N(x, d, η)`
-(`hs6_shear_core`). In `h = x - 2`, `w = η - 13/5`, the lower numerator is bounded below by its
-constant term minus its negative monomials at the far corner (`> 7.97`, by `gcongr`), and the upper numerator is
-`f₀(h, w) + d f₁(h, d, w)` with `f₀ ≥ 12 - 69h ≥ 1/2` (the notes' (13) numerator) and `f₁ > 558`
-by the same corner bound. No sampling or interval arithmetic.
+The differences `Z_U - Z` and `Z - Z_L` are written exactly as `d·N/D` with `D > 0` and an explicit
+polynomial `N(x, d, η)` (`hs6_shear_core`). In `h = x - 2`, `w = η - 13/5`, the lower numerator is
+bounded below by its constant term minus its negative monomials at the far corner (`> 7.97`, by
+`gcongr`), and the upper numerator is `f₀(h, w) + d f₁(h, d, w)` with `f₀ ≥ 12 - 69h ≥ 1/2` and
+`f₁ > 558` by the same corner bound.
 
 ## Main API
 
@@ -73,7 +72,7 @@ theorem hs6_NL_nonneg {h d w : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1 / 6) (hd0 : 0
   norm_num at hn1 hn2
   linarith only [hp, hn1, hn2]
 
-/-- The central shear in rational form (`CENTRAL_COST_SHAPE_BOUNDS` (2)-(3)). -/
+/-- The central shear in rational form. -/
 theorem hs6_Z_simple {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ η) :
     2 * m2U (1 / (1 + x)) * (2 * (x * (1 + d)) * x - x - (1 + η * d) * (x * (1 + d))) / (x * (x + 2)) - hsRr x - (1 + hsAn x (x * (1 + d)) (1 + η * d)) * hsTs (1 + η * d) (x * (1 + d)) = 2 * (x ^ 2 + x + 1) * (2 * x * (1 + d) - 1 - (1 + η * d) * (1 + d)) / ((1 + x) ^ 2 * (x + 2)) - (x * (1 + d) * x - (1 + η * d)) * ((x + 2) * (1 + η * d) + (2 * x + 1) * (x * (1 + d))) / ((1 + x) ^ 2 * ((1 + η * d) ^ 2 + (1 + η * d) * (x * (1 + d)) + (x * (1 + d)) ^ 2)) := by
   have hx0 : 0 < x := by linarith
@@ -84,7 +83,7 @@ theorem hs6_Z_simple {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ �
   field_simp
   ring
 
-/-- The two shear bounds `Z_U`, `Z_L` in `x` (`CENTRAL_COST_SHAPE_BOUNDS` (9)). -/
+/-- The two shear bounds `Z_U`, `Z_L` in `x`. -/
 theorem hs6_ZUL_simple {x d : ℝ} (hx : 2 ≤ x) :
     2 * hsRr x ^ 2 * (1 + hsRr x) / (3 - hsRr x) + (1 + 2 * hsRr x) / (3 * (1 - hsRr x)) * d - 3 / 2 * d ^ 2 = 2 * x * (x - 1) ^ 2 / ((x + 1) ^ 2 * (x + 2)) + (3 * x - 1) / 6 * d - 3 / 2 * d ^ 2 ∧ 2 * hsRr x ^ 2 * (1 + hsRr x) / (3 - hsRr x) * (1 + 11 * d / 2) = 2 * x * (x - 1) ^ 2 / ((x + 1) ^ 2 * (x + 2)) * (1 + 11 * d / 2) := by
   have h1 : 0 < x + 1 := by linarith
@@ -118,7 +117,7 @@ theorem hs6_eL {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ η) :
   field_simp
   ring
 
-/-- **The central shear bounds** (`CENTRAL_COST_SHAPE_BOUNDS` (9)-(13); inventory HS-S567 CS.3):
+/-- **The central shear bounds**:
 `Z_L ≤ Z ≤ Z_U` on the box, `α = 1 + ηd`, `β = x(1 + d)`. -/
 theorem hs6_shear_core {x d η : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hd : 0 ≤ d) (hd2 : d ≤ 1 / 19)
     (hη : 13 / 5 ≤ η) (hη2 : η ≤ 3) :

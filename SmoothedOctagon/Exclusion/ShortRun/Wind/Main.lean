@@ -90,7 +90,7 @@ theorem wd_swd_add (k : ℤ) : C.swd (k + N) = C.swd k := by
 
 end CostateCycle
 
-/-- **The winding identity on a window starting at the seam** (MGPW (2), MGSRAE (2)). -/
+/-- **The winding identity on a window starting at the seam**: `∑_{j<m} φ_j = (m + 1)π/3`. -/
 theorem wd_winding_aux (P : NormalPeriod) (hc : P.IsCompetitive) {k₀ : ℤ} {m : ℕ}
     (hpat : P.m1_IsPattern k₀) (hN : P.N = 3 * m) (hpos : 0 < P.costateCycle.gam2 0)
     (hk0 : 0 ≤ k₀ + 1) (hk2 : k₀ + 1 ≤ 2) :

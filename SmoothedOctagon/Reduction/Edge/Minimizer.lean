@@ -7,10 +7,10 @@ public import SmoothedOctagon.Reduction.Edge.Splice
 
 On an interval `[t₀, t₁] ⊆ [0, T]` on which `u₀ = 0` a.e., the coordinates
 `q(τ) = (X₀₀, X₁₀, ∫₀^τ X₁₀)(t₀ + τ)` and the control `v(τ) = u₁(t₀ + τ)` of a global minimizer form
-an admissible pair of the edge system on `[0, t₁ - t₀]` (`e4_refAdmissible`), whose cost is the
-cost of the segment (`e4_refCost`) and whose frame is recovered from `q` (`e4_refFrame`, MEPB (9)).
-By the splice (`e4_splice`) it is a strong local (indeed global) minimizer of the edge problem with
-fixed end points and free time (`e4_isStrongLocalMinimizer`).
+an admissible pair of the edge system on `[0, t₁ - t₀]` (`e4_refAdmissible`), whose cost is the cost
+of the segment (`e4_refCost`) and whose frame is recovered from `q` (`e4_refFrame`). By the splice
+(`e4_splice`) it is a strong local (indeed global) minimizer of the edge problem with fixed end
+points and free time (`e4_isStrongLocalMinimizer`).
 
 Main API:
 
@@ -171,7 +171,7 @@ theorem e4_refCost (h : IsStateTrajectory T u g X) (h0 : 0 ≤ t₀) (h01 : t₀
   simp only [add_zero, add_sub_cancel] at e2
   rw [cost, e1, intervalIntegral.integral_const_mul, e2]
 
-/-- **The frame of the edge segment** (MEPB (9)): `g(t₀ + τ) = g(t₀) h(q(0))⁻¹ h(q(τ))`. -/
+/-- **The frame of the edge segment**: `g(t₀ + τ) = g(t₀) h(q(0))⁻¹ h(q(τ))`. -/
 theorem e4_refFrame (h : IsStateTrajectory T u g X) (h0 : 0 ≤ t₀) (h01 : t₀ ≤ t₁)
     (h1 : t₁ ≤ T) (hu0 : ∀ᵐ t, t ∈ Ioo t₀ t₁ → u t 0 = 0) :
     ∀ τ ∈ Icc 0 (t₁ - t₀), g (t₀ + τ) =
@@ -191,10 +191,10 @@ theorem e4_refFrame (h : IsStateTrajectory T u g X) (h0 : 0 ≤ t₀) (h01 : t�
 
 end Segment
 
-/-- **The edge segment of a global minimizer is a strong local minimizer of the edge problem**
-(MEPB §3): fixed end points `q(0)`, `q(t₁ - t₀)`, free time. Any admissible edge pair with these
-end points is reconstructed (`e4_reconstruct`) and spliced into the trajectory (`e4_splice`);
-global minimality compares the costs. -/
+/-- **The edge segment of a global minimizer is a strong local minimizer of the edge problem**:
+fixed end points `q(0)`, `q(t₁ - t₀)`, free time. Any admissible edge pair with these end points is
+reconstructed (`e4_reconstruct`) and spliced into the trajectory (`e4_splice`); global minimality
+compares the costs. -/
 theorem e4_isStrongLocalMinimizer {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2} {t₀ t₁ : ℝ}
     (hmin : IsReinhardtMinimizer T u g X) (h0 : 0 ≤ t₀) (h01 : t₀ < t₁) (h1 : t₁ ≤ T)
     (hu0 : ∀ᵐ t, t ∈ Ioo t₀ t₁ → u t 0 = 0) :

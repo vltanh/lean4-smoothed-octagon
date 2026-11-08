@@ -5,14 +5,12 @@ public import SmoothedOctagon.Exclusion.Reverse.Four
 /-!
 # Three alternating pieces: strict log-concavity of the active margins
 
-`MIXED_GLOBAL_MINIMUM_STRUCTURE` (12) and (16). On three consecutive pieces of a normal vertex
-period with labels `i, j, i` the active margins satisfy `a_0 a_2 < a_1²`; on a turn the outer
-active margins are ordered by the switch signs.
+On three consecutive pieces of a normal vertex period with labels `i, j, i` the active margins
+satisfy `a_0 a_2 < a_1²`; on a turn the outer active margins are ordered by the switch signs.
 
-Route: the edge clock and covector transformation MGMS (13)-(14) (legacy note) are not used. On the
-middle piece (label `j`, active margin `a`) the inactive Hamiltonian `σ_i = p_i H_i` of the outer
-label is explicit (`Period/Costate.lean`): with `s` the running factor and `Y = α_j + α_i` at the
-start, `σ_{j-1}(s) = -(2/s) (Y (1 - 1/s) + (√3 a/2) h(s))`,
+On the middle piece (label `j`, active margin `a`) the inactive Hamiltonian `σ_i = p_i H_i` of the
+outer label is explicit (`Period/Costate.lean`): with `s` the running factor and `Y = α_j + α_i` at
+the start, `σ_{j-1}(s) = -(2/s) (Y (1 - 1/s) + (√3 a/2) h(s))`,
 `h(s) = (a + c) log s - a (s - 1) - c (1 - 1/s)` (decreasing outer margin `c`), and
 `σ_{j+1}(s) = 2 s (Y (s - 1) + (√3 a/2) F(s))`,
 `F(s) = (a + b) log s - (a + b)(s - 1) + a (s - 1)²/s` (growing outer margin `b`). It vanishes at
@@ -26,7 +24,7 @@ and the value at the other end then contradicts `a_1² ≤ a_0 a_2`.
 * `cst_log_two`, `cst_qlog`: `(q + 1) log q > 2 (q - 1)`, `q log q > q - 1` for `q > 1`.
 * `cst_three_decr`, `cst_three_grow`: the two scalar lemmas.
 * `CostateCycle.three_arc`: `a_k a_{k+2} < a_{k+1}²` when `i_{k+2} = i_k`.
-* `CostateCycle.turn_up`, `CostateCycle.turn_down`: MGMS (16).
+* `CostateCycle.turn_up`, `CostateCycle.turn_down`: turn feasibility.
 -/
 
 @[expose] public section
@@ -279,9 +277,8 @@ namespace CostateCycle
 
 variable {N : ℕ} (C : CostateCycle N)
 
-/-- **Three-arc strict log-concavity** (MGMS (12)). If pieces `k` and `k + 2` have the same label,
-then `a_k a_{k+2} < a_{k+1}²`; in particular the middle active margin is not at most both outer
-ones. -/
+/-- **Three-arc strict log-concavity.** If pieces `k` and `k + 2` have the same label, then
+`a_k a_{k+2} < a_{k+1}²`; in particular the middle active margin is not at most both outer ones. -/
 theorem three_arc (k : ℤ) (h : C.lab (k + 2) = C.lab k) :
     C.act k * C.act (k + 2) < C.act (k + 1) ^ 2 := by
   have hne : C.lab k ≠ C.lab (k + 1) := (C.lab_ne k).symm
@@ -319,8 +316,9 @@ theorem three_arc_not_min (k : ℤ) (h : C.lab (k + 2) = C.lab k) :
   have p1 := C.act_pos (k + 1)
   nlinarith
 
-/-- **Turn feasibility** (MGMS (16), first row). A reverse switch followed by a forward switch:
-the active margin grows across the turn, `a_k < a_{k+2}`. -/
+/-- **Turn feasibility, reverse then forward.** A reverse switch followed by a forward switch: the
+active margin grows across the turn, `a_k < a_{k+2}`, by the transport of the margins across the
+middle piece (factor `q > 1`). -/
 theorem turn_up (k : ℤ) (h1 : C.lab (k + 1) = C.lab k - 1)
     (h2 : C.lab (k + 2) = C.lab (k + 1) + 1) :
     C.act k < C.act (k + 2) := by
@@ -335,8 +333,9 @@ theorem turn_up (k : ℤ) (h1 : C.lab (k + 1) = C.lab k - 1)
   have hp' := C.m_pos (k + 1) (C.lab (k + 1) + 1)
   nlinarith
 
-/-- **Turn feasibility** (MGMS (16), second row). A forward switch followed by a reverse switch:
-the active margin drops across the turn, `a_{k+2} < a_k`. -/
+/-- **Turn feasibility, forward then reverse.** A forward switch followed by a reverse switch: the
+active margin drops across the turn, `a_{k+2} < a_k`, by the transport of the margins across the
+middle piece (factor `q > 1`). -/
 theorem turn_down (k : ℤ) (h1 : C.lab (k + 1) = C.lab k + 1)
     (h2 : C.lab (k + 2) = C.lab (k + 1) - 1) : C.act (k + 2) < C.act k := by
   obtain ⟨-, -, M2, -⟩ := C.transport (k + 1) (i := C.lab (k + 1)) rfl

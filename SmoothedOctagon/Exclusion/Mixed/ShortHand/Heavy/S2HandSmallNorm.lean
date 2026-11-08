@@ -6,15 +6,13 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandTermDefs
 /-!
 # S2 hand signs: the smaller-shape norm and the lower-shape beta comparison
 
-For the outer face with `α ≤ 3/2` (`archive/lighter-proofs/SHORT_RATIO_OUTER_COMPLETE.md` §3):
-the incoming ceiling `u_s` decreases in `β`; both tests increase in the norm (`u`-coefficient
-`H_u > 0`, `SHORT_RATIO_OUTER_RECIPROCAL` (23)-(24)); on the lower shape `α = a_f(x)` the transport
-satisfies `E_L < 1/3`, `w < 3/4` (`SHORT_RATIO_OUTER_BETA` (4)-(9)), and the tests with the moving
-norm `u_s` increase in `c` (`SHORT_RATIO_OUTER_BETA` (10)-(15)).
+For the outer face with `α ≤ 3/2`: the incoming ceiling `u_s` decreases in `β`; both tests
+increase in the norm (`u`-coefficient `H_u > 0`); on the lower shape `α = a_f(x)` the transport
+satisfies `E_L < 1/3`, `w < 3/4`, and the tests with the moving norm `u_s` increase in `c`.
 
-Route: the notes' moving-norm reciprocal convexity (`SHORT_RATIO_OUTER_RECIPROCAL` §4) is replaced
-by the fixed norm `ū = u_s(x, x + c(a_f - 1))`, which dominates `u_s` on `a_f ≤ α ≤ 3/2` and is
-below `u_v` (`hl2_ubar_le`), so that the fixed-norm convexity of `S2HandRecip` applies.
+The reciprocal convexity of `S2HandRecip` is applied with the fixed norm
+`ū = u_s(x, x + c(a_f - 1))`, which dominates `u_s` on `a_f ≤ α ≤ 3/2` and is below `u_v`
+(`hl2_ubar_le`).
 
 ## Main API
 
@@ -33,7 +31,7 @@ open Real Set
 
 /-! ### The smaller-shape ceiling -/
 
-/-- `k(x) = 17(x - 1)³/(240S²) - (x - 1)/1200` (`SHORT_RATIO_OUTER_BETA` (15)). -/
+/-- `k(x) = 17(x - 1)³/(240S²) - (x - 1)/1200`. -/
 noncomputable def hl2kx (x : ℝ) : ℝ := 17 * (x - 1) ^ 3 / (240 * (1 + x) ^ 2) - (x - 1) / 1200
 
 theorem hl2_Us_eq {x b : ℝ} (hb : b - 1 ≠ 0) : hsUs x b = 3 / 4 + 1 / 1200 + hl2kx x / (b - 1) := by
@@ -57,7 +55,7 @@ theorem hl2_kx_bounds {x : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) :
     have : 0 ≤ (x - 1) / 1200 := by linarith
     linarith
 
-/-- `u_s` decreases in `β`, with the Lipschitz bound `SHORT_RATIO_OUTER_BETA` (15). -/
+/-- `u_s` decreases in `β`, with the Lipschitz bound `u_s(b) - u_s(b') ≤ (119/13872)(b' - b)`. -/
 theorem hl2_Us_lip {x b b' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hb : x ≤ b) (hbb : b ≤ b') :
     hsUs x b' ≤ hsUs x b ∧ hsUs x b - hsUs x b' ≤ 119 / 13872 * (b' - b) := by
   have h1 : 0 < b - 1 := by linarith
@@ -112,8 +110,7 @@ theorem hl2_ubar_le {x c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5
 
 /-! ### The norm coefficient -/
 
-/-- `H_u = Z + j/7 - mt/49`, `j = S(6 + r²) - 2D_r`, `t = D_r(S(6 + r²) - D_r)`
-(`SHORT_RATIO_OUTER_RECIPROCAL` (24)). -/
+/-- `H_u = Z + j/7 - mt/49`, `j = S(6 + r²) - 2D_r`, `t = D_r(S(6 + r²) - D_r)`. -/
 noncomputable def hl2Hu (m x c r : ℝ) : ℝ :=
   hl2Zr x c r + ((1 + x) * (6 + r ^ 2) - 2 * hl2Dr x c r) / 7 -
     m * (hl2Dr x c r * ((1 + x) * (6 + r ^ 2) - hl2Dr x c r)) / 49
@@ -124,8 +121,7 @@ theorem hl2_Ht_u (m x c u u' r : ℝ) :
   unfold hl2Ht hl2Hu hl2ELr hl2Wr hl2J2 hsE0
   ring
 
-/-- `0 < H_u < 13/2` for `2/3 ≤ r ≤ 5/6` and a multiplier `0 < m ≤ 13/4`
-(`SHORT_RATIO_OUTER_RECIPROCAL` (22)-(23)). -/
+/-- `0 < H_u < 13/2` for `2/3 ≤ r ≤ 5/6` and a multiplier `0 < m ≤ 13/4`. -/
 theorem hl2_Hu_pos {m x c r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hr : 2 / 3 ≤ r) (hr2 : r ≤ 5 / 6) (hm : 0 < m) (hm2 : m ≤ 13 / 4) :
     0 < hl2Hu m x c r ∧ hl2Hu m x c r < 13 / 2 := by
@@ -156,7 +152,7 @@ theorem hl2_Hu_pos {m x c r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc 
   · have : 0 < m * (hl2Dr x c r * ((1 + x) * (6 + r ^ 2) - hl2Dr x c r)) := mul_pos hm ht
     linarith
 
-/-! ### The lower shape `α = a_f` (`SHORT_RATIO_OUTER_BETA` §1) -/
+/-! ### The lower shape `α = a_f` -/
 
 /-- `r_f = 1/a_f = 84/(36x + 25)` lies in `[2/3, 5/6]`, and `x r_f - 1 ≥ 3/4`. -/
 theorem hl2_rf {x : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) :
@@ -168,7 +164,7 @@ theorem hl2_rf {x : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) :
   · rw [div_le_div_iff₀ hA (by norm_num)]; linarith
   · rw [mul_div_assoc', le_sub_iff_add_le, le_div_iff₀ hA]; linarith
 
-/-- `D_r` bounds on the smaller rectangle (`SHORT_RATIO_OUTER_RECIPROCAL` (22)). -/
+/-- `D_r` bounds on the smaller rectangle. -/
 theorem hl2_Dr_box {x c r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hr : 2 / 3 ≤ r) (hr2 : r ≤ 5 / 6) :
     53 / 72 ≤ hl2Dr x c r ∧ hl2Dr x c r ≤ 154 / 81 := by
@@ -182,7 +178,7 @@ theorem hl2_Dr_box {x c r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 
     mul_nonneg (mul_nonneg (sub_nonneg.2 hx) (sub_nonneg.2 hx)) (sub_nonneg.2 hr),
     mul_nonneg (mul_nonneg (sub_nonneg.2 hc) (sub_nonneg.2 hr)) (sub_nonneg.2 hr2)]
 
-/-- `E_L < 1/3` at `c = 5/8`, `u = 3/4` on the lower shape (`SHORT_RATIO_OUTER_BETA` (7)). -/
+/-- `E_L < 1/3` at `c = 5/8`, `u = 3/4` on the lower shape. -/
 theorem hl2_af_k7 {x : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) :
     0 < 1 / 3 - hl2ELr x (5 / 8) (3 / 4) (84 / (36 * x + 25)) := by
   have hS : 0 < 1 + x := by linarith
@@ -202,7 +198,7 @@ theorem hl2_af_k7 {x : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) :
   rw [← k7] at this
   exact pos_of_mul_pos_right this (by positivity)
 
-/-- `w < 3/4` at `c = 5/8`, `u = 3/4` on the lower shape (`SHORT_RATIO_OUTER_BETA` (8)). -/
+/-- `w < 3/4` at `c = 5/8`, `u = 3/4` on the lower shape. -/
 theorem hl2_af_k8 {x : ℝ} (hx : 13 / 6 ≤ x) (_hx2 : x ≤ 12 / 5) :
     0 < 3 / 4 - hl2Wr x (5 / 8) (3 / 4) (84 / (36 * x + 25)) / 49 := by
   have hS : 0 < 1 + x := by linarith
@@ -225,7 +221,8 @@ theorem hl2_af_k8 {x : ℝ} (hx : 13 / 6 ≤ x) (_hx2 : x ≤ 12 / 5) :
   have := pos_of_mul_pos_right this (by norm_num : (0 : ℝ) ≤ 4)
   exact pos_of_mul_pos_right this (by positivity)
 
-/-- `E_L < 1/3` and `w < 3/4` on the lower shape (`SHORT_RATIO_OUTER_BETA` (4)-(9)). -/
+/-- `E_L < 1/3` and `w < 3/4` on the lower shape, from their values at `c = 5/8`, `u = 3/4` and
+the bounds on `D_r`. -/
 theorem hl2_af_ELw {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (_hu2 : u ≤ 4 / 5) :
     hl2ELr x c u (84 / (36 * x + 25)) < 1 / 3 ∧ hl2Wr x c u (84 / (36 * x + 25)) / 49 < 3 / 4 := by
@@ -272,7 +269,7 @@ theorem hl2_af_ELw {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 
     have : hl2Wr x c u r ≤ hl2Wr x (5 / 8) (3 / 4) r := by linarith
     linarith
 
-/-! ### The beta comparison on the lower shape (`SHORT_RATIO_OUTER_BETA` §2) -/
+/-! ### The beta comparison on the lower shape -/
 
 theorem hl2_hd_Zc (x r c : ℝ) : HasDerivAt (fun s => hl2Zr x s r) (1 - r) c := by
   convert hl2_hd_lin (1 - r) (1 + x * r) c using 1
@@ -284,8 +281,7 @@ theorem hl2_hd_Drc (x r c : ℝ) :
     using 1
   funext s; unfold hl2Dr hl2d1 hl2d2; ring
 
-/-- The `c`-derivative of a test with multiplier `m(Z)` at fixed `x`, `u`, `r`
-(`SHORT_RATIO_OUTER_BETA` (10)). -/
+/-- The `c`-derivative of a test with multiplier `m(Z)` at fixed `x`, `u`, `r`. -/
 theorem hl2_hd_Htc {x u r c m' : ℝ} {m : ℝ → ℝ} (hm : HasDerivAt m m' (hl2Zr x c r))
     (hZ : 0 < hl2Zr x c r) :
     HasDerivAt (fun s => hl2Ht (m (hl2Zr x s r)) x s u r)
@@ -325,7 +321,7 @@ theorem hl2_hd_Htc {x u r c m' : ℝ} {m : ℝ → ℝ} (hm : HasDerivAt m m' (h
     ring
 
 /-- The `c`-slope lower bound on the lower shape: with a multiplier `0 < m ≤ 11/4`, `m' ≤ 0`,
-the fixed-norm slope is at least `(1 - r_f)·463/5000` (`SHORT_RATIO_OUTER_BETA` (11)-(14)). -/
+the fixed-norm slope is at least `(1 - r_f)·463/5000`. -/
 theorem hl2_Htc_lb {x c u m m' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) (hm : 0 < m) (hm2 : m ≤ 11 / 4)
     (hm' : m' ≤ 0) :
@@ -365,8 +361,11 @@ theorem hl2_Htc_lb {x c u m m' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (
       linarith) hr1'
   linarith
 
-/-- **The beta comparison** (`SHORT_RATIO_OUTER_BETA` (2)): on the lower shape the test with
-multiplier `M(Z)` and the moving norm `u_s` increases in `c`. -/
+/-- **The beta comparison**: on the lower shape the test with multiplier `M(Z)` and the moving
+norm `u_s` increases in `c`. At fixed norm the `c`-slope is at least `κ = (1 - r_f)·463/5000`;
+moving the norm costs at most `(13/2)(119/13872)` per unit of `β` (`H_u < 13/2` and the Lipschitz
+bound of `u_s`), and `β` moves by `a_f - 1` per unit of `c`, with
+`(13/2)(119/13872)(a_f - 1) ≤ κ`. -/
 theorem hl2_beta_gen {M M' : ℝ → ℝ} {x c c' : ℝ} (hM : ∀ z, 0 < z → HasDerivAt M (M' z) z)
     (hMb : ∀ z, 14 / 5 ≤ z → z ≤ 25 / 8 → 0 < M z ∧ M z ≤ 11 / 4 ∧ M' z ≤ 0)
     (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c) (hcc : c ≤ c') (hc' : c' ≤ 7 / 8) :

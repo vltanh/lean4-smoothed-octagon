@@ -7,8 +7,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandOUp
 /-!
 # Gate S3, the outer face by hand: the assembly
 
-Hand proof of the leaf `hs3_outer_face` (`DISPLACEMENT_OUTER_FACE` (4)-(21)), following
-`archive/lighter-proofs/SHORT_DISPLACEMENT_OUTER_COMPLETE.md`. On the actual outer terminal shapes
+Proof of the leaf `hs3_outer_face`. On the actual outer terminal shapes
 `1 ≤ α ≤ x`, `x(x + 2) ≤ 6α²` (so `α ≥ a_* = 5(x + 1)/13`), `β = x + C(α - 1)` with
 `8x/(9x + 8) ≤ C = xg ≤ 115x/304` (the retained lower short-order bound), at `q = 1/7` and
 `u = ū(x, β)`:
@@ -16,7 +15,7 @@ Hand proof of the leaf `hs3_outer_face` (`DISPLACEMENT_OUTER_FACE` (4)-(21)), fo
 * the logarithm is replaced by its rational majorant (`hs3_log_maj`, `β < 2α`), and the test is
   `G(x, C, n, 1/α)` (`hl3o_G_eq`);
 * the duration multipliers satisfy `n₀, n₁ ∈ [25/8, 7/2]` for `α ≤ 5/4` and `∈ [5/2, 7/2]` for
-  `α ≥ 5/4` (the note's (6)-(10), `hl3o_n_bds`);
+  `α ≥ 5/4` (`hl3o_n_bds`);
 * `G` is affine in `n` and convex in `r = 1/α` (`hl3o_neg_between`); it is negative at `α = x`
   (`hl3o_up`), at `α = 5/4` for `n = 5/2` (`hl3o_mid`) and at `α = a_*` for `n = 25/8, 7/2`
   (`hl3o_low`).
@@ -53,7 +52,7 @@ theorem hl3o_G_interp {x C r n n₁ n₂ : ℝ} (h12 : n₁ < n₂) (hn₁ : n�
   rw [← e] at hs
   exact neg_of_mul_neg_right hs (by linarith)
 
-/-! ### The duration multipliers (`SHORT_DISPLACEMENT_OUTER_COMPLETE` §2) -/
+/-! ### The duration multipliers -/
 
 section Mult
 
@@ -73,7 +72,8 @@ theorem hl3o_n0_eq (ha : 1 < a) (hb : 0 < a + b) :
 theorem hl3o_n1_eq (ha : 1 < a) : hsRA a b / (1 / 7) = 7 * a / (a + b) := by
   unfold hsRA; field_simp
 
-/-- **The multiplier enclosure** (the note's (6)-(10)). -/
+/-- **The multiplier enclosure**: `n₀, n₁ ∈ [5/2, 7/2]`, and `n₀, n₁ ≥ 25/8` for `α ≤ 5/4`, from
+the cleared numerators and the lower beta order. -/
 theorem hl3o_n_bds {C : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ha : 1 < a) (hax : a ≤ x)
     (hC : 8 * x / (9 * x + 8) ≤ C) (hC' : C ≤ 19 * x / 50) (hb : b = x + C * (a - 1))
     (hb2 : b < 2 * a) :
@@ -107,7 +107,7 @@ theorem hl3o_n_bds {C : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ha : 1 < a) (h
   have hbl : x + 8 * x / (9 * x + 8) * (a - 1) ≤ b := by
     rw [hb]; nlinarith [mul_le_mul_of_nonneg_right hC (by linarith : (0 : ℝ) ≤ a - 1)]
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
-  · -- (9): `183a - 35a² - 48b > a(87 - 35a) > 0`
+  · -- `183a - 35a² - 48b > a(87 - 35a) > 0`
     rw [hn₀]
     have : 1 / 2 * (7 * a * (5 * a - 1)) ≤ 88 * a - 24 * b := by nlinarith
     have := (le_div_iff₀ hD).2 this
@@ -121,7 +121,7 @@ theorem hl3o_n_bds {C : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ha : 1 < a) (h
     have : 0 ≤ 7 * a * (5 * a - 1) + 4 * (a + b) - 5 / 2 * (a + b) * (5 * a - 1) := by nlinarith
     have := div_nonneg this (by positivity : (0 : ℝ) ≤ (a + b) * (5 * a - 1))
     linarith
-  · -- (6): `(35a - 15)b - 35a² - a > 0`, by the lower beta order
+  · -- `(35a - 15)b - 35a² - a > 0`, by the lower beta order
     rw [hn₁]
     have h := e1 (7 / 2)
     have hnum : 0 < (35 * a - 15) * b - 35 * a ^ 2 - a := by
@@ -163,12 +163,12 @@ theorem hl3o_n_bds {C : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ha : 1 < a) (h
     linarith
   · intro ha54
     constructor
-    · -- (8): `767a - 315a² - 192b ≥ (-7875a² + 15223a - 6448)/25 > 0`
+    · -- `767a - 315a² - 192b ≥ (-7875a² + 15223a - 6448)/25 > 0`
       rw [hn₀]
       have : 9 / 8 * (7 * a * (5 * a - 1)) ≤ 88 * a - 24 * b := by nlinarith
       have := (le_div_iff₀ hD).2 this
       linarith
-    · -- (7): `155a² + a + 57b - 125ab ≥ (15625a² - 35996a + 22971)/300 > 0`
+    · -- `155a² + a + 57b - 125ab ≥ (15625a² - 35996a + 22971)/300 > 0`
       rw [hn₁]
       have h := e1 (25 / 8)
       have hb' : b * (125 * a - 57) ≤ (247 * a + 403) / 300 * (125 * a - 57) :=
@@ -201,8 +201,7 @@ theorem hl3o_logmaj {a b : ℝ} (ha : 0 < a) (hb : 0 < b) :
 
 /-! ### The leaf -/
 
-/-- **`hs3_outer_face`** (`DISPLACEMENT_OUTER_FACE` (4)-(21), by
-`SHORT_DISPLACEMENT_OUTER_COMPLETE`): on the actual outer terminal shapes, with the retained lower
+/-- **`hs3_outer_face`**: on the actual outer terminal shapes, with the retained lower
 short-order slope `g ≥ 8/(9x + 8)`, both outer tests are negative at `q = 1/7`, `u = ū(x, β)`. -/
 theorem hs3_outer_face_proof {x al g : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
     (hax : al ≤ x) (h6 : x * (x + 2) ≤ 6 * al ^ 2) (hg : 8 / (9 * x + 8) ≤ g) (hg' : g ≤ 115 / 304) :

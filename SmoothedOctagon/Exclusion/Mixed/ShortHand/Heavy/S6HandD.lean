@@ -5,10 +5,10 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S6HandR
 /-!
 # Gate S6, hand proof: the four endpoint curves decrease in the displacement
 
-`archive/lighter-proofs/SHORT_COST_CONCAVITY.md` §4 (replacing `SMALL_SHAPE_COST_EXCLUSION`
-(26)-(31)). At fixed `R` and `e`, write the cancelled score as `G₀(d) - κ F h²`. The radical
+At fixed `R` and `e`, write the cancelled
+score as `G₀(d) - κ F h²`. The radical
 correction `κ F h²` increases in `d` (`hl46_corr_mono`), and on a displacement interval `[l, h]` the
-derivative of the four main terms is at most the endpoint recipe `M₁ + M₂ + M₃ + M₄` of note (21)
+derivative of the four main terms is at most the endpoint recipe `M₁ + M₂ + M₃ + M₄`
 (`hl46_G0d_le`), each factor being replaced by its value at the appropriate end of the interval.
 
 ## Main API
@@ -51,7 +51,8 @@ noncomputable def hl46G0d (e d r : ℝ) : ℝ :=
     1 / 8 * ((hl46vd d r * hs6ZU r d + hl46v d r * hl46zd d r) * (hl46q r + hl46q (hs6T r d e)) +
       hl46v d r * hs6ZU r d * (hl46q1 (hs6T r d e) * hl46Td e d r))
 
-/-- **The endpoint recipe** `M₁ + M₂ + M₃ + M₄` of note (21) on `[l, h]`. -/
+/-- **The endpoint recipe** `M₁ + M₂ + M₃ + M₄` on `[l, h]`: the derivative `hl46G0d` of the four
+main terms with each factor evaluated at `l` or at `h`. -/
 noncomputable def hl46M (e r l h : ℝ) : ℝ :=
   hl46k1 (hs6T r l e) * hl46Td e l r +
     (hl46vd h r * (hl46g r + hl46g (hs6T r h e)) +
@@ -114,7 +115,7 @@ theorem hl46_G0_deriv {e d r : ℝ} (hB : hl46Bd e d r ≠ 0) :
 
 /-! ### The endpoint recipe -/
 
-/-- The term-by-term comparison behind note (21), in abstract variables. -/
+/-- The term-by-term comparison behind the endpoint recipe, in abstract variables. -/
 theorem hl46_G0d_abs {k1T k1Tl Td Tdl Tdh vd vdh v vh vl G Gh g1T g1Tl zd zdh zdl P Ph z zh zl
     p1T p1Tl Q Ql Qh q1T q1Tl : ℝ}
     (a1 : k1Tl ≤ k1T) (a2 : k1T ≤ 0) (b1 : Tdl ≤ Td) (b2 : Td ≤ Tdh) (b3 : Tdh ≤ 0)
@@ -165,7 +166,7 @@ section Curves
 
 variable {e r : ℝ}
 
-/-- Monotonicity of the factors in `d` (note §4), on `0 ≤ d₁ ≤ d₂ ≤ 1/19`. -/
+/-- Monotonicity of the factors in `d`, on `0 ≤ d₁ ≤ d₂ ≤ 1/19`. -/
 theorem hl46_d_mono (he : 13 / 5 ≤ e) (_he' : e ≤ 3) (hr : 1 / 3 ≤ r) (hr' : r ≤ 7 / 19)
     {d₁ d₂ : ℝ} (h0 : 0 ≤ d₁) (h12 : d₁ ≤ d₂) (h2 : d₂ ≤ 1 / 19) :
     hs6T r d₂ e ≤ hs6T r d₁ e ∧ hl46Td e d₁ r ≤ hl46Td e d₂ r ∧ hl46Td e d₂ r ≤ 0 ∧
@@ -243,7 +244,7 @@ theorem hl46_a_mono {a b : ℝ} (ha : 9 / 31 ≤ a) (hab : a ≤ b) (hb : b ≤ 
     hl46_anti_of (a := 9 / 31) (b := 7 / 19) (fun x _ => (hl46_q_jet x).2)
       (fun x hx => (hl46_q_bounds (by linarith [hx.1]) (by linarith [hx.2])).2.2.2) ha hab hb⟩
 
-/-- **The endpoint recipe bounds the derivative** (note (21)): on `0 ≤ l ≤ d ≤ h ≤ 1/19`,
+/-- **The endpoint recipe bounds the derivative**: on `0 ≤ l ≤ d ≤ h ≤ 1/19`,
 `∂_d G₀ ≤ M₁ + M₂ + M₃ + M₄`. -/
 theorem hl46_G0d_le (he : 13 / 5 ≤ e) (he' : e ≤ 3) (hr : 1 / 3 ≤ r) (hr' : r ≤ 7 / 19)
     {l d h : ℝ} (hl : 0 ≤ l) (hld : l ≤ d) (hdh : d ≤ h) (hh : h ≤ 1 / 19) :
@@ -294,7 +295,7 @@ noncomputable def hl46hd (e d r : ℝ) : ℝ :=
 noncomputable def hl46kapd (e d : ℝ) : ℝ :=
   161 * (e - 1) ^ 2 * (d * (4 + 11 * d)) / (432 * (2 + 11 * d) ^ 2)
 
-/-- **The correction increases in `d`** (note §4): `κ F h²` is nondecreasing on `[0, 1/19]`. -/
+/-- **The correction increases in `d`**: `κ F h²` is nondecreasing on `[0, 1/19]`. -/
 theorem hl46_corr_mono (he : 13 / 5 ≤ e) (he' : e ≤ 3) (hr : 1 / 3 ≤ r) (hr' : r ≤ 7 / 19)
     {d₁ d₂ : ℝ} (h0 : 0 ≤ d₁) (h12 : d₁ ≤ d₂) (h2 : d₂ ≤ 1 / 19) :
     hl46kap e d₁ * (hl46cF r * (hl46h e d₁ r * hl46h e d₁ r)) ≤

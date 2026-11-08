@@ -7,11 +7,10 @@ public import SmoothedOctagon.Reduction.Switch.Local
 /-!
 # Finitely many switches
 
-QUANTITATIVE_REGULAR_SWITCH_BOUND, Theorem (1), in qualitative form (inventory A2, §2.6 `QRSB:*`).
 A Pontryagin extremal (normal or abnormal) with cost at most `A_oct`, state in `𝔥**`, the singular
 clearance of `Reduction/SingularClearance.lean`, and the edge property (E4) has a control that is
-a.e. a concatenation of finitely many vertex pieces on `[0, T]`. The notes' explicit bound
-`N < 10^56` is not needed by the proof of the main theorem.
+a.e. a concatenation of finitely many vertex pieces on `[0, T]`. Only finiteness is proved; the
+number of pieces is not bounded explicitly.
 
 Main API:
 
@@ -27,27 +26,24 @@ namespace SmoothedOctagon.Reduction
 
 open SmoothedPolygons MeasureTheory Set
 
-/-- **Finitely many switches** (QUANTITATIVE_REGULAR_SWITCH_BOUND, Theorem (1), in qualitative
-form). Let `(T, u, g, X, Λ₁, Λ_R, λ)` be a Pontryagin extremal with cost at most `A_oct` and state in
-`𝔥**`, satisfying the clearance `‖𝒫(t)‖² ≤ 251² Q(t)²` on `[0, T]`, whose control has property (E4).
-Then on `[0, T]` the control is a.e. a concatenation of finitely many vertex pieces.
+/-- **Finitely many switches**. Let `(T, u, g, X, Λ₁, Λ_R, λ)` be a Pontryagin extremal with cost at
+most `A_oct` and state in `𝔥**`, satisfying the clearance `‖𝒫(t)‖² ≤ 251² Q(t)²` on `[0, T]`, whose
+control has property (E4). Then on `[0, T]` the control is a.e. a concatenation of finitely many
+vertex pieces.
 
-Proof outline (QRSB §§2-6, made qualitative). By nontriviality `‖𝒫(t)‖ > 0`, so the clearance
-gives `Q(t) > 0`: the costate never meets the singular locus (`qrsb_singularGapSq_pos`). Around
-each `t₀ ∈ [0, T]` there are `δ > 0` and vertices `j`, `k` with `H_j < 0` on `(t₀, t₀ + δ)` and
-`H_k < 0` on `(t₀ - δ, t₀)` (`qrsb_exists_excluded_vertex`): if one vertex Hamiltonian is
-strictly below the maximum at `t₀`, it stays so nearby; otherwise the three tie, which forces
-`Λ_R(t₀) = 0`, and `Q(t₀) > 0` makes `Λ_R'(t₀) = [X, A] ≠ 0`, whose vertex comparisons are not all
-equal, so one comparison `H_j - H_k` changes sign at `t₀`. On each side that coordinate of the
-control vanishes a.e. (`maximizing_control_support`) and (E4) gives at most four pieces; gluing at
-`t₀` and compactness of `[0, T]` (Lebesgue number) give finitely many pieces in all. The cost bound
-`hcost` is not used (it enters through the clearance `hclear`).
+Proof outline. By nontriviality `‖𝒫(t)‖ > 0`, so the clearance gives `Q(t) > 0`: the costate never
+meets the singular locus (`qrsb_singularGapSq_pos`). Around each `t₀ ∈ [0, T]` there are `δ > 0` and
+vertices `j`, `k` with `H_j < 0` on `(t₀, t₀ + δ)` and `H_k < 0` on `(t₀ - δ, t₀)`
+(`qrsb_exists_excluded_vertex`): if one vertex Hamiltonian is strictly below the maximum at `t₀`, it
+stays so nearby; otherwise the three tie, which forces `Λ_R(t₀) = 0`, and `Q(t₀) > 0` makes
+`Λ_R'(t₀) = [X, A] ≠ 0`, whose vertex comparisons are not all equal, so one comparison `H_j - H_k`
+changes sign at `t₀`. On each side that coordinate of the control vanishes a.e.
+(`maximizing_control_support`) and (E4) gives at most four pieces; gluing at `t₀` and compactness of
+`[0, T]` (Lebesgue number) give finitely many pieces in all. The cost bound `hcost` is not used (it
+enters through the clearance `hclear`).
 
-Route: the notes bound the number of pieces explicitly (`N < 10^56`), which needs the projective
-bounds and the constants of QRSB §1.4, and handle a tie by three guard lines transported along the
-flow (QRSB §§3-6); the proof only uses finiteness, so at a tie the first-order expansion
-`Λ_R(t) = (t - t₀)[X(t₀), A(t₀)] + o(t - t₀)` replaces the guard lines (only QRSB's Case II occurs
-at a tie, and Case III is empty because `Q(t₀) > 0`). -/
+At a tie the sign change comes from the first-order expansion
+`Λ_R(t) = (t - t₀)[X(t₀), A(t₀)] + o(t - t₀)`. -/
 theorem exists_isPiecewiseVertex {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hcost : reinhardtCost T X ≤ octagonCost)

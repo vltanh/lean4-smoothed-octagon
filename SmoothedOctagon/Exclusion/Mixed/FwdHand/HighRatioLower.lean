@@ -7,21 +7,20 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.HighRatioLowerBounds
 /-!
 # Case M2, forward successor by hand: the high-ratio lower-shape sign
 
-`docs/lighter-proofs/NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md` with `NONSHORT_HIGH_RATIO_LOWER_FACE.md`
-(PR #2, branch `proof/lighter-signs`): the sign (13) of `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION`
-at the lower shape `k₀ = 29t²/4`, replacing the generated certificate `CertLGc` in `fh_LGB_core`.
+On the high-ratio large-gap domain the combined residual at the lower shape `k₀ = 29t²/4`, with
+`v_G`, `L₊`, `F_ℓ`, is positive; `fh_LGB_core` uses this sign.
 
-With the incoming majorant `V_L ≥ V_G` (`hrl_VG_le_VL`, note (R3)), the cleared residual is the source
-circuit `S = 24(q + 1)WD · fhComb 4 1 t x k₀ q V_L L₊ F_ℓ` (`hrl_link`, (R8)-(R9)). Along
-`t = (1 - h)/2`, `x = h + j` at fixed `j, y`: `-∂_h²S = ∑ Rᵢ yⁱ > 0` (`hrl_R_pos`, (R11)) and
-`-∂_hS = ∑ Bᵢ yⁱ > 0` at `h = 1/5` (`hrl_B_pos`, (R14)), so `S(h) ≥ S(1/4)` (`hrl_h_reduce`, (R7));
-at `h = 1/4` the face proof gives `S ≥ 13/4` (`hrl_face`). Since the `v`-coefficient is negative,
+With the incoming majorant `V_L ≥ V_G` (`hrl_VG_le_VL`), the cleared residual is the circuit
+`S = 24(q + 1)WD · fhComb 4 1 t x k₀ q V_L L₊ F_ℓ` (`hrl_link`). Along `t = (1 - h)/2`, `x = h + j`
+at fixed `j, y`: `-∂_h²S = ∑ Rᵢ yⁱ > 0` (`hrl_R_pos`) and `-∂_hS = ∑ Bᵢ yⁱ > 0` at `h = 1/5`
+(`hrl_B_pos`), so `S(h) ≥ S(1/4)` (`hrl_h_reduce`); at `h = 1/4` the terminal face gives
+`S ≥ 13/4` (`hrl_face`). Since the `v`-coefficient is negative,
 `V_G ≤ V_L` transfers the sign to the original residual (`hrl_lower_pos`).
 
-Route: the `h`-derivatives are taken of the `y`-coefficients `S₀, …, S₆` of the expanded circuit
+The `h`-derivatives are taken of the `y`-coefficients `S₀, …, S₆` of the expanded circuit
 (`hrlSt0`, …, each a bivariate polynomial of at most 62 monomials after `t = (1 - h)/2`,
-`x = h + j`) instead of differentiating the factored source products; the `x`-monotonicity of `R₀`
-and the univariate signs follow the note; only the signs (not the margins `30000`, `680`) are kept.
+`x = h + j`); the `x`-monotonicity of `R₀` and the univariate signs are proved in
+`FwdHand/HighRatioLowerBounds`.
 
 ## Main API
 
@@ -34,65 +33,70 @@ and the univariate signs follow the note; only the signs (not the margins `30000
 
 namespace SmoothedOctagon
 
-/-! ### The source circuit (`NONSHORT_HIGH_RATIO_LOWER_REDUCTION` §1) -/
+/-! ### The circuit
 
-/-- The coefficient `A_0(t, x)` of the reduction note §1. -/
+At `k₀ = 29t²/4`, with `W = 1 + x`, `p = t + x`: the `v`-coefficient is
+`fhCv 4 1 t x k₀ q = 4W ∑ Aᵢ qⁱ`, the `log q`-coefficient satisfies
+`(q - 1) fhCL = -4q²pW(∑ Bᵢ qⁱ - 1)`, and the residual at `v = L = F = 0` is
+`∑ Cᵢ qⁱ - 4qW² - 4p²q²`. -/
+
+/-- The coefficient `A_0(t, x)` of `q^0` in the `v`-coefficient at `k₀`. -/
 noncomputable def hrlA0 (t x : ℝ) : ℝ :=
   t * x + t ^ (2 : ℕ) + 4 * t * x ^ (2 : ℕ) + 4 * t ^ (2 : ℕ) * x + 6 * t * x ^ (3 : ℕ) + 6 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + 4 * t * x ^ (4 : ℕ) + 4 * t ^ (2 : ℕ) * x ^ (3 : ℕ) + t * x ^ (5 : ℕ) + t ^ (2 : ℕ) * x ^ (4 : ℕ)
 
-/-- The coefficient `A_1(t, x)` of the reduction note §1. -/
+/-- The coefficient `A_1(t, x)` of `q^1` in the `v`-coefficient at `k₀`. -/
 noncomputable def hrlA1 (t x : ℝ) : ℝ :=
   -1 - x - 2 * t * x - t ^ (2 : ℕ) - 7 * t * x ^ (2 : ℕ) - 3 * t ^ (2 : ℕ) * x - 9 * t * x ^ (3 : ℕ) - 3 * t ^ (2 : ℕ) * x ^ (2 : ℕ) - 5 * t * x ^ (4 : ℕ) - t ^ (2 : ℕ) * x ^ (3 : ℕ) - t * x ^ (5 : ℕ)
 
-/-- The coefficient `A_2(t, x)` of the reduction note §1. -/
+/-- The coefficient `A_2(t, x)` of `q^2` in the `v`-coefficient at `k₀`. -/
 noncomputable def hrlA2 (t x : ℝ) : ℝ :=
   11 * t * x ^ (2 : ℕ) + 35 * t ^ (2 : ℕ) * x - (29 / 4) * t ^ (3 : ℕ) + 25 * t * x ^ (3 : ℕ) + 68 * t ^ (2 : ℕ) * x ^ (2 : ℕ) - (203 / 4) * t ^ (3 : ℕ) * x + 17 * t * x ^ (4 : ℕ) + 31 * t ^ (2 : ℕ) * x ^ (3 : ℕ) - (319 / 4) * t ^ (3 : ℕ) * x ^ (2 : ℕ) + 3 * t * x ^ (5 : ℕ) - 2 * t ^ (2 : ℕ) * x ^ (4 : ℕ) - (145 / 4) * t ^ (3 : ℕ) * x ^ (3 : ℕ)
 
-/-- The coefficient `A_3(t, x)` of the reduction note §1. -/
+/-- The coefficient `A_3(t, x)` of `q^3` in the `v`-coefficient at `k₀`. -/
 noncomputable def hrlA3 (t x : ℝ) : ℝ :=
   -12 * t * x ^ (2 : ℕ) - 54 * t ^ (2 : ℕ) * x + (29 / 4) * t ^ (3 : ℕ) - 24 * t * x ^ (3 : ℕ) - 81 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + (29 / 4) * t ^ (3 : ℕ) * x - 15 * t * x ^ (4 : ℕ) - 27 * t ^ (2 : ℕ) * x ^ (3 : ℕ) - 3 * t * x ^ (5 : ℕ)
 
-/-- The coefficient `A_4(t, x)` of the reduction note §1. -/
+/-- The coefficient `A_4(t, x)` of `q^4` in the `v`-coefficient at `k₀`. -/
 noncomputable def hrlA4 (t x : ℝ) : ℝ :=
   -2 * t * x ^ (3 : ℕ) - 3 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + (21 / 4) * t ^ (3 : ℕ) * x - t * x ^ (4 : ℕ) + t ^ (2 : ℕ) * x ^ (3 : ℕ) + (87 / 4) * t ^ (3 : ℕ) * x ^ (2 : ℕ) + (29 / 4) * t ^ (4 : ℕ) * x + t ^ (2 : ℕ) * x ^ (4 : ℕ) + (29 / 4) * t ^ (3 : ℕ) * x ^ (3 : ℕ)
 
-/-- The coefficient `B_0(t, x)` of the reduction note §1. -/
+/-- The coefficient `B_0(t, x)` of `q^0` in the `log q`-coefficient at `k₀`. -/
 noncomputable def hrlBs0 (t x : ℝ) : ℝ :=
   1 - 5 * t * x ^ (2 : ℕ) - 10 * t ^ (2 : ℕ) * x - (145 / 4) * t ^ (3 : ℕ) - 10 * t * x ^ (3 : ℕ) - 20 * t ^ (2 : ℕ) * x ^ (2 : ℕ) - (145 / 2) * t ^ (3 : ℕ) * x - 5 * t * x ^ (4 : ℕ) - 10 * t ^ (2 : ℕ) * x ^ (3 : ℕ) - (145 / 4) * t ^ (3 : ℕ) * x ^ (2 : ℕ)
 
-/-- The coefficient `B_1(t, x)` of the reduction note §1. -/
+/-- The coefficient `B_1(t, x)` of `q^1` in the `log q`-coefficient at `k₀`. -/
 noncomputable def hrlBs1 (t x : ℝ) : ℝ :=
   5 * t * x ^ (2 : ℕ) + 10 * t ^ (2 : ℕ) * x + (145 / 4) * t ^ (3 : ℕ) + 10 * t * x ^ (3 : ℕ) + 20 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + (145 / 2) * t ^ (3 : ℕ) * x + 5 * t * x ^ (4 : ℕ) + 10 * t ^ (2 : ℕ) * x ^ (3 : ℕ) + (145 / 4) * t ^ (3 : ℕ) * x ^ (2 : ℕ)
 
-/-- The coefficient `B_2(t, x)` of the reduction note §1. -/
+/-- The coefficient `B_2(t, x)` of `q^2` in the `log q`-coefficient at `k₀`. -/
 noncomputable def hrlBs2 (t x : ℝ) : ℝ :=
   2 * t * x ^ (3 : ℕ) + 5 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + (33 / 2) * t ^ (3 : ℕ) * x + (29 / 4) * t ^ (4 : ℕ) + t * x ^ (4 : ℕ) + 2 * t ^ (2 : ℕ) * x ^ (3 : ℕ) + (29 / 4) * t ^ (3 : ℕ) * x ^ (2 : ℕ)
 
-/-- The coefficient `B_3(t, x)` of the reduction note §1. -/
+/-- The coefficient `B_3(t, x)` of `q^3` in the `log q`-coefficient at `k₀`. -/
 noncomputable def hrlBs3 (t x : ℝ) : ℝ :=
   -2 * t * x ^ (3 : ℕ) - 5 * t ^ (2 : ℕ) * x ^ (2 : ℕ) - (33 / 2) * t ^ (3 : ℕ) * x - (29 / 4) * t ^ (4 : ℕ) - t * x ^ (4 : ℕ) - 2 * t ^ (2 : ℕ) * x ^ (3 : ℕ) - (29 / 4) * t ^ (3 : ℕ) * x ^ (2 : ℕ)
 
-/-- The coefficient `C_0(t, x)` of the reduction note §1. -/
+/-- The coefficient `C_0(t, x)` of `q^0` in the residual at `k₀`, `v = L = F = 0`. -/
 noncomputable def hrlCs0 (t x : ℝ) : ℝ :=
   -3 * t * x - 3 * t ^ (2 : ℕ) - 15 * t * x ^ (2 : ℕ) - 15 * t ^ (2 : ℕ) * x - 30 * t * x ^ (3 : ℕ) - 30 * t ^ (2 : ℕ) * x ^ (2 : ℕ) - 30 * t * x ^ (4 : ℕ) - 30 * t ^ (2 : ℕ) * x ^ (3 : ℕ) - 15 * t * x ^ (5 : ℕ) - 15 * t ^ (2 : ℕ) * x ^ (4 : ℕ) - 3 * t * x ^ (6 : ℕ) - 3 * t ^ (2 : ℕ) * x ^ (5 : ℕ)
 
-/-- The coefficient `C_1(t, x)` of the reduction note §1. -/
+/-- The coefficient `C_1(t, x)` of `q^1` in the residual at `k₀`, `v = L = F = 0`. -/
 noncomputable def hrlCs1 (t x : ℝ) : ℝ :=
   4 + 8 * x + 4 * x ^ (2 : ℕ) + 6 * t * x + 3 * t ^ (2 : ℕ) + 19 * t * x ^ (2 : ℕ) - 4 * t ^ (2 : ℕ) * x - 8 * t ^ (3 : ℕ) + 16 * t * x ^ (3 : ℕ) - 46 * t ^ (2 : ℕ) * x ^ (2 : ℕ) - 32 * t ^ (3 : ℕ) * x - 6 * t * x ^ (4 : ℕ) - 84 * t ^ (2 : ℕ) * x ^ (3 : ℕ) - 48 * t ^ (3 : ℕ) * x ^ (2 : ℕ) - 14 * t * x ^ (5 : ℕ) - 61 * t ^ (2 : ℕ) * x ^ (4 : ℕ) - 32 * t ^ (3 : ℕ) * x ^ (3 : ℕ) - 5 * t * x ^ (6 : ℕ) - 16 * t ^ (2 : ℕ) * x ^ (5 : ℕ) - 8 * t ^ (3 : ℕ) * x ^ (4 : ℕ)
 
-/-- The coefficient `C_2(t, x)` of the reduction note §1. -/
+/-- The coefficient `C_2(t, x)` of `q^2` in the residual at `k₀`, `v = L = F = 0`. -/
 noncomputable def hrlCs2 (t x : ℝ) : ℝ :=
   4 * x ^ (2 : ℕ) + 8 * t * x + 4 * t ^ (2 : ℕ) - 4 * t * x ^ (2 : ℕ) - 80 * t ^ (2 : ℕ) * x + 49 * t ^ (3 : ℕ) - 22 * t * x ^ (3 : ℕ) - 266 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + (119 / 2) * t ^ (3 : ℕ) * x - (393 / 2) * t ^ (4 : ℕ) - 62 * t * x ^ (4 : ℕ) - 398 * t ^ (2 : ℕ) * x ^ (3 : ℕ) - (721 / 2) * t ^ (3 : ℕ) * x ^ (2 : ℕ) - (1607 / 2) * t ^ (4 : ℕ) * x - 29 * t ^ (5 : ℕ) - 74 * t * x ^ (5 : ℕ) - 318 * t ^ (2 : ℕ) * x ^ (4 : ℕ) - (1407 / 2) * t ^ (3 : ℕ) * x ^ (3 : ℕ) - (1803 / 2) * t ^ (4 : ℕ) * x ^ (2 : ℕ) + 58 * t ^ (5 : ℕ) * x - 30 * t * x ^ (6 : ℕ) - 106 * t ^ (2 : ℕ) * x ^ (5 : ℕ) - (665 / 2) * t ^ (3 : ℕ) * x ^ (4 : ℕ) - (357 / 2) * t ^ (4 : ℕ) * x ^ (3 : ℕ) + 203 * t ^ (5 : ℕ) * x ^ (2 : ℕ) + 116 * t ^ (4 : ℕ) * x ^ (4 : ℕ) + 116 * t ^ (5 : ℕ) * x ^ (3 : ℕ)
 
-/-- The coefficient `C_3(t, x)` of the reduction note §1. -/
+/-- The coefficient `C_3(t, x)` of `q^3` in the residual at `k₀`, `v = L = F = 0`. -/
 noncomputable def hrlCs3 (t x : ℝ) : ℝ :=
   168 * t ^ (2 : ℕ) * x - 41 * t ^ (3 : ℕ) + 44 * t * x ^ (3 : ℕ) + 530 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + 113 * t ^ (3 : ℕ) * x + (401 / 2) * t ^ (4 : ℕ) + 142 * t * x ^ (4 : ℕ) + 728 * t ^ (2 : ℕ) * x ^ (3 : ℕ) + (1883 / 2) * t ^ (3 : ℕ) * x ^ (2 : ℕ) + 947 * t ^ (4 : ℕ) * x + 116 * t ^ (5 : ℕ) + 152 * t * x ^ (5 : ℕ) + 538 * t ^ (2 : ℕ) * x ^ (4 : ℕ) + 1380 * t ^ (3 : ℕ) * x ^ (3 : ℕ) + (2353 / 2) * t ^ (4 : ℕ) * x ^ (2 : ℕ) + 232 * t ^ (5 : ℕ) * x + 54 * t * x ^ (6 : ℕ) + 172 * t ^ (2 : ℕ) * x ^ (5 : ℕ) + (1185 / 2) * t ^ (3 : ℕ) * x ^ (4 : ℕ) + 314 * t ^ (4 : ℕ) * x ^ (3 : ℕ) + 116 * t ^ (5 : ℕ) * x ^ (2 : ℕ) - 116 * t ^ (4 : ℕ) * x ^ (4 : ℕ)
 
-/-- The coefficient `C_4(t, x)` of the reduction note §1. -/
+/-- The coefficient `C_4(t, x)` of `q^4` in the residual at `k₀`, `v = L = F = 0`. -/
 noncomputable def hrlCs4 (t x : ℝ) : ℝ :=
   -8 * t * x ^ (3 : ℕ) - 20 * t ^ (2 : ℕ) * x ^ (2 : ℕ) - 41 * t ^ (3 : ℕ) * x - 4 * t ^ (4 : ℕ) - 44 * t * x ^ (4 : ℕ) - 132 * t ^ (2 : ℕ) * x ^ (3 : ℕ) - 344 * t ^ (3 : ℕ) * x ^ (2 : ℕ) - 268 * t ^ (4 : ℕ) * x - 87 * t ^ (5 : ℕ) - 47 * t * x ^ (5 : ℕ) - 135 * t ^ (2 : ℕ) * x ^ (4 : ℕ) - (743 / 2) * t ^ (3 : ℕ) * x ^ (3 : ℕ) - (575 / 2) * t ^ (4 : ℕ) * x ^ (2 : ℕ) - (423 / 16) * t ^ (5 : ℕ) * x + (841 / 16) * t ^ (6 : ℕ) - 15 * t * x ^ (6 : ℕ) - 43 * t ^ (2 : ℕ) * x ^ (5 : ℕ) - (267 / 2) * t ^ (3 : ℕ) * x ^ (4 : ℕ) - (277 / 2) * t ^ (4 : ℕ) * x ^ (3 : ℕ) - (551 / 16) * t ^ (5 : ℕ) * x ^ (2 : ℕ) + (377 / 16) * t ^ (6 : ℕ) * x
 
-/-- The coefficient `C_5(t, x)` of the reduction note §1. -/
+/-- The coefficient `C_5(t, x)` of `q^5` in the residual at `k₀`, `v = L = F = 0`. -/
 noncomputable def hrlCs5 (t x : ℝ) : ℝ :=
   -2 * t * x ^ (5 : ℕ) - 9 * t ^ (2 : ℕ) * x ^ (4 : ℕ) - 41 * t ^ (3 : ℕ) * x ^ (3 : ℕ) - (153 / 2) * t ^ (4 : ℕ) * x ^ (2 : ℕ) - (1073 / 8) * t ^ (5 : ℕ) * x - (841 / 16) * t ^ (6 : ℕ) - t * x ^ (6 : ℕ) - 4 * t ^ (2 : ℕ) * x ^ (5 : ℕ) - (37 / 2) * t ^ (3 : ℕ) * x ^ (4 : ℕ) - 29 * t ^ (4 : ℕ) * x ^ (3 : ℕ) - (841 / 16) * t ^ (5 : ℕ) * x ^ (2 : ℕ)
 
@@ -100,16 +104,16 @@ noncomputable def hrlCs5 (t x : ℝ) : ℝ :=
 noncomputable def hrlVn (t x : ℝ) : ℝ :=
   1824 + 3144 * x - 1824 * t + 1831 * x ^ (2 : ℕ) - 1320 * t * x + 1824 * t ^ (2 : ℕ) + 408 * x ^ (3 : ℕ) + 401 * t * x ^ (2 : ℕ) + 2232 * t ^ (2 : ℕ) * x + 408 * t ^ (2 : ℕ) * x ^ (2 : ℕ)
 
-/-- The incoming majorant `V_L` with `T_L = (912 - 401x)/(24(17x + 76))` (reduction note (R1)). -/
+/-- The incoming majorant `V_L` with `T_L = (912 - 401x)/(24(17x + 76))`. -/
 noncomputable def hrlVL (t x : ℝ) : ℝ :=
   1 - (1 - t) * (t + x) / (1 + x) ^ (2 : ℕ) + (1 - t) * x / (1 + x) ^ (2 : ℕ) * ((912 - 401 * x) / (24 * (17 * x + 76)) - t)
 
-/-- **The source circuit** `S = 24WD(q + 1)C + 4(q + 1)AV_n - 16W²DpqB(q² + 10q + 1)` (R9). -/
+/-- **The circuit** `S = 24WD(q + 1)C + 4(q + 1)AV_n - 16W²DpqB(q² + 10q + 1)`. -/
 noncomputable def hrlS (t x q : ℝ) : ℝ :=
   24 * (1 + x) * (17 * x + 76) * (q + 1) * (hrlCs0 t x * q ^ (0 : ℕ) + hrlCs1 t x * q ^ (1 : ℕ) + hrlCs2 t x * q ^ (2 : ℕ) + hrlCs3 t x * q ^ (3 : ℕ) + hrlCs4 t x * q ^ (4 : ℕ) + hrlCs5 t x * q ^ (5 : ℕ)) + 4 * (q + 1) * (hrlA0 t x * q ^ (0 : ℕ) + hrlA1 t x * q ^ (1 : ℕ) + hrlA2 t x * q ^ (2 : ℕ) + hrlA3 t x * q ^ (3 : ℕ) + hrlA4 t x * q ^ (4 : ℕ)) * hrlVn t x
     - 16 * (1 + x) ^ (2 : ℕ) * (17 * x + 76) * (t + x) * q * (hrlBs0 t x * q ^ (0 : ℕ) + hrlBs1 t x * q ^ (1 : ℕ) + hrlBs2 t x * q ^ (2 : ℕ) + hrlBs3 t x * q ^ (3 : ℕ)) * (q ^ (2 : ℕ) + 10 * q + 1)
 
-/-- `V_G ≤ V_L` for `x ≥ 0`, `t ≤ 1` (reduction note (R3)). -/
+/-- `V_G ≤ V_L` for `x ≥ 0`, `t ≤ 1`. -/
 theorem hrl_VG_le_VL {t x : ℝ} (hx : 0 ≤ x) (ht : t ≤ 1) : fhVG t x ≤ hrlVL t x := by
   have hW : 0 < 1 + x := by linarith
   have e : hrlVL t x - fhVG t x = (1 - t) * x / (1 + x) ^ (2 : ℕ) *
@@ -119,7 +123,7 @@ theorem hrl_VG_le_VL {t x : ℝ} (hx : 0 ≤ x) (ht : t ≤ 1) : fhVG t x ≤ hr
     rw [e]; apply mul_nonneg (div_nonneg (mul_nonneg (by linarith) hx) (by positivity)); positivity
   linarith
 
-/-- **The link** (reduction note (R4), (R8)-(R9)):
+/-- **The link**: clearing the denominators of `V_L`, `L₊` and `F_ℓ`,
 `24(q + 1)WD · fhComb 4 1 t x (29t²/4) q V_L L₊ F_ℓ = S`. -/
 theorem hrl_link (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
     24 * (q + 1) * (1 + x) * (17 * x + 76) *
@@ -406,9 +410,10 @@ theorem hrl_Ld_fifth6 (j : ℝ) : lrhHorner (hrlLd6 j) (1 / 5) = -hrlBb6 (1 / 5 
 theorem hrl_St_face6 (x : ℝ) : hrlSt6 (3 / 8) x = hrlCF6 x := by
   unfold hrlSt6 hrlCF6; ring
 
-/-! ### The reduction in `h` (reduction note §4, (R7)) -/
+/-! ### The reduction in `h` -/
 
-/-- **`S` decreases in `h`** at fixed `j, y`, so `S(h, j, y) ≥ S(1/4, j, y)` (reduction note (R7)). -/
+/-- **`S` decreases in `h`** at fixed `j, y`, so `S(h, j, y) ≥ S(1/4, j, y)`: `∂_hS` is
+decreasing on `[1/5, 1/4]` (`hrl_R_pos`) and negative at `h = 1/5` (`hrl_B_pos`). -/
 theorem hrl_h_reduce {h j y : ℝ} (h1 : 1 / 5 ≤ h) (h2 : h ≤ 1 / 4) (hj0 : 1 / 30 ≤ j)
     (hj1 : j ≤ 5 / 28) (hy0 : 0 ≤ y) (hy1 : y ≤ 1 / 4) :
     lrhHorner (hrlL0 j) (1 / 4) + lrhHorner (hrlL1 j) (1 / 4) * y + lrhHorner (hrlL2 j) (1 / 4) * y ^ (2 : ℕ) + lrhHorner (hrlL3 j) (1 / 4) * y ^ (3 : ℕ) + lrhHorner (hrlL4 j) (1 / 4) * y ^ (4 : ℕ) + lrhHorner (hrlL5 j) (1 / 4) * y ^ (5 : ℕ) + lrhHorner (hrlL6 j) (1 / 4) * y ^ (6 : ℕ) ≤ lrhHorner (hrlL0 j) h + lrhHorner (hrlL1 j) h * y + lrhHorner (hrlL2 j) h * y ^ (2 : ℕ) + lrhHorner (hrlL3 j) h * y ^ (3 : ℕ) + lrhHorner (hrlL4 j) h * y ^ (4 : ℕ) + lrhHorner (hrlL5 j) h * y ^ (5 : ℕ) + lrhHorner (hrlL6 j) h * y ^ (6 : ℕ) := by
@@ -442,8 +447,7 @@ theorem hrl_h_reduce {h j y : ℝ} (h1 : 1 / 5 ≤ h) (h2 : h ≤ 1 / 4) (hj0 : 
     linarith
   exact hrl_anti dG neg1 h1 h2 le_rfl
 
-/-- **The high-ratio lower-shape sign** (`MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13), via
-`NONSHORT_HIGH_RATIO_LOWER_REDUCTION` and `NONSHORT_HIGH_RATIO_LOWER_FACE`): on the high-ratio
+/-- **The high-ratio lower-shape sign**: on the high-ratio
 large-gap domain, the combined residual at `k₀ = 29t²/4` with `v_G`, `L₊`, `F_ℓ` is positive. The
 negative `v`-coefficient (`fh_LGB_Cv`) is supplied by the caller. -/
 theorem hrl_lower_pos {t x q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)

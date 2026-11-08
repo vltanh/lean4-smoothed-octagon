@@ -5,23 +5,19 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOA1
 /-!
 # Gate S1 by hand, outer face, branch A: the test `F₁`
 
-`SHORT_OUTER_LARGE_SHAPE_REDUCTION` §§2-5, 8, `SHORT_OUTER_RECIPROCAL_RESIDUE`,
-`SHORT_OUTER_UPPER_SHAPE_TERMINAL`, `SHORT_OUTER_LARGE_SHAPE_F1_TERMINAL`. On
-`3/2 ≤ x ≤ 2`, `6/5 ≤ α ≤ x`, `24/43 ≤ C ≤ 10/13`, `u_f ≤ u ≤ u_v`:
+On `3/2 ≤ x ≤ 2`, `6/5 ≤ α ≤ x`, `24/43 ≤ C ≤ 10/13`, `u_f ≤ u ≤ u_v`:
 
 * norm concavity reduces `u` to the affine norms `u₋ = (8x + 1303)/1750 ≤ u_f`,
-  `u₊ = (6x + 443)/600 ≥ u_v` (`(A5)-(A7)`);
-* beta concavity (`SHORT_OUTER_BETA` (3), with `w₀ > (19 + 2x)/28` at `u ≤ u₊`) reduces `C` to
+  `u₊ = (6x + 443)/600 ≥ u_v`;
+* beta concavity (`hl1o_F1_bmin`, with `w₀ > (19 + 2x)/28` at `u ≤ u₊`) reduces `C` to
   `24/43`, `10/13`;
 * at each of these four pairs, the reciprocal-shape curvature is at most
-  `2b₂ + 6b₃/x + 7/216 < 0` (`b₄, b₃ ≤ 0`, residue `Q < 0`, `(e/Z)² ≤ 4/9`; `(A22)`, `(A26)`),
+  `2b₂ + 6b₃/x + 7/216 < 0` (`b₄, b₃ ≤ 0`, residue `Q < 0`, `(e/Z)² ≤ 4/9`),
   so `α ∈ {6/5, x}`;
 * the eight terminal curves `α = 6/5`, `α = x` are positive.
 
-Route: the residue, curvature and terminal signs are proved at the affine norms `u₊`, `u₋`
-themselves (univariate signs in `x`, each cleared and bounded termwise on `[3/2, 2]`), instead of
-uniformly in `u ∈ [3/4, 19/25]`, through the Laurent decompositions and concavity in `x` of the
-notes.
+The residue, curvature and terminal signs are proved at the affine norms `u₊`, `u₋` themselves
+(univariate signs in `x`, each cleared and bounded termwise on `[3/2, 2]`).
 
 ## Main API
 
@@ -759,7 +755,7 @@ theorem hl1o_A_Tx_hp {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ))
     rw [hid]; exact div_pos (by linarith) hD
   linarith
 
-/-- **Reciprocal-shape concavity of `F₁` on the large shapes** (`(A26)`). -/
+/-- **Reciprocal-shape concavity of `F₁` on the large shapes**. -/
 theorem hl1o_A_recip {x a C u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha : 6 / 5 ≤ a) (hax : a ≤ x)
     (hC0 : 24 / 43 ≤ C) (hC1 : C ≤ 10 / 13) (hu0 : 3 / 4 ≤ u) (hu1 : u ≤ 19 / 25)
     (hQ : hl1Q1 x C u < 0) (hM : 2 * hl1b2 x C u + 6 * hl1b3 x C u / x < -7 / 216) :

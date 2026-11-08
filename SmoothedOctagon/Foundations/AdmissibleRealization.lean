@@ -13,8 +13,7 @@ removing `ENNReal.ofReal` from the upstream area theorem.
 
 This module supplies the forward direction. The separate `ReverseComparison` module
 constructs geometric competitors for arbitrary admissible controls and derives control
-optimality from both directions. Source draft only; compilation and kernel validation
-have not been run.
+optimality from both directions.
 -/
 
 @[expose] public section

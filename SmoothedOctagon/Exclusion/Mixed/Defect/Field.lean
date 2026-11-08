@@ -5,15 +5,15 @@ public import SmoothedOctagon.Exclusion.Mixed.Defect.Window
 /-!
 # Case M2, smaller-short window: the window-defect field
 
-`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (A), (8)-(9) (inventory E1 R16-R17) for the two-turn window
-`C, B` (pieces `m + 1`, `m + 2`) after a reverse centre `a` (piece `m`) whose outgoing turn `C`
-has a short forward bridge: the field `M2Short.defect` of `m2_short_window`.
+The window-defect field for the two-turn window `C, B` (pieces `m + 1`, `m + 2`) after a reverse
+centre `a` (piece `m`) whose outgoing turn `C` has a short forward bridge: the field
+`M2Short.defect` of `m2_short_window`.
 
-Route: the window defect `NormalPeriod.df_window` at `k = m + 1`, with its frame and costate
-identified with the cover's rational expressions by `df_alg_traces` and its cost by
+The proof applies the window defect `NormalPeriod.df_window` at `k = m + 1`, with its frame and
+costate identified with the cover's rational expressions by `df_alg_traces` and its cost by
 `df_alg_cost`; the polar angle `θ ∈ (0, π/3)` of the endpoint product `ρ_W e^{iθ}` (`ρ_W ≥ 4`)
 gives `𝒜 = T_κ ρ_W cos θ > 0`, `√3 ℬ = T_κ ρ_W sin θ`, hence `0 < ℬ < 𝒜`,
-`𝒜 + ℬ ≥ T_κ ρ_W ≥ 4 T_κ` (the modulus filter (A)) and `θ = arctan(√3 ℬ/𝒜)`. The data `(u, v, E)` of
+`𝒜 + ℬ ≥ T_κ ρ_W ≥ 4 T_κ` (the modulus filter) and `θ = arctan(√3 ℬ/𝒜)`. The data `(u, v, E)` of
 an arbitrary covector calculus are those of the concrete one, `df_calc` (`M = Mloc`), since both
 are fixed by the secants and centre stationarity.
 
@@ -167,10 +167,8 @@ theorem df_final {AA BB Tk κ cost Cper θ ρw : ℝ} (hTk : 0 < Tk) (hθ0 : 0 <
   rw [harctan]
   exact hcost
 
-/-- **The window-defect field** `M2Short.defect` of a smaller-short window
-(`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (A), (8)-(9), inventory E1 R16-R17). Route: the endpoint
-traces come from the library's costate transport in rotated triangular coordinates (`df_alg_m`,
-`df_alg_h`) instead of the script's propagator and costate representation (E1 R14-R15). -/
+/-- **The window-defect field** `M2Short.defect` of a smaller-short window. The endpoint traces
+come from the costate transport in rotated triangular coordinates (`df_alg_m`, `df_alg_h`). -/
 theorem df_defect (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixed)
     (hN : 3 ≤ P.N) (K : P.M2Calculus) {m : ℤ}
     (h2 : P.costateCycle.m2Fwd (m - 2)) (h1 : ¬ P.costateCycle.m2Fwd (m - 1))

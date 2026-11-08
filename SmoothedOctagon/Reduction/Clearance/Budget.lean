@@ -8,10 +8,10 @@ public import Mathlib.Analysis.Complex.ExponentialBounds
 /-!
 # The complete-period budget inequality
 
-SINGULAR_COST_BUDGET (3), (18)-(21), (24)-(27) and §3 "Applying the bound at every time"
-(inventory A2, §2.4, `SCB:(3)/(21)`, `SCB:(24)-(26)`). For a Pontryagin extremal of cost at most
-`A_oct`, at every time `t ∈ [0, T]`,
-`|λ| ≤ 100 ‖Λ₁(t) - (3/2)λJ‖_F`.
+For a Pontryagin extremal of cost at most `A_oct`, at every time `t ∈ [0, T]`,
+`|λ| ≤ 100 ‖Λ₁(t) - (3/2)λJ‖_F`. The bound is proved at the initial time by integrating the
+equilibrium inequality against the winding bound `∫(ρ + ρ_R) ≥ 2π/3`, and moved to every time by
+rebasing the period.
 
 Main API:
 
@@ -19,9 +19,9 @@ Main API:
 * `scb_budget`: the budget inequality at the initial time of an admissible trajectory with
   `tr((h⁻¹ M h + (3/2)μJ) Y) ≤ 0`: `μ ≤ 100 ‖M + (3/2)μJ‖_F`.
 * `scb_conservation`: `Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)` on `[0, T]` (Corollary 6.5.3).
-* `scb_traceForm_le_zero`: `tr((Λ₁ - (3/2)λJ) X) ≤ 0` at every time (SCB (11)).
+* `scb_traceForm_le_zero`: `tr((Λ₁ - (3/2)λJ) X) ≤ 0` at every time.
 * `scb_twisted_traceForm_le`: the same inequality along the twisted extension, for `t ≥ 0`.
-* `scb_lam_sq_le`: `λ² ≤ 10⁴ ‖Λ₁(t) - (3/2)λJ‖_F²` at every `t ∈ [0, T]` (SCB (27)).
+* `scb_lam_sq_le`: `λ² ≤ 10⁴ ‖Λ₁(t) - (3/2)λJ‖_F²` at every `t ∈ [0, T]`.
 -/
 
 @[expose] public section
@@ -32,8 +32,8 @@ open SmoothedPolygons MeasureTheory Set Real
 
 /-! ### The numerical margin -/
 
-/-- `A_oct < 3.127` (`A_oct = √12 (8 - √32 - log 2)/(√8 - 1) ≈ 3.12605`; SCB (24) gives
-`A_oct < 391/125 = 3.128`). -/
+/-- `A_oct < 3.127` (`A_oct = √12 (8 - √32 - log 2)/(√8 - 1) ≈ 3.12605`), from rational
+enclosures of `√12`, `√32`, `√8` and `log 2`. -/
 theorem scb_octagonCost_lt : octagonCost < 3.127 := by
   have h12 : √12 < 3.46411 := by
     rw [Real.sqrt_lt' (by norm_num)]; norm_num
@@ -55,10 +55,15 @@ theorem scb_octagonCost_lt : octagonCost < 3.127 := by
 
 /-! ### The budget inequality at the initial time -/
 
-/-- **The budget inequality** (SINGULAR_COST_BUDGET (18)-(21), (24)-(27)). Let `(T, u, h, Y)` be
-admissible with cost at most `A_oct`, `μ` real, and `M` a matrix with
-`tr((h⁻¹ M h + (3/2)μJ) Y) ≤ 0` on `[0, T]` (the equilibrium inequality (11) for the costate
-`Λ₁ = h⁻¹ M h`). Then `μ ≤ 100 ‖M + (3/2)μJ‖_F`. -/
+/-- **The budget inequality**. Let `(T, u, h, Y)` be admissible with cost at most `A_oct`, `μ`
+real, and `M` a matrix with `tr((h⁻¹ M h + (3/2)μJ) Y) ≤ 0` on `[0, T]` (the equilibrium
+inequality for the costate `Λ₁ = h⁻¹ M h`). Then `μ ≤ 100 ‖M + (3/2)μJ‖_F`.
+
+Proof: with `A₀ = M + (3/2)μJ` and `V = h Y h⁻¹`, the hypothesis reads
+`3μ ρ_R + tr(A₀ V) ≤ 3μ ρ`, and Cauchy–Schwarz with `‖V‖_F² = 4ρ_R² - 2` gives
+`tr(A₀ V) ≥ -2‖A₀‖ ρ_R`. Integrating, `(3μ - 2‖A₀‖) ∫ρ_R ≤ 3μ ∫ρ`. If `μ > 100 ‖A₀‖`, then
+`3μ - 2‖A₀‖ > (149/50) μ`, and the winding bound `∫ρ_R ≥ 2π/3 - ∫ρ` gives
+`(149/50)(2π/3 - ∫ρ) < 3∫ρ`, which fails because the cost `3∫ρ` is below `3.127`. -/
 theorem scb_budget {T : ℝ} {u : ℝ → Fin 3 → ℝ} {h Y : ℝ → Mat2}
     (hadm : IsReinhardtAdmissible T u h Y) (hcost : reinhardtCost T Y ≤ octagonCost)
     {M : Mat2} {μ : ℝ}
@@ -72,7 +77,7 @@ theorem scb_budget {T : ℝ} {u : ℝ → Fin 3 → ℝ} {h Y : ℝ → Mat2}
   set A₀ := M + (3 / 2 * μ) • J with hA₀
   set a₀ := √(frobSq A₀) with ha₀
   have ha₀0 : 0 ≤ a₀ := Real.sqrt_nonneg _
-  -- the pointwise inequality (19) with `tr(A₀ V) ≥ -2 a₀ ρ_R`
+  -- the pointwise inequality `3μρ_R + tr(A₀ V) ≤ 3μρ` with `tr(A₀ V) ≥ -2 a₀ ρ_R`
   have hpt : ∀ s ∈ Icc 0 T,
       (3 * μ - 2 * a₀) * scb_rhoR (h s) (Y s) ≤ 3 * μ * scb_rho (Y s) := by
     intro s hs
@@ -147,8 +152,8 @@ theorem scb_budget {T : ℝ} {u : ℝ → Fin 3 → ℝ} {h Y : ℝ → Mat2}
 
 variable {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2} {lam : ℝ}
 
-/-- **Spatial conservation** (SINGULAR_COST_BUDGET (18), Corollary 6.5.3):
-`Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)` on `[0, T]`. -/
+/-- **Spatial conservation** (Hales–Vajjha, Corollary 6.5.3): `Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)` on
+`[0, T]`. -/
 theorem scb_conservation (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) :
     ∀ t ∈ Icc 0 T, Λ₁ t = (g t)⁻¹ * Λ₁ 0 * g t := by
   obtain ⟨hst, hg0, -, -, -, -, -, -, hΛ, -, -⟩ := hext
@@ -164,8 +169,8 @@ theorem scb_conservation (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) :
       (((hΛc.mul hXc).sub (hXc.mul hΛc)) t ht)
   exact fun t ht ↦ (corollary6_5_3 T g X Λ₁ hg hg0 (fun t ht ↦ (hsd t ht).1) hΛ' t ht).1
 
-/-- **The equilibrium inequality at every time** (SINGULAR_COST_BUDGET (11)):
-`tr((Λ₁ - (3/2)λJ) X) ≤ 0` on `[0, T]`. -/
+/-- **The equilibrium inequality at every time**: `tr((Λ₁ - (3/2)λJ) X) ≤ 0` on `[0, T]`. Every
+vertex Hamiltonian is `≤ 0`, and `scb_vertex_bounds` turns this into the inequality. -/
 theorem scb_traceForm_le_zero (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) :
     ∀ t ∈ Icc 0 T, traceForm (Λ₁ t - (3 / 2 * lam) • J) (X t) ≤ 0 := by
   intro t ht
@@ -193,10 +198,10 @@ theorem scb_twisted_traceForm_le (hT : 0 < T) {c : ℝ}
   rw [e1, e2, e3, poly_traceForm_conj (R_pow_mul_inv n)]
   exact hle r hr
 
-/-- **The budget inequality at every time** (SINGULAR_COST_BUDGET (3), (27)). For a Pontryagin
-extremal of cost at most `A_oct`, `λ² ≤ 10⁴ ‖Λ₁(t) - (3/2)λJ‖_F²` at every `t ∈ [0, T]`: apply
-`scb_budget` to the period rebased at `t` (`ĝ(s) = G(t)⁻¹ G(t + s)`, `X̂(s) = Y(t + s)`, initial
-costate `Λ₁(t)`), which is admissible with the same cost. -/
+/-- **The budget inequality at every time**. For a Pontryagin extremal of cost at most `A_oct`,
+`λ² ≤ 10⁴ ‖Λ₁(t) - (3/2)λJ‖_F²` at every `t ∈ [0, T]`: apply `scb_budget` to the period rebased at
+`t` (`ĝ(s) = G(t)⁻¹ G(t + s)`, `X̂(s) = Y(t + s)`, initial costate `Λ₁(t)`), which is admissible
+with the same cost. -/
 theorem scb_lam_sq_le (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hcost : reinhardtCost T X ≤ octagonCost) :
     ∀ t ∈ Icc 0 T, lam ^ 2 ≤ 10 ^ 4 * frobSq (Λ₁ t - (3 / 2 * lam) • J) := by

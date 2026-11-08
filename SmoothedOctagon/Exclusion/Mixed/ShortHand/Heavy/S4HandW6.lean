@@ -5,14 +5,12 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW6a
 /-!
 # Gate S4, hand proof of W6: terminal concavity
 
-`archive/lighter-proofs/SHORT_CASIMIR_TERMINAL_CONCAVITY.md` §§3-5. On `x = 13/6`, `e = 13/5`,
-`r = 13d ∈ [0, 13/19]`, the terminal source `hl46W6F` (`S4HandW6a`) has a positive third
-derivative (note (14), from the six elementary terms (15)-(21) and the exact logarithm), so its
+On `x = 13/6`, `e = 13/5`, `r = 13d ∈ [0, 13/19]`, the terminal source `hl46W6F` (`S4HandW6a`)
+has a positive third derivative (from six elementary terms and the exact logarithm), so its
 second derivative increases; at `r = 13/19` it is negative (exact rational value), hence `Ψ` is
 concave in `d` on the whole line.
 
-Route: the terminal value of `Ψ_rr` at `r = 13/19` is evaluated exactly (`norm_num`) instead of
-through the six rounded contributions of note (23).
+The terminal value of `Ψ_rr` at `r = 13/19` is evaluated exactly by `norm_num`.
 
 ## Main API
 
@@ -25,7 +23,7 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-! ### Bounds on `[0, 13/19]` (note (12), (13), (19), (20)) -/
+/-! ### Bounds on `[0, 13/19]` -/
 
 theorem hl46_w6_U_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
     379 / 500 ≤ hl46W6U r ∧ hl46W6U r ≤ 19 / 25 ∧ -7 / 5000 ≤ hl46W6U1 r ∧
@@ -87,7 +85,7 @@ theorem hl46_w6_U_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
     norm_num at *
     linarith
 
-/-! ### The six terms of the third derivative (note (15)-(21)) -/
+/-! ### The six terms of the third derivative -/
 
 theorem hl46_w6_grpG {U U1 U2 U3 : ℝ} (hU : 379 / 500 ≤ U) (hU' : U ≤ 19 / 25) (h1 : U1 ≤ 0)
     (h2 : 0 ≤ U2) (h3 : -1 / 15000 ≤ U3) (h3' : U3 ≤ 0) :
@@ -183,7 +181,7 @@ theorem hl46_w6_grpL {A B K K' : ℝ} (hA : 5 ≤ A) (hB : 95 ≤ B) (hK : 9025 
   norm_num at a b c ⊢
   linarith
 
-/-- The building blocks of `1/K` and of `n - mu` on `[0, 13/19]` (note (19), (20)). -/
+/-- The building blocks of `1/K` and of `n - mu` on `[0, 13/19]`. -/
 theorem hl46_w6_C_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
     let U := hl46W6U r; let U1 := hl46W6U1 r; let U2 := hl46W6U2 r; let U3 := hl46W6U3 r
     let n := 3690640915 / 249774 + 157928748 / 249774 * r
@@ -246,7 +244,7 @@ theorem hl46_concave_of_J3 {f f₁ f₂ f₃ : ℝ → ℝ} {a b c : ℝ}
   hl46_concave_lt (fun _ hy => (hJ _ hy).toJ)
     (fun _ hy => (hl46_mono_of (fun z hz => (hJ z hz).2.2) h3 hy.1 hy.2 le_rfl).trans hb2) ha hb hx
 
-/-- **W6** (`SHORT_CASIMIR_TERMINAL_CONCAVITY`): at `x = 13/6`, `e = 13/5`, `Ψ` is concave in
+/-- **W6**: at `x = 13/6`, `e = 13/5`, `Ψ` is concave in
 `d`, so it exceeds any `c` below both ends. -/
 theorem hl46_W6 {c d : ℝ} (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (h0 : c < hl46PsiC (13 / 6) 0 (13 / 5))
     (h1 : c < hl46PsiC (13 / 6) (1 / 19) (13 / 5)) : c < hl46PsiC (13 / 6) d (13 / 5) := by

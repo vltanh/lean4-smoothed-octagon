@@ -5,11 +5,11 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandRecip
 /-!
 # Gate S1 by hand: explicit rational forms of the outer tests
 
-The cubic majorant at a quotient, `ℓ(p/q) = 8(p³ - q³)/(3(p + q)³)` (`SHORT_OUTER_S_BETA` (4)),
-and the outer tests written with polynomial denominators only (`hl1o_F1_expl`, `hl1o_F0_expl`), for
-substituting a terminal curve before clearing denominators. Also two small curvature tools for
-the reciprocal shape: `γ₄ = -(Su - A₀)²/576 ≤ 0` (`hl1g4_nonpos`, `SHORT_OUTER_S_RECIPROCAL` (5))
-and the termwise bound of the curvature (`hl1_curv_bound`, `SHORT_OUTER_S_RECIPROCAL` (13)).
+The cubic majorant at a quotient, `ℓ(p/q) = 8(p³ - q³)/(3(p + q)³)`, and the outer tests written
+with polynomial denominators only (`hl1o_F1_expl`, `hl1o_F0_expl`), for substituting a terminal
+curve before clearing denominators. Also two small curvature tools for the reciprocal shape:
+`γ₄ = -(Su - A₀)²/576 ≤ 0` (`hl1g4_nonpos`) and the termwise bound of the curvature
+(`hl1_curv_bound`).
 
 ## Main API
 
@@ -62,7 +62,7 @@ theorem hl1g4_nonpos {x u : ℝ} (hx : 0 < x) : hl1b4 x u ≤ 0 := by
   have := sq_nonneg ((1 + x) * u - ((1 + x) - 1 + 1 / (1 + x)))
   linarith
 
-/-- **Termwise curvature bound** (`SHORT_OUTER_S_RECIPROCAL` §3): with `b₄, b₃, Q ≤ 0`,
+/-- **Termwise curvature bound**: with `b₄, b₃, Q ≤ 0`,
 `r ≥ 1/x`, `0 < Z_lo ≤ Z ≤ S`, the curvature is at most
 `2b₂ + 6b₃/x + 2Qe²/S³ + ce²/Z_lo²`. -/
 theorem hl1_curv_bound {b2 b3 b4 Q d e s x S Zl : ℝ} (hb4 : b4 ≤ 0) (hb3 : b3 ≤ 0) (hQ : Q ≤ 0)

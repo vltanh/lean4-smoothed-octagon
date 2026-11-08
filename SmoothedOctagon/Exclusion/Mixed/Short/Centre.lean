@@ -5,19 +5,16 @@ public import SmoothedOctagon.Exclusion.Mixed.Short.Calc
 /-!
 # Case M2, smaller-short side: scalar consequences of reverse-centre stationarity
 
-`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION` §§3-4, `MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (H),
-(O), (10)-(11), `MIXED_GLOBAL_SHORT_BRIDGE_NONPOSITIVE_SCALE` (3), `MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL_FACE`
-§2 (inventory E1 R9-R11, R18-R20, R23). At a reverse centre with neighbour ratios `x`, `y`
-(`x = a/(a + n)`, `y = a/(a + p)`), incident norms `u_x`, `u_y`, scale `ρ = a²/(a² + 4) ≤ xy`
-(positive reverse factor) and centre stationarity
+At a reverse centre with neighbour ratios `x`, `y` (`x = a/(a + n)`, `y = a/(a + p)`), incident
+norms `u_x`, `u_y`, scale `ρ = a²/(a² + 4) ≤ xy` (positive reverse factor) and centre stationarity
 `E = 1 + x + y - ρ + log(ρ/(xy)) - (1 - u_x)/x - (1 - u_y)/y`:
 
-* `ss_E_le_three`: `E ≤ 3ρ` when `u_x ≤ U(x)`, `u_y ≤ U(y)`, `x, y ≤ 1/2` (R11, R23);
+* `ss_E_le_three`: `E ≤ 3ρ` when `u_x ≤ U(x)`, `u_y ≤ U(y)`, `x, y ≤ 1/2`;
 * `ss_gap_nonneg`: `(1 - ρ - u_y)x² + ρ(E - 1 + ρ)x + ρ(1 - ρ - u_x) = ρx(E - E_min) ≥ 0`
-  when `u_y ≤ U(y)`, `y ≤ 1/2` (R18(a), R19 (O));
-* `ss_E_upper`: `x²E ≤ x(u_x + u_y - 2) + 2x³ - ρx² + ρ` when `y ≤ x` (R20 (11));
-* `ss_v_floor`: `x²(1 - u_y) - ρx + ρ² ≥ 0`, i.e. `u_y ≤ U(ρ/x)` (R20 (8));
-* `ss_Rbar`: the convex-chord bound `R̄ ≥ 0` of the outer root (R9-R10), with `T = x/ρ`,
+  when `u_y ≤ U(y)`, `y ≤ 1/2`;
+* `ss_E_upper`: `x²E ≤ x(u_x + u_y - 2) + 2x³ - ρx² + ρ` when `y ≤ x`;
+* `ss_v_floor`: `x²(1 - u_y) - ρx + ρ² ≥ 0`, i.e. `u_y ≤ U(ρ/x)`;
+* `ss_Rbar`: the convex-chord bound `R̄ ≥ 0` of the outer root, with `T = x/ρ`,
   `T_B = 1/x`, `τ = 1/y ∈ [2, T]` and `3/4 ≤ u_y ≤ U(y)`.
 
 Here `U(s) = 1 - s + s²`.
@@ -27,7 +24,7 @@ Here `U(s) = 1 - s + s²`.
 
 namespace SmoothedOctagon
 
-/-- **`E ≤ 3ρ`** (`MIXED_GLOBAL_SHORT_BRIDGE_NONPOSITIVE_SCALE` (3), SIX_VARIABLE (10)). -/
+/-- **`E ≤ 3ρ`** at a reverse centre with `u_x ≤ U(x)`, `u_y ≤ U(y)` and `x, y ≤ 1/2`. -/
 theorem ss_E_le_three {x y ρ ux uy E : ℝ} (hx : 0 < x) (hx2 : x ≤ 1 / 2) (hy : 0 < y)
     (hy2 : y ≤ 1 / 2) (hρ : 0 < ρ) (hρxy : ρ ≤ x * y) (hux : ux ≤ 1 - x + x ^ 2)
     (huy : uy ≤ 1 - y + y ^ 2)
@@ -54,7 +51,7 @@ theorem ss_E_le_three {x y ρ ux uy E : ℝ} (hx : 0 < x) (hx2 : x ≤ 1 / 2) (h
   have : -(1 - uy) / y = -((1 - uy) / y) := neg_div _ _
   linarith
 
-/-- **The central omitted-control filter** (`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (H), (O)):
+/-- **The central omitted-control filter**:
 `(1 - ρ - u_y)x² + ρ(E - 1 + ρ)x + ρ(1 - ρ - u_x) = ρx(E - E_min) ≥ 0`, since `E = 𝓔(y)` and
 `𝓔' = (U(t) - u_y)/t² ≥ 0` on `[ρ/x, y]`; here via `log Y ≤ (Y - 1/Y)/2`, `Y = xy/ρ`. -/
 theorem ss_gap_nonneg {x y ρ ux uy E : ℝ} (hx : 0 < x) (hy : 0 < y) (hy2 : y ≤ 1 / 2)
@@ -89,7 +86,7 @@ theorem ss_gap_nonneg {x y ρ ux uy E : ℝ} (hx : 0 < x) (hy : 0 < y) (hy2 : y 
   have : 0 ≤ E - Emin := by linarith
   positivity
 
-/-- **The rational upper pairing** (`MIXED_GENERAL_SHORT_DEFECT_INTERFACE` (11)): for `y ≤ x`,
+/-- **The rational upper pairing**: for `y ≤ x`,
 `x²E ≤ x(u_x + u_y - 2) + 2x³ - ρx² + ρ`. -/
 theorem ss_E_upper {x y ρ ux uy E : ℝ} (hy : 0 < y) (hyx : y ≤ x) (hρ : 0 < ρ)
     (hρxy : ρ ≤ x * y) (huy : uy ≤ 1 - y + y ^ 2)
@@ -115,7 +112,7 @@ theorem ss_E_upper {x y ρ ux uy E : ℝ} (hy : 0 < y) (hyx : y ≤ x) (hρ : 0 
   rw [le_div_iff₀ (by positivity)] at this
   linarith
 
-/-- **The opposite-norm floor** (SIX_VARIABLE (8)): `u_y ≤ U(y)`, `ρ/x ≤ y ≤ 1/2` give
+/-- **The opposite-norm floor**: `u_y ≤ U(y)`, `ρ/x ≤ y ≤ 1/2` give
 `x²(1 - u_y) - ρx + ρ² ≥ 0`. -/
 theorem ss_v_floor {x y ρ uy : ℝ} (hx : 0 < x) (hy2 : y ≤ 1 / 2) (hρxy : ρ ≤ x * y)
     (huy : uy ≤ 1 - y + y ^ 2) : 0 ≤ x ^ 2 * (1 - uy) - ρ * x + ρ ^ 2 := by
@@ -139,17 +136,15 @@ private lemma ss_Rbar_alg2 {T : ℝ} (hT : 0 < T) :
   field_simp
   ring
 
-/-- **The outer-root chord bound** (`MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL_FACE` (2)-(3),
-SIX_VARIABLE (13), inventory E1 R9-R10). At a reverse centre with `x = 1/T_B`, `y = 1/τ`,
+/-- **The outer-root chord bound**. At a reverse centre with `x = 1/T_B`, `y = 1/τ`,
 `2 ≤ τ ≤ T = x/ρ`, `3/4 ≤ u_y ≤ U(y)` and stationarity `E`, the rational upper bound of the outer
 residual is nonnegative:
 `m₀(u_y - 3/4) + (u_x - 1)/x + 1 + x - ρ - E - 2ζ - (2/3)ζ³ ≥ 0`, `ζ = (1 - 2ρ/x)/(1 + 2ρ/x)`,
 `m₀ = 2(1 + ζ) + (2/3)ζ(1 + ζ)²`.
 
-Route: the residual is affine in `u_y`, so it suffices to check `u_y = 3/4`
+The residual is affine in `u_y`, so it suffices to check `u_y = 3/4`
 (`log(T/2) ≥ 2ζ + (2/3)ζ³`, `log(τ/2) ≤ τ/4 - 1/τ`) and `u_y = U(1/T)` (where it is
-`φ(T) - φ(τ) ≥ 0` for the concave `φ(t) = (u_y - 1)t + 1/t + log t`); this replaces the Legendre
-transform of the notes. -/
+`φ(T) - φ(τ) ≥ 0` for the concave `φ(t) = (u_y - 1)t + 1/t + log t`). -/
 theorem ss_Rbar {x y ρ ux uy E : ℝ} (hx : 0 < x) (hy : 0 < y) (hy2 : y ≤ 1 / 2) (hρ : 0 < ρ)
     (hρxy : ρ ≤ x * y) (huy1 : 3 / 4 ≤ uy) (huy2 : uy ≤ 1 - y + y ^ 2)
     (hE : E = 1 + x + y - ρ + Real.log (ρ / (x * y)) - (1 - ux) / x - (1 - uy) / y) :

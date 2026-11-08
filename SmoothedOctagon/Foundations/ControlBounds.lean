@@ -5,21 +5,17 @@ public import SmoothedOctagon.Foundations.BalancedTargets
 public import SmoothedPolygons.Ch4.TerminalTime
 
 /-!
-# Cost bounds and the exact remaining control comparison
+# Cost bounds and the control comparison
 
 Every integral state trajectory has cost at least three times its terminal time.
 An actual worst disk's constructed realization has cost at most the concrete
 octagon's area, hence strictly below `π` and terminal time below `π / 3`. This
 uses geometric minimality and does not assume control minimality.
 
-For the reverse comparison, costs at least `π` already have the octagon as a
-geometric competitor. The named comparison proposition is therefore
-equivalent to its restriction to costs below `π`. The conditional minimizer and
-target-transfer results retain that comparison as an explicit input in this module;
-`ReverseComparison` supplies it from the constructed extension and geometry.
-
-Source draft only: compilation and kernel validation have not been run.
--/
+For the reverse comparison, costs at least `π` already have the octagon as a geometric competitor.
+The comparison proposition is therefore equivalent to its restriction to costs below `π`. The
+conditional minimizer and target-transfer results retain that comparison as an explicit input in
+this module; `ReverseComparison` supplies it from the constructed extension and geometry. -/
 
 @[expose] public section
 
@@ -179,8 +175,8 @@ theorem controlMinimizer_of_worstDisk_realization
   rw [hcost]
   exact harea.trans hbound
 
-/-- The global inequality remaining in the low-cost control problem. This
-proposition does not restrict switching words or assume a finite classification. -/
+/-- The global inequality of the low-cost control problem. This proposition does not restrict
+switching words or assume a finite classification. -/
 def LowCostControlLowerBound : Prop :=
   ∀ (T : ℝ) (u : ℝ → Fin 3 → ℝ) (g X : ℝ → Mat2),
     IsReinhardtAdmissible T u g X → reinhardtCost T X < π →
@@ -198,9 +194,8 @@ theorem reinhardtConjecture_of_lowCostControlLowerBound (hbound : LowCostControl
   exact (div_le_div_iff_of_pos_right (by positivity : 0 < √12)).mpr
     (hbound T (boundaryControl X) g X hadm hlt)
 
-/-- Under the named reverse-comparison obligation, the low-cost control
-inequality is equivalent to geometric global minimality. Neither open input is
-discharged by this conditional equivalence. -/
+/-- Given the reverse comparison, the low-cost control inequality is equivalent to geometric
+global minimality. The comparison is proved in `ReverseComparison`. -/
 theorem reinhardtConjecture_iff_lowCostControlLowerBound
     (hcomparison : LowCostBalancedComparison) :
     ReinhardtConjecture ↔ LowCostControlLowerBound := by

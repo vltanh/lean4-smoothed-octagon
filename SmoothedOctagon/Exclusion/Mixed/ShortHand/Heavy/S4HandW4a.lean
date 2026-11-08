@@ -5,19 +5,18 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandDefs
 /-!
 # Gate S4, hand proof W4: the incoming curve and the uniform Casimir slope
 
-`archive/lighter-proofs/SHORT_CASIMIR_BOUNDARY_DERIVATIVES.md` §1. At `d = 1/19` the incoming
-curve is `U(x) = ū(x, 20x/19)`. With the printed numerators `I₋`, `I₊`:
+At `d = 1/19` the incoming curve is `U(x) = ū(x, 20x/19)`. With explicit numerators `I₋`, `I₊`:
 `U' - 9/1000 = I₋(h)/(114000S²(20x - 19)²(35x + 13)²)`, `1/100 - U' = I₊(h)/(22800 …)`, so
-`9/1000 < U' < 1/100` (note (2)), hence `U > v = 757/1000 + 9(x - 2)/1000` and `U < 19/25`,
+`9/1000 < U' < 1/100`, hence `U > v = 757/1000 + 9(x - 2)/1000` and `U < 19/25`,
 `U ≤ 7581/10000` for `x ≤ 25/12`.
 
-For `Γ = (4Mu - E²)/(16X²)` the note's monotonicities are made explicit by the exact expansions
+For `Γ = (4Mu - E²)/(16X²)` the monotonicities follow from the exact expansions
 in `u - 19/25` (`Γ` is quadratic in `u`):
 `Γ_xu = G₁(h)/(200x³(x+2)³) - (u - 19/25)S⁵(X - 2)/(4X³)`,
 `Γ_xx = -G₃(h)/(5000x⁴(x+2)⁴) + (u - 19/25)G₂(h)/(100x⁴(x+2)⁴) - (u - 19/25)²S⁴q(x)/(8X⁴)`,
-`q = x⁴ + 4x³ + 2x² - 4x + 12`, with the printed positive `G₁, G₂, G₃`. So for `u ≤ 19/25`,
+`q = x⁴ + 4x³ + 2x² - 4x + 12`, with explicit positive polynomials `G₁, G₂, G₃`. So for `u ≤ 19/25`,
 `Γ_xu > 0` and `Γ_xx < 0`; `Γ_u` is affine decreasing in `u`. With the four scalar values and the
-single split `x = 25/12` this gives (3): `Γ_x + Γ_u U' < -7/1000`.
+single split `x = 25/12` this gives the uniform slope `Γ_x + Γ_u U' < -7/1000`.
 
 ## Main API
 
@@ -26,7 +25,7 @@ single split `x = 25/12` this gives (3): `Γ_x + Γ_u U' < -7/1000`.
 * `hl46W4Gx`, `hl46W4Gu`, `hl46W4Gxu`, `hl46W4Gxx`, `hl46W4G1`, `hl46W4G2`, `hl46W4G3`;
   `hl46W4_G_deriv` (chain rule for `Γ(x, φ(x))`), `hl46W4_Gx_deriv`, `hl46W4_Gu_deriv`,
   `hl46W4_Gx_sub`, `hl46W4_Gu_sub`, `hl46W4_Gxu_pos`, `hl46W4_Gxx_neg`.
-* `hl46W4_Gamma_slope`: note (3).
+* `hl46W4_Gamma_slope`: `Γ_x + Γ_u U' < -7/1000`.
 -/
 
 @[expose] public section
@@ -77,7 +76,7 @@ theorem hl46W4_U_deriv {x : ℝ} (hx : 2 ≤ x) :
   field_simp
   ring
 
-/-- Note (2): `9/1000 < U' < 1/100`. -/
+/-- `9/1000 < U' < 1/100`. -/
 theorem hl46W4_U1_bounds {x : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) :
     9 / 1000 < hl46W4U1 x ∧ hl46W4U1 x < 1 / 100 := by
   have hh : 0 ≤ x - 2 := by linarith
@@ -107,7 +106,7 @@ theorem hl46W4_U1_bounds {x : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) :
     linarith
   · linarith
 
-/-- `v < U < 19/25`, and `U < 7581/10000` for `x ≤ 25/12` (note (2), §1). -/
+/-- `v < U < 19/25`, and `U < 7581/10000` for `x ≤ 25/12`. -/
 theorem hl46W4_U_bounds {x : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) :
     757 / 1000 + 9 / 1000 * (x - 2) < hsUbar x (x * (1 + 1 / 19)) ∧
       hsUbar x (x * (1 + 1 / 19)) < 19 / 25 ∧
@@ -328,7 +327,8 @@ theorem hl46W4_Gu_anti_u {x u v : ℝ} (hx : 0 < x) (huv : u ≤ v) : hl46W4Gu x
     positivity
   linarith
 
-/-- **Note (3)**: the uniform Casimir slope, in abstract curve variables `u = U(x)`, `p = U'`. -/
+/-- **The uniform Casimir slope** `Γ_x + Γ_u p < -7/1000`, in abstract curve variables
+`u = U(x)`, `p = U'`. -/
 theorem hl46W4_Gamma_slope {x u p : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hu : 757 / 1000 ≤ u)
     (hu' : u ≤ 19 / 25) (hs : x ≤ 25 / 12 → u ≤ 7581 / 10000) (hp : 0 ≤ p) (hp' : p ≤ 1 / 100) :
     hl46W4Gx x u + hl46W4Gu x u * p < -7 / 1000 := by

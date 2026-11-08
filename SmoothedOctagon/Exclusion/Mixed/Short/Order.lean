@@ -5,19 +5,17 @@ public import SmoothedOctagon.Exclusion.Mixed.Short.Calc
 /-!
 # Case M2, smaller-short side: the strengthened bridge order (S)
 
-`MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL` §§1-2 (inventory E1 R3-R8). For a short bridge
-`a < C ≤ B`, `A < C` whose two turn secants agree, `Sec(a, C, B) = Sec(A, B, C)`, the strengthened
-order `A ≥ aB/C + (2/7)(B - C)` holds (CENTRAL_FACE (S)).
+For a short bridge `a < C ≤ B`, `A < C` whose two turn secants agree, `Sec(a, C, B) = Sec(A, B, C)`,
+the strengthened order (S) `A ≥ aB/C + (2/7)(B - C)` holds.
 
-Route: the notes integrate a derivative bound along the implicit continuation path
-`β ↦ α(β)` (R4, R8). Here, in the normalized coordinates `ℓ = a/C`, `q = C/B`, `p = A/B` of
-`g(s) = 1 - s/(1 + s)²`, the comparison function `Φ(q) = avg(p_S(q), q) - avg(ℓ, 1/q)` with
-`p_S(q) = ℓ + (2/7)(1 - q)` is shown to be antitone on `[q₁, 1]` directly: its derivative is
+In the normalized coordinates `ℓ = a/C`, `q = C/B`, `p = A/B` of `g(s) = 1 - s/(1 + s)²`, the
+comparison function `Φ(q) = avg(p_S(q), q) - avg(ℓ, 1/q)` with `p_S(q) = ℓ + (2/7)(1 - q)` is shown
+to be antitone on `[q₁, 1]` directly: its derivative is
 `[g(q) + (2/7)g(p_S) - (9/7)avg₂]/(q - p_S) - η₁/(q²(1/q - ℓ))`, nonpositive by the gap ratio
-`9 avg(p, q) ≥ 7g(q) + 2g(p)` (R5-R6, from the Padé bound for the logarithm) and by
-`η₁ = avg(ℓ, 1/q) - g(q) > 0` (R4: `(K - ℓ)(avg(ℓ, K) - g(K))` decreases for `K ≥ 1`). Since
-`Φ(1) = 0`, `Φ(q₁) ≥ 0`, which is (S); the alternative `p_S(q₁) ≥ q₁` is excluded by continuity at
-the crossing `p_S = q`, where `Φ ≥ 0` would force `η₁ ≤ 0`. No implicit function is needed.
+`9 avg(p, q) ≥ 7g(q) + 2g(p)` (from the Padé bound for the logarithm) and by
+`η₁ = avg(ℓ, 1/q) - g(q) > 0` (`(K - ℓ)(avg(ℓ, K) - g(K))` decreases for `K ≥ 1`). Since `Φ(1) = 0`,
+`Φ(q₁) ≥ 0`, which is (S); the alternative `p_S(q₁) ≥ q₁` is excluded by continuity at the crossing
+`p_S = q`, where `Φ ≥ 0` would force `η₁ ≤ 0`.
 
 ## Main API
 
@@ -75,9 +73,8 @@ theorem ss_gB_hasDerivAt {s : ℝ} (hs : 0 < s) : HasDerivAt (ss_gB 1) ((s - 1) 
     field_simp
     ring
 
-/-- **The gap ratio** (`MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL` (3)-(4), inventory E1 R5-R6): for
-`0 < p < q ≤ 1`, `η/ξ ≥ 2/7` with `η = avg - g(q)`, `ξ = g(p) - avg`, i.e.
-`7g(q) + 2g(p) ≤ 9 avg(p, q)`. -/
+/-- **The gap ratio**: for `0 < p < q ≤ 1`, `η/ξ ≥ 2/7` with `η = avg - g(q)`, `ξ = g(p) - avg`,
+i.e. `7g(q) + 2g(p) ≤ 9 avg(p, q)`. -/
 theorem ss_gap_ratio {p q : ℝ} (hp : 0 < p) (hpq : p < q) (hq : q ≤ 1) :
     7 * ss_gB 1 q + 2 * ss_gB 1 p ≤ 9 * m2Sec p 1 q := by
   have hq0 : 0 < q := by linarith
@@ -130,7 +127,7 @@ theorem ss_gap_ratio {p q : ℝ} (hp : 0 < p) (hpq : p < q) (hq : q ≤ 1) :
   have : 0 ≤ (q - p) * R / (6 * (p + 1) ^ 2 * (q + 1) ^ 2 * (p + q + 2)) := by positivity
   linarith
 
-/-- **The turn-norm gap decreases along the continuation** (inventory E1 R4): for `ℓ < 1 ≤ K`,
+/-- **The turn-norm gap decreases along the continuation**: for `ℓ < 1 ≤ K`,
 `(K - ℓ)(avg(ℓ, K) - g(K))` is nonincreasing in `K` (its derivative is `-(K - ℓ) g'(K) ≤ 0`). -/
 theorem ss_eta_mono {ℓ K K₁ : ℝ} (hℓ : 0 < ℓ) (hℓ1 : ℓ < 1) (hK : 1 ≤ K) (hKK : K ≤ K₁) :
     (K₁ - ℓ) * (m2Sec ℓ 1 K₁ - ss_gB 1 K₁) ≤ (K - ℓ) * (m2Sec ℓ 1 K - ss_gB 1 K) := by
@@ -311,9 +308,8 @@ theorem ss_order_norm {ℓ p₁ q₁ : ℝ} (hℓ : 0 < ℓ) (hℓ1 : ℓ < 1) (
     simp only [e] at hx
     linarith
 
-/-- **The strengthened order (S)** (`MIXED_GLOBAL_SHORT_BRIDGE_CENTRAL_FACE` (S), inventory E1
-R8): for a short bridge `a < C ≤ B`, `0 < A < C` with equal turn secants
-`Sec(a, C, B) = Sec(C, B, A)`, `aB/C + (2/7)(B - C) ≤ A`. -/
+/-- **The strengthened order (S)**: for a short bridge `a < C ≤ B`, `0 < A < C` with equal turn
+secants `Sec(a, C, B) = Sec(C, B, A)`, `aB/C + (2/7)(B - C) ≤ A`. -/
 theorem ss_order {a A B C : ℝ} (ha : 0 < a) (haC : a < C) (hA : 0 < A) (hAC : A < C)
     (hCB : C ≤ B) (heq : m2Sec a C B = m2Sec C B A) : a * B / C + 2 / 7 * (B - C) ≤ A := by
   have hC : 0 < C := by linarith

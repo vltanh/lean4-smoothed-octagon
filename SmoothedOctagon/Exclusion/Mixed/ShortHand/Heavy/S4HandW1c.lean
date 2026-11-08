@@ -5,23 +5,23 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW1b
 /-!
 # W1, part c: the shape derivative `Φ_a < 3/500`
 
-`archive/lighter-proofs/SHORT_CASIMIR_FIRST_DERIVATIVES.md` (3), (7), (8), (11). On the containing
-rectangle (2) `2 ≤ x ≤ 13/6`, `1 ≤ a ≤ 22/19`, `x ≤ b ≤ 20x/19`, `3/4 ≤ u ≤ 19/25`:
+On the containing rectangle `2 ≤ x ≤ 13/6`, `1 ≤ a ≤ 22/19`, `x ≤ b ≤ 20x/19`,
+`3/4 ≤ u ≤ 19/25`:
 
-* the bounds (3) `9 ≤ K ≤ 21/2`, `1 ≤ D ≤ 3`, `3 ≤ B ≤ 7/2`, `x - a ≥ 16/19`, `E ≥ 1/2`
+* the bounds `9 ≤ K ≤ 21/2`, `1 ≤ D ≤ 3`, `3 ≤ B ≤ 7/2`, `x - a ≥ 16/19`, `E ≥ 1/2`
   (`hl46_w1_box`, `hl46_w1_E_ge`);
-* `Φ_a` is affine in `u` with slope `-(R₀)_{au}/7`, and `(R₀)_{au} < 0` (8), written as
+* `Φ_a` is affine in `u` with slope `-(R₀)_{au}/7`, and `(R₀)_{au} < 0`, written as
   `-b/a² - 2aS³(K - 2D)/K³ - 4S³(BK - aD)/K³ - 4(BK - aD)(K - 2D)/K³` (`hl46_w1_Pa_u`,
   `hl46_w1_Rau_neg`);
-* `(R₀)_{ab} < 0` (7), by `1/4 - 32/343 - 1920/8379 < 0` (`hl46_w1_Pab_nonneg`);
+* `(R₀)_{ab} < 0`, by `1/4 - 32/343 - 1920/8379 < 0` (`hl46_w1_Pab_nonneg`);
 * hence `Φ_a ≤ Φ_a(x, a, 20x/19, 19/25) = N/(3325a²(19a + 20x)²K³)` (`hl46_w1_Pa_face`,
-  `hl46_w1_Pa_N`), and with `N ≤ V(a)`, `V(11/10) < 0`, `V(22/19) < 65000000` (11):
+  `hl46_w1_Pa_N`), and with `N ≤ V(a)`, `V(11/10) < 0`, `V(22/19) < 65000000`:
   `Φ_a < 3/500` (`hl46_w1_Pa_le`).
 
-For W5 (`SHORT_CASIMIR_BOUNDARY_DERIVATIVES.md` §4) the same source at `x = 13/6` gives
-`Φ_a < 0` (`hl46_w1_Pa_end_neg`). Route: instead of the note's `T = V + W/6` and its printed
-derivative `T'`, it uses `V(a) ≤ V(22/19) < 64431000`, `W(a) ≤ -172000000` (from the printed
-`-W(1 + c)`, note `FIRST_DERIVATIVES` §3.2) and `Q(c, 1/6) ≥ 1100000000 + 1770000000/6`, so that
+For W5 the same source at `x = 13/6` gives
+`Φ_a < 0` (`hl46_w1_Pa_end_neg`), from `V(a) ≤ V(22/19) < 64431000`, `W(a) ≤ -172000000`
+(`hl46_w1_W_neg`) and
+`Q(c, 1/6) ≥ 1100000000 + 1770000000/6`, so that
 `N(13/6, a) = V + W/6 - Q/36 < 64431000 - 28666666 - 38750000 < 0`.
 
 ## Main API
@@ -37,7 +37,8 @@ namespace SmoothedOctagon
 
 open Real
 
-/-- The bounds (3) on the containing rectangle (2). -/
+/-- The bounds `9 ≤ K ≤ 21/2`, `1 ≤ D ≤ 3`, `3 ≤ B ≤ 7/2`, `x - a ≥ 16/19` on the containing
+rectangle. -/
 theorem hl46_w1_box {x be al : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha : 1 ≤ al) (ha' : al ≤ 22 / 19)
     (hb : x ≤ be) (hb' : be ≤ 20 * x / 19) :
     9 ≤ x * (x + 2) + al ^ 2 ∧ x * (x + 2) + al ^ 2 ≤ 21 / 2 ∧ 1 ≤ hsDg x be al ∧
@@ -56,7 +57,7 @@ theorem hl46_w1_box {x be al : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha : 1 
     unfold hsDg
     nlinarith
 
-/-- `E ≥ 1/2` for `u ≥ 3/4` (note §2: the minimum `485/864`). -/
+/-- `E ≥ 1/2` for `u ≥ 3/4` (the minimum is `485/864`). -/
 theorem hl46_w1_E_ge {x u : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hu : 3 / 4 ≤ u) :
     1 / 2 ≤ hh46S4P x u := by
   have h3 : 0 ≤ (1 + x) ^ 3 := by positivity
@@ -67,7 +68,7 @@ theorem hl46_w1_E_ge {x u : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hu : 3 / 4
   unfold hh46S4P
   nlinarith
 
-/-- `(R₀)_{au}`, note (8), in the form `-b/a² + C_a(1 - 2z) - 2Cz_a - 2z_a(1 - 2z)`. -/
+/-- `(R₀)_{au}`, in the form `-b/a² + C_a(1 - 2z) - 2Cz_a - 2z_a(1 - 2z)`. -/
 noncomputable def hl46W1Rau (x be al : ℝ) : ℝ :=
   -be / al ^ 2 - 2 * al * (1 + x) ^ 3 * (x * (x + 2) + al ^ 2 - 2 * hsDg x be al) /
       (x * (x + 2) + al ^ 2) ^ 3 -
@@ -85,7 +86,7 @@ theorem hl46_w1_Pa_u (x be al u v : ℝ) (hx : 0 < x) (hal : 0 < al) (hbe : 0 < 
   field_simp
   ring
 
-/-- `(R₀)_{au} < 0`, note (8). -/
+/-- `(R₀)_{au} < 0`. -/
 theorem hl46_w1_Rau_neg {x be al : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha : 1 ≤ al)
     (ha' : al ≤ 22 / 19) (hb : x ≤ be) (hb' : be ≤ 20 * x / 19) : hl46W1Rau x be al < 0 := by
   obtain ⟨hK1, hK2, hD1, hD2, hB1, hB2, hη⟩ := hl46_w1_box hx hx' ha ha' hb hb'
@@ -106,7 +107,7 @@ theorem hl46_w1_Rau_neg {x be al : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha 
   unfold hl46W1Rau
   linarith
 
-/-- `(R₀)_{ab} < 0`, note (7): `1/4 - 32/343 - 1920/8379 < 0`. -/
+/-- `(R₀)_{ab} < 0`: `1/4 - 32/343 - 1920/8379 < 0`. -/
 theorem hl46_w1_Pab_nonneg {x be al u : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha : 1 ≤ al)
     (ha' : al ≤ 22 / 19) (hb : x ≤ be) (hb' : be ≤ 20 * x / 19) (hu : 3 / 4 ≤ u) :
     0 ≤ hl46W1Pab x be al u := by
@@ -181,7 +182,7 @@ theorem hl46_w1_N_le {x al : ℝ} (hx : 2 ≤ x) (ha : 1 ≤ al)
     mul_nonneg (by positivity) (by nlinarith)
   linarith
 
-/-- Note (11): `Φ_a < 3/500` on the containing rectangle. -/
+/-- `Φ_a < 3/500` on the containing rectangle. -/
 theorem hl46_w1_Pa_le {x be al u : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha : 1 ≤ al)
     (ha' : al ≤ 22 / 19) (hb : x ≤ be) (hb' : be ≤ 20 * x / 19) (hu' : u ≤ 19 / 25) :
     hl46W1Pa x be al u ≤ 3 / 500 := by
@@ -207,7 +208,7 @@ theorem hl46_w1_Pa_le {x be al u : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha 
     norm_num at k
     linarith
 
-/-- W5's sign (`BOUNDARY_DERIVATIVES` §4): `Φ_a < 0` at `x = 13/6`, `b = 20x/19`. -/
+/-- W5's sign: `Φ_a < 0` at `x = 13/6`, `b = 20x/19`. -/
 theorem hl46_w1_Pa_end_neg {al u : ℝ} (ha : 1 ≤ al) (ha' : al ≤ 22 / 19) (hu' : u ≤ 19 / 25) :
     hl46W1Pa (13 / 6) (20 * (13 / 6) / 19) al u < 0 := by
   refine lt_of_le_of_lt (hl46_w1_Pa_face (by norm_num) le_rfl ha ha' (by norm_num) le_rfl hu') ?_

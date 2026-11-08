@@ -9,9 +9,9 @@ public import SmoothedOctagon.Exclusion.Mixed.Short.Calc
 ## Main API
 
 * `hs14_Gs_s`: `16Γ_* = 3 - H² - 2H + 2H(2S - 1 - H)s - H²s²`, `s = q/(α²(1 - q))`,
-  `H = S(U(1/S) - u)` (`CORRECTED_CAP_SCALE` (8)).
+  `H = S(U(1/S) - u)`.
 * `hs14_Gs_inc`: `Γ_*(q₂) - Γ_*(q₁) ≤ H(2S - 1)(q₂ - q₁)/(8α²(1 - q₁)(1 - q₂))`.
-* `hs14_pL` (`ENVELOPE_SCALE_MONOTONICITY` (5)), `hs14_Lp_mono` (lowering `β` lowers `L`),
+* `hs14_pL` (the `B₀` form of `pL`), `hs14_Lp_mono` (lowering `β` lowers `L`),
   `hs14_B0_nonneg`, `hs14_Lp_top_pos` (`L > 0` at `β = x`, `u = U(1/S)`).
 * `hs14_slope_gen`: `κH(2S - 1) < 3α²L(p)` from its value at `(β₀, u = 3/4)`.
 * `hs14_Rs2_inc`: `(R*_2)' > 1` on `(q₁, q₂)` gives `R*_2(q₂) - R*_2(q₁) > q₂ - q₁`.
@@ -37,7 +37,7 @@ private theorem hs14_Gs_rho {x u ρ : ℝ} (hx : 0 < x) (hρ : ρ < 1) :
   field_simp
   ring
 
-/-- **`Γ_*` in the variable `s = q/(α²(1 - q))`** (`CORRECTED_CAP_SCALE` (8)). -/
+/-- **`Γ_*` in the variable `s = q/(α²(1 - q))`**. -/
 theorem hs14_Gs_s {x al u q : ℝ} (hx : 0 < x) (hal : 1 ≤ al) (hq1 : q < 1) :
     hsGs x al u q = (3 - ((1 + x) * (m2U (1 / (1 + x)) - u)) ^ 2 -
       2 * ((1 + x) * (m2U (1 / (1 + x)) - u)) +
@@ -60,7 +60,7 @@ theorem hs14_Gs_s {x al u q : ℝ} (hx : 0 < x) (hal : 1 ≤ al) (hq1 : q < 1) :
   unfold hsGs
   rw [hs14_Gs_rho hx hρ1, hs]
 
-/-- **The increment of `Γ_*`** (`CORRECTED_CAP_SCALE` (8)-(9)): for `H = S(U(1/S) - u) ≥ 0` and
+/-- **The increment of `Γ_*`**: for `H = S(U(1/S) - u) ≥ 0` and
 `0 ≤ q₁ ≤ q₂ < 1`, `Γ_*(q₂) - Γ_*(q₁) ≤ H(2S - 1)/(8α²) · (q₂ - q₁)/((1 - q₁)(1 - q₂))`. -/
 theorem hs14_Gs_inc {x al u q₁ q₂ : ℝ} (hx : 0 < x) (hal : 1 ≤ al) (hH : u ≤ m2U (1 / (1 + x)))
     (hq₁ : 0 ≤ q₁) (hq : q₁ ≤ q₂) (hq₂ : q₂ < 1) :
@@ -93,7 +93,7 @@ theorem hs14_Gs_inc {x al u q₁ q₂ : ℝ} (hx : 0 < x) (hal : 1 ≤ al) (hH :
 
 /-! ### The slope `L(p)` -/
 
-/-- **The `B₀` form of the slope** (`ENVELOPE_SCALE_MONOTONICITY` (5)):
+/-- **The `B₀` form of the slope**:
 `pL = uB₀² + pB₀[(x - 1)/S + H(1 + α⁻²)] + U(p) - u - SHp²/α²`, `B₀ = 1 + p(S - D)/α²`. -/
 theorem hs14_pL {x be al u p : ℝ} (hx : 0 < x) (hal : 0 < al) (hp : 0 < p) :
     p * hsLp x be al u p =
@@ -106,7 +106,7 @@ theorem hs14_pL {x be al u p : ℝ} (hx : 0 < x) (hal : 0 < al) (hp : 0 < p) :
   field_simp
   ring
 
-/-- **Lowering `β` lowers `L`** (`CORRECTED_CAP_SCALE` §1, inventory HS-S01 C7(c)): for
+/-- **Lowering `β` lowers `L`**: for
 `1 ≤ α ≤ x`, `β' ≤ β`, `0 < p`, `0 ≤ u ≤ U(1/S)` and `B₀(β') ≥ 0`, `L(β') ≤ L(β)`. -/
 theorem hs14_Lp_mono {x be be' al u p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x)
     (hbb : be' ≤ be) (hp : 0 < p) (hu : 0 ≤ u) (huS : u ≤ m2U (1 / (1 + x)))
@@ -136,7 +136,7 @@ theorem hs14_Lp_mono {x be be' al u p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax 
       mul_le_mul_of_nonneg_left hBB (mul_nonneg hp.le hc)]
   exact le_of_mul_le_mul_left key hp
 
-/-- **`L > 0` at the upper norm endpoint and `β = x`** (`CORRECTED_CAP_SCALE` (3)-(4); route: the
+/-- **`L > 0` at the upper norm endpoint and `β = x`** (the
 quadratic `pL = A₂p² - (1 + A₃)p + 1` with `4UA₂ = 3 + A₃²` decreases in `A₃ ≤ 1 + 2/x` on
 `p ≤ 1/2`, and equals `(x² + x + 1)((x + 1)p - x)²/(Ux²(x + 1)²) > 0` at `A₃ = 1 + 2/x`). -/
 theorem hs14_Lp_top_pos {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x) (hp : 0 < p)
@@ -201,7 +201,7 @@ theorem hs14_Lp_top_pos {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al �
     exact pos_of_mul_pos_right h4 hU0.le
   exact pos_of_mul_pos_right this hp.le
 
-/-- `B₀(β') = 1 + p(S - D(β'))/α² ≥ 0` for `x ≤ β' ≤ β`, `p ≤ α/(α + β)` (inventory HS-S01 C7(b)). -/
+/-- `B₀(β') = 1 + p(S - D(β'))/α² ≥ 0` for `x ≤ β' ≤ β`, `p ≤ α/(α + β)`. -/
 theorem hs14_B0_nonneg {x be be' al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb' : x ≤ be') (hbb : be' ≤ be) (hp : 0 < p) (hpr : p ≤ hsRA al be) :
     0 ≤ 1 + p * ((1 + x) - hsDg x be' al) / al ^ 2 := by
@@ -217,8 +217,7 @@ theorem hs14_B0_nonneg {x be be' al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax 
     field_simp
   rw [this]; positivity
 
-/-- **The slope inequality from its lower endpoint** (`CORRECTED_CAP_SCALE` §1,
-`SHARP_LOW_RATIO_CORRECTED_CAP` (17)): if `κ ≥ 0`, `x ≤ β₀ ≤ β`, `0 < p ≤ α/(α + β)`,
+/-- **The slope inequality from its lower endpoint**: if `κ ≥ 0`, `x ≤ β₀ ≤ β`, `0 < p ≤ α/(α + β)`,
 `3/4 ≤ u ≤ U(1/S)` and the inequality `κH(2S - 1) < 3α²L` holds at `(β₀, u = 3/4)`, it holds at
 `(β, u)` (lower `β` to `β₀`, affine in `u`, and `hs14_Lp_top_pos` at `u = U(1/S)`). -/
 theorem hs14_slope_gen {κ x be be₀ al u p : ℝ} (hx : 1 < x) (hal : 1 ≤ al)
@@ -272,9 +271,9 @@ theorem hs14_slope_gen {κ x be be₀ al u p : ℝ} (hx : 1 < x) (hal : 1 ≤ al
 
 /-! ### The `τ = 2` residual -/
 
-/-- **The `τ = 2` residual increases faster than `q`** (`SHARP_LOW_RATIO_CORRECTED_CAP` (21),
-`EXTENDED_CASIMIR_FLOOR` §1): if `(R*_2)'(q) = 1/q - (1 + 2A₁ + A₃) + 4qA₂ > 1` on `(q₁, q₂)`,
-then `R*_2(q₂) - R*_2(q₁) > q₂ - q₁`. -/
+/-- **The `τ = 2` residual increases faster than `q`**: if
+`(R*_2)'(q) = 1/q - (1 + 2A₁ + A₃) + 4qA₂ > 1` on `(q₁, q₂)`, then
+`R*_2(q₂) - R*_2(q₁) > q₂ - q₁`. -/
 theorem hs14_Rs2_inc {x be al u q₁ q₂ : ℝ} (hrA : 0 < hsRA al be) (hq₁ : 0 < q₁) (hq : q₁ < q₂)
     (hd : ∀ q ∈ Ioo q₁ q₂, 1 < 1 / q - (1 + 2 * hsA1 x be al u + hsA3 x be al u) +
       4 * q * hsA2 x be al u) :

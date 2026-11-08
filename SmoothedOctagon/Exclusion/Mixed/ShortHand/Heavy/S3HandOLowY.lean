@@ -5,9 +5,10 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandOLowX
 /-!
 # Gate S3, the outer face by hand: the two lower-shape curves (signs)
 
-Hand proof of the leaf `hs3_outer_face`, fifth part: the remaining identities of
-`SHORT_DISPLACEMENT_OUTER_TERMINAL_ALGEBRA.md` §2 (`M_j`, `N_j`, `Y_0`, `Z_0`) and the sign of the
-two lower-shape curves (`SHORT_DISPLACEMENT_OUTER_TERMINALS.md` (3)-(7)).
+Proof of the leaf `hs3_outer_face`, fifth part: the polynomial identities for the derivative bounds
+along the lower-shape curves (`hl3o_N0_id`, `hl3o_N1_id`, `hl3o_M0_id`, `hl3o_M1_id`, `hl3o_Y0_id`,
+`hl3o_Z0_id`), each a polynomial in `h = x - 2` with signs checked on `0 ≤ h ≤ 1/6`, and the sign of
+the two lower-shape curves.
 
 ## Main API
 
@@ -69,8 +70,8 @@ theorem hl3o_M1_id (hx : 0 < x) :
   field_simp
   ring
 
-/-- The closed form `V = (x - 1)²(95x² + 1148x - 1300)/(S(35x + 13)(95x² + 498x - 650))` (the
-note's (3)). -/
+/-- The closed form `V = (x - 1)²(95x² + 1148x - 1300)/(S(35x + 13)(95x² + 498x - 650))` of
+`V = ū - 3/4` at `r_*`, `C = 19x/50`. -/
 noncomputable def hl3oVcl (x : ℝ) : ℝ :=
   (x - 1) ^ 2 * (95 * x ^ 2 + 1148 * x - 1300) / ((x + 1) * (35 * x + 13) * (95 * x ^ 2 + 498 * x - 650))
 
@@ -244,7 +245,8 @@ theorem hl3o_curve_slope {n t a b : ℝ} (hn1 : 5 / 2 ≤ n) (hn2 : n ≤ 7 / 2)
     mul_le_mul hzd hf1.le hf0 (by norm_num)
   linarith
 
-/-- **The two lower-shape curves are negative** (the note's (6)-(7)). -/
+/-- **The two lower-shape curves are negative**: the curve decreases (its slope is negative on
+`[2, 13/6]`) and is negative at `x = 2`. -/
 theorem hl3o_low_curve {n x : ℝ} (hn : n = 25 / 8 ∨ n = 7 / 2) (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) :
     hl3oG x (19 * x / 50) n (13 / (5 * (x + 1))) < 0 := by
   have hn1 : 5 / 2 ≤ n := by rcases hn with h | h <;> norm_num [h]
@@ -321,7 +323,7 @@ theorem hl3o_low_curve {n x : ℝ} (hn : n = 25 / 8 ∨ n = 7 / 2) (hx : 2 ≤ x
       norm_num
   linarith
 
-/-- **The lower-shape tests** (`SHORT_DISPLACEMENT_OUTER_TERMINALS` §§1-2): for every slope
+/-- **The lower-shape tests**: for every slope
 `3/5 ≤ C ≤ 19x/50` and `n ∈ {25/8, 7/2}`, `R_n(x, a_*, C) < 0`. -/
 theorem hl3o_low {n x C : ℝ} (hn : n = 25 / 8 ∨ n = 7 / 2) (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6)
     (hC : 3 / 5 ≤ C) (hC' : C ≤ 19 * x / 50) : hl3oG x C n (13 / (5 * (x + 1))) < 0 := by

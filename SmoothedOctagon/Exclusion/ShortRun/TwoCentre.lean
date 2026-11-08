@@ -5,15 +5,15 @@ public import SmoothedOctagon.Exclusion.ShortRun.Centre
 /-!
 # Case M1: the two-centre period
 
-`MIXED_GLOBAL_SHORT_RUN_PERIOD` (6)-(20): a normal period with the sign word `(− − +)²` has cost
-`C > 2√6 - √3 > A_oct`, so it is not competitive.
+A normal period with the sign word `(− − +)²` has cost `C > 2√6 - √3 > A_oct`, so it is not
+competitive.
 
-Proof (MGSRP §4): the switch vectors `z_j` right after the two centres satisfy the Jacobi
-recurrence `K_{j+1} z_{j+1} = -K_j z_{j-1} + D_j z_j` (`CostateCycle.next_centre_local`) and close
-up to the monodromy sign `σ = ±1` (`CostateCycle.pre_N`); with two centres this forces `σ = -1`,
-`K_0 = K_1` and `D_0 = D_1 = 0`, hence `e_0 + e_1 = 0`. The Euler identity
-(`CostateCycle.euler_sum`) then gives the raw cost `32/K`, i.e. `C = 2√3 (1 - a²/K)`, and the
-positive centre factors give `K/a² > 6 + 4√2`.
+Proof: the switch vectors `z_j` right after the two centres satisfy the Jacobi recurrence
+`K_{j+1} z_{j+1} = -K_j z_{j-1} + D_j z_j` (`CostateCycle.next_centre_local`) and close up to the
+monodromy sign `σ = ±1` (`CostateCycle.pre_N`); with two centres this forces `σ = -1`, `K_0 = K_1`
+and `D_0 = D_1 = 0`, hence `e_0 + e_1 = 0`. The Euler identity (`CostateCycle.euler_sum`) then gives
+the raw cost `32/K`, i.e. `C = 2√3 (1 - a²/K)`, and the positive centre factors give
+`K/a² > 6 + 4√2`.
 
 ## Main API
 
@@ -90,7 +90,8 @@ theorem m1_xz_bound {x z : ℝ} (hx : 1 < x) (hz : 1 < z) (h : x * z = x + z + 1
   have hs : 2828 / 1000 < x + z - 2 := by nlinarith
   linarith
 
-/-- `(b - a)(c - a) = 2a²`, `b, c > a > 0` give `b c > 5.828 a²` (MGSRP (18)). -/
+/-- `(b - a)(c - a) = 2a²`, `b, c > a > 0` give `b c > 5.828 a²`, since
+`b c = 3a² + a(b + c - 2a)` and `(b + c - 2a)² ≥ 4(b - a)(c - a) = 8a²`. -/
 theorem m1_bc_bound {a b c : ℝ} (ha : 0 < a) (hb : a < b) (hc : a < c)
     (h : (b - a) * (c - a) = 2 * a ^ 2) : 5828 / 1000 * a ^ 2 < b * c := by
   have h8 : 8 * a ^ 2 ≤ (b + c - 2 * a) ^ 2 := by nlinarith [sq_nonneg (b - c)]
@@ -100,7 +101,7 @@ theorem m1_bc_bound {a b c : ℝ} (ha : 0 < a) (hb : a < b) (hc : a < c)
     nlinarith
   nlinarith
 
-/-- **The two-centre cost bound** (MGSRP (16)-(20)): with `K = a² + 4`, the bridge relations
+/-- **The two-centre cost bound**: with `K = a² + 4`, the bridge relations
 `(b_j - a)(c_j - a) = 2a²`, the strict centre minima and the positive centre factors,
 `8√3/K > 3.127` (in fact `C = 8√3/K > 2√6 - √3`). -/
 theorem m1_two_centre_numeric {a b₀ c₀ b₁ c₁ K : ℝ} (ha : 0 < a) (hK : K = a ^ 2 + 4)
@@ -126,7 +127,8 @@ theorem m1_two_centre_numeric {a b₀ c₀ b₁ c₁ K : ℝ} (ha : 0 < a) (hK :
     exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
   nlinarith
 
-/-- **The two-centre exclusion** (MGSRP Thm-m2). -/
+/-- **The two-centre exclusion.** A competitive normal period with the sign word `(− − +)²` does not
+exist: its cost exceeds `A_oct`. -/
 theorem m1_two_centre (P : NormalPeriod) (hc : P.IsCompetitive) {k₀ : ℤ}
     (hpat : P.m1_IsPattern k₀) (hN : P.N = 6) : False := by
   set C := P.costateCycle with hC

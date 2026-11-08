@@ -6,11 +6,11 @@ public import SmoothedOctagon.Exclusion.Mixed.Frames
 /-!
 # Case M2: the compact domain on the costate cycle
 
-`MIXED_NONSHORT_BLOWUP_REDUCTION` §1, (2), (2a) (inventory E2, entries 10-11). On `𝔥**`
-(Hales–Vajjha, Definition 5.0.1) every margin is at least `2/15`; the height bound `y ≤ 9/2` and the
-two cusp disks give every pair sum of margins at least `8/(9√3) > 1/2`, and then the quadric
-`p₀p₁ + p₁p₂ + p₂p₀ = 4` gives every margin at most `8`. On the costate cycle of a normal period in
-`𝔥**` these bounds hold for the switch margins `m k j` at every switch, across the twisted seam.
+On `𝔥**` (Hales–Vajjha, Definition 5.0.1) every margin is at least `2/15`; the height bound
+`y ≤ 9/2` and the two cusp disks give every pair sum of margins at least `8/(9√3) > 1/2`, and then
+the quadric `p₀p₁ + p₁p₂ + p₂p₀ = 4` gives every margin at most `8`. On the costate cycle of a
+normal period in `𝔥**` these bounds hold for the switch margins `m k j` at every switch, across the
+twisted seam.
 
 ## Main API
 
@@ -26,7 +26,7 @@ namespace SmoothedOctagon
 
 open SmoothedPolygons Set
 
-/-- **Pair sums on `𝔥**`** (`MIXED_NONSHORT_BLOWUP_REDUCTION` §1): every pair sum of the margins
+/-- **Pair sums on `𝔥**`**: every pair sum of the margins
 of a state in `𝔥**` is at least `1/2` (in fact at least `8/(9√3)`). -/
 theorem wx_half_le_margin_add {X : Mat2} (hX : Cited.HalesVajjha.InCompactDomain X) {i j : Fin 3}
     (hij : i ≠ j) : 1 / 2 ≤ margin i X + margin j X := by
@@ -78,20 +78,20 @@ variable (P : NormalPeriod)
 theorem wx_τ_mem (k : ℤ) : P.rep.τ (k % P.N) ∈ Icc 0 P.T :=
   ⟨P.rep.τ_nonneg (term_emod_nonneg P k), P.rep.τ_le_T (term_emod_lt P k).le⟩
 
-/-- **Compact lower margin** (`MIXED_NONSHORT_BLOWUP_REDUCTION` (2a)): every switch margin of a
+/-- **Compact lower margin**: every switch margin of a
 period in `𝔥**` is at least `2/15`. -/
 theorem wx_m_ge (hK : P.InCompactDomain) (k : ℤ) (j : Fin 3) : 2 / 15 ≤ P.costateCycle.m k j := by
   rw [costateCycle_m, termMargin_eq_cut]
   exact Reduction.two_div_fifteen_le_margin (hK _ (P.wx_τ_mem k)) _
 
-/-- **Compact pair sums** (`MIXED_NONSHORT_BLOWUP_REDUCTION` §1): two distinct switch margins of a
+/-- **Compact pair sums**: two distinct switch margins of a
 period in `𝔥**` sum to at least `1/2`. -/
 theorem wx_half_le_m_add (hK : P.InCompactDomain) (k : ℤ) {j j' : Fin 3} (h : j ≠ j') :
     1 / 2 ≤ P.costateCycle.m k j + P.costateCycle.m k j' := by
   rw [costateCycle_m, costateCycle_m, termMargin_eq_cut, termMargin_eq_cut]
   exact wx_half_le_margin_add (hK _ (P.wx_τ_mem k)) (fun e => h (sub_left_injective e))
 
-/-- **Compact upper margin** (`MIXED_NONSHORT_BLOWUP_REDUCTION` §1): every switch margin of a period
+/-- **Compact upper margin**: every switch margin of a period
 in `𝔥**` is at most `8`. -/
 theorem wx_m_le (hK : P.InCompactDomain) (k : ℤ) (j : Fin 3) : P.costateCycle.m k j ≤ 8 := by
   have hq := P.costateCycle.m2_quad_rot k j

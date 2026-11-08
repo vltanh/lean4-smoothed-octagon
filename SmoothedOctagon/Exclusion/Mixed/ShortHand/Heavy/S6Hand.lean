@@ -3,17 +3,16 @@ module
 public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S6HandD
 
 /-!
-# Heavy leaf `hs6_B_endpoint`: the hand proof
+# The leaf `hs6_B_endpoint`: the hand proof
 
-`archive/lighter-proofs/SHORT_COST_CONCAVITY.md` (replacing `SMALL_SHAPE_COST_EXCLUSION`
-(20)-(31); inventory HS-S567 S6.6-S6.7). For `1/3 ≤ R ≤ 7/19`, `0 ≤ d ≤ 1/19` and
+The two endpoint polynomials of gate S6. For `1/3 ≤ R ≤ 7/19`, `0 ≤ d ≤ 1/19` and
 `e ∈ {13/5, 3}`: `𝓑(u_q; R, T(e), d) > b*`.
 
-The note's argument: in the cancelled form (`hl46_S6F_eq`, note (2), (16)) the score is concave
-in `R` (`hl46_S6F_concave`, note (20)), so it suffices to take `R ∈ {1/3, 7/19}`; on these four
-curves the score decreases in `d` (`hl46_corr_mono` and the endpoint recipe `hl46M` of note (21),
+The argument: in the cancelled form (`hl46_S6F_eq`) the score is concave
+in `R` (`hl46_S6F_concave`), so it suffices to take `R ∈ {1/3, 7/19}`; on these four
+curves the score decreases in `d` (`hl46_corr_mono` and the endpoint recipe `hl46M`,
 six rows, one split at `d = 1/38` for `e = 3`), so it suffices to take `d = 1/19`; the four
-values there exceed `b*` (note §5).
+values there exceed `b*`.
 
 ## Main API
 
@@ -24,7 +23,7 @@ values there exceed `b*` (note §5).
 
 namespace SmoothedOctagon
 
-/-- The six rows of the endpoint-recipe table (note §4). -/
+/-- The six rows of the endpoint-recipe table: `hl46M ≤ 0` on each displacement interval. -/
 theorem hl46_M_rows :
     hl46M (13 / 5) (1 / 3) 0 (1 / 19) ≤ 0 ∧ hl46M (13 / 5) (7 / 19) 0 (1 / 19) ≤ 0 ∧
       hl46M 3 (1 / 3) 0 (1 / 38) ≤ 0 ∧ hl46M 3 (1 / 3) (1 / 38) (1 / 19) ≤ 0 ∧
@@ -33,7 +32,7 @@ theorem hl46_M_rows :
   norm_num [hl46M, hl46k1, hl46Td, hl46Bd, hl46vd, hl46Hf, hl46g, hl46v, hl46Qn, hl46g1, hl46zd,
     hl46p, hs6ZU, hl46p1, hl46q, hl46q1, hs6T]
 
-/-- The four values at `d = 1/19` (note §5): each exceeds `b*`. -/
+/-- The four values at `d = 1/19`: each exceeds `b*`. -/
 theorem hl46_corners :
     hs6bstar < hl46S6F (13 / 5) (1 / 19) (1 / 3) ∧ hs6bstar < hl46S6F (13 / 5) (1 / 19) (7 / 19) ∧
       hs6bstar < hl46S6F 3 (1 / 19) (1 / 3) ∧ hs6bstar < hl46S6F 3 (1 / 19) (7 / 19) := by
@@ -69,8 +68,8 @@ theorem hl46_ends {e r d : ℝ} (he : e = 13 / 5 ∨ e = 3) (hr : r = 1 / 3 ∨ 
   refine lt_of_lt_of_le ?_ (hl46_S6F_dmono he1 he2 hr1 hr2 hd hd' hG)
   rcases he with rfl | rfl <;> rcases hr with rfl | rfl <;> assumption
 
-/-- **The two endpoint polynomials** (`SMALL_SHAPE_COST_EXCLUSION` (20)-(31); inventory HS-S567
-S6.6, S6.7): for `1/3 ≤ R ≤ 7/19`, `0 ≤ δ ≤ 1/19` and `e ∈ {13/5, 3}`: `𝓑(u_q; R, T(e), δ) > b*`. -/
+/-- **The two endpoint polynomials**: for
+`1/3 ≤ R ≤ 7/19`, `0 ≤ δ ≤ 1/19` and `e ∈ {13/5, 3}`: `𝓑(u_q; R, T(e), δ) > b*`. -/
 theorem hs6_B_endpoint_proof {R δ e : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (he : e = 13 / 5 ∨ e = 3) :
     hs6bstar < hs6B R (hs6T R δ e) δ (hs6uq R δ) := by

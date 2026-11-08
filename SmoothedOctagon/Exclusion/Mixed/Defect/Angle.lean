@@ -5,15 +5,15 @@ public import SmoothedOctagon.Exclusion.Forward.Wire
 /-!
 # The continuous polar angle of the costate frame, on subintervals
 
-`GLOBAL_SPECTRAL_COST_CASIMIR` (4), (9), (11)-(13) on an arbitrary subinterval of one period. For a
+The spectral angle bound on an arbitrary subinterval of one period. For a
 normal period with negative elliptic `Λ₁(0) = -κ h₀ J h₀⁻¹` put `B(t) = h₀⁻¹ g(t)` and
 `z(t) = z(B(t))` (`Reduction.scb_zc`). Then `z(t) = z(0) exp(L(t))` on `[0, T]` for a continuous
 complex logarithm `L` with `L(0) = 0`; its imaginary part `Θ = Im L` is the continuous polar angle
 `∫₀ᵗ (ρ + ρ_R)/(2|z|²)`, strictly increasing, and on every subinterval
 `(κ + 3/2)(Θ(t) - Θ(s)) ≤ 3 ∫ₛᵗ ρ` (the pointwise spectral bound `3 m_b ≥ (κ + 3/2) θ'`).
 
-Route: the proofs of `ifc_winding` and `ifc_spectral` (`Exclusion/Forward/Wire`), with the
-logarithm kept on every subinterval instead of only on `[0, T]`.
+The proof is that of `ifc_winding` and `ifc_spectral` (`Exclusion/Forward/Wire`), with the
+logarithm kept on every subinterval.
 
 ## Main API
 
@@ -30,7 +30,7 @@ namespace NormalPeriod
 
 variable (P : NormalPeriod)
 
-/-- **The continuous polar angle on subintervals** (GLOBAL_SPECTRAL_COST_CASIMIR (9), (12)). -/
+/-- **The continuous polar angle on subintervals**. -/
 theorem df_angle (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P.Λ₁ 0) 1 0 < 0) :
     ∃ h₀ : Mat2, h₀.det = 1 ∧ P.Λ₁ 0 = -√(P.Λ₁ 0).det • (h₀ * J * h₀.adjugate) ∧
     ∃ L : ℝ → ℂ, L 0 = 0 ∧

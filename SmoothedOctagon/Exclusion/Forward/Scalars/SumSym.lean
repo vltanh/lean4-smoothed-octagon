@@ -5,8 +5,8 @@ public import SmoothedOctagon.Exclusion.Forward.Scalars.Canon
 /-!
 # Case F scalars: the symmetric sum residual
 
-`HAND_FORWARD_SYMMETRIC_SUM_REDUCTION`, `HAND_FORWARD_SYMMETRIC_SUM_HIGH_D`: on the symmetric domain
-CONDITIONAL_NORM_BOUNDS (31), the sum residual `𝓔_Σ = r - n/35 - (m - n)L(z, I)` is negative.
+On the symmetric domain `1 ≤ z = w ≤ 4/3`, `1 + 6z/5 ≤ U < 3`, `S²/Z ≤ h ≤ S(5U - 2 - 3z)/(3Z)`, the
+sum residual `𝓔_Σ = r - n/35 - (m - n)L(z, I)` is negative.
 
 Coordinates `a = (z - 1)/(z + 1) ∈ [0, 1/7]`, `t = I - 1 ∈ (0, 1/4]`, `I = S²/Z`; logarithms
 `LI = log I = log(1 + t)`, `Lc = log(K/Z) = log(1 - aI)`.
@@ -26,11 +26,11 @@ namespace SmoothedOctagon
 
 open Real Set
 
-/-- `A₀ = 𝓔_Σ(h = 1)` (SYMMETRIC_SUM_REDUCTION (3), (7)) in the coordinates `a = (z - 1)/(z + 1)`,
-`t = I - 1`, with `LI = log I`, `Lc = log(1 - aI)` kept as atoms. -/
+/-- `A₀ = 𝓔_Σ(h = 1)` in the coordinates `a = (z - 1)/(z + 1)`, `t = I - 1`, with `LI = log I`,
+`Lc = log(1 - aI)` kept as atoms. -/
 noncomputable def fs_SA0 (a t LI Lc : ℝ) : ℝ := ((1 / 2) * a ^ (4:ℕ) * t ^ (2:ℕ) + a ^ (4:ℕ) * t + (1 / 2) * a ^ (4:ℕ) + (3 / 2) * a ^ (3:ℕ) * t ^ (2:ℕ) + (5 / 2) * a ^ (3:ℕ) * t + a ^ (3:ℕ) + (3 / 2) * a ^ (2:ℕ) * t ^ (2:ℕ) - (3 / 2) * a ^ (2:ℕ) + (1 / 2) * a * t ^ (2:ℕ) - (3 / 2) * a * t) / ((1 - a)) + (-a ^ (3:ℕ) * t ^ (2:ℕ) - (2) * a ^ (3:ℕ) * t - a ^ (3:ℕ) - (3) * a ^ (2:ℕ) * t ^ (2:ℕ) - (3) * a ^ (2:ℕ) * t + (3) * a * t + a) / ((1 - a) * t) * LI + (-a * t - a + (1)) / (1) * Lc
 
-/-- `A₁` (SYMMETRIC_SUM_REDUCTION (15)): `𝓔_Σ = A₀ + A₁H + z(DH²/(2h) - f(h))`. -/
+/-- The coefficient `A₁` of `H` in `𝓔_Σ = A₀ + A₁H + z(DH²/(2h) - f(h))`. -/
 noncomputable def fs_SA1 (a t LI Lc : ℝ) : ℝ :=
   -((35) * a ^ (5:ℕ) * t ^ (2:ℕ) + (70) * a ^ (5:ℕ) * t + (35) * a ^ (5:ℕ) + (35) * a ^ (4:ℕ) * t ^ (2:ℕ) - (35) * a ^ (4:ℕ) - (70) * a ^ (3:ℕ) * t ^ (2:ℕ) - (210) * a ^ (3:ℕ) * t - (105) * a ^ (3:ℕ) - (70) * a ^ (2:ℕ) * t ^ (2:ℕ) + (70) * a ^ (2:ℕ) * t + (105) * a ^ (2:ℕ) + (35) * a * t ^ (2:ℕ) + (206) * a * t - (4) * a + (35) * t ^ (2:ℕ) - (4) * t + (4)) / (70 * (1 - a) ^ 2) -
     (a ^ (3:ℕ) * t ^ (2:ℕ) + (2) * a ^ (3:ℕ) * t + a ^ (3:ℕ) + a ^ (2:ℕ) * t ^ (2:ℕ) - a ^ (2:ℕ) - (3) * a * t ^ (2:ℕ) - (6) * a * t - (2) * a - t ^ (2:ℕ)) / (t * (1 - a)) * LI +
@@ -747,9 +747,8 @@ theorem fs_Spsi_tangent {A0 A1 D z τ τc : ℝ} (hA0 : A0 ≤ 0) (hz : 0 ≤ z)
 
 /-! ### The decomposition -/
 
-/-- **The decomposition of `𝓔_Σ`** (SYMMETRIC_SUM_REDUCTION (16)) in the coordinates
-`a = (z - 1)/(z + 1)`, `t = (2z + 1 - U)/(z² + U) = I - 1`:
-`𝓔_Σ = A₀ + A₁H + z(DH²/(2h) - f(h))`, `D = a + t + at`. -/
+/-- **The decomposition of `𝓔_Σ`** in the coordinates `a = (z - 1)/(z + 1)`,
+`t = (2z + 1 - U)/(z² + U) = I - 1`: `𝓔_Σ = A₀ + A₁H + z(DH²/(2h) - f(h))`, `D = a + t + at`. -/
 theorem fs_resS_decomp {U z h : ℝ} (hz : 1 ≤ z) (hU3 : U < 3) (hU : 0 < U) (hh : 0 < h) :
     ff_resS U z z h =
       fs_SA0 ((z - 1) / (z + 1)) ((2 * z + 1 - U) / (z ^ 2 + U))
@@ -865,11 +864,11 @@ theorem fs_S_at {a t h z : ℝ} (ha0 : 0 ≤ a) (ha1 : a ≤ 1 / 7) (ht0 : 0 < t
     (by rw [div_lt_one hP2]; linarith) hle hge (fs_SE3_neg ha0 ha1 ht0 ht1)
     (fs_SE4_neg ha0 ha1 ht0 ht1 h39)
 
-/-- **The symmetric sum sign** (HAND_FORWARD_SYMMETRIC_SUM_REDUCTION, _HIGH_D): `𝓔_Σ < 0` on the
-symmetric domain. Route: after the decomposition and the Padé bound, `𝓔_Σ/H ≤ Ψ(τ)`, `τ = H/h`, is
-concave in `τ` (`A₀ ≤ 0`, SYMMETRIC_SUM_HIGH_D §2); its tangent at the cost endpoint `τ_c` gives the
-two values `E₃ = Ψ(τ_c)` and `E₄ = Ψ(τ_c) + Ψ'(τ_c)(τ_I - τ_c)`, signed (like `A₀`) by the
-Padé bound for `log I`, the cubic bound for `log(1 - aI)` and Bernstein expansions; no `D`-split. -/
+/-- **The symmetric sum sign**: `𝓔_Σ < 0` on the symmetric domain. After the decomposition and the
+Padé bound, `𝓔_Σ/H ≤ Ψ(τ)`, `τ = H/h`, is concave in `τ` (`A₀ ≤ 0`); its tangent at the cost
+endpoint `τ_c` gives the two values `E₃ = Ψ(τ_c)` and `E₄ = Ψ(τ_c) + Ψ'(τ_c)(τ_I - τ_c)`, signed
+(like `A₀`) by the Padé bound for `log I`, the cubic bound for `log(1 - aI)` and Bernstein
+expansions. -/
 theorem fs_resS_neg {U z h : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 4 / 3) (hU : 1 + 6 * z / 5 ≤ U)
     (hU3 : U < 3) (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h)
     (hhu : h ≤ (1 + z) * (5 * U - 2 - 3 * z) / (3 * (z ^ 2 + U))) : ff_resS U z z h < 0 := by

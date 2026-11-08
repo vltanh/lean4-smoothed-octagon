@@ -5,27 +5,27 @@ public import SmoothedOctagon.Period.Costate
 /-!
 # The reverse-four principle
 
-`GLOBAL_REVERSE_PERIOD_EXCLUSION` (1) and `MIXED_GLOBAL_MINIMUM_STRUCTURE` (11). Four consecutive
-pieces `k, …, k + 3` of a normal vertex period with three reverse switches between them (labels
-`i, i - 1, i + 1, i`) cannot have the active margin of piece `k + 2`, nor that of piece `k + 1`, at
-most the other three.
+Four consecutive pieces `k, …, k + 3` of a normal vertex period with three reverse switches between
+them (labels `i, i - 1, i + 1, i`) cannot have the active margin of piece `k + 2`, nor that of piece
+`k + 1`, at most the other three.
 
-Route: the needle (first-variation) identity GRPE (24) is replaced by an exact identity between the
-costate coordinates of `Period/Costate.lean` at the three interior switches. For the third
-position, with margins `(P, Q, Z)` at the first interior switch (labels `i, i + 1, i - 1`), factors
-`b, c` of the two interior pieces, `A, B` the margins `p_{i+1}, p_i` at the second switch,
-`σ_j = 2α_j + β_j = p_j H_j`: the four vanishing active Hamiltonians and `⟨Λ_R, X⟩ = 0` give
-`B (c - 1) σ_{i+1} + b (A (c - 1) + Z (b - 1)) σ_i' = -√3 Z N` (σ at the first and second interior
-switch), with `N` the cost derivative GRPE (18). Both left Hamiltonians are `≤ 0` by the maximum
-principle; under the minimum hypothesis `N < 0` (GRPE (20)-(23)). The second position uses the
-needles `σ_{i-1}` at the third and `σ_i` at the second interior switch, with coefficients
-`(b - 1) B` and `c (A (c - 1) + Z (b - 1))`, and the reflected `N`; this replaces the reflection
-argument MGMS §§1-4.
+The proof is an exact identity between the costate coordinates of `Period/Costate.lean` at the three
+interior switches. For the third position, with margins `(P, Q, Z)` at the first interior switch
+(labels `i, i + 1, i - 1`), factors `b, c` of the two interior pieces, `A, B` the margins
+`p_{i+1}, p_i` at the second switch, `σ_j = 2α_j + β_j = p_j H_j`: the four vanishing active
+Hamiltonians and `⟨Λ_R, X⟩ = 0` give `B (c - 1) σ_{i+1} + b (A (c - 1) + Z (b - 1)) σ_i' = -√3 Z N`
+(σ at the first and second interior switch), with `N = cstRevN A B Z b c` the cost derivative. Both
+left Hamiltonians are `≤ 0` by the maximum principle; under the minimum hypothesis `N < 0`
+(`cstRevN_neg`). The second position uses the needles `σ_{i-1}` at the third and `σ_i` at the second
+interior switch, with coefficients `(b - 1) B` and `c (A (c - 1) + Z (b - 1))`, and the reflected
+`N`.
 
 ## Main API
 
-* `cstEta t = t - 1 - log t`, `cstZeta t = t log t - t + 1`, `cstRevN A B Z b c` (GRPE (18)).
-* `cst_eta_pos`, `cst_log_pade` (`(t² + 4t + 1) log t > 3 (t² - 1)`), `cstRevN_neg` (GRPE (23)).
+* `cstEta t = t - 1 - log t`, `cstZeta t = t log t - t + 1`, the cost derivative
+  `cstRevN A B Z b c`.
+* `cst_eta_pos`, `cst_log_pade` (`(t² + 4t + 1) log t > 3 (t² - 1)`), `cstRevN_neg` (`N < 0` under
+  the minimum hypothesis).
 * `cst_rev4_third_identity`, `cst_rev4_second_identity`: the exact costate identities.
 * `CostateCycle.reverse_four_third`, `CostateCycle.reverse_four_second`: the reverse-four
   principle in both interior positions.
@@ -49,7 +49,8 @@ theorem cst_eta_pos {t : ℝ} (ht : 1 < t) : 0 < cstEta t := by
   have := Real.log_lt_sub_one_of_pos (by linarith) ht.ne'
   rw [cstEta]; linarith
 
-/-- The Padé bound `log t > 3 (t² - 1)/(t² + 4t + 1)` for `t > 1` (GRPE (20)). -/
+/-- The Padé bound `log t > 3 (t² - 1)/(t² + 4t + 1)` for `t > 1`: the difference vanishes at `1`
+and has derivative `(t - 1)⁴/(t (t² + 4t + 1)²) > 0`. -/
 theorem cst_log_pade {t : ℝ} (ht : 1 < t) : 3 * (t ^ 2 - 1) < (t ^ 2 + 4 * t + 1) * Real.log t := by
   set ψ : ℝ → ℝ := fun x ↦ Real.log x - 3 * (x ^ 2 - 1) / (x ^ 2 + 4 * x + 1) with hψ
   have hden : ∀ x : ℝ, 0 < x → 0 < x ^ 2 + 4 * x + 1 := fun x hx ↦ by positivity
@@ -97,12 +98,16 @@ theorem cst_eta_lt_zeta {t : ℝ} (ht : 1 < t) : cstEta t < cstZeta t := by
   have h2 := cst_eta_pos ht
   nlinarith
 
-/-- The cost derivative `N` of GRPE (18). -/
+/-- The cost derivative `N` of a window of four pieces with three reverse switches, in terms of
+`η(t) = t - 1 - log t` and `ζ(t) = t log t - t + 1`. -/
 noncomputable def cstRevN (A B Z b c : ℝ) : ℝ :=
   b * (b - 1) * A * (A * c * cstEta c - B * cstZeta c) +
     (c - 1) * (b * A * (B + b * Z) * cstEta b - B * (b * A + Z) * cstZeta b)
 
-/-- **GRPE (23).** Under the minimum hypothesis GRPE (7), `N < 0`. -/
+/-- **The cost derivative is negative.** Under the minimum hypothesis `A ≤ Z`,
+`bA + (b - 1)Z ≤ B`, `(2c - 1)A ≤ B`, `N < 0`: the first bracket is negative since `cA < B` and
+`η(c) < ζ(c)`; the second does not increase in `B` and is negative at `B = bA + (b - 1)Z` by
+`(2b + 1) η(b) < (b + 2) ζ(b)`. -/
 theorem cstRevN_neg {A B Z b c : ℝ} (hb : 1 < b) (hc : 1 < c) (hA : 0 < A) (hZ : 0 < Z)
     (hZA : A ≤ Z) (hB1 : b * A + (b - 1) * Z ≤ B) (hB2 : (2 * c - 1) * A ≤ B) :
     cstRevN A B Z b c < 0 := by
@@ -322,8 +327,8 @@ private theorem rev4_data (k : ℤ) (h0 : C.lab (k + 1) = C.lab k - 1)
   · simp only [act, l2]
   · simp only [act, l3]; rw [N3]
 
-/-- **The reverse-four principle, third position** (GRPE (1)). In a window of four pieces with
-three reverse switches, the active margin of the third piece is not at most the other three. -/
+/-- **The reverse-four principle, third position.** In a window of four pieces with three reverse
+switches, the active margin of the third piece is not at most the other three. -/
 theorem reverse_four_third (k : ℤ) (h0 : C.lab (k + 1) = C.lab k - 1)
     (h1 : C.lab (k + 2) = C.lab (k + 1) - 1) (h2 : C.lab (k + 3) = C.lab (k + 2) - 1) :
     ¬ (C.act (k + 2) ≤ C.act k ∧ C.act (k + 2) ≤ C.act (k + 1) ∧
@@ -359,7 +364,7 @@ theorem reverse_four_third (k : ℤ) (h0 : C.lab (k + 1) = C.lab k - 1)
     have e : B = (b - 1) * Z + b * P := by rw [hB]; ring
     have : 0 < b - 1 := by linarith
     rw [e]; positivity
-  -- the minimum hypothesis GRPE (7)
+  -- the minimum hypothesis
   have hB1 : b * A + (b - 1) * Z ≤ B := by
     have := mul_le_mul_of_nonneg_left m0 hb0.le
     rw [hB]; linarith
@@ -380,10 +385,9 @@ theorem reverse_four_third (k : ℤ) (h0 : C.lab (k + 1) = C.lab k - 1)
   have p3 := mul_nonpos_of_nonneg_of_nonpos hw2 n2
   linarith
 
-/-- **The reverse-four principle, second position** (MGMS (11)). In a window of four pieces with
-three reverse switches, the active margin of the second piece is not at most the other three.
-Route: a direct costate identity (`cst_rev4_second_identity`) replaces the reflection of
-MGMS §§1-4. -/
+/-- **The reverse-four principle, second position.** In a window of four pieces with three reverse
+switches, the active margin of the second piece is not at most the other three. The proof is a
+direct costate identity (`cst_rev4_second_identity`). -/
 theorem reverse_four_second (k : ℤ) (h0 : C.lab (k + 1) = C.lab k - 1)
     (h1 : C.lab (k + 2) = C.lab (k + 1) - 1) (h2 : C.lab (k + 3) = C.lab (k + 2) - 1) :
     ¬ (C.act (k + 1) ≤ C.act k ∧ C.act (k + 1) ≤ C.act (k + 2) ∧

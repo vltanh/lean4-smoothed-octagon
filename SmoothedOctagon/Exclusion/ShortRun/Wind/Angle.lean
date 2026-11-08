@@ -12,9 +12,8 @@ public import Basic.Analysis.Convex.StarCurve
 Elementary tools for the projective winding of case M1 (`Exclusion/ShortRun/Winding.lean`): a real
 `θ` is *an angle of* a nonzero complex number `z` (`wd_IsAng θ z`) when `z = r e^{iθ}` with
 `r > 0`; angles add under products and are unique modulo `2π`. A continuous real function on an
-interval whose increments are multiples of `2π` is constant (`wd_eq_of_int`), which replaces the
-uniqueness of lifts to the universal cover. Plane vectors are complex numbers through
-`sc_toC v = v₀ + v₁ i`.
+interval whose increments are multiples of `2π` is constant (`wd_eq_of_int`); this gives the
+uniqueness of continuous angles. Plane vectors are complex numbers through `sc_toC v = v₀ + v₁ i`.
 
 ## Main API
 

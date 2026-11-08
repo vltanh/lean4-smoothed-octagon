@@ -4,16 +4,15 @@ public import SmoothedOctagon.Foundations.Problem
 public import SmoothedOctagon.Foundations.BalancedReduction
 
 /-!
-# Exact remaining targets in the balanced problem
+# The global targets in the balanced problem
 
-The completed source construction of a balanced representative of an actual worst disk
-allows both global targets to be transferred without an assumed reduction theorem.
-Global minimality becomes an area inequality over all balanced circle competitors;
-affine rigidity becomes a classification of all balanced circle minimizers.
+The construction of a balanced representative of an actual worst disk transfers both global
+targets without an assumed reduction theorem. Global minimality becomes an area inequality over
+all balanced circle competitors; affine rigidity becomes a classification of all balanced circle
+minimizers.
 
-The propositions below remain open. The equivalences identify the remaining work, rather
-than discharge the area inequality or the equality classification. No finite polygon or
-switching-word restriction is imposed. Compilation and kernel validation have not been run.
+The equivalences below restate the area inequality and the equality classification; they do not
+prove them. No finite polygon or switching-word restriction is imposed.
 -/
 
 @[expose] public section
@@ -22,7 +21,7 @@ namespace SmoothedOctagon
 
 open MeasureTheory Set SmoothedPolygons
 
-/-- The explicit global area inequality remaining after the balanced reduction. -/
+/-- The global area inequality of the balanced problem. -/
 def BalancedAreaLowerBound : Prop :=
   ∀ (K : Set (Fin 2 → ℝ)) (σ : ZMod 6 → ℝ → Fin 2 → ℝ) (tf : ℝ),
     IsBalancedPair K σ tf → IsCircleRepresentation σ → volume octagon ≤ volume K
@@ -100,8 +99,7 @@ theorem affineRigidity_iff_balancedAffineRigidity :
         rw [image_image]
         rfl
 
-/-- Both remaining global targets, with their exact unrestricted balanced comparison
-classes. Neither conjunct is established by this equivalence. -/
+/-- Both global targets, with their exact unrestricted balanced comparison classes. -/
 theorem fullReinhardtConjecture_iff_balancedTargets :
     FullReinhardtConjecture ↔ BalancedAreaLowerBound ∧ BalancedAffineRigidity := by
   exact and_congr reinhardtConjecture_iff_balancedAreaLowerBound

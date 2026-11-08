@@ -10,9 +10,9 @@ factors `q_k > 1` excludes every reduced word of at most five letters except the
 (four pieces, all forward), the orbit of `0 1 0 2 0` under rebasing and relabeling, and the
 entirely reverse word `0 2 1 0 2`.
 
-Route: the notes exclude most of these words with the fixed-edge obstruction and twisted rebasing
-(`SMALL_PERIOD_COST_EQUALITY_AUDIT` §1); here every excluded word already contradicts two entries
-of the tangent closure (the table of `legacy/FOUR_LINK_HAND_PROOF` (3), extended to five letters).
+Every excluded word contradicts two entries of the tangent closure: the entries of the product
+are rational functions of the factors, and two of them cannot equal the corresponding entries of
+`R = [[0, 1], [-1, 1]]` when every `q_k > 1`.
 
 * `Term.word_*_false`: the excluded words.
 * `Term.Cycle.cycle_one_false`, `cycle_two_false`, `cycle_three_false`;

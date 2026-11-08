@@ -44,8 +44,8 @@ running factor `q = exp(2 t/a)`:
   `α_i + α_{i-1} ↦ q⁻² (α_i + α_{i-1}) + costateADecr a c q`;
 * `β_i + β_{i+1} ↦ q (β_i + β_{i+1}) + costateBGrow a b q`,
   `β_i + β_{i-1} ↦ q⁻¹ (β_i + β_{i-1}) + costateBDecr a c q`.
-These replace the first-variation identities of the notes: every needle identity
-(GLOBAL_REVERSE_PERIOD_EXCLUSION (24)) is a linear identity between the `σ_j` at the switches.
+Every needle identity follows from these formulas as a linear identity between the `σ_j` at the
+switches; no first variation is used.
 
 ## Normal periods
 

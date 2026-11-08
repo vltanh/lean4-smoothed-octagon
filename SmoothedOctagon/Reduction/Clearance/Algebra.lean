@@ -6,7 +6,8 @@ public import SmoothedOctagon.Reduction.CompactDomain
 /-!
 # Matrix algebra for the singular clearance
 
-Pointwise facts about `2 × 2` matrices used by SINGULAR_COST_BUDGET (inventory A2, §2.4).
+Pointwise facts about `2 × 2` matrices used by the singular clearance and the projective bounds
+(`Reduction/SingularClearance.lean`).
 
 Main API:
 
@@ -15,17 +16,16 @@ Main API:
 * `scb_frobSq_mul_le`: `‖AB‖_F² ≤ ‖A‖_F² ‖B‖_F²`.
 * `scb_frobSq_adjugate`: `‖adj A‖_F = ‖A‖_F`.
 * `scb_frobSq_add_smul_J_le`: `‖M + cJ‖_F² ≤ 2‖M‖_F² + 4c²`.
-* `scb_rho`, `scb_rhoR`: `ρ(Y) = -tr(JY)/2` and the spatial `ρ_R = ρ(h Y adj h)` (SCB (8), (12));
+* `scb_rho`, `scb_rhoR`: `ρ(Y) = -tr(JY)/2` and the spatial `ρ_R = ρ(h Y adj h)`;
   `scb_rho_pos` (`ρ > 0` on star states), `scb_rhoR_pos` (`ρ_R > 0` for `det h = 1`),
-  `scb_frobSq_conj` (`‖h Y adj h‖_F² = 4ρ_R² - 2`, SCB (13)).
+  `scb_frobSq_conj` (`‖h Y adj h‖_F² = 4ρ_R² - 2`).
 * `scb_traceForm_eq`: `tr(AB)` entry by entry; `scb_margin_eq`, `scb_sigma_eq`: the margins
   `p_i = -√3 tr(Z_i X)` and `σ_i = √3 tr(W Z_i)` of traceless matrices, entry by entry;
   `scb_hamiltonian_vertex`: `H_i = tr(AX) + σ_i / p_i` with `A = Λ₁ - (3/2)λJ`.
 * `scb_vertex_scalar`: the scalar core of the two bounds below.
-* `scb_vertex_bounds` (SCB (10)-(11), (30)-(33)): if every vertex Hamiltonian is `≤ 0` at a star
-  state `X`, with `Λ_R` traceless and `tr(Λ_R X) = 0`, then `tr(AX) ≤ 0`; if moreover every margin
-  of `X` is at least `2/15`, then `‖Λ_R‖_F² ≤ 2700 tr(AX)²`.
--/
+* `scb_vertex_bounds`: if every vertex Hamiltonian is `≤ 0` at a star state `X`, with `Λ_R`
+  traceless and `tr(Λ_R X) = 0`, then `tr(AX) ≤ 0`; if moreover every margin of `X` is at least
+  `2/15`, then `‖Λ_R‖_F² ≤ 2700 tr(AX)²`. -/
 
 @[expose] public section
 
@@ -89,11 +89,11 @@ theorem scb_frobSq_add_smul_J_le (M : Mat2) (c : ℝ) :
 
 /-! ### The scalars `ρ` and `ρ_R` -/
 
-/-- `ρ(Y) = -tr(JY)/2` (SINGULAR_COST_BUDGET (8)); the cost density is `3ρ`. -/
+/-- `ρ(Y) = -tr(JY)/2`; the cost density is `3ρ`. -/
 noncomputable def scb_rho (Y : Mat2) : ℝ := -(1 / 2) * traceForm J Y
 
-/-- The spatial scalar `ρ_R = ρ(h Y h⁻¹)` (SINGULAR_COST_BUDGET (12)), written with the
-adjugate, which is the inverse when `det h = 1`. -/
+/-- The spatial scalar `ρ_R = ρ(h Y h⁻¹)`, written with the adjugate, which is the inverse when
+`det h = 1`. -/
 noncomputable def scb_rhoR (h Y : Mat2) : ℝ := scb_rho (h * Y * h.adjugate)
 
 theorem scb_rho_eq (Y : Mat2) : scb_rho Y = (Y 1 0 - Y 0 1) / 2 := by
@@ -130,7 +130,7 @@ theorem scb_rho_pos {Y : Mat2} (hY : IsStarState Y) : 0 < scb_rho Y := by
   rw [scb_rho_eq]
   linarith
 
-/-- `ρ_R > 0`: `-J h Y h⁻¹ = h⁻ᵀ (-JY) h⁻¹` is positive definite (SINGULAR_COST_BUDGET §2). -/
+/-- `ρ_R > 0`: `-J h Y h⁻¹ = h⁻ᵀ (-JY) h⁻¹` is positive definite. -/
 theorem scb_rhoR_pos {h Y : Mat2} (hh : h.det = 1) (hY : IsStarState Y) : 0 < scb_rhoR h Y := by
   obtain ⟨e11, hdY, h10, -⟩ := scb_star_entries hY
   have key := scb_rhoR_eq h Y
@@ -152,8 +152,7 @@ theorem scb_rhoR_pos {h Y : Mat2} (hh : h.det = 1) (hY : IsStarState Y) : 0 < sc
   have := (pos_iff_pos_of_mul_pos this).mp h10
   linarith
 
-/-- `‖h Y h⁻¹‖_F² = 4ρ_R² - 2` for `det h = 1` and `Y` traceless with `det Y = 1`
-(SINGULAR_COST_BUDGET (13)). -/
+/-- `‖h Y h⁻¹‖_F² = 4ρ_R² - 2` for `det h = 1` and `Y` traceless with `det Y = 1`. -/
 theorem scb_frobSq_conj {h Y : Mat2} (hh : h.det = 1) (hY : IsStarState Y) :
     frobSq (h * Y * h.adjugate) = 4 * scb_rhoR h Y ^ 2 - 2 := by
   obtain ⟨e11, hdY, -, -⟩ := scb_star_entries hY
@@ -208,9 +207,14 @@ theorem scb_hamiltonian_vertex (lam : ℝ) (Λ₁ W X : Mat2) (i : Fin 3) :
   rw [hamiltonian, e, div_div_eq_mul_div, div_neg, sub_neg_eq_add]
   ring
 
-/-- The scalar core of SINGULAR_COST_BUDGET (10)-(11) and (30)-(33). With positive margins
-`pᵢ`, `p₀p₁ + p₁p₂ + p₂p₀ = 4`, the equilibrium relation `Σ (p_j + p_k) σ_i = 0` and every vertex
-Hamiltonian `α + σ_i/p_i ≤ 0`: `α ≤ 0`, and if every `p_i ≥ 2/15`, then `σ_i² ≤ 900 α²`. -/
+/-- The scalar core of the equilibrium inequality. With positive margins `pᵢ`,
+`p₀p₁ + p₁p₂ + p₂p₀ = 4`, the equilibrium relation `Σ (p_j + p_k) σ_i = 0` and every vertex
+Hamiltonian `α + σ_i/p_i ≤ 0`: `α ≤ 0`, and if every `p_i ≥ 2/15`, then `σ_i² ≤ 900 α²`.
+
+Proof: `σ_i ≤ -α p_i`; multiplying by `p_j + p_k > 0` and summing, the equilibrium relation gives
+`0 ≤ -8α`. With `m = -α`, each `(p_j + p_k) σ_i` lies in `[-8m, 8m]` (the upper bound from
+`σ_i ≤ m p_i`, the lower one from the relation and the other two upper bounds), and
+`p_j + p_k ≥ 4/15` gives `σ_i² ≤ (15/4)² (8m)² = 900 m²`. -/
 theorem scb_vertex_scalar {p₀ p₁ p₂ σ₀ σ₁ σ₂ α : ℝ} (h₀ : 0 < p₀) (h₁ : 0 < p₁) (h₂ : 0 < p₂)
     (hsum : p₀ * p₁ + p₁ * p₂ + p₂ * p₀ = 4)
     (heq : (p₁ + p₂) * σ₀ + (p₀ + p₂) * σ₁ + (p₀ + p₁) * σ₂ = 0)
@@ -252,14 +256,12 @@ theorem scb_vertex_scalar {p₀ p₁ p₂ σ₀ σ₁ σ₂ α : ℝ} (h₀ : 0 
     bound (s := p₀ + p₁) (by linarith) ?_ ?_⟩ <;> nlinarith [mul_nonneg hm0 p01,
       mul_nonneg hm0 p12, mul_nonneg hm0 p20]
 
-/-- **The equilibrium inequality** (SINGULAR_COST_BUDGET (10)-(11)). At a star state `X`, with
-`Λ_R` traceless and `tr(Λ_R X) = 0`, if every vertex Hamiltonian is `≤ 0` then
-`tr((Λ₁ - (3/2)λJ) X) ≤ 0`, and if moreover every margin is at least `2/15` then
-`‖Λ_R‖_F² ≤ 2700 tr((Λ₁ - (3/2)λJ) X)²` (SINGULAR_COST_BUDGET (30)-(33)).
+/-- **The equilibrium inequality**. At a star state `X`, with `Λ_R` traceless and
+`tr(Λ_R X) = 0`, if every vertex Hamiltonian is `≤ 0` then `tr((Λ₁ - (3/2)λJ) X) ≤ 0`, and if
+moreover every margin is at least `2/15` then `‖Λ_R‖_F² ≤ 2700 tr((Λ₁ - (3/2)λJ) X)²`.
 
-Route: instead of the width estimate of QUANTITATIVE_REGULAR_SWITCH_BOUND (14) and the height
-bound `y ≤ 9/2`, the equilibrium weights `ϑ_i = p_i (p_j + p_k)/8` (exact) give
-`|(p_j + p_k) σ_i| ≤ 8 max_i h_i`, and `‖W‖_F² ≤ Σ σ_i²` with `σ_i = √3 tr(W Z_i)`. -/
+The exact equilibrium weights `ϑ_i = p_i (p_j + p_k)/8` give `|(p_j + p_k) σ_i| ≤ 8 max_i h_i`,
+and `‖W‖_F² ≤ Σ σ_i²` with `σ_i = √3 tr(W Z_i)`. -/
 theorem scb_vertex_bounds {lam : ℝ} {Λ₁ W X : Mat2} (hX : IsStarState X) (hW : W.trace = 0)
     (hWX : traceForm W X = 0) (hH : ∀ i, hamiltonian lam Λ₁ W X (vertex i) ≤ 0) :
     traceForm (Λ₁ - (3 / 2 * lam) • J) X ≤ 0 ∧ ((∀ i, 2 / 15 ≤ margin i X) →

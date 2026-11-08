@@ -9,18 +9,18 @@ public import Mathlib.Tactic
 
 The reference project already proves qualitative nonnegativity and positivity of
 `SmoothedPolygons.hmaxF` in `Ch7.HMaxInequality`. This module gives an explicit rational
-lower bound for the same expression, using two logarithm inequalities and a rational
-identity. It does not import or use the reference project's derivative proof.
+lower bound for the same expression, using two logarithm inequalities,
+`log u ≥ 2(u - 1)/(u + 1)` for `u ≥ 1` and `log v ≤ v - 1` for `v > 0`, and a rational identity.
+It does not import or use the reference project's derivative proof.
 
-For `2 ≤ y ≤ r ≤ 4`, the principal new estimate is
+For `2 ≤ y ≤ r ≤ 4`, the principal estimate is
 
 `r * (r - y)^3 / (4 * (r + y)) ≤ hmaxF y r`.
 
 In particular, `(r - y)^3 / 8 ≤ hmaxF y r`. The bound degenerates on the switching
 diagonal `r = y`; it is not a positive lower bound on switching intervals or their lengths.
-
-See `docs/archive/notes/SWITCHING_MARGIN.md` for the hand proof and the precise connection to
-Hales--Vajjha, Lemma 7.5.3. This is an uncompiled source draft.
+The expression `hmaxF` is the one whose sign Hales–Vajjha establish in the proof of their
+Lemma 7.5.3.
 -/
 
 @[expose] public section
@@ -47,7 +47,7 @@ private lemma log_ratio_lower_bound {y r : ℝ} (hy : 0 < y) (hyr : y ≤ r) :
     field_simp [hy.ne', hsum.ne', hratioPos.ne'] <;> ring
   rwa [hfrac] at h
 
-/-- Exact residual identity behind the rational certificate. Both residuals on the
+/-- Exact residual identity behind the rational lower bound. Both residuals on the
 right are nonnegative when `2 ≤ y ≤ r`; the correction in the first line is also
 nonnegative when `r ≤ 4`. The expression on the left is the upstream `hmaxF`. -/
 theorem hmaxF_margin_identity {y r : ℝ} (hy : 0 < y) (hr : 0 < r) :
@@ -118,7 +118,7 @@ theorem hmaxF_uniform_cubic_lower_bound {y r : ℝ}
   apply (le_div_iff₀ hden).2
   nlinarith [mul_nonneg (sub_nonneg.mpr hyr) hcube]
 
-/-- Qualitative nonnegativity, recovered from the new quantitative certificate. -/
+/-- Qualitative nonnegativity, recovered from the quantitative lower bound. -/
 theorem hmaxF_nonneg_from_margin {y r : ℝ}
     (hy : 2 ≤ y) (hyr : y ≤ r) (hr : r ≤ 4) : 0 ≤ hmaxF y r := by
   exact (div_nonneg (pow_nonneg (sub_nonneg.mpr hyr) 3) (by norm_num)).trans

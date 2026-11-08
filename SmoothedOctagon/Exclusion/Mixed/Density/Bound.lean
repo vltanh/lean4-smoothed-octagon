@@ -6,8 +6,7 @@ public import SmoothedOctagon.Exclusion.Mixed.Density.Local
 /-!
 # The lower Casimir bound of a competitive mixed period
 
-`MIXED_GLOBAL_REVERSE_ANGLE_DENSITY` §3, (10): a competitive mixed normal period has
-`γ² > 27/256` (`NormalPeriod.cg_cas_gt`).
+A competitive mixed normal period has `γ² > 27/256` (`NormalPeriod.cg_cas_gt`).
 
 Proof. Suppose `γ² ≤ 27/256`. At every piece with equal incident signs the Gram identity
 `d_- d_+ - e² = γ²/K²`, `K > 4`, `d_± ≥ 3/32` forces `4 e² > d_- d_+` (`cg_good`), i.e. the
@@ -18,11 +17,8 @@ costate angle avoids `[π/3, 2π/3]`. At a forward piece `+ +` the angle is at m
 (`cg_angle_mm`). At a turn `δ = 0`. A mixed period has a reverse centre, so `∑ δ > π/3`,
 against the winding identity `∑ δ = π/3` (`cg_winding`).
 
-Route: MGRAD §3 selects an edge with gauged angle in `[π/3, 2π/3)` from the count `n/P ≥ 1/3`
-of the whole-period winding; here the same winding is used in its telescoped form
-`∑ δ = π/3`. The reverse bound is the proved `cos φ < 3/10` (MGSRAE (1)) instead of MGRAD (1)
-`cos φ < 1/4` (only `cos φ < 1/2` is needed), and forward acuteness is replaced by the weaker
-`cg_pp_bound`.
+The whole-period winding is used in its telescoped form `∑ δ = π/3`. Of the reverse bound
+`cos φ < 3/10` only `cos φ < 1/2` is needed.
 
 ## Main API
 
@@ -38,7 +34,7 @@ open scoped Matrix
 
 namespace NormalPeriod
 
-/-- **The lower Casimir bound of a competitive mixed period** (MGRAD (10)): `γ² > 27/256`. -/
+/-- **The lower Casimir bound of a competitive mixed period**: `γ² > 27/256`. -/
 theorem cg_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixed) :
     27 / 256 < P.costateCycle.gam2 0 := by
   set C := P.costateCycle with hC

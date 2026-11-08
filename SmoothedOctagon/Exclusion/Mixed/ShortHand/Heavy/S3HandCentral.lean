@@ -5,19 +5,18 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S3HandCDeriv
 /-!
 # Gate S3, the central face by hand: the sign of the shape derivative
 
-Hand proof of the leaf `hs3_central_alpha` (`DISPLACEMENT_CENTRAL_FACE` §2), second part,
-following `archive/lighter-proofs/SHORT_DISPLACEMENT_CENTRAL_SHAPE.md` §§2-6. On the actual
+Proof of the leaf `hs3_central_alpha`, second part. On the actual
 comparison path `a_min(x) ≤ a`, `6a² ≤ x(x + 2)`, `2 ≤ x ≤ 13/6`, both shape derivatives
-`H_i = hl3cH x a n_i N_i` (`S3HandCDeriv.lean`) are negative: the grouped term (19) is at most
-`(8/5)𝓡(q)`, `𝓡(q) = (16363/330)q² - (87103/6000)q + 1 < 0` (20), and with the bounds (12), (13)
-and the `Bu_b` term, `H_i` is below the convex quadratic (21), negative on `[63/500, 1/7]`.
+`H_i = hl3cH x a n_i N_i` (`S3HandCDeriv.lean`) are negative: the grouped term is at most
+`(8/5)𝓡(q)`, `𝓡(q) = (16363/330)q² - (87103/6000)q + 1 < 0`, and with the first-term bound
+`hl3c_T1`, the pairing and norm bounds `hl3c_EL_bd`, `hl3c_w_bd` and the `Bu_b` term, `H_i` is
+below a convex quadratic in `q`, negative on `[63/500, 1/7]` (`hl3c_core`).
 Hence both tests decrease from `a_min(x)` to `a`, and the endpoint signs `hs3_central_endpoint`
 close the leaf.
 
-Route: the lower bounds `n_i ≥ 19/6` are proved by the exact divided differences of the cleared
-multiplier conditions between `a` and `a₊ = 13(3x + 2)/90` (with the note's endpoint polynomials
-`P₀`, `P₁`) instead of the monotonicity of `n_i` on the extension to `a₊`; the quadratic `Q_w(h, r)`
-of (16) is bounded through `4H₀H₂ > H₁²` instead of `∂_r Q_w > 0`.
+The lower bounds `n_i ≥ 19/6` are proved by the exact divided differences of the cleared
+multiplier conditions between `a` and `a₊ = 13(3x + 2)/90` (with the endpoint polynomials
+`P₀(h)`, `P₁(h)`), and the polynomial `Q_w(h, r)` (`hl3cQw`) is bounded through `4H₀H₂ > H₁²`.
 
 ## Main API
 
@@ -50,7 +49,7 @@ section Bounds
 
 variable {x a : ℝ}
 
-/-! ### The comparison domain (§2 (1), (4), (10)) -/
+/-! ### The comparison domain -/
 
 /-- `a ≥ (x + 23)/22 ≥ 108/95`, `a ≤ a₊ = 13(3x + 2)/90 < 5/4`. -/
 theorem hl3c_dom (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
@@ -81,7 +80,7 @@ theorem hl3c_ab (hx : 0 < x) :
   field_simp
   ring
 
-/-- The boundary point: `20x/19 ≤ b ≤ 2a` and `11a/6 ≤ b` (so `1/p ≥ 17/6`, (10)). -/
+/-- The boundary point: `20x/19 ≤ b ≤ 2a` and `11a/6 ≤ b` (so `1/p ≥ 17/6`). -/
 theorem hl3c_b_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) :
     20 * x / 19 ≤ hs3b x a ∧ hs3b x a ≤ 2 * a ∧ 11 * a / 6 ≤ hs3b x a := by
@@ -96,7 +95,7 @@ theorem hl3c_b_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     nlinarith
   · have : 15 * x ^ 2 + 11 * x ≤ a * (5 * x + 72) := by nlinarith
     nlinarith
-  · -- `a(5x + 132) ≤ 2x(15x + 11)`, from the central cap and (10)
+  · -- `a(5x + 132) ≤ 2x(15x + 11)`, from the central cap `6a² ≤ x(x + 2)`
     have hc : a * (5 * x + 132) ≤ 2 * x * (15 * x + 11) := by
       have hsq : (a * (5 * x + 132)) ^ 2 ≤ (2 * x * (15 * x + 11)) ^ 2 := by
         have e10 : 6 * (2 * x * (15 * x + 11)) ^ 2 - (5 * x + 132) ^ 2 * (x * (x + 2)) =
@@ -124,7 +123,7 @@ theorem hl3c_p_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
   · rw [div_lt_iff₀ hab]; linarith
   · rw [one_div_div, le_div_iff₀ (by linarith)]; linarith
 
-/-- `q = a²/K ∈ [63/500, 1/7]` (the note's (8) and the central cap). -/
+/-- `q = a²/K ∈ [63/500, 1/7]`, from `a ≥ (x + 23)/22` and the central cap. -/
 theorem hl3c_q_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) : 63 / 500 ≤ hsQc x a ∧ hsQc x a ≤ 1 / 7 := by
   obtain ⟨h23, h108, hap, h54⟩ := hl3c_dom hx hx2 ham h6
@@ -157,7 +156,7 @@ theorem hl3c_y_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
   · rw [div_le_iff₀ hK]
     nlinarith [mul_le_mul_of_nonneg_left hb2 ha0.le]
 
-/-- `n₀ ≥ 19/6` (the note's (7)): `(103 - 35a)K - 144a(a + b) ≥ 0`, by the divided difference to
+/-- `n₀ ≥ 19/6`: `(103 - 35a)K - 144a(a + b) ≥ 0`, by the divided difference to
 `a₊ = 13(3x + 2)/90` and `P₀(h) > 0`. -/
 theorem hl3c_n0_lo (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) : 19 / 6 ≤ hl3cn0 x a := by
@@ -198,7 +197,7 @@ theorem hl3c_n0_lo (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
   unfold hl3cn0
   linarith
 
-/-- `n₁ ≥ 19/6` (the note's (7)): `6K(5a - 1) + 24a(a + b) - 19(5a - 1)a(a + b) ≥ 0`, by the
+/-- `n₁ ≥ 19/6`: `6K(5a - 1) + 24a(a + b) - 19(5a - 1)a(a + b) ≥ 0`, by the
 divided difference to `a₊` and `P₁(h) > 0`. -/
 theorem hl3c_n1_lo (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) : 19 / 6 ≤ hl3cn1 x a := by
@@ -251,7 +250,7 @@ theorem hl3c_n1_lo (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
   have e2 : 4 / (5 * a - 1) * (5 * a - 1) * m = 4 * m := by rw [htk]
   nlinarith
 
-/-- `n₀, n₁ ≤ 53/15` (the note's (2)), from `y ≥ 3/4` and `k ≥ 89/19`. -/
+/-- `n₀, n₁ ≤ 53/15`, from `y ≥ 3/4` and `k ≥ 89/19`. -/
 theorem hl3c_n_hi (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) : hl3cn0 x a ≤ 53 / 15 ∧ hl3cn1 x a ≤ 53 / 15 := by
   obtain ⟨h23, h108, hap, h54⟩ := hl3c_dom hx hx2 ham h6
@@ -298,7 +297,7 @@ theorem hl3c_A_lo (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
   have := nonneg_of_mul_nonneg_left this (by positivity)
   linarith
 
-/-- `0 < z < 6/5` (the note's (5)): `2560aKZ(6/5 - z) = Q_z(h, r)`, `Z = 3j(a + b)`. -/
+/-- `0 < z < 6/5`: `2560aKZ(6/5 - z) = Q_z(h, r)`, `Z = 3j(a + b)`. -/
 theorem hl3c_z_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) : 0 < hl3cz x a ∧ hl3cz x a < 6 / 5 := by
   obtain ⟨h23, h108, hap, h54⟩ := hl3c_dom hx hx2 ham h6
@@ -352,7 +351,7 @@ theorem hl3c_z_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     have := pos_of_mul_pos_left hQ (by positivity)
     linarith
 
-/-- `-N₀ ≤ 4` and `-N₁ ≤ 21/5`, both `N_i < 0` (the note's (6)). -/
+/-- `-N₀ ≤ 4` and `-N₁ ≤ 21/5`, both `N_i < 0`. -/
 theorem hl3c_N_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) :
     hl3cN0 x a < 0 ∧ -hl3cN0 x a ≤ 21 / 5 ∧ hl3cN1 x a < 0 ∧ -hl3cN1 x a ≤ 21 / 5 := by
@@ -399,7 +398,7 @@ theorem hl3c_N_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     have h1 : 2 / hl3cy x a * hl3cz x a ≤ 8 / 3 * (6 / 5) := mul_le_mul hT hz2.le hz1.le (by norm_num)
     nlinarith
 
-/-! ### The incoming ceiling (§3 (11)) -/
+/-! ### The incoming ceiling -/
 
 /-- `1/5808 ≤ g = V_G - 3/4 ≤ 1/100` on `[2, 13/6]`. -/
 theorem hl3c_g_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) :
@@ -438,7 +437,7 @@ theorem hl3c_bp (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
   have := (hl3c_B_bds hx hx2).1
   nlinarith
 
-/-- `u_0 = 757/1000 + h/150 ≤ u ≤ 19/25` and `-u_b ≥ 3/500` (the note's (11)). -/
+/-- `u_0 = 757/1000 + h/150 ≤ u ≤ 19/25` and `-u_b ≥ 3/500`. -/
 theorem hl3c_u_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) :
     757 / 1000 + (x - 2) / 150 ≤ hl3cu x a ∧ hl3cu x a ≤ 19 / 25 ∧ hl3cub x a ≤ -(3 / 500) := by
@@ -529,9 +528,9 @@ theorem hl3c_u_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     rw [e2]
     linarith
 
-/-! ### The transport coefficients (§2 (9), §4 (13)-(18)) -/
+/-! ### The transport coefficients -/
 
-/-- `0 < d ≤ 3/10` (the note's (9)) and `20/7 ≤ λS ≤ 19/6`. -/
+/-- `0 < d ≤ 3/10` and `20/7 ≤ λS ≤ 19/6`. -/
 theorem hl3c_d_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) :
     0 < hl3cd x a ∧ hl3cd x a ≤ 3 / 10 ∧ 20 / 7 ≤ hl3clam x a * (1 + x) ∧
@@ -581,7 +580,7 @@ theorem hl3c_d_bds (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     have h1 : ((x + 23) / 22) ^ 2 ≤ a ^ 2 := pow_le_pow_left₀ (by linarith) h23 2
     nlinarith [mul_nonneg (sub_nonneg.2 hx) (sub_nonneg.2 hx2)]
 
-/-- **The pairing bound** `E_L ≤ 5q - 83/200` (the note's (13)-(15)). -/
+/-- **The pairing bound** `E_L ≤ 5q - 83/200`. -/
 theorem hl3c_EL_bd (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) :
     hl3cEL x (hl3clam x a) (hl3cd x a) (hl3cu x a) ≤ 5 * hsQc x a - 83 / 200 := by
@@ -633,7 +632,7 @@ theorem hl3c_EL_bd (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
   have := nonneg_of_mul_nonneg_left (e ▸ hPE) (by positivity)
   linarith
 
-/-- The polynomial `Q_w(h, r)` of the note's (16). -/
+/-- The polynomial `Q_w(h, r)` that controls the norm bound `hl3c_w_bd`. -/
 noncomputable def hl3cQw (h r : ℝ) : ℝ :=
   (3278275 * h ^ 2 + 16992820 * h + 22245004) * r ^ 4 +
     (-15808000 * h ^ 3 + 31803500 * h ^ 2 + 466210640 * h + 728151984) * r ^ 3 +
@@ -644,7 +643,7 @@ noncomputable def hl3cQw (h r : ℝ) : ℝ :=
     (-442368000 * h ^ 7 - 5902848000 * h ^ 6 - 28361948160 * h ^ 5 - 60905292416 * h ^ 4 -
       71564445952 * h ^ 3 - 86648243805 * h ^ 2 - 76691490124 * h + 16148237836)
 
-/-- `Q_w(h, r) > 0` for `0 ≤ h ≤ 1/6`, `r ≥ 0` (the note's (17)-(18)): `H₀ > 5·10⁸`,
+/-- `Q_w(h, r) > 0` for `0 ≤ h ≤ 1/6`, `r ≥ 0`: `H₀ > 5·10⁸`,
 `H₁ > -9·10⁸`, `H₂ > 64·10⁸`, `H₃, H₄ > 0`, and `4H₀H₂ > H₁²`. -/
 theorem hl3c_Qw_pos {h r : ℝ} (hh : 0 ≤ h) (hh6 : h ≤ 1 / 6) (hr : 0 ≤ r) : 0 < hl3cQw h r := by
   obtain ⟨p2, p3, p4, p5, p6, p7, -⟩ := hl3_hpow hh hh6
@@ -680,7 +679,7 @@ theorem hl3c_Qw_pos {h r : ℝ} (hh : 0 ≤ h) (hh6 : h ≤ 1 / 6) (hr : 0 ≤ r
   have : 0 ≤ H4 * r ^ 4 + H3 * r ^ 3 := by positivity
   linarith
 
-/-- **The norm bound** `w ≥ w_b = 901/1000 - 6q/5` (the note's (13), (16)-(18)). -/
+/-- **The norm bound** `w ≥ w_b = 901/1000 - 6q/5`, through `Q_w(h, r) > 0`. -/
 theorem hl3c_w_bd (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) :
     901 / 1000 - 6 * hsQc x a / 5 ≤ hl3cW x (hl3clam x a) (hl3cd x a) (hl3cu x a) := by
@@ -714,9 +713,9 @@ theorem hl3c_w_bd (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
   have := pos_of_mul_pos_left hQ (by positivity)
   linarith
 
-/-! ### The first term and the `Bu_b` term (§3 (12)) -/
+/-! ### The first term and the `Bu_b` term -/
 
-/-- `(x - B)(1 - p + p² - u)/a² < 1/48` (the note's (12)). -/
+/-- `(x - B)(1 - p + p² - u)/a² < 1/48`. -/
 theorem hl3c_T1 (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
     (h6 : 6 * a ^ 2 ≤ x * (x + 2)) :
     (x - hl3cB x) / a ^ 2 * (1 - hl3cp x a + hl3cp x a ^ 2 - hl3cu x a) < 1 / 48 := by
@@ -786,9 +785,10 @@ theorem hl3c_T3 (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ham : hs3amin x ≤ a)
   have hBu : hl3cB x * hl3cub x a ≤ -(9 / 2000) := by nlinarith
   nlinarith
 
-/-! ### The final comparison (§5 (19)-(21)) -/
+/-! ### The final comparison -/
 
-/-- **The quadratic comparison** (the note's (19)-(21)), in abstract variables. -/
+/-- **The quadratic comparison**, in abstract variables: from the bounds above, the shape
+derivative is below a convex quadratic in `q` that is negative on `[63/500, 1/7]`. -/
 theorem hl3c_core {a q A u EL w n N L T1 T3 : ℝ} (ha : 1 ≤ a) (ha' : a ≤ 5 / 4)
     (hL : L * a = 2 * q) (hq : 63 / 500 ≤ q) (hq' : q ≤ 1 / 7) (hA : 25 / 11 ≤ A) (hu : 3 / 4 ≤ u)
     (hEL : EL ≤ 5 * q - 83 / 200) (hw : 901 / 1000 - 6 * q / 5 ≤ w) (hn : 19 / 6 ≤ n)
@@ -875,8 +875,7 @@ theorem hl3_le_of_deriv_nonpos {f f' : ℝ → ℝ} {a b : ℝ} (hab : a ≤ b)
     (fun z hz => (hd z hz).neg) (fun z hz => by linarith [hn z hz])
   linarith
 
-/-- **`hs3_central_alpha`** (`DISPLACEMENT_CENTRAL_FACE` §2, by
-`SHORT_DISPLACEMENT_CENTRAL_SHAPE`): on the comparison path `a_min(x) ≤ α`, `6α² ≤ x(x + 2)`,
+/-- **`hs3_central_alpha`**: on the comparison path `a_min(x) ≤ α`, `6α² ≤ x(x + 2)`,
 both central tests are negative at `β = b(x, α)`, `q = q_c`, `u = ū(x, b)`. Both decrease from
 `a_min(x)` (`hl3c_H_neg`), where `b = 20x/19` and `hs3_central_endpoint` applies. -/
 theorem hs3_central_alpha_proof {x al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : hs3amin x ≤ al)

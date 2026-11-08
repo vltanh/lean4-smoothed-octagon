@@ -6,15 +6,14 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandExpl
 /-!
 # Gate S1 by hand, outer face, branch S: shape concavity and the terminal faces
 
-`SHORT_OUTER_S_RECIPROCAL`, `SHORT_OUTER_S_TERMINAL`. At the fixed slope `C = 8/17` and a fixed
+At the fixed slope `C = 8/17` and a fixed
 norm `u ∈ {3/4, 19/25}`, `F₁` is concave in `r = 1/α ∈ [1/x, 1]` (`1 ≤ x ≤ 3/2`): with `b₄ ≤ 0`,
-`b₃ < 0` (`(10)-(12)`), the residue `R = Q < 0` (shifted `R_f`, `R_v`), `2 ≤ Z ≤ S`, the curvature
-is at most `H = 6b₃/x + 2b₂ + 2e²Q/S³ + 7e²/384 = -H_u(z)/(k S⁴(17x - 8)) < 0` (`(13)-(14)`). The
+`b₃ < 0`, the residue `R = Q < 0` (shifted `R_f`, `R_v`), `2 ≤ Z ≤ S`, the curvature
+is at most `H = 6b₃/x + 2b₂ + 2e²Q/S³ + 7e²/384 = -H_u(z)/(k S⁴(17x - 8)) < 0`. The
 two shape faces `α = 1` and `α = x` are then univariate.
 
-Route: the terminal faces `α = 1`, `α = x` are proved by clearing the denominator of the full
-univariate test (degree 8 and 12 in `z = x - 1`) and bounding its adverse monomials on
-`0 ≤ z ≤ 1/2`, instead of the third-derivative argument of §1 and the concavity in `x` of §3.
+The terminal faces `α = 1`, `α = x` are proved by clearing the denominator of the full univariate
+test (degree 8 and 12 in `z = x - 1`) and bounding its adverse monomials on `0 ≤ z ≤ 1/2`.
 
 ## Main API
 
@@ -29,7 +28,7 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- `b₃` at `C = 8/17`, `u = 3 / 4` (`SHORT_OUTER_S_RECIPROCAL` (10)-(12)). -/
+/-- `b₃` at `C = 8/17`, `u = 3 / 4`, in factored form. -/
 theorem hl1o_S_b3_f {x : ℝ} (hx : 1 ≤ x) :
     hl1b3 x (8 / 17) (3 / 4) = -(x * (34 * x - 33) * (102 * (x - 1) ^ 3 + 326 * (x - 1) ^ 2 + 213 * (x - 1) + 6)) /
       (6528 * (1 + x) * (17 * x - 8)) := by
@@ -99,7 +98,7 @@ theorem hl1o_S_Qn_f {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ (1 / 2 : ℝ)) :
     mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 4),
     mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 5)]
 
-/-- `b₃` at `C = 8/17`, `u = 19 / 25` (`SHORT_OUTER_S_RECIPROCAL` (10)-(12)). -/
+/-- `b₃` at `C = 8/17`, `u = 19 / 25`, in factored form. -/
 theorem hl1o_S_b3_v {x : ℝ} (hx : 1 ≤ x) :
     hl1b3 x (8 / 17) (19 / 25) = -(x * (34 * x - 33) * (646 * (x - 1) ^ 3 + 2059 * (x - 1) ^ 2 + 1332 * (x - 1) + 21)) /
       (40800 * (1 + x) * (17 * x - 8)) := by
@@ -317,7 +316,8 @@ theorem hl1o_S_signs {x u : ℝ} (hu : u = 3 / 4 ∨ u = 19 / 25) (hx1 : 1 ≤ x
       nlinarith [pow_nonneg hz0 2, pow_nonneg hz0 3, pow_nonneg hz0 4, pow_nonneg hz0 5,
         pow_nonneg hz0 6, pow_nonneg hz0 7]
 
-/-- **Reciprocal-shape concavity at `C = 8/17`** (`SHORT_OUTER_S_RECIPROCAL` (15)). -/
+/-- **Reciprocal-shape concavity at `C = 8/17`**: at `u ∈ {3/4, 19/25}`, `F₁` on the slope
+`8/17` is at least its smaller value at `α = 1` and `α = x`. -/
 theorem hl1o_S_recip {x a u : ℝ} (hu : u = 3 / 4 ∨ u = 19 / 25) (ha1 : 1 ≤ a) (hax : a ≤ x)
     (hx : x ≤ 3 / 2) :
     min (hh1oF1 x x (x + 8 / 17 * (x - 1)) u) (hh1oF1 x 1 (x + 8 / 17 * (1 - 1)) u) ≤
@@ -388,7 +388,7 @@ theorem hl1o_S_terminals {x u : ℝ} (hu : u = 3 / 4 ∨ u = 19 / 25) (hx1 : 1 �
         rw [h]; apply div_pos hn (by positivity)
       linarith
 
-/-- **The fixed-slope S face** (`SHORT_OUTER_S_TERMINAL` (1)). -/
+/-- **The fixed-slope S face**: `F₁ > 1/1000` on the slope `C = 8/17` for `3/4 ≤ u ≤ 19/25`. -/
 theorem hl1o_S_face {x a u : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 / 2) (hu0 : 3 / 4 ≤ u)
     (hu1 : u ≤ 19 / 25) : 1 / 1000 < hh1oF1 x a (x + 8 / 17 * (a - 1)) u := by
   have hx1 : 1 ≤ x := le_trans ha1 hax
@@ -402,7 +402,7 @@ theorem hl1o_S_face {x a u : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 
   have m2 := lt_of_lt_of_le (lt_min t3 t4) h2
   exact lt_of_lt_of_le (lt_min m1 m2) hm
 
-/-- **The S branch of the outer face** (`SHORT_OUTER_S_TERMINAL` (2)): for `1 ≤ α ≤ x ≤ 3/2`,
+/-- **The S branch of the outer face**: for `1 ≤ α ≤ x ≤ 3/2`,
 `β = x + C(α - 1)` with `8/17 ≤ C ≤ 10/13`, `3/4 ≤ u ≤ 19/25`: `F₀ ≥ F₁ > 0`. -/
 theorem hl1o_S_main {x a b u C : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 / 2)
     (hC0 : 8 / 17 ≤ C) (hC1 : C ≤ 10 / 13) (hb : b = x + C * (a - 1)) (hu0 : 3 / 4 ≤ u)

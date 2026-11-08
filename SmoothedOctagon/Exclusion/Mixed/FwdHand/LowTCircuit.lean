@@ -4,16 +4,16 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.HighRatioLower
 public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTTools
 
 /-!
-# Case M2, forward successor by hand: the low-`t` residual with the new multipliers
+# Case M2, forward successor by hand: the low-`t` residual and its multipliers
 
-`docs/lighter-proofs/NONSHORT_LOW_T_SHAPE.md` (5), (9) and `NONSHORT_LOW_T_CURVATURE.md` §1 (PR #2,
-branch `proof/lighter-signs`). In the low-`t` large-gap branch (`1/3 ≤ t ≤ 3/8`) the combined
+In the low-`t` large-gap branch (`1/3 ≤ t ≤ 3/8`) the combined
 residual is taken with the multipliers `a = 7/2 - 10(q - 1)` (`nltAl`) and
 `m = 8j + 8(q - 1) - 1/6` (`nltM`), the incoming majorant `V_L = hrlVL` (`T_L = (912 - 401x)/(24D)`),
 the logarithm majorant `L₊` and the floor `F_ℓ`. At the unit shape `k = 1` its positive multiple
-`S = 24(q + 1)WD · fhComb` (`W = 1 + x`, `D = 17x + 76`) is the source circuit (C3)
-`S = 24WD(q + 1)C + 4(q + 1)AV_n - 16W²DpqB(q² + 10q + 1)` (`nltS`, `nlt_link`), whose coefficients
-in `y = q - 1` are the bivariate polynomials `nltSt0`, …, `nltSt6` (`nlt_S_split`).
+`S = 24(q + 1)WD · fhComb` (`W = 1 + x`, `D = 17x + 76`) is the circuit
+`S = 24WD(q + 1)C + 4(q + 1)AV_n - 16W²DpqB(q² + 10q + 1)` (`nltS`, `nlt_link`), with `p = t + x`
+and polynomials `A`, `B`, `C` in `q` whose coefficients are `nltA0`, …, `nltC5`. The coefficients
+of `S` in `y = q - 1` are the bivariate polynomials `nltSt0`, …, `nltSt6` (`nlt_S_split`).
 
 ## Main API
 
@@ -25,78 +25,78 @@ in `y = q - 1` are the bivariate polynomials `nltSt0`, …, `nltSt6` (`nlt_S_spl
 
 namespace SmoothedOctagon
 
-/-- The multiplier `a = 7/2 - 10(q - 1)` (`NONSHORT_LOW_T_SHAPE` (5)). -/
+/-- The multiplier `a = 7/2 - 10(q - 1)`. -/
 noncomputable def nltAl (q : ℝ) : ℝ := 7 / 2 - 10 * (q - 1)
 
-/-- The multiplier `m = 8j + 8(q - 1) - 1/6`, `j = 2t + x - 1` (`NONSHORT_LOW_T_SHAPE` (5)). -/
+/-- The multiplier `m = 8j + 8(q - 1) - 1/6`, `j = 2t + x - 1`. -/
 noncomputable def nltM (t x q : ℝ) : ℝ := 8 * (2 * t + x - 1) + 8 * (q - 1) - 1 / 6
 
-/-- `A_0` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `A_0`: the coefficient of `q^0` in the polynomial `A` of the circuit `S`. -/
 noncomputable def nltA0 (t x : ℝ) : ℝ :=
   t * x + t ^ 2 + 4 * t * x ^ 2 + 4 * t ^ 2 * x + 6 * t * x ^ 3 + 6 * t ^ 2 * x ^ 2 + 4 * t * x ^ 4 + 4 * t ^ 2 * x ^ 3 + t * x ^ 5 + t ^ 2 * x ^ 4
 
-/-- `A_1` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `A_1`: the coefficient of `q^1` in the polynomial `A` of the circuit `S`. -/
 noncomputable def nltA1 (t x : ℝ) : ℝ :=
   (97 / 6) + (49 / 6) * x - 16 * t - 8 * x ^ 2 - 18 * t * x - t ^ 2 - 7 * t * x ^ 2 - 3 * t ^ 2 * x - 9 * t * x ^ 3 - 3 * t ^ 2 * x ^ 2 - 5 * t * x ^ 4 - t ^ 2 * x ^ 3 - t * x ^ 5
 
-/-- `A_2` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `A_2`: the coefficient of `q^2` in the polynomial `A` of the circuit `S`. -/
 noncomputable def nltA2 (t x : ℝ) : ℝ :=
   -8 + (11 / 2) * x - t + 27 * x ^ 2 - (33 / 2) * t * x + (27 / 2) * x ^ 3 + (19 / 2) * t * x ^ 2 + 25 * t ^ 2 * x + 77 * t * x ^ 3 + 48 * t ^ 2 * x ^ 2 + (129 / 2) * t * x ^ 4 + 21 * t ^ 2 * x ^ 3 + (25 / 2) * t * x ^ 5 - 2 * t ^ 2 * x ^ 4
 
-/-- `A_3` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `A_3`: the coefficient of `q^3` in the polynomial `A` of the circuit `S`. -/
 noncomputable def nltA3 (t x : ℝ) : ℝ :=
   -37 * x + t - (121 / 2) * x ^ 2 + 11 * t * x - (47 / 2) * x ^ 3 - 60 * t * x ^ 2 - 16 * t ^ 2 * x - 160 * t * x ^ 3 - 34 * t ^ 2 * x ^ 2 - (225 / 2) * t * x ^ 4 - 18 * t ^ 2 * x ^ 3 - (45 / 2) * t * x ^ 5
 
-/-- `A_4` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `A_4`: the coefficient of `q^4` in the polynomial `A` of the circuit `S`. -/
 noncomputable def nltA4 (t x : ℝ) : ℝ :=
   20 * x + 30 * x ^ 2 + t * x + 10 * x ^ 3 + 43 * t * x ^ 2 + t ^ 2 * x + 79 * t * x ^ 3 - 3 * t ^ 2 * x ^ 2 - 2 * t ^ 3 * x + 49 * t * x ^ 4 + t ^ 2 * x ^ 3 + 10 * t * x ^ 5 + t ^ 2 * x ^ 4
 
-/-- `B_0` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `B_0`: the coefficient of `q^0` in the polynomial `B` of the circuit `S`. -/
 noncomputable def nltB0 (t x : ℝ) : ℝ :=
   -(97 / 6) + 8 * x + (3 / 2) * t - 29 * t * x - 29 * t * x ^ 2 - 29 * t ^ 2 * x - 29 * t * x ^ 3 - 58 * t ^ 2 * x ^ 2 - (29 / 2) * t * x ^ 4 - 29 * t ^ 2 * x ^ 3
 
-/-- `B_1` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `B_1`: the coefficient of `q^1` in the polynomial `B` of the circuit `S`. -/
 noncomputable def nltB1 (t x : ℝ) : ℝ :=
   8 + (49 / 2) * t + 49 * t * x + 49 * t * x ^ 2 + 49 * t ^ 2 * x + 49 * t * x ^ 3 + 98 * t ^ 2 * x ^ 2 + (49 / 2) * t * x ^ 4 + 49 * t ^ 2 * x ^ 3
 
-/-- `B_2` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `B_2`: the coefficient of `q^2` in the polynomial `B` of the circuit `S`. -/
 noncomputable def nltB2 (t x : ℝ) : ℝ :=
   -10 * t - 18 * t * x + t ^ 2 - 19 * t * x ^ 2 - 20 * t ^ 2 * x - 18 * t * x ^ 3 - 35 * t ^ 2 * x ^ 2 + 2 * t ^ 3 * x - 9 * t * x ^ 4 - 18 * t ^ 2 * x ^ 3
 
-/-- `B_3` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `B_3`: the coefficient of `q^3` in the polynomial `B` of the circuit `S`. -/
 noncomputable def nltB3 (t x : ℝ) : ℝ :=
   -2 * t * x - t ^ 2 - t * x ^ 2 - 2 * t * x ^ 3 - 5 * t ^ 2 * x ^ 2 - 2 * t ^ 3 * x - t * x ^ 4 - 2 * t ^ 2 * x ^ 3
 
-/-- `C_0` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `C_0`: the coefficient of `q^0` in the polynomial `C` of the circuit `S`. -/
 noncomputable def nltC0 (t x : ℝ) : ℝ :=
   -3 * t * x - 3 * t ^ 2 - 15 * t * x ^ 2 - 15 * t ^ 2 * x - 30 * t * x ^ 3 - 30 * t ^ 2 * x ^ 2 - 30 * t * x ^ 4 - 30 * t ^ 2 * x ^ 3 - 15 * t * x ^ 5 - 15 * t ^ 2 * x ^ 4 - 3 * t * x ^ 6 - 3 * t ^ 2 * x ^ 5
 
-/-- `C_1` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `C_1`: the coefficient of `q^1` in the polynomial `C` of the circuit `S`. -/
 noncomputable def nltC1 (t x : ℝ) : ℝ :=
   -(194 / 3) - (292 / 3) * x + 64 * t - (2 / 3) * x ^ 2 + 134 * t * x + 3 * t ^ 2 + 32 * x ^ 3 + 45 * t * x ^ 2 - 80 * t ^ 2 * x - 46 * t ^ 3 - 136 * t * x ^ 3 - 350 * t ^ 2 * x ^ 2 - 184 * t ^ 3 * x - 234 * t * x ^ 4 - 540 * t ^ 2 * x ^ 3 - 276 * t ^ 3 * x ^ 2 - 166 * t * x ^ 5 - 365 * t ^ 2 * x ^ 4 - 184 * t ^ 3 * x ^ 3 - 43 * t * x ^ 6 - 92 * t ^ 2 * x ^ 5 - 46 * t ^ 3 * x ^ 4
 
-/-- `C_2` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `C_2`: the coefficient of `q^2` in the polynomial `C` of the circuit `S`. -/
 noncomputable def nltC2 (t x : ℝ) : ℝ :=
   32 + 10 * x + 4 * t - (584 / 3) * x ^ 2 - (370 / 3) * t * x - (386 / 3) * t ^ 2 - 130 * x ^ 3 + 138 * t * x ^ 2 + 174 * t ^ 2 * x + 196 * t ^ 3 - 54 * x ^ 4 + 160 * t * x ^ 3 + 672 * t ^ 2 * x ^ 2 + 450 * t ^ 3 * x - 8 * t ^ 4 + 304 * t * x ^ 4 + 944 * t ^ 2 * x ^ 3 + 210 * t ^ 3 * x ^ 2 - 140 * t ^ 4 * x + 162 * t * x ^ 5 + 248 * t ^ 2 * x ^ 4 - 402 * t ^ 3 * x ^ 3 - 256 * t ^ 4 * x ^ 2 + 10 * t * x ^ 6 - 102 * t ^ 2 * x ^ 5 - 294 * t ^ 3 * x ^ 4 - 124 * t ^ 4 * x ^ 3
 
-/-- `C_3` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `C_3`: the coefficient of `q^3` in the polynomial `C` of the circuit `S`. -/
 noncomputable def nltC3 (t x : ℝ) : ℝ :=
   148 * x - 4 * t + 422 * x ^ 2 + 68 * t * x + 136 * t ^ 2 + 336 * x ^ 3 + 154 * t * x ^ 2 + 60 * t ^ 2 * x - 114 * t ^ 3 + 94 * x ^ 4 + 244 * t * x ^ 3 - 524 * t ^ 2 * x ^ 2 - 164 * t ^ 3 * x + 12 * t ^ 4 + 154 * t * x ^ 4 - 408 * t ^ 2 * x ^ 3 + 576 * t ^ 3 * x ^ 2 + 128 * t ^ 4 * x + 148 * t * x ^ 5 + 476 * t ^ 2 * x ^ 4 + 1188 * t ^ 3 * x ^ 3 + 220 * t ^ 4 * x ^ 2 + 92 * t * x ^ 6 + 404 * t ^ 2 * x ^ 5 + 562 * t ^ 3 * x ^ 4 + 104 * t ^ 4 * x ^ 3
 
-/-- `C_4` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `C_4`: the coefficient of `q^4` in the polynomial `C` of the circuit `S`. -/
 noncomputable def nltC4 (t x : ℝ) : ℝ :=
   -80 * x - 200 * x ^ 2 - 3 * t * x - 39 * t ^ 2 - 160 * x ^ 3 - 111 * t * x ^ 2 - 31 * t ^ 2 * x + 28 * t ^ 3 - 40 * x ^ 4 - 206 * t * x ^ 3 + 182 * t ^ 2 * x ^ 2 - 24 * t ^ 3 * x - 4 * t ^ 4 - 178 * t * x ^ 4 + 10 * t ^ 2 * x ^ 3 - 444 * t ^ 3 * x ^ 2 - 40 * t ^ 4 * x - 127 * t * x ^ 5 - 335 * t ^ 2 * x ^ 4 - 576 * t ^ 3 * x ^ 3 - 12 * t ^ 4 * x ^ 2 + 8 * t ^ 5 * x - 55 * t * x ^ 6 - 203 * t ^ 2 * x ^ 5 - 232 * t ^ 3 * x ^ 4 - 8 * t ^ 4 * x ^ 3
 
-/-- `C_5` of `NONSHORT_LOW_T_CURVATURE` (C2). -/
+/-- `C_5`: the coefficient of `q^5` in the polynomial `C` of the circuit `S`. -/
 noncomputable def nltC5 (t x : ℝ) : ℝ :=
   -2 * t * x - t ^ 2 - t * x ^ 2 - 4 * t * x ^ 3 - 10 * t ^ 2 * x ^ 2 - 4 * t ^ 3 * x - 2 * t * x ^ 4 - 4 * t ^ 2 * x ^ 3 - 2 * t * x ^ 5 - 9 * t ^ 2 * x ^ 4 - 12 * t ^ 3 * x ^ 3 - 4 * t ^ 4 * x ^ 2 - t * x ^ 6 - 4 * t ^ 2 * x ^ 5 - 4 * t ^ 3 * x ^ 4
 
-/-- **The source circuit** (`NONSHORT_LOW_T_CURVATURE` (C3)). -/
+/-- **The circuit** `S = 24WD(q + 1)C + 4(q + 1)AV_n - 16W²DpqB(q² + 10q + 1)`. -/
 noncomputable def nltS (t x q : ℝ) : ℝ :=
   24 * (1 + x) * (17 * x + 76) * (q + 1) * (nltC0 t x * q ^ 0 + nltC1 t x * q ^ 1 + nltC2 t x * q ^ 2 + nltC3 t x * q ^ 3 + nltC4 t x * q ^ 4 + nltC5 t x * q ^ 5) + 4 * (q + 1) * (nltA0 t x * q ^ 0 + nltA1 t x * q ^ 1 + nltA2 t x * q ^ 2 + nltA3 t x * q ^ 3 + nltA4 t x * q ^ 4) * hrlVn t x
     - 16 * (1 + x) ^ 2 * (17 * x + 76) * (t + x) * q * (nltB0 t x * q ^ 0 + nltB1 t x * q ^ 1 + nltB2 t x * q ^ 2 + nltB3 t x * q ^ 3) * (q ^ 2 + 10 * q + 1)
 
-/-- **The link** (`NONSHORT_LOW_T_CURVATURE` (C2)-(C3)): `24(q + 1)WD · fhComb = S` at `k = 1`. -/
+/-- **The link**: `24(q + 1)WD · fhComb = S` at `k = 1`. -/
 theorem nlt_link (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
     24 * (q + 1) * (1 + x) * (17 * x + 76) *
         fhComb (nltAl q) (nltM t x q) t x 1 q (hrlVL t x) (nhLp q) (nhFl t x q) = nltS t x q := by

@@ -5,17 +5,15 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Envelope
 /-!
 # Gate S3 helper: the zero-scale face
 
-`MIXED_SMALLER_SHORT_DISPLACEMENT_ZERO_SCALE` (1)-(23); inventory HS-S3 R16-R22. At scale `q = 0`
-the displacement-weighted envelope at fixed normalized duration `p = y r_A` is
+At scale `q = 0` the displacement-weighted envelope at fixed normalized duration `p = y r_A` is
 `Φ(0) = C(p) + m/4`, `m = 4(4 - 3y)/(5α - 1)`. It increases with the incoming norm `u`, so it is at
-most its value `Z(x, α, r_A, y)` at `u = U(r_A)` (`ZERO_SCALE` (2)-(5)); `Z` decreases with `x` at
-fixed `(α, r)` and increases with `r` (`ZERO_SCALE` §§2-3), so it is at most its value on the two
-edges `x = 2` and `x = α` at `r = r₀(α, x)` (the bound `β ≥ b₀`), where the quadratic log bound and
-the two edge polynomials of `ZERO_SCALE` (16), (20) make it negative.
+most its value `Z(x, α, r_A, y)` at `u = U(r_A)`; `Z` decreases with `x` at fixed `(α, r)` and
+increases with `r`, so it is at most its value on the two edges `x = 2` and `x = α` at
+`r = r₀(α, x)` (the bound `β ≥ b₀`), where the quadratic log bound and an explicit polynomial in
+`α` on each edge make it negative.
 
-Route: the notes' argument, with the two monotonicity steps done separately and algebraically
-(lower `x` at fixed `(α, β)` by a product of monotone factors; raise `r` by an exact divided
-difference), instead of the chain rule along `x ↦ (x, r₀(α, x))`.
+The two monotonicity steps are done separately and algebraically: `x` is lowered at fixed
+`(α, β)` by a product of monotone factors, and `r` is raised by an exact divided difference.
 
 ## Main API
 
@@ -28,26 +26,26 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- `H = Sr(1 - r) - 1/S` (`ZERO_SCALE` (4)). -/
+/-- `H = Sr(1 - r) - 1/S`. -/
 private noncomputable def zH (x r : ℝ) : ℝ := (1 + x) * r * (1 - r) - 1 / (1 + x)
 
-/-- `C = 2 + (x - 1)/α²` (`ZERO_SCALE` (4)). -/
+/-- `C = 2 + (x - 1)/α²`. -/
 private noncomputable def zC (x a : ℝ) : ℝ := 2 + (x - 1) / a ^ 2
 
 /-- The `r`-slope of `d₀`: `-1 + 2x/α + (1 + 2x)/α²`. -/
 private noncomputable def zB (x a : ℝ) : ℝ := -1 + 2 * x / a + (1 + 2 * x) / a ^ 2
 
-/-- `d₀ = D/Q` with `β = α(1 - r)/r` (`ZERO_SCALE` (4)). -/
+/-- `d₀ = D/Q` with `β = α(1 - r)/r`. -/
 private noncomputable def zD (x a r : ℝ) : ℝ := 2 - 2 * x / a + r * zB x a
 
-/-- The zero-scale function at `u = U(r)` (`ZERO_SCALE` (5)). -/
+/-- The zero-scale function at `u = U(r)`. -/
 private noncomputable def zZ (x a r y : ℝ) : ℝ :=
   -zH x r * (1 - y * zD x a r) + r * (2 - y * zC x a) + (4 - 3 * y) / (5 * a - 1) + log y
 
-/-- `r₀(α, X) = α(9X + 8)/(α(17X + 8) + 9X²)`, the value of `r_A` at `β = b₀` (`ZERO_SCALE` (9)). -/
+/-- `r₀(α, X) = α(9X + 8)/(α(17X + 8) + 9X²)`, the value of `r_A` at `β = b₀`. -/
 private noncomputable def zR0 (a X : ℝ) : ℝ := a * (9 * X + 8) / (a * (17 * X + 8) + 9 * X ^ 2)
 
-/-- `log y ≤ (y - 1) - (y - 1)²/2` for `0 < y ≤ 1` (`ZERO_SCALE` (14)). -/
+/-- `log y ≤ (y - 1) - (y - 1)²/2` for `0 < y ≤ 1`. -/
 private lemma log_le_quad {y : ℝ} (hy : 0 < y) (hy1 : y ≤ 1) :
     log y ≤ (y - 1) - (y - 1) ^ 2 / 2 := by
   have h := ss_le_of_deriv (f := fun s => log s - (s - 1) + (s - 1) ^ 2 / 2)
@@ -64,14 +62,14 @@ private lemma log_le_quad {y : ℝ} (hy : 0 < y) (hy1 : y ≤ 1) :
   field_simp
   ring
 
-/-- `d₀ = r_A D/α²` (`ZERO_SCALE` (4)). -/
+/-- `d₀ = r_A D/α²`. -/
 private lemma d0_eq {x be al : ℝ} (hal : 0 < al) (hab : 0 < al + be) :
     hsRA al be * hsDg x be al / al ^ 2 = zD x al (hsRA al be) := by
   unfold hsRA hsDg zD zB
   field_simp
   ring
 
-/-- `D < Q` at `β ≥ b₀(X, α)` (`WEIGHT_REDUCTION` (5)). -/
+/-- `D < Q` at `β ≥ b₀(X, α)`. -/
 private lemma D_lt_Q {X be a : ℝ} (hX : 2 ≤ X) (ha : 1 ≤ a) (haX : a ≤ X)
     (hb : X * (9 * X + 8 * a) / (9 * X + 8) ≤ be) : hsDg X be a < a * (a + be) := by
   unfold hsDg
@@ -104,7 +102,7 @@ private lemma R0_le {X a : ℝ} (hX : 2 ≤ X) (ha : 0 < a) (haX : a ≤ X) : zR
   rw [div_le_div_iff₀ (by positivity) (by norm_num)]
   nlinarith [mul_nonneg ha.le (sub_nonneg.2 haX), mul_nonneg (sub_nonneg.2 hX) (by linarith : (0 : ℝ) ≤ X)]
 
-/-- **Raise the incoming norm** (`ZERO_SCALE` (2)-(5)): `Φ(0) ≤ Z(x, α, r_A, p/r_A)`. -/
+/-- **Raise the incoming norm**: `Φ(0) ≤ Z(x, α, r_A, p/r_A)`. -/
 private lemma phi0_le {x be al u p : ℝ} (hx : 2 ≤ x) (hal : 1 < al) (hxb : x ≤ be)
     (hurA : u ≤ m2U (hsRA al be)) (hDQ : hsDg x be al < al * (al + be)) (hp : 0 < p)
     (hpr : p ≤ hsRA al be) :
@@ -154,7 +152,7 @@ private lemma phi0_le {x be al u p : ℝ} (hx : 2 ≤ x) (hal : 1 < al) (hxb : x
     ring
   linarith
 
-/-- **Lower `x` at fixed `(α, r)`** (`ZERO_SCALE` (10)): `Z(x) ≤ Z(x')` for `2 ≤ x' ≤ x`. -/
+/-- **Lower `x` at fixed `(α, r)`**: `Z(x) ≤ Z(x')` for `2 ≤ x' ≤ x`. -/
 private lemma Z_x_mono {x x' a r y : ℝ} (hx' : 2 ≤ x') (hxx : x' ≤ x) (ha : 1 ≤ a)
     (hr : 1 / 3 ≤ r) (hr' : r ≤ 13 / 30) (hd : zD x' a r ≤ 1) (hy0 : 0 ≤ y) (hy1 : y ≤ 1) :
     zZ x a r y ≤ zZ x' a r y := by
@@ -187,7 +185,7 @@ private lemma Z_x_mono {x x' a r y : ℝ} (hx' : 2 ≤ x') (hxx : x' ≤ x) (ha 
   nlinarith [mul_nonneg (sub_nonneg.2 hH) hg, mul_nonneg hH0 (mul_nonneg hy0 (sub_nonneg.2 hD)),
     mul_nonneg (mul_nonneg (by linarith : (0 : ℝ) ≤ r) hy0) (sub_nonneg.2 hC)]
 
-/-- **Raise `r`** (`ZERO_SCALE` (6)-(8)): `Z(r) ≤ Z(r')` for `1/3 ≤ r ≤ r' ≤ 13/30`, by the exact
+/-- **Raise `r`**: `Z(r) ≤ Z(r')` for `1/3 ≤ r ≤ r' ≤ 13/30`, by the exact
 divided difference `Z(r') - Z(r) = (r' - r)((1 - y)B₀ + yB₁)`. -/
 private lemma Z_r_mono {x a r r' y : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ha : 1 ≤ a)
     (hax : a ≤ x) (hr : 1 / 3 ≤ r) (hrr : r ≤ r') (hr' : r' ≤ 13 / 30) (hy0 : 0 ≤ y)
@@ -248,14 +246,14 @@ private lemma Z_r_mono {x a r r' y : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (h
     ring
   linarith only [hid, hprod]
 
-/-- `Z(y) = E + L(1 - y) + log y` (`ZERO_SCALE` (13)). -/
+/-- `Z(y) = E + L(1 - y) + log y`. -/
 private lemma Z_eq_EL (x a r y : ℝ) : zZ x a r y =
     (-zH x r * (1 - zD x a r) + r * (2 - zC x a) + 1 / (5 * a - 1)) +
       (r * zC x a - zD x a r * zH x r + 3 / (5 * a - 1)) * (1 - y) + log y := by
   unfold zZ
   ring
 
-/-- The quadratic log bound and the square completion (`ZERO_SCALE` (14)):
+/-- The quadratic log bound and the square completion:
 `2E + (L - 1)² < 0` gives `Z(y) < 0` on `(0, 1]`. -/
 private lemma Z_neg_of {x a r y E L : ℝ} (hy : 0 < y) (hy1 : y ≤ 1)
     (hE : -zH x r * (1 - zD x a r) + r * (2 - zC x a) + 1 / (5 * a - 1) = E)
@@ -265,7 +263,8 @@ private lemma Z_neg_of {x a r y E L : ℝ} (hy : 0 < y) (hy1 : y ≤ 1)
   have := log_le_quad hy hy1
   nlinarith [sq_nonneg ((1 - y) - (L - 1))]
 
-/-- **The edge `x = 2`** (`ZERO_SCALE` (15)-(18)). -/
+/-- **The edge `x = 2`**: `Z(2, α, r₀(α, 2), y) < 0` for `1 < α ≤ 2`, `0 < y ≤ 1` (`Z_neg_of`
+with an explicit polynomial in `α`). -/
 private lemma edge_two {a y : ℝ} (ha : 1 < a) (ha2 : a ≤ 2) (hy : 0 < y) (hy1 : y ≤ 1) :
     zZ 2 a (zR0 a 2) y < 0 := by
   have hk : 0 < 5 * a - 1 := by linarith
@@ -320,7 +319,8 @@ private lemma edge_two {a y : ℝ} (ha : 1 < a) (ha2 : a ≤ 2) (hy : 0 < y) (hy
     have e0 : 0 ≤ z ^ 4 := by positivity
     linarith
 
-/-- **The edge `x = α`** (`ZERO_SCALE` (19)-(22)). -/
+/-- **The edge `x = α`**: `Z(α, α, r₀(α, α), y) < 0` for `2 ≤ α ≤ 13/6`, `0 < y ≤ 1` (`Z_neg_of`
+with an explicit polynomial in `α`). -/
 private lemma edge_diag {a y : ℝ} (ha : 2 ≤ a) (ha2 : a ≤ 13 / 6) (hy : 0 < y) (hy1 : y ≤ 1) :
     zZ a a (zR0 a a) y < 0 := by
   have hk : 0 < 5 * a - 1 := by linarith
@@ -387,8 +387,7 @@ private lemma edge_diag {a y : ℝ} (ha : 2 ≤ a) (ha2 : a ≤ 13 / 6) (hy : 0 
     have p12 : 0 ≤ v ^ 12 := by positivity
     linarith
 
-/-- **The zero-scale face** (`DISPLACEMENT_ZERO_SCALE` (2)-(23); inventory HS-S3 R16-R22): the
-statement of `hs3_zero_neg`. -/
+/-- **The zero-scale face**: the statement of `hs3_zero_neg`. -/
 theorem hs35_zero_neg {x be al u p : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 < al)
     (hax : al ≤ x) (hxb : x ≤ be) (hU : x * (9 * x + 8 * al) / (9 * x + 8) ≤ be)
     (hrA : 1 / 3 < hsRA al be) (hrA' : hsRA al be ≤ 13 / 30) (hu : 3 / 4 ≤ u)

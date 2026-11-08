@@ -6,18 +6,18 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandRecipPoly
 /-!
 # S2 hand signs: reciprocal-shape convexity of the outer tests
 
-`archive/lighter-proofs/SHORT_RATIO_OUTER_RECIPROCAL.md` (1): on the rectangle
-`13/6 ≤ x ≤ 12/5`, `5/8 ≤ c ≤ 7/8`, `1/x ≤ r ≤ 5/6`, `3/4 ≤ u ≤ 4/5`, both outer tests satisfy
-`(H_j)_rr > 1/2`. For `H₀`: the third derivative is positive by the coefficient bounds (8)-(11),
-and `(H₀)_rr(1/x) > 1/2` by the identities A (§2 (12)). For `H₁`: the residue `L = e⁴R`
-(`R = W(ξ)/7 - 17/4`, `ξ = -d/e`) is positive by the identities B, `Z⁴(H₁)_rrr` increases and is
-positive at `r = 1/x` by D (§3 (15)-(17)), and `(H₁)_rr(1/x) > 1/2` by C (§3 (18)-(19)). The
-eight polynomials are those of the algebra companion (`S2HandRecipPoly`); each identity below is
-the normalization listed there, affine in `u`.
+On the rectangle `13/6 ≤ x ≤ 12/5`, `5/8 ≤ c ≤ 7/8`, `1/x ≤ r ≤ 5/6`, `3/4 ≤ u ≤ 4/5`, both
+outer tests satisfy `(H_j)_rr > 1/2`. For `H₀`: the third derivative is positive by the
+coefficient bounds `hl2_comp`, `hl2_Wb`, and `(H₀)_rr(1/x) > 1/2` by the identities A. For `H₁`:
+the residue `L = e⁴R` (`R = W(ξ)/7 - 17/4`, `ξ = -d/e`) is positive by the identities B,
+`Z⁴(H₁)_rrr` increases and is positive at `r = 1/x` by D, and `(H₁)_rr(1/x) > 1/2` by C. The
+identities A-D write the relevant cleared quantity, which is affine in `u`, as the combination
+`(16 - 20u)P_{·,0} + (20u - 15)P_{·,1}` (up to constant factors) of the eight bivariate
+polynomials `P_{A,0}`, …, `P_{D,1}` of `S2HandRecipPoly`, each positive on the box.
 
 ## Main API
 
-* `hl2_comp`, `hl2_Wb`: the bounds (8)-(9).
+* `hl2_comp`, `hl2_Wb`: bounds on the components and on the quartic coefficients of `W`.
 * `hl2_H0d2_gt`, `hl2_H1d2_gt`: `(H_j)_rr > 1/2` on the rectangle.
 * `hl2_H0_le_max`, `hl2_H1_le_max`: each test is at most the larger endpoint value on any
   subinterval of `[1/x, 5/6]`.
@@ -40,7 +40,7 @@ theorem hl2_affine_pos {u P Q a b : ℝ} (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) 
     have h2 : 0 < (20 * u - 15) * Q / b := div_pos (mul_pos (by linarith) hQ) hb
     linarith
 
-/-- The bounds `SHORT_RATIO_OUTER_RECIPROCAL` (8). -/
+/-- Bounds on the components `x - c`, `d₁`, `d₂`, `E₀`, `J₂` on the rectangle. -/
 theorem hl2_comp {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) :
     5 / 4 < x - c ∧ x - c < 9 / 5 ∧ -5 / 4 < hl2d1 x c ∧ hl2d1 x c ≤ 11 / 20 ∧
@@ -62,7 +62,7 @@ theorem hl2_comp {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 
   refine ⟨by linarith, by linarith, by nlinarith, by nlinarith, by nlinarith, by nlinarith,
     by nlinarith, by nlinarith, by nlinarith, by nlinarith⟩
 
-/-- The coefficient bounds `SHORT_RATIO_OUTER_RECIPROCAL` (9). -/
+/-- Bounds on the quartic coefficients of `W`: `-50 < W₂ < -16`, `W₃ > -6`, `W₄ > 7`. -/
 theorem hl2_Wb {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) :
     -50 < hl2W2 x c u ∧ hl2W2 x c u < -16 ∧ -6 < hl2W3 x c u ∧ 7 < hl2W4 x c u := by
@@ -117,7 +117,7 @@ theorem hl2_Zb {x c r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 
 
 /-! ### The first test -/
 
-/-- `(H₀)_rrr > 0` (`SHORT_RATIO_OUTER_RECIPROCAL` (10)-(11)). -/
+/-- `(H₀)_rrr > 0`, from the coefficient bounds. -/
 theorem hl2_H0d3_pos {x c u r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) (hr : 1 / x ≤ r) (hr2 : r ≤ 5 / 6) :
     0 < hl2H0d3 x c u r := by
@@ -147,7 +147,7 @@ theorem hl2_H0d3_pos {x c u r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (h
   have t3 : 147 < (12 * (7 - c) * r - 30 * (x - c) * r ^ 2) * hl2W4 x c u := by nlinarith
   linarith
 
-/-- `(H₀)_rr(1/x) > 1/2` (`SHORT_RATIO_OUTER_RECIPROCAL` (12); identities A). -/
+/-- `(H₀)_rr(1/x) > 1/2` (identities A). -/
 theorem hl2_H0d2_edge {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) :
     1 / 2 < hl2H0d2 x c u (1 / x) := by
@@ -189,7 +189,7 @@ theorem hl2_H0d2_edge {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc
   unfold hl2H0d2
   linarith
 
-/-- `(H₀)_rr > 1/2` on the rectangle (`SHORT_RATIO_OUTER_RECIPROCAL` (1), `j = 0`). -/
+/-- `(H₀)_rr > 1/2` on the rectangle: it increases from its value at `r = 1/x`. -/
 theorem hl2_H0d2_gt {x c u r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) (hr : 1 / x ≤ r) (hr2 : r ≤ 5 / 6) :
     1 / 2 < hl2H0d2 x c u r :=
@@ -202,13 +202,13 @@ theorem hl2_H0d2_gt {x c u r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc
 /-- `ξ = -d/e`. -/
 noncomputable def hl2Xi (x c : ℝ) : ℝ := -(1 + c) / (x - c)
 
-/-- The residue `R = W(ξ)/7 - 17/4` (`SHORT_RATIO_OUTER_RECIPROCAL` (13)). -/
+/-- The residue `R = W(ξ)/7 - 17/4` at the pole `ξ = -d/e` of `1/Z`. -/
 noncomputable def hl2Rr (x c u : ℝ) : ℝ := hl2Wr x c u (hl2Xi x c) / 7 - 17 / 4
 
 /-- `L = e⁴R`. -/
 noncomputable def hl2Lr (x c u : ℝ) : ℝ := (x - c) ^ 4 * hl2Rr x c u
 
-/-- `(H₁)_rrr = A(r) - 6e³R/Z⁴ + 2e³/Z³` (`SHORT_RATIO_OUTER_RECIPROCAL` (15)). -/
+/-- `(H₁)_rrr = A(r) - 6e³R/Z⁴ + 2e³/Z³`. -/
 theorem hl2_H1d3_eq {x c u r : ℝ} (he : x - c ≠ 0) (hZ : hl2Zr x c r ≠ 0) :
     hl2H1d3 x c u r = 3 * hl2W3 x c u / 98 + 6 * hl2W4 x c u * r / 49 +
       6 * hl2W4 x c u / (7 * (x - c)) - 6 * (x - c) ^ 3 * hl2Rr x c u / hl2Zr x c r ^ 4 +
@@ -224,7 +224,7 @@ theorem hl2_H1d3_eq {x c u r : ℝ} (he : x - c ≠ 0) (hZ : hl2Zr x c r ≠ 0) 
   field_simp
   ring
 
-/-- `(H₁)_rr` in divided form (`SHORT_RATIO_OUTER_RECIPROCAL` (18)). -/
+/-- `(H₁)_rr` in divided form. -/
 theorem hl2_H1d2_eq {x c u r : ℝ} (he : x - c ≠ 0) (hZ : hl2Zr x c r ≠ 0) :
     hl2H1d2 x c u r = -hl2ELd2 x c u + hl2Wd2 x c u r / 196 + 6 * hl2W4 x c u * r / (7 * (x - c)) +
       2 * hl2W3 x c u / (7 * (x - c)) - 2 * (1 + c) * hl2W4 x c u / (7 * (x - c) ^ 2) +
@@ -240,7 +240,7 @@ theorem hl2_H1d2_eq {x c u r : ℝ} (he : x - c ≠ 0) (hZ : hl2Zr x c r ≠ 0) 
   field_simp
   ring
 
-/-- `L > 0` (`SHORT_RATIO_OUTER_RECIPROCAL` (14); identities B). -/
+/-- `L > 0` (identities B). -/
 theorem hl2_L_pos {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) : 0 < hl2Lr x c u := by
   have he : x - c ≠ 0 := by linarith
@@ -258,7 +258,7 @@ theorem hl2_L_pos {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5
     rw [key]; exact hl2_affine_pos hu hu2 hB0 hB1 (by norm_num) (by norm_num)
   exact pos_of_mul_pos_right this (by positivity)
 
-/-- `(H₁)_rrr > 0` (`SHORT_RATIO_OUTER_RECIPROCAL` (15)-(17); identities D). -/
+/-- `(H₁)_rrr > 0` (identities D). -/
 theorem hl2_H1d3_pos {x c u r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) (hr : 1 / x ≤ r) (_hr2 : r ≤ 5 / 6) :
     0 < hl2H1d3 x c u r := by
@@ -316,7 +316,7 @@ theorem hl2_H1d3_pos {x c u r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (h
   rw [e]
   positivity
 
-/-- The identity C (`SHORT_RATIO_OUTER_RECIPROCAL_ALGEBRA`: `107520e²S𝒞`). -/
+/-- The identity C for `107520e²S𝒞`. -/
 theorem hl2_keyC {x c u : ℝ} (hx0 : x ≠ 0) (he0 : x - c ≠ 0) (hS : 1 + x ≠ 0) :
     107520 * (x - c) ^ 2 * (1 + x) * (-hl2ELd2 x c u - 2 / 3 +
       6 * hl2W4 x c u / (7 * (x - c) * x) + 2 * hl2W3 x c u / (7 * (x - c)) -
@@ -327,7 +327,7 @@ theorem hl2_keyC {x c u : ℝ} (hx0 : x ≠ 0) (he0 : x - c ≠ 0) (hS : 1 + x �
     field_simp
     ring
 
-/-- `(H₁)_rr(1/x) > 1/2` (`SHORT_RATIO_OUTER_RECIPROCAL` (18)-(19); identities C). -/
+/-- `(H₁)_rr(1/x) > 1/2` (identities C). -/
 theorem hl2_H1d2_edge {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) :
     1 / 2 < hl2H1d2 x c u (1 / x) := by
@@ -352,7 +352,7 @@ theorem hl2_H1d2_edge {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc
         3 / 5 - 1 / 2) := by
       rw [keyC]; exact hl2_affine_pos hu hu2 hC0 hC1 (by norm_num) (by norm_num)
     exact pos_of_mul_pos_right this (by positivity)
-  -- the three comparisons of (18)-(19)
+  -- the three comparisons in the divided form
   have hWd2 : -(2 / 3) < hl2Wd2 x c u (1 / x) / 196 := by
     unfold hl2Wd2
     have h6 : 1 / x ≤ 6 / 13 := by rw [div_le_iff₀ hx0]; linarith
@@ -384,7 +384,7 @@ theorem hl2_H1d2_edge {x c u : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc
   rw [e6]
   linarith
 
-/-- `(H₁)_rr > 1/2` on the rectangle (`SHORT_RATIO_OUTER_RECIPROCAL` (1), `j = 1`). -/
+/-- `(H₁)_rr > 1/2` on the rectangle: it increases from its value at `r = 1/x`. -/
 theorem hl2_H1d2_gt {x c u r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hu : 3 / 4 ≤ u) (hu2 : u ≤ 4 / 5) (hr : 1 / x ≤ r) (hr2 : r ≤ 5 / 6) :
     1 / 2 < hl2H1d2 x c u r :=

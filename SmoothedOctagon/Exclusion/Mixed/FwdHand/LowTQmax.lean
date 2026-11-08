@@ -5,18 +5,16 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTHorner
 /-!
 # Case M2, forward successor by hand: the low-`t` unit sign on the maximum-duration face
 
-`docs/lighter-proofs/NONSHORT_LOW_T_QMAX.md` and `NONSHORT_LOW_T_QMAX_AUXILIARIES.md` (PR #2, branch
-`proof/lighter-signs`). On the face `q = (1 + h + j)/(1 + 2j)` (`y = (h - j)/d`, `d = 1 + 2j`) the
-cleared circuit `6 d⁶ S = W² P` (`W = 1 + h + j`) defines the bivariate polynomial `P(h, j)` of the
-note (10) (`nltPqL`, `nlt_Pq_eq`). Its `j`-derivative is the factored polynomial `𝓡` of (13)
-(`nlt_Pq_dj`), which is at least `500𝓜` on `[1/4, 1/3] × [0, 1/4]` (15) (`nlt_Rq_ge`); `𝓜 > 0` on
-`1/30 ≤ j ≤ 3h/4` (auxiliary note (1), via `∂_h𝓜 > 0` (4) and the two endpoint faces) (`nlt_Mq_pos`).
+On the face `q = (1 + h + j)/(1 + 2j)` (`y = (h - j)/d`, `d = 1 + 2j`) the cleared circuit
+`6 d⁶ S = W² P` (`W = 1 + h + j`) defines a bivariate polynomial `P(h, j)` (`nltPqL`,
+`nlt_Pq_eq`). Its `j`-derivative is the factored polynomial `𝓡` (`nlt_Pq_dj`), which is at least
+`500𝓜` on `[1/4, 1/3] × [0, 1/4]` (`nlt_Rq_ge`); `𝓜 > 0` on `1/30 ≤ j ≤ 3h/4` (`nlt_Mq_pos`),
+since `∂_h𝓜 > 0` and `𝓜` is positive on the two endpoint faces `h = 1/4` and `h = 4j/3`.
 Hence `P` increases in `j` and `P(h, j) ≥ P(h, 1/30) > 39` (`nlt_face_qmax`).
 
-Route: `P(h, 1/30) > 39` is proved directly as a one-variable sign (termwise monomial bound after a
-shift) in place of the zero-gap value (19) and the integral bound (21)-(25); the identities (10),
-(14) are checked by direct expansion (at most 136 monomials) instead of sixth derivatives and zero
-jets; the one-variable signs use termwise monomial bounds after a shift.
+`P(h, 1/30) > 39` is proved directly as a one-variable sign; the identities `nlt_Pq_eq`,
+`nlt_Pq_dj` are checked by direct expansion (at most 136 monomials); the one-variable signs use
+termwise monomial bounds after a shift.
 
 ## Main API
 
@@ -28,78 +26,78 @@ jets; the one-variable signs use termwise monomial bounds after a shift.
 
 namespace SmoothedOctagon
 
-/-- The coefficients in `j` of the cleared maximum-duration numerator `P(h, j)` (note (10)). -/
+/-- The coefficients in `j` of the cleared maximum-duration numerator `P(h, j)`. -/
 noncomputable def nltPqL (h : ℝ) : List ℝ :=
   [(12 * h ^ 2 - 22762 * h ^ 3 - 38304 * h ^ 4 + 80212 * h ^ 5 + 116136 * h ^ 6 - 578049 * h ^ 7 - 1754001 * h ^ 8 - 2140842 * h ^ 9 - 1430898 * h ^ 10 - 552873 * h ^ 11 - 118887 * h ^ 12 - 11628 * h ^ 13 : ℝ), (-2408 * h + 110558 * h ^ 2 + 97600 * h ^ 3 + 945162 * h ^ 4 + 3769971 * h ^ 5 + 4134198 * h ^ 6 - 2453427 * h ^ 7 - 10074486 * h ^ 8 - 10564929 * h ^ 9 - 5810568 * h ^ 10 - 1841121 * h ^ 11 - 322434 * h ^ 12 - 23256 * h ^ 13 : ℝ), (12 - 21350 * h + 62196 * h ^ 2 - 2055456 * h ^ 3 + 2684664 * h ^ 4 + 20680851 * h ^ 5 + 26170965 * h ^ 6 + 4415583 * h ^ 7 - 16639725 * h ^ 8 - 16544076 * h ^ 9 - 7261710 * h ^ 10 - 1675542 * h ^ 11 - 170136 * h ^ 12 : ℝ), (-42798 + 570408 * h - 1856220 * h ^ 2 - 18016574 * h ^ 3 - 5750376 * h ^ 4 + 53365412 * h ^ 5 + 77418402 * h ^ 6 + 36992574 * h ^ 7 - 1386072 * h ^ 8 - 7462464 * h ^ 9 - 2762316 * h ^ 10 - 399024 * h ^ 11 : ℝ), (-479468 + 5559084 * h - 2262932 * h ^ 2 - 52062067 * h ^ 3 - 31873443 * h ^ 4 + 80610387 * h ^ 5 + 123127329 * h ^ 6 + 67169508 * h ^ 7 + 16571034 * h ^ 8 + 1631064 * h ^ 9 - 93024 * h ^ 10 : ℝ), (-2643022 + 20052419 * h + 12903858 * h ^ 2 - 74774025 * h ^ 3 - 59330232 * h ^ 4 + 65560812 * h ^ 5 + 100739844 * h ^ 6 + 48612174 * h ^ 7 + 11265012 * h ^ 8 + 1153008 * h ^ 9 : ℝ), (-8786580 + 36875433 * h + 41708145 * h ^ 2 - 62851071 * h ^ 3 - 70519173 * h ^ 4 + 14474358 * h ^ 5 + 35225268 * h ^ 6 + 13355964 * h ^ 7 + 2044080 * h ^ 8 : ℝ), (-18285880 + 37322168 * h + 53759262 * h ^ 2 - 36739830 * h ^ 3 - 57636612 * h ^ 4 - 14090832 * h ^ 5 + 1718016 * h ^ 6 + 1008576 * h ^ 7 : ℝ), (-23855858 + 21566391 * h + 39183213 * h ^ 2 - 15939723 * h ^ 3 - 27429555 * h ^ 4 - 8688660 * h ^ 5 - 935136 * h ^ 6 : ℝ), (-19296978 + 8913549 * h + 19369812 * h ^ 2 - 3696549 * h ^ 3 - 6431010 * h ^ 4 - 1570392 * h ^ 5 : ℝ), (-9383466 + 4241574 * h + 6422994 * h ^ 2 - 435318 * h ^ 3 - 845784 * h ^ 4 : ℝ), (-2427636 + 1677000 * h + 919548 * h ^ 2 - 168912 * h ^ 3 : ℝ), (-210936 + 210936 * h : ℝ)]
 
-/-- **The cleared face numerator** (note (10)): `6 d⁶ S = W² P` on `q = W/d`. -/
+/-- **The cleared face numerator**: `6 d⁶ S = W² P` on `q = W/d`. -/
 theorem nlt_Pq_eq (h j : ℝ) :
     6 * nltSt0 ((1 - h) / 2) (h + j) * (h - j) ^ 0 * (1 + 2 * j) ^ 6 + 6 * nltSt1 ((1 - h) / 2) (h + j) * (h - j) ^ 1 * (1 + 2 * j) ^ 5 + 6 * nltSt2 ((1 - h) / 2) (h + j) * (h - j) ^ 2 * (1 + 2 * j) ^ 4 + 6 * nltSt3 ((1 - h) / 2) (h + j) * (h - j) ^ 3 * (1 + 2 * j) ^ 3 + 6 * nltSt4 ((1 - h) / 2) (h + j) * (h - j) ^ 4 * (1 + 2 * j) ^ 2 + 6 * nltSt5 ((1 - h) / 2) (h + j) * (h - j) ^ 5 * (1 + 2 * j) ^ 1 + 6 * nltSt6 ((1 - h) / 2) (h + j) * (h - j) ^ 6 * (1 + 2 * j) ^ 0 = (1 + h + j) ^ 2 * lrhHorner (nltPqL h) j := by
   rw [nlt_St_h0, nlt_St_h1, nlt_St_h2, nlt_St_h3, nlt_St_h4, nlt_St_h5, nlt_St_h6]
   simp only [nltL0, nltL1, nltL2, nltL3, nltL4, nltL5, nltL6, nltPqL, lrhHorner]
   ring
 
-/-- The auxiliary polynomial `𝓜` (auxiliary note (3)). -/
+/-- The auxiliary polynomial `𝓜`; `500𝓜` is the main summand of `𝓡`. -/
 noncomputable def nltMq (h j : ℝ) : ℝ :=
   -5 * h - 257 * j ^ 2 - 86 * h * j + 221 * h ^ 2 - 3836 * j ^ 3 + 3422 * h * j ^ 2 + 248 * h ^ 2 * j + 195 * h ^ 3 - 26431 * j ^ 4 + 44472 * h * j ^ 3 - 11138 * h ^ 2 * j ^ 2 - 8222 * h ^ 3 * j + 1890 * h ^ 4 - 105439 * j ^ 5 + 200524 * h * j ^ 4 - 18104 * h ^ 2 * j ^ 3 - 108100 * h ^ 3 * j ^ 2 + 10738 * h ^ 4 * j + 7539 * h ^ 5 - 256003 * j ^ 6 + 442505 * h * j ^ 5 + 129038 * h ^ 2 * j ^ 4 - 416497 * h ^ 3 * j ^ 3 - 34503 * h ^ 4 * j ^ 2 + 82723 * h ^ 5 * j + 8268 * h ^ 6 - 381694 * j ^ 7 + 522510 * h * j ^ 6 + 500497 * h ^ 2 * j ^ 5 - 747741 * h ^ 3 * j ^ 4 - 254988 * h ^ 4 * j ^ 3 + 320192 * h ^ 5 * j ^ 2 + 104683 * h ^ 6 * j - 4907 * h ^ 7 - 336381 * j ^ 8 + 455425 * h * j ^ 7 + 484321 * h ^ 2 * j ^ 6 - 1018180 * h ^ 3 * j ^ 5 - 358391 * h ^ 4 * j ^ 4 + 926841 * h ^ 5 * j ^ 3 + 517202 * h ^ 6 * j ^ 2 - 13039 * h ^ 7 * j - 28629 * h ^ 8
 
-/-- The positive error polynomial `𝓔` (note §2). -/
+/-- The error polynomial `𝓔`, a summand of `𝓡` with positive coefficients. -/
 noncomputable def nltEq (h j : ℝ) : ℝ :=
   24 * j + 92 * h + 106 * j ^ 2 + 300 * h * j + 58 * h ^ 2 + 128 * j ^ 3 + 224 * h * j ^ 2 + 392 * h ^ 2 * j + 100 * h ^ 3 + 390 * j ^ 4 + 336 * h * j ^ 3 + 340 * h ^ 2 * j ^ 2 + 88 * h ^ 3 * j + 162 * h ^ 4 + 20 * j ^ 5 + 95 * h * j ^ 4 + 272 * h ^ 2 * j ^ 3 + 278 * h ^ 3 * j ^ 2 + 328 * h ^ 4 * j + 471 * h ^ 5 + 340 * j ^ 6 + 98 * h * j ^ 5 + 290 * h ^ 2 * j ^ 4 + 232 * h ^ 3 * j ^ 3 + 372 * h ^ 4 * j ^ 2 + 202 * h ^ 5 * j + 198 * h ^ 6 + 136 * j ^ 7 + 176 * h * j ^ 6 + 370 * h ^ 2 * j ^ 5 + 375 * h ^ 3 * j ^ 4 + 228 * h ^ 4 * j ^ 3 + 236 * h ^ 5 * j ^ 2 + 430 * h ^ 6 * j + 73 * h ^ 7 + (106467959 / 48) * j ^ 8 + (5674 / 27) * h * j ^ 7 + (13483 / 48) * h ^ 2 * j ^ 6 + (7817 / 16) * h ^ 3 * j ^ 5 + (1025 / 32) * h ^ 4 * j ^ 4 + (10739 / 27) * h ^ 5 * j ^ 3 + (3881 / 18) * h ^ 6 * j ^ 2 + (10220 / 27) * h ^ 7 * j + (13130 / 27) * h ^ 8
 
-/-- The homogeneous factor `U_1` (note §2). -/
+/-- The homogeneous factor `U_1`, multiplied by `h^1 - (1/4)^1` in `𝓡`. -/
 noncomputable def nltUq1 (h j : ℝ) : ℝ :=
   80221941 * j ^ 8 + 313465704 * h * j ^ 7 + 327804060 * h ^ 4 * j ^ 4 + 492509316 * h ^ 5 * j ^ 3 + 110977722 * h ^ 6 * j ^ 2
 
-/-- The homogeneous factor `V_1` (note §2). -/
+/-- The homogeneous factor `V_1`, multiplied by `(1/3)^1 - h^1` in `𝓡`. -/
 noncomputable def nltVq1 (h j : ℝ) : ℝ :=
   257178810 * h ^ 2 * j ^ 6 + 423115038 * h ^ 3 * j ^ 5 + 33279450 * h ^ 7 * j + 10564929 * h ^ 8
 
-/-- The homogeneous factor `U_2` (note §2). -/
+/-- The homogeneous factor `U_2`, multiplied by `h^2 - (1/4)^2` in `𝓡`. -/
 noncomputable def nltUq2 (h j : ℝ) : ℝ :=
   174328308 * j ^ 8 + 86846148 * h ^ 3 * j ^ 5 + 503699220 * h ^ 4 * j ^ 4 + 268678032 * h ^ 5 * j ^ 3
 
-/-- The homogeneous factor `V_2` (note §2). -/
+/-- The homogeneous factor `V_2`, multiplied by `(1/3)^2 - h^2` in `𝓡`. -/
 noncomputable def nltVq2 (h j : ℝ) : ℝ :=
   127517784 * h * j ^ 7 + 403456284 * h ^ 2 * j ^ 6 + 4158216 * h ^ 6 * j ^ 2 + 33088152 * h ^ 7 * j + 5810568 * h ^ 8
 
-/-- The homogeneous factor `U_3` (note §2). -/
+/-- The homogeneous factor `U_3`, multiplied by `h^3 - (1/4)^3` in `𝓡`. -/
 noncomputable def nltUq3 (h j : ℝ) : ℝ :=
   211351608 * h ^ 3 * j ^ 5 + 243060870 * h ^ 4 * j ^ 4 + 66284136 * h ^ 5 * j ^ 3
 
-/-- The homogeneous factor `V_3` (note §2). -/
+/-- The homogeneous factor `V_3`, multiplied by `(1/3)^3 - h^3` in `𝓡`. -/
 noncomputable def nltVq3 (h j : ℝ) : ℝ :=
   33268941 * j ^ 8 + 219436440 * h * j ^ 7 + 98635824 * h ^ 2 * j ^ 6 + 22387392 * h ^ 6 * j ^ 2 + 14523420 * h ^ 7 * j + 1841121 * h ^ 8
 
-/-- The homogeneous factor `U_4` (note §2). -/
+/-- The homogeneous factor `U_4`, multiplied by `h^4 - (1/4)^4` in `𝓡`. -/
 noncomputable def nltUq4 (h j : ℝ) : ℝ :=
   12026112 * h ^ 2 * j ^ 6 + 80135784 * h ^ 3 * j ^ 5 + 56325060 * h ^ 4 * j ^ 4 + 6524256 * h ^ 5 * j ^ 3
 
-/-- The homogeneous factor `V_4` (note §2). -/
+/-- The homogeneous factor `V_4`, multiplied by `(1/3)^4 - h^4` in `𝓡`. -/
 noncomputable def nltVq4 (h j : ℝ) : ℝ :=
   57879090 * j ^ 8 + 69509280 * h * j ^ 7 + 8286948 * h ^ 6 * j ^ 2 + 3351084 * h ^ 7 * j + 322434 * h ^ 8
 
-/-- The homogeneous factor `U_5` (note §2). -/
+/-- The homogeneous factor `U_5`, multiplied by `h^5 - (1/4)^5` in `𝓡`. -/
 noncomputable def nltUq5 (h j : ℝ) : ℝ :=
   7060032 * h ^ 2 * j ^ 6 + 12264480 * h ^ 3 * j ^ 5 + 5765040 * h ^ 4 * j ^ 4
 
-/-- The homogeneous factor `V_5` (note §2). -/
+/-- The homogeneous factor `V_5`, multiplied by `(1/3)^5 - h^5` in `𝓡`. -/
 noncomputable def nltVq5 (h j : ℝ) : ℝ :=
   14133528 * j ^ 8 + 7481088 * h * j ^ 7 + 372096 * h ^ 5 * j ^ 3 + 1197072 * h ^ 6 * j ^ 2 + 340272 * h ^ 7 * j + 23256 * h ^ 8
 
-/-- The factor `D_9` (note (11)). -/
+/-- The factor `D_9`, multiplied by `j^9` in `𝓡`. -/
 noncomputable def nltDq9 (h : ℝ) : ℝ :=
   -93834660 + 42415740 * h + 64229940 * h ^ 2 - 4353180 * h ^ 3 - 8457840 * h ^ 4
 
-/-- The factor `D_10` (note (11)). -/
+/-- The factor `D_10`, multiplied by `j^10` in `𝓡`. -/
 noncomputable def nltDq10 (h : ℝ) : ℝ :=
   -26703996 + 18447000 * h + 10115028 * h ^ 2 - 1858032 * h ^ 3
 
-/-- The factor `D_11` (note (11)). -/
+/-- The factor `D_11`, multiplied by `j^11` in `𝓡`. -/
 noncomputable def nltDq11 (h : ℝ) : ℝ :=
   -2531232 + 2531232 * h
 
-/-- The factored polynomial `𝓡` (note (13)). -/
+/-- The factored polynomial `𝓡`. -/
 noncomputable def nltRq (h j : ℝ) : ℝ :=
   500 * nltMq h j
     + nltEq h j
@@ -120,13 +118,13 @@ noncomputable def nltRq (h j : ℝ) : ℝ :=
     + j ^ 11 * (nltDq11 h - (-1898424))
     + 1898424 * j ^ 8 * ((1 / 4) ^ 3 - j ^ 3)
 
-/-- **The gap derivative** (note (14)): `∂_j P = 𝓡`. -/
+/-- **The gap derivative**: `∂_j P = 𝓡`. -/
 theorem nlt_Pq_dj (h j : ℝ) : lrhHorner (nltDer (nltPqL h)) j = nltRq h j := by
   simp only [nltPqL, nltDer, nltDerAux, lrhHorner]
   unfold nltRq nltMq nltEq nltUq1 nltUq2 nltUq3 nltUq4 nltUq5 nltVq1 nltVq2 nltVq3 nltVq4 nltVq5 nltDq9 nltDq10 nltDq11
   ring
 
-/-- `D_9 - ℓ_9` (note (12)). -/
+/-- `D_9 - ℓ_9`, `ℓ_9 = -79482001`. -/
 noncomputable def nltDqb9 (h : ℝ) : ℝ := nltDq9 h - (-79482001)
 
 /-- `nltDqb9 > 0` on `[1/4, 1/3]`. -/
@@ -144,7 +142,7 @@ theorem nltDqb9_pos {h : ℝ} (h1 : (1 / 4) ≤ h) (h2 : h ≤ (1 / 3)) : 0 < nl
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4]
 
 
-/-- `D_10 - ℓ_10` (note (12)). -/
+/-- `D_10 - ℓ_10`, `ℓ_10 = -21528873`. -/
 noncomputable def nltDqb10 (h : ℝ) : ℝ := nltDq10 h - (-21528873)
 
 /-- `nltDqb10 > 0` on `[1/4, 1/3]`. -/
@@ -160,8 +158,8 @@ theorem nltDqb10_pos {h : ℝ} (h1 : (1 / 4) ≤ h) (h2 : h ≤ (1 / 3)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3]
 
 
-/-- **The gap derivative bound** (note (15)): `𝓡 ≥ 500𝓜` on `[1/4, 1/3] × [0, 1/4]`; every other
-summand of (13) is a product of factors of known sign. -/
+/-- **The gap derivative bound**: `𝓡 ≥ 500𝓜` on `[1/4, 1/3] × [0, 1/4]`; every other summand of
+`𝓡` is a product of factors of known sign. -/
 theorem nlt_Rq_ge {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 0 ≤ j) (j1 : j ≤ 1 / 4) :
     500 * nltMq h j ≤ nltRq h j := by
   have h0 : 0 ≤ h := by linarith
@@ -213,46 +211,46 @@ noncomputable def nltMqL (j : ℝ) : List ℝ :=
 theorem nlt_Mq_h (h j : ℝ) : nltMq h j = lrhHorner (nltMqL j) h := by
   simp only [nltMqL, lrhHorner]; unfold nltMq; ring
 
-/-- `A_0(v)` of the auxiliary note (5). -/
+/-- `A_0(v)`: the coefficient of `(4h - 1)^0` in `∂_h𝓜` at `v = 4j`. -/
 noncomputable def nltAq0 (v : ℝ) : ℝ :=
   (1775673 / 4096) + (5629039 / 16384) * v - (3913717 / 4096) * v ^ 2 - (10369939 / 16384) * v ^ 3 + (819537 / 2048) * v ^ 4 + (2007379 / 4096) * v ^ 5 + (1529341 / 8192) * v ^ 6 + (455425 / 16384) * v ^ 7
 
-/-- `A_1(v)` of the auxiliary note (5). -/
+/-- `A_1(v)`: the coefficient of `(4h - 1)^1` in `∂_h𝓜` at `v = 4j`. -/
 noncomputable def nltAq1 (v : ℝ) : ℝ :=
   (1250347 / 1024) + (17305689 / 8192) * v - (3176553 / 4096) * v ^ 2 - (9000907 / 4096) * v ^ 3 - (4529315 / 4096) * v ^ 4 - (131569 / 1024) * v ^ 5 + (484321 / 8192) * v ^ 6
 
-/-- `A_2(v)` of the auxiliary note (5). -/
+/-- `A_2(v)`: the coefficient of `(4h - 1)^2` in `∂_h𝓜` at `v = 4j`. -/
 noncomputable def nltAq2 (v : ℝ) : ℝ :=
   (5486667 / 4096) + (65394153 / 16384) * v + (5259423 / 2048) * v ^ 2 - (2213025 / 8192) * v ^ 3 - (829599 / 1024) * v ^ 4 - (763635 / 4096) * v ^ 5
 
-/-- `A_3(v)` of the auxiliary note (5). -/
+/-- `A_3(v)`: the coefficient of `(4h - 1)^3` in `∂_h𝓜` at `v = 4j`. -/
 noncomputable def nltAq3 (v : ℝ) : ℝ :=
   (1094815 / 2048) + (13129687 / 4096) * v + (6804911 / 2048) * v ^ 2 + (3614253 / 4096) * v ^ 3 - (358391 / 4096) * v ^ 4
 
-/-- `A_4(v)` of the auxiliary note (5). -/
+/-- `A_4(v)`: the coefficient of `(4h - 1)^4` in `∂_h𝓜` at `v = 4j`. -/
 noncomputable def nltAq4 (v : ℝ) : ℝ :=
   -(923985 / 4096) + (17810705 / 16384) * v + (5479975 / 4096) * v ^ 2 + (4634205 / 16384) * v ^ 3
 
-/-- `A_5(v)` of the auxiliary note (5). -/
+/-- `A_5(v)`: the coefficient of `(4h - 1)^5` in `∂_h𝓜` at `v = 4j`. -/
 noncomputable def nltAq5 (v : ℝ) : ℝ :=
   -(37815 / 128) + (982377 / 8192) * v + (775803 / 4096) * v ^ 2
 
-/-- `A_6(v)` of the auxiliary note (5). -/
+/-- `A_6(v)`: the coefficient of `(4h - 1)^6` in `∂_h𝓜` at `v = 4j`. -/
 noncomputable def nltAq6 (v : ℝ) : ℝ :=
   -(435155 / 4096) - (91273 / 16384) * v
 
-/-- `A_7(v)` of the auxiliary note (5). -/
+/-- `A_7(v)`: the coefficient of `(4h - 1)^7` in `∂_h𝓜` at `v = 4j`. -/
 noncomputable def nltAq7 (_v : ℝ) : ℝ :=
   -(28629 / 2048)
 
-/-- The auxiliary derivative identity (5): `∂_h𝓜 = ∑ Aᵢ(4j)(4h - 1)ⁱ`. -/
+/-- The derivative identity: `∂_h𝓜 = ∑ Aᵢ(4j)(4h - 1)ⁱ`. -/
 theorem nlt_Mq_dh (h j : ℝ) : lrhHorner (nltDer (nltMqL j)) h =
     nltAq0 (4 * j) * (4 * h - 1) ^ 0 + nltAq1 (4 * j) * (4 * h - 1) ^ 1 + nltAq2 (4 * j) * (4 * h - 1) ^ 2 + nltAq3 (4 * j) * (4 * h - 1) ^ 3 + nltAq4 (4 * j) * (4 * h - 1) ^ 4 + nltAq5 (4 * j) * (4 * h - 1) ^ 5 + nltAq6 (4 * j) * (4 * h - 1) ^ 6 + nltAq7 (4 * j) * (4 * h - 1) ^ 7 := by
   simp only [nltMqL, nltDer, nltDerAux, lrhHorner]
   unfold nltAq0 nltAq1 nltAq2 nltAq3 nltAq4 nltAq5 nltAq6 nltAq7
   ring
 
-/-- A bound of the auxiliary note §1. -/
+/-- A coefficient bound for `∂_h𝓜 > 0`: `A_0`. -/
 noncomputable def nltAqb0 (v : ℝ) : ℝ := nltAq0 v
 
 /-- `nltAqb0 > 140` on `[0, 1]`. -/
@@ -348,7 +346,7 @@ theorem nltAqb0_pos {v : ℝ} (h1 : 0 ≤ v) (h2 : v ≤ 1) : 140 < nltAqb0 v :=
         rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7]
 
 
-/-- A bound of the auxiliary note §1. -/
+/-- A coefficient bound for `∂_h𝓜 > 0`: `A_1`. -/
 noncomputable def nltAqb1 (v : ℝ) : ℝ := nltAq1 v
 
 /-- `nltAqb1 > -816` on `[0, 1]`. -/
@@ -386,7 +384,7 @@ theorem nltAqb1_pos {v : ℝ} (h1 : 0 ≤ v) (h2 : v ≤ 1) : (-816) < nltAqb1 v
     rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6]
 
 
-/-- A bound of the auxiliary note §1. -/
+/-- A coefficient bound for `∂_h𝓜 > 0`: `A_2`. -/
 noncomputable def nltAqb2 (v : ℝ) : ℝ := nltAq2 v
 
 /-- `nltAqb2 > 1338` on `[0, 1]`. -/
@@ -406,7 +404,7 @@ theorem nltAqb2_pos {v : ℝ} (h1 : 0 ≤ v) (h2 : v ≤ 1) : 1338 < nltAqb2 v :
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5]
 
 
-/-- A bound of the auxiliary note §1. -/
+/-- A coefficient bound for `∂_h𝓜 > 0`: `A_3`. -/
 noncomputable def nltAqb3 (v : ℝ) : ℝ := nltAq3 v
 
 /-- `nltAqb3 > 0` on `[0, 1]`. -/
@@ -424,7 +422,7 @@ theorem nltAqb3_pos {v : ℝ} (h1 : 0 ≤ v) (h2 : v ≤ 1) : 0 < nltAqb3 v := b
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4]
 
 
-/-- A bound of the auxiliary note §1. -/
+/-- A coefficient bound for `∂_h𝓜 > 0`: `A_4`. -/
 noncomputable def nltAqb4 (v : ℝ) : ℝ := nltAq4 v
 
 /-- `nltAqb4 > -226` on `[0, 1]`. -/
@@ -440,7 +438,7 @@ theorem nltAqb4_pos {v : ℝ} (h1 : 0 ≤ v) (h2 : v ≤ 1) : (-226) < nltAqb4 v
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3]
 
 
-/-- A bound of the auxiliary note §1. -/
+/-- A coefficient bound for `∂_h𝓜 > 0`: `A_5`. -/
 noncomputable def nltAqb5 (v : ℝ) : ℝ := nltAq5 v
 
 /-- `nltAqb5 > -296` on `[0, 1]`. -/
@@ -454,7 +452,7 @@ theorem nltAqb5_pos {v : ℝ} (h1 : 0 ≤ v) (h2 : v ≤ 1) : (-296) < nltAqb5 v
   rw [e]; linarith only [z0, z1, p2, q2]
 
 
-/-- A bound of the auxiliary note §1. -/
+/-- A coefficient bound for `∂_h𝓜 > 0`: `A_6`. -/
 noncomputable def nltAqb6 (v : ℝ) : ℝ := nltAq6 v
 
 /-- `nltAqb6 > -112` on `[0, 1]`. -/
@@ -466,7 +464,7 @@ theorem nltAqb6_pos {v : ℝ} (h1 : 0 ≤ v) (h2 : v ≤ 1) : (-112) < nltAqb6 v
   rw [e]; linarith only [z0, z1]
 
 
-/-- A bound of the auxiliary note §1. -/
+/-- A coefficient bound for `∂_h𝓜 > 0`: `A_7`. -/
 noncomputable def nltAqb7 (v : ℝ) : ℝ := nltAq7 v
 
 /-- `nltAqb7 > -14` on `[0, 1]`. -/
@@ -478,7 +476,7 @@ theorem nltAqb7_pos {v : ℝ} (h1 : 0 ≤ v) (h2 : v ≤ 1) : (-14) < nltAqb7 v 
   rw [e]; linarith only [z0, z1]
 
 
-/-- The combined lower polynomial of the auxiliary note (11). -/
+/-- The combined lower polynomial: the coefficient bounds give `∂_h𝓜 ≥ K(4h - 1)`. -/
 noncomputable def nltMqK (u : ℝ) : ℝ := 140 - 816 * u + 1338 * u ^ 2 - 226 * u ^ 4 - 296 * u ^ 5 - 112 * u ^ 6 - 14 * u ^ 7
 
 /-- `nltMqK > 0` on `[0, 1/3]`. -/
@@ -502,7 +500,7 @@ theorem nltMqK_pos {u : ℝ} (h1 : 0 ≤ u) (h2 : u ≤ (1 / 3)) : 0 < nltMqK u 
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7]
 
 
-/-- `F(v) = 65536𝓜(1/4, v/4)` (auxiliary note (12)-(13)). -/
+/-- `F(v) = 65536𝓜(1/4, v/4)`. -/
 noncomputable def nltMqF (v : ℝ) : ℝ := 2073343 + 213357 * v - 6072350 * v ^ 2 - 458951 * v ^ 3 + 4782453 * v ^ 4 + 1315792 * v ^ 5 - 1521687 * v ^ 6 - 1071351 * v ^ 7 - 336381 * v ^ 8
 
 /-- `nltMqF > 0` on `[2/15, 3/4]`. -/
@@ -528,7 +526,7 @@ theorem nltMqF_pos {v : ℝ} (h1 : (2 / 15) ≤ v) (h2 : v ≤ (3 / 4)) : 0 < nl
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- `T(h)` with `65536𝓜(h, 3h/4) = hT(h)` (auxiliary note (17)-(18)). -/
+/-- `T(h)` with `65536𝓜(h, 3h/4) = hT(h)`. -/
 noncomputable def nltMqT (h : ℝ) : ℝ := -327680 + 782336 * h + 45060096 * h ^ 2 - 9367296 * h ^ 3 - 945389376 * h ^ 4 - 1607824368 * h ^ 5 + 4611512824 * h ^ 6 + 26334162591 * h ^ 7
 
 /-- `nltMqT > 0` on `[1/4, 1/3]`. -/
@@ -559,7 +557,7 @@ noncomputable def nltPq30 (h : ℝ) : ℝ :=
 theorem nlt_Pq30_eq (h : ℝ) : lrhHorner (nltPqL h) (1 / 30) = nltPq30 h := by
   simp only [nltPqL, lrhHorner]; unfold nltPq30; ring
 
-/-- `P(h, 1/30) > 39` (auxiliary note (2)). -/
+/-- `P(h, 1/30) > 39` on `[1/4, 1/3]`. -/
 theorem nlt_Pq30_gt {h : ℝ} (h1 : (1 / 4) ≤ h) (h2 : h ≤ (1 / 3)) : 39 < nltPq30 h := by
   obtain ⟨z, rfl⟩ : ∃ z, h = (1 / 4) + z := ⟨h - (1 / 4), by ring⟩
   have z0 : 0 ≤ z := by linarith
@@ -591,7 +589,7 @@ theorem nlt_Pq30_gt {h : ℝ} (h1 : (1 / 4) ≤ h) (h2 : h ≤ (1 / 3)) : 39 < n
   have e : nltPq30 ((1 / 4) + z) = (3266323305507477321173 / 60466176000000000000) + (1304569966743913949561 / 1417176000000000000) * z + (444222076574050877239 / 125971200000000000) * z ^ 2 - (986451461217987841189 / 15746400000000000) * z ^ 3 - (275486806079335308247 / 349920000000000) * z ^ 4 - (16430940574403920511 / 4374000000000) * z ^ 5 - (230645921046637483 / 24300000000) * z ^ 6 - (8798192758991689 / 607500000) * z ^ 7 - (230149354868321 / 16200000) * z ^ 8 - (1551213073163 / 168750) * z ^ 9 - (44077896647 / 11250) * z ^ 10 - (133257164 / 125) * z ^ 11 - (4253356 / 25) * z ^ 12 - (62016 / 5) * z ^ 13 := by unfold nltPq30; ring
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8, p9, q9, p10, q10, p11, q11, p12, q12, p13, q13]
 
-/-- **`𝓜` increases in `h`** (auxiliary note (4), (11)) on `[1/4, 1/3] × [0, 1/4]`. -/
+/-- **`𝓜` increases in `h`** on `[1/4, 1/3] × [0, 1/4]`. -/
 theorem nlt_Mq_dh_pos {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 0 ≤ j) (j1 : j ≤ 1 / 4) :
     0 < lrhHorner (nltDer (nltMqL j)) h := by
   rw [nlt_Mq_dh]
@@ -619,8 +617,8 @@ theorem nlt_Mq_dh_pos {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 0 
   have t7 := mul_le_mul_of_nonneg_right a7.le (pow_nonneg u0 7)
   linarith
 
-/-- **`𝓜 > 0`** (auxiliary note (1)) for `1/4 ≤ h ≤ 1/3`, `1/30 ≤ j ≤ 3h/4`: lower `h` to `1/4`
-if `j ≤ 3/16`, otherwise to `4j/3`, and use the endpoint signs (12)-(13), (17)-(18). -/
+/-- **`𝓜 > 0`** for `1/4 ≤ h ≤ 1/3`, `1/30 ≤ j ≤ 3h/4`: lower `h` to `1/4` if `j ≤ 3/16`,
+otherwise to `4j/3`, and use the endpoint signs `F > 0` (`nltMqF`) and `T > 0` (`nltMqT`). -/
 theorem nlt_Mq_pos {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 1 / 30 ≤ j)
     (j1 : j ≤ 3 / 4 * h) : 0 < nltMq h j := by
   have hd : ∀ s, HasDerivAt (lrhHorner (nltMqL j)) (lrhHorner (nltDer (nltMqL j)) s) s :=
@@ -649,7 +647,7 @@ theorem nlt_Mq_pos {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 1 / 3
     rw [nlt_Mq_h] at base
     linarith
 
-/-- **The maximum-duration face** (`NONSHORT_LOW_T_QMAX` (2)): for `1/4 ≤ h ≤ 1/3`,
+/-- **The maximum-duration face**: for `1/4 ≤ h ≤ 1/3`,
 `1/30 ≤ j ≤ 5h/7`, the circuit at `y = (h - j)/(1 + 2j)` is positive. -/
 theorem nlt_face_qmax {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 1 / 30 ≤ j)
     (j1 : j ≤ 5 / 7 * h) :

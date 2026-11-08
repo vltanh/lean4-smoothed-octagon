@@ -5,25 +5,24 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenXDefs
 /-!
 # S2 hand signs: the central x comparison, incoming norm and speed
 
-`archive/lighter-proofs/SHORT_RATIO_CENTRAL_X.md` §2: along `b = b_+(x, a)` the incoming norm
-`u = u_C(x, b)` has the representation `u = 3/4 + v - (a - 1)W` (9), with
+Along `b = b_+(x, a)` the incoming norm `u = u_C(x, b)` has the representation
+`u = 3/4 + v - (a - 1)W`, with
 `v = 17(x - 1)²/(240S²)`, `L_β = b - 1 = x - 1 + c(a - 1)`, `c = (24x + 51)/128`,
 `W = c(v - 1/3200)/L_β`, and its total x-derivative is `u_x = v_x - (a - 1)W_x`,
-`W_x - 1/400 = Φ(L_β)/L_β²` (10)-(11). On the rectangle `13/6 ≤ x ≤ 12/5`, `1 ≤ a ≤ 4/3`:
-`u ≤ U` and `u_x ≤ V` (8).
+`W_x - 1/400 = Φ(L_β)/L_β²`. On the rectangle `13/6 ≤ x ≤ 12/5`, `1 ≤ a ≤ 4/3`:
+`u ≤ U` and `u_x ≤ V`.
 
-Route for `u ≤ U`: the note obtains `W ≥ 1/200` from the monotonicity of `W` in `x` and `a`
-((10)-(13)); here `L_β(W - 1/200) = c(v - 1/3200) - L_β/200` is affine and decreasing in `a`, and
-its value at `a = 4/3` is a cubic in `X = x - 13/6` with positive coefficients. The speed bound
-follows the note: `Φ` is a concave quadratic in `L`, and its endpoint values are the printed
-quintics `p₀`, `p₁` of (12).
+For `u ≤ U`, `L_β(W - 1/200) = c(v - 1/3200) - L_β/200` is affine and decreasing in `a`, and its
+value at `a = 4/3` is a cubic in `X = x - 13/6` with positive coefficients. For the speed bound,
+`Φ` is a concave quadratic in `L`, and its values at the two ends of the range of `L_β` are
+explicit quintics in `x - 2`.
 
 ## Main API
 
-* `hl2cxv`, `hl2cxvx`, `hl2cxLb`, `hl2cxW`, `hl2cxPhi`, `hl2cxup` (§2).
+* `hl2cxv`, `hl2cxvx`, `hl2cxLb`, `hl2cxW`, `hl2cxPhi`, `hl2cxup`.
 * `hl2cx_bp_deriv`: `b_+` has x-derivative `ℓ`.
-* `hl2cx_uC_eq`: the representation (9). `hl2cx_uC_deriv`: `u_x = hl2cxup`.
-* `hl2cx_u_le`, `hl2cx_up_le`: `u ≤ U`, `u_x ≤ V` (8).
+* `hl2cx_uC_eq`: the representation `u = 3/4 + v - (a - 1)W`. `hl2cx_uC_deriv`: `u_x = hl2cxup`.
+* `hl2cx_u_le`, `hl2cx_up_le`: `u ≤ U`, `u_x ≤ V`.
 -/
 
 @[expose] public section
@@ -32,24 +31,24 @@ namespace SmoothedOctagon
 
 open Real Set
 
-/-- `v = 17(x - 1)²/(240S²)` (`SHORT_RATIO_CENTRAL_X` §2). -/
+/-- `v = 17(x - 1)²/(240S²)`. -/
 noncomputable def hl2cxv (x : ℝ) : ℝ := 17 * (x - 1) ^ 2 / (240 * (1 + x) ^ 2)
 
-/-- `v_x = 17(x - 1)/(60S³)` (`SHORT_RATIO_CENTRAL_X` §2). -/
+/-- `v_x = 17(x - 1)/(60S³)`. -/
 noncomputable def hl2cxvx (x : ℝ) : ℝ := 17 * (x - 1) / (60 * (1 + x) ^ 3)
 
 /-- `L_β = b_+ - 1 = x - 1 + c(a - 1)`, `c = (24x + 51)/128`. -/
 noncomputable def hl2cxLb (x a : ℝ) : ℝ := x - 1 + (24 * x + 51) / 128 * (a - 1)
 
-/-- `W = c(v - 1/3200)/L_β` (`SHORT_RATIO_CENTRAL_X` §2). -/
+/-- `W = c(v - 1/3200)/L_β`. -/
 noncomputable def hl2cxW (x a : ℝ) : ℝ :=
   (24 * x + 51) / 128 * (hl2cxv x - 1 / 3200) / hl2cxLb x a
 
-/-- `Φ(L) = c v_x L - (75/128)(v - 1/3200) - L²/400` (`SHORT_RATIO_CENTRAL_X` (11)). -/
+/-- `Φ(L) = c v_x L - (75/128)(v - 1/3200) - L²/400`. -/
 noncomputable def hl2cxPhi (x L : ℝ) : ℝ :=
   (24 * x + 51) / 128 * hl2cxvx x * L - 75 / 128 * (hl2cxv x - 1 / 3200) - L ^ 2 / 400
 
-/-- The incoming speed `u_x = v_x - (a - 1)W_x`, `W_x = 1/400 + Φ(L_β)/L_β²` (9)-(11). -/
+/-- The incoming speed `u_x = v_x - (a - 1)W_x`, `W_x = 1/400 + Φ(L_β)/L_β²`. -/
 noncomputable def hl2cxup (x a : ℝ) : ℝ :=
   hl2cxvx x - (a - 1) * (1 / 400 + hl2cxPhi x (hl2cxLb x a) / hl2cxLb x a ^ 2)
 
@@ -70,7 +69,7 @@ theorem hl2cx_bp_subx (x a : ℝ) : hl2cbp x a - x = (24 * x + 51) * (a - 1) / 1
   unfold hl2cbp
   ring
 
-/-- **The representation (9)** `u = 3/4 + v - (a - 1)W`. -/
+/-- **The representation** `u = 3/4 + v - (a - 1)W`. -/
 theorem hl2cx_uC_eq {x a : ℝ} (hS : 1 + x ≠ 0) (hL : hl2cxLb x a ≠ 0) :
     hsUC x (hl2cbp x a) = 3 / 4 + hl2cxv x - (a - 1) * hl2cxW x a := by
   unfold hsUC
@@ -80,7 +79,7 @@ theorem hl2cx_uC_eq {x a : ℝ} (hS : 1 + x ≠ 0) (hL : hl2cxLb x a ≠ 0) :
   unfold hl2cxLb
   ring
 
-/-- **The incoming speed** (`SHORT_RATIO_CENTRAL_X` (9)-(11)): along `b = b_+(x, a)`,
+/-- **The incoming speed**: along `b = b_+(x, a)`,
 `u_C` has x-derivative `hl2cxup = v_x - (a - 1)(1/400 + Φ(L_β)/L_β²)`. -/
 theorem hl2cx_uC_deriv {a y : ℝ} (hS : 1 + y ≠ 0) (hL : hl2cxLb y a ≠ 0) :
     HasDerivAt (fun z => hsUC z (hl2cbp z a)) (hl2cxup y a) y := by
@@ -108,7 +107,7 @@ theorem hl2cx_Lb_pos {x a : ℝ} (hx : 13 / 6 ≤ x) (ha : 1 ≤ a) : 0 < hl2cxL
   have : 0 ≤ (24 * x + 51) / 128 * (a - 1) := mul_nonneg (by linarith) (by linarith)
   linarith
 
-/-- **`u ≤ U`** (`SHORT_RATIO_CENTRAL_X` (8)):
+/-- **`u ≤ U`**:
 `U - u = ((x - 1)/96 - 1/400 - v) + (a - 1)(W - 1/200)`, both brackets nonnegative. -/
 theorem hl2cx_u_le {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3) :
     hsUC x (hl2cbp x a) ≤ hl2cxU x a := by
@@ -144,11 +143,11 @@ theorem hl2cx_u_le {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 
   have := mul_nonneg (sub_nonneg.2 ha) (sub_nonneg.2 hW)
   linarith
 
-/-- **`u_x ≤ V`** (`SHORT_RATIO_CENTRAL_X` (8), (10)-(12)):
+/-- **`u_x ≤ V`**:
 `V - u_x = (1/96 - v_x) + (a - 1)Φ(L_β)/L_β²`; `v_x ≤ 1/96`, and `Φ` is a concave quadratic in
 `L` whose values at the two ends `L = x - 1`, `x - 1 + c/3` of the range of `L_β` are
-`p₀(Y)/(409600S³)`, `p₁(Y)/(6553600S³)`, `Y = x - 2`, with the printed quintics `p₀`, `p₁` of
-(12). -/
+`p₀(Y)/(409600S³)`, `p₁(Y)/(6553600S³)`, `Y = x - 2`, with explicit quintics `p₀`, `p₁` that
+are positive for `1/6 ≤ Y ≤ 2/5`. -/
 theorem hl2cx_up_le {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3) :
     hl2cxup x a ≤ hl2cxV a := by
   have hS : 0 < 1 + x := by linarith
@@ -163,7 +162,7 @@ theorem hl2cx_up_le {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1
     unfold hl2cxvx
     rw [div_le_iff₀ (by positivity)]
     linarith [hq 3, mul_nonneg hY0 (sub_nonneg.2 hY)]
-  -- the two endpoint values (12)
+  -- the two endpoint values
   have hP0 : 0 ≤ hl2cxPhi (2 + Y) (2 + Y - 1) := by
     have e : hl2cxPhi (2 + Y) (2 + Y - 1) = (13137 + 1361 * Y - 43205 * Y ^ 2 - 42269 * Y ^ 3 -
         11264 * Y ^ 4 - 1024 * Y ^ 5) / (409600 * (1 + (2 + Y)) ^ 3) := by

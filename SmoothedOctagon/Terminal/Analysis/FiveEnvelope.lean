@@ -9,13 +9,16 @@ public import Mathlib.Tactic.LinearCombination
 /-!
 # The five-piece logarithmic envelope
 
-FAP (19)-(22). With `h(t) = -2t log t/(1 - t) - log(1 + t)` on `(0, 1)`:
+With `h(t) = -2t log t/(1 - t) - log(1 + t)` on `(0, 1)`:
 
 * `ra_fiveH`: the function `h`.
-* `ra_fiveH_concaveOn`: `x ↦ h(√x)` is concave on `(0, 1)` (FAP (21)).
+* `ra_fiveH_concaveOn`: `x ↦ h(√x)` is concave on `(0, 1)`.
 * `ra_fiveH_circle_le`: `h(a) + h(b) ≤ 2 h(√2/2)` for `a, b > 0`, `a² + b² = 1` (two-point Jensen).
-* `ra_five_envelope`: for `0 < t < 1`, with `F` the function of FAP (17),
-  `F(t) + 2 log(1 - t) ≤ (3 + 2√2) log 2 + 2 log(2 - √2)` (FAP (19), through the identity (22)).
+* `ra_five_envelope`: for `0 < t < 1`, with
+  `F(t) = ((1+t)/(1-t))² log((1+t²)/(2t)) + t⁻² log((1+t²)/(1-t²)) + log(2t/(1-t²))`,
+  `F(t) + 2 log(1 - t) ≤ (3 + 2√2) log 2 + 2 log(2 - √2)`, through the identity
+  `F(t) + 2 log(1 - t) = log 2 + h(α) + h(β)`, `α = 2t/(1 + t²)`, `β = (1 - t²)/(1 + t²)`, and
+  `α² + β² = 1`.
 -/
 
 @[expose] public section
@@ -24,7 +27,7 @@ namespace SmoothedOctagon
 
 open Set
 
-/-- `h(t) = -2t log t/(1 - t) - log(1 + t)` (FAP §5). -/
+/-- `h(t) = -2t log t/(1 - t) - log(1 + t)`. -/
 noncomputable def ra_fiveH (t : ℝ) : ℝ := -2 * t * Real.log t / (1 - t) - Real.log (1 + t)
 
 /-- `h'(t) = 2E/(1 - t)² - 1/(1 + t)`, `E = t - 1 - log t`. -/
@@ -48,7 +51,7 @@ private lemma h_hasDerivAt {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
 /-- `k(t) = h'(t)/t`. -/
 private noncomputable def kk (t : ℝ) : ℝ := hd t / t
 
-/-- `k'(t) = (t h'' - h')/t²`, with `t h'' - h'` as in FAP (21). -/
+/-- `k'(t) = (t h'' - h')/t²`, with `t h''(t) - h'(t)` written out. -/
 private noncomputable def kd (t : ℝ) : ℝ :=
   (-2 / (1 - t) + 2 * (3 * t - 1) * (t - 1 - Real.log t) / (1 - t) ^ 3 +
     (1 + 2 * t) / (1 + t) ^ 2) / t ^ 2
@@ -70,7 +73,7 @@ private lemma kk_hasDerivAt {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
     field_simp
     ring
 
-/-- `t h'' - h' ≤ 0` (FAP (21)). -/
+/-- `t h'' - h' ≤ 0`. -/
 private lemma kd_nonpos {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) : kd t ≤ 0 := by
   have h1t : 0 < 1 - t := by linarith
   set E := t - 1 - Real.log t with hE_def
@@ -127,7 +130,7 @@ private lemma g_hasDerivAt {x : ℝ} (hx0 : 0 < x) (hx1 : x < 1) :
   · unfold kk
     field_simp
 
-/-- **Concavity** (FAP (21)): `x ↦ h(√x)` is concave on `(0, 1)`. -/
+/-- **Concavity**: `x ↦ h(√x)` is concave on `(0, 1)`. -/
 theorem ra_fiveH_concaveOn : ConcaveOn ℝ (Ioo 0 1) (fun x => ra_fiveH (√x)) := by
   apply AntitoneOn.concaveOn_of_deriv (convex_Ioo 0 1)
   · exact fun x hx => (g_hasDerivAt hx.1 hx.2).continuousAt.continuousWithinAt
@@ -158,7 +161,7 @@ theorem ra_fiveH_circle_le {a b : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ^ 2 + 
   rw [hmid, Real.sqrt_sq (by positivity)] at h
   linarith
 
-/-- The maximal value: `log 2 + 2 h(√2/2) = (3 + 2√2) log 2 + 2 log(2 - √2)` (FAP (20)). -/
+/-- The maximal value: `log 2 + 2 h(√2/2) = (3 + 2√2) log 2 + 2 log(2 - √2)`. -/
 private lemma fiveH_max_value :
     Real.log 2 + 2 * ra_fiveH (√2 / 2) = (3 + 2 * √2) * Real.log 2 + 2 * Real.log (2 - √2) := by
   have hs2 : √2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
@@ -179,8 +182,7 @@ private lemma fiveH_max_value :
   rw [ra_fiveH, hlog, hplus, hminus, hq]
   ring
 
-/-- `F(t) + 2 log(1 - t) = log 2 + h(α) + h(β)`, `α = 2t/(1 + t²)`, `β = (1 - t²)/(1 + t²)`
-(FAP (22)). -/
+/-- `F(t) + 2 log(1 - t) = log 2 + h(α) + h(β)`, `α = 2t/(1 + t²)`, `β = (1 - t²)/(1 + t²)`. -/
 private lemma five_identity {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
     ((1 + t) / (1 - t)) ^ 2 * Real.log ((1 + t ^ 2) / (2 * t)) +
         Real.log ((1 + t ^ 2) / (1 - t ^ 2)) / t ^ 2 + Real.log (2 * t / (1 - t ^ 2)) +
@@ -220,8 +222,9 @@ private lemma five_identity {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
   field_simp
   ring
 
-/-- **The five-piece envelope** (FAP (19)-(22)): for `0 < t < 1`,
-`F(t) + 2 log(1 - t) ≤ (3 + 2√2) log 2 + 2 log(2 - √2)`. -/
+/-- **The five-piece envelope**: for `0 < t < 1`,
+`F(t) + 2 log(1 - t) ≤ (3 + 2√2) log 2 + 2 log(2 - √2)`. By `five_identity` the left side is
+`log 2 + h(α) + h(β)` with `α² + β² = 1`, and two-point Jensen bounds it by `log 2 + 2 h(√2/2)`. -/
 theorem ra_five_envelope {t : ℝ} (ht0 : 0 < t) (ht1 : t < 1) :
     ((1 + t) / (1 - t)) ^ 2 * Real.log ((1 + t ^ 2) / (2 * t)) +
         Real.log ((1 + t ^ 2) / (1 - t ^ 2)) / t ^ 2 + Real.log (2 * t / (1 - t ^ 2)) +

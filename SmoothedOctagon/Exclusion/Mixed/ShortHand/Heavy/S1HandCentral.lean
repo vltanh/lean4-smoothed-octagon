@@ -5,9 +5,9 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandC5
 /-!
 # Gate S1 by hand: the central face, assembly
 
-`SHORT_CENTRAL_COMPLETE` §§2-3. At the cap `x(x + 2) = 6α²` the central transport (`K = 7α²`) and
+At the cap `x(x + 2) = 6α²` the central transport (`K = 7α²`) and
 the outer transport (`K = 6α² + 1 = S²`) coincide (`hl1c_cap`); the ceiling `u_ℓ(x, β)` is above
-the floor `u_f(x)` there (`hl1_uf_le_ul`, `SHAPE_F0` §4). `hs1_central_face_proof` chains the norm,
+the floor `u_f(x)` there (`hl1_uf_le_ul`). `hs1_central_face_proof` chains the norm,
 beta and shape steps and closes at `α = 1` and at the cap with the outer branch-B signs.
 
 ## Main API
@@ -45,7 +45,7 @@ theorem hl1c_cap {x a b u : ℝ} (hx : 0 < x) (ha : 0 < a) (hcap : x * (x + 2) =
   refine ⟨h0, ?_⟩
   unfold hh1cF1 hh1oF1; rw [h0, hT, hw]
 
-/-- `u_f(x) ≤ u_ℓ(x, β)` for `3/2 ≤ x ≤ 2`, `x ≤ β ≤ 7x/6` (`SHORT_CENTRAL_SHAPE_F0` §4). -/
+/-- `u_f(x) ≤ u_ℓ(x, β)` for `3/2 ≤ x ≤ 2`, `x ≤ β ≤ 7x/6`. -/
 theorem hl1_uf_le_ul {x b : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (hxb : x ≤ b) (hb : b ≤ 7 * x / 6) :
     hsUf x ≤ hsUl x b := by
   unfold hsUf hsUl
@@ -60,7 +60,8 @@ theorem hl1_uf_le_ul {x b : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (hxb : x ≤
     nlinarith
   linarith
 
-/-- **The central low-ratio face** (`LOW_RATIO_CENTRAL_HAND_SIGN` (6); inventory HS-S01 D-R15). -/
+/-- **The central low-ratio face**: on the central face `q = q_c` with the order strip in `β`,
+`3/4 ≤ u ≤ u_ℓ(x, β)` and `2 ≤ τ ≤ r_A/q_c`: `Γ_*(q_c) - (7/96)R*_τ(q_c) > 9193/50000`. -/
 theorem hs1_central_face_proof {x al be u τ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) (hu : 3 / 4 ≤ u)

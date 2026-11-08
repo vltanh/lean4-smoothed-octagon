@@ -5,20 +5,20 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandBeta
 /-!
 # Gate S1 by hand, outer face, branch S: the norm and beta reductions
 
-`SHORT_OUTER_S_BETA`: on the enlarged domain `1 ≤ α ≤ x ≤ 3/2`, `x ≤ β ≤ αx`,
+On the enlarged domain `1 ≤ α ≤ x ≤ 3/2`, `x ≤ β ≤ αx`,
 `3/4 ≤ u ≤ 19/25` (with `A = α - 1`, `X = x - α ∈ [0, 1/2]`):
 
-* `E_L > 0` and `w > 3/4` (`(10)`, `(11)`): both are monotone in `β` and `u`, so they are bounded
+* `E_L > 0` and `w > 3/4`: both are monotone in `β` and `u`, so they are bounded
   below by their values at `β = αx`, `u = 19/25`, which are `P_E/(175α²S)`, `3/4 + P_w/(4900α⁴S)`
   (`hl1o_S_w`); hence `F₀ ≥ F₁` (`hl1o_S_F0_ge`);
-* `w₀ > (19 + 2x)/28` (`(12)`, `(13)`), so `β ↦ F₁` has the convex bracket of `S1HandBeta`;
-* `(R₁)_β ≤ R(x, α, u) ≤ R(x, α, 19/25) = 1/25 - P_β/(700α⁵S³)` (`(16)`, `(18)`); hence
+* `w₀ > (19 + 2x)/28`, so `β ↦ F₁` has the convex bracket of `S1HandBeta`;
+* `(R₁)_β ≤ R(x, α, u) ≤ R(x, α, 19/25) = 1/25 - P_β/(700α⁵S³)`; hence
   `F₁(β) ≥ F₁(x + (8/17)(α - 1)) - 77/176800` for `β = x + C(α - 1)`, `8/17 ≤ C ≤ 10/13`
-  (`hl1o_S_beta`, `(3)`).
+  (`hl1o_S_beta`).
 
-Route: `R` increases in `u` because `∂_u R = 4x(x - α)/(7α³) + 1/α + D₀(KS - D₀)/(7α⁵S²) > 0`
-termwise, instead of the expanded numerator `N_u` of `(17)`. The polynomial signs use the
-termwise bounds of adverse monomials stated in the note.
+`R` increases in `u` because `∂_u R = 4x(x - α)/(7α³) + 1/α + D₀(KS - D₀)/(7α⁵S²) > 0`
+termwise. Each polynomial sign `P > 0` on `A, X ∈ [0, 1/2]` is proved by bounding its negative
+monomials termwise.
 
 ## Main API
 
@@ -32,19 +32,19 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- `P_E(A, X)` (`SHORT_OUTER_S_BETA` (10)). -/
+/-- `P_E(A, X)`: `E_L(x, α, αx, 19/25) = P_E/(175α²S)`, `A = α - 1`, `X = x - α`. -/
 noncomputable def hl1PE (A X : ℝ) : ℝ :=
   36 * A ^ 4 - 4 * A ^ 3 * X + 254 * A ^ 3 - 116 * A ^ 2 * X ^ 2 + 22 * A ^ 2 * X + 502 * A ^ 2 - 76 * A * X ^ 3 - 308 * A * X ^ 2 + 120 * A * X + 437 * A - 76 * X ^ 3 - 160 * X ^ 2 + 145 * X + 147
 
-/-- `P_w(A, X)` (`SHORT_OUTER_S_BETA` (11)). -/
+/-- `P_w(A, X)`: `w(x, α, αx, 19/25) = 3/4 + P_w/(4900α⁴S)`. -/
 noncomputable def hl1Pw (A X : ℝ) : ℝ :=
   -288 * A ^ 6 * X + 144 * A ^ 6 - 560 * A ^ 5 * X ^ 2 - 2320 * A ^ 5 * X + 1441 * A ^ 5 + 48 * A ^ 4 * X ^ 3 - 4112 * A ^ 4 * X ^ 2 - 5775 * A ^ 4 * X + 4838 * A ^ 4 + 624 * A ^ 3 * X ^ 4 - 80 * A ^ 3 * X ^ 3 - 10144 * A ^ 3 * X ^ 2 - 5572 * A ^ 3 * X + 7454 * A ^ 3 + 304 * A ^ 2 * X ^ 5 + 2176 * A ^ 2 * X ^ 4 - 1008 * A ^ 2 * X ^ 3 - 11928 * A ^ 2 * X ^ 2 - 1162 * A ^ 2 * X + 5832 * A ^ 2 + 608 * A * X ^ 5 + 2224 * A * X ^ 4 - 1992 * A * X ^ 3 - 6868 * A * X ^ 2 + 1420 * A * X + 2289 * A + 304 * X ^ 5 + 672 * X ^ 4 - 1060 * X ^ 3 - 1404 * X ^ 2 + 729 * X + 370
 
-/-- `P_0(A, X)` (`SHORT_OUTER_S_BETA` (12)). -/
+/-- `P_0(A, X)`: `w₀(x, α, 19/25) = (19 + 2x)/28 + P_0/(4900α⁴S)`. -/
 noncomputable def hl1P0 (A X : ℝ) : ℝ :=
   -206 * A ^ 6 - 124 * A ^ 5 * X - 659 * A ^ 5 + 370 * A ^ 4 * X ^ 2 + 1413 * A ^ 4 * X - 62 * A ^ 4 + 288 * A ^ 3 * X ^ 3 + 3528 * A ^ 3 * X ^ 2 + 7036 * A ^ 3 * X + 1854 * A ^ 3 + 1456 * A ^ 2 * X ^ 3 + 9428 * A ^ 2 * X ^ 2 + 11534 * A ^ 2 * X + 2682 * A ^ 2 + 2304 * A * X ^ 3 + 10316 * A * X ^ 2 + 8440 * A * X + 1589 * A + 1188 * X ^ 3 + 4174 * X ^ 2 + 2381 * X + 370
 
-/-- `P_β(A, X)` (`SHORT_OUTER_S_BETA` (18)). -/
+/-- `P_β(A, X)`: `R(x, α, 19/25) = 1/25 - P_β/(700α⁵S³)`. -/
 noncomputable def hl1Pb (A X : ℝ) : ℝ :=
   28 * A ^ 8 + 84 * A ^ 7 * X + 476 * A ^ 7 + 84 * A ^ 6 * X ^ 2 + 956 * A ^ 6 * X + 2580 * A ^ 6 + 28 * A ^ 5 * X ^ 3 - 124 * A ^ 5 * X ^ 2 + 3328 * A ^ 5 * X + 7461 * A ^ 5 - 1516 * A ^ 4 * X ^ 3 - 4092 * A ^ 4 * X ^ 2 + 6165 * A ^ 4 * X + 13266 * A ^ 4 - 1216 * A ^ 3 * X ^ 4 - 8792 * A ^ 3 * X ^ 3 - 13224 * A ^ 3 * X ^ 2 + 7400 * A ^ 3 * X + 14594 * A ^ 3 - 304 * A ^ 2 * X ^ 5 - 4560 * A ^ 2 * X ^ 4 - 17320 * A ^ 2 * X ^ 3 - 16860 * A ^ 2 * X ^ 2 + 6058 * A ^ 2 * X + 9556 * A ^ 2 - 608 * A * X ^ 5 - 5472 * A * X ^ 4 - 14212 * A * X ^ 3 - 8728 * A * X ^ 2 + 3292 * A * X + 3437 * A - 304 * X ^ 5 - 2128 * X ^ 4 - 4088 * X ^ 3 - 1080 * X ^ 2 + 901 * X + 538
 
@@ -189,7 +189,7 @@ theorem hl1o_w0_19 {x a : ℝ} (hx : 0 < x) (ha : 0 < a) :
   field_simp
   ring
 
-/-- `R(x, α, u) = A₁ + 1/(αS) - (7w₀ - 17/4)/(αS²)` (`SHORT_OUTER_S_BETA` (16)). -/
+/-- `R(x, α, u) = A₁ + 1/(αS) - (7w₀ - 17/4)/(αS²)`, the bound on `(R₁)_β`. -/
 noncomputable def hl1oRS (x a u : ℝ) : ℝ :=
   hl1oA1 x a u + 1 / (a * (1 + x)) - (7 * hl1ow0 x a u - 17 / 4) / (a * (1 + x) ^ 2)
 
@@ -230,7 +230,7 @@ theorem hl1o_KS_D0 {x a : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) :
   · nlinarith [mul_nonneg (sub_nonneg.2 ha1) (sub_nonneg.2 hax), mul_nonneg (sub_nonneg.2 ha1)
       (sub_nonneg.2 ha1)]
 
-/-- `E_L > 0` on the S domain (`SHORT_OUTER_S_BETA` §2). -/
+/-- `E_L > 0` on the S domain. -/
 theorem hl1o_S_EL {x a b u : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 / 2) (hxb : x ≤ b)
     (hbx : b ≤ a * x) (hu0 : 3 / 4 ≤ u) (hu1 : u ≤ 19 / 25) : 0 < hh1oEL x a b u := by
   have ha : 0 < a := by linarith
@@ -257,7 +257,7 @@ theorem hl1o_S_EL {x a b u : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 
     apply div_pos (by linarith) (by positivity)
   linarith
 
-/-- `w ≥ 3/4 + P_w/(4900α⁴S) > 3/4` on the S domain (`SHORT_OUTER_S_BETA` (11)). -/
+/-- `w ≥ 3/4 + P_w/(4900α⁴S) > 3/4` on the S domain. -/
 theorem hl1o_S_w {x a b u : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 / 2) (hxb : x ≤ b)
     (hbx : b ≤ a * x) (hu0 : 3 / 4 ≤ u) (hu1 : u ≤ 19 / 25) : 3 / 4 < hh1ow x a b u := by
   have ha : 0 < a := by linarith
@@ -314,7 +314,7 @@ theorem hl1o_S_F0_ge {x a b u : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤
   unfold hh1oF1
   nlinarith [mul_nonneg hT (by linarith : (0 : ℝ) ≤ hh1ow x a b u - 3 / 4)]
 
-/-- `w₀ > (19 + 2x)/28` on the S domain for `u ≤ 19/25` (`SHORT_OUTER_S_BETA` (13)). -/
+/-- `w₀ > (19 + 2x)/28` on the S domain for `u ≤ 19/25`. -/
 theorem hl1o_S_w0 {x a u : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 / 2) (hu1 : u ≤ 19 / 25) :
     (19 + 2 * x) / 28 < hl1ow0 x a u := by
   have ha : 0 < a := by linarith
@@ -330,7 +330,7 @@ theorem hl1o_S_w0 {x a u : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 / 
     div_pos (by linarith) (by positivity)
   linarith
 
-/-- **The S-branch beta loss** (`SHORT_OUTER_S_BETA` (3)): for `8/17 ≤ C ≤ 10/13`,
+/-- **The S-branch beta loss**: for `8/17 ≤ C ≤ 10/13`,
 `F₁(x, α, x + C(α - 1), u) ≥ F₁(x, α, x + (8/17)(α - 1), u) - 77/176800`. -/
 theorem hl1o_S_beta {x a u C : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 / 2)
     (hu0 : 3 / 4 ≤ u) (hu1 : u ≤ 19 / 25) (hC0 : 8 / 17 ≤ C) (hC1 : C ≤ 10 / 13) :

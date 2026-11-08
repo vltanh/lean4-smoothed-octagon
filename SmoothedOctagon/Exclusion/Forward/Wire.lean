@@ -7,8 +7,8 @@ public import SmoothedOctagon.Exclusion.Forward.Cap
 /-!
 # Wiring `Period/Elliptic` to the case-F and case-M2 interfaces
 
-The facts of `MIXED_GLOBAL_COSTATE_ELLIPTIC` (MGCE) and `MIXED_GLOBAL_SMALL_FORWARD_MINIMUM` (SFM)
-that `Exclusion/Forward/Interface` and `Exclusion/Mixed/Interface` state, proved on a
+The facts about the normal multiplier and the window of a global minimum that
+`Exclusion/Forward/Interface` and `Exclusion/Mixed/Interface` state, proved on a
 `CostateCycle` from the API of `Period/Elliptic` (`mu`, `wt`, `swd`, `cre`, `Mloc`, `stationarity`,
 `gram_pp`, `Λ₁_zero_neg`, …), in the conventions of the interfaces: `u = 8 d`, `E = 16 e`, the
 cost derivative `ff_Cph p a n = (G_a(a,p) + G_a(a,n))/2 = 4 J_a`.
@@ -22,22 +22,21 @@ cost derivative `ff_Cph p a n = (G_a(a,p) + G_a(a,n))/2 = 4 J_a`.
 * `CostateCycle.ifc_stat_w`, `ifc_stat_M`: stationarity at a same-sign piece,
   `8 s d + 8 s' d' - 16 a e = 4 J_a`.
 * `CostateCycle.ifc_w_rel`: the transport of `w` across a doubly forward piece.
-* `ifc_rows_alg`: the three stationarity rows of SFM (6)-(8) from three stationarity identities and
+* `ifc_rows_alg`: the three stationarity rows of the window from three stationarity identities and
   two transports.
-* `ifc_mc_alg`, `CostateCycle.ifc_mc`: **the missing-control inequality** at a forward switch
-  (SFM (11a)): `σ_{missing} = -4√3 G_L/s²`, so `G_L ≥ 0`.
+* `ifc_mc_alg`, `CostateCycle.ifc_mc`: **the missing-control inequality** at a forward switch:
+  `σ_{missing} = -4√3 G_L/s²`, so `G_L ≥ 0`.
 * `ifc_floor_out_alg`, `ifc_floor_in_alg`, `CostateCycle.ifc_floor_out`, `ifc_floor_in`: **the
-  exterior floors** (SFM (11)-(12)) at a doubly forward piece.
+  exterior floors** at a doubly forward piece.
 * `NormalPeriod.ifc_gam2_pos_of_allForward`: `γ² > 0` for an all-forward period (the projective
   argument of `gam2_pos_of_mixed`, every increment being positive).
 * `NormalPeriod.ifc_S00_pos`, `ifc_negEll`: `γ² > 0` and one positive switch norm give `S₀₀ > 0`,
   hence negative ellipticity of `Λ₁(0)`.
 * `ifc_spec_key` (the pointwise spectral inequality `(ρ + ρ_R)² ≤ 4|z|²ρρ_R`), `ifc_winding` (the
   polar angle integrates to at least `π/3`), and `NormalPeriod.ifc_spectral`: **the spectral
-  cost–Casimir bound** `C ≥ (π/3)(κ + 3/2)` (GLOBAL_SPECTRAL_COST_CASIMIR (1)) for negative
-  elliptic `Λ₁(0)`.
+  cost–Casimir bound** `C ≥ (π/3)(κ + 3/2)` for negative elliptic `Λ₁(0)`.
 * `ifc_octagonCost_lt` (`A_oct < 3.12606`), `ifc_gam2_cap`:
-  `(π/3)(κ + 3/2) ≤ C ≤ A_oct ⇒ γ² = κ²/12 < 9193/50000` (HAND_PROOF_REFINEMENTS §1).
+  `(π/3)(κ + 3/2) ≤ C ≤ A_oct ⇒ γ² = κ²/12 < 9193/50000`.
 -/
 
 @[expose] public section
@@ -59,8 +58,8 @@ theorem ifc_Cph_eq {p a n : ℝ} (hp : 0 < p) (ha : 0 < a) (hn : 0 < n) :
 
 /-! ### Algebraic cores -/
 
-/-- The three rows of SFM (6)-(8), from the stationarity identities at the pieces `b`, `a`, `c` and
-the transports of `w` across the pieces `a` and `c`. -/
+/-- The three stationarity rows of the window, from the stationarity identities at the pieces `b`,
+`a`, `c` and the transports of `w` across the pieces `a` and `c`. -/
 theorem ifc_rows_alg {p b a c d h q k wmm wm w0 wp wpp : ℝ} (hp : 0 < p) (hb : 0 < b)
     (ha : 0 < a) (hc : 0 < c) (hd : 0 < d)
     (hh : h * (b ^ 2 + 4) = (p + b) * (b + a)) (hq : q * (a ^ 2 + 4) = (b + a) * (a + c))
@@ -104,9 +103,9 @@ theorem ifc_rows_alg {p b a c d h q k wmm wm w0 wp wpp : ℝ} (hp : 0 < p) (hb :
   · field_simp; ring
   · field_simp; ring
 
-/-- **The missing-control identity** (SFM (11a)) in coordinates: at a forward switch into a piece
-of label `i` with margins `x = m_i`, `y = m_{i-1}`, `z = m_{i+1}`, costate coordinates `A_j = α_j`,
-`B_j = β_j` and `σ_i = σ_{i-1} = 0`, the missing `σ_{i+1}` is `-4√3 G_L/(x + y)²`; hence `G_L ≥ 0`. -/
+/-- **The missing-control identity** in coordinates: at a forward switch into a piece of label `i`
+with margins `x = m_i`, `y = m_{i-1}`, `z = m_{i+1}`, costate coordinates `A_j = α_j`, `B_j = β_j`
+and `σ_i = σ_{i-1} = 0`, the missing `σ_{i+1}` is `-4√3 G_L/(x + y)²`; hence `G_L ≥ 0`. -/
 theorem ifc_mc_alg {x y z A0 Am Ap B0 Bm Bp : ℝ} (hx : 0 < x) (hy : 0 < y)
     (hz : x * z + z * y + y * x = 4) (h0 : 2 * A0 + B0 = 0) (hm : 2 * Am + Bm = 0)
     (hperp : B0 * (z + y) + Bp * (x + y) + Bm * (x + z) = 0) (hσ : 2 * Ap + Bp ≤ 0) :
@@ -136,8 +135,8 @@ theorem ifc_mc_alg {x y z A0 Am Ap B0 Bm Bp : ℝ} (hx : 0 < x) (hy : 0 < y)
     have := mul_nonpos_of_nonneg_of_nonpos (sq_nonneg (x + y)) hσ; linarith
   positivity
 
-/-- The floor of the outgoing norm of a doubly forward piece (SFM (12)): with `G_L ≥ 0` at its
-incoming switch and its stationarity identity, `u ≥ F_{b/(b+a)}(h)`. -/
+/-- The floor of the outgoing norm of a doubly forward piece: with `G_L ≥ 0` at its incoming switch
+and its stationarity identity, `u ≥ F_{b/(b+a)}(h)`. -/
 theorem ifc_floor_out_alg {p b a h wm w0 wp : ℝ} (hp : 0 < p) (hb : 0 < b) (ha : 0 < a)
     (hh1 : 1 < h) (hh : h * (b ^ 2 + 4) = (p + b) * (b + a))
     (hG : 0 ≤ 4 * b * (p + b) * (w0 / 2) + 2 * (b ^ 2 + 4) * (-(wm + w0) / 2) -
@@ -174,8 +173,8 @@ theorem ifc_floor_out_alg {p b a h wm w0 wp : ℝ} (hp : 0 < p) (hb : 0 < b) (ha
   have := (mul_nonneg_iff_of_pos_left hpos).1 hG
   linarith
 
-/-- The floor of the incoming norm of a doubly forward piece (SFM (11), reflected): with `G_L ≥ 0`
-at its outgoing switch and its stationarity identity, `v ≥ F_{c/(a+c)}(k)`. -/
+/-- The floor of the incoming norm of a doubly forward piece (the reflected statement): with
+`G_L ≥ 0` at its outgoing switch and its stationarity identity, `v ≥ F_{c/(a+c)}(k)`. -/
 theorem ifc_floor_in_alg {a c d k wm w0 wp : ℝ} (ha : 0 < a) (hc : 0 < c) (hd : 0 < d)
     (hk1 : 1 < k) (hk : k * (c ^ 2 + 4) = (a + c) * (c + d))
     (hG : 0 ≤ 4 * d * (c + d) * (wp / 2) + 2 * (d ^ 2 + 4) * (-(w0 + wp) / 2) -
@@ -272,8 +271,8 @@ theorem ifc_norm_rev {k : ℤ} (hout : C.lab (k + 1) = C.lab k - 1) :
   simp only [sw] at hs
   rw [(C.ifc_Mloc_apply k).2.1, swd, C.ifc_wt_decr hout]; field_simp
 
-/-- **Stationarity at a same-sign piece** (MGCE (14), first identity, times 4), in the weights:
-`8 s_{k-1} d_{k-1} + 8 s_k d_k - 16 a_k e_k = 4 J_{a_k}`. -/
+/-- **Stationarity at a same-sign piece** (four times the first stationarity identity), in the
+weights: `8 s_{k-1} d_{k-1} + 8 s_k d_k - 16 a_k e_k = 4 J_{a_k}`. -/
 theorem ifc_stat_w {k : ℤ} (hs : C.sgn (k - 1) = C.sgn k) :
     4 * (C.wt (k - 1) + C.wt k) / (C.act (k - 1) + C.act k) +
         4 * (C.wt k + C.wt (k + 1)) / (C.act k + C.act (k + 1)) -
@@ -359,8 +358,8 @@ theorem ifc_Mloc_10_next {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
   field_simp
   ring
 
-/-- **The missing-control inequality** (SFM (11a)) at a forward switch into piece `k`: in the frame
-of piece `k`, `G_L = 4 a_k s (M_k)₀₀ + 2 K_k (M_k)₀₁ - 2 s² (M_k)₁₀ + a_{k-1} s + K_k ≥ 0`,
+/-- **The missing-control inequality** at a forward switch into piece `k`: in the frame of piece
+`k`, `G_L = 4 a_k s (M_k)₀₀ + 2 K_k (M_k)₀₁ - 2 s² (M_k)₁₀ + a_{k-1} s + K_k ≥ 0`,
 `s = a_{k-1} + a_k`; the missing `σ` is `-4√3 G_L/s²` (`ifc_mc_alg`). -/
 theorem ifc_mc {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1) :
     0 ≤ 4 * C.act k * (C.act (k - 1) + C.act k) * C.Mloc k 0 0 +
@@ -377,8 +376,8 @@ theorem ifc_mc {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1) :
   exact ifc_mc_alg (C.m_pos k _) (C.m_pos k _) (C.quad_rot k _) (C.sig_act k) hm
     (C.perp_rot k _) (C.sig_le k _)
 
-/-- **The floor of the outgoing norm** (SFM (11)-(12)) of a doubly forward piece `k`:
-`8 d_k ≥ F_{a_k/(a_k + a_{k+1})}(q_k)`. -/
+/-- **The floor of the outgoing norm** of a doubly forward piece `k`, from the missing control at
+the switch before it: `8 d_k ≥ F_{a_k/(a_k + a_{k+1})}(q_k)`. -/
 theorem ifc_floor_out {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
     (hout : C.lab (k + 1) = C.lab k + 1) :
     ff_F (C.act k / (C.act k + C.act (k + 1))) (C.q k) ≤ 8 * C.swd k := by
@@ -396,8 +395,8 @@ theorem ifc_floor_out {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
     simp only [swd]; field_simp; ring
   rw [e]; exact h
 
-/-- **The floor of the incoming norm** (SFM (11), reflected) of a doubly forward piece `k`, from the
-missing control at the switch after it: `8 d_{k-1} ≥ F_{a_k/(a_{k-1} + a_k)}(q_k)`. -/
+/-- **The floor of the incoming norm** of a doubly forward piece `k`, from the missing control at
+the switch after it: `8 d_{k-1} ≥ F_{a_k/(a_{k-1} + a_k)}(q_k)`. -/
 theorem ifc_floor_in {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
     (hout : C.lab (k + 1) = C.lab k + 1) :
     ff_F (C.act k / (C.act (k - 1) + C.act k)) (C.q k) ≤ 8 * C.swd (k - 1) := by
@@ -419,15 +418,15 @@ theorem ifc_floor_in {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
 
 end CostateCycle
 
-/-! ### The spectral cost–Casimir inequality (GLOBAL_SPECTRAL_COST_CASIMIR) -/
+/-! ### The spectral cost–Casimir inequality -/
 
 section Spectral
 
 open Reduction MeasureTheory
 
-/-- **The spectral pointwise inequality** (GLOBAL_SPECTRAL_COST_CASIMIR (6)-(8)): for `det B = 1`
-and a star state `Y`, `(ρ + ρ_R)² ≤ 4 |z(B)|² ρ ρ_R`, i.e. `r + 1/r ≤ tr P` for the Rayleigh
-quotient `r = ρ_R/ρ` of `P = B⁻¹B⁻ᵀ`. Route: an explicit sum of squares
+/-- **The spectral pointwise inequality**: for `det B = 1` and a star state `Y`,
+`(ρ + ρ_R)² ≤ 4 |z(B)|² ρ ρ_R`, i.e. `r + 1/r ≤ tr P` for the Rayleigh quotient `r = ρ_R/ρ` of
+`P = B⁻¹B⁻ᵀ`. Proof: the explicit sum of squares
 `4|z|²ρρ_R - (ρ + ρ_R)² = ((b₀-b₃)² + (b₁+b₂)²)((b₀+b₃)² + (b₁-b₂)²) det Y/4 + [Q, P]₀₁²/4`. -/
 theorem ifc_spec_key {B Y : Mat2} (hB : B.det = 1) (hY : IsStarState Y) :
     (scb_rho Y + scb_rhoR B Y) ^ 2 ≤ 4 * Complex.normSq (scb_zc B) * scb_rho Y * scb_rhoR B Y := by
@@ -465,9 +464,9 @@ theorem ifc_spec_key {B Y : Mat2} (hB : B.det = 1) (hY : IsStarState Y) :
           b2 * b3 * x2 + b3 ^ 2 * x0) ^ 2 / 4 := by positivity
   nlinarith
 
-/-- **The winding of the frame** (GLOBAL_COST_CASIMIR (16)-(20)), in the sharp form: for a frame
-path `B' = B X` with star states, `det B = 1` and `B(T) = B(0) R`, the polar angle
-`θ' = (ρ + ρ_R)/(2|z|²)` integrates to at least `π/3`. -/
+/-- **The winding of the frame**, in the sharp form: for a frame path `B' = B X` with star states,
+`det B = 1` and `B(T) = B(0) R`, the polar angle `θ' = (ρ + ρ_R)/(2|z|²)` integrates to at least
+`π/3`. -/
 theorem ifc_winding {T : ℝ} (hT : 0 < T) {B X : ℝ → Mat2}
     (hBc : ContinuousOn B (Icc 0 T)) (hXc : ContinuousOn X (Icc 0 T))
     (hBd : ∀ s ∈ Ioo 0 T, Matrix.HasDerivAtEntrywise B (B s * X s) s)
@@ -605,8 +604,9 @@ theorem ifc_octagonCost_lt : octagonCost < 3.12606 := by
     mul_le_mul_of_nonneg_right h12.le hN
   nlinarith
 
-/-- **The sharper competitive Casimir cap** (HAND_PROOF_REFINEMENTS §1): if `x = κ² > 0` and the
-cost `c` satisfies `(π/3)(κ + 3/2) ≤ c ≤ A_oct`, then `γ² = x/12 < 9193/50000`. -/
+/-- **The sharper competitive Casimir cap**: if `x = κ² > 0` and the cost `c` satisfies
+`(π/3)(κ + 3/2) ≤ c ≤ A_oct`, then `γ² = x/12 < 9193/50000`, since `A_oct < 3.12606` and
+`π > 3.141592` force `κ < 1.4853`. -/
 theorem ifc_gam2_cap {x c : ℝ} (hx : 0 < x) (h : π / 3 * (√x + 3 / 2) ≤ c)
     (hc : c ≤ octagonCost) : x / 12 < 9193 / 50000 := by
   have hA := ifc_octagonCost_lt
@@ -627,10 +627,10 @@ namespace NormalPeriod
 
 variable (P : NormalPeriod)
 
-/-- **Negative ellipticity, all-forward periods** (GLOBAL_STRUCTURE_FORWARD_ELLIPTIC, MGCE (1)):
-`γ² > 0`. Route: the projective argument of `gam2_pos_of_mixed`; at a `+ +` piece the increment of
-the projective coordinate is `η²/(K h h') > 0` (`cross_pp`, `cre_pos_pp`), so the increments over
-one period cannot telescope to `0`. -/
+/-- **Negative ellipticity, all-forward periods**: `γ² > 0`, by the projective argument of
+`gam2_pos_of_mixed`: at a `+ +` piece the increment of the projective coordinate is
+`η²/(K h h') > 0` (`cross_pp`, `cre_pos_pp`), so the increments over one period cannot telescope to
+`0`. -/
 theorem ifc_gam2_pos_of_allForward (hF : P.rep.AllForward) : 0 < P.costateCycle.gam2 0 := by
   set C := P.costateCycle with hC
   by_contra hcon
@@ -747,10 +747,10 @@ theorem ifc_negEll (hpos : 0 < P.costateCycle.gam2 0) {n : ℕ} (hd : 0 < P.cost
   ⟨by rw [P.det_Λ₁_zero]; positivity, P.Λ₁_zero_neg hpos (P.ifc_S00_pos hpos hd)⟩
 
 open Reduction in
-/-- **The spectral cost–Casimir inequality** (GLOBAL_SPECTRAL_COST_CASIMIR (1)). If `Λ₁(0)` is
-negative elliptic with Casimir `κ = √(det Λ₁)`, then `C ≥ (π/3)(κ + 3/2)`. Route: as
-`cost_casimir`, with the pointwise bound `θ' ≤ 2ρρ_R/(ρ + ρ_R) ≤ 6ρ/(2κ + 3)` (`ifc_spec_key`,
-`2κρ_R ≤ 3ρ`) in place of `θ' ≤ (ρ + ρ_R)/2`. -/
+/-- **The spectral cost–Casimir inequality.** If `Λ₁(0)` is negative elliptic with Casimir
+`κ = √(det Λ₁)`, then `C ≥ (π/3)(κ + 3/2)`. The proof follows `cost_casimir`, with its pointwise
+bound `θ' ≤ (ρ + ρ_R)/2` sharpened to `θ' ≤ 2ρρ_R/(ρ + ρ_R) ≤ 6ρ/(2κ + 3)` (`ifc_spec_key`,
+`2κρ_R ≤ 3ρ`). -/
 theorem ifc_spectral (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P.Λ₁ 0) 1 0 < 0) :
     π / 3 * (√(P.Λ₁ 0).det + 3 / 2) ≤ P.cost := by
   have hΛtr := (P.extremal.2.2.2.2.2.2.2.1 0 ⟨le_rfl, P.T_pos.le⟩).1

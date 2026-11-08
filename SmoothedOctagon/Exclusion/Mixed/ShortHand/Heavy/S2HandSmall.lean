@@ -5,16 +5,12 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandSmallLink
 /-!
 # S2 hand signs: the outer face for small `α`
 
-`hs2_outer_sign_small_proof` proves the statement of `hs2_outer_sign_small` following
-`archive/lighter-proofs/SHORT_RATIO_OUTER_COMPLETE.md` §3: the actual shape has
-`a_f(x) = (36x + 25)/84 ≤ α ≤ 3/2` and `5/8 ≤ c ≤ c_+(x) = (24x + 51)/128` (§2 (7)-(8)); the
+`hs2_outer_sign_small_proof` proves the statement of `hs2_outer_sign_small`: the actual shape has
+`a_f(x) = (36x + 25)/84 ≤ α ≤ 3/2` and `5/8 ≤ c ≤ c_+(x) = (24x + 51)/128`; the
 incoming norm `u_s` is raised to `ū = u_s(x, x + c(a_f - 1))`; the fixed-norm reciprocal convexity
 (`S2HandRecip`) bounds each test by its values at `α = 3/2` (the middle terminal of
 `S2HandLarge`, since `ū ≤ u_v`) and at `α = a_f`; there the beta comparison (`S2HandSmallNorm`)
 reaches `c = c_+`, the terminal curve of `S2HandSmallLink`.
-
-Route: the notes' moving-norm reciprocal convexity (`SHORT_RATIO_OUTER_RECIPROCAL` §4) is replaced
-by the fixed norm `ū` (see `S2HandSmallNorm`).
 
 ## Main API
 
@@ -28,7 +24,7 @@ namespace SmoothedOctagon
 
 open Real Set
 
-/-- `a_f(x) < α` from `x(x + 2) ≤ 6α²` (`SHORT_RATIO_OUTER_COMPLETE` (7)). -/
+/-- `a_f(x) < α` from `x(x + 2) ≤ 6α²`. -/
 theorem hl2_af_lt {x al : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hqc : x * (x + 2) ≤ 6 * al ^ 2) : (36 * x + 25) / 84 < al := by
   by_contra h
@@ -36,7 +32,8 @@ theorem hl2_af_lt {x al : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1
   have h1 : al ^ 2 ≤ ((36 * x + 25) / 84) ^ 2 := pow_le_pow_left₀ (by linarith) h 2
   nlinarith
 
-/-- `c ≤ c_+(x) = (24x + 51)/128` (`SHORT_RATIO_OUTER_COMPLETE` (8)). -/
+/-- `c ≤ c_+(x) = (24x + 51)/128`, from `β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)` and
+`x(7x + 1)/(4x² + 11x + 1) ≤ c_+(x)` on `[13/6, 12/5]`. -/
 theorem hl2_c_le_cplus {x al be c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 < al)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1))
     (hbe : be = x + c * (al - 1)) : c ≤ (24 * x + 51) / 128 := by
@@ -72,7 +69,8 @@ theorem hl2_Z_small {x c r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc :
     5 / 2 < hl2Zr x c r ∧ hl2Zr x c r < 19 / 6 := by
   unfold hl2Zr; constructor <;> nlinarith
 
-/-- The small-shape sign for `H₀` (`SHORT_RATIO_OUTER_COMPLETE` §3). -/
+/-- The small-shape sign for `H₀`: raise the norm to `ū`, use convexity in `r` at fixed `ū`, the
+middle shape `α = 3/2`, and at `α = a_f` the beta comparison up to the terminal curve. -/
 theorem hl2_small_H0 {x al c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
     (haf : (36 * x + 25) / 84 ≤ al) (hal' : al ≤ 3 / 2) (hc : 5 / 8 ≤ c)
     (hcp : c ≤ (24 * x + 51) / 128) : hl2H0 x c (hsUs x (x + c * (al - 1))) (1 / al) < 0 := by
@@ -123,7 +121,7 @@ theorem hl2_small_H0 {x al c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
   rw [← hub] at sD
   exact lt_of_le_of_lt hA' (lt_of_le_of_lt sB (max_lt hmid (lt_of_le_of_lt sD sE)))
 
-/-- The small-shape sign for `H₁` (`SHORT_RATIO_OUTER_COMPLETE` §3). -/
+/-- The small-shape sign for `H₁`, by the same four steps. -/
 theorem hl2_small_H1 {x al c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
     (haf : (36 * x + 25) / 84 ≤ al) (hal' : al ≤ 3 / 2) (hc : 5 / 8 ≤ c)
     (hcp : c ≤ (24 * x + 51) / 128) : hl2H1 x c (hsUs x (x + c * (al - 1))) (1 / al) < 0 := by
@@ -178,8 +176,7 @@ theorem hl2_small_H1 {x al c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
   rw [← hub] at sD
   exact lt_of_le_of_lt hA' (lt_of_le_of_lt sB (max_lt hmid (lt_of_le_of_lt sD sE)))
 
-/-- **The outer sharp-ratio face, small `α`** (`hs2_outer_sign_small`;
-`SHORT_RATIO_OUTER_COMPLETE` §3). -/
+/-- **The outer sharp-ratio face, small `α`** (the statement of `hs2_outer_sign_small`). -/
 theorem hs2_outer_sign_small_proof {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
     (hal : 1 ≤ al) (hal' : al ≤ 3 / 2) (_hax : al ≤ x) (hqc : x * (x + 2) ≤ 6 * al ^ 2)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)

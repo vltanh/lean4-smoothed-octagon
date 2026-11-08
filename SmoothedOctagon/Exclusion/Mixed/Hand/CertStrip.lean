@@ -5,15 +5,13 @@ public import SmoothedOctagon.Exclusion.Mixed.Hand.Bern
 /-!
 # Case M2 by hand: generated sign certificates for the reverse scale strip
 
-On the scale face `k = 29t²/4` (`MIXED_NONSHORT_REVERSE_HAND_EXCLUSION` §§2-3), the cleared
-cubic `P = C₀ + C₁y + C₂y² + C₃y³` (`nhSC0`, …, `nhSC3`) satisfies the same six signs as on the
-unit shape (`MIXED_NONSHORT_UNIT_SHAPE_HAND_EXCLUSION` (7)) throughout the strip
+On the scale face `k = 29t²/4` of the reverse exclusion, the cleared cubic
+`P = C₀ + C₁y + C₂y² + C₃y³` (`nhSC0`, …, `nhSC3`) satisfies the same six signs as on the unit
+shape (`Hand/CertUnit`) throughout the strip
 `13/35 ≤ t ≤ 2/5`, `x ≤ 9/35`, `29t²/4 < 2t + 2x + x²`. Since `x ≥ 3/25` there, the chord bound
 `2x + x² ≤ (416/175)x - 27/875` gives `x ≥ (175/416)(29t²/4 - 2t + 27/875)`, so the strip lies in
 `t ∈ [13/35, 2/5]`, `x ∈ [(175/416)(29t²/4 - 2t + 27/875), 9/35]`. Bernstein certificates in `x`
 with univariate Bernstein bounds in `t` (generated; every identity is checked by `ring`).
-Route: in place of the coefficient monotonicity (4)-(6) and the comparison with the unit shape at
-`t₀ = 13/35`.
 
 ## Main API
 

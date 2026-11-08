@@ -5,11 +5,11 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandC1
 /-!
 # Gate S1 by hand, central face: the beta reduction
 
-`SHORT_CENTRAL_REDUCTION` §§2-3: `(r₀)_β ≥ 1/40 + 1/1000` (`hl1c_R2b_ge`) and, at `u = 19/25`,
+`(r₀)_β ≥ 1/40 + 1/1000` (`hl1c_R2b_ge`) and, at `u = 19/25`,
 `(r₁)_β ≥ 1/40 + 1/1000` (`hl1c_R1b_ge`). With `ε(y) ≤ 1/625` for the cubic majorant,
 `(F₀)_u ∈ [-1/5, 0]` and `0 ≤ -(u_ℓ)_β ≤ 15/1992`, the first test decreases in `β` along the
 ceiling `u_ℓ(x, β)` and the second decreases in `β` at `u = 19/25` (`hl1c_F0_bstep`,
-`hl1c_F1_bstep`, `REDUCTION` (4)).
+`hl1c_F1_bstep`).
 
 ## Main API
 
@@ -46,7 +46,7 @@ theorem hl1_phi27 {a t1 t2 : ℝ} (ha : 0 < a) (ht1 : 0 ≤ t1) (h : t1 ≤ t2) 
   have e : (t2 - t1) / (27 * a ^ 2) = t2 / (27 * a ^ 2) - t1 / (27 * a ^ 2) := by ring
   linarith
 
-/-- `(r₀)_β ≥ 1/40 + 1/1000` on the strip for `u ≥ 3/4` (`SHORT_CENTRAL_REDUCTION` (3)). -/
+/-- `(r₀)_β ≥ 1/40 + 1/1000` on the strip for `u ≥ 3/4`. -/
 theorem hl1c_R2b_ge {x a b u : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a) (ha2 : a ≤ 7 / 6)
     (hb0 : x ≤ b) (hb1 : b ≤ x + 10 / 13 * (a - 1)) (hu : 3 / 4 ≤ u) :
     1 / 40 + 1 / 1000 ≤ hh1cR2b x a b u := by
@@ -107,7 +107,7 @@ theorem hl1c_R2b_ge {x a b u : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (ha1 : 
         (sq_nonneg a)]
   linarith
 
-/-- `(r₁)_β ≥ 1/40 + 1/1000` at `u = 19/25` (`SHORT_CENTRAL_REDUCTION` (3)). -/
+/-- `(r₁)_β ≥ 1/40 + 1/1000` at `u = 19/25`. -/
 theorem hl1c_R1b_ge {x a b : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a) (ha2 : a ≤ 7 / 6)
     (hb0 : x ≤ b) (hb1 : b ≤ x + 10 / 13 * (a - 1)) :
     1 / 40 + 1 / 1000 ≤ hh1cR1b x a b (19 / 25) := by
@@ -179,7 +179,7 @@ theorem hl1c_F1_bstep {x a b1 b2 : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (ha
       nlinarith)
   linarith
 
-/-- **The first test decreases in `β` along the ceiling `u_ℓ(x, β)`** (`REDUCTION` (4)). -/
+/-- **The first test decreases in `β` along the ceiling `u_ℓ(x, β)`**. -/
 theorem hl1c_F0_bstep {x a b1 b2 : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a)
     (ha2 : a ≤ 7 / 6) (haU : a ≤ (1013 * x + 676) / 2340) (hb1 : x + (a - 1) / 2 ≤ b1)
     (hb12 : b1 ≤ b2) (hb2 : b2 ≤ x + 10 / 13 * (a - 1)) :

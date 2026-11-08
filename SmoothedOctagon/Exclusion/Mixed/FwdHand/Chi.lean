@@ -6,10 +6,10 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.CertChi
 /-!
 # Case M2, forward successor by hand: the forward ratio `χ` on the small-gap domain
 
-`MIXED_NONSHORT_SMALL_GAP_CHI_BOUND`: if `1/3 ≤ t ≤ 19/50`, `0 ≤ j ≤ 1/30`, `k ≥ 1`, `q > 1`, the
+If `1/3 ≤ t ≤ 19/50`, `0 ≤ j ≤ 1/30`, `k ≥ 1`, `q > 1`, the
 exact incoming secant `v ≤ U(t)` and `N_k < 0`, then `χ = pq/W > 4/7`.
 
-Route: instead of the concavity of `N₁` in `q` and its two endpoint signs, the shape monotonicity
+The shape monotonicity
 lowers `k` to one, the substitutions `v ↦ V₂`, `log q ↦ L₊` lower `N₁` (negative coefficients),
 and the resulting rational function is positive on the whole interval `1 ≤ q ≤ 4W/(7p)` by the
 generated certificate `CertChi`.
@@ -34,7 +34,7 @@ theorem fh_chi_link (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
   field_simp
   ring
 
-/-- **The forward ratio exceeds `4/7`** (`MIXED_NONSHORT_SMALL_GAP_CHI_BOUND` (2)). -/
+/-- **The forward ratio exceeds `4/7`**: `7pq > 4W` on the small-gap domain. -/
 theorem fh_chi_core {t x k q v : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 19 / 50) (hj0 : 0 ≤ 2 * t + x - 1)
     (hj1 : 2 * t + x - 1 ≤ 1 / 30) (hk : 1 ≤ k) (hq : 1 < q) (hv : v = nhSecN t x)
     (hvU : v ≤ 1 - t + t ^ 2) (hN : nhN t x k q v (Real.log q) < 0) :

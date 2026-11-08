@@ -5,12 +5,10 @@ public import SmoothedOctagon.Reduction.Clearance.Budget
 /-!
 # A frame bound depending on the total cost
 
-SINGULAR_COST_BUDGET §5.1, equation (29) (inventory A2, §2.4, `SCB:(29)`), in the Frobenius
-norm. Along a state trajectory with `g(0) = I`, `f = ‖g‖_F² = tr(gᵀg)` satisfies
-`f' = 2 tr(X gᵀg) ≤ 2ρ f` (`X = ρJ + S`, `‖S‖² = 2(ρ² - 1)`, and `gᵀg` is positive definite with
-determinant one), so `f(t) ≤ 2 exp(2∫₀ᵗ ρ) ≤ 2 e^{2C/3}`. Route: the notes bound the operator norm
-by `exp ∫ ‖X‖_op < e^{2C/3} < 9`; the Frobenius form needs no operator norm and gives
-`‖g‖_F² < 42`.
+A bound on the Frobenius norm of the frame. Along a state trajectory with
+`g(0) = I`, `f = ‖g‖_F² = tr(gᵀg)` satisfies `f' = 2 tr(X gᵀg) ≤ 2ρ f` (`X = ρJ + S`,
+`‖S‖² = 2(ρ² - 1)`, and `gᵀg` is positive definite with determinant one), so
+`f(t) ≤ 2 exp(2∫₀ᵗ ρ) ≤ 2 e^{2C/3}`, and `‖g‖_F² < 42` when the cost is at most `A_oct`.
 
 Main API:
 
@@ -71,7 +69,7 @@ theorem scb_frame_deriv_le {g X : Mat2} (hg : g.det = 1) (hX : IsStarState X) :
 
 variable {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2}
 
-/-- **Gronwall for the frame** (SINGULAR_COST_BUDGET (29)): `‖g(t)‖_F² ≤ 2 exp(2 ∫₀ᵗ ρ)`. -/
+/-- **Gronwall for the frame**: `‖g(t)‖_F² ≤ 2 exp(2 ∫₀ᵗ ρ)`. -/
 theorem scb_frobSq_frame_le_exp (hst : IsStateTrajectory T u g X) (hg0 : g 0 = 1) :
     ∀ t ∈ Icc 0 T, frobSq (g t) ≤ 2 * Real.exp (2 * ∫ s in (0 : ℝ)..t, scb_rho (X s)) := by
   have hT : 0 < T := hst.1
@@ -144,8 +142,9 @@ theorem scb_frobSq_frame_le_exp (hst : IsStateTrajectory T u g X) (hg0 : g 0 = 1
   rw [this]
   exact mul_le_mul_of_nonneg_right h hE.le
 
-/-- **The frame bound** (SINGULAR_COST_BUDGET (29)). For a state trajectory with `g(0) = I` and
-cost at most `A_oct`, `‖g(t)‖_F² ≤ 42` on `[0, T]`. -/
+/-- **The frame bound**. For a state trajectory with `g(0) = I` and cost at most `A_oct`,
+`‖g(t)‖_F² ≤ 42` on `[0, T]`: the cost is `3∫₀ᵀ ρ`, so `scb_frobSq_frame_le_exp` gives
+`‖g(t)‖_F² ≤ 2 e^{2A_oct/3} < 42`. -/
 theorem scb_frobSq_frame_le (hst : IsStateTrajectory T u g X) (hg0 : g 0 = 1)
     (hcost : reinhardtCost T X ≤ octagonCost) : ∀ t ∈ Icc 0 T, frobSq (g t) ≤ 42 := by
   intro t ht

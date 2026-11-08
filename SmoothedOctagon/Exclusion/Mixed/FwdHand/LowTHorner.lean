@@ -5,8 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTCircuit
 /-!
 # Case M2, forward successor by hand: the low-`t` circuit along `h` at fixed `j`, `y`
 
-`docs/lighter-proofs/NONSHORT_LOW_T_CURVATURE.md` and `NONSHORT_LOW_T_H_REDUCTION.md` (PR #2): the
-directional derivative `𝓗 = ∂_x - ½∂_t` at fixed `j = x - (1 - 2t)` and `y = q - 1` is the
+The directional derivative `𝓗 = ∂_x - ½∂_t` at fixed `j = x - (1 - 2t)` and `y = q - 1` is the
 derivative in `h = 1 - 2t` along `t = (1 - h)/2`, `x = h + j`. Each coefficient `nltStᵢ` of the
 circuit is, along this line, the polynomial `lrhHorner (nltLᵢ j)` in `h` (`nlt_St_h`); its
 derivatives are given by the derivative coefficient list `nltDer` (`nlt_hasDerivAt_horner`).

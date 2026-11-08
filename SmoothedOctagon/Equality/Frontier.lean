@@ -5,17 +5,16 @@ public import SmoothedOctagon.Foundations.Problem
 /-!
 # A centrally symmetric convex disk is determined by its frontier
 
-`MINIMIZER_WINDOW_AUDIT` §6 and `GLOBAL_COST_EQUALITY_ASSEMBLY` §6 transport the boundary arcs of
-the octagon to the boundary of the normalized worst disk and conclude equality of the disks.
+The equality case transports the boundary arcs of the octagon to the boundary of the normalized
+worst disk; this module turns equality of the boundaries into equality of the disks.
 
 ## Main API
 
 * `eq_disk_eq_of_frontier_eq`: two centrally symmetric convex disks with the same frontier are
   equal.
 
-Route: instead of the radial hull of the frontier, the interior of each disk is a connected set
-avoiding the common frontier and containing the origin, so the interiors agree; a convex body is the
-closure of its interior.
+The interior of each disk is a connected set avoiding the common frontier and containing the
+origin, so the interiors agree; a convex body is the closure of its interior.
 -/
 
 @[expose] public section

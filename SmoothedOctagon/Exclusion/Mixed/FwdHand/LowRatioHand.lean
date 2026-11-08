@@ -3,21 +3,18 @@ module
 public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowRatioHandSigns
 
 /-!
-# Case M2, forward successor by hand: the low-ratio unit-shape sign without a certificate
+# Case M2, forward successor by hand: the low-ratio unit-shape sign
 
-The hand proof of `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10) at `k = 1` from the PR-2 notes
-(`docs/lighter-proofs/NONSHORT_LOW_RATIO_LINK.md` with `NONSHORT_LOW_RATIO.md`,
-`NONSHORT_LOW_RATIO_MONOTONICITY.md`, `NONSHORT_LOW_RATIO_REMAINDER.md`; branch
-`proof/lighter-signs`). It replaces the generated certificate `CertLRa` in `fh_lowRatio_core`.
+The sign of the low-ratio combined residual at the unit shape `k = 1`, at the effective norm `v̂`
+and with `log q ↦ L₊`, used in `fh_lowRatio_core`.
 
 The cleared residual `48(q + 1)WR · fhComb 6 0 t x 1 q v̂ L₊ 0` is the polynomial circuit
-`𝒫 = 48(q + 1)WR 𝒯 + 4𝒰𝒱 + 𝒦` (`lrh_link`; link note (3), (11), (13)). With `h = 1 - 2t`,
+`𝒫 = 48(q + 1)WR 𝒯 + 4𝒰𝒱 + 𝒦` (`lrh_link`). With `h = 1 - 2t`,
 `j = 2t + x - 1`, `y = q - 1`, `𝒫 = ∑ᵢ C̃ᵢ(h, y) jⁱ` (`lrh_collect`), which is positive by
 `lrh_sum_pos` (`FwdHand/LowRatioHandSigns`).
 
-Route: the note's fourth-derivative/Taylor step (link note §§3-5) is replaced by the exact
-collection identity `𝒫 = ∑ C̃ᵢ jⁱ` that the note derives from it (end of §5). It is checked one
-power of `y` at a time (`lrh_coef0`, …, `lrh_coef7`: identities in `(h, j)` with at most 86
+The exact collection identity `𝒫 = ∑ C̃ᵢ jⁱ` is checked one power of `y`
+at a time (`lrh_coef0`, …, `lrh_coef7`: identities in `(h, j)` with at most 86
 monomials and degree at most 12), after expanding the circuit factors `𝒯`, `𝒰`, `𝒱` in `y`
 (`lrh_T_y`, `lrh_U_y`, `lrh_V_y`: at most 195 monomials); no identity in three variables beyond
 these factor expansions is expanded.
@@ -32,13 +29,13 @@ these factor expansions is expanded.
 
 namespace SmoothedOctagon
 
-/-! ### The circuit of the unit-shape residual (`NONSHORT_LOW_RATIO_LINK` §2) -/
+/-! ### The circuit of the unit-shape residual -/
 
-/-- `𝒰` of `NONSHORT_LOW_RATIO_LINK` (11). -/
+/-- The circuit factor `𝒰`, a quartic in `q`. -/
 noncomputable def lrhCU (t x q : ℝ) : ℝ :=
   t * (t + x) * (x + 1) ^ (4 : ℕ) - t * (x + 1) ^ (3 : ℕ) * (t + x ^ (2 : ℕ) + 2 * x) * q + (x + 1) ^ (2 : ℕ) * (-2 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + 10 * t ^ (2 : ℕ) * x + 5 * t * x ^ (3 : ℕ) + 17 * t * x ^ (2 : ℕ) - 7 * t * x - t + 6 * x) * q ^ (2 : ℕ) - (x + 1) * (-2 * t ^ (2 : ℕ) * x ^ (2 : ℕ) - 4 * t ^ (2 : ℕ) * x + 5 * t * x ^ (4 : ℕ) + 20 * t * x ^ (3 : ℕ) + 20 * t * x ^ (2 : ℕ) - t + 6 * x ^ (2 : ℕ) + 12 * x) * q ^ (3 : ℕ) + t * x * (t - 1) * (-2 * t + x ^ (3 : ℕ) + x ^ (2 : ℕ) - 3 * x - 1) * q ^ (4 : ℕ)
 
-/-- `𝒱 = 48(q + 1)RW² v̂` (`NONSHORT_LOW_RATIO_LINK` (6)-(9)). -/
+/-- `𝒱 = 48(q + 1)RW² v̂`. -/
 noncomputable def lrhCV (t x q : ℝ) : ℝ :=
   (q + 1) * (4 + 3 * (q + 2 * t + x - 1)) * (12 * t ^ (2 : ℕ) * x ^ (3 : ℕ) + 132 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + 300 * t ^ (2 : ℕ) * x + 180 * t ^ (2 : ℕ) + 19 * t * x ^ (3 : ℕ) - 12 * t * x ^ (2 : ℕ) - 210 * t * x - 180 * t + 12 * x ^ (4 : ℕ) + 113 * x ^ (3 : ℕ) + 312 * x ^ (2 : ℕ) + 390 * x + 180) - 6 * (x ^ (2 : ℕ) + 10 * x + 15) * (q + 2 * t + x - 1) * ((1 + x) * (-t + 5 * x + 6) + 2 * (3 * t ^ (2 : ℕ) + t * x - 5 * t + x ^ (2 : ℕ) + x + 3) * q + (t + x) * (6 * t + 5 * x - 1) * q ^ (2 : ℕ))
 
@@ -55,16 +52,16 @@ noncomputable def lrhSevx (x : ℝ) : ℝ := 7 * (1 + x) ^ (2 : ℕ)
 /-- `J = t + x(x + 2)`. -/
 noncomputable def lrhJtx (t x : ℝ) : ℝ := t + x * (x + 2)
 
-/-- `𝒦 = -32tBpW²R Z(q)(7W² - Jq²)`, `Z(q) = q(q - 1)(q² + 10q + 1)` (`NONSHORT_LOW_RATIO_LINK` (12)). -/
+/-- `𝒦 = -32tBpW²R Z(q)(7W² - Jq²)`, `Z(q) = q(q - 1)(q² + 10q + 1)`. -/
 noncomputable def lrhCK (t x q : ℝ) : ℝ :=
   lrhGtx t x * (q * (q - 1) * (q ^ (2 : ℕ) + 10 * q + 1)) * (lrhSevx x - lrhJtx t x * q ^ (2 : ℕ))
 
-/-- **The polynomial circuit** `𝒫 = 48(q + 1)WR 𝒯 + 4𝒰𝒱 + 𝒦` (`NONSHORT_LOW_RATIO_LINK` (13)), with
+/-- **The polynomial circuit** `𝒫 = 48(q + 1)WR 𝒯 + 4𝒰𝒱 + 𝒦`, with
 `𝒯 = fhComb 6 0 t x 1 q 0 0 0`. -/
 noncomputable def lrhCP (t x q : ℝ) : ℝ :=
   48 * (q + 1) * lrhWRx x * fhComb 6 0 t x 1 q 0 0 0 + 4 * lrhCU t x q * lrhCV t x q + lrhCK t x q
 
-/-- **The link** (`NONSHORT_LOW_RATIO_LINK` (3), (11), (13)): the cleared unit-shape residual at
+/-- **The link**: the cleared unit-shape residual at
 `v = v̂`, `log q = L₊` is the circuit `𝒫`. -/
 theorem lrh_link (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
     48 * (q + 1) * lrhWRx x * fhComb 6 0 t x 1 q
@@ -164,7 +161,7 @@ theorem lrh_V_y (h j y : ℝ) :
   unfold lrhCV lrhYV0 lrhYV1 lrhYV2 lrhYV3
   ring
 
-/-- The coefficient of `y^0` (`NONSHORT_LOW_RATIO_LINK` (23), (26)). -/
+/-- The coefficient of `y^0` in the collection identity. -/
 theorem lrh_coef0 (h j : ℝ) :
     96 * lrhWRx (h + j) * lrhYT0 h j + 4 * lrhYU0 h j * lrhYV0 h j =
       ((1 + h) ^ (3 : ℕ) * h ^ (3 : ℕ) * lrhB00 h / 2) +
@@ -178,7 +175,7 @@ theorem lrh_coef0 (h j : ℝ) :
   unfold lrhWRx lrhYT0 lrhYU0 lrhYV0 lrhB00 lrhB10 lrhB20 lrhP30 lrhP40 lrhP50 lrhP60 lrhP70
   ring
 
-/-- The coefficient of `y^1` (`NONSHORT_LOW_RATIO_LINK` (23), (26)). -/
+/-- The coefficient of `y^1` in the collection identity. -/
 theorem lrh_coef1 (h j : ℝ) :
     48 * lrhWRx (h + j) * lrhYT0 h j + 96 * lrhWRx (h + j) * lrhYT1 h j + 12 * lrhGtx ((1 - h) / 2) (h + j) * lrhSevx (h + j) - 12 * lrhGtx ((1 - h) / 2) (h + j) * lrhJtx ((1 - h) / 2) (h + j) + 4 * lrhYU0 h j * lrhYV1 h j + 4 * lrhYU1 h j * lrhYV0 h j =
       ((1 + h) ^ (3 : ℕ) * h ^ (2 : ℕ) * lrhB01 h / 2) +
@@ -194,7 +191,7 @@ theorem lrh_coef1 (h j : ℝ) :
   unfold lrhWRx lrhGtx lrhSevx lrhJtx lrhYT0 lrhYT1 lrhYU0 lrhYU1 lrhYV0 lrhYV1 lrhB01 lrhB11 lrhB21 lrhP31 lrhP41 lrhP51 lrhP61 lrhP71 lrhP81 lrhP91
   ring
 
-/-- The coefficient of `y^2` (`NONSHORT_LOW_RATIO_LINK` (23), (26)). -/
+/-- The coefficient of `y^2` in the collection identity. -/
 theorem lrh_coef2 (h j : ℝ) :
     48 * lrhWRx (h + j) * lrhYT1 h j + 96 * lrhWRx (h + j) * lrhYT2 h j + 24 * lrhGtx ((1 - h) / 2) (h + j) * lrhSevx (h + j) - 48 * lrhGtx ((1 - h) / 2) (h + j) * lrhJtx ((1 - h) / 2) (h + j) + 4 * lrhYU0 h j * lrhYV2 h j + 4 * lrhYU1 h j * lrhYV1 h j + 4 * lrhYU2 h j * lrhYV0 h j =
       ((1 + h) ^ (3 : ℕ) * h * lrhB02 h / 2) +
@@ -211,7 +208,7 @@ theorem lrh_coef2 (h j : ℝ) :
   unfold lrhWRx lrhGtx lrhSevx lrhJtx lrhYT1 lrhYT2 lrhYU0 lrhYU1 lrhYU2 lrhYV0 lrhYV1 lrhYV2 lrhB02 lrhB12 lrhB22 lrhP32 lrhP42 lrhP52 lrhP62 lrhP72 lrhP82 lrhP92
   ring
 
-/-- The coefficient of `y^3` (`NONSHORT_LOW_RATIO_LINK` (23), (26)). -/
+/-- The coefficient of `y^3` in the collection identity. -/
 theorem lrh_coef3 (h j : ℝ) :
     48 * lrhWRx (h + j) * lrhYT2 h j + 96 * lrhWRx (h + j) * lrhYT3 h j + 13 * lrhGtx ((1 - h) / 2) (h + j) * lrhSevx (h + j) - 73 * lrhGtx ((1 - h) / 2) (h + j) * lrhJtx ((1 - h) / 2) (h + j) + 4 * lrhYU0 h j * lrhYV3 h j + 4 * lrhYU1 h j * lrhYV2 h j + 4 * lrhYU2 h j * lrhYV1 h j + 4 * lrhYU3 h j * lrhYV0 h j =
       ((1 + h) ^ (3 : ℕ) * lrhB03 h / 2) +
@@ -228,7 +225,7 @@ theorem lrh_coef3 (h j : ℝ) :
   unfold lrhWRx lrhGtx lrhSevx lrhJtx lrhYT2 lrhYT3 lrhYU0 lrhYU1 lrhYU2 lrhYU3 lrhYV0 lrhYV1 lrhYV2 lrhYV3 lrhB03 lrhB13 lrhB23 lrhP33 lrhP43 lrhP53 lrhP63 lrhP73 lrhP83 lrhP93
   ring
 
-/-- The coefficient of `y^4` (`NONSHORT_LOW_RATIO_LINK` (23), (26)). -/
+/-- The coefficient of `y^4` in the collection identity. -/
 theorem lrh_coef4 (h j : ℝ) :
     48 * lrhWRx (h + j) * lrhYT3 h j + 96 * lrhWRx (h + j) * lrhYT4 h j + lrhGtx ((1 - h) / 2) (h + j) * lrhSevx (h + j) - 51 * lrhGtx ((1 - h) / 2) (h + j) * lrhJtx ((1 - h) / 2) (h + j) + 4 * lrhYU1 h j * lrhYV3 h j + 4 * lrhYU2 h j * lrhYV2 h j + 4 * lrhYU3 h j * lrhYV1 h j + 4 * lrhYU4 h j * lrhYV0 h j =
       ((1 + h) ^ (3 : ℕ) * lrhB04 h / 2) +
@@ -245,7 +242,7 @@ theorem lrh_coef4 (h j : ℝ) :
   unfold lrhWRx lrhGtx lrhSevx lrhJtx lrhYT3 lrhYT4 lrhYU1 lrhYU2 lrhYU3 lrhYU4 lrhYV0 lrhYV1 lrhYV2 lrhYV3 lrhB04 lrhB14 lrhB24 lrhP34 lrhP44 lrhP54 lrhP64 lrhP74 lrhP84 lrhP94
   ring
 
-/-- The coefficient of `y^5` (`NONSHORT_LOW_RATIO_LINK` (23), (26)). -/
+/-- The coefficient of `y^5` in the collection identity. -/
 theorem lrh_coef5 (h j : ℝ) :
     48 * lrhWRx (h + j) * lrhYT4 h j + 96 * lrhWRx (h + j) * lrhYT5 h j - 15 * lrhGtx ((1 - h) / 2) (h + j) * lrhJtx ((1 - h) / 2) (h + j) + 4 * lrhYU2 h j * lrhYV3 h j + 4 * lrhYU3 h j * lrhYV2 h j + 4 * lrhYU4 h j * lrhYV1 h j =
       ((1 + h) ^ (3 : ℕ) * lrhB05 h / 2) +
@@ -262,7 +259,7 @@ theorem lrh_coef5 (h j : ℝ) :
   unfold lrhWRx lrhGtx lrhJtx lrhYT4 lrhYT5 lrhYU2 lrhYU3 lrhYU4 lrhYV1 lrhYV2 lrhYV3 lrhB05 lrhB15 lrhB25 lrhP35 lrhP45 lrhP55 lrhP65 lrhP75 lrhP85 lrhP95
   ring
 
-/-- The coefficient of `y^6` (`NONSHORT_LOW_RATIO_LINK` (23), (26)). -/
+/-- The coefficient of `y^6` in the collection identity. -/
 theorem lrh_coef6 (h j : ℝ) :
     48 * lrhWRx (h + j) * lrhYT5 h j - lrhGtx ((1 - h) / 2) (h + j) * lrhJtx ((1 - h) / 2) (h + j) + 4 * lrhYU3 h j * lrhYV3 h j + 4 * lrhYU4 h j * lrhYV2 h j =
       ((1 + h) ^ (3 : ℕ) * lrhB06 h / 2) +
@@ -278,7 +275,7 @@ theorem lrh_coef6 (h j : ℝ) :
   unfold lrhWRx lrhGtx lrhJtx lrhYT5 lrhYU3 lrhYU4 lrhYV2 lrhYV3 lrhB06 lrhB16 lrhB26 lrhP36 lrhP46 lrhP56 lrhP66 lrhP76 lrhP86 lrhP96
   ring
 
-/-- The coefficient of `y^7` (`NONSHORT_LOW_RATIO_LINK` (23), (26)). -/
+/-- The coefficient of `y^7` in the collection identity. -/
 theorem lrh_coef7 (h j : ℝ) :
     4 * lrhYU4 h j * lrhYV3 h j =
       ((1 + h) ^ (3 : ℕ) * h * lrhB07 h / 2) +
@@ -293,8 +290,7 @@ theorem lrh_coef7 (h j : ℝ) :
   unfold lrhYU4 lrhYV3 lrhB07 lrhB17 lrhB27 lrhP37 lrhP47 lrhP57 lrhP67 lrhP77
   ring
 
-/-- **The collection identity** `Π = ∑ C̃ᵢ jⁱ` (`NONSHORT_LOW_RATIO_LINK` §5; checked one power of `y`
-at a time). -/
+/-- **The collection identity** `Π = ∑ C̃ᵢ jⁱ` (checked one power of `y` at a time). -/
 theorem lrh_collect (h j y : ℝ) :
     lrhCP ((1 - h) / 2) (h + j) (1 + y) =
       lrhC0 h y + lrhC1 h y * j + lrhC2 h y * j ^ (2 : ℕ) + lrhC3 h y * j ^ (3 : ℕ) + lrhC4 h y * j ^ (4 : ℕ)
@@ -313,8 +309,8 @@ theorem lrh_collect (h j y : ℝ) :
   unfold lrhC0 lrhC1 lrhC2 lrhC3 lrhC4 lrhC5 lrhC6 lrhC7 lrhC8 lrhC9 lrhC10
   linear_combination e0 + y * e1 + y ^ (2 : ℕ) * e2 + y ^ (3 : ℕ) * e3 + y ^ (4 : ℕ) * e4 + y ^ (5 : ℕ) * e5 + y ^ (6 : ℕ) * e6 + y ^ (7 : ℕ) * e7
 
-/-- **The unit-shape residual is positive** (`MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), via
-`NONSHORT_LOW_RATIO_LINK` (2)): for `1/4 ≤ t ≤ 1/3`, `2t + x ≥ 1`, `1 ≤ q ≤ 2 - 2t`. -/
+/-- **The unit-shape residual is positive**, through the circuit `𝒫` and `lrh_sum_pos`: for
+`1/4 ≤ t ≤ 1/3`, `2t + x ≥ 1`, `1 ≤ q ≤ 2 - 2t`. -/
 theorem lrh_unit_pos {t x q : ℝ} (ht0 : 1 / 4 ≤ t) (ht1 : t ≤ 1 / 3) (hj : 1 ≤ 2 * t + x)
     (hq : 1 ≤ q) (hy : q - 1 ≤ 1 - 2 * t) :
     0 < fhComb 6 0 t x 1 q (fhVG t x + 3 / 4 * (q + 2 * t + x - 1) * (fhVG t x - nhFl t x q))

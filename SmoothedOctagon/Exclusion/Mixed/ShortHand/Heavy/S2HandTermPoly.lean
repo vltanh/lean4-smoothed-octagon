@@ -5,15 +5,13 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandTermDefs
 /-!
 # S2 hand signs: the lower-shape terminal curve, component signs
 
-The univariate component signs of `archive/lighter-proofs/SHORT_RATIO_OUTER_TERMINAL_ALGEBRA.md`
-§2-§4 on `3/4 ≤ r ≤ 49/60`, each stated for the cleared numerator of the bounded quantity (the
-positive clearing factor of the table in §2 is already divided out): for `n = 49/20` and
-`n = 63/25`, `0 < A_n < 5`, `-17 < A_n' < 0`, `A_n'' < 53`, `L_n'' < -1`, `Q_n'' < -17/10`; the
-`F` bounds `K₀`-`K₃` and the logarithm-pole bound `T`. Each is proved by the termwise rule in the
-shifted variable `s = r - 3/4 ∈ [0, 1/15]` (positive terms at `s = 0`, negative terms at
-`s = 1/15`).
-Route: the notes' monotonicity arguments for `P₁, P₂, P₄, P₅, P₆, K₁, T` and the `n`-derivatives
-`J₀`-`J₂` are replaced by the termwise rule at the left endpoint, applied to each `n` separately.
+The univariate component signs of the lower-shape terminal curve on `3/4 ≤ r ≤ 49/60`, each
+stated for the cleared numerator of the bounded quantity (with its positive clearing factor
+divided out): for `n = 49/20` and `n = 63/25`, `0 < A_n < 5`, `-17 < A_n' < 0`, `A_n'' < 53`,
+`L_n'' < -1`, `Q_n'' < -17/10`; the `F` bounds `K₀`-`K₃` and the logarithm-pole bound `T`. Each
+is proved by a termwise rule in the shifted variable `s = r - 3/4 ∈ [0, 1/15]` (positive terms
+at `s = 0`, negative terms at `s = 1/15`).
+The rule is applied to each `n` separately.
 
 ## Main API
 

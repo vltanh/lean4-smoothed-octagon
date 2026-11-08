@@ -114,7 +114,8 @@ theorem ff_f_nonneg {r : ℝ} (hr : 1 ≤ r) : 0 ≤ ff_f r := by
   rw [Real.sinh_eq, Real.exp_neg, Real.exp_log (by linarith)] at h
   unfold ff_f; linarith
 
-/-- `f(1 + t) ≤ t³/6` for `t ≥ 0` (GLOBAL_FORWARD_CENTERED_SYSTEM (7)). -/
+/-- `f(1 + t) ≤ t³/6` for `t ≥ 0`: the difference vanishes at `0` and has derivative
+`t²/2 - t²/(2(1 + t)²) ≥ 0`. -/
 theorem ff_f_le_cube {t : ℝ} (ht : 0 ≤ t) : ff_f (1 + t) ≤ t ^ 3 / 6 := by
   have key := ff_le_of_deriv (f := fun s ↦ s ^ 3 / 6 - ff_f (1 + s))
     (f' := fun s ↦ s ^ 2 / 2 - s ^ 2 / (2 * (1 + s) ^ 2)) ht (fun s hs ↦ ?_) (fun s hs ↦ ?_)

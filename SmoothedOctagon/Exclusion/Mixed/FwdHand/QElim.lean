@@ -8,7 +8,7 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.CertQD
 /-!
 # Case M2, forward successor by hand: elimination of the event factor
 
-`MIXED_NONSHORT_FORWARD_Q_ELIMINATION`. With `η = p/W`, `α = B(w_U - 1)/(pW)`, `β = pW/B`, the
+With `η = p/W`, `α = B(w_U - 1)/(pW)`, `β = pW/B`, the
 diagonal on the stationary line at `w_U`, divided by `B`, is `h(q) = log q + αq + β/q + d`; on
 `1/3 ≤ t ≤ 2/5`, `0 ≤ j ≤ 1/30`, `k ≥ 1`, `v ≤ min(1, V)`:
 `h(q) - h(1) < F_η(q) - g` for `q > 1` (`fh_qelim`).
@@ -16,12 +16,12 @@ diagonal on the stationary line at `w_U`, divided by `B`, is `h(q) = log q + αq
 The logarithm bound `L₊` leaves `y/(6(y + 1)(y + 2))·(C₀ + C₁y + C₂y²)` (`fh_qelim_id`); the `Cᵢ`
 increase with `k` and decrease with `v` (`α(k, v) - α(1, V) ≤ β(k) - β(1) ≤ 0`), and at `k = 1`,
 `v = V` the quadratic is positive since `C₂ > 0` and `4C₀C₂ > C₁²` (certificates `CertQC`,
-`CertQD`, in place of the concavity argument of §§5-7).
+`CertQD`).
 
 ## Main API
 
 * `fhEta`, `fhAq`, `fhBq`, `fhQC0`, `fhQC1`, `fhQC2`; `fh_qelim_id`; `fh_QC_link`, `fh_QD_link`.
-* `fh_qelim_quad`: `C₀ + C₁y + C₂y² > 0` for `y ≥ 0`; `fh_qelim`: **the factor elimination (5)**.
+* `fh_qelim_quad`: `C₀ + C₁y + C₂y² > 0` for `y ≥ 0`; `fh_qelim`: **the factor elimination**.
 -/
 
 @[expose] public section
@@ -45,7 +45,9 @@ noncomputable def fhQC1 (η α β : ℝ) : ℝ := 18 * η ^ 2 - 7 * η - 18 * α
 /-- `C₂ = 6η² - η - 6α - 1`. -/
 noncomputable def fhQC2 (η α β : ℝ) : ℝ := 6 * η ^ 2 - η - 6 * α - 1
 
-/-- The identity (8) of `MIXED_NONSHORT_FORWARD_Q_ELIMINATION`, with `L₊` in place of `log q`. -/
+/-- The elimination identity with `L₊` in place of `log q`: with `q = 1 + y`, the difference
+`η + (η² - α)y + βy/(1 + y) - (1 + η(1 + y)/y)L₊(1 + y)` is
+`y/(6(y + 1)(y + 2))·(C₀ + C₁y + C₂y²)`. -/
 theorem fh_qelim_id (η α β y : ℝ) (hy : 0 < y) :
     η + (η ^ 2 - α) * y + β * y / (1 + y) - (1 + η * (1 + y) / y) * nhLp (1 + y) =
       y / (6 * (y + 1) * (y + 2)) * (fhQC0 η α β + fhQC1 η α β * y + fhQC2 η α β * y ^ 2) := by
@@ -134,7 +136,7 @@ theorem fh_Aq_mono_v {t x v V : ℝ} (ht : 0 < t) (hx : 0 < x) (hv : v ≤ V) :
     apply div_nonneg (mul_nonneg (by linarith) (by positivity)) (by positivity)
   linarith
 
-/-- **The event-factor quadratic is positive** (`MIXED_NONSHORT_FORWARD_Q_ELIMINATION` (13)-(26)). -/
+/-- **The event-factor quadratic is positive**: `C₀ + C₁y + C₂y² > 0` for `y ≥ 0`. -/
 theorem fh_qelim_quad {t x k v y : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj0 : 0 ≤ 2 * t + x - 1)
     (hj1 : 2 * t + x - 1 ≤ 1 / 30) (hk : 1 ≤ k) (hv1 : v ≤ 1) (hvV : v ≤ fhVq t x) (hy : 0 ≤ y) :
     0 < fhQC0 (fhEta t x) (fhAq t x k v) (fhBq t x k) + fhQC1 (fhEta t x) (fhAq t x k v) (fhBq t x k) * y
@@ -174,7 +176,7 @@ theorem fh_qelim_quad {t x k v y : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) 
     exact pos_of_mul_pos_right h4 (by linarith)
   nlinarith [mul_le_mul_of_nonneg_right c1 hy, mul_le_mul_of_nonneg_right c2 (sq_nonneg y)]
 
-/-- **The factor elimination** (`MIXED_NONSHORT_FORWARD_Q_ELIMINATION` (5)): for `q > 1`,
+/-- **The factor elimination**: for `q > 1`,
 `h(q) - h(1) < F_η(q) - g`, `h(q) - h(1) = log q + α(q - 1) + β(1/q - 1)`, `g = 1 - η + η²`. -/
 theorem fh_qelim {t x k q v : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj0 : 0 ≤ 2 * t + x - 1)
     (hj1 : 2 * t + x - 1 ≤ 1 / 30) (hk : 1 ≤ k) (hv1 : v ≤ 1) (hvV : v ≤ fhVq t x) (hq : 1 < q) :

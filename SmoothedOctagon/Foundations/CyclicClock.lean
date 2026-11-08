@@ -15,8 +15,7 @@ The normalized contacts retain every balanced-pair clause. Their frame satisfies
 Consequently the initial frame and both control terminal conditions follow from
 actual balanced circle geometry. The subsequent realization theorem supplies the
 measurable control and exact cost; no optimality against arbitrary control
-trajectories is claimed here. Source draft only: compilation and kernel validation
-have not been run.
+trajectories is claimed here.
 -/
 
 @[expose] public section

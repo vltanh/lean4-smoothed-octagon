@@ -6,13 +6,18 @@ public import SmoothedOctagon.Exclusion.Mixed.Short.Calc
 /-!
 # Gate S1 helper: the derivative ratio `7/96` on the order strip
 
-`MIXED_SMALLER_SHORT_SHARP_LOW_RATIO_CORRECTED_CAP` (4)-(15); inventory HS-S01 C11, C13, C14.
+For `1 < x ≤ 2` the derivative ratio `Γ_v/(R_τ)_v` along the envelope path is at most `7/96`,
+i.e. `2ub + E_L ≤ (7/12)(1 - q)²(1 + τb)`. The function
+`F(s) = (7/12)(1 - s)²(1 + 2b(s)) - 2ub(s) - 3s` decreases on `[0, 1/7]`, and `F(1/7) > 0` reduces
+at the norm `u₀` to the positivity of a polynomial `P`, which holds on the order strip by a
+Bernstein form.
 
 ## Main API
 
-* `hs14P`, `hs14_P_bern`, `hs14_P_pos`: the polynomial `P` of (11) is positive on the order strip
-  `x + (8/17)(α - 1) ≤ β ≤ x + (4/5)(α - 1)` (Bernstein form (15)).
-* `hs14_ratio_strip`: the statement of `hs1_ratio` with the strip (13) as extra hypotheses.
+* `hs14P`, `hs14_P_bern`, `hs14_P_pos`: the polynomial `P` is positive on the order strip
+  `x + (8/17)(α - 1) ≤ β ≤ x + (4/5)(α - 1)` (Bernstein form in `(a, t)` with sextic coefficients
+  in `z`).
+* `hs14_ratio_strip`: the statement of `hs1_ratio` with the order strip as extra hypotheses.
 -/
 
 @[expose] public section
@@ -21,7 +26,7 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- **The polynomial `P` of `SHARP_LOW_RATIO_CORRECTED_CAP` (11)**:
+/-- **The polynomial `P`**:
 `P = 49SαH_N - 4B(17x² + 20x + 17)(6α² + 1 - SD)`, `H_N = [3S² - (x - 1)²]B² - 12S²αB + 12S²α²`,
 `B = α + β`. -/
 noncomputable def hs14P (x al be : ℝ) : ℝ :=
@@ -29,7 +34,7 @@ noncomputable def hs14P (x al be : ℝ) : ℝ :=
     12 * (1 + x) ^ 2 * al * (al + be) + 12 * (1 + x) ^ 2 * al ^ 2) -
     4 * (al + be) * (17 * x ^ 2 + 20 * x + 17) * (6 * al ^ 2 + 1 - (1 + x) * hsDg x be al)
 
-/-- A sextic `432 + c₁z + ⋯ + c₆z⁶` of `SHARP_LOW_RATIO_CORRECTED_CAP` (15). -/
+/-- A sextic `432 + c₁z + ⋯ + c₆z⁶` (the coefficients of the Bernstein form of `P`). -/
 noncomputable def hs14H (c₁ c₂ c₃ c₄ c₅ c₆ z : ℝ) : ℝ :=
   432 + c₁ * z + c₂ * z ^ 2 + c₃ * z ^ 3 + c₄ * z ^ 4 + c₅ * z ^ 5 + c₆ * z ^ 6
 
@@ -69,7 +74,7 @@ private theorem hs14_bern_nonneg {a a' t t' e0 e10 e11 e12 e20 e21 e22 e30 e31 e
       a ^ 3 * t ^ 2 * e32 := by
   positivity
 
-/-- **`P ≥ 300` on the enlarged strip** (`SHARP_LOW_RATIO_CORRECTED_CAP` (14)-(15)): in the
+/-- **`P ≥ 300` on the enlarged strip**: in the
 coordinates `x = 1 + z`, `α = 1 + za`, `β = 1 + z + (8/17 + 28t/85)za`, `z, a, t ∈ [0, 1]`, `P` is
 the Bernstein combination `Σ B_{j,3}(a)B_{k,2}(t)H_{jk}(z)` of the ten displayed sextics, each at
 least `300` on `[0, 1]` (`hs14H_ge`). -/
@@ -103,7 +108,8 @@ theorem hs14_P_bern {z a t : ℝ} (hz : 0 ≤ z) (hz1 : z ≤ 1) (ha : 0 ≤ a) 
     exact hs14_bern_nonneg ha (sub_nonneg.mpr ha1) ht (sub_nonneg.mpr ht1) g0 g10 g11 g12 g20 g21 g22 g30 g31 g32
   linarith
 
-/-- **`P > 0` on the order strip** (`SHARP_LOW_RATIO_CORRECTED_CAP` (13)-(15)). -/
+/-- **`P > 0` on the order strip** `x + (8/17)(α - 1) ≤ β ≤ x + (4/5)(α - 1)`, `1 < x ≤ 2`
+(`hs14_P_bern` in the coordinates `z = x - 1`, `a = (α - 1)/z`). -/
 theorem hs14_P_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al ≤ x)
     (hlo : x + 8 / 17 * (al - 1) ≤ be) (hhi : be ≤ x + 4 / 5 * (al - 1)) : 0 < hs14P x al be := by
   have hz : 0 < x - 1 := by linarith
@@ -132,7 +138,7 @@ theorem hs14_P_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
     rw [e3, e2, e1] at this
     linarith
 
-/-- **`F(1/7) > 0` on the strip** (`SHARP_LOW_RATIO_CORRECTED_CAP` (10)-(12)): with
+/-- **`F(1/7) > 0` on the strip**: with
 `b₇ = (6α² + 1 - SD)/(7Sα²)`, `J_A - (2u - 6/7)b₇ > 0` for `u ≤ u₀`
 (decreasing in `u`; at `u₀` it is `P/(588S³α²(α + β))`). -/
 theorem hs14_F7_pos {x be al u : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al ≤ x)
@@ -163,8 +169,8 @@ theorem hs14_F7_pos {x be al u : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ 
     mul_nonneg (by linarith) (by linarith)
   linarith
 
-/-- **`F` decreases on `[0, 1/7]`** (`SHARP_LOW_RATIO_CORRECTED_CAP` (9), inventory HS-S01 C13
-step 6): `F(s) = (7/12)(1 - s)²(1 + 2b(s)) - 2ub(s) - 3s`, `b(s) = 1/S - sK`, with `0 ≤ K ≤ 9/2`,
+/-- **`F` decreases on `[0, 1/7]`**:
+`F(s) = (7/12)(1 - s)²(1 + 2b(s)) - 2ub(s) - 3s`, `b(s) = 1/S - sK`, with `0 ≤ K ≤ 9/2`,
 `b(1/7) ≥ -2/7`, `u ≤ 41/54`: `F(1/7) ≤ F(q)` for `0 ≤ q ≤ 1/7`. -/
 theorem hs14_F_anti {S K u q : ℝ} (hK0 : 0 ≤ K) (hK : K ≤ 9 / 2) (hb : -2 / 7 ≤ 1 / S - K / 7)
     (hu : u ≤ 41 / 54) (hq0 : 0 ≤ q) (hq7 : q ≤ 1 / 7) :
@@ -195,8 +201,8 @@ theorem hs14_F_anti {S K u q : ℝ} (hK0 : 0 ≤ K) (hK : K ≤ 9 / 2) (hb : -2 
       nlinarith)
   linarith
 
-/-- **The derivative ratio is at most `7/96` on the order strip** (`SHARP_LOW_RATIO_CORRECTED_CAP`
-(4)-(15), inventory HS-S01 C13-C14): the statement of `hs1_ratio` with the strip (13). -/
+/-- **The derivative ratio is at most `7/96` on the order strip**: the statement of `hs1_ratio`
+with the order strip `x + (8/17)(α - 1) ≤ β ≤ x + (4/5)(α - 1)` as extra hypotheses. -/
 theorem hs14_ratio_strip {x be al u rho τ t EL : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
     (hax : al < x) (hxb : x ≤ be) (hD : 0 < hsDg x be al) (hu : 3 / 4 ≤ u) (hu0 : u ≤ hsU0 x)
     (hurA : u ≤ m2U (hsRA al be)) (hρ : 0 < rho) (hq7 : hsQ al rho ≤ 1 / 7) (hτ : 2 ≤ τ)

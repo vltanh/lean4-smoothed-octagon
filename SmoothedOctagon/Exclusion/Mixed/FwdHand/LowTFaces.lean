@@ -5,20 +5,20 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTCircuit
 /-!
 # Case M2, forward successor by hand: the low-`t` unit sign on the faces `h = 1/4` and `j = 5h/7`
 
-`docs/lighter-proofs/NONSHORT_LOW_T_UNIT_FACE.md` and `NONSHORT_LOW_T_OUTER_FACE.md` (PR #2, branch
-`proof/lighter-signs`): the circuit `S = ∑ nltStᵢ(t, x) yⁱ` is positive
+The circuit `S = ∑ nltStᵢ(t, x) yⁱ` is positive
 
 * on the initial face `t = 3/8` (`h = 1/4`), `17/60 ≤ x ≤ 3/7`, `0 ≤ y ≤ (1 - 2x)/(1 + 4x)`
-  (`nlt_face_unit`): with `Cᵢ = 1536 nltStᵢ(3/8, x)` (`nltCuᵢ`), the bounds (6)-(7) reduce `y` to the
-  cubic `C₀ + C₁y + C₂y² + B_*y³`, the square completion (9) bounds `C₂y² + B_*y³ ≥ min(0, C₂/105)`,
-  and the four one-variable signs (11) close it;
+  (`nlt_face_unit`): with `Cᵢ = 1536 nltStᵢ(3/8, x)` (`nltCuᵢ`), the bounds `y ≤ 13/64`, `C₄ > 0`,
+  `C₅ > -144000000x`, `C₆ > -6100000x` reduce `S` to the cubic `C₀ + C₁y + C₂y² + B_*y³`,
+  `B_* = C₃ - 6000000x`, the square completion `(79/20)y³ - y² + 1/105 > 0` bounds
+  `C₂y² + B_*y³ ≥ min(0, C₂/105)`, and the remaining one-variable signs close it;
 * on the outer face `t = (12 - 7x)/24` (`j = 5h/7`), `3/7 ≤ x ≤ 4/7`, `0 ≤ y ≤ 2/31`
-  (`nlt_face_outer`): `S(x, 0) = C₀ > 10` and the bounds (8) give `S_y > 0`.
+  (`nlt_face_outer`): `S(x, 0) = C₀ > 10` and the coefficient bounds `C₁ > 800`, `C₂ > -2000`,
+  `C₃, C₄ > 0`, `C₅ > -50000`, `C₆ > -3000` give `S_y > 0`.
 
-Route: every one-variable sign is proved on its interval by a termwise monomial bound after a shift
-of the variable (a negative power is absorbed into the next lower one, `nlt_pw`), with at most a few
-subintervals, in place of the notes' derivative, Taylor and rounding arguments; the outer-face
-coefficients are linked by direct expansion instead of second derivatives and boundary values.
+Every one-variable sign is proved on its interval by a termwise monomial bound after a shift of the
+variable (a negative power is absorbed into the next lower one, `nlt_pw`), with at most a few
+subintervals; the outer-face coefficients are linked by direct expansion.
 
 ## Main API
 
@@ -30,105 +30,105 @@ coefficients are linked by direct expansion instead of second derivatives and bo
 
 namespace SmoothedOctagon
 
-/-- `C_0` of `NONSHORT_LOW_T_UNIT_FACE` (`1536 nltSt0 (3/8) x`). -/
+/-- `C_0 = 1536 nltSt0 (3/8) x` on the initial face. -/
 noncomputable def nltCu0 (x : ℝ) : ℝ :=
   3793920 * x - 15602560 * x ^ 2 + 9611930 * x ^ 3 + 20231160 * x ^ 4 - 11579400 * x ^ 5 - 2570400 * x ^ 6
 
 theorem nlt_Cu0_eq (x : ℝ) : 1536 * nltSt0 (3 / 8) x = nltCu0 x := by
   unfold nltSt0 nltCu0; ring
 
-/-- `C_1` of `NONSHORT_LOW_T_UNIT_FACE` (`1536 nltSt1 (3/8) x`). -/
+/-- `C_1 = 1536 nltSt1 (3/8) x` on the initial face. -/
 noncomputable def nltCu1 (x : ℝ) : ℝ :=
   2276352 - 11965152 * x - 19510992 * x ^ 2 + 95366541 * x ^ 3 + 51084660 * x ^ 4 - 86017524 * x ^ 5 - 38064240 * x ^ 6 - 2640960 * x ^ 7
 
 theorem nlt_Cu1_eq (x : ℝ) : 1536 * nltSt1 (3 / 8) x = nltCu1 x := by
   unfold nltSt1 nltCu1; ring
 
-/-- `C_2` of `NONSHORT_LOW_T_UNIT_FACE` (`1536 nltSt2 (3/8) x`). -/
+/-- `C_2 = 1536 nltSt2 (3/8) x` on the initial face. -/
 noncomputable def nltCu2 (x : ℝ) : ℝ :=
   -6400416 - 38051816 * x + 58530680 * x ^ 2 + 206949420 * x ^ 3 + 54511676 * x ^ 4 - 155046960 * x ^ 5 - 125578224 * x ^ 6 - 37931040 * x ^ 7 - 3290112 * x ^ 8
 
 theorem nlt_Cu2_eq (x : ℝ) : 1536 * nltSt2 (3 / 8) x = nltCu2 x := by
   unfold nltSt2 nltCu2; ring
 
-/-- `C_3` of `NONSHORT_LOW_T_UNIT_FACE` (`1536 nltSt3 (3/8) x`). -/
+/-- `C_3 = 1536 nltSt3 (3/8) x` on the initial face. -/
 noncomputable def nltCu3 (x : ℝ) : ℝ :=
   -6671280 - 3710852 * x + 207692872 * x ^ 2 + 673286150 * x ^ 3 + 1041675896 * x ^ 4 + 815901492 * x ^ 5 + 259700688 * x ^ 6 + 15220800 * x ^ 7 - 78336 * x ^ 8
 
 theorem nlt_Cu3_eq (x : ℝ) : 1536 * nltSt3 (3 / 8) x = nltCu3 x := by
   unfold nltSt3 nltCu3; ring
 
-/-- `C_4` of `NONSHORT_LOW_T_UNIT_FACE` (`1536 nltSt4 (3/8) x`). -/
+/-- `C_4 = 1536 nltSt4 (3/8) x` on the initial face. -/
 noncomputable def nltCu4 (x : ℝ) : ℝ :=
   -7778448 - 49152972 * x + 9044160 * x ^ 2 + 516188634 * x ^ 3 + 1199150640 * x ^ 4 + 1101130752 * x ^ 5 + 416220768 * x ^ 6 + 50047200 * x ^ 7 + 2271744 * x ^ 8
 
 theorem nlt_Cu4_eq (x : ℝ) : 1536 * nltSt4 (3 / 8) x = nltCu4 x := by
   unfold nltSt4 nltCu4; ring
 
-/-- `C_5` of `NONSHORT_LOW_T_UNIT_FACE` (`1536 nltSt5 (3/8) x`). -/
+/-- `C_5 = 1536 nltSt5 (3/8) x` on the initial face. -/
 noncomputable def nltCu5 (x : ℝ) : ℝ :=
   -10104048 - 69924132 * x - 140397660 * x ^ 2 - 40976151 * x ^ 3 + 176006160 * x ^ 4 + 199922532 * x ^ 5 + 62655048 * x ^ 6 - 2232000 * x ^ 7 - 1253376 * x ^ 8
 
 theorem nlt_Cu5_eq (x : ℝ) : 1536 * nltSt5 (3 / 8) x = nltCu5 x := by
   unfold nltSt5 nltCu5; ring
 
-/-- `C_6` of `NONSHORT_LOW_T_UNIT_FACE` (`1536 nltSt6 (3/8) x`). -/
+/-- `C_6 = 1536 nltSt6 (3/8) x` on the initial face. -/
 noncomputable def nltCu6 (x : ℝ) : ℝ :=
   -295488 - 2093472 * x - 4182660 * x ^ 2 - 5293836 * x ^ 3 - 4773240 * x ^ 4 - 2945808 * x ^ 5 - 1608192 * x ^ 6 - 604800 * x ^ 7 - 78336 * x ^ 8
 
 theorem nlt_Cu6_eq (x : ℝ) : 1536 * nltSt6 (3 / 8) x = nltCu6 x := by
   unfold nltSt6 nltCu6; ring
 
-/-- `C_0` of `NONSHORT_LOW_T_OUTER_FACE` (`nltSt0 ((12 - 7x)/24) x`). -/
+/-- `C_0 = nltSt0 ((12 - 7x)/24) x` on the outer face. -/
 noncomputable def nltCo0 (x : ℝ) : ℝ :=
   -(146 / 3) * x ^ 2 + (1703 / 18) * x ^ 3 - (11383 / 12) * x ^ 4 + (8491 / 36) * x ^ 5 + (273903 / 64) * x ^ 6 + (92134651 / 20736) * x ^ 7 + (42875 / 24) * x ^ 8 + (40817 / 144) * x ^ 9
 
 theorem nlt_Co0_eq (x : ℝ) : nltSt0 ((12 - 7 * x) / 24) x = nltCo0 x := by
   unfold nltSt0 nltCo0; ring
 
-/-- `C_1` of `NONSHORT_LOW_T_OUTER_FACE` (`nltSt1 ((12 - 7x)/24) x`). -/
+/-- `C_1 = nltSt1 ((12 - 7x)/24) x` on the outer face. -/
 noncomputable def nltCo1 (x : ℝ) : ℝ :=
   -(760 / 3) * x + (52450 / 9) * x ^ 2 + (85877 / 18) * x ^ 3 - (1972985 / 144) * x ^ 4 - (18808865 / 1728) * x ^ 5 + (43245665 / 3456) * x ^ 6 + (240616649 / 13824) * x ^ 7 + (14201327 / 1728) * x ^ 8 + (3542161 / 1728) * x ^ 9 + (40817 / 144) * x ^ 10
 
 theorem nlt_Co1_eq (x : ℝ) : nltSt1 ((12 - 7 * x) / 24) x = nltCo1 x := by
   unfold nltSt1 nltCo1; ring
 
-/-- `C_2` of `NONSHORT_LOW_T_OUTER_FACE` (`nltSt2 ((12 - 7x)/24) x`). -/
+/-- `C_2 = nltSt2 ((12 - 7x)/24) x` on the outer face. -/
 noncomputable def nltCo2 (x : ℝ) : ℝ :=
   -(608 / 3) + (42836 / 9) * x + (281723 / 18) * x ^ 2 - (468623 / 72) * x ^ 3 - (38213467 / 864) * x ^ 4 - (136385543 / 3456) * x ^ 5 - (16090531 / 864) * x ^ 6 - (113883629 / 10368) * x ^ 7 - (2481899 / 384) * x ^ 8 - (6680317 / 3456) * x ^ 9 - (145775 / 864) * x ^ 10
 
 theorem nlt_Co2_eq (x : ℝ) : nltSt2 ((12 - 7 * x) / 24) x = nltCo2 x := by
   unfold nltSt2 nltCo2; ring
 
-/-- `C_3` of `NONSHORT_LOW_T_OUTER_FACE` (`nltSt3 ((12 - 7x)/24) x`). -/
+/-- `C_3 = nltSt3 ((12 - 7x)/24) x` on the outer face. -/
 noncomputable def nltCo3 (x : ℝ) : ℝ :=
   (19456 / 3) + (388496 / 9) * x + (286657 / 2) * x ^ 2 + (62450465 / 216) * x ^ 3 + (94747547 / 288) * x ^ 4 + (1262385373 / 10368) * x ^ 5 - (1352480477 / 10368) * x ^ 6 - (3407982385 / 20736) * x ^ 7 - (745859959 / 10368) * x ^ 8 - (12825239 / 864) * x ^ 9 - (425663 / 288) * x ^ 10
 
 theorem nlt_Co3_eq (x : ℝ) : nltSt3 ((12 - 7 * x) / 24) x = nltCo3 x := by
   unfold nltSt3 nltCo3; ring
 
-/-- `C_4` of `NONSHORT_LOW_T_OUTER_FACE` (`nltSt4 ((12 - 7x)/24) x`). -/
+/-- `C_4 = nltSt4 ((12 - 7x)/24) x` on the outer face. -/
 noncomputable def nltCo4 (x : ℝ) : ℝ :=
   -2736 - (24484 / 3) * x + (1172225 / 18) * x ^ 2 + (21947915 / 72) * x ^ 3 + (398494483 / 864) * x ^ 4 + (260416511 / 1152) * x ^ 5 - (205809391 / 1728) * x ^ 6 - (1271989063 / 6912) * x ^ 7 - (7644493 / 96) * x ^ 8 - (8817613 / 576) * x ^ 9 - (833833 / 576) * x ^ 10
 
 theorem nlt_Co4_eq (x : ℝ) : nltSt4 ((12 - 7 * x) / 24) x = nltCo4 x := by
   unfold nltSt4 nltCo4; ring
 
-/-- `C_5` of `NONSHORT_LOW_T_OUTER_FACE` (`nltSt5 ((12 - 7x)/24) x`). -/
+/-- `C_5 = nltSt5 ((12 - 7x)/24) x` on the outer face. -/
 noncomputable def nltCo5 (x : ℝ) : ℝ :=
   -9728 - (143822 / 3) * x - (642419 / 9) * x ^ 2 + (4375 / 2) * x ^ 3 + (14398915 / 144) * x ^ 4 + (261991735 / 3456) * x ^ 5 - (13547797 / 864) * x ^ 6 - (1808944133 / 41472) * x ^ 7 - (4407155 / 216) * x ^ 8 - (13943027 / 3456) * x ^ 9 - (1358623 / 3456) * x ^ 10
 
 theorem nlt_Co5_eq (x : ℝ) : nltSt5 ((12 - 7 * x) / 24) x = nltCo5 x := by
   unfold nltSt5 nltCo5; ring
 
-/-- `C_6` of `NONSHORT_LOW_T_OUTER_FACE` (`nltSt6 ((12 - 7x)/24) x`). -/
+/-- `C_6 = nltSt6 ((12 - 7x)/24) x` on the outer face. -/
 noncomputable def nltCo6 (x : ℝ) : ℝ :=
   -304 - 1626 * x - (17443 / 6) * x ^ 2 - (448201 / 216) * x ^ 3 - (86123 / 864) * x ^ 4 + (1915051 / 2592) * x ^ 5 + (4339501 / 10368) * x ^ 6 + (628367 / 10368) * x ^ 7 - (62327 / 5184) * x ^ 8 - (595 / 216) * x ^ 9
 
 theorem nlt_Co6_eq (x : ℝ) : nltSt6 ((12 - 7 * x) / 24) x = nltCo6 x := by
   unfold nltSt6 nltCo6; ring
 
-/-- An auxiliary sign of `NONSHORT_LOW_T_UNIT_FACE` §§2-4. -/
+/-- An auxiliary sign of the initial face: `C₄`. -/
 noncomputable def nltUf4 (x : ℝ) : ℝ := nltCu4 x
 
 /-- `nltUf4 > 0` on `[17/60, 3/7]`. -/
@@ -154,7 +154,7 @@ theorem nltUf4_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- An auxiliary sign of `NONSHORT_LOW_T_UNIT_FACE` §§2-4. -/
+/-- An auxiliary sign of the initial face: `C₅ + 144000000x`. -/
 noncomputable def nltUf5 (x : ℝ) : ℝ := nltCu5 x + 144000000 * x
 
 /-- `nltUf5 > 0` on `[17/60, 3/7]`. -/
@@ -180,7 +180,7 @@ theorem nltUf5_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- An auxiliary sign of `NONSHORT_LOW_T_UNIT_FACE` §§2-4. -/
+/-- An auxiliary sign of the initial face: `C₆ + 6100000x`. -/
 noncomputable def nltUf6 (x : ℝ) : ℝ := nltCu6 x + 6100000 * x
 
 /-- `nltUf6 > 0` on `[17/60, 3/7]`. -/
@@ -206,7 +206,7 @@ theorem nltUf6_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- An auxiliary sign of `NONSHORT_LOW_T_UNIT_FACE` §§2-4. -/
+/-- An auxiliary sign of the initial face: `B_* = C₃ - 6000000x`. -/
 noncomputable def nltUfB (x : ℝ) : ℝ := nltCu3 x - 6000000 * x
 
 /-- `nltUfB > 0` on `[17/60, 3/7]`. -/
@@ -232,7 +232,7 @@ theorem nltUfB_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- An auxiliary sign of `NONSHORT_LOW_T_UNIT_FACE` §§2-4. -/
+/-- An auxiliary sign of the initial face: `B_* + (79/20)C₂`. -/
 noncomputable def nltUfE (x : ℝ) : ℝ := nltCu3 x - 6000000 * x + 79 / 20 * nltCu2 x
 
 /-- `nltUfE > 0` on `[17/60, 3/7]`. -/
@@ -258,7 +258,7 @@ theorem nltUfE_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- An auxiliary sign of `NONSHORT_LOW_T_UNIT_FACE` §§2-4. -/
+/-- An auxiliary sign of the initial face: `C₀`. -/
 noncomputable def nltUf0 (x : ℝ) : ℝ := nltCu0 x
 
 /-- `nltUf0 > 0` on `[17/60, 3/7]`. -/
@@ -280,7 +280,7 @@ theorem nltUf0_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6]
 
 
-/-- An auxiliary sign of `NONSHORT_LOW_T_UNIT_FACE` §§2-4. -/
+/-- An auxiliary sign of the initial face: `C₀ + C₂/105`. -/
 noncomputable def nltUfR0 (x : ℝ) : ℝ := nltCu0 x + nltCu2 x / 105
 
 /-- `nltUfR0 > 0` on `[17/60, 3/7]`. -/
@@ -326,7 +326,7 @@ theorem nltUfR0_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < 
     rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- An auxiliary sign of `NONSHORT_LOW_T_UNIT_FACE` §§2-4. -/
+/-- An auxiliary sign of the initial face: `C₀ + bC₁`, `b = (15/16)(1/2 - x)`. -/
 noncomputable def nltUfRb (x : ℝ) : ℝ := nltCu0 x + 15 / 16 * (1 / 2 - x) * nltCu1 x
 
 /-- `nltUfRb > 0` on `[17/60, 3/7]`. -/
@@ -372,7 +372,7 @@ theorem nltUfRb_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < 
     rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- An auxiliary sign of `NONSHORT_LOW_T_UNIT_FACE` §§2-4. -/
+/-- An auxiliary sign of the initial face: `C₀ + bC₁ + C₂/105`, `b = (15/16)(1/2 - x)`. -/
 noncomputable def nltUfR (x : ℝ) : ℝ := nltCu0 x + 15 / 16 * (1 / 2 - x) * nltCu1 x + nltCu2 x / 105
 
 /-- `nltUfR > 0` on `[17/60, 3/7]`. -/
@@ -478,7 +478,7 @@ theorem nltUfR_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
     rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A coefficient bound of `NONSHORT_LOW_T_OUTER_FACE` (8). -/
+/-- A coefficient bound of the outer face: `C_0`. -/
 noncomputable def nltOf0 (x : ℝ) : ℝ := nltCo0 x
 
 /-- `nltOf0 > 10` on `[3/7, 4/7]`. -/
@@ -506,7 +506,7 @@ theorem nltOf0_pos {x : ℝ} (h1 : (3 / 7) ≤ x) (h2 : x ≤ (4 / 7)) : 10 < nl
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8, p9, q9]
 
 
-/-- A coefficient bound of `NONSHORT_LOW_T_OUTER_FACE` (8). -/
+/-- A coefficient bound of the outer face: `C_1`. -/
 noncomputable def nltOf1 (x : ℝ) : ℝ := nltCo1 x
 
 /-- `nltOf1 > 800` on `[3/7, 4/7]`. -/
@@ -536,7 +536,7 @@ theorem nltOf1_pos {x : ℝ} (h1 : (3 / 7) ≤ x) (h2 : x ≤ (4 / 7)) : 800 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8, p9, q9, p10, q10]
 
 
-/-- A coefficient bound of `NONSHORT_LOW_T_OUTER_FACE` (8). -/
+/-- A coefficient bound of the outer face: `C_2`. -/
 noncomputable def nltOf2 (x : ℝ) : ℝ := nltCo2 x
 
 /-- `nltOf2 > -2000` on `[3/7, 4/7]`. -/
@@ -566,7 +566,7 @@ theorem nltOf2_pos {x : ℝ} (h1 : (3 / 7) ≤ x) (h2 : x ≤ (4 / 7)) : (-2000)
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8, p9, q9, p10, q10]
 
 
-/-- A coefficient bound of `NONSHORT_LOW_T_OUTER_FACE` (8). -/
+/-- A coefficient bound of the outer face: `C_3`. -/
 noncomputable def nltOf3 (x : ℝ) : ℝ := nltCo3 x
 
 /-- `nltOf3 > 0` on `[3/7, 4/7]`. -/
@@ -596,7 +596,7 @@ theorem nltOf3_pos {x : ℝ} (h1 : (3 / 7) ≤ x) (h2 : x ≤ (4 / 7)) : 0 < nlt
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8, p9, q9, p10, q10]
 
 
-/-- A coefficient bound of `NONSHORT_LOW_T_OUTER_FACE` (8). -/
+/-- A coefficient bound of the outer face: `C_4`. -/
 noncomputable def nltOf4 (x : ℝ) : ℝ := nltCo4 x
 
 /-- `nltOf4 > 0` on `[3/7, 4/7]`. -/
@@ -626,7 +626,7 @@ theorem nltOf4_pos {x : ℝ} (h1 : (3 / 7) ≤ x) (h2 : x ≤ (4 / 7)) : 0 < nlt
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8, p9, q9, p10, q10]
 
 
-/-- A coefficient bound of `NONSHORT_LOW_T_OUTER_FACE` (8). -/
+/-- A coefficient bound of the outer face: `C_5`. -/
 noncomputable def nltOf5 (x : ℝ) : ℝ := nltCo5 x
 
 /-- `nltOf5 > -50000` on `[3/7, 4/7]`. -/
@@ -656,7 +656,7 @@ theorem nltOf5_pos {x : ℝ} (h1 : (3 / 7) ≤ x) (h2 : x ≤ (4 / 7)) : (-50000
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8, p9, q9, p10, q10]
 
 
-/-- A coefficient bound of `NONSHORT_LOW_T_OUTER_FACE` (8). -/
+/-- A coefficient bound of the outer face: `C_6`. -/
 noncomputable def nltOf6 (x : ℝ) : ℝ := nltCo6 x
 
 /-- `nltOf6 > -3000` on `[3/7, 4/7]`. -/
@@ -684,7 +684,7 @@ theorem nltOf6_pos {x : ℝ} (h1 : (3 / 7) ≤ x) (h2 : x ≤ (4 / 7)) : (-3000)
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8, p9, q9]
 
 
-/-- The cubic square completion (`NONSHORT_LOW_T_UNIT_FACE` (9)): `(79/20)y³ - y² + 1/105 > 0` for
+/-- The cubic square completion: `(79/20)y³ - y² + 1/105 > 0` for
 `y ≥ 0`. -/
 theorem nlt_unit_cubic {y : ℝ} (hy : 0 ≤ y) : 0 < 79 / 20 * y ^ 3 - y ^ 2 + 1 / 105 := by
   have e : 79 / 20 * y ^ 3 - y ^ 2 + 1 / 105 =
@@ -693,7 +693,7 @@ theorem nlt_unit_cubic {y : ℝ} (hy : 0 ≤ y) : 0 < 79 / 20 * y ^ 3 - y ^ 2 + 
   have : 0 ≤ 79 / 20 * (y - 40 / 237) ^ 2 * (y + 20 / 237) := by positivity
   linarith
 
-/-- **The initial face** `h = 1/4` (`NONSHORT_LOW_T_UNIT_FACE`): for `17/60 ≤ x ≤ 3/7`, `y ≥ 0`,
+/-- **The initial face** `h = 1/4`: for `17/60 ≤ x ≤ 3/7`, `y ≥ 0`,
 `y(1 + 4x) ≤ 1 - 2x`, the circuit at `t = 3/8` is positive. -/
 theorem nlt_face_unit {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 : 0 ≤ y)
     (hy : y * (1 + 4 * x) ≤ 1 - 2 * x) :
@@ -726,7 +726,7 @@ theorem nlt_face_unit {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 :
   set C5 := nltCu5 x
   set C6 := nltCu6 x
   have hx0 : 0 < x := by linarith
-  -- (5): `y ≤ b = (15/16)(1/2 - x) ≤ 13/64`
+  -- `y ≤ b = (15/16)(1/2 - x) ≤ 13/64`
   have hb : y ≤ 15 / 16 * (1 / 2 - x) := by
     have h4 : 0 < 1 + 4 * x := by linarith
     have : 1 - 2 * x ≤ 15 / 16 * (1 / 2 - x) * (1 + 4 * x) := by nlinarith
@@ -735,7 +735,7 @@ theorem nlt_face_unit {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 :
     have := mul_lt_mul_of_pos_right hc h4
     linarith
   have hy13 : y ≤ 13 / 64 := by linarith
-  -- (6)-(8): `P ≥ C₀ + C₁y + C₂y² + B_*y³`
+  -- `P ≥ C₀ + C₁y + C₂y² + B_*y³`
   have f4 : 0 ≤ C4 * y ^ 4 := mul_nonneg u4.le (pow_nonneg hy0 4)
   have f5 : -(144000000 * x) * y ^ 5 ≤ C5 * y ^ 5 :=
     mul_le_mul_of_nonneg_right (by linarith) (pow_nonneg hy0 5)
@@ -750,7 +750,7 @@ theorem nlt_face_unit {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 :
   have hP : C0 + C1 * y + C2 * y ^ 2 + (C3 - 6000000 * x) * y ^ 3 ≤
       C0 + C1 * y + C2 * y ^ 2 + C3 * y ^ 3 + C4 * y ^ 4 + C5 * y ^ 5 + C6 * y ^ 6 := by
     nlinarith
-  -- (10): `C₂y² + B_*y³ ≥ min(0, C₂/105)`, and (11)
+  -- `C₂y² + B_*y³ ≥ min(0, C₂/105)`, then the bound linear in `y`
   have hbpos : 0 < 15 / 16 * (1 / 2 - x) := by linarith
   have lin : ∀ c0 c1 : ℝ, 0 < c0 → 0 < c0 + 15 / 16 * (1 / 2 - x) * c1 → 0 < c0 + c1 * y := by
     intro c0 c1 hc0 hc1
@@ -779,7 +779,7 @@ theorem nlt_face_unit {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 :
     have := lin (C0 + C2 / 105) C1 uR0 (by linarith)
     linarith
 
-/-- **The outer face** `j = 5h/7` (`NONSHORT_LOW_T_OUTER_FACE`): for `3/7 ≤ x ≤ 4/7`,
+/-- **The outer face** `j = 5h/7`: for `3/7 ≤ x ≤ 4/7`,
 `0 ≤ y ≤ 2/31`, the circuit at `t = (12 - 7x)/24` is positive. -/
 theorem nlt_face_outer {x y : ℝ} (h1 : 3 / 7 ≤ x) (h2 : x ≤ 4 / 7) (hy0 : 0 ≤ y)
     (hy : y ≤ 2 / 31) :
@@ -796,7 +796,7 @@ theorem nlt_face_outer {x y : ℝ} (h1 : 3 / 7 ≤ x) (h2 : x ≤ 4 / 7) (hy0 : 
   have c5 := nltOf5_pos h1 h2
   have c6 := nltOf6_pos h1 h2
   unfold nltOf0 nltOf1 nltOf2 nltOf3 nltOf4 nltOf5 nltOf6 at *
-  -- (9): `S_y > 0` on `[0, 2/31]`, hence `S ≥ S(x, 0) = C₀ > 10`
+  -- `S_y > 0` on `[0, 2/31]`, hence `S ≥ S(x, 0) = C₀ > 10`
   have a2 : y ^ 2 ≤ 2 / 31 * y := by nlinarith
   have a4 : y ^ 4 ≤ (2 / 31) ^ 3 * y := by
     have := pow_le_pow_left₀ hy0 hy 3

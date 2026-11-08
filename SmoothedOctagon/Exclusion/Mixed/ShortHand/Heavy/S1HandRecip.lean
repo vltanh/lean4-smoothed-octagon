@@ -5,14 +5,13 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandBase
 /-!
 # Gate S1 by hand: the outer tests in the reciprocal shape
 
-`SHORT_OUTER_LARGE_SHAPE_REDUCTION` §3, `SHORT_OUTER_S_RECIPROCAL` §1,
-`SHORT_OUTER_RECIPROCAL_LOW_SHAPE` §2. At a fixed slope `C` (`β = x + C(α - 1)`) put `r = 1/α`,
+At a fixed slope `C` (`β = x + C(α - 1)`) put `r = 1/α`,
 `d = 1 + C`, `e = x - C`, `Z = d + er = B/α`, `S = 1 + x`, `E₀ = S(u - 1) + 1/S`,
 `J₂ = E₀ + 2S - 1`, `d₀ = 1 + 2C`, `d₁ = 2((1 - C)x - C)`, `d₂ = 1 + 2x - 2x² + 2Cx`,
-`D_r = d₀ + d₁r + d₂r²`. Then (`(A11)`)
+`D_r = d₀ + d₁r + d₂r²`. Then
 `49w = W(r) = 36 + (12 - 6S)r² + (S² - S + 1)r⁴ + uD_r² - D_r(6E₀ + J₂r²)`,
 `7E_L = 2uD_r - 6E₀ - J₂r²`, `576Γ_* = 4u[36 + (12 - 6S)r² + (S² - S + 1)r⁴] - (6E₀ + J₂r²)²`.
-The quartic `W` is kept with opaque coefficients `W₀, …, W₄` and divided by `Z` (`(7)`, `(A13)`), so
+The quartic `W` is kept with opaque coefficients `W₀, …, W₄` and divided by `Z`, so
 both tests have the form `g(r) = b₀ + b₁r + b₂r² + b₃r³ + b₄r⁴ + Q/Z - cℓ(2Z/7)` (`hl1G`,
 `hl1o_F1_rG`, `hl1o_F0_rG`), with `Q = (119/4 - W(-d/e))/96` for `F₁` and `Q = -c` for `F₀`.
 Its curvature is `g'' = 2b₂ + 6b₃r + 12b₄r² + 2Qe²/Z³ - c(2e/7)²ℓ''(2Z/7)`, and
@@ -91,7 +90,7 @@ noncomputable def hl1b0 (x C u : ℝ) : ℝ :=
 /-- The residue `Q = (119/4 - W(-d/e))/96`. -/
 noncomputable def hl1Q1 (x C u : ℝ) : ℝ := -(hl1W0 x C u - 119 / 4 - (1 + C) * hl1q0 x C u) / 96
 
-/-- `p₄ = γ₄ - W₄/336` (the `F₀` coefficients, `(A13)`). -/
+/-- `p₄ = γ₄ - W₄/336` (the `F₀` coefficients). -/
 noncomputable def hl1p4 (x C u : ℝ) : ℝ := hl1g4 x u - hl1W4 x C u / 336
 /-- `p₃ = -W₃/336`. -/
 noncomputable def hl1p3 (x C u : ℝ) : ℝ := -hl1W3 x C u / 336
@@ -229,7 +228,7 @@ private theorem hl1o_pieces {x a b C u : ℝ} (hx : 0 < x) (ha : 0 < a)
   · rw [hl1o_w hx ha0, hM, hJ, hD]; field_simp
   · rw [hl1o_EL hx ha0, hJ, hD]; field_simp
 
-/-- **Division of the quartic `W` by `Z = d + er`** (`SHORT_OUTER_S_RECIPROCAL` (7)). -/
+/-- **Division of the quartic `W` by `Z = d + er`**. -/
 theorem hl1_div4 {x C u r : ℝ} (he : x - C ≠ 0) (hZ : 1 + C + (x - C) * r ≠ 0) :
     1 / (1 + C + (x - C) * r) * (7 * ((hl1W0 x C u + hl1W1 x C u * r + hl1W2 x C u * r ^ 2 +
       hl1W3 x C u * r ^ 3 + hl1W4 x C u * r ^ 4) / 49) - 17 / 4) =
@@ -246,7 +245,8 @@ theorem hl1_div4 {x C u r : ℝ} (he : x - C ≠ 0) (hZ : 1 + C + (x - C) * r �
   field_simp
   ring
 
-/-- **The reciprocal-shape form of `F₁`** (`SHORT_OUTER_S_RECIPROCAL` (6)-(8)). -/
+/-- **The reciprocal-shape form of `F₁`**: on `β = x + C(α - 1)`, `F₁ = g(1/α)` with
+`Q = (119/4 - W(-d/e))/96`. -/
 theorem hl1o_F1_rG {x a b C u : ℝ} (hx : 0 < x) (ha : 0 < a) (hb : b = x + C * (a - 1))
     (hCx : C < x) (hZ : 0 < 1 + C + (x - C) * (1 / a)) :
     hh1oF1 x a b u = hl1G (hl1b0 x C u) (hl1b1 x C u) (hl1b2 x C u) (hl1b3 x C u) (hl1b4 x u)
@@ -273,7 +273,8 @@ theorem hl1o_F1_rG {x a b C u : ℝ} (hx : 0 < x) (ha : 0 < a) (hb : b = x + C *
   unfold hl1G hl1b0 hl1b1 hl1b2 hl1b3 hl1b4 hl1Q1 hl1g0 hl1g2 hl1g4
   linear_combination (-(7 / 96)) * hdiv
 
-/-- **The reciprocal-shape form of `F₀`** (`SHORT_OUTER_LARGE_SHAPE_REDUCTION` (A14)): `Q = -c`. -/
+/-- **The reciprocal-shape form of `F₀`**: on `β = x + C(α - 1)`, `F₀ = g(1/α)` with
+`Q = -c`. -/
 theorem hl1o_F0_rG {x a b C u : ℝ} (hx : 0 < x) (ha : 0 < a) (hb : b = x + C * (a - 1))
     (hZ : 0 < 1 + C + (x - C) * (1 / a)) :
     hh1oF0 x a b u = hl1G (hl1p0 x C u) (hl1p1 x C u) (hl1p2 x C u) (hl1p3 x C u) (hl1p4 x C u)

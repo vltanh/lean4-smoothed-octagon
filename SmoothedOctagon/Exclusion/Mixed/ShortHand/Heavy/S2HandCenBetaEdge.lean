@@ -7,15 +7,14 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandRecipPoly
 # S2 hand signs: the central beta monotonicity, the base face `b = x`
 
 Both beta derivatives are positive at the lower endpoint `b = x` (`B = a + x`) of the enlarged
-beta range of `archive/lighter-proofs/SHORT_RATIO_CENTRAL_BETA.md` §1.
+beta range `x ≤ b ≤ x + 7(a - 1)/8`.
 
-Route: instead of the lower comparison of §4 (14)-(18) (`u₀ ≥ v`, `u_b ≥ -9/1000`) and the
-factored numerators `N₀`, `N₁` of §5 (19)-(22), the exact derivatives at `b = x` (moving norm
-included, through the partial fractions of `S2HandCenBetaDefs`) are cleared directly:
+The exact derivatives at `b = x` (moving norm included, through the partial fractions of
+`S2HandCenBetaDefs`) are cleared directly:
 `19200aB²(x - 1)S²K³ G_b(x) = N_G(x - 2, a - 1)` and
 `38400aB²(x - 1)S²K² H_b(x) = N_H(x - 2, a - 1)`, two bivariate polynomials of degrees 12 and 10
-(82 and 58 terms in `h = x - 2`, `c = a - 1`), each positive by the termwise rule of
-`SHORT_RATIO_CENTRAL_BETA_ALGEBRA` (lower bounds `2.4·10⁸` and `5.1·10⁷`).
+(82 and 58 terms in `h = x - 2`, `c = a - 1`), each positive by a termwise bound of its monomials
+(lower bounds `2.4·10⁸` and `5.1·10⁷`).
 
 ## Main API
 

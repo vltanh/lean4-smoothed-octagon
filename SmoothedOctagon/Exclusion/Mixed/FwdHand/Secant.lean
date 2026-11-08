@@ -9,17 +9,15 @@ For the normalized incoming secant `v = Sec(t, 1 - t, t + x) = 1 + c²/W - c log
 (`c = 1 - t`, `W = 1 + x`, `p = t + x`, `g = 1 - cp/W²`):
 
 * `fhVG`, `fh_secN_lt_VG`: **the positive-integral bound** `v < v_G = g + (cx/W²)(T_G(x) - t)`,
-  `T_G = (90 - 19x²)/(12(x² + 10x + 15))` (`MIXED_NONSHORT_POSITIVE_INTEGRAL_SECANT_BOUND` (3)),
-  from `log(1 + x) > x(43x³ + 252x² + 390x + 180)/(12W²(x² + 10x + 15))` (`fh_log_gt_G`, whose
+  `T_G = (90 - 19x²)/(12(x² + 10x + 15))`, from
+  `log(1 + x) > x(43x³ + 252x² + 390x + 180)/(12W²(x² + 10x + 15))` (`fh_log_gt_G`, whose
   difference has derivative `x⁶/(W³(x² + 10x + 15)²)`);
-* `fhV2`, `fh_secN_lt_V2`: the polynomial bound with `T₀ < 1/2 - x/3 + x²/12`
-  (`MIXED_NONSHORT_SMALL_GAP_CHI_BOUND` (8));
-* `fhVq`, `fh_secN_lt_Vq`: `v < V = 1 + c²/W - 3c(x + 2)/(x² + 6x + 6)`
-  (`MIXED_NONSHORT_FORWARD_Q_ELIMINATION` §1);
+* `fhV2`, `fh_secN_lt_V2`: the polynomial bound with `T₀ < 1/2 - x/3 + x²/12`;
+* `fhVq`, `fh_secN_lt_Vq`: the Padé bound `v < V = 1 + c²/W - 3c(x + 2)/(x² + 6x + 6)`;
 * `fh_VG_sub_g`: `v_G - g = (cx/W²)(T_G - t)`.
 
-Route: each bound is a monotone one-variable comparison of `log(1 + x)` with a rational function
-(derivative sign), in place of the integral representations of the notes.
+Each bound is a monotone one-variable comparison of `log(1 + x)` with a rational function
+(derivative sign).
 -/
 
 @[expose] public section
@@ -78,7 +76,7 @@ theorem fh_log_gt_G {x : ℝ} (hx : 0 < x) :
       ring
     rw [e]; positivity
 
-/-- **The positive-integral secant bound** (`MIXED_NONSHORT_POSITIVE_INTEGRAL_SECANT_BOUND` (3)). -/
+/-- **The positive-integral secant bound** `v < v_G`, from `fh_log_gt_G`. -/
 theorem fh_secN_lt_VG {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nhSecN t x < fhVG t x := by
   have hl := fh_log_gt_G hx
   have h1 : 0 < 1 - t := by linarith
@@ -101,8 +99,8 @@ theorem fh_VG_sub_g (t x : ℝ) :
       (1 - t) * x / (1 + x) ^ 2 * ((90 - 19 * x ^ 2) / (12 * (x ^ 2 + 10 * x + 15)) - t) := by
   unfold fhVG; ring
 
-/-- **The integral derivative floor** (`MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS` §1): the actual
-floor `v ≥ g` and `v < v_G` give `t < T_G(x)`, i.e. `12(x² + 10x + 15)t < 90 - 19x²`. -/
+/-- **The integral derivative floor**: the actual floor `v ≥ g` and `v < v_G` give `t < T_G(x)`,
+i.e. `12(x² + 10x + 15)t < 90 - 19x²`. -/
 theorem fh_t_lt_TG {t x v : ℝ} (ht1 : t < 1) (hx : 0 < x) (hv : v = nhSecN t x)
     (hg : 1 - (1 - t) * (t + x) / (1 + x) ^ 2 ≤ v) :
     12 * (x ^ 2 + 10 * x + 15) * t < 90 - 19 * x ^ 2 := by
@@ -118,7 +116,7 @@ theorem fh_t_lt_TG {t x v : ℝ} (ht1 : t < 1) (hx : 0 < x) (hv : v = nhSecN t x
   rw [sub_pos, lt_div_iff₀ hR] at this
   linarith
 
-/-- The polynomial secant majorant `V₂` (`MIXED_NONSHORT_SMALL_GAP_CHI_BOUND` (8)). -/
+/-- The polynomial secant majorant `V₂`. -/
 noncomputable def fhV2 (t x : ℝ) : ℝ :=
   1 - (1 - t) * (t + x) / (1 + x) ^ 2 + (1 - t) * x / (1 + x) ^ 2 * (1 / 2 - x / 3 + x ^ 2 / 12 - t)
 
@@ -160,7 +158,7 @@ theorem fh_secN_lt_V2 {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nhSecN t x < fhV2 
     mul_pos (div_pos h1 hx) (by linarith)
   linarith
 
-/-- The Padé secant majorant `V` (`MIXED_NONSHORT_FORWARD_Q_ELIMINATION` (2)). -/
+/-- The Padé secant majorant `V`. -/
 noncomputable def fhVq (t x : ℝ) : ℝ :=
   1 + (1 - t) ^ 2 / (1 + x) - 3 * (1 - t) * (x + 2) / (x ^ 2 + 6 * x + 6)
 
@@ -184,7 +182,7 @@ theorem fh_log_gt_q {x : ℝ} (hx : 0 < x) :
       ring
     rw [e]; positivity
 
-/-- `v < V` (`MIXED_NONSHORT_FORWARD_Q_ELIMINATION` §1). -/
+/-- `v < V`, from `fh_log_gt_q`. -/
 theorem fh_secN_lt_Vq {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nhSecN t x < fhVq t x := by
   have hl := fh_log_gt_q hx
   have h1 : 0 < 1 - t := by linarith

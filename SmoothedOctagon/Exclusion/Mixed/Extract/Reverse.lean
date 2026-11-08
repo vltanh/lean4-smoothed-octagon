@@ -7,7 +7,7 @@ public import Cited.HalesVajjha.CompactDomain
 /-!
 # The reflection of `𝔰𝔩₂` and the reversal of time
 
-`MIXED_GLOBAL_MINIMUM_STRUCTURE` (MGMS) §§1-3. The reflection `S = reflS = diag(-1, 1)` acts on
+The reflection `S = reflS = diag(-1, 1)` acts on
 `𝔰𝔩₂` by `X ↦ -S X S` (`wx_rev`) and on controls by exchanging the components `1` and `2`
 (`wx_reflControl`, `(σ v)_j = v_{-j}`), so that `Z_{σ v} = -S Z_v S`. This map fixes `J`, preserves
 the trace form, the determinant and the Hamiltonian, reverses the Lie bracket, maps the margin `p_i`

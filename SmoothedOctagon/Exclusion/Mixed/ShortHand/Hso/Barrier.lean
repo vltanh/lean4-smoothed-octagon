@@ -5,15 +5,15 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Basic
 /-!
 # Hand proof of the smaller-short case: the first-contact barrier argument
 
-The barrier comparison behind the equal-secant orders of `ShortHand/Order.lean`
-(`MIXED_SMALLER_SHORT_STRONG_ORDER` §5, `GLOBAL_UPPER_ORDER` §5, `SMALL_SHAPE_UPPER_ORDER` §4,
-`RATIONAL_QUADRATIC_ORDER` §3; inventory HS-S4 R1, §5). In the normalized coordinates of
+The barrier comparison behind the equal-secant orders of `ShortHand/Order.lean` (the strong lower
+order, the global and small-shape upper orders and the rational quadratic order). In the
+normalized coordinates of
 `ss_order_norm` (`ℓ = 1/x`, `p₁ = α/β`, `q₁ = x/β`, `avg(p, q) = Sec(p, 1, q)`,
 `g = ss_gB 1`), a barrier is a differentiable `P` with `P(1) = 1/x`, and its comparison function is
 `Φ(z) = avg(P z, z) - avg(1/x, 1/z)`. At a contact (a zero of `Φ`, common average `u`),
 `Φ'(z)(z - P z)z(x - z) = κ(z) = -P'(z)(g(P z) - u)z(x - z) - (u - g(z))((2z - P z)x - z²)`, so the
 sign of the contact inequality decides the sign of `Φ'`, and `hs_first_contact` gives the sign of
-`Φ` on `(q₁, 1)`. Route: no equal-secant continuation (inventory HS-S4 R1, HS-S01 M5).
+`Φ` on `(q₁, 1)`.
 
 ## Main API
 
@@ -331,7 +331,7 @@ theorem hso_norm_eq {x al be : ℝ} (hx : 0 < x) (hal : 0 < al) (hbe : 0 < be)
   rw [← s1, ← s2, heq]
 
 /-- **The lower contact inequality** from a gap ratio `Nξ < (W - N)η` and a contact polynomial
-`B(W - N) ≤ NM` (`STRONG_ORDER` (2)-(4), `RATIONAL_QUADRATIC_ORDER` (4)-(6)): `Bξ < ηM`. -/
+`B(W - N) ≤ NM`: `Bξ < ηM`. -/
 theorem hso_lower_alg {N W M η ξ B : ℝ} (hgap : N * ξ < (W - N) * η) (hcon : B * (W - N) ≤ N * M)
     (hM : 0 < M) (hξ : 0 ≤ ξ) (hη : 0 < η) (hN : 0 ≤ N) : B * ξ < η * M := by
   have hWN : 0 < W - N := by
@@ -348,7 +348,7 @@ theorem hso_lower_alg {N W M η ξ B : ℝ} (hgap : N * ξ < (W - N) * η) (hcon
   linarith
 
 /-- **The upper contact inequality** from a gap ratio `Zη < N'ξ` and a contact polynomial
-`N'M < BZ` (`GLOBAL_UPPER_ORDER` (7)-(10)): `ηM < Bξ`. -/
+`N'M < BZ`: `ηM < Bξ`. -/
 theorem hso_upper_alg {Np Z M η ξ B : ℝ} (hgap : Z * η < Np * ξ) (hcon : Np * M < B * Z)
     (hM : 0 < M) (hξ : 0 ≤ ξ) (hZ : 0 < Z) : η * M < B * ξ := by
   have k1 := mul_lt_mul_of_pos_right hgap hM

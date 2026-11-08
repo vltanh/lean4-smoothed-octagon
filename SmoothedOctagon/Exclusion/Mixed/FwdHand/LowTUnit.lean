@@ -7,10 +7,10 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTHRed
 /-!
 # Case M2, forward successor by hand: the low-`t` unit-shape sign
 
-`docs/lighter-proofs/NONSHORT_LOW_T_CALLER.md` §1 (PR #2, branch `proof/lighter-signs`): on the
-low-`t` domain (4) at `k = 1` the residual `G_n` with the new multipliers is positive
+On the low-`t` domain `1/3 ≤ t ≤ 3/8`, `j = 2t + x - 1 ≥ 1/30`, `7x ≤ 12(1 - 2t)`, `1 ≤ q`,
+`q(4t + 2x - 1) ≤ 1 + x`, at `k = 1`, the residual `G_n` with the low-`t` multipliers is positive
 (`nlt_unit_pos`). Its positive multiple `S` increases in `h` at fixed `j`, `y` (`nlt_HS_pos`), so
-`S(h, j, y) ≥ S(h₀, j, y)` with `h₀ = max(1/4, 7j/5, j + (1 + 2j)y)` (7), and the three faces are
+`S(h, j, y) ≥ S(h₀, j, y)` with `h₀ = max(1/4, 7j/5, j + (1 + 2j)y)`, and the three faces are
 positive (`nlt_face_unit`, `nlt_face_outer`, `nlt_face_qmax`) (`nlt_S_pos`).
 
 ## Main API
@@ -22,7 +22,7 @@ positive (`nlt_face_unit`, `nlt_face_outer`, `nlt_face_qmax`) (`nlt_S_pos`).
 
 namespace SmoothedOctagon
 
-/-- **The circuit is positive** on the low-`t` unit domain (`NONSHORT_LOW_T_CALLER` §1):
+/-- **The circuit is positive** on the low-`t` unit domain:
 `1/4 ≤ h ≤ 1/3`, `1/30 ≤ j ≤ 5h/7`, `0 ≤ y`, `y(1 + 2j) ≤ h - j`. -/
 theorem nlt_S_pos {h j y : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j1 : 1 / 30 ≤ j)
     (j2 : j ≤ 5 / 7 * h) (hy0 : 0 ≤ y) (hy : y * (1 + 2 * j) ≤ h - j) : 0 < lrhHorner (nltL0 j) h + lrhHorner (nltL1 j) h * y + lrhHorner (nltL2 j) h * y ^ 2 + lrhHorner (nltL3 j) h * y ^ 3 + lrhHorner (nltL4 j) h * y ^ 4 + lrhHorner (nltL5 j) h * y ^ 5 + lrhHorner (nltL6 j) h * y ^ 6 := by
@@ -67,9 +67,9 @@ theorem nlt_S_pos {h j y : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j1 : 1 / 
       rw [ey, nlt_St_h0, nlt_St_h1, nlt_St_h2, nlt_St_h3, nlt_St_h4, nlt_St_h5, nlt_St_h6] at face
       linarith
 
-/-- **The unit-shape sign** (`NONSHORT_LOW_T_CALLER` (3) at `k = 1`): on `1/3 ≤ t ≤ 3/8`,
+/-- **The unit-shape sign** at `k = 1`: on `1/3 ≤ t ≤ 3/8`,
 `j = 2t + x - 1 ≥ 1/30`, `7x ≤ 12(1 - 2t)`, `1 ≤ q`, `q(4t + 2x - 1) ≤ 1 + x`, the combined residual
-with the new multipliers, `V_L`, `L₊` and `F_ℓ` is positive. -/
+with the low-`t` multipliers, `V_L`, `L₊` and `F_ℓ` is positive. -/
 theorem nlt_unit_pos {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hjh : 7 * x ≤ 12 * (1 - 2 * t)) (hq : 1 ≤ q) (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x) :
     0 < fhComb (nltAl q) (nltM t x q) t x 1 q (hrlVL t x) (nhLp q) (nhFl t x q) := by

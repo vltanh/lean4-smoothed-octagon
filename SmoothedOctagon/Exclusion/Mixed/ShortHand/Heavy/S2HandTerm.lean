@@ -5,11 +5,11 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandTermPoly
 /-!
 # S2 hand signs: the lower-shape terminal curve
 
-`archive/lighter-proofs/SHORT_RATIO_OUTER_TERMINAL_AF.md` §3-§5: on `3/4 ≤ r ≤ 49/60` the
-component bounds (12)-(16) give `R_n'' < 0` (17); `R_n'(84/103) > 0` (19) then makes `R_n`
-increasing in `r` up to `84/103`, and the two terminal values (21) use the cubic logarithm bound
-(20): `R_{63/25}(84/103) < -1/5000`, `R_{49/20}(42/53) < -1/1000`.
-Route: the scalar values (18)-(19), (21) are computed exactly rather than by rounded components.
+On `3/4 ≤ r ≤ 49/60` the component bounds (on `F`, `q`, `V`, `A_n`, `L_n`, `Q_n` and
+`1/Z + log(2Z/7)`) give `R_n'' < 0`; `R_n'(84/103) > 0` then makes `R_n` increasing in `r` up to
+`84/103`, and the two terminal values use the cubic logarithm bound
+`log y ≤ (y - 1) - (y - 1)²/2 + (y - 1)³/3`: `R_{63/25}(84/103) < -1/5000`,
+`R_{49/20}(42/53) < -1/1000`. The scalar values are computed exactly.
 
 ## Main API
 
@@ -23,7 +23,7 @@ namespace SmoothedOctagon
 
 open Real Set
 
-/-! ### Elementary component bounds (`TERMINAL_AF` (12)-(15)) -/
+/-! ### Elementary component bounds -/
 
 theorem hl2_KJ_pos {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
     0 < hl2Kc r ∧ 0 < hl2Jc r := by
@@ -97,7 +97,7 @@ theorem hl2_V_bounds {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
       nlinarith
     nlinarith
 
-/-- `[1/Z + log(2Z/7)]'' < 7/20` (`TERMINAL_ALGEBRA` §2, `T`). -/
+/-- `[1/Z + log(2Z/7)]'' < 7/20` (the cleared sign `T`, `hl2_bT`). -/
 theorem hl2_ZL_bound {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
     hl2Zidd r + hl2Lgdd r < 7 / 20 := by
   have hJ := (hl2_KJ_pos h0 h1).2
@@ -115,9 +115,10 @@ theorem hl2_ZL_bound {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
   unfold hl2Jc
   linarith
 
-/-! ### Concavity of `R_n` (`TERMINAL_AF` (16)-(17)) -/
+/-! ### Concavity of `R_n` -/
 
-/-- `R_n'' < 0` from the component bounds (16) (`TERMINAL_AF` (17)). -/
+/-- `R_n'' < 0` from the component bounds `0 < A_n < 5`, `-17 < A_n' < 0`, `A_n'' < 53`,
+`L_n'' < -1`, `Q_n'' < -17/10` and the bounds on `V`, `V'`, `V''` and `[1/Z + log(2Z/7)]''`. -/
 theorem hl2_Rcdd_neg {CA CL q0 q1 r : ℝ} {As Ls Qs As1 Ls1 Qs1 As2 Ls2 Qs2 : ℝ → ℝ}
     (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) (hCA : 0 < CA) (hCL : 0 < CL) (hg : 0 < q0 * r + q1)
     (hA : 0 < As r) (hA5 : 0 < 5 * CA * r ^ 2 - As r)
@@ -178,7 +179,7 @@ noncomputable def hl2Rl (r : ℝ) : ℝ :=
 noncomputable def hl2Rh (r : ℝ) : ℝ :=
   hl2Rc 8360755200 11147673600 123200 940800 hl2Ash hl2Lsh hl2Qsh r
 
-/-- **Monotonicity** (`TERMINAL_AF` (17)-(19)): if `R'' < 0` on `[3/4, 84/103]` and
+/-- **Monotonicity**: if `R'' < 0` on `[3/4, 84/103]` and
 `R'(84/103) > 0`, then `R(r) ≤ R(r_e)` for `3/4 ≤ r ≤ r_e ≤ 84/103`. -/
 theorem hl2_R_mono {R R1 R2 : ℝ → ℝ} {r re : ℝ} (h0 : 3 / 4 ≤ r) (hre : r ≤ re)
     (he : re ≤ 84 / 103) (hd : ∀ s ∈ Icc (3 / 4 : ℝ) (84 / 103), HasDerivAt R (R1 s) s)
@@ -221,39 +222,39 @@ theorem hl2_hd_Rhd {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
     (hl2_KJ_pos h0 h1).2 (hl2_hd_Ash r) (hl2_hd_Lsh r) (hl2_hd_Qsh r) (hl2_hd_Ash1 r)
     (hl2_hd_Lsh1 r) (hl2_hd_Qsh1 r)
 
-/-- `R_{49/20}'(84/103) > 0` (`TERMINAL_AF` (18)-(19), exact value). -/
+/-- `R_{49/20}'(84/103) > 0` (exact value). -/
 theorem hl2_Rld_r0 : 0 < hl2Rcd 60197437440 80263249920 887040 6773760 hl2Asl hl2Lsl hl2Qsl
     hl2Asl1 hl2Lsl1 hl2Qsl1 (84 / 103) := by
   norm_num [hl2Rcd, hl2Asl, hl2Lsl, hl2Qsl, hl2Asl1, hl2Lsl1, hl2Qsl1, hl2Vc, hl2Vcd, hl2Fc,
     hl2Fcd, hl2Kc, hl2qc, hl2qcd, hl2Zid, hl2Jc, hl2Lgd]
 
-/-- `R_{63/25}'(84/103) > 0` (`TERMINAL_AF` (18)-(19), exact value). -/
+/-- `R_{63/25}'(84/103) > 0` (exact value). -/
 theorem hl2_Rhd_r0 : 0 < hl2Rcd 8360755200 11147673600 123200 940800 hl2Ash hl2Lsh hl2Qsh
     hl2Ash1 hl2Lsh1 hl2Qsh1 (84 / 103) := by
   norm_num [hl2Rcd, hl2Ash, hl2Lsh, hl2Qsh, hl2Ash1, hl2Lsh1, hl2Qsh1, hl2Vc, hl2Vcd, hl2Fc,
     hl2Fcd, hl2Kc, hl2qc, hl2qcd, hl2Zid, hl2Jc, hl2Lgd]
 
-/-- The cubic logarithm bound at a curve point (`TERMINAL_AF` (20)). -/
+/-- The cubic logarithm bound at a curve point. -/
 theorem hl2_Lg_le {r : ℝ} (hr : 0 < r) (hJ : 0 < hl2Jc r) :
     hl2Lg r ≤ (2 * (hl2Jc r / (1152 * r)) / 7 - 1) - (2 * (hl2Jc r / (1152 * r)) / 7 - 1) ^ 2 / 2 +
       (2 * (hl2Jc r / (1152 * r)) / 7 - 1) ^ 3 / 3 :=
   hl2_log_le_cubic (by positivity)
 
-/-- `R_{63/25}(84/103) < -1/5000` (`TERMINAL_AF` (21)). -/
+/-- `R_{63/25}(84/103) < -1/5000` (exact value with the cubic logarithm bound). -/
 theorem hl2_Rh_r0 : hl2Rh (84 / 103) < -1 / 5000 := by
   have h := hl2_Lg_le (r := 84 / 103) (by norm_num) (by norm_num [hl2Jc])
   unfold hl2Rh hl2Rc
   norm_num [hl2Ash, hl2Lsh, hl2Qsh, hl2Vc, hl2Fc, hl2Kc, hl2qc, hl2Zi, hl2Jc] at h ⊢
   linarith
 
-/-- `R_{49/20}(42/53) < -1/1000` (`TERMINAL_AF` (21)). -/
+/-- `R_{49/20}(42/53) < -1/1000` (exact value with the cubic logarithm bound). -/
 theorem hl2_Rl_r1 : hl2Rl (42 / 53) < -1 / 1000 := by
   have h := hl2_Lg_le (r := 42 / 53) (by norm_num) (by norm_num [hl2Jc])
   unfold hl2Rl hl2Rc
   norm_num [hl2Asl, hl2Lsl, hl2Qsl, hl2Vc, hl2Fc, hl2Kc, hl2qc, hl2Zi, hl2Jc] at h ⊢
   linarith
 
-/-- `R_{63/25} < -1/5000` on `3/4 ≤ r ≤ 84/103` (`TERMINAL_AF` (22), `x ≤ 9/4` branch). -/
+/-- `R_{63/25} < -1/5000` on `3/4 ≤ r ≤ 84/103` (used for `x ≤ 9/4`). -/
 theorem hl2_Rh_le {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 84 / 103) : hl2Rh r < -1 / 5000 := by
   refine lt_of_le_of_lt (hl2_R_mono h0 h1 le_rfl (fun s hs => hl2_hd_Rh hs.1 (by linarith [hs.2]))
     (fun s hs => hl2_hd_Rhd hs.1 (by linarith [hs.2])) (fun s hs => ?_) hl2_Rhd_r0) hl2_Rh_r0
@@ -263,7 +264,7 @@ theorem hl2_Rh_le {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 84 / 103) : hl2Rh r <
     (hl2_bAh_lt5 hs0 hs1) (hl2_bAdh_gt hs0 hs1) (hl2_bAdh_neg hs0 hs1) (hl2_bAddh_lt hs0 hs1)
     (hl2_bLddh hs0 hs1) (hl2_bQddh hs0 hs1)
 
-/-- `R_{49/20} < -1/1000` on `3/4 ≤ r ≤ 42/53` (`TERMINAL_AF` (22), `x ≥ 9/4` branch). -/
+/-- `R_{49/20} < -1/1000` on `3/4 ≤ r ≤ 42/53` (used for `x ≥ 9/4`). -/
 theorem hl2_Rl_le {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 42 / 53) : hl2Rl r < -1 / 1000 := by
   refine lt_of_le_of_lt (hl2_R_mono h0 h1 (by norm_num)
     (fun s hs => hl2_hd_Rl hs.1 (by linarith [hs.2]))

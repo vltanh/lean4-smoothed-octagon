@@ -5,9 +5,9 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenDefs
 /-!
 # S2 hand signs: the central terminal numerators
 
-The four terminal tests of `archive/lighter-proofs/SHORT_RATIO_CENTRAL_TERMINALS.md` at
-`x = 13/6`, `β = b_+(13/6, α) = (309α + 523)/384`, with the original incoming norm
-`u = hsUC(13/6, β)` and the quadratic logarithm bound `Q` of (8), are the rational functions
+The four central terminal tests at `x = 13/6`, `β = b_+(13/6, α) = (309α + 523)/384`, with the
+original incoming norm `u = hsUC(13/6, β)` and the quadratic logarithm bound `Q`
+(`hl2ctQ`), are the rational functions
 `N/(c·Den)` of `S2HandCenTerm`; this file proves the four numerators `N` negative.
 `Den` is `a(693a + 523)(36a² + 325)^m t²(309a + 139)` (`m = 3` for `F₀`, `m = 2` for `F₁`) with
 `t = 20/3 - 4a` on the lower interval `[1, 7/6]`, and the same without `t²` on the upper interval
@@ -32,7 +32,7 @@ A positive term `c_k s^k` (`k ≥ 2`) is bounded by `c_k w^{k-1} s` (linear abso
 
 namespace SmoothedOctagon
 
-/-- The monomial facts of the termwise rule with absorption, `0 ≤ s ≤ w`. -/
+/-- The monomial facts of the termwise bound with absorption, `0 ≤ s ≤ w`. -/
 theorem hl2ct_box {s w : ℝ} (hs : 0 ≤ s) (hw : s ≤ w) :
     (∀ n : ℕ, 0 ≤ s ^ n) ∧ (∀ n : ℕ, 0 ≤ s * (w ^ n - s ^ n)) ∧
       (∀ n : ℕ, 0 ≤ s ^ 2 * (w ^ n - s ^ n)) :=

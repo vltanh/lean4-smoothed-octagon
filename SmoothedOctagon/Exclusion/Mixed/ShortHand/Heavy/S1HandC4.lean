@@ -5,21 +5,18 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandC3b
 /-!
 # Gate S1 by hand, central face: the shape step
 
-`SHORT_CENTRAL_SHAPE_F0`, `SHORT_CENTRAL_SHAPE_F1`.
-
 * First test: along `β₊ = x + (10/13)(α - 1)` at a fixed norm, `(r₀)_α + (10/13)(r₀)_β ≥ 1/40 + 2/625`
   below the tangent chord `α_U` of the cap (affine in `u`; two-variable signs at `u = 3/4, 19/25`),
   so `F₀` decreases with slope `≤ -c/40`; along the ceiling `u_ℓ(x, β₊)` the norm motion costs at
-  most `(1/5)(15/1992)(10/13)` per unit (`SHAPE_F0` (1), (6)): `hl1c_F0_astep`.
+  most `(1/5)(15/1992)(10/13)` per unit: `hl1c_F0_astep`.
 * Second test at `u = 19/25`: `F₁(x, α, β₊, 19/25) = Γ - c φ(α) - g` with
-  `φ = N/V + ℓ(Y/K)`, `V = αBK`, `Y = 2αB` (`SHAPE_F1` (1)-(3)); `φ″ ≥ (N/V)″ + (log y)″ - (1/625)y″/y`
+  `φ = N/V + ℓ(Y/K)`, `V = αBK`, `Y = 2αB`; `φ″ ≥ (N/V)″ + (log y)″ - (1/625)y″/y`
   (`ℓ″ ≥ -1/y²`, `yℓ′(y) = 1 - ε ≥ 624/625`, `y″ ≥ 0`) and `V³((N/V)″ + (log y)″)` is the curvature
-  circuit of `(2)`, at least `V³/500` below the cap; so `φ` is convex and
+  circuit, at least `V³/700` below the cap (`Heavy/S1HandC3b`); so `φ` is convex and
   `F₁(α) ≥ min(F₁(1), F₁(α_c))`: `hl1c_F1_conc`.
 
-Route: below the cap the circuit is positive, so the third derivative `P_aaa` and the endpoint jets
-of `SHAPE_F1` §§2-4 are not needed, and the slope of the first test is bounded below the tangent
-chord directly instead of by the cap division `(3)` of `SHAPE_F0`.
+The convexity uses only the positivity of the circuit below the cap, and the slope of the first
+test is bounded below the tangent chord `α_U` directly.
 
 ## Main API
 

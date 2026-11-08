@@ -7,17 +7,17 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1HandOB5
 /-!
 # Gate S1 by hand: the outer low-ratio face
 
-`hs1_outer_face_proof` proves the leaf `hs1_outer_face` (`LOW_RATIO_OUTER_HAND_SIGN` §6; inventory
-HS-S01 D-R20-D-R22) by the hand argument of `archive/lighter-proofs/SHORT_OUTER_COMPLETE.md`:
+`hs1_outer_face_proof` proves the leaf `hs1_outer_face`:
 the duration reduction `hh1o_face_red` leaves the two tests `F₀`, `F₁`; with `β = x + C(α - 1)`,
 `8x/(9x + 8) ≤ C ≤ x(7x + 1)/(4x² + 11x + 1)`, the three branches close them:
 
-* S (`x ≤ 3/2`): `hl1o_S_main` (`SHORT_OUTER_S_BETA`, `_S_RECIPROCAL`, `_S_TERMINAL`);
-* A (`x ≥ 3/2`, `α ≥ 6/5`): `hl1o_A_F1`, `hl1o_A_F0` (`SHORT_OUTER_LARGE_SHAPE_REDUCTION` and its
-  terminals);
-* B (`x ≥ 3/2`, `α ≤ 6/5`): `hl1o_B_F1`, `hl1o_B_F0` (`SHORT_OUTER_RECIPROCAL_LOW_SHAPE`,
-  `SHORT_OUTER_BETA_LOW_SHAPE`, `SHORT_OUTER_ALPHA_LOW_SHAPE` and their terminals), which use the
-  actual cap `6α² ≥ x(x + 2)` and, for `F₀`, the incoming ceiling `u ≤ u_ℓ(x, β)`.
+* S (`x ≤ 3/2`): `hl1o_S_main` (beta reduction, shape concavity at `C = 8/17`, two terminal
+  faces);
+* A (`x ≥ 3/2`, `α ≥ 6/5`): `hl1o_A_F1`, `hl1o_A_F0` (norm, beta and shape reductions, then the
+  terminal curves);
+* B (`x ≥ 3/2`, `α ≤ 6/5`): `hl1o_B_F1`, `hl1o_B_F0` (the same reductions on the small shapes,
+  then the terminal curves), which use the actual cap `6α² ≥ x(x + 2)` and, for `F₀`, the incoming
+  ceiling `u ≤ u_ℓ(x, β)`.
 
 ## Main API
 
@@ -57,7 +57,9 @@ theorem hl1o_slope {x al be : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hxb : x ≤ be
     · field_simp
       ring
 
-/-- **The outer low-ratio face** (`LOW_RATIO_OUTER_HAND_SIGN` §6; inventory HS-S01 D-R20-D-R22). -/
+/-- **The outer low-ratio face**: on the outer face `q = 1/7` with the order strip in `β`,
+`u_f(x) ≤ u ≤ V̄(x)` (and `u ≤ u_ℓ(x, β)` when `x ≥ 3/2`, `α ≤ 6/5`) and `2 ≤ τ ≤ 7r_A`:
+`Γ_*(1/7) - (7/96)R*_τ(1/7) > 9193/50000`. -/
 theorem hs1_outer_face_proof {x al be u τ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hbx : be ≤ al * x) (hqc : x * (x + 2) ≤ 6 * al ^ 2)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)

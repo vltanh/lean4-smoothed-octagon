@@ -20,7 +20,6 @@ The exported trajectory theorem has explicit global smooth-arc hypotheses. Exten
 arbitrary integral-admissible segment to this interface and reconstructing a balanced disk
 are supplied separately in `CyclicExtension` and `ReverseGeometry`; `ReverseComparison`
 assembles their consequences. This module supplies the smooth-arc winding ingredient.
-Source draft; Lean compilation and kernel validation have not been run.
 -/
 
 @[expose] public section
@@ -284,7 +283,7 @@ theorem lowCost_reflectedFirstRow_angle {g X : ℝ → Mat2} {T : ℝ}
   simpa only [hn0, Int.cast_zero, zero_mul, add_zero] using hphase
 
 /-- The low-cost arc stays in the coordinate chart `g₀₀ > 0`. This also prevents an
-extra turn of its first column; reconstructing the full balanced disk is still separate. -/
+extra turn of its first column; the full balanced disk is reconstructed in `ReverseGeometry`. -/
 theorem lowCost_first_matrix_entry_pos {g X : ℝ → Mat2} {T : ℝ}
     (hT : 0 < T) (hgc : ∀ i j, ContDiff ℝ 1 (fun t ↦ g t i j))
     (hdet : ∀ t, (g t).det = 1) (hXc : Continuous X)

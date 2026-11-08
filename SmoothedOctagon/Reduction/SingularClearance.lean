@@ -6,15 +6,14 @@ public import SmoothedOctagon.Reduction.Clearance.Frame
 /-!
 # Singular clearance and projective bounds of a competitive Pontryagin lift
 
-SINGULAR_COST_BUDGET (inventory A2, §2.4: `SCB:(3)/(21)`, `SCB:(24)-(26)`, `SCB:(29)`,
-`SCB:(30)-(33)`, `SCB:(28)`, `SCB:(34)` and `Thm(1)`). For a Pontryagin extremal (normal or
-abnormal) whose cost is at most `A_oct` and whose state stays in `𝔥**`:
+For a Pontryagin extremal (normal or abnormal) whose cost is at most `A_oct` and whose state stays
+in `𝔥**`:
 
-* (clearance, SCB (34)) the costate stays away from the singular locus `Λ₁ = (3/2)λJ`, `Λ_R = 0`
+* (clearance) the costate stays away from the singular locus `Λ₁ = (3/2)λJ`, `Λ_R = 0`
   in proportion to its size: `‖𝒫(t)‖ ≤ 251 Q(t)`, with `‖𝒫‖² = λ² + ‖Λ₁‖² + ‖Λ_R‖²` and
   `Q² = ‖Λ₁ - (3/2)λJ‖² + ‖Λ_R‖²`. Hence for the lift normalized by `‖𝒫(0)‖ = 1`,
-  `D(t) ≥ Q(t) > 10⁻⁸/251 > 10⁻¹¹` (SCB, Theorem (1)).
-* (projective bounds, SCB (28)) `10⁻⁸ ‖𝒫(0)‖ < ‖𝒫(t)‖ < 10⁸ ‖𝒫(0)‖`.
+  `D(t) ≥ Q(t) > 10⁻⁸/251 > 10⁻¹¹`.
+* (projective bounds) `10⁻⁸ ‖𝒫(0)‖ < ‖𝒫(t)‖ < 10⁸ ‖𝒫(0)‖`.
 
 Both are homogeneous in `(λ, Λ₁, Λ_R)`, so no normalization is imposed; they are stated with squared
 norms (`covectorNormSq`, `singularGapSq`).
@@ -66,8 +65,9 @@ private theorem frobSq_conj_adjugate_le (g M : Mat2) :
     _ ≤ frobSq g * frobSq M * frobSq g := mul_le_mul_of_nonneg_right h2 this
     _ = frobSq g ^ 2 * frobSq M := by ring
 
-/-- SINGULAR_COST_BUDGET (33), with the constant of `scb_vertex_bounds`: on `𝔥**`,
-`‖Λ_R(t)‖_F² ≤ 218700 ‖Λ₁(t) - (3/2)λJ‖_F²` (that is, `‖W‖ ≤ 468 ‖A‖`). -/
+/-- On `𝔥**`, `‖Λ_R(t)‖_F² ≤ 218700 ‖Λ₁(t) - (3/2)λJ‖_F²` (that is, `‖W‖ ≤ 468 ‖A‖`):
+`scb_vertex_bounds` with margins at least `2/15` gives `‖W‖_F² ≤ 2700 tr(AX)²`, and
+Cauchy–Schwarz with `‖X‖_F² < 81` gives `tr(AX)² ≤ 81 ‖A‖_F²`. -/
 private theorem frobSq_ΛR_le {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hK : ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t)) {t : ℝ} (ht : t ∈ Icc 0 T) :
@@ -83,26 +83,20 @@ private theorem frobSq_ΛR_le {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ �
       frobSq (Λ₁ t - (3 / 2 * lam) • J) * 81 := mul_le_mul_of_nonneg_left hX.le hA
   linarith
 
-/-- **Singular clearance** (SINGULAR_COST_BUDGET (34), with (3), (24)-(27)). Let
-`(T, u, g, X, Λ₁, Λ_R, λ)` be a Pontryagin extremal (any `λ ≤ 0`, normal or abnormal) with cost
-`C ≤ A_oct` and state in `𝔥**`. Then at every `t ∈ [0, T]`, `‖𝒫(t)‖² ≤ 251² Q(t)²`.
+/-- **Singular clearance**. Let `(T, u, g, X, Λ₁, Λ_R, λ)` be a Pontryagin extremal (any `λ ≤ 0`,
+normal or abnormal) with cost `C ≤ A_oct` and state in `𝔥**`. Then at every `t ∈ [0, T]`,
+`‖𝒫(t)‖² ≤ 251² Q(t)²`.
 
-Proof outline: (SCB (3), budget inequality) `‖A(t)‖ ≥ κ|λ|` with `A = Λ₁ - (3/2)λJ` and
-`κ = 3(π - C)/(2π - C) > 9/788 > 1/100` (SCB (24)-(26): `A_oct < 391/125 < 157/50 < π`). At
-`t = 0`: `tr(A X) ≤ 0` at every time (SCB (10): the equilibrium control `u*` lies in the simplex and
-`P_{u*} = -X/2`, so `tr(A X) = H(u*) ≤ max H = 0`, the maximum vanishing everywhere by continuity);
-with `Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)` (Corollary 6.5.3) and `V = g X g⁻¹` this gives
-`3μρ_R + tr(A₀V) ≤ 3μρ` (`μ = -λ`), `tr(A₀ V) ≥ -2‖A₀‖ρ_R` (SCB (13)); integrate and use the
-winding bound `∫ρ_R ≥ (2π - C)/3` (SCB (15)-(17), from `ρ + ρ_R = 2(s² + t²)θ'` and
-`g(T) = R`). At general `t`: rebase the twisted extension of the lift (`remark6_6_1`) at `t`. Then,
-with `d = √(11/2)` the norm of `(λ, (3/2)λJ, 0)`, `‖𝒫‖ ≤ Q + d|λ| ≤ (1 + d/κ) Q < 251 Q`.
-(The compact domain is not used for this inequality in the notes' argument.)
-
-Route: the notes' argument (`scb_lam_sq_le`: `λ² ≤ 10⁴ ‖A(t)‖²` from `A_oct < 3.127` and
-`π > 3.141592`); the continuous argument of `s + it` is the imaginary part of `∫ z'/z`
-(`scb_winding`), the rebasing uses `twistedFrame`/`twistedState` with the costate
-`G(τ)⁻¹ Λ₁(0) G(τ)` instead of `remark6_6_1`, and `‖𝒫‖ ≤ Q + d|λ|` is used in the squared form
-`‖Λ₁‖² ≤ (1 + ε)‖A‖² + (1 + 1/ε)(9/2)λ²`, `ε = 200`. -/
+Proof outline: write `A = Λ₁ - (3/2)λJ` and `μ = -λ`. The equilibrium control `u*` lies in the
+simplex and `P_{u*} = -X/2`, so `tr(A X) = H(u*) ≤ max H = 0` at every time
+(`scb_traceForm_le_zero`). With `Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)` (Hales–Vajjha, Corollary 6.5.3) and
+`V = g X g⁻¹` this reads `3μρ_R + tr(A₀V) ≤ 3μρ`, and `tr(A₀ V) ≥ -2‖A₀‖ρ_R`; integrating against
+the winding bound `∫(ρ + ρ_R) ≥ 2π/3` (`scb_winding`: the continuous argument of the `J`-part
+`s + it` of the frame turns by at least `π/3`) gives `μ ≤ 100 ‖A₀‖` (`scb_budget`). Rebasing the
+twisted extension (`twistedFrame`, `twistedState`, with the costate `G(τ)⁻¹ Λ₁(0) G(τ)`) at `t`
+gives `λ² ≤ 10⁴ ‖A(t)‖²` at every time (`scb_lam_sq_le`). Since `Λ₁ = A + (3/2)λJ`, the bound
+`‖Λ₁‖² ≤ (1 + ε)‖A‖² + (1 + 1/ε)(9/2)λ²` with `ε = 200` then gives `‖𝒫‖² ≤ 251² Q²`. The compact
+domain is not used for this inequality. -/
 theorem covectorNormSq_le_singularGapSq {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hcost : reinhardtCost T X ≤ octagonCost)
@@ -120,24 +114,15 @@ theorem covectorNormSq_le_singularGapSq {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g
     unfold frobSq; nlinarith [sq_nonneg (A 1 0 + A 0 1), sq_nonneg (A 0 0), sq_nonneg (A 1 1)]
   nlinarith [sq_nonneg (10 * (A 1 0 - A 0 1) - 3 / 20 * lam)]
 
-/-- **Projective bounds** (SINGULAR_COST_BUDGET (28), with (29)-(33)). Under the same hypotheses,
-for every `t ∈ [0, T]`: `‖𝒫(0)‖² < 10¹⁶ ‖𝒫(t)‖²` and `‖𝒫(t)‖² < 10¹⁶ ‖𝒫(0)‖²`, i.e.
-`10⁻⁸ ‖𝒫(0)‖ < ‖𝒫(t)‖ < 10⁸ ‖𝒫(0)‖`.
+/-- **Projective bounds**. Under the same hypotheses, for every `t ∈ [0, T]`:
+`‖𝒫(0)‖² < 10¹⁶ ‖𝒫(t)‖²` and `‖𝒫(t)‖² < 10¹⁶ ‖𝒫(0)‖²`, i.e. `10⁻⁸ ‖𝒫(0)‖ < ‖𝒫(t)‖ < 10⁸ ‖𝒫(0)‖`.
 
-Proof outline: (SCB (29)) `‖g(t)‖_op, ‖g(t)⁻¹‖_op ≤ exp(∫‖X‖_op) < e^{2C/3} < 9`, so
-`‖Λ₁(t)‖ ≤ 81 ‖Λ₁(0)‖` and conversely (`Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)`); (SCB (30)-(33)) on `𝔥**`,
-`‖W‖ ≤ 607500 ‖A‖ ≤ 10⁶ ‖A‖` at every time (`W = Λ_R`, using the vertex weights of `u*`, at least
-`1/135`, `Σ ϑ_i h_i = 0`, `max_i h_i = -tr(A X) ≤ 9‖A‖`, and the width bound
-`max h - min h ≥ ω‖W‖`, `ω > 1/500`, of QUANTITATIVE_REGULAR_SWITCH_BOUND (14)); and
-`‖A‖ ≤ ‖Λ₁‖ + (3/2)√2|λ|`. Normalizing `‖𝒫(0)‖ = 1`: `‖Λ₁(t)‖ < 81`, `‖A(t)‖ < 84`,
-`‖W(t)‖ < 84·10⁶`, so `‖𝒫(t)‖ < 10⁸`; reading the same bounds from `t` back to `0` gives
-`1 ≤ 83250082 ‖𝒫(t)‖`.
-
-Route: Frobenius norms throughout. Gronwall for `‖g‖_F²` (`f' = 2 tr(X gᵀg) ≤ 2ρ f`) gives
-`‖g(t)‖_F² ≤ 2 e^{2C/3} < 42` (`scb_frobSq_frame_le`), so `‖Λ₁(t)‖_F² ≤ 1764 ‖Λ₁(0)‖_F²` and
-conversely; the exact equilibrium weights `ϑ_i = p_i(p_j + p_k)/8` and the margins `p_i ≥ 2/15`
-give `‖W‖_F² ≤ 2700 tr(AX)² ≤ 218700 ‖A‖_F²` (`scb_vertex_bounds`; no width estimate and no
-height bound `y ≤ 9/2`); hence `‖𝒫(t)‖² < 8·10⁸ ‖𝒫(0)‖²` and conversely. -/
+Proof outline, in Frobenius norms throughout. Gronwall for `‖g‖_F²`
+(`f' = 2 tr(X gᵀg) ≤ 2ρ f`) gives `‖g(t)‖_F² ≤ 2 e^{2C/3} < 42` (`scb_frobSq_frame_le`), so
+`‖Λ₁(t)‖_F² ≤ 1764 ‖Λ₁(0)‖_F²` and conversely (`Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)`). On
+`𝔥**`, with `W = Λ_R`, the exact equilibrium weights `ϑ_i = p_i(p_j + p_k)/8` and the margins
+`p_i ≥ 2/15` give `‖W‖_F² ≤ 2700 tr(AX)² ≤ 218700 ‖A‖_F²` at every time (`scb_vertex_bounds`);
+and `‖A‖ ≤ ‖Λ₁‖ + (3/2)√2|λ|`. Hence `‖𝒫(t)‖² < 8·10⁸ ‖𝒫(0)‖²` and conversely. -/
 theorem covectorNormSq_projective_bounds {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hcost : reinhardtCost T X ≤ octagonCost)

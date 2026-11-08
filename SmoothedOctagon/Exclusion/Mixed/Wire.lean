@@ -17,13 +17,12 @@ The scalar bridges between the case-M2 functions of `Exclusion/Mixed/Scalar` and
 * `ifc_m2Stat_eq` (`m2Stat = ff_Cph`), `ifc_m2g_eq` (`m2g = 4 j`), `ifc_m2F_eq` (`m2F = ff_F` off
   `q = 1`), `ifc_m2Sec_eq` (the turn secant from `16 (n - p) d = G_a(a,n) - G_a(a,p)`).
 * `CostateCycle.ifc_turn_ne`: the outer active margins of a turn differ.
-* `NormalPeriod.ifc_cas_lt`: **the competitive cap** `γ² < 9193/50000` (HAND_PROOF_REFINEMENTS §1),
-  from the spectral cost–Casimir bound; ellipticity comes from `γ² > 0` and a forward switch, which
-  exists by case R (`reverse_exclusion`).
-* `NormalPeriod.ifc_cas_gt`: the lower bound `γ² > 27/256` of a competitive mixed period
-  (MIXED_GLOBAL_REVERSE_ANGLE_DENSITY §3), `NormalPeriod.cg_cas_gt` of `Exclusion/Mixed/Density`
-  (the whole-period winding `cg_winding`, the forward-piece bound `cg_pp_bound` and the
-  reverse-centre gap `m1_angle_gap`).
+* `NormalPeriod.ifc_cas_lt`: **the competitive cap** `γ² < 9193/50000`, from the spectral
+  cost–Casimir bound; ellipticity comes from `γ² > 0` and a forward switch, which exists by case R
+  (`reverse_exclusion`).
+* `NormalPeriod.ifc_cas_gt`: the lower bound `γ² > 27/256` of a competitive mixed period,
+  `NormalPeriod.cg_cas_gt` of `Exclusion/Mixed/Density` (the whole-period winding `cg_winding`,
+  the forward-piece bound `cg_pp_bound` and the reverse-centre gap `m1_angle_gap`).
 -/
 
 @[expose] public section
@@ -44,7 +43,7 @@ theorem ifc_m2g_eq (a b : ℝ) : m2g a b = 4 * elJ a b := by
 theorem ifc_m2F_eq {x q : ℝ} (hq : 1 < q) : m2F x q = ff_F x q := by
   rw [m2F_of_ne hq.ne', ff_F]
 
-/-- **The turn secant** (MGCE (15), CONT (5)): `16 (n - p) d = G_a(a,n) - G_a(a,p)` with `p ≠ n`
+/-- **The turn secant**: `16 (n - p) d = G_a(a,n) - G_a(a,p)` with `p ≠ n`
 gives `8 d = Sec(p, a, n)`. -/
 theorem ifc_m2Sec_eq {p a n d : ℝ} (hp : 0 < p) (ha : 0 < a) (hn : 0 < n) (hne : p ≠ n)
     (h : 16 * (n - p) * d = elGa a n - elGa a p) : 8 * d = m2Sec p a n := by
@@ -77,7 +76,7 @@ theorem ifc_turn_ne {k : ℤ} (hturn : C.sgn (k - 1) = -C.sgn k) :
     rw [show k - 1 + 2 = k + 1 by ring] at this; exact this.ne
   · rw [C.sgn_rev (by rw [ek]; exact hin), C.sgn_rev hout] at hturn; norm_num at hturn
 
-/-- **Both norms at a turn are its secant** (MGCE (15)): `8 d_{k-1} = 8 d_k = Sec(a_{k-1}, a_k,
+/-- **Both norms at a turn are its secant**: `8 d_{k-1} = 8 d_k = Sec(a_{k-1}, a_k,
 a_{k+1})`. -/
 theorem ifc_turn_sec {k : ℤ} (hturn : C.sgn (k - 1) = -C.sgn k) :
     8 * C.swd (k - 1) = m2Sec (C.act (k - 1)) (C.act k) (C.act (k + 1)) ∧
@@ -106,8 +105,8 @@ theorem ifc_exists_fwd : ∃ n : ℕ, P.rep.IsForward n := by
   rw [hcast, P.rep.el_fwd_shift]
   exact hk
 
-/-- **The competitive Casimir cap** (HAND_PROOF_REFINEMENTS §1, GLOBAL_SPECTRAL_COST_CASIMIR (2)):
-`γ² < 9193/50000`. -/
+/-- **The competitive Casimir cap** `γ² < 9193/50000`, from the spectral cost–Casimir bound
+(`ifc_gam2_cap`, `ifc_spectral`); ellipticity comes from `γ² > 0` and a forward switch. -/
 theorem ifc_cas_lt (hc : P.IsCompetitive) : P.costateCycle.gam2 0 < 9193 / 50000 := by
   by_cases hpos : 0 < P.costateCycle.gam2 0
   swap
@@ -122,11 +121,10 @@ theorem ifc_cas_lt (hc : P.IsCompetitive) : P.costateCycle.gam2 0 < 9193 / 50000
   rw [P.det_Λ₁_zero] at h
   linarith
 
-/-- **The lower Casimir bound of a competitive mixed period** (MIXED_GLOBAL_REVERSE_ANGLE_DENSITY
-(10)): `γ² > 27/256` (`NormalPeriod.cg_cas_gt`; the compact domain is not used). Route: the
-whole-period winding in its telescoped form `∑ δ_n = π/3` (`cg_winding`) instead of the count
-`n/P ≥ 1/3`; the reverse gap `cos φ < 3/10` (`m1_angle_gap`) instead of MGRAD (1) `cos φ < 1/4`;
-the bound `e ≥ 0 ∨ 4e² ≤ d_- d_+` at `+ +` (`cg_pp_bound`) instead of forward acuteness. -/
+/-- **The lower Casimir bound of a competitive mixed period**: `γ² > 27/256`
+(`NormalPeriod.cg_cas_gt`; the compact domain is not used). The proof uses the whole-period
+winding in its telescoped form `∑ δ_n = π/3` (`cg_winding`), the reverse gap `cos φ < 3/10`
+(`m1_angle_gap`) and the bound `e ≥ 0 ∨ 4e² ≤ d_- d_+` at `+ +` (`cg_pp_bound`). -/
 theorem ifc_cas_gt (hc : P.IsCompetitive) (hD : P.InCompactDomain) (hmix : P.rep.IsMixed) :
     27 / 256 < P.costateCycle.gam2 0 :=
   P.cg_cas_gt hc hmix

@@ -5,20 +5,20 @@ public import SmoothedOctagon.Exclusion.Mixed.Interface
 /-!
 # Case M2: factors, star inequalities and frame changes on the costate cycle
 
-`MIXED_GLOBAL_COSTATE_ELLIPTIC` (CE) (2), (10)-(13) and inventory E2 §1.4, on the cycle of a normal
-vertex period and its covector calculus.
+The switch classification, the star inequality, the factor formulas for the arc multipliers and the
+frame changes of the multiplier, on the cycle of a normal vertex period and its covector calculus.
 
 * `VertexRepresentation.m2_fwd_or_rev`, `m2_not_fwd_and_rev`, `m2_rev_iff_not_fwd`: every switch
   is forward or reverse, not both.
 * `m2_quad_rot`, `m2_m_prev`: the switch margins of piece `k` (the previous active margin, the
   quadric); `m2_star`: strict star `a_{k-1} a_k < 4` at every switch; `m2_third`: the third
   margin `(4 - a_{k-1} a_k)/(a_{k-1} + a_k)`.
-* The factor formulas CE (2): `m2_factor_ff` (`q K = (p + a)(a + n)`), `m2_factor_rr`
+* The factor formulas: `m2_factor_ff` (`q K = (p + a)(a + n)`), `m2_factor_rr`
   (`q (p + a)(a + n) = K`), `m2_factor_rf` (`q (p + a) = a + n`), `m2_factor_fr`
   (`q (a + n) = p + a`), with `p = a_{k-1}`, `a = a_k`, `n = a_{k+1}`, `K = a² + 4`.
 * `m2A_det`, `m2_transport_mul`: `det A_i = 1`, `A_i M (i + 1) = M i A_i`.
 * `m2_norm_next`: the norm of switch `i` read in the frame of piece `i + 1`: `8 (M (i+1))₂₁/s²`
-  after a reverse switch, `-8 (M (i+1))₁₂/s²` after a forward one (E2 §1.4, "incoming" norms).
+  after a reverse switch, `-8 (M (i+1))₁₂/s²` after a forward one (the incoming norms).
 -/
 
 @[expose] public section
@@ -127,7 +127,7 @@ theorem m2_star (k : ℤ) : C.act (k - 1) * C.act k < 4 := by
     have := C.m_pos k (C.lab k - 1)
     nlinarith
 
-/-- **Factor `++`** (CE (2)): `q_k K_k = (a_{k-1} + a_k)(a_k + a_{k+1})`. -/
+/-- **Factor `++`**: `q_k K_k = (a_{k-1} + a_k)(a_k + a_{k+1})`. -/
 theorem m2_factor_ff {k : ℤ} (h1 : C.m2Fwd (k - 1)) (h0 : C.m2Fwd k) :
     C.q k * (C.act k ^ 2 + 4) = (C.act (k - 1) + C.act k) * (C.act k + C.act (k + 1)) := by
   have ht := C.m2_third_fwd h1
@@ -144,7 +144,7 @@ theorem m2_factor_ff {k : ℤ} (h1 : C.m2Fwd (k - 1)) (h0 : C.m2Fwd k) :
   field_simp
   ring
 
-/-- **Factor `--`** (CE (2)): `q_k (a_{k-1} + a_k)(a_k + a_{k+1}) = K_k`. -/
+/-- **Factor `--`**: `q_k (a_{k-1} + a_k)(a_k + a_{k+1}) = K_k`. -/
 theorem m2_factor_rr {k : ℤ} (h1 : ¬ C.m2Fwd (k - 1)) (h0 : ¬ C.m2Fwd k) :
     C.q k * ((C.act (k - 1) + C.act k) * (C.act k + C.act (k + 1))) = C.act k ^ 2 + 4 := by
   have ht := C.m2_third_rev h1
@@ -162,7 +162,7 @@ theorem m2_factor_rr {k : ℤ} (h1 : ¬ C.m2Fwd (k - 1)) (h0 : ¬ C.m2Fwd k) :
   field_simp
   ring
 
-/-- **Factor `-+`** (CE (2)): `q_k (a_{k-1} + a_k) = a_k + a_{k+1}`. -/
+/-- **Factor `-+`**: `q_k (a_{k-1} + a_k) = a_k + a_{k+1}`. -/
 theorem m2_factor_rf {k : ℤ} (h1 : ¬ C.m2Fwd (k - 1)) (h0 : C.m2Fwd k) :
     C.q k * (C.act (k - 1) + C.act k) = C.act k + C.act (k + 1) := by
   have hp := C.m2_m_prev k
@@ -175,7 +175,7 @@ theorem m2_factor_rf {k : ℤ} (h1 : ¬ C.m2Fwd (k - 1)) (h0 : C.m2Fwd k) :
   rw [hn, hg]
   ring
 
-/-- **Factor `+-`** (CE (2)): `q_k (a_k + a_{k+1}) = a_{k-1} + a_k`. -/
+/-- **Factor `+-`**: `q_k (a_k + a_{k+1}) = a_{k-1} + a_k`. -/
 theorem m2_factor_fr {k : ℤ} (h1 : C.m2Fwd (k - 1)) (h0 : ¬ C.m2Fwd k) :
     C.q k * (C.act k + C.act (k + 1)) = C.act (k - 1) + C.act k := by
   have hp := C.m2_m_prev k
@@ -203,7 +203,7 @@ theorem m2_transport_mul {M : ℤ → Mat2} (hM : ∀ i, M (i + 1) = (C.m2A i)�
   have hu : IsUnit (C.m2A i).det := by rw [C.m2A_det]; exact isUnit_one
   rw [hM, ← Matrix.mul_assoc, ← Matrix.mul_assoc, Matrix.mul_nonsing_inv _ hu, Matrix.one_mul]
 
-/-- **The norm of switch `i` in the frame of piece `i + 1`** (E2 §1.4): `8 (M (i+1))₂₁/s²` after a
+/-- **The norm of switch `i` in the frame of piece `i + 1`**: `8 (M (i+1))₂₁/s²` after a
 reverse switch and `-8 (M (i+1))₁₂/s²` after a forward one, `s = a_i + a_{i+1}`. -/
 theorem m2_norm_next {M : ℤ → Mat2} (hM : ∀ i, M (i + 1) = (C.m2A i)⁻¹ * M i * C.m2A i)
     (i : ℤ) :

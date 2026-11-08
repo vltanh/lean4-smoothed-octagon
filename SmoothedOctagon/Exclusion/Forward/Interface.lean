@@ -12,7 +12,7 @@ stated in the coordinates of `Period/Elliptic.lean` on a `CostateCycle`, and pro
 through `Exclusion/Forward/Wire.lean`. The definitions `ff_mu`, `ff_gam2`, `ff_wt` are
 definitionally `CostateCycle.mu`, `gam2`, `wt`.
 
-## Coordinates (`MIXED_GLOBAL_COSTATE_ELLIPTIC` §§2-4)
+## Coordinates
 
 * `ff_mu k j = μ_j = p_j(𝒰)` at the switch `k`, where `𝒰 = (1/√12) X⁻¹ Λ₁ X` is the normal
   multiplier `U = (1/√12) Ad_{X₀⁻¹} Λ₁(0)` conjugated by the tangent frame:
@@ -20,23 +20,21 @@ definitionally `CostateCycle.mu`, `gam2`, `wt`.
 * `ff_gam2 k = γ² = det 𝒰 = (μ₀μ₁ + μ₁μ₂ + μ₂μ₀)/4`.
 * `ff_wt k = w_k = -μ_{i_k}` (`= tr(U Z_k) = 2 (M_k)₁₁`); the switch norm after piece `k` is
   `d_k = (w_k + w_{k+1})/(2 s_k²)` and the cross pairing on piece `k` is `e_k = w_k/(2 K_k)`.
-* The window coordinates of MIXED_GLOBAL_SMALL_FORWARD_MINIMUM (5) at the piece `m`:
+* The window coordinates at the piece `m`:
   `ff_u m = u = 8 d_{m-1}`, `ff_v m = v = 8 d_m`, `ff_E m = E = 16 e_m`.
 
 ## The interface
 
 For a costate cycle with every switch forward (`i_{k+1} = i_k + 1`), active margins
 `(p, b, a, c, d) = (a_{m-2}, …, a_{m+2})`:
-* `ff_rows`: the three stationarity rows MIXED (6)-(8) (from `CostateCycle.stationarity`,
-  MGCE (8)/(14), at the pieces `m - 1`, `m`, `m + 1` and the transport of the weights across the
-  pieces `m` and `m + 1`, `ifc_w_rel`; MIXED (9)).
-* `ff_floors`: the exterior floors MIXED (11) (from the missing-control inequality `σ ≤ 0` at the
-  switches `m - 1` and `m + 2`, `ifc_mc`; MIXED (11a)-(12)).
-* `ff_gram`: `γ² = (a² + 4)²(4uv - E²)/256` (MGCE (14), `gram_pp`).
+* `ff_rows`: the three stationarity rows (from `CostateCycle.stationarity` at the pieces `m - 1`,
+  `m`, `m + 1` and the transport of the weights across the pieces `m` and `m + 1`, `ifc_w_rel`).
+* `ff_floors`: the exterior floors (from the missing-control inequality `σ ≤ 0` at the switches
+  `m - 1` and `m + 2`, `ifc_mc`).
+* `ff_gram`: `γ² = (a² + 4)²(4uv - E²)/256` (`gram_pp`).
 * `NormalPeriod.ff_gam2_eq`: `γ² = det Λ₁(0)/12` for the cycle of a normal period.
-* `NormalPeriod.ff_cost_casimir`: negative ellipticity of `Λ₁` (GLOBAL_STRUCTURE_FORWARD_ELLIPTIC,
-  MGCE (1)) and the spectral cost–Casimir bound `C ≥ (π/3)(κ + 3/2)`, `κ² = det Λ₁(0)`
-  (GLOBAL_SPECTRAL_COST_CASIMIR (1)).
+* `NormalPeriod.ff_cost_casimir`: negative ellipticity of `Λ₁` and the spectral cost–Casimir bound
+  `C ≥ (π/3)(κ + 3/2)`, `κ² = det Λ₁(0)`.
 -/
 
 @[expose] public section
@@ -72,9 +70,9 @@ noncomputable def ff_v (m : ℤ) : ℝ := 4 * (C.ff_wt m + C.ff_wt (m + 1)) / (C
 /-- `E = 16 e_m = 8 w_m/(a_m² + 4)`. -/
 noncomputable def ff_E (m : ℤ) : ℝ := 8 * C.ff_wt m / (C.act m ^ 2 + 4)
 
-/-- **The three stationarity rows at an all-forward window** (MIXED_GLOBAL_SMALL_FORWARD_MINIMUM
-(6)-(8), from MGCE (8)): `CostateCycle.stationarity` at the pieces `m - 1`, `m`, `m + 1`, with the
-transport of the weights across the pieces `m` and `m + 1` (MIXED (9)); `ifc_rows_alg`. -/
+/-- **The three stationarity rows at an all-forward window**: `CostateCycle.stationarity` at the
+pieces `m - 1`, `m`, `m + 1`, with the transport of the weights across the pieces `m` and `m + 1`;
+`ifc_rows_alg`. -/
 theorem ff_rows (hF : ∀ k, C.lab (k + 1) = C.lab k + 1) (m : ℤ) :
     let p := C.act (m - 2); let b := C.act (m - 1); let a := C.act m; let c := C.act (m + 1)
     let d := C.act (m + 2)
@@ -107,10 +105,9 @@ theorem ff_rows (hF : ∀ k, C.lab (k + 1) = C.lab k + 1) (m : ℤ) :
   exact ifc_rows_alg (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) fL f0 fR
     rL rR sL s0 sR
 
-/-- **The two exterior floors** (MIXED_GLOBAL_SMALL_FORWARD_MINIMUM (11)): the missing-control
-inequality `σ ≤ 0` at the exterior switches `m - 1` and `m + 2` of five consecutive pieces with
-forward switches gives `u ≥ F_{b/(a+b)}(h)` and `v ≥ F_{c/(a+c)}(k)` (MIXED (11a)-(12);
-`CostateCycle.ifc_floor_out`, `ifc_floor_in`). -/
+/-- **The two exterior floors**: the missing-control inequality `σ ≤ 0` at the exterior switches
+`m - 1` and `m + 2` of five consecutive pieces with forward switches gives `u ≥ F_{b/(a+b)}(h)` and
+`v ≥ F_{c/(a+c)}(k)` (`CostateCycle.ifc_floor_out`, `ifc_floor_in`). -/
 theorem ff_floors (hF : ∀ k, C.lab (k + 1) = C.lab k + 1) (m : ℤ) :
     let p := C.act (m - 2); let b := C.act (m - 1); let a := C.act m; let c := C.act (m + 1)
     let d := C.act (m + 2)
@@ -144,8 +141,8 @@ theorem ff_floors (hF : ∀ k, C.lab (k + 1) = C.lab k + 1) (m : ℤ) :
   · rw [show a + b = b + a by ring]; exact fo
   · exact fi
 
-/-- **The Gram identity at the central piece** (MGCE (14), `gram_pp`):
-`d_{m-1} d_m - e_m² = γ²/K_m²`, i.e. `γ² = (a² + 4)²(4uv - E²)/256` (`CostateCycle.gram_pp`). -/
+/-- **The Gram identity at the central piece** (`gram_pp`): `d_{m-1} d_m - e_m² = γ²/K_m²`, i.e.
+`γ² = (a² + 4)²(4uv - E²)/256` (`CostateCycle.gram_pp`). -/
 theorem ff_gram (hF : ∀ k, C.lab (k + 1) = C.lab k + 1) (m : ℤ) :
     C.ff_gam2 m = (C.act m ^ 2 + 4) ^ 2 * (4 * C.ff_u m * C.ff_v m - C.ff_E m ^ 2) / 256 := by
   have hin : C.lab m = C.lab (m - 1) + 1 := by have := hF (m - 1); rwa [sub_add_cancel] at this
@@ -179,10 +176,9 @@ theorem ff_gam2_eq (k : ℤ) : P.costateCycle.ff_gam2 k = (P.Λ₁ 0).det / 12 :
   ring
 
 /-- **Ellipticity and the spectral cost–Casimir bound.** For an all-forward normal period the
-primary costate is negative elliptic (GLOBAL_STRUCTURE_FORWARD_ELLIPTIC, MGCE (1)); with
-`κ = √(det Λ₁(0))` the cost satisfies `C ≥ (π/3)(κ + 3/2)` (GLOBAL_SPECTRAL_COST_CASIMIR (1)).
-Route: `γ² > 0` by the projective argument of `gam2_pos_of_mixed` (`ifc_gam2_pos_of_allForward`),
-then `Λ₁_zero_neg` and the spectral winding bound `ifc_spectral`. -/
+primary costate is negative elliptic; with `κ = √(det Λ₁(0))` the cost satisfies
+`C ≥ (π/3)(κ + 3/2)`. Proof: `γ² > 0` by the projective argument of `gam2_pos_of_mixed`
+(`ifc_gam2_pos_of_allForward`), then `Λ₁_zero_neg` and the spectral winding bound `ifc_spectral`. -/
 theorem ff_cost_casimir (hF : P.rep.AllForward) :
     0 < (P.Λ₁ 0).det ∧ π / 3 * (√((P.Λ₁ 0).det) + 3 / 2) ≤ P.cost := by
   have hpos := P.ifc_gam2_pos_of_allForward hF

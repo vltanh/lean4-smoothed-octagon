@@ -6,10 +6,7 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0HandTools
 /-!
 # Hand proof of the smaller-short case, gate S0: the central face, forms and beta convexity
 
-`archive/lighter-proofs/SHORT_DURATION_CENTRAL_TAU_TWO.md` §1 and
-`SHORT_DURATION_CENTRAL_UPPER_FACES.md` §1 (with the retained beta-convexity sections of
-`archive/notes/MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN.md` §3 and
-`MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES.md` §2).
+The forms of the three central-face tests of gate S0 and their reduction in `β` to two faces.
 
 At the central scale `q = q_c = α²/K`, `K = x² + 2x + α²`, the floor-weighted face value is
 `hl0Gc S K α B u D τ ℓ = (w - 1)τ + 1/τ + (u - 1)B/α + α/B + 1 - q - E_L + ℓ + (w - 3/4)/2` with
@@ -22,20 +19,17 @@ is `kη² + lη + m + r/η + s/(η + α + 1)` (`hl0_pf_two`, `hl0_pf_dur`), with
 `δ²u_∞/(2K²)`, the residue `r = J·A` at `β = 1` and `s = α` resp. `(γK/α)(w_N - 1) + α` at
 `β = -α`. The chord lemma `hl0_chord` then bounds each test by its values at `β = x` and at the
 enlarged upper end (`hl0_cen_two_chord`, `hl0_cen_dur_chord`), once
-* `τ = 2`: `k(x - 1)³ + r ≥ 0` (`hl0_two_res`; the note proves `r ≥ 0`), from the positive
+* `τ = 2`: `k(x - 1)³ + r ≥ 0` (`hl0_two_res`), from the positive
   polynomial `hl0Phi2f` on the shape domain;
 * `τ = T, 8T/9`: `s ≥ 0` (`hl0_dur_s`: `Q + α²K ≥ 0`, the continued norm at `β = -α`) and
-  `k(x - 1)³ + r ≥ (x - 1)³h²/(64K²)`-type bound (`hl0_dur_res`, the note's (11)-(13): `K ≤ (25/2)αh`,
+  `k(x - 1)³ + r ≥ (x - 1)³h²/(64K²)`-type bound (`hl0_dur_res`, from `K ≤ (25/2)αh`,
   `S(α + 1)² ≤ (45/2)h²`, `M ≥ 28S`).
 
 Polynomial signs on the shape domain `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12` use the coefficient
-bound of the notes (rule (6)) on three pieces (`hl0_trap_pos`). The cleared numerators `hl0N2`,
-`hl0NT`, `hl0N8` (duration source (15)-(16)) are also given on coefficient lists (`hl0NcL`,
-`hl0FNc`), so that each face polynomial is computed inside Lean from the source formula
+bound `hl0Low` on three pieces (`hl0_trap_pos`). The cleared numerators `hl0N2`,
+`hl0NT`, `hl0N8` are also given on coefficient lists (`hl0NcL`,
+`hl0FNc`), so that each face polynomial is computed inside Lean from the factored formula
 (`hl0_H2_FN2`, …: `ring` on at most seven atoms), never printed.
-
-Route: the residue sign of the `τ = 2` test is replaced by the weaker `k(x - 1)³ + r ≥ 0`, proved
-by the coefficient bound instead of the note's case split on `d₁`.
 
 ## Main API
 
@@ -160,7 +154,7 @@ theorem hl0_L_pf {S ui J D1 δ η : ℝ} (hη : η ≠ 0) :
   field_simp
   ring
 
-/-- **The `τ = 2` test in partial fractions** (tau-two source §3 (8)). -/
+/-- **The `τ = 2` test in partial fractions** in `η = β - 1`. -/
 theorem hl0_pf_two {S K a c ui J D1 δ η : ℝ} (hK : K ≠ 0) (ha : a ≠ 0) (hη : η ≠ 0)
     (hB : c + η ≠ 0) :
     hl0Gc S K a (c + η) (ui + J / η) (D1 + δ * η) 2 (5 * a * (c + η) / (2 * K) - 11 / 9) =
@@ -181,7 +175,7 @@ theorem hl0_pf_two {S K a c ui J D1 δ η : ℝ} (hK : K ≠ 0) (ha : a ≠ 0) (
 noncomputable def hl0Qd (S K ui J D1 δ c : ℝ) : ℝ :=
   hl0Wk ui δ * c ^ 2 - hl0Wl S ui J D1 δ * c + hl0Wm S ui J D1 δ - K ^ 2 - hl0Wr S J D1 / c
 
-/-- **The duration tests in partial fractions** (duration source §2 (7)), `τ = γK/(αB)`. -/
+/-- **The duration tests in partial fractions** in `η = β - 1`, `τ = γK/(αB)`. -/
 theorem hl0_pf_dur {S K a c ui J D1 δ η γ ℓ : ℝ} (hK : K ≠ 0) (ha : a ≠ 0) (hc : c ≠ 0)
     (hγ : γ ≠ 0) (hη : η ≠ 0) (hB : c + η ≠ 0) :
     hl0Gc S K a (c + η) (ui + J / η) (D1 + δ * η) (γ * K / (a * (c + η))) ℓ =
@@ -228,7 +222,7 @@ theorem hl0_trap_pos (P : List (List ℝ)) (h1 : hl0PosL (P.map (hl0Low (1 / 6))
 
 /-- The `τ = 2` residue polynomial `Φ₂ = 4SMK²α(k(x - 1)³ + r)/(x - 1)³`:
 `30αSMh² + 10αh²(x - 1)² + 7((5/2)αc²(c² - S³) + cK² - αK(2c² - S³))`, `h = x - α`, `c = α + 1`
-(the note's `A*`, cleared). -/
+(the residue factor `A*` of `hl0r2`, cleared). -/
 noncomputable def hl0Phi2f (x a : ℝ) : ℝ :=
   30 * a * (x + 1) * (35 * x + 13) * (x - a) ^ 2 + 10 * a * (x - a) ^ 2 * (x - 1) ^ 2 +
     7 * (5 / 2 * a * (a + 1) ^ 2 * ((a + 1) ^ 2 - (x + 1) ^ 3) +
@@ -272,7 +266,7 @@ theorem hl0_Phi2_pos {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤
 
 /-! ### Beta convexity of the `τ = 2` test -/
 
-/-- The `τ = 2` test (`CENTRAL_TAU_TWO_SIGN` (3)) as a function of `(x, α, β)`. -/
+/-- The `τ = 2` test at `q = q_c`, `u = û(x, β)` as a function of `(x, α, β)`. -/
 noncomputable def hl0G2 (x a b : ℝ) : ℝ :=
   hsF x b a (hsUhat x b) (hsQc x a) 2 (5 / (2 * (hsRA a b / hsQc x a)) - 11 / 9) (1 / 2)
 
@@ -290,7 +284,7 @@ noncomputable def hl0m2 (x a : ℝ) : ℝ :=
     ((hl0ui x - 1) * (a + 1) + hl0J x) / a -
     hl0Lm (x + 1) (hl0ui x) (hl0J x) ((a + 1) ^ 2) (2 * (a - x)) / (x ^ 2 + 2 * x + a ^ 2) +
     5 * a * (a + 1) / (2 * (x ^ 2 + 2 * x + a ^ 2)) - a ^ 2 / (x ^ 2 + 2 * x + a ^ 2) - 151 / 72
-/-- The residue `r₂ = J·A*` at `β = 1`. -/
+/-- The residue `r₂ = J·A*` at `β = 1` (this defines the factor `A*`). -/
 noncomputable def hl0r2 (x a : ℝ) : ℝ :=
   5 / 2 * hl0Wr (x + 1) (hl0J x) ((a + 1) ^ 2) / (x ^ 2 + 2 * x + a ^ 2) ^ 2 +
     hl0J x * (a + 1) / a - hl0Lr (x + 1) (hl0J x) ((a + 1) ^ 2) / (x ^ 2 + 2 * x + a ^ 2)
@@ -328,7 +322,7 @@ theorem hl0_two_res {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ 
   have := hl0_Phi2_pos hx hx9 ha ha'
   positivity
 
-/-- **Beta convexity of the `τ = 2` test** (tau-two source §3): on `x ≤ β ≤ β₁` the test is at most
+/-- **Beta convexity of the `τ = 2` test**: on `x ≤ β ≤ β₁` the test is at most
 the larger of its values at `β = x` and `β = β₁`. -/
 theorem hl0_cen_two_chord {x a b b₁ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
     (ha' : a ≤ (5 * x + 4) / 12) (hxb : x ≤ b) (hbb : b ≤ b₁) :
@@ -343,11 +337,11 @@ theorem hl0_cen_two_chord {x a b b₁ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
 
 /-! ### Beta convexity of the duration tests -/
 
-/-- The duration test `τ = T` (`CENTRAL_DURATION_FACES` (4), `c = 1`). -/
+/-- The duration test `τ = T` (`γ = 1`) at `q = q_c`, `u = û(x, β)`. -/
 noncomputable def hl0GT (x a b : ℝ) : ℝ :=
   hsF x b a (hsUhat x b) (hsQc x a) (hsRA a b / hsQc x a) 0 (1 / 2)
 
-/-- The duration test `τ = 8T/9` (`CENTRAL_DURATION_FACES` (4), `c = 8/9`). -/
+/-- The duration test `τ = 8T/9` (`γ = 8/9`) at `q = q_c`, `u = û(x, β)`. -/
 noncomputable def hl0G8 (x a b : ℝ) : ℝ :=
   hsF x b a (hsUhat x b) (hsQc x a) (8 * (hsRA a b / hsQc x a) / 9) (-1 / 9) (1 / 2)
 
@@ -409,7 +403,7 @@ theorem hl0_G8_pf {x a b : ℝ} (hx : 1 < x) (ha : 0 < a) (hb : 1 < b) :
   congr 1
   ring
 
-/-- `4SM(Q + α²K)` cleared (duration source (8)-(9)): with `U_I = 3SM + (x - 1)² = 4SMu_∞`,
+/-- `4SM(Q + α²K)` cleared: with `U_I = 3SM + (x - 1)² = 4SMu_∞`,
 `J_J = 7(x - 1)³ = 4SMJ`, `E₀' = S³(U_I - 4SM) + 4SM(3S - 1)`, `c = α + 1`, `δ = 2(α - x)`. -/
 noncomputable def hl0Qnf (x a : ℝ) : ℝ :=
   let S := x + 1
@@ -457,7 +451,7 @@ theorem hl0_H2_QnL (x a : List (List ℝ)) (X A : ℝ) :
   simp only [hl0_H2_add2, hl0_H2_mul2, hl0_H2_smul2, hl0_H2_single, lrhHorner]
   ring
 
-/-- **The residue at `β = -α` is nonnegative** (duration source (9)), for `0 < γ ≤ 1`. -/
+/-- **The residue at `β = -α` is nonnegative** for `0 < γ ≤ 1`. -/
 theorem hl0_dur_s {x a γ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
     (ha' : a ≤ (5 * x + 4) / 12) (hγ : 0 < γ) (hγ1 : γ ≤ 1) : 0 ≤ hl0sd x a γ := by
   have ha0 : 0 < a := by linarith
@@ -487,7 +481,7 @@ theorem hl0_dur_s {x a γ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤
   have : 0 ≤ 1 - γ := by linarith
   positivity
 
-/-- **Convexity at `β = 1`** (duration source (11)-(13)): `k_d(x - 1)³ + r_d ≥ 0` for `0 < γ ≤ 1`,
+/-- **Convexity at `β = 1`**: `k_d(x - 1)³ + r_d ≥ 0` for `0 < γ ≤ 1`,
 from `K ≤ (25/2)αh`, `S(α + 1)² ≤ (45/2)h²` and `M ≥ 28S` (`h = x - α`). -/
 theorem hl0_dur_res {x a γ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
     (ha' : a ≤ (5 * x + 4) / 12) (hγ1 : γ ≤ 1) :
@@ -568,7 +562,7 @@ theorem hl0_dur_res {x a γ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 �
   have hM0 : 0 < M := by linarith
   positivity
 
-/-- **Beta convexity of the duration tests** (duration source §2): for `0 < γ ≤ 1`, the test
+/-- **Beta convexity of the duration tests**: for `0 < γ ≤ 1`, the test
 `τ = γT` is at most the larger of its values at `β = x` and `β = β₁`. -/
 theorem hl0_cen_dur_chord {x a b b₁ γ ℓ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
     (ha' : a ≤ (5 * x + 4) / 12) (hxb : x ≤ b) (hbb : b ≤ b₁) (hγ : 0 < γ) (hγ1 : γ ≤ 1) :
@@ -600,7 +594,7 @@ theorem hl0_cen_8_chord {x a b b₁ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (
   rw [hl0_G8_pf hx1 ha0 (by linarith), hl0_G8_pf hx1 ha0 hx1, hl0_G8_pf hx1 ha0 (by linarith)]
   exact hl0_cen_dur_chord hx hx9 ha ha' hxb hbb (by norm_num) (by norm_num)
 
-/-! ### The cleared numerators (duration source (15)-(16)) -/
+/-! ### The cleared numerators -/
 
 /-- `W·V` for `u = U/V`: `S²(S² - S + 1)V + D²U - D E_N`, `E_N = S³(U - V) + (3S - 1)V`. -/
 noncomputable def hl0WN (S U V D : ℝ) : ℝ :=
@@ -723,7 +717,7 @@ theorem hl0_face_d1 (P : List (List ℝ)) {HA W : ℝ} (hcurv : 0 ≤ hl0Low2 HA
   have := hl0_mono_X (P := hl0D2 P) (A := A) (fun X' h1' h2' => h2 X' h1' (h2'.trans hXW)) hX
   linarith
 
-/-- **A face on a rectangle** (`UPPER_FACES` §§3-4): positive second `X`-derivative, positive first
+/-- **A face on a rectangle**: positive second `X`-derivative, positive first
 derivative and value on the left edge `X = 0`. -/
 theorem hl0_face_rect (P : List (List ℝ)) {HA W : ℝ} (hcurv : 0 ≤ hl0Low2 HA W (hl0D2 (hl0D2 P)))
     (hd1 : ∀ A, 0 ≤ A → A ≤ HA → 0 < lrhHorner (hl0Eval 0 (hl0D2 P)) A)
@@ -734,7 +728,7 @@ theorem hl0_face_rect (P : List (List ℝ)) {HA W : ℝ} (hcurv : 0 ≤ hl0Low2 
     (fun X' h1' h2' => hl0_face_d1 P hcurv hd1 hA hAH h1' (h2'.trans hXW)) hX
   linarith
 
-/-- **A face with a slanted edge** (`TAU_TWO` §§3-4): on `A ≤ T` the left edge, beyond it the line
+/-- **A face with a slanted edge**: on `A ≤ T` the left edge, beyond it the line
 `X = αA + β` (to the left of the actual point) carries the sign. -/
 theorem hl0_face_slant (P : List (List ℝ)) {HA W T α β : ℝ}
     (hcurv : 0 ≤ hl0Low2 HA W (hl0D2 (hl0D2 P)))
@@ -841,7 +835,7 @@ noncomputable def hl0cD (x a b : List (List ℝ)) : List (List ℝ) :=
   hl0Add2 (hl0Mul2 a a) (hl0Add2 (hl0Smul2 2 (hl0Mul2 a b)) (hl0Add2 [[1]]
     (hl0Add2 (hl0Smul2 2 x) (hl0Smul2 (-2) (hl0Mul2 b x)))))
 
-/-- **A central face numerator on lists** with coefficients `e`, `c` (computed from the source
+/-- **A central face numerator on lists** with coefficients `e`, `c` (computed from the factored
 formula, never printed). -/
 noncomputable def hl0FNc (e₁ e₂ e₃ e₄ c₁ c₂ c₃ c₄ c₅ c₆ : ℝ) (x a b : List (List ℝ)) :
     List (List ℝ) :=

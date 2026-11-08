@@ -5,14 +5,13 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandDefs
 /-!
 # Gate S4, hand proof W2 (a): the shape derivative `Ψ_a` with a cleared numerator
 
-`archive/lighter-proofs/SHORT_CASIMIR_FIRST_DERIVATIVES.md` §§1, 4-5. In the note's variables
-`x, a = α, b = β, u` (Lean order `x be al u`), with `K = x(x + 2) + a²`, `B = a + b`,
-`D = hsDg`, `E = hh46S4P`, the closed form `Ψ = Γ - R₁/7` of `S4Closed` has
+In the variables `x, a = α, b = β, u` (Lean order `x be al u`), with `K = x(x + 2) + a²`,
+`B = a + b`, `D = hsDg`, `E = hh46S4P`, the closed form `Ψ = Γ - R₁/7` of `S4Closed` has
 `w = N/K²`, `N = M + uD² - DE` (`hl46W2N`) and `E_L = Q/K`, `Q = 2uD - E` (`hl46W2Q`).
 Since `D_a = 2B`, `N_a = 2BQ`, `Q_a = 4Bu` and `K_a = 2a`, differentiating the nine pieces of
 `R₁` (`K(w - 3/4)/(aB)`, `(u - 1)B/a`, `a/B`, `-a²/K`, `-E_L`, `log(2aB/K)`) and multiplying by
-`a²B²K²` gives the term-by-term numerator `hl46W2Va` (the logarithm piece in the note's combined
-form (§6) `(2a + b)K - 2a²B = X(2a + b) - a²b`), so that
+`a²B²K²` gives the term-by-term numerator `hl46W2Va` (the logarithm piece in the combined form
+`(2a + b)K - 2a²B = X(2a + b) - a²b`), so that
 
 `Ψ_a = -V/(7a²B²K²)`, `V = hl46W2V x b a u` (`hl46_w2_deriv`).
 
@@ -31,11 +30,11 @@ namespace SmoothedOctagon
 
 open Real
 
-/-- `N = M + uD² - DE`, the numerator of `w = N/K²` (note §1). -/
+/-- `N = M + uD² - DE`, the numerator of `w = N/K²`. -/
 noncomputable def hl46W2N (x be al u : ℝ) : ℝ :=
   (1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1) + hsDg x be al ^ 2 * u - hsDg x be al * hh46S4P x u
 
-/-- `Q = 2uD - E`, the numerator of `E_L = Q/K` (note §1). -/
+/-- `Q = 2uD - E`, the numerator of `E_L = Q/K`. -/
 noncomputable def hl46W2Q (x be al u : ℝ) : ℝ := 2 * hsDg x be al * u - hh46S4P x u
 
 /-- The cleared numerator `-7a²B²K²Ψ_a`, term by term in the atoms `a, b, K, N, Q, u`
@@ -48,7 +47,7 @@ noncomputable def hl46W2Va (a b K N Q u : ℝ) : ℝ :=
     4 * u * a ^ 2 * (a + b) ^ 3 * K + 2 * a ^ 3 * (a + b) ^ 2 * Q +
     a * (a + b) * K * ((2 * a + b) * K - 2 * a ^ 2 * (a + b))
 
-/-- `V = -7a²B²K²Ψ_a` in the note's variables (Lean order `x be al u`). -/
+/-- `V = -7a²B²K²Ψ_a` in the variables `x, b, a, u` (Lean order `x be al u`). -/
 noncomputable def hl46W2V (x be al u : ℝ) : ℝ :=
   hl46W2Va al be (x * (x + 2) + al ^ 2) (hl46W2N x be al u) (hl46W2Q x be al u) u
 

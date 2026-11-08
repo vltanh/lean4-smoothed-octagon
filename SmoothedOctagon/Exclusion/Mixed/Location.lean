@@ -6,17 +6,13 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallForwardMinimum
 /-!
 # Case M2: the global active-margin minimum is a reverse centre
 
-`MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION` §2 (inventory E2, entry 30). Take a global minimum `m` of
-the (periodic) active margins of a competitive M2 period with at least six pieces. At a turn the
-three-arc log-concavity (`CostateCycle.three_arc_not_min`) excludes it. If both incident switches
-are forward, the strict centre minimum of the neighbouring reverse runs
+Take a global minimum `m` of the (periodic) active margins of a competitive M2 period with at least
+six pieces. At a turn the three-arc log-concavity (`CostateCycle.three_arc_not_min`) excludes it. If
+both incident switches are forward, the strict centre minimum of the neighbouring reverse runs
 (`reverseRun_two_and_centre_min`) forces four consecutive forward switches; some reverse centre has
 `a² < 12/17` (`m2_centre`, `m2_scale`), so `a_m² ≤ 4/3` and the small-forward-minimum theorem
 (`m2_small_forward_minimum`) excludes this pattern. Hence both incident switches are reverse, and
 (reverse runs having two switches) `m` is the centre of a reverse run.
-
-Route: the "phase/scale bound `a² < 4/3`" is replaced by the reverse-centre scale bound
-`a² < 12/17`, which holds at every reverse centre (`MIXED_REVERSE_CENTRE_SCALE_BOUND`).
 
 ## Main API
 
@@ -86,7 +82,9 @@ theorem m2_exists_reverseRun {f j : ℤ} (hf : ρ.IsForward f) (hj : ρ.IsRevers
 
 end VertexRepresentation
 
-/-- **The global minimum is a reverse centre** (`MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION` §2). -/
+/-- **The global minimum is a reverse centre**: a global minimum `m` of the active margins of a
+competitive M2 period with at least six pieces has switches `m - 2` and `m + 1` forward and
+`m - 1`, `m` reverse. -/
 theorem m2_min_centre (P : NormalPeriod) (hc : P.IsCompetitive) (h : P.rep.ClassM2)
     (hN : 6 ≤ P.N) :
     ∃ m : ℤ, (∀ k, P.costateCycle.act m ≤ P.costateCycle.act k) ∧

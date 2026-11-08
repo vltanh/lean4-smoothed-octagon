@@ -5,17 +5,16 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandBase
 /-!
 # S2 hand signs: the central face, definitions and duration tangent
 
-The central sharp-ratio face (`q = q_c = α²/K`, `K = x(x + 2) + α²`) of
-`archive/lighter-proofs/SHORT_RATIO_CENTRAL_COMPLETE.md`, with `a = α`, `b = β`:
+The central sharp-ratio face (`q = q_c = α²/K`, `K = x(x + 2) + α²`), with `a = α`, `b = β`:
 `w = (M + D²u - DE)/K²`, `E_L = (2Du - E)/K`, `k = aB/K`, `B = a + b`, `M = S²(S² - S + 1)`,
-`E = S³(u - 1) + 3S - 1`, `S = 1 + x`, `R = (u - 1)B/a + a/B + 1 - a²/K - E_L` (§1 (1)). The two
-duration-tangent tests of §2 (4)-(5) at a tangent point `t ≥ 2` are `hl2cF0`, `hl2cF1`.
+`E = S³(u - 1) + 3S - 1`, `S = 1 + x`, `R = (u - 1)B/a + a/B + 1 - a²/K - E_L`. The two
+duration-tangent tests at a tangent point `t ≥ 2` are `hl2cF0`, `hl2cF1`.
 
 ## Main API
 
 * `hl2cK`, `hl2cw`, `hl2cEL`, `hl2ck`, `hl2cR`, `hl2cF0`, `hl2cF1`, `hl2cbp` (`b_+(x, a)`).
 * `hl2c_face`: the face value `hsF` at `q = q_c` in terms of `w`, `R`, `k`.
-* `hl2c_tangent`: `G_τ ≤ max(F₀(t), F₁(t))` for `2 ≤ τ ≤ 1/k`, `t ≥ 2` (§2 (2)-(3)).
+* `hl2c_tangent`: `G_τ ≤ max(F₀(t), F₁(t))` for `2 ≤ τ ≤ 1/k`, `t ≥ 2`.
 * `hl2c_strip`: the central strip lies in `x ≤ β ≤ b_+(x, a)`, and `a ≤ 4/3`.
 -/
 
@@ -44,15 +43,15 @@ noncomputable def hl2ck (x a b : ℝ) : ℝ := a * (a + b) / hl2cK x a
 noncomputable def hl2cR (x a b u : ℝ) : ℝ :=
   (u - 1) * (a + b) / a + a / (a + b) + 1 - a ^ 2 / hl2cK x a - hl2cEL x a b u
 
-/-- The first duration-tangent test `F₀(t) = R + (4 - 7k/2)h + 4/t - 2/t² - 3/2 + log(tk)`
-(`SHORT_RATIO_CENTRAL_COMPLETE` (4)), `h = w - 3/4`. -/
+/-- The first duration-tangent test `F₀(t) = R + (4 - 7k/2)h + 4/t - 2/t² - 3/2 + log(tk)`,
+`h = w - 3/4` (the bound at `τ = 2`). -/
 noncomputable def hl2cF0 (t x a b u : ℝ) : ℝ :=
   hl2cR x a b u + (4 - 7 * hl2ck x a b / 2) * (hl2cw x a b u - 3 / 4) + 4 / t - 2 / t ^ 2 - 3 / 2 +
     log (t * hl2ck x a b)
 
 /-- The second duration-tangent test
-`F₁(t) = R + (T + 1/4)h + T((t - 1)/t² - 1/4) + 2/t - 1 + log(tk)`, `T = 1/k`
-(`SHORT_RATIO_CENTRAL_COMPLETE` (5)). -/
+`F₁(t) = R + (T + 1/4)h + T((t - 1)/t² - 1/4) + 2/t - 1 + log(tk)`, `T = 1/k` (the bound at
+`τ = 1/k`). -/
 noncomputable def hl2cF1 (t x a b u : ℝ) : ℝ :=
   hl2cR x a b u + (1 / hl2ck x a b + 1 / 4) * (hl2cw x a b u - 3 / 4) +
     1 / hl2ck x a b * ((t - 1) / t ^ 2 - 1 / 4) + 2 / t - 1 + log (t * hl2ck x a b)
@@ -60,7 +59,8 @@ noncomputable def hl2cF1 (t x a b u : ℝ) : ℝ :=
 /-- The enclosing upper beta face `b_+(x, a) = x + (24x + 51)(a - 1)/128`. -/
 noncomputable def hl2cbp (x a : ℝ) : ℝ := x + (24 * x + 51) * (a - 1) / 128
 
-/-- **The central face value** (`SHORT_RATIO_CENTRAL_COMPLETE` (1)). -/
+/-- **The central face value**: at `q = q_c` the face value `hsF` is
+`(w - 1)τ + 1/τ + R + log(τk) + (2 - 7τk/4)(w - 3/4)`. -/
 theorem hl2c_face {x a b u τ : ℝ} (ha : 0 < a) (hB : 0 < a + b) (hx : 0 < x) :
     hsF x b a u (hsQc x a) τ (log (τ * hsQc x a / hsRA a b))
         (2 - 7 * τ * hsQc x a / (4 * hsRA a b)) =
@@ -90,8 +90,7 @@ theorem hl2c_face {x a b u τ : ℝ} (ha : 0 < a) (hB : 0 < a + b) (hx : 0 < x) 
   have : a ^ 2 / (x * (x + 2) + a ^ 2) = a ^ 2 / hl2cK x a := rfl
   rw [this]
 
-/-- **Concavity of `log τ + 1/τ` on `[2, ∞)`**: its tangent at `t ≥ 2` lies above it
-(`SHORT_RATIO_CENTRAL_COMPLETE` (2)). -/
+/-- **Concavity of `log τ + 1/τ` on `[2, ∞)`**: its tangent at `t ≥ 2` lies above it. -/
 theorem hl2c_log_tangent {t τ : ℝ} (ht : 2 ≤ t) (h2 : 2 ≤ τ) :
     log τ + 1 / τ ≤ log t + 2 / t - 1 + τ * (t - 1) / t ^ 2 := by
   have ht0 : 0 < t := by linarith
@@ -128,7 +127,7 @@ theorem hl2c_log_tangent {t τ : ℝ} (ht : 2 ≤ t) (h2 : 2 ≤ τ) :
         linarith)
     linarith
 
-/-- **The duration tangent** (`SHORT_RATIO_CENTRAL_COMPLETE` (2)-(5)): `log τ + 1/τ` is concave on
+/-- **The duration tangent**: `log τ + 1/τ` is concave on
 `[2, ∞)`, so for `t ≥ 2` and `2 ≤ τ ≤ 1/k`, `G_τ ≤ max(F₀(t), F₁(t))`. -/
 theorem hl2c_tangent {W R k t τ : ℝ} (hk : 0 < k) (ht : 2 ≤ t) (h2 : 2 ≤ τ) (hτ : τ * k ≤ 1) :
     (W - 1) * τ + 1 / τ + R + log (τ * k) + (2 - 7 * τ * k / 4) * (W - 3 / 4) ≤
@@ -166,7 +165,7 @@ theorem hl2c_tangent {W R k t τ : ℝ} (hk : 0 < k) (ht : 2 ≤ t) (h2 : 2 ≤ 
       field_simp; ring
     linarith
 
-/-- **The central strip** (`SHORT_RATIO_CENTRAL_COMPLETE` §1): `1 ≤ a ≤ 4/3` and
+/-- **The central strip**: `1 ≤ a ≤ 4/3` and
 `x ≤ β ≤ b_+(x, a)`. -/
 theorem hl2c_strip {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)

@@ -7,15 +7,14 @@ public import Mathlib.Analysis.Calculus.Deriv.Comp
 /-!
 # Gate S6, hand proof: second-order jets and the four primitive functions
 
-`archive/lighter-proofs/SHORT_COST_CONCAVITY.md` §§1-2 (replacing `SMALL_SHAPE_COST_EXCLUSION`
-(20)-(31)). A small calculus of second-order jets (`HL46J f f₁ f₂ x`: `f' = f₁` and `f₁' = f₂` at
-`x`) with the sum, product and chain rules, a concave-minimum principle, and the four primitive
-functions of the note's score decomposition (2)
+A small calculus of second-order jets
+(`HL46J f f₁ f₂ x`: `f' = f₁` and `f₁' = f₂` at `x`) with the sum, product and chain rules, a
+concave-minimum principle, and the four primitive functions of the score decomposition
 
 `k(a) = a/162 + 161a³/1458 - 161a⁵/7290 - a³/(2(3 + a²))`, `g(a) = a/(2(3 + a²))`,
 `p(a) = a²/(3 + a²)`, `q(a) = 1/(3 + a²)`,
 
-with their derivatives (3), (5) and the elementary bounds (4), (6) on the angle interval
+with their derivatives and elementary bounds on the angle interval
 `9/31 ≤ a ≤ 7/19`.
 
 ## Main API
@@ -115,21 +114,21 @@ theorem hl46_mono_of {f f₁ : ℝ → ℝ} {a b : ℝ} (hd : ∀ x ∈ Icc a b,
   ss_le_of_deriv huv (fun z hz => hd z ⟨hu.trans hz.1, hz.2.trans hv⟩)
     (fun z hz => hpos z ⟨hu.trans hz.1.le, hz.2.le.trans hv⟩)
 
-/-! ### The four primitive functions (note (3), (5)) -/
+/-! ### The four primitive functions -/
 
 /-- `k(a) = a/162 + 161a³/1458 - 161a⁵/7290 - a³/(2(3 + a²))`. -/
 noncomputable def hl46k (a : ℝ) : ℝ :=
   a / 162 + 161 * a ^ 3 / 1458 - 161 * a ^ 5 / 7290 - a ^ 3 / (2 * (3 + a ^ 2))
 
-/-- `k'`, note (3). -/
+/-- `k'`. -/
 noncomputable def hl46k1 (a : ℝ) : ℝ :=
   -(161 * a ^ 8 + 483 * a ^ 6 - 729 * a ^ 4 + 2160 * a ^ 2 - 81) / (1458 * (a ^ 2 + 3) ^ 2)
 
-/-- `k''`, note (3). -/
+/-- `k''`. -/
 noncomputable def hl46k2 (a : ℝ) : ℝ :=
   -a * (322 * a ^ 8 + 2415 * a ^ 6 + 4347 * a ^ 4 - 6534 * a ^ 2 + 6642) / (729 * (a ^ 2 + 3) ^ 3)
 
-/-- `k'''`, note (3). -/
+/-- `k'''`. -/
 noncomputable def hl46k3 (a : ℝ) : ℝ :=
   -(322 * a ^ 10 + 3703 * a ^ 8 + 15456 * a ^ 6 + 28269 * a ^ 4 - 30672 * a ^ 2 + 6642) /
     (243 * (a ^ 2 + 3) ^ 4)
@@ -137,28 +136,28 @@ noncomputable def hl46k3 (a : ℝ) : ℝ :=
 /-- `g(a) = a/(2(3 + a²))`. -/
 noncomputable def hl46g (a : ℝ) : ℝ := a / (2 * (3 + a ^ 2))
 
-/-- `g'`, note (5). -/
+/-- `g'`. -/
 noncomputable def hl46g1 (a : ℝ) : ℝ := (3 - a ^ 2) / (2 * (3 + a ^ 2) ^ 2)
 
-/-- `g''`, note (5). -/
+/-- `g''`. -/
 noncomputable def hl46g2 (a : ℝ) : ℝ := a * (a ^ 2 - 9) / (3 + a ^ 2) ^ 3
 
 /-- `p(a) = a²/(3 + a²)`. -/
 noncomputable def hl46p (a : ℝ) : ℝ := a ^ 2 / (3 + a ^ 2)
 
-/-- `p'`, note (5). -/
+/-- `p'`. -/
 noncomputable def hl46p1 (a : ℝ) : ℝ := 6 * a / (3 + a ^ 2) ^ 2
 
-/-- `p''`, note (5). -/
+/-- `p''`. -/
 noncomputable def hl46p2 (a : ℝ) : ℝ := 18 * (1 - a ^ 2) / (3 + a ^ 2) ^ 3
 
 /-- `q(a) = 1/(3 + a²)`. -/
 noncomputable def hl46q (a : ℝ) : ℝ := 1 / (3 + a ^ 2)
 
-/-- `q'`, note (5). -/
+/-- `q'`. -/
 noncomputable def hl46q1 (a : ℝ) : ℝ := -(2 * a) / (3 + a ^ 2) ^ 2
 
-/-- `q''`, note (5). -/
+/-- `q''`. -/
 noncomputable def hl46q2 (a : ℝ) : ℝ := -(6 * (1 - a ^ 2)) / (3 + a ^ 2) ^ 3
 
 /-- The derivative of `(3 + a²)ⁿ`. -/
@@ -257,7 +256,7 @@ theorem hl46_q_jet (a : ℝ) : HL46J hl46q hl46q1 hl46q2 a := by
     field_simp
     ring
 
-/-! ### Bounds on the angle interval (note (4), (6)) -/
+/-! ### Bounds on the angle interval -/
 
 /-- `k' < 0` for `9/31 ≤ a ≤ 7/19`. -/
 theorem hl46_k1_neg {a : ℝ} (ha : 9 / 31 ≤ a) (ha' : a ≤ 7 / 19) : hl46k1 a < 0 := by
@@ -286,17 +285,18 @@ theorem hl46_k2_anti {a b : ℝ} (ha : 0 ≤ a) (hab : a ≤ b) (hb : b ≤ 7 / 
   hl46_anti_of (a := 0) (b := 7 / 19) (fun x _ => hl46_k2_deriv x)
     (fun _ hx => (hl46_k3_neg hx.1 hx.2).le) ha hab hb
 
-/-- Note (4): `k'' < -2/25` for `9/31 ≤ a ≤ 7/19`. -/
+/-- `k'' ≤ -2/25` for `9/31 ≤ a ≤ 7/19`, since `k''` decreases. -/
 theorem hl46_k2_le {a : ℝ} (ha : 9 / 31 ≤ a) (ha' : a ≤ 7 / 19) : hl46k2 a ≤ -2 / 25 := by
   refine (hl46_k2_anti (by norm_num) ha ha').trans ?_
   norm_num [hl46k2]
 
-/-- Note (4): `k'' < -9/100` for `1/3 ≤ a ≤ 7/19`. -/
+/-- `k'' ≤ -9/100` for `1/3 ≤ a ≤ 7/19`, since `k''` decreases. -/
 theorem hl46_k2_le' {a : ℝ} (ha : 1 / 3 ≤ a) (ha' : a ≤ 7 / 19) : hl46k2 a ≤ -9 / 100 := by
   refine (hl46_k2_anti (by norm_num) ha ha').trans ?_
   norm_num [hl46k2]
 
-/-- Note (6), the `g` bounds on the angle interval. -/
+/-- The `g` bounds on the angle interval: `0 < g ≤ 3/50`, `0 < g' ≤ 31/200` (`≤ 3/20` for
+`a ≥ 1/3`), `g'' ≤ 0`. -/
 theorem hl46_g_bounds {a : ℝ} (ha : 9 / 31 ≤ a) (ha' : a ≤ 7 / 19) :
     0 < hl46g a ∧ hl46g a ≤ 3 / 50 ∧ 0 < hl46g1 a ∧ hl46g1 a ≤ 31 / 200 ∧
       (1 / 3 ≤ a → hl46g1 a ≤ 3 / 20) ∧ hl46g2 a ≤ 0 := by
@@ -315,7 +315,8 @@ theorem hl46_g_bounds {a : ℝ} (ha : 9 / 31 ≤ a) (ha' : a ≤ 7 / 19) :
   · apply div_nonpos_of_nonpos_of_nonneg _ (by positivity)
     apply mul_nonpos_of_nonneg_of_nonpos ha0.le (by linarith)
 
-/-- Note (6), the `p` bounds on the angle interval. -/
+/-- The `p` bounds on the angle interval: `0 < p`, `p' ≥ 3/20` (`≥ 1/5` for `a ≥ 1/3`),
+`p'' ≥ 1/2`. -/
 theorem hl46_p_bounds {a : ℝ} (ha : 9 / 31 ≤ a) (ha' : a ≤ 7 / 19) :
     0 < hl46p a ∧ 3 / 20 ≤ hl46p1 a ∧ (1 / 3 ≤ a → 1 / 5 ≤ hl46p1 a) ∧ 1 / 2 ≤ hl46p2 a := by
   have ha0 : 0 < a := by linarith
@@ -331,7 +332,7 @@ theorem hl46_p_bounds {a : ℝ} (ha : 9 / 31 ≤ a) (ha' : a ≤ 7 / 19) :
   · have hc3 : (3 + a ^ 2) ^ 3 ≤ (3 + 49 / 361) ^ 3 := pow_le_pow_left₀ h3.le (by linarith) 3
     rw [le_div_iff₀ (by positivity)]; nlinarith
 
-/-- Note (6), the `q` bounds for `0 ≤ a ≤ 1`. -/
+/-- The `q` bounds for `0 ≤ a ≤ 1`: `0 < q ≤ 1/3`, `q' ≤ 0`, `q'' ≤ 0`. -/
 theorem hl46_q_bounds {a : ℝ} (ha : 0 ≤ a) (ha' : a ≤ 1) :
     0 < hl46q a ∧ hl46q a ≤ 1 / 3 ∧ hl46q1 a ≤ 0 ∧ hl46q2 a ≤ 0 := by
   have h3 : (0 : ℝ) < 3 + a ^ 2 := by positivity

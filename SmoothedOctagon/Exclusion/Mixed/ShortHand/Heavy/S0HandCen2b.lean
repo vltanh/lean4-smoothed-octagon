@@ -5,15 +5,15 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0HandCen
 /-!
 # Hand proof of the smaller-short case, gate S0: the `τ = 2` test at the upper faces (rows 2, 3)
 
-`archive/lighter-proofs/SHORT_DURATION_CENTRAL_TAU_TWO.md` (algebra in `SHORT_DURATION_CENTRAL_TAU_TWO_ALGEBRA.md`). The upper beta endpoint is enlarged to a
-constant slope `c_j` on each `x`-interval; the cleared numerator (`hl0N2`) there is a polynomial
-of degree ten in `(x, α)`, computed in Lean from its factored source formula (`hl0FNc`; it is never
-printed). On each rectangle `∂²_x N > 0` (the coefficient bound, the note's (6)-(8)), `∂_x N > 0` and
-`N > 0` on the left edge `x = l_j` (the note's (9)-(11)); beyond `α = t_j` the slanted edge `x = 2α - o_j` carries the sign (§4, `hl0_face_slant`; the same rule replaces the third derivatives (13)-(17)).
+The upper beta endpoint is enlarged to a constant
+slope `c_j` on each `x`-interval; the cleared numerator (`hl0N2`) there is a polynomial of degree
+ten in `(x, α)`, computed in Lean from its factored formula (`hl0FNc`; it is never printed).
+On each rectangle `∂²_x N > 0` (the coefficient bound `hl0Low2`), `∂_x N > 0` and `N > 0`
+on the left edge `x = l_j`; beyond `α = t_j` the slanted edge `x = 2α - o_j`
+carries the sign (`hl0_face_slant`, by the same bound).
 
-Route: the edge polynomials are taken exactly at `x = l_j` (no Taylor bound at `x = 2`), and every
-one-variable sign uses the coefficient bound after a Taylor shift on a few fixed pieces (`hl0Cov`)
-instead of the midpoint quadratic bound.
+The edge polynomials are taken exactly at `x = l_j`, and every one-variable sign uses the
+coefficient bound after a Taylor shift on a few fixed pieces (`hl0Cov`).
 
 ## Main API
 
@@ -25,7 +25,7 @@ instead of the midpoint quadratic bound.
 namespace SmoothedOctagon
 
 /-- Row 2 of the `τ = 2` test: the cleared numerator at `β = x + (5 / 4)(α - 1)` as a list in `X = x - 3`,
-`A = α - 1`, computed from the source formula. -/
+`A = α - 1`, computed from the factored formula. -/
 noncomputable def hl0U2_2 : List (List ℝ) :=
   hl0FNc 72 180 0 72 72 (-180) 151 72 0 (-72) [[3], [1]] [[1, 1]] [[3, (5 / 4)], [1]]
 
@@ -58,7 +58,7 @@ theorem hl0U2_2_neg {x a : ℝ} (hx : 3 ≤ x) (hxh : x ≤ 5) (ha : 1 ≤ a)
   · right; constructor <;> linarith
 
 /-- Row 3 of the `τ = 2` test: the cleared numerator at `β = x + (3 / 2)(α - 1)` as a list in `X = x - 5`,
-`A = α - 1`, computed from the source formula. -/
+`A = α - 1`, computed from the factored formula. -/
 noncomputable def hl0U2_3 : List (List ℝ) :=
   hl0FNc 72 180 0 72 72 (-180) 151 72 0 (-72) [[5], [1]] [[1, 1]] [[5, (3 / 2)], [1]]
 

@@ -8,11 +8,10 @@ public import SmoothedOctagon.Exclusion.Mixed.Short.Cover
 # Hand proof of the smaller-short case: the normalized actual data
 
 The actual data of a smaller-short window (`M2Short`), normalized by the central margin `a`, as a
-record of real numbers with exactly the facts the hand gates S0-S6 use
-(`MIXED_SMALLER_SHORT_SIX_VARIABLE_REDUCTION` §§1-5, `MIXED_GENERAL_SHORT_DEFECT_INTERFACE`;
-inventories HS-S01 §3, HS-S2 §3, HS-S3 §3, HS-S4 §3, HS-S567 §3). The five inventories found that
-the `M2Short` interface does not have to grow: every field below is an existing `M2Short` field or
-an existing `ss_*` lemma, rewritten in the normalized coordinates. The gates are proved for an
+record of real numbers with exactly the facts the hand gates S0-S6 use: the shape, the turn
+secants, the opposite-turn range, the outer root and the window defect. Every
+field below is an existing `M2Short` field or an existing `ss_*` lemma, rewritten in the normalized
+coordinates. The gates are proved for an
 `HsData` (plain reals) and transferred to `M2Short` by `M2Short.toHs`.
 
 ## Main API
@@ -21,16 +20,16 @@ an existing `ss_*` lemma, rewritten in the normalized coordinates. The gates are
   `u, v, w`, the pairings `E, EL`, the Casimir `Γ` and the outer root parameter `τ = (A + P_f)/A`,
   with the shape, the opposite-turn range, centre stationarity, the Gram transport, the outer root
   (`EL_eq` at the outer centre, `root`), both Casimir forms and bounds, and the window defect at the
-  point `HsData.pt = ⟨r, δ, α, ρ, v, E⟩` of the cover.
+  point `HsData.pt = ⟨r, δ, α, ρ, v, E⟩` (a `Certificates.SmallerShort.Point`).
 * `M2Short.toHs`: the normalized data of an actual window.
 * Derived actual facts: `HsData.root_zero` (`R_τ(t, v) = 0`), `HsData.q_lt_seventh` (`ρ_A < 1/7`,
-  `HAND_PROOF_REFINEMENTS` §2 at the outer centre), `HsData.u_le_V`, `HsData.u_ge_34`,
+  the reverse-centre scale bound at the outer centre), `HsData.u_le_V`, `HsData.u_ge_34`,
   `HsData.be_le_al_x`, `HsData.q_le_qc`, the orders `HsData.strong_order`, `HsData.upper_order_54`,
-  `HsData.upper_order_98`, and `HsData.strong_box` (`α ≥ 1 + 13δ/5` for `x ≥ 2`,
-  `HAND_PERIOD_EXCLUSION` (3)).
-* `HsData.SmallShape`: the common small-shape domain (`HAND_PERIOD_EXCLUSION` (5), without `η`).
+  `HsData.upper_order_98`, and `HsData.strong_box` (`α ≥ 1 + 13δ/5` for `x ≥ 2`).
+* `HsData.SmallShape`: the common small-shape domain `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`,
+  `13δ/5 ≤ α - 1 ≤ 3δ`.
 
-Not provided (not needed by any gate, inventories HS-S01 §0, HS-S567 §0.4): a strict `w > 3/4` (not
+Not provided (not needed by any gate): a strict `w > 3/4` (not
 derivable from the `M2Short` fields alone; every gate uses only `w ≥ 3/4`) and a strict descending
 root `w < U(1/τ)`.
 -/
@@ -41,7 +40,7 @@ namespace SmoothedOctagon
 
 open Real Certificates.SmallerShort
 
-/-- **The normalized actual data of a smaller-short window** (inventory HS-S567 §3, items A1-A18).
+/-- **The normalized actual data of a smaller-short window**.
 All quantities are normalized by the central margin `a`; `τ = (A + P_f)/A` is the actual outer root
 parameter (`t_A = 1/τ`), `q = hsQ al rho = ρ_A`, `r_A = hsRA al be`. -/
 structure HsData where
@@ -63,7 +62,7 @@ structure HsData where
   Γ : ℝ
   /-- `τ = (A + P_f)/A`. -/
   τ : ℝ
-  /-- The shape (`SIX_VARIABLE_REDUCTION` (1)): `1 < x`, `1 ≤ α < x ≤ β`. -/
+  /-- The shape: `1 < x`, `1 ≤ α < x ≤ β`. -/
   one_lt_x : 1 < x
   /-- The root box `r ≥ 1/10` (`ss_box_r`). -/
   x_le_nine : x ≤ 9
@@ -80,7 +79,8 @@ structure HsData where
   /-- The incident ceilings `u ≤ U(r)`, `u ≤ U(r_A)` (`ss_Ur`, `ss_UrA`). -/
   u_le_r : u ≤ m2U (1 / (1 + x))
   u_le_rA : u ≤ m2U (hsRA al be)
-  /-- The opposite-turn range (`SIX_VARIABLE_REDUCTION` (8)). -/
+  /-- The opposite-turn range: `0 < ρ ≤ 3/20`, `0 < t ≤ r = 1/(1 + x)`, `ρ < rt`,
+  `3/4 ≤ v ≤ U(t)`. -/
   rho_pos : 0 < rho
   rho_le : rho ≤ 3 / 20
   t_pos : 0 < t
@@ -109,7 +109,7 @@ structure HsData where
   Γ_eq' : Γ = hsGam (hsQ al rho) u w EL
   cas_lt : Γ < 9193 / 50000
   cas_gt : 27 / 256 < Γ
-  /-- The cover's incoming norm at the actual point is `u` (`ss_pt_u`). -/
+  /-- The incoming norm `Point.u` at the actual point is `u` (`ss_pt_u`). -/
   pt_u : (⟨1 / (1 + x), be / x - 1, al, rho, v, E⟩ : Point).u = u
   /-- The window-defect inequality (`M2Short.defect`). -/
   defect :
@@ -127,11 +127,12 @@ noncomputable def δ : ℝ := H.be / H.x - 1
 /-- The outer scale `q = ρ_A`. -/
 noncomputable def q : ℝ := hsQ H.al H.rho
 
-/-- The cover's point `⟨r, δ, α, ρ, v, E⟩` (`M2Short.ss_pt`). -/
+/-- The point `⟨r, δ, α, ρ, v, E⟩` of the data, with `r = 1/(1 + x)`, `δ = β/x - 1`
+(`M2Short.ss_pt`). -/
 noncomputable def pt : Point := ⟨1 / (1 + H.x), H.be / H.x - 1, H.al, H.rho, H.v, H.E⟩
 
-/-- **The common small-shape domain** (`HAND_PERIOD_EXCLUSION` (5), stated without `η`:
-`13δ/5 ≤ α - 1 ≤ 3δ`; closed endpoints). -/
+/-- **The common small-shape domain**: `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19` and
+`13δ/5 ≤ α - 1 ≤ 3δ` (closed endpoints). -/
 structure SmallShape : Prop where
   x_ge : 2 ≤ H.x
   x_le : H.x ≤ 13 / 6
@@ -142,31 +143,31 @@ structure SmallShape : Prop where
 
 /-! ### Derived actual facts -/
 
-/-- **The actual outer root** (`SIX_VARIABLE_REDUCTION` §4, inventory HS-S01 M17, HS-S567 I.4):
-`R_τ(t, v) = 0` at the actual opposite turn (`root`, `E_eq`, `w_eq`, `EL_eq`). Status: stable. -/
+/-- **The actual outer root**:
+`R_τ(t, v) = 0` at the actual opposite turn (`root`, `E_eq`, `w_eq`, `EL_eq`). -/
 theorem root_zero : hsR H.x H.be H.al H.rho H.u H.τ H.t H.v = 0 := by
   unfold hsR
   rw [← H.w_eq, ← H.EL_eq, H.root]
   ring
 
-/-- `3/4 ≤ u` (`ss_sec_ge_34`). Status: stable. -/
+/-- `3/4 ≤ u` (`ss_sec_ge_34`). -/
 theorem u_ge_34 : 3 / 4 ≤ H.u := by
   have hx := H.one_lt_x
   rw [H.u_eq]
   exact ss_sec_ge_34 one_pos (by linarith) (by linarith [H.x_le_be])
 
-/-- **`u ≤ V(x)`** (`hs_u_le_V`; inventory HS-S3 R6). Status: stable. -/
+/-- **`u ≤ V(x)`** (`hs_u_le_V`). -/
 theorem u_le_V : H.u ≤ m2Sec 1 H.x H.x := by
   rw [H.u_eq]
   exact hs_u_le_V H.one_lt_x H.x_le_be (by rw [← H.u_eq]; exact H.u_ge)
 
-/-- `β ≤ αx` (from `order27`). Status: stable. -/
+/-- `β ≤ αx` (from `order27`). -/
 theorem be_le_al_x : H.be ≤ H.al * H.x := by
   have hx0 : 0 < H.x := by linarith [H.one_lt_x]
   have h : H.be / H.x ≤ H.al := by linarith [H.order27, H.x_le_be]
   exact (div_le_iff₀ hx0).1 h
 
-/-- `q ≤ q_c` (`ρ < rt ≤ r²`, `hs_q_le_qc_iff`). Status: stable. -/
+/-- `q ≤ q_c` (`ρ < rt ≤ r²`, `hs_q_le_qc_iff`). -/
 theorem q_le_qc : H.q ≤ hsQc H.x H.al := by
   have hx0 : 0 < H.x := by linarith [H.one_lt_x]
   unfold HsData.q
@@ -177,9 +178,8 @@ theorem q_le_qc : H.q ≤ hsQc H.x H.al := by
     rw [sq, one_div_mul_one_div]
   linarith [H.rho_lt_rt]
 
-/-- **The outer scale bound `q = ρ_A < 1/7`** (`HAND_PROOF_REFINEMENTS` §2 at the outer centre,
-`hs_rev_centre_scale` with `r = r_A`, `t = 1/τ`, norms `u, w`, pairing `E_L`; inventory HS-S01 M16,
-HS-S2 R6, HS-S3 R1). Status: stable. -/
+/-- **The outer scale bound `q = ρ_A < 1/7`**: the reverse-centre scale bound at the outer centre
+(`hs_rev_centre_scale` with `r = r_A`, `t = 1/τ`, norms `u, w`, pairing `E_L`). -/
 theorem q_lt_seventh : H.q < 1 / 7 := by
   have hal0 : 0 < H.al := by linarith [H.one_le_al]
   have hbe0 : 0 < H.be := by linarith [H.x_le_be, H.one_lt_x]
@@ -212,21 +212,20 @@ theorem q_lt_seventh : H.q < 1 / 7 := by
     rw [H.Γ_eq'] at h
     exact h
 
-/-- **The strong lower order** at the actual shape (`hs_strong_order`). Status: stable. -/
+/-- **The strong lower order** at the actual shape (`hs_strong_order`). -/
 theorem strong_order : H.be / H.x + hsKs H.x * (H.be - H.x) ≤ H.al :=
   hs_strong_order H.one_lt_x H.x_le_nine H.one_le_al H.al_lt_x H.x_le_be (H.u_eq.symm.trans H.u_eq')
 
-/-- **The global upper order `5/4`** at the actual shape (`hs_upper_order_54`). Status: stable. -/
+/-- **The global upper order `5/4`** at the actual shape (`hs_upper_order_54`). -/
 theorem upper_order_54 : H.al ≤ H.be / H.x + 5 / 4 * (H.be - H.x) :=
   hs_upper_order_54 H.one_lt_x H.one_le_al H.al_lt_x H.x_le_be (H.u_eq.symm.trans H.u_eq')
 
-/-- **The global upper order `9/8`** at the actual shape (`hs_upper_order_98`). Status: stable. -/
+/-- **The global upper order `9/8`** at the actual shape (`hs_upper_order_98`). -/
 theorem upper_order_98 (hx5 : H.x ≤ 5) : H.al ≤ H.be / H.x + 9 / 8 * (H.be - H.x) :=
   hs_upper_order_98 H.one_lt_x hx5 H.one_le_al H.al_lt_x H.x_le_be (H.u_eq.symm.trans H.u_eq')
 
-/-- **The strong order on the small box** (`HAND_PERIOD_EXCLUSION` (3)): for `x ≥ 2`,
-`α ≥ 1 + (1 + 4x(x + 1)/(7x + 1))δ ≥ 1 + 13δ/5` (`4x(x + 1)/(7x + 1)` increases, `8/5` at `2`).
-Status: stable. -/
+/-- **The strong order on the small box**: for `x ≥ 2`,
+`α ≥ 1 + (1 + 4x(x + 1)/(7x + 1))δ ≥ 1 + 13δ/5` (`4x(x + 1)/(7x + 1)` increases, `8/5` at `2`). -/
 theorem strong_box (hx : 2 ≤ H.x) : 1 + 13 / 5 * H.δ ≤ H.al := by
   have h := H.strong_order
   have hx0 : 0 < H.x := by linarith
@@ -248,13 +247,13 @@ namespace M2Short
 
 variable (D : M2Short)
 
-/-- **The normalized actual data are an `HsData`** (inventory HS-S567 §3: every field is an
-`M2Short` field or an `ss_*` lemma: `a_lt_C`, `ss_box_r`, `a_le_A`, `A_lt_C`, `ss_C_le_B`,
-`ss_order`, `u_eq`, `u_eq'` with `ss_sec_scale` and `m2Sec_comm`, `u_ge`, `ss_Ur`, `ss_UrA`,
-`ss_box_rho`, `ss_t_le_r`, `central`, `ss_v_ge`, `ss_Ut`, `ss_E'`, `w_transport`, `EL_transport`
-with `ss_pt_lam`, `A_lt_Pf`, `central_A`, `w_ge`, `ss_UtA`, `ss_EL'` (`t_A = 1/τ`), `scale_A`,
-`Γ_eq`, `Γ_eq'` (`ss_pt_rhoA`), `cas_lt`, `cas_gt`, `ss_pt_u`, `defect`; the point
-`⟨1/(1 + C/a), (B/a)/(C/a) - 1, A/a, ρ, v, E⟩` is `D.ss_pt`). Status: stable. -/
+/-- **The normalized actual data are an `HsData`** (every field is an `M2Short` field or an `ss_*`
+lemma: `a_lt_C`, `ss_box_r`, `a_le_A`, `A_lt_C`, `ss_C_le_B`, `ss_order`, `u_eq`, `u_eq'` with
+`ss_sec_scale` and `m2Sec_comm`, `u_ge`, `ss_Ur`, `ss_UrA`, `ss_box_rho`, `ss_t_le_r`, `central`,
+`ss_v_ge`, `ss_Ut`, `ss_E'`, `w_transport`, `EL_transport` with `ss_pt_lam`, `A_lt_Pf`, `central_A`,
+`w_ge`, `ss_UtA`, `ss_EL'` (`t_A = 1/τ`), `scale_A`, `Γ_eq`, `Γ_eq'` (`ss_pt_rhoA`), `cas_lt`,
+`cas_gt`, `ss_pt_u`, `defect`; the point `⟨1/(1 + C/a), (B/a)/(C/a) - 1, A/a, ρ, v, E⟩` is
+`D.ss_pt`). -/
 theorem toHs_spec : ∃ H : HsData, H.x = D.C / D.a ∧ H.be = D.B / D.a ∧ H.al = D.A / D.a ∧
     H.rho = D.a ^ 2 / (D.a ^ 2 + 4) ∧ H.t = D.a / (D.a + D.b) ∧ H.u = D.u ∧ H.v = D.v ∧
     H.E = D.E ∧ H.w = D.w ∧ H.EL = D.EL ∧ H.Γ = D.Γ ∧ H.τ = (D.A + D.Pf) / D.A := by
@@ -388,7 +387,7 @@ theorem toHs_δ : D.toHs.δ = D.B / D.C - 1 := by
   have ha := D.a_pos
   rw [HsData.δ, toHs_x, toHs_be, div_div_div_cancel_right₀ ha.ne']
 
-/-- The normalized point is the cover's point `D.ss_pt`. -/
+/-- The normalized point is the point `D.ss_pt` of the window. -/
 theorem toHs_pt : D.toHs.pt = D.ss_pt := by
   have ha := D.a_pos
   have hC := D.ss_C_pos

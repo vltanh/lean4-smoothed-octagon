@@ -5,25 +5,24 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandDefs
 /-!
 # Gate S4, hand proof W3 (a): the incoming norm on the shape curve and its `x`-slope
 
-`archive/lighter-proofs/SHORT_CASIMIR_RATIO_DERIVATIVE.md` §1, (2)-(3). For fixed `d`, the incoming
-upper norm on the shape curve `b = x(1 + d)` is
+For fixed `d`, the incoming upper norm on the shape curve `b = x(1 + d)` is
 
 `U(x) = ū(x, x(1 + d)) = 3/4 + H₀/B₀ + xd³/(48B₀)`, `H₀ = 2(x - 1)³/(S(35x + 13))`,
 `B₀ = x(1 + d) - 1`,
 
-with `x`-slope `u_x = H₀'/B₀ - H₀(1 + d)/B₀² - d³/(48B₀²)` (`hl46_w3_U_deriv`). By note (3),
+with `x`-slope `u_x = H₀'/B₀ - H₀(1 + d)/B₀² - d³/(48B₀²)` (`hl46_w3_U_deriv`). The slope
 `u_x` decreases in `d` (`xH₀' ≥ 3H₀` and `B₀ ≥ 1`), so on `2 ≤ x ≤ 13/6`, `0 ≤ d ≤ 1/19`
 
 `9/1000 ≤ u_x(x, 1/19) ≤ u_x ≤ u_x(x, 0) ≤ 1/100`
 
-(`1/100 - u_x(x, 0) = I(h)/(100S²(35x + 13)²)` with the note's `I`, and
-`u_x(x, 1/19) - 9/1000 = I₋(h)/(114000S²(20x - 19)²(35x + 13)²)` with the `I₋` of
-`SHORT_CASIMIR_BOUNDARY_DERIVATIVES.md` §1 (2), `h = x - 2`). Integrating from `x = 2` gives the
+(`1/100 - u_x(x, 0) = I(h)/(100S²(35x + 13)²)` and
+`u_x(x, 1/19) - 9/1000 = I₋(h)/(114000S²(20x - 19)²(35x + 13)²)` with explicit polynomials `I`,
+`I₋` in `h = x - 2`). Integrating from `x = 2` gives the
 lower norm `U ≥ v = 379/500 + 9(x - 2)/1000 - 9d/500`, and `757/1000 ≤ U ≤ 19/25`.
 
-Route: at `x = 2` the bound `U(2) ≥ v(2, d)` is the direct one-variable inequality
-`(4 - 9d)(1 + 2d)/500 ≤ 2/249 + d³/24` (instead of integrating `u_d > -9/500`), and
-`U ≤ 19/25` is the direct bound `H₀ + xd³/48 ≤ (x - 1)/100`.
+At `x = 2` the bound `U(2) ≥ v(2, d)` is the one-variable inequality
+`(4 - 9d)(1 + 2d)/500 ≤ 2/249 + d³/24`, and `U ≤ 19/25` is the bound
+`H₀ + xd³/48 ≤ (x - 1)/100`.
 
 ## Main API
 
@@ -50,12 +49,12 @@ noncomputable def hl46W3UX (x d : ℝ) : ℝ :=
   hl46W3H0p x / (x * (1 + d) - 1) - hl46W3H0 x * (1 + d) / (x * (1 + d) - 1) ^ 2 -
     d ^ 3 / (48 * (x * (1 + d) - 1) ^ 2)
 
-/-- `u_{xd}`, note (3), with `(1 + d)x + 1 = B₀ + 2`. -/
+/-- `u_{xd}`, with `(1 + d)x + 1 = B₀ + 2`. -/
 noncomputable def hl46W3UXD (x d : ℝ) : ℝ :=
   (-(x * hl46W3H0p x * (x * (1 + d) - 1)) + hl46W3H0 x * (x * (1 + d) - 1 + 2)) /
       (x * (1 + d) - 1) ^ 3 - d ^ 2 * (3 * (x - 1) + x * d) / (48 * (x * (1 + d) - 1) ^ 3)
 
-/-- The affine lower norm `v = 379/500 + 9(x - 2)/1000 - 9d/500` of note (2). -/
+/-- The affine lower norm `v = 379/500 + 9(x - 2)/1000 - 9d/500`. -/
 noncomputable def hl46W3v (x d : ℝ) : ℝ := 379 / 500 + 9 / 1000 * (x - 2) - 9 / 500 * d
 
 theorem hl46_w3_H0_deriv {x : ℝ} (hx : 0 < x) : HasDerivAt hl46W3H0 (hl46W3H0p x) x := by
@@ -114,7 +113,7 @@ theorem hl46_w3_UX_deriv_d {x d : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) :
   field_simp
   ring
 
-/-- `xH₀' ≥ 3H₀` on `[2, 13/6]` (note (3): `xH₀'/H₀ > 3`). -/
+/-- `xH₀' ≥ 3H₀` on `[2, 13/6]`. -/
 theorem hl46_w3_xH0p {x : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) :
     3 * hl46W3H0 x ≤ x * hl46W3H0p x := by
   have h2 : x + 1 ≠ 0 := by positivity
@@ -135,7 +134,7 @@ theorem hl46_w3_xH0p {x : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) :
     exact mul_nonneg (mul_nonneg (by norm_num) (sq_nonneg _)) hc
   linarith
 
-/-- Note (3): `u_{xd} ≤ 0`. -/
+/-- `u_{xd} ≤ 0`. -/
 theorem hl46_w3_UXD_nonpos {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d) :
     hl46W3UXD x d ≤ 0 := by
   have hB : 1 ≤ x * (1 + d) - 1 := by nlinarith
@@ -156,7 +155,7 @@ theorem hl46_w3_UXD_nonpos {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd :
   linarith
 
 /-- `u_x(x, 0) ≤ 1/100`: `1/100 - u_x(x, 0) = I(h)/(100S²(35x + 13)²)`, all coefficients of `I`
-positive (note §1). -/
+positive. -/
 theorem hl46_w3_UX0 {x : ℝ} (hx : 2 ≤ x) : hl46W3UX x 0 ≤ 1 / 100 := by
   have h1 : x - 1 ≠ 0 := by linarith
   have h2 : x + 1 ≠ 0 := by linarith
@@ -176,8 +175,8 @@ theorem hl46_w3_UX0 {x : ℝ} (hx : 2 ≤ x) : hl46W3UX x 0 ≤ 1 / 100 := by
     nlinarith [pow_nonneg h0 4, pow_nonneg h0 3, pow_nonneg h0 2]
   linarith
 
-/-- `u_x(x, 1/19) ≥ 9/1000`: the boundary curve slope, with the polynomial `I₋` of
-`SHORT_CASIMIR_BOUNDARY_DERIVATIVES.md` §1 (2). -/
+/-- `u_x(x, 1/19) ≥ 9/1000`: the boundary curve slope,
+`u_x(x, 1/19) - 9/1000 = I₋(h)/(114000S²(20x - 19)²(35x + 13)²)`, `I₋(h) ≥ 0` on `[0, 1/6]`. -/
 theorem hl46_w3_UX19 {x : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) : 9 / 1000 ≤ hl46W3UX x (1 / 19) := by
   have h1 : x * (1 + 1 / 19) - 1 ≠ 0 := by nlinarith
   have h1' : 20 * x - 19 ≠ 0 := by linarith
@@ -202,7 +201,7 @@ theorem hl46_w3_UX19 {x : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) : 9 / 1000 �
       pow_le_pow_left₀ h0 h6 3, pow_le_pow_left₀ h0 h6 2]
   linarith
 
-/-- Note (2): `9/1000 ≤ u_x ≤ 1/100` on the full rectangle. -/
+/-- `9/1000 ≤ u_x ≤ 1/100` on the full rectangle. -/
 theorem hl46_w3_UX_bounds {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d)
     (hd' : d ≤ 1 / 19) : 9 / 1000 ≤ hl46W3UX x d ∧ hl46W3UX x d ≤ 1 / 100 := by
   have anti : ∀ {d₁ d₂ : ℝ}, 0 ≤ d₁ → d₁ ≤ d₂ → d₂ ≤ 1 / 19 → hl46W3UX x d₂ ≤ hl46W3UX x d₁ :=
@@ -212,7 +211,7 @@ theorem hl46_w3_UX_bounds {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 
   exact ⟨(hl46_w3_UX19 hx hx').trans (anti hd hd' le_rfl), (anti le_rfl hd hd').trans
     (hl46_w3_UX0 hx)⟩
 
-/-- Note (2): the incoming norm dominates the affine lower norm `v`. -/
+/-- The incoming norm dominates the affine lower norm `v`. -/
 theorem hl46_w3_U_ge_v {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d)
     (hd' : d ≤ 1 / 19) : hl46W3v x d ≤ hsUbar x (x * (1 + d)) := by
   have hmono := hl46_mono_of (f := fun x => hsUbar x (x * (1 + d)) - hl46W3v x d)

@@ -11,10 +11,8 @@ function `χ₃₂` on the explicit constant-control segment. Time reversal give
 bound for `χ₃₁`. Uniqueness of the strong lift extends both bounds to every `IsStrongLift` with
 `λ_cost = -1` and `1 / √3 < y₀ < 1`.
 
-These hypotheses describe the strong lifts constructed in upstream §7.5. They do not describe
+These hypotheses describe the strong lifts constructed in `SmoothedPolygons`. They do not describe
 all Pontryagin extremals, and the estimates do not assert global optimality of the octagon.
-
-Status: source-level Lean draft; compilation and kernel validation have not been run.
 -/
 
 @[expose] public section

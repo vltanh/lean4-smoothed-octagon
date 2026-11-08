@@ -5,14 +5,14 @@ public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTHorner
 /-!
 # Case M2, forward successor by hand: the initial `h`-derivative of the low-`t` circuit
 
-`docs/lighter-proofs/NONSHORT_LOW_T_INITIAL_DERIVATIVE.md` (PR #2, branch `proof/lighter-signs`): at
-`h = 1/4` (`t = 3/8`, `x = j + 1/4`), `P₀ = 𝓗S = ∑ cᵢ(x) yⁱ` (`nltc0`, …, `nlt_c_eq0`, …) satisfies
-`P₀ ≥ 68` on `17/60 ≤ x ≤ 3/7`, `0 ≤ y ≤ b(x) = 3931/8640 - 8x/9` (I1) (`nlt_P0_pos`). As in the
-note, the signs (I4) and `x³y < 13/2000` (I5) give `∂_yP₀ < 0` (I7), so `P₀(x, y) ≥ P₀(x, b(x))`.
+At `h = 1/4` (`t = 3/8`, `x = j + 1/4`), `P₀ = 𝓗S = ∑ cᵢ(x) yⁱ` (`nltc0`, …, `nlt_c_eq0`, …)
+satisfies `P₀ ≥ 68` on `17/60 ≤ x ≤ 3/7`, `0 ≤ y ≤ b(x) = 3931/8640 - 8x/9` (`nlt_P0_pos`). The
+coefficient signs `c₁, c₅, c₆ < 0`, `c₂ < -48000`, `c₃, c₄ < 3500000x³` and `x³y < 13/2000` give
+`∂_yP₀ < 0`, so `P₀(x, y) ≥ P₀(x, b(x))`.
 
-Route: the line value `P₀(x, b(x))` is expanded as a degree-14 polynomial in `x` and bounded by a
-termwise monomial bound after a shift on two subintervals, in place of the directional concavity
-(I8)-(I10) and the scalar endpoints (I11); the signs (I4), (I5) use the same one-variable bounds.
+The line value `P₀(x, b(x))` is expanded as a degree-14 polynomial in `x` and bounded by a
+termwise monomial bound after a shift on two subintervals; the coefficient signs use the same
+one-variable bounds.
 
 ## Main API
 
@@ -23,56 +23,56 @@ termwise monomial bound after a shift on two subintervals, in place of the direc
 
 namespace SmoothedOctagon
 
-/-- `c_0(x)` of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` §1: the `y^0`-coefficient of `𝓗S` at `h = 1/4`. -/
+/-- `c_0(x)`: the `y^0`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc0 (x : ℝ) : ℝ :=
   2470 + (3961 / 6) * x - (11376409 / 768) * x ^ 2 + (876287 / 48) * x ^ 3 - (1213663 / 64) * x ^ 4 - (192815 / 16) * x ^ 5 - (1785 / 4) * x ^ 6
 
 theorem nlt_c_eq0 (j : ℝ) : lrhHorner (nltDer (nltL0 j)) (1 / 4) = nltc0 (j + 1 / 4) := by
   simp only [nltL0, nltDer, nltDerAux, lrhHorner]; unfold nltc0; ring
 
-/-- `c_1(x)` of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` §1: the `y^1`-coefficient of `𝓗S` at `h = 1/4`. -/
+/-- `c_1(x)`: the `y^1`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc1 (x : ℝ) : ℝ :=
   (26147 / 16) - (205551 / 16) * x + (9390957 / 512) * x ^ 2 + (1105573 / 32) * x ^ 3 - (20610059 / 128) * x ^ 4 - (3096829 / 32) * x ^ 5 - (24953 / 4) * x ^ 6 - (1687 / 4) * x ^ 7
 
 theorem nlt_c_eq1 (j : ℝ) : lrhHorner (nltDer (nltL1 j)) (1 / 4) = nltc1 (j + 1 / 4) := by
   simp only [nltL1, nltDer, nltDerAux, lrhHorner]; unfold nltc1; ring
 
-/-- `c_2(x)` of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` §1: the `y^2`-coefficient of `𝓗S` at `h = 1/4`. -/
+/-- `c_2(x)`: the `y^2`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc2 (x : ℝ) : ℝ :=
   -(5443517 / 192) - (6826585 / 96) * x + (6734773 / 384) * x ^ 2 + (108121 / 16) * x ^ 3 - (2659679 / 16) * x ^ 4 - (4429505 / 32) * x ^ 5 - (304129 / 16) * x ^ 6 + (135469 / 8) * x ^ 7 + 2856 * x ^ 8
 
 theorem nlt_c_eq2 (j : ℝ) : lrhHorner (nltDer (nltL2 j)) (1 / 4) = nltc2 (j + 1 / 4) := by
   simp only [nltL2, nltDer, nltDerAux, lrhHorner]; unfold nltc2; ring
 
-/-- `c_3(x)` of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` §1: the `y^3`-coefficient of `𝓗S` at `h = 1/4`. -/
+/-- `c_3(x)`: the `y^3`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc3 (x : ℝ) : ℝ :=
   -(11571361 / 384) - (256361 / 32) * x + (389312905 / 768) * x ^ 2 + (150040261 / 96) * x ^ 3 + (233452331 / 128) * x ^ 4 + (23757343 / 32) * x ^ 5 + (327123 / 8) * x ^ 6 + 2425 * x ^ 7 + 68 * x ^ 8
 
 theorem nlt_c_eq3 (j : ℝ) : lrhHorner (nltDer (nltL3 j)) (1 / 4) = nltc3 (j + 1 / 4) := by
   simp only [nltL3, nltDer, nltDerAux, lrhHorner]; unfold nltc3; ring
 
-/-- `c_4(x)` of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` §1: the `y^4`-coefficient of `𝓗S` at `h = 1/4`. -/
+/-- `c_4(x)`: the `y^4`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc4 (x : ℝ) : ℝ :=
   -(4352657 / 128) - (691873 / 8) * x + (113788653 / 256) * x ^ 2 + (15305443 / 8) * x ^ 3 + (19033415 / 8) * x ^ 4 + (8180407 / 8) * x ^ 5 + (532071 / 8) * x ^ 6 - (95565 / 8) * x ^ 7 - 1972 * x ^ 8
 
 theorem nlt_c_eq4 (j : ℝ) : lrhHorner (nltDer (nltL4 j)) (1 / 4) = nltc4 (j + 1 / 4) := by
   simp only [nltL4, nltDer, nltDerAux, lrhHorner]; unfold nltc4; ring
 
-/-- `c_5(x)` of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` §1: the `y^5`-coefficient of `𝓗S` at `h = 1/4`. -/
+/-- `c_5(x)`: the `y^5`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc5 (x : ℝ) : ℝ :=
   -(4156227 / 128) - (8970893 / 64) * x - (42983895 / 512) * x ^ 2 + (5365343 / 16) * x ^ 3 + (67540595 / 128) * x ^ 4 + (3581741 / 16) * x ^ 5 + (375341 / 32) * x ^ 6 + (7295 / 2) * x ^ 7 + 1088 * x ^ 8
 
 theorem nlt_c_eq5 (j : ℝ) : lrhHorner (nltDer (nltL5 j)) (1 / 4) = nltc5 (j + 1 / 4) := by
   simp only [nltL5, nltDer, nltDerAux, lrhHorner]; unfold nltc5; ring
 
-/-- `c_6(x)` of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` §1: the `y^6`-coefficient of `𝓗S` at `h = 1/4`. -/
+/-- `c_6(x)`: the `y^6`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc6 (x : ℝ) : ℝ :=
   -(14967 / 16) - (220227 / 64) * x - (640115 / 128) * x ^ 2 - (74907 / 16) * x ^ 3 - (72295 / 32) * x ^ 4 - (7881 / 8) * x ^ 5 - (767 / 4) * x ^ 6 + 270 * x ^ 7 + 68 * x ^ 8
 
 theorem nlt_c_eq6 (j : ℝ) : lrhHorner (nltDer (nltL6 j)) (1 / 4) = nltc6 (j + 1 / 4) := by
   simp only [nltL6, nltDer, nltDerAux, lrhHorner]; unfold nltc6; ring
 
-/-- A one-variable sign of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` (I4), (I5), (I11). -/
+/-- `-c₁(x)`, a coefficient sign for `∂_yP₀ < 0`. -/
 noncomputable def nltIc1 (x : ℝ) : ℝ := -nltc1 x
 
 /-- `nltIc1 > 0` on `[17/60, 3/7]`. -/
@@ -96,7 +96,7 @@ theorem nltIc1_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7]
 
 
-/-- A one-variable sign of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` (I4), (I5), (I11). -/
+/-- `-c₂(x)`, a coefficient sign for `∂_yP₀ < 0`. -/
 noncomputable def nltIc2 (x : ℝ) : ℝ := -nltc2 x
 
 /-- `nltIc2 > 48000` on `[17/60, 3/7]`. -/
@@ -122,7 +122,7 @@ theorem nltIc2_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 48000
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A one-variable sign of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` (I4), (I5), (I11). -/
+/-- `3500000x³ - c₃(x)`, a coefficient sign for `∂_yP₀ < 0`. -/
 noncomputable def nltIc3 (x : ℝ) : ℝ := 3500000 * x ^ 3 - nltc3 x
 
 /-- `nltIc3 > 0` on `[17/60, 3/7]`. -/
@@ -148,7 +148,7 @@ theorem nltIc3_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A one-variable sign of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` (I4), (I5), (I11). -/
+/-- `3500000x³ - c₄(x)`, a coefficient sign for `∂_yP₀ < 0`. -/
 noncomputable def nltIc4 (x : ℝ) : ℝ := 3500000 * x ^ 3 - nltc4 x
 
 /-- `nltIc4 > 0` on `[17/60, 3/7]`. -/
@@ -174,7 +174,7 @@ theorem nltIc4_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A one-variable sign of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` (I4), (I5), (I11). -/
+/-- `-c₅(x)`, a coefficient sign for `∂_yP₀ < 0`. -/
 noncomputable def nltIc5 (x : ℝ) : ℝ := -nltc5 x
 
 /-- `nltIc5 > 0` on `[17/60, 3/7]`. -/
@@ -200,7 +200,7 @@ theorem nltIc5_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A one-variable sign of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` (I4), (I5), (I11). -/
+/-- `-c₆(x)`, a coefficient sign for `∂_yP₀ < 0`. -/
 noncomputable def nltIc6 (x : ℝ) : ℝ := -nltc6 x
 
 /-- `nltIc6 > 0` on `[17/60, 3/7]`. -/
@@ -226,7 +226,7 @@ theorem nltIc6_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-/-- A one-variable sign of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` (I4), (I5), (I11). -/
+/-- `13/2000 - x³b(x)`, which bounds `x³y` for `y ≤ b(x)`. -/
 noncomputable def nltIcb (x : ℝ) : ℝ := 13 / 2000 - x ^ 3 * (3931 / 8640 - 8 / 9 * x)
 
 /-- `nltIcb > 0` on `[17/60, 3/7]`. -/
@@ -280,7 +280,7 @@ theorem nltIcb_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 0 < n
       rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4]
 
 
-/-- A one-variable sign of `NONSHORT_LOW_T_INITIAL_DERIVATIVE` (I4), (I5), (I11). -/
+/-- The line value `P₀(x, b(x))`, `b(x) = 3931/8640 - 8x/9`. -/
 noncomputable def nltIline (x : ℝ) : ℝ := nltc0 x + nltc1 x * (3931 / 8640 - 8 / 9 * x) ^ 1 + nltc2 x * (3931 / 8640 - 8 / 9 * x) ^ 2 + nltc3 x * (3931 / 8640 - 8 / 9 * x) ^ 3 + nltc4 x * (3931 / 8640 - 8 / 9 * x) ^ 4 + nltc5 x * (3931 / 8640 - 8 / 9 * x) ^ 5 + nltc6 x * (3931 / 8640 - 8 / 9 * x) ^ 6
 
 /-- `nltIline > 68` on `[17/60, 3/7]`. -/
@@ -350,7 +350,7 @@ theorem nltIline_pos {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) : 68 
     rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8, p9, q9, p10, q10, p11, q11, p12, q12, p13, q13, p14, q14]
 
 
-/-- **The initial derivative** (`NONSHORT_LOW_T_INITIAL_DERIVATIVE` (I1)): `P₀ = 𝓗S(3/8, x, 1 + y)
+/-- **The initial derivative**: `P₀ = 𝓗S(3/8, x, 1 + y)
 ≥ 68` for `17/60 ≤ x ≤ 3/7`, `0 ≤ y ≤ 3931/8640 - 8x/9`. -/
 theorem nlt_P0_pos {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 : 0 ≤ y)
     (hy : y ≤ 3931 / 8640 - 8 / 9 * x) :
@@ -373,7 +373,7 @@ theorem nlt_P0_pos {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 : 0 
   have hf1 : ∀ w, lrhHorner (nltDer cs) w = nltc1 x + 2 * nltc2 x * w + 3 * nltc3 x * w ^ 2
       + 4 * nltc4 x * w ^ 3 + 5 * nltc5 x * w ^ 4 + 6 * nltc6 x * w ^ 5 := fun w => by
     rw [hcs]; simp only [nltDer, nltDerAux, lrhHorner]; ring
-  -- (I7): `∂_yP₀ < 0` on `[0, b(x)]`
+  -- `∂_yP₀ < 0` on `[0, b(x)]`
   have neg : ∀ w, y ≤ w → w ≤ 3931 / 8640 - 8 / 9 * x → lrhHorner (nltDer cs) w ≤ 0 := by
     intro w w0 w1
     rw [hf1]

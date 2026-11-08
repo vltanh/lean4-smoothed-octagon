@@ -5,9 +5,8 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandDefs
 /-!
 # Gate S4, hand proof W4: the separately concave numerator `N`
 
-`archive/lighter-proofs/SHORT_CASIMIR_BOUNDARY_DERIVATIVES.md` §3. On the boundary `d = 1/19`
-(`b = 20x/19`, `a` fixed) with the affine lower incoming curve `v = 757/1000 + 9(x - 2)/1000`,
-the numerator of `f + 9/200` is the eight-term product source (5)
+On the boundary `d = 1/19` (`b = 20x/19`, `a` fixed) with the affine lower incoming curve
+`v = 757/1000 + 9(x - 2)/1000`, the numerator of `f + 9/200` is the eight-term product source
 
 `N = 90250aC*²(W'K - 2WK') + 45125C*²K³(v'B + (v - 1)B') - 45125·361a²B'K³ + 45125a³C*²K'K -
   45125aC*²(Q'K - QK')K + 45125·19aC*B'K³ - 45125aC*²K'K² + (9/200)45125aC*²K³`,
@@ -15,8 +14,8 @@ the numerator of `f + 9/200` is the eight-term product source (5)
 `C* = 19a + 20x`, `B = C*/19`, `W = M + vD² - DE`, `Q = 2vD - E`, primes = `x`-derivatives.
 Its two second derivatives are computed by composing second-order jets (`HL46J`) of the
 factors before any expansion: `-N_aa = P_A(c, h)`, `-N_xx = P_X(c, h)` (`c = a - 1`, `h = x - 2`,
-the note's printed polynomials). On `1/8 ≤ c ≤ 1/6`, `0 ≤ h ≤ 1/6` both are positive by the
-note's monomial rule (`c = 1/8` in positive, `c = 1/6` in negative terms, then `h = 1/6` in the
+explicit polynomials). On `1/8 ≤ c ≤ 1/6`, `0 ≤ h ≤ 1/6` both are positive by the
+monomial rule (`c = 1/8` in positive, `c = 1/6` in negative terms, then `h = 1/6` in the
 negative terms of the resulting lower polynomial `L_A`, `L_X`). With the four positive corner values
 this gives `N > 0` on `[2, 13/6] × [108/95, 22/19]` (concave minimum in `a`, then in `x` at the two
 end values of `a`).
@@ -37,7 +36,7 @@ namespace SmoothedOctagon
 
 open Set
 
-/-- The affine lower incoming curve `v(x) = 757/1000 + 9(x - 2)/1000` (note (2)). -/
+/-- The affine lower incoming curve `v(x) = 757/1000 + 9(x - 2)/1000`. -/
 noncomputable def hl46W4v (x : ℝ) : ℝ := 757 / 1000 + 9 / 1000 * (x - 2)
 
 /-- `M = S²(S² - S + 1)`, `S = 1 + x`. -/
@@ -81,7 +80,7 @@ noncomputable def hl46W4Q (x a : ℝ) : ℝ := 2 * hl46W4D x a * hl46W4v x - hl4
 noncomputable def hl46W4Qx (x a : ℝ) : ℝ :=
   2 * hl46W4Dx x a * hl46W4v x + 2 * hl46W4D x a * (9 / 1000) - hl46W4Ex x
 
-/-- The eight-term product source (5): `N = 45125aC*²K³(f + 9/200)`. -/
+/-- The eight-term product source `N = 45125aC*²K³(f + 9/200)`. -/
 noncomputable def hl46W4N (x a : ℝ) : ℝ :=
   90250 * a * hl46W4Cs x a ^ 2 * (hl46W4Wx x a * hl46W4K x a - 2 * hl46W4W x a * (2 * x + 2)) +
   45125 * hl46W4Cs x a ^ 2 * hl46W4K x a ^ 3 *
@@ -94,7 +93,7 @@ noncomputable def hl46W4N (x a : ℝ) : ℝ :=
   45125 * a * hl46W4Cs x a ^ 2 * (2 * x + 2) * hl46W4K x a ^ 2 +
   9 / 200 * 45125 * a * hl46W4Cs x a ^ 2 * hl46W4K x a ^ 3
 
-/-- The note's `P_A(c, h) = -N_aa`. -/
+/-- The polynomial `P_A(c, h) = -N_aa`. -/
 noncomputable def hl46W4PA (c h : ℝ) : ℝ :=
   -63336006 * c ^ 7 - 190131480 * c ^ 6 * h - 3411515702 * c ^ 6 + 24630669 * c ^ 5 * h ^ 3 -
     (1339539957 / 2) * c ^ 5 * h ^ 2 - 12899389902 * c ^ 5 * h - 38269433832 * c ^ 5 +
@@ -110,7 +109,7 @@ noncomputable def hl46W4PA (c h : ℝ) : ℝ :=
     (808687201 / 2) * h ^ 6 + 3884414146 * h ^ 5 - 833702501 * h ^ 4 - (121026207631 / 2) * h ^ 3 -
     (304669396099 / 2) * h ^ 2 - 126156559259 * h - 22982058630
 
-/-- The note's `P_X(c, h) = -N_xx`. -/
+/-- The polynomial `P_X(c, h) = -N_xx`. -/
 noncomputable def hl46W4PX (c h : ℝ) : ℝ :=
   3518667 * c ^ 7 * h - (63787617 / 2) * c ^ 7 + 51854040 * c ^ 6 * h ^ 2 - 276895341 * c ^ 6 * h +
     (124641691 / 2) * c ^ 6 + 51285465 * c ^ 5 * h ^ 3 + 247185135 * c ^ 5 * h ^ 2 +
@@ -278,7 +277,7 @@ theorem hl46W4_mhi {c h : ℝ} (hc0 : 0 ≤ c) (hc : c ≤ 1 / 6) (hh : 0 ≤ h)
     c ^ i * h ^ j ≤ (1 / 6 : ℝ) ^ i * h ^ j :=
   mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hc0 hc i) (pow_nonneg hh j)
 
-/-- `P_A > 0` (the note: `P_A ≥ L_A > 5·10⁹`). -/
+/-- `P_A > 0` (the monomial rule gives `P_A ≥ L_A > 5·10⁹`). -/
 theorem hl46W4_PA_pos {c h : ℝ} (hc : 1 / 8 ≤ c) (hc' : c ≤ 1 / 6) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
     0 < hl46W4PA c h := by
   have hc0 : 0 ≤ c := by linarith
@@ -298,7 +297,7 @@ theorem hl46W4_PA_pos {c h : ℝ} (hc : 1 / 8 ≤ c) (hc' : c ≤ 1 / 6) (hh : 0
     pow_le_pow_left₀ hh hh' 5, pow_le_pow_left₀ hh hh' 6, pow_le_pow_left₀ hh hh' 7,
     pow_le_pow_left₀ hh hh' 8]
 
-/-- `P_X > 0` (the note: `P_X ≥ L_X > 10¹¹`). -/
+/-- `P_X > 0` (the monomial rule gives `P_X ≥ L_X > 10¹¹`). -/
 theorem hl46W4_PX_pos {c h : ℝ} (hc : 1 / 8 ≤ c) (hc' : c ≤ 1 / 6) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
     0 < hl46W4PX c h := by
   have hc0 : 0 ≤ c := by linarith
@@ -320,7 +319,7 @@ theorem hl46W4_PX_pos {c h : ℝ} (hc : 1 / 8 ≤ c) (hc' : c ≤ 1 / 6) (hh : 0
     pow_le_pow_left₀ hh hh' 6, pow_le_pow_left₀ hh hh' 7, pow_le_pow_left₀ hh hh' 8]
 
 
-/-- The four corner values of `N` (the note's table). -/
+/-- The four corner values of `N` are positive. -/
 theorem hl46W4_N_corners : 0 < hl46W4N 2 (108 / 95) ∧ 0 < hl46W4N 2 (22 / 19) ∧
     0 < hl46W4N (13 / 6) (108 / 95) ∧ 0 < hl46W4N (13 / 6) (22 / 19) := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;>

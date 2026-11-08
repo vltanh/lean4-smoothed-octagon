@@ -5,21 +5,20 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandDefs
 /-!
 # W1, part a: the three partial derivatives of `Φ`
 
-`archive/lighter-proofs/SHORT_CASIMIR_FIRST_DERIVATIVES.md` §§1-2. In the note's variables
-`x, b = β, a = α, u` (Lean order `x be al u`), with `S = 1 + x`, `X = x(x + 2)`, `K = X + a²`,
-`B = a + b`, `D = hsDg x b a`, `E = hh46S4P x u`, `M = S²(S² - S + 1)`, `η = x - a`,
+In the variables `x, b = β, a = α, u` (Lean order `x be al u`), with `S = 1 + x`, `X = x(x + 2)`,
+`K = X + a²`, `B = a + b`, `D = hsDg x b a`, `E = hh46S4P x u`, `M = S²(S² - S + 1)`, `η = x - a`,
 `F = E + u(K - 2D)`, the partial derivatives of `Φ = hh46S4PhiC x b a u` are
 
-* `Φ_b = -(R₀)_b/7`, `(R₀)_b = (u - 1)/a + b/B² + 4ηF/K²` (note (6)),
+* `Φ_b = -(R₀)_b/7`, `(R₀)_b = (u - 1)/a + b/B² + 4ηF/K²`,
 * `Φ_a = -(2w_a + (R - log)_a + (log y)_a)/7` with
   `w_a = ((2Du - E)·2B·K - 4a(M + uD² - DE))/K³`,
   `(R - log)_a = -(u - 1)b/a² + b/B² - 2aX/K² - (4uBK - 2a(2Du - E))/K²`,
-  `(log y)_a = (X(2a + b) - a²b)/(aBK)` (note §6),
+  `(log y)_a = (X(2a + b) - a²b)/(aBK)`,
 * `Φ_u = Γ_u - (R₀)_u/7`, `Γ_u = (4M - 2ES³)/(16X²)`,
-  `(R₀)_u = 2(D² - DS³)/K² + B/a - (2D - S³)/K` (note (8)),
+  `(R₀)_u = 2(D² - DS³)/K² + B/a - (2D - S³)/K`,
 
 and the `b`-derivative of `Φ_a` is `-(R₀)_{ab}/7`,
-`(R₀)_{ab} = (1 - u)/a² - 2b/B³ - 4F/K² - 8uη(a + 2b)/K² - 16aηF/K³` (note (7)).
+`(R₀)_{ab} = (1 - u)/a² - 2b/B³ - 4F/K² - 8uη(a + 2b)/K² - 16aηF/K³`.
 
 ## Main API
 
@@ -35,7 +34,7 @@ namespace SmoothedOctagon
 
 open Real
 
-/-- `Φ_b = -(R₀)_b/7`, note (6). -/
+/-- `Φ_b = -(R₀)_b/7`. -/
 noncomputable def hl46W1Pb (x be al u : ℝ) : ℝ :=
   -((u - 1) / al + be / (al + be) ^ 2 +
     4 * (x - al) * (hh46S4P x u + u * (x * (x + 2) + al ^ 2 - 2 * hsDg x be al)) /
@@ -69,7 +68,7 @@ noncomputable def hl46W1Pu (x be al u : ℝ) : ℝ :=
     (2 * (hsDg x be al ^ 2 - hsDg x be al * (1 + x) ^ 3) / (x * (x + 2) + al ^ 2) ^ 2 +
       (al + be) / al - (2 * hsDg x be al - (1 + x) ^ 3) / (x * (x + 2) + al ^ 2)) / 7
 
-/-- `Φ_{ab} = -(R₀)_{ab}/7`, note (7). -/
+/-- `Φ_{ab} = -(R₀)_{ab}/7`. -/
 noncomputable def hl46W1Pab (x be al u : ℝ) : ℝ :=
   -((1 - u) / al ^ 2 - 2 * be / (al + be) ^ 3 -
     4 * (hh46S4P x u + u * (x * (x + 2) + al ^ 2 - 2 * hsDg x be al)) / (x * (x + 2) + al ^ 2) ^ 2 -

@@ -9,25 +9,20 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandLarge
 /-!
 # Hand proof of the smaller-short case, gate S2: `x < 13/6`
 
-`MIXED_SMALLER_SHORT_SHARP_RATIO_HAND_EXCLUSION`, with `VARIABLE_FLOOR_REDUCTION`,
-`CENTRAL_RATIO_HAND_SIGN`, `OUTER_RATIO_HAND_SIGN`; inventory HS-S2 (R1-R25). Assuming
-`13/6 ≤ x < 12/5` (the upper end from S0): the variable-floor weight `m = 2 - 7τ/(4T)` gives
-`G_τ = R_τ + m(w - 3/4) ≥ 0` at the actual root; the envelope (`hs_env_weighted`,
-`hs_B_pos_weighted`), the convex scale polynomial (`hs_A2_pos`, `hs_phi_convex_max`,
-`hs2_zero_neg`) and the `τ = 2` continuation (`hs2_tau2_mono`) reach a face `q* = min{q_c, 1/7}`;
-the incoming coefficient (`hs2_uslope`) and the face ceilings (`hs2_central_ceiling`,
-`hs2_outer_ceiling`) reduce to the face signs `hs2_central_sign`, `hs2_outer_sign_small`,
-`hs2_outer_sign_large` (hand proofs in `Heavy/S2Hand*.lean`).
+This module excludes `13/6 ≤ x < 12/5` (the upper end comes from S0). Assuming it, the
+variable-floor weight `m = 2 - 7τ/(4T)` gives `G_τ = R_τ + m(w - 3/4) ≥ 0` at the actual root; the
+envelope (`hs_env_weighted`, `hs_B_pos_weighted`), the convex scale polynomial (`hs_A2_pos`,
+`hs_phi_convex_max`, `hs2_zero_neg`) and the `τ = 2` continuation (`hs2_tau2_mono`) reach a face
+`q* = min{q_c, 1/7}`; the incoming coefficient (`hs2_uslope`) and the face ceilings
+(`hs2_central_ceiling`, `hs2_outer_ceiling`) reduce to the face signs `hs2_central_sign`,
+`hs2_outer_sign_small`, `hs2_outer_sign_large` (hand proofs in `Heavy/S2Hand*.lean`).
 
 ## Main API
 
 * `hsUC`, `hsUs`: the face ceilings `u_C`, `u_s`.
-* Stable: `hs2_uslope`, `hs2_zero_neg`, `hs2_tau2_mono`, `hs2_central_ceiling`,
-  `hs2_outer_ceiling`.
-* Hand (`archive/lighter-proofs/SHORT_RATIO_CENTRAL_COMPLETE.md`): `hs2_central_sign`
-  (`CENTRAL_RATIO_HAND_SIGN` (5)).
-* Hand (`archive/lighter-proofs/SHORT_RATIO_OUTER_COMPLETE.md`): `hs2_outer_sign_small`,
-  `hs2_outer_sign_large` (`OUTER_RATIO_HAND_SIGN` (13), (16), (18)).
+* `hs2_uslope`, `hs2_zero_neg`, `hs2_tau2_mono`, `hs2_central_ceiling`, `hs2_outer_ceiling`.
+* Face signs, proved in `Heavy/S2HandCentral`, `Heavy/S2HandSmall` and `Heavy/S2HandLarge`:
+  `hs2_central_sign`, `hs2_outer_sign_small`, `hs2_outer_sign_large`.
 * Gate: `HsData.s2`, `M2Short.hs_S2`.
 -/
 
@@ -37,7 +32,7 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-- The `u`-slope in scalar form (`VARIABLE_FLOOR_REDUCTION` (8)-(9)). -/
+/-- The `u`-slope in scalar form. -/
 private theorem hs2_slope_pos {S lam d z ri : ℝ} (hS : 0 < S) (hS2 : S ≤ 17 / 5) (hl0 : 0 < lam)
     (hl1 : lam ≤ 1) (hd0 : 0 < d) (hd : d < 3 / 7) (hz : 0 ≤ z) (hzd : z * d < 1 + d / 4)
     (hri : 2 ≤ ri) : 0 < z * d * (d - lam * S) + ri + lam * S - 2 * d := by
@@ -50,10 +45,9 @@ private theorem hs2_slope_pos {S lam d z ri : ℝ} (hS : 0 < S) (hS2 : S ≤ 17 
   have h3 : 0 ≤ z * d ^ 2 := by positivity
   nlinarith
 
-/-- **The positive incoming coefficient** (`VARIABLE_FLOOR_REDUCTION` (8)-(9); inventory HS-S2 R15):
-for `13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ x ≤ β`, `α < β`, `0 < D < α(α + β)`, `D < 3α²`, `0 < q ≤ 1/7`,
-`2 ≤ τ ≤ T = r_A/q`, the variable-floor face value (weight `m = 2 - 7τq/(4r_A)`) is nondecreasing in
-`u` (slope `> 109/140`). Status: stable. -/
+/-- **The positive incoming coefficient**: for `13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ x ≤ β`, `α < β`,
+`0 < D < α(α + β)`, `D < 3α²`, `0 < q ≤ 1/7`, `2 ≤ τ ≤ T = r_A/q`, the variable-floor face value
+(weight `m = 2 - 7τq/(4r_A)`) is nondecreasing in `u` (slope `> 109/140`). -/
 theorem hs2_uslope {x be al q τ ℓ u u' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hab : al < be) (hD : 0 < hsDg x be al)
     (hDQ : hsDg x be al < al * (al + be)) (hD3 : hsDg x be al < 3 * al ^ 2) (hq : 0 < q)
@@ -114,7 +108,7 @@ theorem hs2_uslope {x be al q τ ℓ u u' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x �
   have e := hs02_F_u_sub x be al u u' q τ ℓ (2 - 7 * τ * q / (4 * hsRA al be))
   linarith [mul_nonneg (sub_nonneg.2 huu) hpos.le]
 
-/-- `F(0) < 0` (`VARIABLE_FLOOR_REDUCTION` (14)). -/
+/-- `F(0) < 0`. -/
 private theorem hs2_F0_neg {x u r : ℝ} (hx : 13 / 6 ≤ x) (hu' : u ≤ 61 / 80) (hr0 : 0 < r)
     (hrA : r < 3 / 7) : hsE0 x u + (u - 1) / r + r + 1 / 2 < 0 := by
   have hS : 0 < 1 + x := by linarith
@@ -126,7 +120,7 @@ private theorem hs2_F0_neg {x u r : ℝ} (hx : 13 / 6 ≤ x) (hu' : u ≤ 61 / 8
   have h3 : -(19 / 80) / r = -(19 / 80 / r) := by ring
   linarith
 
-/-- `F(1) < 0` (`VARIABLE_FLOOR_REDUCTION` (15)); `k = D/Q`, `Qi = 1/Q`. -/
+/-- `F(1) < 0`; `k = D/Q`, `Qi = 1/Q`. -/
 private theorem hs2_F1_neg {x u r k Qi : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
     (hu' : u ≤ 61 / 80) (hr0 : 0 < r) (hurA : u ≤ m2U r) (hk : k < 1)
     (hQi : 1 / (x ^ 2 * (1 + x)) ≤ Qi) :
@@ -145,9 +139,9 @@ private theorem hs2_F1_neg {x u r k Qi : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 1
   have := mul_le_mul_of_nonneg_left hQi (by linarith : (0 : ℝ) ≤ x - 1)
   linarith
 
-/-- **The zero-scale end** (`VARIABLE_FLOOR_REDUCTION` (13)-(15); inventory HS-S2 R18): for
-`13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ x ≤ β ≤ αx`, `r_A < 3/7`, `D < α(α + β)`, `3/4 ≤ u ≤ 61/80`,
-`u ≤ U(r_A)` and `0 < p ≤ r_A`: `Φ(0) = C(p) + m/4 < 0`, `m = 2 - 7p/(4r_A)`. Status: stable. -/
+/-- **The zero-scale end**: for `13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ x ≤ β ≤ αx`, `r_A < 3/7`,
+`D < α(α + β)`, `3/4 ≤ u ≤ 61/80`, `u ≤ U(r_A)` and `0 < p ≤ r_A`: `Φ(0) = C(p) + m/4 < 0`,
+`m = 2 - 7p/(4r_A)`. -/
 theorem hs2_zero_neg {x be al u p : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hbx : be ≤ al * x) (hrA : hsRA al be < 3 / 7)
     (hDQ : hsDg x be al < al * (al + be)) (hu : 3 / 4 ≤ u) (hu' : u ≤ 61 / 80)
@@ -195,8 +189,8 @@ theorem hs2_zero_neg {x be al u p : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5
     mul_neg_of_pos_of_neg hp0 hF1'
   linarith only [e2, hlog, h1, h2]
 
-/-- `384uS²F_2` at `a = 0` is positive (`VARIABLE_FLOOR_REDUCTION` (22)-(26)): convex in
-`P` with `∂_P ≤ 0` at `P = 3/7`, concave in `u`, positive quartic endpoints. -/
+/-- `384uS²F_2` at `a = 0` is positive: convex in `P` with `∂_P ≤ 0` at `P = 3/7`, concave in `u`,
+positive quartic endpoints. -/
 private theorem hs2_G20 {S u P : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 61 / 80) (hP : P ≤ 3 / 7) :
     0 < -64*P^2*S^4*u^2 + 128*P^2*S^4*u - 64*P^2*S^4 + 128*P^2*S^2*u + 128*P^2*S^2 - 64*P^2
@@ -256,8 +250,8 @@ private theorem hs2_G20 {S u P : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (
   have := mul_nonneg hc2 (sq_nonneg (P - 3 / 7))
   linarith
 
-/-- `384uS²F_2` at `a = 1` is positive (`VARIABLE_FLOOR_REDUCTION` (22)-(26)): convex in
-`P` with `∂_P ≤ 0` at `P = 3/7`, concave in `u`, positive quartic endpoints. -/
+/-- `384uS²F_2` at `a = 1` is positive: convex in `P` with `∂_P ≤ 0` at `P = 3/7`, concave in `u`,
+positive quartic endpoints. -/
 private theorem hs2_G21 {S u P : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 61 / 80) (hP : P ≤ 3 / 7) :
     0 < 256*P^2*S^4*u - 256*P^2*S^4 + 256*P^2*S^3 - 64*P^2*S^2 - 288*P*S^4*u + 288*P*S^4
@@ -313,8 +307,8 @@ private theorem hs2_G21 {S u P : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (
   have := mul_nonneg hc2 (sq_nonneg (P - 3 / 7))
   linarith
 
-/-- `704uS²F_3` at `a = 0` is positive (`VARIABLE_FLOOR_REDUCTION` (22)-(26)): convex in
-`P` with `∂_P ≤ 0` at `P = 3/7`, concave in `u`, positive quartic endpoints. -/
+/-- `704uS²F_3` at `a = 0` is positive: convex in `P` with `∂_P ≤ 0` at `P = 3/7`, concave in `u`,
+positive quartic endpoints. -/
 private theorem hs2_G30 {S u P : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 61 / 80) (hP : P ≤ 3 / 7) :
     0 < -121*P^2*S^4*u^2 + 242*P^2*S^4*u - 121*P^2*S^4 + 242*P^2*S^2*u + 242*P^2*S^2 - 121*P^2
@@ -375,8 +369,8 @@ private theorem hs2_G30 {S u P : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (
   have := mul_nonneg hc2 (sq_nonneg (P - 3 / 7))
   linarith
 
-/-- `704uS²F_3` at `a = 1` is positive (`VARIABLE_FLOOR_REDUCTION` (22)-(26)): convex in
-`P` with `∂_P ≤ 0` at `P = 3/7`, concave in `u`, positive quartic endpoints. -/
+/-- `704uS²F_3` at `a = 1` is positive: convex in `P` with `∂_P ≤ 0` at `P = 3/7`, concave in `u`,
+positive quartic endpoints. -/
 private theorem hs2_G31 {S u P : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 61 / 80) (hP : P ≤ 3 / 7) :
     0 < 484*P^2*S^4*u - 484*P^2*S^4 + 484*P^2*S^3 - 121*P^2*S^2 - 176*P*S^4*u + 176*P*S^4
@@ -441,7 +435,7 @@ private theorem hs2_G31 {S u P : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (
   have := mul_nonneg hc2 (sq_nonneg (P - 3 / 7))
   linarith
 
-/-- `F_2 > 0` (`VARIABLE_FLOOR_REDUCTION` (20)-(26); concave in `a`). -/
+/-- `F_2 > 0` (concave in `a`). -/
 private theorem hs2_F2 {S u P a H : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 61 / 80) (hP : P ≤ 3 / 7) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
     (hH : H = S * (1 - u) - 1 / S) :
@@ -478,7 +472,7 @@ private theorem hs2_F2 {S u P a H : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5
     · have := mul_pos (by linarith : (0 : ℝ) < a) h1; linarith
   exact pos_of_mul_pos_right hpos (by positivity)
 
-/-- `F_3 > 0` (`VARIABLE_FLOOR_REDUCTION` (20)-(26); concave in `a`). -/
+/-- `F_3 > 0` (concave in `a`). -/
 private theorem hs2_F3 {S u P a H : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 61 / 80) (hP : P ≤ 3 / 7) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
     (hH : H = S * (1 - u) - 1 / S) :
@@ -514,9 +508,9 @@ private theorem hs2_F3 {S u P a H : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5
     · have := mul_pos (by linarith : (0 : ℝ) < a) h1; linarith
   exact pos_of_mul_pos_right hpos (by positivity)
 
-/-- **The Bernstein coefficients** (`VARIABLE_FLOOR_REDUCTION` (16)-(26)): with `P = r_A`,
-`a = α⁻²`, `Δ = D/α² ≥ 0`, `H = -E₀`, `Y = 2q/P ∈ (0, 1]`, the `τ = 2` slope
-`qG₂'(q) = Σ C(3, i)B_iY^i(1 - Y)^{3-i}` is positive (`B₀ = 1`, `B₁, B₂, B₃ > 0`). -/
+/-- **The Bernstein coefficients**: with `P = r_A`, `a = α⁻²`, `Δ = D/α² ≥ 0`, `H = -E₀`,
+`Y = 2q/P ∈ (0, 1]`, the `τ = 2` slope `qG₂'(q) = Σ C(3, i)B_iY^i(1 - Y)^{3-i}` is positive
+(`B₀ = 1`, `B₁, B₂, B₃ > 0`). -/
 private theorem hs2_qG {S u P a Δ H q : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 17 / 5) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 61 / 80) (hP : 5 / 17 ≤ P) (hP' : P ≤ 3 / 7) (ha0 : 0 ≤ a) (ha1 : a ≤ 1)
     (hΔ : 0 ≤ Δ) (hBv : P * (2 * (1 - a) + S * a) ≤ 9 / 8) (hH : H = S * (1 - u) - 1 / S)
@@ -612,7 +606,7 @@ private theorem hs2_qG {S u P a Δ H q : ℝ} (hS : 19 / 6 ≤ S) (hS2 : S ≤ 1
     have : 0 ≤ (1 - Y) ^ 3 := by positivity
     linarith
 
-/-- `B_v = r_A(2ε + S/α²) ≤ 9/8` (`VARIABLE_FLOOR_REDUCTION` (19)). -/
+/-- `B_v = r_A(2ε + S/α²) ≤ 9/8`. -/
 private theorem hs2_Bv {x al be : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x) (hxb : x ≤ be) :
     hsRA al be * (2 * (1 - 1 / al ^ 2) + (1 + x) * (1 / al ^ 2)) ≤ 9 / 8 := by
   have hal0 : 0 < al := by linarith
@@ -635,12 +629,10 @@ private theorem hs2_Bv {x al be : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al
   have h3 : al * (al + x) ≤ al * (al + be) := mul_le_mul_of_nonneg_left (by linarith) hal0.le
   nlinarith
 
-/-- **The `τ = 2` continuation** (`VARIABLE_FLOOR_REDUCTION` (16)-(26); inventory HS-S2 R19): for
-`13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ x ≤ β`, `D ≥ 0`, `5/17 ≤ r_A ≤ 3/7`, `3/4 ≤ u ≤ 61/80`,
-`G₂(q) = R*_2(q) + (2 - 7q/(2r_A))(w_*(q) - 3/4)` is strictly increasing on `(0, 1/7]`.
-Route: each `F_i` at `α⁻² ∈ {0, 1}` is convex in `P = r_A` with `∂_P ≤ 0` at `P = 3/7`
-(instead of the monotonicity tables (23)-(25)).
-Status: stable. -/
+/-- **The `τ = 2` continuation**: for `13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ x ≤ β`, `D ≥ 0`,
+`5/17 ≤ r_A ≤ 3/7`, `3/4 ≤ u ≤ 61/80`, `G₂(q) = R*_2(q) + (2 - 7q/(2r_A))(w_*(q) - 3/4)` is strictly
+increasing on `(0, 1/7]`.
+Each `F_i` at `α⁻² ∈ {0, 1}` is convex in `P = r_A` with `∂_P ≤ 0` at `P = 3/7`. -/
 theorem hs2_tau2_mono {x be al u q₁ q₂ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hD : 0 ≤ hsDg x be al) (hrA : 5 / 17 ≤ hsRA al be)
     (hrA' : hsRA al be ≤ 3 / 7) (hu : 3 / 4 ≤ u) (hu' : u ≤ 61 / 80) (hq₁ : 0 < q₁)
@@ -713,8 +705,8 @@ theorem hs2_tau2_mono {x be al u q₁ q₂ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x �
     rw [e]
     exact div_pos h hz0
 
-/-- `GAUSS_INCOMING_CEILING` at `β = x`, consequence (a): `V(x) - 3/4 < 17(x - 1)²/(240S²)` for
-`x ≥ 13/6` (inventory HS-S2 R2(a)). -/
+/-- The Gauss ceiling at `β = x`: `V(x) - 3/4 < 17(x - 1)²/(240S²)` for `x ≥ 13/6` (from
+`V < V_G`, `hs_V_lt_VG`, and the sign of a cubic in `x`). -/
 private theorem hs2_V_lt_17 {x : ℝ} (hx : 13 / 6 ≤ x) :
     m2Sec 1 x x - 3 / 4 < 17 * (x - 1) ^ 2 / (240 * (1 + x) ^ 2) := by
   have hx0 : 0 < x := by linarith
@@ -733,8 +725,8 @@ private theorem hs2_V_lt_17 {x : ℝ} (hx : 13 / 6 ≤ x) :
     rw [e]; positivity
   linarith
 
-/-- The split incoming bound (`INCOMING_NORM_BOUND` (7)-(8), inventory HS-S2 R1(iii)) with an
-abstract bound on `V - 3/4` and a bound `κ` on `(β - x)²/(48x²)`:
+/-- The split incoming bound (additivity of the secant integral at `x`) with an abstract bound on
+`V - 3/4` and a bound `κ` on `(β - x)²/(48x²)`:
 `(β - 1)(Sec(1, x, β) - 3/4) ≤ (x - 1)·c + (β - x)·κ`. -/
 private theorem hs2_sec_split {x be c κ : ℝ} (hx : 1 < x) (hxb : x ≤ be)
     (hV : m2Sec 1 x x - 3 / 4 ≤ c) (hκ : (be - x) ^ 2 / (48 * x ^ 2) ≤ κ) :
@@ -748,9 +740,8 @@ private theorem hs2_sec_split {x be c κ : ℝ} (hx : 1 < x) (hxb : x ≤ be)
     ≤ 3 / 4 + κ)) (by linarith : (0 : ℝ) ≤ be - x)
   nlinarith
 
-/-- **The central ceiling** (`RATIO_SIGN_HAND_GAP` (4); inventory HS-S2 R1, R2(a), R21): for
-`13/6 ≤ x ≤ 12/5`, `1 ≤ α`, `6α² ≤ x(x + 2)`, `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`:
-`Sec(1, x, β) ≤ u_C(x, β)`. Status: stable. -/
+/-- **The central ceiling**: for `13/6 ≤ x ≤ 12/5`, `1 ≤ α`, `6α² ≤ x(x + 2)`,
+`x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`: `Sec(1, x, β) ≤ u_C(x, β)`. -/
 theorem hs2_central_ceiling {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -783,9 +774,8 @@ theorem hs2_central_ceiling {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 
   rw [e, ← sub_le_iff_le_add', le_div_iff₀ hb1, mul_comm]
   exact hsplit
 
-/-- **The outer ceiling** (`OUTER_RATIO_HAND_SIGN` (9); inventory HS-S2 R22(a)): for
-`13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ 3/2`, `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`:
-`Sec(1, x, β) ≤ u_s(x, β)`. Status: stable. -/
+/-- **The outer ceiling**: for `13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ 3/2`,
+`x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`: `Sec(1, x, β) ≤ u_s(x, β)`. -/
 theorem hs2_outer_ceiling {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hal' : al ≤ 3 / 2) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
@@ -813,13 +803,12 @@ theorem hs2_outer_ceiling {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 
   rw [e, ← sub_le_iff_le_add', le_div_iff₀ hb1, mul_comm]
   exact hsplit
 
-/-! ### Heavy face signs -/
+/-! ### Face signs -/
 
-/-- **The central sharp-ratio face** (`CENTRAL_RATIO_HAND_SIGN` (5); inventory HS-S2 R23): for
-`13/6 ≤ x ≤ 12/5`, `1 ≤ α`, `6α² ≤ x(x + 2)`, the strip
+/-- **The central sharp-ratio face**: for `13/6 ≤ x ≤ 12/5`, `1 ≤ α`, `6α² ≤ x(x + 2)`, the strip
 `x + 8x(α - 1)/(9x + 8) ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`, `q = q_c`, `u = u_C(x, β)` and
-`2 ≤ τ ≤ T = r_A/q_c`: `G_τ = R*_τ + (2 - 7τ/(4T))(w_* - 3/4) < 0`. Status: hand
-(`Heavy/S2HandCentral`). -/
+`2 ≤ τ ≤ T = r_A/q_c`: `G_τ = R*_τ + (2 - 7τ/(4T))(w_* - 3/4) < 0`. Proved in `Heavy/S2HandCentral`.
+-/
 theorem hs2_central_sign {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) (hτ : 2 ≤ τ)
@@ -828,10 +817,9 @@ theorem hs2_central_sign {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 
       (2 - 7 * τ * hsQc x al / (4 * hsRA al be)) < 0 := by
   apply hs2_central_sign_proof <;> assumption
 
-/-- **The outer sharp-ratio face, small `α`** (`OUTER_RATIO_HAND_SIGN` §§4-5, (13), (16); inventory
-HS-S2 R24): for `13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ 3/2`, `α ≤ x`, `x(x + 2) ≤ 6α²`, the strip of
-`hs2_central_sign`, `q = 1/7`, `u = u_s(x, β)` and `2 ≤ τ ≤ 7r_A`: `G_τ < 0`. Status: hand
-(`Heavy/S2HandSmall`). -/
+/-- **The outer sharp-ratio face, small `α`**: for `13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ 3/2`, `α ≤ x`,
+`x(x + 2) ≤ 6α²`, the strip of `hs2_central_sign`, `q = 1/7`, `u = u_s(x, β)` and `2 ≤ τ ≤ 7r_A`:
+`G_τ < 0`. Proved in `Heavy/S2HandSmall`. -/
 theorem hs2_outer_sign_small {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hal' : al ≤ 3 / 2) (hax : al ≤ x) (hqc : x * (x + 2) ≤ 6 * al ^ 2)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
@@ -841,9 +829,9 @@ theorem hs2_outer_sign_small {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤
       (2 - 7 * τ * (1 / 7) / (4 * hsRA al be)) < 0 := by
   apply hs2_outer_sign_small_proof <;> assumption
 
-/-- **The outer sharp-ratio face, large `α`** (`OUTER_RATIO_HAND_SIGN` §6, (18); inventory HS-S2
-R24): for `13/6 ≤ x ≤ 12/5`, `3/2 ≤ α ≤ x`, the strip of `hs2_central_sign`, `q = 1/7`,
-`u = V̄(x)` and `2 ≤ τ ≤ 7r_A`: `G_τ < 0`. Status: hand (`Heavy/S2HandLarge`). -/
+/-- **The outer sharp-ratio face, large `α`**: for `13/6 ≤ x ≤ 12/5`, `3/2 ≤ α ≤ x`, the strip of
+`hs2_central_sign`, `q = 1/7`, `u = V̄(x)` and `2 ≤ τ ≤ 7r_A`: `G_τ < 0`. Proved in
+`Heavy/S2HandLarge`. -/
 theorem hs2_outer_sign_large {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
     (hal : 3 / 2 ≤ al) (hax : al ≤ x) (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) (hτ : 2 ≤ τ)
@@ -854,7 +842,7 @@ theorem hs2_outer_sign_large {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤
 
 /-! ### Gate S2 -/
 
-/-- `r_A < 3/7` from the `9/8` strip (inventory HS-S2 R11, route via `GLOBAL_UPPER_ORDER` (3)). -/
+/-- `r_A < 3/7` from the lower edge `β ≥ x(9x + 8α)/(9x + 8)` of the strip. -/
 private theorem hs2_rA_lt {x al be : ℝ} (hx : 13 / 6 ≤ x) (hal0 : 0 < al) (hax : al < x)
     (hb0 : x * (9 * x + 8 * al) / (9 * x + 8) ≤ be) : hsRA al be < 3 / 7 := by
   have hx0 : 0 < x := by linarith
@@ -871,14 +859,14 @@ private theorem hs2_rA_lt {x al be : ℝ} (hx : 13 / 6 ≤ x) (hal0 : 0 < al) (h
   have h4 : 32 * x ≤ 15 * x ^ 2 := by nlinarith
   nlinarith
 
-/-- `r_A ≥ 1/S ≥ 5/17` from `β ≤ αx` (inventory HS-S2 R11). -/
+/-- `r_A ≥ 1/S ≥ 5/17` from `β ≤ αx`. -/
 private theorem hs2_rA_ge {x al be : ℝ} (hx2 : x ≤ 12 / 5) (hal0 : 0 < al) (hbe0 : 0 < be)
     (hbx : be ≤ al * x) : 5 / 17 ≤ hsRA al be := by
   unfold hsRA
   rw [le_div_iff₀ (by linarith)]
   nlinarith
 
-/-- `V̄(x) < 61/80` on `[13/6, 12/5]` (inventory HS-S2 R12). -/
+/-- `V̄(x) < 61/80` on `[13/6, 12/5]`. -/
 private theorem hs2_Vbar_lt {x : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) : hsVbar x < 61 / 80 := by
   unfold hsVbar
   have : 2 * (x - 1) ^ 2 / ((x + 1) * (35 * x + 13)) < 1 / 80 := by
@@ -889,9 +877,8 @@ namespace HsData
 
 variable (H : HsData)
 
-/-- **The variable-floor reduction** (`VARIABLE_FLOOR_REDUCTION`; inventory HS-S2 R9-R20): for
-`13/6 ≤ x < 12/5`, the actual root gives a nonnegative variable-floor value on the face
-`q* = min{q_c, 1/7}` at some `τ* ∈ [2, r_A/q*]`. -/
+/-- **The variable-floor reduction**: for `13/6 ≤ x < 12/5`, the actual root gives a nonnegative
+variable-floor value on the face `q* = min{q_c, 1/7}` at some `τ* ∈ [2, r_A/q*]`. -/
 private theorem hs2_face (h0 : H.x < 12 / 5) (hx : 13 / 6 ≤ H.x) :
     ∃ τs, 2 ≤ τs ∧ τs * min (hsQc H.x H.al) (1 / 7) ≤ hsRA H.al H.be ∧
       0 ≤ hsF H.x H.be H.al H.u (min (hsQc H.x H.al) (1 / 7)) τs
@@ -994,8 +981,7 @@ private theorem hs2_face (h0 : H.x < 12 / 5) (hx : 13 / 6 ≤ H.x) :
     · exact (hm.trans (hs2_tau2_mono hx h0.le hal hax.le hxb hD0.le hrA5 hrA.le hu34 hu61
         (by positivity) h' hqh7).le)
 
-/-- **The sharp-ratio exclusion** (`SHARP_RATIO_HAND_EXCLUSION`; inventory HS-S2 R25):
-`13/6 ≤ x < 12/5` is impossible. -/
+/-- **The sharp-ratio exclusion**: `13/6 ≤ x < 12/5` is impossible. -/
 private theorem hs2_sharp (h0 : H.x < 12 / 5) (hx : 13 / 6 ≤ H.x) : False := by
   have hx1 := H.one_lt_x
   have hx0 : 0 < H.x := by linarith
@@ -1045,18 +1031,15 @@ private theorem hs2_sharp (h0 : H.x < 12 / 5) (hx : 13 / 6 ≤ H.x) : False := b
       have := hs2_outer_sign_large hx h0.le ha hax.le hs98 hsup hτs hτ7
       linarith
 
-/-- **Gate S2** (`SHARP_RATIO_HAND_EXCLUSION`; inventory HS-S2 R25): given S0's `x < 12/5`,
-`x < 13/6`.
-Proof plan: if `x ≥ 13/6`: `root_zero`, `w_ge`, `hs_env_weighted` with `m = 2 - 7τq/(4r_A)`
+/-- **Gate S2**: given S0's `x < 12/5`, `x < 13/6`.
+Proof: if `x ≥ 13/6`: `root_zero`, `w_ge`, `hs_env_weighted` with `m = 2 - 7τq/(4r_A)`
 (`hs_B_pos_weighted`) give `0 ≤ G*_τ`; `hs_phi_eq`, `hs_A2_pos` (with `u_le_V`, `hs_V_le_Vbar`),
 `hs_phi_convex_max`, `hs2_zero_neg` (`hs_D_lt_Q`, `upper_order_98`, `be_le_al_x`, `u_le_rA`) and
 `hs2_tau2_mono` reach `G*(q*, τ*) ≥ 0` at `q* = min{q_c, 1/7}`; `hs2_uslope` with
 `hs2_central_ceiling` or `hs2_outer_ceiling` / `hs_V_le_Vbar` replaces `u`; the strip is
 `strong_order`, `upper_order_98`; contradiction with `hs2_central_sign`, `hs2_outer_sign_small`,
-`hs2_outer_sign_large`.
-Route: `D > 0` from `D ≥ αD₀` (`hs02_D_pos`) and `r_A < 3/7` from the `9/8` strip (inventory
-HS-S2 R7, R11), not from the equal-secant continuation.
-Status: assembly (to be proved from the leaves above). -/
+`hs2_outer_sign_large`. Here `D > 0` comes from `D ≥ αD₀` (`hs02_D_pos`) and `r_A < 3/7` from the
+`9/8` strip. -/
 theorem s2 (h0 : H.x < 12 / 5) : H.x < 13 / 6 := by
   by_contra h
   push Not at h

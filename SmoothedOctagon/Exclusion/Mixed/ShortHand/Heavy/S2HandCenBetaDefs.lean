@@ -5,13 +5,13 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenDefs
 /-!
 # S2 hand signs: the central beta monotonicity, partial fractions
 
-`archive/lighter-proofs/SHORT_RATIO_CENTRAL_BETA.md` §2: with the incoming pole kept visible,
+With the incoming pole kept visible,
 `u = u_f + J/(b - 1)` (`u_f = 2401/3200`, `J = (x - 1)(680(x - 1)² - 3S²)/(9600S²)`) and
 `D = C² + δ(b - 1)` (`C = a + 1`, `δ = 2(a - x)`, `D₀ = C² - δC`), so with `B = a + b`
-(note (6)-(7); here `c_w = C c_v`)
+(with `c_w = C c_v`)
 `w = c₂B² + c₁B + c₀ + C c_v/(b - 1)`, `E_L = e₁B + e₀ + c_e/(b - 1)`,
 `R = l₁B + l₀ + a/B + c_b/(b - 1)`.
-Hence, with `ℓ = 7a/(2K)` (§3),
+Hence, with `ℓ = 7a/(2K)`,
 `F₀ = p₃B³ + p₂B² + p₁B + a/B + p_c/(b - 1) + log B + const` and
 `F₁ = (c₂/4)B² + q₁B + (A₁ + Kφ/a)/B + P_c/(b - 1) + log B + const`, `φ = (t - 1)/t² - 1/4`,
 the constants being independent of `b`.
@@ -209,7 +209,7 @@ theorem hl2cb_G_alg {y C K a B c2 c1 c0 cv l1 l0 cb l : ℝ} (hy : y ≠ 0) (hB0
   field_simp
   ring
 
-/-- **Partial fractions of `F₀`** (`SHORT_RATIO_CENTRAL_BETA` §3): for `b > 1`,
+/-- **Partial fractions of `F₀`**: for `b > 1`,
 `F₀ = p₃B³ + p₂B² + p₁B + a/B + p_c/(b - 1) + log B + κ₀`, `κ₀` independent of `b`. -/
 theorem hl2cb_F0_pf {t x a b : ℝ} (ht : 0 < t) (hx : 0 < x) (ha : 0 < a) (hb : 1 < b) :
     hl2cF0 t x a b (hsUC x b) =
@@ -252,7 +252,7 @@ theorem hl2cb_H_alg {y C K a B c2 c1 c0 cv l1 l0 cb φ : ℝ} (hy : y ≠ 0) (hB
   field_simp
   ring
 
-/-- **Partial fractions of `F₁`** (`SHORT_RATIO_CENTRAL_BETA` §3, (23)): for `b > 1`,
+/-- **Partial fractions of `F₁`**: for `b > 1`,
 `F₁ = (c₂/4)B² + q₁B + (A₁ + Kφ/a)/B + P_c/(b - 1) + log B + κ₁`, `φ = (t - 1)/t² - 1/4`. -/
 theorem hl2cb_F1_pf {t x a b : ℝ} (ht : 0 < t) (hx : 0 < x) (ha : 0 < a) (hb : 1 < b) :
     hl2cF1 t x a b (hsUC x b) =

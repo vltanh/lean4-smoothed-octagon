@@ -6,21 +6,20 @@ public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenBetaEdge
 /-!
 # S2 hand signs: the central beta monotonicity
 
-`archive/lighter-proofs/SHORT_RATIO_CENTRAL_BETA.md`: on `x ≤ b ≤ x + 7(a - 1)/8` (which contains
+On `x ≤ b ≤ x + 7(a - 1)/8` (which contains
 `x ≤ b ≤ b_+(x, a)`) both duration-tangent tests `F₀`, `F₁` increase in `b`, the incoming ceiling
 `u = u_C(x, b)` moving with `b`.
 
 In the partial-fraction forms (`S2HandCenBetaDefs`) the second derivatives are
 `G_bb = 6p₃B + 2p₂ + 2a/B³ + 2p_c/(b - 1)³ - 1/B²` and
-`H_bb = c₂/2 + 2A₁/B³ + 2P_c/(b - 1)³ - 1/B²` (§3 (9), (12)). With `p₃ ≤ 0`, `p_c > 0`,
-`6p₃B_max + 2p₂ > 1/10` and `B³ - 27a²(b - a) = (b - 2a)²(b + 7a)`, `G_bb > 1/10 - 1/27 > 0`
-(§3 (11)); with `A₁ > 9/2`, `P_c > -2J`, `0 < J < 1/50`, `B ≤ 161/40`, `b - 1 ≥ 7/6`,
-`H_bb ≥ 3/40 - (2/25)(6/7)³ > 0` (§3 (13), with the slightly weaker rational `3/40`). So both first
+`H_bb = c₂/2 + 2A₁/B³ + 2P_c/(b - 1)³ - 1/B²`. With `p₃ ≤ 0`, `p_c > 0`,
+`6p₃B_max + 2p₂ > 1/10` and `B³ - 27a²(b - a) = (b - 2a)²(b + 7a)`, `G_bb > 1/10 - 1/27 > 0`;
+with `A₁ > 9/2`, `P_c > -2J`, `0 < J < 1/50`, `B ≤ 161/40`, `b - 1 ≥ 7/6`,
+`H_bb ≥ 3/40 - (2/25)(6/7)³ > 0`. So both first
 derivatives are smallest at `b = x`, where they are positive (`S2HandCenBetaEdge`). Finally
-`(F₀)_b = G_b` and `(F₁)_b = H_b - Kφ/(aB²) ≥ H_b` with `φ = (t - 1)/t² - 1/4 ≤ 0` (§6 (23)).
+`(F₀)_b = G_b` and `(F₁)_b = H_b - Kφ/(aB²) ≥ H_b` with `φ = (t - 1)/t² - 1/4 ≤ 0`.
 
-Route: the base-face step uses the exact derivatives at `b = x` (`S2HandCenBetaEdge`) instead of
-the lower comparison and factored numerators of §4-§5.
+The base-face step uses the exact derivatives at `b = x` (`S2HandCenBetaEdge`).
 
 ## Main API
 
@@ -44,7 +43,8 @@ theorem hl2cb_cube {a s : ℝ} (ha : 1 ≤ a) (hs : a ≤ s) : 27 * (s - a) ≤ 
     nlinarith
   linarith
 
-/-- **`G_bb > 0`** (`SHORT_RATIO_CENTRAL_BETA` (9)-(11)). -/
+/-- **`G_bb > 0`**: `6p₃B + 2p₂ ≥ 6p₃B_max + 2p₂ > 1/10` (`p₃ ≤ 0`), `p_c > 0` and
+`2a/B³ - 1/B² = -(b - a)/B³ ≥ -1/27`. -/
 theorem hl2cb_G2 {x a s : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3)
     (hs : x ≤ s) (hs' : s ≤ x + 7 * (a - 1) / 8) :
     0 ≤ 6 * hl2cbp3 x a * (a + s) + 2 * hl2cbp2 x a + 2 * a / (a + s) ^ 3 +
@@ -77,7 +77,8 @@ theorem hl2cb_nine {B : ℝ} (hB : 0 < B) (hB' : B ≤ 161 / 40) : 3 / 40 ≤ (9
   have : B ^ 3 ≤ (161 / 40) ^ 3 := pow_le_pow_left₀ hB.le hB' 3
   nlinarith
 
-/-- **`H_bb > 0`** (`SHORT_RATIO_CENTRAL_BETA` (12)-(13)). -/
+/-- **`H_bb > 0`**: from `A₁ > 9/2`, `P_c > -2J`, `0 < J < 1/50`, `B ≤ 161/40` and
+`b - 1 ≥ 7/6`. -/
 theorem hl2cb_H2 {x a s : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3)
     (hs : x ≤ s) (hs' : s ≤ x + 7 * (a - 1) / 8) :
     0 ≤ 6 * 0 * (a + s) + 2 * (hl2cbc2 x a / 4) + 2 * hl2cbA1 x a / (a + s) ^ 3 +
@@ -116,7 +117,7 @@ theorem hl2cb_mono {f f' g g' : ℝ → ℝ} {lo hi b b' : ℝ} (hlo : lo ≤ b)
     (fun w hw => hg2 w ⟨hw.1.le, hw.2.le.trans hz.2⟩)
   linarith [hge z hz]
 
-/-- **The central beta monotonicity** (`SHORT_RATIO_CENTRAL_BETA` §6): both duration-tangent tests
+/-- **The central beta monotonicity**: both duration-tangent tests
 increase in `b` on `x ≤ b ≤ b_+(x, a)`, the incoming ceiling moving with `b`. -/
 theorem hl2c_beta {t x a b b' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
     (ha2 : a ≤ 4 / 3) (ht : 2 ≤ t) (hb : x ≤ b) (hbb : b ≤ b') (hb' : b' ≤ hl2cbp x a) :
