@@ -56,9 +56,8 @@ sources:
     note: >-
       ChatGPT Pro (OpenAI) found the proof, in research notes written in pull requests #1 and #2 of
       this repository and archived in docs/archive/, starting from Hales's control formulation and
-      Hales and Vajjha's book. Claude Opus 5.5 (Anthropic) wrote the Lean proof from those notes,
-      and the manuscript in docs/paper/. No person has reviewed the proof. docs/CREDITS.md tells
-      how the work was done.
+      Hales and Vajjha's book. Claude Opus 5.5 (Anthropic) wrote the Lean proof from those notes.
+      No person has reviewed the proof. docs/CREDITS.md tells how the work was done.
   - title: "Über die dichteste gitterförmige Lagerung kongruenter Bereiche in der Ebene und eine besondere Art konvexer Kurven"
     authors:
       - "Karl Reinhardt"
@@ -185,8 +184,7 @@ automation:
         reduction, the five exclusions, the terminal comparison and the equality case, and
         formalized the hand arguments of both pull requests; along the way it built a verified
         interval arithmetic that checked the last interval cover in the kernel, retired once the
-        hand proof was formalized. It also wrote the documentation, the figures, the manuscript in
-        docs/paper/ and this metadata. A second session of the same model restated the Challenge
+        hand proof was formalized. It also wrote the documentation, the figures and this metadata. A second session of the same model restated the Challenge
         with Reinhardt's description of the smoothed octagon and proved that it is a linear image of
         the octagon given by Hales's trajectory (SmoothedOctagon/Bridge/Classical.lean).
       cost:

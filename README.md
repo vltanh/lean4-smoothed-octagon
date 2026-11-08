@@ -189,7 +189,7 @@ SmoothedOctagon/
   Defs.lean                    the definitions of the statements, shared with the Challenge
   LowerBound.lean              the assembly
 Cited/HalesVajjha/             Definition 5.0.1 of Hales–Vajjha (the compact domain)
-docs/                          credits, prior work, the figures, the paper, and the archive of the
+docs/                          credits, prior work, the figures, and the archive of the
                                informal proof notes (ChatGPT Pro) and their computations
 scripts/                       the audit, the definitions check, the figures and the certificate generators
 ```
