@@ -60,14 +60,39 @@ We therefore lower kappa to kappa0, keeping the actual shape and norm
 u fixed.
 
 The original central-duration cap is rho<=1/(1+x)^2, or
-rho/(1-rho)<=1/[x(x+2)]. Increase this scalar scale to the latter
-endpoint, continuing the exact shear and physical-cost formulas. At
-the original point, (3) and Section 5 of the
+rho/(1-rho)<=1/[x(x+2)]. The other cap required by the
+scale-angle theorem is available at the original point as follows.
+We may assume C_period<=A_oct, since otherwise (2) already holds.
+The [reverse-centre scale theorem and its scope proof](HAND_REVERSE_CENTRE_SCALE_SCOPE_AUDIT.md),
+equivalently Section 2 of [HAND_PROOF_REFINEMENTS](HAND_PROOF_REFINEMENTS.md),
+then give rho_A<1/7 at every actual reverse-run centre of this same
+competitive period, including its outer centre. That centre need not
+be the globally minimal one. If a_0 is the central active margin,
+the outer margin is alpha*a_0; hence, at the original physical point,
+\[
+q=\rho_A
+ =\frac{\alpha^2\rho}{1+(\alpha^2-1)\rho}<\frac17,
+\qquad
+\frac{\rho}{1-\rho}=\frac{q}{\alpha^2(1-q)}
+ <\frac1{6\alpha^2}.
+\tag{3a}
+\]
+The scale theorem uses the original common covector and the original
+competitive period. No scale bound at an artificial point is needed
+for (3a). The original equal secants also supply the
+[strong short order](MIXED_SMALLER_SHORT_STRONG_ORDER.md); together
+with x<=13/6<12/5 this verifies the shape hypotheses of the
+scale-angle theorem.
+
+Increase the scalar scale rho/(1-rho) to 1/[x(x+2)], continuing the
+exact shear and physical-cost formulas. At the original point, both
+caps have now been justified, and (3) and Section 5 of the
 [scale-angle theorem](MIXED_SMALLER_SHORT_SCALE_ANGLE_BARRIER.md)
 give a strictly negative scale derivative of the fixed-kappa score.
 
-The continuation remains on that decreasing branch. To check this
-without transporting an original scale cap, use the exact
+The continuation remains on that decreasing branch. In particular,
+we do not assume rho_A<=1/7 after the scalar scale is increased.
+To check the continuation, use the exact
 [critical-angle classification](MIXED_SMALLER_SHORT_SHEAR_COST_REDUCTION.md).
 Its two possible critical angles are |theta1-theta2| and
 theta1+theta2; they depend only on the fixed shape, u and kappa.

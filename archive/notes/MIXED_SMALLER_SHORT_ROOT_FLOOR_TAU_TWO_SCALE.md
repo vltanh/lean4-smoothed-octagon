@@ -12,10 +12,22 @@ It does not prove the signs on the remaining two scale faces.
 Retain
 \[
 \frac{12}{5}\le x\le9,\qquad 1\le\alpha\le x\le\beta,
-\qquad u=\operatorname{Sec}(1,x,\beta),\qquad
+\qquad
 \frac34\le u\le\frac{13}{16}.
 \tag{1}
 \]
+Require in addition the incoming-floor hypothesis
+\[
+\boxed{u\ge\frac34+\frac{(x-1)^2}{28(x+1)^2}.}
+\tag{1a}
+\]
+The theorem below is a scalar statement on (1)--(1a). In its actual
+application, u=Sec(1,x,beta), and (1a) follows, strictly, from the
+[uniform incoming floor](MIXED_SMALLER_SHORT_UNIFORM_INCOMING_FLOOR.md).
+The interval 3/4<=u<=13/16 alone is insufficient for the lower bound
+F used in the proof. In particular (1a) must be retained whenever
+this theorem is used after a scalar comparison.
+
 Use the coefficients A_1,A_2,A_3 of the envelope scale theorem and
 put
 \[
@@ -35,8 +47,7 @@ Write S=1+x and
 a=\alpha^{-2}\in(0,1],\quad \varepsilon=1-a,\quad
 \delta=D/\alpha^2,\quad H=-E_0=S(1-u)-S^{-1}>0.
 \]
-The [uniform incoming floor](MIXED_SMALLER_SHORT_UNIFORM_INCOMING_FLOOR.md)
-gives
+The explicit hypothesis (1a) gives
 \[
 u\ge\frac34+\frac{(S-2)^2}{28S^2}.
 \]
@@ -267,6 +278,13 @@ The present theorem then permits increasing q at fixed tau=2 until
 \[
 q=\min\left\{\frac{\alpha^2}{S^2+\alpha^2-1},\frac17\right\}.
 \]
+For the caller in
+[the large-ratio exclusion, Section 3](MIXED_SMALLER_SHORT_LARGE_RATIO_HAND_EXCLUSION.md),
+both the preceding fixed-p comparison and this tau=2 comparison
+keep x,beta and the actual incoming value u=Sec(1,x,beta) fixed.
+Thus (1a) holds at the start and throughout the comparison; the
+caller still closes with exactly the same endpoint alternatives.
+
 It remains valid if this comparison passes q=r_A/2, where the
 formal value T=r_A/q becomes less than two. At such a comparison
 point no actual outer reverse arc is asserted. Any subsequent

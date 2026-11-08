@@ -394,7 +394,45 @@ m=(8x^2+8x-3)\alpha+(3x^2-8x-8)\beta,
 V=\alpha^2W+3K_xK_AQ(x-1).
 \tag{29}
 \]
-Direct collection gives
+Here both W and V are strictly positive; this needs a separate sign
+argument before either quotient in (30)--(31) is used. From (1),
+\[
+1\le\alpha\le22/19,\qquad 2\le\beta\le130/57,
+\qquad \beta x-\alpha\ge4-22/19=54/19>0.
+\]
+The two quadratic identities
+\[
+8x^2+8x-48=8(x-2)(x+3)\ge0,
+\qquad
+3x^2-8x+4=(x-2)(3x-2)\ge0
+\]
+give
+\[
+m\ge45\alpha-12\beta
+ \ge45-12(130/57)=335/19>0.
+\]
+Thus W=(beta*x-alpha)m>0. Also
+\[
+Q=\beta(2x-\alpha)-x
+ \ge x(2x-\alpha-1)\ge70/19>0.
+\]
+Every factor in K_x,K_A and x-1 is positive, so (29) gives V>0.
+The two expanded quadratics have three monomials each, total degree
+two, and integer coefficients of absolute value at most 48. The
+only collection needed to identify F below can be checked after
+factoring out beta*x-alpha:
+\[
+\begin{aligned}
+&3\{(x+2)\alpha+(2x+1)\beta\}(x-1)
+ +13(\alpha x-\beta)(x+1)\\
+&\qquad=16\alpha x^2+16\alpha x-6\alpha
+        +6\beta x^2-16\beta x-16\beta=2m.
+\end{aligned}
+\]
+This identity has six monomials, total degree three in x,alpha,beta,
+and coefficients of absolute value at most 16. Keep W and V in the
+products (29); their full expansions are unnecessary for their signs.
+It follows that
 \[
 F:=H_0R+13A/3=\frac{2W}{3S^3K_A}>0,
 \quad
