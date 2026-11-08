@@ -958,4 +958,3 @@ where \(P_i=\mathcal H^{i+1}S(3/8,j+1/4,1+y)\) for \(i=0,1,2\).
 The domain has \(y\le9/32<2/7\), so (C15) applies along the segment.
 This Taylor lower bound is an exact analytic consequence of the derivative bound;
 its sign on the constrained domain remains the next task.
-

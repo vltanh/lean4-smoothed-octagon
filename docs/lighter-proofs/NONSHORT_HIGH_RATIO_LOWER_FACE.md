@@ -565,4 +565,3 @@ and (F3) to obtain (F1) on the unchanged original face.
 The only interval split in this proof is x=2/5. Every polynomial sign premise is
 printed. The largest expanded identity is the 21-monomial degree-5 ninth derivative;
 the source coefficient identities have at most nine monomials and degree at most 8.
-

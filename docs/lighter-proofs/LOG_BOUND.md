@@ -225,4 +225,3 @@ any S3 or S4 residual sign.
 All displayed polynomial identities were checked by exact symbolic
 arithmetic as a transcription check. Their derivative and factor
 arguments are the proofs. No Lean compilation or CI was run.
-

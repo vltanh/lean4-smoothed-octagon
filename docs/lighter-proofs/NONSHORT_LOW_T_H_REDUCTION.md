@@ -618,4 +618,3 @@ monotonicity theorem they establish the full unit sign, since the positive
 normalization of S preserves the sign of G_n. The
 [caller argument](NONSHORT_LOW_T_CALLER.md) gives the complete substitution
 and shape reduction and names the actual Lean integration point.
-

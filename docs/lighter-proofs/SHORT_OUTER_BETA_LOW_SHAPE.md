@@ -295,4 +295,3 @@ coefficient denominators, they remain within the stated monomial,
 degree and coefficient budgets. Exact rational symbolic checks
 verified the identities as a transcription check. No Lean compilation
 or CI was run.
-
