@@ -1,6 +1,14 @@
 # Authoritative handoff — hand proof now in progress
 
-**Current analytic increment:** the [variable-floor reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
+**Current conditional theorem:** the
+[small-shape root-to-shear proof](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
+has passed its [separate review](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR_AUDIT.md).
+It proves `q>(29/30)q_c` and the required negative shear under
+`2<=x<=13/6`, `delta<=1/19`, `13/5<=eta<=3`.
+The ratio and displacement hypotheses remain to be established for
+every actual short bridge; H-S and the actual-domain S-gates remain open.
+
+**Accepted scale increment:** the [variable-floor reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
 has a separately reviewed scale-continuation proof using four factored
 derivatives and eight displayed quartics. Its
 [audit](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_AUDIT.md) accepts only the

@@ -2,7 +2,19 @@
 
 Date: 2026-11-08 UTC.
 
-**Latest accepted increment:** the [variable-floor scale reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
+**Latest accepted conditional theorem:** the
+[small-shape root-to-shear proof](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
+and its [separate review](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR_AUDIT.md)
+prove `q>(29/30)q_c` and `sqrt(3) h R+13A/3<0` when
+`2<=x<=13/6`, `delta<=1/19`, and `alpha=1+eta delta` with
+`13/5<=eta<=3`. The proof uses two logarithm tangents, convexity,
+and explicit small polynomial majorants. Its
+[incoming-norm monotonicity lemma](MIXED_SMALLER_SHORT_ROOT_INCOMING_MONOTONICITY.md)
+holds on the entire ordered shape domain. The actual ratio and
+displacement hypotheses and the completion-cost contradiction remain
+open, so this does not close H-S or an actual-domain S-gate.
+
+**Accepted scale increment:** the [variable-floor scale reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
 and [independent reading](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_AUDIT.md)
 replace its old coefficient-minimum continuation test by four derivative
 identities and eight explicit quartics. The two terminal scale signs
@@ -12,9 +24,10 @@ constitute the requested hand proofs; no S-gate is promoted by them.
 
 **Next-work authority:** [HAND_ONLY_COMPLETION_PLAN](HAND_ONLY_COMPLETION_PLAN.md)
 defines the detailed finite S0–S7 and A1 subgates. S0 (x<12/5,
-D,E_L>0) is closed; S1–S7 and A1 remain unchecked. No post-head
-suggestions of x>2, x<13/6, a root-to-shear implication or a conditional
-physical-cost contradiction are accepted *pushed* hand theorems.
+D,E_L>0) is closed; S1–S7 and A1 remain unchecked. The conditional
+root-to-shear theorem above supplies the scalar implication needed by
+S5 once its actual shape hypotheses are proved. The claims x>2,
+x<13/6 and the physical-cost contradiction are not yet accepted.
 
 **Immediate mathematical gap:** the accepted conditional Casimir
 floor requires 2<=x<=15/7 and delta=beta/x-1<=1/19, so x<13/6 alone

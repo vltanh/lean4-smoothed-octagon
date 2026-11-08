@@ -2,7 +2,16 @@
 
 Date: 2026-11-08 UTC. **Authoritative next-work plan.** Read with [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md) and [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md). This note records the state of the pushed branch, not unpushed drafts or computational discoveries.
 
-**Current continuation:** the [variable-floor reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
+**Accepted conditional S5 input:** the
+[small-shape root-to-shear theorem](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
+and its [separate audit](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR_AUDIT.md)
+prove the required negative shear on `2<=x<=13/6`,
+`delta<=1/19`, `alpha=1+eta delta`, `13/5<=eta<=3`.
+It preserves the original physical scale in its conclusion. The
+actual-domain S5 gate still awaits the ratio and displacement results;
+the conditional theorem does not assume or prove the cost contradiction.
+
+**Current ratio continuation:** the [variable-floor reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
 now has a genuinely analytic proof of its tau=2 scale continuation:
 four factored derivative identities and eight fully displayed quartics
 replace the former aggregate coefficient test. Its
