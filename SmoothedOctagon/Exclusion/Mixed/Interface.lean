@@ -13,8 +13,9 @@ structure `NormalPeriod.M2Calculus`. Its existence `NormalPeriod.m2_calculus` is
 `Period/Elliptic.lean` (through `Exclusion/Forward/Wire` and `Exclusion/Mixed/Wire`) with
 `M i = CostateCycle.Mloc i`, `Γ = gam2 0`: the boundary identity `∂J/∂a_i = tr(U V_i)` (CE (8)),
 the turn secants, the switching inequalities, the missing-control inequality and the spectral
-cost–Casimir bound. The lower Casimir bound `cas_gt` is `NormalPeriod.ifc_cas_gt`, which is still
-`sorry` (it needs the whole-period angle winding). Everything else in case M2 is derived from it.
+cost–Casimir bound. The lower Casimir bound `cas_gt` is `NormalPeriod.ifc_cas_gt`, proved from the
+whole-period winding of the costate-metric angles (`Exclusion/Mixed/Density/`). Everything else in
+case M2 is derived from it.
 
 ## Conventions (CE §§2-4, inventory E2 §1.4)
 

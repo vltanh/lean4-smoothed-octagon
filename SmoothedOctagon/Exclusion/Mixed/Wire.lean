@@ -3,6 +3,7 @@ module
 public import SmoothedOctagon.Exclusion.Forward.Wire
 public import SmoothedOctagon.Exclusion.Mixed.Scalar
 public import SmoothedOctagon.Exclusion.Reverse
+public import SmoothedOctagon.Exclusion.Mixed.Density.Bound
 
 /-!
 # Case M2: wiring `Period/Elliptic` to the covector calculus
@@ -20,10 +21,9 @@ The scalar bridges between the case-M2 functions of `Exclusion/Mixed/Scalar` and
   from the spectral cost–Casimir bound; ellipticity comes from `γ² > 0` and a forward switch, which
   exists by case R (`reverse_exclusion`).
 * `NormalPeriod.ifc_cas_gt`: the lower bound `γ² > 27/256` of a competitive mixed period
-  (MIXED_GLOBAL_REVERSE_ANGLE_DENSITY §3). **Not proved here** (`sorry`): it needs the whole-period
-  winding count of the costate-metric angles (MIXED_GLOBAL_PROJECTIVE_WINDING), forward acuteness at
-  `+ +` arcs (MIXED_GLOBAL_PHASE_DENSITY (3)-(4)) and the reverse-centre angle bound `cos φ < 1/4`
-  (MGRAD (1), through the comparison lemma of MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION).
+  (MIXED_GLOBAL_REVERSE_ANGLE_DENSITY §3), `NormalPeriod.cg_cas_gt` of `Exclusion/Mixed/Density`
+  (the whole-period winding `cg_winding`, the forward-piece bound `cg_pp_bound` and the
+  reverse-centre gap `m1_angle_gap`).
 -/
 
 @[expose] public section
@@ -123,16 +123,13 @@ theorem ifc_cas_lt (hc : P.IsCompetitive) : P.costateCycle.gam2 0 < 9193 / 50000
   linarith
 
 /-- **The lower Casimir bound of a competitive mixed period** (MIXED_GLOBAL_REVERSE_ANGLE_DENSITY
-(10)): `γ² > 27/256`. Not proved: it rests on the whole-period winding count of the costate-metric
-angles (`Σ_{++} θ_i + Σ_{--} (π - φ_j) = (P + m - 1) π/3`, MIXED_GLOBAL_PROJECTIVE_WINDING), on
-forward acuteness `e_i > 0` at every `+ +` arc (MIXED_GLOBAL_PHASE_DENSITY (3)-(4), through
-GLOBAL_STRUCTURE_FORWARD_ACUTE) and on the reverse-centre bound `cos φ < 1/4` (MGRAD (1), through the
-comparison lemma of MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION (13)-(16)); none of these is in the
-library yet (the all-short winding `m1_winding` and the comparison `m1_angle_gap` of case M1 are
-themselves open). -/
+(10)): `γ² > 27/256` (`NormalPeriod.cg_cas_gt`; the compact domain is not used). Route: the
+whole-period winding in its telescoped form `∑ δ_n = π/3` (`cg_winding`) instead of the count
+`n/P ≥ 1/3`; the reverse gap `cos φ < 3/10` (`m1_angle_gap`) instead of MGRAD (1) `cos φ < 1/4`;
+the bound `e ≥ 0 ∨ 4e² ≤ d_- d_+` at `+ +` (`cg_pp_bound`) instead of forward acuteness. -/
 theorem ifc_cas_gt (hc : P.IsCompetitive) (hD : P.InCompactDomain) (hmix : P.rep.IsMixed) :
-    27 / 256 < P.costateCycle.gam2 0 := by
-  sorry
+    27 / 256 < P.costateCycle.gam2 0 :=
+  P.cg_cas_gt hc hmix
 
 end NormalPeriod
 
