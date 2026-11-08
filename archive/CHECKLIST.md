@@ -1,4 +1,13 @@
-# Accepted hand-proof ledger
+# Historical hand-proof ledger
+
+**Current correction (8 November 2026):** the checked boxes below are
+the earlier acceptance record, not acceptance under the new polynomial
+size and no-table requirements. The S1 table-dependent hand premise,
+and consequently H-S and its dependent global hand conclusion under
+that standard, remain open. Track the finite requested replacements in
+[the new ledger](../docs/lighter-proofs/README.md), with the
+[three explicit interface repairs](../docs/lighter-proofs/HS_ERRATA.md)
+recorded separately. Existing kernel-checked exclusions are unchanged.
 
 Date: 2026-11-08 UTC. **The hand proof is complete under the explicit
 external classical geometric/PMP inputs.** Start with the
