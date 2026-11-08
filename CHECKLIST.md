@@ -1,6 +1,13 @@
 # Active proof ledger — five finite whole-period cases
 
-**Only authoritative next-step plan: [docs/HANDOFF.md](docs/HANDOFF.md).** The long earlier progress ledgers and abandoned targets are archived, not silently deleted.
+**Authoritative continuation:** [detailed finite hand-only completion plan](docs/HAND_ONLY_COMPLETION_PLAN.md), with the [source-map handoff](docs/HANDOFF.md) and [proof status](docs/HAND_PROOF_STATUS.md). The long earlier progress ledgers and abandoned targets are archived, not silently deleted.
+
+**Hand-only short-case microgates:** S0 closed (x<12/5, D,E_L>0);
+S1 x>2; S2 upper ratio; S3 delta<1/19; S4 uncovered
+15/7<=x<13/6 strip; S5 root-to-shear; S6 physical-cost sign;
+S7 actual H-S assembly; A1 final global audit — all after S0 are
+still open until committed and independently audited. The
+computer-assisted baseline below is not a substitute.
 
 ## Active goal: proof without computer assistance
 
