@@ -130,11 +130,11 @@ For all other rows it is even enough to take \(b=1/2\). Their
 seven exact values, in row order \(k=1,\ldots,7\), are
 \[
 \left(
-\frac{3547605195}{64},\ 
-\frac{11989271565}{64},\ 
-\frac{15575894919}{64},\ 
-\frac{5265366165}{32},\ 
-\frac{1974254445}{32},\ 
+\frac{3547605195}{64},\,
+\frac{11989271565}{64},\,
+\frac{15575894919}{64},\,
+\frac{5265366165}{32},\,
+\frac{1974254445}{32},\,
 \frac{48816675}{4},\ 996300
 \right).
 \tag{10}
