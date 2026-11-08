@@ -4,3 +4,4 @@
 SmoothedOctagon.Exclusion.Mixed.FwdHand.CertLRb
 SmoothedOctagon.Exclusion.Forward.Scalars.Neighbor
 SmoothedOctagon.Exclusion.Forward.Scalars.SumSym
+SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S1OClaimS
