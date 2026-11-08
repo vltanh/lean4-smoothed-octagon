@@ -11,6 +11,13 @@ H-S and H-N-forward. It identifies no additional indispensable executable
 exclusion in the stated global spine. Final hand-only acceptance remains
 open until those two mathematical gaps and their interfaces close.
 
+The [uniform short-pairing lemma](MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
+now proves D>=0 implies E_L>0, with an
+[independent review](MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md).
+It removes the old outer-margin cutoff on this entire branch; any
+nonpositive-pairing point must have x>12/5 and D<0. The negative-diagonal
+root domain and the terminal cost signs remain open.
+
 **Latest hand progress:** the [small-forward-minimum hand proof](SMALL_FORWARD_MINIMUM_HAND_PROOF.md)
 replaces the hard H5 coefficient table by an integral estimate and an
 elementary cubic sign argument, with an

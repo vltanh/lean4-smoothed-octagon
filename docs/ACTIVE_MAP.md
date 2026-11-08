@@ -15,6 +15,12 @@ gives the conditional final chain and its external inputs. Its
 [terminal counting proof](HAND_TERMINAL_COVERAGE.md) removes the last
 word-enumeration dependency. H-S and H-N-forward remain open.
 
+For the short outer-floor sign, use the
+[uniform positive-pairing theorem](MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
+and [independent review](MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md).
+It covers every D>=0 point of the retained exact short geometry;
+the nonpositive-pairing remainder must have x>12/5 and D<0.
+
 The accepted next hand results are the [nonshort duration gap](MIXED_NONSHORT_UPPER_ENVELOPE_GAP.md),
 [forward reductions](HAND_FORWARD_LEMMAS.md), and
 [short-side root envelope](MIXED_SMALLER_SHORT_OUTER_ENVELOPE.md).

@@ -74,6 +74,10 @@ closed computer-assisted gates below do not close these new obligations.
   and `01020`; no terminal word enumerator is needed. The
   [global dependency review](docs/HAND_GLOBAL_DEPENDENCY_AUDIT.md)
   accepts the retained assembly conditional on the two mixed exclusions.
+- [x] [Uniform short pairing](docs/MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
+  proves D>=0 implies E_L>0, with a separate
+  [hand review](docs/MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md).
+  Remaining nonpositive-pairing points have x>12/5 and D<0.
 
 ## Baseline proof checkpoints
 

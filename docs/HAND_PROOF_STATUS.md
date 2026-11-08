@@ -291,6 +291,14 @@ Its cap and physical cost are not transported with that scale change.
 Both reductions have [independent acceptance](HAND_ENDPOINT_REDUCTIONS_AUDIT.md);
 the resulting short-domain exclusion remains open.
 
+The [uniform pairing theorem](MIXED_SMALLER_SHORT_POSITIVE_DIAGONAL_PAIRING.md)
+and its [independent review](MIXED_SMALLER_SHORT_PAIRING_HAND_AUDIT.md)
+now prove D>=0 implies E_L>0 throughout the exact short geometry and
+its first root comparison. The previous outer-margin cutoff is not
+needed on this branch. Any remaining E_L<=0 point must have x>12/5
+and D<0. Excluding that negative-diagonal branch and the remaining
+terminal cost faces is still required for H-S.
+
 The [quantitative swapped-secant theorem](MIXED_NONSHORT_QUANTITATIVE_SWAP_BOUND.md)
 strengthens the common bound to q<(1+x)/(4t+2x-1) when t>=1/4.
 The [forward ratio reduction](MIXED_NONSHORT_FORWARD_RATIO_REDUCTION.md)
