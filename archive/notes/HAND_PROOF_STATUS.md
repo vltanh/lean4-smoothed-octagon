@@ -1,14 +1,13 @@
 # Proof without computer assistance: finite acceptance ledger
 
 **Correction after the lighter-proof request (8 November 2026).** The
-acceptance recorded below is historical. The requested S1 replacements
-and the outer S2.2 ratio replacement are now separately reviewed;
-only the central S2.1 replacement remains open.
-H-S and its dependent global hand conclusion therefore remain open
-under the requested standard. Three reported interface gaps are repaired in
+acceptance recorded below is historical. All fifteen requested
+replacement rows now have separate source, caller and size reviews;
+the finite hand replacement task is complete under the requested
+standard. Three reported interface gaps are repaired in
 [the errata](../../docs/lighter-proofs/HS_ERRATA.md). The
 [current replacement ledger](../../docs/lighter-proofs/README.md)
-separates those repairs from the still-open polynomial signs. This
+records those repairs and the completed replacement proofs. This
 correction makes no change to the completed Lean exclusions outside H-S.
 
 Date: 2026-11-08 UTC. **Authoritative accepted state.**

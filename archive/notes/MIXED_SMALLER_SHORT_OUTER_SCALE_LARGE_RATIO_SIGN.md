@@ -1,5 +1,12 @@
 # The outer-scale envelope is negative at large short ratio
 
+**Replacement status, 2026-11-08:** the [new two-shape proof](../../docs/lighter-proofs/SHORT_SCALE_OUTER_LARGE_RATIO.md)
+proves all three signs (7) on the unchanged closed domain (1)--(2).
+A cubic beta comparison, beta convexity and two boundary
+derivatives replace the coefficient tables below. Every expanded
+identity has degree at most eight and at most 44 monomials; the
+original scale and duration callers are preserved.
+
 Date: 2026-11-08 UTC. Hand polynomial derivation, accepted in the
 [independent outer-scale review](MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_AUDIT.md).
 This note proves the three outer-scale signs used by the

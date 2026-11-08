@@ -1,5 +1,13 @@
 # A hand sign for the central face of the short upper-ratio reduction
 
+**Replacement status, 2026-11-08:** the [new central-ratio assembly](../../docs/lighter-proofs/SHORT_RATIO_CENTRAL_COMPLETE.md)
+proves (5) with the stronger uniform bound `G_tau<-1/6000` on the
+unchanged source domain, incoming ceiling and duration interval.
+A duration tangent, beta monotonicity and fully printed small
+comparison polynomials with explicit analytic remainders replace the
+large signs below. Expanded identities have degree at most eight and
+at most 45 monomials; the original actual caller is preserved.
+
 Date: 2026-11-08 UTC. **Result:** the central scale face cannot carry
 the positive variable-floor test when \(13/6\le x\le12/5\).
 This is a complete scalar proof, accepted after a separate reading

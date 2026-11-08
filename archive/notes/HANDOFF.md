@@ -2,9 +2,10 @@
 
 **Current work (8 November 2026):** use the
 [replacement ledger](../../docs/lighter-proofs/README.md).
-The completion claims below record the previous acceptance. All requested
-S1 replacements and the outer S2.2 ratio row now have separate reviews;
-only the central S2.1 row remains open under the requested standard. Existing Lean
+The completion claims below record the previous acceptance. All fifteen
+requested replacement rows now have separate source, caller and size
+reviews, and the three reported interfaces are repaired. The new ledger
+records completion of that hand replacement task. Existing Lean
 formalizations outside H-S are a separate, unchanged baseline.
 
 Date: 2026-11-08 UTC.
