@@ -1,5 +1,28 @@
 # Authoritative handoff — hand proof now in progress
 
+**START HERE — active finite plan (2026-11-08):** [HAND_ONLY_COMPLETION_PLAN](HAND_ONLY_COMPLETION_PLAN.md).
+This document is the detailed *source map*; the linked plan is the single
+ordered list of remaining hand-only gates, their scope, deliverables,
+acceptance tests, and commit/handoff procedure. The finite status ledger
+remains [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md).
+
+**Verified pushed status:** H-F and both H-N successors are closed by
+hand. The only unfinished uniform whole-period exclusion is H-S
+(smaller-short); H-A is a conditional global audit. The pushed
+large-ratio theorem has already established x<12/5 and D,E_L>0.
+Do **not** mark the hand proof complete merely because the
+computer-assisted theorem is complete.
+
+**Concrete restart:** work through S1/S2 (the actual short ratio), S3
+(the exact shape displacement), S4 (cover the ratio interval omitted
+by the conditional Casimir theorem), S5 (actual root-to-shear),
+S6 (strict physical cost contradiction), S7 (full H-S theorem and
+audit), then A1 (global acceptance). The accepted Casimir floor
+assumes x<=15/7 and delta<=1/19; a proposed x<13/6 leaves
+15/7<=x<13/6 uncovered. Unpushed claims about sharper ratios,
+root-to-shear or conditional cost are leads, **not** accepted proofs.
+
+
 **Active request (2026-11-07): find a hand proof that does not depend on computer assistance.** The finite replacement ledger is [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md). New explicit inequalities are in [HAND_PROOF_REFINEMENTS](HAND_PROOF_REFINEMENTS.md). That goal is not yet complete: the interval exclusions below are the completed computational baseline, not hand-only premises. Preserve the baseline and replace its indispensable computational dependencies by readable arguments.
 
 **Current continuation (2026-11-08):** H-F and H-N are complete by
