@@ -10,6 +10,11 @@ whose corners are cut off by arcs of hyperbolas, with greatest packing density
 and that it is the only worst shape up to affine maps. Kurt Mahler reached the same octagon
 independently in 1947. The conjecture has been open since.
 
+This repository proves the conjecture in Lean 4, with Mathlib, together with its equality case. The
+informal proof it formalizes was written by ChatGPT (ChatGPT Pro, OpenAI). No person has checked
+the proofs; Lean's kernel checks all of them, and every theorem depends only on Lean's standard
+axioms `propext`, `Classical.choice` and `Quot.sound`.
+
 ![The smoothed octagon in its densest packing, the copies sliding through the continuum of densest packings while staying in contact](docs/figures/worst-packer.gif)
 
 The smoothed octagon packs most densely as a lattice packing, and it can do so in a continuum of
@@ -28,7 +33,7 @@ straight middle part of length `2 − √2`.
 
 ## Statements
 
-All definitions are in [`Challenge.lean`](Challenge.lean), which imports only Mathlib. They are
+All definitions are in [`ReinhardtChallenge.lean`](ReinhardtChallenge.lean), which imports only Mathlib. They are
 copied word for word from [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon),
 the formalization of Hales and Vajjha's *Packings of Smoothed Polygons* on which this project
 builds. `greatestPackingDensity K` is the supremum of the densities of packings of the plane by
@@ -77,36 +82,30 @@ of cost below `π`, with any measurable control, bounds such a disk.
 
 ## Status
 
-This repository is a Lean 4 proof of the conjecture, with Mathlib, in progress. The informal proof
-it formalizes was written by ChatGPT (OpenAI, ChatGPT Pro) in [`docs/`](docs/HANDOFF.md). Nothing
-here is a claim that the conjecture is proved until the build reports no `sorry` and no hypothesis
-remains.
+[`ReinhardtSolution.lean`](ReinhardtSolution.lean) restates the four theorems of
+[`ReinhardtChallenge.lean`](ReinhardtChallenge.lean) word for word and proves them from the library,
+with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 96,916 declarations of the
+library, and the four theorems, depend only on the standard axioms.
 
-The main theorem is proved in Lean from the stages below
-([`LowerBound.lean`](SmoothedOctagon/LowerBound.lean), [`Main.lean`](SmoothedOctagon/Main.lean)),
-under one named hypothesis, `Certificates.IntervalCovers`: the smaller-short interval cover of case
-M2, stated exactly as its C++ program certifies it. A kernel-checked certificate for it is being
-written ([`Interval/`](SmoothedOctagon/Interval)). Case F and the rest of case M2 follow hand
-arguments, with no interval cover.
+| Stage | Lean |
+| --- | --- |
+| Foundations: realization of a worst disk, reverse comparison for arbitrary measurable controls | [`Foundations/`](SmoothedOctagon/Foundations) |
+| Reduction: compact domain (Hales–Vajjha's Theorem 5.0.2), Pontryagin lift, clearance, edge bound, finitely many switches, normality | [`Reduction/`](SmoothedOctagon/Reduction) |
+| The partition of switch-sign sequences into five classes | [`Period/Partition.lean`](SmoothedOctagon/Period/Partition.lean) |
+| Cases R, M3, M1, F, M2 | [`Exclusion/`](SmoothedOctagon/Exclusion) |
+| Terminal comparison: at most five pieces | [`Terminal/`](SmoothedOctagon/Terminal) |
+| Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) |
+| The statements in the Challenge's vocabulary | [`Main.lean`](SmoothedOctagon/Main.lean), [`Bridge/`](SmoothedOctagon/Bridge) |
 
-Hales and Vajjha's compactness theorem (Theorem 5.0.2 of their book) is no longer a hypothesis: it
-is proved in lean4-smoothed-polygon (`SmoothedPolygons.theorem5_0_2`) and applied to a global
-minimizer in [`Reduction/CompactDomain.lean`](SmoothedOctagon/Reduction/CompactDomain.lean).
-
-| Stage | Lean | State |
-| --- | --- | --- |
-| Foundations: realization and reverse comparison | [`Foundations/`](SmoothedOctagon/Foundations) | proved |
-| Compact domain, PMP lift, clearance, edge bound, finitely many switches, rebasing, normality | [`Reduction/`](SmoothedOctagon/Reduction) | proved |
-| Sign partition | [`Period/Partition.lean`](SmoothedOctagon/Period/Partition.lean) | proved |
-| Cases R and M3 | [`Exclusion/`](SmoothedOctagon/Exclusion) | proved |
-| Case M1 | [`Exclusion/ShortRuns.lean`](SmoothedOctagon/Exclusion/ShortRuns.lean) | proved |
-| Case F | [`Exclusion/Forward.lean`](SmoothedOctagon/Exclusion/Forward.lean) | proved, without interval covers |
-| Case M2 | [`Exclusion/Nonshort.lean`](SmoothedOctagon/Exclusion/Nonshort.lean) | proved, from the smaller-short interval cover |
-| Terminal comparison | [`Terminal/`](SmoothedOctagon/Terminal) | proved |
-| Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) | proved |
-| The Challenge's statements | [`Main.lean`](SmoothedOctagon/Main.lean) | proved from the above |
-
-`Solution.lean` will restate the Challenge word for word once no `sorry` and no hypothesis remain.
+The informal proof was partly computer-assisted: it used seven interval-arithmetic covers run in C++
+with MPFR. Six of them have been replaced by hand arguments (case F, and the reverse, low-scale and
+forward parts of case M2), and their Lean proofs follow those arguments. The seventh, the
+smaller-short cover of case M2, is checked by Lean's kernel itself:
+[`Interval/`](SmoothedOctagon/Interval) is a verified interval arithmetic (outward-rounded
+fixed-point intervals, proved enclosures of `√`, `log` and `arctan`, a sound branch-and-bound checker),
+and [`Interval/SmallerShort/`](SmoothedOctagon/Interval/SmallerShort) is a certificate of 337,399 boxes
+checked by `decide`, without `native_decide`. Several steps of the informal proof are proved by
+shorter routes than the notes; each docstring that departs from them says so in a `Route:` line.
 
 ## Prior work
 
@@ -122,16 +121,24 @@ Polygons* (2024). [docs/prior-work.md](docs/prior-work.md) gives the full histor
 ```sh
 lake exe cache get
 lake build
+lake env lean scripts/Audit.lean          # every declaration uses only the standard axioms
+lake env lake comparator --config=comparator.json   # needs bubblewrap; the Solution proves the Challenge
+python3 scripts/sync_challenge_defs.py --check     # the Challenge's definitions are the library's
 python3 scripts/figures/make_figures.py   # the figures, with every illustrated fact asserted
 ```
 
-Lean and Mathlib are pinned at `v4.36.0-rc2`. The project depends on lean4-smoothed-polygon, at a
-development commit for now.
+Lean and Mathlib are pinned at `v4.36.0-rc2`. The project depends on
+[lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) (Hales–Vajjha's book,
+including the Pontryagin lift of a minimizer and Theorem 5.0.2) and, through it, on
+[lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control) (the maximum principle).
+A full build takes about an hour on 16 cores: the interval certificate alone is about 4 CPU-hours of
+kernel time, and some certificate files need up to 10 GB of memory each.
 
 ## Layout
 
 ```text
-Challenge.lean                 the statements of record, in Mathlib's vocabulary
+ReinhardtChallenge.lean        the statements of record, in Mathlib's vocabulary
+ReinhardtSolution.lean         their proofs from the library
 SmoothedOctagon/
   Foundations/                 geometry ↔ control: realization, reverse comparison
   Reduction/                   minimizer → finite normal period
@@ -139,20 +146,22 @@ SmoothedOctagon/
   Exclusion/                   the five cases R, M3, M1, F, M2
   Terminal/                    periods with at most five pieces
   Equality/                    rigidity and its converse
-  Certificates/                the remaining interval covers (hypotheses, to be replaced)
+  Certificates/                the scalar statements of the informal proof's interval covers
+  Interval/                    verified interval arithmetic and the kernel-checked certificate
   Bridge/                      translation, affine maps and the octagon in the Challenge's terms
   LowerBound.lean, Main.lean   the assembly
 Cited/HalesVajjha/             Definition 5.0.1 of Hales–Vajjha (the compact domain)
 docs/                          the informal proof notes (ChatGPT Pro), prior work, figures
-scripts/figures/               the numeric model of the octagon and the figure generator
+scripts/                       the audit, the definitions check, the figures and the certificate generators
 ```
 
 ## Credits
 
-The-Anh Vu-Le directs the work. ChatGPT Pro (OpenAI) wrote the informal proof, with its
-computer-assisted parts, in [`docs/`](docs/HANDOFF.md). Claude Opus 5.5 (Anthropic), in Claude Code,
-writes the Lean formalization, the figures and this documentation. The geometric and
-control-theoretic foundations come from lean4-smoothed-polygon and lean4-optimal-control.
+The-Anh Vu-Le directed the work. ChatGPT Pro (OpenAI) found the proof, in the notes of
+[`docs/`](docs/HANDOFF.md), first with computer-assisted parts and then replacing most of them by
+hand. Claude Opus 5.5 (Anthropic), in Claude Code, wrote the Lean formalization (with sub-agents),
+the verified interval arithmetic and certificate, the figures and this documentation. The geometric
+and control-theoretic foundations come from lean4-smoothed-polygon and lean4-optimal-control.
 
 ## License
 

@@ -1,0 +1,54 @@
+
+/-!
+# Axiom audit
+
+Run with `lake env lean scripts/Audit.lean` after `lake build` (regenerate the imports first with
+`python3 scripts/gen_audit.py`). Every module of the libraries is imported with `import all`, so
+that the proofs are visible. The audit prints the axioms of the theorems of `ReinhardtSolution.lean` (the
+statements of `ReinhardtChallenge.lean`) and fails if any declaration of the libraries, or any of those
+theorems, depends on an axiom other than Lean's standard `propext`, `Classical.choice` and
+`Quot.sound` (a `sorry` would show up as `sorryAx`).
+-/
+
+open Lean Elab Command
+
+namespace Audit
+
+/-- The theorems that Palomar's comparator checks (`theorem_names` of `comparator.json`). -/
+meta def solutionResults : List Name :=
+  [``ReinhardtChallenge.reinhardt, ``ReinhardtChallenge.reinhardt_equality,
+   ``ReinhardtChallenge.reinhardt_cost, ``ReinhardtChallenge.octagon_area]
+
+/-- Lean's standard axioms. -/
+meta def standardAxioms : List Name := [``propext, ``Classical.choice, ``Quot.sound]
+
+/-- Whether `m` is a module of the project's libraries. -/
+meta def isLibraryModule (m : Name) : Bool :=
+  (`SmoothedOctagon).isPrefixOf m || (`Cited).isPrefixOf m || m == `ReinhardtSolution
+
+elab "#audit" : command => do
+  let env ← getEnv
+  let mut bad : Array (Name × Array Name) := #[]
+  let mut count : Nat := 0
+  for m in env.header.moduleNames, d in env.header.moduleData do
+    if isLibraryModule m then
+      for c in d.constNames do
+        if c.isInternal then continue
+        count := count + 1
+        let axs ← liftCoreM <| collectAxioms c
+        let extra := axs.filter (fun a => !standardAxioms.contains a)
+        if !extra.isEmpty then bad := bad.push (c, extra)
+  for t in solutionResults do
+    let axs ← liftCoreM <| collectAxioms t
+    logInfo m!"{t}: {axs}"
+    let extra := axs.filter (fun a => !standardAxioms.contains a)
+    if !extra.isEmpty then bad := bad.push (t, extra)
+  if bad.isEmpty then
+    logInfo m!"audit: {count} declarations of the libraries depend only on the standard axioms"
+  else
+    for (c, e) in bad.toList.take 50 do logError m!"{c} depends on {e}"
+    throwError m!"audit failed: {bad.size} declarations use non-standard axioms"
+
+end Audit
+
+#audit

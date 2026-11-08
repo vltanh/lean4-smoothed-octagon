@@ -1,7 +1,7 @@
 name = "SmoothedOctagon"
 version = "0.1.0"
 keywords = ["math", "reinhardt", "packing"]
-defaultTargets = ["Cited", "SmoothedOctagon", "Challenge", "Solution"]
+defaultTargets = ["Cited", "SmoothedOctagon", "ReinhardtChallenge", "ReinhardtSolution"]
 
 [leanOptions]
 pp.unicode.fun = true
@@ -29,7 +29,7 @@ name = "SmoothedOctagon"
 globs = ["SmoothedOctagon", "SmoothedOctagon.+"]
 
 [[lean_lib]]
-name = "Challenge"
+name = "ReinhardtChallenge"
 
 [[lean_lib]]
-name = "Solution"
+name = "ReinhardtSolution"

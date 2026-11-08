@@ -1,32 +1,34 @@
-# Sources and attribution
+# Credits
 
-The mathematical program is based on Karl Reinhardt's conjecture and the optimal-control
-development of Thomas Hales and Koundinya Vajjha,
-[*Packings of Smoothed Polygons*](https://arxiv.org/abs/2405.04331).
+The-Anh Vu-Le directed the work and is the author and maintainer of this repository.
 
-The concrete Lean geometry, packing-density definitions, candidate construction, and cited
-theorems are reused by dependency from
-[`vltanh/lean4-smoothed-polygon`](https://github.com/vltanh/lean4-smoothed-polygon), pinned to
-`8ce732873a1aa054e98dac46cfaa8d7bb96ffa6f`. Its contributors and provenance are recorded
-in the [upstream credits](https://github.com/vltanh/lean4-smoothed-polygon/blob/8ce732873a1aa054e98dac46cfaa8d7bb96ffa6f/CREDITS.md).
-That project is distributed under Apache-2.0; this project uses the same license.
+## The informal proof
 
-The source contributions in this PR include the explicit global targets, the quantitative
-rational switching certificate, and constructions completing the actual-minimizer balanced
-reduction and the geometric/control comparison in both directions. Hand proofs and source drafts are reviewed
-within this assistant session. The analytic normalization and reduction arguments implement
-known mathematical ideas and the pinned upstream geometric results; this is not a claim of
-new priority for those ideas or of kernel verification.
+ChatGPT Pro (OpenAI) found the proof, in the research notes of [`docs/`](docs/HANDOFF.md), starting
+from Thomas Hales's formulation of the problem as optimal control on `SL₂(ℝ)` and from Hales and
+Vajjha's [*Packings of Smoothed Polygons*](https://arxiv.org/abs/2405.04331). The notes first closed
+the argument with seven interval-arithmetic covers computed in C++ with MPFR
+([`explorations/`](explorations/README.md)), then replaced six of them by hand arguments
+([`docs/HAND_PROOF_STATUS.md`](docs/HAND_PROOF_STATUS.md)).
 
-The logarithmic-angle construction in `LowCostWinding.lean` adapts the proof in upstream
-`Basic/Analysis/Convex/StarCurve.lean` to nonvanishing `C¹` arcs without simplicity or
-periodicity hypotheses. The original implementation remains credited to that pinned
-dependency and is reused under its Apache-2.0 license.
+## The Lean proof
 
-The singular-control developments implement the published pointwise and singular-interval
-arguments in Hales–Vajjha, Chapter 8. Their generality and remaining optimality obligations
-are stated in the corresponding hand proofs; they are not claimed as new mathematical
-priority or as a proof of the full Reinhardt conjecture.
+Claude Opus 5.5 (Anthropic), in Claude Code, wrote the Lean formalization from 7 to 8 November 2026,
+coordinating sub-agents that inventoried the notes, stated each stage, and proved the stages in
+parallel; it also wrote the verified interval arithmetic and the kernel-checked certificate of the
+remaining cover, the figures and the playground, and this documentation. The procedure followed the
+[formalize-math-paper](https://github.com/vltanh/formalize-math-paper) skill (version 3.0.0), with
+shorter routes than the notes allowed wherever they exist (marked `Route:` in the docstrings).
 
-mathlib supplies the logarithm inequalities, real algebra, measure theory, and Lean proof
-infrastructure. Its exact revision is recorded in the package configuration and source map.
+The formalization builds on two Lean libraries by the same author:
+[lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) (Hales and Vajjha's book:
+the packing problem, critical lattices, Fejes Tóth's theorem, the control reformulation, the
+Pontryagin lift of a minimizer, Theorem 5.0.2, the smoothed octagon and its density) and
+[lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control) (Filippov's theorem and the
+Pontryagin maximum principle). The definitions of `ReinhardtChallenge.lean` are copied from the
+first, which is distributed under Apache-2.0 like this project.
+
+## History of the problem
+
+[`docs/prior-work.md`](docs/prior-work.md) lists the work on the Reinhardt problem since 1934 with
+references.

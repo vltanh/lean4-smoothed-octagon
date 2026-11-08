@@ -13,7 +13,7 @@ public import Mathlib.LinearAlgebra.AffineSpace.AffineEquiv
 
 The main theorems, first in the library's vocabulary (`fullReinhardtConjecture`: the smoothed
 octagon is a worst disk, and every worst disk is a linear image of it), then in the vocabulary of
-`Challenge.lean`: arbitrary centres of symmetry, invertible affine maps, the octagon as the convex
+`ReinhardtChallenge.lean`: arbitrary centres of symmetry, invertible affine maps, the octagon as the convex
 hull of the six arcs of its trajectory, and the constant written `(8 - 4√2 - log 2)/(2√2 - 1)`.
 
 Both are conditional on the one remaining named hypothesis of the proof, the interval covers
@@ -31,7 +31,7 @@ open SmoothedPolygons MeasureTheory Set
 theorem fullReinhardtConjecture (hcov : Certificates.IntervalCovers) : FullReinhardtConjecture :=
   ⟨reinhardtConjecture hcov, worstDisk_eq_linear_image hcov⟩
 
-/-! ### The statements of `Challenge.lean`, under the hypothesis -/
+/-! ### The statements of `ReinhardtChallenge.lean`, under the hypothesis -/
 
 /-- `Challenge.reinhardt`, under the hypothesis. -/
 theorem reinhardt_of (hcov : Certificates.IntervalCovers) (K : Set (Fin 2 → ℝ))

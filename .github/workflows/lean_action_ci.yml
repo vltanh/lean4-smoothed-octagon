@@ -1,0 +1,41 @@
+name: Lean Action CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+
+    steps:
+      - uses: actions/checkout@v4
+      # Toolchain, the Mathlib cache and the GitHub cache of .lake; the build itself follows.
+      - uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          use-mathlib-cache: true
+          use-github-cache: true
+      # The generated certificate files need several GB of memory each; build the largest ones one
+      # at a time before the parallel build, so that the 16 GB runner never holds several at once.
+      - name: Build the large certificate modules one at a time
+        run: |
+          find SmoothedOctagon -name '*.lean' -size +150k | sort \
+            | sed 's/\.lean$//; s#/#.#g' | while read m; do
+              echo "::group::$m"; lake build "$m"; echo "::endgroup::"
+            done
+      - name: Build everything
+        run: lake build
+      - name: Check that the audit imports every module
+        run: python3 scripts/gen_audit.py && git diff --exit-code scripts/Audit.lean
+      - name: Audit axioms (only propext, Classical.choice, Quot.sound)
+        run: lake env lean scripts/Audit.lean
+      - name: Check that the Challenge's copy of the shared definitions is current
+        run: python3 scripts/sync_challenge_defs.py --check
+      - name: Check the Markdown tables
+        run: python3 scripts/check_md_tables.py README.md CREDITS.md docs/prior-work.md
