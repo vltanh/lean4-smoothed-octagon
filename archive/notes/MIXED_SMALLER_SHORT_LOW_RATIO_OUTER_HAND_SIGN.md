@@ -1,10 +1,13 @@
 # The three outer corrected-cap faces when x is at most two
 
-**Partial lighter replacement:** the actual small-shape branch B now has a
+**Partial lighter replacement:** both signs in branch S now have a
+[complete small-identity proof](../../docs/lighter-proofs/SHORT_OUTER_S_TERMINAL.md)
+on the unchanged domain, with lower bound \(499/884000\). The actual
+small-shape branch B has a
 [proof of its \(F_0\) sign](../../docs/lighter-proofs/SHORT_OUTER_LOW_SHAPE_TERMINAL.md)
 using small derivative identities and a scalar endpoint bound. It covers
 the original actual caller, including its shape cap, rather than all extra
-points in the generated B row. The \(F_1\) sign and the S/A branches still
+points in the generated B row. Branch B's \(F_1\) sign and branch A still
 require replacements under the requested no-table standard; this does not
 close S1. The original source argument remains below.
 

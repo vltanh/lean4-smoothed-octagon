@@ -34,7 +34,7 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 
 | Priority | Gate and note | Replacement status |
 |---|---|---|
-| S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | Full sign open; first H-S priority. The [actual small-shape branch's `F0` sign](SHORT_OUTER_LOW_SHAPE_TERMINAL.md) is complete. Its `F1` sign and the S/A branches remain open; [beta concavity](SHORT_OUTER_BETA.md) is available for `F1`. |
+| S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | Full sign open; first H-S priority. Both tests in [branch S](SHORT_OUTER_S_TERMINAL.md) are complete, with margin `499/884000`. The [actual small-shape branch B's `F0` sign](SHORT_OUTER_LOW_SHAPE_TERMINAL.md) is complete. Branch A and branch B's `F1` sign remain open. |
 | S1.2 | `MIXED_SMALLER_SHORT_LOW_RATIO_CENTRAL_HAND_SIGN` (20)--(25), Appendices A--C | Open. |
 | S1.3 | `MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_SIGN` (7) | Open. |
 | S1.4 | `MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN` (3) and `MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES` (5) | Open. |
@@ -177,6 +177,28 @@ degree-six derivative identity and a factored curvature proof. Its direct
 incoming-norm majorant has 19 monomials and degree five in two variables.
 It gives a rigorously bounded error at `x=2` of at most `1/8608908`.
 This is a reusable bound, not a completed S1, S3 or S4 replacement.
+
+The [outer S-branch replacement](SHORT_OUTER_S_TERMINAL.md) now closes both
+tests on the unchanged S domain. The [norm and beta reductions](SHORT_OUTER_S_BETA.md)
+prove `w>3/4` and a quantified beta-derivative loss, after which
+[reciprocal-shape concavity](SHORT_OUTER_S_RECIPROCAL.md) reduces the sign
+to `a=1` and `a=x`. One-variable derivative signs give a `1/1000` margin
+at the fixed beta slope; subtracting the derivative loss leaves
+`499/884000`. The proof uses no interval subdivision, and keeps the
+original cubic logarithm bound. Its largest two-variable certificate has
+37 monomials and degree eight; all expanded coefficients, including
+separate source contributions, have at most twelve digits. Independent
+checks reconstructed the source, the printed polynomial identities,
+the derivative bounds, and the scalar endpoint roundings.
+
+Two auxiliary lemmas support the remaining A/B reductions. The
+[wider-norm beta lemma](SHORT_OUTER_BETA_WIDE_NORM.md) proves concavity of
+`F1` in beta for `3/4<=u<=19/25` on the small-shape rectangle, with a
+16-monomial, degree-six source identity. The
+[reciprocal-shape residue lemma](SHORT_OUTER_RECIPROCAL_RESIDUE.md)
+proves the common pole coefficient negative using six degree-six
+univariate signs. Both have been checked against the original transport
+formulas. These auxiliary lemmas do not alone close an additional branch.
 
 The [high-ratio lower-shape proof](NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md)
 uses the same constant multipliers 4 and 1. It first proves `-H^2 S>30000`
