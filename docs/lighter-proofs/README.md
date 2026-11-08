@@ -17,7 +17,7 @@ generated coefficient tables remain an open hand-proof dependency.
 | Priority | Requested sign | Replacement status |
 |---|---|---|
 | N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | Open; first priority. |
-| N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | Full sign open. Its [base-quadratic subclaim](NONSHORT_LOW_RATIO.md) is replaced by three 21-monomial degree-eight square identities, with margin greater than 4. |
+| N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | Full sign open at the algebraic collection link. The [base quadratic](NONSHORT_LOW_RATIO.md), [three monotonicity claims](NONSHORT_LOW_RATIO_MONOTONICITY.md), and [higher-gap remainder](NONSHORT_LOW_RATIO_REMAINDER.md) have small sign proofs. |
 | N3 | `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`, `k=1+j` | Open. |
 | N4a | `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13), `k=29t²/4` | Open. |
 | N4b | The same caller's upper face, `k=1+j` | **Hand dependency removed**, conditional on the retained N4a sign; [shape monotonicity proof](NONSHORT_HIGH_RATIO_SHAPE.md). Lean integration remains open. |
@@ -32,7 +32,7 @@ argument replaces `hB` and `fh_comb_pos_of_ends`.
 
 | Priority | Gate and note | Replacement status |
 |---|---|---|
-| S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | Open; first H-S priority. |
+| S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | Open; first H-S priority. The [first residual's beta concavity](SHORT_OUTER_BETA.md) and [second residual's beta reduction on the low-shape outer strip](SHORT_OUTER_BETA_LOW_SHAPE.md) are proved; the bivariate terminal signs remain open. |
 | S1.2 | `MIXED_SMALLER_SHORT_LOW_RATIO_CENTRAL_HAND_SIGN` (20)--(25), Appendices A--C | Open. |
 | S1.3 | `MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_SIGN` (7) | Open. |
 | S1.4 | `MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN` (3) and `MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES` (5) | Open. |
@@ -68,8 +68,38 @@ All necessary polynomials and the size counts are printed in the notes.
 Independent mathematical and exact-algebra reviews accepted the
 high-ratio caller reduction and the low-ratio base quadratic; the three
 corrections were separately reviewed against their actual domains and
-source callers. The base quadratic is a subordinate replacement and
-does not close N2's remaining monotonicity and remainder obligations.
+source callers. The N2 sign components are subordinate replacements.
+Their remaining obligation is a derivation, within the expansion budget,
+from the original rational residual to the displayed factored coefficient
+functions. An exact symbolic check of that large collection is not accepted
+as that derivation.
+
+## Additional completed reductions
+
+The [N2 base quadratic](NONSHORT_LOW_RATIO.md) is greater than 4 on its
+full domain; its three square identities each have 21 monomials and total
+degree eight. The [N2 monotonicity proof](NONSHORT_LOW_RATIO_MONOTONICITY.md)
+gives derivative lower bounds 3500, 12400 and 5400. The
+[N2 remainder proof](NONSHORT_LOW_RATIO_REMAINDER.md) gives
+`C3>700`, `C4>3900`, and nonnegative remaining coefficients.
+Both latter proofs use explicitly printed univariate factors with at most
+nine monomials and degree at most eight. They do not supply the outstanding
+collection link.
+
+The two S1 outer reductions preserve the norm dependencies. For the first
+residual, beta concavity at fixed norm reduces beta to its two admissible
+endpoints, followed by norm concavity. For the second residual on its
+low-shape strip, both the uniform-floor curve and the beta-dependent
+upper-norm curve decrease in beta. The latter total derivative is less
+than `-143/1274880`; freezing that upper norm during beta comparison
+would not justify the reduction. These results leave respectively four
+and two bivariate terminal signs; no terminal sign is claimed from them.
+
+The [shared rational logarithm bound](LOG_BOUND.md) has a seven-monomial,
+degree-six derivative identity and a factored curvature proof. Its direct
+incoming-norm majorant has 19 monomials and degree five in two variables.
+It gives a rigorously bounded error at `x=2` of at most `1/8608908`.
+This is a reusable bound, not a completed S1, S3 or S4 replacement.
 
 ## Validation boundary
 
