@@ -1,22 +1,24 @@
-# Hand-only global dependency review and conditional assembly
+# Hand-only global dependency review and final assembly
 
-Date: 2026-11-08. Internal mathematical dependency review of the hand
-route, incorporating the [terminal hand count](HAND_TERMINAL_COVERAGE.md)
-and the [completed nonshort hand proof](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md).
+Date: 2026-11-08. **Final internal mathematical acceptance: H-A is
+closed.** This review incorporates the
+[terminal hand count](HAND_TERMINAL_COVERAGE.md), both nonshort
+successor proofs, and the completed
+[smaller-short hand theorem](MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md).
 No Lean, Lake, typechecking, CI, interval replay or executable sign
 check is a premise of this review.
 
 **Scope.** The global reduction, finite-before-normal ordering,
 whole-period interfaces, terminal classification and affine transport
-can be assembled using hand arguments and explicitly named external
-geometric/PMP results. Both nonshort successor alternatives are now
-proved by hand and their actual-period interfaces are accepted. H-S
-remains a genuine mathematical premise. This review does not close it
-or relabel the earlier computational assembly as a proof without
-computer assistance. Gate H-A remains conditional on the complete
-short-case proof and its actual-period interface.
+now give the complete [hand theorem](HAND_COST_EQUALITY_THEOREM.md),
+using only hand arguments and the named external geometric/PMP results.
+H-F, both H-N successors and H-S have accepted scalar and actual-period
+reviews. The final [finite-period audit](HAND_FINITE_PERIOD_ASSEMBLY_AUDIT.md)
+and [inequality/equality audit](HAND_GLOBAL_EQUALITY_FINAL_AUDIT.md)
+separately accept the two halves of the global assembly. The earlier
+computational baseline remains a separate, preserved argument.
 
-## 1. What is asserted conditionally
+## 1. Accepted theorem and complete exclusion inputs
 
 Write
 
@@ -26,7 +28,7 @@ Write
 A_{\mathrm{oct}}=\sqrt{12}\,\delta_{\mathrm{oct}}.
 \]
 
-The sole remaining sufficient hand statement is the following.
+The last previously missing whole-period statement is now proved:
 
 - **H-S.** At a globally smallest active reverse-centre margin of any
   actual competitive finite normal mixed minimizing period with at
@@ -38,14 +40,16 @@ both actual successor signs by the
 [forward hand theorem](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md) and
 [reverse hand theorem](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md).
 
-The H-S statement must include equal smaller-turn choices, unequal
-positive factors, the genuine incoming and outgoing switches, the
-original common covector, and the original complete-period cost cap.
-The scalar domains may be enlarged for a contradiction, but no
-artificial comparison point acquires an unproved physical closure,
-Hamiltonian inequality or Casimir cap.
+The [H-S theorem](MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md)
+includes equal smaller-turn choices, unequal positive factors, genuine
+incoming and outgoing switches, the original common covector and the
+original complete-period budget. Its
+[period audit](MIXED_SMALLER_SHORT_HAND_PERIOD_AUDIT.md) and
+[separate scope audit](MIXED_SMALLER_SHORT_HAND_PERIOD_SCOPE_AUDIT.md)
+accept this interface. Enlarged scalar domains do not acquire an
+unproved physical closure, Hamiltonian inequality or competitive cap.
 
-If H-S is proved by hand with that scope, the retained chain yields
+With every exclusion input now proved by hand, the retained chain yields
 
 \[
 C\ge A_{\mathrm{oct}}
@@ -56,8 +60,8 @@ for every original integral-form admissible competitor, and
 planar convex disk, with equality precisely for invertible affine
 images of the concrete smoothed octagon.
 
-The following sections verify this implication and identify its exact
-external boundary. They do not claim its pending short-case premise.
+The following sections verify the complete implication and identify
+its exact external boundary.
 
 ## 2. The original competitor class and the disk retained for equality
 
@@ -141,9 +145,9 @@ pieces, the following partition is sufficient.
 | --- | --- |
 | Entirely reverse | [GLOBAL_REVERSE_PERIOD_EXCLUSION](GLOBAL_REVERSE_PERIOD_EXCLUSION.md) applies at a cyclic minimum and excludes every length. |
 | Mixed with a reverse run other than length two | [MIXED_GLOBAL_MINIMUM_STRUCTURE](MIXED_GLOBAL_MINIMUM_STRUCTURE.md) excludes it by the reverse four-arc obstruction and strict three-arc log-concavity. |
-| Mixed with all forward runs of length one | The two-centre cost argument in [MIXED_GLOBAL_SHORT_RUN_PERIOD](MIXED_GLOBAL_SHORT_RUN_PERIOD.md) and the angle contradiction in [MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION](MIXED_GLOBAL_SHORT_RUN_ANGLE_EXCLUSION.md) supply a uniform hand exclusion. |
 | Entirely forward | [HAND_FORWARD_PERIOD_EXCLUSION](HAND_FORWARD_PERIOD_EXCLUSION.md), with its scalar norm proofs, excludes every eligible length at least six. |
-| Mixed with a nonshort forward run | Choose the smaller adjacent turn at a global minimum reverse centre. H-S or H-N applies according to its actual run; H-N splits by the actual successor sign. H-N is complete for both actual successor signs; H-S remains open. |
+| Surviving mixed period, chosen smaller turn on a short run | [MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION](MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md) excludes it, including periods with all forward runs short. |
+| Surviving mixed period, chosen smaller turn on a nonshort run | The [forward](MIXED_NONSHORT_FORWARD_HAND_EXCLUSION.md) and [reverse](MIXED_NONSHORT_REVERSE_HAND_EXCLUSION.md) hand theorems exclude the two actual successor signs. |
 
 The all-forward application is genuinely a whole-period argument.
 Its twist gives \(N\equiv1\pmod3\), so \(N\ge6\) implies
@@ -171,7 +175,7 @@ word alone would be insufficient.
 
 The direct smaller-turn split does not need the separate claim that
 at least one neighboring forward run is nonshort before making the
-split. If both are short, the H-S hypotheses still hold. Therefore the
+split. If both are short, the accepted H-S theorem applies. Therefore the
 large coefficient tables in the historical short-bridge minimum
 exclusion need not be premises of the hand assembly, as already
 recognized in [HAND_REDUCTION_REVIEW](HAND_REDUCTION_REVIEW.md).
@@ -195,6 +199,19 @@ successor may cross the twisted seam. Artificial scalar points receive
 no physical closure, new covector or competitive cap. The two actual
 successor alternatives are exhaustive, so these accepted results
 close all of H-N.
+
+The final H-S chain first proves the actual strict ratio interval
+2<x<13/6 and displacement delta<1/19. The strong lower order and
+extended upper order supply alpha=1+eta*delta with 13/5<=eta<=3,
+including alpha=1 when delta=0. The extended Casimir proof covers
+the whole interval through 13/6 and gives
+Gamma_actual>1829/10000, covering the former strip beyond 15/7.
+The actual descending root then supplies the negative physical
+shear, and the strict completion-cost theorem contradicts the
+original whole-period budget. Every input has its own sign review;
+the two independent actual-period audits check all comparison
+directions, equalities, ties and the seam. No competitive cap or
+physical period is assigned to the scalar continuation.
 
 ## 5. Terminal coverage has a direct hand proof
 
@@ -228,10 +245,10 @@ The separate arbitrary-trajectory reverse-five comparison is also
 unnecessary: the terminal theorem classifies actual normal minimizers,
 which R already excludes in that orientation.
 
-## 6. Cost and affine equality after the pending premises close
+## 6. Cost and affine equality
 
-Once H-S closes, Section 4 excludes every actual minimizing
-representation with at least six pieces. Section 5 then makes its
+Section 4 now excludes every actual minimizing representation with
+at least six pieces. Section 5 then makes its
 cost exactly \(A_{\mathrm{oct}}\). The minimizing comparison in
 Section 2 proves the unrestricted inequality directly.
 
@@ -276,17 +293,28 @@ geometric area bound were checked against Hales--Vajjha,
 [*Packings of Smoothed Polygons*, Chapters 2 and 5](https://arxiv.org/html/2405.04331v1).
 No later computer-assisted chattering or basin theorem is a premise.
 
-The active hand ledger must therefore continue to distinguish:
+The critical-hexagon density theorem has a parallelogram exception.
+A parallelogram tiles at density one, so it cannot be the retained
+worst disk or an equality disk at the strictly smaller octagon
+density. The [final equality review](HAND_GLOBAL_EQUALITY_FINAL_AUDIT.md)
+checks this exception and the primary-source statements directly.
 
-- a completed computational baseline;
-- proved hand foundations, H-F and all of H-N;
-- the outstanding short-case hand exclusion H-S; and
-- final acceptance of its complete actual-period interface.
+The accepted hand ledger is now complete:
 
-No further indispensable executable exclusion was identified outside
-H-S on this dependency spine. This reviews the stated chain and its
-quantifiers; it does not claim that every historical document has
-been re-proved or that the pending short signs follow automatically.
-In particular, the physical cost comparison under the short scale
-deformation and its terminal signs cannot be supplied by the older
-certificates when declaring a proof without computer assistance.
+- H-F, both H-N successors and H-S have complete hand exclusions;
+- S0--S7 have explicit scalar signs and accepted actual-period scope;
+- the finite-before-normal order and exhaustive uniform period split
+  have their final independent review;
+- arbitrary measurable competitors, the direct terminal count and
+  affine equality of the original disk have a separate final review.
+
+No indispensable executable cover, coefficient-minimum assertion or
+terminal enumerator remains on this dependency spine. Only the
+specified hand portions of mixed historical files are invoked;
+their old computational sections are not premises. This is an
+acceptance of the stated complete chain and its quantifiers, not a
+claim that every historical exploratory note has been re-proved.
+
+The external classical geometric/PMP inputs remain explicit. Internal
+mathematical review is distinct from external peer review and Lean
+kernel verification. No Lean, Lake, typechecking or CI has been run.
