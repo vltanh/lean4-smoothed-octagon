@@ -16,9 +16,9 @@ generated coefficient tables remain an open hand-proof dependency.
 
 | Priority | Requested sign | Replacement status |
 |---|---|---|
-| N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | Open; first priority. For a simpler eligible residual, [shape monotonicity](NONSHORT_LOW_T_SHAPE.md), the [unit face `h=1/4`](NONSHORT_LOW_T_UNIT_FACE.md), and the [outer-gap face `j=5h/7`](NONSHORT_LOW_T_OUTER_FACE.md) are proved. The [higher-derivative bounds](NONSHORT_LOW_T_CURVATURE.md) and [initial derivative](NONSHORT_LOW_T_INITIAL_DERIVATIVE.md) support the remaining reduction in `h`; that reduction and the maximum-duration face remain open. |
+| N1 | `MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN` (1), `k=1` | **Complete hand caller replacement.** The [new unit sign and caller argument](NONSHORT_LOW_T_CALLER.md) use monotonicity in `h`, three proved faces, and shape monotonicity. The actual low-t branch of `fh_small_gap_j` supplies the new necessary condition through `fh_window_comb`. The old residual's standalone scalar statement is not claimed. Lean integration remains open. |
 | N2 | `MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10), `k=1` | **Complete hand replacement.** The [fourth-derivative proof](NONSHORT_LOW_RATIO_LINK.md) closes the original sign using the base quadratic, monotonicity, and factored remainder. The largest expanded identity has 41 monomials and degree eight. Lean integration remains open. |
-| N3 | `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`, `k=1+j` | Open. The new [low-t shape derivative](NONSHORT_LOW_T_SHAPE.md) would remove this endpoint dependency once its different unit-shape residual is proved positive throughout N1's domain. |
+| N3 | `MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`, `k=1+j` | **Hand dependency removed** from the actual low-t caller by the [completed N1 replacement](NONSHORT_LOW_T_CALLER.md). The wider old scalar face is not re-proved; its exact caller and changed intermediate premise are explicit. Lean integration remains open. |
 | N4a | `MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13), `k=29t²/4` | Open. |
 | N4b | The same caller's upper face, `k=1+j` | **Hand dependency removed**, conditional on the retained N4a sign; [shape monotonicity proof](NONSHORT_HIGH_RATIO_SHAPE.md). Lean integration remains open. |
 
@@ -80,7 +80,8 @@ For N1, the new multipliers are `a=7/2-10(q-1)` and
 `m=8j+8(q-1)-1/6`. Their actual necessary condition and rational
 substitution signs are proved in the [shape note](NONSHORT_LOW_T_SHAPE.md).
 Its positive shape derivative reduces both shape endpoints to the unit
-shape, whose full sign is still open. The [unit-face proof](NONSHORT_LOW_T_UNIT_FACE.md)
+shape, whose full sign is now proved by the [caller argument](NONSHORT_LOW_T_CALLER.md).
+The [unit-face proof](NONSHORT_LOW_T_UNIT_FACE.md)
 closes `h=1/4` using a cubic square completion and four univariate signs.
 Every expanded identity in that face proof has at most nine monomials,
 degree at most eight, and coefficients of at most twelve digits.
@@ -112,9 +113,25 @@ actual initial face and the outer comparison's base. It first decreases
 in `y`, then uses a separate negative directional second derivative
 to reduce the resulting line to two scalar endpoints. Every expanded
 identity has at most nine monomials and degree eight; the largest
-cleared coefficient is 492,759,115,600. These derivative lemmas are not
-counted as a complete reduction in `h` until the remaining transport
-argument is proved.
+cleared coefficient is 492,759,115,600. The
+[completed transport argument](NONSHORT_LOW_T_H_REDUCTION.md) combines
+these derivative lemmas through a cubic Taylor lower bound. It uses four
+pieces with simple rational endpoints, and proves `H S>0` throughout
+the original domain. Its 41 printed sign and derivative polynomials
+have at most nine monomials and degree eight.
+
+The [maximum-duration face](NONSHORT_LOW_T_QMAX.md) closes the last
+boundary. It proves `P_j>=500 M` through an explicit sum of positive
+products, uses the [small auxiliary signs](NONSHORT_LOW_T_QMAX_AUXILIARIES.md),
+and obtains `P>39`. The source identity is checked by a sixth derivative
+and six boundary jets; the zero-gap value uses a fifth derivative and
+scalar jets. Its largest printed sign polynomial has 44 monomials and
+degree eight, and every individual expanded coefficient remains within
+twelve digits. Independent reviews checked the source, every printed
+polynomial, all derivative and boundary identities, and the integral
+roundings. The [caller note](NONSHORT_LOW_T_CALLER.md) explicitly replaces
+the actual low-t branch's old multiplier call; it does not infer the new
+negative residual from the old `fh_LGA_core` hypothesis.
 
 The [N2 base quadratic](NONSHORT_LOW_RATIO.md) is greater than 4 on its
 full domain; its three square identities each have 21 monomials and total

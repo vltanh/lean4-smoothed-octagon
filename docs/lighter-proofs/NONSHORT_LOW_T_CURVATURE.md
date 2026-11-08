@@ -2,9 +2,9 @@
 
 ## Scope
 
-This note proves a derivative lemma for the residual `G_n` defined in
-`NONSHORT_LOW_T_SHAPE.md`. It is a partial component of the first-priority
-replacement. It does **not** yet prove the full unit-shape sign or close its caller.
+This note proves derivative lemmas for the residual `G_n` defined in
+[the shape note](NONSHORT_LOW_T_SHAPE.md). They are components of the
+[completed first-priority caller replacement](NONSHORT_LOW_T_CALLER.md).
 
 Put
 \[
@@ -775,7 +775,8 @@ faces, is not asserted here.
 
 ## 6. A quantitative fourth derivative for the next Taylor step
 
-The following stronger auxiliary bound is useful for the pending first-derivative reduction:
+The following stronger auxiliary bound supplies the
+[first-derivative reduction](NONSHORT_LOW_T_H_REDUCTION.md):
 \[
  \boxed{\mathcal H^4S>500000\quad
  (1/3\le t\le3/8,\ 1/4\le x\le4/7,\ 0\le y\le2/7).}

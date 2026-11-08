@@ -531,7 +531,7 @@ This proves R>0, completing (11).
 Equations (8)--(11) now prove P>0. The positive normalization (3)
 proves the terminal-face claim.
 
-## Budget and remaining work
+## Budget and complete reduction
 
 The proof reduces y to a cubic square completion and four univariate signs.
 Every polynomial entering a sign check is printed. The polynomial coefficient
@@ -545,5 +545,6 @@ integer rounding; none is a sampled claim or a generated coefficient table.
 Exact symbolic arithmetic checked the displayed identities, coefficient
 counts and rational comparisons. The proof is the displayed algebra and
 inequalities. No Lean compilation, Lake, typechecking or CI was run.
-The other lower-h faces and a valid reduction to them remain open;
-this note alone does not close the original first-priority sign.
+The other two faces and the monotonicity reduction are proved in the
+[complete caller argument](NONSHORT_LOW_T_CALLER.md). This note supplies
+its initial face.

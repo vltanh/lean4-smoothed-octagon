@@ -435,7 +435,7 @@ All displayed identities and rational bounds were checked exactly as
 transcription checks. They are not sampling premises or coefficient tables.
 No Lean compilation, typechecking, Lake or CI was run.
 
-The full low-t sign is still open pending its h reduction and the other
-required boundary face. This is an accepted terminal-face argument only
-after its independent review; it cannot alone replace the existing unit
-certificate.
+The full unit sign follows from the other two face signs and the proved
+monotonicity in h. The [complete caller argument](NONSHORT_LOW_T_CALLER.md)
+gives that combination, its unchanged actual domain, and the replacement
+of the old multiplier call.

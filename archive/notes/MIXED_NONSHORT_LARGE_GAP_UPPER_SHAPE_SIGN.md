@@ -1,5 +1,11 @@
 # The upper shape endpoint of the large-gap residual is positive
 
+**Lighter caller replacement:** [positive shape monotonicity and the new
+unit sign](../../docs/lighter-proofs/NONSHORT_LOW_T_CALLER.md) remove this
+endpoint dependency from the actual low-t branch of `fh_small_gap_j`.
+The replacement preserves that caller's domain and conclusion. It does not
+assert a new proof of the old residual's wider scalar statement below.
+
 Date: 2026-11-08 UTC. A closed scalar hand inequality. This note proves
 one of the endpoint signs isolated in
 [MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS](MIXED_NONSHORT_LARGE_GAP_MULTIPLIER_SIGNS.md).

@@ -5,9 +5,9 @@
 This note proves a new, small-identity shape reduction on the entire domain of
 [the low-t unit-shape sign](../../archive/notes/MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN.md).
 It also proves the scalar substitution signs for its new multipliers.
-The remaining unit-shape inequality for the **new** residual is not proved here.
-Consequently this note alone does not replace the existing unit-shape certificate
-or close a new top-level exclusion gate.
+The unit-shape inequality for the new residual is proved separately by the
+[completed face reduction and caller argument](NONSHORT_LOW_T_CALLER.md).
+This note supplies its shape derivative and actual scalar substitution steps.
 
 The replacement interface is
 
@@ -16,11 +16,12 @@ The replacement interface is
 \tag{1}
 \]
 
-If the separate claim \(G_n(t,x,q,1)>0\) is proved, the actual low-t caller
-in theorem fh_LGA_core of FwdHand/LargeGap.lean closes using (1), with both old
-shape endpoint certificates replaced by that one claim. The old unit-shape
-certificate is for different multipliers; it cannot be substituted for this
-missing claim.
+Together with the separate claim \(G_n(t,x,q,1)>0\), (1) closes the actual
+low-t branch of `fh_small_gap_j` in `FwdHand/LargeGap.lean` using the general
+`fh_window_comb` theorem with the new multipliers. Both old shape endpoint
+dependencies are removed. The [caller note](NONSHORT_LOW_T_CALLER.md) explains
+this change explicitly: the old scalar theorem `fh_LGA_core` has an old-multiplier
+`hcomb` premise, so its literal statement is not silently given a new premise.
 
 All expansions below are staged in one variable, with the coefficient
 polynomials kept opaque. The largest bivariate identity has total degree eight.
@@ -552,7 +553,7 @@ and its constant term is strictly positive. Hence
 Sections 5--6 prove \(S>0\) on the entire domain (2).
 Equations (19)--(20) prove the shape monotonicity (1).
 
-## Validation and remaining obligation
+## Validation and completed unit-sign dependency
 
 The coefficient identities (15)--(17), (22)--(23), the six separate
 univariate identities making up (25), and the evaluations (28)--(29)
@@ -567,7 +568,7 @@ The first-priority unit-shape claim
 G_n(t,x,q,1)>0
 \]
 
-is still open under the requested identity budget. Only after that
-claim is proved can the negative actual necessary condition in
-Section 1 and the positive shape derivative in (1) be combined into
-a replacement for fh_LGA_core's two old endpoint signs.
+is proved by the [completed unit-sign reduction](NONSHORT_LOW_T_CALLER.md).
+That note combines it with the negative actual necessary condition in
+Section 1 and the positive shape derivative in (1), and identifies the
+unchanged actual-window conclusion and its integration point.
