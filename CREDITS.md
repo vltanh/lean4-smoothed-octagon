@@ -4,12 +4,12 @@ The-Anh Vu-Le directed the work and is the author and maintainer of this reposit
 
 ## The informal proof
 
-ChatGPT Pro (OpenAI) found the proof, in the research notes of [`docs/`](docs/HANDOFF.md), starting
-from Thomas Hales's formulation of the problem as optimal control on `SL₂(ℝ)` and from Hales and
-Vajjha's [*Packings of Smoothed Polygons*](https://arxiv.org/abs/2405.04331). The notes first closed
-the argument with seven interval-arithmetic covers computed in C++ with MPFR
-([`explorations/`](explorations/README.md)), then replaced six of them by hand arguments
-([`docs/HAND_PROOF_STATUS.md`](docs/HAND_PROOF_STATUS.md)).
+ChatGPT Pro (OpenAI) found the proof, in the research notes of [`archive/`](archive/README.md),
+starting from Thomas Hales's formulation of the problem as optimal control on `SL₂(ℝ)` and from
+Hales and Vajjha's [*Packings of Smoothed Polygons*](https://arxiv.org/abs/2405.04331). The notes
+first closed the argument with seven interval-arithmetic covers computed in C++ with MPFR
+([`archive/explorations/`](archive/explorations/README.md)), then replaced all seven by hand
+arguments ([`archive/notes/HAND_PROOF_STATUS.md`](archive/notes/HAND_PROOF_STATUS.md)).
 
 ## The Lean proof
 

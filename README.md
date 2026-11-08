@@ -97,15 +97,18 @@ library, and the four theorems, depend only on the standard axioms.
 | Equality and its converse | [`Equality/`](SmoothedOctagon/Equality) |
 | The statements in the Challenge's vocabulary | [`Main.lean`](SmoothedOctagon/Main.lean), [`Bridge/`](SmoothedOctagon/Bridge) |
 
-The informal proof was partly computer-assisted: it used seven interval-arithmetic covers run in C++
-with MPFR. Six of them have been replaced by hand arguments (case F, and the reverse, low-scale and
-forward parts of case M2), and their Lean proofs follow those arguments. The seventh, the
-smaller-short cover of case M2, is checked by Lean's kernel itself:
+The informal proof was at first partly computer-assisted: it used seven interval-arithmetic covers
+run in C++ with MPFR. Six of them have been replaced by hand arguments (case F, and the reverse,
+low-scale and forward parts of case M2), and their Lean proofs follow those arguments. The seventh,
+the smaller-short cover of case M2, is checked by Lean's kernel itself:
 [`Interval/`](SmoothedOctagon/Interval) is a verified interval arithmetic (outward-rounded
 fixed-point intervals, proved enclosures of `√`, `log` and `arctan`, a sound branch-and-bound checker),
 and [`Interval/SmallerShort/`](SmoothedOctagon/Interval/SmallerShort) is a certificate of 337,399 boxes
-checked by `decide`, without `native_decide`. Several steps of the informal proof are proved by
-shorter routes than the notes; each docstring that departs from them says so in a `Route:` line.
+checked by `decide`, without `native_decide`. The notes have since proved that case by hand too
+([`MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION`](archive/notes/MIXED_SMALLER_SHORT_HAND_PERIOD_EXCLUSION.md));
+formalizing that proof, which will remove the certificate, is in progress. Several steps of the
+informal proof are proved by shorter routes than the notes; each docstring that departs from them
+says so in a `Route:` line.
 
 ## Prior work
 
@@ -151,15 +154,16 @@ SmoothedOctagon/
   Bridge/                      translation, affine maps and the octagon in the Challenge's terms
   LowerBound.lean, Main.lean   the assembly
 Cited/HalesVajjha/             Definition 5.0.1 of Hales–Vajjha (the compact domain)
-docs/                          the informal proof notes (ChatGPT Pro), prior work, figures
+docs/                          prior work and the figures
+archive/                       the informal proof notes (ChatGPT Pro) and their computations
 scripts/                       the audit, the definitions check, the figures and the certificate generators
 ```
 
 ## Credits
 
 The-Anh Vu-Le directed the work. ChatGPT Pro (OpenAI) found the proof, in the notes of
-[`docs/`](docs/HANDOFF.md), first with computer-assisted parts and then replacing most of them by
-hand. Claude Opus 5.5 (Anthropic), in Claude Code, wrote the Lean formalization (with sub-agents),
+[`archive/`](archive/README.md), first with computer-assisted parts and then replacing all of them
+by hand. Claude Opus 5.5 (Anthropic), in Claude Code, wrote the Lean formalization (with sub-agents),
 the verified interval arithmetic and certificate, the figures and this documentation. The geometric
 and control-theoretic foundations come from lean4-smoothed-polygon and lean4-optimal-control.
 

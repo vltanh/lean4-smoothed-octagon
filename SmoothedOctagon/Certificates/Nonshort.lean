@@ -6,8 +6,9 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Basic
 # Case M2, smaller-nonshort branch: the four boundary covers
 
 The four directed-interval covers of the smaller-nonshort branch, stated as the propositions their
-runs certify. They are named hypotheses of the main theorem pending a hand proof: gate H-N of
-`docs/HAND_PROOF_STATUS.md` (PR branch). All four feed `MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION`.
+runs certify. The proof no longer uses them: gate H-N of `archive/notes/HAND_PROOF_STATUS.md` is
+closed by hand, and only the scalar definitions below are used, by the M2 chart lemmas and the
+interval library. All four fed `MIXED_GLOBAL_NONSHORT_PERIOD_EXCLUSION`.
 
 * `CertNonshortReverse` (Cert-REV): `mixed_nonshort_reverse_boundary_interval_certificate.cpp`
   (branch 1), consumed by `MIXED_NONSHORT_REVERSE_BOUNDARY_EXCLUSION`; `a ∈ [2/15, 17/20]`;
@@ -22,11 +23,11 @@ runs certify. They are named hypotheses of the main theorem pending a hand proof
   consumed by `MIXED_NONSHORT_FORWARD_BOUNDARY_EXCLUSION`; `a ∈ [1/2, 17/20]`; 60976 nodes,
   30489 leaves, maximum depth 32.
 
-All callers are in `explorations/`. Each run has 2 roots, one per chart, with the same box:
+All callers are in `archive/explorations/`. Each run has 2 roots, one per chart, with the same box:
 `a` in its root, `c ∈ [2/15, 2]`, `ε ∈ [1/32, 15]`, `l₀ = 0` exactly, and the free weight
 `ℓ ∈ [0, 1]`; chart 1 has `(l₁, l₂) = (1, ℓ)` and chart 2 has `(l₁, l₂) = (ℓ, 1)` (`main` and
 `evaluate`, lines 84-87).
-Records: `explorations/mixed_nonshort_*_result.json` and `explorations/results/*.log`.
+Records: `archive/explorations/mixed_nonshort_*_result.json` and `archive/explorations/results/*.log`.
 
 ## What a run certifies
 
@@ -61,7 +62,7 @@ noncomputable def Hlog (z : ℝ) : ℝ :=
   if z = 0 then 1 / 3 else (Real.log (1 + z) - z + z ^ 2 / 2) / z ^ 3
 
 /-- `centered_polynomial_cancelled(a, c, eps, l0, l1, l2)`
-(`explorations/mixed_nonshort_coefficients.hpp`, lines 5-67), the cancelled centred polynomial
+(`archive/explorations/mixed_nonshort_coefficients.hpp`, lines 5-67), the cancelled centred polynomial
 `∑_{i=2}^{8} Pᵢ/(a + c)³ · eps^(i-2)`, transcribed term by term. -/
 noncomputable def centeredPolynomialCancelled (a c eps l0 l1 l2 : ℝ) : ℝ :=
   let cx0 := a ^ 2

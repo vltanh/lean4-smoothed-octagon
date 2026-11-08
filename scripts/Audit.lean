@@ -161,10 +161,6 @@ import all SmoothedOctagon.Foundations.SingularLocus
 import all SmoothedOctagon.Foundations.StrongSwitching
 import all SmoothedOctagon.Foundations.SupportNormal
 import all SmoothedOctagon.Foundations.SwitchingMargin
-import all SmoothedOctagon.Interval.Bench.FwdCert
-import all SmoothedOctagon.Interval.Bench.FwdRes
-import all SmoothedOctagon.Interval.Bench.SsCert
-import all SmoothedOctagon.Interval.Bench.SsRes
 import all SmoothedOctagon.Interval.Check
 import all SmoothedOctagon.Interval.Expr
 import all SmoothedOctagon.Interval.Ival

@@ -20,7 +20,7 @@ covers in `Certificates/Nonshort.lean` (`M2Window.chartPt`).
 * `M2Window.δ1`, `δ2`, `eps`, `IsChart2`, `chartPt`.
 * `m2_envelope_gap`: `δ₁ > 1/10` (`MIXED_NONSHORT_UPPER_ENVELOPE_GAP`, Lemma 2 and Corollary), so
   the small-parameter corner `ε' ≤ 1/32` is empty (Route: replaces
-  `MIXED_NONSHORT_SMALL_PARAMETER_EXCLUSION`, as in `docs/HAND_PROOF_STATUS.md`).
+  `MIXED_NONSHORT_SMALL_PARAMETER_EXCLUSION`, as in `archive/notes/HAND_PROOF_STATUS.md`).
 * `m2_chart_box`: `a ∈ [2/15, 17/20]`, `c ∈ [2/15, 2]`, `ε' ∈ [1/32, 15]`, `ℓ ∈ [0, 1]`.
 * `ch_chartPt_at`: `chartPt` represents the boundary point (`Mixed/ChartAux/Point`).
 * `m2_chart_retained`: the sixteen common residuals `g₀, …, g₁₅` and, in chart 2, `g₁₆`.

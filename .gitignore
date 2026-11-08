@@ -5,3 +5,4 @@
 *.trace
 notes/
 __pycache__/
+/.cgtmp/
