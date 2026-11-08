@@ -2,7 +2,7 @@ module
 
 public import SmoothedOctagon.Exclusion.Mixed.FwdHand.Window
 public import SmoothedOctagon.Exclusion.Mixed.FwdHand.Clear
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.CertLRa
+public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowRatioHand
 public import SmoothedOctagon.Exclusion.Mixed.FwdHand.CertLRb
 
 /-!
@@ -14,16 +14,16 @@ actual forward window has `t > 1/3`. Suppose `1/4 < t ≤ 1/3`. The combined res
 `v`-coefficient is negative (`fh_LR_Cv`, from `Je² ≤ 10/3`, `WD/x ≤ 9/4`) and its `log q`
 coefficient is nonpositive, so raising `v` to `v̂ = v_G + ρ(v_G - F_ℓ)` (`ρ = (3/4)(q + 2t + x - 1)`)
 and `log q` to `L₊` keeps it negative. It is a concave quadratic in `k` (`fh_comb_pos_of_ends`), and
-both shape endpoints `k = 1`, `k = 2t + x` have positive residual (certificates `CertLRa`,
-`CertLRb`), a contradiction.
+both shape endpoints `k = 1`, `k = 2t + x` have positive residual (the hand proof `lrh_unit_pos`
+of `FwdHand/LowRatioHand`, and the certificate `CertLRb`), a contradiction.
 
 Route: the shape monotonicity `Ĝ_k > 0` of the notes (§5 of the ratio reduction) is replaced by
-concavity in `k` and a second endpoint certificate at `k = 2t + x`; the polynomial sign of §§2-5 of
-the low-ratio note is a generated Bernstein certificate.
+concavity in `k` and a second endpoint certificate at `k = 2t + x`; the unit-shape sign (10) at
+`k = 1` is the hand proof of the PR-2 notes `docs/lighter-proofs/NONSHORT_LOW_RATIO*.md`.
 
 ## Main API
 
-* `fhVhat`; `fh_LRa_link`, `fh_LRb_link`; `fh_LR_Cv`.
+* `fhVhat`; `fh_LRb_link`; `fh_LR_Cv`.
 * `fh_lowRatio_core`: the scalar exclusion; `fh_low_ratio`: **`t > 1/3`** for an actual forward
   window.
 -/
@@ -36,23 +36,6 @@ namespace SmoothedOctagon
 (`MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (4)). -/
 noncomputable def fhVhat (t x q : ℝ) : ℝ :=
   fhVG t x + 3 / 4 * (q + 2 * t + x - 1) * (fhVG t x - nhFl t x q)
-
-/-- The cleared low-ratio residual at `k = 1` is the certificate polynomial `fhCLRa`. -/
-theorem fh_LRa_link (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
-    48 * (q + 1) * (1 + x) * (x ^ 2 + 10 * x + 15) * fhComb 6 0 t x 1 q (fhVhat t x q) (nhLp q) 0 =
-      (fhCLRaD0_0 (1 - 2 * t) + fhCLRaD0_1 (1 - 2 * t) * (2 * t + x - 1) + fhCLRaD0_2 (1 - 2 * t) * (2 * t + x - 1) ^ (2 : ℕ) + fhCLRaD0_3 (1 - 2 * t) * (2 * t + x - 1) ^ (3 : ℕ) + fhCLRaD0_4 (1 - 2 * t) * (2 * t + x - 1) ^ (4 : ℕ) + fhCLRaD0_5 (1 - 2 * t) * (2 * t + x - 1) ^ (5 : ℕ) + fhCLRaD0_6 (1 - 2 * t) * (2 * t + x - 1) ^ (6 : ℕ) + fhCLRaD0_7 (1 - 2 * t) * (2 * t + x - 1) ^ (7 : ℕ) + fhCLRaD0_8 (1 - 2 * t) * (2 * t + x - 1) ^ (8 : ℕ) + fhCLRaD0_9 (1 - 2 * t) * (2 * t + x - 1) ^ (9 : ℕ) + fhCLRaD0_10 (1 - 2 * t) * (2 * t + x - 1) ^ (10 : ℕ)) + (fhCLRaD1_0 (1 - 2 * t) + fhCLRaD1_1 (1 - 2 * t) * (2 * t + x - 1) + fhCLRaD1_2 (1 - 2 * t) * (2 * t + x - 1) ^ (2 : ℕ) + fhCLRaD1_3 (1 - 2 * t) * (2 * t + x - 1) ^ (3 : ℕ) + fhCLRaD1_4 (1 - 2 * t) * (2 * t + x - 1) ^ (4 : ℕ) + fhCLRaD1_5 (1 - 2 * t) * (2 * t + x - 1) ^ (5 : ℕ) + fhCLRaD1_6 (1 - 2 * t) * (2 * t + x - 1) ^ (6 : ℕ) + fhCLRaD1_7 (1 - 2 * t) * (2 * t + x - 1) ^ (7 : ℕ) + fhCLRaD1_8 (1 - 2 * t) * (2 * t + x - 1) ^ (8 : ℕ) + fhCLRaD1_9 (1 - 2 * t) * (2 * t + x - 1) ^ (9 : ℕ) + fhCLRaD1_10 (1 - 2 * t) * (2 * t + x - 1) ^ (10 : ℕ)) * (q - 1) + (fhCLRaD2_0 (1 - 2 * t) + fhCLRaD2_1 (1 - 2 * t) * (2 * t + x - 1) + fhCLRaD2_2 (1 - 2 * t) * (2 * t + x - 1) ^ (2 : ℕ) + fhCLRaD2_3 (1 - 2 * t) * (2 * t + x - 1) ^ (3 : ℕ) + fhCLRaD2_4 (1 - 2 * t) * (2 * t + x - 1) ^ (4 : ℕ) + fhCLRaD2_5 (1 - 2 * t) * (2 * t + x - 1) ^ (5 : ℕ) + fhCLRaD2_6 (1 - 2 * t) * (2 * t + x - 1) ^ (6 : ℕ) + fhCLRaD2_7 (1 - 2 * t) * (2 * t + x - 1) ^ (7 : ℕ) + fhCLRaD2_8 (1 - 2 * t) * (2 * t + x - 1) ^ (8 : ℕ) + fhCLRaD2_9 (1 - 2 * t) * (2 * t + x - 1) ^ (9 : ℕ) + fhCLRaD2_10 (1 - 2 * t) * (2 * t + x - 1) ^ (10 : ℕ)) * (q - 1) ^ (2 : ℕ) + (fhCLRaD3_0 (1 - 2 * t) + fhCLRaD3_1 (1 - 2 * t) * (2 * t + x - 1) + fhCLRaD3_2 (1 - 2 * t) * (2 * t + x - 1) ^ (2 : ℕ) + fhCLRaD3_3 (1 - 2 * t) * (2 * t + x - 1) ^ (3 : ℕ) + fhCLRaD3_4 (1 - 2 * t) * (2 * t + x - 1) ^ (4 : ℕ) + fhCLRaD3_5 (1 - 2 * t) * (2 * t + x - 1) ^ (5 : ℕ) + fhCLRaD3_6 (1 - 2 * t) * (2 * t + x - 1) ^ (6 : ℕ) + fhCLRaD3_7 (1 - 2 * t) * (2 * t + x - 1) ^ (7 : ℕ) + fhCLRaD3_8 (1 - 2 * t) * (2 * t + x - 1) ^ (8 : ℕ) + fhCLRaD3_9 (1 - 2 * t) * (2 * t + x - 1) ^ (9 : ℕ) + fhCLRaD3_10 (1 - 2 * t) * (2 * t + x - 1) ^ (10 : ℕ)) * (q - 1) ^ (3 : ℕ) + (fhCLRaD4_0 (1 - 2 * t) + fhCLRaD4_1 (1 - 2 * t) * (2 * t + x - 1) + fhCLRaD4_2 (1 - 2 * t) * (2 * t + x - 1) ^ (2 : ℕ) + fhCLRaD4_3 (1 - 2 * t) * (2 * t + x - 1) ^ (3 : ℕ) + fhCLRaD4_4 (1 - 2 * t) * (2 * t + x - 1) ^ (4 : ℕ) + fhCLRaD4_5 (1 - 2 * t) * (2 * t + x - 1) ^ (5 : ℕ) + fhCLRaD4_6 (1 - 2 * t) * (2 * t + x - 1) ^ (6 : ℕ) + fhCLRaD4_7 (1 - 2 * t) * (2 * t + x - 1) ^ (7 : ℕ) + fhCLRaD4_8 (1 - 2 * t) * (2 * t + x - 1) ^ (8 : ℕ) + fhCLRaD4_9 (1 - 2 * t) * (2 * t + x - 1) ^ (9 : ℕ) + fhCLRaD4_10 (1 - 2 * t) * (2 * t + x - 1) ^ (10 : ℕ)) * (q - 1) ^ (4 : ℕ) + (fhCLRaD5_0 (1 - 2 * t) + fhCLRaD5_1 (1 - 2 * t) * (2 * t + x - 1) + fhCLRaD5_2 (1 - 2 * t) * (2 * t + x - 1) ^ (2 : ℕ) + fhCLRaD5_3 (1 - 2 * t) * (2 * t + x - 1) ^ (3 : ℕ) + fhCLRaD5_4 (1 - 2 * t) * (2 * t + x - 1) ^ (4 : ℕ) + fhCLRaD5_5 (1 - 2 * t) * (2 * t + x - 1) ^ (5 : ℕ) + fhCLRaD5_6 (1 - 2 * t) * (2 * t + x - 1) ^ (6 : ℕ) + fhCLRaD5_7 (1 - 2 * t) * (2 * t + x - 1) ^ (7 : ℕ) + fhCLRaD5_8 (1 - 2 * t) * (2 * t + x - 1) ^ (8 : ℕ) + fhCLRaD5_9 (1 - 2 * t) * (2 * t + x - 1) ^ (9 : ℕ) + fhCLRaD5_10 (1 - 2 * t) * (2 * t + x - 1) ^ (10 : ℕ)) * (q - 1) ^ (5 : ℕ) + (fhCLRaD6_0 (1 - 2 * t) + fhCLRaD6_1 (1 - 2 * t) * (2 * t + x - 1) + fhCLRaD6_2 (1 - 2 * t) * (2 * t + x - 1) ^ (2 : ℕ) + fhCLRaD6_3 (1 - 2 * t) * (2 * t + x - 1) ^ (3 : ℕ) + fhCLRaD6_4 (1 - 2 * t) * (2 * t + x - 1) ^ (4 : ℕ) + fhCLRaD6_5 (1 - 2 * t) * (2 * t + x - 1) ^ (5 : ℕ) + fhCLRaD6_6 (1 - 2 * t) * (2 * t + x - 1) ^ (6 : ℕ) + fhCLRaD6_7 (1 - 2 * t) * (2 * t + x - 1) ^ (7 : ℕ) + fhCLRaD6_8 (1 - 2 * t) * (2 * t + x - 1) ^ (8 : ℕ) + fhCLRaD6_9 (1 - 2 * t) * (2 * t + x - 1) ^ (9 : ℕ) + fhCLRaD6_10 (1 - 2 * t) * (2 * t + x - 1) ^ (10 : ℕ)) * (q - 1) ^ (6 : ℕ) + (fhCLRaD7_0 (1 - 2 * t) + fhCLRaD7_1 (1 - 2 * t) * (2 * t + x - 1) + fhCLRaD7_2 (1 - 2 * t) * (2 * t + x - 1) ^ (2 : ℕ) + fhCLRaD7_3 (1 - 2 * t) * (2 * t + x - 1) ^ (3 : ℕ) + fhCLRaD7_4 (1 - 2 * t) * (2 * t + x - 1) ^ (4 : ℕ) + fhCLRaD7_5 (1 - 2 * t) * (2 * t + x - 1) ^ (5 : ℕ) + fhCLRaD7_6 (1 - 2 * t) * (2 * t + x - 1) ^ (6 : ℕ) + fhCLRaD7_7 (1 - 2 * t) * (2 * t + x - 1) ^ (7 : ℕ) + fhCLRaD7_8 (1 - 2 * t) * (2 * t + x - 1) ^ (8 : ℕ) + fhCLRaD7_9 (1 - 2 * t) * (2 * t + x - 1) ^ (9 : ℕ) + fhCLRaD7_10 (1 - 2 * t) * (2 * t + x - 1) ^ (10 : ℕ)) * (q - 1) ^ (7 : ℕ) := by
-  have hW : (1 + x) ≠ 0 := by linarith
-  have hR : x ^ 2 + 10 * x + 15 ≠ 0 := by positivity
-  have hq1 : q + 1 ≠ 0 := by linarith
-  have hv : fhVhat t x q = (180 + 180 * q + 435 * x + (375 / 2) * x * q + 135 * x * q ^ (2 : ℕ) + (45 / 2) * x * q ^ (3 : ℕ) + (639 / 2) * x ^ (2 : ℕ) + 267 * x ^ (2 : ℕ) * q + 270 * x ^ (2 : ℕ) * q ^ (2 : ℕ) - (195 / 2) * x ^ (2 : ℕ) * q ^ (3 : ℕ) + (269 / 4) * x ^ (3 : ℕ) + (409 / 2) * x ^ (3 : ℕ) * q + (111 / 4) * x ^ (3 : ℕ) * q ^ (2 : ℕ) - (147 / 2) * x ^ (3 : ℕ) * q ^ (3 : ℕ) + (15 / 4) * x ^ (4 : ℕ) + (237 / 4) * x ^ (4 : ℕ) * q - 60 * x ^ (4 : ℕ) * q ^ (2 : ℕ) - (15 / 2) * x ^ (4 : ℕ) * q ^ (3 : ℕ) + (3 / 2) * x ^ (5 : ℕ) + 6 * x ^ (5 : ℕ) * q - (15 / 2) * x ^ (5 : ℕ) * q ^ (2 : ℕ) - (135 / 2) * t - (765 / 2) * t * q + (135 / 2) * t * q ^ (2 : ℕ) + (45 / 2) * t * q ^ (3 : ℕ) - (585 / 2) * t * x + (255 / 2) * t * x * q + (495 / 2) * t * x * q ^ (2 : ℕ) - (465 / 2) * t * x * q ^ (3 : ℕ) - (489 / 2) * t * x ^ (2 : ℕ) + 267 * t * x ^ (2 : ℕ) * q - 288 * t * x ^ (2 : ℕ) * q ^ (2 : ℕ) - (327 / 2) * t * x ^ (2 : ℕ) * q ^ (3 : ℕ) - (11 / 4) * t * x ^ (3 : ℕ) + 103 * t * x ^ (3 : ℕ) * q - (1131 / 4) * t * x ^ (3 : ℕ) * q ^ (2 : ℕ) - (33 / 2) * t * x ^ (3 : ℕ) * q ^ (3 : ℕ) + (75 / 4) * t * x ^ (4 : ℕ) + (93 / 4) * t * x ^ (4 : ℕ) * q - (63 / 2) * t * x ^ (4 : ℕ) * q ^ (2 : ℕ) - 180 * t ^ (2 : ℕ) + 495 * t ^ (2 : ℕ) * q + 180 * t ^ (2 : ℕ) * q ^ (2 : ℕ) - 135 * t ^ (2 : ℕ) * q ^ (3 : ℕ) - 30 * t ^ (2 : ℕ) * x + 285 * t ^ (2 : ℕ) * x * q - 375 * t ^ (2 : ℕ) * x * q ^ (2 : ℕ) - 90 * t ^ (2 : ℕ) * x * q ^ (3 : ℕ) + 273 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + 228 * t ^ (2 : ℕ) * x ^ (2 : ℕ) * q - 318 * t ^ (2 : ℕ) * x ^ (2 : ℕ) * q ^ (2 : ℕ) - 9 * t ^ (2 : ℕ) * x ^ (2 : ℕ) * q ^ (3 : ℕ) + (267 / 2) * t ^ (2 : ℕ) * x ^ (3 : ℕ) + (249 / 2) * t ^ (2 : ℕ) * x ^ (3 : ℕ) * q - 33 * t ^ (2 : ℕ) * x ^ (3 : ℕ) * q ^ (2 : ℕ) + 9 * t ^ (2 : ℕ) * x ^ (4 : ℕ) + 9 * t ^ (2 : ℕ) * x ^ (4 : ℕ) * q + 270 * t ^ (3 : ℕ) - 270 * t ^ (3 : ℕ) * q ^ (2 : ℕ) + 450 * t ^ (3 : ℕ) * x + 270 * t ^ (3 : ℕ) * x * q - 180 * t ^ (3 : ℕ) * x * q ^ (2 : ℕ) + 198 * t ^ (3 : ℕ) * x ^ (2 : ℕ) + 180 * t ^ (3 : ℕ) * x ^ (2 : ℕ) * q - 18 * t ^ (3 : ℕ) * x ^ (2 : ℕ) * q ^ (2 : ℕ) + 18 * t ^ (3 : ℕ) * x ^ (3 : ℕ) + 18 * t ^ (3 : ℕ) * x ^ (3 : ℕ) * q) / (12 * (x ^ 2 + 10 * x + 15) * (1 + x) ^ 2 * (q + 1)) := by
-    unfold fhVhat fhVG nhFl; field_simp; ring
-  rw [fh_comb_dec, hv]
-  unfold nhLp
-  apply mul_left_cancel₀ (mul_ne_zero hW hq.ne')
-  rw [fh_clear_LR hW hq.ne' hq1 hR]
-  unfold fhCLRaD0_0 fhCLRaD0_1 fhCLRaD0_2 fhCLRaD0_3 fhCLRaD0_4 fhCLRaD0_5 fhCLRaD0_6 fhCLRaD0_7 fhCLRaD0_8 fhCLRaD0_9 fhCLRaD0_10 fhCLRaD1_0 fhCLRaD1_1 fhCLRaD1_2 fhCLRaD1_3 fhCLRaD1_4 fhCLRaD1_5 fhCLRaD1_6 fhCLRaD1_7 fhCLRaD1_8 fhCLRaD1_9 fhCLRaD1_10 fhCLRaD2_0 fhCLRaD2_1 fhCLRaD2_2 fhCLRaD2_3 fhCLRaD2_4 fhCLRaD2_5 fhCLRaD2_6 fhCLRaD2_7 fhCLRaD2_8 fhCLRaD2_9 fhCLRaD2_10 fhCLRaD3_0 fhCLRaD3_1 fhCLRaD3_2 fhCLRaD3_3 fhCLRaD3_4 fhCLRaD3_5 fhCLRaD3_6 fhCLRaD3_7 fhCLRaD3_8 fhCLRaD3_9 fhCLRaD3_10 fhCLRaD4_0 fhCLRaD4_1 fhCLRaD4_2 fhCLRaD4_3 fhCLRaD4_4 fhCLRaD4_5 fhCLRaD4_6 fhCLRaD4_7 fhCLRaD4_8 fhCLRaD4_9 fhCLRaD4_10 fhCLRaD5_0 fhCLRaD5_1 fhCLRaD5_2 fhCLRaD5_3 fhCLRaD5_4 fhCLRaD5_5 fhCLRaD5_6 fhCLRaD5_7 fhCLRaD5_8 fhCLRaD5_9 fhCLRaD5_10 fhCLRaD6_0 fhCLRaD6_1 fhCLRaD6_2 fhCLRaD6_3 fhCLRaD6_4 fhCLRaD6_5 fhCLRaD6_6 fhCLRaD6_7 fhCLRaD6_8 fhCLRaD6_9 fhCLRaD6_10 fhCLRaD7_0 fhCLRaD7_1 fhCLRaD7_2 fhCLRaD7_3 fhCLRaD7_4 fhCLRaD7_5 fhCLRaD7_6 fhCLRaD7_7 fhCLRaD7_8 fhCLRaD7_9 fhCLRaD7_10
-  unfold fhComb fhCv fhCL fhTPv fhTP fhKt fhHt fhE0 nhN nhNv nhNL
-  ring
 
 /-- The cleared low-ratio residual at `k = 2t + x` is the certificate polynomial `fhCLRb`. -/
 theorem fh_LRb_link (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
@@ -193,10 +176,8 @@ theorem fh_lowRatio_core {t x k q v F : ℝ} (ht0 : 1 / 4 < t) (ht1 : t ≤ 1 / 
   -- the two shape endpoints
   have hy1 : (q - 1) * (1 + 2 * (2 * t + x - 1)) ≤ (1 - 2 * t) - (2 * t + x - 1) := by nlinarith
   have hA : 0 < fhComb 6 0 t x 1 q (fhVhat t x q) (nhLp q) 0 := by
-    have h := fhCLRa_pos_y (1 - 2 * t) (2 * t + x - 1) (q - 1) (by linarith) (by linarith)
-      (by linarith) (by linarith) (by linarith) (by linarith) hy1
-    rw [← fh_LRa_link t x q hq0 hx] at h
-    exact pos_of_mul_pos_right h (by positivity)
+    have hy : q - 1 ≤ 1 - 2 * t := by nlinarith
+    exact lrh_unit_pos ht0.le ht1 hj.le hq.le hy
   have hB : 0 < fhComb 6 0 t x (2 * t + x) q (fhVhat t x q) (nhLp q) 0 := by
     have hy2 : q - 1 ≤ 1 - 2 * t := by nlinarith
     have h := fhCLRb_pos_y (1 - 2 * t) (2 * t + x - 1) (q - 1) (by linarith) (by linarith)

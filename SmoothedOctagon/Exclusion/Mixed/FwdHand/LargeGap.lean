@@ -1,6 +1,8 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LargeGapLink
+public import SmoothedOctagon.Exclusion.Mixed.FwdHand.HighRatioShape
+public import SmoothedOctagon.Exclusion.Mixed.FwdHand.HighRatioLower
 
 /-!
 # Case M2, forward successor by hand: the gap is smaller than one thirtieth
@@ -17,16 +19,18 @@ Suppose `j ≥ 1/30`. The integral derivative floor gives `x < 3/5` and `j < 5h/
   cases `α ≥ 2`, `α < 2` of (13)-(14)), so `v ↦ v_G`, `log q ↦ L₊`, `F ↦ F_ℓ` keep it negative;
   concavity in `k` and the endpoint certificates `CertLGa` (`k = 1`), `CertLGb` (`k = 1 + j`)
   give the opposite sign.
-* `3/8 ≤ t < 2/5`: the same with `α = 4`, `M = 1` and the endpoints `k = 29t²/4` (`CertLGc`),
-  `k = 1 + j` (`CertLGd`).
+* `3/8 ≤ t < 2/5`: the same with `α = 4`, `M = 1`; the residual increases in the shape
+  (`hrs_shape_lt`, `FwdHand/HighRatioShape`, PR-2 note `NONSHORT_HIGH_RATIO_SHAPE.md`), and it is
+  positive at the lower endpoint `k = 29t²/4` (`hrl_lower_pos`, `FwdHand/HighRatioLower`, PR-2 notes
+  `NONSHORT_HIGH_RATIO_LOWER_REDUCTION.md`, `NONSHORT_HIGH_RATIO_LOWER_FACE.md`).
 
-Route: the shape monotonicity of the high-ratio note and the hand polynomial signs (low-t,
+Route: for `t ≤ 3/8` the shape monotonicity of the notes and the hand polynomial signs (low-t,
 upper-shape, `h = 1/4` reduction) are replaced by concavity in `k` and generated Bernstein
 certificates at the shape endpoints.
 
 ## Main API
 
-* the links `fh_LGa_link`, …, `fh_LGd_link` (`FwdHand/LargeGapLink`).
+* the links `fh_LGa_link`, `fh_LGb_link` (`FwdHand/LargeGapLink`).
 * `fh_LG_J`, `fh_LG_WD`, `fh_LG_W2Dek`: the estimates (9) of the multiplier note.
 * `fh_LGA_core`, `fh_LGB_core`; `fh_small_gap_j`: **`j < 1/30`** for an actual forward window.
 -/
@@ -345,23 +349,13 @@ theorem fh_LGB_core {t x k q v : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj 
       (nhNL_nonpos (by linarith) hx.le hq0.le (by linarith))
     apply mul_nonneg (by positivity); nlinarith
   have hG := fh_LG_subst (by linarith) hx (by linarith) hq zero_le_one hv hCv hCL hcomb
-  have hy1 : (q - 1) * (1 + 2 * (2 * t + x - 1)) ≤ (1 - 2 * t) - (2 * t + x - 1) := by nlinarith
-  have hA : 0 < fhComb 4 1 t x (29 / 4 * t ^ 2) q (fhVG t x) (nhLp q) (nhFl t x q) := by
-    have h := fhCLGc_pos_y (1 - 2 * t) (2 * t + x - 1) (q - 1) (by linarith) (by linarith)
-      (by linarith) (by linarith) (by linarith) (by linarith) hy1
-    rw [← fh_LGc_link t x q hq0 hx] at h
-    exact pos_of_mul_pos_right h (by positivity)
-  have hB : 0 < fhComb 4 1 t x (2 * t + x) q (fhVG t x) (nhLp q) (nhFl t x q) := by
-    have h := fhCLGd_pos_y (1 - 2 * t) (2 * t + x - 1) (q - 1) (by linarith) (by linarith)
-      (by linarith) (by linarith) (by linarith) (by linarith) hy1
-    rw [← fh_LGd_link t x q hq0 hx] at h
-    exact pos_of_mul_pos_right h (by positivity)
-  have hD : (t + x) * (1 + x) ≤ q * (t + x * (x + 2)) := by
-    have hJ0 : 0 ≤ t + x * (x + 2) := by positivity
-    have : (t + x) * (1 + x) ≤ t + x * (x + 2) := by nlinarith
-    have := mul_le_mul_of_nonneg_right hq.le hJ0
-    linarith
-  have := fh_comb_pos_of_ends (by linarith) hq0.le hD hks.le hko.le hA hB
+  -- the lower endpoint `k₀ = 29t²/4`: `NONSHORT_HIGH_RATIO_LOWER_REDUCTION` and `…_LOWER_FACE`
+  have hA : 0 < fhComb 4 1 t x (29 / 4 * t ^ 2) q (fhVG t x) (nhLp q) (nhFl t x q) :=
+    hrl_lower_pos ht0 ht1 hj hjh hq.le hqs.le
+      (fh_LGB_Cv (by linarith) ht1.le hj (by nlinarith) hq.le hqs.le)
+  -- the shape monotonicity of `NONSHORT_HIGH_RATIO_SHAPE` replaces the upper endpoint `k = 1 + j`
+  have := hrs_shape_lt ht0 ht1 hj hjh hks hko hq.le hqs.le
+    (fh_LG_J (by linarith) ht1.le hj hq0.le hqs.le) (fh_LG_WD (by linarith) ht1.le hj hq0.le hqs.le)
   linarith
 
 /-- **The gap is smaller than one thirtieth** (`MIXED_NONSHORT_FORWARD_HAND_EXCLUSION` (11)). -/
