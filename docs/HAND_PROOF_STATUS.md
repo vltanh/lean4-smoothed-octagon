@@ -2,6 +2,14 @@
 
 Date: 2026-11-08 UTC.
 
+**Latest accepted increment:** the [variable-floor scale reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
+and [independent reading](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_AUDIT.md)
+replace its old coefficient-minimum continuation test by four derivative
+identities and eight explicit quartics. The two terminal scale signs
+remain open. The [ratio-gap review](MIXED_SMALLER_SHORT_RATIO_SIGN_HAND_GAP.md)
+explains why the old unpushed S1/S2 coefficient certificates do not
+constitute the requested hand proofs; no S-gate is promoted by them.
+
 **Next-work authority:** [HAND_ONLY_COMPLETION_PLAN](HAND_ONLY_COMPLETION_PLAN.md)
 defines the detailed finite S0–S7 and A1 subgates. S0 (x<12/5,
 D,E_L>0) is closed; S1–S7 and A1 remain unchecked. No post-head

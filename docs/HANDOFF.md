@@ -1,5 +1,13 @@
 # Authoritative handoff — hand proof now in progress
 
+**Current analytic increment:** the [variable-floor reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
+has a separately reviewed scale-continuation proof using four factored
+derivatives and eight displayed quartics. Its
+[audit](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_AUDIT.md) accepts only the
+reduction to two scale faces. The [ratio sign gap](MIXED_SMALLER_SHORT_RATIO_SIGN_HAND_GAP.md)
+records the remaining central/outer inequalities and explains why the
+large unpushed coefficient certifications do not close S1 or S2.
+
 **START HERE — active finite plan (2026-11-08):** [HAND_ONLY_COMPLETION_PLAN](HAND_ONLY_COMPLETION_PLAN.md).
 This document is the detailed *source map*; the linked plan is the single
 ordered list of remaining hand-only gates, their scope, deliverables,

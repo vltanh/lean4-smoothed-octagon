@@ -2,6 +2,17 @@
 
 Date: 2026-11-08 UTC. **Authoritative next-work plan.** Read with [HAND_PROOF_STATUS](HAND_PROOF_STATUS.md) and [HAND_GLOBAL_DEPENDENCY_AUDIT](HAND_GLOBAL_DEPENDENCY_AUDIT.md). This note records the state of the pushed branch, not unpushed drafts or computational discoveries.
 
+**Current continuation:** the [variable-floor reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
+now has a genuinely analytic proof of its tau=2 scale continuation:
+four factored derivative identities and eight fully displayed quartics
+replace the former aggregate coefficient test. Its
+[separate review](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_AUDIT.md) accepts the
+reduction to the central and outer scale faces. S1 and S2 remain open:
+the unpushed terminal drafts used tens of thousands of asserted
+coefficient signs, and are not promoted as hand theorems. The
+[precise terminal gap](MIXED_SMALLER_SHORT_RATIO_SIGN_HAND_GAP.md)
+states both remaining S2 inequalities and the independent S1 issue.
+
 ## 0. Executive status and exact target
 
 **Not yet a complete hand proof.** The computationally assisted sharp cost/equality theorem is complete under its declared external inputs and arithmetic trust boundary. The replacement hand proof has closed **H-F** (all-forward) and **H-N** (both nonshort successors). Its terminal count and global dependency chain have a conditional hand audit. The only unproved *whole-period exclusion class* is **H-S**, the smaller-short mixed bridge; **H-A** (final global hand-only audit) must be signed off after H-S.
