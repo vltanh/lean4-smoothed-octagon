@@ -145,47 +145,100 @@ structure SmallShape : Prop where
 /-- **The actual outer root** (`SIX_VARIABLE_REDUCTION` §4, inventory HS-S01 M17, HS-S567 I.4):
 `R_τ(t, v) = 0` at the actual opposite turn (`root`, `E_eq`, `w_eq`, `EL_eq`). Status: stable. -/
 theorem root_zero : hsR H.x H.be H.al H.rho H.u H.τ H.t H.v = 0 := by
-  sorry
+  unfold hsR
+  rw [← H.w_eq, ← H.EL_eq, H.root]
+  ring
 
 /-- `3/4 ≤ u` (`ss_sec_ge_34`). Status: stable. -/
 theorem u_ge_34 : 3 / 4 ≤ H.u := by
-  sorry
+  have hx := H.one_lt_x
+  rw [H.u_eq]
+  exact ss_sec_ge_34 one_pos (by linarith) (by linarith [H.x_le_be])
 
 /-- **`u ≤ V(x)`** (`hs_u_le_V`; inventory HS-S3 R6). Status: stable. -/
 theorem u_le_V : H.u ≤ m2Sec 1 H.x H.x := by
-  sorry
+  rw [H.u_eq]
+  exact hs_u_le_V H.one_lt_x H.x_le_be (by rw [← H.u_eq]; exact H.u_ge)
 
 /-- `β ≤ αx` (from `order27`). Status: stable. -/
 theorem be_le_al_x : H.be ≤ H.al * H.x := by
-  sorry
+  have hx0 : 0 < H.x := by linarith [H.one_lt_x]
+  have h : H.be / H.x ≤ H.al := by linarith [H.order27, H.x_le_be]
+  exact (div_le_iff₀ hx0).1 h
 
 /-- `q ≤ q_c` (`ρ < rt ≤ r²`, `hs_q_le_qc_iff`). Status: stable. -/
 theorem q_le_qc : H.q ≤ hsQc H.x H.al := by
-  sorry
+  have hx0 : 0 < H.x := by linarith [H.one_lt_x]
+  unfold HsData.q
+  rw [hs_q_le_qc_iff hx0 H.one_le_al H.rho_pos]
+  have h1 : 1 / (1 + H.x) * H.t ≤ 1 / (1 + H.x) * (1 / (1 + H.x)) :=
+    mul_le_mul_of_nonneg_left H.t_le_r (by positivity)
+  have e : 1 / (1 + H.x) * (1 / (1 + H.x)) = 1 / (1 + H.x) ^ 2 := by
+    rw [sq, one_div_mul_one_div]
+  linarith [H.rho_lt_rt]
 
 /-- **The outer scale bound `q = ρ_A < 1/7`** (`HAND_PROOF_REFINEMENTS` §2 at the outer centre,
 `hs_rev_centre_scale` with `r = r_A`, `t = 1/τ`, norms `u, w`, pairing `E_L`; inventory HS-S01 M16,
 HS-S2 R6, HS-S3 R1). Status: stable. -/
 theorem q_lt_seventh : H.q < 1 / 7 := by
-  sorry
+  have hal0 : 0 < H.al := by linarith [H.one_le_al]
+  have hbe0 : 0 < H.be := by linarith [H.x_le_be, H.one_lt_x]
+  have hτ : 0 < H.τ := by linarith [H.two_lt_τ]
+  have hrA0 : 0 < hsRA H.al H.be := by unfold hsRA; positivity
+  have hrA2 : hsRA H.al H.be < 1 / 2 := by
+    unfold hsRA; rw [div_lt_iff₀ (by positivity)]; linarith [H.al_lt_x, H.x_le_be]
+  have hq0 : 0 < H.q := by
+    unfold HsData.q hsQ hsLam
+    have h1 : 0 ≤ H.al ^ 2 - 1 := by nlinarith [H.one_le_al]
+    have : 0 < 1 + H.rho * (H.al ^ 2 - 1) := by nlinarith [mul_nonneg H.rho_pos.le h1]
+    have := H.rho_pos
+    positivity
+  have hτq := H.τ_lt
+  refine hs_rev_centre_scale (r := hsRA H.al H.be) (t := 1 / H.τ) (ρ := H.q) (u := H.u)
+    (v := H.w) (E := H.EL) hrA0 hrA2 (by positivity) ?_ hq0 ?_ H.q_lt H.u_ge_34 H.u_le_rA
+    H.w_ge H.w_le ?_ ?_
+  · rw [div_lt_iff₀ hτ]; linarith [H.two_lt_τ]
+  · rw [mul_one_div, lt_div_iff₀ hτ]
+    unfold HsData.q
+    linarith
+  · rw [H.root]
+    have e : H.q / (hsRA H.al H.be * (1 / H.τ)) = H.τ * hsQ H.al H.rho / hsRA H.al H.be := by
+      unfold HsData.q; field_simp
+    rw [e]
+    unfold HsData.q
+    field_simp
+    ring
+  · have h := H.cas_lt
+    rw [H.Γ_eq'] at h
+    exact h
 
 /-- **The strong lower order** at the actual shape (`hs_strong_order`). Status: stable. -/
-theorem strong_order : H.be / H.x + hsKs H.x * (H.be - H.x) ≤ H.al := by
-  sorry
+theorem strong_order : H.be / H.x + hsKs H.x * (H.be - H.x) ≤ H.al :=
+  hs_strong_order H.one_lt_x H.x_le_nine H.one_le_al H.al_lt_x H.x_le_be (H.u_eq.symm.trans H.u_eq')
 
 /-- **The global upper order `5/4`** at the actual shape (`hs_upper_order_54`). Status: stable. -/
-theorem upper_order_54 : H.al ≤ H.be / H.x + 5 / 4 * (H.be - H.x) := by
-  sorry
+theorem upper_order_54 : H.al ≤ H.be / H.x + 5 / 4 * (H.be - H.x) :=
+  hs_upper_order_54 H.one_lt_x H.one_le_al H.al_lt_x H.x_le_be (H.u_eq.symm.trans H.u_eq')
 
 /-- **The global upper order `9/8`** at the actual shape (`hs_upper_order_98`). Status: stable. -/
-theorem upper_order_98 (hx5 : H.x ≤ 5) : H.al ≤ H.be / H.x + 9 / 8 * (H.be - H.x) := by
-  sorry
+theorem upper_order_98 (hx5 : H.x ≤ 5) : H.al ≤ H.be / H.x + 9 / 8 * (H.be - H.x) :=
+  hs_upper_order_98 H.one_lt_x hx5 H.one_le_al H.al_lt_x H.x_le_be (H.u_eq.symm.trans H.u_eq')
 
 /-- **The strong order on the small box** (`HAND_PERIOD_EXCLUSION` (3)): for `x ≥ 2`,
 `α ≥ 1 + (1 + 4x(x + 1)/(7x + 1))δ ≥ 1 + 13δ/5` (`4x(x + 1)/(7x + 1)` increases, `8/5` at `2`).
 Status: stable. -/
 theorem strong_box (hx : 2 ≤ H.x) : 1 + 13 / 5 * H.δ ≤ H.al := by
-  sorry
+  have h := H.strong_order
+  have hx0 : 0 < H.x := by linarith
+  have hδ : 0 ≤ H.δ := by
+    unfold HsData.δ; rw [sub_nonneg, le_div_iff₀ hx0]; linarith [H.x_le_be]
+  have hbe : H.be = H.x * (1 + H.δ) := by unfold HsData.δ; field_simp; ring
+  have hk : 8 / 5 ≤ hsKs H.x * H.x := by
+    unfold hsKs; rw [div_mul_eq_mul_div, le_div_iff₀ (by linarith)]; nlinarith
+  have e1 : H.be / H.x = 1 + H.δ := by rw [hbe]; field_simp
+  have e2 : hsKs H.x * (H.be - H.x) = hsKs H.x * H.x * H.δ := by rw [hbe]; ring
+  rw [e1, e2] at h
+  nlinarith [mul_le_mul_of_nonneg_right hk hδ]
 
 end HsData
 
@@ -205,7 +258,119 @@ with `ss_pt_lam`, `A_lt_Pf`, `central_A`, `w_ge`, `ss_UtA`, `ss_EL'` (`t_A = 1/�
 theorem toHs_spec : ∃ H : HsData, H.x = D.C / D.a ∧ H.be = D.B / D.a ∧ H.al = D.A / D.a ∧
     H.rho = D.a ^ 2 / (D.a ^ 2 + 4) ∧ H.t = D.a / (D.a + D.b) ∧ H.u = D.u ∧ H.v = D.v ∧
     H.E = D.E ∧ H.w = D.w ∧ H.EL = D.EL ∧ H.Γ = D.Γ ∧ H.τ = (D.A + D.Pf) / D.A := by
-  sorry
+  have ha := D.a_pos
+  have hC := D.ss_C_pos
+  have hB := D.ss_B_pos
+  have hA := D.ss_A_pos
+  have hb := D.ss_b_pos
+  have hPf := D.ss_Pf_pos
+  have e_r : 1 / (1 + D.C / D.a) = D.a / (D.a + D.C) := by field_simp
+  have e_lam : hsLam (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) = (D.a ^ 2 + 4) / (D.A ^ 2 + 4) := by
+    unfold hsLam
+    have e : 1 + D.a ^ 2 / (D.a ^ 2 + 4) * ((D.A / D.a) ^ 2 - 1) =
+        (D.A ^ 2 + 4) / (D.a ^ 2 + 4) := by
+      field_simp; ring
+    rw [e, one_div_div]
+  have e_q : hsQ (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) = D.A ^ 2 / (D.A ^ 2 + 4) := by
+    unfold hsQ; rw [e_lam]; field_simp
+  have e_rA : hsRA (D.A / D.a) (D.B / D.a) = D.A / (D.A + D.B) := by unfold hsRA; field_simp
+  have e_tA : 1 / ((D.A + D.Pf) / D.A) = D.A / (D.A + D.Pf) := by rw [one_div_div]
+  have e_pt : (⟨1 / (1 + D.C / D.a), D.B / D.a / (D.C / D.a) - 1, D.A / D.a,
+      D.a ^ 2 / (D.a ^ 2 + 4), D.v, D.E⟩ : Point) = D.ss_pt := by
+    unfold M2Short.ss_pt
+    rw [e_r, div_div_div_cancel_right₀ ha.ne']
+  have hE : D.E = hsE (D.C / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) D.u (D.a / (D.a + D.b)) D.v := by
+    rw [D.ss_E']
+    unfold hsE
+    have e1 : D.a ^ 2 / (D.a ^ 2 + 4) * (1 + D.C / D.a) / (D.a / (D.a + D.b)) =
+        D.a ^ 2 / (D.a ^ 2 + 4) / (D.a / (D.a + D.C) * (D.a / (D.a + D.b))) := by
+      field_simp
+    rw [e1, e_r]
+    have e2 : (D.u - 1) * (1 + D.C / D.a) = -((1 - D.u) / (D.a / (D.a + D.C))) := by
+      field_simp; ring
+    rw [e2]
+    ring
+  refine ⟨
+    { x := D.C / D.a, be := D.B / D.a, al := D.A / D.a, rho := D.a ^ 2 / (D.a ^ 2 + 4),
+      t := D.a / (D.a + D.b), u := D.u, v := D.v, E := D.E, w := D.w, EL := D.EL, Γ := D.Γ,
+      τ := (D.A + D.Pf) / D.A,
+      one_lt_x := (one_lt_div ha).2 D.a_lt_C,
+      x_le_nine := ?_,
+      one_le_al := (one_le_div ha).2 D.a_le_A,
+      al_lt_x := div_lt_div_of_pos_right D.A_lt_C ha,
+      x_le_be := div_le_div_of_nonneg_right D.ss_C_le_B ha.le,
+      order27 := ?_, u_eq := ?_, u_eq' := ?_, u_ge := ?_,
+      u_le_r := by rw [e_r]; exact D.ss_Ur,
+      u_le_rA := by rw [e_rA]; exact D.ss_UrA,
+      rho_pos := by positivity,
+      rho_le := D.ss_box_rho.2,
+      t_pos := by positivity,
+      t_le_r := by rw [e_r]; exact D.ss_t_le_r,
+      rho_lt_rt := ?_,
+      v_ge := D.ss_v_ge,
+      v_le := D.ss_Ut,
+      E_eq := hE,
+      w_eq := ?_, EL_eq := ?_,
+      two_lt_τ := by rw [lt_div_iff₀ hA]; linarith [D.A_lt_Pf],
+      τ_lt := ?_,
+      w_ge := D.w_ge,
+      w_le := by rw [e_tA]; exact D.ss_UtA,
+      root := ?_, q_lt := ?_,
+      Γ_eq := by rw [D.Γ_eq]; unfold m2Gam hsGam; ring,
+      Γ_eq' := by rw [D.Γ_eq', e_q]; unfold m2Gam hsGam; ring,
+      cas_lt := D.cas_lt, cas_gt := D.cas_gt,
+      pt_u := by rw [e_pt]; exact D.ss_pt_u,
+      defect := by
+        intro pt
+        have hpt : pt = D.ss_pt := e_pt
+        rw [hpt]
+        exact D.ss_defect },
+    rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl, rfl⟩
+  · have h := D.ss_box_r.1
+    rw [le_div_iff₀ (by positivity)] at h
+    rw [div_le_iff₀ ha]
+    linarith
+  · have h := ss_order ha D.a_lt_C hA D.A_lt_C D.ss_C_le_B (D.u_eq.symm.trans D.u_eq')
+    have e : D.B / D.a / (D.C / D.a) + 2 / 7 * (D.B / D.a - D.C / D.a) =
+        (D.a * D.B / D.C + 2 / 7 * (D.B - D.C)) / D.a := by
+      field_simp
+    rw [e]
+    exact div_le_div_of_nonneg_right h ha.le
+  · rw [D.u_eq, ← ss_sec_scale (c := 1 / D.a) (by positivity) ha hC hB]
+    congr 1 <;> field_simp
+  · rw [D.u_eq', m2Sec_comm, ← ss_sec_scale (c := 1 / D.a) (by positivity) hA hB hC]
+    congr 1 <;> field_simp
+  · have e : m2g (D.C / D.a) (D.B / D.a) = m2g D.C D.B := by
+      unfold m2g; field_simp
+    rw [e]
+    exact D.u_ge
+  · rw [e_r, div_mul_div_comm, div_lt_div_iff₀ (by positivity) (by positivity)]
+    have key := mul_lt_mul_of_pos_left D.central (pow_pos ha 2)
+    calc D.a ^ 2 * ((D.a + D.C) * (D.a + D.b)) = D.a ^ 2 * ((D.a + D.b) * (D.a + D.C)) := by ring
+      _ < D.a ^ 2 * (D.a ^ 2 + 4) := key
+      _ = D.a * D.a * (D.a ^ 2 + 4) := by ring
+  · rw [D.w_transport]
+    unfold hsW
+    rw [← hE, e_lam]
+    unfold hsDg
+    ring
+  · rw [D.EL_transport]
+    unfold hsEL
+    rw [← hE, e_lam]
+    unfold hsDg
+    ring
+  · rw [e_q, e_rA, div_mul_div_comm, div_lt_div_iff₀ (by positivity) (by positivity)]
+    have key := mul_lt_mul_of_pos_left D.central_A (pow_pos hA 3)
+    nlinarith
+  · rw [D.ss_EL', e_q, e_rA]
+    have e1 : D.A ^ 2 / (D.A ^ 2 + 4) / (D.A / (D.A + D.B) * (D.A / (D.A + D.Pf))) =
+        (D.A + D.Pf) / D.A * (D.A ^ 2 / (D.A ^ 2 + 4)) / (D.A / (D.A + D.B)) := by
+      field_simp
+    rw [e1, e_tA]
+    field_simp
+    ring
+  · rw [e_q, div_lt_iff₀ (by positivity)]
+    linarith [D.scale_A]
 
 /-- The normalized actual data (`toHs_spec`). -/
 noncomputable def toHs : HsData := D.toHs_spec.choose
