@@ -1,5 +1,16 @@
 # Authoritative handoff — hand proof now in progress
 
+**Accepted displacement increment:** the
+[weight reduction](MIXED_SMALLER_SHORT_DISPLACEMENT_WEIGHT_REDUCTION.md),
+[scale continuation](MIXED_SMALLER_SHORT_DISPLACEMENT_SCALE_CONTINUATION.md),
+and [zero-scale proof](MIXED_SMALLER_SHORT_DISPLACEMENT_ZERO_SCALE.md)
+leave two duration tests on each positive-scale face. The
+[central-beta lemma](MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_BETA.md)
+and [quadratic order](MIXED_SMALLER_SHORT_RATIONAL_QUADRATIC_ORDER.md)
+have passed [separate review](MIXED_SMALLER_SHORT_DISPLACEMENT_REDUCTION_AUDIT.md).
+The central and outer terminal signs require their own acceptance;
+the displacement and actual-ratio gates are not yet closed.
+
 **Current conditional theorem:** the
 [small-shape root-to-shear proof](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
 has passed its [separate review](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR_AUDIT.md).

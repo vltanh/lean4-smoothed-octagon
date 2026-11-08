@@ -2,6 +2,18 @@
 
 Date: 2026-11-08 UTC.
 
+**Accepted displacement reductions:** a
+[positive floor weight](MIXED_SMALLER_SHORT_DISPLACEMENT_WEIGHT_REDUCTION.md)
+now reduces delta>=1/19 to two duration tests at the central or outer
+scale face. The [scale continuation](MIXED_SMALLER_SHORT_DISPLACEMENT_SCALE_CONTINUATION.md)
+and [zero-scale sign](MIXED_SMALLER_SHORT_DISPLACEMENT_ZERO_SCALE.md)
+have explicit hand proofs. The [central-beta sign](MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_BETA.md)
+and [quadratic secant order](MIXED_SMALLER_SHORT_RATIONAL_QUADRATIC_ORDER.md)
+are independently reviewed in the
+[displacement audit](MIXED_SMALLER_SHORT_DISPLACEMENT_REDUCTION_AUDIT.md).
+The terminal face signs and the actual ratio hypotheses remain open;
+this increment does not close S3 or H-S.
+
 **Latest accepted conditional theorem:** the
 [small-shape root-to-shear proof](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR.md)
 and its [separate review](MIXED_SMALLER_SHORT_SMALL_SHAPE_ROOT_SHEAR_AUDIT.md)

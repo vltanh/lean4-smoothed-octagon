@@ -11,6 +11,18 @@ It preserves the original physical scale in its conclusion. The
 actual-domain S5 gate still awaits the ratio and displacement results;
 the conditional theorem does not assume or prove the cost contradiction.
 
+**Accepted S3 reductions:** the
+[displacement weight](MIXED_SMALLER_SHORT_DISPLACEMENT_WEIGHT_REDUCTION.md),
+[tau-two scale continuation](MIXED_SMALLER_SHORT_DISPLACEMENT_SCALE_CONTINUATION.md),
+and [zero-scale sign](MIXED_SMALLER_SHORT_DISPLACEMENT_ZERO_SCALE.md)
+now reduce a candidate with delta>=1/19 to two tests on each of two
+positive-scale faces. The
+[central-beta monotonicity](MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_BETA.md)
+and [quadratic secant order](MIXED_SMALLER_SHORT_RATIONAL_QUADRATIC_ORDER.md)
+are also proved. Their [separate review](MIXED_SMALLER_SHORT_DISPLACEMENT_REDUCTION_AUDIT.md)
+preserves the original-root and incoming-ceiling interfaces. These
+reductions do not alone close S3; terminal face signs remain separate.
+
 **Current ratio continuation:** the [variable-floor reduction](MIXED_SMALLER_SHORT_VARIABLE_FLOOR_REDUCTION.md)
 now has a genuinely analytic proof of its tau=2 scale continuation:
 four factored derivative identities and eight fully displayed quartics
