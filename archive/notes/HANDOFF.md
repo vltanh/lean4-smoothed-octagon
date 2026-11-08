@@ -2,9 +2,9 @@
 
 **Current work (8 November 2026):** use the
 [replacement ledger](../../docs/lighter-proofs/README.md).
-The completion claims below record the previous acceptance. The S1
-coefficient-table dependency remains open under the requested hand-proof
-standard; the new three-gap errata do not close it. Existing Lean
+The completion claims below record the previous acceptance. All requested
+S1 replacements now have separate reviews, while the two S2 ratio rows
+remain open under the requested hand-proof standard. Existing Lean
 formalizations outside H-S are a separate, unchanged baseline.
 
 Date: 2026-11-08 UTC.

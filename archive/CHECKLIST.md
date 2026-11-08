@@ -2,9 +2,10 @@
 
 **Current correction (8 November 2026):** the checked boxes below are
 the earlier acceptance record, not acceptance under the new polynomial
-size and no-table requirements. The S1 table-dependent hand premise,
-and consequently H-S and its dependent global hand conclusion under
-that standard, remain open. Track the finite requested replacements in
+size and no-table requirements. The requested S1 replacements now have
+separate reviews; the two S2 ratio replacements, and consequently H-S
+and its dependent global hand conclusion under that standard, remain
+open. Track the finite requested replacements in
 [the new ledger](../docs/lighter-proofs/README.md), with the
 [three explicit interface repairs](../docs/lighter-proofs/HS_ERRATA.md)
 recorded separately. Existing kernel-checked exclusions are unchanged.

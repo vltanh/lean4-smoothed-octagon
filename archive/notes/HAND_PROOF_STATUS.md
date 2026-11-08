@@ -1,10 +1,10 @@
 # Proof without computer assistance: finite acceptance ledger
 
 **Correction after the lighter-proof request (8 November 2026).** The
-acceptance recorded below is historical. The S1 terminal coefficient
-tables do not establish hand-proof acceptance under the requested
-no-table standard; H-S and its dependent global hand conclusion remain
-open under that standard. Three reported interface gaps are repaired in
+acceptance recorded below is historical. The requested S1 replacements
+are now separately reviewed; the two S2 ratio replacements remain open.
+H-S and its dependent global hand conclusion therefore remain open
+under the requested standard. Three reported interface gaps are repaired in
 [the errata](../../docs/lighter-proofs/HS_ERRATA.md). The
 [current replacement ledger](../../docs/lighter-proofs/README.md)
 separates those repairs from the still-open polynomial signs. This

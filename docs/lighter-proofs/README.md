@@ -9,8 +9,8 @@ A replacement is accepted here only after its mathematical sign, domain,
 caller, and expanded-identity sizes have been checked. A numerical probe
 or a large alternative coefficient expansion does not close a row.
 The previous archived hand-proof acceptance does not establish that the
-requested signs meet this stricter standard. In particular, the S1
-generated coefficient tables remain an open hand-proof dependency.
+requested signs meet this stricter standard. Completed rows below have
+their own source, caller and size reviews; the two S2 rows remain open.
 
 ## Already formalized signs, in requested priority order
 
@@ -36,11 +36,11 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 |---|---|---|
 | S1.1 | `MIXED_SMALLER_SHORT_LOW_RATIO_OUTER_HAND_SIGN` (16)--(21), Section 5 | **Complete hand caller replacement.** The [assembled proof](SHORT_OUTER_COMPLETE.md) closes both tests in all three branches. The last B `F1` terminal has margin `1597/144000000`. The exact actual outer caller and its original duration conclusion are preserved. |
 | S1.2 | `MIXED_SMALLER_SHORT_LOW_RATIO_CENTRAL_HAND_SIGN` (20)--(25), Appendices A--C | **Complete hand caller replacement.** The [central assembly](SHORT_CENTRAL_COMPLETE.md) retains the original norm curve for `F0`, reaches the exact cap, and reuses the completed outer sign. A separate curvature argument reduces `F1` to two fixed shapes. Both original strict signs and the duration caller are preserved. |
-| S1.3 | `MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_SIGN` (7) | Open. |
+| S1.3 | `MIXED_SMALLER_SHORT_OUTER_SCALE_LARGE_RATIO_SIGN` (7) | **Complete hand replacement on the unchanged domain.** The [two-shape proof](SHORT_SCALE_OUTER_LARGE_RATIO.md) retains all three original tests. A four-term cubic comparison handles the large shapes; beta convexity and two derivatives handle the boundary strip. The largest expanded identities have 44 monomials and degree eight. Both original duration and scale callers are preserved. |
 | S1.4 | `MIXED_SMALLER_SHORT_CENTRAL_TAU_TWO_SIGN` (3) and `MIXED_SMALLER_SHORT_CENTRAL_DURATION_FACES` (5) | **Complete hand replacement.** The [tau-two proof](SHORT_DURATION_CENTRAL_TAU_TWO.md) and [two duration-face proofs](SHORT_DURATION_CENTRAL_UPPER_FACES.md) share a [lower beta face](SHORT_DURATION_CENTRAL_LOWER_FACE.md). Four constant beta slopes, positive second derivatives and three slanted edges replace the large endpoint expansions. All three original strict signs, norm ceilings and callers are preserved. |
 | S2.1 | `MIXED_SMALLER_SHORT_CENTRAL_RATIO_HAND_SIGN` (5) | Open. |
 | S2.2 | `MIXED_SMALLER_SHORT_OUTER_RATIO_HAND_SIGN` (11)--(18) | Open. |
-| S3.1 | `MIXED_SMALLER_SHORT_DISPLACEMENT_OUTER_FACE` (7)--(21) | Open. |
+| S3.1 | `MIXED_SMALLER_SHORT_DISPLACEMENT_OUTER_FACE` (7)--(21) | **Complete hand caller replacement.** The [outer displacement proof](SHORT_DISPLACEMENT_OUTER_COMPLETE.md) retains the actual lower beta order, bounds the two multipliers, and uses reciprocal-shape convexity with three terminal families. The comparison covers either sign of the norm residual and preserves the original duration and scale caller. Expanded identities have at most 39 monomials and degree eight. |
 | S3.2 | `MIXED_SMALLER_SHORT_DISPLACEMENT_CENTRAL_FACE`, Section 2 (4)--(10) | **Complete hand caller replacement for the requested shape derivative.** The [central displacement proof](SHORT_DISPLACEMENT_CENTRAL_SHAPE.md) groups the exact-log derivative using two correlated transport bounds. A convex quadratic proves both negative signs on the actual comparison path and reaches the original endpoint. The source's separate beta lemma and Section 3 endpoint signs remain dependencies. |
 | S4 | `MIXED_SMALLER_SHORT_EXTENDED_CASIMIR_DERIVATIVES` (4)--(30) | **Complete hand caller replacement.** The [six-sign assembly](SHORT_CASIMIR_COMPLETE.md) uses small derivative identities, a moving-norm comparison, two boundary concavity arguments and six elementary terminal terms. Five signs retain their original full domains; W3 is proved at `e=13/5`, exactly after the caller's W2 comparison. The original actual Casimir floor and all three endpoint margins are preserved. |
 | S6 | `MIXED_SMALLER_SHORT_SMALL_SHAPE_COST_EXCLUSION` (20)--(31) | **Complete hand replacement.** [Angle concavity and four endpoint curves](SHORT_COST_CONCAVITY.md) give `B>113/50000`, with margin greater than `3/100000` over the original target. Primitive numerator degree is at most five; only one rational split is used. The original physical-cost caller is unchanged. |
@@ -48,8 +48,8 @@ caller-preserving dependency removal. None has yet been integrated into Lean.
 These are the finite requested obligations. The three corrections below
 are recorded separately and are not counted as polynomial replacements.
 
-Six of the ten H-S replacement rows are now complete: S1.1, S1.2,
-S1.4, S3.2, S4 and S6. The remaining four are the unchanged finite list above. This count
+Eight of the ten H-S replacement rows are now complete: S1.1, S1.2,
+S1.3, S1.4, S3.1, S3.2, S4 and S6. Only S2.1 and S2.2 remain open. This count
 describes completed rows, not equal amounts of remaining effort, and
 does not claim completion of H-S or Lean integration.
 
