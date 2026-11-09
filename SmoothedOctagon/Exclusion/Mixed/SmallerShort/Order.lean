@@ -6,6 +6,7 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Contacts
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Upper
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.SmallUpper
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Strong
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Quadratic
 
 /-!
 # Smaller-short window: the equal-secant orders
@@ -20,7 +21,8 @@ non-affine barrier of `ss_quad_order`) is `SmallerShort/Order/Barrier.lean`. The
 upper contacts use the integral comparisons and positive products in `Order/Upper.lean`.
 The small-box upper order uses tilted weights and monotonicity in `Order/SmallUpper.lean`;
 the strong lower contact uses positive weights in `Order/Strong.lean`.
-The quadratic contact inequalities are in `Order/Contacts.lean`.
+The quadratic contact retains these gains and bounds the curvature costs in
+`Order/Quadratic.lean`.
 
 ## Main API
 
@@ -30,7 +32,7 @@ The quadratic contact inequalities are in `Order/Contacts.lean`.
 * Orders: `ss_strong_order` (`α ≥ β/x + k_s(x)(β - x)`), `ss_upper_order_54`, `ss_upper_order_98`,
   `ss_small_upper_order` (`α ≤ 1 + 3δ`), `ss_quad_order` (`α ≥ 1 + c(x)δ + δ²/(1 + 4δ)`).
 * Helpers: `ord_upper_contact_of_ratio`, `ord_affine_deriv`,
-  `ord_affine_lt` (affine barriers), `ord_contact_pos` (signs of `M`, `ξ`, `η`, `N` at a contact).
+  `ord_affine_lt` (affine barriers), `ordQuadP`, `ordQuadJ` (the quadratic barrier and its slope).
 -/
 
 @[expose] public section
@@ -38,31 +40,6 @@ The quadratic contact inequalities are in `Order/Contacts.lean`.
 namespace SmoothedOctagon
 
 open Set Real
-
-/-! ### Contact inequalities -/
-
-/-- **The quadratic lower-barrier contact**: for
-`2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 9/20`, `c = (4x² + 11x + 1)/(7x + 1)`, the barrier
-`B(δ) = 1 + cδ + δ²/(1 + 4δ)`, `B'(δ) = c + δ(2 + 4δ)/(1 + 4δ)²`, the contact `q = 1/(1 + δ)`,
-`p = B(δ)/(x(1 + δ))`: `N((2q - p)x - q²) - (x - q)(W - N)(B'(δ)/x - p) ≥ 0`
-(`= δQ(δ, x)/(x³(1 + δ)⁵(1 + 4δ)⁴(7x + 1)³)`, the 8 × 9 table).
-Proof: `Q ≥ 0` row by row of the table (`ord_quad_Q_nonneg`); only `X = x - 2 ≥ 0` is used. -/
-theorem ss_quad_contact {x δ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
-    (hδ2 : δ ≤ 9 / 20) :
-    let c := (4 * x ^ 2 + 11 * x + 1) / (7 * x + 1)
-    let q := 1 / (1 + δ)
-    let p := (1 + c * δ + δ ^ 2 / (1 + 4 * δ)) / (x * (1 + δ))
-    let N := (1 + p) * (6 + p - 5 * p * q - q ^ 2 - q)
-    let W := 6 * (p + q + 2) * (1 - p * q)
-    0 ≤ N * ((2 * q - p) * x - q ^ 2) -
-      (x - q) * (W - N) * ((c + δ * (2 + 4 * δ) / (1 + 4 * δ) ^ 2) / x - p) := by
-  intro c q p N W
-  have _hx2 := hx2
-  have hx0 : 0 < x := by linarith
-  have key := ord_quad_eq (c := c) (q := q) (p := p) (N := N) (W := W) hx0 hδ rfl rfl rfl rfl rfl
-  have h := mul_nonneg hδ (ord_quad_Q_nonneg hx hδ hδ2)
-  rw [← key] at h
-  exact nonneg_of_mul_nonneg_right h (by positivity)
 
 /-! ### The orders -/
 
@@ -78,21 +55,6 @@ theorem ord_affine_lt {ℓ k q₁ : ℝ} (hk : -1 < k) (h : ℓ + k * (1 - q₁)
   intro z hz
   have := mul_nonneg (by linarith : (0:ℝ) ≤ k + 1) (sub_nonneg.2 hz.1)
   linarith
-
-/-- The contact data of an affine lower barrier `p = 1/x + k(1 - z)` below the diagonal. -/
-theorem ord_contact_pos {x p z : ℝ} (hx : 1 < x) (hp : 0 < p) (hpz : p < z) (hz : z ≤ 1) :
-    0 < (2 * z - p) * x - z ^ 2 ∧ 0 ≤ ss_gB 1 p - m2Sec p 1 z ∧ 0 < m2Sec p 1 z - ss_gB 1 z ∧
-      0 ≤ (1 + p) * (6 + p - 5 * p * z - z ^ 2 - z) := by
-  have hz0 : 0 < z := hp.trans hpz
-  refine ⟨?_, sub_nonneg.2 (ss_sec_le_left hp hpz.le hz), sub_pos.2 (ss_sec_gt_right hp hpz hz),
-    ?_⟩
-  · have h1 : 0 < z * (x - z) := mul_pos hz0 (by linarith)
-    have h2 : 0 < (z - p) * x := mul_pos (by linarith) (by linarith)
-    linarith
-  · have h1 : p * z ≤ p := mul_le_of_le_one_right hp.le hz
-    have h2 : z ^ 2 ≤ 1 := pow_le_one₀ hz0.le hz
-    have : 0 < 6 + p - 5 * p * z - z ^ 2 - z := by linarith
-    positivity
 
 /-- The strong lower order holds for every `x>1`. -/
 theorem ss_strong_order {x al be : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al < x)
@@ -274,130 +236,30 @@ theorem ss_small_upper_order {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 13 / 6) (
   simpa only [neg_neg] using ss_small_contact_max hxlarge hx2
     (hq₁19.trans hz.1.le) hz.2
 
-/-- The quadratic barrier `B(δ) = 1 + c(x)δ + δ²/(1 + 4δ)` of the rational quadratic order. -/
-noncomputable def ordQB (x d : ℝ) : ℝ :=
-  1 + (4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) * d + d ^ 2 / (1 + 4 * d)
-
-/-- `B'(δ) = c(x) + δ(2 + 4δ)/(1 + 4δ)²`. -/
-noncomputable def ordQB' (x d : ℝ) : ℝ :=
-  (4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) + d * (2 + 4 * d) / (1 + 4 * d) ^ 2
-
-theorem ordQB_hasDerivAt {x d : ℝ} (hx : 0 < x) (hd : 0 ≤ d) :
-    HasDerivAt (ordQB x) (ordQB' x d) d := by
-  have h1 := ((hasDerivAt_id' d).const_mul ((4 * x ^ 2 + 11 * x + 1) / (7 * x + 1))).const_add 1
-  have h2 := (hasDerivAt_pow 2 d).div (((hasDerivAt_id' d).const_mul 4).const_add 1)
-    (by positivity)
-  refine (h1.add h2).congr_deriv ?_
-  have : 1 + 4 * d ≠ 0 := by positivity
-  unfold ordQB'
-  push_cast
-  field_simp
-  ring
-
-theorem ordQB_pos {x d : ℝ} (hx : 0 < x) (hd : 0 ≤ d) : 0 < ordQB x d := by
-  unfold ordQB
-  have : 0 ≤ (4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) * d := by positivity
-  have : 0 ≤ d ^ 2 / (1 + 4 * d) := by positivity
-  linarith
-
-/-- **The quadratic contact** at `z = 1/(1 + δ)` (`ss_quad_contact`, `ord_lower_alg`): the lower
-contact inequality of `ord_order_lower` for the barrier `P(z) = zB(1/z - 1)/x`. -/
-theorem ord_quad_contact_at {x z : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hz0 : 0 < z)
-    (hz1 : z ≤ 1) (hδ2 : z⁻¹ - 1 ≤ 9 / 20) (hPz : z * ordQB x (z⁻¹ - 1) / x < z) :
-    -((1 * ordQB x (z⁻¹ - 1) + z * (ordQB' x (z⁻¹ - 1) * -(z ^ 2)⁻¹)) / x) *
-        (ss_gB 1 (z * ordQB x (z⁻¹ - 1) / x) - m2Sec (z * ordQB x (z⁻¹ - 1) / x) 1 z) * z *
-        (x - z) <
-      (m2Sec (z * ordQB x (z⁻¹ - 1) / x) 1 z - ss_gB 1 z) *
-        ((2 * z - z * ordQB x (z⁻¹ - 1) / x) * x - z ^ 2) := by
-  have hx0 : 0 < x := by linarith
-  have hδ0 : 0 ≤ z⁻¹ - 1 := by rw [sub_nonneg]; exact (one_le_inv₀ hz0).2 hz1
-  have hq : 0 ≤ (1 + ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1)))) *
-        (6 + ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1))) -
-          5 * (ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1)))) * (1 / (1 + (z⁻¹ - 1))) -
-          (1 / (1 + (z⁻¹ - 1))) ^ 2 - 1 / (1 + (z⁻¹ - 1))) *
-        ((2 * (1 / (1 + (z⁻¹ - 1))) - ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1)))) * x -
-          (1 / (1 + (z⁻¹ - 1))) ^ 2) -
-      (x - 1 / (1 + (z⁻¹ - 1))) *
-        (6 * (ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1))) + 1 / (1 + (z⁻¹ - 1)) + 2) *
-            (1 - ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1))) * (1 / (1 + (z⁻¹ - 1)))) -
-          (1 + ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1)))) *
-            (6 + ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1))) -
-              5 * (ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1)))) * (1 / (1 + (z⁻¹ - 1))) -
-              (1 / (1 + (z⁻¹ - 1))) ^ 2 - 1 / (1 + (z⁻¹ - 1)))) *
-        (ordQB' x (z⁻¹ - 1) / x - ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1)))) :=
-    ss_quad_contact hx hx2 hδ0 hδ2
-  have e1 : 1 / (1 + (z⁻¹ - 1)) = z := by rw [add_sub_cancel, one_div, inv_inv]
-  have e2 : ordQB x (z⁻¹ - 1) / (x * (1 + (z⁻¹ - 1))) = z * ordQB x (z⁻¹ - 1) / x := by
-    rw [add_sub_cancel]; field_simp
-  have hBpos := ordQB_pos hx0 hδ0
-  rw [e1, e2] at hq
-  generalize ordQB x (z⁻¹ - 1) = Bv at hq hPz hBpos ⊢
-  generalize ordQB' x (z⁻¹ - 1) = Bd at hq ⊢
-  have hp0 : 0 < z * Bv / x := by positivity
-  have hgap := ss_gap_ratio_low hp0 hPz hz1
-  obtain ⟨hM, hξ, hη, hN⟩ := ord_contact_pos (x := x) (by linarith) hp0 hPz hz1
-  have key := ord_lower_alg (B := (x - z) * (Bd / x - z * Bv / x)) hgap (by linarith) hM hξ hη hN
-  generalize ss_gB 1 (z * Bv / x) - m2Sec (z * Bv / x) 1 z = ξ at key ⊢
-  have e3 : -((1 * Bv + z * (Bd * -(z ^ 2)⁻¹)) / x) * ξ * z * (x - z) =
-      (x - z) * (Bd / x - z * Bv / x) * ξ := by
-    field_simp
-    ring
-  rw [e3]
-  exact key
-
-/-- **The rational quadratic order**: for
-`2 ≤ x ≤ 13/6`, `1 ≤ α < x ≤ β` with equal secants, `δ = β/x - 1`,
-`α ≥ 1 + c(x)δ + δ²/(1 + 4δ)`, `c(x) = (4x² + 11x + 1)/(7x + 1)` (`ss_strong_order` for the domain
-`δ < 9/20`, `ss_quad_contact`). Proof: first contact for the non-affine barrier
-`p = zB(1/z - 1)/x` (`ord_order_lower`); the case where the barrier meets the diagonal is excluded
-by the last-meeting-point argument of `ss_order_norm`. -/
-theorem ss_quad_order {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
+/-- The rational quadratic order from the curved barrier and its integral contact bound. -/
+theorem ss_quad_order {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13/6) (hal : 1 ≤ al)
     (hax : al < x) (hxb : x ≤ be) (heq : m2Sec 1 x be = m2Sec al be x) :
-    1 + (4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) * (be / x - 1) +
-        (be / x - 1) ^ 2 / (1 + 4 * (be / x - 1)) ≤ al := by
-  have hx1 : 1 < x := by linarith
-  have hx0 : 0 < x := by linarith
-  have hal0 : 0 < al := by linarith
-  have hbe0 : 0 < be := by linarith
-  have hc0 : 0 < (4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) := by positivity
-  -- the strong order gives `δ₁ = β/x - 1 ≤ 9/20`
-  have hδ₁0 : 0 ≤ be / x - 1 := by rw [sub_nonneg, le_div_iff₀ hx0]; linarith
-  have hδ₁ : be / x - 1 ≤ 9 / 20 := by
-    have hs := ss_strong_order hx1 hal hax hxb heq
-    have e : be / x + ssKs x * (be - x) =
-        1 + (4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) * (be / x - 1) := by
-      unfold ssKs; field_simp; ring
-    rw [e] at hs
-    by_contra h
-    push Not at h
-    have k1 := mul_lt_mul_of_pos_left h hc0
-    have k2 : x - 1 ≤ (4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) * (9 / 20) := by
-      rw [div_mul_eq_mul_div, le_div_iff₀ (by linarith)]
-      linarith [mul_nonneg (by linarith : (0:ℝ) ≤ x - 2) (by linarith : (0:ℝ) ≤ 13 / 6 - x)]
-    linarith
-  -- the barrier `P(z) = zB(1/z - 1)/x`, `B(δ) = 1 + cδ + δ²/(1 + 4δ)`
-  have hP := ord_order_lower (P := fun z => z * ordQB x (z⁻¹ - 1) / x)
-    (P' := fun z => (1 * ordQB x (z⁻¹ - 1) + z * (ordQB' x (z⁻¹ - 1) * -(z ^ 2)⁻¹)) / x)
-    (p₁ := al / be) (q₁ := x / be) hx1 (div_pos hal0 hbe0) (div_lt_div_of_pos_right hax hbe0)
-    ((div_le_one hbe0).2 hxb) (ord_norm_eq hx0 hal0 hbe0 heq) (by simp [ordQB])
-    (fun z hz => by
-      have hz0 : 0 < z := (div_pos hx0 hbe0).trans_le hz.1
-      have hδ0 : 0 ≤ z⁻¹ - 1 := by rw [sub_nonneg]; exact (one_le_inv₀ hz0).2 hz.2
-      exact ((hasDerivAt_id' z).mul ((ordQB_hasDerivAt hx0 hδ0).comp z
-        ((hasDerivAt_inv hz0.ne').sub_const 1))).div_const x)
-    (fun z hz => by
-      have hz0 : 0 < z := (div_pos hx0 hbe0).trans_le hz.1
-      have hδ0 : 0 ≤ z⁻¹ - 1 := by rw [sub_nonneg]; exact (one_le_inv₀ hz0).2 hz.2
-      exact div_pos (mul_pos hz0 (ordQB_pos hx0 hδ0)) hx0)
-    (fun z hz hPz _ => by
-      have hz0 : 0 < z := (div_pos hx0 hbe0).trans hz.1
-      refine ord_quad_contact_at hx hx2 hz0 hz.2 ?_ hPz
-      have : z⁻¹ < be / x := by
-        rw [← inv_div]; exact inv_strictAnti₀ (div_pos hx0 hbe0) hz.1
-      linarith)
-  rw [inv_div] at hP
-  have e : x / be * ordQB x (be / x - 1) / x = ordQB x (be / x - 1) / be := by field_simp
-  rw [e] at hP
-  exact (div_le_div_iff_of_pos_right hbe0).1 hP
+    1+(4*x^2+11*x+1)/(7*x+1)*(be/x-1)+(be/x-1)^2/(1+4*(be/x-1)) ≤ al := by
+  have hx1 : 1 < x := by linarith only [hx]
+  have hx0 : 0 < x := by linarith only [hx]
+  have hal0 : 0 < al := by linarith only [hal]
+  have hbe0 : 0 < be := hx0.trans_le hxb
+  have hP := ord_order_lower (P := ordQuadP x) (P' := fun z => -ordQuadJ x z)
+    (p₁ := al/be) (q₁ := x/be) hx1 (div_pos hal0 hbe0) (div_lt_div_of_pos_right hax hbe0)
+    ((div_le_one hbe0).mpr hxb) (ord_norm_eq hx0 hal0 hbe0 heq)
+    (by norm_num [ordQuadP])
+    (fun z hz => ord_quadP_hasDerivAt hx0 hz.2)
+    (fun z hz => ord_quadP_pos hx0 hz.2)
+    (fun z hz hPz _ => by simpa only [neg_neg] using ss_quad_contact hx hx2 hz.2 hPz)
+  have h43 : 0 < 4*be-3*x := by linarith only [hxb,hx0]
+  have he : 1+(4*x^2+11*x+1)/(7*x+1)*(be/x-1)+(be/x-1)^2/(1+4*(be/x-1)) =
+      be*ordQuadP x (x/be) := by
+    unfold ordQuadP ssKs
+    field_simp (disch := first | positivity | nlinarith only [hx0,hbe0,h43])
+    ring
+  calc 1+(4*x^2+11*x+1)/(7*x+1)*(be/x-1)+(be/x-1)^2/(1+4*(be/x-1)) =
+        be*ordQuadP x (x/be) := he
+    _ ≤ be*(al/be) := mul_le_mul_of_nonneg_left hP hbe0.le
+    _ = al := by field_simp
 
 end SmoothedOctagon
