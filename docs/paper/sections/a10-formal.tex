@@ -50,164 +50,180 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 
 \subsection{The scalar estimates}\label{app:formal-scalar}
 
-\noindent\textit{Working-draft status.}
-Eleven of the 24 replacement groups in the current pass are complete and committed.
-Each has passed the full Lean build, the standard-axiom audit, the paper check and an
-independent source review. Group 20 is in progress; the other twelve groups
-remain to be integrated. Groups 25--38 are deferred. The numbers below identify the
-same groups throughout this pass.
+\noindent\textit{Working-draft progress.}
+The current pass covers groups 1--24; groups 25--38 are deferred.
+Group numbers stay fixed as entries move between statuses.
 
-Lean checks the scalar estimates by exact arithmetic, derivatives and integral inequalities.
-For the remaining polynomial checks on boxes, scripts in
-\texttt{scripts/certificates/} of~\cite{Companion} compute Bernstein coefficients;
-\lean{ring} checks the polynomial identity and normalization checks the rational signs.
-These checks use neither interval arithmetic nor floating-point computation.
+\begin{center}
+\begin{tabular}{@{}lrl@{}}
+\toprule
+Status & Count & Group numbers\\
+\midrule
+Complete & 11 & 1, 7--8, 13--19, 21\\
+In progress & 1 & 20\\
+Remaining & 12 & 2--6, 9--12, 22--24\\
+Deferred & 14 & 25--38\\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\begin{enumerate}[label=\arabic*.,itemsep=5pt]
-\item \emph{Complete: symbolic reduction.}
-The clearance and budget estimates use symbolic bounds on an arbitrary compact
-region, with the corresponding equilibrium, projective and finite-switch arguments.
+\medskip\noindent\textbf{In progress.}
+These proofs are being formalized and integrated; this group is not yet complete.
 
-\item \emph{Remaining: octagon cost and spectral caps.}
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
+\item[20.] \emph{S5 norm ceiling, duration and shear.}
+The analytic argument has passed an independent mathematical review.
+Supporting Lean proofs compile in isolation for the norm ceiling, duration
+reduction, shear estimate and inner-shape concavity. The endpoint sign arguments,
+integration into the main proof and full verification remain.
+
+The target conclusions are $q>(15/16)q_c$, $\sqrt3hR_x+(7/2)\nu<0$ and
+$-hR_x>2\nu$. The integrated Lean proof still gives $q>(29/30)q_c$,
+$\sqrt3hR_x+(13/3)\nu<0$ and $-hR_x>5\nu/2$.
+Group~21 already accepts $-hR_x>2\nu$; its caller currently weakens the S5 bound.
+\end{enumerate}
+
+\medskip\noindent\textbf{Remaining in the current pass.}
+Each item states the work needed to integrate the paper's argument into Lean.
+
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
+\item[2.] \emph{Octagon cost and spectral caps.}
 Integrate the exact cost comparisons, using positive integral remainders for
 $\log2$ and $\arcsin$, through the general, forward and mixed cap arguments.
-The general cap is $5/27$ in the paper and the stronger $97969/529200$ in Lean,
-where rounded cost and $\pi$ estimates are still used.
-The stronger forward cap is already proved by \lean{wire_gam2_cap}; its
-integral-moment proof and the direct comparison with the final smaller-short
-score remain to be formalized.
+Reconcile the paper's general cap $5/27$ with Lean's stronger $97969/529200$,
+whose proof still uses rounded cost and $\pi$ estimates.
+The stronger forward cap is proved by \lean{wire_gam2_cap}; its integral-moment
+proof and the direct comparison with the final smaller-short score remain.
 
-\item \emph{Remaining: M1 symmetric angle gap.}
+\item[3.] \emph{M1 symmetric angle gap.}
 Minimize the reduced Gram expression at the symmetric centre and apply one
-logarithm bound. Lean still uses tangent intervals and coefficient tables.
-The paper's domain $\gamma^2\le5/27$ must be reconciled with Lean's domain
-$\gamma^2\le97969/529200$ through the cap arguments in group~2.
+logarithm bound, replacing the tangent intervals and coefficient tables.
+Align the domains $\gamma^2\le5/27$ in the paper and
+$\gamma^2\le97969/529200$ in Lean through group~2.
 
-\item \emph{Remaining: M1 two-centre product.}
+\item[4.] \emph{M1 two-centre product.}
 Integrate the exact bound retaining $(1+\sqrt2)^2$ through the comparison theorem.
 
-\item \emph{Remaining: terminal five-piece comparison.}
+\item[5.] \emph{Terminal five-piece comparison.}
 Formalize the integral proof of concavity and the midpoint logarithm bound
 used in the density comparison.
 
-\item \emph{Remaining: forward sum tangent endpoints.}
+\item[6.] \emph{Forward sum tangent endpoints.}
 Formalize the fixed tangent, paired reciprocal integrals and endpoint signs.
-The norm-sum threshold is $1/32$ in the paper and $1/35$ in Lean; update its
-callers together with the Casimir estimate in group~10.
+Align the norm-sum thresholds $1/32$ in the paper and $1/35$ in Lean,
+updating the callers together with group~10.
 
-\item \emph{Complete: forward symmetric neighbour value.}
-The endpoint value follows from the analytic boundary comparison.
+\item[9.] \emph{Forward asymmetric neighbour.}
+Prove convexity in the neighbour shape after division by the positive row
+multiplier. Control the symmetric-boundary logarithmic chord loss by reciprocal
+tangent remainders and a completed square, replacing the two polynomial endpoint checks.
 
-\item \emph{Complete: forward symmetric neighbour slope.}
-The partial-slope estimate, tangent endpoint and global comparison for
-$h\ge h_0$ are formalized.
-
-\item \emph{Remaining: forward asymmetric neighbour.}
-Formalize convexity in the neighbour shape after division by the positive row
-multiplier. On the symmetric boundary, use reciprocal tangent remainders and a
-completed square to control the logarithmic chord loss. Lean still uses
-polynomial checks for the two endpoint signs.
-
-\item \emph{Remaining: forward Casimir and central pairing.}
+\item[10.] \emph{Forward Casimir and central pairing.}
 Minimize the concave Gram numerator over the norm polygon, equalize the shapes
 with their logarithmic correction, and bound the scalar curve by convexity.
-Prove positivity of the central pairing from the integral of $f'$.
-The conditional Casimir lower bounds are $9193/50000$ in the paper and $23/125$
-in Lean; align these with groups~2 and~6.
+Prove central-pairing positivity from the integral of $f'$.
+Align the conditional lower bounds $9193/50000$ in the paper and $23/125$ in
+Lean with groups~2 and~6.
 
-\item \emph{Remaining: mixed norm ceilings and duration.}
-The shared stronger logarithm bound is formalized. Complete its use in the
-incoming and central bridge-norm ceilings and formalize the duration comparison
-by Jensen's inequality.
+\item[11.] \emph{Mixed norm ceilings and duration.}
+Apply the already formalized stronger logarithm bound to the incoming and central
+bridge-norm ceilings. Formalize the duration comparison by Jensen's inequality.
 
-\item \emph{Remaining: mixed transported ceiling for $t<2/5$.}
-Formalize the comparison with the switching floor: reduce scale and increase the
-middle margin to reach one boundary, then use variance, Jensen's inequality and
-convexity of the resulting quadratic minimum.
+\item[12.] \emph{Mixed transported ceiling for $t<2/5$.}
+Reduce scale and increase the middle margin to reach one boundary. Compare with
+the switching floor using variance, Jensen's inequality and convexity of the
+resulting quadratic minimum.
 
-\item \emph{Complete: smaller-short reverse-centre scale.}
-The comparison holds on the full domain $\rho<1/4$.
-
-\item \emph{Complete: smaller-short bridge norm and endpoint gaps.}
-The global cap $3/2-\log2$, the tilted-gap comparison and both exact endpoint
-gap bounds are formalized.
-
-\item \emph{Complete: smaller-short bridge upper orders.}
-The bound $5/4$ and the bound $9/8$ for $x\le5$ follow from the analytic
-contact comparisons.
-
-\item \emph{Complete: smaller-short small-box upper order.}
-The proof uses the natural tilted moments and their monotonicity.
-
-\item \emph{Complete: smaller-short strong lower order.}
-The proof uses weight-scale comparison, a strict Simpson bound and
-positive-product identities, for every $x>1$.
-
-\item \emph{Complete: smaller-short quadratic order.}
-The proof retains the positive contact gains and bounds the curving cost and
-threshold variation by a positive normalized budget.
-
-\item \emph{Complete: S4 norm comparison.}
-The two central floor tests decrease with the norm on the full half-line $u\ge3/4$.
-The remaining S4 shape signs belong to deferred group~38.
-
-\item \emph{In progress: S5 norm ceiling, duration and shear.}
-The analytic argument has passed an independent mathematical review; Lean
-integration remains. It uses a logarithm bound with a factored derivative,
-exact duration concavity and its endpoint tangent, convexity in the outer shape,
-and resolvent derivatives for the shape signs.
-The paper concludes $q>(15/16)q_c$, $\sqrt3hR_x+(7/2)\nu<0$ and $-hR_x>2\nu$.
-Lean still concludes $q>(29/30)q_c$, $\sqrt3hR_x+(13/3)\nu<0$ and
-$-hR_x>5\nu/2$. The continuation theorem in group~21 now accepts the weaker shear bound;
-its current caller explicitly weakens the S5 conclusion.
-
-\item \emph{Complete: S6 score continuation.}
-Three explicit loss bounds and a natural central-shear bound prove strict decrease
-along the exact tangent curve. The physical continuation and completion theorems
-accept the shear hypothesis $-hR_x>2\nu$.
-
-\item \emph{Remaining: S6 additional angle and shape concavity.}
+\item[22.] \emph{S6 additional angle and shape concavity.}
 Formalize the exact integral cancellation for the additional shear angle,
-removing Lean's fixed approximation allowance $1/800000$, and the three
-derivative signs proving concavity in the second shape ratio.
+removing the fixed allowance $1/800000$, and the three derivative signs for
+concavity in the second shape ratio.
 
-\item \emph{Remaining: S6 norm floor and central-shear envelopes.}
+\item[23.] \emph{S6 norm floor and central-shear envelopes.}
 Formalize the mean-and-variance bound in a reciprocal integral and the curvature
-and initial-slope bounds for the exact central shear. The variance floor differs
-from Lean's current quadratic floor, so update its consumers with group~24.
+and initial-slope bounds for the exact central shear. Update the consumers of
+Lean's current quadratic floor together with group~24.
 
-\item \emph{Remaining: S6 final score comparison.}
+\item[24.] \emph{S6 final score comparison.}
 Keep the exact fixed-row angles, prove decrease in displacement and concavity in
 the remaining shape ratio at maximal displacement, and reduce to four corners.
 Formalize the corner arithmetic and the direct octagon-cost comparison from
-group~2. Lean still uses its quadratic norm floor, polynomial angle bounds and
-polynomial signs on boxes for this minimization.
+group~2, replacing the quadratic norm floor, polynomial angle bounds and box signs.
 \end{enumerate}
 
-\noindent\textit{Deferred replacements.}
-The following groups remain outside the current pass. Their existing Lean proofs
-remain in use, including the polynomial checks on the indicated faces.
+\medskip\noindent\textbf{Complete and committed.}
+Each group below is integrated into the paper and Lean and has passed the full
+Lean build, standard-axiom audit, paper check and independent source review.
 
-\begin{enumerate}[start=25,label=\arabic*.,itemsep=3pt]
-\item \emph{Deferred:} mixed reverse unit face beyond the completed $q_1$ case.
-\item \emph{Deferred:} mixed reverse order face beyond the completed $q_1$ square,
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
+\item[1.] \emph{Symbolic reduction.}
+Symbolic bounds on an arbitrary compact region prove the clearance and budget
+estimates, with the equilibrium, projective and finite-switch arguments.
+
+\item[7.] \emph{Forward symmetric neighbour value.}
+The endpoint value follows from the analytic boundary comparison.
+
+\item[8.] \emph{Forward symmetric neighbour slope.}
+The partial-slope estimate, tangent endpoint and global comparison hold for $h\ge h_0$.
+
+\item[13.] \emph{Smaller-short reverse-centre scale.}
+The comparison holds on the full domain $\rho<1/4$.
+
+\item[14.] \emph{Smaller-short bridge norm and endpoint gaps.}
+The proof gives the global cap $3/2-\log2$, the tilted-gap comparison and both
+exact endpoint gap bounds.
+
+\item[15.] \emph{Smaller-short bridge upper orders.}
+Analytic contact comparisons give the bound $5/4$ and, for $x\le5$, the bound $9/8$.
+
+\item[16.] \emph{Smaller-short small-box upper order.}
+The proof uses the natural tilted moments and their monotonicity.
+
+\item[17.] \emph{Smaller-short strong lower order.}
+Weight-scale comparison, a strict Simpson bound and positive-product identities
+prove the estimate for every $x>1$.
+
+\item[18.] \emph{Smaller-short quadratic order.}
+Positive contact gains control the curving cost and threshold variation through
+a positive normalized budget.
+
+\item[19.] \emph{S4 norm comparison.}
+The two central floor tests decrease with the norm for every $u\ge3/4$.
+The remaining S4 shape signs are deferred in group~38.
+
+\item[21.] \emph{S6 score continuation.}
+Three explicit loss bounds and a natural central-shear bound prove strict decrease
+along the exact tangent curve. The physical continuation and completion theorems
+accept $-hR_x>2\nu$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Deferred: outside the current pass.}
+The existing Lean proofs remain in use for these groups.
+
+\begin{enumerate}[start=25,label=\arabic*.,leftmargin=2em,itemsep=3pt]
+\item Mixed reverse unit face beyond the completed $q_1$ case.
+\item Mixed reverse order face beyond the completed $q_1$ square,
 especially the boundary $q=W/k$.
-\item \emph{Deferred:} mixed scale-strip signs.
-\item \emph{Deferred:} mixed low-scale unit face.
-\item \emph{Deferred:} mixed forward low-ratio unit, order and shape signs,
-and the low-$t$ reductions.
-\item \emph{Deferred:} mixed forward large-gap and high-ratio face signs,
-and the fitted derivative bounds.
-\item \emph{Deferred:} mixed $\chi$-cutoff endpoint signs.
-\item \emph{Deferred:} mixed event-factor elimination: leading terms and discriminants.
-\item \emph{Deferred:} mixed envelope Casimir endpoint at the norm ceiling;
+\item Mixed scale-strip signs.
+\item Mixed low-scale unit face.
+\item Mixed forward low-ratio unit, order and shape signs, and the low-$t$ reductions.
+\item Mixed forward large-gap and high-ratio face signs, and the fitted derivative bounds.
+\item Mixed $\chi$-cutoff endpoint signs.
+\item Mixed event-factor elimination: leading terms and discriminants.
+\item Mixed envelope Casimir endpoint at the norm ceiling;
 norm monotonicity is already formalized.
-\item \emph{Deferred:} S0 central and outer shape signs and auxiliary ceilings.
-\item \emph{Deferred:} S1 central and outer Casimir face signs.
-\item \emph{Deferred:} S2 central and outer ratio face signs.
-\item \emph{Deferred:} S3 central and outer displacement face signs.
-\item \emph{Deferred:} S4 remaining shape derivative and endpoint signs.
+\item S0 central and outer shape signs and auxiliary ceilings.
+\item S1 central and outer Casimir face signs.
+\item S2 central and outer ratio face signs.
+\item S3 central and outer displacement face signs.
+\item S4 remaining shape derivative and endpoint signs.
 \end{enumerate}
+
+All scalar checks use exact arithmetic, derivatives or integral inequalities.
+For the polynomial checks still in use on boxes, scripts in
+\texttt{scripts/certificates/} of~\cite{Companion} compute Bernstein coefficients;
+\lean{ring} checks the polynomial identity and normalization checks the rational signs.
+These checks use neither interval arithmetic nor floating-point computation.
 
 \subsection{Dictionary}\label{app:formal-dictionary}
 
