@@ -51,13 +51,17 @@ theorem wind_triCinv_in (L : Fin 3) : Term.triCinv *ᵥ (elRm L *ᵥ ![-1, 0]) =
   have h := wind_s3pos
   fin_cases L <;> ext i <;> fin_cases i <;>
     simp [wind_bin, elRm, Term.triCinv, Term.triRinv, pow_succ, Matrix.mulVec, dotProduct,
-      Fin.sum_univ_two, Matrix.mul_apply] <;> field_simp <;> ring
+      Fin.sum_univ_two, Matrix.mul_apply]
+  field_simp
+  ring
 
 theorem wind_triCinv_out (L : Fin 3) : Term.triCinv *ᵥ (elRm L *ᵥ ![0, 1]) = wind_bout L := by
   have h := wind_s3pos
   fin_cases L <;> ext i <;> fin_cases i <;>
     simp [wind_bout, elRm, Term.triCinv, Term.triRinv, pow_succ, Matrix.mulVec, dotProduct,
-      Fin.sum_univ_two, Matrix.mul_apply] <;> field_simp <;> ring
+      Fin.sum_univ_two, Matrix.mul_apply]
+  field_simp
+  ring
 
 /-- The rotation `R` multiplies by `e^{iπ/3}`. -/
 theorem wind_toC_R (v : Fin 2 → ℝ) :
@@ -67,7 +71,8 @@ theorem wind_toC_R (v : Fin 2 → ℝ) :
 theorem wind_toC_Rinv (v : Fin 2 → ℝ) :
     sc_toC (R⁻¹ *ᵥ v) = (1 / 2 - (√3 / 2 : ℝ) * I) * sc_toC v := by
   rw [poly_R_inv]
-  apply Complex.ext <;> simp [sc_toC, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> ring
+  apply Complex.ext <;> simp [sc_toC, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+  ring
 
 theorem wind_rot_mul : (1 / 2 + (√3 / 2 : ℝ) * I) * (1 / 2 - (√3 / 2 : ℝ) * I) = 1 := by
   have h : ((√3 / 2 : ℝ) : ℂ) ^ 2 = 3 / 4 := by
@@ -113,7 +118,9 @@ theorem wind_arg_bout_bin (L : Fin 3) :
 theorem wind_det_bin_bout (L : Fin 3) : elDet (wind_bin L) (wind_bout L) ≠ 0 := by
   have h := wind_s3pos
   have h3 := wind_s3
-  fin_cases L <;> simp [elDet, wind_bin, wind_bout] <;> field_simp <;> nlinarith
+  fin_cases L <;> simp [elDet, wind_bin, wind_bout]
+  field_simp
+  nlinarith
 
 theorem wind_bout_chain (L : Fin 3) : wind_bout L = wind_bin (L - 1) ∨ wind_bout L = -wind_bin (L - 1) := by
   fin_cases L
@@ -150,8 +157,9 @@ theorem wind_eig_self (L : Fin 3) : wind_IsEig L (wind_bout L) := by
       field_simp <;> ring_nf
   · change tangentFactor 1 w *ᵥ wind_bout 1 = w⁻¹ • wind_bout 1
     rw [tangentFactor_one_eq hw0]
-    ext i; fin_cases i <;> simp [wind_bout, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;>
-      field_simp <;> ring_nf
+    ext i; fin_cases i <;> simp [wind_bout, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    field_simp
+    ring_nf
   · change tangentFactor 2 w *ᵥ wind_bout 2 = w⁻¹ • wind_bout 2
     rw [tangentFactor_two_eq hw0]
     ext i; fin_cases i <;> simp [wind_bout, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
@@ -165,8 +173,9 @@ theorem wind_eig_pred (L : Fin 3) : wind_IsEig (L - 1) (wind_bout L) := by
   fin_cases L
   · change tangentFactor 2 w *ᵥ wind_bout 0 = w • wind_bout 0
     rw [tangentFactor_two_eq hw0]
-    ext i; fin_cases i <;> simp [wind_bout, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;>
-      field_simp <;> ring_nf
+    ext i; fin_cases i <;> simp [wind_bout, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    field_simp
+    ring_nf
   · change tangentFactor 0 w *ᵥ wind_bout 1 = w • wind_bout 1
     rw [tangentFactor_zero_eq hw0]
     ext i; fin_cases i <;> simp [wind_bout, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;>

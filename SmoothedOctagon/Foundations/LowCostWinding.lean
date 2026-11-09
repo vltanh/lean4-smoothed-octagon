@@ -189,7 +189,7 @@ theorem reflectedFirstRow_angularSpeed_bounds {g X : ℝ → Mat2}
       (reflectedFirstRow g t 0) ^ 2 + (reflectedFirstRow g t 1) ^ 2 := by
     simp [Complex.normSq_apply, sc_toC_re, sc_toC_im, pow_two]
   have htrace : -traceForm J (X t) = X t 1 0 - X t 0 1 := by
-    simp [traceForm, J, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two,
+    simp [traceForm, J, Matrix.trace_fin_two, Fin.sum_univ_two,
       Matrix.vecMul, dotProduct]
     ring
   rw [sc_logDeriv_im, reflectedFirstRow_cross hg hstar t]

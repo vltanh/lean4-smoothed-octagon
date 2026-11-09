@@ -38,7 +38,8 @@ open Set Real
 noncomputable def lrPE2 (c z : ℝ) : ℝ :=
   -6 * c ^ 2 * z ^ 2 - 22 * c ^ 2 * z + 13 / 2 * c ^ 2 + 132 / 5 * c * z ^ 2 + 504 / 5 * c * z + 147 / 5 * c + 12 * z ^ 3 + 949 / 25 * z ^ 2 + 118 / 25 * z + 61 / 100
 
-theorem lrPE2_pos {c z : ℝ} (hc0 : 0 ≤ c) (hc1 : c ≤ (1 / 5 : ℝ)) (hz0 : 0 ≤ z) (hz1 : z ≤ (1 / 2 : ℝ)) :
+theorem lrPE2_pos {c z : ℝ} (hc0 : 0 ≤ c) (hc1 : c ≤ (1 / 5 : ℝ)) (hz0 : 0 ≤ z)
+    (_hz1 : z ≤ (1 / 2 : ℝ)) :
     (1 / 2 : ℝ) < lrPE2 c z := by
   unfold lrPE2
   nlinarith [(by positivity : (0 : ℝ) ≤ z),
@@ -48,7 +49,6 @@ theorem lrPE2_pos {c z : ℝ} (hc0 : 0 ≤ c) (hc1 : c ≤ (1 / 5 : ℝ)) (hz0 :
     (by positivity : (0 : ℝ) ≤ c * z),
     (by positivity : (0 : ℝ) ≤ c * z ^ 2),
     mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ c * z),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ c ^ 2),
     mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ c * z ^ 2)]
 
 /-- The numerator of `w₀(x, α, u₊(x)) - (19 + 2x)/28` at `α = 6/5 + A`, `x = α + X`. -/
@@ -115,7 +115,7 @@ theorem lro_H_nonneg {x u : ℝ} (hx : 3 / 2 ≤ x) (hu : u ≤ 19 / 25) :
     div_nonneg (mul_nonneg (by linarith) (by linarith)) (by positivity)
   nlinarith
 
-theorem lro_W4_pos {x C u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (hC : C ≤ 10 / 13) (hu0 : 0 ≤ u)
+theorem lro_W4_pos {x C u : ℝ} (hx : 3 / 2 ≤ x) (_hx2 : x ≤ 2) (hC : C ≤ 10 / 13) (hu0 : 0 ≤ u)
     (hu : u ≤ 19 / 25) : 0 < lrW4 x C u := by
   rw [lro_W4_fac x C u (by linarith)]
   have hH := lro_H_nonneg hx hu
@@ -128,7 +128,7 @@ theorem lro_W4_pos {x C u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (hC : C ≤ 
     · nlinarith [mul_pos h hL]
   positivity
 
-theorem lro_W43_pos {x C u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (hC0 : 0 ≤ C) (hC : C ≤ 10 / 13)
+theorem lro_W43_pos {x C u : ℝ} (hx : 3 / 2 ≤ x) (_hx2 : x ≤ 2) (hC0 : 0 ≤ C) (hC : C ≤ 10 / 13)
     (hu0 : 0 < u) (hu : u ≤ 19 / 25) : 0 < 4 * lrW4 x C u / x + lrW3 x C u := by
   have hx0 : 0 < x := by linarith
   rw [lro_W4_fac x C u hx0, lro_W3_fac x C u hx0]

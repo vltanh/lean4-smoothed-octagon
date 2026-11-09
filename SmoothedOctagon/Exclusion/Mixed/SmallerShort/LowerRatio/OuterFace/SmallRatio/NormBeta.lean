@@ -65,7 +65,8 @@ theorem lrPE_pos {A X : ℝ} (hA0 : 0 ≤ A) (hA1 : A ≤ (1 / 2 : ℝ)) (hX0 : 
     mul_le_mul_of_nonneg_left hX1 (by positivity : (0 : ℝ) ≤ A ^ 3),
     (by positivity : (0 : ℝ) ≤ A ^ 4)]
 
-theorem lrPw_pos {A X : ℝ} (hA0 : 0 ≤ A) (hA1 : A ≤ (1 / 2 : ℝ)) (hX0 : 0 ≤ X) (hX1 : X ≤ (1 / 2 : ℝ)) :
+theorem lrPw_pos {A X : ℝ} (hA0 : 0 ≤ A) (_hA1 : A ≤ (1 / 2 : ℝ)) (hX0 : 0 ≤ X)
+    (hX1 : X ≤ (1 / 2 : ℝ)) :
     (1 : ℝ) < lrPw A X := by
   unfold lrPw
   nlinarith [hX1,
@@ -99,7 +100,8 @@ theorem lrPw_pos {A X : ℝ} (hA0 : 0 ≤ A) (hA1 : A ≤ (1 / 2 : ℝ)) (hX0 : 
     mul_le_mul_of_nonneg_left hX1 (by positivity : (0 : ℝ) ≤ A ^ 5 * X),
     mul_le_mul_of_nonneg_left hX1 (by positivity : (0 : ℝ) ≤ A ^ 6)]
 
-theorem lrP0_pos {A X : ℝ} (hA0 : 0 ≤ A) (hA1 : A ≤ (1 / 2 : ℝ)) (hX0 : 0 ≤ X) (hX1 : X ≤ (1 / 2 : ℝ)) :
+theorem lrP0_pos {A X : ℝ} (hA0 : 0 ≤ A) (hA1 : A ≤ (1 / 2 : ℝ)) (hX0 : 0 ≤ X)
+    (_hX1 : X ≤ (1 / 2 : ℝ)) :
     (1 : ℝ) < lrP0 A X := by
   unfold lrP0
   nlinarith [(by positivity : (0 : ℝ) ≤ X),
@@ -124,7 +126,8 @@ theorem lrP0_pos {A X : ℝ} (hA0 : 0 ≤ A) (hA1 : A ≤ (1 / 2 : ℝ)) (hX0 : 
     mul_le_mul_of_nonneg_left hA1 (by positivity : (0 : ℝ) ≤ A ^ 4 * X),
     mul_le_mul_of_nonneg_left hA1 (by positivity : (0 : ℝ) ≤ A ^ 5)]
 
-theorem lrPb_pos {A X : ℝ} (hA0 : 0 ≤ A) (hA1 : A ≤ (1 / 2 : ℝ)) (hX0 : 0 ≤ X) (hX1 : X ≤ (1 / 2 : ℝ)) :
+theorem lrPb_pos {A X : ℝ} (hA0 : 0 ≤ A) (_hA1 : A ≤ (1 / 2 : ℝ)) (hX0 : 0 ≤ X)
+    (hX1 : X ≤ (1 / 2 : ℝ)) :
     (1 : ℝ) < lrPb A X := by
   unfold lrPb
   nlinarith [hX1,
@@ -333,7 +336,7 @@ theorem lro_S_w0 {x a u : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 / 2
 /-- **The S-branch beta loss**: for `8/17 ≤ C ≤ 10/13`,
 `F₁(x, α, x + C(α - 1), u) ≥ F₁(x, α, x + (8/17)(α - 1), u) - 77/176800`. -/
 theorem lro_S_beta {x a u C : ℝ} (ha1 : 1 ≤ a) (hax : a ≤ x) (hx : x ≤ 3 / 2)
-    (hu0 : 3 / 4 ≤ u) (hu1 : u ≤ 19 / 25) (hC0 : 8 / 17 ≤ C) (hC1 : C ≤ 10 / 13) :
+    (_hu0 : 3 / 4 ≤ u) (hu1 : u ≤ 19 / 25) (hC0 : 8 / 17 ≤ C) (hC1 : C ≤ 10 / 13) :
     lroF1 x a (x + 8 / 17 * (a - 1)) u - 77 / 176800 ≤ lroF1 x a (x + C * (a - 1)) u := by
   have ha : 0 < a := by linarith
   have hx0 : 0 < x := by linarith

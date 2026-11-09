@@ -86,7 +86,7 @@ theorem lrc_R2b_ge {x a b u : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (ha1 : 1
       obtain ⟨hDx0, hDx1, -, -⟩ := lrc_dom (b := x) hx hx2 ha1 ha2 le_rfl (by nlinarith)
       unfold lrcd lrcL
       have e : 2 * (ssDg x x a / lrcK x a) - (1 + x) ^ 2 / lrcK x a * (1 + x) - 1 =
-          (2 * ssDg x x a - (1 + x) ^ 3 - lrcK x a) / lrcK x a := by field_simp; try ring
+          (2 * ssDg x x a - (1 + x) ^ 3 - lrcK x a) / lrcK x a := by field_simp
       rw [e]
       apply div_nonpos_of_nonpos_of_nonneg _ hKp.le
       unfold ssDg lrcK; nlinarith

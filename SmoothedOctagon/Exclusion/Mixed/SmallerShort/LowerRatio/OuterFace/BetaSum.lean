@@ -86,7 +86,6 @@ theorem lr_phi_hasDerivAt {p q γ k B : ℝ} (hB : 0 < B) (hk : 0 < k) :
   convert h2 using 1
   · funext s; simp only [Pi.add_apply, Function.comp_apply]
   unfold lrphi1
-  try simp only [Function.comp_apply]
   field_simp
   ring
 
@@ -101,7 +100,6 @@ theorem lr_phi1_hasDerivAt {q γ k B : ℝ} (hB : 0 < B) (hk : 0 < k) :
   convert h using 1
   · funext s; simp only [Pi.add_apply, Pi.sub_apply, Function.comp_apply]
   unfold lrphi2
-  try simp only [Function.comp_apply]
   norm_num
   field_simp
 

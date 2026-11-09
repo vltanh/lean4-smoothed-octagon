@@ -195,12 +195,12 @@ theorem contDiff_pos_of_positive_curve_comp
     intro t hz
     have hp := hγpos t
     rw [hz] at hp
-    simpa [det2] using hp
+    simp [det2] at hp
   have hdh : Differentiable ℝ h := by
     intro t
     obtain ⟨i, hi⟩ : ∃ i : Fin 2, deriv γ (h t) i ≠ 0 := by
       by_contra hnone
-      push_neg at hnone
+      push Not at hnone
       apply hreg (h t)
       ext i
       exact hnone i

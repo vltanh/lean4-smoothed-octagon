@@ -398,7 +398,7 @@ theorem boundaryControl_eq_raw_ae {g X : ℝ → Mat2} {T : ℝ}
     fin_cases j <;> simp only [Fin.reduceFinMk] at hj <;> linarith [hn 0, hn 1, hn 2]
   have husable : UsableCurvatures (stateCurvature (X t) (derivEntrywise X t)) :=
     ⟨hn 0, hn 1, hn 2, hsum⟩
-  simp only [boundaryControl, repairedCurvatureControl, if_pos husable]
+  simp only [boundaryControl, repairedCurvatureControl, ite_eq_left husable]
 
 /-- A normalized actual boundary frame produces a state trajectory, with an explicit
 measurable control and with both integral equations proved. -/

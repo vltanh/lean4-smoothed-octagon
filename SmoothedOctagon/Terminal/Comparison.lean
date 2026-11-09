@@ -43,8 +43,8 @@ theorem rawCost_ge_of_le_five (n : ℕ) (c : Cycle n) (hn : n ≤ 5) (hn0 : 0 < 
   · obtain ⟨c0, h0, hcost, -⟩ := c.exists_relabel_zero
     have hf := c0.cycle_four_forward
     have l1 : c0.lab 1 = 1 := by simpa [h0] using hf 0
-    have l2 : c0.lab 2 = 2 := by have := hf 1; norm_num [l1] at this; rw [this] <;> rfl
-    have l3 : c0.lab 3 = 0 := by have := hf 2; norm_num [l2] at this; rw [this] <;> rfl
+    have l2 : c0.lab 2 = 2 := by have := hf 1; norm_num [l1] at this; rw [this]
+    have l3 : c0.lab 3 = 0 := by have := hf 2; norm_num [l2] at this; rw [this]
     rw [← hcost, ← Cycle.rawCost_relabel, ← Cycle.rawCost_relabel]
     refine c0.relabel.relabel.four_rawCost_ge ?_ ?_ ?_ ?_
     · show c0.lab 0 + 1 + 1 = 2; rw [h0]; rfl
@@ -82,8 +82,8 @@ theorem four_equality_data (n : ℕ) (c : Cycle n) (hn : n = 4)
   obtain ⟨c0, h0, hcost, s, hs⟩ := c.exists_relabel_zero
   have hf := c0.cycle_four_forward
   have l1 : c0.lab 1 = 1 := by simpa [h0] using hf 0
-  have l2 : c0.lab 2 = 2 := by have := hf 1; norm_num [l1] at this; rw [this] <;> rfl
-  have l3 : c0.lab 3 = 0 := by have := hf 2; norm_num [l2] at this; rw [this] <;> rfl
+  have l2 : c0.lab 2 = 2 := by have := hf 1; norm_num [l1] at this; rw [this]
+  have l3 : c0.lab 3 = 0 := by have := hf 2; norm_num [l2] at this; rw [this]
   obtain ⟨a, b, ha, hb, hab, hq0, hq1, hq2, hq3, hm0, hm1, hm2, hc⟩ :=
     c0.relabel.relabel.four_param (by show c0.lab 0 + 1 + 1 = 2; rw [h0]; rfl)
       (by show c0.lab 1 + 1 + 1 = 0; rw [l1]; rfl) (by show c0.lab 2 + 1 + 1 = 1; rw [l2]; rfl)

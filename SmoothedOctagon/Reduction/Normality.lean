@@ -28,7 +28,7 @@ open SmoothedPolygons MeasureTheory Set
 /-- **Closed finite vertex extremals are normal**. If a global minimizer `(T, u, g, X)` carries a
 Pontryagin lift `(Λ₁, Λ_R, λ)` and its control has a finite vertex representation, then `λ < 0`.
 
-Minimality is not used (nor a cost budget, rank, or `N ≥ 6`): the hypothesis `hmin` is unused.
+Minimality is not used (nor a cost budget, rank, or `N ≥ 6`): the hypothesis `_hmin` is unused.
 Proof: suppose `λ = 0`. Extend the lift by the twist (`remark6_6_1`) and read the bi-infinite word
 `i_{j+N} = i_j + 1`, `i_{j+1} ≠ i_j` from a genuine switch; its switch signs are `N`-periodic. Every
 vertex piece transports the coordinates `μ_j(a)`, `μ_j(b)` of `a = -XΛ₁X`,
@@ -39,7 +39,7 @@ forces triple ties at both ends of the middle arc, which no arc can have. Both t
 implications follow from one forward identity (`GnSeq.bounce`). Hence the signs alternate,
 `i_{j+2} = i_j`, only two labels occur; but the label set is invariant under `+1`. -/
 theorem lam_lt_zero_of_vertexRepresentation {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
-    {lam : ℝ} (hmin : IsReinhardtMinimizer T u g X)
+    {lam : ℝ} (_hmin : IsReinhardtMinimizer T u g X)
     (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) (ρ : VertexRepresentation T u) : lam < 0 := by
   rcases (hext.2.2.2.2.2.2.1 : lam ≤ 0).lt_or_eq with h | h
   · exact h

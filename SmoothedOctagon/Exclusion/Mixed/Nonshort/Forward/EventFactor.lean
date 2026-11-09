@@ -43,7 +43,7 @@ noncomputable def nsfQC0 (η α β : ℝ) : ℝ := 12 * η ^ 2 - 6 * η - 12 * �
 /-- `C₁ = 18η² - 7η - 18α + 6β - 12`. -/
 noncomputable def nsfQC1 (η α β : ℝ) : ℝ := 18 * η ^ 2 - 7 * η - 18 * α + 6 * β - 12
 /-- `C₂ = 6η² - η - 6α - 1`. -/
-noncomputable def nsfQC2 (η α β : ℝ) : ℝ := 6 * η ^ 2 - η - 6 * α - 1
+noncomputable def nsfQC2 (η α _β : ℝ) : ℝ := 6 * η ^ 2 - η - 6 * α - 1
 
 /-- The elimination identity with `L₊` in place of `log q`: with `q = 1 + y`, the difference
 `η + (η² - α)y + βy/(1 + y) - (1 + η(1 + y)/y)L₊(1 + y)` is

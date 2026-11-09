@@ -39,14 +39,14 @@ stays so nearby; otherwise the three tie, which forces `Λ_R(t₀) = 0`, and `Q(
 `Λ_R'(t₀) = [X, A] ≠ 0`, whose vertex comparisons are not all equal, so one comparison `H_j - H_k`
 changes sign at `t₀`. On each side that coordinate of the control vanishes a.e.
 (`maximizing_control_support`) and (E4) gives at most four pieces; gluing at `t₀` and compactness of
-`[0, T]` (Lebesgue number) give finitely many pieces in all. The cost bound `hcost` is not used (it
+`[0, T]` (Lebesgue number) give finitely many pieces in all. The cost bound `_hcost` is not used (it
 enters through the clearance `hclear`).
 
 At a tie the sign change comes from the first-order expansion
 `Λ_R(t) = (t - t₀)[X(t₀), A(t₀)] + o(t - t₀)`. -/
 theorem exists_isPiecewiseVertex {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
-    (hcost : reinhardtCost T X ≤ octagonCost)
+    (_hcost : reinhardtCost T X ≤ octagonCost)
     (hK : ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t))
     (hclear : ∀ t ∈ Icc 0 T,
       covectorNormSq lam (Λ₁ t) (ΛR t) ≤ 251 ^ 2 * singularGapSq lam (Λ₁ t) (ΛR t))

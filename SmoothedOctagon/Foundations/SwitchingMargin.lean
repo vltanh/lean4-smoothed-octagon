@@ -44,7 +44,7 @@ private lemma log_ratio_lower_bound {y r : ℝ} (hy : 0 < y) (hyr : y ≤ r) :
   have hratioPos : 0 < r / y + 1 := by positivity
   have hfrac : 2 * (r / y - 1) / (r / y + 1) =
       2 * (r - y) / (r + y) := by
-    field_simp [hy.ne', hsum.ne', hratioPos.ne'] <;> ring
+    field_simp [hy.ne', hsum.ne', hratioPos.ne']
   rwa [hfrac] at h
 
 /-- Exact residual identity behind the rational lower bound. Both residuals on the
@@ -63,7 +63,8 @@ theorem hmaxF_margin_identity {y r : ℝ} (hy : 0 < y) (hr : 0 < r) :
   rw [Real.log_div hr.ne' hy.ne',
     Real.log_div (by norm_num : (4 : ℝ) ≠ 0) hr.ne',
     Real.log_div (by norm_num : (4 : ℝ) ≠ 0) hy.ne']
-  field_simp [hy.ne', hr.ne', hsum.ne'] <;> ring
+  field_simp [hy.ne', hr.ne', hsum.ne']
+  ring
 
 /-- The full rational lower bound. This comparison itself only needs `2 ≤ y ≤ r`;
 the restriction `r ≤ 4` is needed when discarding its boundary correction. -/
@@ -78,7 +79,7 @@ theorem hmaxF_rational_lower_bound {y r : ℝ} (hy : 2 ≤ y) (hyr : y ≤ r) :
     calc
       Real.log (4 / r) ≤ 4 / r - 1 :=
         Real.log_le_sub_one_of_pos (div_pos (by norm_num) hr0)
-      _ = (4 - r) / r := by field_simp [hr0.ne'] <;> ring
+      _ = (4 - r) / r := by field_simp [hr0.ne']
   have hA : 0 ≤ y * (y ^ 2 + r * (y - 2)) :=
     mul_nonneg hy0.le
       (add_nonneg (sq_nonneg y) (mul_nonneg hr0.le (sub_nonneg.mpr hy)))

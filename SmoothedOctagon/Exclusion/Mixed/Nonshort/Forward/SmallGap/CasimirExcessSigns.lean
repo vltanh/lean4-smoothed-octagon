@@ -124,11 +124,11 @@ noncomputable def nsfCPnD1_11 (h : ℝ) : ℝ :=
   3216 - 13000 * h + 1500 * h ^ (2 : ℕ) + 36250 * h ^ (3 : ℕ) - 25000 * h ^ (4 : ℕ) + 6250 * h ^ (5 : ℕ)
 
 /-- Coefficient of `y^1 s^12` in `nsfCPn`. -/
-noncomputable def nsfCPnD1_12 (h : ℝ) : ℝ :=
+noncomputable def nsfCPnD1_12 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^1 s^13` in `nsfCPn`. -/
-noncomputable def nsfCPnD1_13 (h : ℝ) : ℝ :=
+noncomputable def nsfCPnD1_13 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^2 s^0` in `nsfCPn`. -/
@@ -176,15 +176,15 @@ noncomputable def nsfCPnD2_10 (h : ℝ) : ℝ :=
   (11228 / 25) - (9228 / 5) * h + 307 * h ^ (2 : ℕ) + 5000 * h ^ (3 : ℕ) - 3125 * h ^ (4 : ℕ)
 
 /-- Coefficient of `y^2 s^11` in `nsfCPn`. -/
-noncomputable def nsfCPnD2_11 (h : ℝ) : ℝ :=
+noncomputable def nsfCPnD2_11 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^2 s^12` in `nsfCPn`. -/
-noncomputable def nsfCPnD2_12 (h : ℝ) : ℝ :=
+noncomputable def nsfCPnD2_12 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^2 s^13` in `nsfCPn`. -/
-noncomputable def nsfCPnD2_13 (h : ℝ) : ℝ :=
+noncomputable def nsfCPnD2_13 (_h : ℝ) : ℝ :=
   0
 
 noncomputable def nsfCPnE0_0_0 (h : ℝ) : ℝ := (91598684752467 / 152587890625) + (41140499159754 / 30517578125) * h - (83370682224423 / 1220703125) * h ^ (2 : ℕ) - (162940239695448 / 244140625) * h ^ (3 : ℕ) - (123995661433947 / 48828125) * h ^ (4 : ℕ) - (128210183507358 / 48828125) * h ^ (5 : ℕ) + (113241565462039 / 9765625) * h ^ (6 : ℕ) + (12371309023468 / 390625) * h ^ (7 : ℕ) - (6386698637372 / 78125) * h ^ (8 : ℕ) - (10233165159568 / 15625) * h ^ (9 : ℕ) - (29544821884836 / 15625) * h ^ (10 : ℕ) - (10411520479392 / 3125) * h ^ (11 : ℕ) - (496896122672 / 125) * h ^ (12 : ℕ) - (82604695552 / 25) * h ^ (13 : ℕ) - (9515923648 / 5) * h ^ (14 : ℕ) - (3664789504 / 5) * h ^ (15 : ℕ) - 172593408 * h ^ (16 : ℕ) - 19200000 * h ^ (17 : ℕ)

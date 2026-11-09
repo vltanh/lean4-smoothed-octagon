@@ -47,12 +47,12 @@ noncomputable def triCinv : Mat2 := !![1 / (2 * √3), 1 / (2 * √3); 1 / 2, -(
 theorem triC_mul_triCinv : triC * triCinv = 1 := by
   have h := tm_s3pos
   rw [triC, triCinv, Matrix.mul_fin_two, Matrix.one_fin_two]
-  congr 1 <;> field_simp <;> norm_num
+  congr 1; field_simp; norm_num
 
 theorem triCinv_mul_triC : triCinv * triC = 1 := by
   have h := tm_s3pos
   rw [triC, triCinv, Matrix.mul_fin_two, Matrix.one_fin_two]
-  congr 1 <;> field_simp <;> norm_num
+  congr 1; field_simp; norm_num
 
 /-- The tangent factors in triangular coordinates. -/
 noncomputable def triFactor (i : Fin 3) (q : ℝ) : Mat2 :=
@@ -89,7 +89,7 @@ theorem triC_conj_R : triC * R * triCinv = triR := by
   have h := tm_s3pos
   rw [triC, triCinv, R, triR]
   simp only [Matrix.mul_fin_two]
-  congr 1 <;> field_simp <;> tm_ring
+  congr 1; field_simp; tm_ring
 
 
 theorem triFactor_succ (i : Fin 3) {q : ℝ} (hq : q ≠ 0) :
@@ -320,7 +320,7 @@ theorem term_emod_nonneg (k : ℤ) : 0 ≤ k % P.N := Int.emod_nonneg k (term_N_
 theorem term_emod_lt (k : ℤ) : k % P.N < P.N := Int.emod_lt_of_pos k (term_N_pos P)
 
 private lemma tm_emod_eq (k N : ℤ) : k % N = k - ((k / N : ℤ) : ℤ) * N := by
-  rw [Int.emod_def]; push_cast; ring
+  rw [Int.emod_def]; ring
 
 /-- The label increments are `N`-periodic, so `i_{k+1} - i_k = i_{r+1} - i_r` for `r = k mod N`. -/
 private lemma tm_label_incr (k : ℤ) :

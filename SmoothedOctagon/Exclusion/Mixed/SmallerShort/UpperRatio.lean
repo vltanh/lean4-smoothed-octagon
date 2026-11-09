@@ -50,7 +50,7 @@ private theorem ur_slope_pos {S lam d z ri : ℝ} (hS : 0 < S) (hS2 : S ≤ 17 /
 `0 < D < α(α + β)`, `D < 3α²`, `0 < q ≤ 1/7`, `2 ≤ τ ≤ T = r_A/q`, the variable-floor face value
 (weight `m = 2 - 7τq/(4r_A)`) is nondecreasing in `u` (slope `> 109/140`). -/
 theorem ur_uslope {x be al q τ ℓ u u' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
-    (hax : al ≤ x) (hxb : x ≤ be) (hab : al < be) (hD : 0 < ssDg x be al)
+    (hax : al ≤ x) (hxb : x ≤ be) (_hab : al < be) (hD : 0 < ssDg x be al)
     (hDQ : ssDg x be al < al * (al + be)) (hD3 : ssDg x be al < 3 * al ^ 2) (hq : 0 < q)
     (hq7 : q ≤ 1 / 7) (hτ : 2 ≤ τ) (hτT : τ * q ≤ ssRA al be) (huu : u ≤ u') :
     ssF x be al u q τ ℓ (2 - 7 * τ * q / (4 * ssRA al be)) ≤
@@ -145,7 +145,7 @@ private theorem ur_F1_neg {x u r k Qi : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12
 `m = 2 - 7p/(4r_A)`. -/
 theorem ur_zero_neg {x be al u p : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hbx : be ≤ al * x) (hrA : ssRA al be < 3 / 7)
-    (hDQ : ssDg x be al < al * (al + be)) (hu : 3 / 4 ≤ u) (hu' : u ≤ 61 / 80)
+    (hDQ : ssDg x be al < al * (al + be)) (_hu : 3 / 4 ≤ u) (hu' : u ≤ 61 / 80)
     (hurA : u ≤ m2U (ssRA al be)) (hp : 0 < p) (hpr : p ≤ ssRA al be) :
     ssPhi x be al u p (2 - 7 * p / (4 * ssRA al be)) 0 < 0 := by
   have hx0 : 0 < x := by linarith
@@ -743,7 +743,7 @@ private theorem ur_sec_split {x be c κ : ℝ} (hx : 1 < x) (hxb : x ≤ be)
 
 /-- **The central ceiling**: for `13/6 ≤ x ≤ 12/5`, `1 ≤ α`, `6α² ≤ x(x + 2)`,
 `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`: `Sec(1, x, β) ≤ u_C(x, β)`. -/
-theorem ur_central_ceiling {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
+theorem ur_central_ceiling {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (_hal : 1 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
     m2Sec 1 x be ≤ ssUC x be := by
@@ -777,7 +777,7 @@ theorem ur_central_ceiling {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 /
 
 /-- **The outer ceiling**: for `13/6 ≤ x ≤ 12/5`, `1 ≤ α ≤ 3/2`,
 `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`: `Sec(1, x, β) ≤ u_s(x, β)`. -/
-theorem ur_outer_ceiling {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
+theorem ur_outer_ceiling {x al be : ℝ} (hx : 13 / 6 ≤ x) (_hx2 : x ≤ 12 / 5) (_hal : 1 ≤ al)
     (hal' : al ≤ 3 / 2) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
     m2Sec 1 x be ≤ ssUs x be := by

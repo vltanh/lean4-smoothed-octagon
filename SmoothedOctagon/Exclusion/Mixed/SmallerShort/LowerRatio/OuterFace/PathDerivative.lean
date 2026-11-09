@@ -181,7 +181,7 @@ theorem lro_F0_hasDerivAt {A B U : ℝ → ℝ} {x a' b' u' t : ℝ} (hA : HasDe
   unfold lroF0 lroR2 lrow lroEL
   convert hF using 1
   · funext s; simp only [Pi.add_apply, Pi.sub_apply, Function.comp_apply]
-  simp only [lroR2a, lrowa, lroELa, lroR2b, lrowb, lroR2u, lrowu, Pi.sub_apply]
+  simp only [lroR2a, lrowa, lroELa, lroR2b, lrowb, lroR2u, lrowu]
   norm_num
   have ha0 : A t ≠ 0 := ha.ne'
   have hy1 : lroy (A t) (B t) ≠ 0 := hy0.ne'

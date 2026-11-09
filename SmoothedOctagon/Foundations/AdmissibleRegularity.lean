@@ -52,8 +52,7 @@ theorem isCompact_controlSimplex : IsCompact controlSimplex := by
 theorem continuous_controlMatrix : Continuous (controlMatrix : (Fin 3 → ℝ) → Mat2) := by
   apply Matrix.continuous_iff_entrywise.mpr
   intro i j
-  fin_cases i <;> fin_cases j <;> simp only [controlMatrix, Matrix.cons_val_zero,
-    Matrix.cons_val_one] <;> fun_prop
+  fin_cases i <;> fin_cases j <;> simp only [controlMatrix] <;> fun_prop
 
 /-- The commutator is continuous jointly in time and a simplex control along a
 continuous star-state curve. The possible zero denominator is excluded explicitly. -/
@@ -126,7 +125,7 @@ theorem integralCurve_lipschitz_of_bounded {f v : ℝ → Mat2} {T : ℝ}
 
 /-- The Lebesgue fundamental theorem of calculus gives the actual state derivative
 almost everywhere from its integral equation. -/
-theorem integralCurve_ae_hasDerivAt {f v : ℝ → Mat2} {T : ℝ} (hT : 0 ≤ T)
+theorem integralCurve_ae_hasDerivAt {f v : ℝ → Mat2} {T : ℝ} (_hT : 0 ≤ T)
     (hf : IsIntegralCurve f v T) :
     ∀ᵐ t, t ∈ Ioo 0 T → HasDerivAtEntrywise f (v t) t := by
   have heach : ∀ i j, ∀ᵐ t, t ∈ Ioo 0 T →

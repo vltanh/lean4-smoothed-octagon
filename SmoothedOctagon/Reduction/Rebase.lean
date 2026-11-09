@@ -39,7 +39,7 @@ endpoints: `ĝ(0) = I`, `ĝ(T) = G(s)⁻¹ G(s) R = R`, `X̂(T) = R⁻¹ X(s) R 
 `∫_s^{s+T} tr(J Y) = ∫_s^T tr(J X) + ∫_0^s tr(J R⁻¹ X R) = ∫_0^T tr(J X)`. Measurability of `û`:
 `⌊·⌋₊` is measurable. -/
 theorem isReinhardtAdmissible_rebase {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2}
-    (h : IsReinhardtAdmissible T u g X) {s : ℝ} (hs0 : 0 ≤ s) (hsT : s < T) :
+    (h : IsReinhardtAdmissible T u g X) {s : ℝ} (hs0 : 0 ≤ s) (_hsT : s < T) :
     IsReinhardtAdmissible T (rebaseControl T u s) (rebaseFrame T g s) (rebaseState T X s) ∧
       reinhardtCost T (rebaseState T X s) = reinhardtCost T X := by
   have hc : rebaseControl T u s = fun t ↦ SmoothedOctagon.twistedControl T u (s + t) := by

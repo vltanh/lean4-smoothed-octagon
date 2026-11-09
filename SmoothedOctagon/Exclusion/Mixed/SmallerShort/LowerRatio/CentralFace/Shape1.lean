@@ -59,7 +59,7 @@ theorem lr_qphi_hasDerivAt {N N1 N2 V V1 V2 Y Y1 Y2 K K1 K2 : ℝ → ℝ} {t : 
     · funext s
       simp only [Pi.add_apply, Pi.div_apply, Function.comp_apply]
     · unfold lrPhi1
-      simp only [Function.comp_apply, Pi.div_apply]
+      simp only []
   · have h1 := ((hN1.mul hV).sub (hN.mul hV1)).div (hV.pow 2) (pow_ne_zero 2 hV0)
     have h2 := ((lr_ell1_hasDerivAt hy).comp t hYK).mul
       (((hY1.mul hK).sub (hY.mul hK1)).div (hK.pow 2) (pow_ne_zero 2 hK0))

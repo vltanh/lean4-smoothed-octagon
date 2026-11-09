@@ -49,7 +49,7 @@ Proof: the monotonicity in `q` by increments (`env_Gs_inc`); the slope inequalit
 and `env_Lp_top_pos` (monotone in `A₃`). -/
 theorem cas_scale_dec_p {x be al u p q₁ q₂ : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al < x)
     (hxb : x ≤ be) (hp : 0 < p) (hpr : p ≤ ssRA al be) (hu : 3 / 4 ≤ u)
-    (hur : u ≤ m2U (1 / (1 + x))) (hurA : u ≤ m2U (ssRA al be)) (hq₁ : 0 < q₁) (hq : q₁ < q₂)
+    (hur : u ≤ m2U (1 / (1 + x))) (_hurA : u ≤ m2U (ssRA al be)) (hq₁ : 0 < q₁) (hq : q₁ < q₂)
     (hq₂ : q₂ ≤ 1 / 6) :
     ssGs x al u q₂ - ssPhi x be al u p 0 q₂ / 7 < ssGs x al u q₁ - ssPhi x be al u p 0 q₁ / 7 := by
   have hal0 : 0 < al := by linarith
@@ -194,7 +194,7 @@ theorem cas_tau2_dec {x δ al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 
   have hC0 : 1 + 2 * ssA1 x be al u + ssA3 x be al u ≤ 5 :=
     cas_C0_le hx hx2 hal1 hu hu' hDS
   have hA2 : 0 < ssA2 x be al u := ss_A2_pos hx (by linarith) hal1 hu (by linarith)
-  have hR := env_Rs2_inc hrA hq₁ hq (fun q hq' => by
+  have hR := env_Rs2_inc (x := x) (u := u) hrA hq₁ hq (fun q hq' => by
     have hq0 : 0 < q := hq₁.trans hq'.1
     have hq6 : q ≤ 1 / 6 := hq'.2.le.trans hq₂
     have : 6 ≤ 1 / q := by rw [le_div_iff₀ hq0]; linarith

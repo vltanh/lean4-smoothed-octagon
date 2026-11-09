@@ -92,11 +92,11 @@ noncomputable def nsfCEnD1_7 (h : ℝ) : ℝ :=
   (12 / 125) - (78 / 25) * h + (44 / 5) * h ^ (2 : ℕ) - 4 * h ^ (3 : ℕ)
 
 /-- Coefficient of `y^1 s^8` in `nsfCEn`. -/
-noncomputable def nsfCEnD1_8 (h : ℝ) : ℝ :=
+noncomputable def nsfCEnD1_8 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^1 s^9` in `nsfCEn`. -/
-noncomputable def nsfCEnD1_9 (h : ℝ) : ℝ :=
+noncomputable def nsfCEnD1_9 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^2 s^0` in `nsfCEn`. -/
@@ -124,19 +124,19 @@ noncomputable def nsfCEnD2_5 (h : ℝ) : ℝ :=
   -(421 / 125) + (164 / 25) * h + (8 / 5) * h ^ (2 : ℕ) - 8 * h ^ (3 : ℕ)
 
 /-- Coefficient of `y^2 s^6` in `nsfCEn`. -/
-noncomputable def nsfCEnD2_6 (h : ℝ) : ℝ :=
+noncomputable def nsfCEnD2_6 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^2 s^7` in `nsfCEn`. -/
-noncomputable def nsfCEnD2_7 (h : ℝ) : ℝ :=
+noncomputable def nsfCEnD2_7 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^2 s^8` in `nsfCEn`. -/
-noncomputable def nsfCEnD2_8 (h : ℝ) : ℝ :=
+noncomputable def nsfCEnD2_8 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^2 s^9` in `nsfCEn`. -/
-noncomputable def nsfCEnD2_9 (h : ℝ) : ℝ :=
+noncomputable def nsfCEnD2_9 (_h : ℝ) : ℝ :=
   0
 
 noncomputable def nsfCEnE0_0_0 (h : ℝ) : ℝ := (6465474 / 9765625) + (490266 / 78125) * h + (727686 / 78125) * h ^ (2 : ℕ) - (1693586 / 15625) * h ^ (3 : ℕ) - (1856304 / 3125) * h ^ (4 : ℕ) - (3479544 / 3125) * h ^ (5 : ℕ) + (8 / 5) * h ^ (6 : ℕ) + (86832 / 25) * h ^ (7 : ℕ) + (29888 / 5) * h ^ (8 : ℕ) + 4352 * h ^ (9 : ℕ) + 1216 * h ^ (10 : ℕ)

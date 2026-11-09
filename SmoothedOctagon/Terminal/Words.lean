@@ -36,10 +36,7 @@ theorem word_0_false {q0 : ℝ} (h0 : 1 < q0)
     (h : triFactor 0 q0 = triR) : False := by
   have p0 : (0:ℝ) < q0 := by linarith
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
-  simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
-  all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
-  all_goals nlinarith [p0]
+  simp [triFactor] at e00 e01 e10 e11
 
 theorem word_02_false {q0 q1 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1)
     (h : triFactor 0 q0 * triFactor 2 q1 = triR) : False := by
@@ -47,9 +44,6 @@ theorem word_02_false {q0 q1 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1)
   have p1 : (0:ℝ) < q1 := by linarith
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
-  all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
-  all_goals nlinarith [p0, p1]
 
 theorem word_012_false {q0 q1 q2 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2)
     (h : triFactor 0 q0 * (triFactor 1 q1 * triFactor 2 q2) = triR) : False := by
@@ -59,7 +53,6 @@ theorem word_012_false {q0 q1 q2 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
   all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
   all_goals nlinarith [p0, p1, p2]
 
 theorem word_010_false {q0 q1 q2 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2)
@@ -69,9 +62,6 @@ theorem word_010_false {q0 q1 q2 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2
   have p2 : (0:ℝ) < q2 := by linarith
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
-  all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
-  all_goals nlinarith [p0, p1, p2]
 
 theorem word_020_false {q0 q1 q2 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2)
     (h : triFactor 0 q0 * (triFactor 2 q1 * triFactor 0 q2) = triR) : False := by
@@ -80,9 +70,6 @@ theorem word_020_false {q0 q1 q2 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2
   have p2 : (0:ℝ) < q2 := by linarith
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
-  all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
-  all_goals nlinarith [p0, p1, p2]
 
 theorem word_0102_false {q0 q1 q2 q3 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2) (h3 : 1 < q3)
     (h : triFactor 0 q0 * (triFactor 1 q1 * (triFactor 0 q2 * triFactor 2 q3)) = triR) : False := by
@@ -93,7 +80,6 @@ theorem word_0102_false {q0 q1 q2 q3 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
   all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
   all_goals nlinarith [p0, p1, p2, p3]
 
 theorem word_0202_false {q0 q1 q2 q3 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2) (h3 : 1 < q3)
@@ -104,9 +90,6 @@ theorem word_0202_false {q0 q1 q2 q3 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 
   have p3 : (0:ℝ) < q3 := by linarith
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
-  all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
-  all_goals nlinarith [p0, p1, p2, p3]
 
 theorem word_0212_false {q0 q1 q2 q3 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2) (h3 : 1 < q3)
     (h : triFactor 0 q0 * (triFactor 2 q1 * (triFactor 1 q2 * triFactor 2 q3)) = triR) : False := by
@@ -117,7 +100,6 @@ theorem word_0212_false {q0 q1 q2 q3 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
   all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
   all_goals nlinarith [p0, p1, p2, p3]
 
 theorem word_0210_false {q0 q1 q2 q3 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2) (h3 : 1 < q3)
@@ -130,7 +112,6 @@ theorem word_0210_false {q0 q1 q2 q3 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
   all_goals (try field_simp at e00 e01 e10 e11)
   all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
-  all_goals nlinarith [p0, p1, p2, p3]
 
 theorem word_01212_false {q0 q1 q2 q3 q4 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2) (h3 : 1 < q3) (h4 : 1 < q4)
     (h : triFactor 0 q0 * (triFactor 1 q1 * (triFactor 2 q2 * (triFactor 1 q3 * triFactor 2 q4))) = triR) : False := by
@@ -142,7 +123,6 @@ theorem word_01212_false {q0 q1 q2 q3 q4 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
   all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
   all_goals nlinarith [p0, p1, p2, p3, p4]
 
 theorem word_01012_false {q0 q1 q2 q3 q4 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2) (h3 : 1 < q3) (h4 : 1 < q4)
@@ -155,7 +135,6 @@ theorem word_01012_false {q0 q1 q2 q3 q4 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
   all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
   all_goals nlinarith [p0, p1, p2, p3, p4]
 
 theorem word_01010_false {q0 q1 q2 q3 q4 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2) (h3 : 1 < q3) (h4 : 1 < q4)
@@ -167,9 +146,6 @@ theorem word_01010_false {q0 q1 q2 q3 q4 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 
   have p4 : (0:ℝ) < q4 := by linarith
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
-  all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
-  all_goals nlinarith [p0, p1, p2, p3, p4]
 
 theorem word_02010_false {q0 q1 q2 q3 q4 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2) (h3 : 1 < q3) (h4 : 1 < q4)
     (h : triFactor 0 q0 * (triFactor 2 q1 * (triFactor 0 q2 * (triFactor 1 q3 * triFactor 0 q4))) = triR) : False := by
@@ -182,7 +158,6 @@ theorem word_02010_false {q0 q1 q2 q3 q4 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
   all_goals (try field_simp at e00 e01 e10 e11)
   all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
-  all_goals nlinarith [p0, p1, p2, p3, p4]
 
 theorem word_02020_false {q0 q1 q2 q3 q4 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 : 1 < q2) (h3 : 1 < q3) (h4 : 1 < q4)
     (h : triFactor 0 q0 * (triFactor 2 q1 * (triFactor 0 q2 * (triFactor 2 q3 * triFactor 0 q4))) = triR) : False := by
@@ -193,9 +168,6 @@ theorem word_02020_false {q0 q1 q2 q3 q4 : ℝ} (h0 : 1 < q0) (h1 : 1 < q1) (h2 
   have p4 : (0:ℝ) < q4 := by linarith
   obtain ⟨e00, e01, e10, e11⟩ := tm_entries h
   simp [triFactor, Matrix.mul_apply, Fin.sum_univ_two] at e00 e01 e10 e11
-  all_goals (try field_simp at e00 e01 e10 e11)
-  all_goals (try (rcases e00 with e | e | e | e | e <;> linarith))
-  all_goals nlinarith [p0, p1, p2, p3, p4]
 
 /-! ### Normalizing the first label -/
 
@@ -235,15 +207,15 @@ private lemma tm_rot_01020 (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1)
       c'.lab 3 = 2 ∧ c'.lab 4 = 0 := by
   refine ⟨c, by simp only [], ?_, ?_, ?_, ?_, ?_⟩
   · show c.lab (0 + 0) = 0
-    rw [show (0 : ℤ) + 0 = 0 by norm_num, h0] <;> rfl
+    rw [show (0 : ℤ) + 0 = 0 by norm_num, h0]
   · show c.lab (1 + 0) = 1
-    rw [show (1 : ℤ) + 0 = 1 by norm_num, h1] <;> rfl
+    rw [show (1 : ℤ) + 0 = 1 by norm_num, h1]
   · show c.lab (2 + 0) = 0
-    rw [show (2 : ℤ) + 0 = 2 by norm_num, h2] <;> rfl
+    rw [show (2 : ℤ) + 0 = 2 by norm_num, h2]
   · show c.lab (3 + 0) = 2
-    rw [show (3 : ℤ) + 0 = 3 by norm_num, h3] <;> rfl
+    rw [show (3 : ℤ) + 0 = 3 by norm_num, h3]
   · show c.lab (4 + 0) = 0
-    rw [show (4 : ℤ) + 0 = 4 by norm_num, h4] <;> rfl
+    rw [show (4 : ℤ) + 0 = 4 by norm_num, h4]
 
 private lemma tm_rot_02120 (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 2)
     (h2 : c.lab 2 = 1) (h3 : c.lab 3 = 2) (h4 : c.lab 4 = 0) :
@@ -251,15 +223,15 @@ private lemma tm_rot_02120 (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 2)
       c'.lab 3 = 2 ∧ c'.lab 4 = 0 := by
   refine ⟨c.shift 4, by simp only [rawCost_shift], ?_, ?_, ?_, ?_, ?_⟩
   · show c.lab (0 + 4) = 0
-    rw [show (0 : ℤ) + 4 = 4 by norm_num, h4] <;> rfl
+    rw [show (0 : ℤ) + 4 = 4 by norm_num, h4]
   · show c.lab (1 + 4) = 1
-    rw [show (1 : ℤ) + 4 = 0 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h0] <;> rfl
+    rw [show (1 : ℤ) + 4 = 0 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h0]; rfl
   · show c.lab (2 + 4) = 0
-    rw [show (2 : ℤ) + 4 = 1 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h1] <;> rfl
+    rw [show (2 : ℤ) + 4 = 1 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h1]; rfl
   · show c.lab (3 + 4) = 2
-    rw [show (3 : ℤ) + 4 = 2 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h2] <;> rfl
+    rw [show (3 : ℤ) + 4 = 2 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h2]; rfl
   · show c.lab (4 + 4) = 0
-    rw [show (4 : ℤ) + 4 = 3 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h3] <;> rfl
+    rw [show (4 : ℤ) + 4 = 3 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h3]; rfl
 
 private lemma tm_rot_02012 (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 2)
     (h2 : c.lab 2 = 0) (h3 : c.lab 3 = 1) (h4 : c.lab 4 = 2) :
@@ -267,15 +239,15 @@ private lemma tm_rot_02012 (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 2)
       c'.lab 3 = 2 ∧ c'.lab 4 = 0 := by
   refine ⟨((c.shift 3).relabel).relabel, by simp only [rawCost_relabel, rawCost_relabel, rawCost_shift], ?_, ?_, ?_, ?_, ?_⟩
   · show c.lab (0 + 3) + 1 + 1 = 0
-    rw [show (0 : ℤ) + 3 = 3 by norm_num, h3] <;> rfl
+    rw [show (0 : ℤ) + 3 = 3 by norm_num, h3]; rfl
   · show c.lab (1 + 3) + 1 + 1 = 1
-    rw [show (1 : ℤ) + 3 = 4 by norm_num, h4] <;> rfl
+    rw [show (1 : ℤ) + 3 = 4 by norm_num, h4]; rfl
   · show c.lab (2 + 3) + 1 + 1 = 0
-    rw [show (2 : ℤ) + 3 = 0 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h0] <;> rfl
+    rw [show (2 : ℤ) + 3 = 0 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h0]; rfl
   · show c.lab (3 + 3) + 1 + 1 = 2
-    rw [show (3 : ℤ) + 3 = 1 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h1] <;> rfl
+    rw [show (3 : ℤ) + 3 = 1 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h1]; rfl
   · show c.lab (4 + 3) + 1 + 1 = 0
-    rw [show (4 : ℤ) + 3 = 2 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h2] <;> rfl
+    rw [show (4 : ℤ) + 3 = 2 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h2]; rfl
 
 private lemma tm_rot_01202 (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1)
     (h2 : c.lab 2 = 2) (h3 : c.lab 3 = 0) (h4 : c.lab 4 = 2) :
@@ -283,15 +255,15 @@ private lemma tm_rot_01202 (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1)
       c'.lab 3 = 2 ∧ c'.lab 4 = 0 := by
   refine ⟨(c.shift 2).relabel, by simp only [rawCost_relabel, rawCost_shift], ?_, ?_, ?_, ?_, ?_⟩
   · show c.lab (0 + 2) + 1 = 0
-    rw [show (0 : ℤ) + 2 = 2 by norm_num, h2] <;> rfl
+    rw [show (0 : ℤ) + 2 = 2 by norm_num, h2]; rfl
   · show c.lab (1 + 2) + 1 = 1
-    rw [show (1 : ℤ) + 2 = 3 by norm_num, h3] <;> rfl
+    rw [show (1 : ℤ) + 2 = 3 by norm_num, h3]; rfl
   · show c.lab (2 + 2) + 1 = 0
-    rw [show (2 : ℤ) + 2 = 4 by norm_num, h4] <;> rfl
+    rw [show (2 : ℤ) + 2 = 4 by norm_num, h4]; rfl
   · show c.lab (3 + 2) + 1 = 2
-    rw [show (3 : ℤ) + 2 = 0 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h0] <;> rfl
+    rw [show (3 : ℤ) + 2 = 0 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h0]; rfl
   · show c.lab (4 + 2) + 1 = 0
-    rw [show (4 : ℤ) + 2 = 1 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h1] <;> rfl
+    rw [show (4 : ℤ) + 2 = 1 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h1]; rfl
 
 private lemma tm_rot_01210 (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1)
     (h2 : c.lab 2 = 2) (h3 : c.lab 3 = 1) (h4 : c.lab 4 = 0) :
@@ -299,21 +271,21 @@ private lemma tm_rot_01210 (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1)
       c'.lab 3 = 2 ∧ c'.lab 4 = 0 := by
   refine ⟨((c.shift 1).relabel).relabel, by simp only [rawCost_relabel, rawCost_relabel, rawCost_shift], ?_, ?_, ?_, ?_, ?_⟩
   · show c.lab (0 + 1) + 1 + 1 = 0
-    rw [show (0 : ℤ) + 1 = 1 by norm_num, h1] <;> rfl
+    rw [show (0 : ℤ) + 1 = 1 by norm_num, h1]; rfl
   · show c.lab (1 + 1) + 1 + 1 = 1
-    rw [show (1 : ℤ) + 1 = 2 by norm_num, h2] <;> rfl
+    rw [show (1 : ℤ) + 1 = 2 by norm_num, h2]; rfl
   · show c.lab (2 + 1) + 1 + 1 = 0
-    rw [show (2 : ℤ) + 1 = 3 by norm_num, h3] <;> rfl
+    rw [show (2 : ℤ) + 1 = 3 by norm_num, h3]; rfl
   · show c.lab (3 + 1) + 1 + 1 = 2
-    rw [show (3 : ℤ) + 1 = 4 by norm_num, h4] <;> rfl
+    rw [show (3 : ℤ) + 1 = 4 by norm_num, h4]; rfl
   · show c.lab (4 + 1) + 1 + 1 = 0
-    rw [show (4 : ℤ) + 1 = 0 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h0] <;> rfl
+    rw [show (4 : ℤ) + 1 = 0 + ((5 : ℕ) : ℤ) by norm_num, c.lab_add, h0]; rfl
 
 private lemma tm_closure_zero_1 (c : Cycle 1) :
     triFactor (c.lab 0) (c.q 0) = triR := by
   have h := c.closure 0
-  simp only [List.range_succ, List.range_zero, List.map_append, List.map_cons, List.map_nil,
-    List.prod_append, List.prod_cons, List.prod_nil, Matrix.mul_one, List.nil_append] at h
+  simp only [List.range_succ, List.range_zero, List.map_cons, List.map_nil,
+    List.prod_cons, List.prod_nil, Matrix.mul_one, List.nil_append] at h
   simpa [Matrix.mul_assoc] using h
 
 private lemma tm_closure_zero_2 (c : Cycle 2) :
@@ -338,14 +310,14 @@ private lemma tm_closure_zero_4 (c : Cycle 4) :
   simpa [Matrix.mul_assoc] using h
 
 /-- The label increments are `N`-periodic. -/
-theorem incr_emod (c : Cycle N) (hN : 0 < N) (k : ℤ) :
+theorem incr_emod (c : Cycle N) (_hN : 0 < N) (k : ℤ) :
     c.lab (k + 1) - c.lab k = c.lab (k % N + 1) - c.lab (k % N) := by
   have hper : Function.Periodic (fun k : ℤ ↦ c.lab (k + 1) - c.lab k) (N : ℤ) := by
     intro k
     simp only [show k + N + 1 = k + 1 + N by ring, c.lab_add]
     abel
   have := hper.sub_int_mul_eq (x := k) (k / N)
-  rw [show k % (N : ℤ) = k - ((k / N : ℤ) : ℤ) * N by rw [Int.emod_def]; push_cast; ring]
+  rw [show k % (N : ℤ) = k - ((k / N : ℤ) : ℤ) * N by rw [Int.emod_def]; ring]
   exact this.symm
 
 /-- A label increment that holds on one period holds everywhere. -/
@@ -420,7 +392,7 @@ theorem cycle_four_forward (c : Cycle 4) (k : ℤ) : c.lab (k + 1) = c.lab k + 1
         exact (word_0102_false (q 0) (q 1) (q 2) (q 3) hcl).elim
     · exact (n1 (by rw [h2, h1])).elim
     · rcases tm_fin3 (c0.lab 3) with h3 | h3 | h3
-      · interval_cases j <;> simp [h0, h1, h2, h3, l4] <;> rfl
+      · interval_cases j <;> simp [h0, h1, h2, h3, l4]
       · exact (n3 (by rw [l4, h3])).elim
       · exact (n2 (by rw [h3, h2])).elim
   · rcases tm_fin3 (c0.lab 2) with h2 | h2 | h2
@@ -508,7 +480,7 @@ theorem cycle_five (c : Cycle 5) :
       · rcases tm_fin3 (c0.lab 4) with h4 | h4 | h4
         · exact (n3 (by rw [h4, h3])).elim
         · exact (n4 (by rw [l5, h4])).elim
-        · exact Or.inl (hrev fun j hj ↦ by interval_cases j <;> simp [h0, h1, h2, h3, h4, l5] <;> rfl)
+        · exact Or.inl (hrev fun j hj ↦ by interval_cases j <;> simp [h0, h1, h2, h3, h4, l5])
       · exact (n2 (by rw [h3, h2])).elim
       · rcases tm_fin3 (c0.lab 4) with h4 | h4 | h4
         · exact hfwd (tm_rot_02120 c0 h0 h1 h2 h3 h4)

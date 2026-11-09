@@ -15,7 +15,7 @@ from fractions import Fraction as Fr
 from math import comb, lcm
 from plan3 import padd, pmul, pscale, bern1
 from plan4 import coeffs_in, shift_scale
-from gen4 import (lnum, P_, upoly, dict_to_list, beta0g_str, poly_str, lemma0g, wI, lin_str, ivname,
+from gen4 import (lnum, P_, upoly, hvar, dict_to_list, beta0g_str, poly_str, lemma0g, wI, lin_str, ivname,
                   lemmaI, uni_split, lin_forms, Out, emit_leaf, uni_count, lpoly_mul, lpoly_add,
                   lpoly_scale, betas_j, structure)
 
@@ -73,7 +73,7 @@ def emit_job(out, X, D, Mstrs, gstr, jlo, h0, h1, plan, needI, need0g, extra_unf
     sstr = "j" if jlo == 0 else f"(j - {lnum(jlo)})"
     for i in range(ny+1):
         for l in range(len(D[i])):
-            out.add(f"/-- Coefficient of `y^{i} s^{l}` in `{X}`. -/\nnoncomputable def {X}D{i}_{l} (h : ℝ) : ℝ :=\n  {upoly(D[i][l], 'h')}\n")
+            out.add(f"/-- Coefficient of `y^{i} s^{l}` in `{X}`. -/\nnoncomputable def {X}D{i}_{l} ({hvar(D[i][l])} : ℝ) : ℝ :=\n  {upoly(D[i][l], 'h')}\n")
     def cstr(i):
         if i > ny: return "0"
         base = "(" + poly_str([f"{X}D{i}_{l} h" for l in range(len(D[i]))], sstr) + ")"
@@ -89,7 +89,7 @@ def emit_job(out, X, D, Mstrs, gstr, jlo, h0, h1, plan, needI, need0g, extra_unf
             Es = []
             for l in range(md+1):
                 if l >= len(E): Es.append("0"); continue
-                out.add(f"noncomputable def {X}E{pi}_{k}_{l} (h : ℝ) : ℝ := {upoly(E[l], 'h')}\n")
+                out.add(f"noncomputable def {X}E{pi}_{k}_{l} ({hvar(E[l])} : ℝ) : ℝ := {upoly(E[l], 'h')}\n")
                 Es.append(f"{X}E{pi}_{k}_{l} h")
             leafnames = []
             for m in range(md+1):
@@ -201,7 +201,7 @@ theorem {X}_pos_y (h j y : ℝ) (hh0 : {lnum(h0)} ≤ h) (hh1 : h ≤ {lnum(h1)}
         zsub = f"(y * ({Dn}) / ({Nm}))"
         out.add(f"""/-- **The certificate in the event-factor variable** `y = q - 1 ∈ [0, Nm/Dn]`. -/
 theorem {X}_pos_y (h j y : ℝ) (hh0 : {lnum(h0)} ≤ h) (hh1 : h ≤ {lnum(h1)})
-    (hs0 : 0 ≤ {sstr}) (hs1 : {sstr} ≤ {gstr}) (hN : 0 < {Nm}) (hD : 0 < {Dn}) (hy0 : 0 ≤ y)
+    (hs0 : 0 ≤ {sstr}) (hs1 : {sstr} ≤ {gstr}) (hN : 0 < {Nm}) (_hD : 0 < {Dn}) (hy0 : 0 ≤ y)
     (hy1 : y * ({Dn}) ≤ {Nm}) :
     0 < {yform} := by
   have hz := {X}_pos h j {zsub} hh0 hh1 hs0 hs1 (by positivity) (by rw [div_le_one hN]; exact hy1)

@@ -115,7 +115,7 @@ theorem lr_Vbar_hasDerivAt {x : ℝ} (hx : 1 < x) :
   push_cast
   ring
 
-theorem lr_Vbar_deriv_nonneg {x : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) :
+theorem lr_Vbar_deriv_nonneg {x : ℝ} (hx : 1 < x) (_hx2 : x ≤ 2) :
     0 ≤ 2 * (2 * (x - 1) * ((x + 1) * (35 * x + 13)) -
       (x - 1) ^ 2 * (70 * x + 48)) / ((x + 1) * (35 * x + 13)) ^ 2 := by
   apply div_nonneg _ (sq_nonneg _)

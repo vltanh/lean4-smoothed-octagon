@@ -114,7 +114,7 @@ theorem lrc_fa_ge {x t u : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (ht : 1 ≤
 
 /-- **`α ↦ F₀(x, α, β₊(α), u)` decreases** at a fixed norm, with slope at most `-c/40`. -/
 theorem lrc_F0_astep {x a1 a2 u : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (h1 : 1 ≤ a1)
-    (h12 : a1 ≤ a2) (h2U : a2 ≤ (1013 * x + 676) / 2340) (h2 : a2 ≤ 7 / 6) (hu0 : 3 / 4 ≤ u)
+    (h12 : a1 ≤ a2) (h2U : a2 ≤ (1013 * x + 676) / 2340) (_h2 : a2 ≤ 7 / 6) (hu0 : 3 / 4 ≤ u)
     (hu1 : u ≤ 19 / 25) :
     lrcF0 x a2 (x + 10 / 13 * (a2 - 1)) u ≤
       lrcF0 x a1 (x + 10 / 13 * (a1 - 1)) u - 7 / 96 * (1 / 40) * (a2 - a1) := by
@@ -198,7 +198,7 @@ theorem lrc_F0_astep_ul {x a1 a2 : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (h1
 /-! ### The second test is concave in the shape -/
 
 theorem lrc_F1_conc {x a ac : ℝ} (hx : 41 / 25 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a) (hac : a ≤ ac)
-    (hacU : ac ≤ (1013 * x + 676) / 2340) (hac2 : ac ≤ 7 / 6) :
+    (hacU : ac ≤ (1013 * x + 676) / 2340) (_hac2 : ac ≤ 7 / 6) :
     min (lrcF1 x 1 (x + 10 / 13 * (1 - 1)) (19 / 25)) (lrcF1 x ac (x + 10 / 13 * (ac - 1)) (19 / 25)) ≤
       lrcF1 x a (x + 10 / 13 * (a - 1)) (19 / 25) := by
   have hx0 : 0 < x := by linarith

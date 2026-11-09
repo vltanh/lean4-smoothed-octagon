@@ -46,7 +46,8 @@ theorem traceForm_controlMatrix_eq_vertex_sum (A : Mat2) (u : Fin 3 → ℝ) :
     traceForm A (controlMatrix u) =
       ∑ i : Fin 3, u i * traceForm A (controlMatrix (vertex i)) := by
   simp [Fin.sum_univ_three, traceForm, controlMatrix, vertex, Matrix.trace_fin_two,
-    Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+    Matrix.mul_apply, Fin.sum_univ_two]
+  ring
 
 /-- The three vertex control matrices separate traceless matrices under the trace form. -/
 theorem eq_zero_of_traceForm_control_vertices_eq_zero {A : Mat2}
@@ -96,7 +97,7 @@ theorem hamiltonian_denominator_mul_eq_vertex_sum (lam : ℝ) (Λ₁ ΛR : Mat2)
     intro v hv
     have hD : D v ≠ 0 := (singular_denominator_neg hX hv).ne
     change D v * (K - N v / D v) = D v * K - N v
-    field_simp [hD] <;> ring
+    field_simp [hD]
   calc
     _ = D u * K - N u := hmul u hu
     _ = ∑ i : Fin 3, u i * (D (vertex i) * K - N (vertex i)) := by
@@ -142,7 +143,7 @@ theorem hamiltonian_le_of_vertex_le (lam : ℝ) (Λ₁ ΛR : Mat2)
 /-- The maximum condition on the whole simplex is equivalent to its three
 vertex comparisons; this statement does not require costate orthogonality. -/
 theorem hamiltonian_isMax_iff_vertexwise (lam : ℝ) (Λ₁ ΛR : Mat2)
-    {X : Mat2} (hX : IsStarState X) {u : Fin 3 → ℝ} (hu : u ∈ controlSimplex) :
+    {X : Mat2} (hX : IsStarState X) {u : Fin 3 → ℝ} (_hu : u ∈ controlSimplex) :
     (∀ v ∈ controlSimplex, hamiltonian lam Λ₁ ΛR X v ≤ hamiltonian lam Λ₁ ΛR X u) ↔
       ∀ i : Fin 3, hamiltonian lam Λ₁ ΛR X (vertex i) ≤ hamiltonian lam Λ₁ ΛR X u := by
   constructor
@@ -252,7 +253,7 @@ theorem hamiltonian_maximizers_in_proper_edge (lam : ℝ) (Λ₁ : Mat2)
   have hnot : ¬ ∀ i : Fin 3, hamiltonian lam Λ₁ ΛR X (vertex i) =
       hamiltonian lam Λ₁ ΛR X (vertex 0) := fun h ↦ hne
     ((hamiltonian_vertices_equal_iff_reducedCostate_eq_zero lam Λ₁ hX htr hperp).mp h)
-  push_neg at hnot
+  push Not at hnot
   obtain ⟨i, hi⟩ := hnot
   rcases lt_or_gt_of_ne hi with hlt | hgt
   · refine ⟨i, fun u hu hmax ↦ ?_⟩

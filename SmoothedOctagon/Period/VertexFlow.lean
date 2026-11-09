@@ -135,8 +135,9 @@ theorem margin_eq_two_mul_rho (X : Mat2) (hX : X.trace = 0) :
   have h := vf_s3pos
   have h11 : X 1 1 = -X 0 0 := by rw [Matrix.trace_fin_two] at hX; linarith
   rw [margin_zero_apply, margin_one_apply, margin_two_apply, h11]
-  refine ⟨?_, ?_, ?_⟩ <;> simp only [ρ₀, ρ₁, ρ₂] <;> field_simp <;> ring_nf <;>
-    simp only [vf_s3] <;> ring
+  refine ⟨?_, ?_, ?_⟩ <;> simp only [ρ₀, ρ₁, ρ₂] <;> field_simp <;> ring_nf
+  simp only [vf_s3]
+  ring
 
 /-- On traceless matrices, `p₀p₁ + p₁p₂ + p₂p₀ = 4 det X`. -/
 theorem margin_mul_add_eq (X : Mat2) (hX : X.trace = 0) :
@@ -218,7 +219,9 @@ theorem tangentFactor_zero_eq {w : ℝ} (hw : w ≠ 0) :
       !![(w + w⁻¹) / 2, (w - w⁻¹) / (2 * √3); √3 * (w - w⁻¹) / 2, (w + w⁻¹) / 2] := by
   have h := vf_s3pos
   rw [tangentFactor, controlMatrix_vertex_zero]
-  ext i j; fin_cases i <;> fin_cases j <;> simp <;> field_simp <;> vf_ring
+  ext i j; fin_cases i <;> fin_cases j <;> simp
+  field_simp
+  vf_ring
 
 theorem tangentFactor_one_eq {w : ℝ} (hw : w ≠ 0) :
     tangentFactor 1 w = !![w, -((w - w⁻¹) / √3); 0, w⁻¹] := by

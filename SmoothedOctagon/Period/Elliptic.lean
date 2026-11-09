@@ -540,11 +540,11 @@ noncomputable def elRp (i : Fin 3) : Mat2 := Term.triR ^ i.val
 noncomputable def elRm (i : Fin 3) : Mat2 := Term.triRinv ^ i.val
 
 theorem elRp_mul_elRm (i : Fin 3) : elRp i * elRm i = 1 := by
-  fin_cases i <;> simp [elRp, elRm, pow_succ, Term.triR, Term.triRinv, Matrix.mul_fin_two,
+  fin_cases i <;> simp [elRp, elRm, pow_succ, Term.triR, Term.triRinv,
     Matrix.one_fin_two]
 
 theorem elRm_mul_elRp (i : Fin 3) : elRm i * elRp i = 1 := by
-  fin_cases i <;> simp [elRp, elRm, pow_succ, Term.triR, Term.triRinv, Matrix.mul_fin_two,
+  fin_cases i <;> simp [elRp, elRm, pow_succ, Term.triR, Term.triRinv,
     Matrix.one_fin_two]
 
 theorem triFactor_eq_conj (i : Fin 3) (q : ℝ) :
@@ -556,26 +556,26 @@ theorem triFactor_eq_conj (i : Fin 3) (q : ℝ) :
 theorem elRp_fwd (i : Fin 3) :
     elRp i = Term.triRinv * elRp (i + 1) ∨ elRp i = -(Term.triRinv * elRp (i + 1)) := by
   fin_cases i
-  · left; simp [elRp, Term.triR, Term.triRinv, Matrix.mul_fin_two, Matrix.one_fin_two]
-  · left; simp [elRp, pow_succ, Term.triR, Term.triRinv, Matrix.mul_fin_two, Matrix.one_fin_two]
+  · left; simp [elRp, Term.triR, Term.triRinv, Matrix.one_fin_two]
+  · left; simp [elRp, pow_succ, Term.triR, Term.triRinv, Matrix.one_fin_two]
   · right
-    simp [elRp, pow_succ, Term.triR, Term.triRinv, Matrix.mul_fin_two, Matrix.one_fin_two]
+    simp [elRp, pow_succ, Term.triR, Term.triRinv, Matrix.one_fin_two]
 
 theorem elRp_rev (i : Fin 3) :
     elRp i = Term.triR * elRp (i - 1) ∨ elRp i = -(Term.triR * elRp (i - 1)) := by
   fin_cases i
   · right
-    simp [elRp, pow_succ, Term.triR, Term.triRinv, Matrix.mul_fin_two, Matrix.one_fin_two]
-  · left; simp [elRp, pow_succ, Term.triR, Term.triRinv, Matrix.mul_fin_two, Matrix.one_fin_two]
-  · left; simp [elRp, pow_succ, Term.triR, Term.triRinv, Matrix.mul_fin_two, Matrix.one_fin_two]
+    simp [elRp, pow_succ, Term.triR, Matrix.one_fin_two]
+  · left; simp [elRp, pow_succ, Term.triR, Matrix.one_fin_two]
+  · left; simp [elRp, pow_succ, Term.triR, Matrix.one_fin_two]
 
 theorem elRp_R_elRm (i : Fin 3) :
     elRp i * Term.triR * elRm (i + 1) = 1 ∨ elRp i * Term.triR * elRm (i + 1) = -1 := by
   fin_cases i
-  · left; simp [elRp, elRm, Term.triR, Term.triRinv, Matrix.mul_fin_two, Matrix.one_fin_two]
-  · left; simp [elRp, elRm, pow_succ, Term.triR, Term.triRinv, Matrix.mul_fin_two,
+  · left; simp [elRp, elRm, Term.triR, Term.triRinv, Matrix.one_fin_two]
+  · left; simp [elRp, elRm, pow_succ, Term.triR, Term.triRinv,
       Matrix.one_fin_two]
-  · right; simp [elRp, elRm, pow_succ, Term.triR, Term.triRinv, Matrix.mul_fin_two,
+  · right; simp [elRp, elRm, pow_succ, Term.triR, Term.triRinv,
       Matrix.one_fin_two]
 
 
@@ -1312,7 +1312,8 @@ private theorem Mloc_conj (k : ℤ) :
       C.q k ^ 2 * (C.mu k (C.lab k) + C.mu k (C.lab k + 1)) - C.mu k (C.lab k) := by linarith
   ext a b; fin_cases a <;> fin_cases b <;>
     simp [triY, Mloc, Term.triFactor, Matrix.mul_apply, Fin.sum_univ_two, e1, e2, h1, e3, e4] <;>
-    field_simp <;> ring
+    field_simp
+  ring
 
 /-- `M_{k+1} = A_k⁻¹ M_k A_k`. -/
 theorem Mloc_succ (k : ℤ) : C.Mloc (k + 1) = C.Ainv k * C.Mloc k * C.Amat k := by
@@ -1415,12 +1416,13 @@ theorem Amat_inc (k : ℤ) : C.Amat k *ᵥ C.inc (k + 1) = C.outv k := by
   rcases C.lab_cases k with h | h
   · simp only [h, ↓reduceIte]
     ext i; fin_cases i <;>
-      simp [Term.triFactor, Term.triRinv, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;> ring
+      simp [Term.triFactor, Term.triRinv, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    ring
   · have hne : ¬ (C.lab k - 1 = C.lab k + 1) := by generalize C.lab k = i; revert i; decide
     simp only [h, hne, ↓reduceIte]
     ext i; fin_cases i <;>
-      simp [Term.triFactor, Term.triR, Matrix.mulVec, dotProduct, Fin.sum_univ_two] <;>
-      field_simp
+      simp [Term.triFactor, Term.triR, Matrix.mulVec, dotProduct, Fin.sum_univ_two]
+    field_simp
 
 /-- The local form `S_k = -J₀ M_k` (`P_kᵀ S P_k`). -/
 noncomputable def Sloc (k : ℤ) : Mat2 := -(elJ0 * C.Mloc k)
@@ -1433,7 +1435,7 @@ private theorem Sloc_apply (k : ℤ) :
   have e1 : (1 : Fin 3) + C.lab k = C.lab k + 1 := by abel
   have e2 : (2 : Fin 3) + C.lab k = C.lab k - 1 := by generalize C.lab k = i; revert i; decide
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
-    simp [Sloc, Mloc, triY, elJ0, Matrix.mul_apply, Fin.sum_univ_two, e1, e2] <;> ring
+    simp [Sloc, Mloc, triY, elJ0, e1, e2] <;> ring
 
 theorem Sloc_out (k : ℤ) : elQ (C.Sloc k) (C.outv k) (C.outv k) = C.swd k := by
   obtain ⟨s00, s01, s10, s11⟩ := C.Sloc_apply k
@@ -1540,7 +1542,7 @@ theorem cross_pp {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
     field_simp
     simp only [act] at hf ⊢
     linear_combination (-(C.mu k (C.lab k))) * hf
-  · simp only [elDet, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+  · simp only [elDet, Matrix.cons_val_zero, Matrix.cons_val_one]
     field_simp
     linear_combination hf
 
@@ -1562,7 +1564,7 @@ theorem cross_mm {k : ℤ} (hin : C.lab k = C.lab (k - 1) - 1)
     field_simp
     simp only [act] at hf' ⊢
     linear_combination (C.mu k (C.lab k)) * hf'
-  · simp only [elDet, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+  · simp only [elDet, Matrix.cons_val_zero, Matrix.cons_val_one]
     field_simp
     linear_combination hf'
 
@@ -1576,12 +1578,13 @@ theorem outv_turn {k : ℤ} (hturn : C.sgn (k - 1) = -C.sgn k) : C.outv k = -C.i
     have h2 := (C.sw_pos k).ne'
     have hq := (C.q_pos k).ne'
     rw [C.inc_fwd hin, C.outv_rev hout, ← hf]
-    ext i; fin_cases i <;> simp <;> field_simp
+    ext i; fin_cases i <;> simp
   · have hf := C.factor_mp hin hout
     have h2 := (C.sw_pos (k - 1)).ne'
     have hq := (C.q_pos k).ne'
     rw [C.inc_rev hin, C.outv_fwd hout, ← hf]
-    ext i; fin_cases i <;> simp <;> field_simp
+    ext i; fin_cases i <;> simp
+    field_simp
   · rw [C.sgn_rev (by rw [ek]; exact hin), C.sgn_rev hout] at hturn; norm_num at hturn
 
 /-! ### The global switch vectors -/
@@ -1607,7 +1610,7 @@ theorem elQ_pre (n : ℕ) (x y : Fin 2 → ℝ) :
   congr 1
   simp only [Sloc, Matrix.mul_neg, Matrix.neg_mul, ← Matrix.mul_assoc, C.transpose_pre_J0]
   rw [C.Mloc_pre n]
-  simp only [Matrix.mul_assoc, Nat.cast_ofNat]
+  simp only [Matrix.mul_assoc]
 
 theorem elDet_pre (n : ℕ) (x y : Fin 2 → ℝ) :
     elDet (C.pre n *ᵥ x) (C.pre n *ᵥ y) = elDet x y := by
@@ -2054,8 +2057,7 @@ theorem next_centre_local (n : ℤ) (h0 : C.lab n = C.lab (n - 1) - 1)
     congr 1; rw [Q3]; field_simp
   rw [A0, A1, A2, O3, C.inc_rev h0, C.outv_rev h1, Q0, Q1, Q2]
   ext i; fin_cases i <;>
-    simp [Term.triFactor, Term.triR, Term.triRinv, Matrix.mulVec, dotProduct, Fin.sum_univ_two,
-      Matrix.mul_apply] <;> field_simp <;> ring
+    simp [Term.triFactor, Term.triR, Term.triRinv] <;> field_simp <;> ring
 
 end CostateCycle
 
@@ -2248,7 +2250,7 @@ theorem el_negEll_repr {L : Mat2} (htr : L.trace = 0) (hdet : 0 < L.det) (h10 : 
   · rw [Matrix.det_fin_two]; simp; field_simp
   · rw [hκp] at hκ2 ⊢
     ext a b; fin_cases a <;> fin_cases b <;>
-      simp [Matrix.mul_apply, Fin.sum_univ_two, Matrix.adjugate_fin_two, J, e11]
+      simp [Matrix.adjugate_fin_two, J, e11]
     · field_simp
     · field_simp
       linear_combination hκ2
@@ -2608,8 +2610,9 @@ noncomputable def Ucal : Mat2 := -(1 / √12) • (P.X 0 * P.Λ₁ 0 * P.X 0)
 
 theorem el_margin_J (j : Fin 3) : margin j J = 2 / √3 := by
   have h := el_s3pos
-  fin_cases j <;> simp [margin_zero_apply, margin_one_apply, margin_two_apply, J] <;>
-    field_simp <;> el_ring
+  fin_cases j <;> simp [margin_zero_apply, margin_one_apply, margin_two_apply, J]
+  field_simp
+  el_ring
 
 /-- The margins of `𝒰₀` are the coordinates `μ_j` of the costate cycle at the switch `0`. -/
 theorem mu_zero (j : Fin 3) : P.costateCycle.mu 0 j = margin j P.Ucal := by
@@ -2680,7 +2683,7 @@ theorem Λ₁_zero_neg (hpos : 0 < P.costateCycle.gam2 0) (hS : 0 < P.costateCyc
   -- `S₀₀ = (M₀)₁₀`
   have hM : 0 < C.Mloc 0 1 0 := by
     have : C.Sloc 0 0 0 = C.Mloc 0 1 0 := by
-      simp [CostateCycle.Sloc, elJ0, Matrix.mul_apply, Fin.sum_univ_two, Matrix.vecMul,
+      simp [CostateCycle.Sloc, elJ0, Fin.sum_univ_two, Matrix.vecMul,
         dotProduct]
     linarith
   -- `M₀ = A Y A⁻¹`, `Y = triY(μ)`

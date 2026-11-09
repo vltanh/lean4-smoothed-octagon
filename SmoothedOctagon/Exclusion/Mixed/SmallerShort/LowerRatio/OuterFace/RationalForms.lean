@@ -66,7 +66,7 @@ theorem lrg4_nonpos {x u : ℝ} (hx : 0 < x) : lrb4 x u ≤ 0 := by
 `r ≥ 1/x`, `0 < Z_lo ≤ Z ≤ S`, the curvature is at most
 `2b₂ + 6b₃/x + 2Qe²/S³ + ce²/Z_lo²`. -/
 theorem lr_curv_bound {b2 b3 b4 Q d e s x S Zl : ℝ} (hb4 : b4 ≤ 0) (hb3 : b3 ≤ 0) (hQ : Q ≤ 0)
-    (hx : 0 < x) (hs : 1 / x ≤ s) (hZl : 0 < Zl) (hZ0 : Zl ≤ d + e * s) (hZ1 : d + e * s ≤ S) :
+    (_hx : 0 < x) (hs : 1 / x ≤ s) (hZl : 0 < Zl) (hZ0 : Zl ≤ d + e * s) (hZ1 : d + e * s ≤ S) :
     2 * b2 + 6 * b3 * s + 12 * b4 * s ^ 2 + 2 * Q * e ^ 2 / (d + e * s) ^ 3 +
       7 / 96 * e ^ 2 / (d + e * s) ^ 2 ≤
         2 * b2 + 6 * b3 / x + 2 * Q * e ^ 2 / S ^ 3 + 7 / 96 * e ^ 2 / Zl ^ 2 := by

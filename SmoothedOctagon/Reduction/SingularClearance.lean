@@ -100,7 +100,7 @@ domain is not used for this inequality. -/
 theorem covectorNormSq_le_singularGapSq {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hcost : reinhardtCost T X ≤ octagonCost)
-    (hK : ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t)) :
+    (_hK : ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t)) :
     ∀ t ∈ Icc 0 T,
       covectorNormSq lam (Λ₁ t) (ΛR t) ≤ 251 ^ 2 * singularGapSq lam (Λ₁ t) (ΛR t) := by
   intro t ht

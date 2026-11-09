@@ -65,7 +65,7 @@ theorem nsf_comb_concave (α M t x q v L F k k1 k2 : ℝ) :
 
 /-- **The endpoint principle**: on `[k₁, k₂]`, with `qJ ≥ pW`, the combined residual is at least
 the smaller of its endpoint values; in particular it is positive if both are. -/
-theorem nsf_comb_pos_of_ends {α M t x q v L F k k1 k2 : ℝ} (ht : 0 ≤ t) (hq : 0 ≤ q)
+theorem nsf_comb_pos_of_ends {α M t x q v L F k k1 k2 : ℝ} (ht : 0 ≤ t) (_hq : 0 ≤ q)
     (hD : (t + x) * (1 + x) ≤ q * (t + x * (x + 2))) (hk1 : k1 ≤ k) (hk2 : k ≤ k2)
     (h1 : 0 < nsfComb α M t x k1 q v L F) (h2 : 0 < nsfComb α M t x k2 q v L F) :
     0 < nsfComb α M t x k q v L F := by

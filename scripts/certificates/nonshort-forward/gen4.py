@@ -10,6 +10,7 @@ is proved in three levels:
     univariate Bernstein certificate (subdivision), checked by `linear_combination`.
 Exponents are written `^ (n : ℕ)` (fast elaboration).  Lean re-checks every identity.
 """
+import re
 from fractions import Fraction as Fr
 from math import comb, lcm
 from plan3 import padd, pmul, pscale, bern1
@@ -25,6 +26,10 @@ def P_(name, e):
     if e == 0: return None
     if e == 1: return name
     return f"{name} ^ ({e} : ℕ)"
+
+def hvar(c):
+    """The binder of a coefficient `c(h)`: `_h` when `c` is constant (Lean's unused-variable linter)."""
+    return "h" if re.search(r"\bh\b", upoly(c, "h")) else "_h"
 
 def upoly(cs, var):
     """Lean string for sum cs[i] var^i (Fractions)."""
@@ -297,7 +302,7 @@ def emit_job(out, X, D, g, gstr, jlo, h0, h1, plan, needI, need0g):
     # D definitions
     for i in range(ny+1):
         for l in range(nl+1):
-            out.add(f"/-- Coefficient of `y^{i} s^{l}` in `{X}`. -/\nnoncomputable def {X}D{i}_{l} (h : ℝ) : ℝ :=\n  {upoly(D[i][l], 'h')}\n")
+            out.add(f"/-- Coefficient of `y^{i} s^{l}` in `{X}`. -/\nnoncomputable def {X}D{i}_{l} ({hvar(D[i][l])} : ℝ) : ℝ :=\n  {upoly(D[i][l], 'h')}\n")
     allD = " ".join(f"{X}D{i}_{l}" for i in range(ny+1) for l in range(nl+1))
     # c_i strings (padded with zeros for elevation): sum_l D_il h * s^l
     def cstr(i, n):
@@ -314,7 +319,7 @@ def emit_job(out, X, D, g, gstr, jlo, h0, h1, plan, needI, need0g):
             Es = []
             for l in range(md+1):
                 if l > nl: Es.append("0"); continue
-                out.add(f"noncomputable def {X}E{pi}_{k}_{l} (h : ℝ) : ℝ := {upoly(E[l], 'h')}\n")
+                out.add(f"noncomputable def {X}E{pi}_{k}_{l} ({hvar(E[l])} : ℝ) : ℝ := {upoly(E[l], 'h')}\n")
                 Es.append(f"{X}E{pi}_{k}_{l} h")
             leafnames = []
             for m in range(md+1):

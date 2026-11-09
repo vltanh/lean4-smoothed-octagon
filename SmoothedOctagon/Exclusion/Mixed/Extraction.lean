@@ -67,7 +67,7 @@ namespace SmoothedOctagon
 turn outgoing and the switch `m + 2` forward, the pieces `m - 2, …, m + 3` carry an `M2Window`,
 with `ForwardNext` or `ReverseNext` according to the switch `m + 3`. -/
 theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDomain)
-    (h : P.rep.ClassM2) (hN : 6 ≤ P.N) {m : ℤ}
+    (h : P.rep.ClassM2) (_hN : 6 ≤ P.N) {m : ℤ}
     (hm : ∀ k, P.costateCycle.act m ≤ P.costateCycle.act k)
     (h2 : P.costateCycle.m2Fwd (m - 2)) (h1 : ¬ P.costateCycle.m2Fwd (m - 1))
     (h0 : ¬ P.costateCycle.m2Fwd m) (h3 : P.costateCycle.m2Fwd (m + 1))

@@ -208,7 +208,7 @@ lemma rein_bd_isPositiveBoundaryParam_of_support (hK : IsCCSDisk K) {n : ℝ →
   · intro θ hzero
     have hp := hpos θ
     rw [hzero] at hp
-    simpa [det2] using hp
+    simp [det2] at hp
   · ext x
     constructor
     · rintro ⟨θ, rfl⟩

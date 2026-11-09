@@ -256,7 +256,7 @@ theorem m1_two_centre (P : NormalPeriod) (hc : P.IsCompetitive) {k₀ : ℤ}
         · linarith
         · exact absurd h hW
       have d1 := congrArg (fun v ↦ elDet v Z1) rec0
-      simp only [elDet_smul_left, elDet_add_left, elDet_self, mul_zero, zero_add] at d1
+      simp only [elDet_smul_left, elDet_add_left, elDet_self, mul_zero] at d1
       have dl : ∀ c : ℝ, ∀ v w : Fin 2 → ℝ, elDet (c • v) w = c * elDet v w :=
         fun c v w ↦ elDet_smul_left c v w
       have hD0z : D0 = 0 := by
@@ -267,7 +267,7 @@ theorem m1_two_centre (P : NormalPeriod) (hc : P.IsCompetitive) {k₀ : ℤ}
         · exact absurd h hW
       have d2 := congrArg (elDet Z0) rec1
       simp only [elDet_smul_right, elDet_add_right, elDet_self, elDet_neg_right, mul_zero,
-        add_zero, neg_zero, zero_add] at d2
+        neg_zero, zero_add] at d2
       have hD1z : D1 = 0 := by
         rcases mul_eq_zero.1 d2.symm with h | h
         · exact h

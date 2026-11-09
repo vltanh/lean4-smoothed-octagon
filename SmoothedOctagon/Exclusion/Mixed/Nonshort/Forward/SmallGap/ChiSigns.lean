@@ -44,11 +44,11 @@ noncomputable def nsfCChiD0_5 (h : ℝ) : ℝ :=
   -(1 / 2) - (1 / 2) * h + (1 / 2) * h ^ (2 : ℕ) + (1 / 2) * h ^ (3 : ℕ)
 
 /-- Coefficient of `y^0 s^6` in `nsfCChi`. -/
-noncomputable def nsfCChiD0_6 (h : ℝ) : ℝ :=
+noncomputable def nsfCChiD0_6 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^0 s^7` in `nsfCChi`. -/
-noncomputable def nsfCChiD0_7 (h : ℝ) : ℝ :=
+noncomputable def nsfCChiD0_7 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^1 s^0` in `nsfCChi`. -/
@@ -566,7 +566,7 @@ theorem nsfCChi_pos (h j z : ℝ) (hh0 : (6 / 25) ≤ h) (hh1 : h ≤ (1 / 3))
 
 /-- **The certificate in the event-factor variable** `y = q - 1 ∈ [0, Nm/Dn]`. -/
 theorem nsfCChi_pos_y (h j y : ℝ) (hh0 : (6 / 25) ≤ h) (hh1 : h ≤ (1 / 3))
-    (hs0 : 0 ≤ j) (hs1 : j ≤ 1 / 30) (hN : 0 < (1 + h) / 2 - 3 * j) (hD : 0 < 7 * (1 + h) / 2 + 7 * j) (hy0 : 0 ≤ y)
+    (hs0 : 0 ≤ j) (hs1 : j ≤ 1 / 30) (hN : 0 < (1 + h) / 2 - 3 * j) (_hD : 0 < 7 * (1 + h) / 2 + 7 * j) (hy0 : 0 ≤ y)
     (hy1 : y * (7 * (1 + h) / 2 + 7 * j) ≤ (1 + h) / 2 - 3 * j) :
     0 < (nsfCChiD0_0 h + nsfCChiD0_1 h * j + nsfCChiD0_2 h * j ^ (2 : ℕ) + nsfCChiD0_3 h * j ^ (3 : ℕ) + nsfCChiD0_4 h * j ^ (4 : ℕ) + nsfCChiD0_5 h * j ^ (5 : ℕ) + nsfCChiD0_6 h * j ^ (6 : ℕ) + nsfCChiD0_7 h * j ^ (7 : ℕ)) + (nsfCChiD1_0 h + nsfCChiD1_1 h * j + nsfCChiD1_2 h * j ^ (2 : ℕ) + nsfCChiD1_3 h * j ^ (3 : ℕ) + nsfCChiD1_4 h * j ^ (4 : ℕ) + nsfCChiD1_5 h * j ^ (5 : ℕ) + nsfCChiD1_6 h * j ^ (6 : ℕ) + nsfCChiD1_7 h * j ^ (7 : ℕ)) * y + (nsfCChiD2_0 h + nsfCChiD2_1 h * j + nsfCChiD2_2 h * j ^ (2 : ℕ) + nsfCChiD2_3 h * j ^ (3 : ℕ) + nsfCChiD2_4 h * j ^ (4 : ℕ) + nsfCChiD2_5 h * j ^ (5 : ℕ) + nsfCChiD2_6 h * j ^ (6 : ℕ) + nsfCChiD2_7 h * j ^ (7 : ℕ)) * y ^ (2 : ℕ) + (nsfCChiD3_0 h + nsfCChiD3_1 h * j + nsfCChiD3_2 h * j ^ (2 : ℕ) + nsfCChiD3_3 h * j ^ (3 : ℕ) + nsfCChiD3_4 h * j ^ (4 : ℕ) + nsfCChiD3_5 h * j ^ (5 : ℕ) + nsfCChiD3_6 h * j ^ (6 : ℕ) + nsfCChiD3_7 h * j ^ (7 : ℕ)) * y ^ (3 : ℕ) := by
   have hz := nsfCChi_pos h j (y * (7 * (1 + h) / 2 + 7 * j) / ((1 + h) / 2 - 3 * j)) hh0 hh1 hs0 hs1 (by positivity) (by rw [div_le_one hN]; exact hy1)

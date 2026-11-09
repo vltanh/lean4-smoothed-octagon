@@ -125,7 +125,7 @@ theorem wire_cas_lt (hc : P.IsCompetitive) : P.costateCycle.gam2 0 < 9193 / 5000
 (`NormalPeriod.dens_cas_gt`; the compact domain is not used). The proof uses the whole-period
 winding in its telescoped form `∑ δ_n = π/3` (`dens_winding`), the reverse gap `cos φ < 3/10`
 (`m1_angle_gap`) and the bound `e ≥ 0 ∨ 4e² ≤ d_- d_+` at `+ +` (`dens_pp_bound`). -/
-theorem wire_cas_gt (hc : P.IsCompetitive) (hD : P.InCompactDomain) (hmix : P.rep.IsMixed) :
+theorem wire_cas_gt (hc : P.IsCompetitive) (_hD : P.InCompactDomain) (hmix : P.rep.IsMixed) :
     27 / 256 < P.costateCycle.gam2 0 :=
   P.dens_cas_gt hc hmix
 

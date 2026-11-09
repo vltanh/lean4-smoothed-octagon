@@ -61,7 +61,7 @@ theorem lro_slope {x al be : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hxb : x ≤ be)
 `u_f(x) ≤ u ≤ V̄(x)` (and `u ≤ u_ℓ(x, β)` when `x ≥ 3/2`, `α ≤ 6/5`) and `2 ≤ τ ≤ 7r_A`:
 `Γ_*(1/7) - (7/96)R*_τ(1/7) > 9193/50000`. -/
 theorem lr_outer_face_proof {x al be u τ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
-    (hax : al ≤ x) (hxb : x ≤ be) (hbx : be ≤ al * x) (hqc : x * (x + 2) ≤ 6 * al ^ 2)
+    (hax : al ≤ x) (hxb : x ≤ be) (_hbx : be ≤ al * x) (hqc : x * (x + 2) ≤ 6 * al ^ 2)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) (hu : ssUf x ≤ u)
     (huv : u ≤ ssVbar x) (hul : 3 / 2 ≤ x → al ≤ 6 / 5 → u ≤ ssUl x be) (hτ : 2 ≤ τ)

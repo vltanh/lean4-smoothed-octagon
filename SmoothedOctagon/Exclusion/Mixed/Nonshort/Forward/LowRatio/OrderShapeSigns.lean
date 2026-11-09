@@ -56,11 +56,11 @@ noncomputable def nsfCLRbD0_8 (h : ℝ) : ℝ :=
   900 - 216 * h - 900 * h ^ (2 : ℕ) + 216 * h ^ (3 : ℕ)
 
 /-- Coefficient of `y^0 s^9` in `nsfCLRb`. -/
-noncomputable def nsfCLRbD0_9 (h : ℝ) : ℝ :=
+noncomputable def nsfCLRbD0_9 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^0 s^10` in `nsfCLRb`. -/
-noncomputable def nsfCLRbD0_10 (h : ℝ) : ℝ :=
+noncomputable def nsfCLRbD0_10 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^1 s^0` in `nsfCLRb`. -/
@@ -104,7 +104,7 @@ noncomputable def nsfCLRbD1_9 (h : ℝ) : ℝ :=
   1332 - 648 * h - 900 * h ^ (2 : ℕ) + 216 * h ^ (3 : ℕ)
 
 /-- Coefficient of `y^1 s^10` in `nsfCLRb`. -/
-noncomputable def nsfCLRbD1_10 (h : ℝ) : ℝ :=
+noncomputable def nsfCLRbD1_10 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^2 s^0` in `nsfCLRb`. -/
@@ -324,7 +324,7 @@ noncomputable def nsfCLRbD6_9 (h : ℝ) : ℝ :=
   262 - 232 * h - 30 * h ^ (2 : ℕ)
 
 /-- Coefficient of `y^6 s^10` in `nsfCLRb`. -/
-noncomputable def nsfCLRbD6_10 (h : ℝ) : ℝ :=
+noncomputable def nsfCLRbD6_10 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^7 s^0` in `nsfCLRb`. -/
@@ -364,11 +364,11 @@ noncomputable def nsfCLRbD7_8 (h : ℝ) : ℝ :=
   -30 + 60 * h - 30 * h ^ (2 : ℕ)
 
 /-- Coefficient of `y^7 s^9` in `nsfCLRb`. -/
-noncomputable def nsfCLRbD7_9 (h : ℝ) : ℝ :=
+noncomputable def nsfCLRbD7_9 (_h : ℝ) : ℝ :=
   0
 
 /-- Coefficient of `y^7 s^10` in `nsfCLRb`. -/
-noncomputable def nsfCLRbD7_10 (h : ℝ) : ℝ :=
+noncomputable def nsfCLRbD7_10 (_h : ℝ) : ℝ :=
   0
 
 noncomputable def nsfCLRbE0_0_0 (h : ℝ) : ℝ := -930 * h ^ (3 : ℕ) - 1505 * h ^ (4 : ℕ) + 5948 * h ^ (5 : ℕ) + 20844 * h ^ (6 : ℕ) + 26248 * h ^ (7 : ℕ) + 16205 * h ^ (8 : ℕ) + 4782 * h ^ (9 : ℕ) + 504 * h ^ (10 : ℕ)

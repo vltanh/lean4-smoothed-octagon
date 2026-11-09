@@ -48,7 +48,7 @@ theorem lro_F0_uquad {x a b u1 u2 : ℝ} (hx : 0 < x) (ha : 0 < a) :
   field_simp
   ring
 
-theorem lro_Gu_diff {x a u u' : ℝ} (hx : 0 < x) (ha : 0 < a) :
+theorem lro_Gu_diff {x a u u' : ℝ} (_hx : 0 < x) (_ha : 0 < a) :
     lroGu x a u - lroGu x a u' = (u' - u) * (2 * (1 + x) ^ 2 * lroK a ^ 2 / (576 * a ^ 4)) := by
   simp only [lroGu, lroE]
   ring

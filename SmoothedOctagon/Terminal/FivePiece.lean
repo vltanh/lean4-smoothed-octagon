@@ -399,35 +399,35 @@ private lemma five_margins (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1) (
     c.m 0 0 = 2 * ((1 + u) * (1 - v)) / √(((1 - u) * (1 - v)) * (4 - (1 - u) * (1 - v))) ∧ c.m 0 1 = 2 * ((1 - u) * (1 - v)) / √(((1 - u) * (1 - v)) * (4 - (1 - u) * (1 - v))) ∧
       c.m 0 2 = 2 * ((1 - u) * (1 + v)) / √(((1 - u) * (1 - v)) * (4 - (1 - u) * (1 - v))) := by
   have s0a := c.m_act 0
-  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s0a
+  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0] at s0a
   have s0g := c.m_grow 0
-  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s0g
+  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (0 : Fin 3) + 1 = 1 from rfl] at s0g
   have s0d := c.m_decr 0
-  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s0d
+  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (0 : Fin 3) - 1 = 2 from rfl] at s0d
   have s1a := c.m_act 1
-  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1, show (1 : Fin 3) + 1 = 2 from rfl, show (1 : Fin 3) - 1 = 0 from rfl, div_inv_eq_mul] at s1a
+  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1] at s1a
   have s1g := c.m_grow 1
-  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1, show (1 : Fin 3) + 1 = 2 from rfl, show (1 : Fin 3) - 1 = 0 from rfl, div_inv_eq_mul] at s1g
+  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1, show (1 : Fin 3) + 1 = 2 from rfl] at s1g
   have s1d := c.m_decr 1
-  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1, show (1 : Fin 3) + 1 = 2 from rfl, show (1 : Fin 3) - 1 = 0 from rfl, div_inv_eq_mul] at s1d
+  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1, show (1 : Fin 3) - 1 = 0 from rfl] at s1d
   have s2a := c.m_act 2
-  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s2a
+  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2] at s2a
   have s2g := c.m_grow 2
-  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s2g
+  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (0 : Fin 3) + 1 = 1 from rfl] at s2g
   have s2d := c.m_decr 2
-  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s2d
+  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (0 : Fin 3) - 1 = 2 from rfl] at s2d
   have s3a := c.m_act 3
-  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s3a
+  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3] at s3a
   have s3g := c.m_grow 3
-  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s3g
+  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl] at s3g
   have s3d := c.m_decr 3
-  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s3d
+  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) - 1 = 1 from rfl] at s3d
   have s4a := c.m_act 4
-  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4, hq4, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s4a
+  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4] at s4a
   have s4g := c.m_grow 4
-  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4, hq4, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s4g
+  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4, hq4, show (0 : Fin 3) + 1 = 1 from rfl] at s4g
   have s4d := c.m_decr 4
-  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4, hq4, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s4d
+  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4, hq4, show (0 : Fin 3) - 1 = 2 from rfl] at s4d
   have tw0 := c.m_add 0 0
   have tw1 := c.m_add 0 1
   simp only [show ((0:ℤ) + ((5:ℕ):ℤ)) = 5 by norm_num, show (0 : Fin 3) - 1 = 2 from rfl,
@@ -461,35 +461,35 @@ private lemma five_rawCost (c : Cycle 5) (h0 : c.lab 0 = 0) (h1 : c.lab 1 = 1) (
   have hu4 : u ^ 2 + 1 ≠ 0 := by positivity
   have hv4 : v ^ 2 + 1 ≠ 0 := by positivity
   have s0a := c.m_act 0
-  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s0a
+  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0] at s0a
   have s0g := c.m_grow 0
-  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s0g
+  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (0 : Fin 3) + 1 = 1 from rfl] at s0g
   have s0d := c.m_decr 0
-  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s0d
+  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (0 : Fin 3) - 1 = 2 from rfl] at s0d
   have s1a := c.m_act 1
-  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1, show (1 : Fin 3) + 1 = 2 from rfl, show (1 : Fin 3) - 1 = 0 from rfl, div_inv_eq_mul] at s1a
+  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1] at s1a
   have s1g := c.m_grow 1
-  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1, show (1 : Fin 3) + 1 = 2 from rfl, show (1 : Fin 3) - 1 = 0 from rfl, div_inv_eq_mul] at s1g
+  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1, show (1 : Fin 3) + 1 = 2 from rfl] at s1g
   have s1d := c.m_decr 1
-  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1, show (1 : Fin 3) + 1 = 2 from rfl, show (1 : Fin 3) - 1 = 0 from rfl, div_inv_eq_mul] at s1d
+  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1, show (1 : Fin 3) - 1 = 0 from rfl] at s1d
   have s2a := c.m_act 2
-  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s2a
+  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2] at s2a
   have s2g := c.m_grow 2
-  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s2g
+  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (0 : Fin 3) + 1 = 1 from rfl] at s2g
   have s2d := c.m_decr 2
-  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s2d
+  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (0 : Fin 3) - 1 = 2 from rfl] at s2d
   have s3a := c.m_act 3
-  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s3a
+  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3] at s3a
   have s3g := c.m_grow 3
-  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s3g
+  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl] at s3g
   have s3d := c.m_decr 3
-  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s3d
+  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) - 1 = 1 from rfl] at s3d
   have s4a := c.m_act 4
-  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4, hq4, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s4a
+  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4] at s4a
   have s4g := c.m_grow 4
-  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4, hq4, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s4g
+  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4, hq4, show (0 : Fin 3) + 1 = 1 from rfl] at s4g
   have s4d := c.m_decr 4
-  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4, hq4, show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s4d
+  simp only [show (4 : ℤ) + 1 = 5 by norm_num, h4, hq4, show (0 : Fin 3) - 1 = 2 from rfl] at s4d
   have tw0 := c.m_add 0 0
   have tw1 := c.m_add 0 1
   simp only [show ((0:ℤ) + ((5:ℕ):ℤ)) = 5 by norm_num, show (0 : Fin 3) - 1 = 2 from rfl,

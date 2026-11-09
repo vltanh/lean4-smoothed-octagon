@@ -59,7 +59,7 @@ theorem nsf_LR_J {t x q : ℝ} (ht1 : t ≤ 1 / 3) (hx1 : x ≤ 1) (hx : 0 < x) 
 
 /-- `WD/x ≤ 9/4` on the low-ratio domain. -/
 theorem nsf_LR_WD {t x q : ℝ} (ht0 : 1 / 4 ≤ t) (ht1 : t ≤ 1 / 3) (hx0 : 1 - 2 * t ≤ x)
-    (hx : 0 < x) (hq : 0 ≤ q) (hqo : q * (2 * t + x) ≤ 1 + x) :
+    (hx : 0 < x) (_hq : 0 ≤ q) (hqo : q * (2 * t + x) ≤ 1 + x) :
     q * (t + x * (x + 2)) - (t + x) * (1 + x) ≤ 9 / 4 * x := by
   have hW : 0 < 1 + x := by linarith
   have hJ0 : 0 ≤ t + x * (x + 2) := by positivity

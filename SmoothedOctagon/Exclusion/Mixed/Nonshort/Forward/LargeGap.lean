@@ -57,7 +57,7 @@ theorem nsf_LG_J {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1 /
   nlinarith
 
 /-- `(qJ - pW)(1 + 2j) ≤ W(hW - j²)` from the swap bound (`J - p(1 + 2j) = hW - j²`). -/
-theorem nsf_LG_D1 {t x q : ℝ} (hq : 0 ≤ q) (hJ0 : 0 ≤ t + x * (x + 2))
+theorem nsf_LG_D1 {t x q : ℝ} (_hq : 0 ≤ q) (hJ0 : 0 ≤ t + x * (x + 2))
     (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x) :
     (q * (t + x * (x + 2)) - (t + x) * (1 + x)) * (4 * t + 2 * x - 1) ≤
       (1 + x) * ((1 - 2 * t) * (1 + x) - (2 * t + x - 1) ^ 2) := by

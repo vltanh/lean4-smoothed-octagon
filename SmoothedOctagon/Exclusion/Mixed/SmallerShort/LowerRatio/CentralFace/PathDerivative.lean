@@ -213,8 +213,7 @@ theorem lrc_F0_hasDerivAt {X Aa Bb U : ℝ → ℝ} {x' a' b' u' t : ℝ}
   unfold lrcF0 lrcR2 lrcw lrcEL
   convert hF using 1
   · funext s; simp only [Pi.add_apply, Pi.sub_apply, Function.comp_apply]
-  simp only [lrcR2x, lrcwx, lrcELx, lrcR2a, lrcwa, lrcELa, lrcR2b, lrcwb, lrcR2u, lrcwu,
-    Pi.sub_apply]
+  simp only [lrcR2x, lrcwx, lrcELx, lrcR2a, lrcwa, lrcELa, lrcR2b, lrcwb, lrcR2u, lrcwu]
   norm_num
   have ha0 : Aa t ≠ 0 := ha.ne'
   have hK0 : lrcK (X t) (Aa t) ≠ 0 := by unfold lrcK; positivity

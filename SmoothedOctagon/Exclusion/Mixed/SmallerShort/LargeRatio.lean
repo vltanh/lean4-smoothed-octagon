@@ -143,7 +143,7 @@ theorem lgr_face_alpha {x al : ℝ} (hx : 0 < x) (hal : 0 ≤ al) :
 
 /-- **`ū ≤ û` on the central face domain**: for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12`,
 `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`, `ū(x, β) ≤ û(x, β)` (`P_t(x) > 0`). -/
-theorem lgr_ubar_le_uhat {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
+theorem lgr_ubar_le_uhat {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (_hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
     ssUbar x be ≤ ssUhat x be := by
@@ -208,7 +208,7 @@ theorem lgr_ubar_le_uhat {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha
 /-- **The positive diagonal** (from `D ≥ αD₀`): for `1 < x ≤ 12/5`, `1 ≤ α ≤ x ≤ β ≤ αx`,
 `D ≥ D₀ = 2 + 4x - 2x² ≥ 2/25`. -/
 theorem lgr_D_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al) (hax : al ≤ x)
-    (hxb : x ≤ be) (hb : be ≤ al * x) :
+    (_hxb : x ≤ be) (hb : be ≤ al * x) :
     2 + 4 * x - 2 * x ^ 2 ≤ ssDg x be al ∧ 2 / 25 ≤ ssDg x be al := by
   exact ss_D_pos hx hx2 hal hax hb
 
@@ -630,7 +630,7 @@ With the cap `D > 0 ⇒ (x - 1)² < (11/5)α²` (no `√2`), `A₂ < 0` forces `
 the slope bound is taken at `p = 1/2` (decreasing in `p`). -/
 theorem lgr_endpoint_alt {x be al u p qm q : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hp : 0 < p)
-    (hpr : p ≤ ssRA al be) (hqm : 0 ≤ qm) (hqmp : qm ≤ p / 2) (hq : 0 ≤ q) (hqq : q ≤ qm) :
+    (hpr : p ≤ ssRA al be) (_hqm : 0 ≤ qm) (hqmp : qm ≤ p / 2) (hq : 0 ≤ q) (hqq : q ≤ qm) :
     ssPhi x be al u p (1 / 2) q ≤
       max (ssPhi x be al u p (1 / 2) 0) (ssPhi x be al u p (1 / 2) qm) := by
   rcases le_or_gt 0 (ssA2 x be al u) with hA | hA
@@ -786,7 +786,7 @@ private theorem lgr_Mr_neg {x u r vb k Qi : ℝ} (hx : 12 / 5 ≤ x) (hu' : u �
 `𝒢(0) = C(p) + 1/8 < 0`. -/
 theorem lgr_G_zero_neg {x be al u p : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb : x ≤ be) (hrA : ssRA al be ≤ 3 / 7)
-    (hDQ : ssDg x be al ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2) * (al * (al + be))) (hu : 3 / 4 ≤ u)
+    (hDQ : ssDg x be al ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2) * (al * (al + be))) (_hu : 3 / 4 ≤ u)
     (hu' : u ≤ 13 / 16) (huV : u ≤ ssVbar x) (hp : 0 < p) (hpr : p ≤ ssRA al be) :
     ssPhi x be al u p (1 / 2) 0 < 0 := by
   have hal0 : 0 < al := by linarith
@@ -1054,7 +1054,7 @@ The bound `log(q₂/q₁) ≥ 2(q₂ - q₁)/(q₂ + q₁)` (`ss_log_ge_pade`) r
 `σG₂'(σ) > 0` at the midpoint `σ`, with no derivative; the two quadratics in `σ` (`α⁻² = 0, 1`) are
 handled by a convex/concave case split. -/
 theorem lgr_tau_two {x be al u q₁ q₂ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
-    (hax : al ≤ x) (hxb : x ≤ be) (hu : u = m2Sec 1 x be) (hu' : u ≤ 13 / 16) (hq₁ : 0 < q₁)
+    (_hax : al ≤ x) (hxb : x ≤ be) (hu : u = m2Sec 1 x be) (hu' : u ≤ 13 / 16) (hq₁ : 0 < q₁)
     (hq : q₁ < q₂) (hq₂ : q₂ ≤ 1 / 7) :
     ssF x be al u q₁ 2 (log (2 * q₁ / ssRA al be)) (1 / 2) <
       ssF x be al u q₂ 2 (log (2 * q₂ / ssRA al be)) (1 / 2) := by

@@ -45,7 +45,7 @@ open Set Real
 `E_L = (w - 1)τ + 1/τ + (u - 1)/r_A + r_A + 1 - q + log(τq/r_A)`, then `E_L ≤ 3q - J_A`,
 `J_A = (U(r_A) - u)/r_A` (`ss_E_le_three` with the norm `U(r_A)`). -/
 theorem lr_root_cap {rA τ q u w EL : ℝ} (hrA : 0 < rA) (hrA2 : rA < 1 / 2) (hτ : 2 < τ)
-    (hq : 0 < q) (hτq : τ * q < rA) (hu : u ≤ m2U rA) (hw : w ≤ m2U (1 / τ))
+    (hq : 0 < q) (hτq : τ * q < rA) (_hu : u ≤ m2U rA) (hw : w ≤ m2U (1 / τ))
     (hEL : EL = (w - 1) * τ + 1 / τ + (u - 1) / rA + rA + 1 - q + log (τ * q / rA)) :
     EL ≤ 3 * q - (m2U rA - u) / rA :=
   env_root_cap hrA hrA2.le hτ.le hq hτq.le hw hEL
@@ -72,7 +72,7 @@ theorem lr_ratio {x be al u rho τ t EL : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal
 `0 < p ≤ α/(α + β)`, `3/4 ≤ u ≤ U(1/S)`: `3α²L(p) > 7J(2S - 1)`, `J = S[U(1/S) - u]`.
 Proof: `env_slope_gen` (lower `β`, affine in `u`) with the identity `env_bot_sharp`; the
 upper norm endpoint by `env_Lp_top_pos` (monotone in `A₃`). -/
-theorem lr_slope {x be al u p : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al ≤ x)
+theorem lr_slope {x be al u p : ℝ} (hx : 1 < x) (_hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al ≤ x)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be) (hp : 0 < p) (hpr : p ≤ ssRA al be)
     (hu : 3 / 4 ≤ u) (huS : u ≤ m2U (1 / (1 + x))) :
     7 * ((1 + x) * (m2U (1 / (1 + x)) - u)) * (2 * (1 + x) - 1) < 3 * al ^ 2 * ssLp x be al u p := by
@@ -363,7 +363,7 @@ theorem lr_tau2_dec {x be al u q₁ q₂ : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (ha
 
 /-- **The β-dependent ceiling**: for `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`,
 `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`: `ū(x, β) ≤ u_ℓ(x, β)`. -/
-theorem lr_u_ell {x al be : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hal' : al ≤ 6 / 5)
+theorem lr_u_ell {x al be : ℝ} (hx : 3 / 2 ≤ x) (_hx2 : x ≤ 2) (_hal : 1 ≤ al) (hal' : al ≤ 6 / 5)
     (hxb : x ≤ be) (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
     ssUbar x be ≤ ssUl x be := by
   have hS : 0 < 1 + x := by linarith

@@ -46,7 +46,7 @@ theorem lrc_cap {x a b u : ℝ} (hx : 0 < x) (ha : 0 < a) (hcap : x * (x + 2) = 
   unfold lrcF1 lroF1; rw [h0, hT, hw]
 
 /-- `u_f(x) ≤ u_ℓ(x, β)` for `3/2 ≤ x ≤ 2`, `x ≤ β ≤ 7x/6`. -/
-theorem lr_uf_le_ul {x b : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (hxb : x ≤ b) (hb : b ≤ 7 * x / 6) :
+theorem lr_uf_le_ul {x b : ℝ} (hx : 3 / 2 ≤ x) (_hx2 : x ≤ 2) (hxb : x ≤ b) (hb : b ≤ 7 * x / 6) :
     ssUf x ≤ ssUl x b := by
   unfold ssUf ssUl
   have hb1 : 0 < b - 1 := by linarith

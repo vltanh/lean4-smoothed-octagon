@@ -83,7 +83,7 @@ theorem lro_S_H_f {x : ℝ} (hx : 1 ≤ x) :
   field_simp
   ring
 
-theorem lro_S_cub_f {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ (1 / 2 : ℝ)) :
+theorem lro_S_cub_f {z : ℝ} (hz0 : 0 ≤ z) (_hz1 : z ≤ (1 / 2 : ℝ)) :
     (0 : ℝ) < 102 * z ^ 3 + 326 * z ^ 2 + 213 * z + 6 := by
   nlinarith [(by positivity : (0 : ℝ) ≤ z),
     (by positivity : (0 : ℝ) ≤ z ^ 2),
@@ -153,7 +153,7 @@ theorem lro_S_H_v {x : ℝ} (hx : 1 ≤ x) :
   field_simp
   ring
 
-theorem lro_S_cub_v {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ (1 / 2 : ℝ)) :
+theorem lro_S_cub_v {z : ℝ} (hz0 : 0 ≤ z) (_hz1 : z ≤ (1 / 2 : ℝ)) :
     (0 : ℝ) < 646 * z ^ 3 + 2059 * z ^ 2 + 1332 * z + 21 := by
   nlinarith [(by positivity : (0 : ℝ) ≤ z),
     (by positivity : (0 : ℝ) ≤ z ^ 2),

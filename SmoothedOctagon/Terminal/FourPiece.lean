@@ -143,7 +143,7 @@ private lemma four_lin {a b x0 x1 x2 m10 m11 m12 m21 m22 m32 m41 m42 : ℝ}
 /-- State closure for the octagon word, scale: with the quadric, the initial margins are
 `(A, B, C)/√N`. -/
 private lemma four_scale {a b x0 x1 x2 : ℝ} (ha : 0 < a) (hb : 0 < b) (hab : a ^ 2 + b ^ 2 = 1)
-    (ha1 : a < 1) (hb1 : b < 1) (hs : 1 < a + b) (hx2pos : 0 < x2)
+    (_ha1 : a < 1) (hb1 : b < 1) (hs : 1 < a + b) (hx2pos : 0 < x2)
     (e0 : 2 * (1 + a - b) * x0 = 2 * (a + b - 1) * x2)
     (e1 : 2 * (1 + a - b) * x1 = 2 * (1 - a + b) * x2)
     (hq4 : x0 * x1 + x1 * x2 + x2 * x0 = 4) :
@@ -239,29 +239,29 @@ theorem four_param (c : Cycle 4) (h0 : c.lab 0 = 2) (h1 : c.lab 1 = 0) (h2 : c.l
   clear_value a b
   -- the one-arc margin maps and the twist
   have s0a := c.m_act 0
-  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s0a
+  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0] at s0a
   have s0g := c.m_grow 0
-  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s0g
+  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (2 : Fin 3) + 1 = 0 from rfl] at s0g
   have s0d := c.m_decr 0
-  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s0d
+  simp only [show (0 : ℤ) + 1 = 1 by norm_num, h0, hq0, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s0d
   have s1a := c.m_act 1
-  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1', show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s1a
+  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1] at s1a
   have s1g := c.m_grow 1
-  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1', show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s1g
+  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1', show (0 : Fin 3) + 1 = 1 from rfl] at s1g
   have s1d := c.m_decr 1
-  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1', show (0 : Fin 3) + 1 = 1 from rfl, show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s1d
+  simp only [show (1 : ℤ) + 1 = 2 by norm_num, h1, hq1', show (0 : Fin 3) - 1 = 2 from rfl, div_inv_eq_mul] at s1d
   have s2a := c.m_act 2
-  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (1 : Fin 3) + 1 = 2 from rfl, show (1 : Fin 3) - 1 = 0 from rfl, div_inv_eq_mul] at s2a
+  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2] at s2a
   have s2g := c.m_grow 2
-  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (1 : Fin 3) + 1 = 2 from rfl, show (1 : Fin 3) - 1 = 0 from rfl, div_inv_eq_mul] at s2g
+  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (1 : Fin 3) + 1 = 2 from rfl] at s2g
   have s2d := c.m_decr 2
-  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (1 : Fin 3) + 1 = 2 from rfl, show (1 : Fin 3) - 1 = 0 from rfl, div_inv_eq_mul] at s2d
+  simp only [show (2 : ℤ) + 1 = 3 by norm_num, h2, hq2, show (1 : Fin 3) - 1 = 0 from rfl, div_inv_eq_mul] at s2d
   have s3a := c.m_act 3
-  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s3a
+  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3] at s3a
   have s3g := c.m_grow 3
-  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s3g
+  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl] at s3g
   have s3d := c.m_decr 3
-  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) + 1 = 0 from rfl, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s3d
+  simp only [show (3 : ℤ) + 1 = 4 by norm_num, h3, hq3, show (2 : Fin 3) - 1 = 1 from rfl, div_inv_eq_mul] at s3d
   have tw0 := c.m_add 0 0
   have tw1 := c.m_add 0 1
   have tw2 := c.m_add 0 2
