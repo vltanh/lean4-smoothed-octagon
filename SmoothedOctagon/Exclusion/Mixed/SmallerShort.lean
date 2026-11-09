@@ -40,7 +40,14 @@ theorem m2_smallerShort_exclusion (D : M2Short) : False := by
   obtain ⟨hU, hΓ⟩ := D.upper_order_casimir_floor h1.le h2.le h3.le
   have hL := D.ss_strong_box h1.le
   obtain ⟨-, -, hh, hhR⟩ := D.shear_neg h1.le h2.le hδ h3.le hL hU
-  have h6 := D.octagonCost_lt_completion h1.le h2.le hδ h3.le hL hU hΓ hh hhR
+  have hhR2 : 2*ssAn (D.C/D.a) (D.B/D.a) (D.A/D.a) <
+      -ssShear (D.C/D.a) (D.B/D.a) (D.A/D.a) (D.a^2/(D.a^2+4))*ssRr (D.C/D.a) := by
+    have hR : 0 < ssRr (D.C/D.a) := by
+      unfold ssRr
+      exact div_pos (by linarith only [h1]) (by linarith only [h1])
+    have hpos := mul_pos (neg_pos.mpr hh) hR
+    linarith only [hhR,hpos]
+  have h6 := D.octagonCost_lt_completion h1.le h2.le hδ h3.le hL hU hΓ hh hhR2
   exact absurd D.ss_defect.2.2.2.2 (not_le.2 h6)
 
 end SmoothedOctagon

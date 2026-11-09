@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 110{,}000 lines in 358 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 110{,}000 lines in 359 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -51,9 +51,9 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 \subsection{The scalar estimates}\label{app:formal-scalar}
 
 \noindent\textit{Working-draft status.}
-Ten of the 24 replacement groups in the current pass are complete and committed.
+Eleven of the 24 replacement groups in the current pass are complete and committed.
 Each has passed the full Lean build, the standard-axiom audit, the paper check and an
-independent source review. Groups 20--21 are in progress; the other twelve groups
+independent source review. Group 20 is in progress; the other twelve groups
 remain to be integrated. Groups 25--38 are deferred. The numbers below identify the
 same groups throughout this pass.
 
@@ -158,13 +158,13 @@ exact duration concavity and its endpoint tangent, convexity in the outer shape,
 and resolvent derivatives for the shape signs.
 The paper concludes $q>(15/16)q_c$, $\sqrt3hR_x+(7/2)\nu<0$ and $-hR_x>2\nu$.
 Lean still concludes $q>(29/30)q_c$, $\sqrt3hR_x+(13/3)\nu<0$ and
-$-hR_x>5\nu/2$. Update these statements together with group~21.
+$-hR_x>5\nu/2$. The continuation theorem in group~21 now accepts the weaker shear bound;
+its current caller explicitly weakens the S5 conclusion.
 
-\item \emph{In progress: S6 score continuation.}
-The three explicit continuation-loss bounds have passed an independent
-mathematical review; Lean integration remains. They allow the shear hypothesis
-$-hR_x>2\nu$. Lean still uses a quadratic sign check and the stronger hypothesis
-$-hR_x>5\nu/2$, supplied by its current S5 theorem.
+\item \emph{Complete: S6 score continuation.}
+Three explicit loss bounds and a natural central-shear bound prove strict decrease
+along the exact tangent curve. The physical continuation and completion theorems
+accept the shear hypothesis $-hR_x>2\nu$.
 
 \item \emph{Remaining: S6 additional angle and shape concavity.}
 Formalize the exact integral cancellation for the additional shear angle,

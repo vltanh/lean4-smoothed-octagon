@@ -4,6 +4,7 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Interface
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Angle
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.AngleConcavity
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.CentralShear
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Continuation
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Defs
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Endpoint
 
@@ -11,9 +12,9 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Endpoint
 # Smaller-short window, cost: the completion cost is too large
 
 The window cost plus completion is compared with the central-scale score through a shear-cost
-reduction, an angle barrier and bounds on the central shape; the barrier is applied pointwise
+reduction, three explicit continuation-loss bounds and the central shape; the loss bounds hold pointwise
 along the continuation in the angle `δ`. On the small-shape domain
-with `Γ > 1829/10000`, `h < 0`, `-hR > 5A/2`: the window cost plus completion
+with `Γ > 1829/10000`, `h < 0`, `-hR > 2A`: the window cost plus completion
 `C_br + (κ + 3/2)(π/3 - θ_br)` is at least the central-scale score `𝓕_c`
 (`SmallerShortData.cost_continuation`), `𝓕_c > cπ/3 + √3𝓑(u_q) - 1/800000` (`cost_Fc_gt`), `𝓑(u_q) > b*`
 (`cost_B_concave`, `cost_B_endpoint`), and the constants (`cost_constants`) give `> A_oct`,
@@ -24,7 +25,8 @@ contradicting the window defect.
 * Central-scale objects: `costJ0`, `costK`, `costpsi`, `costZ`, `costomega`, `costCc`, `costFc`; the
   polynomial bound `costB` with `costuq`, `costZU`, `costZL`, `costT`, `costL`; `costbstar`.
 * Scalar lemmas: `cost_kappa`, `cost_shape`, `cost_u_bounds`, `cost_central_shear`,
-  `cost_tangent_inv`, `cost_tangent_anti`, `cost_score_deriv`, `cost_barrier_sin`, `cost_barrier`,
+  `cost_tangent_inv`, `cost_tangent_anti`, `cost_score_deriv`, `cost_continuation_loss`,
+  `cost_continuation_shape`,
   `cost_Fc_gt`, `cost_T_eq`, `cost_B_concave`, `cost_constants`.
 * Actual-data lemmas: `SmallerShortData.cost_angle`, `SmallerShortData.cost_continuation`.
 * `cost_B_endpoint` (the two endpoint polynomials), proved in `SmallerShort/Cost/Endpoint`.
@@ -427,202 +429,6 @@ theorem cost_score_deriv {A K J₀ c δ : ℝ} (hA : 0 ≤ A) (hK : A < K) (h0 :
   rw [← (cost_tangent_sqrt hA hK h0 hπ).2]
   field_simp
   ring
-
-/-- **The barrier criterion**: with
-`0 ≤ b₁ < 1`, `A ≥ 0`, `b₂ = b₁ - (1 - b₁)A`, `c > 3/2`, `3(b₁ + b₂)/2 < c`, `J₀ = 3(1 - b₁)/2`,
-`K = A + 2 + 2(c - 3/2)/J₀`, `H > 0` and `δ = 2 arctan((√(H² + A²) + H)/(K + √(K² - A²)))`: if
-`Q_c(H²) = J₀²H⁴ + (-3c(b₁ + b₂) + (9/2)(b₁² + b₂²))H² + A²(c - 3(b₁ + b₂)/2)² < 0` then
-`J₀√(H² + A²) < c sin δ`. -/
-theorem cost_barrier_sin {b₁ A c H : ℝ} (hb₁ : 0 ≤ b₁) (hb₁1 : b₁ < 1) (hA : 0 ≤ A) (hc : 3 / 2 < c)
-    (hcb : 3 * (b₁ + (b₁ - (1 - b₁) * A)) / 2 < c) (hH : 0 < H)
-    (hQ : (3 * (1 - b₁) / 2) ^ 2 * (H ^ 2) ^ 2 +
-        (-3 * c * (b₁ + (b₁ - (1 - b₁) * A)) + 9 / 2 * (b₁ ^ 2 + (b₁ - (1 - b₁) * A) ^ 2)) * H ^ 2 +
-        A ^ 2 * (c - 3 * (b₁ + (b₁ - (1 - b₁) * A)) / 2) ^ 2 < 0) :
-    3 * (1 - b₁) / 2 * √(H ^ 2 + A ^ 2) <
-      c * sin (2 * arctan ((√(H ^ 2 + A ^ 2) + H) /
-        ((A + 2 + 2 * (c - 3 / 2) / (3 * (1 - b₁) / 2)) +
-          √((A + 2 + 2 * (c - 3 / 2) / (3 * (1 - b₁) / 2)) ^ 2 - A ^ 2)))) := by
-  have _ := hb₁
-  set J := 3 * (1 - b₁) / 2 with hJ
-  set K := A + 2 + 2 * (c - 3 / 2) / J with hKdef
-  set b₂ := b₁ - (1 - b₁) * A with hb₂
-  have hJ0 : 0 < J := by rw [hJ]; linarith
-  have hJK : J * K = 2 * c - 3 / 2 * (b₁ + b₂) := by
-    rw [hKdef, hb₂]; field_simp; ring
-  have hKA : A < K := by
-    have : 0 < 2 * (c - 3 / 2) / J := div_pos (by linarith) hJ0
-    rw [hKdef]; linarith
-  set D := √(K ^ 2 - A ^ 2) with hD
-  set ρ := √(H ^ 2 + A ^ 2) with hρ
-  have hD0 : 0 ≤ D := Real.sqrt_nonneg _
-  have hρ0 : 0 ≤ ρ := Real.sqrt_nonneg _
-  have hD2 : D ^ 2 = K ^ 2 - A ^ 2 := Real.sq_sqrt (sub_nonneg.2 (pow_le_pow_left₀ hA hKA.le 2))
-  have hρ2 : ρ ^ 2 = H ^ 2 + A ^ 2 := Real.sq_sqrt (by positivity)
-  obtain ⟨hδ0, hδπ, hδh⟩ := cost_tangent_inv hA hKA (neg_lt_zero.2 hH)
-  have e : √((-H) ^ 2 + A ^ 2) - -H = ρ + H := by rw [neg_sq]; ring
-  rw [e, ← hD] at hδ0 hδπ hδh
-  set δ := 2 * arctan ((ρ + H) / (K + D)) with hδ
-  have hs : 0 < sin δ := sin_pos_of_pos_of_lt_pi hδ0 hδπ
-  obtain ⟨e1, e2⟩ := cost_tangent_sqrt hA hKA hδ0 hδπ
-  rw [← hD, hδh, neg_sq, ← hρ] at e2
-  rw [← hD, hδh] at e1
-  have hlin1 : K * cos δ - D = -H * sin δ := by
-    rw [← hδh]; field_simp
-  have hlin2 : K * sin δ - H * cos δ = ρ := by rw [← e2, ← e1]; ring
-  have hsin : sin δ * (K ^ 2 + H ^ 2) = K * ρ + D * H := by
-    linear_combination K * hlin2 + H * hlin1
-  have hKH : 0 < K ^ 2 + H ^ 2 := by positivity
-  have hc0 : 0 < c := by linarith
-  have hP : 0 ≤ ρ * (K * (J * K - c) + J * H ^ 2) := by
-    have : 0 < J * K - c := by rw [hJK]; linarith
-    have : 0 < K := by linarith
-    positivity
-  have hcDH : 0 ≤ c * D * H := by positivity
-  have hid : (c * D * H) ^ 2 - (ρ * (K * (J * K - c) + J * H ^ 2)) ^ 2 =
-      -((K ^ 2 + H ^ 2) * (J ^ 2 * (H ^ 2) ^ 2 +
-        (-3 * c * (b₁ + b₂) + 9 / 2 * (b₁ ^ 2 + b₂ ^ 2)) * H ^ 2 +
-        A ^ 2 * (c - 3 * (b₁ + b₂) / 2) ^ 2)) := by
-    rw [hJ, hb₂] at hJK ⊢
-    linear_combination 3 * (A ^ 2 + H ^ 2) * (H ^ 2 + K ^ 2) *
-      (A * b₁ - A + K * b₁ - K + 2 * b₁) / 2 * hJK -
-      (K * (3 * (1 - b₁) / 2 * K - c) + 3 * (1 - b₁) / 2 * H ^ 2) ^ 2 * hρ2 +
-      c ^ 2 * H ^ 2 * hD2
-  have hsq : (ρ * (K * (J * K - c) + J * H ^ 2)) ^ 2 < (c * D * H) ^ 2 := by
-    have := mul_pos hKH (neg_pos.2 hQ)
-    linarith
-  have hlt : ρ * (K * (J * K - c) + J * H ^ 2) < c * D * H := lt_of_pow_lt_pow_left₀ 2 hcDH hsq
-  have : J * ρ * (K ^ 2 + H ^ 2) < c * sin δ * (K ^ 2 + H ^ 2) := by
-    rw [mul_assoc c, hsin]; linarith
-  exact lt_of_mul_lt_mul_right this hKH.le
-
-/-- The barrier quotient `Q = Q_c(H²)/H²` with `A = tH`, `v = b₁`, expanded:
-`(9/4)(1 - v)²H² - 6cv + 9v² + 3(1 - v)tH(c - 3v) + (9/2)(1 - v)²t²H² +
-(t(c - 3v + (3/2)(1 - v)tH))²`. -/
-private noncomputable def costQb (v t H c : ℝ) : ℝ :=
-  9 / 4 * (1 - v) ^ 2 * H ^ 2 - 6 * c * v + 9 * v ^ 2 + 3 * (1 - v) * t * H * (c - 3 * v) +
-    9 / 2 * (1 - v) ^ 2 * t ^ 2 * H ^ 2 + (t * (c - 3 * v + 3 / 2 * (1 - v) * t * H)) ^ 2
-
-/-- The `v`-derivative of `costQb`, in a form with signed terms. -/
-private noncomputable def costQbv (v t H c : ℝ) : ℝ :=
-  -(9 / 2 * (1 - v) * H ^ 2) + (-6 * c + 18 * v) - 3 * t * H * ((c - 3 * v) + 3 * (1 - v)) -
-    9 * (1 - v) * t ^ 2 * H ^ 2 -
-      2 * t ^ 2 * (c - 3 * v + 3 / 2 * (1 - v) * t * H) * (3 + 3 / 2 * t * H)
-
-/-- `costQb` is quadratic in `v`: its increment is the derivative at the midpoint. -/
-private lemma costQb_v (v w t H c : ℝ) :
-    costQb w t H c - costQb v t H c = (w - v) * costQbv ((v + w) / 2) t H c := by
-  unfold costQb costQbv; ring
-
-/-- The derivative is negative: every term but `-6c + 18v` is nonpositive. -/
-private lemma costQbv_neg {m t H c : ℝ} (hm : m ≤ 1) (ht : 0 ≤ t) (hH : 0 ≤ H)
-    (hc : 18 * m < 6 * c) : costQbv m t H c < 0 := by
-  unfold costQbv
-  generalize ha : 1 - m = a
-  have ha0 : 0 ≤ a := by rw [← ha]; linarith
-  generalize he : c - 3 * m = e
-  have he0 : 0 ≤ e := by rw [← he]; linarith
-  have : 0 ≤ 9 / 2 * a * H ^ 2 + 3 * t * H * (e + 3 * a) + 9 * a * t ^ 2 * H ^ 2 +
-      2 * t ^ 2 * (e + 3 / 2 * a * t * H) * (3 + 3 / 2 * t * H) := by positivity
-  linarith
-
-/-- **The barrier lemma**: for
-`0 < R ≤ 7/17`, `v₀ = 2R²/(3(3 + R²)) ≤ b₁ ≤ 49/916`, `0 ≤ A ≤ R²/3`, `b₂ = b₁ - (1 - b₁)A ≥ 0`,
-`21/8 ≤ c ≤ 3`, `0 < H < 7R²/6`, `HR ≥ 5A/2`: `Q_c(H²) < 0`. Every term of the `v`-derivative of
-`Q` is nonpositive, so the step `v ↦ v₀` needs neither `b₂ ≥ 0` nor `A ≤ R²/3` (both hypotheses are
-unused). -/
-theorem cost_barrier {R b₁ A c H : ℝ} (hR : 0 < R) (hR7 : R ≤ 7 / 17)
-    (hb₁ : 2 * R ^ 2 / (3 * (3 + R ^ 2)) ≤ b₁) (hb₁' : b₁ ≤ 49 / 916) (hA : 0 ≤ A)
-    (hA' : A ≤ R ^ 2 / 3) (hb₂ : 0 ≤ b₁ - (1 - b₁) * A) (hc : 21 / 8 ≤ c) (hc' : c ≤ 3) (hH : 0 < H)
-    (hH' : H < 7 * R ^ 2 / 6) (hHR : 5 / 2 * A ≤ H * R) :
-    (3 * (1 - b₁) / 2) ^ 2 * (H ^ 2) ^ 2 +
-        (-3 * c * (b₁ + (b₁ - (1 - b₁) * A)) + 9 / 2 * (b₁ ^ 2 + (b₁ - (1 - b₁) * A) ^ 2)) * H ^ 2 +
-        A ^ 2 * (c - 3 * (b₁ + (b₁ - (1 - b₁) * A)) / 2) ^ 2 < 0 := by
-  have _ := hA'
-  have _ := hb₂
-  set b₂ := b₁ - (1 - b₁) * A with hb₂def
-  have hb₁0 : 0 ≤ b₁ := le_trans (by positivity) hb₁
-  have hR2 : R ^ 2 ≤ 49 / 289 := by
-    have := pow_le_pow_left₀ hR.le hR7 2
-    norm_num at this ⊢; linarith
-  -- `A = tH` with `0 ≤ t ≤ 2R/5`
-  set t := A / H with htdef
-  have hAt : A = t * H := by rw [htdef]; field_simp
-  have ht0 : 0 ≤ t := div_nonneg hA hH.le
-  have ht1 : t ≤ 2 * R / 5 := by
-    rw [htdef, div_le_iff₀ hH]; linarith
-  have hQ : (3 * (1 - b₁) / 2) ^ 2 * (H ^ 2) ^ 2 +
-      (-3 * c * (b₁ + b₂) + 9 / 2 * (b₁ ^ 2 + b₂ ^ 2)) * H ^ 2 +
-      A ^ 2 * (c - 3 * (b₁ + b₂) / 2) ^ 2 = H ^ 2 * costQb b₁ t H c := by
-    rw [hb₂def, hAt]; unfold costQb; ring
-  rw [hQ]
-  refine mul_neg_of_pos_of_neg (by positivity) ?_
-  obtain ⟨d, hd⟩ : ∃ d : ℝ, d = 2 * R / 5 := ⟨_, rfl⟩
-  obtain ⟨H₁, hH₁⟩ : ∃ H₁ : ℝ, H₁ = 7 * R ^ 2 / 6 := ⟨_, rfl⟩
-  obtain ⟨v₀, hv₀⟩ : ∃ v₀ : ℝ, v₀ = 2 * R ^ 2 / (3 * (3 + R ^ 2)) := ⟨_, rfl⟩
-  rw [← hd] at ht1
-  rw [← hH₁] at hH'
-  rw [← hv₀] at hb₁
-  have hd0 : 0 ≤ d := by rw [hd]; positivity
-  have hc3 : 0 ≤ c - 3 * b₁ := by linarith
-  have ha : 0 ≤ 1 - b₁ := by linarith
-  -- (i) raise `t` to `d`
-  have s1 : costQb b₁ t H c ≤ costQb b₁ d H c := by
-    unfold costQb
-    have : 0 ≤ c - 3 * b₁ + 3 / 2 * (1 - b₁) * t * H := by positivity
-    gcongr
-  -- (ii) raise `H` to `H₁`
-  have s2 : costQb b₁ d H c ≤ costQb b₁ d H₁ c := by
-    unfold costQb
-    have : 0 ≤ c - 3 * b₁ + 3 / 2 * (1 - b₁) * d * H := by positivity
-    gcongr
-  -- (iii) lower `v` to `v₀`
-  have s3 : costQb b₁ d H₁ c ≤ costQb v₀ d H₁ c := by
-    have h := costQb_v v₀ b₁ d H₁ c
-    have hv0 : 0 ≤ v₀ := by rw [hv₀]; positivity
-    have hneg := costQbv_neg (m := (v₀ + b₁) / 2) (t := d) (H := H₁) (c := c)
-      (by linarith) hd0 (by linarith) (by linarith)
-    have := mul_nonpos_of_nonneg_of_nonpos (sub_nonneg.2 hb₁) hneg.le
-    linarith
-  -- (iv) the chord in `c`
-  have s4 : costQb v₀ d H₁ c * (3 / 8) ≤
-      (3 - c) * costQb v₀ d H₁ (21 / 8) + (c - 21 / 8) * costQb v₀ d H₁ 3 := by
-    have e : costQb v₀ d H₁ c * (3 / 8) - ((3 - c) * costQb v₀ d H₁ (21 / 8) +
-        (c - 21 / 8) * costQb v₀ d H₁ 3) = -(3 / 8 * (d ^ 2 * (c - 21 / 8) * (3 - c))) := by
-      unfold costQb; ring
-    have := mul_nonneg (mul_nonneg (sq_nonneg d) (sub_nonneg.2 hc)) (sub_nonneg.2 hc')
-    linarith
-  -- (v) the two endpoint polynomials
-  have hp : ∀ k : ℕ, R ^ k ≤ (7 / 17) ^ k := fun k => pow_le_pow_left₀ hR.le hR7 k
-  have hR3 : 0 < 3 + R ^ 2 := by positivity
-  have e1 : costQb v₀ d H₁ (21 / 8) * (90000 * (R ^ 2 + 3) ^ 2) = R ^ 2 *
-      (784 * R ^ 10 + 23912 * R ^ 8 + 4200 * R ^ 7 + 270529 * R ^ 6 + 116970 * R ^ 5 +
-        1350675 * R ^ 4 + 1043280 * R ^ 3 + 2037375 * R ^ 2 + 2976750 * R - 1941975) := by
-    rw [hv₀, hd, hH₁]; unfold costQb; field_simp; ring
-  have e2 : costQb v₀ d H₁ 3 * (90000 * (R ^ 2 + 3) ^ 2) = R ^ 2 *
-      (784 * R ^ 10 + 23912 * R ^ 8 + 6720 * R ^ 7 + 270529 * R ^ 6 + 162960 * R ^ 5 +
-        1359450 * R ^ 4 + 1300320 * R ^ 3 + 2019825 * R ^ 2 + 3402000 * R - 2073600) := by
-    rw [hv₀, hd, hH₁]; unfold costQb; field_simp; ring
-  have p1 : 784 * R ^ 10 + 23912 * R ^ 8 + 4200 * R ^ 7 + 270529 * R ^ 6 + 116970 * R ^ 5 +
-      1350675 * R ^ 4 + 1043280 * R ^ 3 + 2037375 * R ^ 2 + 2976750 * R - 1941975 < 0 := by
-    linarith [hp 10, hp 8, hp 7, hp 6, hp 5, hp 4, hp 3, hp 2]
-  have p2 : 784 * R ^ 10 + 23912 * R ^ 8 + 6720 * R ^ 7 + 270529 * R ^ 6 + 162960 * R ^ 5 +
-      1359450 * R ^ 4 + 1300320 * R ^ 3 + 2019825 * R ^ 2 + 3402000 * R - 2073600 < 0 := by
-    linarith [hp 10, hp 8, hp 7, hp 6, hp 5, hp 4, hp 3, hp 2]
-  have hD : 0 < 90000 * (R ^ 2 + 3) ^ 2 := by positivity
-  have q1 : costQb v₀ d H₁ (21 / 8) < 0 := by
-    have : costQb v₀ d H₁ (21 / 8) * (90000 * (R ^ 2 + 3) ^ 2) < 0 := by
-      rw [e1]; exact mul_neg_of_pos_of_neg (by positivity) p1
-    exact neg_of_mul_neg_left this hD.le
-  have q2 : costQb v₀ d H₁ 3 < 0 := by
-    have : costQb v₀ d H₁ 3 * (90000 * (R ^ 2 + 3) ^ 2) < 0 := by
-      rw [e2]; exact mul_neg_of_pos_of_neg (by positivity) p2
-    exact neg_of_mul_neg_left this hD.le
-  have m1 := mul_le_mul_of_nonneg_left (le_max_left (costQb v₀ d H₁ (21 / 8)) (costQb v₀ d H₁ 3))
-    (sub_nonneg.2 hc')
-  have m2 := mul_le_mul_of_nonneg_left (le_max_right (costQb v₀ d H₁ (21 / 8)) (costQb v₀ d H₁ 3))
-    (sub_nonneg.2 hc)
-  have hmax : max (costQb v₀ d H₁ (21 / 8)) (costQb v₀ d H₁ 3) < 0 := max_lt q1 q2
-  linarith
 
 /-- The cost-shear identity in the atoms of `SmallerShortData.cost_continuation`: with `J₀ = 3u/(2U₁)` and
 `Z = 2U₁Q₀w₀ - P`, `C_br = C_c + J₀h_c - J₀h_a` (the cost-shear identity `C = H₀ - J₀h` at the two
@@ -1224,16 +1030,12 @@ theorem cost_angle (hκ : 40 / 27 ≤ H.pt.kap) {δ : ℝ} (hδ : 0 < δ)
         arctan_le_arctan_iff.2 htan
     _ = costpsi H.x H.be H.al + δ := arctan_tan (by linarith) (by linarith)
 
-/-- **The continuation to the central scale**:
-on the small-shape domain, with `Γ > 1829/10000`, `h < 0`,
-`-hR > 5A/2`: `C_br + (κ + 3/2)(π/3 - θ_br) ≥ 𝓕_c(u)` (`cost_kappa`, `cost_angle` at `δ_a = δ(h)`,
-`cost_tangent_inv`, `cost_tangent_anti`, the cost-shear identity `C_br = H₀ - J₀h`, `cost_score_deriv`
-with `cost_barrier_sin`, `cost_barrier` pointwise on `[δ_a, δ_c]` (`cost_shape`, `cost_u_bounds`,
-`cost_central_shear`, `q_le_qc`)). The barrier holds pointwise along `[δ_a, δ_c]` because
-`H ≤ H_c = Z/√3 < 7R²/6` (`cost_cont_core`); the outer cap `ρ_A < 1/7` is not used. -/
+/-- The original window score dominates the central-scale score under `-hR > 2ν`.
+The exact tangent curve and the three explicit losses give pointwise strict decrease;
+the natural central-shear bound controls the angle throughout the continuation. -/
 theorem cost_continuation (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ)
     (hh : ssShear H.x H.be H.al H.rho < 0)
-    (hhR : 5 / 2 * ssAn H.x H.be H.al < -ssShear H.x H.be H.al H.rho * ssRr H.x) :
+    (hhR : 2 * ssAn H.x H.be H.al < -ssShear H.x H.be H.al H.rho * ssRr H.x) :
     costFc H.x H.be H.al H.u ≤
       H.pt.cost + (H.pt.kap + 3 / 2) * (π / 3 - arctan (√3 * H.pt.BB / H.pt.AA)) := by
   have hx1 := H.one_lt_x
@@ -1248,32 +1050,28 @@ theorem cost_continuation (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ)
   obtain ⟨hx2, hx13, hδ0, hδ19, hal1', hal2'⟩ := hS
   have hal : 13 / 5 * H.δ ≤ H.al - 1 := by linarith only [hal1']
   have hal' : H.al - 1 ≤ 3 * H.δ := by linarith only [hal2']
-  obtain ⟨hR1, hR2, hT1, hT2, hA0, hA1, hP⟩ := cost_shape hx2 hx13 hδ0 hδ19 hal hal'
-  obtain ⟨hu1, hu2⟩ := cost_u_bounds hx2 hx13 hδ0 hδ19 hal hal'
-  obtain ⟨hZL, hZLZ, -, hZU⟩ := cost_central_shear hx2 hx13 hδ0 hδ19 hal hal'
-  have hZU' := (cost_central_shear hx2 hx13 hδ0 hδ19 hal hal').2.2.1
-  rw [hbe] at hT1 hT2 hA0 hA1 hP hu1 hu2 hZLZ hZU'
-  rw [← H.u_eq] at hu1 hu2
-  have hZ1 : 1 / 9 ≤ costZ H.x H.be H.al := hZL.trans hZLZ
-  have hZ5 : costZ H.x H.be H.al < 1 / 5 := lt_of_le_of_lt hZU' hZU
+  obtain ⟨hR1, hR2, hT1, hT2, hA0, hAd, hZnat⟩ :=
+    cost_continuation_shape hx2 hx13 hδ0 hδ19 hal hal'
+  have hu2 : H.u ≤ 3/4+(ssRr H.x)^2/12 := by
+    have hu := H.u_le_V.trans (ss_V_le_U0 hx1)
+    have heq : ssU0 H.x = 3/4+(ssRr H.x)^2/12 := by
+      unfold ssU0 ssRr
+      field_simp
+    rwa [heq] at hu
+  rw [hbe] at hT1 hT2 hA0 hAd hZnat
+  have hP : (H.be*H.x-H.al)*((H.x+2)*H.al+(2*H.x+1)*H.be) /
+      ((1+H.x)^2*(H.al^2+H.al*H.be+H.be^2)) =
+      ssRr H.x+(1+ssAn H.x H.be H.al)*ssTs H.al H.be := by
+    unfold ssRr ssTs ssAn
+    have hKA : 0 < H.al^2+H.al*H.be+H.be^2 := by positivity
+    field_simp
+    ring
   have hu34 := H.u_ge_34
   have hs3 : √3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hs3g : (17 / 10 : ℝ) < √3 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
   -- the incident ceilings `u ≤ U₁`, `u(1 + A) ≤ U₁`
   have hU1 : m2U (1 / (1 + H.x)) = (3 + ssRr H.x ^ 2) / 4 := by
     unfold m2U ssRr; field_simp; ring
-  have hU12 : (1 + ssAn H.x H.be H.al) * m2U (ssRA H.al H.be) = m2U (1 / (1 + H.x)) := by
-    unfold m2U ssRA ssAn
-    have : 0 < H.al ^ 2 + H.al * H.be + H.be ^ 2 :=
-      add_pos (add_pos (pow_pos hal0 2) (mul_pos hal0 hbe0)) (pow_pos hbe0 2)
-    have : 0 < H.al + H.be := by linarith only [hal0, hbe0]
-    have : 0 < H.be + H.al := by linarith only [hal0, hbe0]
-    field_simp; ring
-  have huA : H.u * (1 + ssAn H.x H.be H.al) ≤ m2U (1 / (1 + H.x)) := by
-    rw [← hU12]
-    have := mul_le_mul_of_nonneg_left H.u_le_rA (by linarith only [hA0] : 0 ≤ 1 + ssAn H.x H.be H.al)
-    linarith only [this]
-  have huU := H.u_le_r
   -- the shear at the central scale `h_c = -Z/√3`, below the actual shear
   have hQ0 : 0 < 2 * H.be * H.x - H.x - H.al * H.be := by
     have hq1 := mul_pos (by linarith only [hx1] : (0 : ℝ) < H.x)
@@ -1359,53 +1157,41 @@ theorem cost_continuation (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ)
   have hFc : costFc H.x H.be H.al H.u = costCc H.x H.be H.al H.u +
       161 / 54 * (π / 3 - costpsi H.x H.be H.al - costomega H.x H.be H.al H.u) := rfl
   clear_value A R J₀ K ha hc
-  have hR9 : (1 / 3) ^ 2 ≤ R ^ 2 := pow_le_pow_left₀ (by norm_num) hR1 2
-  have hR49 : R ^ 2 ≤ (7 / 19) ^ 2 := pow_le_pow_left₀ (by linarith only [hR1]) hR2 2
-  have hZs : -hc < 7 / 54 := by
-    rw [hcdef, neg_neg, div_lt_iff₀ (by positivity)]; linarith only [hZ5, hs3g]
-  have hbar : ∀ h, hc ≤ h → h ≤ ha → J₀ * √(h ^ 2 + A ^ 2) <
-      161 / 54 * sin (2 * arctan ((√(h ^ 2 + A ^ 2) - h) / (K + √(K ^ 2 - A ^ 2)))) := by
+  have hR2sq : R^2 < 1/7 := by nlinarith only [hR1,hR2]
+  have hhc : -hc < R^2 := by
+    rw [hcdef,neg_neg,div_lt_iff₀ (by positivity)]
+    simpa only [mul_comm] using hZnat
+  have hJbound : J₀ ≤ (9+R^2)/(2*(3+R^2)) := by
+    rw [hJdef,costJ0,hU1]
+    rw [div_le_div_iff₀ (by positivity) (by positivity)]
+    nlinarith only [hu2]
+  have hJ41 : J₀ ≤ 41/28 := by
+    have hb : (9+R^2)/(2*(3+R^2)) ≤ 41/28 := by
+      rw [div_le_iff₀ (by positivity)]
+      nlinarith only [hR1]
+    exact hJbound.trans hb
+  have hK4A : 4+A < K := by
+    rw [hKJ]
+    have ht : 2 < 2*(40/27)/J₀ := by
+      rw [lt_div_iff₀ hJ0]
+      linarith only [hJ41]
+    linarith only [ht]
+  have hD4 : 4 < √(K^2-A^2) := by
+    rw [Real.lt_sqrt (by norm_num)]
+    have hp := pow_lt_pow_left₀ (show A+4 < K by linarith only [hK4A])
+      (show 0 ≤ A+4 by linarith only [hA0]) (by norm_num : (2:ℕ) ≠ 0)
+    nlinarith only [hp,hA0]
+  have hbar : ∀ h, hc ≤ h → h ≤ ha → J₀*√(h^2+A^2) <
+      (161/54)*sin (2*arctan ((√(h^2+A^2)-h)/(K+√(K^2-A^2)))) := by
     intro h h1 h2
-    set v := 1 - H.u / m2U (1 / (1 + H.x)) with hv
-    have hvU : H.u / m2U (1 / (1 + H.x)) = 1 - v := by rw [hv]; ring
-    have hJv : J₀ = 3 * (1 - v) / 2 := by
-      rw [← hvU, hJdef, costJ0]; field_simp
-    have hKv : K = A + 2 + 2 * (161 / 54 - 3 / 2) / (3 * (1 - v) / 2) := by
-      rw [hKJ, ← hJv]; norm_num
-    have hv0 : 0 ≤ v := by
-      rw [hv, sub_nonneg, div_le_one hU0]; exact huU
-    have hv1 : v < 1 := by
-      have : 0 < H.u / m2U (1 / (1 + H.x)) := by positivity
-      rw [hv]; linarith only [this]
-    have hvA : 0 ≤ v - (1 - v) * A := by
-      rw [← hvU, hv]
-      have : H.u / m2U (1 / (1 + H.x)) * (1 + A) ≤ 1 := by
-        rw [div_mul_eq_mul_div, div_le_one hU0]; exact huA
-      linarith only [this]
-    have hv49 : v ≤ 49 / 916 := by
-      have e1 : 867 / 916 * m2U (1 / (1 + H.x)) ≤ H.u := by
-        rw [hU1]; linarith only [hu34, hR49]
-      have e2 : 867 / 916 ≤ H.u / m2U (1 / (1 + H.x)) := by
-        rw [le_div_iff₀ hU0]; linarith only [e1]
-      rw [hv]; linarith only [e2]
-    have hvv0 : 2 * R ^ 2 / (3 * (3 + R ^ 2)) ≤ v := by
-      have e1 : H.u / m2U (1 / (1 + H.x)) ≤ (3 / 4 + R ^ 2 / 12) / m2U (1 / (1 + H.x)) :=
-        div_le_div_of_nonneg_right hu2 hU0.le
-      have e2 : (3 / 4 + R ^ 2 / 12) / m2U (1 / (1 + H.x)) = 1 - 2 * R ^ 2 / (3 * (3 + R ^ 2)) := by
-        rw [hU1]; field_simp; ring
-      rw [hv]; linarith only [e1, e2]
-    have hH0 : 0 < -h := by linarith only [h2, hh]
-    have hH7 : -h < 7 * R ^ 2 / 6 := by linarith only [h1, hZs, hR9]
-    have hHR : 5 / 2 * A ≤ -h * R := by
-      have := mul_le_mul_of_nonneg_right (neg_le_neg h2) (by linarith only [hR1] : (0 : ℝ) ≤ R)
-      linarith only [this, hhR]
-    have hvA' : 0 ≤ (1 - v) * A := mul_nonneg (by linarith only [hv1]) hA0
-    have hQ := cost_barrier (R := R) (b₁ := v) (A := A) (c := 161 / 54) (H := -h)
-      (by linarith only [hR1]) (by linarith only [hR2]) hvv0 hv49 hA0 (by linarith only [hA1, hR9])
-      hvA (by norm_num) (by norm_num) hH0 hH7 hHR
-    have hb := cost_barrier_sin hv0 hv1 hA0 (by norm_num) (by linarith only [hv49, hvA']) hH0 hQ
-    rw [← hKv, ← hJv, neg_sq, ← sub_eq_add_neg] at hb
-    exact hb
+    have hH0 : 0 < -h := by linarith only [h2,hh]
+    have hH1 : -h < R^2 := by linarith only [h1,hhc]
+    have hHR : 2*A ≤ (-h)*R := by
+      have hm := mul_le_mul_of_nonneg_right (neg_le_neg h2)
+        (show 0 ≤ R by linarith only [hR1])
+      linarith only [hm,hhR]
+    have hb := cost_continuation_loss hR1 hR2 hδ19 hA0 hAd hH0 hH1 hHR hJ0 hJbound hKJ
+    simpa only [neg_sq,sub_eq_add_neg] using hb
   -- the continuation from `δ_a` to `δ_c`
   obtain ⟨ha0', hac, hF⟩ := cost_cont_core (J₀ := J₀) (c := 161 / 54) hA0 hKA hcs hh hbar
   -- the supporting-line hypothesis of the angle bound holds with equality at `δ_a`
@@ -1421,11 +1207,21 @@ theorem cost_continuation (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ)
   have hy0 : 0 ≤ (√(hc ^ 2 + A ^ 2) - hc) / (K + √(K ^ 2 - A ^ 2)) :=
     div_nonneg (by linarith only [Real.sqrt_nonneg (hc ^ 2 + A ^ 2), hc0])
       (by linarith only [hD0, hK2, hA0])
-  have hhc : -hc < 2 / 17 := by
-    rw [hcdef, neg_neg, div_lt_iff₀ (by positivity)]; linarith only [hZ5, hs3g]
-  have hy : (√(hc ^ 2 + A ^ 2) - hc) / (K + √(K ^ 2 - A ^ 2)) < 1 / 8 := by
-    rw [div_lt_iff₀ (by linarith only [hD0, hK2, hA0])]
-    linarith only [hnum, hhc, hA1, hD0, hK2, hA0]
+  have hHRc : 2*A ≤ (-hc)*R := by
+    have hm := mul_le_mul_of_nonneg_right (neg_le_neg hcs.le)
+      (show 0 ≤ R by linarith only [hR1])
+    linarith only [hm,hhR]
+  have hnumR : √(hc^2+A^2)-hc ≤ (2+R/2)*(-hc) := by
+    nlinarith only [hnum,hHRc]
+  have hm1 := mul_le_mul_of_nonneg_left hhc.le
+    (show 0 ≤ 2+R/2 by linarith only [hR1])
+  have hm2 := mul_lt_mul_of_pos_left hR2sq
+    (show 0 < 2+R/2 by linarith only [hR1])
+  have hnum1 : √(hc^2+A^2)-hc < 1 := by
+    nlinarith only [hnumR,hm1,hm2,hR2]
+  have hy : (√(hc^2+A^2)-hc)/(K+√(K^2-A^2)) < 1/8 := by
+    rw [div_lt_iff₀ (by linarith only [hD4,hK4A,hA0])]
+    linarith only [hnum1,hD4,hK4A,hA0]
   have hatc : 2 * arctan ((√(hc ^ 2 + A ^ 2) - hc) / (K + √(K ^ 2 - A ^ 2))) < 1 / 4 := by
     linarith only [arctan_le_self hy0, hy]
   rw [← hω] at hac hF hatc
@@ -1463,13 +1259,14 @@ theorem cost_continuation (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ)
   rw [hFc, hcost]
   linarith only [hstep, hθ, hF]
 
+
 /-- **The cost bound**: on the small-shape domain,
-with `Γ > 1829/10000`, `h < 0`, `-hR > 5A/2`: `C_br + (κ + 3/2)(π/3 - θ_br) > A_oct`.
+with `Γ > 1829/10000`, `h < 0`, `-hR > 2A`: `C_br + (κ + 3/2)(π/3 - θ_br) > A_oct`.
 Proof: `cost_continuation`; `cost_Fc_gt` (with `cost_u_bounds`, `u_le_rA`); `cost_T_eq`,
 `cost_B_concave`, `cost_B_endpoint` give `𝓑(u_q) > b* > 0`; `cost_constants`:
 `cπ/3 + √3𝓑 - 1/800000 > cπ₀/3 + ℓb* - 1/800000 = A₀ > A_oct`. -/
 theorem octagonCost_lt_completion (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ) (hh : ssShear H.x H.be H.al H.rho < 0)
-    (hhR : 5 / 2 * ssAn H.x H.be H.al < -ssShear H.x H.be H.al H.rho * ssRr H.x) :
+    (hhR : 2 * ssAn H.x H.be H.al < -ssShear H.x H.be H.al H.rho * ssRr H.x) :
     octagonCost < H.pt.cost + (H.pt.kap + 3 / 2) * (π / 3 - arctan (√3 * H.pt.BB / H.pt.AA)) := by
   have hx1 := H.one_lt_x
   have hbe : H.x * (1 + H.δ) = H.be := by
@@ -1521,14 +1318,14 @@ theorem octagonCost_lt_completion (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ
 end SmallerShortData
 
 /-- **The cost bound for the actual window**: on the small-shape
-domain, with `Γ > 1829/10000`, `h < 0`, `-hR > 5A/2`, the window cost and completion exceed
+domain, with `Γ > 1829/10000`, `h < 0`, `-hR > 2A`, the window cost and completion exceed
 `A_oct`. -/
 theorem M2Short.octagonCost_lt_completion (D : M2Short) (h1 : 2 ≤ D.C / D.a) (h2 : D.C / D.a ≤ 13 / 6)
     (h3 : 0 ≤ D.B / D.C - 1) (h4 : D.B / D.C - 1 ≤ 1 / 19)
     (h5 : 1 + 13 / 5 * (D.B / D.C - 1) ≤ D.A / D.a) (h6 : D.A / D.a ≤ 1 + 3 * (D.B / D.C - 1))
     (hΓ : 1829 / 10000 < D.Γ)
     (hh : ssShear (D.C / D.a) (D.B / D.a) (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) < 0)
-    (hhR : 5 / 2 * ssAn (D.C / D.a) (D.B / D.a) (D.A / D.a) <
+    (hhR : 2 * ssAn (D.C / D.a) (D.B / D.a) (D.A / D.a) <
       -ssShear (D.C / D.a) (D.B / D.a) (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) *
         ssRr (D.C / D.a)) :
     octagonCost <

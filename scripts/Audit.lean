@@ -153,6 +153,7 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Angle
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.AngleConcavity
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.CentralShear
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Continuation
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Defs
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Endpoint
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.EndpointCurves
