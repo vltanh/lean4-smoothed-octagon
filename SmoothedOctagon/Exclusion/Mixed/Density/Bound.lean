@@ -43,7 +43,7 @@ theorem dens_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMi
   have hpos := P.gam2_pos_of_mixed hmix
   have hdge := P.swd_ge_of_mixed hmix
   have hd0 : 0 < C.swd 0 := by have := hdge 0; linarith
-  have hcap := P.gam2_le_cap hc hpos hd0
+  have hcap := (P.gam2_lt_cap hc hpos hd0).le
   -- no piece with equal incident signs has `4 e² ≤ d_- d_+`
   have hbad : ∀ k : ℤ,
       C.swd (k - 1) * C.swd k - C.cre k ^ 2 = C.gam2 k / (C.act k ^ 2 + 4) ^ 2 →

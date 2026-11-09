@@ -18,7 +18,7 @@ At a reverse centre of a mixed normal period, with `r = a/(a + p)`, `t = a/(a + 
 ## Main API
 
 * `m1_CentreData`: the scalar data of a reverse centre.
-* `m1_angle_gap`: under the competitive cap `γ² ≤ 97969/529200`, `E < (3/5) √(uv)`, i.e. the
+* `m1_angle_gap`: under the competitive cap `γ² ≤ 5/27`, `E < (3/5) √(uv)`, i.e. the
   centre angle `φ = arccos(E/(2√(uv)))` has `cos φ < 3/10`.
 * `m1_cos_two_pi_div_five`: `cos(2π/5) = (√5 - 1)/4 > 3/10`; `m1_arccos_gt`: `arccos c > 2π/5`
   for `c < 3/10`.
@@ -51,10 +51,10 @@ structure m1_CentreData (γ2 r t ρ u v E : ℝ) : Prop where
 
 Each factor is moved to its boundary `u = U(r')` at fixed `u` (`ag_phi_le`), the two factors are
 merged at fixed `uv` by the superadditivity of `σ(x) = -x - log(1 - x)` in `x²`
-(`ag_sigma_superadd`), and the remaining two-variable inequality is closed by tangent lines of
-`log`, an S-procedure multiplier and concavity in `z = 4ρ/(1 - S)` (`ag_core`). -/
+(`ag_sigma_superadd`). Radial monotonicity lowers the Gram expression to its stationarity
+root; the constrained shape minimum occurs at the symmetric centre (`ag_core`). -/
 theorem m1_angle_gap {γ2 r t ρ u v E : ℝ} (h : m1_CentreData γ2 r t ρ u v E)
-    (hcap : γ2 ≤ 97969 / 529200) : E < 3 / 5 * √(u * v) := by
+    (hcap : γ2 ≤ 5 / 27) : E < 3 / 5 * √(u * v) := by
   by_contra hlt
   rw [not_lt] at hlt
   obtain ⟨hs0, hs1, hs2, hrs, hφr⟩ := ag_phi_le h.r_pos h.r_lt h.u_ge h.u_le
@@ -71,8 +71,8 @@ theorem m1_angle_gap {γ2 r t ρ u v E : ℝ} (h : m1_CentreData γ2 r t ρ u v 
   have huv : 9 / 16 ≤ u * v := by
     have := mul_le_mul h.u_ge h.v_ge (by norm_num) (by linarith [h.u_ge])
     linarith
-  have hW : 3 / 4 ≤ √(u * v) := (Real.le_sqrt (by norm_num) (by linarith)).2 (by linarith)
-  have hE45 : 9 / 20 ≤ E := by linarith
+  have hW : 0 < √(u * v) := Real.sqrt_pos.2 (by linarith only [huv])
+  have hE0 : 0 < E := by linarith only [hlt, hW]
   have h1s : 0 < 1 - s := by linarith
   have h1s' : 0 < 1 - s' := by linarith
   have h4ρ : 4 * ρ < (1 - s) * (1 - s') := by
@@ -85,7 +85,7 @@ theorem m1_angle_gap {γ2 r t ρ u v E : ℝ} (h : m1_CentreData γ2 r t ρ u v 
     Real.log_mul h1s.ne' h1s'.ne'
   have hlt4 : Real.log (4 * ρ) < Real.log ((1 - s) * (1 - s')) :=
     Real.log_lt_log (by positivity) h4ρ
-  have hss : s + s' < 11 / 20 := by linarith
+  have hss : s + s' < 1 := by linarith
   -- merge the two factors: `S² = s² + s'² + s²s'²/3`, so `uv = 3(3 + S²)/16`
   set S := √(s ^ 2 + s' ^ 2 + s ^ 2 * s' ^ 2 / 3) with hSdef
   have hS0 : 0 ≤ S := Real.sqrt_nonneg _
@@ -110,7 +110,6 @@ theorem m1_angle_gap {γ2 r t ρ u v E : ℝ} (h : m1_CentreData γ2 r t ρ u v 
     have e : (1 - S) * (1 - z / 4) = 1 - S - ρ := by rw [hρz]; ring
     rw [e]; linarith
   have huvS : u * v = 3 * (3 + S ^ 2) / 16 := by rw [hS2, hs2, hs'2]; ring
-  have hE0 : 0 < E := by linarith
   have hE2 : 9 / 25 * (3 * (3 + S ^ 2) / 16) ≤ E ^ 2 := by
     rw [← huvS]
     have hsq : √(u * v) ^ 2 = u * v := Real.sq_sqrt (by linarith)

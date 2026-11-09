@@ -300,6 +300,7 @@ import all SmoothedOctagon.Exclusion.ShortRuns
 import all SmoothedOctagon.Exclusion.ShortRuns.Centre
 import all SmoothedOctagon.Exclusion.ShortRuns.Gap.Core
 import all SmoothedOctagon.Exclusion.ShortRuns.Gap.Log
+import all SmoothedOctagon.Exclusion.ShortRuns.Gap.SymmetricRoot
 import all SmoothedOctagon.Exclusion.ShortRuns.Pattern
 import all SmoothedOctagon.Exclusion.ShortRuns.Scalar
 import all SmoothedOctagon.Exclusion.ShortRuns.TwoCentre

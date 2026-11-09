@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 117{,}000 lines in 376 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 117{,}000 lines in 377 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -50,8 +50,8 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 
 \subsection{Scalar proof replacement status}\label{app:formal-scalar}
 
-Groups 1--24 are the current scope: 16 are complete and committed,
-two are in progress, and six are pending. Groups 25--38 are deferred.
+Groups 1--24 are the current scope: 17 are complete and committed,
+three are in progress, and four are pending. Groups 25--38 are deferred.
 Group numbers stay fixed as their status changes.
 
 \begin{center}
@@ -59,48 +59,42 @@ Group numbers stay fixed as their status changes.
 \toprule
 Status & Count & Group numbers\\
 \midrule
-Complete & 16 & 1--2, 4--5, 7--8, 13--22\\
-In progress & 2 & 3, 6\\
-Pending & 6 & 9--12, 23--24\\
+Complete & 17 & 1--5, 7--8, 13--22\\
+In progress & 3 & 6, 9--10\\
+Pending & 4 & 11--12, 23--24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\medskip\noindent\textbf{In progress (2).}
+\medskip\noindent\textbf{In progress (3).}
 The auxiliary lemmas described here compile; integration into the full
 exclusion proofs remains.
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
-\item[3.] \emph{M1 symmetric angle gap.}
-The constrained root exists uniquely, its derivative is proved, and the
-logarithmic shape ratio is minimized at the symmetric centre.
-Remaining: the radial logarithm comparison, the angle-gap conclusion on
-$\gamma^2\le5/27$, and both M1 callers. Their current domain is
-$\gamma^2\le97969/529200$.
-
 \item[6.] \emph{Forward sum tangent endpoints.}
-The paired reciprocal integrals, logarithm identity and fixed tangent are proved.
-Remaining: connect the original row, prove the endpoint signs and update the
-callers with group~10 to use the paper's norm-sum threshold $1/32$;
-Lean currently uses $1/35$.
-\end{enumerate}
-
-\medskip\noindent\textbf{Pending (6).}
-
-\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
+The paired reciprocal integrals, logarithm identity, fixed tangent and original
+row comparison are proved. The zero-factor endpoint is negative.
+Remaining: prove the other endpoint signs and update the callers with group~10
+to use the paper's norm-sum threshold $1/32$; Lean currently uses $1/35$.
 
 \item[9.] \emph{Forward asymmetric neighbour.}
-Prove convexity in the neighbour shape after division by the positive row
-multiplier. Bound the boundary logarithmic chord loss by reciprocal tangent
-remainders and a completed square, then update the two endpoint proofs.
+The opposite-floor comparison and positive curvature expression are proved.
+Remaining: identify that expression with the original row's second derivative,
+bound the boundary logarithmic chord loss by reciprocal tangent remainders
+and a completed square, and update the two endpoint proofs.
 
 \item[10.] \emph{Forward Casimir and central pairing.}
-Prove the Gram minimum over the norm polygon, the shape-equalization bound
-and convexity of the remaining scalar curve. Prove central-pairing positivity
-from the integral of $f'$.
+The norm-polygon reduction, shape equalization and reciprocal-kernel derivative
+bounds are proved. Remaining: close the scalar-curve signs and prove
+central-pairing positivity from the integral of $f'$.
 Update the callers with groups~2 and~6 to use the paper's conditional lower
 bound $9193/50000$; Lean currently uses $23/125$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Pending (4).}
+
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
 
 \item[11.] \emph{Mixed norm ceilings and duration.}
 Apply the proved logarithm bound to the incoming and central bridge-norm
@@ -124,7 +118,7 @@ from group~2.
 Update the final score callers together with group~23.
 \end{enumerate}
 
-\newpage\noindent\textbf{Complete and committed (16).}
+\newpage\noindent\textbf{Complete and committed (17).}
 These groups are integrated into the paper and Lean. Each has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
@@ -137,7 +131,11 @@ estimates, with the equilibrium, projective and finite-switch arguments.
 Positive logarithm and inverse-sine remainders prove the cost comparisons.
 The golden-unit threshold gives $\gamma^2<5/27$, and the spectral inequality
 gives the exact cap $\Gamma_{\rm oct}$. The cover comparisons use the same
-moments. The M1 domain and final S6 score comparison remain in groups~3 and~24.
+moments. The final S6 score comparison remains in group~24.
+
+\item[3.] \emph{M1 symmetric angle gap.}
+The constrained root, radial monotonicity and symmetric minimum prove the
+angle gap at $c=3/5$. Both physical callers use $\gamma^2\le5/27$.
 
 \item[4.] \emph{M1 two-centre product.}
 The exact centre-product bound gives a period cost greater than
@@ -324,8 +322,8 @@ Result & Lean declarations\\
 \cref{lem:m1-log} & \lean{ag_half_sub_inv_le_log}, \lean{ag_sigma_superadd} \\
 \cref{lem:m1-one-switch} & \lean{ag_phi_le} \\
 \cref{lem:m1-reduce} & steps of the proof of \lean{m1_angle_gap} \\
-\cref{lem:m1-symmetric} & New analytic lemma in the text; not separately formalized \\
-\cref{lem:m1-core} & \lean{ag_core}, with the cap difference described above \\
+\cref{lem:m1-symmetric} & \lean{agSymmetric_gram_min}, \lean{agSymRoot_existsUnique}, \lean{agSymRoot_zero_spec} \\
+\cref{lem:m1-core} & \lean{ag_core} \\
 \cref{lem:m1-bc} & \lean{m1_bc_bound} \\
 \addlinespace
 \multicolumn{2}{@{}l}{\emph{\Cref{sec:forward}}}\\[2pt]

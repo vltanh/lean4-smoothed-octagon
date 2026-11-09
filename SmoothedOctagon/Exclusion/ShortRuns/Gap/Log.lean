@@ -9,8 +9,6 @@ public import Mathlib.Analysis.SpecialFunctions.Sqrt
 
 ## Main API
 
-* `ag_log_le_tangent`: `log z ≤ l + z/z₀ - 1` whenever `log z₀ ≤ l` (tangent line of `log`).
-* `ag_log_le_atanh`: `log z ≤ -2τ - 2τ³/3` for `0 < z ≤ 1`, `τ = (1 - z)/(1 + z)`.
 * `ag_half_sub_inv_le_log`: `(x - x⁻¹)/2 ≤ log x` on `(0, 1]`.
 * `ag_sigma_superadd`: `σ(x) = -x - log(1 - x)` satisfies `σ(a) + σ(b) ≤ σ(c)` for
   `0 ≤ a, b, c`, `c < 1`, `a² + b² ≤ c²`.
@@ -25,29 +23,6 @@ public import Mathlib.Analysis.SpecialFunctions.Sqrt
 namespace SmoothedOctagon
 
 open Real Finset
-
-/-- Tangent line of the logarithm at `z₀`, with an upper bound `l` for `log z₀`. -/
-theorem ag_log_le_tangent {z z₀ l : ℝ} (hz : 0 < z) (hz₀ : 0 < z₀) (hl : Real.log z₀ ≤ l) :
-    Real.log z ≤ l + z / z₀ - 1 := by
-  have h1 := Real.log_le_sub_one_of_pos (div_pos hz hz₀)
-  rw [Real.log_div hz.ne' hz₀.ne'] at h1
-  linarith
-
-/-- The first two terms of the `artanh` series: `log z ≤ -2τ - 2τ³/3` on `(0, 1]`. -/
-theorem ag_log_le_atanh {z : ℝ} (hz : 0 < z) (hz1 : z ≤ 1) :
-    Real.log z ≤ -2 * ((1 - z) / (1 + z)) - 2 * ((1 - z) / (1 + z)) ^ 3 / 3 := by
-  set τ := (1 - z) / (1 + z) with hτ
-  have hτ0 : 0 ≤ τ := div_nonneg (by linarith) (by linarith)
-  have hτ1 : τ < 1 := by rw [hτ, div_lt_one (by linarith)]; linarith
-  have hs := Real.hasSum_log_sub_log_of_abs_lt_one (x := τ) (by rw [abs_of_nonneg hτ0]; exact hτ1)
-  have hle := sum_le_hasSum (range 2) (fun k _ ↦ by positivity) hs
-  simp only [sum_range_succ, sum_range_zero] at hle
-  norm_num at hle
-  have h1 : 1 + τ = (1 - τ) / z := by
-    rw [hτ]; field_simp; ring
-  have h2 : Real.log (1 + τ) = Real.log (1 - τ) - Real.log z := by
-    rw [h1, Real.log_div (by linarith) hz.ne']
-  linarith
 
 /-- `(x - x⁻¹)/2 ≤ log x` on `(0, 1]`: with `y = -log x ≥ 0` this is `y ≤ sinh y`. -/
 theorem ag_half_sub_inv_le_log {x : ℝ} (hx0 : 0 < x) (hx1 : x ≤ 1) :

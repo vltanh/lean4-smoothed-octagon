@@ -65,7 +65,6 @@ tangent closure), switch vectors `yv n = P_n (outgoing vector)` with `yv_norm` (
 * **`NormalPeriod.cost_casimir`**: `C ≥ 4πκ/(2κ + 3)` for negative elliptic `Λ₁(0)`
   (`el_winding`, `el_negEll_repr`).
 * **`NormalPeriod.gam2_lt_cap`**: competitive, `γ² > 0`, `d₀ > 0` ⇒ `γ² < 5/27`.
-* `NormalPeriod.gam2_le_cap` supplies the stronger bound used by the M1 scalar interface.
 -/
 
 @[expose] public section
@@ -2847,22 +2846,6 @@ private theorem negEll_of_gam2_swd (hpos : 0 < P.costateCycle.gam2 0)
   have hdet : 0 < (P.Λ₁ 0).det := by rw [P.det_Λ₁_zero]; positivity
   exact ⟨hdet,h10⟩
 
-/-- The exact moment comparison supplies a strict general Casimir threshold. -/
-private theorem gam2_lt_moment_cap (hc : P.IsCompetitive) (hpos : 0 < P.costateCycle.gam2 0)
-    (hd : 0 < P.costateCycle.swd 0) : P.costateCycle.gam2 0 < (609/410:ℝ)^2/12 := by
-  set C := P.costateCycle
-  obtain ⟨hdet,h10⟩ := P.negEll_of_gam2_swd hpos hd
-  have hcc := P.cost_casimir hdet h10
-  rw [P.det_Λ₁_zero] at hcc
-  set κ := √(12 * C.gam2 0) with hκ
-  have hκpos : 0 < κ := Real.sqrt_pos.2 (by positivity)
-  have hκ2 : κ ^ 2 = 12 * C.gam2 0 := Real.sq_sqrt (by positivity)
-  have hk := octagon_general_kappa_lt hκpos hcc hc
-  have hs : κ^2 < (609/410:ℝ)^2 :=
-    (sq_lt_sq₀ hκpos.le (by norm_num)).mpr hk
-  rw [hκ2] at hs
-  nlinarith only [hs]
-
 open Real in
 /-- The golden-unit cost threshold gives the natural Casimir scale. -/
 private theorem kappa_lt_golden {κ c : ℝ} (hκ : 0 < κ)
@@ -2891,12 +2874,6 @@ theorem gam2_lt_cap (hc : P.IsCompetitive) (hpos : 0 < P.costateCycle.gam2 0)
   rw [Real.sq_sqrt hp.le] at hs
   have h5 := Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 5)
   nlinarith only [hs,h5]
-
-/-- The moment threshold also implies the bound used by the M1 scalar interface. -/
-theorem gam2_le_cap (hc : P.IsCompetitive) (hpos : 0 < P.costateCycle.gam2 0)
-    (hd : 0 < P.costateCycle.swd 0) : P.costateCycle.gam2 0 ≤ 97969/529200 := by
-  have h := P.gam2_lt_moment_cap hc hpos hd
-  linarith only [h]
 
 end NormalPeriod
 

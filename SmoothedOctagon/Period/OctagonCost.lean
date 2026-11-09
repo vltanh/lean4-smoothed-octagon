@@ -197,16 +197,6 @@ theorem octagonCost_lt_cover : octagonCost < 2501/800 := by
   rw [div_lt_iff₀ hD]
   exact hm
 
-/-- The general cost–Casimir inequality gives the exact rational moment threshold. -/
-theorem octagon_general_kappa_lt {κ c : ℝ} (hκ : 0 < κ)
-    (h : 4*π*κ/(2*κ+3) ≤ c) (hc : c ≤ octagonCost) : κ < 609/410 := by
-  have hi := h.trans_lt (hc.trans_lt octagonCost_lt_pi_mul)
-  rw [div_lt_iff₀ (by positivity)] at hi
-  have hk : 410*κ < 609 := by
-    apply (mul_lt_mul_iff_right₀ Real.pi_pos).mp
-    nlinarith only [hi]
-  linarith only [hk]
-
 /-- The spectral cost inequality gives the cap used by forward and mixed periods. -/
 theorem octagon_spectral_cap {x c : ℝ} (hx : 0 < x)
     (h : π/3*(sqrt x+3/2) ≤ c) (hc : c ≤ octagonCost) : x/12 < 9193/50000 := by

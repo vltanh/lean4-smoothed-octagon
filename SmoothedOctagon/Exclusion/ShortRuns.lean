@@ -13,7 +13,7 @@ competitive period are incompatible.
 
 The proof: the word is `(− − +)^m` with `m ≡ 2 (mod 3)` (`m1_pattern`); the normal multiplier is
 elliptic (`NormalPeriod.gam2_pos_of_mixed`) and, the period being competitive, its Casimir is capped
-(`NormalPeriod.gam2_le_cap`); at every centre the scalar data (`NormalPeriod.m1_centreData`) and the
+(`NormalPeriod.gam2_lt_cap`); at every centre the scalar data (`NormalPeriod.m1_centreData`) and the
 cap give `cos φ_j < 3/10` (`m1_angle_gap`), so `φ_j > 2π/5`; for `m ≥ 5` this contradicts
 `∑ φ_j = (m + 1)π/3` (`m1_winding`), and `m = 2` is excluded by its cost (`m1_two_centre`).
 -/
@@ -34,7 +34,7 @@ theorem shortRuns_exclusion (P : NormalPeriod) (hc : P.IsCompetitive) (h : P.rep
   have hd : 0 < P.costateCycle.swd 0 := by
     have := P.swd_ge_of_mixed h.1 0
     linarith
-  have hcap := P.gam2_le_cap hc hpos hd
+  have hcap := (P.gam2_lt_cap hc hpos hd).le
   rcases (show m = 2 ∨ 5 ≤ m by omega) with h2 | h5
   · exact m1_two_centre P hc hpat' (by show P.rep.N = 6; rw [hN, h2])
   · have hw := m1_winding P hc hpat' hN hpos
