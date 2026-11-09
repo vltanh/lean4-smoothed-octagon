@@ -2,6 +2,7 @@ module
 
 public import SmoothedOctagon.Terminal.Words
 public import SmoothedOctagon.Terminal.Analysis.FiveEnvelope
+public import SmoothedOctagon.Foundations.ReciprocalMidpoint
 
 /-!
 # Terminal comparison: five mixed pieces
@@ -58,7 +59,7 @@ private lemma five_d_lt {u v : ℝ} (hu0 : 0 < u) (hu1 : u < 1) (hv0 : 0 < v) (h
   have hy : 0 < 1 - v := by linarith
   have hd : 0 < (1 - u) * (1 - v) := mul_pos hx hy
   have hs2 : √2 ^ 2 = 2 := Real.sq_sqrt (by norm_num)
-  have h2lo : (1.4142 : ℝ) < √2 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
+  have h2lo : (1 : ℝ) < √2 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
   have hw := Real.sqrt_nonneg ((1 - u) * (1 - v))
   have hw2 : √((1 - u) * (1 - v)) ^ 2 = (1 - u) * (1 - v) := Real.sq_sqrt hd.le
   have hsum : 2 * √((1 - u) * (1 - v)) ≤ (1 - u) + (1 - v) := by
@@ -70,13 +71,21 @@ private lemma five_d_lt {u v : ℝ} (hu0 : 0 < u) (hu1 : u < 1) (hv0 : 0 < v) (h
   rw [← hw2]
   exact pow_lt_pow_left₀ hwlt hw (by norm_num)
 
-/-- The numerical gap `3 + δ_oct < (3 + 2√2) log 2`. -/
+/-- The strict reciprocal midpoint bound gives the terminal comparison gap. -/
 private lemma five_gap : 3 + octagonDensity < (3 + 2 * √2) * Real.log 2 := by
-  have h2lo : (1.4142 : ℝ) < √2 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have hl2lo := Real.log_two_gt_d9
-  have hD : 0 < 2 * √2 - 1 := by linarith
-  rw [octagonDensity, five_sqrt32, five_sqrt8, ← lt_sub_iff_add_lt', div_lt_iff₀ hD]
-  nlinarith [mul_pos (sub_pos.2 h2lo) (sub_pos.2 hl2lo)]
+  have hr : (1:ℝ) < √2 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
+  have hs : 0 < √2 := by positivity
+  have hs2 : (√2)^2 = 2 := Real.sq_sqrt (by norm_num)
+  have hD : 0 < 2*√2-1 := by linarith only [hr]
+  have hlog := ra_log_two_gt_midpoint
+  have hm := mul_lt_mul_of_pos_left hlog (show 0 < 2*(1+√2)^2 by positivity)
+  have hid : 2*(1+√2)^2*(4*(√2-1)/(√2+1)) = 8 := by
+    field_simp
+    nlinarith only [hs2]
+  rw [hid] at hm
+  have hrem : 0 < (√2-1)^2 := sq_pos_of_ne_zero (by linarith only [hr])
+  rw [octagonDensity,five_sqrt32,five_sqrt8,← lt_sub_iff_add_lt',div_lt_iff₀ hD]
+  nlinarith only [hs2,hm,hrem]
 
 /-- `B(d*) = δ_oct`: `2d* + 4 - K d* = δ_oct (4 - d*)`, `K = (3 + 2√2) log 2`. -/
 private lemma five_boundary :
@@ -86,7 +95,7 @@ private lemma five_boundary :
   have hK : (3 + 2 * √2) * Real.log 2 * (2 - √2) ^ 2 = 2 * Real.log 2 := by
     linear_combination (2 * √2 - 5) * Real.log 2 * hs2
   have hds : (2 - √2) ^ 2 = 6 - 4 * √2 := by linear_combination hs2
-  have h2lo : (1.4142 : ℝ) < √2 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
+  have h2lo : (1 : ℝ) < √2 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
   have hD : 2 * √2 - 1 ≠ 0 := by linarith
   rw [hK, hds, octagonDensity, five_sqrt32, five_sqrt8]
   field_simp
@@ -108,8 +117,8 @@ theorem fivePiece_density_gt {u v : ℝ} (hu0 : 0 < u) (hu1 : u < 1) (hv0 : 0 < 
   have hFv := fiveEnvelope hv0 hv1
   have hlogd : Real.log ((1 - u) * (1 - v)) = Real.log (1 - u) + Real.log (1 - v) :=
     Real.log_mul hx.ne' hy.ne'
-  have h2lo : (1.4142 : ℝ) < √2 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have h2hi : √2 < (1.4143 : ℝ) := by rw [Real.sqrt_lt' (by norm_num)]; norm_num
+  have h2lo : (1 : ℝ) < √2 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
+  have h2hi : √2 < (2 : ℝ) := by rw [Real.sqrt_lt' (by norm_num)]; norm_num
   have hds0 : 0 < (2 - √2) ^ 2 := pow_pos (by linarith) 2
   have hd : 0 < (1 - u) * (1 - v) := mul_pos hx hy
   have hlogds : Real.log ((2 - √2) ^ 2) = 2 * Real.log (2 - √2) := by

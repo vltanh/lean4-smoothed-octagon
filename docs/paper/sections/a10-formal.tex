@@ -51,8 +51,8 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 \subsection{The scalar estimates}\label{app:formal-scalar}
 
 \noindent\textit{Replacement status (working draft).}
-Of the 24 groups in the current pass, 14 are complete and committed,
-one is in progress, and nine remain. Groups 25--38 are deferred.
+Of the 24 groups in the current pass, 15 are complete and committed
+and nine remain. Groups 25--38 are deferred.
 The numbers identify the same groups throughout this list.
 
 \begin{center}
@@ -60,22 +60,13 @@ The numbers identify the same groups throughout this list.
 \toprule
 Status & Count & Group numbers\\
 \midrule
-Complete & 14 & 1, 4, 7--8, 13--22\\
-In progress & 1 & 5\\
+Complete & 15 & 1, 4--5, 7--8, 13--22\\
+In progress & 0 & ---\\
 Pending & 9 & 2--3, 6, 9--12, 23--24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
 \end{center}
-
-\medskip\noindent\textbf{In progress: 1 group.}
-
-\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
-\item[5.] \emph{Terminal five-piece comparison.}
-The integral proof of strict concavity, the circle inequality and the strict
-midpoint logarithm bound compile in drafts. Integration into the terminal
-density theorem and full verification remain.
-\end{enumerate}
 
 \medskip\noindent\textbf{Pending: 9 groups.}
 Each item gives the next proof or integration step.
@@ -133,7 +124,7 @@ Formalize the corner arithmetic and the direct octagon-cost comparison from
 group~2, replacing the quadratic norm floor, polynomial angle bounds and box signs.
 \end{enumerate}
 
-\medskip\noindent\textbf{Complete and committed: 14 groups.}
+\medskip\noindent\textbf{Complete and committed: 15 groups.}
 Each group below is integrated into the paper and Lean and has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
@@ -147,6 +138,12 @@ The exact product bound $(1+\sqrt2)^2a^2$ and the positive centre factors give
 $a^2<4/(5+4\sqrt2)$ and a period cost greater than $\sqrt3(2\sqrt2-1)$.
 The strict reciprocal midpoint bound for $\log2$ compares this cost directly
 with the octagon cost.
+
+\item[5.] \emph{Terminal five-piece comparison.}
+A positive integral kernel makes $h'(t)/t$ strictly decreasing, proving strict
+concavity of $h(\sqrt x)$ and the circle bound with equality only at equal
+coordinates. The reciprocal midpoint bound for $\log2$ proves the strict
+density gap on the full five-piece domain.
 
 \item[7.] \emph{Forward symmetric neighbour value.}
 The endpoint value follows from the analytic boundary comparison.
@@ -430,7 +427,7 @@ Result & Lean declarations\\
 \cref{prop:reinhardt-construction} & \lean{cls_image_octagon}, \lean{cls_exists_affine_iff} \\
 \cref{lem:log-sinh} & \lean{ra_half_sub_inv_le_log} \\
 \cref{lem:four-weight} & \lean{ra_weight_monotoneOn}, \lean{ra_weight_le} \\
-\cref{lem:five-h} & \lean{ra_fiveH_concaveOn}, \lean{ra_fiveH_circle_le} \\
+\cref{lem:five-h} & \lean{ra_fiveH_strictConcaveOn}, \lean{ra_fiveH_circle_le}, \lean{ra_fiveH_circle_eq_iff} \\
 \cref{lem:five-envelope} & \lean{ra_five_envelope}, \lean{Term.fiveEnvelope} \\
 \cref{lem:five-d} & a private lemma of \lean{Term.fivePiece_density_gt} \\
 \end{longtable}
