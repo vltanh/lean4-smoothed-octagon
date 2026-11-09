@@ -9,7 +9,7 @@ def write_bern(jobs):
         needI |= G['needI']; need0g |= G['need0g']; needTr.add((G['kind'], G['ny']))
     s = """module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Bernstein
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Bernstein
 public import Mathlib.Tactic.FieldSimp
 
 /-!

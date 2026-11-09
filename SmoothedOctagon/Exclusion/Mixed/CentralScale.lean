@@ -1,8 +1,8 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.Centre
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.WindowData
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.OrderBounds
+public import SmoothedOctagon.Exclusion.Mixed.WindowData
+public import SmoothedOctagon.Exclusion.Mixed.OrderBounds
 
 /-!
 # Case M2, reverse successor: the sharpened central scale bounds

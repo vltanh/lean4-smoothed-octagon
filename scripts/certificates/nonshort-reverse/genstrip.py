@@ -10,7 +10,7 @@ f = R(29,4)*t**2-2*t
 S0 = expand(R(175,416)*(f+R(27,875)))
 hdr = """module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Bernstein
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Bernstein
 
 /-!
 # Case M2, reverse successor: sign certificates for the reverse scale strip
@@ -46,4 +46,4 @@ for i in J:
         code, nl = emit_biv_piece(f"nsrSJr{i}_pos{j}", e, x, t, 'x', 't', pc, stmt=f"nsrSJr{i} t x", unfold=f"nsrSJr{i}")
         out.append(code)
 out.append("end SmoothedOctagon\n")
-open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Reverse/ScaleStrip/Signs.lean','w').write("\n".join(out))
+open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/ScaleStrip/Signs.lean','w').write("\n".join(out))

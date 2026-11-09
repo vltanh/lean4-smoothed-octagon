@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.TurnSecant
+public import SmoothedOctagon.Exclusion.Mixed.TurnSecant
 public import SmoothedOctagon.Exclusion.Mixed.Comparison
 
 /-!

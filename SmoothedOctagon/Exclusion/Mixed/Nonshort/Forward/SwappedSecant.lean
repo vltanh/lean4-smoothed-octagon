@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Residual
+public import SmoothedOctagon.Exclusion.Mixed.Residual
 
 /-!
 # Case M2, forward successor: the quantitative swapped-secant bound

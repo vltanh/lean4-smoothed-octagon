@@ -1,7 +1,7 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Residual
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.UnitShape.Signs
+public import SmoothedOctagon.Exclusion.Mixed.Residual
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Signs
 
 /-!
 # Case M2, reverse successor: the unit-shape exclusion
@@ -12,7 +12,7 @@ On the face `k = 1`, for
 After the relaxations `v ↦ v̄`, `log q ↦ L₊` and the subtraction of `(q - 1)(v̄ - F_ℓ)`, the
 cleared residual is the cubic `P = C₀ + C₁y + C₂y² + C₃y³` in `y = q - 1` (`nsrU_P_eq`),
 positive by six coefficient signs (`nsr_cubic_pos`), which are proved by the generated
-certificates of `Nonshort/Reverse/UnitShape/Signs`.
+certificates of `Nonshort/UnitShape/Signs`.
 
 ## Main API
 
@@ -83,7 +83,7 @@ theorem nsrU_J5 (t x : ℝ) :
   unfold nsrUC0 nsrUC3 nsrUJr5; ring
 
 /-- The unit-shape domain, in the coordinates `(x, s)`, `s = 1 - 2t - x`, is covered by the three
-pieces of `Nonshort/Reverse/UnitShape/Signs`. -/
+pieces of `Nonshort/UnitShape/Signs`. -/
 theorem nsrU_dom {f : ℝ → ℝ → ℝ} {t x : ℝ} (ht : 0 < t) (ht' : t ≤ 13 / 35) (hx : 0 < x)
     (hxt : x ≤ 1 - 2 * t) (hgap : 1 < 2 * t + 2 * x + x ^ 2)
     (ha : ∀ x s : ℝ, (3 / 25) ≤ x → x ≤ (9 / 35) → (9 / 35) - x ≤ s → s ≤ x + x ^ 2 →

@@ -2,9 +2,9 @@ module
 
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.BoundaryRoot
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SwappedSecant
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.NecessaryBounds
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.LowScale
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.OrderBounds
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.NecessaryBounds
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale
+public import SmoothedOctagon.Exclusion.Mixed.OrderBounds
 
 /-!
 # Case M2, forward successor: the necessary conditions of an actual window

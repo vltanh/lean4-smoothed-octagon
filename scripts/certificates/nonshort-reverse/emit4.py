@@ -44,4 +44,4 @@ theorem leaf_test (x s : ℝ) (h0 : 1/4 ≤ x) (h1 : x ≤ 5/16) (h2 : 0 ≤ s) 
   exact pos_of_mul_pos_left this (by norm_num)
 """
 lean = re.sub(r'\^ (\d+)', r'^ (\1 : ℕ)', lean)
-open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Reverse/Test.lean','w').write(lean)
+open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Test.lean','w').write(lean)

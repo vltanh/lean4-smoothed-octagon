@@ -1,7 +1,7 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Window
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.CentreGap
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.CentreGap
 
 /-!
 # Case M2, forward successor: the actual Casimir on the first-event stationary line

@@ -3,7 +3,7 @@ module
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.LogSecant
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Order
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Secant
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.CentralScale
+public import SmoothedOctagon.Exclusion.Mixed.CentralScale
 
 /-!
 # Smaller-short window: shared scalar functions

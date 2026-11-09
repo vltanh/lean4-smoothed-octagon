@@ -1,14 +1,14 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.UnitShape
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.ScaleStrip.Signs
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.ScaleStrip.Signs
 
 /-!
 # Case M2, reverse successor: the reverse scale strip `k = 29t²/4`
 
 On `13/35 ≤ t ≤ 2/5`, `0 < x ≤ 9/35` with the centre gap `29t²/4 < 2t + 2x + x²`, the exact
 incoming secant and its floor give `N(29t²/4) > 0`: the cleared cubic `P_{29t²/4}` satisfies the
-six signs of the unit shape (`Nonshort/Reverse/ScaleStrip/Signs`), so it is positive for every `y ≥ 0`.
+six signs of the unit shape (`Nonshort/ScaleStrip/Signs`), so it is positive for every `y ≥ 0`.
 
 ## Main API
 

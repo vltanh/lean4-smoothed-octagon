@@ -1,8 +1,8 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.Comparison
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Core
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.NecessaryBounds
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Core
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.NecessaryBounds
 
 /-!
 # Case M2: the reverse successor
@@ -24,9 +24,9 @@ from
 and the three exhaustive cases (the unit shape, the order face and the scale strip) each give
 `N_{k'} > 0` at a smaller shape `k' ≤ k`, contradicting the strict increase of `N` in `k`.
 
-The scalar argument is `nsr_reverse_core` (`Nonshort/Reverse/Core`), the window-level bounds are in
-`Nonshort/Reverse/WindowData`, `OrderBounds`, `CentreGap`, `CentralScale` and `HighRatio`
-(`Nonshort/Reverse/NecessaryBounds`).
+The scalar argument is `nsr_reverse_core` (`Nonshort/Core`), the window-level bounds are in
+`WindowData`, `OrderBounds`, `CentreGap`, `CentralScale` and `HighRatio`
+(`Nonshort/NecessaryBounds`).
 
 The polynomial signs of the unit shape, the order face and the high-ratio exclusion are proved by
 Bernstein certificates checked by `ring` (the `Signs` modules); the scale strip is closed by

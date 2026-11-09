@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.CentralScale
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.LowScale
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.CentreGap
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.HighRatio.Signs
+public import SmoothedOctagon.Exclusion.Mixed.CentralScale
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.CentreGap
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.HighRatio.Signs
 
 /-!
 # Case M2, reverse successor: the high-ratio exclusion `t < 2/5`
@@ -12,7 +12,7 @@ If `t ≥ 2/5`, the sharpened scale `a² < 2/3`
 (`nsr_a_sq`) gives `k > 7t²`; `t < T(x)` gives `x < 1/3` and the centre gap gives `x > 1/7`.
 Lowering `k` to `7t²`, the cleared cubic `P = C₀ + C₁y + C₂y² + C₃y³` is positive: `C₀ > 0` and,
 on each of the four `x`-rows, `C₁ > b`, `C₂ > -M`, `C₃ > c` with `4bc > M²`
-(`Nonshort/Reverse/HighRatio/Signs`), so `C₁ + C₂y + C₃y² > 0` for `y ≥ 0`. Hence `N > 0`, contrary to `N < 0`.
+(`Nonshort/HighRatio/Signs`), so `C₁ + C₂y + C₃y² > 0` for `y ≥ 0`. Hence `N > 0`, contrary to `N < 0`.
 
 ## Main API
 

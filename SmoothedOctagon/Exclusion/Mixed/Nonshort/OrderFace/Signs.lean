@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Bernstein
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Bernstein
 
 /-!
 # Case M2, reverse successor: sign certificate for the reverse order face

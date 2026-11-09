@@ -24,5 +24,5 @@ theorem leaf_test (x s : ℝ) (h0 : {lean_num(box[0][0])} ≤ x) (h1 : x ≤ {le
   have : 0 ≤ {s_} := by positivity
   nlinarith
 """
-open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Reverse/Test.lean','w').write(lean)
+open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Test.lean','w').write(lean)
 print(len(lean))

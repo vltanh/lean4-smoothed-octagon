@@ -1,7 +1,7 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.WindowData
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.OrderFace.Signs
+public import SmoothedOctagon.Exclusion.Mixed.WindowData
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.OrderFace.Signs
 public import Mathlib.Analysis.Convex.Deriv
 
 /-!

@@ -42,4 +42,4 @@ for d in range(1, 15):
     linarith
 """)
 out.append("end SmoothedOctagon\n")
-open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Reverse/Bernstein.lean','w').write("\n".join(out))
+open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Bernstein.lean','w').write("\n".join(out))

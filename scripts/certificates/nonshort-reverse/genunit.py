@@ -10,7 +10,7 @@ pieces = [("a", R(3,25),R(9,35), lambda a,b: R(9,35)-x, lambda a,b: x+x**2),
           ("c", R(2,5),Integer(1), lambda a,b: Integer(0), lambda a,b: 1-x)]
 hdr = """module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Bernstein
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Bernstein
 
 /-!
 # Case M2, reverse successor: sign certificates for the unit shape
@@ -47,5 +47,5 @@ for i in J:
         tot+=nl
         out.append(code)
 out.append("end SmoothedOctagon\n")
-open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Reverse/UnitShape/Signs.lean','w').write("\n".join(out))
+open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/UnitShape/Signs.lean','w').write("\n".join(out))
 print('leaves', tot)

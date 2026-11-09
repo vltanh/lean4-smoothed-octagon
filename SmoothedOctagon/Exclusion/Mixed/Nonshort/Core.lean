@@ -1,8 +1,8 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.ScaleStrip
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.OrderFace
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.OrderBounds
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.ScaleStrip
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.OrderFace
+public import SmoothedOctagon.Exclusion.Mixed.OrderBounds
 
 /-!
 # Case M2, reverse successor: the scalar reverse exclusion

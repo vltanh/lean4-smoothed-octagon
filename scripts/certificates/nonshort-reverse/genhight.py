@@ -8,7 +8,7 @@ C = [expand(c) for c in pickle.load(open('highT7C.pkl','rb'))]
 R=Rational
 hdr = """module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Bernstein
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Bernstein
 
 /-!
 # Case M2, reverse successor: sign certificates for the high-ratio exclusion
@@ -65,4 +65,4 @@ for name, e, lo, hi in jobs:
             cur = f"hc{pi}"
     out.append("\n".join(lines)+"\n")
 out.append("end SmoothedOctagon\n")
-open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Reverse/HighRatio/Signs.lean','w').write("\n".join(out))
+open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/HighRatio/Signs.lean','w').write("\n".join(out))

@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.WindowData
+public import SmoothedOctagon.Exclusion.Mixed.WindowData
 
 /-!
 # Case M2, forward successor: the normalized boundary root and next norm

@@ -1,7 +1,7 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Core
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.LowScale.Signs
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Core
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Signs
 
 /-!
 # Case M2, reverse successor: the low-scale region `k ≥ 17t²`
@@ -16,7 +16,7 @@ On the necessary domain with `k ≥ 17t²` (that is, `a ≤ 1/2`), `N_k > 0`:
   hold here); otherwise `k < 2t + x`, and by shape monotonicity `k` is lowered to the unit face
   `k = 1` (`t ≤ 1/4`) or to the high-ratio face `k = 2t + 1/2` (`t ≥ 1/4`), where the cleared
   quartic `Q = P₀ + P₁y + ⋯ + P₄y⁴` is positive by six coefficient signs (`nsr_quartic_pos`,
-  certificates `Nonshort/Reverse/LowScale/Signs`).
+  certificates `Nonshort/LowScale/Signs`).
 
 ## Main API
 

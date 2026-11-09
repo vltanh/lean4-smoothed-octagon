@@ -1,19 +1,19 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.WindowData
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.CentreGap
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.HighRatio
+public import SmoothedOctagon.Exclusion.Mixed.WindowData
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.CentreGap
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.HighRatio
 
 /-!
 # Case M2, reverse successor: necessary bounds of an actual window
 
 The three actual-window bounds used by the exclusions of both successors, and their normalized forms
-(proved in `Nonshort/Reverse/CentreGap`, `Nonshort/Reverse/HighRatio`, `Nonshort/Reverse/CentralScale`).
+(proved in `Nonshort/CentreGap`, `Nonshort/HighRatio`, `CentralScale`).
 
-* `nsr_centre_gap`: `d² + 2cd > 4` (Lemma 2 of `Nonshort/Reverse/CentreGap`), i.e. `k < 2t + 2x + x²`
+* `nsr_centre_gap`: `d² + 2cd > 4` (Lemma 2 of `Nonshort/CentreGap`), i.e. `k < 2t + 2x + x²`
   (`nsr_centre_gap_k`).
-* `nsr_high_t`: `t = a/(a + c) < 2/5` (the high-ratio exclusion of `Nonshort/Reverse/HighRatio`).
-* `nsr_scale_lt`: `a < 4/5` (the conditional scale bound of `Nonshort/Reverse/CentralScale`), i.e. `k > 29t²/4`
+* `nsr_high_t`: `t = a/(a + c) < 2/5` (the high-ratio exclusion of `Nonshort/HighRatio`).
+* `nsr_scale_lt`: `a < 4/5` (the conditional scale bound of `CentralScale`), i.e. `k > 29t²/4`
   (`nsr_scale_k`).
 -/
 

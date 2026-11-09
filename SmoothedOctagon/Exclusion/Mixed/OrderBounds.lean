@@ -1,7 +1,7 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.WindowData
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.TurnSecant
+public import SmoothedOctagon.Exclusion.Mixed.WindowData
+public import SmoothedOctagon.Exclusion.Mixed.TurnSecant
 
 /-!
 # Case M2, reverse successor: order bounds from the actual norm floors

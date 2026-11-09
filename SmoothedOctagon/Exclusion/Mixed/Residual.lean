@@ -11,7 +11,7 @@ The normalized residual of a smaller-nonshort window: in the coordinates `t = a/
 `x = (d - a)/T`, `k = K/T²`, `q = WZ/Q` (`T = a + c`), with `W = 1 + x`, `X = x + 2`, `p = t + x`,
 `Y = x X`, `B = k + 2tx + x²`, the residual `R = R_d(U*; b*)/T` and its positive multiple
 `N = tBqW R`. `N` is a polynomial in `t, x, k, q, v` and `L = log q` (`nsrN`; its identity with the
-window residual is `nsr_link_N` in `Nonshort/Reverse/WindowData`), affine in `k`, `v` and `L`.
+window residual is `nsr_link_N` in `WindowData`), affine in `k`, `v` and `L`.
 
 ## Main API
 

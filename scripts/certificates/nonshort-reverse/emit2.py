@@ -36,5 +36,5 @@ theorem leaf_test (x s : ℝ) (h0 : 1/4 ≤ x) (h1 : x ≤ 5/16) (h2 : 0 ≤ s) 
   have : 0 ≤ {S} := by positivity
   nlinarith
 """
-open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Reverse/Test.lean','w').write(lean)
+open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Test.lean','w').write(lean)
 print(len(lean), int(HL))

@@ -6,7 +6,7 @@ P = pickle.load(open('ofaceP.pkl','rb'))
 R=Rational
 hdr = """module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Bernstein
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Bernstein
 
 /-!
 # Case M2, reverse successor: sign certificate for the reverse order face
@@ -37,4 +37,4 @@ for tag,(lo,hi,S0f,S1f) in [('a',(R(1,5),R(1,4),lambda a,b: R(1,4)-h, lambda a,b
     code, nl = emit_biv_piece(f"nsrOP_pos_{tag}", P, s, h, 's', 'h', pl[0], stmt="nsrOP h s", unfold="nsrOP")
     out.append(code)
 out.append("end SmoothedOctagon\n")
-open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Reverse/OrderFace/Signs.lean','w').write("\n".join(out))
+open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/OrderFace/Signs.lean','w').write("\n".join(out))

@@ -10,7 +10,7 @@ R=Rational
 Tn = lambda xx: (-2*xx**3-xx**2+10*xx+12)/(3*(xx+2)**3)
 hdr = """module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Bernstein
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Bernstein
 
 /-!
 # Case M2, reverse successor: sign certificates for the low-scale faces
@@ -104,4 +104,4 @@ theorem {nm}_dom (t x : ℝ) (ht0 : 1 / 4 ≤ t) (ht1 : t ≤ 7 / 20) (hx0 : 1 /
   {nm}_p0 x t hx0 hx1 ht0 ht1 (by norm_num)
 """)
 out.append("end SmoothedOctagon\n")
-open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Reverse/LowScale/Signs.lean','w').write("\n".join(out))
+open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/LowScale/Signs.lean','w').write("\n".join(out))
