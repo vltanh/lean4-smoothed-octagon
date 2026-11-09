@@ -706,7 +706,7 @@ theorem ur_tau2_mono {x be al u q₁ q₂ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x �
     rw [e]
     exact div_pos h hz0
 
-/-- The Gauss ceiling at `β = x`: `V(x) - 3/4 < 17(x - 1)²/(240S²)` for `x ≥ 13/6` (from
+/-- The rational ceiling at `β = x`: `V(x) - 3/4 < 17(x - 1)²/(240S²)` for `x ≥ 13/6` (from
 `V < V_G`, `ss_V_lt_VG`, and the sign of a cubic in `x`). -/
 private theorem ur_V_lt_17 {x : ℝ} (hx : 13 / 6 ≤ x) :
     m2Sec 1 x x - 3 / 4 < 17 * (x - 1) ^ 2 / (240 * (1 + x) ^ 2) := by

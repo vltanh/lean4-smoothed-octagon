@@ -165,13 +165,21 @@ theorem nsr_log_one_add_gt3 {x : ℝ} (hx : 0 < x) :
     field_simp
     ring
 
-/-- `log(10/3) > 119/100`. -/
-theorem nsr_log_ten_thirds : (119 / 100 : ℝ) < Real.log (10 / 3) := by
-  have := nsr_log_one_add_gt3 (x := 7 / 3) (by norm_num)
-  norm_num at this ⊢
-  linarith
+/-- The uniform reciprocal mean bounds every feasible duration ratio. -/
+private theorem duration_ratio_of_log {h : ℝ} (h0 : 0 < h)
+    (hl : Real.log (1+h) < h*(1+2*h)/(1+h)^2) : 3*h < 7 := by
+  have hrat := (nsr_log_one_add_jensen h0).trans hl
+  rw [div_lt_div_iff₀ (by positivity) (by positivity)] at hrat
+  have hpoly : 0 < h^2*(-h^2+h+3) := by nlinarith only [hrat]
+  have hquad : h^2-h-3 < 0 := by
+    have := (mul_pos_iff_of_pos_left (sq_pos_of_pos h0)).mp hpoly
+    linarith only [this]
+  by_contra hcon
+  have hbound : 7/3 ≤ h := by linarith only [hcon]
+  have hp : 0 ≤ (h-7/3)*(h+4/3) := mul_nonneg (by linarith only [hbound]) (by positivity)
+  nlinarith only [hquad,hp]
 
-/-- **The duration bound** `d < 7c/3`. -/
+/-- The duration bound follows from the secant extended to zero and uniform Jensen. -/
 theorem nsr_window_dur (W : M2Window) : 3 * W.d < 7 * W.c := by
   have ha := W.a_pos
   have hc : 0 < W.c := by linarith [W.a_lt_c]
@@ -196,37 +204,10 @@ theorem nsr_window_dur (W : M2Window) : 3 * W.d < 7 * W.c := by
       field_simp; ring
     have : Real.log (1 + h) / h < h * (1 + 2 * h) / (1 + h) ^ 2 / h := by linarith
     exact (div_lt_div_iff_of_pos_right hh0).1 this
-  by_contra hcon
-  push Not at hcon
-  have h73 : 7 / 3 ≤ h := by rw [hh, le_div_iff₀ hc]; linarith
-  -- `φ(h) = log(1 + h) - h(1 + 2h)/(1 + h)²` increases for `h > 1`
-  have hmono := nsr_strictMonoOn_Ici (a := 7 / 3)
-    (f := fun z => Real.log (1 + z) - z * (1 + 2 * z) / (1 + z) ^ 2)
-    (f' := fun z => z * (z - 1) / (1 + z) ^ 3) (fun z hz => ?_) (fun z hz => by
-      have : 0 < z - 1 := by linarith
-      have : 0 < z := by linarith
-      positivity)
-  · have hφ : Real.log (1 + 7 / 3) - 7 / 3 * (1 + 2 * (7 / 3)) / (1 + 7 / 3) ^ 2 ≤
-        Real.log (1 + h) - h * (1 + 2 * h) / (1 + h) ^ 2 :=
-      hmono.monotoneOn (Set.mem_Ici.2 le_rfl) (Set.mem_Ici.2 h73) h73
-    have := nsr_log_ten_thirds
-    norm_num at hφ
-    linarith
-  · have hz : 0 < 1 + z := by linarith
-    have h1 : HasDerivAt (fun z : ℝ => 1 + z) 1 z := by
-      simpa using (hasDerivAt_id z).const_add 1
-    have h3 : HasDerivAt (fun z : ℝ => z * (1 + 2 * z)) (1 * (1 + 2 * z) + z * 2) z := by
-      have hb : HasDerivAt (fun z : ℝ => 1 + 2 * z) 2 z := by
-        simpa using ((hasDerivAt_id z).const_mul (2 : ℝ)).const_add 1
-      exact (hasDerivAt_id' z).mul hb
-    have h4 : HasDerivAt (fun z : ℝ => (1 + z) ^ 2) (2 * (1 + z)) z := by
-      have := (h1.pow 2)
-      refine this.congr_deriv ?_
-      norm_num
-    have := (h1.log hz.ne').sub (h3.div h4 (pow_ne_zero 2 hz.ne'))
-    refine this.congr_deriv ?_
-    field_simp
-    ring
+  have hratio := duration_ratio_of_log hh0 hlog
+  have hbound : W.d / W.c < 7/3 := by change h < 7/3; linarith only [hratio]
+  rw [div_lt_iff₀ hc] at hbound
+  linarith only [hbound]
 
 /-- The duration bound in normalized form: `x < 7/3 - (10/3)t`. -/
 theorem nsr_window_dur_x (W : M2Window) : W.nx < 7 / 3 - 10 / 3 * W.nt := by

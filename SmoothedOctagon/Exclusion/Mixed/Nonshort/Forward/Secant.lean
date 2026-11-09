@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.Residual
+public import SmoothedOctagon.Exclusion.Mixed.WeightedLog
 
 /-!
 # Case M2, forward successor: rational upper bounds for the incoming secant
@@ -9,15 +10,14 @@ For the normalized incoming secant `v = Sec(t, 1 - t, t + x) = 1 + c²/W - c log
 (`c = 1 - t`, `W = 1 + x`, `p = t + x`, `g = 1 - cp/W²`):
 
 * `nsfVG`, `nsf_secN_lt_VG`: **the positive-integral bound** `v < v_G = g + (cx/W²)(T_G(x) - t)`,
-  `T_G = (90 - 19x²)/(12(x² + 10x + 15))`, from
-  `log(1 + x) > x(43x³ + 252x² + 390x + 180)/(12W²(x² + 10x + 15))` (`nsf_log_gt_G`, whose
-  difference has derivative `x⁶/(W³(x² + 10x + 15)²)`);
+  `T_G = (90 - 19x²)/(12(x² + 10x + 15))`, from the weighted reciprocal mean
+  and the positive ceiling difference;
 * `nsfV2`, `nsf_secN_lt_V2`: the polynomial bound with `T₀ < 1/2 - x/3 + x²/12`;
 * `nsfVq`, `nsf_secN_lt_Vq`: the Padé bound `v < V = 1 + c²/W - 3c(x + 2)/(x² + 6x + 6)`;
 * `nsf_VG_sub_g`: `v_G - g = (cx/W²)(T_G - t)`.
 
-Each bound is a monotone one-variable comparison of `log(1 + x)` with a rational function
-(derivative sign).
+The weighted reciprocal mean gives the first ceiling. The other logarithm comparisons
+use their positive derivatives.
 -/
 
 @[expose] public section
@@ -47,51 +47,36 @@ theorem nsf_log_gt_of {N D N' D' : ℝ → ℝ} (h0 : N 0 = 0) (hD : ∀ z, 0 �
     refine this.congr_deriv ?_
     simp
 
-/-- `log(1 + x) > x(43x³ + 252x² + 390x + 180)/(12(x + 1)²(x² + 10x + 15))` for `x > 0`. -/
-theorem nsf_log_gt_G {x : ℝ} (hx : 0 < x) :
-    x * (43 * x ^ 3 + 252 * x ^ 2 + 390 * x + 180) / (12 * (x + 1) ^ 2 * (x ^ 2 + 10 * x + 15)) <
-      Real.log (1 + x) := by
-  refine nsf_log_gt_of (N := fun z => z * (43 * z ^ 3 + 252 * z ^ 2 + 390 * z + 180))
-    (D := fun z => 12 * (z + 1) ^ 2 * (z ^ 2 + 10 * z + 15))
-    (N' := fun z => 172 * z ^ 3 + 756 * z ^ 2 + 780 * z + 180)
-    (D' := fun z => 24 * (z + 1) * (z ^ 2 + 10 * z + 15) + 12 * (z + 1) ^ 2 * (2 * z + 10))
-    (by norm_num) (fun z hz => by positivity) (fun z => ?_) (fun z => ?_) (fun z hz => ?_) hx
-  · have h := ((((hasDerivAt_pow 4 z).const_mul (43 : ℝ)).add ((hasDerivAt_pow 3 z).const_mul (252 : ℝ))).add
-      ((hasDerivAt_pow 2 z).const_mul (390 : ℝ))).add ((hasDerivAt_id z).const_mul (180 : ℝ))
-    refine (h.congr_deriv (by norm_num; ring)).congr_of_eventuallyEq (Filter.Eventually.of_forall fun w => ?_)
-    simp; ring
-  · have h := ((((((hasDerivAt_pow 4 z).const_mul (12 : ℝ)).add ((hasDerivAt_pow 3 z).const_mul (144 : ℝ))).add
-      ((hasDerivAt_pow 2 z).const_mul (432 : ℝ))).add ((hasDerivAt_id z).const_mul (480 : ℝ))).add_const (180 : ℝ))
-    refine (h.congr_deriv (by norm_num; ring)).congr_of_eventuallyEq (Filter.Eventually.of_forall fun w => ?_)
-    simp; ring
-  · have e : 1 / (1 + z) - ((172 * z ^ 3 + 756 * z ^ 2 + 780 * z + 180) *
-        (12 * (z + 1) ^ 2 * (z ^ 2 + 10 * z + 15)) - z * (43 * z ^ 3 + 252 * z ^ 2 + 390 * z + 180) *
-        (24 * (z + 1) * (z ^ 2 + 10 * z + 15) + 12 * (z + 1) ^ 2 * (2 * z + 10))) /
-        (12 * (z + 1) ^ 2 * (z ^ 2 + 10 * z + 15)) ^ 2 =
-        z ^ 6 / ((z + 1) ^ 3 * (z ^ 2 + 10 * z + 15) ^ 2) := by
-      have : (1 + z) ≠ 0 := by linarith
-      have : (z + 1) ≠ 0 := by linarith
-      have : z ^ 2 + 10 * z + 15 ≠ 0 := by positivity
-      field_simp
-      ring
-    rw [e]; positivity
+/-- The incoming secant lies below the weighted-Jensen secant. -/
+theorem mix_incoming_lt_weighted {t x : ℝ} (hx : 0 < x) (ht : t < 1) :
+    nsrSecN t x < 1+(1-t)^2/(1+x)-(1-t)*mixLogWeighted x/x := by
+  have hc : 0 < 1-t := by linarith only [ht]
+  have h := div_lt_div_of_pos_right (mul_lt_mul_of_pos_left (mix_log_weighted_lt hx) hc) hx
+  unfold nsrSecN
+  linarith only [h]
 
-/-- **The positive-integral secant bound** `v < v_G`, from `nsf_log_gt_G`. -/
-theorem nsf_secN_lt_VG {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nsrSecN t x < nsfVG t x := by
-  have hl := nsf_log_gt_G hx
-  have h1 : 0 < 1 - t := by linarith
-  have e : nsfVG t x - nsrSecN t x = (1 - t) / x * (Real.log (1 + x) -
-      x * (43 * x ^ 3 + 252 * x ^ 2 + 390 * x + 180) / (12 * (x + 1) ^ 2 * (x ^ 2 + 10 * x + 15))) := by
-    unfold nsfVG nsrSecN
-    have : (1 + x) ≠ 0 := by linarith
-    have : (x + 1) ≠ 0 := by linarith
-    have : x ^ 2 + 10 * x + 15 ≠ 0 := by positivity
-    field_simp
-    ring
-  have : 0 < (1 - t) / x * (Real.log (1 + x) -
-      x * (43 * x ^ 3 + 252 * x ^ 2 + 390 * x + 180) / (12 * (x + 1) ^ 2 * (x ^ 2 + 10 * x + 15))) :=
-    mul_pos (div_pos h1 hx) (by linarith)
-  linarith
+/-- The positive difference between the rational ceiling and the weighted-Jensen secant. -/
+theorem mix_incoming_ceiling_gap {t x : ℝ} (hx : 0 < x) :
+    nsfVG t x-(1+(1-t)^2/(1+x)-(1-t)*mixLogWeighted x/x) =
+      (1-t)*x^6/(12*(1+x)^2*(x+2)*(x^2+10*x+10)*(x^2+10*x+15)) := by
+  rw [mixLogWeighted_eq hx]
+  unfold nsfVG
+  have hW : 0 < 1+x := by positivity
+  have hX : 0 < x+2 := by positivity
+  have hQ : 0 < x^2+10*x+10 := by positivity
+  have hR : 0 < x^2+10*x+15 := by positivity
+  field_simp [hx.ne',hW.ne',hX.ne',hQ.ne',hR.ne']
+  ring
+
+/-- The incoming rational ceiling follows from weighted Jensen and its positive gap. -/
+theorem nsf_secN_lt_VG {t x : ℝ} (hx : 0 < x) (ht : t < 1) :
+    nsrSecN t x < nsfVG t x := by
+  have hv := mix_incoming_lt_weighted hx ht
+  have hg := mix_incoming_ceiling_gap (t := t) hx
+  have hc : 0 < 1-t := by linarith only [ht]
+  have hp : 0 < (1-t)*x^6/(12*(1+x)^2*(x+2)*(x^2+10*x+10)*(x^2+10*x+15)) := by
+    positivity
+  linarith only [hv,hg,hp]
 
 /-- `v_G - g = (cx/W²)(T_G(x) - t)`. -/
 theorem nsf_VG_sub_g (t x : ℝ) :

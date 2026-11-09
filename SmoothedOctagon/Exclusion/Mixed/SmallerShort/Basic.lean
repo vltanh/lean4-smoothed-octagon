@@ -4,6 +4,7 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Ceiling
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Order
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Secant
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.ReverseScale
+public import SmoothedOctagon.Exclusion.Mixed.WeightedLog
 
 /-!
 # Smaller-short window: shared scalar functions
@@ -187,8 +188,8 @@ noncomputable def ssUl (x be : ℝ) : ℝ :=
 /-- `u₀ = 3/4 + (x - 1)²/(12(x + 1)²)`. -/
 noncomputable def ssU0 (x : ℝ) : ℝ := 3 / 4 + (x - 1) ^ 2 / (12 * (x + 1) ^ 2)
 
-/-- The Gauss ceiling of `V`: `V_G = 3/4 + (x - 1)²(71x² + 48x + 1)/(96x(x + 1)(13x² + 14x + 3))`
-(the Gauss ceiling of `Sec(1, x, β)` at `β = x`). -/
+/-- The rational ceiling of `V`: `V_G = 3/4 + (x - 1)²(71x² + 48x + 1)/(96x(x + 1)(13x² + 14x + 3))`
+(the central ceiling of `Sec(1, x, β)` at `β = x`). -/
 noncomputable def ssVG (x : ℝ) : ℝ :=
   3 / 4 + (x - 1) ^ 2 * (71 * x ^ 2 + 48 * x + 1) / (96 * x * (x + 1) * (13 * x ^ 2 + 14 * x + 3))
 
@@ -394,71 +395,58 @@ theorem ss_u_le_V {x be : ℝ} (hx : 1 < x) (hxb : x ≤ be) (hge : m2g x be ≤
   have h3 : (x - 1) * m2Sec 1 x be ≤ (x - 1) * m2Sec 1 x x := by linarith
   exact le_of_mul_le_mul_left h3 (by linarith)
 
-/-- The Gauss logarithm bound
-`log(1 + z) > z(43z³ + 252z² + 390z + 180)/(12(1 + z)²(z² + 10z + 15))` for `z > 0`
-(derivative of the difference `z⁶/((1 + z)³(z² + 10z + 15)²)`). -/
-private theorem ss_log_gauss {z : ℝ} (hz : 0 < z) :
-    z * (43 * z ^ 3 + 252 * z ^ 2 + 390 * z + 180) / (12 * (1 + z) ^ 2 * (z ^ 2 + 10 * z + 15)) <
-      log (1 + z) := by
-  have h := ss_lt_of_deriv (x := 0) (y := z)
-    (f := fun s => log (1 + s) - s * (43 * s ^ 3 + 252 * s ^ 2 + 390 * s + 180) /
-      (12 * (1 + s) ^ 2 * (s ^ 2 + 10 * s + 15)))
-    (f' := fun s => s ^ 6 / ((1 + s) ^ 3 * (s ^ 2 + 10 * s + 15) ^ 2)) hz (fun s hs => ?_)
-    (fun s hs => by have := hs.1; positivity)
-  · simp only [add_zero, log_one, zero_mul, zero_div, sub_zero] at h
-    linarith
-  have hs0 : 0 ≤ s := hs.1
-  have h1 : HasDerivAt (fun s : ℝ => 1 + s) 1 s := by simpa using (hasDerivAt_id s).const_add 1
-  have hN : HasDerivAt (fun s : ℝ => s * (43 * s ^ 3 + 252 * s ^ 2 + 390 * s + 180))
-      (172 * s ^ 3 + 756 * s ^ 2 + 780 * s + 180) s := by
-    have hp : HasDerivAt (fun s : ℝ => 43 * s ^ 3 + 252 * s ^ 2 + 390 * s + 180)
-        (43 * (3 * s ^ 2) + 252 * (2 * s) + 390) s := by
-      have := (((((hasDerivAt_id' s).pow 3).const_mul (43 : ℝ)).add
-        (((hasDerivAt_id' s).pow 2).const_mul (252 : ℝ))).add
-        ((hasDerivAt_id' s).const_mul (390 : ℝ))).add_const (180 : ℝ)
-      refine this.congr_deriv ?_
-      push_cast; ring
-    refine ((hasDerivAt_id' s).mul hp).congr_deriv ?_
-    ring
-  have hD : HasDerivAt (fun s : ℝ => 12 * (1 + s) ^ 2 * (s ^ 2 + 10 * s + 15))
-      (12 * (2 * (1 + s)) * (s ^ 2 + 10 * s + 15) + 12 * (1 + s) ^ 2 * (2 * s + 10)) s := by
-    have hq : HasDerivAt (fun s : ℝ => s ^ 2 + 10 * s + 15) (2 * s + 10) s := by
-      have := ((((hasDerivAt_id' s).pow 2).add
-        ((hasDerivAt_id' s).const_mul (10 : ℝ))).add_const (15 : ℝ))
-      refine this.congr_deriv ?_
-      push_cast; ring
-    have := ((h1.pow 2).const_mul (12 : ℝ)).mul hq
-    refine this.congr_deriv ?_
-    simp only [Pi.pow_apply]; push_cast; ring
-  have hDpos : 12 * (1 + s) ^ 2 * (s ^ 2 + 10 * s + 15) ≠ 0 := by positivity
-  have := (h1.log (by positivity)).sub (hN.div hD hDpos)
-  refine this.congr_deriv ?_
+/-- The central secant in its symmetric coordinate. -/
+theorem mix_central_secant_eq {x : ℝ} (hx : 1 < x) :
+    m2Sec 1 x x=3/4+(1/2+((x-1)/(x+1))/4-
+      (1+(x-1)/(x+1))*log (1+(x-1)/(x+1))/(2*((x-1)/(x+1)))) := by
+  have hx0 : 0 < x := by linarith only [hx]
+  have hxm : x-1 ≠ 0 := by linarith only [hx]
+  have hxp : x+1 ≠ 0 := by positivity
+  have hid : 1+(x-1)/(x+1)=(x+x)/(1+x) := by field_simp; ring
+  rw [m2Sec_of_ne hx.ne,hid]
   field_simp
   ring
 
-/-- `V(x) < V_G(x)`: `ss_log_gauss` at `z = (x - 1)/(x + 1)`, `1 + z = 2x/(x + 1)`, and
-`V_G - V = (x/(x - 1))(log(1 + z) - [Gauss bound])`. -/
-private theorem ss_V_lt_VG_aux {x : ℝ} (hx : 1 < x) : m2Sec 1 x x < ssVG x := by
-  have hx0 : 0 < x := by linarith
-  have hx1 : 0 < x - 1 := by linarith
-  have hz0 : 0 < (x - 1) / (x + 1) := div_pos hx1 (by linarith)
-  have hl := ss_log_gauss hz0
-  have e1 : 1 + (x - 1) / (x + 1) = (x + x) / (1 + x) := by field_simp; ring
-  rw [e1] at hl
-  rw [m2Sec_of_ne hx.ne]
-  have key : ssVG x = 1 + x ^ 2 / ((1 + x) * (x + x)) - x / (x - 1) *
-      ((x - 1) / (x + 1) * (43 * ((x - 1) / (x + 1)) ^ 3 + 252 * ((x - 1) / (x + 1)) ^ 2 +
-        390 * ((x - 1) / (x + 1)) + 180) / (12 * ((x + x) / (1 + x)) ^ 2 *
-        (((x - 1) / (x + 1)) ^ 2 + 10 * ((x - 1) / (x + 1)) + 15))) := by
-    unfold ssVG
-    have h1 : x + 1 ≠ 0 := by linarith
-    have h2 : x - 1 ≠ 0 := by linarith
-    have h3 : 13 * x ^ 2 + 14 * x + 3 ≠ 0 := by positivity
-    field_simp
-    ring
-  rw [key]
-  have := mul_lt_mul_of_pos_left hl (div_pos hx0 hx1)
-  linarith
+/-- The exact positive difference between the central rational and Jensen ceilings. -/
+theorem mix_central_ceiling_gap {x : ℝ} (hx : 1 < x) :
+    ssVG x-3/4-(1/2+((x-1)/(x+1))/4-
+      (1+(x-1)/(x+1))*mixLogWeighted ((x-1)/(x+1))/(2*((x-1)/(x+1)))) =
+    (x-1)^6/(96*x*(3*x+1)*(13*x^2+14*x+3)*(21*x^2+18*x+1)) := by
+  have hx0 : 0 < x := by linarith only [hx]
+  have hxm : 0 < x-1 := by linarith only [hx]
+  have hxp : 0 < x+1 := by positivity
+  have hz0 : 0 < (x-1)/(x+1) := div_pos hxm hxp
+  have h31 : 0 < 3*x+1 := by positivity
+  have h13 : 0 < 13*x^2+14*x+3 := by positivity
+  have h21 : 0 < 21*x^2+18*x+1 := by positivity
+  have hQz : 0 < ((x-1)/(x+1))^2+10*((x-1)/(x+1))+10 := by positivity
+  rw [mixLogWeighted_eq hz0]
+  unfold ssVG
+  field_simp [hx0.ne',hxm.ne',hxp.ne',h31.ne',h13.ne',h21.ne',hQz.ne',hz0.ne']
+  ring
+
+/-- The central rational ceiling follows from the same weighted reciprocal mean. -/
+private theorem ss_V_lt_VG_aux {x : ℝ} (hx : 1 < x) :
+    m2Sec 1 x x < ssVG x := by
+  have hx0 : 0 < x := by linarith only [hx]
+  have hxm : 0 < x-1 := by linarith only [hx]
+  have hxp : 0 < x+1 := by positivity
+  let z := (x-1)/(x+1)
+  have hz0 : 0 < z := div_pos hxm hxp
+  have hlog := mix_log_weighted_lt hz0
+  have hc : 0 < (1+z)/(2*z) := by positivity
+  have hm := mul_lt_mul_of_pos_left hlog hc
+  simp only [div_mul_eq_mul_div] at hm
+  have hv : m2Sec 1 x x <
+      3/4+(1/2+z/4-(1+z)*mixLogWeighted z/(2*z)) := by
+    rw [mix_central_secant_eq hx]
+    change 3/4+(1/2+z/4-(1+z)*log (1+z)/(2*z)) < _
+    linarith only [hm]
+  have hg := mix_central_ceiling_gap hx
+  have hp : 0 < (x-1)^6/(96*x*(3*x+1)*(13*x^2+14*x+3)*(21*x^2+18*x+1)) := by
+    positivity
+  change ssVG x-3/4-(1/2+z/4-(1+z)*mixLogWeighted z/(2*z)) = _ at hg
+  linarith only [hv,hg,hp]
 
 /-- **`V ≤ V̄`**: `Sec(1, x, x) ≤ 3/4 + 2(x - 1)²/((x + 1)(35x + 13))`
 for `x > 1`, from `V < V_G` (`ss_V_lt_VG`) and
@@ -477,9 +465,7 @@ theorem ss_V_le_Vbar {x : ℝ} (hx : 1 < x) : m2Sec 1 x x ≤ ssVbar x := by
     positivity
   linarith
 
-/-- **The Gauss ceiling at `β = x`**:
-`Sec(1, x, x) < V_G(x)` for `x > 1` (`log(1 + w) > w(43w³ + 252w² + 390w + 180)/(12(1 + w)²(w² +
-10w + 15))`, derivative of the difference `w⁶/((1 + w)³(w² + 10w + 15)²)`). -/
+/-- The central bridge ceiling at `β = x`, from weighted Jensen and a positive gap. -/
 theorem ss_V_lt_VG {x : ℝ} (hx : 1 < x) : m2Sec 1 x x < ssVG x := by
   exact ss_V_lt_VG_aux hx
 

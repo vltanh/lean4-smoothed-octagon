@@ -291,6 +291,7 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Order
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Residual
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Secant
 import all SmoothedOctagon.Exclusion.Mixed.TurnSecant
+import all SmoothedOctagon.Exclusion.Mixed.WeightedLog
 import all SmoothedOctagon.Exclusion.Mixed.Window
 import all SmoothedOctagon.Exclusion.Mixed.WindowData
 import all SmoothedOctagon.Exclusion.Mixed.Wire

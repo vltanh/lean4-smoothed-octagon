@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 117{,}000 lines in 377 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 117{,}000 lines in 378 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -50,8 +50,8 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 
 \subsection{Scalar proof replacement status}\label{app:formal-scalar}
 
-Groups 1--24 are the current scope: 17 are complete and committed,
-three are in progress, and four are pending. Groups 25--38 are deferred.
+Groups 1--24 are the current scope: 18 are complete and committed,
+three are in progress, and three are pending. Groups 25--38 are deferred.
 Group numbers stay fixed as their status changes.
 
 \begin{center}
@@ -59,9 +59,9 @@ Group numbers stay fixed as their status changes.
 \toprule
 Status & Count & Group numbers\\
 \midrule
-Complete & 17 & 1--5, 7--8, 13--22\\
+Complete & 18 & 1--5, 7--8, 11, 13--22\\
 In progress & 3 & 6, 9--10\\
-Pending & 4 & 11--12, 23--24\\
+Pending & 3 & 12, 23--24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
@@ -74,31 +74,26 @@ exclusion proofs remains.
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
 \item[6.] \emph{Forward sum tangent endpoints.}
 The paired reciprocal integrals, logarithm identity, fixed tangent and original
-row comparison are proved. The zero-factor endpoint is negative.
-Remaining: prove the other endpoint signs and update the callers with group~10
+row comparison are proved. The full lower endpoint is negative.
+Remaining: prove the upper endpoint signs and update the callers with group~10
 to use the paper's norm-sum threshold $1/32$; Lean currently uses $1/35$.
 
 \item[9.] \emph{Forward asymmetric neighbour.}
-The opposite-floor comparison and positive curvature expression are proved.
-Remaining: identify that expression with the original row's second derivative,
-bound the boundary logarithmic chord loss by reciprocal tangent remainders
-and a completed square, and update the two endpoint proofs.
+The normalized original row is convex in the neighbour shape, and its
+unit-shape boundary is negative. Remaining: prove convexity in the scale
+parameter on the symmetric boundary, close its endpoint and logarithmic-chord
+comparisons, and update the physical callers.
 
 \item[10.] \emph{Forward Casimir and central pairing.}
-The norm-polygon reduction, shape equalization and reciprocal-kernel derivative
-bounds are proved. Remaining: close the scalar-curve signs and prove
-central-pairing positivity from the integral of $f'$.
-Update the callers with groups~2 and~6 to use the paper's conditional lower
-bound $9193/50000$; Lean currently uses $23/125$.
+The norm polygon, shape equalization, scalar-curve signs and central-pairing
+positivity from the integral of $f'$ are proved. Remaining: verify and integrate
+the combined proof, and update the callers with groups~2 and~6 to use the
+paper's conditional lower bound $9193/50000$; Lean currently uses $23/125$.
 \end{enumerate}
 
-\medskip\noindent\textbf{Pending (4).}
+\medskip\noindent\textbf{Pending (3).}
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
-
-\item[11.] \emph{Mixed norm ceilings and duration.}
-Apply the proved logarithm bound to the incoming and central bridge-norm
-ceilings, and integrate the compiled Jensen-based duration proof.
 
 \item[12.] \emph{Mixed transported ceiling for $t<2/5$.}
 Reduce scale and increase the middle margin to reach one boundary.
@@ -118,7 +113,7 @@ from group~2.
 Update the final score callers together with group~23.
 \end{enumerate}
 
-\newpage\noindent\textbf{Complete and committed (17).}
+\newpage\noindent\textbf{Complete and committed (18).}
 These groups are integrated into the paper and Lean. Each has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
@@ -152,6 +147,11 @@ The endpoint value follows from the analytic boundary comparison.
 
 \item[8.] \emph{Forward symmetric neighbour slope.}
 The partial-slope estimate, tangent endpoint and global comparison hold for $h\ge h_0$.
+
+\item[11.] \emph{Mixed norm ceilings and duration.}
+A weighted reciprocal mean gives both incoming and central bridge-norm
+ceilings through exact positive gaps. Uniform Jensen gives the duration
+bound $3d<7c$.
 
 \item[13.] \emph{Smaller-short reverse-centre scale.}
 The comparison holds on the full domain $\rho<1/4$.
@@ -365,7 +365,7 @@ Result & Lean declarations\\
 \cref{prop:m2-forward-steps} & \lean{nsf_low_ratio}, \lean{nsf_small_gap_j}, \lean{nsf_small_gap} \\
 \cref{thm:m2-forward} & \lean{m2_forward_exclusion} \\
 \cref{lem:m2-secants} & \lean{nsr_sec_swap}, \lean{nsr_sec_start}, \lean{nsr_m2F_eq_sec}, \lean{nsr_sec_lt_chord}, \lean{nsr_turn_floor} \\
-\cref{lem:m2-logs} & \lean{nsr_log_one_add_gt}, \lean{nsr_secN_lt_vbar}, \lean{nsr_log_lt_Lp}, \lean{nsr_m2F_gt_Fl}, \lean{nsr_log_one_add_jensen}, \lean{nsr_secN_lt_jensen}, \lean{nsf_log_gt_G}, \lean{nsf_secN_lt_VG}, \lean{nsf_secN_lt_Vq}, \lean{nsr_t_lt_T} \\
+\cref{lem:m2-logs} & \lean{nsr_log_one_add_gt}, \lean{nsr_secN_lt_vbar}, \lean{nsr_log_lt_Lp}, \lean{nsr_m2F_gt_Fl}, \lean{mix_log_weighted_lt}, \lean{nsr_log_one_add_jensen}, \lean{nsr_secN_lt_jensen}, \lean{nsf_secN_lt_VG}, \lean{nsf_secN_lt_Vq}, \lean{nsr_t_lt_T} \\
 \cref{lem:m2-relax} & \lean{nsrNv_nonpos}, \lean{nsrNL_nonpos}, \lean{nsr_N_pos_of_relax} \\
 \cref{lem:m2-centre-gap} & \lean{nsr_centre_gap}, \lean{nsr_centre_gap_k}, \lean{nsr_gap_chord_pos}, \lean{nsr_gap_normalize} \\
 \cref{lem:m2-high-t} & New analytic proof in the text; compare \lean{nsr_high_t'} \\
@@ -387,6 +387,7 @@ Result & Lean declarations\\
 \eqref{eq:ss-bridge-frame}, \eqref{eq:ss-angle-data} & \lean{df_alg_m}, \lean{df_alg_traces}, \lean{SmallerShort.Point.AA}, \lean{SmallerShort.Point.BB} \\
 \cref{thm:m2-smaller-short} & \lean{m2_smallerShort_exclusion} \\
 \cref{lem:ss-first} & \lean{M2Short.ss_C_le_B}, \lean{SmallerShortData.u_le_V}, \lean{ss_V_lt_limit}, \lean{M2Short.ss_u_le}, \lean{SmallerShortData.be_le_al_x}, \lean{SmallerShortData.root_zero}, \lean{SmallerShortData.q_le_qc}, \lean{SmallerShortData.q_lt_seventh} \\
+\cref{app:ss-secant} & \lean{ss_V_lt_VG}, \lean{ss_V_le_Vbar}, \lean{mix_log_weighted_lt} \\
 \cref{lem:ss-orders} & \lean{ss_strong_order}, \lean{ss_upper_order_54}, \lean{ss_upper_order_98}, \lean{ss_small_upper_order}, \lean{ss_quad_order}, \lean{SmallerShortData.strong_box} \\
 \cref{prop:ss-S0} & \lean{M2Short.ratio_lt_twelve_fifths}, \lean{SmallerShortData.ratio_lt_twelve_fifths}, \lean{lgr_D_pos}, \lean{lgr_pairing} \\
 \cref{prop:ss-S1} & \lean{M2Short.two_lt_ratio}, \lean{SmallerShortData.two_lt_ratio}, \lean{SmallerShortData.lr_cap_env} \\
