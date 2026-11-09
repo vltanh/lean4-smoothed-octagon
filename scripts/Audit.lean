@@ -327,6 +327,7 @@ import all SmoothedOctagon.Foundations.LowCostWinding
 import all SmoothedOctagon.Foundations.Normalization
 import all SmoothedOctagon.Foundations.Problem
 import all SmoothedOctagon.Foundations.RadialRegularity
+import all SmoothedOctagon.Foundations.ReciprocalMidpoint
 import all SmoothedOctagon.Foundations.ReverseComparison
 import all SmoothedOctagon.Foundations.ReverseGeometry
 import all SmoothedOctagon.Foundations.SingularArc

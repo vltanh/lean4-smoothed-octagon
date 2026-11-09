@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 116{,}000 lines in 372 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 116{,}000 lines in 373 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -51,8 +51,8 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 \subsection{The scalar estimates}\label{app:formal-scalar}
 
 \noindent\textit{Replacement status (working draft).}
-Of the 24 groups in the current pass, 13 are complete and committed
-and 11 remain. Groups 25--38 are deferred.
+Of the 24 groups in the current pass, 14 are complete and committed,
+one is in progress, and nine remain. Groups 25--38 are deferred.
 The numbers identify the same groups throughout this list.
 
 \begin{center}
@@ -60,15 +60,24 @@ The numbers identify the same groups throughout this list.
 \toprule
 Status & Count & Group numbers\\
 \midrule
-Complete & 13 & 1, 7--8, 13--22\\
-In progress & 0 & ---\\
-Pending & 11 & 2--6, 9--12, 23--24\\
+Complete & 14 & 1, 4, 7--8, 13--22\\
+In progress & 1 & 5\\
+Pending & 9 & 2--3, 6, 9--12, 23--24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\medskip\noindent\textbf{Pending: 11 groups.}
+\medskip\noindent\textbf{In progress: 1 group.}
+
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
+\item[5.] \emph{Terminal five-piece comparison.}
+The integral proof of strict concavity, the circle inequality and the strict
+midpoint logarithm bound compile in drafts. Integration into the terminal
+density theorem and full verification remain.
+\end{enumerate}
+
+\medskip\noindent\textbf{Pending: 9 groups.}
 Each item gives the next proof or integration step.
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
@@ -85,13 +94,6 @@ Minimize the reduced Gram expression at the symmetric centre and apply one
 logarithm bound, replacing the tangent intervals and coefficient tables.
 Align the domains $\gamma^2\le5/27$ in the paper and
 $\gamma^2\le97969/529200$ in Lean through group~2.
-
-\item[4.] \emph{M1 two-centre product.}
-Integrate the exact bound retaining $(1+\sqrt2)^2$ through the comparison theorem.
-
-\item[5.] \emph{Terminal five-piece comparison.}
-Formalize the integral proof of concavity and the midpoint logarithm bound
-used in the density comparison.
 
 \item[6.] \emph{Forward sum tangent endpoints.}
 Formalize the fixed tangent, paired reciprocal integrals and endpoint signs.
@@ -131,7 +133,7 @@ Formalize the corner arithmetic and the direct octagon-cost comparison from
 group~2, replacing the quadratic norm floor, polynomial angle bounds and box signs.
 \end{enumerate}
 
-\medskip\noindent\textbf{Complete and committed: 13 groups.}
+\medskip\noindent\textbf{Complete and committed: 14 groups.}
 Each group below is integrated into the paper and Lean and has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
@@ -139,6 +141,12 @@ Lean build, standard-axiom audit, paper check and independent source review.
 \item[1.] \emph{Symbolic reduction.}
 Symbolic bounds on an arbitrary compact region prove the clearance and budget
 estimates, with the equilibrium, projective and finite-switch arguments.
+
+\item[4.] \emph{M1 two-centre product.}
+The exact product bound $(1+\sqrt2)^2a^2$ and the positive centre factors give
+$a^2<4/(5+4\sqrt2)$ and a period cost greater than $\sqrt3(2\sqrt2-1)$.
+The strict reciprocal midpoint bound for $\log2$ compares this cost directly
+with the octagon cost.
 
 \item[7.] \emph{Forward symmetric neighbour value.}
 The endpoint value follows from the analytic boundary comparison.
@@ -313,7 +321,7 @@ Result & Lean declarations\\
 \cref{prop:m1-winding} & \lean{m1_winding}, \lean{wind_winding_aux}, \lean{wind_polar}, \lean{wind_centre}, \lean{wind_track_range}, \lean{wind_seam} \\
 \cref{lem:m1-recurrence} & \lean{CostateCycle.m1_next_centre}, \lean{CostateCycle.next_centre_local}, \lean{CostateCycle.cross_mm}, \lean{CostateCycle.pre_N} \\
 \cref{lem:m1-euler} & \lean{CostateCycle.euler_sum}, \lean{CostateCycle.rawCost_eq}, \lean{elGa_euler} \\
-\cref{prop:m1-two-centre} & \lean{m1_two_centre}, \lean{m1_two_centre_numeric} \\
+\cref{prop:m1-two-centre} & \lean{m1_two_centre}, \lean{m1_two_centre_bounds}, \lean{m1_octagonCost_lt_two_centre} \\
 \cref{lem:m1-log} & \lean{ag_half_sub_inv_le_log}, \lean{ag_sigma_superadd} \\
 \cref{lem:m1-one-switch} & \lean{ag_phi_le} \\
 \cref{lem:m1-reduce} & steps of the proof of \lean{m1_angle_gap} \\

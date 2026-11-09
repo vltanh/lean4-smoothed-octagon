@@ -1,19 +1,19 @@
 module
 
 public import SmoothedOctagon.Exclusion.ShortRuns.Centre
+public import SmoothedOctagon.Foundations.ReciprocalMidpoint
 
 /-!
 # Case M1: the two-centre period
 
-A normal period with the sign word `(− − +)²` has cost `C > 2√6 - √3 > A_oct`, so it is not
-competitive.
+A normal period with the sign word `(− − +)²` has cost greater than
+`√3(2√2 - 1)`, which exceeds the octagon cost.
 
-Proof: the switch vectors `z_j` right after the two centres satisfy the Jacobi recurrence
-`K_{j+1} z_{j+1} = -K_j z_{j-1} + D_j z_j` (`CostateCycle.next_centre_local`) and close up to the
-monodromy sign `σ = ±1` (`CostateCycle.pre_N`); with two centres this forces `σ = -1`, `K_0 = K_1`
-and `D_0 = D_1 = 0`, hence `e_0 + e_1 = 0`. The Euler identity (`CostateCycle.euler_sum`) then gives
-the raw cost `32/K`, i.e. `C = 2√3 (1 - a²/K)`, and the positive centre factors give
-`K/a² > 6 + 4√2`.
+The two-centre Jacobi recurrence forces opposite monodromy, equal active margins
+and vanishing diagonal terms. Euler's identity gives the cost `8√3/K`, with
+`K = a² + 4`. The bridge products are at least `(1 + √2)² a²`; multiplying the
+strict centre-factor bounds gives `a² < 4/(5 + 4√2)`. The reciprocal midpoint
+inequality completes the exact comparison with the octagon.
 
 ## Main API
 
@@ -24,7 +24,7 @@ the raw cost `32/K`, i.e. `C = 2√3 (1 - a²/K)`, and the positive centre facto
 
 namespace SmoothedOctagon
 
-open SmoothedPolygons Set
+open Real SmoothedPolygons Set
 open scoped Matrix
 
 namespace CostateCycle
@@ -82,53 +82,120 @@ theorem m1_sum_six (f : ℤ → ℝ) (c : ℤ) :
   rw [add_comm (1 : ℤ) c, add_comm (2 : ℤ) c, add_comm (3 : ℤ) c, add_comm (4 : ℤ) c,
     add_comm (5 : ℤ) c]
 
-/-- `x z = x + z + 1`, `x, z > 1` give `x z > 5.828` (`x z ≥ (1 + √2)²`). -/
-theorem m1_xz_bound {x z : ℝ} (hx : 1 < x) (hz : 1 < z) (h : x * z = x + z + 1) :
-    5828 / 1000 < x * z := by
-  have h2 : (x - 1) * (z - 1) = 2 := by linarith
-  have h8 : 8 ≤ (x + z - 2) ^ 2 := by nlinarith [sq_nonneg (x - z)]
-  have hs : 2828 / 1000 < x + z - 2 := by nlinarith
-  linarith
-
-/-- `(b - a)(c - a) = 2a²`, `b, c > a > 0` give `b c > 5.828 a²`, since
-`b c = 3a² + a(b + c - 2a)` and `(b + c - 2a)² ≥ 4(b - a)(c - a) = 8a²`. -/
+/-- The bridge relation gives the sharp product bound and exact centre-factor identity. -/
 theorem m1_bc_bound {a b c : ℝ} (ha : 0 < a) (hb : a < b) (hc : a < c)
-    (h : (b - a) * (c - a) = 2 * a ^ 2) : 5828 / 1000 * a ^ 2 < b * c := by
-  have h8 : 8 * a ^ 2 ≤ (b + c - 2 * a) ^ 2 := by nlinarith [sq_nonneg (b - c)]
-  have hs : 2828 / 1000 * a < b + c - 2 * a := by
-    by_contra hcon; push Not at hcon
-    have h0 : 0 ≤ b + c - 2 * a := by linarith
-    nlinarith
-  nlinarith
+    (h : (b-a)*(c-a) = 2*a^2) :
+    (1+sqrt 2)^2*a^2 ≤ b*c ∧ (a+b)*(a+c) = 2*b*c := by
+  have hs0 : 0 ≤ sqrt (2:ℝ) := sqrt_nonneg _
+  have hs2 : (sqrt (2:ℝ))^2 = 2 := sq_sqrt (by norm_num)
+  have hs : 0 ≤ b+c-2*a := by linarith only [hb,hc]
+  have h8 : 8*a^2 ≤ (b+c-2*a)^2 := by nlinarith only [h,sq_nonneg (b-c)]
+  have hroot : (2*sqrt 2*a)^2 = 8*a^2 := by
+    calc
+      (2*sqrt 2*a)^2 = 4*(sqrt (2:ℝ))^2*a^2 := by ring
+      _ = 8*a^2 := by rw [hs2]; ring
+  have hsum : 2*sqrt 2*a ≤ b+c-2*a :=
+    (sq_le_sq₀ (by positivity) hs).mp (by rw [hroot]; exact h8)
+  have hr : (1+sqrt (2:ℝ))^2 = 3+2*sqrt 2 := by nlinarith only [hs2]
+  constructor
+  · rw [hr]
+    have hm := mul_le_mul_of_nonneg_left hsum ha.le
+    nlinarith only [h,hm]
+  · nlinarith only [h]
 
-/-- **The two-centre cost bound**: with `K = a² + 4`, the bridge relations
-`(b_j - a)(c_j - a) = 2a²`, the strict centre minima and the positive centre factors,
-`8√3/K > 3.127` (in fact `C = 8√3/K > 2√6 - √3`). -/
-theorem m1_two_centre_numeric {a b₀ c₀ b₁ c₁ K : ℝ} (ha : 0 < a) (hK : K = a ^ 2 + 4)
+/-- Dimensionless version of the exact product bound. -/
+theorem m1_xz_bound {x z : ℝ} (hx : 1 < x) (hz : 1 < z)
+    (h : x*z = x+z+1) : (1+sqrt 2)^2 ≤ x*z := by
+  have hh : (x-1)*(z-1) = 2*(1:ℝ)^2 := by nlinarith only [h]
+  simpa using (m1_bc_bound (by norm_num : (0:ℝ) < 1) hx hz hh).1
+
+/-- The positive centre factors bound the margin and exact cost. -/
+theorem m1_two_centre_bounds {a b₀ c₀ b₁ c₁ K : ℝ}
+    (ha : 0 < a) (hK : K = a^2+4)
     (m1 : a < c₁) (m2 : a < b₀) (m3 : a < c₀) (m4 : a < b₁)
-    (hD0 : (b₀ - a) * (c₀ - a) = 2 * a ^ 2) (hD1 : (b₁ - a) * (c₁ - a) = 2 * a ^ 2)
-    (l0 : (a + c₁) * (a + b₀) < K) (l1 : (a + c₀) * (a + b₁) < K) : 3.127 * K < 8 * √3 := by
-  have bc0 := m1_bc_bound ha m2 m3 hD0
-  have bc1 := m1_bc_bound ha m4 m1 hD1
-  have p0 : (a + b₀) * (a + c₀) = 2 * (b₀ * c₀) := by nlinarith
-  have p1 : (a + b₁) * (a + c₁) = 2 * (b₁ * c₁) := by nlinarith
+    (hD0 : (b₀-a)*(c₀-a) = 2*a^2) (hD1 : (b₁-a)*(c₁-a) = 2*a^2)
+    (l0 : (a+c₁)*(a+b₀) < K) (l1 : (a+c₀)*(a+b₁) < K) :
+    a^2 < 4/(5+4*sqrt 2) ∧ sqrt 3*(2*sqrt 2-1) < 8*sqrt 3/K := by
+  obtain ⟨bc0,p0⟩ := m1_bc_bound ha m2 m3 hD0
+  obtain ⟨bc1,p1⟩ := m1_bc_bound ha m4 m1 hD1
+  have hs2 : (sqrt (2:ℝ))^2 = 2 := sq_sqrt (by norm_num)
+  have hs0 : 0 < sqrt (2:ℝ) := by positivity
+  have hs1 : 1 < sqrt (2:ℝ) := by rw [lt_sqrt (by norm_num)]; norm_num
   have hKpos : 0 < K := by rw [hK]; positivity
-  have hprod : (a + c₁) * (a + b₀) * ((a + c₀) * (a + b₁)) < K * K :=
-    mul_lt_mul'' l0 l1 (mul_pos (by linarith) (by linarith)).le
-      (mul_pos (by linarith) (by linarith)).le
-  have hsq : 4 * (b₀ * c₀) * (b₁ * c₁) < K * K := by nlinarith
-  have ha2 : 0 < a ^ 2 := by positivity
-  have e1 : (5828 / 1000 * a ^ 2) * (5828 / 1000 * a ^ 2) < (b₀ * c₀) * (b₁ * c₁) :=
-    mul_lt_mul'' bc0 bc1 (by positivity) (by positivity)
-  have hK11 : 11656 / 1000 * a ^ 2 < K := by nlinarith
-  have hKlt : K < 437538 / 100000 := by nlinarith
-  have hs3 : (1732 / 1000 : ℝ) < √3 := by
-    rw [show (1732 / 1000 : ℝ) = √((1732 / 1000) ^ 2) by rw [Real.sqrt_sq (by norm_num)]]
-    exact Real.sqrt_lt_sqrt (by norm_num) (by norm_num)
-  nlinarith
+  have hfactor0 : 0 ≤ (a+c₁)*(a+b₀) :=
+    mul_nonneg (by linarith only [ha,m1]) (by linarith only [ha,m2])
+  have hfactor1 : 0 ≤ (a+c₀)*(a+b₁) :=
+    mul_nonneg (by linarith only [ha,m3]) (by linarith only [ha,m4])
+  have hprod := mul_lt_mul'' l0 l1 hfactor0 hfactor1
+  have hsq : 4*(b₀*c₀)*(b₁*c₁) < K^2 := by
+    have hid : (a+c₁)*(a+b₀)*((a+c₀)*(a+b₁)) =
+        ((a+b₀)*(a+c₀))*((a+b₁)*(a+c₁)) := by ring
+    rw [hid,p0,p1] at hprod
+    nlinarith only [hprod]
+  have hbc0 : 0 ≤ (1+sqrt (2:ℝ))^2*a^2 := by positivity
+  have hbc1 : 0 ≤ b₀*c₀ := by linarith only [hbc0,bc0]
+  have hbcprod := mul_le_mul bc0 bc1 hbc0 hbc1
+  have hsq' : (2*(1+sqrt 2)^2*a^2)^2 < K^2 := by nlinarith only [hbcprod,hsq]
+  have hKexact : 2*(1+sqrt 2)^2*a^2 < K :=
+    (sq_lt_sq₀ (by positivity) hKpos.le).mp hsq'
+  have hr : (1+sqrt (2:ℝ))^2 = 3+2*sqrt 2 := by nlinarith only [hs2]
+  rw [hr] at hKexact
+  have hden : 0 < 5+4*sqrt (2:ℝ) := by positivity
+  have haBound : a^2 < 4/(5+4*sqrt 2) := by
+    rw [lt_div_iff₀ hden]
+    nlinarith only [hKexact,hK]
+  have hKBound : K < 4+4/(5+4*sqrt 2) := by linarith only [haBound,hK]
+  have hcap : (2*sqrt 2-1)*(4+4/(5+4*sqrt 2)) = 8 := by
+    field_simp
+    nlinarith only [hs2]
+  have hmul := mul_lt_mul_of_pos_left hKBound (show 0 < 2*sqrt 2-1 by linarith only [hs1])
+  have hcost : sqrt 3*(2*sqrt 2-1) < 8*sqrt 3/K := by
+    rw [lt_div_iff₀ hKpos]
+    have hstrict : (2*sqrt 2-1)*K < 8 := by linarith only [hmul,hcap]
+    have hp := mul_lt_mul_of_pos_left hstrict (show 0 < sqrt (3:ℝ) by positivity)
+    nlinarith only [hp]
+  exact ⟨haBound,hcost⟩
 
-/-- **The two-centre exclusion.** A competitive normal period with the sign word `(− − +)²` does not
-exist: its cost exceeds `A_oct`. -/
+
+
+
+/-- The exact reciprocal midpoint gap beats the two-centre density barrier. -/
+theorem m1_octagonCost_lt_two_centre : octagonCost < sqrt 3*(2*sqrt 2-1) := by
+  have hs0 : 0 ≤ sqrt (2:ℝ) := sqrt_nonneg _
+  have hs1 : 1 < sqrt (2:ℝ) := by rw [lt_sqrt (by norm_num)]; norm_num
+  have hs2 : (sqrt (2:ℝ))^2 = 2 := sq_sqrt (by norm_num)
+  have hlog := ra_log_two_gt_midpoint
+  have emid : 4*(sqrt 2-1)/(sqrt 2+1) = 12-8*sqrt 2 := by
+    field_simp
+    nlinarith only [hs2]
+  rw [emid] at hlog
+  have h32 : 0 < 3-2*sqrt (2:ℝ) := by nlinarith only [hs2,hs0]
+  have hrem : (17/2:ℝ)-6*sqrt 2 = (3-2*sqrt 2)^2/2 := by nlinarith only [hs2]
+  have hgap : 0 < log 2+2*sqrt 2-7/2 := by
+    have hp : 0 < (3-2*sqrt (2:ℝ))^2/2 := by positivity
+    linarith only [hlog,hrem,hp]
+  have hs12 : sqrt (12:ℝ) = 2*sqrt 3 := by
+    rw [show (12:ℝ) = 2^2*3 by norm_num,sqrt_mul (by positivity),sqrt_sq (by norm_num : (0:ℝ) ≤ 2)]
+  have hs32 : sqrt (32:ℝ) = 4*sqrt 2 := by
+    rw [show (32:ℝ) = 4^2*2 by norm_num,sqrt_mul (by positivity),sqrt_sq (by norm_num : (0:ℝ) ≤ 4)]
+  have hs8 : sqrt (8:ℝ) = 2*sqrt 2 := by
+    rw [show (8:ℝ) = 2^2*2 by norm_num,sqrt_mul (by positivity),sqrt_sq (by norm_num : (0:ℝ) ≤ 2)]
+  have hD : 0 < 2*sqrt (2:ℝ)-1 := by linarith only [hs1]
+  have hid : (2*sqrt 2-1)*((2*sqrt 2-1)/2-octagonDensity) = log 2+2*sqrt 2-7/2 := by
+    unfold octagonDensity
+    rw [hs32,hs8]
+    field_simp
+    nlinarith only [hs2]
+  have hprod : 0 < (2*sqrt 2-1)*((2*sqrt 2-1)/2-octagonDensity) := by rw [hid]; exact hgap
+  have hdensity : octagonDensity < (2*sqrt 2-1)/2 := by
+    have hp : 0 < (2*sqrt 2-1)/2-octagonDensity := (mul_pos_iff_of_pos_left hD).mp hprod
+    linarith only [hp]
+  have hm := mul_lt_mul_of_pos_left hdensity (show 0 < 2*sqrt (3:ℝ) by positivity)
+  rw [octagonCost,hs12]
+  nlinarith only [hm]
+
+
+/-- The two-centre exclusion: the exact period cost exceeds the octagon cost. -/
 theorem m1_two_centre (P : NormalPeriod) (hc : P.IsCompetitive) {k₀ : ℤ}
     (hpat : P.m1_IsPattern k₀) (hN : P.N = 6) : False := by
   set C := P.costateCycle with hC
@@ -366,12 +433,10 @@ theorem m1_two_centre (P : NormalPeriod) (hc : P.IsCompetitive) {k₀ : ℤ}
     have f1' : C.q ((n₀ : ℤ) + 3) * ((a + c₀) * (a + b₁)) = a ^ 2 + 4 := f1
     have hK0a : K0 = a ^ 2 + 4 := rfl
     linarith
-  have hnum := m1_two_centre_numeric ha rfl m1 m2 m3 m4 hD0' hD1' l0 l1
-  have hA := Reduction.clr_octagonCost_lt
-  have hcp : P.cost ≤ octagonCost := hc
-  rw [hcost, div_le_iff₀ hK0] at hcp
-  have := mul_lt_mul_of_pos_right hA hK0
-  norm_num at this hnum
-  linarith
+  obtain ⟨-,hproductCost⟩ := m1_two_centre_bounds ha rfl m1 m2 m3 m4 hD0' hD1' l0 l1
+  have hcostGap : octagonCost < P.cost := by
+    rw [hcost]
+    exact m1_octagonCost_lt_two_centre.trans hproductCost
+  exact (not_lt_of_ge (show P.cost ≤ octagonCost from hc)) hcostGap
 
 end SmoothedOctagon
