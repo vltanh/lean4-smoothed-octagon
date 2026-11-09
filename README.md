@@ -1,6 +1,7 @@
 # The Reinhardt conjecture, in Lean 4
 
 [![Lean Action CI](https://github.com/vltanh/lean4-smoothed-octagon/actions/workflows/lean_action_ci.yml/badge.svg?branch=main)](https://github.com/vltanh/lean4-smoothed-octagon/actions/workflows/lean_action_ci.yml?query=branch%3Amain)
+[![Palomar verified](https://img.shields.io/badge/Palomar-verified-2ea44f)](https://palomar-registry.org/entry?id=PALOMAR-2026-11-09-000008)
 
 ![The smoothed octagon in its densest packing, the copies sliding through the continuum of densest packings while staying in contact](docs/figures/worst-packer.gif)
 
@@ -122,6 +123,12 @@ pack the octagon yourself, build it corner by corner, look for a worse packer, a
 sliding packings.
 
 ## Status
+
+The proof is registered on Palomar, a registry of Lean-verified results, as
+[PALOMAR-2026-11-09-000008](https://palomar-registry.org/entry?id=PALOMAR-2026-11-09-000008), at trust
+level high: Palomar's verifier checked it with the kernels nanoda and con-ron at commit [`9ba6bf8`](https://github.com/vltanh/lean4-smoothed-octagon/tree/9ba6bf8630c70d6a0f11ecfef15021cb83df8c40).
+Later commits reorganize and rename the library and leave the statements of the three theorems
+unchanged.
 
 [`SmoothedOctagon.lean`](SmoothedOctagon.lean), the root of the library, restates the three
 theorems of [`Palomar/Challenge.lean`](Palomar/Challenge.lean) word for word and proves them,
