@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 121{,}000 lines in 393 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 123{,}000 lines in 396 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -50,8 +50,8 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 
 \subsection{Scalar proof replacement status}\label{app:formal-scalar}
 
-Groups 1--24 are the current scope: 21 are complete and committed,
-and three are in progress. Groups 25--38 are deferred.
+Groups 1--24 are the current scope: 22 are complete and committed,
+and two are in progress. Groups 25--38 are deferred.
 Group numbers stay fixed as their status changes.
 
 \begin{center}
@@ -59,35 +59,29 @@ Group numbers stay fixed as their status changes.
 \toprule
 Status & Count & Group numbers\\
 \midrule
-Complete & 21 & 1--11, 13--22\\
-In progress & 3 & 12, 23--24\\
+Complete & 22 & 1--22\\
+In progress & 2 & 23--24\\
 Pending & 0 & None\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\medskip\noindent\textbf{In progress (3).}
+\medskip\noindent\textbf{In progress (2).}
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
-\item[12.] \emph{Mixed transported ceiling for $t<2/5$.}
-The scale reduction, secant-derivative comparisons and the branch $D\le3/2$
-are proved. Remaining: the variance ceiling and switching-floor comparison
-for $D\ge3/2$, then the physical callers.
-
 \item[23.] \emph{S6 norm floor and central-shear envelopes.}
-The norm floor and exact shear envelopes are proved, including zero
-displacement. Remaining: integrate the floor and shear bounds into the score
-proof with group~24.
+The norm floor, exact shear envelopes and physical cost bounds are proved,
+including zero displacement. Remaining: integrate them with the final score
+comparison in group~24.
 
 \item[24.] \emph{S6 final score comparison.}
-The integral angle bound, four corner comparisons and decrease of the pair
-term are proved. Remaining: control the shear and anisotropy losses in
-displacement, prove concavity at maximal displacement and connect the direct
-octagon-cost comparison from group~2.
+The integral angle bound, four corner comparisons, decrease in displacement
+and direct octagon-cost comparison are proved. The concavity proof at maximal
+displacement is being checked. Remaining: update the final score callers.
 \end{enumerate}
 
-\newpage\noindent\textbf{Complete and committed (21).}
+\newpage\noindent\textbf{Complete and committed (22).}
 These groups are integrated into the paper and Lean. Each has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
@@ -141,6 +135,12 @@ lower bound $\gamma^2>9193/50000$ from the paper's norm bounds.
 A weighted reciprocal mean gives both incoming and central bridge-norm
 ceilings through exact positive gaps. Uniform Jensen gives the duration
 bound $3d<7c$.
+
+\item[12.] \emph{Mixed transported ceiling for $t<2/5$.}
+The scale and middle-margin comparisons reduce the original transported
+ceiling to two displacement ranges. Reciprocal variance, the incoming
+Jensen bound and a positive quadratic exclude the larger range and prove
+$t<2/5$ for every physical window.
 
 \item[13.] \emph{Smaller-short reverse-centre scale.}
 The comparison holds on the full domain $\rho<1/4$.
@@ -357,7 +357,7 @@ Result & Lean declarations\\
 \cref{lem:m2-logs} & \lean{nsr_log_one_add_gt}, \lean{nsr_secN_lt_vbar}, \lean{nsr_log_lt_Lp}, \lean{nsr_m2F_gt_Fl}, \lean{mix_log_weighted_lt}, \lean{nsr_log_one_add_jensen}, \lean{nsr_secN_lt_jensen}, \lean{nsf_secN_lt_VG}, \lean{nsf_secN_lt_Vq}, \lean{nsr_t_lt_T} \\
 \cref{lem:m2-relax} & \lean{nsrNv_nonpos}, \lean{nsrNL_nonpos}, \lean{nsr_N_pos_of_relax} \\
 \cref{lem:m2-centre-gap} & \lean{nsr_centre_gap}, \lean{nsr_centre_gap_k}, \lean{nsr_gap_chord_pos}, \lean{nsr_gap_normalize} \\
-\cref{lem:m2-high-t} & New analytic proof in the text; compare \lean{nsr_high_t'} \\
+\cref{lem:m2-high-t} & \lean{mhtDelta_physical_pos}, \lean{nsr_high_t_analytic}, \lean{nsr_high_t'} \\
 \cref{lem:m2-unit-shape} & \lean{nsr_unit_shape}, \lean{nsr_cubic_pos}, \lean{nsrU_signs}, \lean{nsrUC0_pos} \\
 \cref{lem:m2-order-face} & \lean{nsr_order_face}, \lean{nsr_q_le_order}, \lean{nsr_concave_min}, \lean{nsr_order_one_pos} \\
 \cref{lem:m2-strip} & \lean{nsr_strip} \\
