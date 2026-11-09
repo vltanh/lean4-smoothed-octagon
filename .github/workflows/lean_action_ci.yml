@@ -24,7 +24,7 @@ jobs:
       # A few modules need 5-7 GB of memory each. Build them one at a time first, so that the 16 GB
       # runner never holds several; everything else, at most about 4 GB per module, is built in
       # parallel afterwards.
-      - name: Build the memory-heavy certificate modules one at a time
+      - name: Build memory-heavy modules one at a time
         run: |
           for m in $(grep -v '^#' scripts/ci/sequential-modules.txt); do
             echo "::group::$m"; lake build "$m"; echo "::endgroup::"

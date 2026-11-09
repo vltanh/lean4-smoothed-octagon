@@ -210,4 +210,38 @@ theorem ff_F_mono {x r r' : ℝ} (hx : 1 / 2 ≤ x) (hr : 1 < r) (hrr : r ≤ r'
     have hx0 : 0 ≤ x := by linarith
     nlinarith
 
+/-- Simpson's upper bound for the reciprocal integral from `1` to `q`. -/
+noncomputable def ff_logSimpson (q : ℝ) : ℝ :=
+  (q-1)*(q^2+10*q+1)/(6*q*(q+1))
+
+theorem ff_log_le_simpson {q : ℝ} (hq : 1 ≤ q) : log q ≤ ff_logSimpson q := by
+  have hh := ff_le_of_deriv
+    (f := fun z => ff_logSimpson z-log z)
+    (f' := fun z => (z-1)^4/(6*z^2*(z+1)^2)) hq
+    (fun z hz => ?_) (fun z hz => by positivity)
+  · norm_num [ff_logSimpson] at hh
+    simpa only [ff_logSimpson] using hh
+  · have hz0 : 0 < z := by linarith only [hz.1]
+    have hn := ((hasDerivAt_id z).sub_const 1).mul
+      (((hasDerivAt_pow 2 z).add ((hasDerivAt_id z).const_mul (10:ℝ))).add_const 1)
+    have hd := ((hasDerivAt_id z).const_mul (6:ℝ)).mul ((hasDerivAt_id z).add_const 1)
+    have h := (hn.div hd (by dsimp; positivity)).sub (hasDerivAt_log hz0.ne')
+    refine h.congr_deriv ?_
+    norm_num
+    field_simp
+    ring
+
+
+/-- The same Simpson bound in displacement coordinates, with positive denominators. -/
+theorem ff_log_one_add_le_simpson {t : ℝ} (ht : 0 ≤ t) :
+    Real.log (1+t) ≤ t/6*(1+8/(2+t)+1/(1+t)) := by
+  have h1 : 1+t ≠ 0 := by linarith only [ht]
+  have h2 : 2+t ≠ 0 := by linarith only [ht]
+  have h := ff_log_le_simpson (q := 1+t) (by linarith only [ht])
+  have he : ff_logSimpson (1+t) = t/6*(1+8/(2+t)+1/(1+t)) := by
+    unfold ff_logSimpson
+    field_simp [h1,h2]
+    ring
+  rwa [he] at h
+
 end SmoothedOctagon

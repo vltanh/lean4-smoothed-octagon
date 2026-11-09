@@ -1,11 +1,13 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactShape
-public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
-public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.Basic
 
 /-!
-# S6 final score: reciprocal angle floors and the pair term
+# S6 pair term: decrease in displacement
+
+Uniform bounds on the one-variable kernels control the pair derivative.
+Three partial monotonicities bound its logarithmic ratio; the positive initial
+slope and its increasing derivative give the required sign.
 -/
 
 @[expose] public section
@@ -13,262 +15,7 @@ public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 namespace SmoothedOctagon
 open Real Set MeasureTheory
 
-/-- The exact arctangent score at the genuine variance floor. -/
-noncomputable def s6FinalScore (R d e : ℝ) : ℝ :=
-  costBExact R (costT R d e) (s6VarianceFloor R d) (costZU R d) (costZL R d)
-
-noncomputable def s6AngleJensen (z : ℝ) : ℝ :=
-  (1-(161/54)/3)*z+(161/54)*z^3/(27*(1+z^2/5))
-
-private noncomputable def s6AngleMoment (z : ℝ) : ℝ :=
-  ∫ t in (0:ℝ)..z, t^2/(3+t^2)
-
-private noncomputable def s6AngleTangent (z t : ℝ) : ℝ :=
-  t^2/(3+3*z^2/5)-t^2*(t^2-3*z^2/5)/(3+3*z^2/5)^2
-
-private theorem s6_angle_tangent_le (z t : ℝ) :
-    s6AngleTangent z t ≤ t^2/(3+t^2) := by
-  have hp : 0 < 3+3*z^2/5 := by positivity
-  have ht : 0 < 3+t^2 := by positivity
-  have hid : t^2/(3+t^2)-s6AngleTangent z t =
-      t^2*(t^2-3*z^2/5)^2/((3+t^2)*(3+3*z^2/5)^2) := by
-    unfold s6AngleTangent
-    field_simp
-    ring
-  have hh : 0 ≤ t^2*(t^2-3*z^2/5)^2/((3+t^2)*(3+3*z^2/5)^2) := by positivity
-  linarith only [hid,hh]
-
-private theorem s6_angle_tangent_mid_lt {z : ℝ} (hz : 0 < z) :
-    s6AngleTangent z (z/2) < (z/2)^2/(3+(z/2)^2) := by
-  have hp : 0 < 3+3*z^2/5 := by positivity
-  have ht : 0 < 3+(z/2)^2 := by positivity
-  have hd : (z/2)^2-3*z^2/5 ≠ 0 := by nlinarith only [sq_pos_of_pos hz]
-  have hid : (z/2)^2/(3+(z/2)^2)-s6AngleTangent z (z/2) =
-      (z/2)^2*((z/2)^2-3*z^2/5)^2/((3+(z/2)^2)*(3+3*z^2/5)^2) := by
-    unfold s6AngleTangent
-    field_simp
-    ring
-  have hh : 0 < (z/2)^2*((z/2)^2-3*z^2/5)^2/((3+(z/2)^2)*(3+3*z^2/5)^2) := by
-    exact div_pos (mul_pos (sq_pos_of_pos (by positivity)) (sq_pos_of_ne_zero hd))
-      (mul_pos ht (sq_pos_of_pos hp))
-  linarith only [hid,hh]
-
-private theorem s6_angle_moment_gt {z : ℝ} (hz : 0 < z) :
-    z^3/(9*(1+z^2/5)) < s6AngleMoment z := by
-  have hp : 0 < 3+3*z^2/5 := by positivity
-  have hc : Continuous (fun t : ℝ => t^2/(3+t^2)) := by
-    exact Continuous.div (by fun_prop) (by fun_prop)
-      (fun t => ne_of_gt (by positivity : 0 < 3+t^2))
-  have ht : Continuous (s6AngleTangent z) := by unfold s6AngleTangent; fun_prop
-  have hi := intervalIntegral.integral_lt_integral_of_continuousOn_of_le_of_exists_lt hz
-    ht.continuousOn hc.continuousOn (fun t _ => s6_angle_tangent_le z t)
-    ⟨z/2,⟨by linarith only [hz],by linarith only [hz]⟩,s6_angle_tangent_mid_lt hz⟩
-  let P : ℝ → ℝ := fun t => t^3/(3*(3+3*z^2/5))-
-    (t^5/5-(3*z^2/5)*t^3/3)/(3+3*z^2/5)^2
-  have hd (t : ℝ) : HasDerivAt P (s6AngleTangent z t) t := by
-    have hh := ((hasDerivAt_pow 3 t).div_const (3*(3+3*z^2/5))).sub
-      ((((hasDerivAt_pow 5 t).div_const 5).sub
-        (((hasDerivAt_pow 3 t).const_mul (3*z^2/5)).div_const 3)).div_const
-          ((3+3*z^2/5)^2))
-    refine hh.congr_deriv ?_
-    unfold s6AngleTangent
-    norm_num
-    field_simp
-  have he := intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
-    (ht.intervalIntegrable 0 z)
-  have hv : P z-P 0=z^3/(9*(1+z^2/5)) := by
-    dsimp [P]
-    field_simp
-    ring
-  rw [he,hv] at hi
-  exact hi
-
-/-- The original arctangent contribution is the reciprocal moment. -/
-private theorem s6_angle_moment_eq (z : ℝ) :
-    s6AngleMoment z = (3/(161/54))*(costLExact z-(1-(161/54)/3)*z) := by
-  let P : ℝ → ℝ := fun t => (3/(161/54))*(costLExact t-(1-(161/54)/3)*t)
-  have hc : Continuous (fun t : ℝ => t^2/(3+t^2)) := by
-    exact Continuous.div (by fun_prop) (by fun_prop)
-      (fun t => ne_of_gt (by positivity : 0 < 3+t^2))
-  have hd (t : ℝ) : HasDerivAt P (t^2/(3+t^2)) t := by
-    have hh := ((costLExact_hasDerivAt t).sub
-      ((hasDerivAt_id t).const_mul (1-(161/54)/3))).const_mul (3/(161/54))
-    refine hh.congr_deriv ?_
-    field_simp
-    ring
-  have he := intervalIntegral.integral_eq_sub_of_hasDerivAt (fun t _ => hd t)
-    (hc.intervalIntegrable 0 z)
-  simpa [s6AngleMoment,P,costLExact] using he
-
-/-- The strict weighted-Jensen lower bound used in the four corner comparisons. -/
-theorem s6_angle_jensen_lt {z : ℝ} (hz : 0 < z) : s6AngleJensen z < costLExact z := by
-  have hm := s6_angle_moment_gt hz
-  rw [s6_angle_moment_eq] at hm
-  have hm2 := mul_lt_mul_of_pos_left hm (by norm_num : (0:ℝ) < (161/54)/3)
-  have hid : ((161/54)/3)*(z^3/(9*(1+z^2/5))) = (161/54)*z^3/(27*(1+z^2/5)) := by
-    field_simp
-    ring
-  rw [hid] at hm2
-  unfold s6AngleJensen
-  norm_num at hm2
-  linarith only [hm2]
-
-/-- A rational lower score, obtained only by applying weighted Jensen to both angles. -/
-noncomputable def s6RationalScore (R d e : ℝ) : ℝ :=
-  let T := costT R d e
-  let u := s6VarianceFloor R d
-  s6AngleJensen R+s6AngleJensen T-
-    ((1-4*u/(3+R^2))*R+(1-4*u/(3+T^2))*T)/2-
-    ((1-4*u/(3+R^2))+(1-4*u/(3+T^2)))*costZU R d/8-
-    (161/54)*((R^2-T^2)/(3+T^2))^2/(8*costZL R d)
-
-theorem s6_rationalScore_lt {R d e : ℝ} (hR : 0 < R) (hT : 0 < costT R d e) :
-    s6RationalScore R d e < s6FinalScore R d e := by
-  have hh := add_lt_add (s6_angle_jensen_lt hR) (s6_angle_jensen_lt hT)
-  dsimp [s6RationalScore,s6FinalScore,costBExact]
-  linarith only [hh]
-
-/-- These are the four substitutions after the two analytic monotonicity reductions. -/
-theorem s6_rational_four_corners {R e : ℝ} (hR : R=1/3 ∨ R=7/19)
-    (he : e=13/5 ∨ e=3) : 9/4000 < s6RationalScore R (1/19) e := by
-  rcases hR with rfl | rfl <;> rcases he with rfl | rfl <;>
-    norm_num [s6RationalScore,s6AngleJensen,s6VarianceFloor,costT,costZU,costZL]
-
-/-- The four exact-angle corner scores, with strict inequality throughout. -/
-theorem s6_final_four_corners {R e : ℝ} (hR : R=1/3 ∨ R=7/19)
-    (he : e=13/5 ∨ e=3) : 9/4000 < s6FinalScore R (1/19) e := by
-  have hRp : 0 < R := by rcases hR with rfl | rfl <;> norm_num
-  have hTp : 0 < costT R (1/19) e := by
-    rcases hR with rfl | rfl <;> rcases he with rfl | rfl <;> norm_num [costT]
-  exact (s6_rational_four_corners hR he).trans (s6_rationalScore_lt hRp hTp)
-
-
-/-! The score decomposition used in the displacement and final-face arguments. -/
-noncomputable def s6FinalG (a : ℝ) : ℝ := a/(2*(3+a^2))
-noncomputable def s6FinalG1 (a : ℝ) : ℝ := (3-a^2)/(2*(3+a^2)^2)
-noncomputable def s6FinalG2 (a : ℝ) : ℝ := a*(a^2-9)/(3+a^2)^3
-noncomputable def s6FinalK (a : ℝ) : ℝ := costLExact a-a^3/(2*(3+a^2))
-noncomputable def s6FinalK1 (a : ℝ) : ℝ :=
-  1-(161/54)/(3+a^2)-a^2*(9+a^2)/(2*(3+a^2)^2)
-noncomputable def s6FinalK2 (a : ℝ) : ℝ :=
-  a*(2*(161/54)*(3+a^2)-3*(9-a^2))/(3+a^2)^3
-noncomputable def s6FinalV (R d : ℝ) : ℝ := 4*s6VarianceFloor R d-3
-noncomputable def s6FinalPair (R d e : ℝ) : ℝ :=
-  s6FinalK R+s6FinalK (costT R d e)+s6FinalV R d*(s6FinalG R+s6FinalG (costT R d e))
-noncomputable def s6FinalShearLoss (R d e : ℝ) : ℝ :=
-  costZU R d*((1-4*s6VarianceFloor R d/(3+R^2))+
-    (1-4*s6VarianceFloor R d/(3+(costT R d e)^2)))/8
-noncomputable def s6FinalAnisotropyLoss (R d e : ℝ) : ℝ :=
-  (161/54)*((R^2-(costT R d e)^2)/(3+(costT R d e)^2))^2/(8*costZL R d)
-
-theorem s6_final_score_decomposition (R d e : ℝ) :
-    s6FinalScore R d e=s6FinalPair R d e-s6FinalShearLoss R d e-
-      s6FinalAnisotropyLoss R d e := by
-  unfold s6FinalScore costBExact s6FinalPair s6FinalShearLoss s6FinalAnisotropyLoss
-    s6FinalK s6FinalG s6FinalV
-  field_simp
-  ring
-
-theorem s6_final_g_deriv (a : ℝ) : HasDerivAt s6FinalG (s6FinalG1 a) a := by
-  have hp : 3+a^2 ≠ 0 := ne_of_gt (by positivity)
-  have hh := (hasDerivAt_id' a).div
-    (((hasDerivAt_pow 2 a).const_add 3).const_mul 2) (mul_ne_zero (by norm_num) hp)
-  refine hh.congr_deriv ?_
-  unfold s6FinalG1
-  norm_num
-  field_simp
-  ring
-
-theorem s6_final_g1_deriv (a : ℝ) : HasDerivAt s6FinalG1 (s6FinalG2 a) a := by
-  have hp : 3+a^2 ≠ 0 := ne_of_gt (by positivity)
-  have hh := ((hasDerivAt_pow 2 a).const_sub 3).div
-    ((((hasDerivAt_pow 2 a).const_add 3).pow 2).const_mul 2)
-    (mul_ne_zero (by norm_num) (pow_ne_zero 2 hp))
-  refine hh.congr_deriv ?_
-  unfold s6FinalG2
-  norm_num
-  field_simp
-  ring
-
-theorem s6_final_k_deriv (a : ℝ) : HasDerivAt s6FinalK (s6FinalK1 a) a := by
-  have hp : 3+a^2 ≠ 0 := ne_of_gt (by positivity)
-  have hh := (costLExact_hasDerivAt a).sub ((hasDerivAt_pow 3 a).div
-    (((hasDerivAt_pow 2 a).const_add 3).const_mul 2) (mul_ne_zero (by norm_num) hp))
-  refine hh.congr_deriv ?_
-  unfold s6FinalK1
-  norm_num
-  field_simp
-  ring
-
-theorem s6_final_k1_deriv (a : ℝ) : HasDerivAt s6FinalK1 (s6FinalK2 a) a := by
-  have hp : 3+a^2 ≠ 0 := ne_of_gt (by positivity)
-  have hfirst := (hasDerivAt_const a (1:ℝ)).sub
-    ((hasDerivAt_const a ((161/54):ℝ)).div ((hasDerivAt_pow 2 a).const_add 3) hp)
-  have hn := (hasDerivAt_pow 2 a).mul ((hasDerivAt_pow 2 a).const_add 9)
-  have hd := (((hasDerivAt_pow 2 a).const_add 3).pow 2).const_mul 2
-  have hh := hfirst.sub (hn.div hd (mul_ne_zero (by norm_num) (pow_ne_zero 2 hp)))
-  refine hh.congr_deriv ?_
-  unfold s6FinalK2
-  norm_num
-  field_simp
-  ring
-
-/-- The zero-displacement variance excess, as two increasing positive terms. -/
-noncomputable def s6FinalV0 (R : ℝ) : ℝ :=
-  16*R^2*(1+R)/(3*(4+3*R)^2)+3*R^4/(80*(1+R)^3)
-noncomputable def s6FinalV01 (R : ℝ) : ℝ :=
-  16*R*(3*R^2+12*R+8)/(3*(3*R+4)^3)+3*R^3*(R+4)/(80*(R+1)^4)
-
-theorem s6_final_v0_deriv {R : ℝ} (hR : 0 ≤ R) :
-    HasDerivAt s6FinalV0 (s6FinalV01 R) R := by
-  have hp : 4+3*R ≠ 0 := ne_of_gt (by positivity)
-  have hq : 1+R ≠ 0 := ne_of_gt (by positivity)
-  have hnum := ((hasDerivAt_pow 2 R).const_mul 16).mul ((hasDerivAt_id' R).const_add 1)
-  have hden := ((((hasDerivAt_id' R).const_mul 3).const_add 4).pow 2).const_mul 3
-  have hnum2 := (hasDerivAt_pow 4 R).const_mul 3
-  have hden2 := (((hasDerivAt_id' R).const_add 1).pow 3).const_mul 80
-  have hh := (hnum.div hden (mul_ne_zero (by norm_num) (pow_ne_zero 2 hp))).add
-    (hnum2.div hden2 (mul_ne_zero (by norm_num) (pow_ne_zero 3 hq)))
-  refine hh.congr_deriv ?_
-  unfold s6FinalV01
-  norm_num
-  field_simp
-  ring
-
-/-- The full displacement dependence of the genuine variance floor. -/
-theorem s6_final_v_eq {R d : ℝ} (hR : 0 < R) (hd : 0 ≤ d) :
-    s6FinalV R d=s6FinalV0 R*(2*R)/(2*R+(1+R)*d) := by
-  have hM : 0 < 2*R+(1+R)*d := by positivity
-  have hp : 0 < 1+R := by positivity
-  have hq : 0 < 4+3*R := by positivity
-  unfold s6FinalV s6VarianceFloor s6FinalV0
-  field_simp
-  ring
-
-theorem s6_final_v_bounds {R d : ℝ} (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19) (hd : 0 ≤ d) :
-    0 < s6FinalV R d ∧ s6FinalV R d < 1/25 := by
-  have hRp : 0 < R := by linarith only [hR]
-  have hv0 : 0 < s6FinalV0 R := by unfold s6FinalV0; positivity
-  have hv0b := ss_le_of_deriv (f := s6FinalV0) (f' := s6FinalV01)
-    (show R ≤ 3/8 by linarith only [hR1])
-    (fun z hz => s6_final_v0_deriv (by linarith only [hz.1,hRp]))
-    (fun z hz => by
-      have hz0 : 0 < z := by linarith only [hz.1,hRp]
-      unfold s6FinalV01
-      positivity)
-  have hv0u : s6FinalV0 R < 1/25 := by
-    norm_num [s6FinalV0] at hv0b
-    change s6FinalV0 R ≤ _ at hv0b
-    linarith only [hv0b]
-  have hM : 0 < 2*R+(1+R)*d := by positivity
-  have hq : (2*R)/(2*R+(1+R)*d) ≤ 1 := by
-    rw [div_le_one hM]
-    have : 0 ≤ (1+R)*d := by positivity
-    linarith only [this]
-  rw [s6_final_v_eq hRp hd]
-  refine ⟨by positivity,?_⟩
-  simpa only [mul_div_assoc] using (mul_le_of_le_one_right hv0.le hq).trans_lt hv0u
-
+/-! ### One-variable kernel bounds -/
 
 noncomputable def s6FinalF (a : ℝ) : ℝ := 9*a*(a^2-1)/(3+a^2)^3
 noncomputable def s6FinalF1 (a : ℝ) : ℝ :=
@@ -284,12 +31,6 @@ theorem s6_final_f_deriv (a : ℝ) : HasDerivAt s6FinalF (s6FinalF1 a) a := by
   norm_num
   field_simp
   ring
-
-theorem s6_final_interval {a : ℝ} (ha : 9/31 ≤ a) (ha1 : a ≤ 7/19) :
-    0 < a ∧ 2/7 < a ∧ a^2 < 1/7 := by
-  have hapos : 0 < a := by linarith only [ha]
-  have hasq : a^2 ≤ (7/19:ℝ)^2 := by nlinarith only [hapos,ha1]
-  exact ⟨hapos,by linarith only [ha],by norm_num at hasq ⊢; linarith only [hasq]⟩
 
 theorem s6_final_k2_upper {a : ℝ} (ha : 9/31 ≤ a) (ha1 : a ≤ 7/19) :
     s6FinalK2 a < -2/25 := by
@@ -353,7 +94,6 @@ theorem s6_final_g_sum_bounds {R T : ℝ} (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19)
   change s6FinalG T ≤ _ at hTb
   linarith only [hRb,hTb]
 
-
 private theorem s6_final_k2_neg {a : ℝ} (ha : 0 < a) (ha1 : a < 1) :
     s6FinalK2 a < 0 := by
   unfold s6FinalK2
@@ -414,69 +154,7 @@ theorem s6_final_k1_lower {R : ℝ} (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19) :
       nlinarith only [hss,hsp,h3]
     · positivity
 
-noncomputable def s6FinalFloorFactor (R : ℝ) : ℝ := (1+R)/(3*(1+3*R/4)^2)
-theorem s6_final_floor_factor_deriv {R : ℝ} (hR : 0 ≤ R) :
-    HasDerivAt s6FinalFloorFactor (-(16*(3*R+2))/(3*(3*R+4)^3)) R := by
-  have hp : 1+3*R/4 ≠ 0 := ne_of_gt (by positivity)
-  have hn := (hasDerivAt_id' R).const_add 1
-  have hd := (((((hasDerivAt_id' R).const_mul 3).div_const 4).const_add 1).pow 2).const_mul 3
-  have hh := hn.div hd (mul_ne_zero (by norm_num) (pow_ne_zero 2 hp))
-  refine hh.congr_deriv ?_
-  norm_num
-  field_simp
-  ring
-
-theorem s6_final_v0_lower {R : ℝ} (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19) :
-    (5/18)*R^2 < s6FinalV0 R := by
-  have hRp : 0 < R := by linarith only [hR]
-  have hf := ss_le_of_deriv (f := fun r => -s6FinalFloorFactor r)
-    (f' := fun r => (16*(3*r+2))/(3*(3*r+4)^3))
-    (show R ≤ 3/8 by linarith only [hR1])
-    (fun r hr => by
-      have hh := (s6_final_floor_factor_deriv (show 0 ≤ r by linarith only [hr.1,hRp])).neg
-      convert hh using 1; ring)
-    (fun r hr => by
-      have hrp : 0 < r := by linarith only [hr.1,hRp]
-      positivity)
-  have hff : (5/18:ℝ) < s6FinalFloorFactor R := by
-    have hnum : (5/18:ℝ) < s6FinalFloorFactor (3/8) := by norm_num [s6FinalFloorFactor]
-    linarith only [hf,hnum]
-  have hid : s6FinalV0 R=R^2*s6FinalFloorFactor R+3*R^4/(80*(1+R)^3) := by
-    unfold s6FinalV0 s6FinalFloorFactor
-    field_simp
-    ring
-  have htail : 0 < 3*R^4/(80*(1+R)^3) := by positivity
-  have hh := mul_lt_mul_of_pos_left hff (sq_pos_of_pos hRp)
-  nlinarith only [hid,htail,hh]
-
-
-noncomputable def s6FinalGamma (R e : ℝ) : ℝ := e+1-(e-1)*R
-noncomputable def s6FinalL (R d e : ℝ) : ℝ := 2+s6FinalGamma R e*d
-noncomputable def s6FinalM (R d : ℝ) : ℝ := 2*R+(1+R)*d
-noncomputable def s6FinalChi (R d e : ℝ) : ℝ :=
-  (s6FinalL R d e)^2/(2*(e-1)*(1-R)*s6FinalM R d)
-
-theorem s6_final_box_denoms {R d e : ℝ}
-    (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19) (hd : 0 ≤ d) (hd1 : d ≤ 1/19)
-    (he : 13/5 ≤ e) (he1 : e ≤ 3) :
-    0 < R ∧ 0 < 1-R ∧ 0 < e-1 ∧ 3 < s6FinalGamma R e ∧
-    s6FinalGamma R e < 4 ∧ 0 < s6FinalL R d e ∧ 0 < s6FinalM R d ∧ s6FinalL R d e < 3 := by
-  have hRp : 0 < R := by linarith only [hR]
-  have hRone : 0 < 1-R := by linarith only [hR1]
-  have hep : 0 < e-1 := by linarith only [he]
-  have hprod := mul_le_mul (show (8/5:ℝ) ≤ e-1 by linarith only [he])
-    (show (12/19:ℝ) ≤ 1-R by linarith only [hR1]) (by norm_num) hep.le
-  have hGammaId : s6FinalGamma R e=2+(e-1)*(1-R) := by unfold s6FinalGamma; ring
-  have hGlow : 3 < s6FinalGamma R e := by linarith only [hprod,hGammaId]
-  have hGhi : s6FinalGamma R e < 4 := by
-    have hmul := mul_le_mul (show e-1 ≤ 2 by linarith only [he1])
-      (show 1-R ≤ 2/3 by linarith only [hR]) hRone.le (by norm_num : (0:ℝ) ≤ 2)
-    linarith only [hmul,hGammaId]
-  have hL : 0 < s6FinalL R d e := by unfold s6FinalL; nlinarith only [hGlow,hd]
-  have hM : 0 < s6FinalM R d := by unfold s6FinalM; positivity
-  refine ⟨hRp,hRone,hep,hGlow,hGhi,hL,hM,?_⟩
-  unfold s6FinalL
-  nlinarith only [hGhi,hd,hd1]
+/-! ### The derivative ratio -/
 
 noncomputable def s6FinalChiD (R d e : ℝ) : ℝ :=
   s6FinalChi R d e*(2*s6FinalGamma R e/s6FinalL R d e-(1+R)/s6FinalM R d)
@@ -542,7 +220,6 @@ private theorem s6_final_chi_deriv_e {R d e : ℝ}
     field_simp [hLn,hMn,hep.ne',hRm.ne']
     unfold s6FinalGamma
     ring
-
 
 private theorem s6_final_chi_signs {R d e : ℝ}
     (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19) (hd : 0 ≤ d) (hd1 : d ≤ 1/19)
@@ -612,63 +289,7 @@ theorem s6_final_chi_bounds {R d e : ℝ}
     norm_num [s6FinalChi,s6FinalL,s6FinalM,s6FinalGamma]
   exact ⟨hb.1,by linarith only [hmd,hmr,hme,hcorner],hb.2.1⟩
 
-
-noncomputable def s6FinalTD (R d e : ℝ) : ℝ :=
-  -2*(e-1)*(1-R^2)/(s6FinalL R d e)^2
-noncomputable def s6FinalVNum (R : ℝ) : ℝ :=
-  (2*(1+R)*R^3/3)*(1/(1+3*R/4)^2+9*R^2/(80*(1+R)^4))
-
-private theorem s6_final_v_num_eq (R d : ℝ) :
-    s6FinalV R d=s6FinalVNum R/s6FinalM R d := by
-  unfold s6FinalV s6VarianceFloor s6FinalVNum s6FinalM
-  simp only [div_eq_mul_inv,mul_inv_rev]
-  ring
-
-theorem s6_final_t_displacement_deriv {R d e : ℝ}
-    (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19) (hd : 0 ≤ d) (hd1 : d ≤ 1/19)
-    (he : 13/5 ≤ e) (he1 : e ≤ 3) :
-    HasDerivAt (fun d => costT R d e) (s6FinalTD R d e) d := by
-  rcases s6_final_box_denoms hR hR1 hd hd1 he he1 with
-    ⟨hRp,hRm,hep,hGlo,hGhi,hLp,hMp,hLhi⟩
-  have hn := ((hasDerivAt_id' d).const_mul ((e+1)*R-(e-1))).const_add (2*R)
-  have hd0 := ((hasDerivAt_id' d).const_mul (s6FinalGamma R e)).const_add 2
-  have hh := hn.div hd0 hLp.ne'
-  refine hh.congr_deriv ?_
-  unfold s6FinalTD s6FinalL s6FinalGamma
-  norm_num
-  field_simp
-  ring
-
-theorem s6_final_v_displacement_deriv {R d e : ℝ}
-    (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19) (hd : 0 ≤ d) (hd1 : d ≤ 1/19)
-    (he : 13/5 ≤ e) (he1 : e ≤ 3) :
-    HasDerivAt (fun d => s6FinalV R d)
-      (s6FinalV R d*s6FinalChi R d e*s6FinalTD R d e) d := by
-  rcases s6_final_box_denoms hR hR1 hd hd1 he he1 with
-    ⟨hRp,hRm,hep,hGlo,hGhi,hLp,hMp,hLhi⟩
-  have hd0 := ((hasDerivAt_id' d).const_mul (1+R)).const_add (2*R)
-  have hh := (hasDerivAt_const d (s6FinalVNum R)).div hd0 hMp.ne'
-  have hfun : (fun d => s6FinalV R d)=(fun d => s6FinalVNum R/s6FinalM R d) :=
-    funext (fun d => s6_final_v_num_eq R d)
-  rw [hfun]
-  refine hh.congr_deriv ?_
-  rw [s6_final_v_num_eq]
-  unfold s6FinalChi s6FinalTD
-  have hLn : 2+s6FinalGamma R e*d ≠ 0 := hLp.ne'
-  have hMn : 2*R+(1+R)*d ≠ 0 := hMp.ne'
-  unfold s6FinalL s6FinalM
-  norm_num
-  field_simp [hLn,hMn,hep.ne',hRm.ne']
-  ring
-
-theorem s6_final_td_neg {R d e : ℝ}
-    (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19) (hd : 0 ≤ d) (hd1 : d ≤ 1/19)
-    (he : 13/5 ≤ e) (he1 : e ≤ 3) : s6FinalTD R d e < 0 := by
-  rcases s6_final_box_denoms hR hR1 hd hd1 he he1 with
-    ⟨hRp,hRm,hep,hGlo,hGhi,hLp,hMp,hLhi⟩
-  have hRs : R^2 < 1 := by nlinarith only [hRp,hRm]
-  unfold s6FinalTD
-  exact div_neg_of_neg_of_pos (by nlinarith only [mul_pos hep (sub_pos.2 hRs)]) (sq_pos_of_pos hLp)
+/-! ### Pair monotonicity -/
 
 noncomputable def s6FinalPairSlope (R d e : ℝ) : ℝ :=
   s6FinalK1 (costT R d e)+s6FinalV R d*s6FinalG1 (costT R d e)+
@@ -749,7 +370,6 @@ private theorem s6_final_pair_slopeD_pos {R d e : ℝ}
   have htail : 0 < s6FinalV R d*s6FinalChiD R d e*(s6FinalG R+s6FinalG (costT R d e)) := by positivity
   unfold s6FinalPairSlopeD
   linarith only [hterm,htail]
-
 
 private theorem s6_final_initial_bracket {R e : ℝ}
     (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19) (he : 13/5 ≤ e) (he1 : e ≤ 3) :

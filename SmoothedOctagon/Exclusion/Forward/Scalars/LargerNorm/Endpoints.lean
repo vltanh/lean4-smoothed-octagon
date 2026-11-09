@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Forward.Scalars.Canon
 public import Mathlib.Analysis.Convex.Deriv
 
@@ -20,20 +22,6 @@ namespace SmoothedOctagon
 
 open Real Set
 
-local syntax "analytic_deriv" : tactic
-macro_rules
-| `(tactic| analytic_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> analytic_deriv
-  | apply HasDerivAt.sub <;> analytic_deriv
-  | apply HasDerivAt.pow <;> analytic_deriv
-  | apply HasDerivAt.mul <;> analytic_deriv
-  | apply HasDerivAt.div <;> first | analytic_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> analytic_deriv
-  | apply HasDerivAt.log <;> first | analytic_deriv | positivity | assumption)
 
 /-- The rational part of the smooth cancelled residual, retaining the row factors. -/
 noncomputable def fs_normRat (U z h : ℝ) : ℝ :=
@@ -100,7 +88,7 @@ private theorem fsV_quadLog_deriv (A B C : ℝ) {l : ℝ} (hl : 0 < l) :
     HasDerivAt (fsV_quadLog A B C) (fsV_quadLog1 A B C l) l := by
   unfold fsV_quadLog fsV_quadLog1
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]
     field_simp
     ring
@@ -109,7 +97,7 @@ private theorem fsV_quadLog1_deriv (A B C : ℝ) {l : ℝ} (hl : 0 < l) :
     HasDerivAt (fsV_quadLog1 A B C) (fsV_quadLog2 A B C l) l := by
   unfold fsV_quadLog1 fsV_quadLog2
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]
     field_simp
     ring
@@ -118,7 +106,7 @@ private theorem fsV_quadLog2_deriv (A B C : ℝ) {l : ℝ} (hl : 0 < l) :
     HasDerivAt (fsV_quadLog2 A B C) (2 * A / l - B / l ^ 2 + 2 * C / l ^ 3) l := by
   unfold fsV_quadLog2
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]
     field_simp
     ring
@@ -135,7 +123,7 @@ private theorem fsV_affineLog_deriv (A B C c d : ℝ) {t : ℝ} (hc : 0 < c + d 
     HasDerivAt (fsV_affineLog A B C c d) (fsV_affineLog1 A B C c d t) t := by
   unfold fsV_affineLog fsV_affineLog1
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]
     field_simp
 
@@ -143,7 +131,7 @@ private theorem fsV_affineLog1_deriv (A B C c d : ℝ) {t : ℝ} (hc : 0 < c + d
     HasDerivAt (fsV_affineLog1 A B C c d) (fsV_affineLog2 A B C c d t) t := by
   unfold fsV_affineLog1 fsV_affineLog2
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]
     field_simp
     ring
@@ -154,7 +142,7 @@ private theorem fsV_affineLog2_deriv (A B C c d : ℝ) {t : ℝ} (hc : 0 < c + d
         2 * (A * t ^ 2 + B * t + C) * d ^ 3 / (c + d * t) ^ 3) t := by
   unfold fsV_affineLog2
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]
     field_simp
     ring
@@ -171,19 +159,19 @@ private noncomputable def fsV_cubicSecond (a t : ℝ) : ℝ := 2 * fsV_quadratic
 private theorem fsV_Rmodel_deriv (a t : ℝ) : HasDerivAt (fsV_cubic a) (fsV_cubicFirst a t) t := by
   unfold fsV_cubic fsV_cubicFirst
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]
     ring
 private theorem fsV_Rmodel1_deriv (a t : ℝ) : HasDerivAt (fsV_cubicFirst a) (fsV_cubicSecond a t) t := by
   unfold fsV_cubicFirst fsV_cubicSecond
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]
     ring
 private theorem fsV_Rmodel2_deriv (a t : ℝ) : HasDerivAt (fsV_cubicSecond a) (6 * fsV_lead a) t := by
   unfold fsV_cubicSecond
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]
 
 private noncomputable def fsV_valueModel (a t : ℝ) : ℝ :=
@@ -392,7 +380,7 @@ private theorem fsV_U_deriv {S : ℝ} (hS : 0 < S) (hD : 0 < 10 - S) :
     HasDerivAt fsV_upperModel (fsV_upperFirst S) S := by
   unfold fsV_upperModel fsV_upperFirst fsV_URmodel fsV_UB
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]
     field_simp
     ring
@@ -406,7 +394,7 @@ private theorem fsV_U1_deriv {S : ℝ} (hS : 0 < S) (hD : 0 < 10 - S) :
     field_simp
   unfold fsV_upperFirst fsV_upperSecond
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · rw [hlog]
     norm_num [npowRec]
     field_simp
@@ -440,7 +428,7 @@ private theorem fsV_U2_pos {S : ℝ} (hS : 2 ≤ S) (hS1 : S ≤ 7 / 3) : 0 < fs
       (f' := fun r => 52 - 4 * r ^ 3) hS
       (fun r _ => by
         apply HasDerivAt.congr_deriv
-        · analytic_deriv
+        · elementary_deriv
         · norm_num [npowRec]; ring) (fun r hr => ?_)
     · norm_num at hm
       linarith only [hm]
@@ -701,19 +689,19 @@ private theorem fsT_R_deriv {a t : ℝ} (hl : 0 < 1 + t) :
     HasDerivAt (fsT_ratModel a) (fsT_ratFirst a t) t := by
   unfold fsT_ratModel fsT_ratFirst
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem fsT_R1_deriv {a t : ℝ} (hl : 0 < 1 + t) :
     HasDerivAt (fsT_ratFirst a) (fsT_ratSecond a t) t := by
   unfold fsT_ratFirst fsT_ratSecond
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem fsT_R2_deriv {a t : ℝ} (hl : 0 < 1 + t) :
     HasDerivAt (fsT_ratSecond a) (6 * fsT_lead a - 6 * fsT_recip a / (1 + t) ^ 4) t := by
   unfold fsT_ratSecond
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem fsT_deriv {a t : ℝ} (hl : 0 < 1 + t) (hc : 0 < 1 - a + -a * t) :
@@ -922,13 +910,13 @@ private theorem fsT_G_deriv {b : ℝ} (hb : 0 < b) :
     HasDerivAt fsT_Gmodel (fsT_Gfirst b) b := by
   unfold fsT_Gmodel fsT_Gfirst fsT_kernel
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem fsT_G1_deriv {b : ℝ} (hb : 0 < b) :
     HasDerivAt fsT_Gfirst (fsT_Gsecond b) b := by
   unfold fsT_Gfirst fsT_Gsecond
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem fsT_log_lower : (1 : ℝ) / 5 < Real.log (5 / 4) := by

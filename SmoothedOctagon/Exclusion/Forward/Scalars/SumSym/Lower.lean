@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Forward.Scalars.SumSym.Tangent
 public import Mathlib.Analysis.Calculus.Deriv.Polynomial
 public import Mathlib.Analysis.Calculus.Deriv.Inv
@@ -269,19 +271,6 @@ end SmoothedOctagon
 namespace SmoothedOctagon
 open Set Real Polynomial Filter
 
-local syntax "sum_endpoint_deriv" : tactic
-macro_rules
-| `(tactic| sum_endpoint_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> sum_endpoint_deriv
-  | apply HasDerivAt.sub <;> sum_endpoint_deriv
-  | apply HasDerivAt.pow <;> sum_endpoint_deriv
-  | apply HasDerivAt.mul <;> sum_endpoint_deriv
-  | apply HasDerivAt.div <;> first | sum_endpoint_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> sum_endpoint_deriv)
 
 /-- Initial curvature reconstructed by twice integrating the paper's reciprocal kernels. -/
 noncomputable def fwdSumInitial (a : ℝ) : ℝ :=
@@ -310,7 +299,7 @@ theorem fwdSumInitial_hasDerivAt {a : ℝ} (ha : a < 1/2) :
   have hb : 0 < 1-a := by linarith
   apply HasDerivAt.congr_deriv
   · unfold fwdSumInitial
-    sum_endpoint_deriv
+    rational_deriv
   · unfold fwdSumInitialFirst
     norm_num [npowRec]
     field_simp
@@ -321,7 +310,7 @@ theorem fwdSumInitialFirst_hasDerivAt {a : ℝ} (ha : a < 1/2) :
   have hb : 0 < 1-a := by linarith
   apply HasDerivAt.congr_deriv
   · unfold fwdSumInitialFirst
-    sum_endpoint_deriv
+    rational_deriv
   · unfold fwdSumInitialSecond
     norm_num [npowRec]
     field_simp
@@ -432,7 +421,7 @@ theorem fwdSumYCurvature_hasDerivAt {b : ℝ} (hb : 0 < b) :
     HasDerivAt fwdSumYCurvatureBound (fwdSumYCurvatureFirst b) b := by
   apply HasDerivAt.congr_deriv
   · unfold fwdSumYCurvatureBound
-    sum_endpoint_deriv
+    rational_deriv
   · unfold fwdSumYCurvatureFirst
     norm_num [npowRec]
     field_simp
@@ -442,7 +431,7 @@ theorem fwdSumYCurvatureFirst_hasDerivAt {b : ℝ} (hb : 0 < b) :
     HasDerivAt fwdSumYCurvatureFirst (fwdSumYCurvatureSecond b) b := by
   apply HasDerivAt.congr_deriv
   · unfold fwdSumYCurvatureFirst
-    sum_endpoint_deriv
+    rational_deriv
   · unfold fwdSumYCurvatureSecond
     norm_num [npowRec]
     field_simp

@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Shape.Defs
 
 /-!
@@ -58,19 +60,6 @@ private theorem j_resolvents {x be al : ℝ} (hx : 0 < x) (hb : 0 < be) (ha : 0 
   unfold jC1 jC2 jLittleL jLittleM
   ring
 
-local syntax "jderiv" : tactic
-macro_rules
-| `(tactic| jderiv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> jderiv
-  | apply HasDerivAt.sub <;> jderiv
-  | apply HasDerivAt.pow <;> jderiv
-  | apply HasDerivAt.mul <;> jderiv
-  | apply HasDerivAt.div <;> first | jderiv | positivity | assumption
-  | apply HasDerivAt.neg <;> jderiv)
 
 private theorem j_resolvent_deriv {x be al : ℝ} (hx : 0 < x) (hb : 0 < be) (ha : 0 < al) :
     HasDerivAt (fun al => ssS5J x be al)
@@ -85,7 +74,7 @@ private theorem j_resolvent_deriv {x be al : ℝ} (hx : 0 < x) (hb : 0 < be) (ha
         2*al*jLittleM x be/(al^2+jV x)^2) al := by
     dsimp [f]
     apply HasDerivAt.congr_deriv
-    · unfold jV; jderiv
+    · unfold jV; rational_deriv
     · norm_num [npowRec]
       unfold jV
       field_simp (disch := positivity)
@@ -130,7 +119,7 @@ private theorem j_lower_derivatives {x : ℝ} (hx : 0 < x) :
   refine ⟨?_,?_,?_,?_,?_⟩ <;>
     (dsimp only [jLoC1,jLoC1D,jLoC2,jLoC2D,jLoL,jLoLD,jLoM,jLoMD,jLoMDD];
      apply HasDerivAt.congr_deriv
-     · jderiv
+     · rational_deriv
      · norm_num [npowRec]; field_simp (disch := positivity); ring)
 
 private theorem j_motion_upper {f f' : ℝ → ℝ} {a b C : ℝ} (hab : a ≤ b)
@@ -368,7 +357,7 @@ private theorem j_upper_derivatives {x : ℝ} (hx : 0 < x) :
   refine ⟨?_,?_,?_,?_,?_⟩ <;>
     (dsimp only [jHiC2,jHiC2Base,jHiC2Aff,jHiC2D,jHiC2DD,jHiL,jHiLD,jHiM,jHiMBase,jHiMAff,jHiMD,jHiMDD];
      apply HasDerivAt.congr_deriv
-     · jderiv
+     · rational_deriv
      · norm_num [npowRec]
        simp only [jHiC2Base,jHiMBase,mul_comm]
        field_simp (disch := positivity)
@@ -379,7 +368,7 @@ private noncomputable def jHiGD (x : ℝ) : ℝ := 2*jHiAL-2*jHiB/(x+2)^3
 private theorem j_HiG_deriv {x : ℝ} (hx : 0 < x) : HasDerivAt jHiG (jHiGD x) x := by
   unfold jHiG jHiGD
   apply HasDerivAt.congr_deriv
-  · jderiv
+  · rational_deriv
   · norm_num [npowRec]; field_simp (disch := positivity); ring
 
 private theorem j_upper_derivative_bounds {x : ℝ} (hx : 2 ≤ x) (hx1 : x ≤ 13/6) :
@@ -488,7 +477,7 @@ private theorem j_C1_difference {x be : ℝ} (hx : 0 < x) (hb : 0 < be) :
 private theorem j_R0_deriv {x : ℝ} (hx : 0 < x) : HasDerivAt jR0 (jR0D x) x := by
   unfold jR0 jR0D
   apply HasDerivAt.congr_deriv
-  · jderiv
+  · rational_deriv
   · norm_num [npowRec]; field_simp (disch := positivity); ring
 private theorem j_R0D_pos {x : ℝ} (hx : 2 ≤ x) (hx1 : x ≤ 13/6) : 0 < jR0D x := by
   have hx0 : 0 < x := by linarith only [hx]
@@ -582,7 +571,7 @@ private theorem j_initial_derivatives {x : ℝ} (hx : 0 < x) :
     (dsimp only [jInitBracket,jInitBracketD,jInitPref,jInitPrefD,jInitScaledPref,jInitScaledPrefD,
       jInitL,jInitLD,jInitQ,jInitQD,jE,ssE0];
      apply HasDerivAt.congr_deriv
-     · jderiv
+     · rational_deriv
      · norm_num [npowRec,jE,ssE0]; field_simp (disch := positivity); ring)
 
 private theorem j_initial_positive_factors {x : ℝ} (hx : 2 ≤ x) (hx1 : x ≤ 13/6) :

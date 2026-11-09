@@ -1,5 +1,9 @@
 module
 
+public import SmoothedOctagon.Foundations.IntervalBounds
+
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import Mathlib.Analysis.Calculus.Deriv.Inv
 public import Mathlib.Analysis.Calculus.Deriv.Pow
 public import Mathlib.Analysis.Calculus.MeanValue
@@ -95,19 +99,6 @@ noncomputable def mhtC3 (u : ℝ) : ℝ :=
 noncomputable def mhtC4 (u : ℝ) : ℝ :=
   mhtCPart4 u+3*mhtR0/mhtW u^5-(45/2)*mhtR0/mhtW u^6
 
-local syntax "mht_product_deriv" : tactic
-macro_rules
-| `(tactic| mht_product_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> mht_product_deriv
-  | apply HasDerivAt.sub <;> mht_product_deriv
-  | apply HasDerivAt.pow <;> mht_product_deriv
-  | apply HasDerivAt.mul <;> mht_product_deriv
-  | apply HasDerivAt.div <;> first | mht_product_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> mht_product_deriv)
 
 
 
@@ -599,18 +590,6 @@ theorem mhtC4_neg {u : ℝ} (hu : u ∈ Icc (0:ℝ) (2/3)) : mhtC4 u < 0 := by
   nlinarith only [hpole,hprod]
 
 
-private theorem mht_le_of_deriv {f f' : ℝ → ℝ} {x y : ℝ} (hxy : x ≤ y)
-    (hd : ∀ z ∈ Icc x y, HasDerivAt f (f' z) z)
-    (hn : ∀ z ∈ Ioo x y, 0 ≤ f' z) : f x ≤ f y := by
-  have hm : MonotoneOn f (Icc x y) := by
-    apply monotoneOn_of_deriv_nonneg (convex_Icc x y)
-    · exact fun z hz => (hd z hz).continuousAt.continuousWithinAt
-    · intro z hz
-      exact (hd z (interior_subset hz)).differentiableAt.differentiableWithinAt
-    · intro z hz
-      rw [(hd z (interior_subset hz)).deriv]
-      exact hn z (by simpa only [interior_Icc] using hz)
-  exact hm (left_mem_Icc.mpr hxy) (right_mem_Icc.mpr hxy) hxy
 
 private theorem mht_fence {f f' : ℝ → ℝ} {lo hi B : ℝ}
     (hd : ∀ x ∈ Icc lo hi, HasDerivAt f (f' x) x) (hinit : f lo ≤ B)
@@ -638,12 +617,6 @@ private theorem mht_convex_tangent {S : Set ℝ} {f : ℝ → ℝ} {m x d : ℝ}
     have hp := (le_div_iff₀ (sub_pos.mpr hmx)).mp hs
     linarith only [hp]
 
-private theorem mht_concave_ge_min {f : ℝ → ℝ} {lo hi x : ℝ}
-    (hc : ConcaveOn ℝ (Icc lo hi) f) (hx : x ∈ Icc lo hi) :
-    min (f lo) (f hi) ≤ f x := by
-  have hle : lo ≤ hi := le_trans hx.1 hx.2
-  apply hc.ge_on_segment ⟨le_rfl,hle⟩ ⟨hle,le_rfl⟩
-  simpa only [segment_eq_Icc hle] using hx
 
 noncomputable def mhtEll : ℝ := mhtA1 0/mhtA 0
 noncomputable def mhtLogDeriv (u : ℝ) : ℝ := mhtA1 u/mhtA u
@@ -692,36 +665,36 @@ theorem mht_A_bounds {u : ℝ} (hu : u ∈ Icc (0:ℝ) (2/3)) :
     have : 0 < mhtW u := by linarith only [hw0]
     have : 0 < 1-mhtEps u := by linarith only [he]
     positivity
-  have hm2 : mhtA2 0 ≤ mhtA2 u := mht_le_of_deriv hu.1
+  have hm2 : mhtA2 0 ≤ mhtA2 u := le_of_hasDerivAt_nonneg hu.1
     (fun x hx => mhtA2_hasDerivAt (by linarith only [hx.1]))
     (fun x hx => (mhtA3_pos ⟨hx.1.le,le_trans hx.2.le hu.2⟩).le)
   have hp2 : 0 < mhtA2 u := lt_of_lt_of_le mht_A_endpoints.2.1 hm2
-  have hm1 : mhtA1 0 ≤ mhtA1 u := mht_le_of_deriv hu.1
+  have hm1 : mhtA1 0 ≤ mhtA1 u := le_of_hasDerivAt_nonneg hu.1
     (fun x hx => mhtA1_hasDerivAt (by linarith only [hx.1]))
     (fun x hx => by
-      have hh := mht_le_of_deriv hx.1.le
+      have hh := le_of_hasDerivAt_nonneg hx.1.le
         (fun z hz => mhtA2_hasDerivAt (by linarith only [hz.1]))
         (fun z hz => (mhtA3_pos ⟨hz.1.le,le_trans hz.2.le (le_trans hx.2.le hu.2)⟩).le)
       exact (lt_of_lt_of_le mht_A_endpoints.2.1 hh).le)
   have hp1 : 0 < mhtA1 u := lt_of_lt_of_le mht_A_endpoints.1 hm1
-  have hm2up : mhtA2 u ≤ mhtA2 (2/3) := mht_le_of_deriv hu.2
+  have hm2up : mhtA2 u ≤ mhtA2 (2/3) := le_of_hasDerivAt_nonneg hu.2
     (fun x hx => mhtA2_hasDerivAt (by linarith only [hu.1,hx.1]))
     (fun x hx => (mhtA3_pos ⟨le_trans hu.1 hx.1.le,hx.2.le⟩).le)
   exact ⟨ha,hp1,hp2,lt_of_le_of_lt hm2up (lt_of_lt_of_le mht_A_endpoints.2.2.1 hm1)⟩
 
 private theorem mhtB3_ge_initial {u : ℝ} (hu : u ∈ Icc (0:ℝ) (2/3)) :
-    mhtB3 0 ≤ mhtB3 u := mht_le_of_deriv hu.1
+    mhtB3 0 ≤ mhtB3 u := le_of_hasDerivAt_nonneg hu.1
   (fun x hx => mhtB3_hasDerivAt (by linarith only [hx.1]))
   (fun x hx => (mhtB4_pos ⟨hx.1.le,le_trans hx.2.le hu.2⟩).le)
 
 private theorem mhtB2_ge_initial {u : ℝ} (hu : u ∈ Icc (0:ℝ) (2/3)) :
-    mhtB2 0 ≤ mhtB2 u := mht_le_of_deriv hu.1
+    mhtB2 0 ≤ mhtB2 u := le_of_hasDerivAt_nonneg hu.1
   (fun x hx => mhtB2_hasDerivAt (by linarith only [hx.1]))
   (fun x hx => (lt_of_lt_of_le mht_B_endpoints.2.2.2.1
     (mhtB3_ge_initial ⟨hx.1.le,le_trans hx.2.le hu.2⟩)).le)
 
 private theorem mhtB1_neg {u : ℝ} (hu : u ∈ Icc (0:ℝ) (2/3)) : mhtB1 u < 0 := by
-  have hh : mhtB1 u ≤ mhtB1 (2/3) := mht_le_of_deriv hu.2
+  have hh : mhtB1 u ≤ mhtB1 (2/3) := le_of_hasDerivAt_nonneg hu.2
     (fun x hx => mhtB1_hasDerivAt (by linarith only [hu.1,hx.1]))
     (fun x hx => (lt_of_lt_of_le mht_B_endpoints.2.2.1
       (mhtB2_ge_initial ⟨le_trans hu.1 hx.1.le,hx.2.le⟩)).le)
@@ -729,7 +702,7 @@ private theorem mhtB1_neg {u : ℝ} (hu : u ∈ Icc (0:ℝ) (2/3)) : mhtB1 u < 0
 
 theorem mht_B_bounds {u : ℝ} (hu : u ∈ Icc (0:ℝ) (2/3)) :
     mhtB u ≤ mhtB 0 ∧ mhtB u < 0 ∧ mhtB2 0 ≤ mhtB2 u ∧ 0 < mhtB2 u := by
-  have hh : -mhtB 0 ≤ -mhtB u := mht_le_of_deriv
+  have hh : -mhtB 0 ≤ -mhtB u := le_of_hasDerivAt_nonneg
     (f := fun x : ℝ => -mhtB x) (f' := fun x : ℝ => -mhtB1 x) hu.1
     (fun x hx => (mhtB_hasDerivAt (by linarith only [hx.1])).neg)
     (fun x hx => neg_nonneg.mpr (mhtB1_neg ⟨hx.1.le,le_trans hx.2.le hu.2⟩).le)
@@ -750,7 +723,7 @@ theorem mht_C2_pos {u : ℝ} (hu : u ∈ Icc (0:ℝ) (2/3)) : 0 < mhtC2 u := by
         (by have := (interior_subset hx).1; linarith)).hasDerivWithinAt
     · exact fun x hx => (mhtC4_neg (interior_subset hx)).le
   exact lt_of_lt_of_le (lt_min mht_C_endpoints.1 mht_C_endpoints.2)
-    (mht_concave_ge_min hc hu)
+    (concaveOn_min_endpoints_le hc hu)
 
 theorem mhtLogDeriv_hasDerivAt {u : ℝ} (hu : u ∈ Icc (0:ℝ) (2/3)) :
     HasDerivAt mhtLogDeriv (mhtLogDeriv1 u) u := by

@@ -1,5 +1,9 @@
 module
 
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.RationalKernel
+
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Basic
 public import Mathlib.Analysis.Convex.Deriv
 
@@ -31,45 +35,18 @@ noncomputable def s6CentralZ (R d e : ℝ) : ℝ :=
 noncomputable def s6CentralZU (R d : ℝ) : ℝ := s6CentralZ0 R+s6CentralA R*d-3*d^2/2
 noncomputable def s6CentralZL (R d : ℝ) : ℝ := s6CentralZ0 R*(1+11*d/2)
 
-local syntax "central_deriv" : tactic
-macro_rules
-| `(tactic| central_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> central_deriv
-  | apply HasDerivAt.sub <;> central_deriv
-  | apply HasDerivAt.pow <;> central_deriv
-  | apply HasDerivAt.mul <;> central_deriv
-  | apply HasDerivAt.div <;> first | central_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> central_deriv)
 
 theorem s6CentralF_hasDerivAt (t : ℝ) : HasDerivAt s6CentralF (s6CentralF1 t) t := by
-  have hp : 0 < 3+t^2 := by positivity
-  apply HasDerivAt.congr_deriv
-  · unfold s6CentralF
-    central_deriv
-  · unfold s6CentralF1
-    norm_num [npowRec]
-    field_simp
-    ring
+  exact costAngleKernel_hasDerivAt t
 
 theorem s6CentralF1_hasDerivAt (t : ℝ) : HasDerivAt s6CentralF1 (s6CentralF2 t) t := by
-  have hp : 0 < 3+t^2 := by positivity
-  apply HasDerivAt.congr_deriv
-  · unfold s6CentralF1
-    central_deriv
-  · unfold s6CentralF2
-    norm_num [npowRec]
-    field_simp
-    ring
+  exact costAngleKernel1_hasDerivAt t
 
 theorem s6CentralF2_hasDerivAt (t : ℝ) : HasDerivAt s6CentralF2 (s6CentralF3 t) t := by
   have hp : 0 < 3+t^2 := by positivity
   apply HasDerivAt.congr_deriv
   · unfold s6CentralF2
-    central_deriv
+    rational_deriv
   · unfold s6CentralF3
     norm_num [npowRec]
     field_simp
@@ -219,7 +196,7 @@ private theorem s6_gamma_kernel_lower {d g : ℝ} (hd : 0 ≤ d) (hd1 : d ≤ 1/
   · have hv0 : 0 < v := by linarith only [hv.1]
     have hD : 0 < 2+v*d := by positivity
     apply HasDerivAt.congr_deriv
-    · central_deriv
+    · rational_deriv
     · norm_num [npowRec]
       field_simp
       ring
@@ -238,7 +215,7 @@ private theorem s6_upper_kernel_le_at_two {w g L : ℝ}
   · exact neg_le_neg_iff.mp hm
   · have hv0 : 0 < v := by linarith only [hv.1]
     apply HasDerivAt.congr_deriv
-    · central_deriv
+    · rational_deriv
     · norm_num [npowRec]
       field_simp
       ring
@@ -328,7 +305,7 @@ theorem s6CentralCBase_hasDerivAt {R : ℝ} (hR : R ≠ 3) :
   have hp : 3-R ≠ 0 := sub_ne_zero.mpr (Ne.symm hR)
   apply HasDerivAt.congr_deriv
   · unfold s6CentralCBase
-    central_deriv
+    rational_deriv
   · unfold s6CentralCBase1
     norm_num [npowRec]
     field_simp
@@ -421,7 +398,7 @@ theorem s6CentralG_hasDerivAt (R : ℝ) : HasDerivAt s6CentralG (s6CentralG1 R) 
   have hp : 0 < 3+R^2 := by positivity
   apply HasDerivAt.congr_deriv
   · unfold s6CentralG
-    central_deriv
+    rational_deriv
   · unfold s6CentralG1
     norm_num [npowRec]
     field_simp
@@ -432,7 +409,7 @@ theorem s6CentralB_hasDerivAt {R e : ℝ} (hR : R ≠ 3) :
   have hp : 3-R ≠ 0 := sub_ne_zero.mpr (Ne.symm hR)
   apply HasDerivAt.congr_deriv
   · unfold s6CentralB
-    central_deriv
+    rational_deriv
   · unfold s6CentralB1
     norm_num [npowRec]
     field_simp
@@ -450,7 +427,7 @@ theorem s6CentralA_hasDerivAt {R : ℝ} (hR : R ≠ 1) :
   have hp : 1-R ≠ 0 := sub_ne_zero.mpr (Ne.symm hR)
   apply HasDerivAt.congr_deriv
   · unfold s6CentralA
-    central_deriv
+    rational_deriv
   · norm_num [npowRec]
     field_simp
     ring
@@ -461,7 +438,7 @@ theorem s6CentralP_hasDerivAt {R : ℝ} (hR : R ≠ 3) (hR1 : R ≠ 1) :
   have hq : 1-R ≠ 0 := sub_ne_zero.mpr (Ne.symm hR1)
   apply HasDerivAt.congr_deriv
   · unfold s6CentralP
-    central_deriv
+    rational_deriv
   · unfold s6CentralP1
     norm_num [npowRec]
     field_simp
@@ -472,7 +449,7 @@ theorem s6CentralZ0_hasDerivAt {R : ℝ} (hR : R ≠ 3) :
   have hp : 3-R ≠ 0 := sub_ne_zero.mpr (Ne.symm hR)
   apply HasDerivAt.congr_deriv
   · unfold s6CentralZ0
-    central_deriv
+    rational_deriv
   · unfold s6CentralZ01
     norm_num [npowRec]
     field_simp

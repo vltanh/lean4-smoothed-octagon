@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import Mathlib.Analysis.Calculus.Deriv.MeanValue
 public import Mathlib.Analysis.SpecialFunctions.Integrals.Basic
 public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
@@ -143,20 +145,6 @@ end SmoothedOctagon
 namespace SmoothedOctagon
 open Real Set MeasureTheory
 
-local syntax "asym_deriv" : tactic
-macro_rules
-| `(tactic| asym_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> asym_deriv
-  | apply HasDerivAt.sub <;> asym_deriv
-  | apply HasDerivAt.pow <;> asym_deriv
-  | apply HasDerivAt.mul <;> asym_deriv
-  | apply HasDerivAt.div <;> first | asym_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> asym_deriv
-  | apply HasDerivAt.log <;> first | asym_deriv | positivity | assumption)
 
 noncomputable def asymMomentPrimitive1 (t r : ℝ) : ℝ :=
   (1/(1-t*r)+log (1-t*r)-1)/t^2
@@ -169,7 +157,7 @@ theorem asymMomentPrimitive1_deriv {t r : ℝ} (ht : 0 < t) (hv : 0 < 1-t*r) :
     HasDerivAt (asymMomentPrimitive1 t) (r^1/(1-t*r)^2) r := by
   unfold asymMomentPrimitive1
   apply HasDerivAt.congr_deriv
-  · asym_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 theorem asym_moment_1_eq {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
@@ -186,7 +174,7 @@ theorem asymMomentPrimitive2_deriv {t r : ℝ} (ht : 0 < t) (hv : 0 < 1-t*r) :
     HasDerivAt (asymMomentPrimitive2 t) (r^2/(1-t*r)^3) r := by
   unfold asymMomentPrimitive2
   apply HasDerivAt.congr_deriv
-  · asym_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 theorem asym_moment_2_eq {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
@@ -203,7 +191,7 @@ theorem asymMomentPrimitive3_deriv {t r : ℝ} (ht : 0 < t) (hv : 0 < 1-t*r) :
     HasDerivAt (asymMomentPrimitive3 t) (r^3/(1-t*r)^4) r := by
   unfold asymMomentPrimitive3
   apply HasDerivAt.congr_deriv
-  · asym_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 theorem asym_moment_3_eq {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
@@ -230,7 +218,7 @@ theorem asymFloorT_deriv1 {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
   have hv : 0 < 1-t := by linarith only [ht1]
   unfold asymFloorT asymFloorT1 asymMomentPrimitive1
   apply HasDerivAt.congr_deriv
-  · asym_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 theorem asymFloorT_deriv2 {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
@@ -239,7 +227,7 @@ theorem asymFloorT_deriv2 {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
   unfold asymFloorT1 asymFloorT2 asymMomentPrimitive1 asymMomentPrimitive2
   simp only [mul_one]
   apply HasDerivAt.congr_deriv
-  · asym_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 theorem asymFloorT_deriv3 {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
@@ -248,7 +236,7 @@ theorem asymFloorT_deriv3 {t : ℝ} (ht : 0 < t) (ht1 : t < 1) :
   unfold asymFloorT2 asymFloorT3 asymMomentPrimitive2 asymMomentPrimitive3
   simp only [mul_one]
   apply HasDerivAt.congr_deriv
-  · asym_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 /-- The positive-order opposite-floor kernels are positive by their actual integrals. -/

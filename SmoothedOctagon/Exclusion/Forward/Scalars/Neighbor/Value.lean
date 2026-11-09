@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Forward.Scalars.Canon
 public import Mathlib.Analysis.Convex.Deriv
 
@@ -17,20 +19,6 @@ namespace SmoothedOctagon
 
 open Real Set
 
-local syntax "analytic_deriv" : tactic
-macro_rules
-| `(tactic| analytic_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> analytic_deriv
-  | apply HasDerivAt.sub <;> analytic_deriv
-  | apply HasDerivAt.pow <;> analytic_deriv
-  | apply HasDerivAt.mul <;> analytic_deriv
-  | apply HasDerivAt.div <;> first | analytic_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> analytic_deriv
-  | apply HasDerivAt.log <;> first | analytic_deriv | positivity | assumption)
 
 /-- Rational part of the symmetric neighbour row at its least factor. -/
 noncomputable def fs_neighborR (a t : ℝ) : ℝ :=
@@ -67,18 +55,7 @@ private noncomputable def fsN_majorant (a t : ℝ) : ℝ :=
     fs_neighborCM a t * fsN_P (a * (1 + t))
 
 private theorem fsN_simpson_upper {t : ℝ} (ht : 0 ≤ t) : Real.log (1 + t) ≤ fsN_S t := by
-  have h := ff_le_of_deriv (f := fun s => fsN_S s - Real.log (1 + s))
-    (f' := fun s => s ^ 4 / (6 * (1 + s) ^ 2 * (2 + s) ^ 2)) ht (fun s hs => ?_) (fun s hs => ?_)
-  · norm_num [fsN_S] at h
-    unfold fsN_S
-    simpa only [one_div] using h
-  · have hs0 : 0 < 1 + s := by linarith [hs.1]
-    have hs2 : 0 < 2 + s := by linarith [hs.1]
-    unfold fsN_S
-    apply HasDerivAt.congr_deriv
-    · analytic_deriv
-    · norm_num [npowRec]; field_simp; ring
-  · positivity
+  exact ff_log_one_add_le_simpson ht
 
 private theorem fsN_value_le {a t : ℝ} (ha : 1 / 7 ≤ a) (ha1 : a ≤ 1 / 4)
     (ht : 0 < t) (ht1 : t ≤ 1 / 4) : fs_neighborValue a t ≤ fsN_majorant a t := by
@@ -154,7 +131,7 @@ private theorem fsN_shape_deriv {a t : ℝ} (hb : 0 < 1 - a) :
     HasDerivAt (fsN_shapeModel t) (fsN_shapeDeriv t a) a := by
   unfold fsN_shapeModel fsN_shapeDeriv
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem fsN_reciprocal_weights {a : ℝ} (ha : 1 / 7 ≤ a) (ha1 : a ≤ 1 / 4) :
@@ -173,11 +150,11 @@ private theorem fsN_reciprocal_weights {a : ℝ} (ha : 1 / 7 ≤ a) (ha1 : a ≤
         norm_num at h2
         nlinarith only [h2]
     · apply HasDerivAt.congr_deriv
-      · analytic_deriv
+      · elementary_deriv
       · norm_num [npowRec]; ring
     · exact mul_nonneg (by linarith [hx.2]) (by linarith [hx.2])
   · apply HasDerivAt.congr_deriv
-    · analytic_deriv
+    · elementary_deriv
     · norm_num [npowRec]; ring
   · exact mul_nonneg (sq_nonneg _) (by linarith [hx.2])
 
@@ -346,7 +323,7 @@ private theorem fsN_edge_deriv {t : ℝ} (ht : 0 ≤ t) :
   have h2 : 0 < t + 2 := by linarith
   unfold fsN_edgeModel fsN_edgeHigh fsN_edgePoles fsN_edgeFirst
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem fsN_edge_first_deriv {t : ℝ} (ht : 0 ≤ t) :
@@ -355,7 +332,7 @@ private theorem fsN_edge_first_deriv {t : ℝ} (ht : 0 ≤ t) :
   have h2 : 0 < t + 2 := by linarith
   unfold fsN_edgeFirst fsN_edgeSecond
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem fsN_edge_second_deriv {t : ℝ} (ht : 0 ≤ t) :
@@ -364,7 +341,7 @@ private theorem fsN_edge_second_deriv {t : ℝ} (ht : 0 ≤ t) :
   have h2 : 0 < t + 2 := by linarith
   unfold fsN_edgeSecond fsN_edgeThird
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem fsN_edge_third_lower {t : ℝ} (ht : 0 ≤ t) :
@@ -408,7 +385,7 @@ private theorem fsN_edge_second_eighth : 0 < fsN_edgeSecond (1 / 8) := by
   · apply HasDerivAt.congr_deriv
     · apply HasDerivAt.sub
       · exact fsN_edge_second_deriv ht.1
-      · analytic_deriv
+      · elementary_deriv
     · ring
   · have h1 : 0 < 1 + t := by linarith [ht.1]
     have hp : (1 + t) ^ 4 ≤ (9 / 8 : ℝ) ^ 4 := by gcongr; linarith [ht.1, ht.2]

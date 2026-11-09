@@ -1,5 +1,9 @@
 module
 
+public import SmoothedOctagon.Foundations.IntervalBounds
+
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Mixed.Scalar
 public import Mathlib.Analysis.Calculus.Deriv.Inv
 public import Mathlib.Analysis.Calculus.Deriv.Pow
@@ -81,22 +85,8 @@ theorem mhtDelta_value_identity (C D K v V q : ℝ) :
 theorem mhtT_le_of_deriv {f f' : ℝ → ℝ} {x y : ℝ} (hxy : x ≤ y)
     (hd : ∀ z ∈ Icc x y, HasDerivAt f (f' z) z)
     (hn : ∀ z ∈ Ioo x y, 0 ≤ f' z) : f x ≤ f y := by
-  have hm : MonotoneOn f (Icc x y) := by
-    apply monotoneOn_of_deriv_nonneg (convex_Icc x y)
-    · exact fun z hz => (hd z hz).continuousAt.continuousWithinAt
-    · intro z hz
-      exact (hd z (interior_subset hz)).differentiableAt.differentiableWithinAt
-    · intro z hz
-      rw [(hd z (interior_subset hz)).deriv]
-      exact hn z (by simpa only [interior_Icc] using hz)
-  exact hm (left_mem_Icc.mpr hxy) (right_mem_Icc.mpr hxy) hxy
+  exact le_of_hasDerivAt_nonneg hxy hd hn
 
-private theorem mhtT_concave_ge_min {f : ℝ → ℝ} {lo hi x : ℝ}
-    (hc : ConcaveOn ℝ (Icc lo hi) f) (hx : x ∈ Icc lo hi) :
-    min (f lo) (f hi) ≤ f x := by
-  have hle : lo ≤ hi := le_trans hx.1 hx.2
-  apply hc.ge_on_segment ⟨le_rfl,hle⟩ ⟨hle,le_rfl⟩
-  simpa only [segment_eq_Icc hle] using hx
 
 noncomputable def mhtSmallGap (D : ℝ) : ℝ :=
   (3/4)*(D^2+6)^2-151/4-(13/5)*((D-1)*(D+4))-(19/25)*((D-1)*(D+4))^2
@@ -151,7 +141,7 @@ theorem mhtSmallGap_pos {D : ℝ} (hD : D ∈ Icc (4/3:ℝ) (3/2)) : 0 < mhtSmal
       unfold mhtSmallGap2
       nlinarith only [hsq,hl,hy]
   have he : 0 < min (mhtSmallGap (4/3)) (mhtSmallGap (3/2)) := by norm_num [mhtSmallGap]
-  exact lt_of_lt_of_le he (mhtT_concave_ge_min hc hD)
+  exact lt_of_lt_of_le he (concaveOn_min_endpoints_le hc hD)
 
 theorem mhtDelta_smallD_pos {D v q : ℝ} (hD : D ∈ Icc (4/3:ℝ) (3/2))
     (hv : v ≤ 19/25) : 0 < mhtDelta (3/2) D 7 v q := by
@@ -185,19 +175,6 @@ noncomputable def mhtZEdge (C : ℝ) : ℝ := -(60*C^3+C^2-178*C-35)/9
 noncomputable def mhtZEdge1 (C : ℝ) : ℝ := -(180*C^2+2*C-178)/9
 noncomputable def mhtZEdge2 (C : ℝ) : ℝ := -40*C-2/9
 
-local syntax "mht_transport_deriv" : tactic
-macro_rules
-| `(tactic| mht_transport_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> mht_transport_deriv
-  | apply HasDerivAt.sub <;> mht_transport_deriv
-  | apply HasDerivAt.pow <;> mht_transport_deriv
-  | apply HasDerivAt.mul <;> mht_transport_deriv
-  | apply HasDerivAt.div <;> first | mht_transport_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> mht_transport_deriv)
 
 /-- Total derivative along the actual incident secant; the scalar lemma does not assume its sign. -/
 theorem mhtDelta_hasDerivAt_C {v : ℝ → ℝ} {C D q vc : ℝ}
@@ -288,7 +265,7 @@ theorem mhtZ_pos {C D : ℝ} (hC : C ∈ Icc (1:ℝ) (3/2)) (hD : 4/3 ≤ D) : 0
       linarith only [hx0]
   have hinit : 0 < mhtZEdge C := lt_of_lt_of_le
     (by norm_num [mhtZEdge] : 0 < min (mhtZEdge 1) (mhtZEdge (3/2)))
-    (mhtT_concave_ge_min hc hC)
+    (concaveOn_min_endpoints_le hc hC)
   have hm := mhtT_le_of_deriv hD
     (fun x _ => mhtZ_hasDerivAt_D)
     (fun x hx => (mhtZD_pos hC.1 hx.1.le).le)

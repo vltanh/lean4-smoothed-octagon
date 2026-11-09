@@ -21,21 +21,7 @@ noncomputable def asymLogSimpson (q : ℝ) : ℝ :=
 
 /-- The reciprocal Simpson bound, verified by its nonnegative derivative remainder. -/
 theorem asym_log_simpson {q : ℝ} (hq : 1 ≤ q) : log q ≤ asymLogSimpson q := by
-  have hh := ff_le_of_deriv
-    (f := fun z => asymLogSimpson z-log z)
-    (f' := fun z => (z-1)^4/(6*z^2*(z+1)^2)) hq
-    (fun z hz => ?_) (fun z hz => by positivity)
-  · norm_num [asymLogSimpson] at hh
-    simpa only [asymLogSimpson] using hh
-  · have hz0 : 0 < z := by linarith only [hz.1]
-    have hn := ((hasDerivAt_id z).sub_const 1).mul
-      (((hasDerivAt_pow 2 z).add ((hasDerivAt_id z).const_mul (10:ℝ))).add_const 1)
-    have hd := ((hasDerivAt_id z).const_mul (6:ℝ)).mul ((hasDerivAt_id z).add_const 1)
-    have h := (hn.div hd (by dsimp; positivity)).sub (hasDerivAt_log hz0.ne')
-    refine h.congr_deriv ?_
-    norm_num
-    field_simp
-    ring
+  exact ff_log_le_simpson hq
 
 /-- A simple lower bound for the opposite floor on the full asymmetric scale interval. -/
 theorem asym_opposite_floor_gt {ν : ℝ} (hν : 12/5 ≤ ν) (hν3 : ν ≤ 3) :

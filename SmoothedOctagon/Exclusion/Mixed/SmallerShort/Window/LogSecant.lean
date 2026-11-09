@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Mixed.Scalar
 public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 public import Mathlib.Analysis.Calculus.Deriv.MeanValue
@@ -344,20 +346,6 @@ theorem ss_sec_cross {a B C : ℝ} (ha : 0 < a) (haB : a < B) (hBC : B < C) :
   rw [k1, k2, sub_div, sub_div]
   linarith
 
-local syntax "analytic_deriv" : tactic
-macro_rules
-| `(tactic| analytic_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> analytic_deriv
-  | apply HasDerivAt.sub <;> analytic_deriv
-  | apply HasDerivAt.pow <;> analytic_deriv
-  | apply HasDerivAt.mul <;> analytic_deriv
-  | apply HasDerivAt.div <;> first | analytic_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> analytic_deriv
-  | apply HasDerivAt.log <;> first | analytic_deriv | positivity | assumption)
 
 
 
@@ -404,7 +392,7 @@ private theorem ssMean_deriv {a : ℝ} (ha : 0 ≤ a) (ha1 : a < 1) :
   have hb : 0 < 1 - a := by linarith
   unfold ssMean_central ss_gB
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem ssMean_lt_origin {a : ℝ} (ha : 0 < a) (ha1 : a < 1) :

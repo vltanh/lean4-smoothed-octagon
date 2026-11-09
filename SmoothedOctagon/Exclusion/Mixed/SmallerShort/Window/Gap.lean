@@ -1,4 +1,6 @@
 module
+
+public meta import SmoothedOctagon.Tactic.Deriv
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.LogSecant
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Mean
 public import Mathlib.MeasureTheory.Integral.IntervalIntegral.FundThmCalculus
@@ -13,20 +15,6 @@ variance gain in the lower bound.
 @[expose] public section
 namespace SmoothedOctagon
 open Real Set MeasureTheory
-local syntax "analytic_deriv" : tactic
-macro_rules
-| `(tactic| analytic_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> analytic_deriv
-  | apply HasDerivAt.sub <;> analytic_deriv
-  | apply HasDerivAt.pow <;> analytic_deriv
-  | apply HasDerivAt.mul <;> analytic_deriv
-  | apply HasDerivAt.div <;> first | analytic_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> analytic_deriv
-  | apply HasDerivAt.log <;> first | analytic_deriv | positivity | assumption)
 
 private noncomputable def ssGap_h (p q t : ℝ) : ℝ :=
   (1 - p - (q - p) * t) / (1 + p + (q - p) * t) ^ 3
@@ -50,7 +38,7 @@ private theorem ssGap_mass_deriv {p q t : ℝ} (hp : 0 ≤ p) (hd : 0 < q - p) (
   have hD : 0 < 1 + p + (q - p) * t := by positivity
   unfold ssGap_massPrimitive ssGap_h ss_gB
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem ssGap_first_deriv {p q t : ℝ} (hp : 0 ≤ p) (hd : 0 < q - p) (ht : 0 ≤ t) :
@@ -58,7 +46,7 @@ private theorem ssGap_first_deriv {p q t : ℝ} (hp : 0 ≤ p) (hd : 0 < q - p) 
   have hD : 0 < p + (q - p) * t + 1 := by positivity
   unfold ssGap_firstPrimitive ssGap_h ss_gB ss_FB
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem ssGap_mass {p q : ℝ} (hp : 0 ≤ p) (hpq : p < q) :
@@ -180,7 +168,7 @@ private theorem ssGap_ratio_deriv {p q t : ℝ} (hp : 0 < p) (hpq : p < q) (ht :
   have h1 : 0 < 1 - t := by linarith
   unfold ssGap_ratioModel ssGap_ratioDerivative
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem ssGap_ratio_derivative_pos {p q t : ℝ} (hp : 0 < p) (hpq : p < q) (hq : q ≤ 1)
@@ -301,14 +289,14 @@ private theorem ssGap_tilt_deriv (p q e t : ℝ) :
     HasDerivAt (ssGap_tiltPrimitive p q e) (ssGap_tiltV p q e t) t := by
   unfold ssGap_tiltPrimitive ssGap_tiltV
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; ring
 
 private theorem ssGap_tilt_first_deriv (p q e t : ℝ) :
     HasDerivAt (ssGap_tiltFirstPrimitive p q e) (t * ssGap_tiltV p q e t) t := by
   unfold ssGap_tiltFirstPrimitive ssGap_tiltV
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; ring
 
 private theorem ssGap_tilt_mass (p q e : ℝ) :
@@ -372,7 +360,7 @@ private theorem ssGap_tilt_factor_deriv {p q e t : ℝ} (hp : 0 < p) (hpq : p < 
   have hE := ssGap_tilt_den_pos he he1 ht.2
   unfold ssGap_tiltFactor ssGap_tiltFactorDerivative
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem ssGap_tilt_factor_derivative_neg {p q e t : ℝ} (hp : 0 < p) (hpq : p < q)
@@ -556,7 +544,7 @@ private theorem ssGap_scaleFactor_deriv {b1 b2 r t : ℝ} (hb1 : 0 < b1)
   have hd := ssGap_scale_den (hb1.trans hb12) hb2 hr hr1 ht
   unfold ssGap_scaleFactor ssGap_scaleFactorD
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem ssGap_scaleFactor_anti {b1 b2 r : ℝ} (hb1 : 0 < b1)

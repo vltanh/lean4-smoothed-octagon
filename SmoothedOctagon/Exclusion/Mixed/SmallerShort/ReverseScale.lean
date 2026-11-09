@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Mixed.CentralScale
 
 /-!
@@ -14,20 +16,6 @@ midpoint comparison for the logarithm.
 namespace SmoothedOctagon
 open Real Set
 
-local syntax "analytic_deriv" : tactic
-macro_rules
-| `(tactic| analytic_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> analytic_deriv
-  | apply HasDerivAt.sub <;> analytic_deriv
-  | apply HasDerivAt.pow <;> analytic_deriv
-  | apply HasDerivAt.mul <;> analytic_deriv
-  | apply HasDerivAt.div <;> first | analytic_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> analytic_deriv
-  | apply HasDerivAt.log <;> first | analytic_deriv | positivity | assumption)
 
 
 
@@ -49,7 +37,7 @@ private theorem ssScale_log_upper {z : ℝ} (hz : 0 < z) (hz1 : z ≤ 1) :
   · have hs0 : 0 < s := lt_of_lt_of_le hz hs.1
     have hs1 : 0 < s + 1 := by linarith
     apply HasDerivAt.congr_deriv
-    · analytic_deriv
+    · elementary_deriv
     · norm_num [npowRec]; field_simp; ring
   · have hs0 : 0 < s := lt_of_lt_of_le hz hs.1
     positivity
@@ -75,7 +63,7 @@ private theorem ssScale_gram_deriv {rho : ℝ} (hr : 0 < rho) (hb : 0 < 1 - rho)
       ((9 / 4 - ss_reversePairing rho ^ 2 - ss_reversePairing rho * (1 - rho) ^ 2 / rho) / (8 * (1 - rho) ^ 3)) rho := by
   unfold ss_reverseGram ss_reversePairing
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem ssScale_gram_numerator_nonneg {rho : ℝ} (hlo : 1 / 7 ≤ rho) (hhi : rho < 1 / 4) :

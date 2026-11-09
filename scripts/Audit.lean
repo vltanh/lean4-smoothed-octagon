@@ -177,9 +177,16 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Endpoint
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactConcavity
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactScore
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactShape
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.Angles
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.Basic
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.Displacement
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.Pair
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.RConcavity
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.RConcavity.Anisotropy
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.RConcavity.Basic
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.RConcavity.Pair
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.RConcavity.Shear
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.RationalKernel
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.VarianceFloor
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Displacement
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Displacement.CentralFace
@@ -345,6 +352,7 @@ import all SmoothedOctagon.Foundations.ControlTrajectory
 import all SmoothedOctagon.Foundations.CyclicClock
 import all SmoothedOctagon.Foundations.CyclicExtension
 import all SmoothedOctagon.Foundations.DeterminantClock
+import all SmoothedOctagon.Foundations.IntervalBounds
 import all SmoothedOctagon.Foundations.LowCostWinding
 import all SmoothedOctagon.Foundations.Normalization
 import all SmoothedOctagon.Foundations.Problem
@@ -391,6 +399,7 @@ import all SmoothedOctagon.Reduction.Switch.Glue
 import all SmoothedOctagon.Reduction.Switch.Local
 import all SmoothedOctagon.Reduction.SwitchCount
 import all SmoothedOctagon.Reduction.WordReduction
+import all SmoothedOctagon.Tactic.Deriv
 import all SmoothedOctagon.Terminal.Analysis.FiveEnvelope
 import all SmoothedOctagon.Terminal.Analysis.FourDensity
 import all SmoothedOctagon.Terminal.Analysis.LogBounds

@@ -1,5 +1,7 @@
 module
 
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.RationalKernel
+
 public import Mathlib.Analysis.Convex.Deriv
 public import Mathlib.Analysis.Calculus.Deriv.Pow
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.ArctanDeriv
@@ -43,22 +45,13 @@ theorem costLExact_hasDerivAt (z : ℝ) :
 
 private lemma s6_frac1_d (T : ℝ) :
     HasDerivAt (fun T : ℝ => T/(3+T^2)) ((3-T^2)/(3+T^2)^2) T := by
-  have hd : 3+T^2 ≠ 0 := ne_of_gt (by positivity)
-  have h := (hasDerivAt_id' T).div ((hasDerivAt_pow 2 T).const_add 3) hd
-  refine h.congr_deriv ?_
-  norm_num
-  field_simp
-  ring
+  exact costAngleKernel_hasDerivAt T
+
 private lemma s6_frac1_dd (T : ℝ) :
     HasDerivAt (fun T : ℝ => (3-T^2)/(3+T^2)^2)
       (2*T*(T^2-9)/(3+T^2)^3) T := by
-  have hd : 3+T^2 ≠ 0 := ne_of_gt (by positivity)
-  have h := ((hasDerivAt_pow 2 T).const_sub 3).div
-    (((hasDerivAt_pow 2 T).const_add 3).pow 2) (pow_ne_zero 2 hd)
-  refine h.congr_deriv ?_
-  norm_num
-  field_simp
-  ring
+  exact costAngleKernel1_hasDerivAt T
+
 private lemma s6_frac2_d (T : ℝ) :
     HasDerivAt (fun T : ℝ => 1/(3+T^2)) (-(2*T)/(3+T^2)^2) T := by
   have hd : 3+T^2 ≠ 0 := ne_of_gt (by positivity)

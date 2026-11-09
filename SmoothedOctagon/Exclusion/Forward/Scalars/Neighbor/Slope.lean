@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Forward.Scalars.Neighbor.Value
 public import Mathlib.Analysis.Convex.Slope
 public import Mathlib.Analysis.Convex.Jensen
@@ -15,20 +17,6 @@ The remaining edge is convex after its two reciprocal poles are separated.
 namespace SmoothedOctagon
 open Real Set
 
-local syntax "analytic_deriv" : tactic
-macro_rules
-| `(tactic| analytic_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> analytic_deriv
-  | apply HasDerivAt.sub <;> analytic_deriv
-  | apply HasDerivAt.pow <;> analytic_deriv
-  | apply HasDerivAt.mul <;> analytic_deriv
-  | apply HasDerivAt.div <;> first | analytic_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> analytic_deriv
-  | apply HasDerivAt.log <;> first | analytic_deriv | positivity | assumption)
 
 
 /-- Rational part of the partial factor slope, before moving the least factor. -/
@@ -60,18 +48,7 @@ private noncomputable def fsNd_majorant (a t : ℝ) : ℝ :=
     2 * (1 - a * (1 + t)) / (1 - a) * fsNd_P (a * (1 + t))
 
 private theorem fsNd_simpson_upper {t : ℝ} (ht : 0 ≤ t) : Real.log (1 + t) ≤ fsNd_S t := by
-  have h := ff_le_of_deriv (f := fun s => fsNd_S s - Real.log (1 + s))
-    (f' := fun s => s ^ 4 / (6 * (1 + s) ^ 2 * (2 + s) ^ 2)) ht (fun s hs => ?_) (fun s hs => ?_)
-  · norm_num [fsNd_S] at h
-    unfold fsNd_S
-    simpa only [one_div] using h
-  · have hs0 : 0 < 1 + s := by linarith [hs.1]
-    have hs2 : 0 < 2 + s := by linarith [hs.1]
-    unfold fsNd_S
-    apply HasDerivAt.congr_deriv
-    · analytic_deriv
-    · norm_num [npowRec]; field_simp; ring
-  · positivity
+  exact ff_log_one_add_le_simpson ht
 
 private theorem fsNd_slope_le {a t : ℝ} (ha : 1 / 7 ≤ a) (ha1 : a ≤ 1 / 4)
     (ht : 0 < t) (ht1 : t ≤ 1 / 4) : fs_neighborSlope a t ≤ fsNd_majorant a t := by
@@ -149,25 +126,25 @@ private theorem fsNd_shape_deriv {a t : ℝ} (hb : 0 < 1 - a) :
     HasDerivAt (fsNd_shapeModel t) (fsNd_shapeFirst t a) a := by
   unfold fsNd_shapeModel fsNd_shapeFirst
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem fsNd_shape_first_deriv {a t : ℝ} (hb : 0 < 1 - a) :
     HasDerivAt (fsNd_shapeFirst t) (fsNd_shapeSecond t a) a := by
   unfold fsNd_shapeFirst fsNd_shapeSecond
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem fsNd_shape_second_deriv {a t : ℝ} (hb : 0 < 1 - a) :
     HasDerivAt (fsNd_shapeSecond t) (fsNd_shapeThird t a) a := by
   unfold fsNd_shapeSecond fsNd_shapeThird
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem fsNd_shape_third_deriv {a t : ℝ} (hb : 0 < 1 - a) :
     HasDerivAt (fsNd_shapeThird t) (fsNd_shapeFourth t a) a := by
   unfold fsNd_shapeThird fsNd_shapeFourth
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private noncomputable def fsNd_L3 (t : ℝ) : ℝ := 7 / 6 + 11 / 3 * t + 9 / 2 * t ^ 2
@@ -380,7 +357,7 @@ private theorem fsNd_edge_deriv {t : ℝ} (ht : 0 ≤ t) :
   have h2 : 0 < t + 2 := by linarith
   unfold fsNd_edgeModel fsNd_edgeHigh fsNd_edgePoles fsNd_edgeFirst
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem fsNd_edge_first_deriv {t : ℝ} (ht : 0 ≤ t) :
@@ -389,7 +366,7 @@ private theorem fsNd_edge_first_deriv {t : ℝ} (ht : 0 ≤ t) :
   have h2 : 0 < t + 2 := by linarith
   unfold fsNd_edgeFirst fsNd_edgeSecond
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem fsNd_edge_second_pos {t : ℝ} (ht : 0 ≤ t) : 0 < fsNd_edgeSecond t := by

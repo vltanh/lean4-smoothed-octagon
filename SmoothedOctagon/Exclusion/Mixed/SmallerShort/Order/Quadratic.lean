@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Strong
 
 /-!
@@ -17,19 +19,6 @@ namespace SmoothedOctagon
 
 open Set Real
 
-local syntax "analytic_deriv" : tactic
-macro_rules
-| `(tactic| analytic_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> analytic_deriv
-  | apply HasDerivAt.sub <;> analytic_deriv
-  | apply HasDerivAt.pow <;> analytic_deriv
-  | apply HasDerivAt.mul <;> analytic_deriv
-  | apply HasDerivAt.div <;> first | analytic_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> analytic_deriv)
 
 private noncomputable def quadF (a r v : ℝ) : ℝ :=
   (1+v*r)/((1+(v-a)*r)*(1+(v+1-a)*r))
@@ -47,7 +36,7 @@ private theorem quadF_deriv {a r v : ℝ} (hv : 1/5 ≤ v-a) (hr : 0 ≤ r) :
     positivity
   unfold quadF quadFD
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · rational_deriv
   · norm_num [npowRec]
     field_simp (disch := first | positivity | nlinarith)
     ring
@@ -580,7 +569,7 @@ theorem ord_quadP_hasDerivAt {x z : ℝ} (hx : 0 < x) (hz : z ≤ 1) :
   have hd : 0 < 1+3*(1-z) := by linarith only [hz]
   unfold ordQuadP ordQuadJ
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · rational_deriv
   · norm_num [npowRec]
     field_simp (disch := first | positivity | nlinarith)
     ring

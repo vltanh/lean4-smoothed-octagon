@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Shape.Defs
 
 /-!
@@ -12,19 +14,6 @@ namespace SmoothedOctagon
 
 open Set Real
 
-local syntax "tederiv" : tactic
-macro_rules
-| `(tactic| tederiv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> tederiv
-  | apply HasDerivAt.sub <;> tederiv
-  | apply HasDerivAt.pow <;> tederiv
-  | apply HasDerivAt.mul <;> tederiv
-  | apply HasDerivAt.div <;> first | tederiv | positivity | assumption
-  | apply HasDerivAt.neg <;> tederiv)
 
 noncomputable def teE (x : ℝ) : ℝ := -6*(x+1)/25+1/(x+1)
 noncomputable def teQ (x : ℝ) : ℝ := (15/16)/(x+1)^2
@@ -99,7 +88,7 @@ theorem te_original_alpha_deriv {x be : ℝ} (hx : 0 < x) (hb : 0 < be) :
   have hd : HasDerivAt (fun al => teFactor x be al) (ssS5Ta x be) 1 := by
     unfold teFactor teAg teBg teD0 teD1 teD2 teQg teGg teE ssRA ssQc ssDg
     apply HasDerivAt.congr_deriv
-    · tederiv
+    · rational_deriv
     · norm_num [npowRec]
       unfold ssS5Ta teC1g teE1g teDalpha teQ teE
       field_simp (disch := positivity)
@@ -121,19 +110,19 @@ private theorem te_a_deriv {x k : ℝ} (hs : 0 < x+1) :
     HasDerivAt (fun x => teA x k) (teAp x k) x := by
   unfold teA teAp
   apply HasDerivAt.congr_deriv
-  · tederiv
+  · rational_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem te_b_deriv {x k : ℝ} (hs : 0 < x+1) :
     HasDerivAt (fun x => teB x k) (teBp x k) x := by
   unfold teB teBp
   apply HasDerivAt.congr_deriv
-  · tederiv
+  · rational_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem te_bp_deriv {x k : ℝ} (hs : 0 < x+1) :
     HasDerivAt (fun x => teBp x k) (teBpp x k) x := by
   unfold teBp teBpp
   apply HasDerivAt.congr_deriv
-  · tederiv
+  · rational_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem te_bpp_pos {x k : ℝ} (hx : 2 ≤ x) (hk : 1 ≤ k) : 0 < teBpp x k := by
@@ -155,7 +144,7 @@ private theorem te_ap_half {x k : ℝ} (hx : 2 ≤ x) (hx1 : x ≤ 13/6) (hk : 1
       (f' := fun z => 3*(z+1)^2-15) hx1
       (fun z hz => by
         apply HasDerivAt.congr_deriv
-        · tederiv
+        · rational_deriv
         · ring)
       (fun z hz => by
         have hz0 : 2 ≤ z := hx.trans hz.1.le
@@ -265,19 +254,19 @@ private theorem te_c1_deriv {x k : ℝ} (hs : 0 < x+1) :
     HasDerivAt (fun x => teC1 x k) (teC1p x k) x := by
   unfold teC1 teC1p teH
   apply HasDerivAt.congr_deriv
-  · tederiv
+  · rational_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem te_e1_deriv {x k : ℝ} (hs : 0 < x+1) :
     HasDerivAt (fun x => teE1 x k) (teE1p x k) x := by
   unfold teE1 teE1p
   apply HasDerivAt.congr_deriv
-  · tederiv
+  · rational_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem te_e1p_deriv {x k : ℝ} (hs : 0 < x+1) :
     HasDerivAt (fun x => teE1p x k) (teE1pp x k) x := by
   unfold teE1p teE1pp teH1
   apply HasDerivAt.congr_deriv
-  · tederiv
+  · rational_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem te_h_pos {x k : ℝ} (hx : 2 ≤ x) (hk : 1 ≤ k) : 0 < teH x k := by
@@ -357,7 +346,7 @@ private theorem te_corr_deriv {x k : ℝ} (hx : 0 < x) (hk : 0 < k) :
   have hb : 0 < 1+k*x := by positivity
   unfold teCorr teC teQ teCorrp teAbsorb
   apply HasDerivAt.congr_deriv
-  · tederiv
+  · rational_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem te_face_deriv {x k : ℝ} (hx : 0 < x) (hk : 0 < k) :
@@ -510,7 +499,7 @@ private theorem te_delta_deriv {x k : ℝ} (hx : 0 < x) (hk : 0 < k) :
   have hb : 0 < 1+k*x := by positivity
   unfold teDelta teQt teK teJ teA0 teA teBracket teF teQr teR teL teQ teE
   apply HasDerivAt.congr_deriv
-  · tederiv
+  · rational_deriv
   · norm_num [npowRec]
     unfold teDeltap teQtp teKp teJp teA0 teA teJ teAp teBracketp teFp teQrp teRp teLp teL teE
     field_simp (disch := positivity)
@@ -563,7 +552,7 @@ private theorem te_ratio1 {x : ℝ} (hx : 2 ≤ x) : (3*x-1)/(x+1)^5 ≤ 5/243 :
     (fun z hz => by
       have hs : 0 < z+1 := by linarith [hz.1]
       apply HasDerivAt.congr_deriv
-      · tederiv
+      · rational_deriv
       · norm_num [npowRec]; field_simp; ring)
     (fun z hz => div_nonneg (by linarith [hz.1]) (by positivity))
   norm_num at hm
@@ -576,7 +565,7 @@ private theorem te_ratio2 {x : ℝ} (hx : 2 ≤ x) : x*(x-1)/(x+1)^5 ≤ 2/243 :
     (fun z hz => by
       have hs : 0 < z+1 := by linarith [hz.1]
       apply HasDerivAt.congr_deriv
-      · tederiv
+      · rational_deriv
       · norm_num [npowRec]; field_simp; ring)
     (fun z hz => by
       have hz0 : 2 ≤ z := hz.1.le
@@ -592,7 +581,7 @@ private theorem te_ratio3 {x : ℝ} (hx : 2 ≤ x) : x/(x+1)^3 ≤ 2/27 := by
     (fun z hz => by
       have hs : 0 < z+1 := by linarith [hz.1]
       apply HasDerivAt.congr_deriv
-      · tederiv
+      · rational_deriv
       · norm_num [npowRec]; field_simp; ring)
     (fun z hz => div_nonneg (by linarith [hz.1]) (by positivity))
   norm_num at hm
@@ -605,7 +594,7 @@ private theorem te_ratio4 {x : ℝ} (hx : 2 ≤ x) (hx1 : x ≤ 13/6) : 1/28 < (
     (fun z hz => by
       have hs : 0 < z+1 := by linarith [hz.1,hx]
       apply HasDerivAt.congr_deriv
-      · tederiv
+      · rational_deriv
       · norm_num [npowRec]; field_simp; ring)
     (fun z hz => div_nonneg (by linarith [hz.1,hx]) (by positivity))
   norm_num at hm
@@ -698,7 +687,7 @@ private theorem te_bracketp_nonpos {x k : ℝ} (hx : 2 ≤ x) (hx1 : x ≤ 13/6)
       have hs : 0 < 1+y := by linarith [hy.1,hx]
       unfold teBracketKernel
       apply HasDerivAt.congr_deriv
-      · tederiv
+      · rational_deriv
       · norm_num [npowRec]; field_simp; ring)
     (fun y hy => by
       have hy0 : 0 ≤ y-2 := by linarith [hy.1,hx]

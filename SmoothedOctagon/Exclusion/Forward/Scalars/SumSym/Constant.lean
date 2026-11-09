@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Forward.Scalars.Canon
 
 /-!
@@ -16,20 +18,6 @@ namespace SmoothedOctagon
 
 open Real Set
 
-local syntax "analytic_deriv" : tactic
-macro_rules
-| `(tactic| analytic_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> analytic_deriv
-  | apply HasDerivAt.sub <;> analytic_deriv
-  | apply HasDerivAt.pow <;> analytic_deriv
-  | apply HasDerivAt.mul <;> analytic_deriv
-  | apply HasDerivAt.div <;> first | analytic_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> analytic_deriv
-  | apply HasDerivAt.log <;> first | analytic_deriv | positivity | assumption)
 
 /-- The value of the continuously extended sum residual at factor one, with logarithms as atoms. -/
 noncomputable def fs_SA0 (a t LI Lc : ℝ) : ℝ :=
@@ -44,7 +32,7 @@ private theorem fsA_log_lower {t : ℝ} (ht : 0 ≤ t) : t - t ^ 2 / 2 ≤ Real.
     linarith only [h]
   · have hs0 : 0 < 1 + s := by linarith [hs.1]
     apply HasDerivAt.congr_deriv
-    · analytic_deriv
+    · elementary_deriv
     · norm_num [npowRec]; field_simp; ring
   · have hs0 : 0 < 1 + s := by linarith [hs.1]
     positivity
@@ -57,7 +45,7 @@ private theorem fsA_log_upper {t : ℝ} (ht : 0 ≤ t) :
     linarith only [h]
   · have hs0 : 0 < 1 + s := by linarith [hs.1]
     apply HasDerivAt.congr_deriv
-    · analytic_deriv
+    · elementary_deriv
     · norm_num [npowRec]; field_simp; ring
   · have hs0 : 0 < 1 + s := by linarith [hs.1]
     positivity
@@ -95,19 +83,19 @@ private theorem fsA_deriv {a t : ℝ} (hb : 0 < 1 - a) (hc : 0 < 1 - a * (1 + t)
     HasDerivAt (fsA_model t) (fsA_first t a) a := by
   unfold fsA_model fsA_first
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem fsA_1_deriv {a t : ℝ} (hb : 0 < 1 - a) (hc : 0 < 1 - a * (1 + t)) :
     HasDerivAt (fsA_first t) (fsA_second t a) a := by
   unfold fsA_first fsA_second
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 private theorem fsA_2_deriv {a t : ℝ} (hb : 0 < 1 - a) (hc : 0 < 1 - a * (1 + t)) :
     HasDerivAt (fsA_second t) (fsA_third t a) a := by
   unfold fsA_second fsA_third
   apply HasDerivAt.congr_deriv
-  · analytic_deriv
+  · elementary_deriv
   · norm_num [npowRec]; field_simp; ring
 
 private theorem fsA_third_neg {a t : ℝ} (ha : 0 ≤ a) (ha1 : a ≤ 1 / 7)

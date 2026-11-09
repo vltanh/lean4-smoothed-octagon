@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Forward.Scalars.SumSym.Upper.Curvature
 
 /-!
@@ -14,19 +16,6 @@ bound controls the short right chord, and monotonicity handles the lower ceiling
 namespace SmoothedOctagon
 open Set Real Polynomial Filter
 
-local syntax "upper_shape_deriv" : tactic
-macro_rules
-| `(tactic| upper_shape_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> upper_shape_deriv
-  | apply HasDerivAt.sub <;> upper_shape_deriv
-  | apply HasDerivAt.pow <;> upper_shape_deriv
-  | apply HasDerivAt.mul <;> upper_shape_deriv
-  | apply HasDerivAt.div <;> first | upper_shape_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> upper_shape_deriv)
 
 noncomputable def fwdSumGShapeFirst (a k : ℝ) : ℝ :=
   fwdPole0 fwdSumGQ1Poly k+2*a*fwdPole0 fwdSumGQ2Poly k+
@@ -42,7 +31,7 @@ private theorem fse_Gmodel_a_hasDerivAt {a k : ℝ} (ha : a < 1/2) :
   have hb : 0 < 1-a := by linarith
   apply HasDerivAt.congr_deriv
   · unfold fwdSumGModel
-    upper_shape_deriv
+    rational_deriv
   · unfold fwdSumGShapeFirst
     norm_num [npowRec]
     field_simp
@@ -61,7 +50,7 @@ theorem fwdSumGFirst_hasDerivAt_a {a k : ℝ} (ha : a < 1/2) :
   have hb : 0 < 1-a := by linarith
   apply HasDerivAt.congr_deriv
   · unfold fwdSumGFirst
-    upper_shape_deriv
+    rational_deriv
   · unfold fwdSumGFirstA
     norm_num [npowRec]
     field_simp
@@ -127,7 +116,7 @@ private theorem fse_fixed_reciprocal_deriv {a : ℝ} (ha : a < 1/2) :
   have hb : 0 < 1-a := by linarith
   apply HasDerivAt.congr_deriv
   · unfold fwdSumFixedReciprocal
-    upper_shape_deriv
+    rational_deriv
   · unfold fwdSumFixedReciprocalFirst
     norm_num [npowRec]
     field_simp
@@ -305,7 +294,7 @@ private theorem fse_right_kernel_deriv {r : ℝ} (hr : 0 < r) :
     HasDerivAt fwdSumRightKernel (fwdSumRightKernelFirst r) r := by
   apply HasDerivAt.congr_deriv
   · unfold fwdSumRightKernel
-    upper_shape_deriv
+    rational_deriv
   · unfold fwdSumRightKernelFirst
     norm_num [npowRec]
     field_simp
@@ -358,7 +347,7 @@ private theorem fse_right_adjusted_deriv {a k : ℝ} (ha : a < 1/2) (hk : k < 1/
   have hG := fwdSumG_hasDerivAt ha hk
   apply HasDerivAt.congr_deriv
   · unfold fwdSumGRightAdjusted
-    upper_shape_deriv
+    rational_deriv
   · unfold fwdSumGRightAdjustedFirst
     norm_num [npowRec]
     ring
@@ -368,7 +357,7 @@ private theorem fse_right_adjustedFirst_deriv {a k : ℝ} (hk : k ≠ 1) :
   have hG := fwdSumGFirst_hasDerivAt (a := a) hk
   apply HasDerivAt.congr_deriv
   · unfold fwdSumGRightAdjustedFirst
-    upper_shape_deriv
+    rational_deriv
   · norm_num [npowRec]
 
 theorem fwdSumG_right_neg {a k : ℝ} (ha : 0 ≤ a) (ha1 : a ≤ 1/7)
@@ -453,7 +442,7 @@ theorem fwdSumHFirst_hasDerivAt {a k : ℝ} (hk : k < 1/2) :
   have hr : 0 < 1-k := by linarith
   apply HasDerivAt.congr_deriv
   · unfold fwdSumHFirst
-    upper_shape_deriv
+    rational_deriv
   · unfold fwdSumHSecond
     norm_num [npowRec]
     field_simp

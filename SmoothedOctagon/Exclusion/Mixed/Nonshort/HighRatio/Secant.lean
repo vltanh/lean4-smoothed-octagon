@@ -1,5 +1,7 @@
 module
 
+public import SmoothedOctagon.Foundations.IntervalBounds
+
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.CentreGap
 public import Mathlib.Analysis.Convex.Deriv
 
@@ -56,15 +58,7 @@ theorem mhtg_hasDerivAt_C {C D : ℝ} (hCD : 0 < C+D) :
 theorem mhtS_le_of_deriv {f f' : ℝ → ℝ} {x y : ℝ} (hxy : x ≤ y)
     (hd : ∀ z ∈ Icc x y, HasDerivAt f (f' z) z)
     (hn : ∀ z ∈ Ioo x y, 0 ≤ f' z) : f x ≤ f y := by
-  have hm : MonotoneOn f (Icc x y) := by
-    apply monotoneOn_of_deriv_nonneg (convex_Icc x y)
-    · exact fun z hz => (hd z hz).continuousAt.continuousWithinAt
-    · intro z hz
-      exact (hd z (interior_subset hz)).differentiableAt.differentiableWithinAt
-    · intro z hz
-      rw [(hd z (interior_subset hz)).deriv]
-      exact hn z (by simpa only [interior_Icc] using hz)
-  exact hm (left_mem_Icc.mpr hxy) (right_mem_Icc.mpr hxy) hxy
+  exact le_of_hasDerivAt_nonneg hxy hd hn
 
 theorem mhtg_ge_floor {C s : ℝ} (h : C+s ≠ 0) : (3/4:ℝ) ≤ m2g C s := by
   have hid : m2g C s-3/4 = (C-s)^2/(4*(C+s)^2) := by

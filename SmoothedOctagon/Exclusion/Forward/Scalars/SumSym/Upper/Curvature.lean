@@ -1,5 +1,7 @@
 module
 
+public meta import SmoothedOctagon.Tactic.Deriv
+
 public import SmoothedOctagon.Exclusion.Forward.Scalars.SumSym.Lower
 
 /-!
@@ -306,19 +308,6 @@ end SmoothedOctagon
 namespace SmoothedOctagon
 open Set Real Polynomial Filter
 
-local syntax "upper_shape_deriv" : tactic
-macro_rules
-| `(tactic| upper_shape_deriv) => `(tactic|
-  first
-  | assumption
-  | exact hasDerivAt_id' _
-  | exact hasDerivAt_const _ _
-  | apply HasDerivAt.add <;> upper_shape_deriv
-  | apply HasDerivAt.sub <;> upper_shape_deriv
-  | apply HasDerivAt.pow <;> upper_shape_deriv
-  | apply HasDerivAt.mul <;> upper_shape_deriv
-  | apply HasDerivAt.div <;> first | upper_shape_deriv | positivity | assumption
-  | apply HasDerivAt.neg <;> upper_shape_deriv)
 
 noncomputable def fwdSumGSecondA (a k : ℝ) : ℝ :=
   fwdPole2 fwdSumGQ1Poly k+2*a*fwdPole2 fwdSumGQ2Poly k+
@@ -330,7 +319,7 @@ theorem fwdSumGSecond_hasDerivAt_a {a k : ℝ} (ha : a < 1/2) :
   have hb : 0 < 1-a := by linarith
   apply HasDerivAt.congr_deriv
   · unfold fwdSumGSecond
-    upper_shape_deriv
+    rational_deriv
   · unfold fwdSumGSecondA
     norm_num [npowRec]
     field_simp
