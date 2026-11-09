@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 110{,}000 lines in 355 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 110{,}000 lines in 356 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -115,12 +115,9 @@ The mixed envelope endpoint estimate still uses polynomial checks.
 
 The smaller-short shear comparison has the stronger scale threshold
 $q>(29/30)q_c$ and conclusion $\sqrt3hR+13A/3<0$ in the library.
-The strong lower order uses Simpson's
-bound for the reciprocal integral, comparison of positive weights as the interval scale varies,
-and two positive-product identities. This proof also removes the library's restriction $x\le9$.
-The quadratic order retains the positive gain in this comparison and bounds the two costs
+The quadratic order retains the positive gain in the endpoint-gap comparison and bounds the two costs
 of curving the barrier, ending in a sum of positive terms and a square.
-The library uses polynomial contact certificates for these orders.
+The library uses a polynomial contact certificate for this order.
 The norm comparison in gate S4 follows from the compact central Gram expression and the
 transport derivatives for the exact residual at every duration. It holds for every $u\ge3/4$,
 removing the library's upper norm cutoff at this step. Its remaining shape signs still use
@@ -312,7 +309,7 @@ Result & Lean declarations\\
 \eqref{eq:ss-defect} & \lean{NormalPeriod.df_window}, \lean{NormalPeriod.df_defect} \\
 \eqref{eq:ss-bridge-frame}, \eqref{eq:ss-angle-data} & \lean{df_alg_m}, \lean{df_alg_traces}, \lean{SmallerShort.Point.AA}, \lean{SmallerShort.Point.BB} \\
 \cref{thm:m2-smaller-short} & \lean{m2_smallerShort_exclusion} \\
-\cref{lem:ss-first} & \lean{M2Short.ss_C_le_B}, \lean{SmallerShortData.u_le_V}, \lean{ss_V_lt_limit}, \lean{M2Short.ss_u_le}, \lean{ss_order}, \lean{SmallerShortData.root_zero}, \lean{SmallerShortData.q_le_qc}, \lean{SmallerShortData.q_lt_seventh} \\
+\cref{lem:ss-first} & \lean{M2Short.ss_C_le_B}, \lean{SmallerShortData.u_le_V}, \lean{ss_V_lt_limit}, \lean{M2Short.ss_u_le}, \lean{SmallerShortData.be_le_al_x}, \lean{SmallerShortData.root_zero}, \lean{SmallerShortData.q_le_qc}, \lean{SmallerShortData.q_lt_seventh} \\
 \cref{lem:ss-orders} & \lean{ss_strong_order}, \lean{ss_upper_order_54}, \lean{ss_upper_order_98}, \lean{ss_small_upper_order}, \lean{ss_quad_order}, \lean{SmallerShortData.strong_box} \\
 \cref{prop:ss-S0} & \lean{M2Short.ratio_lt_twelve_fifths}, \lean{SmallerShortData.ratio_lt_twelve_fifths}, \lean{lgr_D_pos}, \lean{lgr_pairing} \\
 \cref{prop:ss-S1} & \lean{M2Short.two_lt_ratio}, \lean{SmallerShortData.two_lt_ratio}, \lean{SmallerShortData.lr_cap_env} \\

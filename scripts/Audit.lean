@@ -234,6 +234,7 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Barrier
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Contacts
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.SmallUpper
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Strong
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Upper
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Point
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.ReverseScale

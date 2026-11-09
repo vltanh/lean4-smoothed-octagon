@@ -69,8 +69,6 @@ structure SmallerShortData where
   one_le_al : 1 ≤ al
   al_lt_x : al < x
   x_le_be : x ≤ be
-  /-- The strengthened order (S) (`ss_order`). -/
-  order27 : be / x + 2 / 7 * (be - x) ≤ al
   /-- The equal turn secants (`u_eq`, `u_eq'`). -/
   u_eq : u = m2Sec 1 x be
   u_eq' : u = m2Sec al be x
@@ -159,11 +157,27 @@ theorem u_le_V : H.u ≤ m2Sec 1 H.x H.x := by
   rw [H.u_eq]
   exact ss_u_le_V H.one_lt_x H.x_le_be (by rw [← H.u_eq]; exact H.u_ge)
 
-/-- `β ≤ αx` (from `order27`). -/
+/-- **The strong lower order** at the actual shape (`ss_strong_order`). -/
+theorem strong_order : H.be / H.x + ssKs H.x * (H.be - H.x) ≤ H.al :=
+  ss_strong_order H.one_lt_x H.one_le_al H.al_lt_x H.x_le_be (H.u_eq.symm.trans H.u_eq')
+
+/-- The weaker affine order follows from the strong lower order. -/
+theorem order27 : H.be / H.x + 2 / 7 * (H.be - H.x) ≤ H.al := by
+  have hx0 : 0 < H.x := by linarith only [H.one_lt_x]
+  have hk : 2 / 7 ≤ ssKs H.x := by
+    unfold ssKs
+    rw [le_div_iff₀ (by positivity)]
+    linarith only [H.one_lt_x]
+  have hm := mul_le_mul_of_nonneg_right hk (sub_nonneg.mpr H.x_le_be)
+  linarith only [H.strong_order, hm]
+
+/-- `β ≤ αx` follows from the strong lower order. -/
 theorem be_le_al_x : H.be ≤ H.al * H.x := by
-  have hx0 : 0 < H.x := by linarith [H.one_lt_x]
-  have h : H.be / H.x ≤ H.al := by linarith [H.order27, H.x_le_be]
-  exact (div_le_iff₀ hx0).1 h
+  have hx0 : 0 < H.x := by linarith only [H.one_lt_x]
+  have hk : 0 ≤ ssKs H.x := by unfold ssKs; positivity
+  have hm := mul_nonneg hk (sub_nonneg.mpr H.x_le_be)
+  have h : H.be / H.x ≤ H.al := by linarith only [H.strong_order, hm]
+  exact (div_le_iff₀ hx0).mp h
 
 /-- `q ≤ q_c` (`ρ < rt ≤ r²`, `ss_q_le_qc_iff`). -/
 theorem q_le_qc : H.q ≤ ssQc H.x H.al := by
@@ -216,10 +230,6 @@ theorem q_lt : ssQ H.al H.rho < 3 / 20 := by
   unfold q at h
   linarith only [h]
 
-/-- **The strong lower order** at the actual shape (`ss_strong_order`). -/
-theorem strong_order : H.be / H.x + ssKs H.x * (H.be - H.x) ≤ H.al :=
-  ss_strong_order H.one_lt_x H.x_le_nine H.one_le_al H.al_lt_x H.x_le_be (H.u_eq.symm.trans H.u_eq')
-
 /-- **The global upper order `5/4`** at the actual shape (`ss_upper_order_54`). -/
 theorem upper_order_54 : H.al ≤ H.be / H.x + 5 / 4 * (H.be - H.x) :=
   ss_upper_order_54 H.one_lt_x H.one_le_al H.al_lt_x H.x_le_be (H.u_eq.symm.trans H.u_eq')
@@ -252,7 +262,7 @@ namespace M2Short
 variable (D : M2Short)
 
 /-- **The normalized actual data are an `SmallerShortData`** (every field is an `M2Short` field or an `ss_*`
-lemma: `a_lt_C`, `ss_box_r`, `a_le_A`, `A_lt_C`, `ss_C_le_B`, `ss_order`, `u_eq`, `u_eq'` with
+lemma: `a_lt_C`, `ss_box_r`, `a_le_A`, `A_lt_C`, `ss_C_le_B`, `u_eq`, `u_eq'` with
 `ss_sec_scale` and `m2Sec_comm`, `u_ge`, `ss_Ur`, `ss_UrA`, `ss_box_rho`, `ss_t_le_r`, `central`,
 `ss_v_ge`, `ss_Ut`, `ss_E'`, `w_transport`, `EL_transport` with `ss_pt_lam`, `A_lt_Pf`, `central_A`,
 `w_ge`, `ss_UtA`, `ss_EL'` (`t_A = 1/τ`), `scale_A`, `Γ_eq`, `Γ_eq'` (`ss_pt_rhoA`), `cas_lt`,
@@ -302,7 +312,7 @@ theorem toData_spec : ∃ H : SmallerShortData, H.x = D.C / D.a ∧ H.be = D.B /
       one_le_al := (one_le_div ha).2 D.a_le_A,
       al_lt_x := div_lt_div_of_pos_right D.A_lt_C ha,
       x_le_be := div_le_div_of_nonneg_right D.ss_C_le_B ha.le,
-      order27 := ?_, u_eq := ?_, u_eq' := ?_, u_ge := ?_,
+      u_eq := ?_, u_eq' := ?_, u_ge := ?_,
       u_le_r := by rw [e_r]; exact D.ss_Ur,
       u_le_rA := by rw [e_rA]; exact D.ss_UrA,
       rho_pos := by positivity,
@@ -333,12 +343,6 @@ theorem toData_spec : ∃ H : SmallerShortData, H.x = D.C / D.a ∧ H.be = D.B /
     rw [le_div_iff₀ (by positivity)] at h
     rw [div_le_iff₀ ha]
     linarith
-  · have h := ss_order ha D.a_lt_C hA D.A_lt_C D.ss_C_le_B (D.u_eq.symm.trans D.u_eq')
-    have e : D.B / D.a / (D.C / D.a) + 2 / 7 * (D.B / D.a - D.C / D.a) =
-        (D.a * D.B / D.C + 2 / 7 * (D.B - D.C)) / D.a := by
-      field_simp
-    rw [e]
-    exact div_le_div_of_nonneg_right h ha.le
   · rw [D.u_eq, ← ss_sec_scale (c := 1 / D.a) (by positivity) ha hC hB]
     congr 1 <;> field_simp
   · rw [D.u_eq', m2Sec_comm, ← ss_sec_scale (c := 1 / D.a) (by positivity) hA hB hC]

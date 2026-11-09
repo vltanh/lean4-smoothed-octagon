@@ -537,4 +537,137 @@ theorem ss_gap_ratio_bounds {p q : ℝ} (hp : 0 < p) (hpq : p < q) (hq : q ≤ 1
       (Real.log 2 - 1 / 2) / (3 / 4 - Real.log 2)) :=
   ⟨ss_gap_ratio_lower hp hpq hq, ss_gap_ratio_upper hp hpq hq⟩
 
+private theorem ssGap_scale_den {b r t : ℝ} (hb : 0 < b) (hb1 : b < 1)
+    (_hr : 0 ≤ r) (hr1 : r < 1) (ht : t ∈ Icc (0:ℝ) 1) :
+    0 < 2-b*(1-(1-r)*t) := by
+  have hv : 1-(1-r)*t ≤ 1 := by nlinarith only [hr1,ht.1]
+  have hh := mul_le_mul_of_nonneg_left hv hb.le
+  linarith only [hh,hb1]
+
+private noncomputable def ssGap_scaleFactor (b1 b2 r t : ℝ) : ℝ :=
+  b2/b1 * ((2-b1*(1-(1-r)*t))/(2-b2*(1-(1-r)*t)))^3
+private noncomputable def ssGap_scaleFactorD (b1 b2 r t : ℝ) : ℝ :=
+  -(6*b2/b1)*(b2-b1)*(1-r)*(2-b1*(1-(1-r)*t))^2 /
+    (2-b2*(1-(1-r)*t))^4
+
+private theorem ssGap_scaleFactor_deriv {b1 b2 r t : ℝ} (hb1 : 0 < b1)
+    (hb12 : b1 < b2) (hb2 : b2 < 1) (hr : 0 ≤ r) (hr1 : r < 1)
+    (ht : t ∈ Icc (0:ℝ) 1) : HasDerivAt (ssGap_scaleFactor b1 b2 r) (ssGap_scaleFactorD b1 b2 r t) t := by
+  have hd := ssGap_scale_den (hb1.trans hb12) hb2 hr hr1 ht
+  unfold ssGap_scaleFactor ssGap_scaleFactorD
+  apply HasDerivAt.congr_deriv
+  · analytic_deriv
+  · norm_num [npowRec]; field_simp; ring
+
+private theorem ssGap_scaleFactor_anti {b1 b2 r : ℝ} (hb1 : 0 < b1)
+    (hb12 : b1 < b2) (hb2 : b2 < 1) (hr : 0 ≤ r) (hr1 : r < 1) :
+    StrictAntiOn (ssGap_scaleFactor b1 b2 r) (Icc (0:ℝ) 1) := by
+  intro s hs t ht hst
+  have h := ss_lt_of_deriv (f := fun u => -ssGap_scaleFactor b1 b2 r u)
+    (f' := fun u => -ssGap_scaleFactorD b1 b2 r u) hst
+    (fun u hu => (ssGap_scaleFactor_deriv hb1 hb12 hb2 hr hr1 ⟨hs.1.trans hu.1,hu.2.trans ht.2⟩).neg)
+    (fun u hu => by
+      have huI : u ∈ Icc (0:ℝ) 1 := ⟨hs.1.trans hu.1.le,hu.2.le.trans ht.2⟩
+      have hD1 := ssGap_scale_den hb1 (hb12.trans hb2) hr hr1 huI
+      have hD2 := ssGap_scale_den (hb1.trans hb12) hb2 hr hr1 huI
+      have hb2p : 0 < b2 := hb1.trans hb12
+      have h12 : 0 < b2-b1 := sub_pos.mpr hb12
+      have hrp : 0 < 1-r := by linarith
+      unfold ssGap_scaleFactorD
+      have : 0 < (6*b2/b1)*(b2-b1)*(1-r)*(2-b1*(1-(1-r)*u))^2 /
+          (2-b2*(1-(1-r)*u))^4 := by positivity
+      convert this using 1; ring)
+  linarith only [h]
+
+/-- Increasing the scale of an interval with fixed deficit ratio increases its endpoint-gap ratio. -/
+theorem ss_gap_ratio_scale_mono {b1 b2 r : ℝ} (hb1 : 0 < b1)
+    (hb12 : b1 ≤ b2) (hb2 : b2 < 1) (hr : 0 ≤ r) (hr1 : r < 1) :
+    (ss_gB 1 (1-b1)-m2Sec (1-b1) 1 (1-b1*r)) /
+        (m2Sec (1-b1) 1 (1-b1*r)-ss_gB 1 (1-b1*r)) ≤
+    (ss_gB 1 (1-b2)-m2Sec (1-b2) 1 (1-b2*r)) /
+        (m2Sec (1-b2) 1 (1-b2*r)-ss_gB 1 (1-b2*r)) := by
+  rcases hb12.eq_or_lt with he | hb12
+  · subst b2; exact le_rfl
+  have hb2p : 0 < b2 := hb1.trans hb12
+  have h1 : 0 < 1-b1 := by linarith only [hb12,hb2]
+  have h2 : 0 < 1-b2 := by linarith only [hb2]
+  have hpq1 : 1-b1 < 1-b1*r := by nlinarith only [hb1,hr1]
+  have hpq2 : 1-b2 < 1-b2*r := by nlinarith only [hb2p,hr1]
+  have hq1 : 1-b1*r ≤ 1 := by nlinarith only [hb1,hr]
+  have hq2 : 1-b2*r ≤ 1 := by nlinarith only [hb2p,hr]
+  have hη1 : 0 < m2Sec (1-b1) 1 (1-b1*r)-ss_gB 1 (1-b1*r) :=
+    sub_pos.mpr (ss_sec_gt_right h1 hpq1 hq1)
+  have hξ1 : 0 < ss_gB 1 (1-b1)-m2Sec (1-b1) 1 (1-b1*r) :=
+    sub_pos.mpr (ss_sec_lt_left h1 hpq1 hq1)
+  have hη2 : 0 < m2Sec (1-b2) 1 (1-b2*r)-ss_gB 1 (1-b2*r) :=
+    sub_pos.mpr (ss_sec_gt_right h2 hpq2 hq2)
+  have htotal : 0 < ss_gB 1 (1-b1)-ss_gB 1 (1-b1*r) := by linarith only [hη1,hξ1]
+  let c := (m2Sec (1-b1) 1 (1-b1*r)-ss_gB 1 (1-b1*r)) /
+      (ss_gB 1 (1-b1)-ss_gB 1 (1-b1*r))
+  have hc0 : 0 < c := div_pos hη1 htotal
+  have hc1 : c < 1 := by dsimp [c]; rw [div_lt_one htotal]; linarith only [hξ1]
+  have hcA := ssGap_continuous h1.le (sub_pos.mpr hpq1)
+  have hcB := ssGap_continuous h2.le (sub_pos.mpr hpq2)
+  have hcenter : (∫ t in (0:ℝ)..1, (t-c)*ssGap_h (1-b1) (1-b1*r) t) = 0 := by
+    have he : (fun t => (t-c)*ssGap_h (1-b1) (1-b1*r) t) =
+        (fun t => t*ssGap_h (1-b1) (1-b1*r) t-c*ssGap_h (1-b1) (1-b1*r) t) := by funext t; ring
+    rw [he,intervalIntegral.integral_sub (f := fun t : ℝ => t*ssGap_h (1-b1) (1-b1*r) t)
+      (g := fun t : ℝ => c*ssGap_h (1-b1) (1-b1*r) t)
+      ((continuousOn_id.mul hcA).intervalIntegrable_of_Icc (by norm_num))
+      ((continuousOn_const.mul hcA).intervalIntegrable_of_Icc (by norm_num)),
+      intervalIntegral.integral_const_mul,ssGap_first h1 hpq1,ssGap_mass h1.le hpq1]
+    dsimp [c]
+    field_simp [htotal.ne']
+    ring
+  have hfac : ∀ t ∈ Icc (0:ℝ) 1, ssGap_h (1-b2) (1-b2*r) t =
+      ssGap_h (1-b1) (1-b1*r) t * ssGap_scaleFactor b1 b2 r t := by
+    intro t ht
+    have hD1 := ssGap_scale_den hb1 (hb12.trans hb2) hr hr1 ht
+    have hD2 := ssGap_scale_den hb2p hb2 hr hr1 ht
+    have he1 : 1+(1-b1)+((1-b1*r)-(1-b1))*t = 2-b1*(1-(1-r)*t) := by ring
+    have he2 : 1+(1-b2)+((1-b2*r)-(1-b2))*t = 2-b2*(1-(1-r)*t) := by ring
+    unfold ssGap_h ssGap_scaleFactor
+    rw [he1,he2]
+    field_simp (disch := first | positivity | nlinarith)
+    ring
+  have hvn : ∀ t ∈ Icc (0:ℝ) 1, 0 ≤ ssGap_h (1-b1) (1-b1*r) t := by
+    intro t ht
+    have hd := ssGap_scale_den hb1 (hb12.trans hb2) hr hr1 ht
+    have hv : 0 ≤ 1-(1-r)*t := by
+      have hm := mul_le_mul_of_nonneg_left ht.2 (show 0 ≤ 1-r by linarith)
+      linarith only [hm,hr]
+    have he : ssGap_h (1-b1) (1-b1*r) t = b1*(1-(1-r)*t)/(2-b1*(1-(1-r)*t))^3 := by
+      unfold ssGap_h; congr 1 <;> ring
+    rw [he]; positivity
+  have hvp : ∀ t ∈ Ioo (0:ℝ) 1, 0 < ssGap_h (1-b1) (1-b1*r) t := by
+    intro t ht
+    have hd := ssGap_scale_den hb1 (hb12.trans hb2) hr hr1 ⟨ht.1.le,ht.2.le⟩
+    have hv : 0 < 1-(1-r)*t := by
+      have hm := mul_le_mul_of_nonneg_left ht.2.le (show 0 ≤ 1-r by linarith)
+      have hm2 := mul_nonneg hr ht.1.le
+      nlinarith only [ht.2,hm2]
+    have he : ssGap_h (1-b1) (1-b1*r) t = b1*(1-(1-r)*t)/(2-b1*(1-(1-r)*t))^3 := by
+      unfold ssGap_h; congr 1 <;> ring
+    rw [he]; positivity
+  have hm := ss_weighted_moment_of_strictAnti_factor hcB hcA hc0 hc1 hvn hvp hfac
+    (ssGap_scaleFactor_anti hb1 hb12 hb2 hr hr1) hcenter
+  rw [ssGap_first h2 hpq2,ssGap_mass h2.le hpq2] at hm
+  have hd2 : 0 < (1-b2*r)-(1-b2) := sub_pos.mpr hpq2
+  rw [show c*((ss_gB 1 (1-b2)-ss_gB 1 (1-b2*r))/((1-b2*r)-(1-b2))) =
+      (c*(ss_gB 1 (1-b2)-ss_gB 1 (1-b2*r)))/((1-b2*r)-(1-b2)) by ring] at hm
+  have hm' := (div_lt_div_iff_of_pos_right hd2).mp hm
+  dsimp [c] at hm'
+  have hcross : (m2Sec (1-b2) 1 (1-b2*r)-ss_gB 1 (1-b2*r)) *
+      (ss_gB 1 (1-b1)-ss_gB 1 (1-b1*r)) <
+      (m2Sec (1-b1) 1 (1-b1*r)-ss_gB 1 (1-b1*r)) *
+      (ss_gB 1 (1-b2)-ss_gB 1 (1-b2*r)) := by
+    have hh := (lt_div_iff₀ htotal).mp (show
+      m2Sec (1-b2) 1 (1-b2*r)-ss_gB 1 (1-b2*r) <
+      ((m2Sec (1-b1) 1 (1-b1*r)-ss_gB 1 (1-b1*r))*
+        (ss_gB 1 (1-b2)-ss_gB 1 (1-b2*r)))/
+        (ss_gB 1 (1-b1)-ss_gB 1 (1-b1*r)) by
+          convert hm' using 1; ring)
+    exact hh
+  rw [div_le_div_iff₀ hη1 hη2]
+  linarith only [hcross]
 end SmoothedOctagon

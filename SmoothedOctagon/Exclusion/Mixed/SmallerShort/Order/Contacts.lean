@@ -3,23 +3,11 @@ module
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Basic
 
 /-!
-# Smaller-short window: certificates of the order contacts
+# Reciprocal bounds and quadratic bridge contacts
 
-The logarithm bounds and the polynomial identities behind the contact inequalities of
-`SmallerShort/Order.lean` (the Padé gap, the strong lower order and the rational
-quadratic order). Every identity is a
-two-variable rational identity checked by `field_simp`/`ring`; every sign is a positive Bernstein
-form, a termwise bound or a one-sign-change row.
-
-## Main API
-
-* `ord_log_lt_pade3` (strict Padé).
-* `ord_bern4_pos`: positivity of a quartic Bernstein form.
-* Strong contact: the quartic `ordSP`, `ord_strong_eq` (the factored contact function),
-  `ord_strong_bern` (its
-  Bernstein form on `[q_min, 1]`, without `x ≤ 9`).
-* Quadratic contact: the rows `ordQ0`, …, `ordQ7` of the table and their signs `ord_row0`, …,
-  `ord_row7`, `ord_quad_Q_nonneg`, `ord_quad_eq` (the cleared contact function is `d Q(d, x)`).
+The strict Simpson bound for the reciprocal integral gives the endpoint-gap
+majorant used by the affine and quadratic lower barriers. The remaining
+quadratic contact table and its row signs are recorded here.
 -/
 
 @[expose] public section
@@ -58,63 +46,74 @@ theorem ord_log_lt_pade3 {z : ℝ} (hz : 1 < z) :
   field_simp
   ring
 
-/-- A quartic Bernstein form with positive end coefficients and nonnegative inner ones is positive
-on `T, S ≥ 0`, `T + S > 0`. -/
-theorem ord_bern4_pos {T S b0 b1 b2 b3 b4 : ℝ} (hT : 0 ≤ T) (hS : 0 ≤ S) (hTS : 0 < T + S)
-    (h0 : 0 < b0) (h1 : 0 ≤ b1) (h2 : 0 ≤ b2) (h3 : 0 ≤ b3) (h4 : 0 < b4) :
-    0 < b0 * S ^ 4 + b1 * T * S ^ 3 + b2 * T ^ 2 * S ^ 2 + b3 * T ^ 3 * S + b4 * T ^ 4 := by
-  have e1 : 0 ≤ b1 * T * S ^ 3 := by positivity
-  have e2 : 0 ≤ b2 * T ^ 2 * S ^ 2 := by positivity
-  have e3 : 0 ≤ b3 * T ^ 3 * S := by positivity
-  rcases hS.lt_or_eq with hS' | hS'
-  · have : 0 < b0 * S ^ 4 := by positivity
-    have : 0 ≤ b4 * T ^ 4 := by positivity
-    linarith
-  · subst hS'
-    have hT' : 0 < T := by linarith
-    have : 0 < b4 * T ^ 4 := by positivity
-    simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, mul_zero, add_zero,
-      zero_add] at *
-    linarith
+/-- **The Padé gap**: for
+`0 < p < q ≤ 1`, `η = avg(p, q) - g(q) > η₀ = (q - p)(6 + p - 5pq - q² - q)/(6(1 + p)(1 + q)²(p + q +
+2))` (strict `log z < (z - 1)(z² + 10z + 1)/(6z(z + 1))` at `z = (1 + q)/(1 + p)`). -/
+theorem ss_pade_gap {p q : ℝ} (hp : 0 < p) (hpq : p < q) (hq : q ≤ 1) :
+    (q - p) * (6 + p - 5 * p * q - q ^ 2 - q) / (6 * (1 + p) * (1 + q) ^ 2 * (p + q + 2)) <
+      m2Sec p 1 q - ss_gB 1 q := by
+  have hq1 : q ≤ 1 := hq
+  have hq0 : 0 < q := by linarith
+  have hz : 1 < (q + 1) / (p + 1) := by rw [lt_div_iff₀ (by positivity)]; linarith
+  have hlog := ord_log_lt_pade3 hz
+  rw [m2Sec_of_ne hpq.ne]
+  have hqp : 0 < q - p := by linarith
+  have k : 1 / (q - p) * Real.log ((q + 1) / (p + 1)) <
+      1 / (q - p) * (((q + 1) / (p + 1) - 1) *
+        (((q + 1) / (p + 1)) ^ 2 + 10 * ((q + 1) / (p + 1)) + 1) /
+          (6 * ((q + 1) / (p + 1)) * ((q + 1) / (p + 1) + 1))) :=
+    mul_lt_mul_of_pos_left hlog (by positivity)
+  have e : 1 / (q - p) * (((q + 1) / (p + 1) - 1) *
+      (((q + 1) / (p + 1)) ^ 2 + 10 * ((q + 1) / (p + 1)) + 1) /
+        (6 * ((q + 1) / (p + 1)) * ((q + 1) / (p + 1) + 1))) =
+      (p ^ 2 + 10 * p * q + 12 * p + q ^ 2 + 12 * q + 12) /
+        (6 * (p + 1) * (q + 1) * (p + q + 2)) := by
+    have : p + 1 ≠ 0 := by positivity
+    have : q + 1 ≠ 0 := by positivity
+    have : p + q + 2 ≠ 0 := by positivity
+    field_simp
+    ring
+  rw [e] at k
+  have e2 : 1 + 1 ^ 2 / ((p + 1) * (q + 1)) -
+      (p ^ 2 + 10 * p * q + 12 * p + q ^ 2 + 12 * q + 12) /
+        (6 * (p + 1) * (q + 1) * (p + q + 2)) - ss_gB 1 q =
+      (q - p) * (6 + p - 5 * p * q - q ^ 2 - q) / (6 * (1 + p) * (1 + q) ^ 2 * (p + q + 2)) := by
+    unfold ss_gB
+    have : p + 1 ≠ 0 := by positivity
+    have : q + 1 ≠ 0 := by positivity
+    have : 1 + q ≠ 0 := by positivity
+    have : 1 + p ≠ 0 := by positivity
+    have : p + q + 2 ≠ 0 := by positivity
+    field_simp
+    ring
+  rw [← e2]
+  linarith
 
-/-- The strong contact quartic `P(q, x) = -aq⁴ + bq³ - cq² + dq - e`. -/
-noncomputable def ordSP (x q : ℝ) : ℝ :=
-  -(860 * x ^ 4 + 1096 * x ^ 3 + 92 * x ^ 2) * q ^ 4 +
-    (1432 * x ^ 5 + 2829 * x ^ 4 + 3321 * x ^ 3 + 583 * x ^ 2 + 27 * x) * q ^ 3 -
-    (3210 * x ^ 5 + 12960 * x ^ 4 + 5523 * x ^ 3 + 787 * x ^ 2 + 47 * x + 1) * q ^ 2 +
-    (8184 * x ^ 5 + 9883 * x ^ 4 + 8635 * x ^ 3 + 1821 * x ^ 2 + 145 * x + 4) * q -
-    (2024 * x ^ 5 + 6498 * x ^ 4 + 3181 * x ^ 3 + 545 * x ^ 2 + 39 * x + 1)
-
-/-- The strong contact function `F` factors as `x²(7x + 1)²F = (1 - q)(x + 1)P(q, x)`. -/
-theorem ord_strong_eq {x q : ℝ} (hx : 1 < x) :
-    x ^ 2 * (7 * x + 1) ^ 2 * ((7 * x + 1) * ((1 + (1 / x + ssKs x * (1 - q))) *
-        (6 + (1 / x + ssKs x * (1 - q)) - 5 * (1 / x + ssKs x * (1 - q)) * q - q ^ 2 - q)) *
-        ((2 * q - (1 / x + ssKs x * (1 - q))) * x - q ^ 2) -
-      4 * (x + 1) * q * (x - q) *
-        (6 * ((1 / x + ssKs x * (1 - q)) + q + 2) * (1 - (1 / x + ssKs x * (1 - q)) * q) -
-          (1 + (1 / x + ssKs x * (1 - q))) *
-            (6 + (1 / x + ssKs x * (1 - q)) - 5 * (1 / x + ssKs x * (1 - q)) * q - q ^ 2 - q))) =
-      (1 - q) * (x + 1) * ordSP x q := by
-  have hx0 : 0 < x := by linarith
-  unfold ssKs ordSP
-  field_simp
-  ring
-
-/-- The Bernstein form of the strong contact quartic `P(q, x)` on
-`[q_min, 1]`, in `T = x(11x + 5)q - (4x² + 11x + 1)` and `1 - q`. -/
-theorem ord_strong_bern (x q : ℝ) : (7 * x + 1) ^ 3 * (x - 1) ^ 2 * ordSP x q =
-      18 * (x + 1) ^ 2 * (7 * x + 1) * (11 * x + 1) * (15 * x + 1) ^ 2 * (4 * x ^ 2 + 11 * x + 1) *
-          x ^ 2 * (1 - q) ^ 4 +
-        (x + 1) * (15 * x + 1) *
-            (82008 * x ^ 5 + 141569 * x ^ 4 + 62540 * x ^ 3 + 10134 * x ^ 2 + 692 * x + 17) * x *
-          (x * (11 * x + 5) * q - (4 * x ^ 2 + 11 * x + 1)) * (1 - q) ^ 3 +
-        (x + 1) * (262098 * x ^ 5 + 211683 * x ^ 4 + 41340 * x ^ 3 + 2966 * x ^ 2 + 58 * x - 1) *
-          (x * (11 * x + 5) * q - (4 * x ^ 2 + 11 * x + 1)) ^ 2 * (1 - q) ^ 2 +
-        2 * (10742 * x ^ 4 + 10397 * x ^ 3 + 1685 * x ^ 2 + 87 * x + 1) *
-          (x * (11 * x + 5) * q - (4 * x ^ 2 + 11 * x + 1)) ^ 3 * (1 - q) +
-        2 * (313 * x ^ 2 + 38 * x + 1) * (x * (11 * x + 5) * q - (4 * x ^ 2 + 11 * x + 1)) ^ 4 := by
-  unfold ordSP
-  ring
+/-- **The gap ratio from below**: for `0 < p < q ≤ 1`, with
+`N = (1 + p)(6 + p - 5pq - q² - q)`, `W = 6(p + q + 2)(1 - pq)`, `η = avg - g(q)`, `ξ = g(p) - avg`:
+`η/ξ > N/(W - N)`, in cleared form `N ξ < (W - N) η`. -/
+theorem ss_gap_ratio_low {p q : ℝ} (hp : 0 < p) (hpq : p < q) (hq : q ≤ 1) :
+    (1 + p) * (6 + p - 5 * p * q - q ^ 2 - q) * (ss_gB 1 p - m2Sec p 1 q) <
+      (6 * (p + q + 2) * (1 - p * q) - (1 + p) * (6 + p - 5 * p * q - q ^ 2 - q)) *
+        (m2Sec p 1 q - ss_gB 1 q) := by
+  have hq0 : 0 < q := by linarith
+  have hgap := ss_pade_gap hp hpq hq
+  have hpq1 : p * q < 1 := by have := mul_le_of_le_one_right hp.le hq; linarith
+  have hW : 0 < 6 * (p + q + 2) * (1 - p * q) := by
+    have : 0 < 1 - p * q := by linarith
+    positivity
+  have e : (1 + p) * (6 + p - 5 * p * q - q ^ 2 - q) * (ss_gB 1 p - ss_gB 1 q) =
+      6 * (p + q + 2) * (1 - p * q) *
+        ((q - p) * (6 + p - 5 * p * q - q ^ 2 - q) /
+          (6 * (1 + p) * (1 + q) ^ 2 * (p + q + 2))) := by
+    unfold ss_gB
+    have : 1 + q ≠ 0 := by positivity
+    have : 1 + p ≠ 0 := by positivity
+    have : p + q + 2 ≠ 0 := by positivity
+    field_simp
+    ring
+  have := mul_lt_mul_of_pos_left hgap hW
+  linarith
 
 /-- Row 0 of the quadratic contact table: the coefficient `Q_0(d)` of `X^0` in `Q(d, 2 + X)`. -/
 noncomputable def ordQ0 (d : ℝ) : ℝ :=

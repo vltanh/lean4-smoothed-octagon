@@ -5,6 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Barrier
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Contacts
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Upper
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.SmallUpper
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Strong
 
 /-!
 # Smaller-short window: the equal-secant orders
@@ -18,7 +19,8 @@ is the contact inequality below. The barrier machinery (any differentiable barri
 non-affine barrier of `ss_quad_order`) is `SmallerShort/Order/Barrier.lean`. The global
 upper contacts use the integral comparisons and positive products in `Order/Upper.lean`.
 The small-box upper order uses tilted weights and monotonicity in `Order/SmallUpper.lean`;
-the lower contact inequalities are in `Order/Contacts.lean`.
+the strong lower contact uses positive weights in `Order/Strong.lean`.
+The quadratic contact inequalities are in `Order/Contacts.lean`.
 
 ## Main API
 
@@ -37,123 +39,7 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-! ### Gap ratios of the averaged threshold `avg(p, q) = Sec(p, 1, q)` -/
-
-/-- **The Padé gap**: for
-`0 < p < q ≤ 1`, `η = avg(p, q) - g(q) > η₀ = (q - p)(6 + p - 5pq - q² - q)/(6(1 + p)(1 + q)²(p + q +
-2))` (strict `log z < (z - 1)(z² + 10z + 1)/(6z(z + 1))` at `z = (1 + q)/(1 + p)`). -/
-theorem ss_pade_gap {p q : ℝ} (hp : 0 < p) (hpq : p < q) (hq : q ≤ 1) :
-    (q - p) * (6 + p - 5 * p * q - q ^ 2 - q) / (6 * (1 + p) * (1 + q) ^ 2 * (p + q + 2)) <
-      m2Sec p 1 q - ss_gB 1 q := by
-  have hq1 : q ≤ 1 := hq
-  have hq0 : 0 < q := by linarith
-  have hz : 1 < (q + 1) / (p + 1) := by rw [lt_div_iff₀ (by positivity)]; linarith
-  have hlog := ord_log_lt_pade3 hz
-  rw [m2Sec_of_ne hpq.ne]
-  have hqp : 0 < q - p := by linarith
-  have k : 1 / (q - p) * Real.log ((q + 1) / (p + 1)) <
-      1 / (q - p) * (((q + 1) / (p + 1) - 1) *
-        (((q + 1) / (p + 1)) ^ 2 + 10 * ((q + 1) / (p + 1)) + 1) /
-          (6 * ((q + 1) / (p + 1)) * ((q + 1) / (p + 1) + 1))) :=
-    mul_lt_mul_of_pos_left hlog (by positivity)
-  have e : 1 / (q - p) * (((q + 1) / (p + 1) - 1) *
-      (((q + 1) / (p + 1)) ^ 2 + 10 * ((q + 1) / (p + 1)) + 1) /
-        (6 * ((q + 1) / (p + 1)) * ((q + 1) / (p + 1) + 1))) =
-      (p ^ 2 + 10 * p * q + 12 * p + q ^ 2 + 12 * q + 12) /
-        (6 * (p + 1) * (q + 1) * (p + q + 2)) := by
-    have : p + 1 ≠ 0 := by positivity
-    have : q + 1 ≠ 0 := by positivity
-    have : p + q + 2 ≠ 0 := by positivity
-    field_simp
-    ring
-  rw [e] at k
-  have e2 : 1 + 1 ^ 2 / ((p + 1) * (q + 1)) -
-      (p ^ 2 + 10 * p * q + 12 * p + q ^ 2 + 12 * q + 12) /
-        (6 * (p + 1) * (q + 1) * (p + q + 2)) - ss_gB 1 q =
-      (q - p) * (6 + p - 5 * p * q - q ^ 2 - q) / (6 * (1 + p) * (1 + q) ^ 2 * (p + q + 2)) := by
-    unfold ss_gB
-    have : p + 1 ≠ 0 := by positivity
-    have : q + 1 ≠ 0 := by positivity
-    have : 1 + q ≠ 0 := by positivity
-    have : 1 + p ≠ 0 := by positivity
-    have : p + q + 2 ≠ 0 := by positivity
-    field_simp
-    ring
-  rw [← e2]
-  linarith
-
-/-- **The gap ratio from below**: for `0 < p < q ≤ 1`, with
-`N = (1 + p)(6 + p - 5pq - q² - q)`, `W = 6(p + q + 2)(1 - pq)`, `η = avg - g(q)`, `ξ = g(p) - avg`:
-`η/ξ > N/(W - N)`, in cleared form `N ξ < (W - N) η`. -/
-theorem ss_gap_ratio_low {p q : ℝ} (hp : 0 < p) (hpq : p < q) (hq : q ≤ 1) :
-    (1 + p) * (6 + p - 5 * p * q - q ^ 2 - q) * (ss_gB 1 p - m2Sec p 1 q) <
-      (6 * (p + q + 2) * (1 - p * q) - (1 + p) * (6 + p - 5 * p * q - q ^ 2 - q)) *
-        (m2Sec p 1 q - ss_gB 1 q) := by
-  have hq0 : 0 < q := by linarith
-  have hgap := ss_pade_gap hp hpq hq
-  have hpq1 : p * q < 1 := by have := mul_le_of_le_one_right hp.le hq; linarith
-  have hW : 0 < 6 * (p + q + 2) * (1 - p * q) := by
-    have : 0 < 1 - p * q := by linarith
-    positivity
-  have e : (1 + p) * (6 + p - 5 * p * q - q ^ 2 - q) * (ss_gB 1 p - ss_gB 1 q) =
-      6 * (p + q + 2) * (1 - p * q) *
-        ((q - p) * (6 + p - 5 * p * q - q ^ 2 - q) /
-          (6 * (1 + p) * (1 + q) ^ 2 * (p + q + 2))) := by
-    unfold ss_gB
-    have : 1 + q ≠ 0 := by positivity
-    have : 1 + p ≠ 0 := by positivity
-    have : p + q + 2 ≠ 0 := by positivity
-    field_simp
-    ring
-  have := mul_lt_mul_of_pos_left hgap hW
-  linarith
-
 /-! ### Contact inequalities -/
-
-/-- **The strong lower-barrier contact**: for `1 < x ≤ 9`,
-`q_min = (4x² + 11x + 1)/(x(11x + 5)) ≤ q ≤ 1`, `p = 1/x + k_s(x)(1 - q)`:
-`(7x + 1)N((2q - p)x - q²) - 4(x + 1)q(x - q)(W - N) ≥ 0` (`= (1 - q)(x + 1)P(q, x)/(x²(7x + 1)²)`),
-since `P ≥ 0` on `[q_min, 1]` by its quartic Bernstein form (`ord_strong_bern`, five coefficients
-positive for every `x > 1`); `x ≤ 9` is not used. -/
-theorem ss_strong_contact {x q : ℝ} (hx : 1 < x) (hx9 : x ≤ 9)
-    (hq : (4 * x ^ 2 + 11 * x + 1) / (x * (11 * x + 5)) ≤ q) (hq1 : q ≤ 1) :
-    0 ≤ (7 * x + 1) * ((1 + (1 / x + ssKs x * (1 - q))) *
-        (6 + (1 / x + ssKs x * (1 - q)) - 5 * (1 / x + ssKs x * (1 - q)) * q - q ^ 2 - q)) *
-        ((2 * q - (1 / x + ssKs x * (1 - q))) * x - q ^ 2) -
-      4 * (x + 1) * q * (x - q) *
-        (6 * ((1 / x + ssKs x * (1 - q)) + q + 2) * (1 - (1 / x + ssKs x * (1 - q)) * q) -
-          (1 + (1 / x + ssKs x * (1 - q))) *
-            (6 + (1 / x + ssKs x * (1 - q)) - 5 * (1 / x + ssKs x * (1 - q)) * q - q ^ 2 - q)) := by
-  have _hx9 := hx9
-  have hx0 : 0 < x := by linarith
-  have hx1 : 0 < x - 1 := by linarith
-  have hT : 0 ≤ x * (11 * x + 5) * q - (4 * x ^ 2 + 11 * x + 1) := by
-    rw [div_le_iff₀ (by positivity)] at hq; linarith
-  have hS1 : 0 ≤ 1 - q := by linarith
-  have hTS1 : 0 < x * (11 * x + 5) * q - (4 * x ^ 2 + 11 * x + 1) + (1 - q) := by
-    rcases hS1.lt_or_eq with h | h
-    · linarith
-    · have : q = 1 := by linarith
-      subst this
-      linarith [mul_pos (show (0:ℝ) < 7 * x + 1 by linarith) hx1]
-  have hb2 : 0 ≤ (x + 1) *
-      (262098 * x ^ 5 + 211683 * x ^ 4 + 41340 * x ^ 3 + 2966 * x ^ 2 + 58 * x - 1) := by
-    have : 0 ≤ 262098 * x ^ 5 + 211683 * x ^ 4 + 41340 * x ^ 3 + 2966 * x ^ 2 + 58 * x - 1 := by
-      linarith [pow_pos hx0 5, pow_pos hx0 4, pow_pos hx0 3, pow_pos hx0 2]
-    positivity
-  have hpos := ord_bern4_pos hT hS1 hTS1
-    (b0 := 18 * (x + 1) ^ 2 * (7 * x + 1) * (11 * x + 1) * (15 * x + 1) ^ 2 *
-      (4 * x ^ 2 + 11 * x + 1) * x ^ 2)
-    (b1 := (x + 1) * (15 * x + 1) *
-      (82008 * x ^ 5 + 141569 * x ^ 4 + 62540 * x ^ 3 + 10134 * x ^ 2 + 692 * x + 17) * x)
-    (b3 := 2 * (10742 * x ^ 4 + 10397 * x ^ 3 + 1685 * x ^ 2 + 87 * x + 1))
-    (b4 := 2 * (313 * x ^ 2 + 38 * x + 1))
-    (by positivity) (by positivity) hb2 (by positivity) (by positivity)
-  rw [← ord_strong_bern x q] at hpos
-  have hP := pos_of_mul_pos_right hpos (by positivity)
-  have hR := mul_nonneg (mul_nonneg hS1 (by linarith : (0:ℝ) ≤ x + 1)) hP.le
-  rw [← ord_strong_eq hx] at hR
-  exact nonneg_of_mul_nonneg_right hR (by positivity)
 
 /-- **The quadratic lower-barrier contact**: for
 `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 9/20`, `c = (4x² + 11x + 1)/(7x + 1)`, the barrier
@@ -208,11 +94,8 @@ theorem ord_contact_pos {x p z : ℝ} (hx : 1 < x) (hp : 0 < p) (hpz : p < z) (h
     have : 0 < 6 + p - 5 * p * z - z ^ 2 - z := by linarith
     positivity
 
-/-- **The strong lower order**: for
-`1 < x ≤ 9`, `1 ≤ α < x ≤ β` with `Sec(1, x, β) = Sec(α, β, x)`,
-`α ≥ β/x + k_s(x)(β - x)`, `k_s = 4(x + 1)/(7x + 1)` (barrier `p = ℓ + k_s(1 - z)`, contact
-`ss_pade_gap`, `ss_gap_ratio_low`, `ss_strong_contact`, `ss_first_contact`). -/
-theorem ss_strong_order {x al be : ℝ} (hx : 1 < x) (hx9 : x ≤ 9) (hal : 1 ≤ al) (hax : al < x)
+/-- The strong lower order holds for every `x>1`. -/
+theorem ss_strong_order {x al be : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al < x)
     (hxb : x ≤ be) (heq : m2Sec 1 x be = m2Sec al be x) : be / x + ssKs x * (be - x) ≤ al := by
   have hx0 : 0 < x := by linarith
   have hal0 : 0 < al := by linarith
@@ -230,35 +113,8 @@ theorem ss_strong_order {x al be : ℝ} (hx : 1 < x) (hx9 : x ≤ 9) (hal : 1 �
     calc be * (1 / x + ssKs x * (1 - x / be)) ≤ be * (al / be) :=
           mul_le_mul_of_nonneg_left hP hbe0.le
       _ = al := by field_simp
-  intro z hz hPz hzeq
-  have hz1 := hz.2
-  have hp0 : 0 < 1 / x + ssKs x * (1 - z) := by
-    have : 0 ≤ 1 - z := by linarith
-    positivity
-  obtain ⟨hM, hξ, hη, hN⟩ := ord_contact_pos hx hp0 hPz hz1
-  have hq : (4 * x ^ 2 + 11 * x + 1) / (x * (11 * x + 5)) ≤ z := by
-    have e : 1 / x + ssKs x * (1 - z) =
-        (7 * x + 1 + 4 * (x + 1) * x * (1 - z)) / (x * (7 * x + 1)) := by
-      unfold ssKs; field_simp
-    rw [e, div_lt_iff₀ (by positivity)] at hPz
-    rw [div_le_iff₀ (by positivity)]
-    linarith only [hPz]
-  have hcont := ss_strong_contact hx hx9 hq hz1
-  have hgap := ss_gap_ratio_low hp0 hPz hz1
-  set pz := 1 / x + ssKs x * (1 - z) with hpz
-  set N := (1 + pz) * (6 + pz - 5 * pz * z - z ^ 2 - z) with hNdef
-  set W := 6 * (pz + z + 2) * (1 - pz * z) with hWdef
-  set M := (2 * z - pz) * x - z ^ 2 with hMdef
-  have hcon : ssKs x * z * (x - z) * (W - N) ≤ N * M := by
-    have h7 : 0 < 7 * x + 1 := by linarith
-    have ek : ssKs x * (7 * x + 1) = 4 * (x + 1) := by unfold ssKs; field_simp
-    have key : (7 * x + 1) * (N * M - ssKs x * z * (x - z) * (W - N)) =
-        (7 * x + 1) * N * M - 4 * (x + 1) * z * (x - z) * (W - N) := by rw [← ek]; ring
-    rw [← key] at hcont
-    have := nonneg_of_mul_nonneg_right hcont h7
-    linarith only [this]
-  have := ord_lower_alg hgap hcon hM hξ hη hN
-  exact lt_of_eq_of_lt (by ring) this
+  intro z hz hPz _
+  simpa only [neg_neg] using ss_strong_contact hx hz.2 hPz
 
 /-- The `5/4` upper order from the integral gap bound and first contact. -/
 theorem ss_upper_order_54 {x al be : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al < x)
@@ -507,7 +363,7 @@ theorem ss_quad_order {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal :
   -- the strong order gives `δ₁ = β/x - 1 ≤ 9/20`
   have hδ₁0 : 0 ≤ be / x - 1 := by rw [sub_nonneg, le_div_iff₀ hx0]; linarith
   have hδ₁ : be / x - 1 ≤ 9 / 20 := by
-    have hs := ss_strong_order hx1 (by linarith) hal hax hxb heq
+    have hs := ss_strong_order hx1 hal hax hxb heq
     have e : be / x + ssKs x * (be - x) =
         1 + (4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) * (be / x - 1) := by
       unfold ssKs; field_simp; ring
