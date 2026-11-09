@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Short.Calc
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.LogSecant
 
 /-!
 # Case M2, smaller-short side: the strengthened bridge order (S)

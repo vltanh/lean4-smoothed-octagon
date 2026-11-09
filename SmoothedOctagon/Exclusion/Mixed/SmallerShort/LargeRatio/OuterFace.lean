@@ -1,35 +1,35 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0HandCen
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace
 
 /-!
-# Hand proof of the smaller-short case, gate S0: the outer face, forms and reductions
+# Smaller-short window, large ratio: the outer face, forms and reductions
 
 At the outer scale `q = 1/7` the floor-weighted face value is
-`hl0Go S α B u D τ ℓ = (w - 1)τ + 1/τ + (u - 1)B/α + α/B + 6/7 - E_L + ℓ + (w - 3/4)/2` with
+`lgrGo S α B u D τ ℓ = (w - 1)τ + 1/τ + (u - 1)B/α + α/B + 6/7 - E_L + ℓ + (w - 3/4)/2` with
 `w = W/(49α⁴)`, `E_L = L/(7α²)`, `W = C₀ - DP₀ + uD(D - Q₀)`, `L = u(2D - Q₀) - P₀`,
 `M₀ = 6α² + 1`, `Q₀ = M₀S`, `P₀ = M₀(1/S - S) + 2S - 1`, `C₀ = M₀² - M₀S + S²`
-(`hl0_out_F`). The three tests are `τ = T = 7r_A`, `8T/9` and `2` (`hl0OT`, `hl0O8`, `hl0O2`).
+(`lgr_out_F`). The three tests are `τ = T = 7r_A`, `8T/9` and `2` (`lgrOT`, `lgrO8`, `lgrO2`).
 
 * **Incoming monotonicity**: the coefficient of `u` is
-  `(τ + 1/2)d(d - λS) + 1/r_A - 2d + λS > 0` (`hl0_Cu_pos`, with `d ≤ 51/175`, `λS ≤ 10`,
-  `1/r_A ≥ 7/3`, `τ ≤ 3`), so `ū` may be raised (`hl0_OT_mono`, …).
-* **Two majorants**: `ū ≤ u_b = (x + 74)/100` (`hl0_ubar_le_ub`) and, on the strip
-  `α ≤ m = (2x + 3)/5`, `ū ≤ û` (`hl0_ubar_le_uhat`), both from the common step `hl0_ubar_step`.
+  `(τ + 1/2)d(d - λS) + 1/r_A - 2d + λS > 0` (`lgr_Cu_pos`, with `d ≤ 51/175`, `λS ≤ 10`,
+  `1/r_A ≥ 7/3`, `τ ≤ 3`), so `ū` may be raised (`lgr_OT_mono`, …).
+* **Two majorants**: `ū ≤ u_b = (x + 74)/100` (`lgr_ubar_le_ub`) and, on the strip
+  `α ≤ m = (2x + 3)/5`, `ū ≤ û` (`lgro_ubar_le_uhat`), both from the common step `lgr_ubar_step`.
 * **Beta convexity on the strip**: with `u = û` each test is
-  `kη² + lη + m + r/η + s/(η + α + 1)` (`hl0_pfo_T`, `hl0_pfo_2`); the generalised chord bound
-  `hl0_chord2` lets the pole at `β = -α` absorb the negative residue at `β = 1`, from
-  `U_T > -5/2`, `U₂ > 0` and `R_T > x²/3` (`hl0_strip_chord_T`, …).
+  `kη² + lη + m + r/η + s/(η + α + 1)` (`lgr_pfo_g`, `lgr_pfo_2`); the generalised chord bound
+  `lgr_chord2` lets the pole at `β = -α` absorb the negative residue at `β = 1`, from
+  `U_T > -5/2`, `U₂ > 0` and `R_T > x²/3` (`lgr_strip_chord_T`, …).
 
-The residue signs `U_T > -5/2`, `U₂ > 0` are proved by the uniform coefficient bound (`hl0Cov2`) on
+The residue signs `U_T > -5/2`, `U₂ > 0` are proved by the uniform coefficient bound (`lgrCov2`) on
 the strip
 coordinates `X = x - 12/5`, `A = α - α_f(x)`, and `R_T > x²/3` directly at `u = û(-α)`.
 
 ## Main API
 
-* `hl0Go`, `hl0_out_F`, `hl0OT`, `hl0O8`, `hl0O2`.
-* `hl0_OT_mono`, `hl0_O8_mono`, `hl0_O2_mono`; `hl0_ubar_le_ub`, `hl0_ubar_le_uhat`.
-* `hl0_chord2`, `hl0Cov2`, `hl0_cov2_pos`.
+* `lgrGo`, `lgr_out_F`, `lgrOT`, `lgrO8`, `lgrO2`.
+* `lgr_OT_mono`, `lgr_O8_mono`, `lgr_O2_mono`; `lgr_ubar_le_ub`, `lgro_ubar_le_uhat`.
+* `lgr_chord2`, `lgrCov2`, `lgr_cov2_pos`.
 -/
 
 @[expose] public section
@@ -41,7 +41,7 @@ namespace SmoothedOctagon
 /-- **The chord bound, second form**: for `f(y) = k y² + l y + m + r/(y - p) + s/(y - q)` on
 `[b₀, b₁]` with both poles left of `b₀`, `s ≥ 0` and `k + min(r, 0)/(b₀ - p)³ + s/(b₁ - q)³ ≥ 0`,
 `f(y) ≤ max (f b₀) (f b₁)`. -/
-theorem hl0_chord2 {k l m r s p q b₀ b₁ y : ℝ} (hp : p < b₀) (hq : q < b₀) (h0 : b₀ ≤ y)
+theorem lgr_chord2 {k l m r s p q b₀ b₁ y : ℝ} (hp : p < b₀) (hq : q < b₀) (h0 : b₀ ≤ y)
     (h1 : y ≤ b₁) (hs : 0 ≤ s) (hk : 0 ≤ k + min r 0 / (b₀ - p) ^ 3 + s / (b₁ - q) ^ 3) :
     k * y ^ 2 + l * y + m + r / (y - p) + s / (y - q) ≤
       max (k * b₀ ^ 2 + l * b₀ + m + r / (b₀ - p) + s / (b₀ - q))
@@ -100,23 +100,23 @@ theorem hl0_chord2 {k l m r s p q b₀ b₁ y : ℝ} (hp : p < b₀) (hq : q < b
     nlinarith
   exact le_of_mul_le_mul_left h2 hw
 
-/-- **The bivariate cover**: `hl0Cov2 P H_A e [p₀, …, pₙ]` asks the bivariate coefficient bound on
+/-- **The bivariate cover**: `lgrCov2 P H_A e [p₀, …, pₙ]` asks the bivariate coefficient bound on
 each outer piece `[pᵢ, pᵢ₊₁]` (`pₙ₊₁ = e`) after an outer Taylor shift, inner `0 ≤ A ≤ H_A`. -/
-def hl0Cov2 (P : List (List ℝ)) (HA e : ℝ) : List ℝ → Prop
+def lgrCov2 (P : List (List ℝ)) (HA e : ℝ) : List ℝ → Prop
   | [] => True
-  | [p] => 0 < hl0Low2 HA (e - p) (hl0Shift2 p P)
-  | p :: q :: r => 0 < hl0Low2 HA (q - p) (hl0Shift2 p P) ∧ hl0Cov2 P HA e (q :: r)
+  | [p] => 0 < lgrLow2 HA (e - p) (lgrShift2 p P)
+  | p :: q :: r => 0 < lgrLow2 HA (q - p) (lgrShift2 p P) ∧ lgrCov2 P HA e (q :: r)
 
-theorem hl0_cov2_pos (P : List (List ℝ)) (HA e : ℝ) :
-    ∀ (p : ℝ) (r : List ℝ), hl0Cov2 P HA e (p :: r) →
-      ∀ X A, p ≤ X → X ≤ e → 0 ≤ A → A ≤ HA → 0 < hl0H2 P X A := by
-  have one : ∀ p q X A, 0 < hl0Low2 HA (q - p) (hl0Shift2 p P) → p ≤ X → X ≤ q → 0 ≤ A →
-      A ≤ HA → 0 < hl0H2 P X A := by
+theorem lgr_cov2_pos (P : List (List ℝ)) (HA e : ℝ) :
+    ∀ (p : ℝ) (r : List ℝ), lgrCov2 P HA e (p :: r) →
+      ∀ X A, p ≤ X → X ≤ e → 0 ≤ A → A ≤ HA → 0 < lgrH2 P X A := by
+  have one : ∀ p q X A, 0 < lgrLow2 HA (q - p) (lgrShift2 p P) → p ≤ X → X ≤ q → 0 ≤ A →
+      A ≤ HA → 0 < lgrH2 P X A := by
     intro p q X A h h1 h2 h3 h4
-    have e : hl0H2 P X A = hl0H2 (hl0Shift2 p P) (X - p) A := by
-      rw [hl0_H2_shift2]; congr 1; ring
+    have e : lgrH2 P X A = lgrH2 (lgrShift2 p P) (X - p) A := by
+      rw [lgr_H2_shift2]; congr 1; ring
     rw [e]
-    exact h.trans_le (hl0_low2_le h3 h4 (by linarith) (by linarith) _)
+    exact h.trans_le (lgr_low2_le h3 h4 (by linarith) (by linarith) _)
   intro p r
   induction r generalizing p with
   | nil => intro h X A h1 h2 h3 h4; exact one p e X A h h1 h2 h3 h4
@@ -130,65 +130,65 @@ theorem hl0_cov2_pos (P : List (List ℝ)) (HA e : ℝ) :
 /-! ### The outer face value -/
 
 /-- `W = C₀ - DP₀ + uD(D - Q₀)`, so that `w = W/(49α⁴)`. -/
-noncomputable def hl0Wo (S a u D : ℝ) : ℝ :=
+noncomputable def lgrWo (S a u D : ℝ) : ℝ :=
   (6 * a ^ 2 + 1) ^ 2 - (6 * a ^ 2 + 1) * S + S ^ 2 + D ^ 2 * u -
     D * ((6 * a ^ 2 + 1) * (S * (u - 1) + 1 / S) + 2 * S - 1)
 
 /-- `L = 2Du - N₀`, so that `E_L = L/(7α²)`. -/
-noncomputable def hl0Lo (S a u D : ℝ) : ℝ :=
+noncomputable def lgrLo (S a u D : ℝ) : ℝ :=
   2 * D * u - ((6 * a ^ 2 + 1) * (S * (u - 1) + 1 / S) + 2 * S - 1)
 
 /-- **The outer face value** at `q = 1/7`, floor weight `1/2`. -/
-noncomputable def hl0Go (S a B u D τ ℓ : ℝ) : ℝ :=
-  (hl0Wo S a u D / (49 * a ^ 4) - 1) * τ + 1 / τ + (u - 1) * B / a + a / B + 6 / 7 -
-    hl0Lo S a u D / (7 * a ^ 2) + ℓ + (hl0Wo S a u D / (49 * a ^ 4) - 3 / 4) / 2
+noncomputable def lgrGo (S a B u D τ ℓ : ℝ) : ℝ :=
+  (lgrWo S a u D / (49 * a ^ 4) - 1) * τ + 1 / τ + (u - 1) * B / a + a / B + 6 / 7 -
+    lgrLo S a u D / (7 * a ^ 2) + ℓ + (lgrWo S a u D / (49 * a ^ 4) - 3 / 4) / 2
 
-theorem hl0_Ws_o {x a b u : ℝ} (hx : 0 < x) (ha : 0 < a) :
-    hsWs x b a u (1 / 7) = hl0Wo (x + 1) a u (hsDg x b a) / (49 * a ^ 4) := by
-  unfold hsWs hsA1 hsA2 hsE0 hl0Wo
+theorem lgr_Ws_o {x a b u : ℝ} (hx : 0 < x) (ha : 0 < a) :
+    ssWs x b a u (1 / 7) = lgrWo (x + 1) a u (ssDg x b a) / (49 * a ^ 4) := by
+  unfold ssWs ssA1 ssA2 ssE0 lgrWo
   field_simp
   ring
 
-theorem hl0_ELs_o {x a b u : ℝ} (hx : 0 < x) (ha : 0 < a) :
-    hsELs x b a u (1 / 7) = hl0Lo (x + 1) a u (hsDg x b a) / (7 * a ^ 2) := by
-  unfold hsELs hsA3 hsE0 hl0Lo
+theorem lgr_ELs_o {x a b u : ℝ} (hx : 0 < x) (ha : 0 < a) :
+    ssELs x b a u (1 / 7) = lgrLo (x + 1) a u (ssDg x b a) / (7 * a ^ 2) := by
+  unfold ssELs ssA3 ssE0 lgrLo
   field_simp
   ring
 
-/-- **The outer face value** of `hsF` at `q = 1/7`. -/
-theorem hl0_out_F {x a b u τ ℓ : ℝ} (hx : 0 < x) (ha : 0 < a) (hB : 0 < a + b) :
-    hsF x b a u (1 / 7) τ ℓ (1 / 2) = hl0Go (x + 1) a (a + b) u (hsDg x b a) τ ℓ := by
-  unfold hsF
-  rw [hl0_Ws_o hx ha, hl0_ELs_o hx ha]
-  unfold hl0Go hsRA
+/-- **The outer face value** of `ssF` at `q = 1/7`. -/
+theorem lgr_out_F {x a b u τ ℓ : ℝ} (hx : 0 < x) (ha : 0 < a) (hB : 0 < a + b) :
+    ssF x b a u (1 / 7) τ ℓ (1 / 2) = lgrGo (x + 1) a (a + b) u (ssDg x b a) τ ℓ := by
+  unfold ssF
+  rw [lgr_Ws_o hx ha, lgr_ELs_o hx ha]
+  unfold lgrGo ssRA
   field_simp
   ring
 
 /-- The outer `τ = T = 7r_A` test at `q = 1/7`, with incoming norm `u`. -/
-noncomputable def hl0OT (x a b u : ℝ) : ℝ := hsF x b a u (1 / 7) (7 * hsRA a b) 0 (1 / 2)
+noncomputable def lgrOT (x a b u : ℝ) : ℝ := ssF x b a u (1 / 7) (7 * ssRA a b) 0 (1 / 2)
 /-- The outer `τ = 8T/9` test. -/
-noncomputable def hl0O8 (x a b u : ℝ) : ℝ :=
-  hsF x b a u (1 / 7) (8 * (7 * hsRA a b) / 9) (-1 / 9) (1 / 2)
+noncomputable def lgrO8 (x a b u : ℝ) : ℝ :=
+  ssF x b a u (1 / 7) (8 * (7 * ssRA a b) / 9) (-1 / 9) (1 / 2)
 /-- The outer `τ = 2` test. -/
-noncomputable def hl0O2 (x a b u : ℝ) : ℝ :=
-  hsF x b a u (1 / 7) 2 (5 / (2 * (7 * hsRA a b)) - 11 / 9) (1 / 2)
+noncomputable def lgrO2 (x a b u : ℝ) : ℝ :=
+  ssF x b a u (1 / 7) 2 (5 / (2 * (7 * ssRA a b)) - 11 / 9) (1 / 2)
 
 /-! ### Incoming monotonicity -/
 
 /-- The coefficient of `u`: `(τ + 1/2)d(d - λS) + B/α - 2d + λS`, `d = D/(7α²)`,
 `λS = M₀S/(7α²)`. -/
-noncomputable def hl0Cu (S a B D τ : ℝ) : ℝ :=
+noncomputable def lgrCu (S a B D τ : ℝ) : ℝ :=
   (τ + 1 / 2) * (D / (7 * a ^ 2)) * (D / (7 * a ^ 2) - (6 * a ^ 2 + 1) * S / (7 * a ^ 2)) + B / a -
     2 * (D / (7 * a ^ 2)) + (6 * a ^ 2 + 1) * S / (7 * a ^ 2)
 
-theorem hl0_Go_affine {S a B u u' D τ ℓ : ℝ} (hS : S ≠ 0) (ha : a ≠ 0) (hτ : τ ≠ 0) :
-    hl0Go S a B u' D τ ℓ = hl0Go S a B u D τ ℓ + (u' - u) * hl0Cu S a B D τ := by
-  unfold hl0Go hl0Wo hl0Lo hl0Cu
+theorem lgr_Go_affine {S a B u u' D τ ℓ : ℝ} (hS : S ≠ 0) (ha : a ≠ 0) (hτ : τ ≠ 0) :
+    lgrGo S a B u' D τ ℓ = lgrGo S a B u D τ ℓ + (u' - u) * lgrCu S a B D τ := by
+  unfold lgrGo lgrWo lgrLo lgrCu
   field_simp
   ring
 
-/-- The scalar core of the positivity of `hl0Cu`. -/
-theorem hl0_Cu_core {d L τ ρ : ℝ} (hτ : 0 < τ) (hτ3 : τ ≤ 3) (hρ : 7 / 3 ≤ ρ) (hL : 0 ≤ L)
+/-- The scalar core of the positivity of `lgrCu`. -/
+theorem lgr_Cu_core {d L τ ρ : ℝ} (hτ : 0 < τ) (hτ3 : τ ≤ 3) (hρ : 7 / 3 ≤ ρ) (hL : 0 ≤ L)
     (hL10 : L ≤ 10) (hd : d ≤ 51 / 175) : 0 < (τ + 1 / 2) * d * (d - L) + ρ - 2 * d + L := by
   rcases le_or_gt d 0 with h0 | h0
   · have : 0 ≤ (τ + 1 / 2) * d * (d - L) := by
@@ -205,75 +205,75 @@ theorem hl0_Cu_core {d L τ ρ : ℝ} (hτ : 0 < τ) (hτ3 : τ ≤ 3) (hρ : 7 
 
 /-- **The coefficient of `u` is positive** on the outer domain (`β ≥ 4α/3`, `β ≥ x ≥ α ≥ 1`,
 `x ≥ 12/5`, `x ≤ 9`, `0 < τ ≤ 3`). -/
-theorem hl0_Cu_pos {x a b τ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a) (hax : a ≤ x)
+theorem lgr_Cu_pos {x a b τ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a) (hax : a ≤ x)
     (hxb : x ≤ b) (hb43 : 4 * a ≤ 3 * b) (hτ : 0 < τ) (hτ3 : τ ≤ 3) :
-    0 < hl0Cu (x + 1) a (a + b) (hsDg x b a) τ := by
+    0 < lgrCu (x + 1) a (a + b) (ssDg x b a) τ := by
   have ha0 : 0 < a := by linarith
   have ha2 : 0 < 7 * a ^ 2 := by positivity
-  have hD : hsDg x b a ≤ 51 / 25 * a ^ 2 := by
-    unfold hsDg
+  have hD : ssDg x b a ≤ 51 / 25 * a ^ 2 := by
+    unfold ssDg
     have : 2 * b * (x - a) ≥ 2 * x * (x - a) := by nlinarith
     nlinarith
-  have hd : hsDg x b a / (7 * a ^ 2) ≤ 51 / 175 := by
+  have hd : ssDg x b a / (7 * a ^ 2) ≤ 51 / 175 := by
     rw [div_le_iff₀ ha2]; linarith
   have hL : (6 * a ^ 2 + 1) * (x + 1) / (7 * a ^ 2) ≤ 10 := by
     rw [div_le_iff₀ ha2]; nlinarith
   have hρ : 7 / 3 ≤ (a + b) / a := by rw [le_div_iff₀ ha0]; linarith
-  unfold hl0Cu
-  exact hl0_Cu_core hτ hτ3 hρ (by positivity) hL hd
+  unfold lgrCu
+  exact lgr_Cu_core hτ hτ3 hρ (by positivity) hL hd
 
 /-- `T = 7r_A ≤ 3` from `β ≥ 4α/3`. -/
-theorem hl0_T_le {a b : ℝ} (ha : 0 < a) (hb43 : 4 * a ≤ 3 * b) : 7 * hsRA a b ≤ 3 := by
-  unfold hsRA
+theorem lgr_T_le {a b : ℝ} (ha : 0 < a) (hb43 : 4 * a ≤ 3 * b) : 7 * ssRA a b ≤ 3 := by
+  unfold ssRA
   have : 0 < a + b := by linarith
   rw [mul_div_assoc', div_le_iff₀ this]; linarith
 
-theorem hl0_T_pos {a b : ℝ} (ha : 0 < a) (hb : 0 < b) : 0 < 7 * hsRA a b := by
-  unfold hsRA; positivity
+theorem lgr_T_pos {a b : ℝ} (ha : 0 < a) (hb : 0 < b) : 0 < 7 * ssRA a b := by
+  unfold ssRA; positivity
 
 /-- **Raising the incoming norm**: each outer test increases with `u`. -/
-theorem hl0_O_mono {x a b u u' τ ℓ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
+theorem lgr_O_mono {x a b u u' τ ℓ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
     (hax : a ≤ x) (hxb : x ≤ b) (hb43 : 4 * a ≤ 3 * b) (hτ : 0 < τ) (hτ3 : τ ≤ 3) (hu : u ≤ u') :
-    hsF x b a u (1 / 7) τ ℓ (1 / 2) ≤ hsF x b a u' (1 / 7) τ ℓ (1 / 2) := by
+    ssF x b a u (1 / 7) τ ℓ (1 / 2) ≤ ssF x b a u' (1 / 7) τ ℓ (1 / 2) := by
   have hx0 : 0 < x := by linarith
   have ha0 : 0 < a := by linarith
   have hB : 0 < a + b := by linarith
-  rw [hl0_out_F hx0 ha0 hB, hl0_out_F hx0 ha0 hB,
-    hl0_Go_affine (u := u) (u' := u') (by linarith : x + 1 ≠ 0) ha0.ne' hτ.ne']
-  have := hl0_Cu_pos hx hx9 ha hax hxb hb43 hτ hτ3
+  rw [lgr_out_F hx0 ha0 hB, lgr_out_F hx0 ha0 hB,
+    lgr_Go_affine (u := u) (u' := u') (by linarith : x + 1 ≠ 0) ha0.ne' hτ.ne']
+  have := lgr_Cu_pos hx hx9 ha hax hxb hb43 hτ hτ3
   nlinarith
 
-theorem hl0_OT_mono {x a b u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
+theorem lgr_OT_mono {x a b u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
     (hax : a ≤ x) (hxb : x ≤ b) (hb43 : 4 * a ≤ 3 * b) (hu : u ≤ u') :
-    hl0OT x a b u ≤ hl0OT x a b u' :=
-  hl0_O_mono hx hx9 ha hax hxb hb43 (hl0_T_pos (by linarith) (by linarith))
-    (hl0_T_le (by linarith) hb43) hu
+    lgrOT x a b u ≤ lgrOT x a b u' :=
+  lgr_O_mono hx hx9 ha hax hxb hb43 (lgr_T_pos (by linarith) (by linarith))
+    (lgr_T_le (by linarith) hb43) hu
 
-theorem hl0_O8_mono {x a b u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
+theorem lgr_O8_mono {x a b u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
     (hax : a ≤ x) (hxb : x ≤ b) (hb43 : 4 * a ≤ 3 * b) (hu : u ≤ u') :
-    hl0O8 x a b u ≤ hl0O8 x a b u' := by
-  have h1 := hl0_T_pos (a := a) (b := b) (by linarith) (by linarith)
-  have h2 := hl0_T_le (a := a) (b := b) (by linarith) hb43
-  exact hl0_O_mono hx hx9 ha hax hxb hb43 (by positivity) (by linarith) hu
+    lgrO8 x a b u ≤ lgrO8 x a b u' := by
+  have h1 := lgr_T_pos (a := a) (b := b) (by linarith) (by linarith)
+  have h2 := lgr_T_le (a := a) (b := b) (by linarith) hb43
+  exact lgr_O_mono hx hx9 ha hax hxb hb43 (by positivity) (by linarith) hu
 
-theorem hl0_O2_mono {x a b u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
+theorem lgr_O2_mono {x a b u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
     (hax : a ≤ x) (hxb : x ≤ b) (hb43 : 4 * a ≤ 3 * b) (hu : u ≤ u') :
-    hl0O2 x a b u ≤ hl0O2 x a b u' :=
-  hl0_O_mono hx hx9 ha hax hxb hb43 (by norm_num) (by norm_num) hu
+    lgrO2 x a b u ≤ lgrO2 x a b u' :=
+  lgr_O_mono hx hx9 ha hax hxb hb43 (by norm_num) (by norm_num) hu
 
 /-! ### Two incoming majorants -/
 
 /-- The common step: `ū ≤ 3/4 + v(x - 1 + κδ)/(β - 1)` once `δ²SM ≤ 96κ x²(x - 1)²`
 (`v = 2(x - 1)²/(SM)`, `δ = β - x`). -/
-theorem hl0_ubar_step {x b κ : ℝ} (hx : 1 < x) (hxb : x ≤ b)
+theorem lgr_ubar_step {x b κ : ℝ} (hx : 1 < x) (hxb : x ≤ b)
     (h : (b - x) ^ 2 * ((x + 1) * (35 * x + 13)) ≤ 96 * κ * x ^ 2 * (x - 1) ^ 2) :
-    hsUbar x b ≤ 3 / 4 + 2 * (x - 1) ^ 2 / ((x + 1) * (35 * x + 13)) * (x - 1 + κ * (b - x)) /
+    ssUbar x b ≤ 3 / 4 + 2 * (x - 1) ^ 2 / ((x + 1) * (35 * x + 13)) * (x - 1 + κ * (b - x)) /
       (b - 1) := by
   have hSM : 0 < (x + 1) * (35 * x + 13) := by nlinarith
   have hb1 : 0 < b - 1 := by linarith
   have hδ : 0 ≤ b - x := by linarith
   have hx0 : 0 < x := by linarith
-  unfold hsUbar
+  unfold ssUbar
   have key : 2 * (x - 1) ^ 3 / ((x + 1) * (35 * x + 13)) + (b - x) ^ 3 / (48 * x ^ 2) ≤
       2 * (x - 1) ^ 2 / ((x + 1) * (35 * x + 13)) * (x - 1 + κ * (b - x)) := by
     have e : 2 * (x - 1) ^ 2 / ((x + 1) * (35 * x + 13)) * (x - 1 + κ * (b - x)) -
@@ -291,7 +291,7 @@ theorem hl0_ubar_step {x b κ : ℝ} (hx : 1 < x) (hxb : x ≤ b)
   linarith
 
 /-- `δ R ≤ x(7x + 1)(α - 1)` bounds `δ² R²`. -/
-theorem hl0_delta_sq {x a b t : ℝ} (hx : 0 < x) (hxb : x ≤ b) (hat : a - 1 ≤ t)
+theorem lgr_delta_sq {x a b t : ℝ} (hx : 0 < x) (hxb : x ≤ b) (hat : a - 1 ≤ t)
     (hb : b ≤ x + x * (7 * x + 1) * (a - 1) / (4 * x ^ 2 + 11 * x + 1)) :
     (b - x) ^ 2 * (4 * x ^ 2 + 11 * x + 1) ^ 2 ≤ x ^ 2 * (7 * x + 1) ^ 2 * t ^ 2 := by
   have hR : 0 < 4 * x ^ 2 + 11 * x + 1 := by positivity
@@ -304,13 +304,13 @@ theorem hl0_delta_sq {x a b t : ℝ} (hx : 0 < x) (hxb : x ≤ b) (hat : a - 1 �
   nlinarith
 
 /-- **`ū ≤ u_b = (x + 74)/100`** on the whole outer domain. -/
-theorem hl0_ubar_le_ub {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hax : a ≤ x)
+theorem lgr_ubar_le_ub {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hax : a ≤ x)
     (hxb : x ≤ b) (hb : b ≤ x + x * (7 * x + 1) * (a - 1) / (4 * x ^ 2 + 11 * x + 1)) :
-    hsUbar x b ≤ (x + 74) / 100 := by
+    ssUbar x b ≤ (x + 74) / 100 := by
   have hx0 : 0 < x := by linarith
   have hx1 : 1 < x := by linarith
   have hR : 0 < 4 * x ^ 2 + 11 * x + 1 := by positivity
-  have hd := hl0_delta_sq hx0 hxb (by linarith : a - 1 ≤ x - 1) hb
+  have hd := lgr_delta_sq hx0 hxb (by linarith : a - 1 ≤ x - 1) hb
   have h7 : (7 * x + 1) ^ 2 * ((x + 1) * (35 * x + 13)) ≤ 96 * (4 * x ^ 2 + 11 * x + 1) ^ 2 := by
     nlinarith [mul_nonneg (pow_nonneg hx0.le 3) (by linarith : (0 : ℝ) ≤ 5606 - 179 * x)]
   have hstep : (b - x) ^ 2 * ((x + 1) * (35 * x + 13)) ≤ 96 * 1 * x ^ 2 * (x - 1) ^ 2 := by
@@ -321,7 +321,7 @@ theorem hl0_ubar_le_ub {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hax : 
         96 * x ^ 2 * (x - 1) ^ 2 * (4 * x ^ 2 + 11 * x + 1) ^ 2 := by nlinarith
     have := le_of_mul_le_mul_right this (by positivity)
     linarith
-  have h := hl0_ubar_step hx1 hxb hstep
+  have h := lgr_ubar_step hx1 hxb hstep
   have e : 2 * (x - 1) ^ 2 / ((x + 1) * (35 * x + 13)) * (x - 1 + 1 * (b - x)) / (b - 1) =
       2 * (x - 1) ^ 2 / ((x + 1) * (35 * x + 13)) := by
     have : b - 1 ≠ 0 := by linarith
@@ -333,14 +333,14 @@ theorem hl0_ubar_le_ub {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hax : 
   linarith
 
 /-- **`ū ≤ û`** on the strip `α ≤ (2x + 3)/5`. -/
-theorem hl0_ubar_le_uhat {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
+theorem lgro_ubar_le_uhat {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (ham : a ≤ (2 * x + 3) / 5) (hxb : x ≤ b)
     (hb : b ≤ x + x * (7 * x + 1) * (a - 1) / (4 * x ^ 2 + 11 * x + 1)) :
-    hsUbar x b ≤ hsUhat x b := by
+    ssUbar x b ≤ ssUhat x b := by
   have hx0 : 0 < x := by linarith
   have hx1 : 1 < x := by linarith
   have hR : 0 < 4 * x ^ 2 + 11 * x + 1 := by positivity
-  have hd := hl0_delta_sq hx0 hxb (by linarith : a - 1 ≤ 2 / 5 * (x - 1)) hb
+  have hd := lgr_delta_sq hx0 hxb (by linarith : a - 1 ≤ 2 / 5 * (x - 1)) hb
   have h9 : (7 * x + 1) ^ 2 * ((x + 1) * (35 * x + 13)) ≤ 75 * (4 * x ^ 2 + 11 * x + 1) ^ 2 := by
     nlinarith [mul_nonneg (pow_nonneg hx0.le 3) (by linarith : (0 : ℝ) ≤ 9 - x),
       mul_nonneg (sq_nonneg x) (by linarith : (0 : ℝ) ≤ 8331 - 877 * x)]
@@ -352,200 +352,200 @@ theorem hl0_ubar_le_uhat {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
         12 * x ^ 2 * (x - 1) ^ 2 * (4 * x ^ 2 + 11 * x + 1) ^ 2 := by nlinarith
     have := le_of_mul_le_mul_right this (by positivity)
     linarith
-  have h := hl0_ubar_step hx1 hxb hstep
-  have e : hsUhat x b = 3 / 4 + 2 * (x - 1) ^ 2 / ((x + 1) * (35 * x + 13)) *
+  have h := lgr_ubar_step hx1 hxb hstep
+  have e : ssUhat x b = 3 / 4 + 2 * (x - 1) ^ 2 / ((x + 1) * (35 * x + 13)) *
       (x - 1 + 1 / 8 * (b - x)) / (b - 1) := by
-    unfold hsUhat; ring
+    unfold ssUhat; ring
   rw [e]; exact h
 
 /-! ### The cleared outer numerators -/
 
 /-- `S V W` for `u = U/V`. -/
-noncomputable def hl0WoN (S a U V D : ℝ) : ℝ :=
+noncomputable def lgrWoN (S a U V D : ℝ) : ℝ :=
   S * ((6 * a ^ 2 + 1) ^ 2 - (6 * a ^ 2 + 1) * S + S ^ 2) * V + S * D ^ 2 * U -
     D * ((6 * a ^ 2 + 1) * (S ^ 2 * (U - V) + V) + (2 * S - 1) * S * V)
 
 /-- `S V L` for `u = U/V`. -/
-noncomputable def hl0LoN (S a U V D : ℝ) : ℝ :=
+noncomputable def lgrLoN (S a U V D : ℝ) : ℝ :=
   2 * S * D * U - ((6 * a ^ 2 + 1) * (S ^ 2 * (U - V) + V) + (2 * S - 1) * S * V)
 
 /-- The cleared `τ = T` numerator: `F_T = -N_T/(392α⁴SVB)`. -/
-noncomputable def hl0NoT (S a B U V D : ℝ) : ℝ :=
-  56 * a ^ 2 * B * hl0LoN S a U V D - (4 * B + 56 * a) * hl0WoN S a U V D -
+noncomputable def lgrNoT (S a B U V D : ℝ) : ℝ :=
+  56 * a ^ 2 * B * lgrLoN S a U V D - (4 * B + 56 * a) * lgrWoN S a U V D -
     392 * a ^ 3 * B ^ 2 * S * U + V * (336 * a ^ 3 * B ^ 2 * S - 189 * a ^ 4 * B * S + 2352 * a ^ 5 * S)
 
 /-- The cleared `τ = 8T/9` numerator: `F₈ = -N₈/(7056α⁴SVB)`. -/
-noncomputable def hl0No8 (S a B U V D : ℝ) : ℝ :=
-  1008 * a ^ 2 * B * hl0LoN S a U V D - (72 * B + 896 * a) * hl0WoN S a U V D -
+noncomputable def lgrNo8 (S a B U V D : ℝ) : ℝ :=
+  1008 * a ^ 2 * B * lgrLoN S a U V D - (72 * B + 896 * a) * lgrWoN S a U V D -
     7056 * a ^ 3 * B ^ 2 * S * U +
     V * (5922 * a ^ 3 * B ^ 2 * S - 2618 * a ^ 4 * B * S + 36848 * a ^ 5 * S)
 
 /-- The cleared `τ = 2` numerator: `F₂ = -N₂/(3528α⁴SVB)`. -/
-noncomputable def hl0No2 (S a B U V D : ℝ) : ℝ :=
-  504 * a ^ 2 * B * hl0LoN S a U V D - 180 * B * hl0WoN S a U V D - 3528 * a ^ 3 * B ^ 2 * S * U +
+noncomputable def lgrNo2 (S a B U V D : ℝ) : ℝ :=
+  504 * a ^ 2 * B * lgrLoN S a U V D - 180 * B * lgrWoN S a U V D - 3528 * a ^ 3 * B ^ 2 * S * U +
     V * (2268 * a ^ 3 * B ^ 2 * S + 7903 * a ^ 4 * B * S - 3528 * a ^ 5 * S)
 
-theorem hl0_Go_UV {S a B U V D τ ℓ : ℝ} (hS : S ≠ 0) (hV : V ≠ 0) :
-    hl0Go S a B (U / V) D τ ℓ = (hl0WoN S a U V D / (S * V) / (49 * a ^ 4) - 1) * τ + 1 / τ +
-      (U / V - 1) * B / a + a / B + 6 / 7 - hl0LoN S a U V D / (S * V) / (7 * a ^ 2) + ℓ +
-      (hl0WoN S a U V D / (S * V) / (49 * a ^ 4) - 3 / 4) / 2 := by
-  have hW : hl0Wo S a (U / V) D = hl0WoN S a U V D / (S * V) := by
-    unfold hl0Wo hl0WoN; field_simp; ring
-  have hL : hl0Lo S a (U / V) D = hl0LoN S a U V D / (S * V) := by
-    unfold hl0Lo hl0LoN; field_simp; ring
-  unfold hl0Go; rw [hW, hL]
+theorem lgr_Go_UV {S a B U V D τ ℓ : ℝ} (hS : S ≠ 0) (hV : V ≠ 0) :
+    lgrGo S a B (U / V) D τ ℓ = (lgrWoN S a U V D / (S * V) / (49 * a ^ 4) - 1) * τ + 1 / τ +
+      (U / V - 1) * B / a + a / B + 6 / 7 - lgrLoN S a U V D / (S * V) / (7 * a ^ 2) + ℓ +
+      (lgrWoN S a U V D / (S * V) / (49 * a ^ 4) - 3 / 4) / 2 := by
+  have hW : lgrWo S a (U / V) D = lgrWoN S a U V D / (S * V) := by
+    unfold lgrWo lgrWoN; field_simp; ring
+  have hL : lgrLo S a (U / V) D = lgrLoN S a U V D / (S * V) := by
+    unfold lgrLo lgrLoN; field_simp; ring
+  unfold lgrGo; rw [hW, hL]
 
-theorem hl0_NoT_eq {S a B U V D : ℝ} (hS : S ≠ 0) (ha : a ≠ 0) (hB : B ≠ 0) (hV : V ≠ 0) :
-    hl0Go S a B (U / V) D (7 * (a / B)) 0 = -hl0NoT S a B U V D / (392 * a ^ 4 * S * V * B) := by
-  rw [hl0_Go_UV hS hV]
-  unfold hl0NoT
-  generalize hl0WoN S a U V D = W
-  generalize hl0LoN S a U V D = L
+theorem lgr_NoT_eq {S a B U V D : ℝ} (hS : S ≠ 0) (ha : a ≠ 0) (hB : B ≠ 0) (hV : V ≠ 0) :
+    lgrGo S a B (U / V) D (7 * (a / B)) 0 = -lgrNoT S a B U V D / (392 * a ^ 4 * S * V * B) := by
+  rw [lgr_Go_UV hS hV]
+  unfold lgrNoT
+  generalize lgrWoN S a U V D = W
+  generalize lgrLoN S a U V D = L
   field_simp
   ring
 
-theorem hl0_No8_eq {S a B U V D : ℝ} (hS : S ≠ 0) (ha : a ≠ 0) (hB : B ≠ 0) (hV : V ≠ 0) :
-    hl0Go S a B (U / V) D (8 * (7 * (a / B)) / 9) (-1 / 9) =
-      -hl0No8 S a B U V D / (7056 * a ^ 4 * S * V * B) := by
-  rw [hl0_Go_UV hS hV]
-  unfold hl0No8
-  generalize hl0WoN S a U V D = W
-  generalize hl0LoN S a U V D = L
+theorem lgr_No8_eq {S a B U V D : ℝ} (hS : S ≠ 0) (ha : a ≠ 0) (hB : B ≠ 0) (hV : V ≠ 0) :
+    lgrGo S a B (U / V) D (8 * (7 * (a / B)) / 9) (-1 / 9) =
+      -lgrNo8 S a B U V D / (7056 * a ^ 4 * S * V * B) := by
+  rw [lgr_Go_UV hS hV]
+  unfold lgrNo8
+  generalize lgrWoN S a U V D = W
+  generalize lgrLoN S a U V D = L
   field_simp
   ring
 
-theorem hl0_No2_eq {S a B U V D : ℝ} (hS : S ≠ 0) (ha : a ≠ 0) (hB : B ≠ 0) (hV : V ≠ 0) :
-    hl0Go S a B (U / V) D 2 (5 / (2 * (7 * (a / B))) - 11 / 9) =
-      -hl0No2 S a B U V D / (3528 * a ^ 4 * S * V * B) := by
-  rw [hl0_Go_UV hS hV]
-  unfold hl0No2
-  generalize hl0WoN S a U V D = W
-  generalize hl0LoN S a U V D = L
+theorem lgr_No2_eq {S a B U V D : ℝ} (hS : S ≠ 0) (ha : a ≠ 0) (hB : B ≠ 0) (hV : V ≠ 0) :
+    lgrGo S a B (U / V) D 2 (5 / (2 * (7 * (a / B))) - 11 / 9) =
+      -lgrNo2 S a B U V D / (3528 * a ^ 4 * S * V * B) := by
+  rw [lgr_Go_UV hS hV]
+  unfold lgrNo2
+  generalize lgrWoN S a U V D = W
+  generalize lgrLoN S a U V D = L
   field_simp
   ring
 
 /-- The outer tests are negative when their cleared numerators are positive (`u = U/V`, `V > 0`). -/
-theorem hl0_OT_neg {x a b U V : ℝ} (hx : 0 < x) (ha : 0 < a) (hb : 0 < b) (hV : 0 < V)
-    (hN : 0 < hl0NoT (x + 1) a (a + b) U V (hsDg x b a)) : hl0OT x a b (U / V) < 0 := by
+theorem lgr_OT_neg {x a b U V : ℝ} (hx : 0 < x) (ha : 0 < a) (hb : 0 < b) (hV : 0 < V)
+    (hN : 0 < lgrNoT (x + 1) a (a + b) U V (ssDg x b a)) : lgrOT x a b (U / V) < 0 := by
   have hB : 0 < a + b := by linarith
-  unfold hl0OT
-  rw [hl0_out_F hx ha hB]
-  unfold hsRA
-  rw [hl0_NoT_eq (by linarith) ha.ne' hB.ne' hV.ne']
+  unfold lgrOT
+  rw [lgr_out_F hx ha hB]
+  unfold ssRA
+  rw [lgr_NoT_eq (by linarith) ha.ne' hB.ne' hV.ne']
   apply div_neg_of_neg_of_pos (by linarith)
   positivity
 
-theorem hl0_O8_neg {x a b U V : ℝ} (hx : 0 < x) (ha : 0 < a) (hb : 0 < b) (hV : 0 < V)
-    (hN : 0 < hl0No8 (x + 1) a (a + b) U V (hsDg x b a)) : hl0O8 x a b (U / V) < 0 := by
+theorem lgr_O8_neg {x a b U V : ℝ} (hx : 0 < x) (ha : 0 < a) (hb : 0 < b) (hV : 0 < V)
+    (hN : 0 < lgrNo8 (x + 1) a (a + b) U V (ssDg x b a)) : lgrO8 x a b (U / V) < 0 := by
   have hB : 0 < a + b := by linarith
-  unfold hl0O8
-  rw [hl0_out_F hx ha hB]
-  unfold hsRA
-  rw [hl0_No8_eq (by linarith) ha.ne' hB.ne' hV.ne']
+  unfold lgrO8
+  rw [lgr_out_F hx ha hB]
+  unfold ssRA
+  rw [lgr_No8_eq (by linarith) ha.ne' hB.ne' hV.ne']
   apply div_neg_of_neg_of_pos (by linarith)
   positivity
 
-theorem hl0_O2_neg {x a b U V : ℝ} (hx : 0 < x) (ha : 0 < a) (hb : 0 < b) (hV : 0 < V)
-    (hN : 0 < hl0No2 (x + 1) a (a + b) U V (hsDg x b a)) : hl0O2 x a b (U / V) < 0 := by
+theorem lgr_O2_neg {x a b U V : ℝ} (hx : 0 < x) (ha : 0 < a) (hb : 0 < b) (hV : 0 < V)
+    (hN : 0 < lgrNo2 (x + 1) a (a + b) U V (ssDg x b a)) : lgrO2 x a b (U / V) < 0 := by
   have hB : 0 < a + b := by linarith
-  unfold hl0O2
-  rw [hl0_out_F hx ha hB]
-  unfold hsRA
-  rw [hl0_No2_eq (by linarith) ha.ne' hB.ne' hV.ne']
+  unfold lgrO2
+  rw [lgr_out_F hx ha hB]
+  unfold ssRA
+  rw [lgr_No2_eq (by linarith) ha.ne' hB.ne' hV.ne']
   apply div_neg_of_neg_of_pos (by linarith)
   positivity
 
 /-! ### The cleared outer numerators on coefficient lists -/
 
-/-- `hl0WoN` on lists (`M₀ = 6α² + 1`). -/
-noncomputable def hl0WoNL (S a U V D : List (List ℝ)) : List (List ℝ) :=
-  let M0 := hl0Add2 (hl0Smul2 6 (hl0Mul2 a a)) [[1]]
-  let S2 := hl0Mul2 S S
-  hl0Add2 (hl0Mul2 (hl0Mul2 S (hl0Add2 (hl0Mul2 M0 M0) (hl0Add2 (hl0Smul2 (-1) (hl0Mul2 M0 S)) S2))) V)
-    (hl0Add2 (hl0Mul2 (hl0Mul2 S (hl0Mul2 D D)) U)
-      (hl0Smul2 (-1) (hl0Mul2 D (hl0Add2 (hl0Mul2 M0 (hl0Add2 (hl0Mul2 S2 (hl0Add2 U (hl0Smul2 (-1) V))) V))
-        (hl0Mul2 (hl0Mul2 (hl0Add2 (hl0Smul2 2 S) [[-1]]) S) V)))))
+/-- `lgrWoN` on lists (`M₀ = 6α² + 1`). -/
+noncomputable def lgrWoNL (S a U V D : List (List ℝ)) : List (List ℝ) :=
+  let M0 := lgrAdd2 (lgrSmul2 6 (lgrMul2 a a)) [[1]]
+  let S2 := lgrMul2 S S
+  lgrAdd2 (lgrMul2 (lgrMul2 S (lgrAdd2 (lgrMul2 M0 M0) (lgrAdd2 (lgrSmul2 (-1) (lgrMul2 M0 S)) S2))) V)
+    (lgrAdd2 (lgrMul2 (lgrMul2 S (lgrMul2 D D)) U)
+      (lgrSmul2 (-1) (lgrMul2 D (lgrAdd2 (lgrMul2 M0 (lgrAdd2 (lgrMul2 S2 (lgrAdd2 U (lgrSmul2 (-1) V))) V))
+        (lgrMul2 (lgrMul2 (lgrAdd2 (lgrSmul2 2 S) [[-1]]) S) V)))))
 
-/-- `hl0LoN` on lists. -/
-noncomputable def hl0LoNL (S a U V D : List (List ℝ)) : List (List ℝ) :=
-  let M0 := hl0Add2 (hl0Smul2 6 (hl0Mul2 a a)) [[1]]
-  hl0Add2 (hl0Smul2 2 (hl0Mul2 (hl0Mul2 S D) U))
-    (hl0Smul2 (-1) (hl0Add2 (hl0Mul2 M0 (hl0Add2 (hl0Mul2 (hl0Mul2 S S) (hl0Add2 U (hl0Smul2 (-1) V))) V))
-      (hl0Mul2 (hl0Mul2 (hl0Add2 (hl0Smul2 2 S) [[-1]]) S) V)))
+/-- `lgrLoN` on lists. -/
+noncomputable def lgrLoNL (S a U V D : List (List ℝ)) : List (List ℝ) :=
+  let M0 := lgrAdd2 (lgrSmul2 6 (lgrMul2 a a)) [[1]]
+  lgrAdd2 (lgrSmul2 2 (lgrMul2 (lgrMul2 S D) U))
+    (lgrSmul2 (-1) (lgrAdd2 (lgrMul2 M0 (lgrAdd2 (lgrMul2 (lgrMul2 S S) (lgrAdd2 U (lgrSmul2 (-1) V))) V))
+      (lgrMul2 (lgrMul2 (lgrAdd2 (lgrSmul2 2 S) [[-1]]) S) V)))
 
-theorem hl0_H2_WoNL (S a U V D : List (List ℝ)) (X A : ℝ) :
-    hl0H2 (hl0WoNL S a U V D) X A =
-      hl0WoN (hl0H2 S X A) (hl0H2 a X A) (hl0H2 U X A) (hl0H2 V X A) (hl0H2 D X A) := by
-  unfold hl0WoNL hl0WoN
-  simp only [hl0_H2_add2, hl0_H2_mul2, hl0_H2_smul2, hl0_H2_single, lrhHorner]
+theorem lgr_H2_WoNL (S a U V D : List (List ℝ)) (X A : ℝ) :
+    lgrH2 (lgrWoNL S a U V D) X A =
+      lgrWoN (lgrH2 S X A) (lgrH2 a X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) := by
+  unfold lgrWoNL lgrWoN
+  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
   ring
 
-theorem hl0_H2_LoNL (S a U V D : List (List ℝ)) (X A : ℝ) :
-    hl0H2 (hl0LoNL S a U V D) X A =
-      hl0LoN (hl0H2 S X A) (hl0H2 a X A) (hl0H2 U X A) (hl0H2 V X A) (hl0H2 D X A) := by
-  unfold hl0LoNL hl0LoN
-  simp only [hl0_H2_add2, hl0_H2_mul2, hl0_H2_smul2, hl0_H2_single, lrhHorner]
+theorem lgr_H2_LoNL (S a U V D : List (List ℝ)) (X A : ℝ) :
+    lgrH2 (lgrLoNL S a U V D) X A =
+      lgrLoN (lgrH2 S X A) (lgrH2 a X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) := by
+  unfold lgrLoNL lgrLoN
+  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
   ring
 
 /-- A cleared outer numerator on lists:
-`e₁α²B·L - (e₂B + e₃α)W - e₄α³B²SU + V(c₁α³B²S + c₂α⁴BS + c₃α⁵S)` (`hl0NoT`, `hl0No8`, `hl0No2`). -/
-noncomputable def hl0NoL (e₁ e₂ e₃ e₄ c₁ c₂ c₃ : ℝ) (S a B U V D : List (List ℝ)) : List (List ℝ) :=
-  let a2 := hl0Mul2 a a
-  let a3 := hl0Mul2 a2 a
-  let B2 := hl0Mul2 B B
-  hl0Add2 (hl0Smul2 e₁ (hl0Mul2 (hl0Mul2 a2 B) (hl0LoNL S a U V D)))
-    (hl0Add2 (hl0Smul2 (-1) (hl0Mul2 (hl0Add2 (hl0Smul2 e₂ B) (hl0Smul2 e₃ a)) (hl0WoNL S a U V D)))
-      (hl0Add2 (hl0Smul2 (-e₄) (hl0Mul2 (hl0Mul2 (hl0Mul2 a3 B2) S) U))
-        (hl0Mul2 V (hl0Add2 (hl0Smul2 c₁ (hl0Mul2 (hl0Mul2 a3 B2) S))
-          (hl0Add2 (hl0Smul2 c₂ (hl0Mul2 (hl0Mul2 (hl0Mul2 a3 a) B) S))
-            (hl0Smul2 c₃ (hl0Mul2 (hl0Mul2 (hl0Mul2 a3 a2) [[1]]) S)))))))
+`e₁α²B·L - (e₂B + e₃α)W - e₄α³B²SU + V(c₁α³B²S + c₂α⁴BS + c₃α⁵S)` (`lgrNoT`, `lgrNo8`, `lgrNo2`). -/
+noncomputable def lgrNoL (e₁ e₂ e₃ e₄ c₁ c₂ c₃ : ℝ) (S a B U V D : List (List ℝ)) : List (List ℝ) :=
+  let a2 := lgrMul2 a a
+  let a3 := lgrMul2 a2 a
+  let B2 := lgrMul2 B B
+  lgrAdd2 (lgrSmul2 e₁ (lgrMul2 (lgrMul2 a2 B) (lgrLoNL S a U V D)))
+    (lgrAdd2 (lgrSmul2 (-1) (lgrMul2 (lgrAdd2 (lgrSmul2 e₂ B) (lgrSmul2 e₃ a)) (lgrWoNL S a U V D)))
+      (lgrAdd2 (lgrSmul2 (-e₄) (lgrMul2 (lgrMul2 (lgrMul2 a3 B2) S) U))
+        (lgrMul2 V (lgrAdd2 (lgrSmul2 c₁ (lgrMul2 (lgrMul2 a3 B2) S))
+          (lgrAdd2 (lgrSmul2 c₂ (lgrMul2 (lgrMul2 (lgrMul2 a3 a) B) S))
+            (lgrSmul2 c₃ (lgrMul2 (lgrMul2 (lgrMul2 a3 a2) [[1]]) S)))))))
 
-theorem hl0_H2_NoL (e₁ e₂ e₃ e₄ c₁ c₂ c₃ : ℝ) (S a B U V D : List (List ℝ)) (X A : ℝ) :
-    hl0H2 (hl0NoL e₁ e₂ e₃ e₄ c₁ c₂ c₃ S a B U V D) X A =
-      e₁ * hl0H2 a X A ^ 2 * hl0H2 B X A *
-          hl0LoN (hl0H2 S X A) (hl0H2 a X A) (hl0H2 U X A) (hl0H2 V X A) (hl0H2 D X A) -
-        (e₂ * hl0H2 B X A + e₃ * hl0H2 a X A) *
-          hl0WoN (hl0H2 S X A) (hl0H2 a X A) (hl0H2 U X A) (hl0H2 V X A) (hl0H2 D X A) -
-        e₄ * hl0H2 a X A ^ 3 * hl0H2 B X A ^ 2 * hl0H2 S X A * hl0H2 U X A +
-        hl0H2 V X A * (c₁ * hl0H2 a X A ^ 3 * hl0H2 B X A ^ 2 * hl0H2 S X A +
-          c₂ * hl0H2 a X A ^ 4 * hl0H2 B X A * hl0H2 S X A + c₃ * hl0H2 a X A ^ 5 * hl0H2 S X A) := by
-  unfold hl0NoL
-  simp only [hl0_H2_add2, hl0_H2_mul2, hl0_H2_smul2, hl0_H2_WoNL, hl0_H2_LoNL, hl0_H2_single,
-    lrhHorner]
-  generalize hl0WoN _ _ _ _ _ = W
-  generalize hl0LoN _ _ _ _ _ = L
+theorem lgr_H2_NoL (e₁ e₂ e₃ e₄ c₁ c₂ c₃ : ℝ) (S a B U V D : List (List ℝ)) (X A : ℝ) :
+    lgrH2 (lgrNoL e₁ e₂ e₃ e₄ c₁ c₂ c₃ S a B U V D) X A =
+      e₁ * lgrH2 a X A ^ 2 * lgrH2 B X A *
+          lgrLoN (lgrH2 S X A) (lgrH2 a X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) -
+        (e₂ * lgrH2 B X A + e₃ * lgrH2 a X A) *
+          lgrWoN (lgrH2 S X A) (lgrH2 a X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) -
+        e₄ * lgrH2 a X A ^ 3 * lgrH2 B X A ^ 2 * lgrH2 S X A * lgrH2 U X A +
+        lgrH2 V X A * (c₁ * lgrH2 a X A ^ 3 * lgrH2 B X A ^ 2 * lgrH2 S X A +
+          c₂ * lgrH2 a X A ^ 4 * lgrH2 B X A * lgrH2 S X A + c₃ * lgrH2 a X A ^ 5 * lgrH2 S X A) := by
+  unfold lgrNoL
+  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_WoNL, lgr_H2_LoNL, lgr_H2_single,
+    polyHorner]
+  generalize lgrWoN _ _ _ _ _ = W
+  generalize lgrLoN _ _ _ _ _ = L
   ring
 
-theorem hl0_NoT_NoL (S a B U V D : ℝ) :
-    hl0NoT S a B U V D = 56 * a ^ 2 * B * hl0LoN S a U V D - (4 * B + 56 * a) * hl0WoN S a U V D -
+theorem lgr_NoT_NoL (S a B U V D : ℝ) :
+    lgrNoT S a B U V D = 56 * a ^ 2 * B * lgrLoN S a U V D - (4 * B + 56 * a) * lgrWoN S a U V D -
       392 * a ^ 3 * B ^ 2 * S * U + V * (336 * a ^ 3 * B ^ 2 * S + -189 * a ^ 4 * B * S + 2352 * a ^ 5 * S) := by
-  unfold hl0NoT; ring
+  unfold lgrNoT; ring
 
-theorem hl0_No8_NoL (S a B U V D : ℝ) :
-    hl0No8 S a B U V D = 1008 * a ^ 2 * B * hl0LoN S a U V D - (72 * B + 896 * a) * hl0WoN S a U V D -
+theorem lgr_No8_NoL (S a B U V D : ℝ) :
+    lgrNo8 S a B U V D = 1008 * a ^ 2 * B * lgrLoN S a U V D - (72 * B + 896 * a) * lgrWoN S a U V D -
       7056 * a ^ 3 * B ^ 2 * S * U +
       V * (5922 * a ^ 3 * B ^ 2 * S + -2618 * a ^ 4 * B * S + 36848 * a ^ 5 * S) := by
-  unfold hl0No8; ring
+  unfold lgrNo8; ring
 
-theorem hl0_No2_NoL (S a B U V D : ℝ) :
-    hl0No2 S a B U V D = 504 * a ^ 2 * B * hl0LoN S a U V D - (180 * B + 0 * a) * hl0WoN S a U V D -
+theorem lgr_No2_NoL (S a B U V D : ℝ) :
+    lgrNo2 S a B U V D = 504 * a ^ 2 * B * lgrLoN S a U V D - (180 * B + 0 * a) * lgrWoN S a U V D -
       3528 * a ^ 3 * B ^ 2 * S * U + V * (2268 * a ^ 3 * B ^ 2 * S + 7903 * a ^ 4 * B * S + -3528 * a ^ 5 * S) := by
-  unfold hl0No2; ring
+  unfold lgrNo2; ring
 
-/-- The outer `τ = T`, `8T/9`, `2` coefficients of `hl0NoL`. -/
-theorem hl0_H2_NoTL (S a B U V D : List (List ℝ)) (X A : ℝ) :
-    hl0H2 (hl0NoL 56 4 56 392 336 (-189) 2352 S a B U V D) X A =
-      hl0NoT (hl0H2 S X A) (hl0H2 a X A) (hl0H2 B X A) (hl0H2 U X A) (hl0H2 V X A) (hl0H2 D X A) := by
-  rw [hl0_H2_NoL, hl0_NoT_NoL]
+/-- The outer `τ = T`, `8T/9`, `2` coefficients of `lgrNoL`. -/
+theorem lgr_H2_NoTL (S a B U V D : List (List ℝ)) (X A : ℝ) :
+    lgrH2 (lgrNoL 56 4 56 392 336 (-189) 2352 S a B U V D) X A =
+      lgrNoT (lgrH2 S X A) (lgrH2 a X A) (lgrH2 B X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) := by
+  rw [lgr_H2_NoL, lgr_NoT_NoL]
 
-theorem hl0_H2_No8L (S a B U V D : List (List ℝ)) (X A : ℝ) :
-    hl0H2 (hl0NoL 1008 72 896 7056 5922 (-2618) 36848 S a B U V D) X A =
-      hl0No8 (hl0H2 S X A) (hl0H2 a X A) (hl0H2 B X A) (hl0H2 U X A) (hl0H2 V X A) (hl0H2 D X A) := by
-  rw [hl0_H2_NoL, hl0_No8_NoL]
+theorem lgr_H2_No8L (S a B U V D : List (List ℝ)) (X A : ℝ) :
+    lgrH2 (lgrNoL 1008 72 896 7056 5922 (-2618) 36848 S a B U V D) X A =
+      lgrNo8 (lgrH2 S X A) (lgrH2 a X A) (lgrH2 B X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) := by
+  rw [lgr_H2_NoL, lgr_No8_NoL]
 
-theorem hl0_H2_No2L (S a B U V D : List (List ℝ)) (X A : ℝ) :
-    hl0H2 (hl0NoL 504 180 0 3528 2268 7903 (-3528) S a B U V D) X A =
-      hl0No2 (hl0H2 S X A) (hl0H2 a X A) (hl0H2 B X A) (hl0H2 U X A) (hl0H2 V X A) (hl0H2 D X A) := by
-  rw [hl0_H2_NoL, hl0_No2_NoL]
+theorem lgr_H2_No2L (S a B U V D : List (List ℝ)) (X A : ℝ) :
+    lgrH2 (lgrNoL 504 180 0 3528 2268 7903 (-3528) S a B U V D) X A =
+      lgrNo2 (lgrH2 S X A) (lgrH2 a X A) (lgrH2 B X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) := by
+  rw [lgr_H2_NoL, lgr_No2_NoL]
 
 end SmoothedOctagon

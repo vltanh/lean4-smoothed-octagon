@@ -1,25 +1,25 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.Centre
-public import SmoothedOctagon.Exclusion.Mixed.Hand.Link
-public import SmoothedOctagon.Exclusion.Mixed.Hand.Order
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.WindowData
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.OrderBounds
 
 /-!
-# Case M2 by hand: the sharpened central scale bounds
+# Case M2, reverse successor: the sharpened central scale bounds
 
 The Casimir lower bound at the reverse centre `a` of an actual window, with the competitive cap
 `γ² < 9193/50000` (`M2Window.cas_lt`):
 
-* `nh_a_sq`: `a² < 2/3`;
-* `nh_scale_of_t`: if `t ≤ 2/5`, then `a < 4/5`.
+* `nsr_a_sq`: `a² < 2/3`;
+* `nsr_scale_of_t`: if `t ≤ 2/5`, then `a < 4/5`.
 
 In the centre coordinates `r = a/(a + b)`, `t = a/(a + c)`, `ρ = a²/(a² + 4)` (`ρ < rt`),
-`γ² = (4uv - E²)/(16(1 - ρ)²)` (`nh_window_cas`). Lowering both incident norms to a floor `μ`
-(`nh_lower_norms`) and raising both ratios to a cap `ζ` (`nh_psi_mono`) gives
+`γ² = (4uv - E²)/(16(1 - ρ)²)` (`nsr_window_cas`). Lowering both incident norms to a floor `μ`
+(`nsr_lower_norms`) and raising both ratios to a cap `ζ` (`nsr_psi_mono`) gives
 `γ² ≥ (4μ² - B(ρ)²)/(16(1 - ρ)²)` with `B(ρ) = 1 - ρ + log ρ + 2ψ_μ(ζ)`; the cleared comparison
-`φ(ρ) = 4μ² - B(ρ)² - 16·cap·(1 - ρ)²` is increasing (`nh_phi_mono`: its derivative is
+`φ(ρ) = 4μ² - B(ρ)² - 16·cap·(1 - ρ)²` is increasing (`nsr_phi_mono`: its derivative is
 `2(1 - ρ)(16 cap - B/ρ)`) and positive at the left end of the excluded interval. For `a < 4/5` the
-floor is `μ = 94/125` (`nh_turn_floor`: with `log q < L₊(q)` the turn secant minus `94/125` is
+floor is `μ = 94/125` (`nsr_turn_floor`: with `log q < L₊(q)` the turn secant minus `94/125` is
 bounded below by a quadratic in `q` with negative discriminant), and the excluded interval is
 `ρ ∈ [4/29, 3/20)` (from the window's `a² < 12/17`).
 -/
@@ -29,7 +29,7 @@ bounded below by a quadratic in `q` with negative discriminant), and the exclude
 namespace SmoothedOctagon
 
 /-- The squared Casimir of the window in centre form: `γ² = (4uv - E²)/(16(1 - ρ)²)`. -/
-theorem nh_window_cas (W : M2Window) :
+theorem nsr_window_cas (W : M2Window) :
     m2Cas W.a W.u W.v W.h = (4 * W.u * W.v - (m2E W.a W.b W.c W.u W.v) ^ 2) /
       (16 * (1 - W.a ^ 2 / (W.a ^ 2 + 4)) ^ 2) := by
   have ha := W.a_pos
@@ -50,7 +50,7 @@ theorem nh_window_cas (W : M2Window) :
   ring
 
 /-- **Lowering both incident norms to `μ`** lowers `4uv - E²`, when `E ≤ 2μr` and `E ≤ 2μt`. -/
-theorem nh_lower_norms {r t u v E E0 μ : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hu : μ ≤ u) (hv : μ ≤ v)
+theorem nsr_lower_norms {r t u v E E0 μ : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hu : μ ≤ u) (hv : μ ≤ v)
     (hEr : E ≤ 2 * μ * r) (hEt : E ≤ 2 * μ * t) (hEE0 : E = E0 + (u - μ) / r + (v - μ) / t) :
     4 * μ ^ 2 - E0 ^ 2 ≤ 4 * u * v - E ^ 2 := by
   have hdu : 0 ≤ u - μ := by linarith
@@ -73,7 +73,7 @@ theorem nh_lower_norms {r t u v E E0 μ : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hu :
 
 /-- `ψ_μ(y) = y - (1 - μ)/y - log y` is nondecreasing on `(0, ζ]` for `ζ ≤ 1/2`,
 `μ ≤ U(ζ) = 1 - ζ + ζ²` (derivative `(U(y) - μ)/y²`). -/
-theorem nh_psi_mono {y ζ μ : ℝ} (hy : 0 < y) (hyζ : y ≤ ζ) (hζ : ζ ≤ 1 / 2)
+theorem nsr_psi_mono {y ζ μ : ℝ} (hy : 0 < y) (hyζ : y ≤ ζ) (hζ : ζ ≤ 1 / 2)
     (hμ : μ ≤ 1 - ζ + ζ ^ 2) :
     y - (1 - μ) / y - Real.log y ≤ ζ - (1 - μ) / ζ - Real.log ζ := by
   have hmono : MonotoneOn (fun z => z - (1 - μ) / z - Real.log z) (Set.Icc y ζ) := by
@@ -99,7 +99,7 @@ theorem nh_psi_mono {y ζ μ : ℝ} (hy : 0 < y) (hyζ : y ≤ ζ) (hζ : ζ ≤
   exact hmono (Set.left_mem_Icc.2 hyζ) (Set.right_mem_Icc.2 hyζ) hyζ
 
 /-- `y - 1/(4y) - log y` is nondecreasing on `(0, ∞)`. -/
-theorem nh_phi34_mono {y y' : ℝ} (hy : 0 < y) (hyy : y ≤ y') :
+theorem nsr_phi34_mono {y y' : ℝ} (hy : 0 < y) (hyy : y ≤ y') :
     y - 1 / 4 * y⁻¹ - Real.log y ≤ y' - 1 / 4 * y'⁻¹ - Real.log y' := by
   have hd : ∀ z, 0 < z → HasDerivAt (fun z => z - 1 / 4 * z⁻¹ - Real.log z)
       ((2 * z - 1) ^ 2 / (4 * z ^ 2)) z := by
@@ -122,7 +122,7 @@ theorem nh_phi34_mono {y y' : ℝ} (hy : 0 < y) (hyy : y ≤ y') :
 
 /-- The lower diagonal bound: at the norm floor `3/4`,
 `E₀ ≥ 1 + ρ - 1/(8ρ)` for `ρ < rt`, `r, t < 1/2`. -/
-theorem nh_E0_lower {r t ρ : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hr2 : r < 1 / 2) (ht2 : t < 1 / 2)
+theorem nsr_E0_lower {r t ρ : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hr2 : r < 1 / 2) (ht2 : t < 1 / 2)
     (hρ0 : 0 < ρ) (hρrt : ρ < r * t) (hρ1 : ρ < 1 / 4) :
     1 + ρ - 1 / (8 * ρ) ≤ 1 + r + t - ρ + Real.log (ρ / (r * t)) - 1 / 4 * r⁻¹ - 1 / 4 * t⁻¹ := by
   have hsplit : 1 + r + t - ρ + Real.log (ρ / (r * t)) - 1 / 4 * r⁻¹ - 1 / 4 * t⁻¹ =
@@ -130,7 +130,7 @@ theorem nh_E0_lower {r t ρ : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hr2 : r < 1 / 2)
     rw [Real.log_div hρ0.ne' (by positivity), Real.log_mul hr0.ne' ht0.ne']; ring
   rw [hsplit]
   have htr : ρ / r ≤ t := by rw [div_le_iff₀ hr0]; linarith
-  have h1 := nh_phi34_mono (show 0 < ρ / r by positivity) htr
+  have h1 := nsr_phi34_mono (show 0 < ρ / r by positivity) htr
   rw [Real.log_div hρ0.ne' hr0.ne'] at h1
   have hr2ρ : 2 * ρ ≤ r := by
     have := mul_lt_mul_of_pos_left ht2 hr0; linarith
@@ -148,7 +148,7 @@ theorem nh_E0_lower {r t ρ : ℝ} (hr0 : 0 < r) (ht0 : 0 < t) (hr2 : r < 1 / 2)
   linarith
 
 /-- `B(ρ) = κ - ρ + log(λρ)` is nondecreasing on `(0, 1]`. -/
-theorem nh_B_mono {κ lam ρ ρ' : ℝ} (hl : 0 < lam) (hρ : 0 < ρ) (hρρ : ρ ≤ ρ') (hρ1 : ρ' ≤ 1) :
+theorem nsr_B_mono {κ lam ρ ρ' : ℝ} (hl : 0 < lam) (hρ : 0 < ρ) (hρρ : ρ ≤ ρ') (hρ1 : ρ' ≤ 1) :
     κ - ρ + Real.log (lam * ρ) ≤ κ - ρ' + Real.log (lam * ρ') := by
   have hρ' : 0 < ρ' := lt_of_lt_of_le hρ hρρ
   have h := Real.one_sub_inv_le_log_of_pos (show 0 < lam * ρ' / (lam * ρ) by positivity)
@@ -163,7 +163,7 @@ theorem nh_B_mono {κ lam ρ ρ' : ℝ} (hl : 0 < lam) (hρ : 0 < ρ) (hρρ : �
 /-- **The cleared comparison is increasing**: `φ(ρ) = C - B(ρ)² - D(1 - ρ)²`,
 `B(ρ) = κ - ρ + log(λρ)`, has derivative `2(1 - ρ)(D - B/ρ) > 0` on `[ρ₀, ρ₁]` when
 `B ≤ B_max` there and `B_max < Dρ₀`. -/
-theorem nh_phi_mono {C D κ lam ρ0 ρ1 Bmax ρ : ℝ} (hl : 0 < lam) (hD : 0 ≤ D) (hρ0 : 0 < ρ0)
+theorem nsr_phi_mono {C D κ lam ρ0 ρ1 Bmax ρ : ℝ} (hl : 0 < lam) (hD : 0 ≤ D) (hρ0 : 0 < ρ0)
     (hρ01 : ρ0 ≤ ρ)
     (hρ1 : ρ ≤ ρ1) (hρ11 : ρ1 < 1) (hB : κ - ρ1 + Real.log (lam * ρ1) ≤ Bmax)
     (hBD : Bmax < D * ρ0) :
@@ -197,28 +197,28 @@ theorem nh_phi_mono {C D κ lam ρ0 ρ1 Bmax ρ : ℝ} (hl : 0 < lam) (hD : 0 �
       have hz0 : 0 < z := lt_trans hρ0 hz.1
       rw [(hd z hz0).deriv]
       apply mul_nonneg (by nlinarith [hz.2])
-      have hBz := nh_B_mono (κ := κ) hl hz0 hz.2.le hρ11.le
+      have hBz := nsr_B_mono (κ := κ) hl hz0 hz.2.le hρ11.le
       rw [sub_nonneg, div_le_iff₀ hz0]
       nlinarith [mul_le_mul_of_nonneg_left hz.1.le hD]
   exact hmono (Set.left_mem_Icc.2 (hρ01.trans hρ1)) ⟨hρ01, hρ1⟩ hρ01
 
-private theorem nh_turn_disc_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
+private theorem nsr_turn_disc_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
     0 ≤ 16320 * a * b ^ 3 + 91200 * a ^ 2 * b ^ 2 + 143040 * a ^ 3 * b + 53760 * a ^ 4 := by positivity
 
-private theorem nh_turn_disc_l0 (η : ℝ) (h0 : (3 / 5) ≤ η) (h1 : η ≤ 1) :
+private theorem nsr_turn_disc_l0 (η : ℝ) (h0 : (3 / 5) ≤ η) (h1 : η ≤ 1) :
     0 < -((6 + 6 * η ^ 2 - 10 * η - 6 * (94 / 125)) ^ 2 - 4 * (6 - η - 6 * (94 / 125)) * (6 * η ^ 2 - η)) := by
-  linear_combination (1 / 250000 : ℝ) * nh_turn_disc_bp0 (5 * η - 3) (5 - 5 * η) (by linarith) (by linarith)
+  linear_combination (1 / 250000 : ℝ) * nsr_turn_disc_bp0 (5 * η - 3) (5 - 5 * η) (by linarith) (by linarith)
 
 /-- The discriminant of the cleared turn-floor quadratic is negative for `3/5 ≤ η ≤ 1`
 (generated Bernstein certificate). -/
-theorem nh_turn_disc (η : ℝ) (h0 : (3 / 5) ≤ η) (h1 : η ≤ 1) :
+theorem nsr_turn_disc (η : ℝ) (h0 : (3 / 5) ≤ η) (h1 : η ≤ 1) :
     0 < -((6 + 6 * η ^ 2 - 10 * η - 6 * (94 / 125)) ^ 2 - 4 * (6 - η - 6 * (94 / 125)) * (6 * η ^ 2 - η)) := by
-  exact nh_turn_disc_l0 η h0 h1
+  exact nsr_turn_disc_l0 η h0 h1
 
 /-- **The turn floor**: for a turn with `η = B/(A + B) ≥ 3/5` and `A < P`,
 `Sec(A, B, P) > 94/125`. In `q = (P + B)/(A + B)`, `Sec = 1 + η²/q - η log q/(q - 1)`; the bound
-`log q < L₊(q)` leaves a quadratic in `q` whose discriminant is negative (`nh_turn_disc`). -/
-theorem nh_turn_floor {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hAP : A < P) (hη : 3 / 5 ≤ B / (A + B)) :
+`log q < L₊(q)` leaves a quadratic in `q` whose discriminant is negative (`nsr_turn_disc`). -/
+theorem nsr_turn_floor {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hAP : A < P) (hη : 3 / 5 ≤ B / (A + B)) :
     94 / 125 < m2Sec A B P := by
   have hAB : 0 < A + B := by linarith
   set η := B / (A + B) with hηdef
@@ -232,8 +232,8 @@ theorem nh_turn_floor {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hAP : A < P) (hη
     rw [hq1, hηdef, hqdef]
     field_simp
   rw [hsec]
-  have hL := nh_log_lt_Lp hq
-  unfold nhLp at hL
+  have hL := nsr_log_lt_Lp hq
+  unfold nsrLp at hL
   have hq0 : 0 < q := by linarith
   have hq1 : 0 < q - 1 := by linarith
   have h1 : η * Real.log q / (q - 1) < η * ((q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))) := by
@@ -243,7 +243,7 @@ theorem nh_turn_floor {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hAP : A < P) (hη
     have e : η * ((q - 1) * (q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))) =
         η * ((q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))) * (q - 1) := by ring
     linarith
-  have hd := nh_turn_disc η hη hη1
+  have hd := nsr_turn_disc η hη hη1
   -- the cleared quadratic is positive
   have hquad : 0 < (6 - η - 6 * (94 / 125)) * q ^ 2 + (6 + 6 * η ^ 2 - 10 * η - 6 * (94 / 125)) * q
       + (6 * η ^ 2 - η) := by
@@ -261,7 +261,7 @@ theorem nh_turn_floor {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hAP : A < P) (hη
 
 /-- The centre data of the window: ratios, norm bounds, the diagonal `E` and its bound
 `E < -1 + 2r + 2t - rt`. -/
-theorem nh_window_centre (W : M2Window) :
+theorem nsr_window_centre (W : M2Window) :
     let r := W.a / (W.a + W.b)
     let t := W.a / (W.a + W.c)
     let ρ := W.a ^ 2 / (W.a ^ 2 + 4)
@@ -314,14 +314,14 @@ theorem nh_window_centre (W : M2Window) :
   linarith
 
 /-- `log(5/3) > 1/2`. -/
-theorem nh_log_five_thirds : (1 / 2 : ℝ) < Real.log (5 / 3) := by
-  have := nh_log_one_add_gt (x := 2 / 3) (by norm_num)
+theorem nsr_log_five_thirds : (1 / 2 : ℝ) < Real.log (5 / 3) := by
+  have := nsr_log_one_add_gt (x := 2 / 3) (by norm_num)
   norm_num at this ⊢
   linarith
 
 /-- **The sharpened central scale** `a² < 2/3`. -/
-theorem nh_a_sq (W : M2Window) : W.a ^ 2 < 2 / 3 := by
-  obtain ⟨hr0, ht0, hrt, ht2, hρ0, hρrt, hρ3, hUr, hUt, hE, hEb⟩ := nh_window_centre W
+theorem nsr_a_sq (W : M2Window) : W.a ^ 2 < 2 / 3 := by
+  obtain ⟨hr0, ht0, hrt, ht2, hρ0, hρrt, hρ3, hUr, hUt, hE, hEb⟩ := nsr_window_centre W
   set r := W.a / (W.a + W.b) with hr
   set t := W.a / (W.a + W.c) with ht
   set ρ := W.a ^ 2 / (W.a ^ 2 + 4) with hρ
@@ -332,7 +332,7 @@ theorem nh_a_sq (W : M2Window) : W.a ^ 2 < 2 / 3 := by
   have hu34 : 3 / 4 ≤ W.u := W.u_eq ▸ m2Sec_ge ha hb (by linarith [W.a_lt_p])
   have hv34 : 3 / 4 ≤ W.v := W.v_eq ▸ m2Sec_ge ha hc (by linarith [W.a_lt_d])
   have hcas := W.cas_lt
-  rw [nh_window_cas] at hcas
+  rw [nsr_window_cas] at hcas
   set E := m2E W.a W.b W.c W.u W.v with hEdef
   by_contra hcon
   push Not at hcon
@@ -349,16 +349,16 @@ theorem nh_a_sq (W : M2Window) : W.a ^ 2 < 2 / 3 := by
   have hEt : E ≤ 2 * (3 / 4) * t := by
     have : (2 - t) * (r - 1 / 2) < 0 := mul_neg_of_pos_of_neg (by linarith) (by linarith)
     nlinarith
-  have hlow := nh_lower_norms hr0 ht0 hu34 hv34 hEr hEt hEE0
+  have hlow := nsr_lower_norms hr0 ht0 hu34 hv34 hEr hEt hEE0
   have hρ14 : ρ < 1 / 4 := by linarith
   have hE0pos : 0 < E0 := by
-    have := nh_E0_lower hr0 ht0 hr2 ht2 hρ0 hρrt hρ14
+    have := nsr_E0_lower hr0 ht0 hr2 ht2 hρ0 hρrt hρ14
     have h8 : 1 / (8 * ρ) ≤ 7 / 8 := by rw [div_le_iff₀ (by positivity)]; linarith
     linarith
   -- raise the ratios to `1/2`
   have hE0B : E0 ≤ 1 - ρ + Real.log (4 * ρ) := by
-    have h1 := nh_phi34_mono hr0 hr2.le
-    have h2 := nh_phi34_mono ht0 ht2.le
+    have h1 := nsr_phi34_mono hr0 hr2.le
+    have h2 := nsr_phi34_mono ht0 ht2.le
     have hφ : (1 / 2 : ℝ) - 1 / 4 * (1 / 2)⁻¹ - Real.log (1 / 2) = Real.log 2 := by
       rw [one_div, Real.log_inv]; norm_num
     rw [hφ] at h1 h2
@@ -371,13 +371,13 @@ theorem nh_a_sq (W : M2Window) : W.a ^ 2 < 2 / 3 := by
     rw [e1, e2]; linarith
   -- the comparison function is increasing on `[1/7, 3/20]` and positive at `1/7`
   have hl35 : Real.log (4 * (3 / 20)) ≤ -(1 / 2) := by
-    have := nh_log_five_thirds
+    have := nsr_log_five_thirds
     rw [show (4 : ℝ) * (3 / 20) = (5 / 3)⁻¹ by norm_num, Real.log_inv]; linarith
-  have hphi := nh_phi_mono (C := 9 / 4) (D := 16 * (9193 / 50000)) (κ := 1) (lam := 4)
+  have hphi := nsr_phi_mono (C := 9 / 4) (D := 16 * (9193 / 50000)) (κ := 1) (lam := 4)
     (ρ0 := 1 / 7) (ρ1 := 3 / 20) (Bmax := 7 / 20) (ρ := ρ) (by norm_num) (by norm_num)
     (by norm_num) hρ7 hρ3.le (by norm_num) (by linarith) (by norm_num)
   have hl74 : (450606 / 805255 : ℝ) < Real.log (7 / 4) := by
-    have := nh_log_one_add_gt3 (x := 3 / 4) (by norm_num)
+    have := nsr_log_one_add_gt3 (x := 3 / 4) (by norm_num)
     norm_num at this ⊢; linarith
   have hl74' : Real.log (7 / 4) ≤ 3 / 4 := by
     have := Real.log_le_sub_one_of_pos (show (0 : ℝ) < 7 / 4 by norm_num); linarith
@@ -403,8 +403,8 @@ theorem nh_a_sq (W : M2Window) : W.a ^ 2 < 2 / 3 := by
 
 /-- **The conditional scale bound**: if
 `t = a/(a + c) ≤ 2/5`, then `a < 4/5`. -/
-theorem nh_scale_of_t (W : M2Window) (ht25 : W.a / (W.a + W.c) ≤ 2 / 5) : W.a < 4 / 5 := by
-  obtain ⟨hr0, ht0, hrt, ht2, hρ0, hρrt, hρ3, hUr, hUt, hE, hEb⟩ := nh_window_centre W
+theorem nsr_scale_of_t (W : M2Window) (ht25 : W.a / (W.a + W.c) ≤ 2 / 5) : W.a < 4 / 5 := by
+  obtain ⟨hr0, ht0, hrt, ht2, hρ0, hρrt, hρ3, hUr, hUt, hE, hEb⟩ := nsr_window_centre W
   set r := W.a / (W.a + W.b) with hr
   set t := W.a / (W.a + W.c) with ht
   set ρ := W.a ^ 2 / (W.a ^ 2 + 4) with hρ
@@ -417,12 +417,12 @@ theorem nh_scale_of_t (W : M2Window) (ht25 : W.a / (W.a + W.c) ≤ 2 / 5) : W.a 
   have h1t : W.c / (W.a + W.c) = 1 - t := by rw [ht]; field_simp; ring
   have hu : (94 / 125 : ℝ) ≤ W.u := by
     rw [W.u_eq]
-    exact (nh_turn_floor ha hb W.a_lt_p (by rw [h1r]; linarith)).le
+    exact (nsr_turn_floor ha hb W.a_lt_p (by rw [h1r]; linarith)).le
   have hv : (94 / 125 : ℝ) ≤ W.v := by
     rw [W.v_eq]
-    exact (nh_turn_floor ha hc W.a_lt_d (by rw [h1t]; linarith)).le
+    exact (nsr_turn_floor ha hc W.a_lt_d (by rw [h1t]; linarith)).le
   have hcas := W.cas_lt
-  rw [nh_window_cas] at hcas
+  rw [nsr_window_cas] at hcas
   set E := m2E W.a W.b W.c W.u W.v with hEdef
   by_contra hcon
   push Not at hcon
@@ -443,10 +443,10 @@ theorem nh_scale_of_t (W : M2Window) (ht25 : W.a / (W.a + W.c) ≤ 2 / 5) : W.a 
     have e : -1 + 2 * r + 2 * t - r * t - 2 * (94 / 125 : ℝ) * t =
         (-1 + 2 * r + 2 / 5 * (62 / 125 - r)) - (2 / 5 - t) * (62 / 125 - r) := by ring
     linarith
-  have hlow := nh_lower_norms hr0 ht0 hu hv hEr hEt hEE0
+  have hlow := nsr_lower_norms hr0 ht0 hu hv hEr hEt hEE0
   have hE0pos : 0 < E0 := by
     have hρ14 : ρ < 1 / 4 := by linarith
-    have := nh_E0_lower hr0 ht0 (by linarith) (by linarith) hρ0 hρrt hρ14
+    have := nsr_E0_lower hr0 ht0 (by linarith) (by linarith) hρ0 hρrt hρ14
     have h8 : 1 / (8 * ρ) ≤ 29 / 32 := by rw [div_le_iff₀ (by positivity)]; linarith
     have e : E0 = (1 + r + t - ρ + Real.log (ρ / (r * t)) - 1 / 4 * r⁻¹ - 1 / 4 * t⁻¹) +
         ((94 / 125 : ℝ) - 3 / 4) * (1 / r + 1 / t) := by rw [hE0]; field_simp; ring
@@ -454,8 +454,8 @@ theorem nh_scale_of_t (W : M2Window) (ht25 : W.a / (W.a + W.c) ≤ 2 / 5) : W.a 
     linarith
   -- raise the ratios to `2/5`
   have hE0B : E0 ≤ 14 / 25 - ρ + Real.log (25 / 4 * ρ) := by
-    have h1 := nh_psi_mono (μ := 94 / 125) hr0 hr2 (by norm_num) (by norm_num)
-    have h2 := nh_psi_mono (μ := 94 / 125) ht0 ht25 (by norm_num) (by norm_num)
+    have h1 := nsr_psi_mono (μ := 94 / 125) hr0 hr2 (by norm_num) (by norm_num)
+    have h2 := nsr_psi_mono (μ := 94 / 125) ht0 ht25 (by norm_num) (by norm_num)
     have e1 : E0 = 1 - ρ + Real.log ρ + (r - (1 - (94 / 125 : ℝ)) / r - Real.log r) +
         (t - (1 - (94 / 125 : ℝ)) / t - Real.log t) := by
       rw [hE0, Real.log_div hρ0.ne' (by positivity), Real.log_mul hr0.ne' ht0.ne']; ring
@@ -469,15 +469,15 @@ theorem nh_scale_of_t (W : M2Window) (ht25 : W.a / (W.a + W.c) ≤ 2 / 5) : W.a 
     rw [e1, e2]; linarith
   -- the comparison function
   have hl1615 : (2 / 31 : ℝ) < Real.log (16 / 15) := by
-    have := nh_log_one_add_gt (x := 1 / 15) (by norm_num)
+    have := nsr_log_one_add_gt (x := 1 / 15) (by norm_num)
     norm_num at this ⊢; linarith
-  have hphi := nh_phi_mono (C := 4 * (94 / 125 : ℝ) ^ 2) (D := 16 * (9193 / 50000)) (κ := 14 / 25)
+  have hphi := nsr_phi_mono (C := 4 * (94 / 125 : ℝ) ^ 2) (D := 16 * (9193 / 50000)) (κ := 14 / 25)
     (lam := 25 / 4) (ρ0 := 4 / 29) (ρ1 := 3 / 20) (Bmax := 41 / 100 - 2 / 31) (ρ := ρ)
     (by norm_num) (by norm_num) (by norm_num) hρ4 hρ3.le (by norm_num) (by
       rw [show (25 / 4 : ℝ) * (3 / 20) = (16 / 15)⁻¹ by norm_num, Real.log_inv]; linarith)
     (by norm_num)
   have hl2925 : (4 / 27 : ℝ) < Real.log (29 / 25) := by
-    have := nh_log_one_add_gt (x := 4 / 25) (by norm_num)
+    have := nsr_log_one_add_gt (x := 4 / 25) (by norm_num)
     norm_num at this ⊢; linarith
   have hl2925' : Real.log (29 / 25) ≤ 4 / 25 := by
     have := Real.log_le_sub_one_of_pos (show (0 : ℝ) < 29 / 25 by norm_num); linarith

@@ -1,15 +1,15 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Interface
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Basic
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Slope
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs14.Data
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Interface
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope.CasimirScale
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope.NormEndpoint
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope.CapData
 
 /-!
-# Gate S4: definitions
+# Smaller-short window, Casimir floor: definitions
 
-The scalar functions of gate S4, kept apart from `S4.lean` so that the modules `Heavy/S4*.lean`
-can state their signs with them and `S4.lean` can import those modules.
+The scalar functions of the Casimir floor, kept apart from `SmallerShort/CasimirFloor` so that
+the modules of `SmallerShort/CasimirFloor/` can state their signs with them.
 -/
 
 @[expose] public section
@@ -19,11 +19,11 @@ namespace SmoothedOctagon
 open Set Real
 
 /-- `Φ = Γ_*(q_c) - R*_2(q_c)/7`. -/
-noncomputable def hs4Phi (x be al u : ℝ) : ℝ :=
-  hsGs x al u (hsQc x al) - hsRs x be al u (hsQc x al) 2 / 7
+noncomputable def casPhi (x be al u : ℝ) : ℝ :=
+  ssGs x al u (ssQc x al) - ssRs x be al u (ssQc x al) 2 / 7
 
 /-- `Ψ = Φ - (T - 2)(w_*(q_c) - 3/4)/7`, `T = r_A/q_c`. -/
-noncomputable def hs4Psi (x be al u : ℝ) : ℝ :=
-  hs4Phi x be al u - (hsRA al be / hsQc x al - 2) * (hsWs x be al u (hsQc x al) - 3 / 4) / 7
+noncomputable def casPsi (x be al u : ℝ) : ℝ :=
+  casPhi x be al u - (ssRA al be / ssQc x al - 2) * (ssWs x be al u (ssQc x al) - 3 / 4) / 7
 
 end SmoothedOctagon

@@ -1,14 +1,14 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.Coef
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.Secant
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.ResidualAffine
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Secant
 
 /-!
-# Case M2, forward successor by hand: the high-ratio residual increases in the shape
+# Case M2, forward successor: the high-ratio residual increases in the shape
 
 On the high-ratio large-gap domain (`3/8 ≤ t < 2/5`, `j = 2t + x - 1 ≥ 1/30`, `7x < 12h`, `1 ≤ q`,
-`q(1 + 2j) ≤ 1 + x`) the combined residual `fhComb 4 1 … (fhVG t x) (nhLp q) (nhFl t x q)`
-increases in the shape `k` on `[1, 1 + j]`. The caller `fh_LGB_core` then needs only its lower
+`q(1 + 2j) ≤ 1 + x`) the combined residual `nsfComb 4 1 … (nsfVG t x) (nsrLp q) (nsrFl t x q)`
+increases in the shape `k` on `[1, 1 + j]`. The caller `nsf_LGB_core` then needs only its lower
 shape endpoint `k = 29t²/4`.
 
 The residual is quadratic in `k`, so `F(k) - F(k₀) = (k - k₀) ∂_kF((k + k₀)/2)` exactly
@@ -18,15 +18,15 @@ nonpositive, and `v_G < U(t)`, `L₊ ≤ q - 1` (`hrs_VG_lt_U`, `hrs_Lp_le`). At
 `L = q - 1`, `k = 1 + j` it equals `2tq²(d₀ + d₁y + d₂y² + d₃y³)`, `y = q - 1` (`hrs_K_end`, via
 the four coefficient identities `hrs_d_eq`), which is positive (`hrs_cubic_pos`).
 
-The bounds `Je² ≤ 17/16`, `(qJ - pW)/x ≤ 41/24` that the caller already has (`fh_LG_J`,
-`fh_LG_WD`, passed as hypotheses) suffice for the sign of the `v`-slope, and the derivative is
+The bounds `Je² ≤ 17/16`, `(qJ - pW)/x ≤ 41/24` that the caller already has (`nsf_LG_J`,
+`nsf_LG_WD`, passed as hypotheses) suffice for the sign of the `v`-slope, and the derivative is
 integrated through the exact midpoint identity of a quadratic.
 
 ## Main API
 
-* `hrsTk`, `hrsK`: `∂_k` of the transport brace and of `fhComb`; `hrs_comb_sub_k`.
+* `hrsTk`, `hrsK`: `∂_k` of the transport brace and of `nsfComb`; `hrs_comb_sub_k`.
 * `hrsKv`, `hrsKL`, `hrsKk`, `hrs_K_dec`; `hrs_K_end`: the endpoint value.
-* `hrs_shape_lt`: **`fhComb(29t²/4) < fhComb(k)`** for `29t²/4 < k < 2t + x` on the high-ratio
+* `hrs_shape_lt`: **`nsfComb(29t²/4) < nsfComb(k)`** for `29t²/4 < k < 2t + x` on the high-ratio
   large-gap domain (given the caller's bounds `Je² ≤ 17/16`, `qJ - pW ≤ 41x/24`).
 -/
 
@@ -36,12 +36,12 @@ namespace SmoothedOctagon
 
 /-- `∂_k` of the transport brace `3tE₀² - 4tvW⁴ + 4q²W²(tH_U + 2tvY) - 4q⁴tB²w_U`. -/
 noncomputable def hrsTk (t x k q v : ℝ) : ℝ :=
-  6 * t * q ^ (2 : ℕ) * fhE0 t x k q + 4 * q ^ (2 : ℕ) * (1 + x) ^ (2 : ℕ) * (v - 1 + t ^ (2 : ℕ))
+  6 * t * q ^ (2 : ℕ) * nsfE0 t x k q + 4 * q ^ (2 : ℕ) * (1 + x) ^ (2 : ℕ) * (v - 1 + t ^ (2 : ℕ))
     - 4 * q ^ (4 : ℕ) * (t * (2 * k - t) + (v - 1 + t ^ (2 : ℕ)) * (x * (x + 2)))
 
-/-- **The shape derivative** `∂_k fhComb α M` (independent of `M` and `F`). -/
+/-- **The shape derivative** `∂_k nsfComb α M` (independent of `M` and `F`). -/
 noncomputable def hrsK (α t x k q v L : ℝ) : ℝ :=
-  4 * q * ((α + 1) * (1 + x) ^ (2 : ℕ) - (t + x * (x + 2)) * q ^ (2 : ℕ)) * nhA t x q v L
+  4 * q * ((α + 1) * (1 + x) ^ (2 : ℕ) - (t + x * (x + 2)) * q ^ (2 : ℕ)) * nsrA t x q v L
     + (q * (t + x * (x + 2)) - (t + x) * (1 + x)) * hrsTk t x k q v
 
 /-- The `v`-coefficient of `hrsK`. -/
@@ -60,34 +60,34 @@ noncomputable def hrsKL (α t x q : ℝ) : ℝ :=
 noncomputable def hrsKk (t x q : ℝ) : ℝ :=
   (q * (t + x * (x + 2)) - (t + x) * (1 + x)) * (-(2 * t * q ^ (4 : ℕ)))
 
-/-- **The exact midpoint identity** of the quadratic `k ↦ fhComb`. -/
+/-- **The exact midpoint identity** of the quadratic `k ↦ nsfComb`. -/
 theorem hrs_comb_sub_k (α M t x q v L F k k₀ : ℝ) :
-    fhComb α M t x k q v L F - fhComb α M t x k₀ q v L F =
+    nsfComb α M t x k q v L F - nsfComb α M t x k₀ q v L F =
       (k - k₀) * hrsK α t x ((k + k₀) / 2) q v L := by
-  have e2 : fhTP t x k q v - fhTP t x k₀ q v =
+  have e2 : nsfTP t x k q v - nsfTP t x k₀ q v =
       (k - k₀) * ((q * (t + x * (x + 2)) - (t + x) * (1 + x)) * hrsTk t x ((k + k₀) / 2) q v) := by
-    unfold fhTP hrsTk fhKt fhHt fhE0
+    unfold nsfTP hrsTk nsfKt nsfHt nsfE0
     generalize q * (t + x * (x + 2)) - (t + x) * (1 + x) = D
     ring
-  unfold fhComb hrsK
-  rw [nhN_sub_k t x k k₀ q v L]
+  unfold nsfComb hrsK
+  rw [nsrN_sub_k t x k k₀ q v L]
   linear_combination e2
 
 /-- `hrsK` is affine in `v`, `L` and `k`. -/
 theorem hrs_K_dec (α t x k k' q v v' L L' : ℝ) :
     hrsK α t x k q v L = hrsK α t x k' q v' L' + (v - v') * hrsKv α t x q
       + (L - L') * hrsKL α t x q + (k - k') * hrsKk t x q := by
-  unfold hrsK hrsKv hrsKL hrsKk hrsTk nhA fhE0
+  unfold hrsK hrsKv hrsKL hrsKk hrsTk nsrA nsfE0
   ring
 
 /-! ### The endpoint derivative
 
-At `v = U(t)`, `L = q - 1`, `k = 1 + j` and with `y = q - 1`: `nhA = tq(A₀ + A₁y)`,
+At `v = U(t)`, `L = q - 1`, `k = 1 + j` and with `y = q - 1`: `nsrA = tq(A₀ + A₁y)`,
 `hrsTk = 2tq²(b₀ + b₁y + b₂y²)`, `5W² - Jq² = e₀ + e₁y + e₂y²` and `qJ - pW = r₀ + r₁y`. -/
 
-/-- The coefficient `A₀` of `nhA` at the endpoint. -/
+/-- The coefficient `A₀` of `nsrA` at the endpoint. -/
 noncomputable def hrsA0 (t x : ℝ) : ℝ := t * x ^ (2 : ℕ) - t ^ (2 : ℕ) * x ^ (2 : ℕ)
-/-- The coefficient `A₁` of `nhA` at the endpoint. -/
+/-- The coefficient `A₁` of `nsrA` at the endpoint. -/
 noncomputable def hrsA1 (t x : ℝ) : ℝ := 2 * x ^ (2 : ℕ) + x - 2 * t * x ^ (2 : ℕ) - t * x
 /-- The coefficient `b₀` of `hrsTk` at the endpoint. -/
 noncomputable def hrsb0 (t x : ℝ) : ℝ := 1 - 2 * t - x
@@ -140,11 +140,11 @@ theorem hrs_K_end (t x q : ℝ) :
     hrsK 4 t x (2 * t + x) q (1 - t + t ^ (2 : ℕ)) (q - 1) =
       2 * t * q ^ (2 : ℕ) * (hrsd0 t x + hrsd1 t x * (q - 1) + hrsd2 t x * (q - 1) ^ (2 : ℕ)
         + hrsd3 t x * (q - 1) ^ (3 : ℕ)) := by
-  have eN : nhA t x q (1 - t + t ^ (2 : ℕ)) (q - 1) = t * q * (hrsA0 t x + hrsA1 t x * (q - 1)) := by
-    unfold nhA hrsA0 hrsA1; ring
+  have eN : nsrA t x q (1 - t + t ^ (2 : ℕ)) (q - 1) = t * q * (hrsA0 t x + hrsA1 t x * (q - 1)) := by
+    unfold nsrA hrsA0 hrsA1; ring
   have eT : hrsTk t x (2 * t + x) q (1 - t + t ^ (2 : ℕ)) =
       2 * t * q ^ (2 : ℕ) * (hrsb0 t x + hrsb1 t x * (q - 1) + hrsb2 t x * (q - 1) ^ (2 : ℕ)) := by
-    unfold hrsTk fhE0 hrsb0 hrsb1 hrsb2; ring
+    unfold hrsTk nsfE0 hrsb0 hrsb1 hrsb2; ring
   have eE : (4 + 1) * (1 + x) ^ (2 : ℕ) - (t + x * (x + 2)) * q ^ (2 : ℕ) =
       hrse0 t x + hrse1 t x * (q - 1) + hrse2 t x * (q - 1) ^ (2 : ℕ) := by
     unfold hrse0 hrse1 hrse2; ring
@@ -199,14 +199,14 @@ theorem hrs_cubic_pos {t x y : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t ≤ 2 / 5) (hx 
 
 /-- `v_G < U(t)` on the high-ratio large-gap domain. -/
 theorem hrs_VG_lt_U {t x : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t ≤ 2 / 5) (hx : 1 / 5 ≤ x)
-    (hjh : 7 * x < 12 * (1 - 2 * t)) : fhVG t x < 1 - t + t ^ (2 : ℕ) := by
+    (hjh : 7 * x < 12 * (1 - 2 * t)) : nsfVG t x < 1 - t + t ^ (2 : ℕ) := by
   have hx0 : 0 < x := by linarith
   have hR : 0 < x ^ (2 : ℕ) + 10 * x + 15 := by positivity
   have hW : 0 < 1 + x := by linarith
-  have e : 1 - t + t ^ (2 : ℕ) - fhVG t x = (1 - t) * x *
+  have e : 1 - t + t ^ (2 : ℕ) - nsfVG t x = (1 - t) * x *
       (12 * (x ^ (2 : ℕ) + 10 * x + 15) * (1 - t * (1 + x)) - (90 - 19 * x ^ (2 : ℕ)))
         / (12 * (x ^ (2 : ℕ) + 10 * x + 15) * (1 + x) ^ (2 : ℕ)) := by
-    unfold fhVG; field_simp; ring
+    unfold nsfVG; field_simp; ring
   -- `tW ≤ 361/672 < 11/20`
   have htw : t * (1 + x) ≤ 11 / 20 := by
     have : t * x ≤ t * (12 * (1 - 2 * t) / 7) := mul_le_mul_of_nonneg_left (by linarith) (by linarith)
@@ -215,16 +215,16 @@ theorem hrs_VG_lt_U {t x : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t ≤ 2 / 5) (hx : 1 
     have : 0 ≤ (x ^ (2 : ℕ) + 10 * x + 15) * (11 / 20 - t * (1 + x)) :=
       mul_nonneg hR.le (by linarith)
     nlinarith
-  have : 0 < 1 - t + t ^ (2 : ℕ) - fhVG t x := by
+  have : 0 < 1 - t + t ^ (2 : ℕ) - nsfVG t x := by
     rw [e]; apply div_pos (mul_pos (mul_pos (by linarith) hx0) hN); positivity
   linarith
 
 /-- `L₊(q) ≤ q - 1` for `q ≥ 1`. -/
-theorem hrs_Lp_le {q : ℝ} (hq : 1 ≤ q) : nhLp q ≤ q - 1 := by
+theorem hrs_Lp_le {q : ℝ} (hq : 1 ≤ q) : nsrLp q ≤ q - 1 := by
   have hq0 : 0 < q := by linarith
-  have e : q - 1 - nhLp q = (q - 1) ^ (2 : ℕ) * (5 * q + 1) / (6 * q * (q + 1)) := by
-    unfold nhLp; field_simp; ring
-  have : 0 ≤ q - 1 - nhLp q := by rw [e]; positivity
+  have e : q - 1 - nsrLp q = (q - 1) ^ (2 : ℕ) * (5 * q + 1) / (6 * q * (q + 1)) := by
+    unfold nsrLp; field_simp; ring
+  have : 0 ≤ q - 1 - nsrLp q := by rw [e]; positivity
   linarith
 
 /-- **The `v`-slope of the shape derivative is negative**, given `Je² ≤ 17/16` and
@@ -274,14 +274,14 @@ theorem hrs_Kv_neg {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1
 
 /-- **The shape increases the high-ratio residual** (the shape derivative integrated on
 `[29t²/4, k]` by the midpoint identity): on the
-high-ratio large-gap domain, `fhComb 4 1` at the shape `k` exceeds its value at `k₀ = 29t²/4`. -/
+high-ratio large-gap domain, `nsfComb 4 1` at the shape `k` exceeds its value at `k₀ = 29t²/4`. -/
 theorem hrs_shape_lt {t x k q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hjh : 7 * x < 12 * (1 - 2 * t)) (hks : 29 / 4 * t ^ (2 : ℕ) < k) (hko : k < 2 * t + x)
     (hq : 1 ≤ q) (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x)
     (hJ : (t + x * (x + 2)) * q ^ 2 ≤ 17 / 16 * (1 + x) ^ 2)
     (hWD : q * (t + x * (x + 2)) - (t + x) * (1 + x) ≤ 41 / 24 * x) :
-    fhComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (fhVG t x) (nhLp q) (nhFl t x q) <
-      fhComb 4 1 t x k q (fhVG t x) (nhLp q) (nhFl t x q) := by
+    nsfComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (nsfVG t x) (nsrLp q) (nsrFl t x q) <
+      nsfComb 4 1 t x k q (nsfVG t x) (nsrLp q) (nsrFl t x q) := by
   have hx : 1 / 5 ≤ x := by linarith
   have hx0 : 0 < x := by linarith
   have hq0 : 0 < q := by linarith
@@ -297,15 +297,15 @@ theorem hrs_shape_lt {t x k q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj :
   -- the midpoint derivative is positive
   set m := (k + 29 / 4 * t ^ (2 : ℕ)) / 2 with hm
   have hmk : m ≤ 2 * t + x := by rw [hm]; linarith
-  have hdec := hrs_K_dec 4 t x m (2 * t + x) q (fhVG t x) (1 - t + t ^ (2 : ℕ)) (nhLp q) (q - 1)
+  have hdec := hrs_K_dec 4 t x m (2 * t + x) q (nsfVG t x) (1 - t + t ^ (2 : ℕ)) (nsrLp q) (q - 1)
   rw [hrs_K_end] at hdec
   have p0 : 0 < 2 * t * q ^ (2 : ℕ) * (hrsd0 t x + hrsd1 t x * (q - 1)
       + hrsd2 t x * (q - 1) ^ (2 : ℕ) + hrsd3 t x * (q - 1) ^ (3 : ℕ)) :=
     mul_pos (by positivity) (hrs_cubic_pos ht0 ht1.le hx (by linarith) hy1)
-  have p1 : 0 < (fhVG t x - (1 - t + t ^ (2 : ℕ))) * hrsKv 4 t x q :=
+  have p1 : 0 < (nsfVG t x - (1 - t + t ^ (2 : ℕ))) * hrsKv 4 t x q :=
     mul_pos_of_neg_of_neg (by linarith [hrs_VG_lt_U ht0 ht1.le hx hjh])
       (hrs_Kv_neg (by linarith) ht1.le hj hq hJ hWD)
-  have p2 : 0 ≤ (nhLp q - (q - 1)) * hrsKL 4 t x q := by
+  have p2 : 0 ≤ (nsrLp q - (q - 1)) * hrsKL 4 t x q := by
     apply mul_nonneg_of_nonpos_of_nonpos (by linarith [hrs_Lp_le hq])
     unfold hrsKL
     apply mul_nonpos_of_nonneg_of_nonpos
@@ -318,10 +318,10 @@ theorem hrs_shape_lt {t x k q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj :
     apply mul_nonpos_of_nonneg_of_nonpos hD0
     have : 0 ≤ 2 * t * q ^ (4 : ℕ) := by positivity
     linarith
-  have hK : 0 < hrsK 4 t x m q (fhVG t x) (nhLp q) := by linarith
-  have e := hrs_comb_sub_k 4 1 t x q (fhVG t x) (nhLp q) (nhFl t x q) k (29 / 4 * t ^ (2 : ℕ))
+  have hK : 0 < hrsK 4 t x m q (nsfVG t x) (nsrLp q) := by linarith
+  have e := hrs_comb_sub_k 4 1 t x q (nsfVG t x) (nsrLp q) (nsrFl t x q) k (29 / 4 * t ^ (2 : ℕ))
   rw [← hm] at e
-  have : 0 < (k - 29 / 4 * t ^ (2 : ℕ)) * hrsK 4 t x m q (fhVG t x) (nhLp q) :=
+  have : 0 < (k - 29 / 4 * t ^ (2 : ℕ)) * hrsK 4 t x m q (nsfVG t x) (nsrLp q) :=
     mul_pos (by linarith) hK
   linarith
 

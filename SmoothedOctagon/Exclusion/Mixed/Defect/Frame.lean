@@ -36,13 +36,13 @@ noncomputable def df_Jt : Mat2 := triY fun _ ↦ 2 / √3
 /-- **The endpoint product**: for `det B = 1` and
 `Λ̂ = -B⁻¹ J B`, `4 z(BM) conj z(B) = (tr M + tr(J Λ̂ M)) + i (tr(Λ̂ M) - tr(J M))`. -/
 theorem df_zc_prod {Bm M : Mat2} (hB : Bm.det = 1) :
-    4 * (scb_zc (Bm * M) * (starRingEnd ℂ) (scb_zc Bm)).re =
+    4 * (clr_zc (Bm * M) * (starRingEnd ℂ) (clr_zc Bm)).re =
         M.trace + (J * (-(Bm.adjugate * J * Bm)) * M).trace ∧
-    4 * (scb_zc (Bm * M) * (starRingEnd ℂ) (scb_zc Bm)).im =
+    4 * (clr_zc (Bm * M) * (starRingEnd ℂ) (clr_zc Bm)).im =
         ((-(Bm.adjugate * J * Bm)) * M).trace - (J * M).trace := by
   rw [Matrix.det_fin_two] at hB
-  simp only [Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im, scb_zc_re,
-    scb_zc_im, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two, Matrix.adjugate_fin_two,
+  simp only [Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im, clr_zc_re,
+    clr_zc_im, Matrix.trace_fin_two, Matrix.mul_apply, Fin.sum_univ_two, Matrix.adjugate_fin_two,
     Matrix.neg_apply, J, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
     Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one]
   constructor

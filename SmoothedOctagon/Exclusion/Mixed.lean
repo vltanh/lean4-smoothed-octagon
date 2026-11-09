@@ -2,8 +2,8 @@ module
 
 public import SmoothedOctagon.Period.Defs
 public import SmoothedOctagon.Exclusion.Mixed.Extraction
-public import SmoothedOctagon.Exclusion.Mixed.NonshortScalar
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Assembly
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort
 
 /-!
 # Case M2: no competitive mixed period with a nonshort forward run
@@ -22,9 +22,9 @@ The proof (modules `Exclusion/Mixed/*`):
 2. `m2_reflect` (`Mixed/Reflection`): if the incoming turn is the smaller one, pass to the
    reflected, time-reversed period, in which it is outgoing (`m2_reflect_classM2`).
 3. `m2_window`, `m2_short_window` (`Mixed/Extraction`): the scalar window of the chosen turn.
-4. `m2_nonshort_scalar` (`Mixed/NonshortScalar`): the reverse successor by `m2_reverse_hand`, the
-   forward successor by `m2_forward_hand`; `m2_short_exclusion_hand` (`Mixed/ShortHand/Assembly`):
-   the smaller-short window by the steps S0-S6 of `Mixed/ShortHand`.
+4. `m2_nonshort_scalar` (`Mixed/Nonshort`): the reverse successor by `m2_reverse_exclusion`, the
+   forward successor by `m2_forward_exclusion`; `m2_smallerShort_exclusion` (`Mixed/SmallerShort`):
+   the smaller-short window by the seven bounds of `Mixed/SmallerShort/`.
 -/
 
 @[expose] public section
@@ -45,7 +45,7 @@ private theorem m2_oriented (P : NormalPeriod)
     · exact m2_nonshort_scalar W (Or.inl (hF h5))
     · exact m2_nonshort_scalar W (Or.inr (hR h5))
   · obtain ⟨D, -⟩ := m2_short_window P hc hK h hN hm h2 h1 h0 h3 hcb h4
-    exact m2_short_exclusion_hand D
+    exact m2_smallerShort_exclusion D
 
 /-- **Case M2.** No competitive normal vertex period with state in `𝔥**` and at least six pieces has
 mixed signs, every reverse run of length two, and a forward run of length at least two. -/

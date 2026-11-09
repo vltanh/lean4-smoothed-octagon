@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTHorner
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Horner
 
 /-!
-# Case M2, forward successor by hand: the higher `h`-derivatives of the low-`t` circuit
+# Case M2, forward successor: the higher `h`-derivatives of the low-`t` circuit
 
 With `𝓗 = ∂_h` at fixed `j`, `y` (`nltDer` of the coefficient lists `nltLᵢ`):
 
@@ -34,148 +34,148 @@ namespace SmoothedOctagon
 noncomputable def nltF0 (t x : ℝ) : ℝ :=
   4974736 + 13841976 * x - 15109728 * t + 16803528 * x ^ 2 - 40448208 * t * x + 13016832 * t ^ 2 + 10479048 * x ^ 3 - 42980352 * t * x ^ 2 + 31532736 * t ^ 2 * x - 3344256 * t ^ 3 + 2833176 * x ^ 4 - 20387232 * t * x ^ 3 + 27457344 * t ^ 2 * x ^ 2 - 6802368 * t ^ 3 * x + 78336 * t ^ 4 + 205632 * x ^ 5 - 3084480 * t * x ^ 4 + 8225280 * t ^ 2 * x ^ 3 - 4112640 * t ^ 3 * x ^ 2
 
-theorem nlt_F_eq0 (j s : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL0 j))))) s = nltF0 ((1 - s) / 2) (s + j) := by
-  simp only [nltL0, nltDer, nltDerAux, lrhHorner]; unfold nltF0; ring
+theorem nlt_F_eq0 (j s : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltDer (nltL0 j))))) s = nltF0 ((1 - s) / 2) (s + j) := by
+  simp only [nltL0, nltDer, nltDerAux, polyHorner]; unfold nltF0; ring
 
 /-- `F_1`: the `y^1`-coefficient of `𝓗⁴S`. -/
 noncomputable def nltF1 (t x : ℝ) : ℝ :=
   1653624 + 15553116 * x + 4649952 * t + 46561452 * x ^ 2 - 28875192 * t * x - 18446112 * t ^ 2 + 51554148 * x ^ 3 - 110821632 * t * x ^ 2 + 3321696 * t ^ 2 * x + 8859264 * t ^ 3 + 22611900 * x ^ 4 - 106477200 * t * x ^ 3 + 76204800 * t ^ 2 * x ^ 2 - 711840 * t ^ 3 * x - 311040 * t ^ 4 + 4038264 * x ^ 5 - 36255360 * t * x ^ 4 + 63766560 * t ^ 2 * x ^ 3 - 21225600 * t ^ 3 * x ^ 2 - 391680 * t ^ 4 * x + 239904 * x ^ 6 - 4318272 * t * x ^ 5 + 14394240 * t ^ 2 * x ^ 4 - 9596160 * t ^ 3 * x ^ 3
 
-theorem nlt_F_eq1 (j s : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL1 j))))) s = nltF1 ((1 - s) / 2) (s + j) := by
-  simp only [nltL1, nltDer, nltDerAux, lrhHorner]; unfold nltF1; ring
+theorem nlt_F_eq1 (j s : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltDer (nltL1 j))))) s = nltF1 ((1 - s) / 2) (s + j) := by
+  simp only [nltL1, nltDer, nltDerAux, polyHorner]; unfold nltF1; ring
 
 /-- `F_2`: the `y^2`-coefficient of `𝓗⁴S`. -/
 noncomputable def nltF2 (t x : ℝ) : ℝ :=
   -30440040 - 106874856 * x + 97971048 * t - 126533508 * x ^ 2 + 321862248 * t * x - 86395152 * t ^ 2 - 67386096 * x ^ 3 + 366738624 * t * x ^ 2 - 245814912 * t ^ 2 * x + 7613472 * t ^ 3 - 12589392 * x ^ 4 + 189394944 * t * x ^ 3 - 240882768 * t ^ 2 * x ^ 2 + 10732896 * t ^ 3 * x + 5280768 * t ^ 4 - 547524 * x ^ 5 + 37840560 * t * x ^ 4 - 87641520 * t ^ 2 * x ^ 3 + 9146880 * t ^ 3 * x ^ 2 + 11508480 * t ^ 4 * x - 203184 * x ^ 6 + 3069792 * t * x ^ 5 - 6315840 * t ^ 2 * x ^ 4 - 3623040 * t ^ 3 * x ^ 3 + 4700160 * t ^ 4 * x ^ 2
 
-theorem nlt_F_eq2 (j s : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL2 j))))) s = nltF2 ((1 - s) / 2) (s + j) := by
-  simp only [nltL2, nltDer, nltDerAux, lrhHorner]; unfold nltF2; ring
+theorem nlt_F_eq2 (j s : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltDer (nltL2 j))))) s = nltF2 ((1 - s) / 2) (s + j) := by
+  simp only [nltL2, nltDer, nltDerAux, polyHorner]; unfold nltF2; ring
 
 /-- `F_3`: the `y^3`-coefficient of `𝓗⁴S`. -/
 noncomputable def nltF3 (t x : ℝ) : ℝ :=
   -52545968 - 260483220 * x + 130131600 * t - 483765492 * x ^ 2 + 663880872 * t * x - 52494048 * t ^ 2 - 429002712 * x ^ 3 + 1141961088 * t * x ^ 2 - 366995904 * t ^ 2 * x - 10887936 * t ^ 3 - 164322492 * x ^ 4 + 832132944 * t * x ^ 3 - 674484768 * t ^ 2 * x ^ 2 + 27603936 * t ^ 3 * x + 5503488 * t ^ 4 - 25192560 * x ^ 5 + 232771200 * t * x ^ 4 - 406332480 * t ^ 2 * x ^ 3 + 106686720 * t ^ 3 * x ^ 2 + 15989760 * t ^ 4 * x - 1341504 * x ^ 6 + 23265792 * t * x ^ 5 - 71677440 * t ^ 2 * x ^ 4 + 36034560 * t ^ 3 * x ^ 3 + 7050240 * t ^ 4 * x ^ 2
 
-theorem nlt_F_eq3 (j s : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL3 j))))) s = nltF3 ((1 - s) / 2) (s + j) := by
-  simp only [nltL3, nltDer, nltDerAux, lrhHorner]; unfold nltF3; ring
+theorem nlt_F_eq3 (j s : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltDer (nltL3 j))))) s = nltF3 ((1 - s) / 2) (s + j) := by
+  simp only [nltL3, nltDer, nltDerAux, polyHorner]; unfold nltF3; ring
 
 /-- `F_4`: the `y^4`-coefficient of `𝓗⁴S`. -/
 noncomputable def nltF4 (t x : ℝ) : ℝ :=
   -31292952 - 198378264 * x + 64874352 * t - 443411736 * x ^ 2 + 477479136 * t * x + 12482976 * t ^ 2 - 439351704 * x ^ 3 + 986248656 * t * x ^ 2 - 190997568 * t ^ 2 * x - 19400832 * t ^ 3 - 179825436 * x ^ 4 + 784631952 * t * x ^ 3 - 532849104 * t ^ 2 * x ^ 2 + 12538368 * t ^ 3 * x + 774144 * t ^ 4 - 28140780 * x ^ 5 + 228525600 * t * x ^ 4 - 369265680 * t ^ 2 * x ^ 3 + 104253120 * t ^ 3 * x ^ 2 + 6819840 * t ^ 4 * x - 1270512 * x ^ 6 + 22428576 * t * x ^ 5 - 71824320 * t ^ 2 * x ^ 4 + 42007680 * t ^ 3 * x ^ 3 + 3525120 * t ^ 4 * x ^ 2
 
-theorem nlt_F_eq4 (j s : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL4 j))))) s = nltF4 ((1 - s) / 2) (s + j) := by
-  simp only [nltL4, nltDer, nltDerAux, lrhHorner]; unfold nltF4; ring
+theorem nlt_F_eq4 (j s : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltDer (nltL4 j))))) s = nltF4 ((1 - s) / 2) (s + j) := by
+  simp only [nltL4, nltDer, nltDerAux, polyHorner]; unfold nltF4; ring
 
 /-- `F_5`: the `y^5`-coefficient of `𝓗⁴S`. -/
 noncomputable def nltF5 (t x : ℝ) : ℝ :=
   -5677200 - 45349824 * x + 12551712 * t - 113773884 * x ^ 2 + 119386344 * t * x + 9252624 * t ^ 2 - 117050460 * x ^ 3 + 270106800 * t * x ^ 2 - 38125920 * t ^ 2 * x - 10642080 * t ^ 3 - 46952172 * x ^ 4 + 221497104 * t * x ^ 3 - 139925088 * t ^ 2 * x ^ 2 - 7557024 * t ^ 3 * x - 352512 * t ^ 4 - 7015656 * x ^ 5 + 64254840 * t * x ^ 4 - 100989120 * t ^ 2 * x ^ 3 + 24711840 * t ^ 3 * x ^ 2 + 875520 * t ^ 4 * x - 340272 * x ^ 6 + 6051456 * t * x ^ 5 - 19681920 * t ^ 2 * x ^ 4 + 12142080 * t ^ 3 * x ^ 3 + 587520 * t ^ 4 * x ^ 2
 
-theorem nlt_F_eq5 (j s : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL5 j))))) s = nltF5 ((1 - s) / 2) (s + j) := by
-  simp only [nltL5, nltDer, nltDerAux, lrhHorner]; unfold nltF5; ring
+theorem nlt_F_eq5 (j s : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltDer (nltL5 j))))) s = nltF5 ((1 - s) / 2) (s + j) := by
+  simp only [nltL5, nltDer, nltDerAux, polyHorner]; unfold nltF5; ring
 
 /-- `F_6`: the `y^6`-coefficient of `𝓗⁴S`. -/
 noncomputable def nltF6 (t x : ℝ) : ℝ :=
   2496 - 32832 * x + 206016 * t - 41712 * x ^ 2 + 255552 * t * x - 102528 * t ^ 2 - 164688 * x ^ 3 + 204672 * t * x ^ 2 + 773184 * t ^ 2 * x - 132864 * t ^ 3 - 50592 * x ^ 4 + 514944 * t * x ^ 3 + 839232 * t ^ 2 * x ^ 2 - 799104 * t ^ 3 * x - 26112 * t ^ 4 + 8160 * x ^ 5 + 163200 * t * x ^ 4 + 97920 * t ^ 2 * x ^ 3 - 391680 * t ^ 3 * x ^ 2
 
-theorem nlt_F_eq6 (j s : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL6 j))))) s = nltF6 ((1 - s) / 2) (s + j) := by
-  simp only [nltL6, nltDer, nltDerAux, lrhHorner]; unfold nltF6; ring
+theorem nlt_F_eq6 (j s : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltDer (nltL6 j))))) s = nltF6 ((1 - s) / 2) (s + j) := by
+  simp only [nltL6, nltDer, nltDerAux, polyHorner]; unfold nltF6; ring
 
 /-- `E_0`: the `y^0`-coefficient of `𝓗²S` at `h = 1/4`. -/
 noncomputable def nltE0 (x : ℝ) : ℝ :=
   (129817 / 6) + (2519527 / 384) * x + (255743 / 16) * x ^ 2 - (88091 / 16) * x ^ 3 - (75561 / 4) * x ^ 4 + (34321 / 2) * x ^ 5 + 4998 * x ^ 6
 
-theorem nlt_E_eq0 (j : ℝ) : lrhHorner (nltDer (nltDer (nltL0 j))) (1 / 4) = nltE0 (j + 1 / 4) := by
-  simp only [nltL0, nltDer, nltDerAux, lrhHorner]; unfold nltE0; ring
+theorem nlt_E_eq0 (j : ℝ) : polyHorner (nltDer (nltDer (nltL0 j))) (1 / 4) = nltE0 (j + 1 / 4) := by
+  simp only [nltL0, nltDer, nltDerAux, polyHorner]; unfold nltE0; ring
 
 /-- `E_1`: the `y^1`-coefficient of `𝓗²S` at `h = 1/4`. -/
 noncomputable def nltE1 (x : ℝ) : ℝ :=
   (209393 / 16) + (7161165 / 256) * x + (1826257 / 32) * x ^ 2 - (4621567 / 32) * x ^ 3 - (89755 / 8) * x ^ 4 + 179309 * x ^ 5 + (109753 / 2) * x ^ 6 + 5096 * x ^ 7
 
-theorem nlt_E_eq1 (j : ℝ) : lrhHorner (nltDer (nltDer (nltL1 j))) (1 / 4) = nltE1 (j + 1 / 4) := by
-  simp only [nltL1, nltDer, nltDerAux, lrhHorner]; unfold nltE1; ring
+theorem nlt_E_eq1 (j : ℝ) : polyHorner (nltDer (nltDer (nltL1 j))) (1 / 4) = nltE1 (j + 1 / 4) := by
+  simp only [nltL1, nltDer, nltDerAux, polyHorner]; unfold nltE1; ring
 
 /-- `E_2`: the `y^2`-coefficient of `𝓗²S` at `h = 1/4`. -/
 noncomputable def nltE2 (x : ℝ) : ℝ :=
   -(4448395 / 32) - (78497143 / 192) * x - (19490043 / 32) * x ^ 2 - (3399997 / 8) * x ^ 3 + (731345 / 8) * x ^ 4 + (3106839 / 8) * x ^ 5 + (1075711 / 4) * x ^ 6 + 44636 * x ^ 7
 
-theorem nlt_E_eq2 (j : ℝ) : lrhHorner (nltDer (nltDer (nltL2 j))) (1 / 4) = nltE2 (j + 1 / 4) := by
-  simp only [nltL2, nltDer, nltDerAux, lrhHorner]; unfold nltE2; ring
+theorem nlt_E_eq2 (j : ℝ) : polyHorner (nltDer (nltDer (nltL2 j))) (1 / 4) = nltE2 (j + 1 / 4) := by
+  simp only [nltL2, nltDer, nltDerAux, polyHorner]; unfold nltE2; ring
 
 /-- `E_3`: the `y^3`-coefficient of `𝓗²S` at `h = 1/4`. -/
 noncomputable def nltE3 (x : ℝ) : ℝ :=
   -(16355135 / 96) - (87639991 / 384) * x + (9003923 / 8) * x ^ 2 + (79713483 / 32) * x ^ 3 + (1984789 / 8) * x ^ 4 - 1324225 * x ^ 5 - 395410 * x ^ 6 - 29460 * x ^ 7
 
-theorem nlt_E_eq3 (j : ℝ) : lrhHorner (nltDer (nltDer (nltL3 j))) (1 / 4) = nltE3 (j + 1 / 4) := by
-  simp only [nltL3, nltDer, nltDerAux, lrhHorner]; unfold nltE3; ring
+theorem nlt_E_eq3 (j : ℝ) : polyHorner (nltDer (nltDer (nltL3 j))) (1 / 4) = nltE3 (j + 1 / 4) := by
+  simp only [nltL3, nltDer, nltDerAux, polyHorner]; unfold nltE3; ring
 
 /-- `E_4`: the `y^4`-coefficient of `𝓗²S` at `h = 1/4`. -/
 noncomputable def nltE4 (x : ℝ) : ℝ :=
   -(269093 / 2) + (10046253 / 128) * x + (19296511 / 8) * x ^ 2 + (16152471 / 4) * x ^ 3 + (4040223 / 8) * x ^ 4 - (15113277 / 8) * x ^ 5 - (2848437 / 4) * x ^ 6 - 72520 * x ^ 7
 
-theorem nlt_E_eq4 (j : ℝ) : lrhHorner (nltDer (nltDer (nltL4 j))) (1 / 4) = nltE4 (j + 1 / 4) := by
-  simp only [nltL4, nltDer, nltDerAux, lrhHorner]; unfold nltE4; ring
+theorem nlt_E_eq4 (j : ℝ) : polyHorner (nltDer (nltDer (nltL4 j))) (1 / 4) = nltE4 (j + 1 / 4) := by
+  simp only [nltL4, nltDer, nltDerAux, polyHorner]; unfold nltE4; ring
 
 /-- `E_5`: the `y^5`-coefficient of `𝓗²S` at `h = 1/4`. -/
 noncomputable def nltE5 (x : ℝ) : ℝ :=
   -(6239549 / 64) - (33072663 / 256) * x + 630610 * x ^ 2 + (40301203 / 32) * x ^ 3 + (10927599 / 32) * x ^ 4 - (2680261 / 8) * x ^ 5 - (366553 / 4) * x ^ 6 - 1500 * x ^ 7
 
-theorem nlt_E_eq5 (j : ℝ) : lrhHorner (nltDer (nltDer (nltL5 j))) (1 / 4) = nltE5 (j + 1 / 4) := by
-  simp only [nltL5, nltDer, nltDerAux, lrhHorner]; unfold nltE5; ring
+theorem nlt_E_eq5 (j : ℝ) : polyHorner (nltDer (nltDer (nltL5 j))) (1 / 4) = nltE5 (j + 1 / 4) := by
+  simp only [nltL5, nltDer, nltDerAux, polyHorner]; unfold nltE5; ring
 
 /-- `E_6`: the `y^6`-coefficient of `𝓗²S` at `h = 1/4`. -/
 noncomputable def nltE6 (x : ℝ) : ℝ :=
   -(106491 / 64) - (11107 / 64) * x + (72005 / 16) * x ^ 2 + (83037 / 8) * x ^ 3 + (39063 / 4) * x ^ 4 + (10711 / 2) * x ^ 5 + 3316 * x ^ 6 + 680 * x ^ 7
 
-theorem nlt_E_eq6 (j : ℝ) : lrhHorner (nltDer (nltDer (nltL6 j))) (1 / 4) = nltE6 (j + 1 / 4) := by
-  simp only [nltL6, nltDer, nltDerAux, lrhHorner]; unfold nltE6; ring
+theorem nlt_E_eq6 (j : ℝ) : polyHorner (nltDer (nltDer (nltL6 j))) (1 / 4) = nltE6 (j + 1 / 4) := by
+  simp only [nltL6, nltDer, nltDerAux, polyHorner]; unfold nltE6; ring
 
 /-- `R_0(3/8, x)`: the `y^0`-coefficient of `𝓗³S` at `h = 1/4`. -/
 noncomputable def nltR0 (x : ℝ) : ℝ :=
   (18701901 / 128) + (2068095 / 8) * x + (6934239 / 16) * x ^ 2 + (1753299 / 4) * x ^ 3 + 391038 * x ^ 4 + 128562 * x ^ 5 + 8568 * x ^ 6
 
-theorem nlt_R_eq0 (j : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltL0 j)))) (1 / 4) = nltR0 (j + 1 / 4) := by
-  simp only [nltL0, nltDer, nltDerAux, lrhHorner]; unfold nltR0; ring
+theorem nlt_R_eq0 (j : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltL0 j)))) (1 / 4) = nltR0 (j + 1 / 4) := by
+  simp only [nltL0, nltDer, nltDerAux, polyHorner]; unfold nltR0; ring
 
 /-- `R_1(3/8, x)`: the `y^1`-coefficient of `𝓗³S` at `h = 1/4`. -/
 noncomputable def nltR1 (x : ℝ) : ℝ :=
   (43850541 / 256) + (7673091 / 16) * x + (34827195 / 32) * x ^ 2 + (18793257 / 8) * x ^ 3 + (10806867 / 4) * x ^ 4 + (2129181 / 2) * x ^ 5 + 154500 * x ^ 6 + 8568 * x ^ 7
 
-theorem nlt_R_eq1 (j : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltL1 j)))) (1 / 4) = nltR1 (j + 1 / 4) := by
-  simp only [nltL1, nltDer, nltDerAux, lrhHorner]; unfold nltR1; ring
+theorem nlt_R_eq1 (j : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltL1 j)))) (1 / 4) = nltR1 (j + 1 / 4) := by
+  simp only [nltL1, nltDer, nltDerAux, polyHorner]; unfold nltR1; ring
 
 /-- `R_2(3/8, x)`: the `y^2`-coefficient of `𝓗³S` at `h = 1/4`. -/
 noncomputable def nltR2 (x : ℝ) : ℝ :=
   -(47853089 / 64) - (11985385 / 4) * x - (15743559 / 4) * x ^ 2 - (8011443 / 8) * x ^ 3 + (12927771 / 8) * x ^ 4 + (6193359 / 4) * x ^ 5 + 327900 * x ^ 6 - 7956 * x ^ 7
 
-theorem nlt_R_eq2 (j : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltL2 j)))) (1 / 4) = nltR2 (j + 1 / 4) := by
-  simp only [nltL2, nltDer, nltDerAux, lrhHorner]; unfold nltR2; ring
+theorem nlt_R_eq2 (j : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltL2 j)))) (1 / 4) = nltR2 (j + 1 / 4) := by
+  simp only [nltL2, nltDer, nltDerAux, polyHorner]; unfold nltR2; ring
 
 /-- `R_3(3/8, x)`: the `y^3`-coefficient of `𝓗³S` at `h = 1/4`. -/
 noncomputable def nltR3 (x : ℝ) : ℝ :=
   -(153734461 / 128) - (77243917 / 16) * x - (331922271 / 32) * x ^ 2 - (162567723 / 8) * x ^ 3 - 21401556 * x ^ 4 - 8037669 * x ^ 5 - 1007628 * x ^ 6 - 48960 * x ^ 7
 
-theorem nlt_R_eq3 (j : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltL3 j)))) (1 / 4) = nltR3 (j + 1 / 4) := by
-  simp only [nltL3, nltDer, nltDerAux, lrhHorner]; unfold nltR3; ring
+theorem nlt_R_eq3 (j : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltL3 j)))) (1 / 4) = nltR3 (j + 1 / 4) := by
+  simp only [nltL3, nltDer, nltDerAux, polyHorner]; unfold nltR3; ring
 
 /-- `R_4(3/8, x)`: the `y^4`-coefficient of `𝓗³S` at `h = 1/4`. -/
 noncomputable def nltR4 (x : ℝ) : ℝ :=
   -(66090579 / 128) - (4419435 / 4) * x - (21125391 / 4) * x ^ 2 - (42340149 / 2) * x ^ 3 - (53222733 / 2) * x ^ 4 - (43987527 / 4) * x ^ 5 - 1476666 * x ^ 6 - 45900 * x ^ 7
 
-theorem nlt_R_eq4 (j : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltL4 j)))) (1 / 4) = nltR4 (j + 1 / 4) := by
-  simp only [nltL4, nltDer, nltDerAux, lrhHorner]; unfold nltR4; ring
+theorem nlt_R_eq4 (j : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltL4 j)))) (1 / 4) = nltR4 (j + 1 / 4) := by
+  simp only [nltL4, nltDer, nltDerAux, polyHorner]; unfold nltR4; ring
 
 /-- `R_5(3/8, x)`: the `y^5`-coefficient of `𝓗³S` at `h = 1/4`. -/
 noncomputable def nltR5 (x : ℝ) : ℝ :=
   -(22449111 / 256) + (4086027 / 8) * x + (16060125 / 32) * x ^ 2 - (7528755 / 2) * x ^ 3 - (94472307 / 16) * x ^ 4 - (4653201 / 2) * x ^ 5 - 274899 * x ^ 6 - 12240 * x ^ 7
 
-theorem nlt_R_eq5 (j : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltL5 j)))) (1 / 4) = nltR5 (j + 1 / 4) := by
-  simp only [nltL5, nltDer, nltDerAux, lrhHorner]; unfold nltR5; ring
+theorem nlt_R_eq5 (j : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltL5 j)))) (1 / 4) = nltR5 (j + 1 / 4) := by
+  simp only [nltL5, nltDer, nltDerAux, polyHorner]; unfold nltR5; ring
 
 /-- `R_6(3/8, x)`: the `y^6`-coefficient of `𝓗³S` at `h = 1/4`. -/
 noncomputable def nltR6 (x : ℝ) : ℝ :=
   (505197 / 64) + (299187 / 8) * x + (486351 / 8) * x ^ 2 + (116313 / 2) * x ^ 3 + (56781 / 2) * x ^ 4 + 14832 * x ^ 5 + 3672 * x ^ 6
 
-theorem nlt_R_eq6 (j : ℝ) : lrhHorner (nltDer (nltDer (nltDer (nltL6 j)))) (1 / 4) = nltR6 (j + 1 / 4) := by
-  simp only [nltL6, nltDer, nltDerAux, lrhHorner]; unfold nltR6; ring
+theorem nlt_R_eq6 (j : ℝ) : polyHorner (nltDer (nltDer (nltDer (nltL6 j)))) (1 / 4) = nltR6 (j + 1 / 4) := by
+  simp only [nltL6, nltDer, nltDerAux, polyHorner]; unfold nltR6; ring
 
 /-- A coefficient combination of `𝓗⁴S`: `-F₃`. -/
 noncomputable def nltFc3 (t x : ℝ) : ℝ := -nltF3 t x
@@ -903,13 +903,13 @@ theorem nlt_H4_box {t x y : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hx0 : 
 `0 ≤ y ≤ 9/32`. -/
 theorem nlt_H4_ge {j s y : ℝ} (hs0 : 1 / 4 ≤ s) (hs1 : s ≤ 1 / 3) (hx0 : 17 / 60 ≤ s + j)
     (hx1 : s + j ≤ 4 / 7) (hy0 : 0 ≤ y) (hy1 : y ≤ 9 / 32) :
-    500000 ≤ lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL0 j))))) s
-      + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL1 j))))) s * y
-      + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL2 j))))) s * y ^ 2
-      + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL3 j))))) s * y ^ 3
-      + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL4 j))))) s * y ^ 4
-      + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL5 j))))) s * y ^ 5
-      + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL6 j))))) s * y ^ 6 := by
+    500000 ≤ polyHorner (nltDer (nltDer (nltDer (nltDer (nltL0 j))))) s
+      + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL1 j))))) s * y
+      + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL2 j))))) s * y ^ 2
+      + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL3 j))))) s * y ^ 3
+      + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL4 j))))) s * y ^ 4
+      + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL5 j))))) s * y ^ 5
+      + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL6 j))))) s * y ^ 6 := by
   rw [nlt_F_eq0, nlt_F_eq1, nlt_F_eq2, nlt_F_eq3, nlt_F_eq4, nlt_F_eq5, nlt_F_eq6]
   exact nlt_H4_box (by linarith) (by linarith) hx0 hx1 hy0 hy1
 
@@ -945,19 +945,19 @@ theorem nlt_P1_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy0 : 
   have bY := nltEbY_pos h1 h2
   unfold nltEb4 nltEb5 nltEb6 nltEb2 nltEbD nltEb0 nltEbY at *
   set cs : List ℝ := [nltE0 u, nltE1 u, nltE2 u, nltE3 u, nltE4 u, nltE5 u, nltE6 u] with hcs
-  have hf : ∀ w, lrhHorner cs w = nltE0 u + nltE1 u * w + nltE2 u * w ^ 2 + nltE3 u * w ^ 3
+  have hf : ∀ w, polyHorner cs w = nltE0 u + nltE1 u * w + nltE2 u * w ^ 2 + nltE3 u * w ^ 3
       + nltE4 u * w ^ 4 + nltE5 u * w ^ 5 + nltE6 u * w ^ 6 := fun w => by
-    rw [hcs]; simp only [lrhHorner]; ring
-  have hf1 : ∀ w, lrhHorner (nltDer cs) w = nltE1 u + 2 * nltE2 u * w + 3 * nltE3 u * w ^ 2
+    rw [hcs]; simp only [polyHorner]; ring
+  have hf1 : ∀ w, polyHorner (nltDer cs) w = nltE1 u + 2 * nltE2 u * w + 3 * nltE3 u * w ^ 2
       + 4 * nltE4 u * w ^ 3 + 5 * nltE5 u * w ^ 4 + 6 * nltE6 u * w ^ 5 := fun w => by
-    rw [hcs]; simp only [nltDer, nltDerAux, lrhHorner]; ring
-  have hf2 : ∀ w, lrhHorner (nltDer (nltDer cs)) w = 2 * nltE2 u + 6 * nltE3 u * w
+    rw [hcs]; simp only [nltDer, nltDerAux, polyHorner]; ring
+  have hf2 : ∀ w, polyHorner (nltDer (nltDer cs)) w = 2 * nltE2 u + 6 * nltE3 u * w
       + 12 * nltE4 u * w ^ 2 + 20 * nltE5 u * w ^ 3 + 30 * nltE6 u * w ^ 4 := fun w => by
-    rw [hcs]; simp only [nltDer, nltDerAux, lrhHorner]; ring
-  have hf4 : ∀ w, lrhHorner (nltDer (nltDer (nltDer (nltDer cs)))) w =
+    rw [hcs]; simp only [nltDer, nltDerAux, polyHorner]; ring
+  have hf4 : ∀ w, polyHorner (nltDer (nltDer (nltDer (nltDer cs)))) w =
       24 * nltE4 u + 120 * nltE5 u * w + 360 * nltE6 u * w ^ 2 := fun w => by
-    rw [hcs]; simp only [nltDer, nltDerAux, lrhHorner]; ring
-  have h4 : ∀ s, 0 ≤ s → s ≤ 9 / 32 → 0 ≤ lrhHorner (nltDer (nltDer (nltDer (nltDer cs)))) s := by
+    rw [hcs]; simp only [nltDer, nltDerAux, polyHorner]; ring
+  have h4 : ∀ s, 0 ≤ s → s ≤ 9 / 32 → 0 ≤ polyHorner (nltDer (nltDer (nltDer (nltDer cs)))) s := by
     intro s s0 s1
     rw [hf4]
     have k5 := mul_le_mul_of_nonneg_right b5.le s0

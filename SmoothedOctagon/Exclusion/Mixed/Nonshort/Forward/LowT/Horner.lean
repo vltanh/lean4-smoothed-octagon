@@ -1,13 +1,13 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTCircuit
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Circuit
 
 /-!
-# Case M2, forward successor by hand: the low-`t` circuit along `h` at fixed `j`, `y`
+# Case M2, forward successor: the low-`t` circuit along `h` at fixed `j`, `y`
 
 The directional derivative `𝓗 = ∂_x - ½∂_t` at fixed `j = x - (1 - 2t)` and `y = q - 1` is the
 derivative in `h = 1 - 2t` along `t = (1 - h)/2`, `x = h + j`. Each coefficient `nltStᵢ` of the
-circuit is, along this line, the polynomial `lrhHorner (nltLᵢ j)` in `h` (`nlt_St_h`); its
+circuit is, along this line, the polynomial `polyHorner (nltLᵢ j)` in `h` (`nlt_St_h`); its
 derivatives are given by the derivative coefficient list `nltDer` (`nlt_hasDerivAt_horner`).
 
 ## Main API
@@ -31,20 +31,20 @@ noncomputable def nltDer : List ℝ → List ℝ
   | _ :: cs => nltDerAux 1 cs
 
 theorem nlt_derAux (n : ℝ) (cs : List ℝ) (s : ℝ) :
-    lrhHorner (nltDerAux n cs) s = n * lrhHorner cs s + s * lrhHornerD cs s := by
+    polyHorner (nltDerAux n cs) s = n * polyHorner cs s + s * polyHornerD cs s := by
   induction cs generalizing n with
-  | nil => simp [nltDerAux, lrhHorner, lrhHornerD]
-  | cons c cs ih => simp only [nltDerAux, lrhHorner, lrhHornerD, ih]; ring
+  | nil => simp [nltDerAux, polyHorner, polyHornerD]
+  | cons c cs ih => simp only [nltDerAux, polyHorner, polyHornerD, ih]; ring
 
-theorem nlt_der (cs : List ℝ) (s : ℝ) : lrhHornerD cs s = lrhHorner (nltDer cs) s := by
+theorem nlt_der (cs : List ℝ) (s : ℝ) : polyHornerD cs s = polyHorner (nltDer cs) s := by
   cases cs with
-  | nil => simp [nltDer, lrhHorner, lrhHornerD]
-  | cons c cs => simp only [nltDer, nlt_derAux, lrhHornerD]; ring
+  | nil => simp [nltDer, polyHorner, polyHornerD]
+  | cons c cs => simp only [nltDer, nlt_derAux, polyHornerD]; ring
 
-/-- The derivative of `lrhHorner cs` is `lrhHorner (nltDer cs)`. -/
+/-- The derivative of `polyHorner cs` is `polyHorner (nltDer cs)`. -/
 theorem nlt_hasDerivAt_horner (cs : List ℝ) (s : ℝ) :
-    HasDerivAt (lrhHorner cs) (lrhHorner (nltDer cs) s) s := by
-  rw [← nlt_der]; exact lrh_hasDerivAt_horner cs s
+    HasDerivAt (polyHorner cs) (polyHorner (nltDer cs) s) s := by
+  rw [← nlt_der]; exact poly_hasDerivAt_horner cs s
 
 /-- The coefficients in `h` of `nltSt0 ((1 - h)/2) (h + j)`. -/
 noncomputable def nltL0 (j : ℝ) : List ℝ :=
@@ -74,25 +74,25 @@ noncomputable def nltL5 (j : ℝ) : List ℝ :=
 noncomputable def nltL6 (j : ℝ) : List ℝ :=
   [(-304 - 1892 * j - 4208 * j ^ 2 - 5714 * j ^ 3 - 5344 * j ^ 4 - 3536 * j ^ 5 - 1794 * j ^ 6 - 576 * j ^ 7 - 68 * j ^ 8 : ℝ), (-1436 - 6186 * j - 10586 * j ^ 2 - 10896 * j ^ 3 - 6976 * j ^ 4 - 3050 * j ^ 5 - 612 * j ^ 6 + 236 * j ^ 7 + 68 * j ^ 8 : ℝ), (-1978 - 4486 * j - 3158 * j ^ 2 + 1440 * j ^ 3 + 4052 * j ^ 4 + 3196 * j ^ 5 + 1794 * j ^ 6 + 340 * j ^ 7 : ℝ), (234 + 4962 * j + 11120 * j ^ 2 + 12416 * j ^ 3 + 7316 * j ^ 4 + 3050 * j ^ 5 + 612 * j ^ 6 : ℝ), (2568 + 7848 * j + 9228 * j ^ 2 + 4886 * j ^ 3 + 1292 * j ^ 4 + 340 * j ^ 5 : ℝ), (1608 + 1902 * j - 194 * j ^ 2 - 1520 * j ^ 3 - 340 * j ^ 4 : ℝ), (-218 - 1402 * j - 1862 * j ^ 2 - 612 * j ^ 3 : ℝ), (-406 - 678 * j - 340 * j ^ 2 : ℝ), (-68 - 68 * j : ℝ)]
 
-theorem nlt_St_h0 (h j : ℝ) : nltSt0 ((1 - h) / 2) (h + j) = lrhHorner (nltL0 j) h := by
-  simp only [nltL0, lrhHorner]; unfold nltSt0; ring
+theorem nlt_St_h0 (h j : ℝ) : nltSt0 ((1 - h) / 2) (h + j) = polyHorner (nltL0 j) h := by
+  simp only [nltL0, polyHorner]; unfold nltSt0; ring
 
-theorem nlt_St_h1 (h j : ℝ) : nltSt1 ((1 - h) / 2) (h + j) = lrhHorner (nltL1 j) h := by
-  simp only [nltL1, lrhHorner]; unfold nltSt1; ring
+theorem nlt_St_h1 (h j : ℝ) : nltSt1 ((1 - h) / 2) (h + j) = polyHorner (nltL1 j) h := by
+  simp only [nltL1, polyHorner]; unfold nltSt1; ring
 
-theorem nlt_St_h2 (h j : ℝ) : nltSt2 ((1 - h) / 2) (h + j) = lrhHorner (nltL2 j) h := by
-  simp only [nltL2, lrhHorner]; unfold nltSt2; ring
+theorem nlt_St_h2 (h j : ℝ) : nltSt2 ((1 - h) / 2) (h + j) = polyHorner (nltL2 j) h := by
+  simp only [nltL2, polyHorner]; unfold nltSt2; ring
 
-theorem nlt_St_h3 (h j : ℝ) : nltSt3 ((1 - h) / 2) (h + j) = lrhHorner (nltL3 j) h := by
-  simp only [nltL3, lrhHorner]; unfold nltSt3; ring
+theorem nlt_St_h3 (h j : ℝ) : nltSt3 ((1 - h) / 2) (h + j) = polyHorner (nltL3 j) h := by
+  simp only [nltL3, polyHorner]; unfold nltSt3; ring
 
-theorem nlt_St_h4 (h j : ℝ) : nltSt4 ((1 - h) / 2) (h + j) = lrhHorner (nltL4 j) h := by
-  simp only [nltL4, lrhHorner]; unfold nltSt4; ring
+theorem nlt_St_h4 (h j : ℝ) : nltSt4 ((1 - h) / 2) (h + j) = polyHorner (nltL4 j) h := by
+  simp only [nltL4, polyHorner]; unfold nltSt4; ring
 
-theorem nlt_St_h5 (h j : ℝ) : nltSt5 ((1 - h) / 2) (h + j) = lrhHorner (nltL5 j) h := by
-  simp only [nltL5, lrhHorner]; unfold nltSt5; ring
+theorem nlt_St_h5 (h j : ℝ) : nltSt5 ((1 - h) / 2) (h + j) = polyHorner (nltL5 j) h := by
+  simp only [nltL5, polyHorner]; unfold nltSt5; ring
 
-theorem nlt_St_h6 (h j : ℝ) : nltSt6 ((1 - h) / 2) (h + j) = lrhHorner (nltL6 j) h := by
-  simp only [nltL6, lrhHorner]; unfold nltSt6; ring
+theorem nlt_St_h6 (h j : ℝ) : nltSt6 ((1 - h) / 2) (h + j) = polyHorner (nltL6 j) h := by
+  simp only [nltL6, polyHorner]; unfold nltSt6; ring
 
 end SmoothedOctagon

@@ -1,20 +1,20 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Hand.Basic
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Residual
 
 /-!
-# Case M2, forward successor by hand: rational upper bounds for the incoming secant
+# Case M2, forward successor: rational upper bounds for the incoming secant
 
 For the normalized incoming secant `v = Sec(t, 1 - t, t + x) = 1 + c²/W - c log W/x`
 (`c = 1 - t`, `W = 1 + x`, `p = t + x`, `g = 1 - cp/W²`):
 
-* `fhVG`, `fh_secN_lt_VG`: **the positive-integral bound** `v < v_G = g + (cx/W²)(T_G(x) - t)`,
+* `nsfVG`, `nsf_secN_lt_VG`: **the positive-integral bound** `v < v_G = g + (cx/W²)(T_G(x) - t)`,
   `T_G = (90 - 19x²)/(12(x² + 10x + 15))`, from
-  `log(1 + x) > x(43x³ + 252x² + 390x + 180)/(12W²(x² + 10x + 15))` (`fh_log_gt_G`, whose
+  `log(1 + x) > x(43x³ + 252x² + 390x + 180)/(12W²(x² + 10x + 15))` (`nsf_log_gt_G`, whose
   difference has derivative `x⁶/(W³(x² + 10x + 15)²)`);
-* `fhV2`, `fh_secN_lt_V2`: the polynomial bound with `T₀ < 1/2 - x/3 + x²/12`;
-* `fhVq`, `fh_secN_lt_Vq`: the Padé bound `v < V = 1 + c²/W - 3c(x + 2)/(x² + 6x + 6)`;
-* `fh_VG_sub_g`: `v_G - g = (cx/W²)(T_G - t)`.
+* `nsfV2`, `nsf_secN_lt_V2`: the polynomial bound with `T₀ < 1/2 - x/3 + x²/12`;
+* `nsfVq`, `nsf_secN_lt_Vq`: the Padé bound `v < V = 1 + c²/W - 3c(x + 2)/(x² + 6x + 6)`;
+* `nsf_VG_sub_g`: `v_G - g = (cx/W²)(T_G - t)`.
 
 Each bound is a monotone one-variable comparison of `log(1 + x)` with a rational function
 (derivative sign).
@@ -25,17 +25,17 @@ Each bound is a monotone one-variable comparison of `log(1 + x)` with a rational
 namespace SmoothedOctagon
 
 /-- The positive-integral secant majorant `v_G`. -/
-noncomputable def fhVG (t x : ℝ) : ℝ :=
+noncomputable def nsfVG (t x : ℝ) : ℝ :=
   1 - (1 - t) * (t + x) / (1 + x) ^ 2 +
     (1 - t) * x / (1 + x) ^ 2 * ((90 - 19 * x ^ 2) / (12 * (x ^ 2 + 10 * x + 15)) - t)
 
 /-- A logarithm lower bound from a derivative comparison: if `N(0) = 0`, `D > 0` on `[0, ∞)` and
 `(N/D)' < 1/(1 + z)` on `(0, ∞)`, then `N(x)/D(x) < log(1 + x)` for `x > 0`. -/
-theorem fh_log_gt_of {N D N' D' : ℝ → ℝ} (h0 : N 0 = 0) (hD : ∀ z, 0 ≤ z → 0 < D z)
+theorem nsf_log_gt_of {N D N' D' : ℝ → ℝ} (h0 : N 0 = 0) (hD : ∀ z, 0 ≤ z → 0 < D z)
     (hN : ∀ z, HasDerivAt N (N' z) z) (hDd : ∀ z, HasDerivAt D (D' z) z)
     (hpos : ∀ z, 0 < z → 0 < 1 / (1 + z) - (N' z * D z - N z * D' z) / D z ^ 2)
     {x : ℝ} (hx : 0 < x) : N x / D x < Real.log (1 + x) := by
-  have hmono := nh_strictMonoOn_Ici (a := 0) (f := fun z => Real.log (1 + z) - N z / D z)
+  have hmono := nsr_strictMonoOn_Ici (a := 0) (f := fun z => Real.log (1 + z) - N z / D z)
     (f' := fun z => 1 / (1 + z) - (N' z * D z - N z * D' z) / D z ^ 2) (fun z hz => ?_) hpos
   · have := hmono (Set.mem_Ici.2 le_rfl) (Set.mem_Ici.2 hx.le) hx
     simp only [add_zero, Real.log_one, h0, zero_div, sub_zero] at this
@@ -48,10 +48,10 @@ theorem fh_log_gt_of {N D N' D' : ℝ → ℝ} (h0 : N 0 = 0) (hD : ∀ z, 0 ≤
     simp
 
 /-- `log(1 + x) > x(43x³ + 252x² + 390x + 180)/(12(x + 1)²(x² + 10x + 15))` for `x > 0`. -/
-theorem fh_log_gt_G {x : ℝ} (hx : 0 < x) :
+theorem nsf_log_gt_G {x : ℝ} (hx : 0 < x) :
     x * (43 * x ^ 3 + 252 * x ^ 2 + 390 * x + 180) / (12 * (x + 1) ^ 2 * (x ^ 2 + 10 * x + 15)) <
       Real.log (1 + x) := by
-  refine fh_log_gt_of (N := fun z => z * (43 * z ^ 3 + 252 * z ^ 2 + 390 * z + 180))
+  refine nsf_log_gt_of (N := fun z => z * (43 * z ^ 3 + 252 * z ^ 2 + 390 * z + 180))
     (D := fun z => 12 * (z + 1) ^ 2 * (z ^ 2 + 10 * z + 15))
     (N' := fun z => 172 * z ^ 3 + 756 * z ^ 2 + 780 * z + 180)
     (D' := fun z => 24 * (z + 1) * (z ^ 2 + 10 * z + 15) + 12 * (z + 1) ^ 2 * (2 * z + 10))
@@ -76,13 +76,13 @@ theorem fh_log_gt_G {x : ℝ} (hx : 0 < x) :
       ring
     rw [e]; positivity
 
-/-- **The positive-integral secant bound** `v < v_G`, from `fh_log_gt_G`. -/
-theorem fh_secN_lt_VG {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nhSecN t x < fhVG t x := by
-  have hl := fh_log_gt_G hx
+/-- **The positive-integral secant bound** `v < v_G`, from `nsf_log_gt_G`. -/
+theorem nsf_secN_lt_VG {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nsrSecN t x < nsfVG t x := by
+  have hl := nsf_log_gt_G hx
   have h1 : 0 < 1 - t := by linarith
-  have e : fhVG t x - nhSecN t x = (1 - t) / x * (Real.log (1 + x) -
+  have e : nsfVG t x - nsrSecN t x = (1 - t) / x * (Real.log (1 + x) -
       x * (43 * x ^ 3 + 252 * x ^ 2 + 390 * x + 180) / (12 * (x + 1) ^ 2 * (x ^ 2 + 10 * x + 15))) := by
-    unfold fhVG nhSecN
+    unfold nsfVG nsrSecN
     have : (1 + x) ≠ 0 := by linarith
     have : (x + 1) ≠ 0 := by linarith
     have : x ^ 2 + 10 * x + 15 ≠ 0 := by positivity
@@ -94,19 +94,19 @@ theorem fh_secN_lt_VG {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nhSecN t x < fhVG 
   linarith
 
 /-- `v_G - g = (cx/W²)(T_G(x) - t)`. -/
-theorem fh_VG_sub_g (t x : ℝ) :
-    fhVG t x - (1 - (1 - t) * (t + x) / (1 + x) ^ 2) =
+theorem nsf_VG_sub_g (t x : ℝ) :
+    nsfVG t x - (1 - (1 - t) * (t + x) / (1 + x) ^ 2) =
       (1 - t) * x / (1 + x) ^ 2 * ((90 - 19 * x ^ 2) / (12 * (x ^ 2 + 10 * x + 15)) - t) := by
-  unfold fhVG; ring
+  unfold nsfVG; ring
 
 /-- **The integral derivative floor**: the actual floor `v ≥ g` and `v < v_G` give `t < T_G(x)`,
 i.e. `12(x² + 10x + 15)t < 90 - 19x²`. -/
-theorem fh_t_lt_TG {t x v : ℝ} (ht1 : t < 1) (hx : 0 < x) (hv : v = nhSecN t x)
+theorem nsf_t_lt_TG {t x v : ℝ} (ht1 : t < 1) (hx : 0 < x) (hv : v = nsrSecN t x)
     (hg : 1 - (1 - t) * (t + x) / (1 + x) ^ 2 ≤ v) :
     12 * (x ^ 2 + 10 * x + 15) * t < 90 - 19 * x ^ 2 := by
-  have h := fh_secN_lt_VG hx ht1
+  have h := nsf_secN_lt_VG hx ht1
   rw [← hv] at h
-  have e := fh_VG_sub_g t x
+  have e := nsf_VG_sub_g t x
   have hpos : 0 < (1 - t) * x / (1 + x) ^ 2 *
       ((90 - 19 * x ^ 2) / (12 * (x ^ 2 + 10 * x + 15)) - t) := by linarith
   have hc : 0 < (1 - t) * x / (1 + x) ^ 2 := by
@@ -117,14 +117,14 @@ theorem fh_t_lt_TG {t x v : ℝ} (ht1 : t < 1) (hx : 0 < x) (hv : v = nhSecN t x
   linarith
 
 /-- The polynomial secant majorant `V₂`. -/
-noncomputable def fhV2 (t x : ℝ) : ℝ :=
+noncomputable def nsfV2 (t x : ℝ) : ℝ :=
   1 - (1 - t) * (t + x) / (1 + x) ^ 2 + (1 - t) * x / (1 + x) ^ 2 * (1 / 2 - x / 3 + x ^ 2 / 12 - t)
 
 /-- `log(1 + x) > x(x + 2)(6 + 6x - x²)/(12(1 + x)²)` for `x > 0` (equivalent to
 `T₀ < 1/2 - x/3 + x²/12`). -/
-theorem fh_log_gt_2 {x : ℝ} (hx : 0 < x) :
+theorem nsf_log_gt_2 {x : ℝ} (hx : 0 < x) :
     x * (x + 2) * (6 + 6 * x - x ^ 2) / (12 * (1 + x) ^ 2) < Real.log (1 + x) := by
-  refine fh_log_gt_of (N := fun z => z * (z + 2) * (6 + 6 * z - z ^ 2))
+  refine nsf_log_gt_of (N := fun z => z * (z + 2) * (6 + 6 * z - z ^ 2))
     (D := fun z => 12 * (1 + z) ^ 2) (N' := fun z => -4 * z ^ 3 + 12 * z ^ 2 + 36 * z + 12)
     (D' := fun z => 24 * (1 + z))
     (by norm_num) (fun z hz => by positivity) (fun z => ?_) (fun z => ?_) (fun z hz => ?_) hx
@@ -144,12 +144,12 @@ theorem fh_log_gt_2 {x : ℝ} (hx : 0 < x) :
     rw [e]; positivity
 
 /-- `v < V₂`. -/
-theorem fh_secN_lt_V2 {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nhSecN t x < fhV2 t x := by
-  have hl := fh_log_gt_2 hx
+theorem nsf_secN_lt_V2 {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nsrSecN t x < nsfV2 t x := by
+  have hl := nsf_log_gt_2 hx
   have h1 : 0 < 1 - t := by linarith
-  have e : fhV2 t x - nhSecN t x = (1 - t) / x * (Real.log (1 + x) -
+  have e : nsfV2 t x - nsrSecN t x = (1 - t) / x * (Real.log (1 + x) -
       x * (x + 2) * (6 + 6 * x - x ^ 2) / (12 * (1 + x) ^ 2)) := by
-    unfold fhV2 nhSecN
+    unfold nsfV2 nsrSecN
     have : (1 + x) ≠ 0 := by linarith
     field_simp
     ring
@@ -159,13 +159,13 @@ theorem fh_secN_lt_V2 {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nhSecN t x < fhV2 
   linarith
 
 /-- The Padé secant majorant `V`. -/
-noncomputable def fhVq (t x : ℝ) : ℝ :=
+noncomputable def nsfVq (t x : ℝ) : ℝ :=
   1 + (1 - t) ^ 2 / (1 + x) - 3 * (1 - t) * (x + 2) / (x ^ 2 + 6 * x + 6)
 
 /-- `log(1 + x) > 3x(x + 2)/(x² + 6x + 6)` for `x > 0`. -/
-theorem fh_log_gt_q {x : ℝ} (hx : 0 < x) :
+theorem nsf_log_gt_q {x : ℝ} (hx : 0 < x) :
     3 * x * (x + 2) / (x ^ 2 + 6 * x + 6) < Real.log (1 + x) := by
-  refine fh_log_gt_of (N := fun z => 3 * z * (z + 2)) (D := fun z => z ^ 2 + 6 * z + 6)
+  refine nsf_log_gt_of (N := fun z => 3 * z * (z + 2)) (D := fun z => z ^ 2 + 6 * z + 6)
     (N' := fun z => 6 * z + 6) (D' := fun z => 2 * z + 6)
     (by norm_num) (fun z hz => by positivity) (fun z => ?_) (fun z => ?_) (fun z hz => ?_) hx
   · have h := ((hasDerivAt_pow 2 z).const_mul (3 : ℝ)).add ((hasDerivAt_id z).const_mul (6 : ℝ))
@@ -182,13 +182,13 @@ theorem fh_log_gt_q {x : ℝ} (hx : 0 < x) :
       ring
     rw [e]; positivity
 
-/-- `v < V`, from `fh_log_gt_q`. -/
-theorem fh_secN_lt_Vq {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nhSecN t x < fhVq t x := by
-  have hl := fh_log_gt_q hx
+/-- `v < V`, from `nsf_log_gt_q`. -/
+theorem nsf_secN_lt_Vq {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nsrSecN t x < nsfVq t x := by
+  have hl := nsf_log_gt_q hx
   have h1 : 0 < 1 - t := by linarith
-  have e : fhVq t x - nhSecN t x = (1 - t) / x * (Real.log (1 + x) -
+  have e : nsfVq t x - nsrSecN t x = (1 - t) / x * (Real.log (1 + x) -
       3 * x * (x + 2) / (x ^ 2 + 6 * x + 6)) := by
-    unfold fhVq nhSecN
+    unfold nsfVq nsrSecN
     have : (1 + x) ≠ 0 := by linarith
     have : x ^ 2 + 6 * x + 6 ≠ 0 := by positivity
     field_simp

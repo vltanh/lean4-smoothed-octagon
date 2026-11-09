@@ -1,14 +1,14 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTCircuit
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.HighRatioShape
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Circuit
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.Shape
 
 /-!
-# Case M2, forward successor by hand: the low-`t` residual increases in the shape
+# Case M2, forward successor: the low-`t` residual increases in the shape
 
 On the low-`t` large-gap domain the combined residual with the multipliers `a = nltAl q`,
 `m = nltM t x q`, the majorants `V_L`, `L₊` and the floor `F_ℓ` satisfies
-`fhComb(1) ≤ fhComb(k)` for `1 ≤ k ≤ 1 + j` (`nlt_shape_ge`), so the unit shape is the worst case.
+`nsfComb(1) ≤ nsfComb(k)` for `1 ≤ k ≤ 1 + j` (`nlt_shape_ge`), so the unit shape is the worst case.
 
 The residual is quadratic in `k` (`hrs_comb_sub_k`): its shape derivative at the midpoint is affine
 in `v`, `L`, `k` (`hrs_K_dec`). Its `v`-slope is `-2q²W𝓑` with `𝓑 > 0` (`nlt_Kv_eq`,
@@ -103,7 +103,7 @@ theorem nlt_Kend_eq (t x q : ℝ) (hx : 0 < 1 + x) :
       / (1 + x) ^ 2 := by
     unfold nltVbar; field_simp
   rw [hV]
-  unfold hrsK nhA hrsTk fhE0 nltLbar nltAl nltSS nltSS0 nltSS1 nltSS2 nltSS3 nltSS4
+  unfold hrsK nsrA hrsTk nsfE0 nltLbar nltAl nltSS nltSS0 nltSS1 nltSS2 nltSS3 nltSS4
   field_simp
   ring
 
@@ -397,13 +397,13 @@ theorem nlt_SS_pos {t x y : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hx0 : 
 /-- **Shape monotonicity**, integrated on `[1, k]`: on the low-`t` large-gap domain
 `1/3 ≤ t ≤ 3/8`, `j = 2t + x - 1 ≥ 1/30`, `7x ≤ 12(1 - 2t)`, `1 ≤ q`, `q(4t + 2x - 1) ≤ 1 + x`, for
 `1 ≤ k ≤ 2t + x`, the residual at the unit shape is at most its value at `k`. The bound
-`Je² ≤ 17/16` (`fh_LG_J`) is supplied by the caller. -/
+`Je² ≤ 17/16` (`nsf_LG_J`) is supplied by the caller. -/
 theorem nlt_shape_ge {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hjh : 7 * x ≤ 12 * (1 - 2 * t)) (hk1 : 1 ≤ k) (hk : k ≤ 2 * t + x) (hq : 1 ≤ q)
     (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x)
     (hJ : (t + x * (x + 2)) * q ^ 2 ≤ 17 / 16 * (1 + x) ^ 2) :
-    fhComb (nltAl q) (nltM t x q) t x 1 q (hrlVL t x) (nhLp q) (nhFl t x q) ≤
-      fhComb (nltAl q) (nltM t x q) t x k q (hrlVL t x) (nhLp q) (nhFl t x q) := by
+    nsfComb (nltAl q) (nltM t x q) t x 1 q (hrlVL t x) (nsrLp q) (nsrFl t x q) ≤
+      nsfComb (nltAl q) (nltM t x q) t x k q (hrlVL t x) (nsrLp q) (nsrFl t x q) := by
   have hx0 : 17 / 60 ≤ x := by linarith
   have hx1 : x ≤ 4 / 7 := by linarith
   have hx : 0 < x := by linarith
@@ -438,9 +438,9 @@ theorem nlt_shape_ge {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hj
       have : 0 < 1 - t := by linarith
       positivity
     linarith
-  have hL : nhLp q ≤ nltLbar q := by
-    have e : nltLbar q - nhLp q = (q - 1) ^ 2 * (2 + 5 * q - 5 * q ^ 2) / (12 * q * (q + 1)) := by
-      unfold nltLbar nhLp; field_simp; ring
+  have hL : nsrLp q ≤ nltLbar q := by
+    have e : nltLbar q - nsrLp q = (q - 1) ^ 2 * (2 + 5 * q - 5 * q ^ 2) / (12 * q * (q + 1)) := by
+      unfold nltLbar nsrLp; field_simp; ring
     have : 0 ≤ 2 + 5 * q - 5 * q ^ 2 := by nlinarith
     have : 0 ≤ (q - 1) ^ 2 * (2 + 5 * q - 5 * q ^ 2) / (12 * q * (q + 1)) := by positivity
     linarith
@@ -460,16 +460,16 @@ theorem nlt_shape_ge {t x k q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 3 / 8) (hj
     · have : 0 ≤ 2 * t * q ^ 4 := by positivity
       linarith
   have dec := hrs_K_dec (nltAl q) t x ((k + 1) / 2) (2 * t + x) q (hrlVL t x) (nltVbar t x)
-    (nhLp q) (nltLbar q)
+    (nsrLp q) (nltLbar q)
   have p1 : 0 < (hrlVL t x - nltVbar t x) * hrsKv (nltAl q) t x q :=
     mul_pos_of_neg_of_neg (by linarith) hKv
-  have p2 : 0 ≤ (nhLp q - nltLbar q) * hrsKL (nltAl q) t x q :=
+  have p2 : 0 ≤ (nsrLp q - nltLbar q) * hrsKL (nltAl q) t x q :=
     mul_nonneg_of_nonpos_of_nonpos (by linarith) hKL
   have p3 : 0 ≤ ((k + 1) / 2 - (2 * t + x)) * hrsKk t x q :=
     mul_nonneg_of_nonpos_of_nonpos (by linarith) hKk
-  have hK : 0 < hrsK (nltAl q) t x ((k + 1) / 2) q (hrlVL t x) (nhLp q) := by linarith
-  have e := hrs_comb_sub_k (nltAl q) (nltM t x q) t x q (hrlVL t x) (nhLp q) (nhFl t x q) k 1
-  have : 0 ≤ (k - 1) * hrsK (nltAl q) t x ((k + 1) / 2) q (hrlVL t x) (nhLp q) :=
+  have hK : 0 < hrsK (nltAl q) t x ((k + 1) / 2) q (hrlVL t x) (nsrLp q) := by linarith
+  have e := hrs_comb_sub_k (nltAl q) (nltM t x q) t x q (hrlVL t x) (nsrLp q) (nsrFl t x q) k 1
+  have : 0 ≤ (k - 1) * hrsK (nltAl q) t x ((k + 1) / 2) q (hrlVL t x) (nsrLp q) :=
     mul_nonneg (by linarith) hK.le
   linarith
 

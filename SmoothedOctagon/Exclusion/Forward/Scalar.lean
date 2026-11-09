@@ -142,7 +142,7 @@ noncomputable def ff_resN (U z w h : ℝ) : ℝ :=
 with `N ≥ 7`: the five consecutive active margins `(p, b, a, c, d)`, the normal multiplier's
 coordinates `(u, v, E)` in the central prefix frame (`u = 8 d_{-1}`, `v = 8 d_0`, `E = 16 e_0`), the
 three stationarity rows, the two exterior floors, the seven-entry cost bound (with `n = N - 7`
-further copies of `G(a, a)`) and the Casimir cap `γ² ≤ 23/125` (`ifc_gam2_cap` gives the sharper
+further copies of `G(a, a)`) and the Casimir cap `γ² ≤ 23/125` (`wire_gam2_cap` gives the sharper
 `γ² < 9193/50000`; the weaker cap suffices). -/
 structure ff_Win where
   a : ℝ

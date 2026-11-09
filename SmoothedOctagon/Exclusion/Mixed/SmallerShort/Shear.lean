@@ -1,22 +1,22 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Interface
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Interface
 
 /-!
-# Hand proof of the smaller-short case, gate S5: the root forces a negative physical shear
+# Smaller-short window, shear: the root forces a negative physical shear
 
-On the small-shape domain: the actual outer root (`HsData.root_zero`) and the envelope
-(`hs_env_weighted`, `m = 0`) give `𝓡(u; p, q) ≥ 0` at `p = τq`; the incoming monotonicity
-(`hs5_u_mono`) and the rational majorant `û` (`hs5_Vbar_le_uhat`) give `𝓡(û; p, q) ≥ 0`; this
-contradicts `hs5_residual_neg` unless `q > q_b = (29/30)q_c`; and `q > q_b` forces
-`√3hR + 13A/3 < 0` (`hs5_shear_sign`).
+On the small-shape domain: the actual outer root (`SmallerShortData.root_zero`) and the envelope
+(`ss_env_weighted`, `m = 0`) give `𝓡(u; p, q) ≥ 0` at `p = τq`; the incoming monotonicity
+(`shr_u_mono`) and the rational majorant `û` (`shr_Vbar_le_uhat`) give `𝓡(û; p, q) ≥ 0`; this
+contradicts `shr_residual_neg` unless `q > q_b = (29/30)q_c`; and `q > q_b` forces
+`√3hR + 13A/3 < 0` (`shr_shear_sign`).
 
 ## Main API
 
-* `hsUhat5` (`û = 755/996 + (x - 2)/100`), `hs5J2`, `hs5Jt` (the face values `J₂`, `J_τ`).
-* `hs5_Vbar_le_uhat`, `hs5_u_mono`, `hs5_log_tangent`, `hs5_J_neg`, `hs5_residual_neg`,
-  `hs5_shear_sign`.
-* Gate: `HsData.s5`, `M2Short.hs_S5`.
+* `ssUhat5` (`û = 755/996 + (x - 2)/100`), `shrJ2`, `shrJt` (the face values `J₂`, `J_τ`).
+* `shr_Vbar_le_uhat`, `shr_u_mono`, `shr_log_tangent`, `shr_J_neg`, `shr_residual_neg`,
+  `shr_shear_sign`.
+* The bound: `SmallerShortData.shear_neg`, `M2Short.shear_neg`.
 -/
 
 @[expose] public section
@@ -26,24 +26,24 @@ namespace SmoothedOctagon
 open Set Real
 
 /-- The rational majorant `û = 755/996 + (x - 2)/100`. -/
-noncomputable def hsUhat5 (x : ℝ) : ℝ := 755 / 996 + (x - 2) / 100
+noncomputable def ssUhat5 (x : ℝ) : ℝ := 755 / 996 + (x - 2) / 100
 
 /-- The face value at `p = 2q_b` with the second log tangent:
 `J₂ = E₀ + (û - 1)/r_A + r_A + 277/1000 + q_b(5/(2r_A) - 2A₁ - 1 - A₃) + 2q_b²A₂` at `u = û`,
 `q_b = (29/30)q_c`. -/
-noncomputable def hs5J2 (x be al : ℝ) : ℝ :=
-  hsE0 x (hsUhat5 x) + (hsUhat5 x - 1) / hsRA al be + hsRA al be + 277 / 1000 +
-    29 / 30 * hsQc x al * (5 / (2 * hsRA al be) - 2 * hsA1 x be al (hsUhat5 x) - 1 -
-      hsA3 x be al (hsUhat5 x)) +
-    2 * (29 / 30 * hsQc x al) ^ 2 * hsA2 x be al (hsUhat5 x)
+noncomputable def shrJ2 (x be al : ℝ) : ℝ :=
+  ssE0 x (ssUhat5 x) + (ssUhat5 x - 1) / ssRA al be + ssRA al be + 277 / 1000 +
+    29 / 30 * ssQc x al * (5 / (2 * ssRA al be) - 2 * ssA1 x be al (ssUhat5 x) - 1 -
+      ssA3 x be al (ssUhat5 x)) +
+    2 * (29 / 30 * ssQc x al) ^ 2 * ssA2 x be al (ssUhat5 x)
 
 /-- The face value at `p = τ r_A` with `log τ ≤ τ - 1`:
 `J_τ = E₀ + (û - 1)/r_A + r_A + τ - τr_A A₁ + q_b(τr_A A₂ + 1/(τr_A) - 1 - A₃)`. -/
-noncomputable def hs5Jt (x be al τ : ℝ) : ℝ :=
-  hsE0 x (hsUhat5 x) + (hsUhat5 x - 1) / hsRA al be + hsRA al be + τ -
-    τ * hsRA al be * hsA1 x be al (hsUhat5 x) +
-    29 / 30 * hsQc x al * (τ * hsRA al be * hsA2 x be al (hsUhat5 x) + 1 / (τ * hsRA al be) - 1 -
-      hsA3 x be al (hsUhat5 x))
+noncomputable def shrJt (x be al τ : ℝ) : ℝ :=
+  ssE0 x (ssUhat5 x) + (ssUhat5 x - 1) / ssRA al be + ssRA al be + τ -
+    τ * ssRA al be * ssA1 x be al (ssUhat5 x) +
+    29 / 30 * ssQc x al * (τ * ssRA al be * ssA2 x be al (ssUhat5 x) + 1 / (τ * ssRA al be) - 1 -
+      ssA3 x be al (ssUhat5 x))
 
 /-! ### Private helpers: monomial bounds on the unit cube -/
 
@@ -64,87 +64,87 @@ private theorem nn3 {s w n : ℝ} {i j k : ℕ} (hs0 : 0 ≤ s) (hw0 : 0 ≤ w) 
 
 /-- `D_u = 24900S`, `N_u = (18875 + 249t)S` (`û = N_u/D_u`), `E = S(N_u - D_u) + 24900`
 (`E₀ = E/D_u`), `A₁ = N₁/(α²D_u)`, `A₂ = N₂/(α⁴D_u)`, `A₃ = N₃/(α²D_u)`. -/
-private noncomputable def s5Du (x : ℝ) : ℝ := 24900 * (1 + x)
-private noncomputable def s5Nu (x : ℝ) : ℝ := (18875 + 249 * (x - 2)) * (1 + x)
-private noncomputable def s5E (x : ℝ) : ℝ := (1 + x) * (s5Nu x - s5Du x) + 24900
-private noncomputable def s5N1 (x be al : ℝ) : ℝ :=
-  (2 * al ^ 2 + (1 + x) - 2) * s5Du x + hsDg x be al * s5E x
-private noncomputable def s5N2 (x be al : ℝ) : ℝ :=
-  ((al ^ 2 - 1) ^ 2 + (al ^ 2 - 1) * (1 + x) + (1 + x) ^ 2) * s5Du x +
-    hsDg x be al ^ 2 * s5Nu x + hsDg x be al * (al ^ 2 - 1) * s5E x -
-    hsDg x be al * (2 * (1 + x) - 1) * s5Du x
-private noncomputable def s5N3 (x be al : ℝ) : ℝ :=
-  2 * hsDg x be al * s5Nu x + (al ^ 2 - 1) * s5E x - (2 * (1 + x) - 1) * s5Du x
-private noncomputable def s5C (x al : ℝ) : ℝ := x * (x + 2) + al ^ 2
-private noncomputable def s5N0 (x be al : ℝ) : ℝ :=
-  1000 * al * (al + be) * s5E x + 1000 * (al + be) ^ 2 * (s5Nu x - s5Du x) +
-    1000 * al ^ 2 * s5Du x + 277 * al * (al + be) * s5Du x
+private noncomputable def shrDu (x : ℝ) : ℝ := 24900 * (1 + x)
+private noncomputable def shrNu (x : ℝ) : ℝ := (18875 + 249 * (x - 2)) * (1 + x)
+private noncomputable def shrE (x : ℝ) : ℝ := (1 + x) * (shrNu x - shrDu x) + 24900
+private noncomputable def shrN1 (x be al : ℝ) : ℝ :=
+  (2 * al ^ 2 + (1 + x) - 2) * shrDu x + ssDg x be al * shrE x
+private noncomputable def shrN2 (x be al : ℝ) : ℝ :=
+  ((al ^ 2 - 1) ^ 2 + (al ^ 2 - 1) * (1 + x) + (1 + x) ^ 2) * shrDu x +
+    ssDg x be al ^ 2 * shrNu x + ssDg x be al * (al ^ 2 - 1) * shrE x -
+    ssDg x be al * (2 * (1 + x) - 1) * shrDu x
+private noncomputable def shrN3 (x be al : ℝ) : ℝ :=
+  2 * ssDg x be al * shrNu x + (al ^ 2 - 1) * shrE x - (2 * (1 + x) - 1) * shrDu x
+private noncomputable def shrC (x al : ℝ) : ℝ := x * (x + 2) + al ^ 2
+private noncomputable def shrN0 (x be al : ℝ) : ℝ :=
+  1000 * al * (al + be) * shrE x + 1000 * (al + be) ^ 2 * (shrNu x - shrDu x) +
+    1000 * al ^ 2 * shrDu x + 277 * al * (al + be) * shrDu x
 /-- The numerator `P₂` of `J₂`: `J₂ = -P₂/(2000αBD_uC²)`. -/
-private noncomputable def s5P2 (x be al : ℝ) : ℝ :=
-  -(2 * s5N0 x be al * s5C x al ^ 2 +
-    1000 * (29 / 30) * (5 * al ^ 2 * (al + be) ^ 2 * s5Du x * s5C x al -
-      2 * al * (al + be) * s5C x al * (2 * s5N1 x be al + s5N3 x be al + al ^ 2 * s5Du x)) +
-    4000 * (29 / 30) ^ 2 * al * (al + be) * s5N2 x be al)
+private noncomputable def shrP2 (x be al : ℝ) : ℝ :=
+  -(2 * shrN0 x be al * shrC x al ^ 2 +
+    1000 * (29 / 30) * (5 * al ^ 2 * (al + be) ^ 2 * shrDu x * shrC x al -
+      2 * al * (al + be) * shrC x al * (2 * shrN1 x be al + shrN3 x be al + al ^ 2 * shrDu x)) +
+    4000 * (29 / 30) ^ 2 * al * (al + be) * shrN2 x be al)
 /-- The numerator `P_τ` of `J_τ`: `J_τ = -P_τ/(αBD_uC)`. -/
-private noncomputable def s5PT (x be al τ : ℝ) : ℝ :=
-  -(al * (al + be) * s5C x al * s5E x + (al + be) ^ 2 * s5C x al * (s5Nu x - s5Du x) +
-    al ^ 2 * s5C x al * s5Du x + τ * al * (al + be) * s5C x al * s5Du x -
-    τ * s5C x al * s5N1 x be al +
-    29 / 30 * (τ * s5N2 x be al + al ^ 2 * (al + be) * s5Du x * ((al + be) / τ - al) -
-      al * (al + be) * s5N3 x be al))
+private noncomputable def shrPT (x be al τ : ℝ) : ℝ :=
+  -(al * (al + be) * shrC x al * shrE x + (al + be) ^ 2 * shrC x al * (shrNu x - shrDu x) +
+    al ^ 2 * shrC x al * shrDu x + τ * al * (al + be) * shrC x al * shrDu x -
+    τ * shrC x al * shrN1 x be al +
+    29 / 30 * (τ * shrN2 x be al + al ^ 2 * (al + be) * shrDu x * ((al + be) / τ - al) -
+      al * (al + be) * shrN3 x be al))
 
-private theorem s5_uhat_eq {x : ℝ} (hx : 0 < x) : hsUhat5 x = s5Nu x / s5Du x := by
-  unfold hsUhat5 s5Nu s5Du
+private theorem shr_uhat_eq {x : ℝ} (hx : 0 < x) : ssUhat5 x = shrNu x / shrDu x := by
+  unfold ssUhat5 shrNu shrDu
   field_simp
   ring
 
-private theorem s5_E0_eq {x : ℝ} (hx : 0 < x) : hsE0 x (hsUhat5 x) = s5E x / s5Du x := by
-  unfold hsE0 hsUhat5 s5E s5Nu s5Du
+private theorem shr_E0_eq {x : ℝ} (hx : 0 < x) : ssE0 x (ssUhat5 x) = shrE x / shrDu x := by
+  unfold ssE0 ssUhat5 shrE shrNu shrDu
   field_simp
   ring
 
-private theorem s5_A1_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) :
-    hsA1 x be al (hsUhat5 x) = s5N1 x be al / (al ^ 2 * s5Du x) := by
-  unfold hsA1 hsE0 hsUhat5 s5N1 s5E s5Nu s5Du
+private theorem shr_A1_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) :
+    ssA1 x be al (ssUhat5 x) = shrN1 x be al / (al ^ 2 * shrDu x) := by
+  unfold ssA1 ssE0 ssUhat5 shrN1 shrE shrNu shrDu
   field_simp
   ring
 
-private theorem s5_A2_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) :
-    hsA2 x be al (hsUhat5 x) = s5N2 x be al / (al ^ 4 * s5Du x) := by
-  unfold hsA2 hsE0 hsUhat5 s5N2 s5E s5Nu s5Du
+private theorem shr_A2_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) :
+    ssA2 x be al (ssUhat5 x) = shrN2 x be al / (al ^ 4 * shrDu x) := by
+  unfold ssA2 ssE0 ssUhat5 shrN2 shrE shrNu shrDu
   field_simp
   ring
 
-private theorem s5_A3_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) :
-    hsA3 x be al (hsUhat5 x) = s5N3 x be al / (al ^ 2 * s5Du x) := by
-  unfold hsA3 hsE0 hsUhat5 s5N3 s5E s5Nu s5Du
+private theorem shr_A3_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) :
+    ssA3 x be al (ssUhat5 x) = shrN3 x be al / (al ^ 2 * shrDu x) := by
+  unfold ssA3 ssE0 ssUhat5 shrN3 shrE shrNu shrDu
   field_simp
   ring
 
 /-- The identity `J₂ = -P₂/(2000αBD_uC²)`. -/
-private theorem s5_J2_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) (hb : 0 < al + be) :
-    hs5J2 x be al = -s5P2 x be al / (2000 * al * (al + be) * s5Du x * s5C x al ^ 2) := by
-  have hC : 0 < s5C x al := by unfold s5C; positivity
-  have hD : 0 < s5Du x := by unfold s5Du; positivity
-  unfold hs5J2
-  rw [s5_E0_eq hx, s5_A1_eq hx hal, s5_A2_eq hx hal, s5_A3_eq hx hal, s5_uhat_eq hx]
-  have hQ : hsQc x al = al ^ 2 / s5C x al := rfl
+private theorem shr_J2_eq {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) (hb : 0 < al + be) :
+    shrJ2 x be al = -shrP2 x be al / (2000 * al * (al + be) * shrDu x * shrC x al ^ 2) := by
+  have hC : 0 < shrC x al := by unfold shrC; positivity
+  have hD : 0 < shrDu x := by unfold shrDu; positivity
+  unfold shrJ2
+  rw [shr_E0_eq hx, shr_A1_eq hx hal, shr_A2_eq hx hal, shr_A3_eq hx hal, shr_uhat_eq hx]
+  have hQ : ssQc x al = al ^ 2 / shrC x al := rfl
   rw [hQ]
-  unfold hsRA s5P2 s5N0
+  unfold ssRA shrP2 shrN0
   field_simp
   ring
 
 /-- The identity `J_τ = -P_τ/(αBD_uC)`. -/
-private theorem s5_Jt_eq {x be al τ : ℝ} (hx : 0 < x) (hal : 0 < al) (hb : 0 < al + be)
+private theorem shr_Jt_eq {x be al τ : ℝ} (hx : 0 < x) (hal : 0 < al) (hb : 0 < al + be)
     (hτ : 0 < τ) :
-    hs5Jt x be al τ = -s5PT x be al τ / (al * (al + be) * s5Du x * s5C x al) := by
-  have hC : 0 < s5C x al := by unfold s5C; positivity
-  have hD : 0 < s5Du x := by unfold s5Du; positivity
-  unfold hs5Jt
-  rw [s5_E0_eq hx, s5_A1_eq hx hal, s5_A2_eq hx hal, s5_A3_eq hx hal, s5_uhat_eq hx]
-  have hQ : hsQc x al = al ^ 2 / s5C x al := rfl
+    shrJt x be al τ = -shrPT x be al τ / (al * (al + be) * shrDu x * shrC x al) := by
+  have hC : 0 < shrC x al := by unfold shrC; positivity
+  have hD : 0 < shrDu x := by unfold shrDu; positivity
+  unfold shrJt
+  rw [shr_E0_eq hx, shr_A1_eq hx hal, shr_A2_eq hx hal, shr_A3_eq hx hal, shr_uhat_eq hx]
+  have hQ : ssQc x al = al ^ 2 / shrC x al := rfl
   rw [hQ]
-  unfold hsRA s5PT
+  unfold ssRA shrPT
   field_simp
   ring
 
@@ -156,8 +156,8 @@ rational is a polynomial in `s, w, n ∈ [0, 1]` whose negative monomials are ab
 positive monomials (`mono3`); the certificate is an exact `linear_combination`. The parameter
 `v ∈ [1/3, 5/13]` covers the whole `β` interval at once. -/
 
-private theorem s5P2_pos_id {s w n : ℝ} :
-    ((5425149211635816/5 : ℚ) : ℝ) * s5P2 (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3
+private theorem shrP2_pos_id {s w n : ℝ} :
+    ((5425149211635816/5 : ℚ) : ℝ) * shrP2 (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3
         * w / 19))) (1 + (3 * w / 19)) =
       ((((((((1084294843111970779648320) + (-631905840084011035645440) * w) +
           ((703395700467957567562752) * s + ((98293204257376177969920) * w * n +
@@ -263,13 +263,13 @@ private theorem s5P2_pos_id {s w n : ℝ} :
           (3:ℕ) * n ^ (2:ℕ))) + ((1085576256) * s ^ (5:ℕ) * w ^ (6:ℕ) * n ^ (3:ℕ) + ((-2291772096) *
           s ^ (6:ℕ) * w ^ (5:ℕ) * n ^ (3:ℕ) + (1209546384) * s ^ (7:ℕ) * w ^ (4:ℕ) * n ^
           (3:ℕ))))))))) := by
-  unfold s5P2 s5N0 s5N1 s5N2 s5N3 s5C s5E s5Nu s5Du hsDg
+  unfold shrP2 shrN0 shrN1 shrN2 shrN3 shrC shrE shrNu shrDu ssDg
   push_cast
   ring
 
-private theorem s5P2_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
+private theorem shrP2_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
     (hn0 : 0 ≤ n) (hn1 : n ≤ 1) :
-    0 < s5P2 (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3 * w / 19))) (1 + (3 * w /
+    0 < shrP2 (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3 * w / 19))) (1 + (3 * w /
         19)) := by
   have hp : 0 < ((((((((1084294843111970779648320) + (-631905840084011035645440) * w) +
       ((703395700467957567562752) * s + ((98293204257376177969920) * w * n +
@@ -624,14 +624,14 @@ private theorem s5P2_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 
       5131794021705 * nn3 (i := 8) (j := 2) (k := 1) hs0 hw0 hn0 +
       193162472100 * nn3 (i := 8) (j := 3) (k := 1) hs0 hw0 hn0
   have hL : (0 : ℝ) < ((5425149211635816/5 : ℚ) : ℝ) := by norm_num
-  have h0 : ((5425149211635816/5 : ℚ) : ℝ) * 0 < ((5425149211635816/5 : ℚ) : ℝ) * s5P2 (2 + s / 6)
+  have h0 : ((5425149211635816/5 : ℚ) : ℝ) * 0 < ((5425149211635816/5 : ℚ) : ℝ) * shrP2 (2 + s / 6)
       ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3 * w / 19))) (1 + (3 * w / 19)) := by
-    rw [mul_zero, s5P2_pos_id]
+    rw [mul_zero, shrP2_pos_id]
     exact hp
   exact lt_of_mul_lt_mul_left h0 hL.le
 
-private theorem s5PTth_pos_id {s w n : ℝ} :
-    ((286433286974640000 : ℚ) : ℝ) * s5PT (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3
+private theorem shrPTth_pos_id {s w n : ℝ} :
+    ((286433286974640000 : ℚ) : ℝ) * shrPT (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3
         * (1 - w) / 19))) (1 + (3 * (1 - w) / 19)) (223 / 250) =
       (((((((997550050595895201600) + ((1691465272829428262400) * n + (10953678304682094297600) *
           w)) + ((4469657403301148681712) * s + ((-21911509842453504000) * n ^ (2:ℕ) +
@@ -687,13 +687,13 @@ private theorem s5PTth_pos_id {s w n : ℝ} :
           (2:ℕ) + (5156439338280) * s ^ (6:ℕ) * w ^ (2:ℕ) * n)) + (((-3680374166690) * s ^ (7:ℕ) * w
           * n + (-52389058176) * s ^ (4:ℕ) * w ^ (4:ℕ) * n ^ (2:ℕ)) + ((-287841306816) * s ^ (5:ℕ) *
           w ^ (3:ℕ) * n ^ (2:ℕ) + (-445913201264) * s ^ (6:ℕ) * w ^ (2:ℕ) * n ^ (2:ℕ)))))))) := by
-  unfold s5PT s5N1 s5N2 s5N3 s5C s5E s5Nu s5Du hsDg
+  unfold shrPT shrN1 shrN2 shrN3 shrC shrE shrNu shrDu ssDg
   push_cast
   ring
 
-private theorem s5PTth_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
+private theorem shrPTth_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
     (hn0 : 0 ≤ n) (hn1 : n ≤ 1) :
-    0 < s5PT (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3 * (1 - w) / 19))) (1 + (3 *
+    0 < shrPT (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3 * (1 - w) / 19))) (1 + (3 *
         (1 - w) / 19)) (223 / 250) := by
   have hp : 0 < (((((((997550050595895201600) + ((1691465272829428262400) * n +
       (10953678304682094297600) * w)) + ((4469657403301148681712) * s + ((-21911509842453504000) * n
@@ -899,15 +899,15 @@ private theorem s5PTth_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 
       3680374166690 * nn3 (i := 7) (j := 0) (k := 1) hs0 hw0 hn0 +
       27602806250175 * nn3 (i := 7) (j := 1) (k := 0) hs0 hw0 hn0
   have hL : (0 : ℝ) < ((286433286974640000 : ℚ) : ℝ) := by norm_num
-  have h0 : ((286433286974640000 : ℚ) : ℝ) * 0 < ((286433286974640000 : ℚ) : ℝ) * s5PT (2 + s / 6)
+  have h0 : ((286433286974640000 : ℚ) : ℝ) * 0 < ((286433286974640000 : ℚ) : ℝ) * shrPT (2 + s / 6)
       ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3 * (1 - w) / 19))) (1 + (3 * (1 - w) / 19)) (223
       / 250) := by
-    rw [mul_zero, s5PTth_pos_id]
+    rw [mul_zero, shrPTth_pos_id]
     exact hp
   exact lt_of_mul_lt_mul_left h0 hL.le
 
-private theorem s5PT1_pos_id {s w n : ℝ} :
-    ((5137816806720 : ℚ) : ℝ) * s5PT (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3 * (1
+private theorem shrPT1_pos_id {s w n : ℝ} :
+    ((5137816806720 : ℚ) : ℝ) * shrPT (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3 * (1
         - w) / 19))) (1 + (3 * (1 - w) / 19)) 1 =
       (((((((130519731174206400) + ((28082708149766400) * n + (103396056003619200) * w)) +
           ((106987310369551728) * s + ((-399831991603200) * n ^ (2:ℕ) + (-26613674656617600) * w *
@@ -959,13 +959,13 @@ private theorem s5PT1_pos_id {s w n : ℝ} :
           (((-74008610) * s ^ (7:ℕ) * w * n + (-1613520) * s ^ (4:ℕ) * w ^ (4:ℕ) * n ^ (2:ℕ)) +
           ((-6585552) * s ^ (5:ℕ) * w ^ (3:ℕ) * n ^ (2:ℕ) + (-8749196) * s ^ (6:ℕ) * w ^ (2:ℕ) * n ^
           (2:ℕ)))))))) := by
-  unfold s5PT s5N1 s5N2 s5N3 s5C s5E s5Nu s5Du hsDg
+  unfold shrPT shrN1 shrN2 shrN3 shrC shrE shrNu shrDu ssDg
   push_cast
   ring
 
-private theorem s5PT1_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
+private theorem shrPT1_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
     (hn0 : 0 ≤ n) (hn1 : n ≤ 1) :
-    0 < s5PT (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3 * (1 - w) / 19))) (1 + (3 *
+    0 < shrPT (2 + s / 6) ((2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * (3 * (1 - w) / 19))) (1 + (3 *
         (1 - w) / 19)) 1 := by
   have hp : 0 < (((((((130519731174206400) + ((28082708149766400) * n + (103396056003619200) * w)) +
       ((106987310369551728) * s + ((-399831991603200) * n ^ (2:ℕ) + (-26613674656617600) * w * n)))
@@ -1166,18 +1166,18 @@ private theorem s5PT1_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0
       74008610 * nn3 (i := 7) (j := 0) (k := 1) hs0 hw0 hn0 +
       555064575 * nn3 (i := 7) (j := 1) (k := 0) hs0 hw0 hn0
   have hL : (0 : ℝ) < ((5137816806720 : ℚ) : ℝ) := by norm_num
-  have h0 : ((5137816806720 : ℚ) : ℝ) * 0 < ((5137816806720 : ℚ) : ℝ) * s5PT (2 + s / 6) ((2 + s /
+  have h0 : ((5137816806720 : ℚ) : ℝ) * 0 < ((5137816806720 : ℚ) : ℝ) * shrPT (2 + s / 6) ((2 + s /
       6) * (1 + (5 / 13 - 2 * n / 39) * (3 * (1 - w) / 19))) (1 + (3 * (1 - w) / 19)) 1 := by
-    rw [mul_zero, s5PT1_pos_id]
+    rw [mul_zero, shrPT1_pos_id]
     exact hp
   exact lt_of_mul_lt_mul_left h0 hL.le
 
 /-- **`V̄ ≤ û`**: for `2 ≤ x ≤ 13/6`,
 `V̄(x) ≤ 755/996 + (x - 2)/100` (difference `t(8715t² + 4012t + 1)/(24900(3 + t)(35t + 83))`,
 `t = x - 2`). -/
-theorem hs5_Vbar_le_uhat {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) : hsVbar x ≤ hsUhat5 x := by
+theorem shr_Vbar_le_uhat {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) : ssVbar x ≤ ssUhat5 x := by
   have _hx2 := hx2
-  unfold hsVbar hsUhat5
+  unfold ssVbar ssUhat5
   have hx0 : 0 < x := by linarith
   have hd : 0 < (x + 1) * (35 * x + 13) := by positivity
   have ht : 0 ≤ x - 2 := by linarith
@@ -1187,36 +1187,36 @@ theorem hs5_Vbar_le_uhat {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) : hsVbar 
   linarith
 
 /-- The `u`-slope of `𝓡(u; p, q) = C(p) + qL(p)`, bilinear in `(p, q)`. -/
-private noncomputable def s5sl (x be al p q : ℝ) : ℝ :=
-  (1 + x) + (al + be) / al - p * (hsDg x be al / al ^ 2) * (1 + x) +
-    q * (p * ((hsDg x be al / al ^ 2) ^ 2 + hsDg x be al / al ^ 2 * (1 - 1 / al ^ 2) * (1 + x)) -
-      2 * (hsDg x be al / al ^ 2) - (1 - 1 / al ^ 2) * (1 + x))
+private noncomputable def shrsl (x be al p q : ℝ) : ℝ :=
+  (1 + x) + (al + be) / al - p * (ssDg x be al / al ^ 2) * (1 + x) +
+    q * (p * ((ssDg x be al / al ^ 2) ^ 2 + ssDg x be al / al ^ 2 * (1 - 1 / al ^ 2) * (1 + x)) -
+      2 * (ssDg x be al / al ^ 2) - (1 - 1 / al ^ 2) * (1 + x))
 
 /-- The four corner values of the slope. -/
-private theorem s5sl_corners {x be al : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x)
+private theorem shrsl_corners {x be al : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb : x ≤ be) :
-    0 ≤ s5sl x be al 0 0 ∧ 0 ≤ s5sl x be al 0 (1 / 7) ∧ 0 ≤ s5sl x be al (al / (al + be)) 0 ∧
-      0 ≤ s5sl x be al (al / (al + be)) (1 / 7) := by
+    0 ≤ shrsl x be al 0 0 ∧ 0 ≤ shrsl x be al 0 (1 / 7) ∧ 0 ≤ shrsl x be al (al / (al + be)) 0 ∧
+      0 ≤ shrsl x be al (al / (al + be)) (1 / 7) := by
   have hal0 : 0 < al := by linarith
   have hab : 0 < al + be := by linarith
-  have e00 : s5sl x be al 0 0 = (1 + x) + (al + be) / al := by unfold s5sl; ring
-  have e01 : s5sl x be al 0 (1 / 7) =
+  have e00 : shrsl x be al 0 0 = (1 + x) + (al + be) / al := by unfold shrsl; ring
+  have e01 : shrsl x be al 0 (1 / 7) =
       (6 * x * al ^ 2 + 4 * x * be - 3 * x + 11 * al ^ 2 + 3 * al * be - 1) / (7 * al ^ 2) := by
-    unfold s5sl hsDg
+    unfold shrsl ssDg
     field_simp
     ring
-  have e10 : s5sl x be al (al / (al + be)) 0 =
+  have e10 : shrsl x be al (al / (al + be)) 0 =
       (2 * x ^ 2 * be - 2 * x ^ 2 - x * al * be + 2 * x * be - 3 * x + al ^ 2 + al * be +
         be ^ 2 - 1) / (al * (al + be)) := by
-    unfold s5sl hsDg
+    unfold shrsl ssDg
     field_simp
     ring
-  have e11 : s5sl x be al (al / (al + be)) (1 / 7) =
+  have e11 : shrsl x be al (al / (al + be)) (1 / 7) =
       (12 * x ^ 2 * al ^ 2 * be - 12 * x ^ 2 * al ^ 2 + 4 * x ^ 2 * be ^ 2 - 6 * x ^ 2 * be +
         2 * x ^ 2 - 6 * x * al ^ 3 * be + 12 * x * al ^ 2 * be - 18 * x * al ^ 2 -
         4 * x * al * be ^ 2 + 3 * x * al * be - 2 * x * be + x + 6 * al ^ 4 + 6 * al ^ 3 * be +
         7 * al ^ 2 * be ^ 2 - 6 * al ^ 2 + al * be) / (7 * al ^ 3 * (al + be)) := by
-    unfold s5sl hsDg
+    unfold shrsl ssDg
     field_simp
     ring
   rw [e00, e01, e10, e11]
@@ -1229,36 +1229,36 @@ private theorem s5sl_corners {x be al : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax 
 /-- **The residual is monotone in the incoming norm**: for `x > 1`, `1 ≤ α ≤ x ≤ β`, `0 < q ≤ 1/7`,
 `0 < p ≤ r_A`, `𝓡(u; p, q) = C(p) + qL(p)` is nondecreasing in `u` (bilinear corner check of the
 slope). -/
-theorem hs5_u_mono {x be al p q u u' : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x)
-    (hxb : x ≤ be) (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hp : 0 < p) (hpr : p ≤ hsRA al be)
-    (huu : u ≤ u') : hsPhi x be al u p 0 q ≤ hsPhi x be al u' p 0 q := by
+theorem shr_u_mono {x be al p q u u' : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x)
+    (hxb : x ≤ be) (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hp : 0 < p) (hpr : p ≤ ssRA al be)
+    (huu : u ≤ u') : ssPhi x be al u p 0 q ≤ ssPhi x be al u' p 0 q := by
   have hal0 : 0 < al := by linarith
   have hab : 0 < al + be := by linarith
   have hr0 : 0 < al / (al + be) := by positivity
   have hpr' : p ≤ al / (al + be) := hpr
-  have key : hsPhi x be al u' p 0 q - hsPhi x be al u p 0 q = (u' - u) * s5sl x be al p q := by
-    unfold hsPhi hsCp hsLp hsA1 hsA2 hsA3 hsE0 s5sl hsRA
+  have key : ssPhi x be al u' p 0 q - ssPhi x be al u p 0 q = (u' - u) * shrsl x be al p q := by
+    unfold ssPhi ssCp ssLp ssA1 ssA2 ssA3 ssE0 shrsl ssRA
     field_simp
     ring
-  have interp : s5sl x be al p q * (al / (al + be) / 7) =
-      (al / (al + be) - p) * (1 / 7 - q) * s5sl x be al 0 0 +
-        p * (1 / 7 - q) * s5sl x be al (al / (al + be)) 0 +
-        (al / (al + be) - p) * q * s5sl x be al 0 (1 / 7) +
-        p * q * s5sl x be al (al / (al + be)) (1 / 7) := by
-    unfold s5sl
+  have interp : shrsl x be al p q * (al / (al + be) / 7) =
+      (al / (al + be) - p) * (1 / 7 - q) * shrsl x be al 0 0 +
+        p * (1 / 7 - q) * shrsl x be al (al / (al + be)) 0 +
+        (al / (al + be) - p) * q * shrsl x be al 0 (1 / 7) +
+        p * q * shrsl x be al (al / (al + be)) (1 / 7) := by
+    unfold shrsl
     ring
-  obtain ⟨c00, c01, c10, c11⟩ := s5sl_corners hx hal hax hxb
+  obtain ⟨c00, c01, c10, c11⟩ := shrsl_corners hx hal hax hxb
   have w1 : 0 ≤ al / (al + be) - p := by linarith
   have w2 : 0 ≤ 1 / 7 - q := by linarith
-  have hprod : 0 ≤ s5sl x be al p q * (al / (al + be) / 7) := by
+  have hprod : 0 ≤ shrsl x be al p q * (al / (al + be) / 7) := by
     rw [interp]
     have := mul_nonneg (mul_nonneg w1 w2) c00
     have := mul_nonneg (mul_nonneg hp.le w2) c10
     have := mul_nonneg (mul_nonneg w1 hq.le) c01
     have := mul_nonneg (mul_nonneg hp.le hq.le) c11
     linarith
-  have hsl : 0 ≤ s5sl x be al p q := by
-    rcases le_or_gt 0 (s5sl x be al p q) with h | h
+  have hsl : 0 ≤ shrsl x be al p q := by
+    rcases le_or_gt 0 (shrsl x be al p q) with h | h
     · exact h
     · have := mul_neg_of_neg_of_pos h (show 0 < al / (al + be) / 7 by positivity)
       linarith
@@ -1267,7 +1267,7 @@ theorem hs5_u_mono {x be al p q u u' : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax :
 
 /-- **The second log tangent**: for `y > 0`,
 `log y < 5y/4 - 1223/1000` (`log(5/4) > 488/2187`). -/
-theorem hs5_log_tangent {y : ℝ} (hy : 0 < y) : log y < 5 * y / 4 - 1223 / 1000 := by
+theorem shr_log_tangent {y : ℝ} (hy : 0 < y) : log y < 5 * y / 4 - 1223 / 1000 := by
   have h1 := Real.log_le_sub_one_of_pos (show 0 < 5 / 4 * y by positivity)
   have h2 : Real.log (5 / 4 * y) = Real.log (5 / 4) + Real.log y :=
     Real.log_mul (by norm_num) hy.ne'
@@ -1275,9 +1275,9 @@ theorem hs5_log_tangent {y : ℝ} (hy : 0 < y) : log y < 5 * y / 4 - 1223 / 1000
   norm_num at h3
   linarith
 
-/-- The parameters `(s, c, n) ∈ [0, 1] × [0, 3/19] × [0, 1]` of the enlarged domain of `hs5_J_neg`:
+/-- The parameters `(s, c, n) ∈ [0, 1] × [0, 3/19] × [0, 1]` of the enlarged domain of `shr_J_neg`:
 `x = 2 + s/6`, `α = 1 + c`, `β = x(1 + vc)`, `v = 5/13 - 2n/39`. -/
-private theorem s5_param {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
+private theorem shr_param {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
     (hal' : al ≤ 22 / 19) (hb : x * (1 + (al - 1) / 3) ≤ be)
     (hb' : be ≤ x * (1 + 5 * (al - 1) / 13)) :
     ∃ s c n : ℝ, 0 ≤ s ∧ s ≤ 1 ∧ 0 ≤ c ∧ c ≤ 3 / 19 ∧ 0 ≤ n ∧ n ≤ 1 ∧ x = 2 + s / 6 ∧
@@ -1309,41 +1309,41 @@ private theorem s5_param {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (ha
 /-- **The three face values are negative**: on the enlarged domain `2 ≤ x ≤ 13/6`, `1 ≤ α ≤ 22/19`,
 `x(1 + (α - 1)/3) ≤ β ≤ x(1 + 5(α - 1)/13)`: `J₂ < 0`, `J_θ < 0` (`θ = 223/250`), `J₁ < 0`.
 Proof: the numerators `P₂, P_θ, P₁` of `J₂, J_θ, J₁` are positive on the whole
-parameter box `(t, c, v)` by three monomial-absorption certificates (`s5P2_pos`, `s5PTth_pos`,
-`s5PT1_pos`). -/
-theorem hs5_J_neg {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al) (hal' : al ≤ 22 / 19)
+parameter box `(t, c, v)` by three monomial-absorption certificates (`shrP2_pos`, `shrPTth_pos`,
+`shrPT1_pos`). -/
+theorem shr_J_neg {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al) (hal' : al ≤ 22 / 19)
     (hb : x * (1 + (al - 1) / 3) ≤ be) (hb' : be ≤ x * (1 + 5 * (al - 1) / 13)) :
-    hs5J2 x be al < 0 ∧ hs5Jt x be al (223 / 250) < 0 ∧ hs5Jt x be al 1 < 0 := by
+    shrJ2 x be al < 0 ∧ shrJt x be al (223 / 250) < 0 ∧ shrJt x be al 1 < 0 := by
   obtain ⟨s, c, n, hs0, hs1, hc0, hc1, hn0, hn1, rfl, rfl, rfl⟩ :=
-    s5_param hx hx2 hal hal' hb hb'
+    shr_param hx hx2 hal hal' hb hb'
   have hx0 : 0 < 2 + s / 6 := by linarith
   have hal0 : 0 < 1 + c := by linarith
   have hv0 : 0 ≤ (5 / 13 - 2 * n / 39) * c := mul_nonneg (by linarith) hc0
   have hb0 : 0 < 1 + c + (2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * c) := by
     have : 0 < (2 + s / 6) * (1 + (5 / 13 - 2 * n / 39) * c) := mul_pos hx0 (by linarith)
     linarith
-  have hD : 0 < s5Du (2 + s / 6) := by unfold s5Du; positivity
-  have hC : 0 < s5C (2 + s / 6) (1 + c) := by unfold s5C; positivity
+  have hD : 0 < shrDu (2 + s / 6) := by unfold shrDu; positivity
+  have hC : 0 < shrC (2 + s / 6) (1 + c) := by unfold shrC; positivity
   refine ⟨?_, ?_, ?_⟩
-  · rw [s5_J2_eq hx0 hal0 hb0]
-    have hP := s5P2_pos (w := 19 * c / 3) hs0 hs1 (by linarith) (by linarith) hn0 hn1
+  · rw [shr_J2_eq hx0 hal0 hb0]
+    have hP := shrP2_pos (w := 19 * c / 3) hs0 hs1 (by linarith) (by linarith) hn0 hn1
     rw [show 3 * (19 * c / 3) / 19 = c by ring] at hP
     apply div_neg_of_neg_of_pos (by linarith)
     have := mul_pos (mul_pos (mul_pos (mul_pos (by norm_num : (0 : ℝ) < 2000) hal0) hb0) hD)
       (pow_pos hC 2)
     exact this
-  · rw [s5_Jt_eq hx0 hal0 hb0 (by norm_num)]
-    have hP := s5PTth_pos (w := 1 - 19 * c / 3) hs0 hs1 (by linarith) (by linarith) hn0 hn1
+  · rw [shr_Jt_eq hx0 hal0 hb0 (by norm_num)]
+    have hP := shrPTth_pos (w := 1 - 19 * c / 3) hs0 hs1 (by linarith) (by linarith) hn0 hn1
     rw [show 3 * (1 - (1 - 19 * c / 3)) / 19 = c by ring] at hP
     exact div_neg_of_neg_of_pos (by linarith) (mul_pos (mul_pos (mul_pos hal0 hb0) hD) hC)
-  · rw [s5_Jt_eq hx0 hal0 hb0 (by norm_num)]
-    have hP := s5PT1_pos (w := 1 - 19 * c / 3) hs0 hs1 (by linarith) (by linarith) hn0 hn1
+  · rw [shr_Jt_eq hx0 hal0 hb0 (by norm_num)]
+    have hP := shrPT1_pos (w := 1 - 19 * c / 3) hs0 hs1 (by linarith) (by linarith) hn0 hn1
     rw [show 3 * (1 - (1 - 19 * c / 3)) / 19 = c by ring] at hP
     exact div_neg_of_neg_of_pos (by linarith) (mul_pos (mul_pos (mul_pos hal0 hb0) hD) hC)
 
 /-- A function `a + bp + c/p` with `c ≥ 0` is convex on `p > 0`: negative at both ends of
 `[p₁, p₂]`, it is negative inside. -/
-private theorem s5_inv_conv {a b c p₁ p₂ p : ℝ} (hc : 0 ≤ c) (hp₁ : 0 < p₁) (h1 : p₁ ≤ p)
+private theorem shr_inv_conv {a b c p₁ p₂ p : ℝ} (hc : 0 ≤ c) (hp₁ : 0 < p₁) (h1 : p₁ ≤ p)
     (h2 : p ≤ p₂) (hf1 : a + b * p₁ + c / p₁ < 0) (hf2 : a + b * p₂ + c / p₂ < 0) :
     a + b * p + c / p < 0 := by
   rcases eq_or_lt_of_le h1 with h | h
@@ -1372,11 +1372,11 @@ private theorem s5_inv_conv {a b c p₁ p₂ p : ℝ} (hc : 0 ≤ c) (hp₁ : 0 
 
 /-- The face `p = 2q'`, `0 < q' ≤ q_b`: with the second tangent the
 residual is below a convex quadratic in `q'`, negative at `q' = 0` and at `q' = q_b` (`J₂`). -/
-private theorem s5_face_p2q {X a1 a2 a3 r qb q' : ℝ} (hX : X < -7 / 10) (ha2 : 0 < a2)
+private theorem shr_face_p2q {X a1 a2 a3 r qb q' : ℝ} (hX : X < -7 / 10) (ha2 : 0 < a2)
     (hr0 : 0 < r) (hqb : 0 < qb) (hq'0 : 0 < q') (hcase : q' ≤ qb)
     (hJ2 : X + 277 / 1000 + qb * (5 / (2 * r) - 2 * a1 - 1 - a3) + 2 * qb ^ 2 * a2 < 0) :
     X + 1 - 2 * q' * a1 + log (2 * q' / r) + q' * (2 * q' * a2 + 1 / (2 * q') - 1 - a3) < 0 := by
-  have hlog2 := hs5_log_tangent (show 0 < 2 * q' / r by positivity)
+  have hlog2 := shr_log_tangent (show 0 < 2 * q' / r by positivity)
   have e1 : q' * (1 / (2 * q')) = 1 / 2 := by field_simp
   have e2 : 5 * (2 * q' / r) / 4 = q' * (5 / (2 * r)) := by field_simp; ring
   have hf : X + 1 - 2 * q' * a1 + log (2 * q' / r) + q' * (2 * q' * a2 + 1 / (2 * q') - 1 - a3) <
@@ -1397,14 +1397,14 @@ private theorem s5_face_p2q {X a1 a2 a3 r qb q' : ℝ} (hX : X < -7 / 10) (ha2 :
   linarith
 
 /-- The face `q = q_b`, `2q_b ≤ p ≤ θr` (second tangent; convex in `p`, endpoints `J₂`, `J_θ`). -/
-private theorem s5_face_qb_low {X a1 a2 a3 r qb p : ℝ} (hr0 : 0 < r) (hqb : 0 < qb)
+private theorem shr_face_qb_low {X a1 a2 a3 r qb p : ℝ} (hr0 : 0 < r) (hqb : 0 < qb)
     (hp1 : 2 * qb ≤ p) (hpθ : p ≤ 223 / 250 * r)
     (hJ2 : X + 277 / 1000 + qb * (5 / (2 * r) - 2 * a1 - 1 - a3) + 2 * qb ^ 2 * a2 < 0)
     (hJθ : X + 223 / 250 - 223 / 250 * r * a1 +
       qb * (223 / 250 * r * a2 + 1 / (223 / 250 * r) - 1 - a3) < 0) :
     X + 1 - p * a1 + log (p / r) + qb * (p * a2 + 1 / p - 1 - a3) < 0 := by
   have hp : 0 < p := by linarith
-  have hlog2 := hs5_log_tangent (show 0 < p / r by positivity)
+  have hlog2 := shr_log_tangent (show 0 < p / r by positivity)
   have e2 : 5 * (p / r) / 4 = 5 / (4 * r) * p := by field_simp
   have e3 : qb * (1 / p) = qb / p := by ring
   have hg : X + 1 - p * a1 + log (p / r) + qb * (p * a2 + 1 / p - 1 - a3) <
@@ -1427,11 +1427,11 @@ private theorem s5_face_qb_low {X a1 a2 a3 r qb p : ℝ} (hr0 : 0 < r) (hqb : 0 
       field_simp
       ring
     rw [e]; exact hJθ
-  have := s5_inv_conv hqb.le (by linarith) hp1 hpθ hg1 hg2
+  have := shr_inv_conv hqb.le (by linarith) hp1 hpθ hg1 hg2
   linarith
 
 /-- The face `q = q_b`, `θr ≤ p ≤ r` (first tangent; convex in `p`, endpoints `J_θ`, `J₁`). -/
-private theorem s5_face_qb_high {X a1 a2 a3 r qb p : ℝ} (hr0 : 0 < r) (hqb : 0 < qb)
+private theorem shr_face_qb_high {X a1 a2 a3 r qb p : ℝ} (hr0 : 0 < r) (hqb : 0 < qb)
     (hpθ : 223 / 250 * r ≤ p) (hpr : p ≤ r)
     (hJθ : X + 223 / 250 - 223 / 250 * r * a1 +
       qb * (223 / 250 * r * a2 + 1 / (223 / 250 * r) - 1 - a3) < 0)
@@ -1461,13 +1461,13 @@ private theorem s5_face_qb_high {X a1 a2 a3 r qb p : ℝ} (hr0 : 0 < r) (hqb : 0
       simp only [one_mul]
       linear_combination h1r
     rw [e]; exact hJ1
-  have := s5_inv_conv hqb.le hθ hpθ hpr hh1 hh2
+  have := shr_inv_conv hqb.le hθ hpθ hpr hh1 hh2
   linarith
 
 /-- The abstract residual argument in the coordinates
 `X = E₀ + (û - 1)/r + r`, `a_i = A_i(û)`, `r = r_A`, `q_b`: the `q = 0` face, the `p = 2q` face
 and the `q = q_b` face; the residual is affine in `q`. -/
-private theorem s5_resid_abstract {X a1 a2 a3 r qb p q : ℝ} (hX : X < -7 / 10) (ha1 : 3 / 2 < a1)
+private theorem shr_resid_abstract {X a1 a2 a3 r qb p q : ℝ} (hX : X < -7 / 10) (ha1 : 3 / 2 < a1)
     (ha2 : 0 < a2) (hr : 6 / 19 ≤ r) (hqb : 0 < qb) (hq : 0 ≤ q) (hqqb : q ≤ qb) (hp : 0 < p)
     (hpq : 2 * q ≤ p) (hpr : p ≤ r)
     (hJ2 : X + 277 / 1000 + qb * (5 / (2 * r) - 2 * a1 - 1 - a3) + 2 * qb ^ 2 * a2 < 0)
@@ -1502,22 +1502,22 @@ private theorem s5_resid_abstract {X a1 a2 a3 r qb p q : ℝ} (hX : X < -7 / 10)
       linarith
   rcases le_or_gt (p / 2) qb with hcase | hcase
   · refine ⟨p / 2, by linarith, ?_⟩
-    have := s5_face_p2q (a1 := a1) (a3 := a3) hX ha2 hr0 hqb (by linarith) hcase hJ2
+    have := shr_face_p2q (a1 := a1) (a3 := a3) hX ha2 hr0 hqb (by linarith) hcase hJ2
     rw [show 2 * (p / 2) = p by ring] at this
     exact this
   · refine ⟨qb, hqqb, ?_⟩
     rcases le_or_gt p (223 / 250 * r) with hpθ | hpθ
-    · exact s5_face_qb_low hr0 hqb (by linarith) hpθ hJ2 hJθ
-    · exact s5_face_qb_high hr0 hqb hpθ.le hpr hJθ hJ1
+    · exact shr_face_qb_low hr0 hqb (by linarith) hpθ hJ2 hJθ
+    · exact shr_face_qb_high hr0 hqb hpθ.le hpr hJθ hJ1
 
-/-- **The residual at `û` is negative below `q_b`**: on the enlarged domain of `hs5_J_neg`, for
-`0 ≤ q ≤ q_b = (29/30)q_c`, `0 < p`, `2q ≤ p ≤ r_A`: `𝓡(û; p, q) < 0` (`hs_A2_pos`; the `q = 0`
-face; affine in `q`; faces `q = q_b`, `p = 2q` through `hs5_log_tangent` and `hs5_J_neg`). -/
-theorem hs5_residual_neg {x al be p q : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
+/-- **The residual at `û` is negative below `q_b`**: on the enlarged domain of `shr_J_neg`, for
+`0 ≤ q ≤ q_b = (29/30)q_c`, `0 < p`, `2q ≤ p ≤ r_A`: `𝓡(û; p, q) < 0` (`ss_A2_pos`; the `q = 0`
+face; affine in `q`; faces `q = q_b`, `p = 2q` through `shr_log_tangent` and `shr_J_neg`). -/
+theorem shr_residual_neg {x al be p q : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
     (hal' : al ≤ 22 / 19) (hb : x * (1 + (al - 1) / 3) ≤ be) (hb' : be ≤ x * (1 + 5 * (al - 1) / 13))
-    (hq : 0 ≤ q) (hqb : q ≤ 29 / 30 * hsQc x al) (hp : 0 < p) (hpq : 2 * q ≤ p)
-    (hpr : p ≤ hsRA al be) : hsPhi x be al (hsUhat5 x) p 0 q < 0 := by
-  obtain ⟨hJ2, hJθ, hJ1⟩ := hs5_J_neg hx hx2 hal hal' hb hb'
+    (hq : 0 ≤ q) (hqb : q ≤ 29 / 30 * ssQc x al) (hp : 0 < p) (hpq : 2 * q ≤ p)
+    (hpr : p ≤ ssRA al be) : ssPhi x be al (ssUhat5 x) p 0 q < 0 := by
+  obtain ⟨hJ2, hJθ, hJ1⟩ := shr_J_neg hx hx2 hal hal' hb hb'
   have hx0 : 0 < x := by linarith
   have hal0 : 0 < al := by linarith
   have hbe : 2 * (2 + al) / 3 ≤ be := by
@@ -1532,18 +1532,18 @@ theorem hs5_residual_neg {x al be p q : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6)
   have hbe0 : 0 < be := by linarith
   have hab : 0 < al + be := by linarith
   -- `6/19 ≤ r_A ≤ 11/31`
-  have hr6 : 6 / 19 ≤ hsRA al be := by
-    unfold hsRA; rw [le_div_iff₀ hab]; linarith
-  have hr11 : hsRA al be ≤ 11 / 31 := by
-    unfold hsRA; rw [div_le_iff₀ hab]; linarith
-  have hr0 : 0 < hsRA al be := by linarith
+  have hr6 : 6 / 19 ≤ ssRA al be := by
+    unfold ssRA; rw [le_div_iff₀ hab]; linarith
+  have hr11 : ssRA al be ≤ 11 / 31 := by
+    unfold ssRA; rw [div_le_iff₀ hab]; linarith
+  have hr0 : 0 < ssRA al be := by linarith
   -- the incoming majorant
-  have hu1 : 3 / 4 ≤ hsUhat5 x := by unfold hsUhat5; linarith
-  have hu2 : hsUhat5 x ≤ 31 / 40 := by unfold hsUhat5; linarith
-  have hu3 : hsUhat5 x - 1 ≤ -6 / 25 := by unfold hsUhat5; linarith
+  have hu1 : 3 / 4 ≤ ssUhat5 x := by unfold ssUhat5; linarith
+  have hu2 : ssUhat5 x ≤ 31 / 40 := by unfold ssUhat5; linarith
+  have hu3 : ssUhat5 x - 1 ≤ -6 / 25 := by unfold ssUhat5; linarith
   -- `E₀ ∈ [-1/2, -29/75]`
-  have hE0a : hsE0 x (hsUhat5 x) ≤ -29 / 75 := by
-    unfold hsE0 hsUhat5
+  have hE0a : ssE0 x (ssUhat5 x) ≤ -29 / 75 := by
+    unfold ssE0 ssUhat5
     have h1 : 0 < 1 + x := by linarith
     have ht : 0 ≤ x - 2 := by linarith
     have ht2 : 0 ≤ (x - 2) ^ 2 := sq_nonneg _
@@ -1553,83 +1553,83 @@ theorem hs5_residual_neg {x al be p q : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6)
       rw [div_le_iff₀ h1]
       linarith
     linarith
-  have hE0b : -1 / 2 ≤ hsE0 x (hsUhat5 x) := by
-    unfold hsE0 hsUhat5
+  have hE0b : -1 / 2 ≤ ssE0 x (ssUhat5 x) := by
+    unfold ssE0 ssUhat5
     have h1 : 0 < 1 + x := by linarith
     have : 6 / 19 ≤ 1 / (1 + x) := by rw [le_div_iff₀ h1]; linarith
     have ht : 0 ≤ x - 2 := by linarith
     have ht2 := mul_self_nonneg (x - 2)
     linarith
   -- `X < -7/10`
-  have hX : hsE0 x (hsUhat5 x) + (hsUhat5 x - 1) / hsRA al be + hsRA al be < -7 / 10 := by
-    have hinv : 31 / 11 ≤ 1 / hsRA al be := by
+  have hX : ssE0 x (ssUhat5 x) + (ssUhat5 x - 1) / ssRA al be + ssRA al be < -7 / 10 := by
+    have hinv : 31 / 11 ≤ 1 / ssRA al be := by
       rw [le_div_iff₀ hr0]; linarith
-    have : (hsUhat5 x - 1) / hsRA al be ≤ -6 / 25 * (31 / 11) := by
+    have : (ssUhat5 x - 1) / ssRA al be ≤ -6 / 25 * (31 / 11) := by
       rw [div_eq_mul_one_div]
-      have := mul_le_mul_of_nonpos_left hinv (show hsUhat5 x - 1 ≤ 0 by linarith)
+      have := mul_le_mul_of_nonpos_left hinv (show ssUhat5 x - 1 ≤ 0 by linarith)
       linarith
     linarith
   -- `A₁ > 3/2`
-  have hA1 : 3 / 2 < hsA1 x be al (hsUhat5 x) := by
-    have hD : hsDg x be al ≤ 9 / 4 * al ^ 2 := by
-      unfold hsDg
+  have hA1 : 3 / 2 < ssA1 x be al (ssUhat5 x) := by
+    have hD : ssDg x be al ≤ 9 / 4 * al ^ 2 := by
+      unfold ssDg
       have h1 := mul_nonneg (sub_nonneg.2 hbx) (show 0 ≤ x - al by linarith)
       have h2 := mul_nonneg (show 0 ≤ 2 - al by linarith) (show 0 ≤ 6 / 5 - al by linarith)
       have h3 := mul_nonneg (sub_nonneg.2 hx) (show 0 ≤ 2 * x + 2 - 2 * al by linarith)
       linarith
-    have hDE : -(9 / 8) * al ^ 2 ≤ hsDg x be al * hsE0 x (hsUhat5 x) := by
-      have h1 := mul_nonneg (sub_nonneg.2 hD) (show 0 ≤ -hsE0 x (hsUhat5 x) by linarith)
+    have hDE : -(9 / 8) * al ^ 2 ≤ ssDg x be al * ssE0 x (ssUhat5 x) := by
+      have h1 := mul_nonneg (sub_nonneg.2 hD) (show 0 ≤ -ssE0 x (ssUhat5 x) by linarith)
       have h2 := mul_le_mul_of_nonneg_left hE0b (sq_nonneg al)
       linarith
-    have e : hsA1 x be al (hsUhat5 x) =
-        (2 * al ^ 2 - 2 + (1 + x) + hsDg x be al * hsE0 x (hsUhat5 x)) / al ^ 2 := by
-      unfold hsA1
+    have e : ssA1 x be al (ssUhat5 x) =
+        (2 * al ^ 2 - 2 + (1 + x) + ssDg x be al * ssE0 x (ssUhat5 x)) / al ^ 2 := by
+      unfold ssA1
       field_simp
     rw [e, lt_div_iff₀ (by positivity)]
     have := mul_le_mul hal' hal' hal0.le (by norm_num)
     linarith
-  have hA2 : 0 < hsA2 x be al (hsUhat5 x) := hs_A2_pos hx (by linarith) hal hu1 hu2
-  have hqb0 : 0 < 29 / 30 * hsQc x al := by unfold hsQc; positivity
-  have ePhi : hsPhi x be al (hsUhat5 x) p 0 q =
-      (hsE0 x (hsUhat5 x) + (hsUhat5 x - 1) / hsRA al be + hsRA al be) + 1 -
-        p * hsA1 x be al (hsUhat5 x) + log (p / hsRA al be) +
-        q * (p * hsA2 x be al (hsUhat5 x) + 1 / p - 1 - hsA3 x be al (hsUhat5 x)) := by
-    unfold hsPhi hsCp hsLp
+  have hA2 : 0 < ssA2 x be al (ssUhat5 x) := ss_A2_pos hx (by linarith) hal hu1 hu2
+  have hqb0 : 0 < 29 / 30 * ssQc x al := by unfold ssQc; positivity
+  have ePhi : ssPhi x be al (ssUhat5 x) p 0 q =
+      (ssE0 x (ssUhat5 x) + (ssUhat5 x - 1) / ssRA al be + ssRA al be) + 1 -
+        p * ssA1 x be al (ssUhat5 x) + log (p / ssRA al be) +
+        q * (p * ssA2 x be al (ssUhat5 x) + 1 / p - 1 - ssA3 x be al (ssUhat5 x)) := by
+    unfold ssPhi ssCp ssLp
     ring
-  have eJ2 : hs5J2 x be al =
-      (hsE0 x (hsUhat5 x) + (hsUhat5 x - 1) / hsRA al be + hsRA al be) + 277 / 1000 +
-        29 / 30 * hsQc x al * (5 / (2 * hsRA al be) - 2 * hsA1 x be al (hsUhat5 x) - 1 -
-          hsA3 x be al (hsUhat5 x)) +
-        2 * (29 / 30 * hsQc x al) ^ 2 * hsA2 x be al (hsUhat5 x) := by
-    unfold hs5J2
+  have eJ2 : shrJ2 x be al =
+      (ssE0 x (ssUhat5 x) + (ssUhat5 x - 1) / ssRA al be + ssRA al be) + 277 / 1000 +
+        29 / 30 * ssQc x al * (5 / (2 * ssRA al be) - 2 * ssA1 x be al (ssUhat5 x) - 1 -
+          ssA3 x be al (ssUhat5 x)) +
+        2 * (29 / 30 * ssQc x al) ^ 2 * ssA2 x be al (ssUhat5 x) := by
+    unfold shrJ2
     ring
-  have eJt : ∀ τ, hs5Jt x be al τ =
-      (hsE0 x (hsUhat5 x) + (hsUhat5 x - 1) / hsRA al be + hsRA al be) + τ -
-        τ * hsRA al be * hsA1 x be al (hsUhat5 x) +
-        29 / 30 * hsQc x al * (τ * hsRA al be * hsA2 x be al (hsUhat5 x) +
-          1 / (τ * hsRA al be) - 1 - hsA3 x be al (hsUhat5 x)) := by
+  have eJt : ∀ τ, shrJt x be al τ =
+      (ssE0 x (ssUhat5 x) + (ssUhat5 x - 1) / ssRA al be + ssRA al be) + τ -
+        τ * ssRA al be * ssA1 x be al (ssUhat5 x) +
+        29 / 30 * ssQc x al * (τ * ssRA al be * ssA2 x be al (ssUhat5 x) +
+          1 / (τ * ssRA al be) - 1 - ssA3 x be al (ssUhat5 x)) := by
     intro τ
-    unfold hs5Jt
+    unfold shrJt
     ring
   rw [eJ2] at hJ2
   rw [eJt] at hJθ hJ1
   rw [ePhi]
-  exact s5_resid_abstract hX hA1 hA2 hr6 hqb0 hq hqb hp hpq hpr hJ2 hJθ hJ1
+  exact shr_resid_abstract hX hA1 hA2 hr6 hqb0 hq hqb hp hpq hpr hJ2 hJθ hJ1
 
 /-! ### Private helpers: the shear polynomials -/
 
 /-- `W = (βx - α)m`, `m = (8x² + 8x - 3)α + (3x² - 8x - 8)β`. -/
-private noncomputable def s5W (x be al : ℝ) : ℝ :=
+private noncomputable def shrW (x be al : ℝ) : ℝ :=
   (be * x - al) * ((8 * x ^ 2 + 8 * x - 3) * al + (3 * x ^ 2 - 8 * x - 8) * be)
 
 /-- `V = α²W + 3K_xK_AQ₀(x - 1)`. -/
-private noncomputable def s5V (x be al : ℝ) : ℝ :=
-  al ^ 2 * s5W x be al +
+private noncomputable def shrV (x be al : ℝ) : ℝ :=
+  al ^ 2 * shrW x be al +
     3 * (x ^ 2 + x + 1) * (al ^ 2 + al * be + be ^ 2) * (2 * be * x - x - al * be) * (x - 1)
 
-private theorem s5Pi_pos_id {s w n : ℝ} :
-    ((3800160360000 : ℚ) : ℝ) * (29 * s5V (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n /
-        5) * (w / 19)) - 30 * s5W (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w
+private theorem shrPi_pos_id {s w n : ℝ} :
+    ((3800160360000 : ℚ) : ℝ) * (29 * shrV (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n /
+        5) * (w / 19)) - 30 * shrW (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w
         / 19)) * ((2 + s / 6) * ((2 + s / 6) + 2) + (1 + (3 - 2 * n / 5) * (w / 19)) ^ 2)) =
       (((((((7102499712840000) + ((-6420270924000000) * w + (5939650642680000) * s)) +
           ((2110649065632000) * w * n + ((-91961775360000) * w ^ (2:ℕ) + (-2204093008800000) * s *
@@ -1679,14 +1679,14 @@ private theorem s5Pi_pos_id {s w n : ℝ} :
           ^ (4:ℕ))) + (((344375) * s ^ (7:ℕ) * w ^ (3:ℕ) + (136800) * s ^ (4:ℕ) * w ^ (4:ℕ) * n ^
           (3:ℕ)) + ((-54000) * s ^ (5:ℕ) * w ^ (4:ℕ) * n ^ (2:ℕ) + (21750) * s ^ (6:ℕ) * w ^ (4:ℕ) *
           n))))))) := by
-  unfold s5V s5W
+  unfold shrV shrW
   push_cast
   ring
 
-private theorem s5Pi_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
+private theorem shrPi_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
     (hn0 : 0 ≤ n) (hn1 : n ≤ 1) :
-    0 < (29 * s5V (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) - 30 *
-        s5W (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) * ((2 + s / 6)
+    0 < (29 * shrV (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) - 30 *
+        shrW (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) * ((2 + s / 6)
         * ((2 + s / 6) + 2) + (1 + (3 - 2 * n / 5) * (w / 19)) ^ 2)) := by
   have hp : 0 < (((((((7102499712840000) + ((-6420270924000000) * w + (5939650642680000) * s)) +
       ((2110649065632000) * w * n + ((-91961775360000) * w ^ (2:ℕ) + (-2204093008800000) * s * w)))
@@ -1859,20 +1859,20 @@ private theorem s5Pi_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 
       16245000 * nn3 (i := 7) (j := 2) (k := 0) hs0 hw0 hn0 +
       344375 * nn3 (i := 7) (j := 3) (k := 0) hs0 hw0 hn0
   have hL : (0 : ℝ) < ((3800160360000 : ℚ) : ℝ) := by norm_num
-  have h0 : ((3800160360000 : ℚ) : ℝ) * 0 < ((3800160360000 : ℚ) : ℝ) * (29 * s5V (2 + s / 6) ((2 +
-      s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) - 30 * s5W (2 + s / 6) ((2 + s / 6) *
+  have h0 : ((3800160360000 : ℚ) : ℝ) * 0 < ((3800160360000 : ℚ) : ℝ) * (29 * shrV (2 + s / 6) ((2 +
+      s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) - 30 * shrW (2 + s / 6) ((2 + s / 6) *
       (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) * ((2 + s / 6) * ((2 + s / 6) + 2) + (1 + (3 -
       2 * n / 5) * (w / 19)) ^ 2)) := by
-    rw [mul_zero, s5Pi_pos_id]
+    rw [mul_zero, shrPi_pos_id]
     exact hp
   exact lt_of_mul_lt_mul_left h0 hL.le
 
 /-- `Π = 29V - 30WC > 0` on the small-shape box `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`,
 `13δ/5 ≤ α - 1 ≤ 3δ` (parameters `x = 2 + s/6`, `δ = w/19`, `α = 1 + (3 - 2n/5)δ`,
 `s, w, n ∈ [0, 1]`). -/
-private theorem s5_Pi_pos {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
+private theorem shr_Pi_pos {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
-    0 < 29 * s5V x (x * (1 + δ)) al - 30 * s5W x (x * (1 + δ)) al * (x * (x + 2) + al ^ 2) := by
+    0 < 29 * shrV x (x * (1 + δ)) al - 30 * shrW x (x * (1 + δ)) al * (x * (x + 2) + al ^ 2) := by
   obtain ⟨n, hn0, hn1, han⟩ : ∃ n : ℝ, 0 ≤ n ∧ n ≤ 1 ∧ al = 1 + (3 - 2 * n / 5) * δ := by
     rcases eq_or_lt_of_le hδ with h | h
     · subst h
@@ -1884,7 +1884,7 @@ private theorem s5_Pi_pos {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (h
         linarith
       · field_simp
         ring
-  have h := s5Pi_pos (s := 6 * (x - 2)) (w := 19 * δ) (n := n) (by linarith) (by linarith)
+  have h := shrPi_pos (s := 6 * (x - 2)) (w := 19 * δ) (n := n) (by linarith) (by linarith)
     (by linarith) (by linarith) hn0 hn1
   rw [show 2 + 6 * (x - 2) / 6 = x by ring, show 19 * δ / 19 = δ by ring, ← han] at h
   exact h
@@ -1893,16 +1893,16 @@ private theorem s5_Pi_pos {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (h
 `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`,
 `β = x(1 + δ)`, for `0 < ρ < 1` with `q = α²λρ > (29/30)q_c`: `√3·h·R + 13A/3 < 0`
 (`(1 - q)(√3hR + 13A/3) = F - Gq`, `Π = 29V - 30WC > 0`).
-Proof: `Π > 0` by an exact monomial-absorption certificate on the parameter cube (`s5Pi_pos`);
+Proof: `Π > 0` by an exact monomial-absorption certificate on the parameter cube (`shrPi_pos`);
 `W > 0` from `m > 0`. -/
-theorem hs5_shear_sign {x δ al rho : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
+theorem shr_shear_sign {x δ al rho : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) (hρ : 0 < rho)
-    (hρ1 : rho < 1) (hq : 29 / 30 * hsQc x al < hsQ al rho) :
-    √3 * hsShear x (x * (1 + δ)) al rho * hsRr x + 13 / 3 * hsAn x (x * (1 + δ)) al < 0 := by
+    (hρ1 : rho < 1) (hq : 29 / 30 * ssQc x al < ssQ al rho) :
+    √3 * ssShear x (x * (1 + δ)) al rho * ssRr x + 13 / 3 * ssAn x (x * (1 + δ)) al < 0 := by
   have hx0 : 0 < x := by linarith
   have hal1 : 1 ≤ al := by linarith
   have hal0 : 0 < al := by linarith
-  have hPi := s5_Pi_pos hx hx2 hδ hδ2 hal hal'
+  have hPi := shr_Pi_pos hx hx2 hδ hδ2 hal hal'
   have hbx : x ≤ x * (1 + δ) := by
     have := mul_nonneg hx0.le hδ
     linarith
@@ -1912,8 +1912,8 @@ theorem hs5_shear_sign {x δ al rho : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (
   generalize x * (1 + δ) = be at hPi hbx hbe20 ⊢
   have hbe0 : 0 < be := by linarith
   -- `W > 0`, `V > 0`
-  have hW : 0 < s5W x be al := by
-    unfold s5W
+  have hW : 0 < shrW x be al := by
+    unfold shrW
     have hxx : 2 * x ≤ x * x := mul_le_mul_of_nonneg_right hx hx0.le
     have h1 : 0 < be * x - al := by
       have := mul_le_mul_of_nonneg_right hbx hx0.le
@@ -1929,55 +1929,55 @@ theorem hs5_shear_sign {x δ al rho : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (
       linarith [mul_pos hal0 h4]
     exact mul_pos h1 h2
   have hC : 0 < x * (x + 2) + al ^ 2 := by positivity
-  have hV : 0 < s5V x be al := by linarith [mul_pos hW hC]
+  have hV : 0 < shrV x be al := by linarith [mul_pos hW hC]
   -- the scale `q`
   have hden : 0 < 1 + rho * (al ^ 2 - 1) := by
     have : 0 ≤ rho * (al ^ 2 - 1) := mul_nonneg hρ.le (by linarith [one_le_pow₀ (n := 2) hal1])
     linarith
-  have hqe : hsQ al rho = al ^ 2 * rho / (1 + rho * (al ^ 2 - 1)) := by
-    unfold hsQ hsLam; field_simp
-  have h1q : 1 - hsQ al rho = (1 - rho) / (1 + rho * (al ^ 2 - 1)) := by
+  have hqe : ssQ al rho = al ^ 2 * rho / (1 + rho * (al ^ 2 - 1)) := by
+    unfold ssQ ssLam; field_simp
+  have h1q : 1 - ssQ al rho = (1 - rho) / (1 + rho * (al ^ 2 - 1)) := by
     rw [hqe]; field_simp; ring
-  have hq1 : 0 < 1 - hsQ al rho := by rw [h1q]; exact div_pos (by linarith) hden
-  have hκ : al ^ 2 * (rho / (1 - rho)) = hsQ al rho / (1 - hsQ al rho) := by
+  have hq1 : 0 < 1 - ssQ al rho := by rw [h1q]; exact div_pos (by linarith) hden
+  have hκ : al ^ 2 * (rho / (1 - rho)) = ssQ al rho / (1 - ssQ al rho) := by
     rw [h1q, hqe]
     have : (1 - rho) ≠ 0 := by linarith
     field_simp
   -- the shear identity `T·M = α²W - (V - α²W)α²ρ/(1 - ρ)`
   have h3 : √3 * √3 = 3 := Real.mul_self_sqrt (by norm_num)
-  have hS : √3 * hsShear x be al rho = √3 * √3 / 3 *
+  have hS : √3 * ssShear x be al rho = √3 * √3 / 3 *
       ((be * x - al) * ((x + 2) * al + (2 * x + 1) * be) /
           ((1 + x) ^ 2 * (al ^ 2 + al * be + be ^ 2)) -
         2 * ((x ^ 2 + x + 1) / (1 + x) ^ 2) * (2 * be * x - x - al * be) * (rho / (1 - rho))) := by
-    unfold hsShear
+    unfold ssShear
     ring
   have hK : 0 < al ^ 2 + al * be + be ^ 2 := by positivity
   have hM : 0 < 3 * al ^ 2 * (1 + x) ^ 3 * (al ^ 2 + al * be + be ^ 2) / 2 := by positivity
-  have key : (√3 * hsShear x be al rho * hsRr x + 13 / 3 * hsAn x be al) *
+  have key : (√3 * ssShear x be al rho * ssRr x + 13 / 3 * ssAn x be al) *
       (3 * al ^ 2 * (1 + x) ^ 3 * (al ^ 2 + al * be + be ^ 2) / 2) =
-      al ^ 2 * s5W x be al - (s5V x be al - al ^ 2 * s5W x be al) * (al ^ 2 * (rho / (1 - rho))) :=
+      al ^ 2 * shrW x be al - (shrV x be al - al ^ 2 * shrW x be al) * (al ^ 2 * (rho / (1 - rho))) :=
           by
     rw [hS, h3]
-    unfold hsRr hsAn s5V s5W
+    unfold ssRr ssAn shrV shrW
     have : (1 - rho) ≠ 0 := by linarith
     field_simp
     ring
   rw [hκ] at key
   -- `α²W < Vq` from `q > q_b` and `Π > 0`
-  have hVq : al ^ 2 * s5W x be al < s5V x be al * hsQ al rho := by
+  have hVq : al ^ 2 * shrW x be al < shrV x be al * ssQ al rho := by
     have h1 := mul_lt_mul_of_pos_left hq hV
-    have h2 : al ^ 2 * s5W x be al ≤ s5V x be al * (29 / 30 * hsQc x al) := by
-      unfold hsQc
-      rw [show s5V x be al * (29 / 30 * (al ^ 2 / (x * (x + 2) + al ^ 2))) =
-        29 * al ^ 2 * s5V x be al / (30 * (x * (x + 2) + al ^ 2)) by field_simp,
+    have h2 : al ^ 2 * shrW x be al ≤ shrV x be al * (29 / 30 * ssQc x al) := by
+      unfold ssQc
+      rw [show shrV x be al * (29 / 30 * (al ^ 2 / (x * (x + 2) + al ^ 2))) =
+        29 * al ^ 2 * shrV x be al / (30 * (x * (x + 2) + al ^ 2)) by field_simp,
         le_div_iff₀ (by positivity)]
       linarith [mul_pos (pow_pos hal0 2) hPi]
     linarith
-  have hneg : al ^ 2 * s5W x be al - (s5V x be al - al ^ 2 * s5W x be al) *
-      (hsQ al rho / (1 - hsQ al rho)) < 0 := by
-    rw [show al ^ 2 * s5W x be al - (s5V x be al - al ^ 2 * s5W x be al) *
-        (hsQ al rho / (1 - hsQ al rho)) =
-        (al ^ 2 * s5W x be al - s5V x be al * hsQ al rho) / (1 - hsQ al rho) by
+  have hneg : al ^ 2 * shrW x be al - (shrV x be al - al ^ 2 * shrW x be al) *
+      (ssQ al rho / (1 - ssQ al rho)) < 0 := by
+    rw [show al ^ 2 * shrW x be al - (shrV x be al - al ^ 2 * shrW x be al) *
+        (ssQ al rho / (1 - ssQ al rho)) =
+        (al ^ 2 * shrW x be al - shrV x be al * ssQ al rho) / (1 - ssQ al rho) by
       field_simp
       ring]
     exact div_neg_of_neg_of_pos (by linarith) hq1
@@ -1986,43 +1986,43 @@ theorem hs5_shear_sign {x δ al rho : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (
   have := mul_nonneg (not_lt.mp hcon) hM.le
   linarith
 
-/-! ### Gate S5 -/
+/-! ### The shear bound -/
 
-namespace HsData
+namespace SmallerShortData
 
-variable (H : HsData)
+variable (H : SmallerShortData)
 
-/-- **Gate S5**: on the small-shape domain, `q > (29/30)q_c`, `√3hR + 13A/3 < 0`, hence `h < 0`
+/-- **The shear bound**: on the small-shape domain, `q > (29/30)q_c`, `√3hR + 13A/3 < 0`, hence `h < 0`
 and `-hR > 5A/2` (`13/(3√3) > 5/2`, `A ≥ 0`, `R > 0`).
-Proof: if `q ≤ q_b`: `root_zero`, `hs_env_weighted` (`m = 0`, `hs_B_pos`), `hs_env_scale`,
-`hs_phi_eq` give `0 ≤ 𝓡(u; τq, q)`; `hs5_u_mono` with `u_le_V`, `hs_V_le_Vbar`,
-`hs5_Vbar_le_uhat`; contradiction with `hs5_residual_neg` (`2q < p = τq < r_A`). Then
-`hs5_shear_sign`. -/
-theorem s5 (hS : H.SmallShape) :
-    29 / 30 * hsQc H.x H.al < H.q ∧
-      √3 * hsShear H.x H.be H.al H.rho * hsRr H.x + 13 / 3 * hsAn H.x H.be H.al < 0 ∧
-      hsShear H.x H.be H.al H.rho < 0 ∧
-      5 / 2 * hsAn H.x H.be H.al < -hsShear H.x H.be H.al H.rho * hsRr H.x := by
+Proof: if `q ≤ q_b`: `root_zero`, `ss_env_weighted` (`m = 0`, `ss_B_factor_pos`), `ss_env_scale`,
+`ss_phi_eq` give `0 ≤ 𝓡(u; τq, q)`; `shr_u_mono` with `u_le_V`, `ss_V_le_Vbar`,
+`shr_Vbar_le_uhat`; contradiction with `shr_residual_neg` (`2q < p = τq < r_A`). Then
+`shr_shear_sign`. -/
+theorem shear_neg (hS : H.SmallShape) :
+    29 / 30 * ssQc H.x H.al < H.q ∧
+      √3 * ssShear H.x H.be H.al H.rho * ssRr H.x + 13 / 3 * ssAn H.x H.be H.al < 0 ∧
+      ssShear H.x H.be H.al H.rho < 0 ∧
+      5 / 2 * ssAn H.x H.be H.al < -ssShear H.x H.be H.al H.rho * ssRr H.x := by
   obtain ⟨hx, hx2, hδ0, hδ1, hal1, hal2⟩ := hS
   have hx1 : 1 < H.x := H.one_lt_x
   have hx0 : 0 < H.x := by linarith
-  have hbe : H.be = H.x * (1 + H.δ) := by unfold HsData.δ; field_simp; ring
+  have hbe : H.be = H.x * (1 + H.δ) := by unfold SmallerShortData.δ; field_simp; ring
   have hal : 1 ≤ H.al := H.one_le_al
   have hax : H.al ≤ H.x := H.al_lt_x.le
   have hxb : H.x ≤ H.be := H.x_le_be
   have hρ := H.rho_pos
   have hρ1 : H.rho < 1 := by linarith [H.rho_le]
   -- the scale lower bound `q > q_b`
-  have hq : 29 / 30 * hsQc H.x H.al < hsQ H.al H.rho := by
+  have hq : 29 / 30 * ssQc H.x H.al < ssQ H.al H.rho := by
     by_contra hcon
     have hqb := not_lt.mp hcon
-    have hq0 : 0 < hsQ H.al H.rho := by
-      unfold hsQ hsLam
+    have hq0 : 0 < ssQ H.al H.rho := by
+      unfold ssQ ssLam
       have : 0 < 1 + H.rho * (H.al ^ 2 - 1) := by
         have := mul_nonneg hρ.le (show 0 ≤ H.al ^ 2 - 1 by linarith [one_le_pow₀ (n := 2) hal])
         linarith
       positivity
-    have hq7 : hsQ H.al H.rho < 1 / 7 := H.q_lt_seventh
+    have hq7 : ssQ H.al H.rho < 1 / 7 := H.q_lt_seventh
     have hτ2 := H.two_lt_τ
     have hτT := H.τ_lt
     have hτ0 : 0 < H.τ := by linarith
@@ -2031,44 +2031,44 @@ theorem s5 (hS : H.SmallShape) :
       have h := H.rho_lt_rt
       rw [div_mul_eq_mul_div, one_mul, lt_div_iff₀ (by linarith)] at h
       linarith
-    have henv := hs_env_weighted (be := H.be) (u := H.u) (τ := H.τ) (m := 0) hx1 hal hρ ht0
+    have henv := ss_env_weighted (be := H.be) (u := H.u) (τ := H.τ) (m := 0) hx1 hal hρ ht0
       H.t_le_r H.v_le (fun s hs => by
         rw [add_zero]
-        exact hs_B_pos hx1 hal hax hxb hρ hs.1 hτ0.le hτT.le)
+        exact ss_B_factor_pos hx1 hal hax hxb hρ hs.1 hτ0.le hτT.le)
     rw [H.root_zero] at henv
     simp only [zero_mul, add_zero] at henv
-    obtain ⟨-, -, hR, -⟩ := hs_env_scale (be := H.be) (u := H.u) (τ := H.τ) hx0 hal hq0
-      (by linarith : hsQ H.al H.rho < 1)
-    rw [(hs_scale_coords (x := H.x) (be := H.be) hal hρ).1] at hR
+    obtain ⟨-, -, hR, -⟩ := ss_env_scale (be := H.be) (u := H.u) (τ := H.τ) hx0 hal hq0
+      (by linarith : ssQ H.al H.rho < 1)
+    rw [(ss_scale_coords (x := H.x) (be := H.be) hal hρ).1] at hR
     rw [hR] at henv
-    have hphi := hs_phi_eq (x := H.x) (be := H.be) (al := H.al) (u := H.u) (m := 0)
-      (show 0 < H.τ * hsQ H.al H.rho by positivity) hq0
-    rw [show H.τ * hsQ H.al H.rho / hsQ H.al H.rho = H.τ by field_simp] at hphi
-    have h0 : 0 ≤ hsPhi H.x H.be H.al H.u (H.τ * hsQ H.al H.rho) 0 (hsQ H.al H.rho) := by
+    have hphi := ss_phi_eq (x := H.x) (be := H.be) (al := H.al) (u := H.u) (m := 0)
+      (show 0 < H.τ * ssQ H.al H.rho by positivity) hq0
+    rw [show H.τ * ssQ H.al H.rho / ssQ H.al H.rho = H.τ by field_simp] at hphi
+    have h0 : 0 ≤ ssPhi H.x H.be H.al H.u (H.τ * ssQ H.al H.rho) 0 (ssQ H.al H.rho) := by
       rw [← hphi]
       exact henv
     -- raise `u` to `û`, then the residual at `û` is negative
-    have hu : H.u ≤ hsUhat5 H.x :=
-      H.u_le_V.trans ((hs_V_le_Vbar hx1).trans (hs5_Vbar_le_uhat hx hx2))
-    have h1 := hs5_u_mono hx1 hal hax hxb hq0 hq7.le (by positivity) hτT.le hu
+    have hu : H.u ≤ ssUhat5 H.x :=
+      H.u_le_V.trans ((ss_V_le_Vbar hx1).trans (shr_Vbar_le_uhat hx hx2))
+    have h1 := shr_u_mono hx1 hal hax hxb hq0 hq7.le (by positivity) hτT.le hu
     have hδx : H.x * (1 + (H.al - 1) / 3) ≤ H.be := by
       rw [hbe]
       exact mul_le_mul_of_nonneg_left (by linarith) hx0.le
     have hδx' : H.be ≤ H.x * (1 + 5 * (H.al - 1) / 13) := by
       rw [hbe]
       exact mul_le_mul_of_nonneg_left (by linarith) hx0.le
-    have h2τ : 2 * hsQ H.al H.rho ≤ H.τ * hsQ H.al H.rho :=
+    have h2τ : 2 * ssQ H.al H.rho ≤ H.τ * ssQ H.al H.rho :=
       mul_le_mul_of_nonneg_right hτ2.le hq0.le
-    have h2 := hs5_residual_neg hx hx2 hal (by linarith) hδx hδx' hq0.le hqb (by positivity)
+    have h2 := shr_residual_neg hx hx2 hal (by linarith) hδx hδx' hq0.le hqb (by positivity)
       h2τ hτT.le
     linarith
   -- the shear sign
-  have hsh : √3 * hsShear H.x H.be H.al H.rho * hsRr H.x + 13 / 3 * hsAn H.x H.be H.al < 0 := by
+  have hsh : √3 * ssShear H.x H.be H.al H.rho * ssRr H.x + 13 / 3 * ssAn H.x H.be H.al < 0 := by
     rw [hbe]
-    exact hs5_shear_sign hx hx2 hδ0 hδ1 (by linarith) (by linarith) hρ hρ1 hq
+    exact shr_shear_sign hx hx2 hδ0 hδ1 (by linarith) (by linarith) hρ hρ1 hq
   -- `h < 0` and `-hR > 5A/2`
-  have hA : 0 ≤ hsAn H.x H.be H.al := by
-    unfold hsAn
+  have hA : 0 ≤ ssAn H.x H.be H.al := by
+    unfold ssAn
     have h1 : 0 ≤ H.be * H.x - H.al := by
       have := mul_le_mul_of_nonneg_right hxb hx0.le
       have := mul_le_mul_of_nonneg_left hx1.le hx0.le
@@ -2077,8 +2077,8 @@ theorem s5 (hS : H.SmallShape) :
     have hbe0 : 0 < H.be := by linarith
     have hal0 : 0 < H.al := by linarith
     positivity
-  have hRr : 0 < hsRr H.x := by
-    unfold hsRr
+  have hRr : 0 < ssRr H.x := by
+    unfold ssRr
     exact div_pos (by linarith) (by linarith)
   have hs3 : 0 < √3 := by positivity
   have hs3' : √3 < 26 / 15 := by rw [Real.sqrt_lt' (by norm_num)]; norm_num
@@ -2090,28 +2090,28 @@ theorem s5 (hS : H.SmallShape) :
     have hX := not_lt.mp hcon
     have h1 := mul_le_mul_of_nonneg_left hX hs3.le
     have h2 := mul_le_mul_of_nonneg_right hs3'.le
-      (show 0 ≤ 5 / 2 * hsAn H.x H.be H.al by positivity)
-    have e : √3 * (-hsShear H.x H.be H.al H.rho * hsRr H.x) =
-        -(√3 * hsShear H.x H.be H.al H.rho * hsRr H.x) := by ring
+      (show 0 ≤ 5 / 2 * ssAn H.x H.be H.al by positivity)
+    have e : √3 * (-ssShear H.x H.be H.al H.rho * ssRr H.x) =
+        -(√3 * ssShear H.x H.be H.al H.rho * ssRr H.x) := by ring
     linarith
 
-end HsData
+end SmallerShortData
 
-/-- **Gate S5 for the actual window**: on the small-shape domain,
+/-- **The shear bound for the actual window**: on the small-shape domain,
 `q > (29/30)q_c`, `√3hR + 13A/3 < 0`, `h < 0`, `-hR > 5A/2`, with the physical shear
-`h = hsShear (C/a) (B/a) (A/a) ρ`. -/
-theorem M2Short.hs_S5 (D : M2Short) (h1 : 2 ≤ D.C / D.a) (h2 : D.C / D.a ≤ 13 / 6)
+`h = ssShear (C/a) (B/a) (A/a) ρ`. -/
+theorem M2Short.shear_neg (D : M2Short) (h1 : 2 ≤ D.C / D.a) (h2 : D.C / D.a ≤ 13 / 6)
     (h3 : 0 ≤ D.B / D.C - 1) (h4 : D.B / D.C - 1 ≤ 1 / 19)
     (h5 : 1 + 13 / 5 * (D.B / D.C - 1) ≤ D.A / D.a) (h6 : D.A / D.a ≤ 1 + 3 * (D.B / D.C - 1)) :
-    29 / 30 * hsQc (D.C / D.a) (D.A / D.a) < hsQ (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) ∧
-      √3 * hsShear (D.C / D.a) (D.B / D.a) (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) *
-          hsRr (D.C / D.a) + 13 / 3 * hsAn (D.C / D.a) (D.B / D.a) (D.A / D.a) < 0 ∧
-      hsShear (D.C / D.a) (D.B / D.a) (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) < 0 ∧
-      5 / 2 * hsAn (D.C / D.a) (D.B / D.a) (D.A / D.a) <
-        -hsShear (D.C / D.a) (D.B / D.a) (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) *
-          hsRr (D.C / D.a) := by
-  have h := D.toHs.s5 (D.hs_smallShape h1 h2 h3 h4 h5 h6)
-  rw [HsData.q, D.toHs_x, D.toHs_be, D.toHs_al, D.toHs_rho] at h
+    29 / 30 * ssQc (D.C / D.a) (D.A / D.a) < ssQ (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) ∧
+      √3 * ssShear (D.C / D.a) (D.B / D.a) (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) *
+          ssRr (D.C / D.a) + 13 / 3 * ssAn (D.C / D.a) (D.B / D.a) (D.A / D.a) < 0 ∧
+      ssShear (D.C / D.a) (D.B / D.a) (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) < 0 ∧
+      5 / 2 * ssAn (D.C / D.a) (D.B / D.a) (D.A / D.a) <
+        -ssShear (D.C / D.a) (D.B / D.a) (D.A / D.a) (D.a ^ 2 / (D.a ^ 2 + 4)) *
+          ssRr (D.C / D.a) := by
+  have h := D.toData.shear_neg (D.ss_smallShape h1 h2 h3 h4 h5 h6)
+  rw [SmallerShortData.q, D.toData_x, D.toData_be, D.toData_al, D.toData_rho] at h
   exact h
 
 end SmoothedOctagon

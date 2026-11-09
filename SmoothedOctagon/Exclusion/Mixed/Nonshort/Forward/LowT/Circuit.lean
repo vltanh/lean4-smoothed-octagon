@@ -1,16 +1,16 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.HighRatioLower
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTTools
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Monomials
 
 /-!
-# Case M2, forward successor by hand: the low-`t` residual and its multipliers
+# Case M2, forward successor: the low-`t` residual and its multipliers
 
 In the low-`t` large-gap branch (`1/3 ≤ t ≤ 3/8`) the combined
 residual is taken with the multipliers `a = 7/2 - 10(q - 1)` (`nltAl`) and
 `m = 8j + 8(q - 1) - 1/6` (`nltM`), the incoming majorant `V_L = hrlVL` (`T_L = (912 - 401x)/(24D)`),
 the logarithm majorant `L₊` and the floor `F_ℓ`. At the unit shape `k = 1` its positive multiple
-`S = 24(q + 1)WD · fhComb` (`W = 1 + x`, `D = 17x + 76`) is the circuit
+`S = 24(q + 1)WD · nsfComb` (`W = 1 + x`, `D = 17x + 76`) is the circuit
 `S = 24WD(q + 1)C + 4(q + 1)AV_n - 16W²DpqB(q² + 10q + 1)` (`nltS`, `nlt_link`), with `p = t + x`
 and polynomials `A`, `B`, `C` in `q` whose coefficients are `nltA0`, …, `nltC5`. The coefficients
 of `S` in `y = q - 1` are the bivariate polynomials `nltSt0`, …, `nltSt6` (`nlt_S_split`).
@@ -96,30 +96,30 @@ noncomputable def nltS (t x q : ℝ) : ℝ :=
   24 * (1 + x) * (17 * x + 76) * (q + 1) * (nltC0 t x * q ^ 0 + nltC1 t x * q ^ 1 + nltC2 t x * q ^ 2 + nltC3 t x * q ^ 3 + nltC4 t x * q ^ 4 + nltC5 t x * q ^ 5) + 4 * (q + 1) * (nltA0 t x * q ^ 0 + nltA1 t x * q ^ 1 + nltA2 t x * q ^ 2 + nltA3 t x * q ^ 3 + nltA4 t x * q ^ 4) * hrlVn t x
     - 16 * (1 + x) ^ 2 * (17 * x + 76) * (t + x) * q * (nltB0 t x * q ^ 0 + nltB1 t x * q ^ 1 + nltB2 t x * q ^ 2 + nltB3 t x * q ^ 3) * (q ^ 2 + 10 * q + 1)
 
-/-- **The link**: `24(q + 1)WD · fhComb = S` at `k = 1`. -/
+/-- **The link**: `24(q + 1)WD · nsfComb = S` at `k = 1`. -/
 theorem nlt_link (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
     24 * (q + 1) * (1 + x) * (17 * x + 76) *
-        fhComb (nltAl q) (nltM t x q) t x 1 q (hrlVL t x) (nhLp q) (nhFl t x q) = nltS t x q := by
+        nsfComb (nltAl q) (nltM t x q) t x 1 q (hrlVL t x) (nsrLp q) (nsrFl t x q) = nltS t x q := by
   have hW : (1 : ℝ) + x ≠ 0 := by positivity
   have hD : (17 : ℝ) * x + 76 ≠ 0 := by positivity
   have hq1 : q + 1 ≠ 0 := by positivity
   have hq0 : q ≠ 0 := hq.ne'
-  have hA : fhCv (nltAl q) (nltM t x q) t x 1 q = 4 * (1 + x) * (nltA0 t x * q ^ 0 + nltA1 t x * q ^ 1 + nltA2 t x * q ^ 2 + nltA3 t x * q ^ 3 + nltA4 t x * q ^ 4) := by
-    unfold fhCv nhNv fhTPv nltAl nltM nltA0 nltA1 nltA2 nltA3 nltA4; ring
-  have hC : fhComb (nltAl q) (nltM t x q) t x 1 q 0 0 0 =
+  have hA : nsfCv (nltAl q) (nltM t x q) t x 1 q = 4 * (1 + x) * (nltA0 t x * q ^ 0 + nltA1 t x * q ^ 1 + nltA2 t x * q ^ 2 + nltA3 t x * q ^ 3 + nltA4 t x * q ^ 4) := by
+    unfold nsfCv nsrNv nsfTPv nltAl nltM nltA0 nltA1 nltA2 nltA3 nltA4; ring
+  have hC : nsfComb (nltAl q) (nltM t x q) t x 1 q 0 0 0 =
       (nltC0 t x * q ^ 0 + nltC1 t x * q ^ 1 + nltC2 t x * q ^ 2 + nltC3 t x * q ^ 3 + nltC4 t x * q ^ 4 + nltC5 t x * q ^ 5) - 4 * q * (1 + x) ^ 2 * nltM t x q - 4 * (t + x) ^ 2 * q ^ 2 * nltM t x q := by
-    unfold fhComb fhTP fhKt fhHt fhE0 nhN nltAl nltM nltC0 nltC1 nltC2 nltC3 nltC4 nltC5; ring
-  have hB : fhCL (nltAl q) t x 1 q * (q - 1) =
+    unfold nsfComb nsfTP nsfKt nsfHt nsfE0 nsrN nltAl nltM nltC0 nltC1 nltC2 nltC3 nltC4 nltC5; ring
+  have hB : nsfCL (nltAl q) t x 1 q * (q - 1) =
       -4 * q ^ 2 * (t + x) * (1 + x) * ((nltB0 t x * q ^ 0 + nltB1 t x * q ^ 1 + nltB2 t x * q ^ 2 + nltB3 t x * q ^ 3) - nltM t x q) := by
-    unfold fhCL nhNL nltAl nltM nltB0 nltB1 nltB2 nltB3; ring
+    unfold nsfCL nsrNL nltAl nltM nltB0 nltB1 nltB2 nltB3; ring
   have hV : hrlVL t x = hrlVn t x / (24 * (17 * x + 76) * (1 + x) ^ 2) := by
     unfold hrlVL hrlVn; field_simp; ring
-  rw [fh_comb_dec, hA, hC, hV]
-  have hL : nhLp q * fhCL (nltAl q) t x 1 q =
-      (q ^ 2 + 10 * q + 1) / (6 * q * (q + 1)) * (fhCL (nltAl q) t x 1 q * (q - 1)) := by
-    unfold nhLp; field_simp
+  rw [nsf_comb_dec, hA, hC, hV]
+  have hL : nsrLp q * nsfCL (nltAl q) t x 1 q =
+      (q ^ 2 + 10 * q + 1) / (6 * q * (q + 1)) * (nsfCL (nltAl q) t x 1 q * (q - 1)) := by
+    unfold nsrLp; field_simp
   rw [hL, hB]
-  unfold nhFl nltS
+  unfold nsrFl nltS
   field_simp
   ring
 

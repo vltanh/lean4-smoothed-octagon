@@ -1,11 +1,11 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.PolyDeriv
+public import SmoothedOctagon.Exclusion.Mixed.PolyDeriv
 
 /-!
-# Case M2, forward successor by hand: small tools for the low-`t` large-gap signs
+# Case M2, forward successor: small tools for the low-`t` large-gap signs
 
-Elementary one-variable tools for the hand proofs of the low-`t` signs:
+Elementary one-variable tools for the proofs of the low-`t` signs:
 
 * `nlt_pw`: `z^(k+1) ≤ w z^k` on `0 ≤ z ≤ w`, the step of every termwise monomial bound on an
   interval (a negative monomial is absorbed into the next lower power);
@@ -49,7 +49,7 @@ theorem nlt_taylor3 {f f1 f2 f3 : ℝ → ℝ} {a b c : ℝ} (hd0 : ∀ s, HasDe
     intro w h1 h2
     have hd : ∀ v, HasDerivAt (fun v => f2 v - c * (v - a)) (f3 v - c) v := fun v =>
       ((hd2 v).sub (((hasDerivAt_id v).sub_const a).const_mul c)).congr_deriv (by simp)
-    have := hrl_mono hd (fun v h1 h2 => by linarith [h3 v h1 h2]) le_rfl h1 h2
+    have := poly_mono hd (fun v h1 h2 => by linarith [h3 v h1 h2]) le_rfl h1 h2
     simp only [sub_self, mul_zero, sub_zero] at this
     linarith
   have g1 : ∀ w, a ≤ w → w ≤ b → f1 a + (w - a) * f2 a + c * (w - a) ^ 2 / 2 ≤ f1 w := by
@@ -59,7 +59,7 @@ theorem nlt_taylor3 {f f1 f2 f3 : ℝ → ℝ} {a b c : ℝ} (hd0 : ∀ s, HasDe
       have e1 := ((hasDerivAt_id v).sub_const a).mul_const (f2 a)
       have e2 := ((((hasDerivAt_id v).sub_const a).pow 2).const_mul c).div_const 2
       exact ((hd1 v).sub (e1.add e2)).congr_deriv (by simp; ring)
-    have := hrl_mono hd (fun v h1 h2 => by linarith [g2 v h1 h2]) le_rfl h1 h2
+    have := poly_mono hd (fun v h1 h2 => by linarith [g2 v h1 h2]) le_rfl h1 h2
     simp only [sub_self, zero_mul, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow,
       mul_zero, zero_div, add_zero, sub_zero] at this
     linarith
@@ -70,7 +70,7 @@ theorem nlt_taylor3 {f f1 f2 f3 : ℝ → ℝ} {a b c : ℝ} (hd0 : ∀ s, HasDe
     have e2 := ((((hasDerivAt_id v).sub_const a).pow 2).div_const 2).mul_const (f2 a)
     have e3 := ((((hasDerivAt_id v).sub_const a).pow 3).const_mul c).div_const 6
     exact ((hd0 v).sub ((e1.add e2).add e3)).congr_deriv (by simp; ring)
-  have := hrl_mono hd (fun v h1 h2 => by linarith [g1 v h1 h2]) le_rfl has hsb
+  have := poly_mono hd (fun v h1 h2 => by linarith [g1 v h1 h2]) le_rfl has hsb
   simp only [sub_self, zero_mul, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow,
     zero_div, mul_zero, add_zero, sub_zero] at this
   linarith
@@ -85,13 +85,13 @@ theorem nlt_unimodal {f f1 f2 f3 f4 : ℝ → ℝ} {Y : ℝ} (hd0 : ∀ s, HasDe
     min (f 0) (f Y) ≤ f y := by
   -- `f'''` increases on `[0, Y]`
   have m3 : ∀ u v, 0 ≤ u → u ≤ v → v ≤ Y → f3 u ≤ f3 v :=
-    fun u v hu huv hv => hrl_mono hd3 h4 hu huv hv
+    fun u v hu huv hv => poly_mono hd3 h4 hu huv hv
   -- (A) once `f'' > 0`, it stays positive (`f''` is convex with `f''(0) ≤ 0`)
   have pA : ∀ s1 s2, 0 ≤ s1 → s1 ≤ s2 → s2 ≤ Y → 0 < f2 s1 → 0 < f2 s2 := by
     intro s1 s2 h1 h12 h2 hp
     have hd : ∀ v, HasDerivAt (fun v => f2 v - v * f3 s1) (f3 v - f3 s1) v := fun v =>
       ((hd2 v).sub ((hasDerivAt_id v).mul_const (f3 s1))).congr_deriv (by simp)
-    have a1 := hrl_anti hd (a := 0) (b := s1)
+    have a1 := poly_anti hd (a := 0) (b := s1)
       (fun v hv1 hv2 => by linarith [m3 v s1 hv1 hv2 (h12.trans h2)]) le_rfl h1 le_rfl
     simp only [zero_mul, sub_zero] at a1
     have hs1 : 0 < s1 * f3 s1 := by linarith
@@ -99,7 +99,7 @@ theorem nlt_unimodal {f f1 f2 f3 f4 : ℝ → ℝ} {Y : ℝ} (hd0 : ∀ s, HasDe
       rcases eq_or_lt_of_le h1 with h | h
       · rw [← h] at hs1; simp at hs1
       · exact pos_of_mul_pos_right hs1 h.le
-    have := hrl_mono hd2 (a := s1) (b := Y)
+    have := poly_mono hd2 (a := s1) (b := Y)
       (fun v hv1 hv2 => le_trans hf3.le (m3 s1 v h1 hv1 hv2)) le_rfl h12 h2
     linarith
   -- (B) once `f' < 0`, it stays nonpositive
@@ -110,19 +110,19 @@ theorem nlt_unimodal {f f1 f2 f3 f4 : ℝ → ℝ} {Y : ℝ} (hd0 : ∀ s, HasDe
     have : ∃ s, a ≤ s ∧ s ≤ b ∧ 0 < f2 s := by
       by_contra hno
       push Not at hno
-      have := hrl_anti hd1 (a := a) (b := b) (fun v h1 h2 => hno v h1 h2) le_rfl hab le_rfl
+      have := poly_anti hd1 (a := a) (b := b) (fun v h1 h2 => hno v h1 h2) le_rfl hab le_rfl
       linarith
     obtain ⟨s, hs1, hs2, hs⟩ := this
-    have := hrl_mono hd1 (a := s) (b := Y)
+    have := poly_mono hd1 (a := s) (b := Y)
       (fun v h1 h2 => (pA s v (ha.trans hs1) h1 h2 hs).le) hs2 (le_refl b |>.trans hb) le_rfl
     linarith
   by_cases hA : ∃ a, 0 ≤ a ∧ a ≤ y ∧ f1 a < 0
   · obtain ⟨a, ha0, hay, ha⟩ := hA
-    have := hrl_anti hd0 (a := y) (b := Y)
+    have := poly_anti hd0 (a := y) (b := Y)
       (fun v h1 h2 => pB a v ha0 (hay.trans h1) h2 ha) le_rfl hyY le_rfl
     exact (min_le_right _ _).trans this
   · push Not at hA
-    have := hrl_mono hd0 (a := 0) (b := y) (fun v h1 h2 => hA v h1 h2) le_rfl hy0 le_rfl
+    have := poly_mono hd0 (a := 0) (b := y) (fun v h1 h2 => hA v h1 h2) le_rfl hy0 le_rfl
     exact (min_le_left _ _).trans this
 
 /-- **A sextic above its chord**: with `c₃, c₄, c₅ ≤ 0 ≤ c₆` and `c₂ + 5Y⁴c₆ ≤ 0`, the sextic

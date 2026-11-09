@@ -1,13 +1,13 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Short.Window
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Covector
 
 /-!
 # Case M2, smaller-short window: the algebra of the window-defect field
 
 The window cost and the endpoint traces of the window-defect field, as identities of real
 algebra at the window point `pt = (a/(a + C), B/C - 1, A/a, a²/(a² + 4), v, E)` of the cover
-`Certificates.SmallerShort`.
+`SmallerShort`.
 
 The window is read in the rotated triangular coordinates of its first piece (label `i`, margins
 `(C, a, n)` at the central switch, `(A, B, p)` at the far switch, in the label order
@@ -35,7 +35,7 @@ triangular frame (`df_alg_m`), the cover's `H = [[h₁₁, h₁₂], [h₂₁, -
 
 namespace SmoothedOctagon
 
-open SmoothedPolygons Certificates.SmallerShort
+open SmoothedPolygons SmallerShort
 
 private lemma df_s3 : √3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
 private lemma df_s3pos : (0 : ℝ) < √3 := by positivity

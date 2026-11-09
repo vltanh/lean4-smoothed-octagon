@@ -5,7 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.Reflection
 public import SmoothedOctagon.Exclusion.Mixed.Extract.Compact
 public import SmoothedOctagon.Exclusion.Mixed.Extract.Transport
 public import SmoothedOctagon.Exclusion.Mixed.Extract.WindowAlg
-public import SmoothedOctagon.Exclusion.Mixed.Short.Window
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Covector
 public import SmoothedOctagon.Exclusion.Mixed.Defect.Field
 
 /-!
@@ -41,20 +41,20 @@ Ingredients, all on the costate cycle of the period and its covector calculus
 * for the short window, the middle missing-control slack and the two-turn window-defect
   inequality.
 
-The short window uses `Mixed/Short/Window`: the same-lift transport to the outer centre
+The short window uses `Mixed/SmallerShort/Window/Covector`: the same-lift transport to the outer centre
 (`ss_alg_wEL`) and the middle slack `N_mid = (4/K_a²) G_L` from the missing control
 `M2Calculus.mc_fwd` at the forward switch `C → B` (`ss_alg_mid`), the centre frames
 (`ss_centre_frame`) and the reduced coordinates `u`, `β`, `x` at the window point
 (`ss_point_*`). The window-defect field (`M2Short.defect`: the spectral cost–Casimir inequality on
 the two-turn window, with its endpoint traces and the modulus filter) is `NormalPeriod.df_defect`
 (`Mixed/Defect/`): the window angle of the costate frame (`df_window`) and the traces of
-`Certificates.SmallerShort.Point` identified with the rotated triangular frames (`df_alg_traces`,
+`SmallerShort.Point` identified with the rotated triangular frames (`df_alg_traces`,
 `df_alg_cost`).
 
-Helpers (usable for both windows): `Mixed/Extract/Compact` (`NormalPeriod.wx_m_ge`,
-`wx_half_le_m_add`, `wx_m_le`: the compact-domain bounds on the switch margins),
-`Mixed/Extract/Transport` (`CostateCycle.wx_next_fwd`, `wx_next_rev`: the transports entry by
-entry) and `Mixed/Extract/WindowAlg` (`wx_alg_hd`, `wx_alg_w`, `wx_alg_t`, `wx_alg_cas`: the
+Helpers (usable for both windows): `Mixed/Extract/Compact` (`NormalPeriod.extr_m_ge`,
+`extr_half_le_m_add`, `extr_m_le`: the compact-domain bounds on the switch margins),
+`Mixed/Extract/Transport` (`CostateCycle.extr_next_fwd`, `extr_next_rev`: the transports entry by
+entry) and `Mixed/Extract/WindowAlg` (`extr_alg_hd`, `extr_alg_w`, `extr_alg_t`, `extr_alg_cas`: the
 window identities for `h_d`, `w`, `t` and `γ²`). In `M2Window.ReverseNext` the bound `A ≥ a` is
 global minimality itself; that `A` is a reverse centre is not needed.
 -/
@@ -144,14 +144,14 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
   rw [show m + 2 - 1 = m + 1 by ring] at st_cd
   rw [show m + 3 - 1 = m + 2 by ring] at st_dr
   -- the compact domain
-  have hmc := fun k j => P.wx_m_ge hK k j
+  have hmc := fun k j => P.extr_m_ge hK k j
   have third_cd := P.costateCycle.m2_third_fwd h3'
   rw [show m + 2 - 1 = m + 1 by ring] at third_cd
   have third_dr := P.costateCycle.m2_third_fwd h4'
   rw [show m + 3 - 1 = m + 2 by ring] at third_dr
   have m_cd := hmc (m + 2) (P.costateCycle.lab (m + 2) + 1)
   have m_dr := hmc (m + 3) (P.costateCycle.lab (m + 3) + 1)
-  have pair := fun k => P.wx_half_le_m_add hK (k + 1) (j := P.costateCycle.lab k)
+  have pair := fun k => P.extr_half_le_m_add hK (k + 1) (j := P.costateCycle.lab k)
     (j' := P.costateCycle.lab (k + 1)) (P.costateCycle.lab_ne k).symm
   have pair_ac := pair m
   have pair_cd := pair (m + 1)
@@ -160,8 +160,8 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
   rw [show m + 1 + 1 = m + 2 by ring] at pair_cd
   rw [show m + 2 + 1 = m + 3 by ring] at pair_dr
   have a_ge : 2 / 15 ≤ P.costateCycle.act m := hmc m _
-  have d_le : P.costateCycle.act (m + 2) ≤ 8 := P.wx_m_le hK (m + 2) _
-  have r_le : P.costateCycle.act (m + 3) ≤ 8 := P.wx_m_le hK (m + 3) _
+  have d_le : P.costateCycle.act (m + 2) ≤ 8 := P.extr_m_le hK (m + 2) _
+  have r_le : P.costateCycle.act (m + 3) ≤ 8 := P.extr_m_le hK (m + 3) _
   -- three-arc log-concavity on `a, c, d`
   have hlog := P.costateCycle.three_arc m (by
     rw [show m + 2 = m + 1 + 1 by ring,
@@ -213,22 +213,22 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
       K.M (m + 2) 1 0 / (P.costateCycle.act (m + 2) + P.costateCycle.act (m + 3)) ^ 2 := by
     unfold CostateCycle.m2Norm; simp only [h4, ↓reduceIte]
     rw [show m + 2 + 1 = m + 3 by ring]
-  obtain ⟨x1, y1, z1, w1⟩ := P.costateCycle.wx_next_rev K.transport h0
-  obtain ⟨x2, y2, z2, w2⟩ := P.costateCycle.wx_next_fwd K.transport h3
+  obtain ⟨x1, y1, z1, w1⟩ := P.costateCycle.extr_next_rev K.transport h0
+  obtain ⟨x2, y2, z2, w2⟩ := P.costateCycle.extr_next_fwd K.transport h3
   rw [show m + 1 + 1 = m + 2 by ring] at x2 y2 z2 w2
   rw [e11] at x1 y1
   have hhd : K.M (m + 2) 0 0 = m2hd (P.costateCycle.act m) (P.costateCycle.act (m + 1))
       (P.costateCycle.act (m + 2)) (P.costateCycle.m2Norm K.M m) (K.M m 0 0) := by
     rw [x2, z1, w1, hv']
-    exact wx_alg_hd a0 c0 hqm hq1
+    exact extr_alg_hd a0 c0 hqm hq1
   have hww : P.costateCycle.m2Norm K.M (m + 2) = m2wOf (P.costateCycle.act m)
       (P.costateCycle.act (m + 1)) (P.costateCycle.act (m + 2)) (P.costateCycle.m2Norm K.M (m - 1))
       (P.costateCycle.m2Norm K.M m) (K.M m 0 0) := by
     rw [hw', z2, x1, y1, z1, w1, hu', hv']
-    exact wx_alg_w a0 b0 c0 d0 r0 hqm hq1 hq2
+    exact extr_alg_w a0 b0 c0 d0 r0 hqm hq1 hq2
   have hcas : m2Cas (P.costateCycle.act m) (P.costateCycle.m2Norm K.M (m - 1))
       (P.costateCycle.m2Norm K.M m) (K.M m 0 0) = K.Γ := by
-    rw [hu', hv', ← wx_alg_cas a0 b0 c0 hqm, ← hdet]
+    rw [hu', hv', ← extr_alg_cas a0 b0 c0 hqm, ← hdet]
   have hhq : K.M m 0 0 = m2h (P.costateCycle.act m) (P.costateCycle.act (m - 1))
       (P.costateCycle.act (m + 1)) (P.costateCycle.m2Norm K.M (m - 1))
       (P.costateCycle.m2Norm K.M m) := by
@@ -303,7 +303,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
     have ht : P.costateCycle.m2Norm K.M (m + 3) = m2Next (P.costateCycle.act m)
         (P.costateCycle.act (m + 1)) (P.costateCycle.act (m + 2)) (P.costateCycle.act (m + 3))
         (P.costateCycle.m2Norm K.M (m - 1)) (P.costateCycle.m2Norm K.M m) (K.M m 0 0) := by
-      obtain ⟨-, -, z3, -⟩ := P.costateCycle.wx_next_fwd K.transport h4
+      obtain ⟨-, -, z3, -⟩ := P.costateCycle.extr_next_fwd K.transport h4
       rw [show m + 2 + 1 = m + 3 by ring] at z3
       have ht0 : P.costateCycle.m2Norm K.M (m + 3) = 8 * P.costateCycle.q (m + 3) ^ 2 *
           K.M (m + 3) 1 0 / (P.costateCycle.act (m + 3) + P.costateCycle.act (m + 4)) ^ 2 := by
@@ -312,7 +312,7 @@ theorem m2_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InCompactDom
       rw [ht0, z3, e11', hy2]
       unfold m2Next
       rw [← hhd, ← hww]
-      exact wx_alg_t c0 d0 r0 s0 hq2 hq3 hw'
+      exact extr_alg_t c0 d0 r0 s0 hq2 hq3 hw'
     rw [hq3] at fl_in' fl_out'
     exact ⟨P.costateCycle.act (m + 4), hm _, st_rs, by
       have := mul_lt_mul_of_pos_right q31
@@ -491,10 +491,10 @@ theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InComp
       (Y.q (m + 3) ^ 2 * (Y.act (m + 3) + Y.act (m + 4)) ^ 2) := by
     unfold CostateCycle.m2Norm; simp only [h5, ↓reduceIte]
     rw [show m + 3 + 1 = m + 4 by ring]
-  obtain ⟨x1, y1, z1, w1⟩ := Y.wx_next_rev K.transport h0
-  obtain ⟨x2, y2, z2, w2⟩ := Y.wx_next_fwd K.transport h3
+  obtain ⟨x1, y1, z1, w1⟩ := Y.extr_next_rev K.transport h0
+  obtain ⟨x2, y2, z2, w2⟩ := Y.extr_next_fwd K.transport h3
   rw [show m + 1 + 1 = m + 2 by ring] at x2 y2 z2 w2
-  obtain ⟨x3, y3, -, -⟩ := Y.wx_next_rev K.transport h4
+  obtain ⟨x3, y3, -, -⟩ := Y.extr_next_rev K.transport h4
   rw [show m + 2 + 1 = m + 3 by ring] at x3 y3
   rw [e11] at x1 y1
   obtain ⟨hwt, hELt⟩ := ss_alg_wEL a0 b0 c0 B0 A0 P0 hqm hq1 hq2 hq3 x1 y1 z1 w1 x2 y2 z2 w2 x3 y3
@@ -525,7 +525,7 @@ theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InComp
       have := mul_lt_mul_of_pos_right q31
         (show 0 < (Y.act (m + 2) + Y.act (m + 3)) * (Y.act (m + 3) + Y.act (m + 4)) by positivity)
       linarith
-    a_ge := P.wx_m_ge hK m _, scale := hsc, scale_A := hscA
+    a_ge := P.extr_m_ge hK m _, scale := hsc, scale_A := hscA
     u_eq := sec_C.1
     u_eq' := by rw [← hu1]; exact sec_B.1
     v_eq := by rw [sec_b.2, m2Sec_comm]
@@ -535,7 +535,7 @@ theorem m2_short_window (P : NormalPeriod) (hc : P.IsCompetitive) (hK : P.InComp
     cas_lt := K.cas_lt hc, cas_gt := K.cas_gt hc hK h.1
     w_transport := hwt, EL_transport := hELt
     mid := by
-      rw [Certificates.SmallerShort.Point.fmid, Certificates.SmallerShort.Point.pmid,
+      rw [SmallerShort.Point.fmid, SmallerShort.Point.pmid,
         ss_point_be a0 c0, ss_point_x a0 c0, ss_point_u a0 c0 B0, ← sec_C.1]
       exact hmid
     defect := P.df_defect hc h.1 (by omega) K h2 h1 h0 h3 h4 hAC' }, rfl, rfl, rfl, rfl, rfl,

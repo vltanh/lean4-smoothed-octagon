@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.ShortRun.Centre
+public import SmoothedOctagon.Exclusion.ShortRuns.Centre
 
 /-!
 # The local angle facts of a mixed period
@@ -8,17 +8,17 @@ public import SmoothedOctagon.Exclusion.ShortRun.Centre
 The local inputs of the angle-density bound, at the pieces with equal incident signs of a mixed
 normal period:
 
-* `NormalPeriod.cg_centreData`: every reverse centre (switches `c - 2, c - 1, c, c + 1` signed
+* `NormalPeriod.dens_centreData`: every reverse centre (switches `c - 2, c - 1, c, c + 1` signed
   `+ - - +`) carries the scalar data `m1_CentreData`, so the angle gap
   `m1_angle_gap` (`cos φ < 3/10`) applies to it. This is `NormalPeriod.m1_centreData` without the
   all-short pattern: its proof only reads the four switches around the centre.
-* `CostateCycle.cg_pp_bound`: at a forward piece `+ +`, `e ≥ 0` or `4 e² ≤ d_- d_+` (the angle is
+* `CostateCycle.dens_pp_bound`: at a forward piece `+ +`, `e ≥ 0` or `4 e² ≤ d_- d_+` (the angle is
   at most `2π/3`). It follows from the lower bound `e ≥ X = (-1 + 2r + 2t - ρ + log q)/16`,
   `ρ < r`, and the polynomial inequality
-  `(1 - r - 2t)² ≤ (1 - r + r²)(1 - t + t²)` (`cg_pp_scalar`).
-* `cg_good`: the Gram identity `d_- d_+ - e² = γ²/K²` with `d_± ≥ 3/32` and `4 e² ≤ d_- d_+`
+  `(1 - r - 2t)² ≤ (1 - r + r²)(1 - t + t²)` (`dens_pp_scalar`).
+* `dens_good`: the Gram identity `d_- d_+ - e² = γ²/K²` with `d_± ≥ 3/32` and `4 e² ≤ d_- d_+`
   gives `γ² > 27/256`.
-* `cg_arccos_lt`, `cg_arccos_gt`: `arccos x < π/3` for `x > 1/2`, `arccos x > 2π/3` for
+* `dens_arccos_lt`, `dens_arccos_gt`: `arccos x < π/3` for `x > 1/2`, `arccos x > 2π/3` for
   `x < -1/2`.
 -/
 
@@ -30,7 +30,7 @@ open Real
 
 /-- **The Gram bound**: `d_- d_+ - e² = γ²/K²`, `d_± ≥ 3/32`, `K = a² + 4`, `a > 0`
 and `4 e² ≤ d_- d_+` give `γ² > 27/256`. -/
-theorem cg_good {γ2 a dm dp e : ℝ} (ha : 0 < a) (hdm : 3 / 32 ≤ dm) (hdp : 3 / 32 ≤ dp)
+theorem dens_good {γ2 a dm dp e : ℝ} (ha : 0 < a) (hdm : 3 / 32 ≤ dm) (hdp : 3 / 32 ≤ dp)
     (hgram : dm * dp - e ^ 2 = γ2 / (a ^ 2 + 4) ^ 2) (h4 : 4 * e ^ 2 ≤ dm * dp) :
     27 / 256 < γ2 := by
   have hK : 16 < (a ^ 2 + 4) ^ 2 := by nlinarith [sq_nonneg a, pow_pos ha 2]
@@ -43,7 +43,7 @@ theorem cg_good {γ2 a dm dp e : ℝ} (ha : 0 < a) (hdm : 3 / 32 ≤ dm) (hdp : 
   nlinarith
 
 /-- `arccos x < π/3` for `x > 1/2`. -/
-theorem cg_arccos_lt {x : ℝ} (hx : 1 / 2 < x) : Real.arccos x < π / 3 := by
+theorem dens_arccos_lt {x : ℝ} (hx : 1 / 2 < x) : Real.arccos x < π / 3 := by
   have hpi := Real.pi_pos
   rcases le_or_gt x 1 with h1 | h1
   · have h := Real.arccos_lt_arccos (by norm_num) hx h1
@@ -53,7 +53,7 @@ theorem cg_arccos_lt {x : ℝ} (hx : 1 / 2 < x) : Real.arccos x < π / 3 := by
   · rw [Real.arccos_of_one_le h1.le]; positivity
 
 /-- `arccos x > 2π/3` for `x < -1/2`. -/
-theorem cg_arccos_gt {x : ℝ} (hx : x < -1 / 2) : 2 * π / 3 < Real.arccos x := by
+theorem dens_arccos_gt {x : ℝ} (hx : x < -1 / 2) : 2 * π / 3 < Real.arccos x := by
   have hpi := Real.pi_pos
   rcases le_or_gt (-1) x with h1 | h1
   · have h := Real.arccos_lt_arccos h1 hx (by norm_num)
@@ -66,7 +66,7 @@ theorem cg_arccos_gt {x : ℝ} (hx : x < -1 / 2) : 2 * π / 3 < Real.arccos x :=
 
 /-- The polynomial inequality of a forward piece: `(1 - r - 2t)² ≤ (1 - r + r²)(1 - t + t²)` for
 `r, t > 0`, `r + 2t < 1`. -/
-theorem cg_pp_poly {r t : ℝ} (hr : 0 < r) (ht : 0 < t) (h : r + 2 * t < 1) :
+theorem dens_pp_poly {r t : ℝ} (hr : 0 < r) (ht : 0 < t) (h : r + 2 * t < 1) :
     (1 - r - 2 * t) ^ 2 ≤ (1 - r + r ^ 2) * (1 - t + t ^ 2) := by
   have h1 : 0 ≤ (1 - r - 2 * t) * r := mul_nonneg (by linarith) hr.le
   have h2 : 0 ≤ t * (3 - r - 4 * t) := mul_nonneg ht.le (by linarith)
@@ -77,7 +77,7 @@ theorem cg_pp_poly {r t : ℝ} (hr : 0 < r) (ht : 0 < t) (h : r + 2 * t < 1) :
 /-- **The scalar bound of a forward piece**: with `e ≥ X = (-1 + 2r + 2t - ρ + L)/16`, `L > 0`,
 `ρ < r` (`a p < 4`) and the forward switching bounds `d_- ≥ j(p,a)/2`, `d_+ ≥ j(a,n)/2`, either
 `e ≥ 0` or `4 e² ≤ d_- d_+`. -/
-theorem cg_pp_scalar {a p n dm dp e L : ℝ} (ha : 0 < a) (hp : 0 < p) (hn : 0 < n)
+theorem dens_pp_scalar {a p n dm dp e L : ℝ} (ha : 0 < a) (hp : 0 < p) (hn : 0 < n)
     (hap : a * p < 4) (hL : 0 < L)
     (heX : (-1 + 2 * a * (1 / (a + p) + 1 / (a + n)) - a ^ 2 / (a ^ 2 + 4) + L) / 16 ≤ e)
     (hdm : elJ p a / 2 ≤ dm) (hdp : elJ a n / 2 ≤ dp) : 0 ≤ e ∨ 4 * e ^ 2 ≤ dm * dp := by
@@ -105,7 +105,7 @@ theorem cg_pp_scalar {a p n dm dp e L : ℝ} (ha : 0 < a) (hp : 0 < p) (hn : 0 <
     have : elJ a n / 2 = (1 - t + t ^ 2) / 8 := by
       simp only [elJ, ht]; field_simp; ring
     linarith
-  have hpoly := cg_pp_poly hr0 ht0 (by linarith)
+  have hpoly := dens_pp_poly hr0 ht0 (by linarith)
   have hf1 : 0 < (1 - r + r ^ 2) / 8 := by nlinarith
   have hf2 : 0 < (1 - t + t ^ 2) / 8 := by nlinarith
   have hprod : (1 - r + r ^ 2) / 8 * ((1 - t + t ^ 2) / 8) ≤ dm * dp :=
@@ -118,7 +118,7 @@ namespace CostateCycle
 variable {N : ℕ} (C : CostateCycle N)
 
 /-- **A forward piece `+ +` has angle at most `2π/3`**: `e_k ≥ 0` or `4 e_k² ≤ d_{k-1} d_k`. -/
-theorem cg_pp_bound {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
+theorem dens_pp_bound {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
     (hout : C.lab (k + 1) = C.lab k + 1) :
     0 ≤ C.cre k ∨ 4 * C.cre k ^ 2 ≤ C.swd (k - 1) * C.swd k := by
   have ha := C.act_pos k
@@ -164,7 +164,7 @@ theorem cg_pp_bound {k : ℤ} (hin : C.lab k = C.lab (k - 1) + 1)
     have := C.m_pos k (C.lab k + 1)
     rw [hp']; simp only [act]
     nlinarith [C.m_pos k (C.lab k), C.m_pos k (C.lab k - 1)]
-  exact cg_pp_scalar ha hp hn hap hlog hge hd1 hd2
+  exact dens_pp_scalar ha hp hn hap hlog hge hd1 hd2
 
 end CostateCycle
 
@@ -174,7 +174,7 @@ variable (P : NormalPeriod)
 
 /-- **The centre data at any reverse centre of a mixed period**: the switches
 `c - 2, c - 1, c, c + 1` are `+ - - +`. -/
-theorem cg_centreData (hmix : P.rep.IsMixed) {c : ℤ} (hf2 : P.rep.IsForward (c - 2))
+theorem dens_centreData (hmix : P.rep.IsMixed) {c : ℤ} (hf2 : P.rep.IsForward (c - 2))
     (hr1 : P.rep.IsReverse (c - 1)) (hr0 : P.rep.IsReverse c) (hf1 : P.rep.IsForward (c + 1)) :
     m1_CentreData (P.costateCycle.gam2 0) (P.m1_r c) (P.m1_t c) (P.m1_ρ c) (P.m1_u c)
       (P.m1_v c) (P.m1_E c) := by

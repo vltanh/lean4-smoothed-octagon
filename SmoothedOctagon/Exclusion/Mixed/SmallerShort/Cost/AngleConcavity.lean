@@ -6,7 +6,7 @@ public import Mathlib.Analysis.Calculus.Deriv.Pow
 public import Mathlib.Analysis.Calculus.Deriv.Inv
 
 /-!
-# Gate S6 helper: concavity of the polynomial bound in the angle coordinate
+# Smaller-short window, cost: concavity of the polynomial bound in the angle coordinate
 
 At fixed `R`, `d` and incoming norm `u ≥ 3/4`, the polynomial bound `𝓑(u; R, T, d)` is concave in
 the angle coordinate `T` on `[9/31, 7/19]`: it is
@@ -15,7 +15,7 @@ and the last square convex.
 
 ## Main API
 
-* `hs6_B_concaveOn`: concavity on `[9/31, 7/19]`, for the bound written out with parameters
+* `cost_B_concaveOn`: concavity on `[9/31, 7/19]`, for the bound written out with parameters
   `R, u, Z_U, Z_L`.
 -/
 
@@ -26,7 +26,7 @@ namespace SmoothedOctagon
 open Set
 
 /-- The derivative of `T/(3 + T²)`. -/
-theorem hs6_d_frac1 (T : ℝ) :
+theorem cost_d_frac1 (T : ℝ) :
     HasDerivAt (fun T : ℝ => T / (3 + T ^ 2)) ((3 - T ^ 2) / (3 + T ^ 2) ^ 2) T := by
   have h3 : (3 + T ^ 2) ≠ 0 := by positivity
   have := (hasDerivAt_id' T).fun_div ((hasDerivAt_pow 2 T).const_add 3) h3
@@ -36,7 +36,7 @@ theorem hs6_d_frac1 (T : ℝ) :
   ring
 
 /-- The derivative of `(3 - T²)/(3 + T²)²`. -/
-theorem hs6_d_frac1' (T : ℝ) :
+theorem cost_d_frac1' (T : ℝ) :
     HasDerivAt (fun T : ℝ => (3 - T ^ 2) / (3 + T ^ 2) ^ 2) (2 * T * (T ^ 2 - 9) / (3 + T ^ 2) ^ 3) T := by
   have h3 : (3 + T ^ 2) ≠ 0 := by positivity
   have := ((hasDerivAt_pow 2 T).const_sub 3).fun_div (((hasDerivAt_pow 2 T).const_add 3).fun_pow 2)
@@ -47,7 +47,7 @@ theorem hs6_d_frac1' (T : ℝ) :
   ring
 
 /-- The derivative of `1/(3 + T²)`. -/
-theorem hs6_d_frac2 (T : ℝ) :
+theorem cost_d_frac2 (T : ℝ) :
     HasDerivAt (fun T : ℝ => 1 / (3 + T ^ 2)) (-(2 * T) / (3 + T ^ 2) ^ 2) T := by
   have h3 : (3 + T ^ 2) ≠ 0 := by positivity
   have := (hasDerivAt_const T (1 : ℝ)).fun_div ((hasDerivAt_pow 2 T).const_add 3) h3
@@ -55,7 +55,7 @@ theorem hs6_d_frac2 (T : ℝ) :
   norm_num
 
 /-- The derivative of `-2T/(3 + T²)²`. -/
-theorem hs6_d_frac2' (T : ℝ) :
+theorem cost_d_frac2' (T : ℝ) :
     HasDerivAt (fun T : ℝ => -(2 * T) / (3 + T ^ 2) ^ 2) ((6 * T ^ 2 - 6) / (3 + T ^ 2) ^ 3) T := by
   have h3 : (3 + T ^ 2) ≠ 0 := by positivity
   have := ((hasDerivAt_id' T).const_mul 2).fun_neg.fun_div (((hasDerivAt_pow 2 T).const_add 3).fun_pow 2)
@@ -66,7 +66,7 @@ theorem hs6_d_frac2' (T : ℝ) :
   ring
 
 /-- The derivative of `((R² - T²)/(3 + T²))²`. -/
-theorem hs6_d_sq (R T : ℝ) :
+theorem cost_d_sq (R T : ℝ) :
     HasDerivAt (fun T : ℝ => ((R ^ 2 - T ^ 2) / (3 + T ^ 2)) ^ 2)
       (-(4 * T * (3 + R ^ 2) * (R ^ 2 - T ^ 2)) / (3 + T ^ 2) ^ 3) T := by
   have h3 : (3 + T ^ 2) ≠ 0 := by positivity
@@ -77,7 +77,7 @@ theorem hs6_d_sq (R T : ℝ) :
   ring
 
 /-- The derivative of `-4T(3 + R²)(R² - T²)/(3 + T²)³`. -/
-theorem hs6_d_sq' (R T : ℝ) :
+theorem cost_d_sq' (R T : ℝ) :
     HasDerivAt (fun T : ℝ => -(4 * T * (3 + R ^ 2) * (R ^ 2 - T ^ 2)) / (3 + T ^ 2) ^ 3)
       (4 * (3 + R ^ 2) * (9 * T ^ 2 + 5 * R ^ 2 * T ^ 2 - 3 * R ^ 2 - 3 * T ^ 4) /
         (3 + T ^ 2) ^ 4) T := by
@@ -98,7 +98,7 @@ theorem hs6_d_sq' (R T : ℝ) :
 `1/3 ≤ R ≤ 7/19`, `u ≥ 3/4`, `Z_U ≥ 0`, `Z_L > 0`, the bound
 `𝓑(T) = L(R) + L(T) - (b₁R + b₂T)/2 - (b₁ + b₂)Z_U/8 - c((3 + R²)/(3 + T²) - 1)²/(8Z_L)`,
 `b₁ = 1 - u/((3 + R²)/4)`, `b₂ = 1 - u/((3 + T²)/4)`, is concave on `[9/31, 7/19]`. -/
-theorem hs6_B_concaveOn {R u ZU ZL : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19) (hu : 3 / 4 ≤ u)
+theorem cost_B_concaveOn {R u ZU ZL : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19) (hu : 3 / 4 ≤ u)
     (hZU : 0 ≤ ZU) (hZL : 0 < ZL) :
     ConcaveOn ℝ (Icc (9 / 31) (7 / 19)) (fun T : ℝ =>
       (R / 162 + 161 * R ^ 3 / 1458 - 161 * R ^ 5 / 7290) +
@@ -143,8 +143,8 @@ theorem hs6_B_concaveOn {R u ZU ZL : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19
       ((1 / 162 + 161 * T ^ 2 / 486 - 161 * T ^ 4 / 1458 - 1 / 2) +
         2 * u * ((3 - T ^ 2) / (3 + T ^ 2) ^ 2) + u * ZU / 2 * (-(2 * T) / (3 + T ^ 2) ^ 2) -
         γ * (-(4 * T * (3 + R ^ 2) * (R ^ 2 - T ^ 2)) / (3 + T ^ 2) ^ 3)) T := fun T =>
-    ((((hp T).add ((hs6_d_frac1 T).const_mul (2 * u))).add ((hs6_d_frac2 T).const_mul
-      (u * ZU / 2))).sub ((hs6_d_sq R T).const_mul γ)).const_add K0
+    ((((hp T).add ((cost_d_frac1 T).const_mul (2 * u))).add ((cost_d_frac2 T).const_mul
+      (u * ZU / 2))).sub ((cost_d_sq R T).const_mul γ)).const_add K0
   have hg' : ∀ T : ℝ, HasDerivAt (fun T : ℝ => (1 / 162 + 161 * T ^ 2 / 486 - 161 * T ^ 4 / 1458 - 1 / 2) +
         2 * u * ((3 - T ^ 2) / (3 + T ^ 2) ^ 2) + u * ZU / 2 * (-(2 * T) / (3 + T ^ 2) ^ 2) -
         γ * (-(4 * T * (3 + R ^ 2) * (R ^ 2 - T ^ 2)) / (3 + T ^ 2) ^ 3))
@@ -152,8 +152,8 @@ theorem hs6_B_concaveOn {R u ZU ZL : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19
         u * ZU / 2 * ((6 * T ^ 2 - 6) / (3 + T ^ 2) ^ 3) -
         γ * (4 * (3 + R ^ 2) * (9 * T ^ 2 + 5 * R ^ 2 * T ^ 2 - 3 * R ^ 2 - 3 * T ^ 4) /
           (3 + T ^ 2) ^ 4)) T := fun T =>
-    (((hp' T).add ((hs6_d_frac1' T).const_mul (2 * u))).add ((hs6_d_frac2' T).const_mul
-      (u * ZU / 2))).sub ((hs6_d_sq' R T).const_mul γ)
+    (((hp' T).add ((cost_d_frac1' T).const_mul (2 * u))).add ((cost_d_frac2' T).const_mul
+      (u * ZU / 2))).sub ((cost_d_sq' R T).const_mul γ)
   refine concaveOn_of_hasDerivWithinAt2_nonpos (convex_Icc _ _)
     (fun T _ => (hg T).continuousAt.continuousWithinAt)
     (fun T _ => (hg T).hasDerivWithinAt) (fun T _ => (hg' T).hasDerivWithinAt) ?_

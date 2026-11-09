@@ -1,35 +1,36 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Interface
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs35.Zero
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs35.Cont
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs35.Central
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Interface
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Displacement.ZeroScale
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Displacement.TauTwo
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Displacement.CentralFace.Endpoint
 
 /-!
-# Hand proof of the smaller-short case, gate S3: the leaves
+# Smaller-short window, displacement: the face tests
 
-Assuming `2 ≤ x ≤ 13/6` (gates S1, S2) and `δ ≥ 1/19`: the displacement weight
+Assuming `2 ≤ x ≤ 13/6` (the lower- and upper-ratio bounds) and `δ ≥ 1/19`: the displacement weight
 `m(y) = 4(4 - 3y)/(5α - 1)` gives `G_τ = R_τ + m(w - 3/4) ≥ 0` at the actual root
-(`hs_env_weighted`, `hs3_B_pos`); the convex scale polynomial (`hs_A2_pos`, `hs_phi_convex_max`),
-the zero-scale face (`hs3_zero_neg`) and the `τ = 2` continuation (`hs3_tau2_cont`) reach
-`q* = min{q_c, 1/7}`; the duration tests (`hs3_dur`) and the incoming slope (`hs3_uslope`) reduce to
-`F₀, F₁ < 0` on the central face (`hs3_central_*`) or the outer face (`hs3_outer_*`).
+(`ss_env_weighted`, `dsp_B_pos`); the convex scale polynomial (`ss_A2_pos`, `ss_phi_convex_max`),
+the zero-scale face (`dsp_zero_neg`) and the `τ = 2` continuation (`dsp_tau2_cont`) reach
+`q* = min{q_c, 1/7}`; the duration tests (`dsp_dur`) and the incoming slope (`dsp_uslope`) reduce to
+`F₀, F₁ < 0` on the central face (`dsp_central_*`) or the outer face (`dsp_outer_*`).
 
 ## Main API
 
-* `hs3Fn` (the test `J + n(w_* - 3/4)`), `hs3F0`, `hs3F1`, the ceilings `hsUCB`, `hsUO`, the central
-  boundary `hs3b`, `hs3amin`.
-* `hs3_shape`, `hs3_B_pos`, `hs3_uslope`, `hs3_dur`, `hs3_zero_neg`, `hs3_tau2_cont`,
-  `hs3_central_straight`, `hs3_central_ceiling`, `hs3_beta_mono`, `hs3_log_maj`,
-  `hs3_central_endpoint`, `hs3_outer_enclose`, `hs3_outer_ceiling`.
+* `dspFn` (the test `J + n(w_* - 3/4)`), `dspF0`, `dspF1`, the ceilings `ssUCB`, `ssUO`, the central
+  boundary `dspb`, `dspamin`.
+* `dsp_shape`, `dsp_B_pos`, `dsp_uslope`, `dsp_dur`, `dsp_zero_neg`, `dsp_tau2_cont`,
+  `dsp_central_straight`, `dsp_central_ceiling`, `dsp_beta_mono`, `dsp_log_maj`,
+  `dsp_central_endpoint`, `dsp_outer_enclose`, `dsp_outer_ceiling`.
 
-The zero-scale face, the `τ = 2` continuation and the central-face leaves are proved in the helper
-modules `Hs35/Zero.lean`, `Hs35/Cont.lean`, `Hs35/Central.lean`. The gate uses only the weak actual
-root `R_τ = 0` and `w ≥ 3/4`, and `D > 0` is derived locally from `β < 2α`.
+The zero-scale face, the `τ = 2` continuation and the central-face lemmas are proved in
+`Displacement/ZeroScale`, `Displacement/TauTwo` and `Displacement/CentralFace/Endpoint`. The bound
+uses only the weak actual root `R_τ = 0` and `w ≥ 3/4`, and `D > 0` is derived locally from
+`β < 2α`.
 
-The two face signs and the gate itself are in `S3.lean`, which imports the hand proofs
-`Heavy/S3HandCentral.lean` and `Heavy/S3HandOuter.lean` (which use `hs3_log_maj` and
-`hs3_central_endpoint` from this module).
+The two face signs and the bound itself are in `SmallerShort/Displacement`, which imports
+`Displacement/CentralFace` and `Displacement/OuterFace` (which use `dsp_log_maj` and
+`dsp_central_endpoint` from this module).
 -/
 
 @[expose] public section
@@ -39,38 +40,38 @@ namespace SmoothedOctagon
 open Set Real
 
 /-- The duration test `J + n(w_* - 3/4)`, `J = (u - 1)/r_A + r_A + 1 - q - E_{L,*} + ℓ`. -/
-noncomputable def hs3Fn (x be al u q n ℓ : ℝ) : ℝ :=
-  (u - 1) / hsRA al be + hsRA al be + 1 - q - hsELs x be al u q + ℓ +
-    n * (hsWs x be al u q - 3 / 4)
+noncomputable def dspFn (x be al u q n ℓ : ℝ) : ℝ :=
+  (u - 1) / ssRA al be + ssRA al be + 1 - q - ssELs x be al u q + ℓ +
+    n * (ssWs x be al u q - 3 / 4)
 
 /-- `F₀ = J + n₀(w_* - 3/4)`, `n₀ = 2 + 4(4 - 3y)/k`, `y = 2q/r_A`, `k = 5α - 1`, with
 `ℓ = log(2q/r_A)`; `F₀ = G*_2`. -/
-noncomputable def hs3F0 (x be al u q : ℝ) : ℝ :=
-  hs3Fn x be al u q (2 + 4 * (4 - 3 * (2 * q / hsRA al be)) / (5 * al - 1))
-    (log (2 * q / hsRA al be))
+noncomputable def dspF0 (x be al u q : ℝ) : ℝ :=
+  dspFn x be al u q (2 + 4 * (4 - 3 * (2 * q / ssRA al be)) / (5 * al - 1))
+    (log (2 * q / ssRA al be))
 
 /-- `F₁ = J + n₁(w_* - 3/4)`, `n₁ = T + 4/k`, `T = r_A/q`. -/
-noncomputable def hs3F1 (x be al u q : ℝ) : ℝ :=
-  hs3Fn x be al u q (hsRA al be / q + 4 / (5 * al - 1)) (log (2 * q / hsRA al be))
+noncomputable def dspF1 (x be al u q : ℝ) : ℝ :=
+  dspFn x be al u q (ssRA al be / q + 4 / (5 * al - 1)) (log (2 * q / ssRA al be))
 
 /-- The central ceiling `ū(x, β) = 3/4 + ((x - 1)g(x) + (β - x)/5808)/(β - 1)`,
 `g(x) = V_G(x) - 3/4`. -/
-noncomputable def hsUCB (x be : ℝ) : ℝ := 3 / 4 + ((x - 1) * (hsVG x - 3 / 4) + (be - x) / 5808) / (be - 1)
+noncomputable def ssUCB (x be : ℝ) : ℝ := 3 / 4 + ((x - 1) * (ssVG x - 3 / 4) + (be - x) / 5808) / (be - 1)
 
 /-- The outer ceiling `ū = 3/4 + (x - 1)²(x + β - 2)/((β - 1)(x + 1)(35x + 13))`. -/
-noncomputable def hsUO (x be : ℝ) : ℝ :=
+noncomputable def ssUO (x be : ℝ) : ℝ :=
   3 / 4 + (x - 1) ^ 2 * (x + be - 2) / ((be - 1) * (x + 1) * (35 * x + 13))
 
 /-- The central boundary `b(x, α) = x + (25x/(15x + 36))(α - 1)`. -/
-noncomputable def hs3b (x al : ℝ) : ℝ := x + 25 * x / (15 * x + 36) * (al - 1)
+noncomputable def dspb (x al : ℝ) : ℝ := x + 25 * x / (15 * x + 36) * (al - 1)
 
 /-- The lower `α`-bound of the central face, `a_min(x) = (15x + 511)/475`. -/
-noncomputable def hs3amin (x : ℝ) : ℝ := (15 * x + 511) / 475
+noncomputable def dspamin (x : ℝ) : ℝ := (15 * x + 511) / 475
 
 /-! ### The weighted reduction -/
 
 /-- `α ≤ (5x + 4)/12` from `6α² ≤ x(x + 2)` (`((5x + 4)/12)² - x(x + 2)/6 = (x - 4)²/144`). -/
-lemma hs3_al_le {x al : ℝ} (hx : 0 ≤ x) (h6 : 6 * al ^ 2 ≤ x * (x + 2)) :
+lemma dsp_al_le {x al : ℝ} (hx : 0 ≤ x) (h6 : 6 * al ^ 2 ≤ x * (x + 2)) :
     al ≤ (5 * x + 4) / 12 := by
   have e : ((5 * x + 4) / 12) ^ 2 = x * (x + 2) / 6 + (x - 4) ^ 2 / 144 := by ring
   have h : al ^ 2 ≤ ((5 * x + 4) / 12) ^ 2 := by
@@ -80,11 +81,11 @@ lemma hs3_al_le {x al : ℝ} (hx : 0 ≤ x) (h6 : 6 * al ^ 2 ≤ x * (x + 2)) :
 /-- **Shape bounds on the displacement domain**: for
 `2 ≤ x ≤ 13/6`, `1 ≤ α ≤ x ≤ β`, `δ = β/x - 1 ≥ 1/19`, `α ≥ 1 + c(x)δ` and
 `β ≥ x(9x + 8α)/(9x + 8)`: `α ≥ 108/95`, `β < 2α`, `1/3 < r_A ≤ 13/30`. -/
-theorem hs3_shape {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al) (hax : al ≤ x)
+theorem dsp_shape {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb : x ≤ be) (hδ : 1 / 19 ≤ be / x - 1)
     (hL : 1 + (4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) * (be / x - 1) ≤ al)
     (hU : x * (9 * x + 8 * al) / (9 * x + 8) ≤ be) :
-    108 / 95 ≤ al ∧ be < 2 * al ∧ 1 / 3 < hsRA al be ∧ hsRA al be ≤ 13 / 30 := by
+    108 / 95 ≤ al ∧ be < 2 * al ∧ 1 / 3 < ssRA al be ∧ ssRA al be ≤ 13 / 30 := by
   have hx0 : 0 < x := by linarith
   have h71 : 0 < 7 * x + 1 := by linarith
   have hal0 : 0 < al := by linarith
@@ -110,8 +111,8 @@ theorem hs3_shape {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 �
   have hU' : x * (9 * x + 8 * al) ≤ be * (9 * x + 8) := by
     rwa [div_le_iff₀ (by positivity)] at hU
   refine ⟨h108, hb2, ?_, ?_⟩
-  · rw [hsRA, lt_div_iff₀ (by positivity)]; linarith
-  · rw [hsRA, div_le_iff₀ (by positivity)]
+  · rw [ssRA, lt_div_iff₀ (by positivity)]; linarith
+  · rw [ssRA, div_le_iff₀ (by positivity)]
     have : 17 * al * (9 * x + 8) ≤ 13 * be * (9 * x + 8) := by
       nlinarith [mul_nonneg hal0.le (sub_nonneg.2 hax), mul_nonneg hx0.le (sub_nonneg.2 hx)]
     have := le_of_mul_le_mul_right this (by positivity : (0 : ℝ) < 9 * x + 8)
@@ -119,7 +120,7 @@ theorem hs3_shape {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 �
 
 /-- `c(α) = -5α² + 10αx - 3α + 2x ≥ 0` on `1 ≤ α ≤ x` (concave in `α`, endpoint values
 `12x - 8`, `5x² - x`). -/
-private lemma hs3_cα {x al : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x) :
+private lemma dsp_cα {x al : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x) :
     0 ≤ -5 * al ^ 2 + 10 * al * x - 3 * al + 2 * x := by
   have h : (x - 1) * (-5 * al ^ 2 + 10 * al * x - 3 * al + 2 * x) =
       (x - al) * (12 * x - 8) + (al - 1) * (5 * x ^ 2 - x) + 5 * ((al - 1) * (x - al)) * (x - 1) := by
@@ -135,13 +136,13 @@ private lemma hs3_cα {x al : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤
   linarith
 
 /-- `kα(α + β) - (k + 2)(D - S) > 0`, `k = 5α - 1`. -/
-private lemma hs3_kQ {x be al : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x) (hxb : x ≤ be) :
+private lemma dsp_kQ {x be al : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x) (hxb : x ≤ be) :
     0 < (5 * al - 1) * (al * (al + be)) -
       (5 * al - 1 + 2) * (al ^ 2 + 2 * al * be + 1 + 2 * x - 2 * be * x - (1 + x)) := by
   have e : (5 * al - 1) * (al * (al + be)) -
       (5 * al - 1 + 2) * (al ^ 2 + 2 * al * be + 1 + 2 * x - 2 * be * x - (1 + x)) =
       be * (-5 * al ^ 2 + 10 * al * x - 3 * al + 2 * x) - 2 * al ^ 2 - 5 * al * x - x := by ring
-  have hc := hs3_cα hx hal hax
+  have hc := dsp_cα hx hal hax
   have hg : (x - 1) * (x * (-5 * al ^ 2 + 10 * al * x - 3 * al + 2 * x) - 2 * al ^ 2 - 5 * al * x - x)
       = (x - al) * (12 * x ^ 2 - 14 * x - 2) + (al - 1) * (5 * x ^ 3 - 8 * x ^ 2 - x) +
         (5 * x + 2) * ((al - 1) * (x - al)) * (x - 1) := by ring
@@ -167,8 +168,8 @@ private lemma hs3_kQ {x be al : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al �
   rw [e]
   nlinarith [mul_le_mul_of_nonneg_right hxb hc]
 
-/-- The core of `hs3_B_pos` in plain variables. -/
-private lemma hs3_B_core {x be al L rho q rA s τ D : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x)
+/-- The core of `dsp_B_pos` in plain variables. -/
+private lemma dsp_B_core {x be al L rho q rA s τ D : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb : x ≤ be) (hL0 : 0 < L) (hρ : 0 < rho) (hs : rho * (1 + x) ≤ s) (hτ : 2 ≤ τ)
     (hτT : τ * q ≤ rA) (hLq : L * rho * al ^ 2 = q) (hrAe : rA * (al + be) = al) (hrA0 : 0 < rA)
     (hD : D = al ^ 2 + 2 * al * be + 1 + 2 * x - 2 * be * x) :
@@ -211,7 +212,7 @@ private lemma hs3_B_core {x be al L rho q rA s τ D : ℝ} (hx : 2 ≤ x) (hal :
     have := mul_le_mul_of_nonneg_left e5 hrA0.le
     linarith
   have hpoly : 0 < k * (al * (al + be)) - (k + 2) * (D - (1 + x)) := by
-    rw [hk, hD]; exact hs3_kQ hx hal hax hxb
+    rw [hk, hD]; exact dsp_kQ hx hal hax hxb
   have hDS' : 0 < D - (1 + x) := by linarith
   have hfin : (τ + m) * q * k * (D - (1 + x)) < k * al ^ 2 := by
     have h1 : (τ + m) * q * k * (D - (1 + x)) ≤ rA * (k + 2) * (D - (1 + x)) :=
@@ -230,23 +231,23 @@ private lemma hs3_B_core {x be al L rho q rA s τ D : ℝ} (hx : 2 ≤ x) (hal :
 
 /-- **The displacement-weighted positive factor**: for `x ≥ 2`, `1 ≤ α ≤ x ≤ β`, `ρ > 0`,
 `s ≥ ρ(1 + x)`, `2 ≤ τ`, `τq ≤ r_A`, with `m = 4(4 - 3τq/r_A)/(5α - 1)`: `B_{τ+m}(s) > 0`. -/
-theorem hs3_B_pos {x be al rho s τ : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x) (hxb : x ≤ be)
-    (hρ : 0 < rho) (hs : rho * (1 + x) ≤ s) (hτ : 2 ≤ τ) (hτT : τ * hsQ al rho ≤ hsRA al be) :
-    0 < 1 + (τ + 4 * (4 - 3 * (τ * hsQ al rho / hsRA al be)) / (5 * al - 1)) *
-      (hsLam al rho * s - hsLam al rho * rho * hsDg x be al) := by
+theorem dsp_B_pos {x be al rho s τ : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x) (hxb : x ≤ be)
+    (hρ : 0 < rho) (hs : rho * (1 + x) ≤ s) (hτ : 2 ≤ τ) (hτT : τ * ssQ al rho ≤ ssRA al be) :
+    0 < 1 + (τ + 4 * (4 - 3 * (τ * ssQ al rho / ssRA al be)) / (5 * al - 1)) *
+      (ssLam al rho * s - ssLam al rho * rho * ssDg x be al) := by
   have hal0 : 0 < al := by linarith
   have hbe0 : 0 < be := by linarith
   have hden : 0 < 1 + rho * (al ^ 2 - 1) := by
     have : 0 ≤ al ^ 2 - 1 := by nlinarith
     positivity
-  have hL0 : 0 < hsLam al rho := by rw [hsLam]; positivity
-  have hrA0 : 0 < hsRA al be := by rw [hsRA]; positivity
-  exact hs3_B_core hx hal hax hxb hL0 hρ hs hτ hτT (by rw [hsQ]; ring)
-    (by rw [hsRA]; field_simp) hrA0 rfl
+  have hL0 : 0 < ssLam al rho := by rw [ssLam]; positivity
+  have hrA0 : 0 < ssRA al be := by rw [ssRA]; positivity
+  exact dsp_B_core hx hal hax hxb hL0 hρ hs hτ hτT (by rw [ssQ]; ring)
+    (by rw [ssRA]; field_simp) hrA0 rfl
 
 /-- The incoming slope `c_u(n) = 1/r_A + λS - 2d + nd(d - λS) > 17/182`
 (`λ = 1 - εq`, `d = qΔ`), in plain variables. -/
-private lemma hs3_cu_pos {S R q ε Δ n : ℝ} (hS : 3 ≤ S) (hS' : S ≤ 19 / 6) (hR : 30 / 13 ≤ R)
+private lemma dsp_cu_pos {S R q ε Δ n : ℝ} (hS : 3 ≤ S) (hS' : S ≤ 19 / 6) (hR : 30 / 13 ≤ R)
     (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hε0 : 0 ≤ ε) (hε1 : ε ≤ 1) (hΔ0 : 0 < Δ) (hΔ3 : Δ < 3)
     (hn : 0 ≤ n) (hnd : n * (q * Δ) ≤ 1 + q * Δ) :
     17 / 182 < R + S - q * (2 * Δ + ε * S) + n * (-(q * Δ * S) + q ^ 2 * (Δ ^ 2 + Δ * ε * S)) := by
@@ -271,24 +272,24 @@ private lemma hs3_cu_pos {S R q ε Δ n : ℝ} (hS : 3 ≤ S) (hS' : S ≤ 19 / 
 `2 ≤ x ≤ 13/6`, `11/10 ≤ α ≤ x ≤ β`, `0 < D < α(α + β)`, `D < 3α²`, `0 < q ≤ 1/7`,
 `r_A ≤ 13/30` and `0 ≤ n ≤ r_A/q + 1`, the test `J + n(w_* - 3/4)` is nondecreasing in `u`
 (slope `c_u(n) > 17/182`). -/
-theorem hs3_uslope {x be al q n ℓ u u' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 11 / 10 ≤ al)
-    (hax : al ≤ x) (hxb : x ≤ be) (hD : 0 < hsDg x be al) (hDQ : hsDg x be al < al * (al + be))
-    (hD3 : hsDg x be al < 3 * al ^ 2) (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hrA : hsRA al be ≤ 13 / 30)
-    (hn : 0 ≤ n) (hnT : n ≤ hsRA al be / q + 1) (huu : u ≤ u') :
-    hs3Fn x be al u q n ℓ ≤ hs3Fn x be al u' q n ℓ := by
+theorem dsp_uslope {x be al q n ℓ u u' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 11 / 10 ≤ al)
+    (hax : al ≤ x) (hxb : x ≤ be) (hD : 0 < ssDg x be al) (hDQ : ssDg x be al < al * (al + be))
+    (hD3 : ssDg x be al < 3 * al ^ 2) (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hrA : ssRA al be ≤ 13 / 30)
+    (hn : 0 ≤ n) (hnT : n ≤ ssRA al be / q + 1) (huu : u ≤ u') :
+    dspFn x be al u q n ℓ ≤ dspFn x be al u' q n ℓ := by
   have _ := hax
   have hal0 : 0 < al := by linarith
   have hbe0 : 0 < be := by linarith
-  have hrA0 : 0 < hsRA al be := by rw [hsRA]; positivity
-  set Δ := hsDg x be al / al ^ 2 with hΔ
+  have hrA0 : 0 < ssRA al be := by rw [ssRA]; positivity
+  set Δ := ssDg x be al / al ^ 2 with hΔ
   set ε := 1 - 1 / al ^ 2 with hε
-  have e : hs3Fn x be al u' q n ℓ - hs3Fn x be al u q n ℓ = (u' - u) *
-      (1 / hsRA al be + (1 + x) - q * (2 * Δ + ε * (1 + x)) +
+  have e : dspFn x be al u' q n ℓ - dspFn x be al u q n ℓ = (u' - u) *
+      (1 / ssRA al be + (1 + x) - q * (2 * Δ + ε * (1 + x)) +
         n * (-(q * Δ * (1 + x)) + q ^ 2 * (Δ ^ 2 + Δ * ε * (1 + x)))) := by
-    unfold hs3Fn hsELs hsWs hsA1 hsA2 hsA3 hsE0
+    unfold dspFn ssELs ssWs ssA1 ssA2 ssA3 ssE0
     rw [← hΔ, ← hε]
     ring
-  have hR : 30 / 13 ≤ 1 / hsRA al be := by
+  have hR : 30 / 13 ≤ 1 / ssRA al be := by
     rw [le_div_iff₀ hrA0]; linarith
   have hal2 : 1 ≤ al ^ 2 := by nlinarith
   have hε0 : 0 ≤ ε := by rw [hε, sub_nonneg, div_le_one (by positivity)]; exact hal2
@@ -296,18 +297,18 @@ theorem hs3_uslope {x be al q n ℓ u u' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 /
                          linarith
   have hΔ0 : 0 < Δ := by rw [hΔ]; positivity
   have hΔ3 : Δ < 3 := by rw [hΔ, div_lt_iff₀ (by positivity)]; exact hD3
-  have hrAΔ : hsRA al be * Δ < 1 := by
-    have : hsRA al be * Δ = hsDg x be al / (al * (al + be)) := by
-      rw [hsRA, hΔ]; field_simp
+  have hrAΔ : ssRA al be * Δ < 1 := by
+    have : ssRA al be * Δ = ssDg x be al / (al * (al + be)) := by
+      rw [ssRA, hΔ]; field_simp
     rw [this, div_lt_one (by positivity)]; exact hDQ
   have hnd : n * (q * Δ) ≤ 1 + q * Δ := by
-    have h1 : n * (q * Δ) ≤ (hsRA al be / q + 1) * (q * Δ) :=
+    have h1 : n * (q * Δ) ≤ (ssRA al be / q + 1) * (q * Δ) :=
       mul_le_mul_of_nonneg_right hnT (by positivity)
-    have h2 : (hsRA al be / q + 1) * (q * Δ) = hsRA al be * Δ + q * Δ := by field_simp
+    have h2 : (ssRA al be / q + 1) * (q * Δ) = ssRA al be * Δ + q * Δ := by field_simp
     linarith
-  have hc := hs3_cu_pos (by linarith : (3 : ℝ) ≤ 1 + x) (by linarith : 1 + x ≤ (19 : ℝ) / 6) hR hq hq7
+  have hc := dsp_cu_pos (by linarith : (3 : ℝ) ≤ 1 + x) (by linarith : 1 + x ≤ (19 : ℝ) / 6) hR hq hq7
     hε0 hε1 hΔ0 hΔ3 hn hnd
-  have : 0 ≤ (u' - u) * (1 / hsRA al be + (1 + x) - q * (2 * Δ + ε * (1 + x)) +
+  have : 0 ≤ (u' - u) * (1 / ssRA al be + (1 + x) - q * (2 * Δ + ε * (1 + x)) +
         n * (-(q * Δ * (1 + x)) + q ^ 2 * (Δ ^ 2 + Δ * ε * (1 + x)))) :=
     mul_nonneg (by linarith) (by linarith)
   linarith
@@ -315,25 +316,25 @@ theorem hs3_uslope {x be al q n ℓ u u' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 /
 /-- **The two duration tests**: for `α ≥ 1`, `β > 0`, `q > 0`, `2 ≤ τ`, `τq ≤ r_A`, the weighted
 envelope `G*_τ = R*_τ + m(τq/r_A)(w_* - 3/4)` satisfies `G*_τ ≤ max{F₀, F₁}` (exact remainder
 `τ/4 - 1/τ - log(τ/2) ≥ 0`). -/
-theorem hs3_dur {x be al u q τ : ℝ} (hal : 1 ≤ al) (hbe : 0 < be) (hq : 0 < q) (hτ : 2 ≤ τ)
-    (hτT : τ * q ≤ hsRA al be) :
-    hsF x be al u q τ (log (τ * q / hsRA al be)) (4 * (4 - 3 * (τ * q / hsRA al be)) / (5 * al - 1)) ≤
-      max (hs3F0 x be al u q) (hs3F1 x be al u q) := by
-  have hrA0 : 0 < hsRA al be := by rw [hsRA]; apply div_pos <;> linarith
+theorem dsp_dur {x be al u q τ : ℝ} (hal : 1 ≤ al) (hbe : 0 < be) (hq : 0 < q) (hτ : 2 ≤ τ)
+    (hτT : τ * q ≤ ssRA al be) :
+    ssF x be al u q τ (log (τ * q / ssRA al be)) (4 * (4 - 3 * (τ * q / ssRA al be)) / (5 * al - 1)) ≤
+      max (dspF0 x be al u q) (dspF1 x be al u q) := by
+  have hrA0 : 0 < ssRA al be := by rw [ssRA]; apply div_pos <;> linarith
   have hk0 : 0 < 5 * al - 1 := by linarith
   have hτ0 : 0 < τ := by linarith
-  have hlog : log (τ * q / hsRA al be) = log (2 * q / hsRA al be) + log (τ / 2) := by
+  have hlog : log (τ * q / ssRA al be) = log (2 * q / ssRA al be) + log (τ / 2) := by
     rw [← Real.log_mul (by positivity) (by positivity)]; congr 1; field_simp
   have hrem : log (τ / 2) ≤ τ / 4 - 1 / τ := by
     have := ss_log_le_half (z := τ / 2) (by linarith)
     have e : (τ / 2 - (τ / 2)⁻¹) / 2 = τ / 4 - 1 / τ := by field_simp; ring
     linarith
-  have hτT' : τ ≤ hsRA al be / q := by rw [le_div_iff₀ hq]; exact hτT
-  unfold hsF hs3F0 hs3F1 hs3Fn
+  have hτT' : τ ≤ ssRA al be / q := by rw [le_div_iff₀ hq]; exact hτT
+  unfold ssF dspF0 dspF1 dspFn
   rw [hlog]
-  generalize hsWs x be al u q = w
-  generalize hsELs x be al u q = EL
-  generalize hsRA al be = rA at hrA0 hτT'
+  generalize ssWs x be al u q = w
+  generalize ssELs x be al u q = EL
+  generalize ssRA al be = rA at hrA0 hτT'
   generalize log (2 * q / rA) = ℓ
   set B := 1 - 12 * q / (rA * (5 * al - 1)) with hB
   have e0 : (w - 1) * τ + 1 / τ + (u - 1) / rA + rA + 1 - q - EL + (ℓ + log (τ / 2)) +
@@ -359,40 +360,40 @@ theorem hs3_dur {x be al u q τ : ℝ} (hal : 1 ≤ al) (hbe : 0 < be) (hq : 0 <
 `2 ≤ x ≤ 13/6`, `1 < α ≤ x ≤ β`, `β ≥ x(9x + 8α)/(9x + 8)`, `1/3 < r_A ≤ 13/30`,
 `3/4 ≤ u ≤ U(r_A)`, `D < α(α + β)` and `0 < p ≤ r_A`: `Φ(0) = C(p) + m/4 < 0`,
 `m = 4(4 - 3p/r_A)/(5α - 1)`.
-Proof: `hs35_zero_neg` (`Hs35/Zero.lean`), on the edges `x = 2` and `x = α`, with the `x`-lowering
+Proof: `dspf_zero_neg` (`SmallerShort/Displacement/ZeroScale.lean`), on the edges `x = 2` and `x = α`, with the `x`-lowering
 and the `r`-raising done algebraically by exact divided differences. -/
-theorem hs3_zero_neg {x be al u p : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 < al) (hax : al ≤ x)
-    (hxb : x ≤ be) (hU : x * (9 * x + 8 * al) / (9 * x + 8) ≤ be) (hrA : 1 / 3 < hsRA al be)
-    (hrA' : hsRA al be ≤ 13 / 30) (hu : 3 / 4 ≤ u) (hurA : u ≤ m2U (hsRA al be))
-    (hDQ : hsDg x be al < al * (al + be)) (hp : 0 < p) (hpr : p ≤ hsRA al be) :
-    hsPhi x be al u p (4 * (4 - 3 * (p / hsRA al be)) / (5 * al - 1)) 0 < 0 :=
-  hs35_zero_neg hx hx2 hal hax hxb hU hrA hrA' hu hurA hDQ hp hpr
+theorem dsp_zero_neg {x be al u p : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 < al) (hax : al ≤ x)
+    (hxb : x ≤ be) (hU : x * (9 * x + 8 * al) / (9 * x + 8) ≤ be) (hrA : 1 / 3 < ssRA al be)
+    (hrA' : ssRA al be ≤ 13 / 30) (hu : 3 / 4 ≤ u) (hurA : u ≤ m2U (ssRA al be))
+    (hDQ : ssDg x be al < al * (al + be)) (hp : 0 < p) (hpr : p ≤ ssRA al be) :
+    ssPhi x be al u p (4 * (4 - 3 * (p / ssRA al be)) / (5 * al - 1)) 0 < 0 :=
+  dspf_zero_neg hx hx2 hal hax hxb hU hrA hrA' hu hurA hDQ hp hpr
 
 /-- **The `τ = 2` continuation**: for
 `2 ≤ x ≤ 13/6`, `11/10 ≤ α ≤ x ≤ β`, `1/3 ≤ r_A`, `3/4 ≤ u ≤ 19/25`,
 `0 < D < 3α²`, `G*_2(q) = R*_2(q) + m(2q/r_A)(w_*(q) - 3/4)` is strictly increasing on `(0, 1/7]`.
-Proof: `hs35_tau2_cont` (`Hs35/Cont.lean`): `B₂, B₃` are affine in `u` and in `1/r_A`, so the sign
+Proof: `dspf_tau2_cont` (`SmallerShort/Displacement/TauTwo.lean`): `B₂, B₃` are affine in `u` and in `1/r_A`, so the sign
 reduces to four corners, each with a negative discriminant in `Δ`. -/
-theorem hs3_tau2_cont {x be al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 11 / 10 ≤ al)
-    (hax : al ≤ x) (hxb : x ≤ be) (hrA : 1 / 3 ≤ hsRA al be) (hu : 3 / 4 ≤ u) (hu' : u ≤ 19 / 25)
-    (hD : 0 < hsDg x be al) (hD3 : hsDg x be al < 3 * al ^ 2) (hq₁ : 0 < q₁) (hq : q₁ < q₂)
+theorem dsp_tau2_cont {x be al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 11 / 10 ≤ al)
+    (hax : al ≤ x) (hxb : x ≤ be) (hrA : 1 / 3 ≤ ssRA al be) (hu : 3 / 4 ≤ u) (hu' : u ≤ 19 / 25)
+    (hD : 0 < ssDg x be al) (hD3 : ssDg x be al < 3 * al ^ 2) (hq₁ : 0 < q₁) (hq : q₁ < q₂)
     (hq₂ : q₂ ≤ 1 / 7) :
-    hsF x be al u q₁ 2 (log (2 * q₁ / hsRA al be))
-        (4 * (4 - 3 * (2 * q₁ / hsRA al be)) / (5 * al - 1)) <
-      hsF x be al u q₂ 2 (log (2 * q₂ / hsRA al be))
-        (4 * (4 - 3 * (2 * q₂ / hsRA al be)) / (5 * al - 1)) :=
-  hs35_tau2_cont hx hx2 hal hax hxb hrA hu hu' hD hD3 hq₁ hq hq₂
+    ssF x be al u q₁ 2 (log (2 * q₁ / ssRA al be))
+        (4 * (4 - 3 * (2 * q₁ / ssRA al be)) / (5 * al - 1)) <
+      ssF x be al u q₂ 2 (log (2 * q₂ / ssRA al be))
+        (4 * (4 - 3 * (2 * q₂ / ssRA al be)) / (5 * al - 1)) :=
+  dspf_tau2_cont hx hx2 hal hax hxb hrA hu hu' hD hD3 hq₁ hq hq₂
 
 /-! ### The central face `q* = q_c ≤ 1/7` -/
 
 /-- **The straight order bound**: for
 `2 ≤ x ≤ 13/6`, `δ = β/x - 1 ≥ 1/19` and the quadratic order `α ≥ 1 + (c(x) + 1/23)δ`
-(`hs_quad_order`, `δ/(1 + 4δ) ≥ 1/23`):
+(`ss_quad_order`, `δ/(1 + 4δ) ≥ 1/23`):
 `a_min(x) < α` and `β < b(x, α)`. -/
-theorem hs3_central_straight {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6)
+theorem dsp_central_straight {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6)
     (hδ : 1 / 19 ≤ be / x - 1)
     (hQ : 1 + ((4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) + 1 / 23) * (be / x - 1) ≤ al) :
-    hs3amin x < al ∧ be < hs3b x al := by
+    dspamin x < al ∧ be < dspb x al := by
   have hx0 : 0 < x := by linarith
   have h71 : 0 < 7 * x + 1 := by linarith
   have h36 : 0 < 15 * x + 36 := by linarith
@@ -408,8 +409,8 @@ theorem hs3_central_straight {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6)
   constructor
   · have : (15 * x + 36) / 25 * (1 / 19) ≤ (15 * x + 36) / 25 * δ :=
       mul_le_mul_of_nonneg_left hδ (by positivity)
-    rw [hs3amin]; linarith
-  · rw [hs3b, hbe]
+    rw [dspamin]; linarith
+  · rw [dspb, hbe]
     have hB : 0 < 25 * x / (15 * x + 36) := by positivity
     have := mul_lt_mul_of_pos_left (by linarith : (15 * x + 36) / 25 * δ < al - 1) hB
     have e : 25 * x / (15 * x + 36) * ((15 * x + 36) / 25 * δ) = x * δ := by field_simp
@@ -417,34 +418,34 @@ theorem hs3_central_straight {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6)
 
 /-- **The central incoming ceiling**: on `2 ≤ x ≤ 13/6`, `α ≥ 108/95`, `6α² ≤ x(x + 2)`,
 `20x/19 ≤ β ≤ x + 5x(α - 1)/13`: `Sec(1, x, β) ≤ ū(x, β)`. -/
-theorem hs3_central_ceiling {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ al)
+theorem dsp_central_ceiling {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : 20 * x / 19 ≤ be)
-    (hb' : be ≤ x + 5 * x * (al - 1) / 13) : m2Sec 1 x be ≤ hsUCB x be := by
+    (hb' : be ≤ x + 5 * x * (al - 1) / 13) : m2Sec 1 x be ≤ ssUCB x be := by
   have _ := hal
   have hx0 : 0 < x := by linarith
   have hxb : x ≤ be := by
     have : x ≤ 20 * x / 19 := by rw [le_div_iff₀ (by norm_num)]; linarith
     linarith
   -- `α ≤ (5x + 4)/12`, so `(β - x)/x ≤ 85/936 < 1/11`
-  have hα : al ≤ (5 * x + 4) / 12 := hs3_al_le hx0.le hqc
+  have hα : al ≤ (5 * x + 4) / 12 := dsp_al_le hx0.le hqc
   have hbx : (be - x) * 11 ≤ x := by
     have : 5 * x * (al - 1) / 13 * 11 ≤ x := by
       rw [div_mul_eq_mul_div, div_le_iff₀ (by norm_num)]; nlinarith
     nlinarith
   have hadd := ss_sec_add (A := 1) (B := x) (M := x) (P := be) one_pos hx0 hx0 (by linarith)
-  have hV := hs_V_lt_VG (by linarith : 1 < x)
-  have htail := hs_sec_tail_le hx0 hxb
+  have hV := ss_V_lt_VG (by linarith : 1 < x)
+  have htail := ss_sec_tail_le hx0 hxb
   have ht2 : (be - x) ^ 2 / (48 * x ^ 2) ≤ 1 / 5808 := by
     rw [div_le_div_iff₀ (by positivity) (by norm_num)]
     nlinarith [mul_le_mul hbx hbx (by linarith) hx0.le]
   have h1 : (be - x) * m2Sec x x be ≤ (be - x) * (3 / 4 + 1 / 5808) :=
     mul_le_mul_of_nonneg_left (by linarith) (by linarith)
-  have h2 : (x - 1) * m2Sec 1 x x ≤ (x - 1) * hsVG x :=
+  have h2 : (x - 1) * m2Sec 1 x x ≤ (x - 1) * ssVG x :=
     mul_le_mul_of_nonneg_left hV.le (by linarith)
-  rw [hsUCB, ← sub_nonneg]
+  rw [ssUCB, ← sub_nonneg]
   have hb1 : 0 < be - 1 := by linarith
-  have e : 3 / 4 + ((x - 1) * (hsVG x - 3 / 4) + (be - x) / 5808) / (be - 1) - m2Sec 1 x be =
-      ((x - 1) * hsVG x + (be - x) * (3 / 4 + 1 / 5808) - (be - 1) * m2Sec 1 x be) / (be - 1) := by
+  have e : 3 / 4 + ((x - 1) * (ssVG x - 3 / 4) + (be - x) / 5808) / (be - 1) - m2Sec 1 x be =
+      ((x - 1) * ssVG x + (be - x) * (3 / 4 + 1 / 5808) - (be - 1) * m2Sec 1 x be) / (be - 1) := by
     field_simp; ring
   rw [e]
   apply div_nonneg _ hb1.le
@@ -454,36 +455,36 @@ theorem hs3_central_ceiling {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) 
 `2 ≤ x ≤ 13/6`, `α ≥ 108/95`, `6α² ≤ x(x + 2)`, for
 `20x/19 ≤ β₁ ≤ β₂ ≤ min{2α, x + 5x(α - 1)/13}`, `F_i(x, α, β₁; ū) ≤ F_i(x, α, β₂; ū)` at `q = q_c`
 (`(F₀)_β > 7/1500`, `(F₁)_β > 1/1200`).
-Proof: `hs35_beta_mono` (`Hs35/Central.lean`): exact differences between `β₁` and `β₂` (the secant
+Proof: `dspf_beta_mono` (`SmallerShort/Displacement/CentralFace/Endpoint.lean`): exact differences between `β₁` and `β₂` (the secant
 form of the β-derivative bound). -/
-theorem hs3_beta_mono {x al be₁ be₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ al)
+theorem dsp_beta_mono {x al be₁ be₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 108 / 95 ≤ al)
     (hqc : 6 * al ^ 2 ≤ x * (x + 2)) (hb : 20 * x / 19 ≤ be₁) (hbb : be₁ ≤ be₂)
     (hb2 : be₂ ≤ 2 * al) (hb2' : be₂ ≤ x + 5 * x * (al - 1) / 13) :
-    hs3F0 x be₁ al (hsUCB x be₁) (hsQc x al) ≤ hs3F0 x be₂ al (hsUCB x be₂) (hsQc x al) ∧
-      hs3F1 x be₁ al (hsUCB x be₁) (hsQc x al) ≤ hs3F1 x be₂ al (hsUCB x be₂) (hsQc x al) :=
-  hs35_beta_mono hx hx2 hal hqc hb hbb hb2 hb2'
+    dspF0 x be₁ al (ssUCB x be₁) (ssQc x al) ≤ dspF0 x be₂ al (ssUCB x be₂) (ssQc x al) ∧
+      dspF1 x be₁ al (ssUCB x be₁) (ssQc x al) ≤ dspF1 x be₂ al (ssUCB x be₂) (ssQc x al) :=
+  dspf_beta_mono hx hx2 hal hqc hb hbb hb2 hb2'
 
 /-- **The rational log majorant**: for
 `0 < y ≤ 6/7`, `log y ≤ -40153/180000 + 2(5y - 4)/(5y + 4)`.
-Proof: `hs35_log_maj` (`Hs35/Central.lean`): the difference is monotone up to `y = 6/7`. -/
-theorem hs3_log_maj {y : ℝ} (hy : 0 < y) (hy7 : y ≤ 6 / 7) :
+Proof: `dspf_log_maj` (`SmallerShort/Displacement/CentralFace/Endpoint.lean`): the difference is monotone up to `y = 6/7`. -/
+theorem dsp_log_maj {y : ℝ} (hy : 0 < y) (hy7 : y ≤ 6 / 7) :
     log y ≤ -40153 / 180000 + 2 * (5 * y - 4) / (5 * y + 4) :=
-  hs35_log_maj hy hy7
+  dspf_log_maj hy hy7
 
 /-- **The central endpoint signs**: for `2 ≤ x ≤ 13/6`, at `α = a_min(x)`, `β = 20x/19`, `q = q_c`,
 `u = ū`: `F₀ < 0`, `F₁ < 0`.
-Proof: `hs35_central_endpoint` (`Hs35/Central.lean`). -/
-theorem hs3_central_endpoint {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) :
-    hs3F0 x (20 * x / 19) (hs3amin x) (hsUCB x (20 * x / 19)) (hsQc x (hs3amin x)) < 0 ∧
-      hs3F1 x (20 * x / 19) (hs3amin x) (hsUCB x (20 * x / 19)) (hsQc x (hs3amin x)) < 0 :=
-  hs35_central_endpoint hx hx2
+Proof: `dspf_central_endpoint` (`SmallerShort/Displacement/CentralFace/Endpoint.lean`). -/
+theorem dsp_central_endpoint {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) :
+    dspF0 x (20 * x / 19) (dspamin x) (ssUCB x (20 * x / 19)) (ssQc x (dspamin x)) < 0 ∧
+      dspF1 x (20 * x / 19) (dspamin x) (ssUCB x (20 * x / 19)) (ssQc x (dspamin x)) < 0 :=
+  dspf_central_endpoint hx hx2
 
 /-! ### The outer face `q* = 1/7 ≤ q_c` -/
 
 /-- **The enclosing outer domain**: for
 `2 ≤ x ≤ 13/6`, `α ≤ x`, `x(x + 2) ≤ 6α²`, `β ≥ x(9x + 8α)/(9x + 8)`, `δ = β/x - 1 ≥ 1/19` and
 `α ≥ 1 + (c(x) + 1/23)δ`: `a₀(x) = (100x + 77)/240 ≤ α` and `1/4 ≤ δ/(α - 1) ≤ 115/304`. -/
-theorem hs3_outer_enclose {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hax : al ≤ x)
+theorem dsp_outer_enclose {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hax : al ≤ x)
     (hqc : x * (x + 2) ≤ 6 * al ^ 2) (hU : x * (9 * x + 8 * al) / (9 * x + 8) ≤ be)
     (hδ : 1 / 19 ≤ be / x - 1)
     (hQ : 1 + ((4 * x ^ 2 + 11 * x + 1) / (7 * x + 1) + 1 / 23) * (be / x - 1) ≤ al) :
@@ -515,11 +516,11 @@ theorem hs3_outer_enclose {x al be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (h
 
 /-- **The outer incoming ceiling**: for
 `2 ≤ x ≤ 13/6`, `x ≤ β ≤ x + 5x(x - 1)/13`: `Sec(1, x, β) ≤ ū(x, β)`. -/
-theorem hs3_outer_ceiling {x be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hxb : x ≤ be)
-    (hb : be ≤ x + 5 * x * (x - 1) / 13) : m2Sec 1 x be ≤ hsUO x be := by
+theorem dsp_outer_ceiling {x be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hxb : x ≤ be)
+    (hb : be ≤ x + 5 * x * (x - 1) / 13) : m2Sec 1 x be ≤ ssUO x be := by
   have hx0 : 0 < x := by linarith
   have hS : 0 < (x + 1) * (35 * x + 13) := by positivity
-  have hub := hs_sec_le_ubar (by linarith : 1 < x) hxb
+  have hub := ss_sec_le_ubar (by linarith : 1 < x) hxb
   have hbx : (be - x) * 13 ≤ 5 * x * (x - 1) := by linarith
   have htail : (be - x) ^ 3 / (48 * x ^ 2) ≤ (x - 1) ^ 2 * (be - x) / ((x + 1) * (35 * x + 13)) := by
     rw [div_le_div_iff₀ (by positivity) hS]
@@ -530,7 +531,7 @@ theorem hs3_outer_ceiling {x be : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hxb 
       nlinarith [mul_le_mul_of_nonneg_left h2 (by positivity : (0 : ℝ) ≤ x ^ 2 * (x - 1) ^ 2)]
     nlinarith [mul_le_mul_of_nonneg_left h3 (by linarith : (0 : ℝ) ≤ be - x)]
   refine hub.trans ?_
-  rw [hsUbar, hsUO]
+  rw [ssUbar, ssUO]
   have hb1 : 0 < be - 1 := by linarith
   have e : (2 * (x - 1) ^ 3 / ((x + 1) * (35 * x + 13)) + (x - 1) ^ 2 * (be - x) /
       ((x + 1) * (35 * x + 13))) / (be - 1) =

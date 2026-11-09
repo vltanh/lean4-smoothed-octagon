@@ -1,8 +1,8 @@
 module
 
 public import SmoothedOctagon.Period.Elliptic
-public import SmoothedOctagon.Exclusion.ShortRun.Pattern
-public import SmoothedOctagon.Exclusion.ShortRun.Scalar
+public import SmoothedOctagon.Exclusion.ShortRuns.Pattern
+public import SmoothedOctagon.Exclusion.ShortRuns.Scalar
 
 /-!
 # Case M1: the scalar data at the centres

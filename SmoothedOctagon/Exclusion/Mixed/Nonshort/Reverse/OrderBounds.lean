@@ -1,18 +1,18 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Hand.Link
-public import SmoothedOctagon.Exclusion.Mixed.Hand.Secant
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.WindowData
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.TurnSecant
 
 /-!
-# Case M2 by hand: order bounds from the actual norm floors
+# Case M2, reverse successor: order bounds from the actual norm floors
 
-* `nh_q_le_order`: on `k ≥ 2t + x`-type data, the incoming floor and the swapped secant order give
+* `nsr_q_le_order`: on `k ≥ 2t + x`-type data, the incoming floor and the swapped secant order give
   `q ≤ W/(2t + x)`.
-* `nh_reverse_order`: **the reverse order bound** `d ≤ b*`, i.e. `k ≥ 2t + x`
-  (`nh_reverse_order_k`), for a reverse successor.
-* `nh_log_one_add_gt3`: three atanh terms for `log(1 + x)`.
-* `nh_window_dur`: **the duration bound** `d < 7c/3`, i.e. `x < 7/3 - (10/3)t`
-  (`nh_window_dur_x`).
+* `nsr_reverse_order`: **the reverse order bound** `d ≤ b*`, i.e. `k ≥ 2t + x`
+  (`nsr_reverse_order_k`), for a reverse successor.
+* `nsr_log_one_add_gt3`: three atanh terms for `log(1 + x)`.
+* `nsr_window_dur`: **the duration bound** `d < 7c/3`, i.e. `x < 7/3 - (10/3)t`
+  (`nsr_window_dur_x`).
 -/
 
 @[expose] public section
@@ -22,18 +22,18 @@ namespace SmoothedOctagon
 /-- **The order-face factor interval**: with
 `2t + x ≥ 1`, the incoming floor `F_{p/W}(q) ≤ v = Sec(t, 1 - t, t + x)` and `1 < q < W/p` force
 `q ≤ W/(2t + x)`. -/
-theorem nh_q_le_order {t x q v : ℝ} (ht : 0 < t) (ht2 : t < 1 / 2) (hx : 0 < x)
-    (hk : 1 ≤ 2 * t + x) (hq : 1 < q) (hqW : q < (1 + x) / (t + x)) (hv : v = nhSecN t x)
+theorem nsr_q_le_order {t x q v : ℝ} (ht : 0 < t) (ht2 : t < 1 / 2) (hx : 0 < x)
+    (hk : 1 ≤ 2 * t + x) (hq : 1 < q) (hqW : q < (1 + x) / (t + x)) (hv : v = nsrSecN t x)
     (hF : m2F ((t + x) / (1 + x)) q ≤ v) : q ≤ (1 + x) / (2 * t + x) := by
   have hq0 : 0 < q := by linarith
   have hFs : m2F ((t + x) / (1 + x)) q = m2Sec ((1 + x) / q - (t + x)) (t + x) (1 - t) := by
-    have := nh_m2F_eq_sec (P := t + x) (C := 1 - t) (q := q) (by linarith) (by linarith) hq
+    have := nsr_m2F_eq_sec (P := t + x) (C := 1 - t) (q := q) (by linarith) (by linarith) hq
     rwa [show t + x + (1 - t) = 1 + x by ring] at this
-  rw [hFs, hv, nh_secN_eq hx] at hF
+  rw [hFs, hv, nsr_secN_eq hx] at hF
   have hswap : m2Sec t (1 - t) (t + x) ≤ m2Sec t (t + x) (1 - t) := by
     rcases eq_or_lt_of_le (show 1 - t ≤ t + x by linarith) with h | h
     · rw [h]
-    · exact (nh_sec_swap ht (by linarith) h).le
+    · exact (nsr_sec_swap ht (by linarith) h).le
   have hA0 : 0 < (1 + x) / q - (t + x) := by
     rw [sub_pos, lt_div_iff₀ hq0]
     rw [lt_div_iff₀ (by linarith)] at hqW
@@ -44,13 +44,13 @@ theorem nh_q_le_order {t x q v : ℝ} (ht : 0 < t) (ht2 : t < 1 / 2) (hx : 0 < x
     rw [div_lt_iff₀ (by linarith)] at hcon
     have : (1 + x) / q < 2 * t + x := by rw [div_lt_iff₀ hq0]; linarith
     linarith
-  have := nh_sec_start (z1 := (1 + x) / q - (t + x)) (z2 := t) (c := 1 - t) (d := t + x) hA0 hlt
+  have := nsr_sec_start (z1 := (1 + x) / q - (t + x)) (z2 := t) (c := 1 - t) (d := t + x) hA0 hlt
     (by linarith) (by linarith)
   linarith
 
 /-- **The reverse order bound**: a reverse successor
 forces `d ≤ b* = K/(a + c) - a`. -/
-theorem nh_reverse_order (W : M2Window) (hR : W.ReverseNext) : W.d ≤ W.bStar := by
+theorem nsr_reverse_order (W : M2Window) (hR : W.ReverseNext) : W.d ≤ W.bStar := by
   obtain ⟨A, haA, hAd, hAdr, hw, hwle⟩ := hR
   have ha := W.a_pos
   have hc : 0 < W.c := by linarith [W.a_lt_c]
@@ -76,7 +76,7 @@ theorem nh_reverse_order (W : M2Window) (hR : W.ReverseNext) : W.d ≤ W.bStar :
     nlinarith
   -- the incoming floor as a secant: `B₀ = (4 - dr)/(d + r) > a`
   have hFv : m2F (W.d / (W.d + W.c)) q = m2Sec ((4 - W.d * W.r) / (W.d + W.r)) W.d W.c := by
-    rw [nh_m2F_eq_sec hd hc hq]
+    rw [nsr_m2F_eq_sec hd hc hq]
     congr 1
     rw [hqdef]
     field_simp
@@ -84,20 +84,20 @@ theorem nh_reverse_order (W : M2Window) (hR : W.ReverseNext) : W.d ≤ W.bStar :
   have hfloor := W.v_floor
   rw [show W.d / (W.c + W.d) = W.d / (W.d + W.c) by ring, ← hqdef, hFv, W.v_eq] at hfloor
   have hB0 : 0 < (4 - W.d * W.r) / (W.d + W.r) := div_pos (by linarith [W.star_dr]) (by positivity)
-  have hswap1 := nh_sec_swap ha W.a_lt_c.le hcb
+  have hswap1 := nsr_sec_swap ha W.a_lt_c.le hcb
   have haB0 : W.a < (4 - W.d * W.r) / (W.d + W.r) := by
     by_contra h
     push Not at h
     rcases eq_or_lt_of_le h with h' | h'
     · rw [h'] at hfloor; linarith
-    · have := nh_sec_start hB0 h' W.a_lt_c.le hcb.le
+    · have := nsr_sec_start hB0 h' W.a_lt_c.le hcb.le
       linarith
   have hsmall : (W.a + W.d) * (W.a + W.r) < W.a ^ 2 + 4 := by
     rw [lt_div_iff₀ (by positivity)] at haB0; nlinarith
   have hrc : W.r < W.c := by nlinarith
   -- the outgoing floor as a secant: `A₀ = (4 - cd)/(c + d) > a`
   have hFw : m2F (W.d / (W.d + W.r)) q = m2Sec ((4 - W.c * W.d) / (W.c + W.d)) W.d W.r := by
-    rw [nh_m2F_eq_sec hd hr hq]
+    rw [nsr_m2F_eq_sec hd hr hq]
     congr 1
     rw [hqdef]
     field_simp
@@ -107,22 +107,22 @@ theorem nh_reverse_order (W : M2Window) (hR : W.ReverseNext) : W.d ≤ W.bStar :
   have hA0 : 0 < (4 - W.c * W.d) / (W.c + W.d) := div_pos (by linarith [W.star_cd]) (by positivity)
   have hAr : A ≤ W.r := by nlinarith
   have hw2 : W.w ≤ m2Sec W.a W.r W.d := by
-    rw [hw]; exact nh_sec_le_of_rev ha haA hAr hAd (hw ▸ hwle)
+    rw [hw]; exact nsr_sec_le_of_rev ha haA hAr hAd (hw ▸ hwle)
   have hrd : W.r < W.d := by linarith
-  have hswap2 := nh_sec_swap ha W.a_le_r hrd
+  have hswap2 := nsr_sec_swap ha W.a_le_r hrd
   have haA0 : W.a < (4 - W.c * W.d) / (W.c + W.d) := by
     by_contra h
     push Not at h
     rcases eq_or_lt_of_le h with h' | h'
     · rw [h'] at hwf; linarith
-    · have := nh_sec_start hA0 h' W.a_le_r hrd.le
+    · have := nsr_sec_start hA0 h' W.a_le_r hrd.le
       linarith
   rw [lt_div_iff₀ (by positivity)] at haA0
   nlinarith
 
 /-- The reverse order bound in normalized form: `k ≥ 2t + x`. -/
-theorem nh_reverse_order_k (W : M2Window) (hR : W.ReverseNext) : 2 * W.nt + W.nx ≤ W.nk := by
-  have h := nh_reverse_order W hR
+theorem nsr_reverse_order_k (W : M2Window) (hR : W.ReverseNext) : 2 * W.nt + W.nx ≤ W.nk := by
+  have h := nsr_reverse_order W hR
   have hT : 0 < W.a + W.c := by linarith [W.a_pos, W.a_lt_c]
   have hbs : W.bStar = (W.a ^ 2 + 4) / (W.a + W.c) - W.a := rfl
   rw [hbs] at h
@@ -135,9 +135,9 @@ theorem nh_reverse_order_k (W : M2Window) (hR : W.ReverseNext) : 2 * W.nt + W.nx
   nlinarith
 
 /-- Three atanh terms: `log(1 + x) > 2z + 2z³/3 + 2z⁵/5`, `z = x/(x + 2)`. -/
-theorem nh_log_one_add_gt3 {x : ℝ} (hx : 0 < x) :
+theorem nsr_log_one_add_gt3 {x : ℝ} (hx : 0 < x) :
     2 * (x / (x + 2)) + 2 * (x / (x + 2)) ^ 3 / 3 + 2 * (x / (x + 2)) ^ 5 / 5 < Real.log (1 + x) := by
-  have hmono := nh_strictMonoOn_Ici (a := 0)
+  have hmono := nsr_strictMonoOn_Ici (a := 0)
     (f := fun z => Real.log (1 + z) - (2 * (z / (z + 2)) + 2 * (z / (z + 2)) ^ 3 / 3
       + 2 * (z / (z + 2)) ^ 5 / 5))
     (f' := fun z => z ^ 6 / ((z + 1) * (z + 2) ^ 6)) (fun z hz => ?_) (fun z hz => by positivity)
@@ -166,17 +166,17 @@ theorem nh_log_one_add_gt3 {x : ℝ} (hx : 0 < x) :
     ring
 
 /-- `log(10/3) > 119/100`. -/
-theorem nh_log_ten_thirds : (119 / 100 : ℝ) < Real.log (10 / 3) := by
-  have := nh_log_one_add_gt3 (x := 7 / 3) (by norm_num)
+theorem nsr_log_ten_thirds : (119 / 100 : ℝ) < Real.log (10 / 3) := by
+  have := nsr_log_one_add_gt3 (x := 7 / 3) (by norm_num)
   norm_num at this ⊢
   linarith
 
 /-- **The duration bound** `d < 7c/3`. -/
-theorem nh_window_dur (W : M2Window) : 3 * W.d < 7 * W.c := by
+theorem nsr_window_dur (W : M2Window) : 3 * W.d < 7 * W.c := by
   have ha := W.a_pos
   have hc : 0 < W.c := by linarith [W.a_lt_c]
   have hd : 0 < W.d := by linarith [W.a_lt_d]
-  have hv0 := nh_sec_zero_gt ha W.a_lt_c W.a_lt_d (W.v_eq ▸ W.v_le)
+  have hv0 := nsr_sec_zero_gt ha W.a_lt_c W.a_lt_d (W.v_eq ▸ W.v_le)
   rw [← W.v_eq] at hv0
   have hgd := W.v_ge
   -- in terms of `h = d/c`
@@ -200,7 +200,7 @@ theorem nh_window_dur (W : M2Window) : 3 * W.d < 7 * W.c := by
   push Not at hcon
   have h73 : 7 / 3 ≤ h := by rw [hh, le_div_iff₀ hc]; linarith
   -- `φ(h) = log(1 + h) - h(1 + 2h)/(1 + h)²` increases for `h > 1`
-  have hmono := nh_strictMonoOn_Ici (a := 7 / 3)
+  have hmono := nsr_strictMonoOn_Ici (a := 7 / 3)
     (f := fun z => Real.log (1 + z) - z * (1 + 2 * z) / (1 + z) ^ 2)
     (f' := fun z => z * (z - 1) / (1 + z) ^ 3) (fun z hz => ?_) (fun z hz => by
       have : 0 < z - 1 := by linarith
@@ -209,7 +209,7 @@ theorem nh_window_dur (W : M2Window) : 3 * W.d < 7 * W.c := by
   · have hφ : Real.log (1 + 7 / 3) - 7 / 3 * (1 + 2 * (7 / 3)) / (1 + 7 / 3) ^ 2 ≤
         Real.log (1 + h) - h * (1 + 2 * h) / (1 + h) ^ 2 :=
       hmono.monotoneOn (Set.mem_Ici.2 le_rfl) (Set.mem_Ici.2 h73) h73
-    have := nh_log_ten_thirds
+    have := nsr_log_ten_thirds
     norm_num at hφ
     linarith
   · have hz : 0 < 1 + z := by linarith
@@ -229,8 +229,8 @@ theorem nh_window_dur (W : M2Window) : 3 * W.d < 7 * W.c := by
     ring
 
 /-- The duration bound in normalized form: `x < 7/3 - (10/3)t`. -/
-theorem nh_window_dur_x (W : M2Window) : W.nx < 7 / 3 - 10 / 3 * W.nt := by
-  have h := nh_window_dur W
+theorem nsr_window_dur_x (W : M2Window) : W.nx < 7 / 3 - 10 / 3 * W.nt := by
+  have h := nsr_window_dur W
   have hT : 0 < W.a + W.c := by linarith [W.a_pos, W.a_lt_c]
   unfold M2Window.nt M2Window.nx
   rw [show (7 : ℝ) / 3 - 10 / 3 * (W.a / (W.a + W.c)) = (7 * W.c - 3 * W.a) / (3 * (W.a + W.c)) by

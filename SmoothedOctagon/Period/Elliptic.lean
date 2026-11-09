@@ -20,7 +20,7 @@ cost–Casimir inequality. Shared by cases M1, M2 and F.
 * The margins `p_j` are `margin j` (= `2 ρ_{2-j}` of SmoothedPolygons). `λ = -1`.
 * `J = C/√12 = rawCost/8` (`cost = (√3/4) rawCost`); `8J = ∑ ε_k G(a_k, a_{k+1})`.
 * `γ² = det U = det Λ₁ / 12` (`NormalPeriod.det_Λ₁_zero`), `κ = √(12 γ²)`; the rescaled variables
-  `u = 8d`, `E = 16e` are used only in `Exclusion/ShortRun`.
+  `u = 8d`, `E = 16e` are used only in `Exclusion/ShortRuns`.
 
 ## The local normal multiplier
 
@@ -2069,13 +2069,13 @@ section Winding
 open Reduction MeasureTheory Real
 
 theorem el_zc_mul_R (M : Mat2) :
-    scb_zc (M * R) = scb_zc M * Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I) := by
+    clr_zc (M * R) = clr_zc M * Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I) := by
   rw [Complex.exp_mul_I, ← Complex.ofReal_cos, ← Complex.ofReal_sin, Real.cos_pi_div_three,
     Real.sin_pi_div_three]
   apply Complex.ext <;>
-    simp [scb_zc, R, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
+    simp [clr_zc, R, Matrix.mul_apply, Fin.sum_univ_two] <;> ring
 
-/-- **The polar-angle bound** (the argument of `scb_winding`, for a frame not starting at `I`):
+/-- **The polar-angle bound** (the argument of `clr_winding`, for a frame not starting at `I`):
 for a frame path `B' = B X` with star states, `det B = 1` and `B(T) = B(0) R`,
 `∫₀ᵀ (ρ(X) + ρ(B X B⁻¹)) ≥ 2π/3`. -/
 theorem el_winding {T : ℝ} (hT : 0 < T) {B X : ℝ → Mat2}
@@ -2083,13 +2083,13 @@ theorem el_winding {T : ℝ} (hT : 0 < T) {B X : ℝ → Mat2}
     (hBd : ∀ s ∈ Ioo 0 T, Matrix.HasDerivAtEntrywise B (B s * X s) s)
     (hdet : ∀ s ∈ Icc 0 T, (B s).det = 1) (hstar : ∀ s ∈ Icc 0 T, IsStarState (X s))
     (hBT : B T = B 0 * R) :
-    2 * π / 3 ≤ ∫ s in (0 : ℝ)..T, (scb_rho (X s) + scb_rhoR (B s) (X s)) := by
-  set z : ℝ → ℂ := fun r ↦ scb_zc (B r) with hz
-  set zp : ℝ → ℂ := fun r ↦ scb_zc (B r * X r) with hzp
-  have hzc : ContinuousOn z (Icc 0 T) := scb_continuous_zc.comp_continuousOn hBc
-  have hzpc : ContinuousOn zp (Icc 0 T) := scb_continuous_zc.comp_continuousOn (hBc.mul hXc)
+    2 * π / 3 ≤ ∫ s in (0 : ℝ)..T, (clr_rho (X s) + clr_rhoR (B s) (X s)) := by
+  set z : ℝ → ℂ := fun r ↦ clr_zc (B r) with hz
+  set zp : ℝ → ℂ := fun r ↦ clr_zc (B r * X r) with hzp
+  have hzc : ContinuousOn z (Icc 0 T) := clr_continuous_zc.comp_continuousOn hBc
+  have hzpc : ContinuousOn zp (Icc 0 T) := clr_continuous_zc.comp_continuousOn (hBc.mul hXc)
   have hnormSq : ∀ s ∈ Icc 0 T, 1 ≤ Complex.normSq (z s) := fun s hs ↦
-    scb_zc_normSq_ge (hdet s hs)
+    clr_zc_normSq_ge (hdet s hs)
   have hz0 : ∀ s ∈ Icc 0 T, z s ≠ 0 := fun s hs h0 ↦ by
     have := hnormSq s hs
     rw [h0, map_zero] at this
@@ -2097,7 +2097,7 @@ theorem el_winding {T : ℝ} (hT : 0 < T) {B X : ℝ → Mat2}
   have hzd : ∀ s ∈ Ioo 0 T, HasDerivAt z (zp s) s := by
     intro s hs
     have hd := hBd s hs
-    simp only [hz, hzp, scb_zc]
+    simp only [hz, hzp, clr_zc]
     exact (((hd 0 0).add (hd 1 1)).div_const 2).ofReal_comp.add
       ((((hd 1 0).sub (hd 0 1)).div_const 2).ofReal_comp.mul_const Complex.I)
   set f : ℝ → ℂ := fun r ↦ zp r / z r with hf
@@ -2156,15 +2156,15 @@ theorem el_winding {T : ℝ} (hT : 0 < T) {B X : ℝ → Mat2}
     simp only [hL]
     exact (Complex.imCLM.intervalIntegral_comp_comm hfi).symm
   have hfim : ∀ r ∈ Icc 0 T, (f r).im =
-      (scb_rho (X r) + scb_rhoR (B r) (X r)) / 2 / Complex.normSq (z r) := by
+      (clr_rho (X r) + clr_rhoR (B r) (X r)) / 2 / Complex.normSq (z r) := by
     intro r hr
-    have ha := scb_angular (B r) (hstar r hr).1
+    have ha := clr_angular (B r) (hstar r hr).1
     rw [hdet r hr, mul_one] at ha
     simp only [hf, hz, hzp, Complex.div_im]
     rw [← ha]
     ring
-  have hρpos : ∀ r ∈ Icc 0 T, 0 < scb_rho (X r) + scb_rhoR (B r) (X r) := fun r hr ↦
-    add_pos (scb_rho_pos (hstar r hr)) (scb_rhoR_pos (hdet r hr) (hstar r hr))
+  have hρpos : ∀ r ∈ Icc 0 T, 0 < clr_rho (X r) + clr_rhoR (B r) (X r) := fun r hr ↦
+    add_pos (clr_rho_pos (hstar r hr)) (clr_rhoR_pos (hdet r hr) (hstar r hr))
   have hfim_pos : ∀ r ∈ Icc 0 T, 0 < (f r).im := by
     intro r hr
     rw [hfim r hr]
@@ -2172,7 +2172,7 @@ theorem el_winding {T : ℝ} (hT : 0 < T) {B X : ℝ → Mat2}
     have := hρpos r hr
     positivity
   have hfim_le : ∀ r ∈ Icc 0 T,
-      (f r).im ≤ (scb_rho (X r) + scb_rhoR (B r) (X r)) / 2 := by
+      (f r).im ≤ (clr_rho (X r) + clr_rhoR (B r) (X r)) / 2 := by
     intro r hr
     rw [hfim r hr]
     exact div_le_self (by linarith [hρpos r hr]) (hnormSq r hr)
@@ -2189,14 +2189,14 @@ theorem el_winding {T : ℝ} (hT : 0 < T) {B X : ℝ → Mat2}
       push Not at hc
       nlinarith [Real.pi_pos]
     exact_mod_cast (show (-1 : ℤ) < n by exact_mod_cast hn')
-  have hρc : ContinuousOn (fun s ↦ scb_rho (X s) + scb_rhoR (B s) (X s)) (Icc 0 T) := by
+  have hρc : ContinuousOn (fun s ↦ clr_rho (X s) + clr_rhoR (B s) (X s)) (Icc 0 T) := by
     have hp : ContinuousOn (fun s ↦ (B s, X s)) (Icc 0 T) := hBc.prodMk hXc
-    exact (scb_continuous_rho.comp_continuousOn hXc).add
-      (scb_continuous_rhoR.comp_continuousOn (f := fun s ↦ (B s, X s)) hp)
-  have hρi : IntervalIntegrable (fun s ↦ (scb_rho (X s) + scb_rhoR (B s) (X s)) / 2) volume 0 T :=
+    exact (clr_continuous_rho.comp_continuousOn hXc).add
+      (clr_continuous_rhoR.comp_continuousOn (f := fun s ↦ (B s, X s)) hp)
+  have hρi : IntervalIntegrable (fun s ↦ (clr_rho (X s) + clr_rhoR (B s) (X s)) / 2) volume 0 T :=
     ((hρc.div_const 2).mono (by rw [uIcc_of_le hT.le])).intervalIntegrable
   have hmono : ∫ r in (0 : ℝ)..T, (f r).im ≤
-      ∫ r in (0 : ℝ)..T, (scb_rho (X r) + scb_rhoR (B r) (X r)) / 2 :=
+      ∫ r in (0 : ℝ)..T, (clr_rho (X r) + clr_rhoR (B r) (X r)) / 2 :=
     intervalIntegral.integral_mono_on hT.le hfimi hρi hfim_le
   rw [intervalIntegral.integral_div] at hmono
   rw [← hIm, hLim] at hmono
@@ -2745,8 +2745,8 @@ theorem cost_casimir (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P.Λ₁ 0) 1 0 < 0) :
   have hκpos : 0 < κ := Real.sqrt_pos.2 hdet
   have hT := P.T_pos
   obtain ⟨hst, hg0, hgT, -, -, -, -, -, -, -, -⟩ := P.extremal
-  have hgc := scb_continuousOn_frame hst
-  have hXc := scb_continuousOn_state hst
+  have hgc := clr_continuousOn_frame hst
+  have hXc := clr_continuousOn_state hst
   have hdg : ∀ s ∈ Icc 0 P.T, (P.g s).det = 1 := fun s hs ↦ (hst.2.2.2.1 s hs).1
   have hstar : ∀ s ∈ Icc 0 P.T, IsStarState (P.X s) := fun s hs ↦ (hst.2.2.2.1 s hs).2
   set B : ℝ → Mat2 := fun s ↦ h₀.adjugate * P.g s with hB
@@ -2755,15 +2755,15 @@ theorem cost_casimir (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P.Λ₁ 0) 1 0 < 0) :
   have hBc : ContinuousOn B (Icc 0 P.T) := continuousOn_const.mul hgc
   have hBd : ∀ s ∈ Ioo 0 P.T, Matrix.HasDerivAtEntrywise B (B s * P.X s) s := by
     intro s hs
-    have := (scb_hasDerivAtEntrywise_frame hst hs).const_mul h₀.adjugate
+    have := (clr_hasDerivAtEntrywise_frame hst hs).const_mul h₀.adjugate
     simpa [hB, Matrix.mul_assoc] using this
   have hBdet : ∀ s ∈ Icc 0 P.T, (B s).det = 1 := fun s hs ↦ by
     simp only [hB, Matrix.det_mul, hdetadj, hdg s hs, mul_one]
   have hBT : B P.T = B 0 * R := by simp only [hB, hgT, hg0, Matrix.mul_one]
   have hwind := el_winding hT hBc hXc hBd hBdet hstar hBT
   -- `tr(Λ₁ X) = 2κ ρ_R`
-  have hcons := scb_conservation P.extremal
-  have hρR : ∀ s ∈ Icc 0 P.T, traceForm (P.Λ₁ s) (P.X s) = 2 * κ * scb_rhoR (B s) (P.X s) := by
+  have hcons := clr_conservation P.extremal
+  have hρR : ∀ s ∈ Icc 0 P.T, traceForm (P.Λ₁ s) (P.X s) = 2 * κ * clr_rhoR (B s) (P.X s) := by
     intro s hs
     have hinv : (P.g s)⁻¹ = (P.g s).adjugate := by
       rw [Matrix.inv_def, hdg s hs]; simp
@@ -2771,7 +2771,7 @@ theorem cost_casimir (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P.Λ₁ 0) 1 0 < 0) :
       simp only [hB, Matrix.adjugate_mul_distrib]
       rw [Matrix.adjugate_adjugate _ (by simp)]
       simp
-    rw [hcons s hs, hrep, hinv, scb_rhoR, scb_rho, hadjB]
+    rw [hcons s hs, hrep, hinv, clr_rhoR, clr_rho, hadjB]
     simp only [traceForm, hB, Matrix.mul_smul, Matrix.smul_mul, Matrix.trace_smul, smul_eq_mul]
     have key : ∀ A B C D E F : Mat2, (A * (B * (C * (D * (E * F))))).trace =
         (F * (A * (B * (C * (D * E))))).trace := by
@@ -2782,32 +2782,32 @@ theorem cost_casimir (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P.Λ₁ 0) 1 0 < 0) :
       rw [key J, key h₀]
     rw [this]; ring
   -- `ρ_R ≤ 3ρ/(2κ)`
-  have hle : ∀ s ∈ Icc 0 P.T, scb_rho (P.X s) + scb_rhoR (B s) (P.X s) ≤
-      (1 + 3 / (2 * κ)) * scb_rho (P.X s) := by
+  have hle : ∀ s ∈ Icc 0 P.T, clr_rho (P.X s) + clr_rhoR (B s) (P.X s) ≤
+      (1 + 3 / (2 * κ)) * clr_rho (P.X s) := by
     intro s hs
-    have h1 := scb_traceForm_le_zero P.extremal s hs
+    have h1 := clr_traceForm_le_zero P.extremal s hs
     have h2 := hρR s hs
     simp only [traceForm, Matrix.sub_mul, Matrix.trace_sub, Matrix.smul_mul,
       Matrix.trace_smul, smul_eq_mul] at h1
     simp only [traceForm] at h2
-    simp only [scb_rho, traceForm]
+    simp only [clr_rho, traceForm]
     rw [h2] at h1
     field_simp
     nlinarith
-  have hρc : ContinuousOn (fun s ↦ scb_rho (P.X s)) (Icc 0 P.T) :=
-    scb_continuous_rho.comp_continuousOn hXc
-  have hρRc : ContinuousOn (fun s ↦ scb_rhoR (B s) (P.X s)) (Icc 0 P.T) :=
-    scb_continuous_rhoR.comp_continuousOn (f := fun s ↦ (B s, P.X s)) (hBc.prodMk hXc)
-  have hi1 : IntervalIntegrable (fun s ↦ scb_rho (P.X s) + scb_rhoR (B s) (P.X s))
+  have hρc : ContinuousOn (fun s ↦ clr_rho (P.X s)) (Icc 0 P.T) :=
+    clr_continuous_rho.comp_continuousOn hXc
+  have hρRc : ContinuousOn (fun s ↦ clr_rhoR (B s) (P.X s)) (Icc 0 P.T) :=
+    clr_continuous_rhoR.comp_continuousOn (f := fun s ↦ (B s, P.X s)) (hBc.prodMk hXc)
+  have hi1 : IntervalIntegrable (fun s ↦ clr_rho (P.X s) + clr_rhoR (B s) (P.X s))
       MeasureTheory.volume 0 P.T :=
     ((hρc.add hρRc).mono (by rw [uIcc_of_le hT.le])).intervalIntegrable
-  have hi2 : IntervalIntegrable (fun s ↦ (1 + 3 / (2 * κ)) * scb_rho (P.X s))
+  have hi2 : IntervalIntegrable (fun s ↦ (1 + 3 / (2 * κ)) * clr_rho (P.X s))
       MeasureTheory.volume 0 P.T :=
     ((hρc.const_smul (1 + 3 / (2 * κ))).mono (by rw [uIcc_of_le hT.le])).intervalIntegrable
   have hmono := intervalIntegral.integral_mono_on hT.le hi1 hi2 hle
   rw [intervalIntegral.integral_const_mul] at hmono
-  have hcost : P.cost = 3 * ∫ s in (0 : ℝ)..P.T, scb_rho (P.X s) := by
-    simp only [cost, reinhardtCost, scb_rho, intervalIntegral.integral_const_mul]; ring
+  have hcost : P.cost = 3 * ∫ s in (0 : ℝ)..P.T, clr_rho (P.X s) := by
+    simp only [cost, reinhardtCost, clr_rho, intervalIntegral.integral_const_mul]; ring
   rw [hcost]
   have := le_trans hwind hmono
   rw [div_le_iff₀ (by positivity)]
@@ -2847,7 +2847,7 @@ theorem gam2_le_cap (hc : P.IsCompetitive) (hpos : 0 < P.costateCycle.gam2 0)
   set κ := √(12 * C.gam2 0) with hκ
   have hκpos : 0 < κ := Real.sqrt_pos.2 (by positivity)
   have hκ2 : κ ^ 2 = 12 * C.gam2 0 := Real.sq_sqrt (by positivity)
-  have hA := Reduction.scb_octagonCost_lt
+  have hA := Reduction.clr_octagonCost_lt
   have hpi := Real.pi_gt_d2
   have hcost : P.cost < 3.127 := lt_of_le_of_lt hc hA
   rw [div_le_iff₀ (by positivity)] at hcc

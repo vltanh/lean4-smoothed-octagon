@@ -3,7 +3,7 @@ module
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Inverse
 public import Mathlib.Analysis.SpecialFunctions.Pow.Real
 public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
-public import SmoothedOctagon.Exclusion.ShortRun.Gap.Core
+public import SmoothedOctagon.Exclusion.ShortRuns.Gap.Core
 
 /-!
 # Case M1: the reverse-centre angle gap

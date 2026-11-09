@@ -1,7 +1,7 @@
 module
 
 public import SmoothedOctagon.Period.Defs
-public import SmoothedOctagon.Exclusion.Minimum.ThreeArc
+public import SmoothedOctagon.Exclusion.MinimumStructure.ThreeArc
 
 /-!
 # Case M3: reverse runs have exactly two switches
@@ -16,7 +16,7 @@ a run minimum at either end of the run, and the reverse-four principle in its tw
 (`CostateCycle.reverse_four_third`, `reverse_four_second`) excludes it in the interior of a run with
 at least three switches. The reverse-four principle and three-arc log-concavity are proved from
 exact identities of the explicit costate (`Exclusion/Reverse/Four.lean`,
-`Exclusion/Minimum/ThreeArc.lean`). Mixedness is not used: a maximal reverse run is bounded by
+`Exclusion/MinimumStructure/ThreeArc.lean`). Mixedness is not used: a maximal reverse run is bounded by
 forward switches by definition.
 -/
 

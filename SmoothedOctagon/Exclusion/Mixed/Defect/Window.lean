@@ -142,9 +142,9 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
   have hdetadj : h₀.adjugate.det = 1 := by rw [Matrix.det_adjugate, hh₀]; simp
   have hBdet : ∀ t ∈ Icc 0 P.T, (B t).det = 1 := fun t ht ↦ by
     simp only [hB, Matrix.det_mul, hdetadj, hdg t ht, mul_one]
-  have hz0 : scb_zc h₀.adjugate ≠ 0 := by
+  have hz0 : clr_zc h₀.adjugate ≠ 0 := by
     intro h0
-    have := scb_zc_normSq_ge hdetadj
+    have := clr_zc_normSq_ge hdetadj
     rw [h0, map_zero] at this; linarith
   set Θ : ℝ → ℝ := fun t ↦ (L t).im with hΘ
   have hΘ0 : Θ 0 = 0 := by simp [hΘ, hL0]
@@ -161,33 +161,33 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
       simp only [hB, Matrix.adjugate_mul_distrib]
       rw [Matrix.adjugate_adjugate _ (by simp)]
       simp
-    rw [scb_conservation P.extremal s hs, hrep, hinv, hadjB]
+    rw [clr_conservation P.extremal s hs, hrep, hinv, hadjB]
     simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_neg, Matrix.neg_mul, smul_neg,
       neg_smul, hB, Matrix.mul_assoc]
   -- the endpoint identity
   have hend : ∀ s ∈ Icc 0 P.T, ∀ M : Mat2,
-      (4 * (scb_zc (B s * M) * (starRingEnd ℂ) (scb_zc (B s)))).re =
+      (4 * (clr_zc (B s * M) * (starRingEnd ℂ) (clr_zc (B s)))).re =
         M.trace + (J * P.Λ₁ s * M).trace / κ ∧
-      (4 * (scb_zc (B s * M) * (starRingEnd ℂ) (scb_zc (B s)))).im =
+      (4 * (clr_zc (B s * M) * (starRingEnd ℂ) (clr_zc (B s)))).im =
         (P.Λ₁ s * M).trace / κ - (J * M).trace := by
     intro s hs M
     obtain ⟨h1, h2⟩ := df_zc_prod (M := M) (hBdet s hs)
-    have e1 : (4 * (scb_zc (B s * M) * (starRingEnd ℂ) (scb_zc (B s)))).re =
-        4 * (scb_zc (B s * M) * (starRingEnd ℂ) (scb_zc (B s))).re := by
+    have e1 : (4 * (clr_zc (B s * M) * (starRingEnd ℂ) (clr_zc (B s)))).re =
+        4 * (clr_zc (B s * M) * (starRingEnd ℂ) (clr_zc (B s))).re := by
       rw [show (4 : ℂ) = ((4 : ℝ) : ℂ) by norm_num, Complex.re_ofReal_mul]
-    have e2 : (4 * (scb_zc (B s * M) * (starRingEnd ℂ) (scb_zc (B s)))).im =
-        4 * (scb_zc (B s * M) * (starRingEnd ℂ) (scb_zc (B s))).im := by
+    have e2 : (4 * (clr_zc (B s * M) * (starRingEnd ℂ) (clr_zc (B s)))).im =
+        4 * (clr_zc (B s * M) * (starRingEnd ℂ) (clr_zc (B s))).im := by
       rw [show (4 : ℂ) = ((4 : ℝ) : ℂ) by norm_num, Complex.im_ofReal_mul]
     rw [e1, e2, h1, h2, hΛs s hs]
     simp only [Matrix.mul_smul, Matrix.smul_mul, Matrix.trace_smul, smul_eq_mul]
     constructor <;> field_simp
   -- the total angle is `π/3`
-  have hcost : P.cost = 3 * ∫ t in (0 : ℝ)..P.T, scb_rho (P.X t) := by
-    simp only [cost, reinhardtCost, scb_rho, intervalIntegral.integral_const_mul]; ring
+  have hcost : P.cost = 3 * ∫ t in (0 : ℝ)..P.T, clr_rho (P.X t) := by
+    simp only [cost, reinhardtCost, clr_rho, intervalIntegral.integral_const_mul]; ring
   have hΘT : Θ P.T = π / 3 := by
     have hzT := hz P.T ⟨hT.le, le_rfl⟩
-    have hR : scb_zc (h₀.adjugate * P.g P.T) =
-        scb_zc h₀.adjugate * Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I) := by
+    have hR : clr_zc (h₀.adjugate * P.g P.T) =
+        clr_zc h₀.adjugate * Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I) := by
       rw [P.g_T, el_zc_mul_R]
     rw [hR] at hzT
     have hexp : Complex.exp (L P.T) = Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I) :=
@@ -203,7 +203,7 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
     have hb := hbd 0 P.T le_rfl hT.le le_rfl
     rw [← hcost] at hb
     have hc' : P.cost ≤ octagonCost := hc
-    have hA := ifc_octagonCost_lt
+    have hA := wire_octagonCost_lt
     have hpi := Real.pi_gt_three
     have hpi' := Real.pi_lt_d2
     have hn0 : n = 0 := by
@@ -221,23 +221,23 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
       omega
     rw [hLT, hn0]; simp
   -- integrals of `ρ`
-  have hρc : ContinuousOn (fun t ↦ scb_rho (P.X t)) (Icc 0 P.T) :=
-    scb_continuousOn_rho P.isStateTrajectory
+  have hρc : ContinuousOn (fun t ↦ clr_rho (P.X t)) (Icc 0 P.T) :=
+    clr_continuousOn_rho P.isStateTrajectory
   have hint : ∀ a b, a ∈ Icc 0 P.T → b ∈ Icc 0 P.T →
-      IntervalIntegrable (fun t ↦ scb_rho (P.X t)) volume a b := fun a b ha hb ↦
+      IntervalIntegrable (fun t ↦ clr_rho (P.X t)) volume a b := fun a b ha hb ↦
     (hρc.mono (uIcc_subset_Icc ha hb)).intervalIntegrable
   have hadd : ∀ a b c, a ∈ Icc 0 P.T → b ∈ Icc 0 P.T → c ∈ Icc 0 P.T →
-      (∫ t in a..b, scb_rho (P.X t)) + (∫ t in b..c, scb_rho (P.X t)) =
-        ∫ t in a..c, scb_rho (P.X t) := fun a b c ha hb hc ↦
+      (∫ t in a..b, clr_rho (P.X t)) + (∫ t in b..c, clr_rho (P.X t)) =
+        ∫ t in a..c, clr_rho (P.X t) := fun a b c ha hb hc ↦
     intervalIntegral.integral_add_adjacent_intervals (hint a b ha hb) (hint b c hb hc)
   have hpiece : ∀ j : ℤ, 0 ≤ j → j < P.N →
-      3 * ∫ t in P.rep.τ j..P.rep.τ (j + 1), scb_rho (P.X t) = √3 / 4 * C.arc j := by
+      3 * ∫ t in P.rep.τ j..P.rep.τ (j + 1), clr_rho (P.X t) = √3 / 4 * C.arc j := by
     intro j hj0 hjN
     have hp := P.piece_cost hj0 hjN
     have hmod : j % P.N = j := Int.emod_eq_of_lt hj0 hjN
-    have e : 3 * ∫ t in P.rep.τ j..P.rep.τ (j + 1), scb_rho (P.X t) =
+    have e : 3 * ∫ t in P.rep.τ j..P.rep.τ (j + 1), clr_rho (P.X t) =
         -(3 / 2) * ∫ t in P.rep.τ j..P.rep.τ (j + 1), traceForm J (P.X t) := by
-      simp only [scb_rho, intervalIntegral.integral_const_mul]; ring
+      simp only [clr_rho, intervalIntegral.integral_const_mul]; ring
     rw [e, hp]
     simp only [hC, costateCycle, Term.Cycle.arc, termCycle, termMargin, hmod, sub_self, sub_zero,
       arcCost, Term.rawArc, P.activeMargin_eq hj0 hjN]
@@ -265,20 +265,20 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
       ← df_W_conj_mul, df_trace_conj, df_trace_conj, df_trace_conj, df_trace_conj]
     exact ⟨rfl, rfl⟩
   have hr4 : ∀ s ∈ Icc 0 P.T, ∀ t ∈ Icc 0 P.T,
-      4 ≤ 4 * Complex.normSq (scb_zc h₀.adjugate) * Real.exp ((L t).re + (L s).re) := by
+      4 ≤ 4 * Complex.normSq (clr_zc h₀.adjugate) * Real.exp ((L t).re + (L s).re) := by
     intro s hs t ht
-    have h1 := scb_zc_normSq_ge (hBdet s hs)
-    have h2 := scb_zc_normSq_ge (hBdet t ht)
-    have es : Complex.normSq (scb_zc (B s)) =
-        Complex.normSq (scb_zc h₀.adjugate) * Real.exp ((L s).re) ^ 2 := by
-      rw [show scb_zc (B s) = _ from hz s hs, map_mul, Complex.normSq_eq_norm_sq (Complex.exp _),
+    have h1 := clr_zc_normSq_ge (hBdet s hs)
+    have h2 := clr_zc_normSq_ge (hBdet t ht)
+    have es : Complex.normSq (clr_zc (B s)) =
+        Complex.normSq (clr_zc h₀.adjugate) * Real.exp ((L s).re) ^ 2 := by
+      rw [show clr_zc (B s) = _ from hz s hs, map_mul, Complex.normSq_eq_norm_sq (Complex.exp _),
         Complex.norm_exp]
-    have et : Complex.normSq (scb_zc (B t)) =
-        Complex.normSq (scb_zc h₀.adjugate) * Real.exp ((L t).re) ^ 2 := by
-      rw [show scb_zc (B t) = _ from hz t ht, map_mul, Complex.normSq_eq_norm_sq (Complex.exp _),
+    have et : Complex.normSq (clr_zc (B t)) =
+        Complex.normSq (clr_zc h₀.adjugate) * Real.exp ((L t).re) ^ 2 := by
+      rw [show clr_zc (B t) = _ from hz t ht, map_mul, Complex.normSq_eq_norm_sq (Complex.exp _),
         Complex.norm_exp]
     rw [es] at h1; rw [et] at h2
-    set n0 := Complex.normSq (scb_zc h₀.adjugate)
+    set n0 := Complex.normSq (clr_zc h₀.adjugate)
     have hn0 : 0 ≤ n0 := Complex.normSq_nonneg _
     have hx : Real.exp ((L t).re + (L s).re) = Real.exp ((L t).re) * Real.exp ((L s).re) :=
       Real.exp_add _ _
@@ -295,7 +295,7 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
     have hst := hτlt k (k + 2) (by omega)
     have htT := hτ (k + 2) (by omega) hcase
     have hk1 := hτ (k + 1) (by omega) (by omega)
-    refine ⟨Θ t - Θ s, 4 * Complex.normSq (scb_zc h₀.adjugate) * Real.exp ((L t).re + (L s).re),
+    refine ⟨Θ t - Θ s, 4 * Complex.normSq (clr_zc h₀.adjugate) * Real.exp ((L t).re + (L s).re),
       ?_, ?_, hr4 s hsk t htT, ?_, ?_, ?_⟩
     · have := hmono s t hsk.1 hst htT.2; linarith
     · rcases eq_or_lt_of_le hk0 with h0 | h0
@@ -347,10 +347,10 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
       obtain ⟨tr1, tr2⟩ := htr _ hM
       have hzt := hz t htT
       have hzs := hz s hsk
-      obtain ⟨p1, p2⟩ := df_polar_prod (scb_zc h₀.adjugate) (L t) (L s) 0
+      obtain ⟨p1, p2⟩ := df_polar_prod (clr_zc h₀.adjugate) (L t) (L s) 0
       simp only [Complex.ofReal_zero, zero_mul, Complex.exp_zero, mul_one, add_zero] at p1 p2
       rw [hBt] at hre him
-      rw [show scb_zc (B t) = _ from hzt, show scb_zc (B s) = _ from hzs] at hre him
+      rw [show clr_zc (B t) = _ from hzt, show clr_zc (B s) = _ from hzs] at hre him
     · rw [← tr1, ← hre, p1]
     · rw [← tr2, ← him, p2]
     · -- the cost of the complement
@@ -371,10 +371,10 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
       calc √3 / 4 * (C.arc k + C.arc (k + 1)) + (κ + 3 / 2) * (π / 3 - ((L t).im - (L s).im)) =
             (κ + 3 / 2) * ((L s).im - 0) + √3 / 4 * C.arc k + √3 / 4 * C.arc (k + 1) +
               (κ + 3 / 2) * (π / 3 - (L t).im) := by ring
-        _ ≤ 3 * (∫ r in (0 : ℝ)..s, scb_rho (P.X r)) +
-              3 * (∫ r in s..P.rep.τ (k + 1), scb_rho (P.X r)) +
-              3 * (∫ r in P.rep.τ (k + 1)..t, scb_rho (P.X r)) +
-              3 * (∫ r in t..P.T, scb_rho (P.X r)) := by linarith
+        _ ≤ 3 * (∫ r in (0 : ℝ)..s, clr_rho (P.X r)) +
+              3 * (∫ r in s..P.rep.τ (k + 1), clr_rho (P.X r)) +
+              3 * (∫ r in P.rep.τ (k + 1)..t, clr_rho (P.X r)) +
+              3 * (∫ r in t..P.T, clr_rho (P.X r)) := by linarith
         _ = P.cost := by rw [hcost, ← a2, ← a1, ← a3]; ring
   · -- the window crosses the seam: `k = N - 1`
     have hkN1 : k = P.N - 1 := by omega
@@ -384,7 +384,7 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
     have htT := hτ 1 (by norm_num) h1
     have hts : t < s := hτlt 1 k (by omega)
     refine ⟨Θ t - Θ s + π / 3,
-      4 * Complex.normSq (scb_zc h₀.adjugate) * Real.exp ((L t).re + (L s).re),
+      4 * Complex.normSq (clr_zc h₀.adjugate) * Real.exp ((L t).re + (L s).re),
       ?_, ?_, hr4 s hsk t htT, ?_, ?_, ?_⟩
     · have hsT : s < P.T := by
         have := hτlt k P.N (by omega); rwa [P.rep.τ_N] at this
@@ -441,9 +441,9 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
       obtain ⟨tr1, tr2⟩ := htr _ hM
       have hzt := hz t htT
       have hzs := hz s hsk
-      obtain ⟨p1, p2⟩ := df_polar_prod (scb_zc h₀.adjugate) (L t) (L s) (π / 3)
+      obtain ⟨p1, p2⟩ := df_polar_prod (clr_zc h₀.adjugate) (L t) (L s) (π / 3)
       rw [hBt, el_zc_mul_R] at hre him
-      rw [show scb_zc (B t) = _ from hzt, show scb_zc (B s) = _ from hzs] at hre him
+      rw [show clr_zc (B t) = _ from hzt, show clr_zc (B s) = _ from hzs] at hre him
     · rw [← tr1, ← hre, p1]
     · rw [← tr2, ← him, p2]
     · -- the cost of the complement
@@ -464,8 +464,8 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
       calc √3 / 4 * (C.arc k + C.arc 0) +
             (κ + 3 / 2) * (π / 3 - ((L t).im - (L s).im + π / 3)) =
             √3 / 4 * C.arc 0 + (κ + 3 / 2) * ((L s).im - (L t).im) + √3 / 4 * C.arc k := by ring
-        _ ≤ 3 * (∫ r in (0 : ℝ)..t, scb_rho (P.X r)) + 3 * (∫ r in t..s, scb_rho (P.X r)) +
-              3 * (∫ r in s..P.T, scb_rho (P.X r)) := by linarith
+        _ ≤ 3 * (∫ r in (0 : ℝ)..t, clr_rho (P.X r)) + 3 * (∫ r in t..s, clr_rho (P.X r)) +
+              3 * (∫ r in s..P.T, clr_rho (P.X r)) := by linarith
         _ = P.cost := by rw [hcost, ← a2, ← a1]; ring
 
 /-- **The window defect of the two pieces `k`, `k + 1`** (any `k : ℤ`, switch `k` forward). -/

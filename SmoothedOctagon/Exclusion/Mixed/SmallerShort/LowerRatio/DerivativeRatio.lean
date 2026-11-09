@@ -1,10 +1,10 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Envelope
-public import SmoothedOctagon.Exclusion.Mixed.Short.Calc
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.LogSecant
 
 /-!
-# Gate S1 helper: the derivative ratio `7/96` on the order strip
+# Smaller-short window, lower ratio: the derivative ratio `7/96` on the order strip
 
 For `1 < x ≤ 2` the derivative ratio `Γ_v/(R_τ)_v` along the envelope path is at most `7/96`,
 i.e. `2ub + E_L ≤ (7/12)(1 - q)²(1 + τb)`. The function
@@ -14,10 +14,10 @@ Bernstein form.
 
 ## Main API
 
-* `hs14P`, `hs14_P_bern`, `hs14_P_pos`: the polynomial `P` is positive on the order strip
+* `lrP`, `lr_P_bern`, `lr_P_pos`: the polynomial `P` is positive on the order strip
   `x + (8/17)(α - 1) ≤ β ≤ x + (4/5)(α - 1)` (Bernstein form in `(a, t)` with sextic coefficients
   in `z`).
-* `hs14_ratio_strip`: the statement of `hs1_ratio` with the order strip as extra hypotheses.
+* `lr_ratio_strip`: the statement of `lr_ratio` with the order strip as extra hypotheses.
 -/
 
 @[expose] public section
@@ -29,22 +29,22 @@ open Set Real
 /-- **The polynomial `P`**:
 `P = 49SαH_N - 4B(17x² + 20x + 17)(6α² + 1 - SD)`, `H_N = [3S² - (x - 1)²]B² - 12S²αB + 12S²α²`,
 `B = α + β`. -/
-noncomputable def hs14P (x al be : ℝ) : ℝ :=
+noncomputable def lrP (x al be : ℝ) : ℝ :=
   49 * (1 + x) * al * ((3 * (1 + x) ^ 2 - (x - 1) ^ 2) * (al + be) ^ 2 -
     12 * (1 + x) ^ 2 * al * (al + be) + 12 * (1 + x) ^ 2 * al ^ 2) -
-    4 * (al + be) * (17 * x ^ 2 + 20 * x + 17) * (6 * al ^ 2 + 1 - (1 + x) * hsDg x be al)
+    4 * (al + be) * (17 * x ^ 2 + 20 * x + 17) * (6 * al ^ 2 + 1 - (1 + x) * ssDg x be al)
 
 /-- A sextic `432 + c₁z + ⋯ + c₆z⁶` (the coefficients of the Bernstein form of `P`). -/
-noncomputable def hs14H (c₁ c₂ c₃ c₄ c₅ c₆ z : ℝ) : ℝ :=
+noncomputable def lrH (c₁ c₂ c₃ c₄ c₅ c₆ z : ℝ) : ℝ :=
   432 + c₁ * z + c₂ * z ^ 2 + c₃ * z ^ 3 + c₄ * z ^ 4 + c₅ * z ^ 5 + c₆ * z ^ 6
 
 /-- **A sextic is at least `300` on `[0, 1]`**: bound `cᵢzⁱ ≥ dᵢz²` (`dᵢ ≤ min(cᵢ, 0)`, `i ≥ 3`); the
 remaining concave quadratic `432 + c₁z + (c₂ + Σdᵢ)z²` is at least `300` at both ends. -/
-theorem hs14H_ge {c₁ c₂ c₃ c₄ c₅ c₆ d₃ d₄ d₅ d₆ z : ℝ} (hz : 0 ≤ z) (hz1 : z ≤ 1) (h₁ : 0 ≤ c₁)
+theorem lrH_ge {c₁ c₂ c₃ c₄ c₅ c₆ d₃ d₄ d₅ d₆ z : ℝ} (hz : 0 ≤ z) (hz1 : z ≤ 1) (h₁ : 0 ≤ c₁)
     (e₃ : d₃ ≤ c₃) (e₄ : d₄ ≤ c₄) (e₅ : d₅ ≤ c₅) (e₆ : d₆ ≤ c₆) (f₃ : d₃ ≤ 0) (f₄ : d₄ ≤ 0)
     (f₅ : d₅ ≤ 0) (f₆ : d₆ ≤ 0) (hs : 0 ≤ 132 + c₁ + c₂ + d₃ + d₄ + d₅ + d₆) :
-    0 ≤ hs14H c₁ c₂ c₃ c₄ c₅ c₆ z - 300 := by
-  unfold hs14H
+    0 ≤ lrH c₁ c₂ c₃ c₄ c₅ c₆ z - 300 := by
+  unfold lrH
   have p2 : z ^ 2 ≤ z := by nlinarith
   have p3 : z ^ 3 ≤ z ^ 2 := by nlinarith
   have p4 : z ^ 4 ≤ z ^ 2 := by nlinarith
@@ -64,7 +64,7 @@ theorem hs14H_ge {c₁ c₂ c₃ c₄ c₅ c₆ d₃ d₄ d₅ d₆ z : ℝ} (hz
     nlinarith
 
 /-- Nonnegativity of a Bernstein combination with nonnegative weights. -/
-private theorem hs14_bern_nonneg {a a' t t' e0 e10 e11 e12 e20 e21 e22 e30 e31 e32 : ℝ}
+private theorem lr_bern_nonneg {a a' t t' e0 e10 e11 e12 e20 e21 e22 e30 e31 e32 : ℝ}
     (ha : 0 ≤ a) (ha' : 0 ≤ a') (ht : 0 ≤ t) (ht' : 0 ≤ t') (h0 : 0 ≤ e0) (h10 : 0 ≤ e10)
     (h11 : 0 ≤ e11) (h12 : 0 ≤ e12) (h20 : 0 ≤ e20) (h21 : 0 ≤ e21) (h22 : 0 ≤ e22) (h30 : 0 ≤ e30)
     (h31 : 0 ≤ e31) (h32 : 0 ≤ e32) :
@@ -77,41 +77,41 @@ private theorem hs14_bern_nonneg {a a' t t' e0 e10 e11 e12 e20 e21 e22 e30 e31 e
 /-- **`P ≥ 300` on the enlarged strip**: in the
 coordinates `x = 1 + z`, `α = 1 + za`, `β = 1 + z + (8/17 + 28t/85)za`, `z, a, t ∈ [0, 1]`, `P` is
 the Bernstein combination `Σ B_{j,3}(a)B_{k,2}(t)H_{jk}(z)` of the ten displayed sextics, each at
-least `300` on `[0, 1]` (`hs14H_ge`). -/
-theorem hs14_P_bern {z a t : ℝ} (hz : 0 ≤ z) (hz1 : z ≤ 1) (ha : 0 ≤ a) (ha1 : a ≤ 1) (ht : 0 ≤ t)
-    (ht1 : t ≤ 1) : 300 ≤ hs14P (1 + z) (1 + z * a) (1 + z + (8 / 17 + 28 * t / 85) * z * a) := by
-  have g0 := hs14H_ge (c₁ := 2376) (c₂ := 2000) (c₃ := (-804)) (c₄ := (-1844)) (c₅ := (-878)) (c₆ := (-136)) (d₃ := (-804)) (d₄ := (-1844)) (d₅ := (-878)) (d₆ := (-136)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have g10 := hs14H_ge (c₁ := (32400 / 17)) (c₂ := (36232 / 17)) (c₃ := (-5432 / 17)) (c₄ := (-81680 / 51)) (c₅ := (-14690 / 17)) (c₆ := (-146)) (d₃ := (-5432 / 17)) (d₄ := (-81680 / 51)) (d₅ := (-14690 / 17)) (d₆ := (-146)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have g11 := hs14H_ge (c₁ := (163008 / 85)) (c₂ := (189112 / 85)) (c₃ := (-28336 / 85)) (c₄ := (-147128 / 85)) (c₅ := (-241126 / 255)) (c₆ := (-2414 / 15)) (d₃ := (-28336 / 85)) (d₄ := (-147128 / 85)) (d₅ := (-241126 / 255)) (d₆ := (-2414 / 15)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have g12 := hs14H_ge (c₁ := (9648 / 5)) (c₂ := (11592 / 5)) (c₃ := (-1736 / 5)) (c₄ := (-27904 / 15)) (c₅ := (-15406 / 15)) (c₆ := (-2638 / 15)) (d₃ := (-1736 / 5)) (d₄ := (-27904 / 15)) (d₅ := (-15406 / 15)) (d₆ := (-2638 / 15)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have g20 := hs14H_ge (c₁ := (24408 / 17)) (c₂ := (475112 / 289)) (c₃ := (-11264 / 289)) (c₄ := (-394420 / 289)) (c₅ := (-762508 / 867)) (c₆ := (-9008 / 51)) (d₃ := (-11264 / 289)) (d₄ := (-394420 / 289)) (d₅ := (-762508 / 867)) (d₆ := (-9008 / 51)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have g21 := hs14H_ge (c₁ := (124056 / 85)) (c₂ := (153864 / 85)) (c₃ := (8928 / 85)) (c₄ := (-358124 / 255)) (c₅ := (-242612 / 255)) (c₆ := (-3320 / 17)) (d₃ := 0) (d₄ := (-358124 / 255)) (d₅ := (-242612 / 255)) (d₆ := (-3320 / 17)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have g22 := hs14H_ge (c₁ := (7416 / 5)) (c₂ := (50472 / 25)) (c₃ := (1408 / 5)) (c₄ := (-36564 / 25)) (c₅ := (-26132 / 25)) (c₆ := (-5472 / 25)) (d₃ := 0) (d₄ := (-36564 / 25)) (d₅ := (-26132 / 25)) (d₆ := (-5472 / 25)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have g30 := hs14H_ge (c₁ := (16416 / 17)) (c₂ := (155504 / 289)) (c₃ := (-88260 / 289)) (c₄ := (-200932 / 289)) (c₅ := (-139868 / 289)) (c₆ := (-28476 / 289)) (d₃ := (-88260 / 289)) (d₄ := (-200932 / 289)) (d₅ := (-139868 / 289)) (d₆ := (-28476 / 289)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have g31 := hs14H_ge (c₁ := (85104 / 85)) (c₂ := (64256 / 85)) (c₃ := (8244 / 85)) (c₄ := (-7244 / 17)) (c₅ := (-2204 / 5)) (c₆ := (-8876 / 85)) (d₃ := 0) (d₄ := (-7244 / 17)) (d₅ := (-2204 / 5)) (d₆ := (-8876 / 85)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have g32 := hs14H_ge (c₁ := (5184 / 5)) (c₂ := (27536 / 25)) (c₃ := (4092 / 5)) (c₄ := (2988 / 25)) (c₅ := (-7548 / 25)) (c₆ := (-2492 / 25)) (d₃ := 0) (d₄ := 0) (d₅ := (-7548 / 25)) (d₆ := (-2492 / 25)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
-  have key : hs14P (1 + z) (1 + z * a) (1 + z + (8 / 17 + 28 * t / 85) * z * a) - 300 =
-      (fun a' t' : ℝ => a' ^ 3 * (hs14H 2376 2000 (-804) (-1844) (-878) (-136) z - 300) +
-      3 * a * a' ^ 2 * t' ^ 2 * (hs14H (32400 / 17) (36232 / 17) (-5432 / 17) (-81680 / 51) (-14690 / 17) (-146) z - 300) +
-      6 * a * a' ^ 2 * t * t' * (hs14H (163008 / 85) (189112 / 85) (-28336 / 85) (-147128 / 85) (-241126 / 255) (-2414 / 15) z - 300) +
-      3 * a * a' ^ 2 * t ^ 2 * (hs14H (9648 / 5) (11592 / 5) (-1736 / 5) (-27904 / 15) (-15406 / 15) (-2638 / 15) z - 300) +
-      3 * a ^ 2 * a' * t' ^ 2 * (hs14H (24408 / 17) (475112 / 289) (-11264 / 289) (-394420 / 289) (-762508 / 867) (-9008 / 51) z - 300) +
-      6 * a ^ 2 * a' * t * t' * (hs14H (124056 / 85) (153864 / 85) (8928 / 85) (-358124 / 255) (-242612 / 255) (-3320 / 17) z - 300) +
-      3 * a ^ 2 * a' * t ^ 2 * (hs14H (7416 / 5) (50472 / 25) (1408 / 5) (-36564 / 25) (-26132 / 25) (-5472 / 25) z - 300) +
-      a ^ 3 * t' ^ 2 * (hs14H (16416 / 17) (155504 / 289) (-88260 / 289) (-200932 / 289) (-139868 / 289) (-28476 / 289) z - 300) +
-      2 * a ^ 3 * t * t' * (hs14H (85104 / 85) (64256 / 85) (8244 / 85) (-7244 / 17) (-2204 / 5) (-8876 / 85) z - 300) +
-      a ^ 3 * t ^ 2 * (hs14H (5184 / 5) (27536 / 25) (4092 / 5) (2988 / 25) (-7548 / 25) (-2492 / 25) z - 300)) (1 - a) (1 - t) := by
-    simp only [hs14P, hs14H, hsDg]; ring
-  have : 0 ≤ hs14P (1 + z) (1 + z * a) (1 + z + (8 / 17 + 28 * t / 85) * z * a) - 300 := by
+least `300` on `[0, 1]` (`lrH_ge`). -/
+theorem lr_P_bern {z a t : ℝ} (hz : 0 ≤ z) (hz1 : z ≤ 1) (ha : 0 ≤ a) (ha1 : a ≤ 1) (ht : 0 ≤ t)
+    (ht1 : t ≤ 1) : 300 ≤ lrP (1 + z) (1 + z * a) (1 + z + (8 / 17 + 28 * t / 85) * z * a) := by
+  have g0 := lrH_ge (c₁ := 2376) (c₂ := 2000) (c₃ := (-804)) (c₄ := (-1844)) (c₅ := (-878)) (c₆ := (-136)) (d₃ := (-804)) (d₄ := (-1844)) (d₅ := (-878)) (d₆ := (-136)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have g10 := lrH_ge (c₁ := (32400 / 17)) (c₂ := (36232 / 17)) (c₃ := (-5432 / 17)) (c₄ := (-81680 / 51)) (c₅ := (-14690 / 17)) (c₆ := (-146)) (d₃ := (-5432 / 17)) (d₄ := (-81680 / 51)) (d₅ := (-14690 / 17)) (d₆ := (-146)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have g11 := lrH_ge (c₁ := (163008 / 85)) (c₂ := (189112 / 85)) (c₃ := (-28336 / 85)) (c₄ := (-147128 / 85)) (c₅ := (-241126 / 255)) (c₆ := (-2414 / 15)) (d₃ := (-28336 / 85)) (d₄ := (-147128 / 85)) (d₅ := (-241126 / 255)) (d₆ := (-2414 / 15)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have g12 := lrH_ge (c₁ := (9648 / 5)) (c₂ := (11592 / 5)) (c₃ := (-1736 / 5)) (c₄ := (-27904 / 15)) (c₅ := (-15406 / 15)) (c₆ := (-2638 / 15)) (d₃ := (-1736 / 5)) (d₄ := (-27904 / 15)) (d₅ := (-15406 / 15)) (d₆ := (-2638 / 15)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have g20 := lrH_ge (c₁ := (24408 / 17)) (c₂ := (475112 / 289)) (c₃ := (-11264 / 289)) (c₄ := (-394420 / 289)) (c₅ := (-762508 / 867)) (c₆ := (-9008 / 51)) (d₃ := (-11264 / 289)) (d₄ := (-394420 / 289)) (d₅ := (-762508 / 867)) (d₆ := (-9008 / 51)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have g21 := lrH_ge (c₁ := (124056 / 85)) (c₂ := (153864 / 85)) (c₃ := (8928 / 85)) (c₄ := (-358124 / 255)) (c₅ := (-242612 / 255)) (c₆ := (-3320 / 17)) (d₃ := 0) (d₄ := (-358124 / 255)) (d₅ := (-242612 / 255)) (d₆ := (-3320 / 17)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have g22 := lrH_ge (c₁ := (7416 / 5)) (c₂ := (50472 / 25)) (c₃ := (1408 / 5)) (c₄ := (-36564 / 25)) (c₅ := (-26132 / 25)) (c₆ := (-5472 / 25)) (d₃ := 0) (d₄ := (-36564 / 25)) (d₅ := (-26132 / 25)) (d₆ := (-5472 / 25)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have g30 := lrH_ge (c₁ := (16416 / 17)) (c₂ := (155504 / 289)) (c₃ := (-88260 / 289)) (c₄ := (-200932 / 289)) (c₅ := (-139868 / 289)) (c₆ := (-28476 / 289)) (d₃ := (-88260 / 289)) (d₄ := (-200932 / 289)) (d₅ := (-139868 / 289)) (d₆ := (-28476 / 289)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have g31 := lrH_ge (c₁ := (85104 / 85)) (c₂ := (64256 / 85)) (c₃ := (8244 / 85)) (c₄ := (-7244 / 17)) (c₅ := (-2204 / 5)) (c₆ := (-8876 / 85)) (d₃ := 0) (d₄ := (-7244 / 17)) (d₅ := (-2204 / 5)) (d₆ := (-8876 / 85)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have g32 := lrH_ge (c₁ := (5184 / 5)) (c₂ := (27536 / 25)) (c₃ := (4092 / 5)) (c₄ := (2988 / 25)) (c₅ := (-7548 / 25)) (c₆ := (-2492 / 25)) (d₃ := 0) (d₄ := 0) (d₅ := (-7548 / 25)) (d₆ := (-2492 / 25)) hz hz1 (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num) (by norm_num)
+  have key : lrP (1 + z) (1 + z * a) (1 + z + (8 / 17 + 28 * t / 85) * z * a) - 300 =
+      (fun a' t' : ℝ => a' ^ 3 * (lrH 2376 2000 (-804) (-1844) (-878) (-136) z - 300) +
+      3 * a * a' ^ 2 * t' ^ 2 * (lrH (32400 / 17) (36232 / 17) (-5432 / 17) (-81680 / 51) (-14690 / 17) (-146) z - 300) +
+      6 * a * a' ^ 2 * t * t' * (lrH (163008 / 85) (189112 / 85) (-28336 / 85) (-147128 / 85) (-241126 / 255) (-2414 / 15) z - 300) +
+      3 * a * a' ^ 2 * t ^ 2 * (lrH (9648 / 5) (11592 / 5) (-1736 / 5) (-27904 / 15) (-15406 / 15) (-2638 / 15) z - 300) +
+      3 * a ^ 2 * a' * t' ^ 2 * (lrH (24408 / 17) (475112 / 289) (-11264 / 289) (-394420 / 289) (-762508 / 867) (-9008 / 51) z - 300) +
+      6 * a ^ 2 * a' * t * t' * (lrH (124056 / 85) (153864 / 85) (8928 / 85) (-358124 / 255) (-242612 / 255) (-3320 / 17) z - 300) +
+      3 * a ^ 2 * a' * t ^ 2 * (lrH (7416 / 5) (50472 / 25) (1408 / 5) (-36564 / 25) (-26132 / 25) (-5472 / 25) z - 300) +
+      a ^ 3 * t' ^ 2 * (lrH (16416 / 17) (155504 / 289) (-88260 / 289) (-200932 / 289) (-139868 / 289) (-28476 / 289) z - 300) +
+      2 * a ^ 3 * t * t' * (lrH (85104 / 85) (64256 / 85) (8244 / 85) (-7244 / 17) (-2204 / 5) (-8876 / 85) z - 300) +
+      a ^ 3 * t ^ 2 * (lrH (5184 / 5) (27536 / 25) (4092 / 5) (2988 / 25) (-7548 / 25) (-2492 / 25) z - 300)) (1 - a) (1 - t) := by
+    simp only [lrP, lrH, ssDg]; ring
+  have : 0 ≤ lrP (1 + z) (1 + z * a) (1 + z + (8 / 17 + 28 * t / 85) * z * a) - 300 := by
     rw [key]
     beta_reduce
-    exact hs14_bern_nonneg ha (sub_nonneg.mpr ha1) ht (sub_nonneg.mpr ht1) g0 g10 g11 g12 g20 g21 g22 g30 g31 g32
+    exact lr_bern_nonneg ha (sub_nonneg.mpr ha1) ht (sub_nonneg.mpr ht1) g0 g10 g11 g12 g20 g21 g22 g30 g31 g32
   linarith
 
 /-- **`P > 0` on the order strip** `x + (8/17)(α - 1) ≤ β ≤ x + (4/5)(α - 1)`, `1 < x ≤ 2`
-(`hs14_P_bern` in the coordinates `z = x - 1`, `a = (α - 1)/z`). -/
-theorem hs14_P_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al ≤ x)
-    (hlo : x + 8 / 17 * (al - 1) ≤ be) (hhi : be ≤ x + 4 / 5 * (al - 1)) : 0 < hs14P x al be := by
+(`lr_P_bern` in the coordinates `z = x - 1`, `a = (α - 1)/z`). -/
+theorem lr_P_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al ≤ x)
+    (hlo : x + 8 / 17 * (al - 1) ≤ be) (hhi : be ≤ x + 4 / 5 * (al - 1)) : 0 < lrP x al be := by
   have hz : 0 < x - 1 := by linarith
   have ha0 : 0 ≤ (al - 1) / (x - 1) := div_nonneg (by linarith) hz.le
   have ha1 : (al - 1) / (x - 1) ≤ 1 := by rw [div_le_one hz]; linarith
@@ -119,7 +119,7 @@ theorem hs14_P_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
   have e2 : 1 + (x - 1) * ((al - 1) / (x - 1)) = al := by field_simp; ring
   rcases eq_or_lt_of_le hal with h | h
   · have hbe : be = x := by rw [← h] at hlo hhi; linarith
-    have := hs14_P_bern (z := x - 1) hz.le (by linarith) ha0 ha1 le_rfl zero_le_one
+    have := lr_P_bern (z := x - 1) hz.le (by linarith) ha0 ha1 le_rfl zero_le_one
     have e3 : 1 + (x - 1) + (8 / 17 + 28 * 0 / 85) * (x - 1) * ((al - 1) / (x - 1)) = be := by
       rw [hbe, ← h]; ring
     rw [e3, e2, e1] at this
@@ -131,7 +131,7 @@ theorem hs14_P_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
     have ht1 : ((be - x) / (al - 1) - 8 / 17) * (85 / 28) ≤ 1 := by
       have : (be - x) / (al - 1) ≤ 4 / 5 := by rw [div_le_iff₀ hal1]; linarith
       linarith
-    have := hs14_P_bern (z := x - 1) hz.le (by linarith) ha0 ha1 ht0 ht1
+    have := lr_P_bern (z := x - 1) hz.le (by linarith) ha0 ha1 ht0 ht1
     have e3 : 1 + (x - 1) + (8 / 17 + 28 * (((be - x) / (al - 1) - 8 / 17) * (85 / 28)) / 85) *
         (x - 1) * ((al - 1) / (x - 1)) = be := by
       field_simp; ring
@@ -141,38 +141,38 @@ theorem hs14_P_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
 /-- **`F(1/7) > 0` on the strip**: with
 `b₇ = (6α² + 1 - SD)/(7Sα²)`, `J_A - (2u - 6/7)b₇ > 0` for `u ≤ u₀`
 (decreasing in `u`; at `u₀` it is `P/(588S³α²(α + β))`). -/
-theorem hs14_F7_pos {x be al u : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al ≤ x)
-    (hlo : x + 8 / 17 * (al - 1) ≤ be) (hhi : be ≤ x + 4 / 5 * (al - 1)) (hu0 : u ≤ hsU0 x)
-    (hb7 : -2 / 7 ≤ (6 * al ^ 2 + 1 - (1 + x) * hsDg x be al) / (7 * (1 + x) * al ^ 2)) :
-    0 < (m2U (hsRA al be) - u) / hsRA al be -
-      (2 * u - 6 / 7) * ((6 * al ^ 2 + 1 - (1 + x) * hsDg x be al) / (7 * (1 + x) * al ^ 2)) := by
+theorem lr_F7_pos {x be al u : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al ≤ x)
+    (hlo : x + 8 / 17 * (al - 1) ≤ be) (hhi : be ≤ x + 4 / 5 * (al - 1)) (hu0 : u ≤ ssU0 x)
+    (hb7 : -2 / 7 ≤ (6 * al ^ 2 + 1 - (1 + x) * ssDg x be al) / (7 * (1 + x) * al ^ 2)) :
+    0 < (m2U (ssRA al be) - u) / ssRA al be -
+      (2 * u - 6 / 7) * ((6 * al ^ 2 + 1 - (1 + x) * ssDg x be al) / (7 * (1 + x) * al ^ 2)) := by
   have hal0 : 0 < al := by linarith
   have hS : 0 < 1 + x := by linarith
   have hB : 0 < al + be := by linarith
-  have hrA : 0 < hsRA al be := by unfold hsRA; positivity
-  have hrA2 : 1 / hsRA al be ≥ 2 := by
-    unfold hsRA; rw [one_div_div, ge_iff_le, le_div_iff₀ hal0]; linarith
-  set b₇ := (6 * al ^ 2 + 1 - (1 + x) * hsDg x be al) / (7 * (1 + x) * al ^ 2) with hb₇
-  have hP := hs14_P_pos hx hx2 hal hax hlo hhi
-  have e : (m2U (hsRA al be) - hsU0 x) / hsRA al be - (2 * hsU0 x - 6 / 7) * b₇ =
-      hs14P x al be / (588 * (1 + x) ^ 3 * al ^ 2 * (al + be)) := by
-    rw [hb₇]; unfold m2U hsRA hsU0 hs14P
+  have hrA : 0 < ssRA al be := by unfold ssRA; positivity
+  have hrA2 : 1 / ssRA al be ≥ 2 := by
+    unfold ssRA; rw [one_div_div, ge_iff_le, le_div_iff₀ hal0]; linarith
+  set b₇ := (6 * al ^ 2 + 1 - (1 + x) * ssDg x be al) / (7 * (1 + x) * al ^ 2) with hb₇
+  have hP := lr_P_pos hx hx2 hal hax hlo hhi
+  have e : (m2U (ssRA al be) - ssU0 x) / ssRA al be - (2 * ssU0 x - 6 / 7) * b₇ =
+      lrP x al be / (588 * (1 + x) ^ 3 * al ^ 2 * (al + be)) := by
+    rw [hb₇]; unfold m2U ssRA ssU0 lrP
     field_simp
     ring
-  have h0 : 0 < (m2U (hsRA al be) - hsU0 x) / hsRA al be - (2 * hsU0 x - 6 / 7) * b₇ := by
+  have h0 : 0 < (m2U (ssRA al be) - ssU0 x) / ssRA al be - (2 * ssU0 x - 6 / 7) * b₇ := by
     rw [e]; positivity
-  have e2 : (m2U (hsRA al be) - u) / hsRA al be - (2 * u - 6 / 7) * b₇ -
-      ((m2U (hsRA al be) - hsU0 x) / hsRA al be - (2 * hsU0 x - 6 / 7) * b₇) =
-      (hsU0 x - u) * (1 / hsRA al be + 2 * b₇) := by
+  have e2 : (m2U (ssRA al be) - u) / ssRA al be - (2 * u - 6 / 7) * b₇ -
+      ((m2U (ssRA al be) - ssU0 x) / ssRA al be - (2 * ssU0 x - 6 / 7) * b₇) =
+      (ssU0 x - u) * (1 / ssRA al be + 2 * b₇) := by
     field_simp; ring
-  have : 0 ≤ (hsU0 x - u) * (1 / hsRA al be + 2 * b₇) :=
+  have : 0 ≤ (ssU0 x - u) * (1 / ssRA al be + 2 * b₇) :=
     mul_nonneg (by linarith) (by linarith)
   linarith
 
 /-- **`F` decreases on `[0, 1/7]`**:
 `F(s) = (7/12)(1 - s)²(1 + 2b(s)) - 2ub(s) - 3s`, `b(s) = 1/S - sK`, with `0 ≤ K ≤ 9/2`,
 `b(1/7) ≥ -2/7`, `u ≤ 41/54`: `F(1/7) ≤ F(q)` for `0 ≤ q ≤ 1/7`. -/
-theorem hs14_F_anti {S K u q : ℝ} (hK0 : 0 ≤ K) (hK : K ≤ 9 / 2) (hb : -2 / 7 ≤ 1 / S - K / 7)
+theorem lr_F_anti {S K u q : ℝ} (hK0 : 0 ≤ K) (hK : K ≤ 9 / 2) (hb : -2 / 7 ≤ 1 / S - K / 7)
     (hu : u ≤ 41 / 54) (hq0 : 0 ≤ q) (hq7 : q ≤ 1 / 7) :
     7 / 12 * (1 - 1 / 7) ^ 2 * (1 + 2 * (1 / S - 1 / 7 * K)) - 2 * u * (1 / S - 1 / 7 * K) -
         3 * (1 / 7) ≤
@@ -201,43 +201,43 @@ theorem hs14_F_anti {S K u q : ℝ} (hK0 : 0 ≤ K) (hK : K ≤ 9 / 2) (hb : -2 
       nlinarith)
   linarith
 
-/-- **The derivative ratio is at most `7/96` on the order strip**: the statement of `hs1_ratio`
+/-- **The derivative ratio is at most `7/96` on the order strip**: the statement of `lr_ratio`
 with the order strip `x + (8/17)(α - 1) ≤ β ≤ x + (4/5)(α - 1)` as extra hypotheses. -/
-theorem hs14_ratio_strip {x be al u rho τ t EL : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
-    (hax : al < x) (hxb : x ≤ be) (hD : 0 < hsDg x be al) (hu : 3 / 4 ≤ u) (hu0 : u ≤ hsU0 x)
-    (hurA : u ≤ m2U (hsRA al be)) (hρ : 0 < rho) (hq7 : hsQ al rho ≤ 1 / 7) (hτ : 2 ≤ τ)
-    (hτq : τ * hsQ al rho < hsRA al be) (_ht : 0 < t) (htr : t ≤ 1 / (1 + x))
-    (hB : 0 < 1 + τ * (hsLam al rho * t - hsLam al rho * rho * hsDg x be al))
-    (hEL : EL ≤ 3 * hsQ al rho - (m2U (hsRA al be) - u) / hsRA al be)
+theorem lr_ratio_strip {x be al u rho τ t EL : ℝ} (hx : 1 < x) (hx2 : x ≤ 2) (hal : 1 ≤ al)
+    (hax : al < x) (hxb : x ≤ be) (hD : 0 < ssDg x be al) (hu : 3 / 4 ≤ u) (hu0 : u ≤ ssU0 x)
+    (hurA : u ≤ m2U (ssRA al be)) (hρ : 0 < rho) (hq7 : ssQ al rho ≤ 1 / 7) (hτ : 2 ≤ τ)
+    (hτq : τ * ssQ al rho < ssRA al be) (_ht : 0 < t) (htr : t ≤ 1 / (1 + x))
+    (hB : 0 < 1 + τ * (ssLam al rho * t - ssLam al rho * rho * ssDg x be al))
+    (hEL : EL ≤ 3 * ssQ al rho - (m2U (ssRA al be) - u) / ssRA al be)
     (hlo : x + 8 / 17 * (al - 1) ≤ be) (hhi : be ≤ x + 4 / 5 * (al - 1)) :
-    2 * u * (hsLam al rho * t - hsLam al rho * rho * hsDg x be al) + EL ≤
-      7 / 12 * (1 - hsQ al rho) ^ 2 *
-        (1 + τ * (hsLam al rho * t - hsLam al rho * rho * hsDg x be al)) := by
+    2 * u * (ssLam al rho * t - ssLam al rho * rho * ssDg x be al) + EL ≤
+      7 / 12 * (1 - ssQ al rho) ^ 2 *
+        (1 + τ * (ssLam al rho * t - ssLam al rho * rho * ssDg x be al)) := by
   have hal0 : 0 < al := by linarith
   have hS : 0 < 1 + x := by linarith
   have hτ0 : 0 < τ := by linarith
-  obtain ⟨-, hlam, hd⟩ := hs_scale_coords (x := x) (be := be) hal hρ
-  set q := hsQ al rho with hqdef
-  set D := hsDg x be al with hDdef
-  set rA := hsRA al be with hrAdef
+  obtain ⟨-, hlam, hd⟩ := ss_scale_coords (x := x) (be := be) hal hρ
+  set q := ssQ al rho with hqdef
+  set D := ssDg x be al with hDdef
+  set rA := ssRA al be with hrAdef
   set JA := (m2U rA - u) / rA with hJA
-  have hlam0 : 0 < hsLam al rho := by
-    unfold hsLam; apply div_pos one_pos
+  have hlam0 : 0 < ssLam al rho := by
+    unfold ssLam; apply div_pos one_pos
     have : 0 ≤ rho * (al ^ 2 - 1) := mul_nonneg hρ.le (by nlinarith)
     linarith
-  have hq0 : 0 < q := by rw [hqdef]; unfold hsQ; exact mul_pos (mul_pos (by positivity) hlam0) hρ
-  have hrA : 0 < rA := by rw [hrAdef]; unfold hsRA; exact div_pos hal0 (by linarith)
+  have hq0 : 0 < q := by rw [hqdef]; unfold ssQ; exact mul_pos (mul_pos (by positivity) hlam0) hρ
+  have hrA : 0 < rA := by rw [hrAdef]; unfold ssRA; exact div_pos hal0 (by linarith)
   have hrA2 : rA < 1 / 2 := by
-    rw [hrAdef]; unfold hsRA; rw [div_lt_iff₀ (by linarith)]; linarith
+    rw [hrAdef]; unfold ssRA; rw [div_lt_iff₀ (by linarith)]; linarith
   have hJA0 : 0 ≤ JA := by rw [hJA]; exact div_nonneg (by linarith) hrA.le
   have hu41 : u ≤ 41 / 54 := by
     have : (x - 1) ^ 2 / (12 * (x + 1) ^ 2) ≤ 1 / 108 := by
       rw [div_le_div_iff₀ (by positivity) (by norm_num)]; nlinarith
-    unfold hsU0 at hu0; linarith
+    unfold ssU0 at hu0; linarith
   -- `K = (1 - α⁻²)/S + D/α²` and `b₀ = 1/S - qK`
   set K := (1 - 1 / al ^ 2) / (1 + x) + D / al ^ 2 with hK
   have hDle : D ≤ 4 * al ^ 2 := by
-    rw [hDdef]; unfold hsDg
+    rw [hDdef]; unfold ssDg
     have h1 : 2 * be * (al - x) ≤ 2 * x * (al - x) :=
       mul_le_mul_of_nonpos_right (by linarith) (by linarith)
     nlinarith
@@ -261,7 +261,7 @@ theorem hs14_ratio_strip {x be al u rho τ t EL : ℝ} (hx : 1 < x) (hx2 : x ≤
     have e : 1 / (1 + x) - ((1 - 1 / al ^ 2) / (1 + x) + D / al ^ 2) / 7 =
         (1 - (1 - 1 / al ^ 2) / 7) / (1 + x) - D / al ^ 2 / 7 := by ring
     rw [e]; linarith
-  set b := hsLam al rho * t - hsLam al rho * rho * D with hb
+  set b := ssLam al rho * t - ssLam al rho * rho * D with hb
   set b₀ := 1 / (1 + x) - q * K with hb₀
   clear_value q D rA JA K b b₀
   have hbb₀ : b ≤ b₀ := by
@@ -289,14 +289,14 @@ theorem hs14_ratio_strip {x be al u rho τ t EL : ℝ} (hx : 1 < x) (hx2 : x ≤
         rw [e2]; apply mul_nonneg (by norm_num); apply mul_nonneg <;> linarith
       apply add_nonneg (mul_nonneg h1.le (by linarith))
       exact mul_nonneg_of_nonpos_of_nonpos h0 (by linarith)
-    · have hF := hs14_F_anti hK0 hK9 hb7 hu41 hq0.le hq7
-      have hF7 := hs14_F7_pos hx hx2 hal hax.le hlo hhi hu0 (by
-        have e : (6 * al ^ 2 + 1 - (1 + x) * hsDg x be al) / (7 * (1 + x) * al ^ 2) =
+    · have hF := lr_F_anti hK0 hK9 hb7 hu41 hq0.le hq7
+      have hF7 := lr_F7_pos hx hx2 hal hax.le hlo hhi hu0 (by
+        have e : (6 * al ^ 2 + 1 - (1 + x) * ssDg x be al) / (7 * (1 + x) * al ^ 2) =
             1 / (1 + x) - K / 7 := by rw [hK, hDdef]; field_simp; ring
         rw [e]; exact hb7)
       have e7 : 7 / 12 * (1 - 1 / 7) ^ 2 * (1 + 2 * (1 / (1 + x) - 1 / 7 * K)) -
           2 * u * (1 / (1 + x) - 1 / 7 * K) - 3 * (1 / 7) + JA =
-          JA - (2 * u - 6 / 7) * ((6 * al ^ 2 + 1 - (1 + x) * hsDg x be al) /
+          JA - (2 * u - 6 / 7) * ((6 * al ^ 2 + 1 - (1 + x) * ssDg x be al) /
             (7 * (1 + x) * al ^ 2)) := by
         rw [hK, hDdef]; field_simp; ring
       have h2 : 0 ≤ 7 / 12 * (1 - q) ^ 2 * (τ - 2) * b₀ :=

@@ -10,7 +10,7 @@ public import SmoothedPolygons.Ch7.Isolated.VertexFlow
 
 The costate calculus of a Pontryagin extremal with cost multiplier `λ = -1` on vertex pieces,
 written in the margin coordinates `p_j = margin j` of `Period/Defs.lean`, and its transport through
-the twist. Cases R and M3 are derived from it (`Exclusion/Reverse`, `Exclusion/Minimum`); it is
+the twist. Cases R and M3 are derived from it (`Exclusion/Reverse`, `Exclusion/MinimumStructure`); it is
 meant for cases M1, F and M2 as well.
 
 ## Coordinates

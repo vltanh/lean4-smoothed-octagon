@@ -1,10 +1,10 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.Comparison
-public import SmoothedOctagon.Exclusion.Mixed.Hand.Basic
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Residual
 
 /-!
-# Case M2 by hand: the normalized data of an actual window
+# Case M2, reverse successor: the normalized data of an actual window
 
 The normalized coordinates of an actual smaller-nonshort window `W : M2Window`: `t = a/T`,
 `x = (d - a)/T`, `k = K/T²`, `q = WZ/Q` (`T = a + c`, `K = a² + 4`), and the necessary conditions
@@ -13,8 +13,8 @@ they satisfy without any successor assumption.
 ## Main API
 
 * `M2Window.nt`, `nx`, `nk`, `nq`.
-* `nh_link_N`: `N(t, x, k, q, v, log q)·T = tBqW·G(b*)`, so the boundary comparison
-  `G(b*) < 0` (`m2_comparison`) gives `nh_window_N_neg`: `N < 0`.
+* `nsr_link_N`: `N(t, x, k, q, v, log q)·T = tBqW·G(b*)`, so the boundary comparison
+  `G(b*) < 0` (`m2_comparison`) gives `nsr_window_N_neg`: `N < 0`.
 -/
 
 @[expose] public section
@@ -42,7 +42,7 @@ end M2Window
 /-- The normalized residual `R`: with `W = 1 + x`,
 `p = t + x`, `Y = x(x + 2)`, `B = k + 2tx + x²`, `Z = qB/W`,
 `R = (1 - t) + Z - p²/W - p²/Z + p³/B - pL - Wv - Z w_U + p(H₀ + 2vY)/B`. -/
-noncomputable def nhR (t x k q v L : ℝ) : ℝ :=
+noncomputable def nsrR (t x k q v L : ℝ) : ℝ :=
   (1 - t) + q * (k + 2 * t * x + x ^ 2) / (1 + x) - (t + x) ^ 2 / (1 + x)
     - (t + x) ^ 2 / (q * (k + 2 * t * x + x ^ 2) / (1 + x))
     + (t + x) ^ 3 / (k + 2 * t * x + x ^ 2) - (t + x) * L - (1 + x) * v
@@ -53,16 +53,16 @@ noncomputable def nhR (t x k q v L : ℝ) : ℝ :=
       / (k + 2 * t * x + x ^ 2)
 
 /-- `N = tBqW·R`. -/
-theorem nhN_eq_R {t x k q v L : ℝ} (ht : 0 < t) (hx : 0 < x) (hk : 0 < k) (hq : 0 < q) :
-    nhN t x k q v L = t * (k + 2 * t * x + x ^ 2) * q * (1 + x) * nhR t x k q v L := by
+theorem nsrN_eq_R {t x k q v L : ℝ} (ht : 0 < t) (hx : 0 < x) (hk : 0 < k) (hq : 0 < q) :
+    nsrN t x k q v L = t * (k + 2 * t * x + x ^ 2) * q * (1 + x) * nsrR t x k q v L := by
   have hB : 0 < k + 2 * t * x + x ^ 2 := by positivity
-  unfold nhN nhR
+  unfold nsrN nsrR
   field_simp
   ring
 
 /-- The central diagonal at the boundary with the upper incident norm:
 `h(U*, b*) = (T²/16) H₀`, `H₀ = (k/t)(v - 1 + t²) + t(2 - t)`. -/
-theorem nh_m2h_star {a c T t k v : ℝ} (hT : 0 < T) (ht : 0 < t) (hk : 0 < k) (ha : a = t * T)
+theorem nsr_m2h_star {a c T t k v : ℝ} (hT : 0 < T) (ht : 0 < t) (hk : 0 < k) (ha : a = t * T)
     (hc : c = (1 - t) * T) (hK : a ^ 2 + 4 = k * T ^ 2) :
     m2h a (m2bStar a c) c (m2U (a * (a + c) / (a ^ 2 + 4))) v =
       T ^ 2 / 16 * (k / t * (v - 1 + t ^ 2) + t * (2 - t)) := by
@@ -85,7 +85,7 @@ theorem nh_m2h_star {a c T t k v : ℝ} (hT : 0 < T) (ht : 0 < t) (hk : 0 < k) (
   ring
 
 /-- The transported norm and the diagonal at `d`, at the boundary with the upper incident norm. -/
-theorem nh_m2wOf_star {a c d T t x k u v h H : ℝ} (hT : 0 < T) (_hB : 0 < k + 2 * t * x + x ^ 2)
+theorem nsr_m2wOf_star {a c d T t x k u v h H : ℝ} (hT : 0 < T) (_hB : 0 < k + 2 * t * x + x ^ 2)
     (ha : a = t * T) (hc : c = (1 - t) * T) (hd : d = (t + x) * T) (hK : a ^ 2 + 4 = k * T ^ 2)
     (hQ : d ^ 2 + 4 = T ^ 2 * (k + 2 * t * x + x ^ 2)) (hu : u * k ^ 2 = k ^ 2 - k * t + t ^ 2)
     (hh : h = T ^ 2 / 16 * H) (hk : 0 < k) :
@@ -105,7 +105,7 @@ theorem nh_m2wOf_star {a c d T t x k u v h H : ℝ} (hT : 0 < T) (_hB : 0 < k + 
     ring
 
 /-- The cost derivative at `d` in normalized form. -/
-theorem nh_m2Stat_d {c d r T t x k q L : ℝ} (hT : 0 < T) (hx : 0 < x)
+theorem nsr_m2Stat_d {c d r T t x k q L : ℝ} (hT : 0 < T) (hx : 0 < x)
     (_hB : 0 < k + 2 * t * x + x ^ 2) (hq : 0 < q) (hc : c = (1 - t) * T) (hd : d = (t + x) * T)
     (hQ : d ^ 2 + 4 = T ^ 2 * (k + 2 * t * x + x ^ 2))
     (hZ : d + r = q * (k + 2 * t * x + x ^ 2) / (1 + x) * T)
@@ -123,31 +123,31 @@ theorem nh_m2Stat_d {c d r T t x k q L : ℝ} (hT : 0 < T) (hx : 0 < x)
   ring
 
 /-- The normalized root identity: `G(b*) = R_d(U*; b*) = T·R`. -/
-theorem nh_root_star {a c d r v T t x k q : ℝ} (hT : 0 < T) (ht : 0 < t) (hx : 0 < x)
+theorem nsr_root_star {a c d r v T t x k q : ℝ} (hT : 0 < T) (ht : 0 < t) (hx : 0 < x)
     (hk : 0 < k) (hq : 0 < q) (ha : a = t * T) (hc : c = (1 - t) * T) (hd : d = (t + x) * T)
     (hK : a ^ 2 + 4 = k * T ^ 2) (hQ : d ^ 2 + 4 = T ^ 2 * (k + 2 * t * x + x ^ 2))
     (hZ : d + r = q * (k + 2 * t * x + x ^ 2) / (1 + x) * T)
     (hqd : (c + d) * (d + r) / (d ^ 2 + 4) = q) :
     m2RootAt a (m2bStar a c) c d r v (m2U (a * (a + c) / (a ^ 2 + 4))) =
-      T * nhR t x k q v (Real.log q) := by
+      T * nsrR t x k q v (Real.log q) := by
   have hB : 0 < k + 2 * t * x + x ^ 2 := by positivity
-  have hh := nh_m2h_star (v := v) hT ht hk ha hc hK
+  have hh := nsr_m2h_star (v := v) hT ht hk ha hc hK
   have hu : m2U (a * (a + c) / (a ^ 2 + 4)) * k ^ 2 = k ^ 2 - k * t + t ^ 2 := by
     have hac : a + c = T := by rw [ha, hc]; ring
     unfold m2U; rw [hac, hK, ha]; field_simp
-  obtain ⟨hw, hhd⟩ := nh_m2wOf_star (v := v) hT hB ha hc hd hK hQ hu hh hk
-  have hS := nh_m2Stat_d (r := r) hT hx hB hq hc hd hQ hZ (by rw [hqd])
+  obtain ⟨hw, hhd⟩ := nsr_m2wOf_star (v := v) hT hB ha hc hd hK hQ hu hh hk
+  have hS := nsr_m2Stat_d (r := r) hT hx hB hq hc hd hQ hZ (by rw [hqd])
   unfold m2RootAt m2Root
   rw [hw, hhd, hS, hQ, hZ]
   have hcd : c + d = (1 + x) * T := by rw [hc, hd]; ring
   rw [hcd, hd]
-  unfold nhR
+  unfold nsrR
   have hW : 0 < 1 + x := by linarith
   field_simp
 
 /-- **The link with the boundary comparison**: `N·T = tBqW·G(b*)`. -/
-theorem nh_link_N (W : M2Window) :
-    nhN W.nt W.nx W.nk W.nq W.v (Real.log W.nq) * (W.a + W.c) =
+theorem nsr_link_N (W : M2Window) :
+    nsrN W.nt W.nx W.nk W.nq W.v (Real.log W.nq) * (W.a + W.c) =
       W.nt * (W.nk + 2 * W.nt * W.nx + W.nx ^ 2) * W.nq * (1 + W.nx) *
         m2RootAt W.a W.bStar W.c W.d W.r W.v W.ceilStar := by
   have ha0 := W.a_pos
@@ -178,15 +178,15 @@ theorem nh_link_N (W : M2Window) :
     have hW : 0 < 1 + W.nx := by linarith
     field_simp
     nlinarith [hq']
-  have hroot := nh_root_star (v := W.v) hT ht hx hk hq ha hc hd hK hQ hZ rfl
+  have hroot := nsr_root_star (v := W.v) hT ht hx hk hq ha hc hd hK hQ hZ rfl
   unfold M2Window.bStar M2Window.ceilStar
-  rw [hroot, nhN_eq_R ht hx hk hq]
+  rw [hroot, nsrN_eq_R ht hx hk hq]
   ring
 
 /-- **The actual normalized residual is negative** (from `G(b*) < 0`, `m2_comparison`). -/
-theorem nh_window_N_neg (W : M2Window) : nhN W.nt W.nx W.nk W.nq W.v (Real.log W.nq) < 0 := by
+theorem nsr_window_N_neg (W : M2Window) : nsrN W.nt W.nx W.nk W.nq W.v (Real.log W.nq) < 0 := by
   have hG := (m2_comparison W).1
-  have h := nh_link_N W
+  have h := nsr_link_N W
   have hc0 : 0 < W.c := by linarith [W.a_lt_c, W.a_pos]
   have hT : 0 < W.a + W.c := by linarith [W.a_pos]
   have ht : 0 < W.nt := by unfold M2Window.nt; have := W.a_pos; positivity
@@ -198,7 +198,7 @@ theorem nh_window_N_neg (W : M2Window) : nhN W.nt W.nx W.nk W.nq W.v (Real.log W
     have : 0 < W.r := by linarith [W.a_le_r, W.a_pos]
     positivity
   have hpos : 0 < W.nt * (W.nk + 2 * W.nt * W.nx + W.nx ^ 2) * W.nq * (1 + W.nx) := by positivity
-  have : nhN W.nt W.nx W.nk W.nq W.v (Real.log W.nq) * (W.a + W.c) < 0 := by
+  have : nsrN W.nt W.nx W.nk W.nq W.v (Real.log W.nq) * (W.a + W.c) < 0 := by
     rw [h]; exact mul_neg_of_pos_of_neg hpos hG
   by_contra hcon
   push Not at hcon
@@ -208,9 +208,9 @@ theorem nh_window_N_neg (W : M2Window) : nhN W.nt W.nx W.nk W.nq W.v (Real.log W
 /-- **The normalized necessary conditions of an actual window** (no successor assumption):
 `0 < t < 1/2`, `x > 0`, `k > 1`, `1 < q < W/p`, `v = Sec(t, 1 - t, t + x)`, `v ≤ U(t)`,
 `v ≥ g_c(d) = 1 - (1 - t)p/W²`, `v ≥ F_{p/W}(q)`, and `a²(k - t²) = 4t²`. -/
-theorem nh_window_basic (W : M2Window) :
+theorem nsr_window_basic (W : M2Window) :
     0 < W.nt ∧ W.nt < 1 / 2 ∧ 0 < W.nx ∧ 1 < W.nk ∧ 1 < W.nq ∧
-      W.nq < (1 + W.nx) / (W.nt + W.nx) ∧ W.v = nhSecN W.nt W.nx ∧
+      W.nq < (1 + W.nx) / (W.nt + W.nx) ∧ W.v = nsrSecN W.nt W.nx ∧
       W.v ≤ 1 - W.nt + W.nt ^ 2 ∧
       1 - (1 - W.nt) * (W.nt + W.nx) / (1 + W.nx) ^ 2 ≤ W.v ∧
       m2F ((W.nt + W.nx) / (1 + W.nx)) W.nq ≤ W.v ∧
@@ -240,7 +240,7 @@ theorem nh_window_basic (W : M2Window) :
     have : 0 < W.c + W.d := by positivity
     nlinarith
   · rw [W.v_eq, m2Sec_of_ne (ne_of_lt W.a_lt_d)]
-    unfold nhSecN
+    unfold nsrSecN
     rw [h1x, h1t, show (W.d + W.c) / (W.a + W.c) = (W.c + W.d) / (W.a + W.c) by ring]
     unfold M2Window.nx
     field_simp

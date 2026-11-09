@@ -1,31 +1,31 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenBetaCoef
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenBetaEdge
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.CentralFace.Beta.Coefficients
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.CentralFace.Beta.BaseFace
 
 /-!
-# S2 hand signs: the central beta monotonicity
+# Smaller-short window, upper ratio: the central beta monotonicity
 
 On `x ≤ b ≤ x + 7(a - 1)/8` (which contains
 `x ≤ b ≤ b_+(x, a)`) both duration-tangent tests `F₀`, `F₁` increase in `b`, the incoming ceiling
 `u = u_C(x, b)` moving with `b`.
 
-In the partial-fraction forms (`S2HandCenBetaDefs`) the second derivatives are
+In the partial-fraction forms (`Beta/PartialFractions`) the second derivatives are
 `G_bb = 6p₃B + 2p₂ + 2a/B³ + 2p_c/(b - 1)³ - 1/B²` and
 `H_bb = c₂/2 + 2A₁/B³ + 2P_c/(b - 1)³ - 1/B²`. With `p₃ ≤ 0`, `p_c > 0`,
 `6p₃B_max + 2p₂ > 1/10` and `B³ - 27a²(b - a) = (b - 2a)²(b + 7a)`, `G_bb > 1/10 - 1/27 > 0`;
 with `A₁ > 9/2`, `P_c > -2J`, `0 < J < 1/50`, `B ≤ 161/40`, `b - 1 ≥ 7/6`,
 `H_bb ≥ 3/40 - (2/25)(6/7)³ > 0`. So both first
-derivatives are smallest at `b = x`, where they are positive (`S2HandCenBetaEdge`). Finally
+derivatives are smallest at `b = x`, where they are positive (`Beta/BaseFace`). Finally
 `(F₀)_b = G_b` and `(F₁)_b = H_b - Kφ/(aB²) ≥ H_b` with `φ = (t - 1)/t² - 1/4 ≤ 0`.
 
-The base-face step uses the exact derivatives at `b = x` (`S2HandCenBetaEdge`).
+The base-face step uses the exact derivatives at `b = x` (`Beta/BaseFace`).
 
 ## Main API
 
-* `hl2cb_G2`, `hl2cb_H2`: the second derivatives are nonnegative.
-* `hl2cb_mono`: monotonicity from a lower derivative that increases from a nonnegative value.
-* `hl2c_beta`: both tests increase in `b` on `x ≤ b ≤ b_+(x, a)`.
+* `urcb_G2`, `urcb_H2`: the second derivatives are nonnegative.
+* `urcb_mono`: monotonicity from a lower derivative that increases from a nonnegative value.
+* `urc_beta`: both tests increase in `b` on `x ≤ b ≤ b_+(x, a)`.
 -/
 
 @[expose] public section
@@ -35,7 +35,7 @@ namespace SmoothedOctagon
 open Real Set
 
 /-- `B³ ≥ 27(b - a)` for `1 ≤ a ≤ b` (`B³ - 27a²(b - a) = (b - 2a)²(b + 7a)`). -/
-theorem hl2cb_cube {a s : ℝ} (ha : 1 ≤ a) (hs : a ≤ s) : 27 * (s - a) ≤ (a + s) ^ 3 := by
+theorem urcb_cube {a s : ℝ} (ha : 1 ≤ a) (hs : a ≤ s) : 27 * (s - a) ≤ (a + s) ^ 3 := by
   have e : (a + s) ^ 3 - 27 * a ^ 2 * (s - a) = (s - 2 * a) ^ 2 * (s + 7 * a) := by ring
   have h1 : 0 ≤ (s - 2 * a) ^ 2 * (s + 7 * a) := mul_nonneg (sq_nonneg _) (by linarith)
   have h2 : 27 * (s - a) ≤ 27 * a ^ 2 * (s - a) := by
@@ -45,60 +45,60 @@ theorem hl2cb_cube {a s : ℝ} (ha : 1 ≤ a) (hs : a ≤ s) : 27 * (s - a) ≤ 
 
 /-- **`G_bb > 0`**: `6p₃B + 2p₂ ≥ 6p₃B_max + 2p₂ > 1/10` (`p₃ ≤ 0`), `p_c > 0` and
 `2a/B³ - 1/B² = -(b - a)/B³ ≥ -1/27`. -/
-theorem hl2cb_G2 {x a s : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3)
+theorem urcb_G2 {x a s : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3)
     (hs : x ≤ s) (hs' : s ≤ x + 7 * (a - 1) / 8) :
-    0 ≤ 6 * hl2cbp3 x a * (a + s) + 2 * hl2cbp2 x a + 2 * a / (a + s) ^ 3 +
-      2 * hl2cbpc x a / (s - 1) ^ 3 - 1 / (a + s) ^ 2 := by
-  have hK := hl2cb_K_pos (a := a) (by linarith : (0 : ℝ) < x)
+    0 ≤ 6 * urcbp3 x a * (a + s) + 2 * urcbp2 x a + 2 * a / (a + s) ^ 3 +
+      2 * urcbpc x a / (s - 1) ^ 3 - 1 / (a + s) ^ 2 := by
+  have hK := urcb_K_pos (a := a) (by linarith : (0 : ℝ) < x)
   have hB : 0 < a + s := by linarith
   have hs1 : 0 < s - 1 := by linarith
-  have hpc := hl2cb_pc_pos hx hx2 ha ha2
-  have hcurv := hl2cb_curv hx hx2 ha ha2
-  have hp3 : hl2cbp3 x a ≤ 0 := by
-    unfold hl2cbp3 hl2cbl hl2cbc2
-    have : 0 ≤ 7 * a / (2 * hl2cK x a) * (2401 / 3200 * hl2cbd x a ^ 2 / hl2cK x a ^ 2) := by
+  have hpc := urcb_pc_pos hx hx2 ha ha2
+  have hcurv := urcb_curv hx hx2 ha ha2
+  have hp3 : urcbp3 x a ≤ 0 := by
+    unfold urcbp3 urcbl urcbc2
+    have : 0 ≤ 7 * a / (2 * urcK x a) * (2401 / 3200 * urcbd x a ^ 2 / urcK x a ^ 2) := by
       apply mul_nonneg <;> positivity
     linarith
-  have h1 : 6 * hl2cbp3 x a * (a + x + 7 * (a - 1) / 8) ≤ 6 * hl2cbp3 x a * (a + s) :=
+  have h1 : 6 * urcbp3 x a * (a + x + 7 * (a - 1) / 8) ≤ 6 * urcbp3 x a * (a + s) :=
     mul_le_mul_of_nonpos_left (by linarith) (by linarith)
-  have h2 : 0 ≤ 2 * hl2cbpc x a / (s - 1) ^ 3 := by positivity
+  have h2 : 0 ≤ 2 * urcbpc x a / (s - 1) ^ 3 := by positivity
   have h3 : -(1 / 27) ≤ 2 * a / (a + s) ^ 3 - 1 / (a + s) ^ 2 := by
     have e : 2 * a / (a + s) ^ 3 - 1 / (a + s) ^ 2 = -((s - a) / (a + s) ^ 3) := by
       field_simp
       ring
     rw [e, neg_le_neg_iff, div_le_iff₀ (by positivity)]
-    have := hl2cb_cube ha (by linarith : a ≤ s)
+    have := urcb_cube ha (by linarith : a ≤ s)
     linarith
   linarith
 
 /-- `(9 - B)/B³ ≥ 3/40` for `0 < B ≤ 161/40`. -/
-theorem hl2cb_nine {B : ℝ} (hB : 0 < B) (hB' : B ≤ 161 / 40) : 3 / 40 ≤ (9 - B) / B ^ 3 := by
+theorem urcb_nine {B : ℝ} (hB : 0 < B) (hB' : B ≤ 161 / 40) : 3 / 40 ≤ (9 - B) / B ^ 3 := by
   rw [le_div_iff₀ (by positivity)]
   have : B ^ 3 ≤ (161 / 40) ^ 3 := pow_le_pow_left₀ hB.le hB' 3
   nlinarith
 
 /-- **`H_bb > 0`**: from `A₁ > 9/2`, `P_c > -2J`, `0 < J < 1/50`, `B ≤ 161/40` and
 `b - 1 ≥ 7/6`. -/
-theorem hl2cb_H2 {x a s : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3)
+theorem urcb_H2 {x a s : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a) (ha2 : a ≤ 4 / 3)
     (hs : x ≤ s) (hs' : s ≤ x + 7 * (a - 1) / 8) :
-    0 ≤ 6 * 0 * (a + s) + 2 * (hl2cbc2 x a / 4) + 2 * hl2cbA1 x a / (a + s) ^ 3 +
-      2 * hl2cbPc x a / (s - 1) ^ 3 - 1 / (a + s) ^ 2 := by
-  have hK := hl2cb_K_pos (a := a) (by linarith : (0 : ℝ) < x)
+    0 ≤ 6 * 0 * (a + s) + 2 * (urcbc2 x a / 4) + 2 * urcbA1 x a / (a + s) ^ 3 +
+      2 * urcbPc x a / (s - 1) ^ 3 - 1 / (a + s) ^ 2 := by
+  have hK := urcb_K_pos (a := a) (by linarith : (0 : ℝ) < x)
   have hB : 0 < a + s := by linarith
   have hs1 : 7 / 6 ≤ s - 1 := by linarith
-  have hA := hl2cb_A1 hx hx2 ha ha2
-  have hP := hl2cb_Pc hx hx2 ha ha2
-  have hJ := hl2cb_J_pos hx hx2
-  have hJ' := hl2cb_J_lt hx hx2
-  have hc2 : 0 ≤ hl2cbc2 x a := by unfold hl2cbc2; positivity
-  have h1 : 3 / 40 ≤ 2 * hl2cbA1 x a / (a + s) ^ 3 - 1 / (a + s) ^ 2 := by
-    have e : 2 * hl2cbA1 x a / (a + s) ^ 3 - 1 / (a + s) ^ 2 =
-        (2 * hl2cbA1 x a - (a + s)) / (a + s) ^ 3 := by
+  have hA := urcb_A1 hx hx2 ha ha2
+  have hP := urcb_Pc hx hx2 ha ha2
+  have hJ := urcb_J_pos hx hx2
+  have hJ' := urcb_J_lt hx hx2
+  have hc2 : 0 ≤ urcbc2 x a := by unfold urcbc2; positivity
+  have h1 : 3 / 40 ≤ 2 * urcbA1 x a / (a + s) ^ 3 - 1 / (a + s) ^ 2 := by
+    have e : 2 * urcbA1 x a / (a + s) ^ 3 - 1 / (a + s) ^ 2 =
+        (2 * urcbA1 x a - (a + s)) / (a + s) ^ 3 := by
       field_simp
     rw [e]
-    refine le_trans (hl2cb_nine hB (by linarith)) ?_
+    refine le_trans (urcb_nine hB (by linarith)) ?_
     apply div_le_div_of_nonneg_right (by linarith) (by positivity)
-  have h2 : -(432 / 8575) ≤ 2 * hl2cbPc x a / (s - 1) ^ 3 := by
+  have h2 : -(432 / 8575) ≤ 2 * urcbPc x a / (s - 1) ^ 3 := by
     have hc : (7 / 6) ^ 3 ≤ (s - 1) ^ 3 := pow_le_pow_left₀ (by norm_num) hs1 3
     have hc0 : 0 < (s - 1) ^ 3 := by positivity
     rw [le_div_iff₀ hc0]
@@ -107,7 +107,7 @@ theorem hl2cb_H2 {x a s : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 
 
 /-- **Monotonicity from an increasing lower derivative**: if `g ≤ f'` on `[lo, hi]`, `g' ≥ 0` there
 and `g(lo) ≥ 0`, then `f` increases on `[lo, hi]`. -/
-theorem hl2cb_mono {f f' g g' : ℝ → ℝ} {lo hi b b' : ℝ} (hlo : lo ≤ b) (hbb : b ≤ b')
+theorem urcb_mono {f f' g g' : ℝ → ℝ} {lo hi b b' : ℝ} (hlo : lo ≤ b) (hbb : b ≤ b')
     (hhi : b' ≤ hi) (hf : ∀ s ∈ Icc lo hi, HasDerivAt f (f' s) s)
     (hge : ∀ s ∈ Icc lo hi, g s ≤ f' s) (hg : ∀ s ∈ Icc lo hi, HasDerivAt g (g' s) s)
     (hg2 : ∀ s ∈ Icc lo hi, 0 ≤ g' s) (h0 : 0 ≤ g lo) : f b ≤ f b' := by
@@ -119,17 +119,17 @@ theorem hl2cb_mono {f f' g g' : ℝ → ℝ} {lo hi b b' : ℝ} (hlo : lo ≤ b)
 
 /-- **The central beta monotonicity**: both duration-tangent tests
 increase in `b` on `x ≤ b ≤ b_+(x, a)`, the incoming ceiling moving with `b`. -/
-theorem hl2c_beta {t x a b b' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
-    (ha2 : a ≤ 4 / 3) (ht : 2 ≤ t) (hb : x ≤ b) (hbb : b ≤ b') (hb' : b' ≤ hl2cbp x a) :
-    hl2cF0 t x a b (hsUC x b) ≤ hl2cF0 t x a b' (hsUC x b') ∧
-      hl2cF1 t x a b (hsUC x b) ≤ hl2cF1 t x a b' (hsUC x b') := by
+theorem urc_beta {t x a b b' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
+    (ha2 : a ≤ 4 / 3) (ht : 2 ≤ t) (hb : x ≤ b) (hbb : b ≤ b') (hb' : b' ≤ urcbp x a) :
+    urcF0 t x a b (ssUC x b) ≤ urcF0 t x a b' (ssUC x b') ∧
+      urcF1 t x a b (ssUC x b) ≤ urcF1 t x a b' (ssUC x b') := by
   have ht0 : 0 < t := by linarith
   have hx0 : 0 < x := by linarith
   have ha0 : 0 < a := by linarith
-  have hK := hl2cb_K_pos (a := a) hx0
+  have hK := urcb_K_pos (a := a) hx0
   have hhi : b' ≤ x + 7 * (a - 1) / 8 := by
-    have : hl2cbp x a ≤ x + 7 * (a - 1) / 8 := by
-      unfold hl2cbp
+    have : urcbp x a ≤ x + 7 * (a - 1) / 8 := by
+      unfold urcbp
       have : (24 * x + 51) * (a - 1) ≤ 112 * (a - 1) :=
         mul_le_mul_of_nonneg_right (by linarith) (by linarith)
       linarith
@@ -139,17 +139,17 @@ theorem hl2c_beta {t x a b b' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (h
   have hb1 : 1 < b := by linarith
   have hb1' : 1 < b' := by linarith
   constructor
-  · rw [hl2cb_F0_pf ht0 hx0 ha0 hb1, hl2cb_F0_pf ht0 hx0 ha0 hb1']
-    have := hl2cb_mono (g := hl2cbG1 x a) hb hbb hhi
-      (fun s hs => hl2cb_hd (α3 := hl2cbp3 x a) (α2 := hl2cbp2 x a) (α1 := hl2cbp1 x a) (β := a)
-        (γ := hl2cbpc x a) (hS s hs).1 (hS s hs).2)
+  · rw [urcb_F0_pf ht0 hx0 ha0 hb1, urcb_F0_pf ht0 hx0 ha0 hb1']
+    have := urcb_mono (g := urcbG1 x a) hb hbb hhi
+      (fun s hs => urcb_hd (α3 := urcbp3 x a) (α2 := urcbp2 x a) (α1 := urcbp1 x a) (β := a)
+        (γ := urcbpc x a) (hS s hs).1 (hS s hs).2)
       (fun s _ => le_refl _)
-      (fun s hs => hl2cb_hd2 (α3 := hl2cbp3 x a) (α2 := hl2cbp2 x a) (α1 := hl2cbp1 x a) (β := a)
-        (γ := hl2cbpc x a) (hS s hs).1 (hS s hs).2)
-      (fun s hs => hl2cb_G2 hx hx2 ha ha2 hs.1 hs.2) (hl2cb_G1_base hx hx2 ha ha2).le
+      (fun s hs => urcb_hd2 (α3 := urcbp3 x a) (α2 := urcbp2 x a) (α1 := urcbp1 x a) (β := a)
+        (γ := urcbpc x a) (hS s hs).1 (hS s hs).2)
+      (fun s hs => urcb_G2 hx hx2 ha ha2 hs.1 hs.2) (urcb_G1_base hx hx2 ha ha2).le
     linarith
-  · rw [hl2cb_F1_pf ht0 hx0 ha0 hb1, hl2cb_F1_pf ht0 hx0 ha0 hb1']
-    have hφ : hl2cK x a * ((t - 1) / t ^ 2 - 1 / 4) / a ≤ 0 := by
+  · rw [urcb_F1_pf ht0 hx0 ha0 hb1, urcb_F1_pf ht0 hx0 ha0 hb1']
+    have hφ : urcK x a * ((t - 1) / t ^ 2 - 1 / 4) / a ≤ 0 := by
       have e : (t - 1) / t ^ 2 - 1 / 4 = -((t - 2) ^ 2 / (4 * t ^ 2)) := by
         field_simp
         ring
@@ -157,20 +157,20 @@ theorem hl2c_beta {t x a b b' : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (h
       have : 0 ≤ (t - 2) ^ 2 / (4 * t ^ 2) := by positivity
       apply div_nonpos_of_nonpos_of_nonneg _ ha0.le
       nlinarith
-    have := hl2cb_mono (g := hl2cbH1 x a) hb hbb hhi
-      (fun s hs => hl2cb_hd (α3 := 0) (α2 := hl2cbc2 x a / 4) (α1 := hl2cbq1 x a)
-        (β := hl2cbA1 x a + hl2cK x a * ((t - 1) / t ^ 2 - 1 / 4) / a)
-        (γ := hl2cbPc x a) (hS s hs).1 (hS s hs).2)
+    have := urcb_mono (g := urcbH1 x a) hb hbb hhi
+      (fun s hs => urcb_hd (α3 := 0) (α2 := urcbc2 x a / 4) (α1 := urcbq1 x a)
+        (β := urcbA1 x a + urcK x a * ((t - 1) / t ^ 2 - 1 / 4) / a)
+        (γ := urcbPc x a) (hS s hs).1 (hS s hs).2)
       (fun s hs => by
-        unfold hl2cbH1
+        unfold urcbH1
         have hB := (hS s hs).1
-        have : hl2cK x a * ((t - 1) / t ^ 2 - 1 / 4) / a / (a + s) ^ 2 ≤ 0 :=
+        have : urcK x a * ((t - 1) / t ^ 2 - 1 / 4) / a / (a + s) ^ 2 ≤ 0 :=
           div_nonpos_of_nonpos_of_nonneg hφ (by positivity)
         rw [add_div] at *
         linarith)
-      (fun s hs => hl2cb_hd2 (α3 := 0) (α2 := hl2cbc2 x a / 4) (α1 := hl2cbq1 x a)
-        (β := hl2cbA1 x a) (γ := hl2cbPc x a) (hS s hs).1 (hS s hs).2)
-      (fun s hs => hl2cb_H2 hx hx2 ha ha2 hs.1 hs.2) (hl2cb_H1_base hx hx2 ha ha2).le
+      (fun s hs => urcb_hd2 (α3 := 0) (α2 := urcbc2 x a / 4) (α1 := urcbq1 x a)
+        (β := urcbA1 x a) (γ := urcbPc x a) (hS s hs).1 (hS s hs).2)
+      (fun s hs => urcb_H2 hx hx2 ha ha2 hs.1 hs.2) (urcb_H1_base hx hx2 ha ha2).le
     simp only [zero_mul, zero_add] at this
     linarith
 

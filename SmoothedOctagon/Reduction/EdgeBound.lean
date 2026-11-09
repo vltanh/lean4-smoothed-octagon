@@ -26,28 +26,28 @@ namespace SmoothedOctagon.Reduction
 
 open SmoothedPolygons MeasureTheory Set Filter Edge
 
-private lemma e4_relabelControl_injective : Function.Injective relabelControl := by
+private lemma edge_relabelControl_injective : Function.Injective relabelControl := by
   intro v w h
   funext i
   have := congrFun h (i - 2)
   simpa [relabelControl] using this
 
 /-- **The edge bound on the edge `u₀ = 0`.** -/
-theorem e4_edgeBound_zero {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2}
+theorem edge_edgeBound_zero {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → Mat2}
     (hmin : IsReinhardtMinimizer T u g X) {t₀ t₁ : ℝ} (h0 : 0 ≤ t₀) (h01 : t₀ < t₁)
     (h1 : t₁ ≤ T) (hu0 : ∀ᵐ t, t ∈ Ioo t₀ t₁ → u t 0 = 0) :
     ∃ n ≤ 4, IsPiecewiseVertex u t₀ t₁ n := by
-  have hSLM := e4_isStrongLocalMinimizer hmin h0 h01 h1 hu0
+  have hSLM := edge_isStrongLocalMinimizer hmin h0 h01 h1 hu0
   have hTe : 0 < t₁ - t₀ := by linarith
   obtain ⟨ν, p, -, hlip, hN, hA, hM, hZ, -⟩ :=
-    External.pontryagin_maximum_principle e4_isOpen_edgeDomain isCompact_Icc e4_isC1On_edgeField
-      e4_isC1On_edgeCost hSLM
-      (G := fun w : (ℝ × ℝ × ℝ) × (ℝ × ℝ × ℝ) ↦ w - (e4_refQ X t₀ 0, e4_refQ X t₀ (t₁ - t₀)))
+    External.pontryagin_maximum_principle edge_isOpen_edgeDomain isCompact_Icc edge_isC1On_edgeField
+      edge_isC1On_edgeCost hSLM
+      (G := fun w : (ℝ × ℝ × ℝ) × (ℝ × ℝ × ℝ) ↦ w - (edge_refQ X t₀ 0, edge_refQ X t₀ (t₁ - t₀)))
       (contDiffAt_id.sub contDiffAt_const)
       (by rw [fderiv_sub_const, fderiv_fun_id]; exact Function.surjective_id)
       (sub_self _) (Eventually.of_forall fun _ hz ↦ sub_eq_zero.1 hz)
   obtain ⟨n, hn, τ, b, hτ0, hτn, hτlt, hτmem, hb, hae⟩ :=
-    e4_bangBang hTe hSLM.2.1 hlip hN hA hM hZ
+    edge_bangBang hTe hSLM.2.1 hlip hN hA hM hZ
   refine ⟨n, hn, fun k ↦ t₀ + τ k, fun k ↦ if b k = 1 then 1 else 2, by simp [hτ0],
     by simp [hτn], fun k hk ↦ by simp [hτlt k hk], fun k hk ↦ ?_⟩
   have hshift := (measurePreserving_add_right volume (-t₀)).quasiMeasurePreserving.ae (hae k hk)
@@ -56,7 +56,7 @@ theorem e4_edgeBound_zero {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : ℝ → M
   have htI : t ∈ Ioo t₀ t₁ := ⟨by linarith [hmem.1, (hτmem k hk.le).1],
     by linarith [hmem.2, (hτmem (k + 1) hk).2]⟩
   have hv := ht hs
-  simp only [e4_refV, show t₀ + (t + -t₀) = t by ring] at hv
+  simp only [edge_refV, show t₀ + (t + -t₀) = t by ring] at hv
   have h0' := ht0 htI
   have hsum := (hmin.1.1.2.2.1 t ⟨by linarith [htI.1], by linarith [htI.2]⟩).2
   funext j
@@ -100,10 +100,10 @@ theorem edgeBound_of_isReinhardtMinimizer {T : ℝ} {u : ℝ → Fin 3 → ℝ} 
     filter_upwards [hj] with t ht hmem
     rw [relabelControl_iterate_apply, hj0]
     exact ht hmem
-  obtain ⟨n, hn, τ, l, hτ0, hτn, hτlt, hl⟩ := e4_edgeBound_zero hmin' h0 h01 h1 hj'
+  obtain ⟨n, hn, τ, l, hτ0, hτn, hτlt, hl⟩ := edge_edgeBound_zero hmin' h0 h01 h1 hj'
   refine ⟨n, hn, τ, fun k ↦ l k - Fin.ofNat 3 (2 * j.val), hτ0, hτn, hτlt, fun k hk ↦ ?_⟩
   filter_upwards [hl k hk] with t ht hmem
-  apply e4_relabelControl_injective.iterate (2 * j.val)
+  apply edge_relabelControl_injective.iterate (2 * j.val)
   rw [ht hmem, relabelControl_iterate_vertex, sub_add_cancel]
 
 end SmoothedOctagon.Reduction

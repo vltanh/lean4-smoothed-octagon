@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.ShortRun.Gap.Log
+public import SmoothedOctagon.Exclusion.ShortRuns.Gap.Log
 
 /-!
 # Case M1 angle gap: the two-variable core

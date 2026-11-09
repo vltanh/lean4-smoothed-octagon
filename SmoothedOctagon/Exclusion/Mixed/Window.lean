@@ -2,15 +2,15 @@ module
 
 public import SmoothedOctagon.Exclusion.Mixed.Scalar
 public import SmoothedOctagon.Period.Defs
-public import SmoothedOctagon.Certificates.SmallerShort
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Point
 
 /-!
 # Case M2: the scalar data of the windows
 
 The scalar data that case M2 extracts from one actual period, as structures of real numbers with
 their necessary conditions as fields. The period-level modules (`Mixed/Centre`,
-`Mixed/Extraction`) produce them; the scalar exclusions (`Mixed/Comparison`, `Mixed/ReverseHand`,
-`Mixed/ForwardHand`, `Mixed/ShortHand`) consume them, so the scalar arguments
+`Mixed/Extraction`) produce them; the scalar exclusions (`Mixed/Comparison`, `Mixed/Nonshort/Reverse`,
+`Mixed/Nonshort/Forward`, `Mixed/SmallerShort`) consume them, so the scalar arguments
 are independent of the period-level argument.
 
 * `m2E`, `m2Gam`: the centre pairing and the squared Casimir at a reverse centre.
@@ -250,12 +250,12 @@ structure M2Short where
   /-- The middle-switch slack `N_mid ≥ 0` (the missing control at the forward switch
   `C → B`). -/
   mid : 0 ≤ (⟨a / (a + C), B / C - 1, A / a, a ^ 2 / (a ^ 2 + 4), v, E⟩ :
-    Certificates.SmallerShort.Point).fmid
+    SmallerShort.Point).fmid
   /-- The window-defect inequality and the modulus filter of the two-turn window, written with
-  the traces `𝒜`, `ℬ`, `T_κ` and turn cost `C_br` of `Certificates.SmallerShort.Point` at the
+  the traces `𝒜`, `ℬ`, `T_κ` and turn cost `C_br` of `SmallerShort.Point` at the
   actual coordinates. -/
   defect :
-    let pt : Certificates.SmallerShort.Point :=
+    let pt : SmallerShort.Point :=
       ⟨a / (a + C), B / C - 1, A / a, a ^ 2 / (a ^ 2 + 4), v, E⟩
     2 * pt.Tk ≤ pt.AA ∧ 0 < pt.BB ∧ pt.BB < pt.AA ∧ 4 * pt.Tk ≤ pt.AA + pt.BB ∧
       pt.cost + (pt.kap + 3 / 2) * (Real.pi / 3 - Real.arctan (Real.sqrt 3 * pt.BB / pt.AA)) ≤

@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTHorner
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Horner
 
 /-!
-# Case M2, forward successor by hand: the low-`t` unit sign on the maximum-duration face
+# Case M2, forward successor: the low-`t` unit sign on the maximum-duration face
 
 On the face `q = (1 + h + j)/(1 + 2j)` (`y = (h - j)/d`, `d = 1 + 2j`) the cleared circuit
 `6 d⁶ S = W² P` (`W = 1 + h + j`) defines a bivariate polynomial `P(h, j)` (`nltPqL`,
@@ -32,9 +32,9 @@ noncomputable def nltPqL (h : ℝ) : List ℝ :=
 
 /-- **The cleared face numerator**: `6 d⁶ S = W² P` on `q = W/d`. -/
 theorem nlt_Pq_eq (h j : ℝ) :
-    6 * nltSt0 ((1 - h) / 2) (h + j) * (h - j) ^ 0 * (1 + 2 * j) ^ 6 + 6 * nltSt1 ((1 - h) / 2) (h + j) * (h - j) ^ 1 * (1 + 2 * j) ^ 5 + 6 * nltSt2 ((1 - h) / 2) (h + j) * (h - j) ^ 2 * (1 + 2 * j) ^ 4 + 6 * nltSt3 ((1 - h) / 2) (h + j) * (h - j) ^ 3 * (1 + 2 * j) ^ 3 + 6 * nltSt4 ((1 - h) / 2) (h + j) * (h - j) ^ 4 * (1 + 2 * j) ^ 2 + 6 * nltSt5 ((1 - h) / 2) (h + j) * (h - j) ^ 5 * (1 + 2 * j) ^ 1 + 6 * nltSt6 ((1 - h) / 2) (h + j) * (h - j) ^ 6 * (1 + 2 * j) ^ 0 = (1 + h + j) ^ 2 * lrhHorner (nltPqL h) j := by
+    6 * nltSt0 ((1 - h) / 2) (h + j) * (h - j) ^ 0 * (1 + 2 * j) ^ 6 + 6 * nltSt1 ((1 - h) / 2) (h + j) * (h - j) ^ 1 * (1 + 2 * j) ^ 5 + 6 * nltSt2 ((1 - h) / 2) (h + j) * (h - j) ^ 2 * (1 + 2 * j) ^ 4 + 6 * nltSt3 ((1 - h) / 2) (h + j) * (h - j) ^ 3 * (1 + 2 * j) ^ 3 + 6 * nltSt4 ((1 - h) / 2) (h + j) * (h - j) ^ 4 * (1 + 2 * j) ^ 2 + 6 * nltSt5 ((1 - h) / 2) (h + j) * (h - j) ^ 5 * (1 + 2 * j) ^ 1 + 6 * nltSt6 ((1 - h) / 2) (h + j) * (h - j) ^ 6 * (1 + 2 * j) ^ 0 = (1 + h + j) ^ 2 * polyHorner (nltPqL h) j := by
   rw [nlt_St_h0, nlt_St_h1, nlt_St_h2, nlt_St_h3, nlt_St_h4, nlt_St_h5, nlt_St_h6]
-  simp only [nltL0, nltL1, nltL2, nltL3, nltL4, nltL5, nltL6, nltPqL, lrhHorner]
+  simp only [nltL0, nltL1, nltL2, nltL3, nltL4, nltL5, nltL6, nltPqL, polyHorner]
   ring
 
 /-- The auxiliary polynomial `𝓜`; `500𝓜` is the main summand of `𝓡`. -/
@@ -119,8 +119,8 @@ noncomputable def nltRq (h j : ℝ) : ℝ :=
     + 1898424 * j ^ 8 * ((1 / 4) ^ 3 - j ^ 3)
 
 /-- **The gap derivative**: `∂_j P = 𝓡`. -/
-theorem nlt_Pq_dj (h j : ℝ) : lrhHorner (nltDer (nltPqL h)) j = nltRq h j := by
-  simp only [nltPqL, nltDer, nltDerAux, lrhHorner]
+theorem nlt_Pq_dj (h j : ℝ) : polyHorner (nltDer (nltPqL h)) j = nltRq h j := by
+  simp only [nltPqL, nltDer, nltDerAux, polyHorner]
   unfold nltRq nltMq nltEq nltUq1 nltUq2 nltUq3 nltUq4 nltUq5 nltVq1 nltVq2 nltVq3 nltVq4 nltVq5 nltDq9 nltDq10 nltDq11
   ring
 
@@ -208,8 +208,8 @@ theorem nlt_Rq_ge {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 0 ≤ 
 noncomputable def nltMqL (j : ℝ) : List ℝ :=
   [(-257 * j ^ 2 - 3836 * j ^ 3 - 26431 * j ^ 4 - 105439 * j ^ 5 - 256003 * j ^ 6 - 381694 * j ^ 7 - 336381 * j ^ 8 : ℝ), (-5 - 86 * j + 3422 * j ^ 2 + 44472 * j ^ 3 + 200524 * j ^ 4 + 442505 * j ^ 5 + 522510 * j ^ 6 + 455425 * j ^ 7 : ℝ), (221 + 248 * j - 11138 * j ^ 2 - 18104 * j ^ 3 + 129038 * j ^ 4 + 500497 * j ^ 5 + 484321 * j ^ 6 : ℝ), (195 - 8222 * j - 108100 * j ^ 2 - 416497 * j ^ 3 - 747741 * j ^ 4 - 1018180 * j ^ 5 : ℝ), (1890 + 10738 * j - 34503 * j ^ 2 - 254988 * j ^ 3 - 358391 * j ^ 4 : ℝ), (7539 + 82723 * j + 320192 * j ^ 2 + 926841 * j ^ 3 : ℝ), (8268 + 104683 * j + 517202 * j ^ 2 : ℝ), (-4907 - 13039 * j : ℝ), (-28629 : ℝ)]
 
-theorem nlt_Mq_h (h j : ℝ) : nltMq h j = lrhHorner (nltMqL j) h := by
-  simp only [nltMqL, lrhHorner]; unfold nltMq; ring
+theorem nlt_Mq_h (h j : ℝ) : nltMq h j = polyHorner (nltMqL j) h := by
+  simp only [nltMqL, polyHorner]; unfold nltMq; ring
 
 /-- `A_0(v)`: the coefficient of `(4h - 1)^0` in `∂_h𝓜` at `v = 4j`. -/
 noncomputable def nltAq0 (v : ℝ) : ℝ :=
@@ -244,9 +244,9 @@ noncomputable def nltAq7 (_v : ℝ) : ℝ :=
   -(28629 / 2048)
 
 /-- The derivative identity: `∂_h𝓜 = ∑ Aᵢ(4j)(4h - 1)ⁱ`. -/
-theorem nlt_Mq_dh (h j : ℝ) : lrhHorner (nltDer (nltMqL j)) h =
+theorem nlt_Mq_dh (h j : ℝ) : polyHorner (nltDer (nltMqL j)) h =
     nltAq0 (4 * j) * (4 * h - 1) ^ 0 + nltAq1 (4 * j) * (4 * h - 1) ^ 1 + nltAq2 (4 * j) * (4 * h - 1) ^ 2 + nltAq3 (4 * j) * (4 * h - 1) ^ 3 + nltAq4 (4 * j) * (4 * h - 1) ^ 4 + nltAq5 (4 * j) * (4 * h - 1) ^ 5 + nltAq6 (4 * j) * (4 * h - 1) ^ 6 + nltAq7 (4 * j) * (4 * h - 1) ^ 7 := by
-  simp only [nltMqL, nltDer, nltDerAux, lrhHorner]
+  simp only [nltMqL, nltDer, nltDerAux, polyHorner]
   unfold nltAq0 nltAq1 nltAq2 nltAq3 nltAq4 nltAq5 nltAq6 nltAq7
   ring
 
@@ -554,8 +554,8 @@ theorem nltMqT_pos {h : ℝ} (h1 : (1 / 4) ≤ h) (h2 : h ≤ (1 / 3)) : 0 < nlt
 noncomputable def nltPq30 (h : ℝ) : ℝ :=
   -(50606609017731059 / 22143375000000000) - (1663456257809172061 / 22143375000000000) * h + (113651532055800193 / 30754687500000) * h ^ 2 - (1385635615253177929 / 61509375000000) * h ^ 3 - (5563875353943587 / 1366875000000) * h ^ 4 + (7891487292263033 / 34171875000) * h ^ 5 + (24135046988069 / 84375000) * h ^ 6 - (49622776152083 / 75937500) * h ^ 7 - (1067345198659 / 506250) * h ^ 8 - (423843119963 / 168750) * h ^ 9 - (9184244566 / 5625) * h ^ 10 - (77015024 / 125) * h ^ 11 - (3245596 / 25) * h ^ 12 - (62016 / 5) * h ^ 13
 
-theorem nlt_Pq30_eq (h : ℝ) : lrhHorner (nltPqL h) (1 / 30) = nltPq30 h := by
-  simp only [nltPqL, lrhHorner]; unfold nltPq30; ring
+theorem nlt_Pq30_eq (h : ℝ) : polyHorner (nltPqL h) (1 / 30) = nltPq30 h := by
+  simp only [nltPqL, polyHorner]; unfold nltPq30; ring
 
 /-- `P(h, 1/30) > 39` on `[1/4, 1/3]`. -/
 theorem nlt_Pq30_gt {h : ℝ} (h1 : (1 / 4) ≤ h) (h2 : h ≤ (1 / 3)) : 39 < nltPq30 h := by
@@ -591,7 +591,7 @@ theorem nlt_Pq30_gt {h : ℝ} (h1 : (1 / 4) ≤ h) (h2 : h ≤ (1 / 3)) : 39 < n
 
 /-- **`𝓜` increases in `h`** on `[1/4, 1/3] × [0, 1/4]`. -/
 theorem nlt_Mq_dh_pos {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 0 ≤ j) (j1 : j ≤ 1 / 4) :
-    0 < lrhHorner (nltDer (nltMqL j)) h := by
+    0 < polyHorner (nltDer (nltMqL j)) h := by
   rw [nlt_Mq_dh]
   have v0 : 0 ≤ 4 * j := by linarith
   have v1 : 4 * j ≤ 1 := by linarith
@@ -621,14 +621,14 @@ theorem nlt_Mq_dh_pos {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 0 
 otherwise to `4j/3`, and use the endpoint signs `F > 0` (`nltMqF`) and `T > 0` (`nltMqT`). -/
 theorem nlt_Mq_pos {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 1 / 30 ≤ j)
     (j1 : j ≤ 3 / 4 * h) : 0 < nltMq h j := by
-  have hd : ∀ s, HasDerivAt (lrhHorner (nltMqL j)) (lrhHorner (nltDer (nltMqL j)) s) s :=
+  have hd : ∀ s, HasDerivAt (polyHorner (nltMqL j)) (polyHorner (nltDer (nltMqL j)) s) s :=
     fun s => nlt_hasDerivAt_horner _ s
   have jle : j ≤ 1 / 4 := by linarith
-  have dpos : ∀ s, 1 / 4 ≤ s → s ≤ 1 / 3 → 0 ≤ lrhHorner (nltDer (nltMqL j)) s :=
+  have dpos : ∀ s, 1 / 4 ≤ s → s ≤ 1 / 3 → 0 ≤ polyHorner (nltDer (nltMqL j)) s :=
     fun s s1 s2 => (nlt_Mq_dh_pos s1 s2 (by linarith) jle).le
   rw [nlt_Mq_h]
   rcases le_total j (3 / 16) with hj | hj
-  · have mono := hrl_mono hd dpos le_rfl h1 h2
+  · have mono := poly_mono hd dpos le_rfl h1 h2
     have base : 0 < nltMq (1 / 4) j := by
       have := nltMqF_pos (v := 4 * j) (by linarith) (by linarith)
       have e : 65536 * nltMq (1 / 4) j = nltMqF (4 * j) := by unfold nltMq nltMqF; ring
@@ -637,7 +637,7 @@ theorem nlt_Mq_pos {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 1 / 3
     linarith
   · have h0 : 1 / 4 ≤ 4 / 3 * j := by linarith
     have h0' : 4 / 3 * j ≤ h := by linarith
-    have mono := hrl_mono hd dpos h0 h0' h2
+    have mono := poly_mono hd dpos h0 h0' h2
     have base : 0 < nltMq (4 / 3 * j) j := by
       have hT := nltMqT_pos (h := 4 / 3 * j) h0 (by linarith)
       have e : 65536 * nltMq (4 / 3 * j) j = 4 / 3 * j * nltMqT (4 / 3 * j) := by
@@ -657,20 +657,20 @@ theorem nlt_face_qmax {h j : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j0 : 1 
       + nltSt4 ((1 - h) / 2) (h + j) * ((h - j) / (1 + 2 * j)) ^ 4
       + nltSt5 ((1 - h) / 2) (h + j) * ((h - j) / (1 + 2 * j)) ^ 5
       + nltSt6 ((1 - h) / 2) (h + j) * ((h - j) / (1 + 2 * j)) ^ 6 := by
-  have hd : ∀ s, HasDerivAt (lrhHorner (nltPqL h)) (lrhHorner (nltDer (nltPqL h)) s) s :=
+  have hd : ∀ s, HasDerivAt (polyHorner (nltPqL h)) (polyHorner (nltDer (nltPqL h)) s) s :=
     fun s => nlt_hasDerivAt_horner _ s
-  have pos : ∀ s, 1 / 30 ≤ s → s ≤ j → 0 ≤ lrhHorner (nltDer (nltPqL h)) s := fun s s1 s2 => by
+  have pos : ∀ s, 1 / 30 ≤ s → s ≤ j → 0 ≤ polyHorner (nltDer (nltPqL h)) s := fun s s1 s2 => by
     rw [nlt_Pq_dj]
     have := nlt_Rq_ge h1 h2 (by linarith) (by linarith : s ≤ 1 / 4)
     have := nlt_Mq_pos h1 h2 s1 (by linarith : s ≤ 3 / 4 * h)
     linarith
-  have mono := hrl_mono hd pos le_rfl j0 le_rfl
+  have mono := poly_mono hd pos le_rfl j0 le_rfl
   have p30 := nlt_Pq30_gt h1 h2
   rw [← nlt_Pq30_eq] at p30
-  have hP : 0 < lrhHorner (nltPqL h) j := by linarith
+  have hP : 0 < polyHorner (nltPqL h) j := by linarith
   have e := nlt_Pq_eq h j
   have hd1 : 0 < 1 + 2 * j := by linarith
-  set P := lrhHorner (nltPqL h) j
+  set P := polyHorner (nltPqL h) j
   have key : nltSt0 ((1 - h) / 2) (h + j) + nltSt1 ((1 - h) / 2) (h + j) * ((h - j) / (1 + 2 * j))
       + nltSt2 ((1 - h) / 2) (h + j) * ((h - j) / (1 + 2 * j)) ^ 2
       + nltSt3 ((1 - h) / 2) (h + j) * ((h - j) / (1 + 2 * j)) ^ 3

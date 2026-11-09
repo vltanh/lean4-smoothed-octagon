@@ -1,7 +1,7 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Short.Order
-public import SmoothedOctagon.Certificates.SmallerShort
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Order
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Point
 
 /-!
 # Case M2, smaller-short side: the secant facts of a short bridge
@@ -22,7 +22,7 @@ The regular form of the secant, the bridge order `C ≤ B` and the smaller-turn 
 
 namespace SmoothedOctagon
 
-open Certificates.SmallerShort
+open SmallerShort
 
 /-- **The regular form of the secant**: `Sec(A, B, P) = 1 + c²/q - c·logDiv(q)` with
 `q = (P + B)/(A + B)`, `c = B/(A + B)`. -/

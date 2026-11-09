@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S4Defs
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.Defs
 
 /-!
-# The leaf `hs4_floor_box`: closed forms of `Φ` and `Ψ` at the central scale
+# Smaller-short window, Casimir floor: closed forms of `Φ` and `Ψ` at the central scale
 
 At `q = q_c = α²/Σ`,
 `Σ = x(x + 2) + α²`, the scale `ρ(q_c) = 1/S²` (`S = 1 + x`), and with
@@ -16,7 +16,7 @@ At `q = q_c = α²/Σ`,
 
 ## Main API
 
-`hh46S4G`, `hh46S4Wc`, `hh46S4EL`, `hh46S4PhiC`, `hh46S4PsiC`, `hh46_s4_phi_eq`, `hh46_s4_psi_eq`.
+`casClosedG`, `casClosedWc`, `casClosedEL`, `casClosedPhiC`, `casClosedPsiC`, `cas_closed_phi_eq`, `cas_closed_psi_eq`.
 -/
 
 @[expose] public section
@@ -26,107 +26,107 @@ namespace SmoothedOctagon
 open Real
 
 /-- `P = S³(u - 1) + 3S - 1`, `S = 1 + x`. -/
-noncomputable def hh46S4P (x u : ℝ) : ℝ := (1 + x) ^ 3 * (u - 1) + 3 * (1 + x) - 1
+noncomputable def casClosedP (x u : ℝ) : ℝ := (1 + x) ^ 3 * (u - 1) + 3 * (1 + x) - 1
 
 /-- `G = Γ_*(q_c)`. -/
-noncomputable def hh46S4G (x u : ℝ) : ℝ :=
-  (4 * u * (1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1) - hh46S4P x u ^ 2) /
+noncomputable def casClosedG (x u : ℝ) : ℝ :=
+  (4 * u * (1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1) - casClosedP x u ^ 2) /
     (16 * x ^ 2 * (x + 2) ^ 2)
 
 /-- `w_c = w_*(q_c)`. -/
-noncomputable def hh46S4Wc (x be al u : ℝ) : ℝ :=
-  ((1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1) + hsDg x be al ^ 2 * u - hsDg x be al * hh46S4P x u) /
+noncomputable def casClosedWc (x be al u : ℝ) : ℝ :=
+  ((1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1) + ssDg x be al ^ 2 * u - ssDg x be al * casClosedP x u) /
     (x * (x + 2) + al ^ 2) ^ 2
 
 /-- `E_L = E_{L,*}(q_c)`. -/
-noncomputable def hh46S4EL (x be al u : ℝ) : ℝ :=
-  (2 * hsDg x be al * u - hh46S4P x u) / (x * (x + 2) + al ^ 2)
+noncomputable def casClosedEL (x be al u : ℝ) : ℝ :=
+  (2 * ssDg x be al * u - casClosedP x u) / (x * (x + 2) + al ^ 2)
 
 /-- The part of the bracket common to `Φ` and `Ψ`, without the logarithm. -/
-noncomputable def hh46S4Rest (x be al u : ℝ) : ℝ :=
-  (u - 1) * (al + be) / al + al / (al + be) - al ^ 2 / (x * (x + 2) + al ^ 2) - hh46S4EL x be al u
+noncomputable def casClosedRest (x be al u : ℝ) : ℝ :=
+  (u - 1) * (al + be) / al + al / (al + be) - al ^ 2 / (x * (x + 2) + al ^ 2) - casClosedEL x be al u
 
 /-- The closed form of `Φ`. -/
-noncomputable def hh46S4PhiC (x be al u : ℝ) : ℝ :=
-  hh46S4G x u - (2 * hh46S4Wc x be al u - 1 / 2 + hh46S4Rest x be al u +
+noncomputable def casClosedPhiC (x be al u : ℝ) : ℝ :=
+  casClosedG x u - (2 * casClosedWc x be al u - 1 / 2 + casClosedRest x be al u +
     log (2 * al * (al + be) / (x * (x + 2) + al ^ 2))) / 7
 
 /-- The closed form of `Ψ`. -/
-noncomputable def hh46S4PsiC (x be al u : ℝ) : ℝ :=
-  hh46S4G x u - ((x * (x + 2) + al ^ 2) / (al * (al + be)) * (hh46S4Wc x be al u - 3 / 4) + 1 +
-    hh46S4Rest x be al u + log (2 * al * (al + be) / (x * (x + 2) + al ^ 2))) / 7
+noncomputable def casClosedPsiC (x be al u : ℝ) : ℝ :=
+  casClosedG x u - ((x * (x + 2) + al ^ 2) / (al * (al + be)) * (casClosedWc x be al u - 3 / 4) + 1 +
+    casClosedRest x be al u + log (2 * al * (al + be) / (x * (x + 2) + al ^ 2))) / 7
 
-theorem hh46_s4_rho {x al : ℝ} (hx : 0 < x) (hal : 0 < al) :
-    hsRhoOf al (hsQc x al) = 1 / (1 + x) ^ 2 := by
+theorem cas_closed_rho {x al : ℝ} (hx : 0 < x) (hal : 0 < al) :
+    ssRhoOf al (ssQc x al) = 1 / (1 + x) ^ 2 := by
   have h1 : x * (x + 2) + al ^ 2 ≠ 0 := by positivity
   have h2 : (1 + x) ≠ 0 := by positivity
-  unfold hsRhoOf hsQc
+  unfold ssRhoOf ssQc
   have h3 : al ^ 2 - (al ^ 2 - 1) * (al ^ 2 / (x * (x + 2) + al ^ 2)) =
       al ^ 2 * (1 + x) ^ 2 / (x * (x + 2) + al ^ 2) := by
     field_simp; ring
   rw [h3]
   field_simp
 
-theorem hh46_s4_G_eq {x al u : ℝ} (hx : 0 < x) (hal : 0 < al) :
-    hsGs x al u (hsQc x al) = hh46S4G x u := by
+theorem cas_closed_G_eq {x al u : ℝ} (hx : 0 < x) (hal : 0 < al) :
+    ssGs x al u (ssQc x al) = casClosedG x u := by
   have h2 : (1 + x) ≠ 0 := by positivity
   have h3 : x ≠ 0 := hx.ne'
   have h4 : x + 2 ≠ 0 := by positivity
-  unfold hsGs
-  rw [hh46_s4_rho hx hal]
-  unfold m2U hsE0 hh46S4G hh46S4P
+  unfold ssGs
+  rw [cas_closed_rho hx hal]
+  unfold m2U ssE0 casClosedG casClosedP
   have h5 : (1 - 1 / (1 + x) ^ 2) = x * (x + 2) / (1 + x) ^ 2 := by field_simp; ring
   rw [h5]
   field_simp
   ring
 
-theorem hh46_s4_W_eq {x be al u : ℝ} (hx : 0 < x) (hal : 0 < al) :
-    hsWs x be al u (hsQc x al) = hh46S4Wc x be al u := by
+theorem cas_closed_W_eq {x be al u : ℝ} (hx : 0 < x) (hal : 0 < al) :
+    ssWs x be al u (ssQc x al) = casClosedWc x be al u := by
   have h1 : x * (x + 2) + al ^ 2 ≠ 0 := by positivity
   have h2 : (1 + x) ≠ 0 := by positivity
   have h3 : al ≠ 0 := hal.ne'
-  unfold hsWs hsA1 hsA2 hsE0 hsQc hh46S4Wc hh46S4P
+  unfold ssWs ssA1 ssA2 ssE0 ssQc casClosedWc casClosedP
   field_simp
   ring
 
-theorem hh46_s4_EL_eq {x be al u : ℝ} (hx : 0 < x) (hal : 0 < al) :
-    hsELs x be al u (hsQc x al) = hh46S4EL x be al u := by
+theorem cas_closed_EL_eq {x be al u : ℝ} (hx : 0 < x) (hal : 0 < al) :
+    ssELs x be al u (ssQc x al) = casClosedEL x be al u := by
   have h1 : x * (x + 2) + al ^ 2 ≠ 0 := by positivity
   have h2 : (1 + x) ≠ 0 := by positivity
   have h3 : al ≠ 0 := hal.ne'
-  unfold hsELs hsA3 hsE0 hsQc hh46S4EL hh46S4P
+  unfold ssELs ssA3 ssE0 ssQc casClosedEL casClosedP
   field_simp
   ring
 
-theorem hh46_s4_log_arg {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) (hbe : 0 < be) :
-    2 * hsQc x al / hsRA al be = 2 * al * (al + be) / (x * (x + 2) + al ^ 2) := by
+theorem cas_closed_log_arg {x be al : ℝ} (hx : 0 < x) (hal : 0 < al) (hbe : 0 < be) :
+    2 * ssQc x al / ssRA al be = 2 * al * (al + be) / (x * (x + 2) + al ^ 2) := by
   have h1 : x * (x + 2) + al ^ 2 ≠ 0 := by positivity
   have h3 : al ≠ 0 := hal.ne'
   have h4 : al + be ≠ 0 := by positivity
-  unfold hsQc hsRA
+  unfold ssQc ssRA
   field_simp
 
 /-- `Φ` in closed form. -/
-theorem hh46_s4_phi_eq {x be al u : ℝ} (hx : 0 < x) (hal : 0 < al) (hbe : 0 < be) :
-    hs4Phi x be al u = hh46S4PhiC x be al u := by
+theorem cas_closed_phi_eq {x be al u : ℝ} (hx : 0 < x) (hal : 0 < al) (hbe : 0 < be) :
+    casPhi x be al u = casClosedPhiC x be al u := by
   have h1 : x * (x + 2) + al ^ 2 ≠ 0 := by positivity
   have h3 : al ≠ 0 := hal.ne'
   have h4 : al + be ≠ 0 := by positivity
-  unfold hs4Phi hsRs hsF
-  rw [hh46_s4_G_eq hx hal, hh46_s4_W_eq hx hal, hh46_s4_EL_eq hx hal, hh46_s4_log_arg hx hal hbe]
-  unfold hh46S4PhiC hh46S4Rest hsRA hsQc
+  unfold casPhi ssRs ssF
+  rw [cas_closed_G_eq hx hal, cas_closed_W_eq hx hal, cas_closed_EL_eq hx hal, cas_closed_log_arg hx hal hbe]
+  unfold casClosedPhiC casClosedRest ssRA ssQc
   field_simp
   ring
 
 /-- `Ψ` in closed form. -/
-theorem hh46_s4_psi_eq {x be al u : ℝ} (hx : 0 < x) (hal : 0 < al) (hbe : 0 < be) :
-    hs4Psi x be al u = hh46S4PsiC x be al u := by
+theorem cas_closed_psi_eq {x be al u : ℝ} (hx : 0 < x) (hal : 0 < al) (hbe : 0 < be) :
+    casPsi x be al u = casClosedPsiC x be al u := by
   have h1 : x * (x + 2) + al ^ 2 ≠ 0 := by positivity
   have h3 : al ≠ 0 := hal.ne'
   have h4 : al + be ≠ 0 := by positivity
-  unfold hs4Psi
-  rw [hh46_s4_phi_eq hx hal hbe, hh46_s4_W_eq hx hal]
-  unfold hh46S4PhiC hh46S4PsiC hsRA hsQc
+  unfold casPsi
+  rw [cas_closed_phi_eq hx hal hbe, cas_closed_W_eq hx hal]
+  unfold casClosedPhiC casClosedPsiC ssRA ssQc
   field_simp
   ring
 

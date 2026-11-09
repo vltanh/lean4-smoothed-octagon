@@ -2,7 +2,7 @@ module
 
 public import SmoothedOctagon.Exclusion.Mixed.Centre
 public import SmoothedOctagon.Exclusion.Mixed.Extract.Transport
-public import SmoothedOctagon.Exclusion.Mixed.Short.Residual
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Residual
 
 /-!
 # Case M2, smaller-short side: the covector algebra of the short window
@@ -31,7 +31,7 @@ missing control `G_L ≥ 0` at the forward switch `C → B` (`M2Calculus.mc_fwd`
 
 namespace SmoothedOctagon
 
-open Certificates.SmallerShort
+open SmallerShort
 
 /-- **The same-lift transport to the outer centre**: with `λ = K_a/K_A`, the norm `w` and the
 pairing `E_L` at `A` are `w = λ²v + d²u - dλE` and `E_L = 2du - λE`. -/

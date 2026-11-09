@@ -1,16 +1,16 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenBetaDefs
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandRecipPoly
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.CentralFace.Beta.PartialFractions
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.OuterFace.Reciprocal.Polynomials
 
 /-!
-# S2 hand signs: the central beta monotonicity, the base face `b = x`
+# Smaller-short window, upper ratio: the central beta monotonicity, the base face `b = x`
 
 Both beta derivatives are positive at the lower endpoint `b = x` (`B = a + x`) of the enlarged
 beta range `x ≤ b ≤ x + 7(a - 1)/8`.
 
 The exact derivatives at `b = x` (moving norm included, through the partial fractions of
-`S2HandCenBetaDefs`) are cleared directly:
+`Beta/PartialFractions`) are cleared directly:
 `19200aB²(x - 1)S²K³ G_b(x) = N_G(x - 2, a - 1)` and
 `38400aB²(x - 1)S²K² H_b(x) = N_H(x - 2, a - 1)`, two bivariate polynomials of degrees 12 and 10
 (82 and 58 terms in `h = x - 2`, `c = a - 1`), each positive by a termwise bound of its monomials
@@ -18,8 +18,8 @@ The exact derivatives at `b = x` (moving norm included, through the partial frac
 
 ## Main API
 
-* `hl2cbG1`, `hl2cbH1`: the two first derivatives (template forms of `hl2cb_hd`).
-* `hl2cbNG`, `hl2cbNH` and `hl2cb_G1_base`, `hl2cb_H1_base`: positivity at `b = x`.
+* `urcbG1`, `urcbH1`: the two first derivatives (template forms of `urcb_hd`).
+* `urcbNG`, `urcbNH` and `urcb_G1_base`, `urcb_H1_base`: positivity at `b = x`.
 -/
 
 @[expose] public section
@@ -29,17 +29,17 @@ namespace SmoothedOctagon
 open Real Set
 
 /-- `G_b = 3p₃B² + 2p₂B + p₁ - a/B² - p_c/(b - 1)² + 1/B`. -/
-noncomputable def hl2cbG1 (x a s : ℝ) : ℝ :=
-  3 * hl2cbp3 x a * (a + s) ^ 2 + 2 * hl2cbp2 x a * (a + s) + hl2cbp1 x a - a / (a + s) ^ 2 -
-    hl2cbpc x a / (s - 1) ^ 2 + 1 / (a + s)
+noncomputable def urcbG1 (x a s : ℝ) : ℝ :=
+  3 * urcbp3 x a * (a + s) ^ 2 + 2 * urcbp2 x a * (a + s) + urcbp1 x a - a / (a + s) ^ 2 -
+    urcbpc x a / (s - 1) ^ 2 + 1 / (a + s)
 
 /-- `H_b = (c₂/2)B + q₁ - A₁/B² - P_c/(b - 1)² + 1/B`. -/
-noncomputable def hl2cbH1 (x a s : ℝ) : ℝ :=
-  3 * 0 * (a + s) ^ 2 + 2 * (hl2cbc2 x a / 4) * (a + s) + hl2cbq1 x a - hl2cbA1 x a / (a + s) ^ 2 -
-    hl2cbPc x a / (s - 1) ^ 2 + 1 / (a + s)
+noncomputable def urcbH1 (x a s : ℝ) : ℝ :=
+  3 * 0 * (a + s) ^ 2 + 2 * (urcbc2 x a / 4) * (a + s) + urcbq1 x a - urcbA1 x a / (a + s) ^ 2 -
+    urcbPc x a / (s - 1) ^ 2 + 1 / (a + s)
 
 /-- `N_G(h, c) = 19200aB²(x - 1)S²K³ G_b(x)`, `x = 2 + h`, `a = 1 + c`. -/
-noncomputable def hl2cbNG (h c : ℝ) : ℝ :=
+noncomputable def urcbNG (h c : ℝ) : ℝ :=
   (-44500 * h ^ 11 - 685654 * h ^ 10 - 3344404 * h ^ 9 + 3894818 * h ^ 8 + 118880392 * h ^ 7 + 626394692 * h ^ 6 + 1806612888 * h ^ 5 + 3258606228 * h ^ 4 + 3760785644 * h ^ 3 + 2694645106 * h ^ 2 + 1089387996 * h + 189421290) +
     (-39706 * h ^ 11 - 528696 * h ^ 10 - 1600178 * h ^ 9 + 11506184 * h ^ 8 + 113758768 * h ^ 7 + 420611428 * h ^ 6 + 789278336 * h ^ 5 + 599392516 * h ^ 4 - 409074118 * h ^ 3 - 1220657916 * h ^ 2 - 932125342 * h - 250124988) * c +
     (16578 * h ^ 10 - 3034 * h ^ 9 - 5709255 * h ^ 8 - 74744308 * h ^ 7 - 456872632 * h ^ 6 - 1615901592 * h ^ 5 - 3520448402 * h ^ 4 - 4739020252 * h ^ 3 - 3769402162 * h ^ 2 - 1577643390 * h - 254877887) * c ^ 2 +
@@ -52,7 +52,7 @@ noncomputable def hl2cbNG (h c : ℝ) : ℝ :=
     (677 * h ^ 2 + 1342 * h + 653) * c ^ 9
 
 /-- `N_H(h, c) = 38400aB²(x - 1)S²K² H_b(x)`, `x = 2 + h`, `a = 1 + c`. -/
-noncomputable def hl2cbNH (h c : ℝ) : ℝ :=
+noncomputable def urcbNH (h c : ℝ) : ℝ :=
   (-5416 * h ^ 10 - 58018 * h ^ 9 + 191974 * h ^ 8 + 6139812 * h ^ 7 + 42878708 * h ^ 6 + 157885536 * h ^ 5 + 349930944 * h ^ 4 + 479534428 * h ^ 3 + 395543188 * h ^ 2 + 179075778 * h + 34037370) +
     (-21262 * h ^ 9 - 307188 * h ^ 8 - 1867556 * h ^ 7 - 6741444 * h ^ 6 - 19678592 * h ^ 5 - 55279244 * h ^ 4 - 122364860 * h ^ 3 - 166849260 * h ^ 2 - 118045586 * h - 32799184) * c +
     (-622 * h ^ 8 - 126453 * h ^ 7 - 2066269 * h ^ 6 - 15626365 * h ^ 5 - 65317025 * h ^ 4 - 155766887 * h ^ 3 - 205321951 * h ^ 2 - 134917447 * h - 33726869) * c ^ 2 +
@@ -62,65 +62,65 @@ noncomputable def hl2cbNH (h c : ℝ) : ℝ :=
     (17858 * h ^ 3 + 121645 * h ^ 2 + 266744 * h + 163113) * c ^ 6 +
     (-677 * h ^ 2 - 1342 * h - 653) * c ^ 7
 
-theorem hl2cb_NG_id {x a : ℝ} (hx : 1 < x) (ha : 0 < a) :
-    19200 * a * (a + x) ^ 2 * (x - 1) * (1 + x) ^ 2 * hl2cK x a ^ 3 * hl2cbG1 x a x =
-      hl2cbNG (x - 2) (a - 1) := by
-  have hK := (hl2cb_K_pos (a := a) (by linarith : (0 : ℝ) < x)).ne'
+theorem urcb_NG_id {x a : ℝ} (hx : 1 < x) (ha : 0 < a) :
+    19200 * a * (a + x) ^ 2 * (x - 1) * (1 + x) ^ 2 * urcK x a ^ 3 * urcbG1 x a x =
+      urcbNG (x - 2) (a - 1) := by
+  have hK := (urcb_K_pos (a := a) (by linarith : (0 : ℝ) < x)).ne'
   have hS : 1 + x ≠ 0 := by linarith
   have hx1 : x - 1 ≠ 0 := by linarith
   have hB : a + x ≠ 0 := by linarith
-  unfold hl2cbG1 hl2cbp3 hl2cbp2 hl2cbp1 hl2cbpc hl2cbl hl2cbc2 hl2cbc1 hl2cbc0 hl2cbcv hl2cbl1
-    hl2cbe1 hl2cbcb hl2cbce hl2cbM hl2cbD0 hl2cbEf hl2cbJ hl2cbd
+  unfold urcbG1 urcbp3 urcbp2 urcbp1 urcbpc urcbl urcbc2 urcbc1 urcbc0 urcbcv urcbl1
+    urcbe1 urcbcb urcbce urcbM urcbD0 urcbEf urcbJ urcbd
   field_simp
-  unfold hl2cbNG hl2cK
+  unfold urcbNG urcK
   ring
 
-theorem hl2cb_NG_pos {h c : ℝ} (hh : 1 / 6 ≤ h) (hh' : h ≤ 2 / 5) (hc : 0 ≤ c) (hc' : c ≤ 1 / 3) :
-    0 < hl2cbNG h c := by
-  obtain ⟨hp, tp, tq, hu, hl⟩ := hl2_box hh hh' (by norm_num) hc hc'
-  unfold hl2cbNG
+theorem urcb_NG_pos {h c : ℝ} (hh : 1 / 6 ≤ h) (hh' : h ≤ 2 / 5) (hc : 0 ≤ c) (hc' : c ≤ 1 / 3) :
+    0 < urcbNG h c := by
+  obtain ⟨hp, tp, tq, hu, hl⟩ := ur_box hh hh' (by norm_num) hc hc'
+  unfold urcbNG
   linarith [mul_nonneg (tq 1) (hp 11), mul_nonneg (tp 2) (hp 10), mul_nonneg (tq 1) (hp 10), mul_nonneg (tp 3) (hp 9), mul_nonneg (tq 2) (hp 9), mul_nonneg (tq 1) (hp 9), mul_nonneg (tq 4) (hp 8), mul_nonneg (tp 3) (hp 8), mul_nonneg (tq 2) (hp 8), mul_nonneg (tp 1) (hp 8), mul_nonneg (tq 5) (hp 7), mul_nonneg (tp 4) (hp 7), mul_nonneg (tp 3) (hp 7), mul_nonneg (tq 2) (hp 7), mul_nonneg (tp 1) (hp 7), mul_nonneg (tq 6) (hp 6), mul_nonneg (tq 5) (hp 6), mul_nonneg (tp 4) (hp 6), mul_nonneg (tp 3) (hp 6), mul_nonneg (tq 2) (hp 6), mul_nonneg (tp 1) (hp 6), mul_nonneg (tq 7) (hp 5), mul_nonneg (tq 6) (hp 5), mul_nonneg (tq 5) (hp 5), mul_nonneg (tp 4) (hp 5), mul_nonneg (tp 3) (hp 5), mul_nonneg (tq 2) (hp 5), mul_nonneg (tp 1) (hp 5), mul_nonneg (tq 7) (hp 4), mul_nonneg (tq 6) (hp 4), mul_nonneg (tq 5) (hp 4), mul_nonneg (tp 4) (hp 4), mul_nonneg (tp 3) (hp 4), mul_nonneg (tq 2) (hp 4), mul_nonneg (tp 1) (hp 4), mul_nonneg (tq 8) (hp 3), mul_nonneg (tq 7) (hp 3), mul_nonneg (tq 6) (hp 3), mul_nonneg (tq 5) (hp 3), mul_nonneg (tp 4) (hp 3), mul_nonneg (tp 3) (hp 3), mul_nonneg (tq 2) (hp 3), mul_nonneg (tq 1) (hp 3), mul_nonneg (tp 9) (hp 2), mul_nonneg (tq 8) (hp 2), mul_nonneg (tq 7) (hp 2), mul_nonneg (tq 6) (hp 2), mul_nonneg (tq 5) (hp 2), mul_nonneg (tp 4) (hp 2), mul_nonneg (tp 3) (hp 2), mul_nonneg (tq 2) (hp 2), mul_nonneg (tq 1) (hp 2), mul_nonneg (tp 9) (hp 1), mul_nonneg (tq 8) (hp 1), mul_nonneg (tq 7) (hp 1), mul_nonneg (tq 6) (hp 1), mul_nonneg (tq 5) (hp 1), mul_nonneg (tp 4) (hp 1), mul_nonneg (tp 3) (hp 1), mul_nonneg (tq 2) (hp 1), mul_nonneg (tq 1) (hp 1), tp 9, tq 8, tq 7, tq 6, tq 5, tp 4, tp 3, tq 2, tq 1, hu 11, hu 10, hu 9, hl 8, hl 7, hl 6, hl 5, hl 4, hl 3, hl 2, hl 1]
 
-theorem hl2cb_NH_id {x a : ℝ} (hx : 1 < x) (ha : 0 < a) :
-    38400 * a * (a + x) ^ 2 * (x - 1) * (1 + x) ^ 2 * hl2cK x a ^ 2 * hl2cbH1 x a x =
-      hl2cbNH (x - 2) (a - 1) := by
-  have hK := (hl2cb_K_pos (a := a) (by linarith : (0 : ℝ) < x)).ne'
+theorem urcb_NH_id {x a : ℝ} (hx : 1 < x) (ha : 0 < a) :
+    38400 * a * (a + x) ^ 2 * (x - 1) * (1 + x) ^ 2 * urcK x a ^ 2 * urcbH1 x a x =
+      urcbNH (x - 2) (a - 1) := by
+  have hK := (urcb_K_pos (a := a) (by linarith : (0 : ℝ) < x)).ne'
   have hS : 1 + x ≠ 0 := by linarith
   have hx1 : x - 1 ≠ 0 := by linarith
   have hB : a + x ≠ 0 := by linarith
-  unfold hl2cbH1 hl2cbq1 hl2cbA1 hl2cbPc hl2cbc2 hl2cbc1 hl2cbc0 hl2cbcv hl2cbl1 hl2cbe1 hl2cbcb
-    hl2cbce hl2cbM hl2cbD0 hl2cbEf hl2cbJ hl2cbd
+  unfold urcbH1 urcbq1 urcbA1 urcbPc urcbc2 urcbc1 urcbc0 urcbcv urcbl1 urcbe1 urcbcb
+    urcbce urcbM urcbD0 urcbEf urcbJ urcbd
   field_simp
-  unfold hl2cbNH hl2cK
+  unfold urcbNH urcK
   ring
 
-theorem hl2cb_NH_pos {h c : ℝ} (hh : 1 / 6 ≤ h) (hh' : h ≤ 2 / 5) (hc : 0 ≤ c) (hc' : c ≤ 1 / 3) :
-    0 < hl2cbNH h c := by
-  obtain ⟨hp, tp, tq, hu, hl⟩ := hl2_box hh hh' (by norm_num) hc hc'
-  unfold hl2cbNH
+theorem urcb_NH_pos {h c : ℝ} (hh : 1 / 6 ≤ h) (hh' : h ≤ 2 / 5) (hc : 0 ≤ c) (hc' : c ≤ 1 / 3) :
+    0 < urcbNH h c := by
+  obtain ⟨hp, tp, tq, hu, hl⟩ := ur_box hh hh' (by norm_num) hc hc'
+  unfold urcbNH
   linarith [mul_nonneg (tq 1) (hp 9), mul_nonneg (tq 2) (hp 8), mul_nonneg (tq 1) (hp 8), mul_nonneg (tq 3) (hp 7), mul_nonneg (tq 2) (hp 7), mul_nonneg (tq 1) (hp 7), mul_nonneg (tp 4) (hp 6), mul_nonneg (tq 3) (hp 6), mul_nonneg (tq 2) (hp 6), mul_nonneg (tq 1) (hp 6), mul_nonneg (tp 5) (hp 5), mul_nonneg (tp 4) (hp 5), mul_nonneg (tq 3) (hp 5), mul_nonneg (tq 2) (hp 5), mul_nonneg (tq 1) (hp 5), mul_nonneg (tp 5) (hp 4), mul_nonneg (tq 4) (hp 4), mul_nonneg (tq 3) (hp 4), mul_nonneg (tq 2) (hp 4), mul_nonneg (tq 1) (hp 4), mul_nonneg (tp 6) (hp 3), mul_nonneg (tp 5) (hp 3), mul_nonneg (tp 4) (hp 3), mul_nonneg (tq 3) (hp 3), mul_nonneg (tq 2) (hp 3), mul_nonneg (tq 1) (hp 3), mul_nonneg (tq 7) (hp 2), mul_nonneg (tp 6) (hp 2), mul_nonneg (tp 5) (hp 2), mul_nonneg (tp 4) (hp 2), mul_nonneg (tq 3) (hp 2), mul_nonneg (tq 2) (hp 2), mul_nonneg (tq 1) (hp 2), mul_nonneg (tq 7) (hp 1), mul_nonneg (tp 6) (hp 1), mul_nonneg (tp 5) (hp 1), mul_nonneg (tp 4) (hp 1), mul_nonneg (tq 3) (hp 1), mul_nonneg (tq 2) (hp 1), mul_nonneg (tq 1) (hp 1), tq 7, tp 6, tp 5, tp 4, tp 3, tq 2, tq 1, hu 10, hu 9, hl 8, hl 7, hl 6, hl 5, hl 4, hl 3, hl 2, hl 1]
 
 /-- **The first beta derivative at `b = x`** is positive. -/
-theorem hl2cb_G1_base {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
-    (ha2 : a ≤ 4 / 3) : 0 < hl2cbG1 x a x := by
-  have hK := hl2cb_K_pos (a := a) (by linarith : (0 : ℝ) < x)
-  have e := hl2cb_NG_id (a := a) (by linarith : (1 : ℝ) < x) (by linarith)
-  have hP := hl2cb_NG_pos (h := x - 2) (c := a - 1) (by linarith) (by linarith) (by linarith)
+theorem urcb_G1_base {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
+    (ha2 : a ≤ 4 / 3) : 0 < urcbG1 x a x := by
+  have hK := urcb_K_pos (a := a) (by linarith : (0 : ℝ) < x)
+  have e := urcb_NG_id (a := a) (by linarith : (1 : ℝ) < x) (by linarith)
+  have hP := urcb_NG_pos (h := x - 2) (c := a - 1) (by linarith) (by linarith) (by linarith)
     (by linarith)
   have hx1 : 0 < x - 1 := by linarith
-  have h2 : 0 < 19200 * a * (a + x) ^ 2 * (x - 1) * (1 + x) ^ 2 * hl2cK x a ^ 3 := by positivity
+  have h2 : 0 < 19200 * a * (a + x) ^ 2 * (x - 1) * (1 + x) ^ 2 * urcK x a ^ 3 := by positivity
   rw [← e] at hP
   exact pos_of_mul_pos_right hP h2.le
 
 /-- **The second beta derivative at `b = x`** is positive. -/
-theorem hl2cb_H1_base {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
-    (ha2 : a ≤ 4 / 3) : 0 < hl2cbH1 x a x := by
-  have hK := hl2cb_K_pos (a := a) (by linarith : (0 : ℝ) < x)
-  have e := hl2cb_NH_id (a := a) (by linarith : (1 : ℝ) < x) (by linarith)
-  have hP := hl2cb_NH_pos (h := x - 2) (c := a - 1) (by linarith) (by linarith) (by linarith)
+theorem urcb_H1_base {x a : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha : 1 ≤ a)
+    (ha2 : a ≤ 4 / 3) : 0 < urcbH1 x a x := by
+  have hK := urcb_K_pos (a := a) (by linarith : (0 : ℝ) < x)
+  have e := urcb_NH_id (a := a) (by linarith : (1 : ℝ) < x) (by linarith)
+  have hP := urcb_NH_pos (h := x - 2) (c := a - 1) (by linarith) (by linarith) (by linarith)
     (by linarith)
   have hx1 : 0 < x - 1 := by linarith
-  have h2 : 0 < 38400 * a * (a + x) ^ 2 * (x - 1) * (1 + x) ^ 2 * hl2cK x a ^ 2 := by positivity
+  have h2 : 0 < 38400 * a * (a + x) ^ 2 * (x - 1) * (1 + x) ^ 2 * urcK x a ^ 2 := by positivity
   rw [← e] at hP
   exact pos_of_mul_pos_right hP h2.le
 

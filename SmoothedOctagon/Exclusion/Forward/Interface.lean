@@ -28,9 +28,9 @@ definitionally `CostateCycle.mu`, `gam2`, `wt`.
 For a costate cycle with every switch forward (`i_{k+1} = i_k + 1`), active margins
 `(p, b, a, c, d) = (a_{m-2}, …, a_{m+2})`:
 * `ff_rows`: the three stationarity rows (from `CostateCycle.stationarity` at the pieces `m - 1`,
-  `m`, `m + 1` and the transport of the weights across the pieces `m` and `m + 1`, `ifc_w_rel`).
+  `m`, `m + 1` and the transport of the weights across the pieces `m` and `m + 1`, `wire_w_rel`).
 * `ff_floors`: the exterior floors (from the missing-control inequality `σ ≤ 0` at the switches
-  `m - 1` and `m + 2`, `ifc_mc`).
+  `m - 1` and `m + 2`, `wire_mc`).
 * `ff_gram`: `γ² = (a² + 4)²(4uv - E²)/256` (`gram_pp`).
 * `NormalPeriod.ff_gam2_eq`: `γ² = det Λ₁(0)/12` for the cycle of a normal period.
 * `NormalPeriod.ff_cost_casimir`: negative ellipticity of `Λ₁` and the spectral cost–Casimir bound
@@ -72,7 +72,7 @@ noncomputable def ff_E (m : ℤ) : ℝ := 8 * C.ff_wt m / (C.act m ^ 2 + 4)
 
 /-- **The three stationarity rows at an all-forward window**: `CostateCycle.stationarity` at the
 pieces `m - 1`, `m`, `m + 1`, with the transport of the weights across the pieces `m` and `m + 1`;
-`ifc_rows_alg`. -/
+`wire_rows_alg`. -/
 theorem ff_rows (hF : ∀ k, C.lab (k + 1) = C.lab k + 1) (m : ℤ) :
     let p := C.act (m - 2); let b := C.act (m - 1); let a := C.act m; let c := C.act (m + 1)
     let d := C.act (m + 2)
@@ -86,14 +86,14 @@ theorem ff_rows (hF : ∀ k, C.lab (k + 1) = C.lab k + 1) (m : ℤ) :
     have := hF (k - 1); rwa [sub_add_cancel] at this
   have hs : ∀ k, C.sgn (k - 1) = C.sgn k := fun k ↦ by
     rw [C.sgn_fwd (by rw [sub_add_cancel]; exact hf k), C.sgn_fwd (hF k)]
-  have sL := C.ifc_stat_w (hs (m - 1))
-  have s0 := C.ifc_stat_w (hs m)
-  have sR := C.ifc_stat_w (hs (m + 1))
+  have sL := C.wire_stat_w (hs (m - 1))
+  have s0 := C.wire_stat_w (hs m)
+  have sR := C.wire_stat_w (hs (m + 1))
   rw [show m - 1 - 1 = m - 2 by ring, sub_add_cancel] at sL
   rw [add_sub_cancel_right, show m + 1 + 1 = m + 2 by ring] at sR
-  have rL := C.ifc_w_rel (k := m) (by rw [show m - 2 = m - 1 - 1 by ring]; exact hf (m - 1))
+  have rL := C.wire_w_rel (k := m) (by rw [show m - 2 = m - 1 - 1 by ring]; exact hf (m - 1))
     (hf m) (hF m)
-  have rR := C.ifc_w_rel (k := m + 1) (by
+  have rR := C.wire_w_rel (k := m + 1) (by
       rw [show m + 1 - 2 = m - 1 by ring, add_sub_cancel_right]; exact hf m) (hf (m + 1)) (hF (m + 1))
   rw [show m + 1 - 2 = m - 1 by ring, add_sub_cancel_right, show m + 1 + 1 = m + 2 by ring] at rR
   have fL := C.factor_pp (hf (m - 1)) (hF (m - 1))
@@ -102,12 +102,12 @@ theorem ff_rows (hF : ∀ k, C.lab (k + 1) = C.lab k + 1) (m : ℤ) :
   simp only [CostateCycle.sw, show m - 1 - 1 = m - 2 by ring, sub_add_cancel,
     add_sub_cancel_right, show m + 1 + 1 = m + 2 by ring, show m - 2 + 1 = m - 1 by ring] at fL f0 fR
   simp only [ff_u, ff_v, ff_E, ff_wt_eq]
-  exact ifc_rows_alg (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) fL f0 fR
+  exact wire_rows_alg (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) fL f0 fR
     rL rR sL s0 sR
 
 /-- **The two exterior floors**: the missing-control inequality `σ ≤ 0` at the exterior switches
 `m - 1` and `m + 2` of five consecutive pieces with forward switches gives `u ≥ F_{b/(a+b)}(h)` and
-`v ≥ F_{c/(a+c)}(k)` (`CostateCycle.ifc_floor_out`, `ifc_floor_in`). -/
+`v ≥ F_{c/(a+c)}(k)` (`CostateCycle.wire_floor_out`, `wire_floor_in`). -/
 theorem ff_floors (hF : ∀ k, C.lab (k + 1) = C.lab k + 1) (m : ℤ) :
     let p := C.act (m - 2); let b := C.act (m - 1); let a := C.act m; let c := C.act (m + 1)
     let d := C.act (m + 2)
@@ -115,8 +115,8 @@ theorem ff_floors (hF : ∀ k, C.lab (k + 1) = C.lab k + 1) (m : ℤ) :
   intro p b a c d
   have hf : ∀ k, C.lab k = C.lab (k - 1) + 1 := fun k ↦ by
     have := hF (k - 1); rwa [sub_add_cancel] at this
-  have fo := C.ifc_floor_out (hf (m - 1)) (hF (m - 1))
-  have fi := C.ifc_floor_in (hf (m + 1)) (hF (m + 1))
+  have fo := C.wire_floor_out (hf (m - 1)) (hF (m - 1))
+  have fi := C.wire_floor_in (hf (m + 1)) (hF (m + 1))
   rw [sub_add_cancel] at fo
   rw [add_sub_cancel_right] at fi
   have fL := C.factor_pp (hf (m - 1)) (hF (m - 1))
@@ -178,16 +178,16 @@ theorem ff_gam2_eq (k : ℤ) : P.costateCycle.ff_gam2 k = (P.Λ₁ 0).det / 12 :
 /-- **Ellipticity and the spectral cost–Casimir bound.** For an all-forward normal period the
 primary costate is negative elliptic; with `κ = √(det Λ₁(0))` the cost satisfies
 `C ≥ (π/3)(κ + 3/2)`. Proof: `γ² > 0` by the projective argument of `gam2_pos_of_mixed`
-(`ifc_gam2_pos_of_allForward`), then `Λ₁_zero_neg` and the spectral winding bound `ifc_spectral`. -/
+(`wire_gam2_pos_of_allForward`), then `Λ₁_zero_neg` and the spectral winding bound `wire_spectral`. -/
 theorem ff_cost_casimir (hF : P.rep.AllForward) :
     0 < (P.Λ₁ 0).det ∧ π / 3 * (√((P.Λ₁ 0).det) + 3 / 2) ≤ P.cost := by
-  have hpos := P.ifc_gam2_pos_of_allForward hF
+  have hpos := P.wire_gam2_pos_of_allForward hF
   have hd : 0 < P.costateCycle.swd ((0 : ℕ) : ℤ) := by
     have := P.costateCycle.swd_fwd (k := 0) (hF 0)
     have := CostateCycle.elJ_ge _ _ (P.costateCycle.act_pos 0) (P.costateCycle.act_pos (0 + 1))
     push_cast; linarith
-  obtain ⟨hdet, h10⟩ := P.ifc_negEll hpos hd
-  exact ⟨hdet, P.ifc_spectral hdet h10⟩
+  obtain ⟨hdet, h10⟩ := P.wire_negEll hpos hd
+  exact ⟨hdet, P.wire_spectral hdet h10⟩
 
 end NormalPeriod
 

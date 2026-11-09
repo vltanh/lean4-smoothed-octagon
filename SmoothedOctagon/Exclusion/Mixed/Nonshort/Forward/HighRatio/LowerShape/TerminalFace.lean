@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.PolyDeriv
+public import SmoothedOctagon.Exclusion.Mixed.PolyDeriv
 
 /-!
-# Case M2, forward successor by hand: the high-ratio lower shape, terminal face `h = 1/4`
+# Case M2, forward successor: the high-ratio lower shape, terminal face `h = 1/4`
 
 At `t = 3/8`, `k₀ = 29t²/4`, the normalized residual `P(x, y) = ∑ Cᵢ(x) yⁱ`
 (`96q(q + 1)W³D G_{4,L}`, `q = 1 + y`) satisfies `P ≥ 13/4` for `17/60 ≤ x ≤ 3/7`,
@@ -115,79 +115,79 @@ noncomputable def hrlRL1 : List ℝ :=
 noncomputable def hrlRL2 : List ℝ :=
   [(-254219902 : ℝ), 3123763200, 5383526400, 2005401600]
 
-theorem hrl_FL_d0 (s : ℝ) : HasDerivAt (lrhHorner hrlFL0) (lrhHorner hrlFL1 s) s := by
-  have H := lrh_hasDerivAt_horner hrlFL0 s
-  have e : lrhHornerD hrlFL0 s = lrhHorner hrlFL1 s := by
-    simp only [hrlFL0, hrlFL1, lrhHornerD, lrhHorner]; ring
+theorem hrl_FL_d0 (s : ℝ) : HasDerivAt (polyHorner hrlFL0) (polyHorner hrlFL1 s) s := by
+  have H := poly_hasDerivAt_horner hrlFL0 s
+  have e : polyHornerD hrlFL0 s = polyHorner hrlFL1 s := by
+    simp only [hrlFL0, hrlFL1, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_FL_d1 (s : ℝ) : HasDerivAt (lrhHorner hrlFL1) (lrhHorner hrlFL2 s) s := by
-  have H := lrh_hasDerivAt_horner hrlFL1 s
-  have e : lrhHornerD hrlFL1 s = lrhHorner hrlFL2 s := by
-    simp only [hrlFL1, hrlFL2, lrhHornerD, lrhHorner]; ring
+theorem hrl_FL_d1 (s : ℝ) : HasDerivAt (polyHorner hrlFL1) (polyHorner hrlFL2 s) s := by
+  have H := poly_hasDerivAt_horner hrlFL1 s
+  have e : polyHornerD hrlFL1 s = polyHorner hrlFL2 s := by
+    simp only [hrlFL1, hrlFL2, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_FL_d2 (s : ℝ) : HasDerivAt (lrhHorner hrlFL2) (lrhHorner hrlFL3 s) s := by
-  have H := lrh_hasDerivAt_horner hrlFL2 s
-  have e : lrhHornerD hrlFL2 s = lrhHorner hrlFL3 s := by
-    simp only [hrlFL2, hrlFL3, lrhHornerD, lrhHorner]; ring
+theorem hrl_FL_d2 (s : ℝ) : HasDerivAt (polyHorner hrlFL2) (polyHorner hrlFL3 s) s := by
+  have H := poly_hasDerivAt_horner hrlFL2 s
+  have e : polyHornerD hrlFL2 s = polyHorner hrlFL3 s := by
+    simp only [hrlFL2, hrlFL3, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_FL_d3 (s : ℝ) : HasDerivAt (lrhHorner hrlFL3) (lrhHorner hrlFL4 s) s := by
-  have H := lrh_hasDerivAt_horner hrlFL3 s
-  have e : lrhHornerD hrlFL3 s = lrhHorner hrlFL4 s := by
-    simp only [hrlFL3, hrlFL4, lrhHornerD, lrhHorner]; ring
+theorem hrl_FL_d3 (s : ℝ) : HasDerivAt (polyHorner hrlFL3) (polyHorner hrlFL4 s) s := by
+  have H := poly_hasDerivAt_horner hrlFL3 s
+  have e : polyHornerD hrlFL3 s = polyHorner hrlFL4 s := by
+    simp only [hrlFL3, hrlFL4, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_FL_d4 (s : ℝ) : HasDerivAt (lrhHorner hrlFL4) (lrhHorner hrlFL5 s) s := by
-  have H := lrh_hasDerivAt_horner hrlFL4 s
-  have e : lrhHornerD hrlFL4 s = lrhHorner hrlFL5 s := by
-    simp only [hrlFL4, hrlFL5, lrhHornerD, lrhHorner]; ring
+theorem hrl_FL_d4 (s : ℝ) : HasDerivAt (polyHorner hrlFL4) (polyHorner hrlFL5 s) s := by
+  have H := poly_hasDerivAt_horner hrlFL4 s
+  have e : polyHornerD hrlFL4 s = polyHorner hrlFL5 s := by
+    simp only [hrlFL4, hrlFL5, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_FL_d5 (s : ℝ) : HasDerivAt (lrhHorner hrlFL5) (lrhHorner hrlFL6 s) s := by
-  have H := lrh_hasDerivAt_horner hrlFL5 s
-  have e : lrhHornerD hrlFL5 s = lrhHorner hrlFL6 s := by
-    simp only [hrlFL5, hrlFL6, lrhHornerD, lrhHorner]; ring
+theorem hrl_FL_d5 (s : ℝ) : HasDerivAt (polyHorner hrlFL5) (polyHorner hrlFL6 s) s := by
+  have H := poly_hasDerivAt_horner hrlFL5 s
+  have e : polyHornerD hrlFL5 s = polyHorner hrlFL6 s := by
+    simp only [hrlFL5, hrlFL6, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_FL_d6 (s : ℝ) : HasDerivAt (lrhHorner hrlFL6) (lrhHorner hrlFL7 s) s := by
-  have H := lrh_hasDerivAt_horner hrlFL6 s
-  have e : lrhHornerD hrlFL6 s = lrhHorner hrlFL7 s := by
-    simp only [hrlFL6, hrlFL7, lrhHornerD, lrhHorner]; ring
+theorem hrl_FL_d6 (s : ℝ) : HasDerivAt (polyHorner hrlFL6) (polyHorner hrlFL7 s) s := by
+  have H := poly_hasDerivAt_horner hrlFL6 s
+  have e : polyHornerD hrlFL6 s = polyHorner hrlFL7 s := by
+    simp only [hrlFL6, hrlFL7, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_FL_d7 (s : ℝ) : HasDerivAt (lrhHorner hrlFL7) (lrhHorner hrlFL8 s) s := by
-  have H := lrh_hasDerivAt_horner hrlFL7 s
-  have e : lrhHornerD hrlFL7 s = lrhHorner hrlFL8 s := by
-    simp only [hrlFL7, hrlFL8, lrhHornerD, lrhHorner]; ring
+theorem hrl_FL_d7 (s : ℝ) : HasDerivAt (polyHorner hrlFL7) (polyHorner hrlFL8 s) s := by
+  have H := poly_hasDerivAt_horner hrlFL7 s
+  have e : polyHornerD hrlFL7 s = polyHorner hrlFL8 s := by
+    simp only [hrlFL7, hrlFL8, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_FL_d8 (s : ℝ) : HasDerivAt (lrhHorner hrlFL8) (lrhHorner hrlFL9 s) s := by
-  have H := lrh_hasDerivAt_horner hrlFL8 s
-  have e : lrhHornerD hrlFL8 s = lrhHorner hrlFL9 s := by
-    simp only [hrlFL8, hrlFL9, lrhHornerD, lrhHorner]; ring
+theorem hrl_FL_d8 (s : ℝ) : HasDerivAt (polyHorner hrlFL8) (polyHorner hrlFL9 s) s := by
+  have H := poly_hasDerivAt_horner hrlFL8 s
+  have e : polyHornerD hrlFL8 s = polyHorner hrlFL9 s := by
+    simp only [hrlFL8, hrlFL9, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_RL_d0 (s : ℝ) : HasDerivAt (lrhHorner hrlRL0) (lrhHorner hrlRL1 s) s := by
-  have H := lrh_hasDerivAt_horner hrlRL0 s
-  have e : lrhHornerD hrlRL0 s = lrhHorner hrlRL1 s := by
-    simp only [hrlRL0, hrlRL1, lrhHornerD, lrhHorner]; ring
+theorem hrl_RL_d0 (s : ℝ) : HasDerivAt (polyHorner hrlRL0) (polyHorner hrlRL1 s) s := by
+  have H := poly_hasDerivAt_horner hrlRL0 s
+  have e : polyHornerD hrlRL0 s = polyHorner hrlRL1 s := by
+    simp only [hrlRL0, hrlRL1, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_RL_d1 (s : ℝ) : HasDerivAt (lrhHorner hrlRL1) (lrhHorner hrlRL2 s) s := by
-  have H := lrh_hasDerivAt_horner hrlRL1 s
-  have e : lrhHornerD hrlRL1 s = lrhHorner hrlRL2 s := by
-    simp only [hrlRL1, hrlRL2, lrhHornerD, lrhHorner]; ring
+theorem hrl_RL_d1 (s : ℝ) : HasDerivAt (polyHorner hrlRL1) (polyHorner hrlRL2 s) s := by
+  have H := poly_hasDerivAt_horner hrlRL1 s
+  have e : polyHornerD hrlRL1 s = polyHorner hrlRL2 s := by
+    simp only [hrlRL1, hrlRL2, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
-theorem hrl_F_eq (x : ℝ) : hrlP x (467 / 960 - x) = lrhHorner hrlFL0 x := by
-  simp only [hrlFL0, lrhHorner]
+theorem hrl_F_eq (x : ℝ) : hrlP x (467 / 960 - x) = polyHorner hrlFL0 x := by
+  simp only [hrlFL0, polyHorner]
   unfold hrlP hrlCF0 hrlCF1 hrlCF2 hrlCF3 hrlCF4 hrlCF5 hrlCF6
   ring
 
-theorem hrl_R_eq (x : ℝ) : hrlRf x = lrhHorner hrlRL0 x := by
-  simp only [hrlRL0, lrhHorner]; unfold hrlRf; ring
+theorem hrl_R_eq (x : ℝ) : hrlRf x = polyHorner hrlRL0 x := by
+  simp only [hrlRL0, polyHorner]; unfold hrlRf; ring
 
 theorem hrl_xb {x : ℝ} (h1 : (17 / 60) ≤ x) (h2 : x ≤ (3 / 7)) :
     ((289 / 3600) : ℝ) ≤ x ^ (2 : ℕ) ∧
@@ -244,151 +244,151 @@ theorem hrl_sb {s : ℝ} (h1 : 0 ≤ s) (h2 : s ≤ (61 / 420)) :
     | (have := l 8; norm_num at this ⊢; linarith) | (have := u 8; norm_num at this ⊢; linarith)
 
 /-- `F⁽⁹⁾ < 0` on `[17/60, 3/7]`. -/
-theorem hrl_F9_neg {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : lrhHorner hrlFL9 x < 0 := by
+theorem hrl_F9_neg {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : polyHorner hrlFL9 x < 0 := by
   obtain ⟨s, rfl⟩ : ∃ s, x = s + 17 / 60 := ⟨x - 17 / 60, by ring⟩
   have hs0 : 0 ≤ s := by linarith
   have hs1 : s ≤ 61 / 420 := by linarith
   obtain ⟨l2, u2, l3, u3, l4, u4, l5, u5, l6, u6, l7, u7, l8, u8⟩ := hrl_sb hs0 hs1
-  have e : lrhHorner hrlFL9 (s + 17 / 60) = (-(89081107364515043449 / 2621440000) : ℝ) + (-(63923547408347487 / 327680) : ℝ) * s ^ (1 : ℕ) + (902943613293183 / 2560) * s ^ (2 : ℕ) + (8142666703479 / 8) * s ^ (3 : ℕ) + 360338558580 * s ^ (4 : ℕ) + (-37050773760 : ℝ) * s ^ (5 : ℕ) := by
-    simp only [hrlFL9, lrhHorner]; ring
+  have e : polyHorner hrlFL9 (s + 17 / 60) = (-(89081107364515043449 / 2621440000) : ℝ) + (-(63923547408347487 / 327680) : ℝ) * s ^ (1 : ℕ) + (902943613293183 / 2560) * s ^ (2 : ℕ) + (8142666703479 / 8) * s ^ (3 : ℕ) + 360338558580 * s ^ (4 : ℕ) + (-37050773760 : ℝ) * s ^ (5 : ℕ) := by
+    simp only [hrlFL9, polyHorner]; ring
   rw [e]; linarith only [hs0, l5, u2, u3, u4]
 
-theorem hrl_jet0 : 0 < lrhHorner hrlFL7 (17 / 60) := by
-  simp only [hrlFL7, lrhHorner]; norm_num
+theorem hrl_jet0 : 0 < polyHorner hrlFL7 (17 / 60) := by
+  simp only [hrlFL7, polyHorner]; norm_num
 
-theorem hrl_jet1 : 0 < lrhHorner hrlFL7 (3 / 7) := by
-  simp only [hrlFL7, lrhHorner]; norm_num
+theorem hrl_jet1 : 0 < polyHorner hrlFL7 (3 / 7) := by
+  simp only [hrlFL7, polyHorner]; norm_num
 
-theorem hrl_jet2 : lrhHorner hrlFL5 (17 / 60) < 0 := by
-  simp only [hrlFL5, lrhHorner]; norm_num
+theorem hrl_jet2 : polyHorner hrlFL5 (17 / 60) < 0 := by
+  simp only [hrlFL5, polyHorner]; norm_num
 
-theorem hrl_jet3 : lrhHorner hrlFL5 (3 / 7) < 0 := by
-  simp only [hrlFL5, lrhHorner]; norm_num
+theorem hrl_jet3 : polyHorner hrlFL5 (3 / 7) < 0 := by
+  simp only [hrlFL5, polyHorner]; norm_num
 
-theorem hrl_jet4 : lrhHorner hrlFL4 (17 / 60) < 0 := by
-  simp only [hrlFL4, lrhHorner]; norm_num
+theorem hrl_jet4 : polyHorner hrlFL4 (17 / 60) < 0 := by
+  simp only [hrlFL4, polyHorner]; norm_num
 
-theorem hrl_jet5 : 0 < lrhHorner hrlFL2 (17 / 60) := by
-  simp only [hrlFL2, lrhHorner]; norm_num
+theorem hrl_jet5 : 0 < polyHorner hrlFL2 (17 / 60) := by
+  simp only [hrlFL2, polyHorner]; norm_num
 
-theorem hrl_jet6 : 0 < lrhHorner hrlFL2 (2 / 5) := by
-  simp only [hrlFL2, lrhHorner]; norm_num
+theorem hrl_jet6 : 0 < polyHorner hrlFL2 (2 / 5) := by
+  simp only [hrlFL2, polyHorner]; norm_num
 
-theorem hrl_jet7 : 0 < lrhHorner hrlFL1 (2 / 5) := by
-  simp only [hrlFL1, lrhHorner]; norm_num
+theorem hrl_jet7 : 0 < polyHorner hrlFL1 (2 / 5) := by
+  simp only [hrlFL1, polyHorner]; norm_num
 
-theorem hrl_jet8 : 0 < lrhHorner hrlFL1 (3 / 7) := by
-  simp only [hrlFL1, lrhHorner]; norm_num
+theorem hrl_jet8 : 0 < polyHorner hrlFL1 (3 / 7) := by
+  simp only [hrlFL1, polyHorner]; norm_num
 
-theorem hrl_jet9 : 5 ≤ lrhHorner hrlFL0 (11 / 30) := by
-  simp only [hrlFL0, lrhHorner]; norm_num
+theorem hrl_jet9 : 5 ≤ polyHorner hrlFL0 (11 / 30) := by
+  simp only [hrlFL0, polyHorner]; norm_num
 
-theorem hrl_jet10 : 19 ≤ lrhHorner hrlFL1 (11 / 30) := by
-  simp only [hrlFL1, lrhHorner]; norm_num
+theorem hrl_jet10 : 19 ≤ polyHorner hrlFL1 (11 / 30) := by
+  simp only [hrlFL1, polyHorner]; norm_num
 
-theorem hrl_jet11 : lrhHorner hrlFL1 (11 / 30) ≤ 21 := by
-  simp only [hrlFL1, lrhHorner]; norm_num
+theorem hrl_jet11 : polyHorner hrlFL1 (11 / 30) ≤ 21 := by
+  simp only [hrlFL1, polyHorner]; norm_num
 
 /-- **The line face**: `F(x) = P(x, 467/960 - x) ≥ 13/4` on `[17/60, 3/7]`. -/
-theorem hrl_F_ge {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : 13 / 4 ≤ lrhHorner hrlFL0 x := by
+theorem hrl_F_ge {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : 13 / 4 ≤ polyHorner hrlFL0 x := by
   -- `F⁽⁸⁾` decreases, so `F⁽⁷⁾` (concave) is positive
-  have a8 : ∀ u v, 17 / 60 ≤ u → u ≤ v → v ≤ 3 / 7 → lrhHorner hrlFL8 v ≤ lrhHorner hrlFL8 u :=
-    fun u v hu huv hv => hrl_anti hrl_FL_d8 (fun s h1 h2 => (hrl_F9_neg h1 h2).le) hu huv hv
-  have p7 : ∀ s, 17 / 60 ≤ s → s ≤ 3 / 7 → 0 < lrhHorner hrlFL7 s :=
-    fun s h1 h2 => hrl_concave_pos hrl_FL_d7 a8 hrl_jet0 hrl_jet1 h1 h2
+  have a8 : ∀ u v, 17 / 60 ≤ u → u ≤ v → v ≤ 3 / 7 → polyHorner hrlFL8 v ≤ polyHorner hrlFL8 u :=
+    fun u v hu huv hv => poly_anti hrl_FL_d8 (fun s h1 h2 => (hrl_F9_neg h1 h2).le) hu huv hv
+  have p7 : ∀ s, 17 / 60 ≤ s → s ≤ 3 / 7 → 0 < polyHorner hrlFL7 s :=
+    fun s h1 h2 => poly_concave_pos hrl_FL_d7 a8 hrl_jet0 hrl_jet1 h1 h2
   -- `F⁽⁶⁾` increases, so `F⁽⁵⁾` (convex) is negative
   have a6 : ∀ u v, 17 / 60 ≤ u → u ≤ v → v ≤ 3 / 7 →
-      -lrhHorner hrlFL6 v ≤ -lrhHorner hrlFL6 u := fun u v hu huv hv => by
-    have := hrl_mono hrl_FL_d6 (fun s h1 h2 => (p7 s h1 h2).le) hu huv hv; linarith
-  have n5 : ∀ s, 17 / 60 ≤ s → s ≤ 3 / 7 → lrhHorner hrlFL5 s < 0 := fun s h1 h2 => by
-    have := hrl_concave_pos (f := fun s => -lrhHorner hrlFL5 s) (f' := fun s => -lrhHorner hrlFL6 s)
-      (fun s => (hrl_FL_d5 s).neg) a6 (show 0 < -lrhHorner hrlFL5 (17 / 60) by linarith [hrl_jet2])
-      (show 0 < -lrhHorner hrlFL5 (3 / 7) by linarith [hrl_jet3]) h1 h2
-    have : 0 < -lrhHorner hrlFL5 s := this
+      -polyHorner hrlFL6 v ≤ -polyHorner hrlFL6 u := fun u v hu huv hv => by
+    have := poly_mono hrl_FL_d6 (fun s h1 h2 => (p7 s h1 h2).le) hu huv hv; linarith
+  have n5 : ∀ s, 17 / 60 ≤ s → s ≤ 3 / 7 → polyHorner hrlFL5 s < 0 := fun s h1 h2 => by
+    have := poly_concave_pos (f := fun s => -polyHorner hrlFL5 s) (f' := fun s => -polyHorner hrlFL6 s)
+      (fun s => (hrl_FL_d5 s).neg) a6 (show 0 < -polyHorner hrlFL5 (17 / 60) by linarith [hrl_jet2])
+      (show 0 < -polyHorner hrlFL5 (3 / 7) by linarith [hrl_jet3]) h1 h2
+    have : 0 < -polyHorner hrlFL5 s := this
     linarith
   -- `F⁽⁴⁾` decreases from a negative value; `F⁽³⁾` decreases
-  have n4 : ∀ s, 17 / 60 ≤ s → s ≤ 3 / 7 → lrhHorner hrlFL4 s < 0 := fun s h1 h2 => by
-    have := hrl_anti hrl_FL_d4 (fun s h1 h2 => (n5 s h1 h2).le) le_rfl h1 h2
+  have n4 : ∀ s, 17 / 60 ≤ s → s ≤ 3 / 7 → polyHorner hrlFL4 s < 0 := fun s h1 h2 => by
+    have := poly_anti hrl_FL_d4 (fun s h1 h2 => (n5 s h1 h2).le) le_rfl h1 h2
     have := hrl_jet4; linarith
-  have a3 : ∀ u v, 17 / 60 ≤ u → u ≤ v → v ≤ 3 / 7 → lrhHorner hrlFL3 v ≤ lrhHorner hrlFL3 u :=
-    fun u v hu huv hv => hrl_anti hrl_FL_d3 (fun s h1 h2 => (n4 s h1 h2).le) hu huv hv
+  have a3 : ∀ u v, 17 / 60 ≤ u → u ≤ v → v ≤ 3 / 7 → polyHorner hrlFL3 v ≤ polyHorner hrlFL3 u :=
+    fun u v hu huv hv => poly_anti hrl_FL_d3 (fun s h1 h2 => (n4 s h1 h2).le) hu huv hv
   -- on `[17/60, 2/5]`: `F'' > 0`, so `F` lies above its tangent at `11/30`
-  have p2 : ∀ s, 17 / 60 ≤ s → s ≤ 2 / 5 → 0 < lrhHorner hrlFL2 s := fun s h1 h2 =>
-    hrl_concave_pos hrl_FL_d2 (fun u v hu huv hv => a3 u v hu huv (by linarith)) hrl_jet5 hrl_jet6 h1 h2
+  have p2 : ∀ s, 17 / 60 ≤ s → s ≤ 2 / 5 → 0 < polyHorner hrlFL2 s := fun s h1 h2 =>
+    poly_concave_pos hrl_FL_d2 (fun u v hu huv hv => a3 u v hu huv (by linarith)) hrl_jet5 hrl_jet6 h1 h2
   have tangent : ∀ s, 17 / 60 ≤ s → s ≤ 2 / 5 →
-      lrhHorner hrlFL0 (11 / 30) + lrhHorner hrlFL1 (11 / 30) * (s - 11 / 30) ≤ lrhHorner hrlFL0 s := by
+      polyHorner hrlFL0 (11 / 30) + polyHorner hrlFL1 (11 / 30) * (s - 11 / 30) ≤ polyHorner hrlFL0 s := by
     intro s h1 h2
-    have hd : ∀ u, HasDerivAt (fun u => lrhHorner hrlFL0 u - lrhHorner hrlFL1 (11 / 30) * u)
-        (lrhHorner hrlFL1 u - lrhHorner hrlFL1 (11 / 30)) u := fun u =>
-      ((hrl_FL_d0 u).sub ((hasDerivAt_id' u).const_mul (lrhHorner hrlFL1 (11 / 30)))).congr_deriv
+    have hd : ∀ u, HasDerivAt (fun u => polyHorner hrlFL0 u - polyHorner hrlFL1 (11 / 30) * u)
+        (polyHorner hrlFL1 u - polyHorner hrlFL1 (11 / 30)) u := fun u =>
+      ((hrl_FL_d0 u).sub ((hasDerivAt_id' u).const_mul (polyHorner hrlFL1 (11 / 30)))).congr_deriv
         (by ring)
     rcases le_total s (11 / 30) with hs | hs
-    · have := hrl_anti hd (a := 17 / 60) (b := 11 / 30) (fun u hu1 hu2 => by
-        have := hrl_mono hrl_FL_d1 (a := 17 / 60) (b := 2 / 5) (fun w w1 w2 => (p2 w w1 w2).le)
+    · have := poly_anti hd (a := 17 / 60) (b := 11 / 30) (fun u hu1 hu2 => by
+        have := poly_mono hrl_FL_d1 (a := 17 / 60) (b := 2 / 5) (fun w w1 w2 => (p2 w w1 w2).le)
           hu1 hu2 (by norm_num)
         linarith) h1 hs le_rfl
       linarith
-    · have := hrl_mono hd (a := 11 / 30) (b := 2 / 5) (fun u hu1 hu2 => by
-        have := hrl_mono hrl_FL_d1 (a := 17 / 60) (b := 2 / 5) (fun w w1 w2 => (p2 w w1 w2).le)
+    · have := poly_mono hd (a := 11 / 30) (b := 2 / 5) (fun u hu1 hu2 => by
+        have := poly_mono hrl_FL_d1 (a := 17 / 60) (b := 2 / 5) (fun w w1 w2 => (p2 w w1 w2).le)
           (by norm_num) hu1 hu2
         linarith) le_rfl hs h2
       linarith
-  have left : ∀ s, 17 / 60 ≤ s → s ≤ 2 / 5 → 13 / 4 ≤ lrhHorner hrlFL0 s := fun s h1 h2 => by
+  have left : ∀ s, 17 / 60 ≤ s → s ≤ 2 / 5 → 13 / 4 ≤ polyHorner hrlFL0 s := fun s h1 h2 => by
     have := tangent s h1 h2
     have j0 := hrl_jet9; have j1 := hrl_jet10; have j2 := hrl_jet11
     rcases le_total s (11 / 30) with hs | hs
-    · have : 0 ≤ (21 - lrhHorner hrlFL1 (11 / 30)) * (11 / 30 - s) :=
+    · have : 0 ≤ (21 - polyHorner hrlFL1 (11 / 30)) * (11 / 30 - s) :=
         mul_nonneg (by linarith) (by linarith)
       linarith
-    · have : 0 ≤ lrhHorner hrlFL1 (11 / 30) * (s - 11 / 30) := mul_nonneg (by linarith) (by linarith)
+    · have : 0 ≤ polyHorner hrlFL1 (11 / 30) * (s - 11 / 30) := mul_nonneg (by linarith) (by linarith)
       linarith
   -- on `[2/5, 3/7]`: `F'` is concave and positive at both ends, so `F` increases
-  have p1 : ∀ s, 2 / 5 ≤ s → s ≤ 3 / 7 → 0 < lrhHorner hrlFL1 s := fun s h1 h2 => by
-    rcases le_or_gt 0 (lrhHorner hrlFL2 s) with hs | hs
-    · have nn : ∀ w, 2 / 5 ≤ w → w ≤ s → 0 ≤ lrhHorner hrlFL2 w := fun w w1 w2 => by
-        rcases le_or_gt 0 (lrhHorner hrlFL3 w) with h3 | h3
-        · have := hrl_mono hrl_FL_d2 (a := 2 / 5) (b := w)
+  have p1 : ∀ s, 2 / 5 ≤ s → s ≤ 3 / 7 → 0 < polyHorner hrlFL1 s := fun s h1 h2 => by
+    rcases le_or_gt 0 (polyHorner hrlFL2 s) with hs | hs
+    · have nn : ∀ w, 2 / 5 ≤ w → w ≤ s → 0 ≤ polyHorner hrlFL2 w := fun w w1 w2 => by
+        rcases le_or_gt 0 (polyHorner hrlFL3 w) with h3 | h3
+        · have := poly_mono hrl_FL_d2 (a := 2 / 5) (b := w)
             (fun u u1 u2 => le_trans h3 (a3 u w (by linarith) u2 (by linarith))) le_rfl w1 le_rfl
           linarith [hrl_jet6]
-        · have := hrl_anti hrl_FL_d2 (a := w) (b := s)
+        · have := poly_anti hrl_FL_d2 (a := w) (b := s)
             (fun u u1 u2 => le_trans (a3 w u (by linarith) u1 (by linarith)) h3.le) le_rfl w2 le_rfl
           linarith
-      have := hrl_mono hrl_FL_d1 (a := 2 / 5) (b := s) nn le_rfl h1 le_rfl
+      have := poly_mono hrl_FL_d1 (a := 2 / 5) (b := s) nn le_rfl h1 le_rfl
       linarith [hrl_jet7]
-    · have h3 : lrhHorner hrlFL3 s ≤ 0 := by
+    · have h3 : polyHorner hrlFL3 s ≤ 0 := by
         by_contra hc
         push Not at hc
-        have := hrl_mono hrl_FL_d2 (a := 2 / 5) (b := s)
+        have := poly_mono hrl_FL_d2 (a := 2 / 5) (b := s)
           (fun u u1 u2 => le_trans hc.le (a3 u s (by linarith) u2 h2)) le_rfl h1 le_rfl
         linarith [hrl_jet6]
-      have h2' : ∀ u, s ≤ u → u ≤ 3 / 7 → lrhHorner hrlFL2 u ≤ 0 := fun u u1 u2 => by
-        have := hrl_anti hrl_FL_d2 (a := s) (b := 3 / 7)
+      have h2' : ∀ u, s ≤ u → u ≤ 3 / 7 → polyHorner hrlFL2 u ≤ 0 := fun u u1 u2 => by
+        have := poly_anti hrl_FL_d2 (a := s) (b := 3 / 7)
           (fun w w1 w2 => le_trans (a3 s w (by linarith) w1 w2) h3) le_rfl u1 u2
         linarith
-      have := hrl_anti hrl_FL_d1 (a := s) (b := 3 / 7) h2' le_rfl h2 le_rfl
+      have := poly_anti hrl_FL_d1 (a := s) (b := 3 / 7) h2' le_rfl h2 le_rfl
       linarith [hrl_jet8]
   rcases le_total x (2 / 5) with hx | hx
   · exact left x h1 hx
-  · have := hrl_mono hrl_FL_d0 (fun s h1 h2 => (p1 s h1 h2).le) le_rfl hx h2
+  · have := poly_mono hrl_FL_d0 (fun s h1 h2 => (p1 s h1 h2).le) le_rfl hx h2
     have := left (2 / 5) (by norm_num) le_rfl
     linarith
 
 /-- `C₀ > 20` on `[17/60, 3/7]`: `R` is convex with `R < -5·10⁶` at both ends. -/
 theorem hrl_CF0_gt {x : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) : 20 < hrlCF0 x := by
-  have hR2 : ∀ s, 17 / 60 ≤ s → s ≤ 3 / 7 → 0 ≤ lrhHorner hrlRL2 s := fun s h1 h2 => by
-    simp only [hrlRL2, lrhHorner]; nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ s) (by linarith : (0 : ℝ) ≤ s)]
+  have hR2 : ∀ s, 17 / 60 ≤ s → s ≤ 3 / 7 → 0 ≤ polyHorner hrlRL2 s := fun s h1 h2 => by
+    simp only [hrlRL2, polyHorner]; nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ s) (by linarith : (0 : ℝ) ≤ s)]
   have a1 : ∀ u v, 17 / 60 ≤ u → u ≤ v → v ≤ 3 / 7 →
-      -lrhHorner hrlRL1 v ≤ -lrhHorner hrlRL1 u := fun u v hu huv hv => by
-    have := hrl_mono hrl_RL_d1 hR2 hu huv hv; linarith
-  have key := hrl_concave_pos (f := fun s => -lrhHorner hrlRL0 s - 5000000)
-    (f' := fun s => -lrhHorner hrlRL1 s) (fun s => ((hrl_RL_d0 s).neg.sub_const 5000000)) a1
-    (show 0 < -lrhHorner hrlRL0 (17 / 60) - 5000000 by simp only [hrlRL0, lrhHorner]; norm_num)
-    (show 0 < -lrhHorner hrlRL0 (3 / 7) - 5000000 by simp only [hrlRL0, lrhHorner]; norm_num) h1 h2
-  have k2 : 0 < -lrhHorner hrlRL0 x - 5000000 := key
-  have e : hrlCF0 x = -5 * x * lrhHorner hrlRL0 x / 262144 := by
+      -polyHorner hrlRL1 v ≤ -polyHorner hrlRL1 u := fun u v hu huv hv => by
+    have := poly_mono hrl_RL_d1 hR2 hu huv hv; linarith
+  have key := poly_concave_pos (f := fun s => -polyHorner hrlRL0 s - 5000000)
+    (f' := fun s => -polyHorner hrlRL1 s) (fun s => ((hrl_RL_d0 s).neg.sub_const 5000000)) a1
+    (show 0 < -polyHorner hrlRL0 (17 / 60) - 5000000 by simp only [hrlRL0, polyHorner]; norm_num)
+    (show 0 < -polyHorner hrlRL0 (3 / 7) - 5000000 by simp only [hrlRL0, polyHorner]; norm_num) h1 h2
+  have k2 : 0 < -polyHorner hrlRL0 x - 5000000 := key
+  have e : hrlCF0 x = -5 * x * polyHorner hrlRL0 x / 262144 := by
     rw [← hrl_R_eq]; unfold hrlCF0 hrlRf; ring
   rw [e]
-  have : 5 * x * 5000000 ≤ 5 * x * (-lrhHorner hrlRL0 x) :=
+  have : 5 * x * 5000000 ≤ 5 * x * (-polyHorner hrlRL0 x) :=
     mul_le_mul_of_nonneg_left (by linarith) (by linarith)
   have : (20 : ℝ) * 262144 < 5 * x * 5000000 := by nlinarith
   rw [lt_div_iff₀ (by norm_num)]; nlinarith

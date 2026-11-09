@@ -1,27 +1,27 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Basic
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Basic
 
 /-!
-# Gate S6 helper: the central shear bounds
+# Smaller-short window, cost: the central shear bounds
 
 On `2 ≤ x ≤ 13/6`, `0 ≤ d ≤ 1/19`,
 `13/5 ≤ η ≤ 3`, `α = 1 + ηd`, `β = x(1 + d)`, the central shear `Z = 2U₁Q/(x(x + 2)) - R - (1 + A)T`
 satisfies `Z_L ≤ Z ≤ Z_U`.
 
 The differences `Z_U - Z` and `Z - Z_L` are written exactly as `d·N/D` with `D > 0` and an explicit
-polynomial `N(x, d, η)` (`hs6_shear_core`). In `h = x - 2`, `w = η - 13/5`, the lower numerator is
+polynomial `N(x, d, η)` (`cost_shear_core`). In `h = x - 2`, `w = η - 13/5`, the lower numerator is
 bounded below by its constant term minus its negative monomials at the far corner (`> 7.97`, by
 `gcongr`), and the upper numerator is `f₀(h, w) + d f₁(h, d, w)` with `f₀ ≥ 12 - 69h ≥ 1/2` and
 `f₁ > 558` by the same corner bound.
 
 ## Main API
 
-* `hs6_NU_nonneg`, `hs6_NL_nonneg` (with `hs6_NL_neg1`, `hs6_NL_neg2`): the two numerators are
+* `cost_NU_nonneg`, `cost_NL_nonneg` (with `cost_NL_neg1`, `cost_NL_neg2`): the two numerators are
   nonnegative on the box.
-* `hs6_Z_simple`, `hs6_ZUL_simple`, `hs6_eU`, `hs6_eL`: the rational forms and the two exact
+* `cost_Z_simple`, `cost_ZUL_simple`, `cost_eU`, `cost_eL`: the rational forms and the two exact
   differences.
-* `hs6_shear_core`: `Z_L ≤ Z ≤ Z_U`.
+* `cost_shear_core`: `Z_L ≤ Z ≤ Z_U`.
 -/
 
 @[expose] public section
@@ -30,7 +30,7 @@ namespace SmoothedOctagon
 
 /-- **The upper numerator is nonnegative**, in `h = x - 2`, `w = η - 13/5`:
 `N_U = f₀(h, w) + d f₁(h, d, w)` with `f₀ ≥ 12 - 69h ≥ 1/2` and `f₁ ≥ 65319404681/116964000`. -/
-theorem hs6_NU_nonneg {h d w : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1 / 6) (hd0 : 0 ≤ d) (hd1 : d ≤ 1 / 19)
+theorem cost_NU_nonneg {h d w : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1 / 6) (hd0 : 0 ≤ d) (hd1 : d ≤ 1 / 19)
     (hw0 : 0 ≤ w) (hw1 : w ≤ 2 / 5) :
     0 ≤ (3*h^6 + 26*h^5 + 6*h^4*w + 453*h^4/5 + 36*h^3*w + 723*h^3/5 + 54*h^2*w + 292*h^2/5 - 12*h*w - 321*h/5 - 36*w + 132/5) + d * (-9*d^2*h^5 + 3*d^2*h^4*w - 591*d^2*h^4/5 + 3*d^2*h^3*w^2 + 78*d^2*h^3*w/5 - 16818*d^2*h^3/25 + 12*d^2*h^2*w^3 + 438*d^2*h^2*w^2/5 + 2679*d^2*h^2*w/25 - 246831*d^2*h^2/125 + 60*d^2*h*w^3 + 375*d^2*h*w^2 + 1956*d^2*h*w/5 - 73683*d^2*h/25 + 84*d^2*w^3 + 2496*d^2*w^2/5 + 14508*d^2*w/25 - 210672*d^2/125 + 3*d*h^6 + 3*d*h^5*w + 64*d*h^5/5 + 3*d*h^4*w^2 + 298*d*h^4*w/5 - 1933*d*h^4/25 + 35*d*h^3*w^2 + 407*d*h^3*w - 3657*d*h^3/5 + 12*d*h^2*w^3 + 1393*d*h^2*w^2/5 + 41484*d*h^2*w/25 - 247386*d*h^2/125 + 60*d*h*w^3 + 921*d*h*w^2 + 18852*d*h*w/5 - 46059*d*h/25 + 84*d*w^3 + 5436*d*w^2/5 + 92148*d*w/25 + 22788*d/125 + 6*h^6 + 3*h^5*w + 239*h^5/5 + 53*h^4*w + 619*h^4/5 + 325*h^3*w + 4*h^3 + 6*h^2*w^2 + 5071*h^2*w/5 - 10491*h^2/25 + 48*h*w^2 + 8868*h*w/5 - 5853*h/25 + 96*w^2 + 7476*w/5 + 15864/25) := by
   have hf0 : 0 ≤ 3*h^6 + 26*h^5 + 6*h^4*w + 453*h^4/5 + 36*h^3*w + 723*h^3/5 + 54*h^2*w + 292*h^2/5 - 12*h*w - 321*h/5 - 36*w + 132/5 := by
@@ -52,31 +52,31 @@ theorem hs6_NU_nonneg {h d w : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1 / 6) (hd0 : 0
   exact add_nonneg hf0 (mul_nonneg hd0 hf1)
 
 /-- First half of the negative part of the lower numerator, at the far corner. -/
-theorem hs6_NL_neg1 {h d w : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1 / 6) (hd0 : 0 ≤ d) (hd1 : d ≤ 1 / 19)
+theorem cost_NL_neg1 {h d w : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1 / 6) (hd0 : 0 ≤ d) (hd1 : d ≤ 1 / 19)
     (hw0 : 0 ≤ w) (hw1 : w ≤ 2 / 5) : 7 * h ^ 5 * d ^ 2 + 14 * h ^ 5 * d + 7 * h ^ 5 + 2 * h ^ 4 * d ^ 3 * w + (26 / 5) * h ^ 4 * d ^ 3 + 13 * h ^ 4 * d ^ 2 * w + (399 / 5) * h ^ 4 * d ^ 2 + 12 * h ^ 4 * d * w + (656 / 5) * h ^ 4 * d + 1 * h ^ 4 * w + (283 / 5) * h ^ 4 + 2 * h ^ 3 * d ^ 3 * w ^ 2 + (142 / 5) * h ^ 3 * d ^ 3 * w + (1508 / 25) * h ^ 3 * d ^ 3 + 11 * h ^ 3 * d ^ 2 * w ^ 2 + (726 / 5) * h ^ 3 * d ^ 2 * w + (10004 / 25) * h ^ 3 * d ^ 2 + 94 * h ^ 3 * d * w + (2412 / 5) * h ^ 3 * d + 6 * h ^ 3 * w + (828 / 5) * h ^ 3 + 2 * h ^ 2 * d ^ 3 * w ^ 3 + (148 / 5) * h ^ 2 * d ^ 3 * w ^ 2 + (4384 / 25) * h ^ 2 * d ^ 3 * w + (36374 / 125) * h ^ 2 * d ^ 3 + 2 * h ^ 2 * d ^ 2 * w ^ 3 + (328 / 5) * h ^ 2 * d ^ 2 * w ^ 2 + (13339 / 25) * h ^ 2 * d ^ 2 * w ≤ 7 * (1 / 6) ^ 5 * (1 / 19) ^ 2 + 14 * (1 / 6) ^ 5 * (1 / 19) + 7 * (1 / 6) ^ 5 + 2 * (1 / 6) ^ 4 * (1 / 19) ^ 3 * (2 / 5) + (26 / 5) * (1 / 6) ^ 4 * (1 / 19) ^ 3 + 13 * (1 / 6) ^ 4 * (1 / 19) ^ 2 * (2 / 5) + (399 / 5) * (1 / 6) ^ 4 * (1 / 19) ^ 2 + 12 * (1 / 6) ^ 4 * (1 / 19) * (2 / 5) + (656 / 5) * (1 / 6) ^ 4 * (1 / 19) + 1 * (1 / 6) ^ 4 * (2 / 5) + (283 / 5) * (1 / 6) ^ 4 + 2 * (1 / 6) ^ 3 * (1 / 19) ^ 3 * (2 / 5) ^ 2 + (142 / 5) * (1 / 6) ^ 3 * (1 / 19) ^ 3 * (2 / 5) + (1508 / 25) * (1 / 6) ^ 3 * (1 / 19) ^ 3 + 11 * (1 / 6) ^ 3 * (1 / 19) ^ 2 * (2 / 5) ^ 2 + (726 / 5) * (1 / 6) ^ 3 * (1 / 19) ^ 2 * (2 / 5) + (10004 / 25) * (1 / 6) ^ 3 * (1 / 19) ^ 2 + 94 * (1 / 6) ^ 3 * (1 / 19) * (2 / 5) + (2412 / 5) * (1 / 6) ^ 3 * (1 / 19) + 6 * (1 / 6) ^ 3 * (2 / 5) + (828 / 5) * (1 / 6) ^ 3 + 2 * (1 / 6) ^ 2 * (1 / 19) ^ 3 * (2 / 5) ^ 3 + (148 / 5) * (1 / 6) ^ 2 * (1 / 19) ^ 3 * (2 / 5) ^ 2 + (4384 / 25) * (1 / 6) ^ 2 * (1 / 19) ^ 3 * (2 / 5) + (36374 / 125) * (1 / 6) ^ 2 * (1 / 19) ^ 3 + 2 * (1 / 6) ^ 2 * (1 / 19) ^ 2 * (2 / 5) ^ 3 + (328 / 5) * (1 / 6) ^ 2 * (1 / 19) ^ 2 * (2 / 5) ^ 2 + (13339 / 25) * (1 / 6) ^ 2 * (1 / 19) ^ 2 * (2 / 5) := by
   gcongr
 
 /-- Second half of the negative part of the lower numerator, at the far corner. -/
-theorem hs6_NL_neg2 {h d w : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1 / 6) (hd0 : 0 ≤ d) (hd1 : d ≤ 1 / 19)
+theorem cost_NL_neg2 {h d w : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1 / 6) (hd0 : 0 ≤ d) (hd1 : d ≤ 1 / 19)
     (hw0 : 0 ≤ w) (hw1 : w ≤ 2 / 5) : (127369 / 125) * h ^ 2 * d ^ 2 + 1 * h ^ 2 * d * w ^ 2 + (1276 / 5) * h ^ 2 * d * w + (20544 / 25) * h ^ 2 * d + 9 * h ^ 2 * w + (917 / 5) * h ^ 2 + 10 * h * d ^ 3 * w ^ 3 + 112 * h * d ^ 3 * w ^ 2 + (2378 / 5) * h * d ^ 3 * w + (3276 / 5) * h * d ^ 3 + 10 * h * d ^ 2 * w ^ 3 + 163 * h * d ^ 2 * w ^ 2 + (4704 / 5) * h * d ^ 2 * w + (35699 / 25) * h * d ^ 2 + 8 * h * d * w ^ 2 + (1628 / 5) * h * d * w + (16962 / 25) * h * d + (79 / 5) * h + 14 * d ^ 3 * w ^ 3 + (686 / 5) * d ^ 3 * w ^ 2 + (12138 / 25) * d ^ 3 * w + (72618 / 125) * d ^ 3 + 14 * d ^ 2 * w ^ 3 + (866 / 5) * d ^ 2 * w ^ 2 + (19318 / 25) * d ^ 2 * w + (125538 / 125) * d ^ 2 + 16 * d * w ^ 2 + (1086 / 5) * d * w + (8014 / 25) * d ≤ (127369 / 125) * (1 / 6) ^ 2 * (1 / 19) ^ 2 + 1 * (1 / 6) ^ 2 * (1 / 19) * (2 / 5) ^ 2 + (1276 / 5) * (1 / 6) ^ 2 * (1 / 19) * (2 / 5) + (20544 / 25) * (1 / 6) ^ 2 * (1 / 19) + 9 * (1 / 6) ^ 2 * (2 / 5) + (917 / 5) * (1 / 6) ^ 2 + 10 * (1 / 6) * (1 / 19) ^ 3 * (2 / 5) ^ 3 + 112 * (1 / 6) * (1 / 19) ^ 3 * (2 / 5) ^ 2 + (2378 / 5) * (1 / 6) * (1 / 19) ^ 3 * (2 / 5) + (3276 / 5) * (1 / 6) * (1 / 19) ^ 3 + 10 * (1 / 6) * (1 / 19) ^ 2 * (2 / 5) ^ 3 + 163 * (1 / 6) * (1 / 19) ^ 2 * (2 / 5) ^ 2 + (4704 / 5) * (1 / 6) * (1 / 19) ^ 2 * (2 / 5) + (35699 / 25) * (1 / 6) * (1 / 19) ^ 2 + 8 * (1 / 6) * (1 / 19) * (2 / 5) ^ 2 + (1628 / 5) * (1 / 6) * (1 / 19) * (2 / 5) + (16962 / 25) * (1 / 6) * (1 / 19) + (79 / 5) * (1 / 6) + 14 * (1 / 19) ^ 3 * (2 / 5) ^ 3 + (686 / 5) * (1 / 19) ^ 3 * (2 / 5) ^ 2 + (12138 / 25) * (1 / 19) ^ 3 * (2 / 5) + (72618 / 125) * (1 / 19) ^ 3 + 14 * (1 / 19) ^ 2 * (2 / 5) ^ 3 + (866 / 5) * (1 / 19) ^ 2 * (2 / 5) ^ 2 + (19318 / 25) * (1 / 19) ^ 2 * (2 / 5) + (125538 / 125) * (1 / 19) ^ 2 + 16 * (1 / 19) * (2 / 5) ^ 2 + (1086 / 5) * (1 / 19) * (2 / 5) + (8014 / 25) * (1 / 19) := by
   gcongr
 
 /-- **The lower numerator is nonnegative**, in `h = x - 2`, `w = η - 13/5`: its constant term
 `258/5` exceeds the sum of its negative monomials at the far corner (`N_L ≥ 66492518/8333685`). -/
-theorem hs6_NL_nonneg {h d w : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1 / 6) (hd0 : 0 ≤ d) (hd1 : d ≤ 1 / 19)
+theorem cost_NL_nonneg {h d w : ℝ} (hh0 : 0 ≤ h) (hh1 : h ≤ 1 / 6) (hd0 : 0 ≤ d) (hd1 : d ≤ 1 / 19)
     (hw0 : 0 ≤ w) (hw1 : w ≤ 2 / 5) :
     0 ≤ -2*d^3*h^4*w - 26*d^3*h^4/5 - 2*d^3*h^3*w^2 - 142*d^3*h^3*w/5 - 1508*d^3*h^3/25 - 2*d^3*h^2*w^3 - 148*d^3*h^2*w^2/5 - 4384*d^3*h^2*w/25 - 36374*d^3*h^2/125 - 10*d^3*h*w^3 - 112*d^3*h*w^2 - 2378*d^3*h*w/5 - 3276*d^3*h/5 - 14*d^3*w^3 - 686*d^3*w^2/5 - 12138*d^3*w/25 - 72618*d^3/125 - 7*d^2*h^5 - 13*d^2*h^4*w - 399*d^2*h^4/5 - 11*d^2*h^3*w^2 - 726*d^2*h^3*w/5 - 10004*d^2*h^3/25 - 2*d^2*h^2*w^3 - 328*d^2*h^2*w^2/5 - 13339*d^2*h^2*w/25 - 127369*d^2*h^2/125 - 10*d^2*h*w^3 - 163*d^2*h*w^2 - 4704*d^2*h*w/5 - 35699*d^2*h/25 - 14*d^2*w^3 - 866*d^2*w^2/5 - 19318*d^2*w/25 - 125538*d^2/125 - 14*d*h^5 - 12*d*h^4*w - 656*d*h^4/5 - 94*d*h^3*w - 2412*d*h^3/5 - d*h^2*w^2 - 1276*d*h^2*w/5 - 20544*d*h^2/25 - 8*d*h*w^2 - 1628*d*h*w/5 - 16962*d*h/25 - 16*d*w^2 - 1086*d*w/5 - 8014*d/25 - 7*h^5 - h^4*w - 283*h^4/5 - 6*h^3*w - 828*h^3/5 - 9*h^2*w - 917*h^2/5 + 2*h*w - 79*h/5 + 6*w + 258/5 := by
   have hp : 0 ≤ 2 * h * w + 6 * w := by positivity
-  have hn1 := hs6_NL_neg1 hh0 hh1 hd0 hd1 hw0 hw1
-  have hn2 := hs6_NL_neg2 hh0 hh1 hd0 hd1 hw0 hw1
+  have hn1 := cost_NL_neg1 hh0 hh1 hd0 hd1 hw0 hw1
+  have hn2 := cost_NL_neg2 hh0 hh1 hd0 hd1 hw0 hw1
   norm_num at hn1 hn2
   linarith only [hp, hn1, hn2]
 
 /-- The central shear in rational form. -/
-theorem hs6_Z_simple {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ η) :
-    2 * m2U (1 / (1 + x)) * (2 * (x * (1 + d)) * x - x - (1 + η * d) * (x * (1 + d))) / (x * (x + 2)) - hsRr x - (1 + hsAn x (x * (1 + d)) (1 + η * d)) * hsTs (1 + η * d) (x * (1 + d)) = 2 * (x ^ 2 + x + 1) * (2 * x * (1 + d) - 1 - (1 + η * d) * (1 + d)) / ((1 + x) ^ 2 * (x + 2)) - (x * (1 + d) * x - (1 + η * d)) * ((x + 2) * (1 + η * d) + (2 * x + 1) * (x * (1 + d))) / ((1 + x) ^ 2 * ((1 + η * d) ^ 2 + (1 + η * d) * (x * (1 + d)) + (x * (1 + d)) ^ 2)) := by
+theorem cost_Z_simple {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ η) :
+    2 * m2U (1 / (1 + x)) * (2 * (x * (1 + d)) * x - x - (1 + η * d) * (x * (1 + d))) / (x * (x + 2)) - ssRr x - (1 + ssAn x (x * (1 + d)) (1 + η * d)) * ssTs (1 + η * d) (x * (1 + d)) = 2 * (x ^ 2 + x + 1) * (2 * x * (1 + d) - 1 - (1 + η * d) * (1 + d)) / ((1 + x) ^ 2 * (x + 2)) - (x * (1 + d) * x - (1 + η * d)) * ((x + 2) * (1 + η * d) + (2 * x + 1) * (x * (1 + d))) / ((1 + x) ^ 2 * ((1 + η * d) ^ 2 + (1 + η * d) * (x * (1 + d)) + (x * (1 + d)) ^ 2)) := by
   have hx0 : 0 < x := by linarith
-  unfold m2U hsRr hsAn hsTs
+  unfold m2U ssRr ssAn ssTs
   have : 0 < 1 + η * d + x * (1 + d) := by positivity
   have : 0 < x * (1 + d) + (1 + η * d) := by positivity
   have : 0 < (1 + η * d) ^ 2 + (1 + η * d) * (x * (1 + d)) + (x * (1 + d)) ^ 2 := by positivity
@@ -84,15 +84,15 @@ theorem hs6_Z_simple {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ �
   ring
 
 /-- The two shear bounds `Z_U`, `Z_L` in `x`. -/
-theorem hs6_ZUL_simple {x d : ℝ} (hx : 2 ≤ x) :
-    2 * hsRr x ^ 2 * (1 + hsRr x) / (3 - hsRr x) + (1 + 2 * hsRr x) / (3 * (1 - hsRr x)) * d - 3 / 2 * d ^ 2 = 2 * x * (x - 1) ^ 2 / ((x + 1) ^ 2 * (x + 2)) + (3 * x - 1) / 6 * d - 3 / 2 * d ^ 2 ∧ 2 * hsRr x ^ 2 * (1 + hsRr x) / (3 - hsRr x) * (1 + 11 * d / 2) = 2 * x * (x - 1) ^ 2 / ((x + 1) ^ 2 * (x + 2)) * (1 + 11 * d / 2) := by
+theorem cost_ZUL_simple {x d : ℝ} (hx : 2 ≤ x) :
+    2 * ssRr x ^ 2 * (1 + ssRr x) / (3 - ssRr x) + (1 + 2 * ssRr x) / (3 * (1 - ssRr x)) * d - 3 / 2 * d ^ 2 = 2 * x * (x - 1) ^ 2 / ((x + 1) ^ 2 * (x + 2)) + (3 * x - 1) / 6 * d - 3 / 2 * d ^ 2 ∧ 2 * ssRr x ^ 2 * (1 + ssRr x) / (3 - ssRr x) * (1 + 11 * d / 2) = 2 * x * (x - 1) ^ 2 / ((x + 1) ^ 2 * (x + 2)) * (1 + 11 * d / 2) := by
   have h1 : 0 < x + 1 := by linarith
   have h2 : 0 < x + 2 := by linarith
-  have hR : hsRr x = (x - 1) / (x + 1) := rfl
-  have e3 : 3 - hsRr x = 2 * (x + 2) / (x + 1) := by rw [hR, eq_div_iff h1.ne']; field_simp; ring
-  have e1p : 1 + hsRr x = 2 * x / (x + 1) := by rw [hR, eq_div_iff h1.ne']; field_simp; ring
-  have e1m : 1 - hsRr x = 2 / (x + 1) := by rw [hR, eq_div_iff h1.ne']; field_simp; ring
-  have e12 : 1 + 2 * hsRr x = (3 * x - 1) / (x + 1) := by
+  have hR : ssRr x = (x - 1) / (x + 1) := rfl
+  have e3 : 3 - ssRr x = 2 * (x + 2) / (x + 1) := by rw [hR, eq_div_iff h1.ne']; field_simp; ring
+  have e1p : 1 + ssRr x = 2 * x / (x + 1) := by rw [hR, eq_div_iff h1.ne']; field_simp; ring
+  have e1m : 1 - ssRr x = 2 / (x + 1) := by rw [hR, eq_div_iff h1.ne']; field_simp; ring
+  have e12 : 1 + 2 * ssRr x = (3 * x - 1) / (x + 1) := by
     rw [hR, eq_div_iff h1.ne']; field_simp; ring
   rw [e3, e1p, e1m, e12, hR]
   constructor
@@ -100,7 +100,7 @@ theorem hs6_ZUL_simple {x d : ℝ} (hx : 2 ≤ x) :
   all_goals ring
 
 /-- The upper difference `Z_U - Z = d N_U/D`. -/
-theorem hs6_eU {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ η) :
+theorem cost_eU {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ η) :
     2 * x * (x - 1) ^ 2 / ((x + 1) ^ 2 * (x + 2)) + (3 * x - 1) / 6 * d - 3 / 2 * d ^ 2 - (2 * (x ^ 2 + x + 1) * (2 * x * (1 + d) - 1 - (1 + η * d) * (1 + d)) / ((1 + x) ^ 2 * (x + 2)) - (x * (1 + d) * x - (1 + η * d)) * ((x + 2) * (1 + η * d) + (2 * x + 1) * (x * (1 + d))) / ((1 + x) ^ 2 * ((1 + η * d) ^ 2 + (1 + η * d) * (x * (1 + d)) + (x * (1 + d)) ^ 2))) =
       d * ((3*(x - 2)^6 + 26*(x - 2)^5 + 6*(x - 2)^4*(η - 13 / 5) + 453*(x - 2)^4/5 + 36*(x - 2)^3*(η - 13 / 5) + 723*(x - 2)^3/5 + 54*(x - 2)^2*(η - 13 / 5) + 292*(x - 2)^2/5 - 12*(x - 2)*(η - 13 / 5) - 321*(x - 2)/5 - 36*(η - 13 / 5) + 132/5) + d * (-9*d^2*(x - 2)^5 + 3*d^2*(x - 2)^4*(η - 13 / 5) - 591*d^2*(x - 2)^4/5 + 3*d^2*(x - 2)^3*(η - 13 / 5)^2 + 78*d^2*(x - 2)^3*(η - 13 / 5)/5 - 16818*d^2*(x - 2)^3/25 + 12*d^2*(x - 2)^2*(η - 13 / 5)^3 + 438*d^2*(x - 2)^2*(η - 13 / 5)^2/5 + 2679*d^2*(x - 2)^2*(η - 13 / 5)/25 - 246831*d^2*(x - 2)^2/125 + 60*d^2*(x - 2)*(η - 13 / 5)^3 + 375*d^2*(x - 2)*(η - 13 / 5)^2 + 1956*d^2*(x - 2)*(η - 13 / 5)/5 - 73683*d^2*(x - 2)/25 + 84*d^2*(η - 13 / 5)^3 + 2496*d^2*(η - 13 / 5)^2/5 + 14508*d^2*(η - 13 / 5)/25 - 210672*d^2/125 + 3*d*(x - 2)^6 + 3*d*(x - 2)^5*(η - 13 / 5) + 64*d*(x - 2)^5/5 + 3*d*(x - 2)^4*(η - 13 / 5)^2 + 298*d*(x - 2)^4*(η - 13 / 5)/5 - 1933*d*(x - 2)^4/25 + 35*d*(x - 2)^3*(η - 13 / 5)^2 + 407*d*(x - 2)^3*(η - 13 / 5) - 3657*d*(x - 2)^3/5 + 12*d*(x - 2)^2*(η - 13 / 5)^3 + 1393*d*(x - 2)^2*(η - 13 / 5)^2/5 + 41484*d*(x - 2)^2*(η - 13 / 5)/25 - 247386*d*(x - 2)^2/125 + 60*d*(x - 2)*(η - 13 / 5)^3 + 921*d*(x - 2)*(η - 13 / 5)^2 + 18852*d*(x - 2)*(η - 13 / 5)/5 - 46059*d*(x - 2)/25 + 84*d*(η - 13 / 5)^3 + 5436*d*(η - 13 / 5)^2/5 + 92148*d*(η - 13 / 5)/25 + 22788*d/125 + 6*(x - 2)^6 + 3*(x - 2)^5*(η - 13 / 5) + 239*(x - 2)^5/5 + 53*(x - 2)^4*(η - 13 / 5) + 619*(x - 2)^4/5 + 325*(x - 2)^3*(η - 13 / 5) + 4*(x - 2)^3 + 6*(x - 2)^2*(η - 13 / 5)^2 + 5071*(x - 2)^2*(η - 13 / 5)/5 - 10491*(x - 2)^2/25 + 48*(x - 2)*(η - 13 / 5)^2 + 8868*(x - 2)*(η - 13 / 5)/5 - 5853*(x - 2)/25 + 96*(η - 13 / 5)^2 + 7476*(η - 13 / 5)/5 + 15864/25)) / (6 * (x + 1) ^ 2 * (x + 2) * ((1 + η * d) ^ 2 + (1 + η * d) * (x * (1 + d)) + (x * (1 + d)) ^ 2)) := by
   have hx0 : 0 < x := by linarith
@@ -109,7 +109,7 @@ theorem hs6_eU {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ η) :
   ring
 
 /-- The lower difference `Z - Z_L = d N_L/D`. -/
-theorem hs6_eL {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ η) :
+theorem cost_eL {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ η) :
     2 * (x ^ 2 + x + 1) * (2 * x * (1 + d) - 1 - (1 + η * d) * (1 + d)) / ((1 + x) ^ 2 * (x + 2)) - (x * (1 + d) * x - (1 + η * d)) * ((x + 2) * (1 + η * d) + (2 * x + 1) * (x * (1 + d))) / ((1 + x) ^ 2 * ((1 + η * d) ^ 2 + (1 + η * d) * (x * (1 + d)) + (x * (1 + d)) ^ 2)) - (2 * x * (x - 1) ^ 2 / ((x + 1) ^ 2 * (x + 2)) * (1 + 11 * d / 2)) =
       d * (-2*d^3*(x - 2)^4*(η - 13 / 5) - 26*d^3*(x - 2)^4/5 - 2*d^3*(x - 2)^3*(η - 13 / 5)^2 - 142*d^3*(x - 2)^3*(η - 13 / 5)/5 - 1508*d^3*(x - 2)^3/25 - 2*d^3*(x - 2)^2*(η - 13 / 5)^3 - 148*d^3*(x - 2)^2*(η - 13 / 5)^2/5 - 4384*d^3*(x - 2)^2*(η - 13 / 5)/25 - 36374*d^3*(x - 2)^2/125 - 10*d^3*(x - 2)*(η - 13 / 5)^3 - 112*d^3*(x - 2)*(η - 13 / 5)^2 - 2378*d^3*(x - 2)*(η - 13 / 5)/5 - 3276*d^3*(x - 2)/5 - 14*d^3*(η - 13 / 5)^3 - 686*d^3*(η - 13 / 5)^2/5 - 12138*d^3*(η - 13 / 5)/25 - 72618*d^3/125 - 7*d^2*(x - 2)^5 - 13*d^2*(x - 2)^4*(η - 13 / 5) - 399*d^2*(x - 2)^4/5 - 11*d^2*(x - 2)^3*(η - 13 / 5)^2 - 726*d^2*(x - 2)^3*(η - 13 / 5)/5 - 10004*d^2*(x - 2)^3/25 - 2*d^2*(x - 2)^2*(η - 13 / 5)^3 - 328*d^2*(x - 2)^2*(η - 13 / 5)^2/5 - 13339*d^2*(x - 2)^2*(η - 13 / 5)/25 - 127369*d^2*(x - 2)^2/125 - 10*d^2*(x - 2)*(η - 13 / 5)^3 - 163*d^2*(x - 2)*(η - 13 / 5)^2 - 4704*d^2*(x - 2)*(η - 13 / 5)/5 - 35699*d^2*(x - 2)/25 - 14*d^2*(η - 13 / 5)^3 - 866*d^2*(η - 13 / 5)^2/5 - 19318*d^2*(η - 13 / 5)/25 - 125538*d^2/125 - 14*d*(x - 2)^5 - 12*d*(x - 2)^4*(η - 13 / 5) - 656*d*(x - 2)^4/5 - 94*d*(x - 2)^3*(η - 13 / 5) - 2412*d*(x - 2)^3/5 - d*(x - 2)^2*(η - 13 / 5)^2 - 1276*d*(x - 2)^2*(η - 13 / 5)/5 - 20544*d*(x - 2)^2/25 - 8*d*(x - 2)*(η - 13 / 5)^2 - 1628*d*(x - 2)*(η - 13 / 5)/5 - 16962*d*(x - 2)/25 - 16*d*(η - 13 / 5)^2 - 1086*d*(η - 13 / 5)/5 - 8014*d/25 - 7*(x - 2)^5 - (x - 2)^4*(η - 13 / 5) - 283*(x - 2)^4/5 - 6*(x - 2)^3*(η - 13 / 5) - 828*(x - 2)^3/5 - 9*(x - 2)^2*(η - 13 / 5) - 917*(x - 2)^2/5 + 2*(x - 2)*(η - 13 / 5) - 79*(x - 2)/5 + 6*(η - 13 / 5) + 258/5) / ((x + 1) ^ 2 * (x + 2) * ((1 + η * d) ^ 2 + (1 + η * d) * (x * (1 + d)) + (x * (1 + d)) ^ 2)) := by
   have hx0 : 0 < x := by linarith
@@ -119,20 +119,20 @@ theorem hs6_eL {x d η : ℝ} (hx : 2 ≤ x) (hd : 0 ≤ d) (hη : 0 ≤ η) :
 
 /-- **The central shear bounds**:
 `Z_L ≤ Z ≤ Z_U` on the box, `α = 1 + ηd`, `β = x(1 + d)`. -/
-theorem hs6_shear_core {x d η : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hd : 0 ≤ d) (hd2 : d ≤ 1 / 19)
+theorem cost_shear_core {x d η : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hd : 0 ≤ d) (hd2 : d ≤ 1 / 19)
     (hη : 13 / 5 ≤ η) (hη2 : η ≤ 3) :
-    2 * hsRr x ^ 2 * (1 + hsRr x) / (3 - hsRr x) * (1 + 11 * d / 2) ≤ 2 * m2U (1 / (1 + x)) * (2 * (x * (1 + d)) * x - x - (1 + η * d) * (x * (1 + d))) / (x * (x + 2)) - hsRr x - (1 + hsAn x (x * (1 + d)) (1 + η * d)) * hsTs (1 + η * d) (x * (1 + d)) ∧
-      2 * m2U (1 / (1 + x)) * (2 * (x * (1 + d)) * x - x - (1 + η * d) * (x * (1 + d))) / (x * (x + 2)) - hsRr x - (1 + hsAn x (x * (1 + d)) (1 + η * d)) * hsTs (1 + η * d) (x * (1 + d)) ≤ 2 * hsRr x ^ 2 * (1 + hsRr x) / (3 - hsRr x) + (1 + 2 * hsRr x) / (3 * (1 - hsRr x)) * d - 3 / 2 * d ^ 2 := by
+    2 * ssRr x ^ 2 * (1 + ssRr x) / (3 - ssRr x) * (1 + 11 * d / 2) ≤ 2 * m2U (1 / (1 + x)) * (2 * (x * (1 + d)) * x - x - (1 + η * d) * (x * (1 + d))) / (x * (x + 2)) - ssRr x - (1 + ssAn x (x * (1 + d)) (1 + η * d)) * ssTs (1 + η * d) (x * (1 + d)) ∧
+      2 * m2U (1 / (1 + x)) * (2 * (x * (1 + d)) * x - x - (1 + η * d) * (x * (1 + d))) / (x * (x + 2)) - ssRr x - (1 + ssAn x (x * (1 + d)) (1 + η * d)) * ssTs (1 + η * d) (x * (1 + d)) ≤ 2 * ssRr x ^ 2 * (1 + ssRr x) / (3 - ssRr x) + (1 + 2 * ssRr x) / (3 * (1 - ssRr x)) * d - 3 / 2 * d ^ 2 := by
   have hx0 : 0 < x := by linarith
   have hKA : 0 < (1 + η * d) ^ 2 + (1 + η * d) * (x * (1 + d)) + (x * (1 + d)) ^ 2 := by positivity
-  obtain ⟨hZU, hZL⟩ := hs6_ZUL_simple (d := d) hx
-  rw [hs6_Z_simple hx hd (by linarith), hZU, hZL]
-  have hNU := hs6_NU_nonneg (h := x - 2) (d := d) (w := η - 13 / 5) (by linarith) (by linarith) hd hd2
+  obtain ⟨hZU, hZL⟩ := cost_ZUL_simple (d := d) hx
+  rw [cost_Z_simple hx hd (by linarith), hZU, hZL]
+  have hNU := cost_NU_nonneg (h := x - 2) (d := d) (w := η - 13 / 5) (by linarith) (by linarith) hd hd2
     (by linarith) (by linarith)
-  have hNL := hs6_NL_nonneg (h := x - 2) (d := d) (w := η - 13 / 5) (by linarith) (by linarith) hd hd2
+  have hNL := cost_NL_nonneg (h := x - 2) (d := d) (w := η - 13 / 5) (by linarith) (by linarith) hd hd2
     (by linarith) (by linarith)
-  have eU := hs6_eU (x := x) (d := d) (η := η) hx hd (by linarith)
-  have eL := hs6_eL (x := x) (d := d) (η := η) hx hd (by linarith)
+  have eU := cost_eU (x := x) (d := d) (η := η) hx hd (by linarith)
+  have eL := cost_eL (x := x) (d := d) (η := η) hx hd (by linarith)
   constructor
   · rw [← sub_nonneg, eL]
     exact div_nonneg (mul_nonneg hd hNL) (by positivity)

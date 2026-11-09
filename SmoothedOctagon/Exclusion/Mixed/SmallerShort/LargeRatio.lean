@@ -1,27 +1,27 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Hs02.Common
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S0Hand
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.FaceValue
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.FaceSigns
 
 /-!
-# Hand proof of the smaller-short case, gate S0: `x < 12/5`, `D > 0`, `E_L > 0`
+# Smaller-short window, large ratio: `x < 12/5`, `D > 0`, `E_L > 0`
 
 This module proves `x < 12/5` (the large-ratio exclusion), then `D > 0` and `E_L > 0` (the positive
 diagonal and pairing). Assuming `x ≥ 12/5`, the actual root gives `G*_τ ≥ 0` for the floor-weighted
-envelope `G = R_τ + ½(w - 3/4)` (`hs_env_weighted` with `m = 1/2`); the scale moves
-(`hs0_endpoint_alt`, `hs0_G_zero_neg`, `hs0_tau_two`) push it to a face `q = q_c ≤ 1/7` or
-`q = 1/7 ≤ q_c`; the norm substitution (`hs0_uslope`, `hs_sec_le_ubar`, `hs0_ubar_le_uhat`) and the
-three duration tests (`hs_dur_three`) reduce to the face signs `hs0_central_tau_two`,
-`hs0_central_duration`, `hs0_outer_tests`.
+envelope `G = R_τ + ½(w - 3/4)` (`ss_env_weighted` with `m = 1/2`); the scale moves
+(`lgr_endpoint_alt`, `lgr_G_zero_neg`, `lgr_tau_two`) push it to a face `q = q_c ≤ 1/7` or
+`q = 1/7 ≤ q_c`; the norm substitution (`lgr_uslope`, `ss_sec_le_ubar`, `lgr_ubar_le_uhat`) and the
+three duration tests (`ss_dur_three`) reduce to the face signs `lgr_central_tau_two`,
+`lgr_central_duration`, `lgr_outer_tests`.
 
 ## Main API
 
-* Shape leaves: `hs0_al_be` (`α/β < 3/4`), `hs0_DQ_le` (`D/Q ≤ 3(1 + x)²/(7x²)`),
-  `hs0_face_alpha`, `hs0_ubar_le_uhat`, `hs0_D_pos`, `hs0_pairing`.
-* Scale leaves: `hs0_uslope`, `hs0_endpoint_alt`, `hs0_G_zero_neg`, `hs0_tau_two`.
-* Face signs: `hs0_central_tau_two`, `hs0_central_duration`, `hs0_outer_tests`, proved by hand in
-  `Heavy/S0Hand*`.
-* Gate: `HsData.s0`, `M2Short.hs_S0`.
+* Shape lemmas: `lgr_al_be` (`α/β < 3/4`), `lgr_DQ_le` (`D/Q ≤ 3(1 + x)²/(7x²)`),
+  `lgr_face_alpha`, `lgr_ubar_le_uhat`, `lgr_D_pos`, `lgr_pairing`.
+* Scale lemmas: `lgr_uslope`, `lgr_endpoint_alt`, `lgr_G_zero_neg`, `lgr_tau_two`.
+* Face signs: `lgr_central_tau_two`, `lgr_central_duration`, `lgr_outer_tests`, proved in
+  `SmallerShort/LargeRatio/FaceSigns`.
+* The bound: `SmallerShortData.ratio_lt_twelve_fifths`, `M2Short.ratio_lt_twelve_fifths`.
 -/
 
 @[expose] public section
@@ -30,12 +30,12 @@ namespace SmoothedOctagon
 
 open Set Real
 
-/-! ### Shape leaves -/
+/-! ### Shape lemmas -/
 
 /-- **`α/β < 3/4`**: for `x ≥ 12/5`, `1 ≤ α < x ≤ β` with equal secants, `4α < 3β` (upper bound of
 `Sec(α, β, x)` by its value at `α`; lower bound of `Sec(1, x, β)` from the Padé bound
 `ss_log_le_pade3` on `V(x)`, `V - 3/4 ≥ (x - 1)²/(6(1 + x)(3x + 1))`). -/
-theorem hs0_al_be {x al be : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al < x) (hxb : x ≤ be)
+theorem lgr_al_be {x al be : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al < x) (hxb : x ≤ be)
     (heq : m2Sec 1 x be = m2Sec al be x) : 4 * al < 3 * be := by
   by_contra hcon
   push Not at hcon
@@ -92,11 +92,11 @@ theorem hs0_al_be {x al be : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al
 
 /-- **The diagonal ratio**: for `x ≥ 12/5`, `1 ≤ α ≤ x ≤ β`, `4α ≤ 3β`:
 `D ≤ (3(1 + x)²/(7x²))·α(α + β)`. -/
-theorem hs0_DQ_le {x al be : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x) (hxb : x ≤ be)
-    (h43 : 4 * al ≤ 3 * be) : hsDg x be al ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2) * (al * (al + be)) := by
+theorem lgr_DQ_le {x al be : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x) (hxb : x ≤ be)
+    (h43 : 4 * al ≤ 3 * be) : ssDg x be al ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2) * (al * (al + be)) := by
   have hx0 : 0 < x := by linarith
   rw [div_mul_eq_mul_div, le_div_iff₀ (by positivity)]
-  unfold hsDg
+  unfold ssDg
   -- the β-slope of `7x²D - 3S²Q` is negative
   have hsl : al * (11 * x ^ 2 - 6 * x - 3) - 14 * x ^ 3 ≤ 0 := by
     nlinarith [mul_le_mul_of_nonneg_right hax (by nlinarith : (0 : ℝ) ≤ 11 * x ^ 2 - 6 * x - 3)]
@@ -128,7 +128,7 @@ theorem hs0_DQ_le {x al be : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al
 
 /-- **The face α-bounds**: for `x > 0`, `α ≥ 0`: `6α² ≤ x(x + 2) → α ≤ (5x + 4)/12`; and for
 `x ≥ 12/5`: `x(x + 2) ≤ 6α² → (22x + 20)/55 ≤ α`. -/
-theorem hs0_face_alpha {x al : ℝ} (hx : 0 < x) (hal : 0 ≤ al) :
+theorem lgr_face_alpha {x al : ℝ} (hx : 0 < x) (hal : 0 ≤ al) :
     (6 * al ^ 2 ≤ x * (x + 2) → al ≤ (5 * x + 4) / 12) ∧
       (12 / 5 ≤ x → x * (x + 2) ≤ 6 * al ^ 2 → (22 * x + 20) / 55 ≤ al) := by
   constructor
@@ -143,17 +143,17 @@ theorem hs0_face_alpha {x al : ℝ} (hx : 0 < x) (hal : 0 ≤ al) :
 
 /-- **`ū ≤ û` on the central face domain**: for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12`,
 `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`, `ū(x, β) ≤ û(x, β)` (`P_t(x) > 0`). -/
-theorem hs0_ubar_le_uhat {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
+theorem lgr_ubar_le_uhat {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
-    hsUbar x be ≤ hsUhat x be := by
+    ssUbar x be ≤ ssUhat x be := by
   have hx0 : 0 < x := by linarith
   have hb1 : 0 < be - 1 := by linarith
   have hR : 0 < 4 * x ^ 2 + 11 * x + 1 := by positivity
-  have e : hsUhat x be - hsUbar x be = (be - x) * (12 * x ^ 2 * (x - 1) ^ 2 -
+  have e : ssUhat x be - ssUbar x be = (be - x) * (12 * x ^ 2 * (x - 1) ^ 2 -
       (be - x) ^ 2 * ((1 + x) * (35 * x + 13))) /
       (48 * x ^ 2 * ((1 + x) * (35 * x + 13)) * (be - 1)) := by
-    unfold hsUhat hsUbar
+    unfold ssUhat ssUbar
     field_simp
     ring
   -- `β - x ≤ B₀ = x(7x + 1)(5x - 8)/(12R)`
@@ -198,7 +198,7 @@ theorem hs0_ubar_le_uhat {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha
       linarith
     have := mul_le_mul_of_nonneg_right h2 (by positivity : (0 : ℝ) ≤ (1 + x) * (35 * x + 13))
     linarith
-  have : 0 ≤ hsUhat x be - hsUbar x be := by
+  have : 0 ≤ ssUhat x be - ssUbar x be := by
     rw [e]
     apply div_nonneg
     · exact mul_nonneg (by linarith) (by linarith)
@@ -207,16 +207,16 @@ theorem hs0_ubar_le_uhat {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha
 
 /-- **The positive diagonal** (from `D ≥ αD₀`): for `1 < x ≤ 12/5`, `1 ≤ α ≤ x ≤ β ≤ αx`,
 `D ≥ D₀ = 2 + 4x - 2x² ≥ 2/25`. -/
-theorem hs0_D_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al) (hax : al ≤ x)
+theorem lgr_D_pos {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al) (hax : al ≤ x)
     (hxb : x ≤ be) (hb : be ≤ al * x) :
-    2 + 4 * x - 2 * x ^ 2 ≤ hsDg x be al ∧ 2 / 25 ≤ hsDg x be al := by
-  exact hs02_D_pos hx hx2 hal hax hb
+    2 + 4 * x - 2 * x ^ 2 ≤ ssDg x be al ∧ 2 / 25 ≤ ssDg x be al := by
+  exact ss_D_pos hx hx2 hal hax hb
 
 /-- **The positive pairing sign** (affine in `ρ`): for `1 < x ≤ 12/5`, `0 ≤ ρ ≤ 1/(1 + x)²`,
 `D ≥ 2 + 4x - 2x²`, `3/4 ≤ u ≤ u₀(x)`: `F₂ = E_* - 2ρDu = S(u - 1) + 1/S + ρ(2S - 1) - 2ρDu < 0`. -/
-theorem hs0_pairing {x rho D u : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hρ : 0 ≤ rho)
+theorem lgr_pairing {x rho D u : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hρ : 0 ≤ rho)
     (hρr : rho ≤ 1 / (1 + x) ^ 2) (hD : 2 + 4 * x - 2 * x ^ 2 ≤ D) (hu : 3 / 4 ≤ u)
-    (hu0 : u ≤ hsU0 x) : hsE0 x u + rho * (2 * (1 + x) - 1) - 2 * rho * D * u < 0 := by
+    (hu0 : u ≤ ssU0 x) : ssE0 x u + rho * (2 * (1 + x) - 1) - 2 * rho * D * u < 0 := by
   have hS : 0 < 1 + x := by linarith
   have hD0 : 2 / 25 ≤ 2 + 4 * x - 2 * x ^ 2 := by nlinarith
   have hρS : rho * (1 + x) ^ 2 ≤ 1 := by
@@ -230,7 +230,7 @@ theorem hs0_pairing {x rho D u : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hρ : 0
     have : rho * (2 + 4 * x - 2 * x ^ 2) * (1 + x) ^ 2 ≤ 4 := by nlinarith
     nlinarith
   have h2 : u * ((1 + x) - 2 * rho * (2 + 4 * x - 2 * x ^ 2)) ≤
-      hsU0 x * ((1 + x) - 2 * rho * (2 + 4 * x - 2 * x ^ 2)) :=
+      ssU0 x * ((1 + x) - 2 * rho * (2 + 4 * x - 2 * x ^ 2)) :=
     mul_le_mul_of_nonneg_right hu0 hcoef
   -- the affine function of `ρ`
   have hM0 : -2 * (x - 1) * (1 + x) ^ 2 * (x + 5) < 0 := by
@@ -267,24 +267,24 @@ theorem hs0_pairing {x rho D u : ℝ} (hx : 1 < x) (hx2 : x ≤ 12 / 5) (hρ : 0
             + 9)) < 0 := mul_neg_of_pos_of_neg (by positivity) (by linarith)
         linarith
     exact neg_of_mul_neg_left this hS.le
-  have hU0 : hsU0 x * ((1 + x) - 2 * rho * (2 + 4 * x - 2 * x ^ 2)) - (1 + x) + 1 / (1 + x) +
+  have hU0 : ssU0 x * ((1 + x) - 2 * rho * (2 + 4 * x - 2 * x ^ 2)) - (1 + x) + 1 / (1 + x) +
       rho * (2 * (1 + x) - 1) = ((9 * (1 + x) ^ 2 + (x - 1) ^ 2) *
       ((1 + x) - 2 * rho * (2 + 4 * x - 2 * x ^ 2)) * (1 + x) - 12 * (1 + x) ^ 4 +
       12 * (1 + x) ^ 2 + 12 * rho * (2 * (1 + x) - 1) * (1 + x) ^ 3) / (12 * (1 + x) ^ 3) := by
-    unfold hsU0
+    unfold ssU0
     field_simp
     ring
-  have hneg : hsU0 x * ((1 + x) - 2 * rho * (2 + 4 * x - 2 * x ^ 2)) - (1 + x) + 1 / (1 + x) +
+  have hneg : ssU0 x * ((1 + x) - 2 * rho * (2 + 4 * x - 2 * x ^ 2)) - (1 + x) + 1 / (1 + x) +
       rho * (2 * (1 + x) - 1) < 0 := by
     rw [hU0]
     exact div_neg_of_neg_of_pos hM (by positivity)
-  unfold hsE0
+  unfold ssE0
   nlinarith
 
-/-! ### Scale leaves -/
+/-! ### Scale lemmas -/
 
 /-- Sign of the `u`-slope in scalar form. -/
-private theorem hs0_slope_pos {S q ε Δ ri τ : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10) (hε : 0 ≤ ε)
+private theorem lgr_slope_pos {S q ε Δ ri τ : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10) (hε : 0 ≤ ε)
     (hε1 : ε ≤ 1) (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hri : 2 < ri) (hτ : 2 ≤ τ)
     (hτd : 0 ≤ Δ → τ * (q * Δ) < 1) (hΔ : Δ ≤ 51 / 25) (hΔ2 : 7 / 2 ≤ S → Δ ≤ 2) :
     0 < (τ + 1 / 2) * (q * Δ) * (q * Δ - (1 - ε * q) * S) + ri + (1 - ε * q) * S -
@@ -341,10 +341,10 @@ private theorem hs0_slope_pos {S q ε Δ ri τ : ℝ} (hS : 17 / 5 ≤ S) (hS10 
 /-- **The incoming coefficient**: for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ x ≤ β`, `α < β`, `D < α(α + β)`,
 `0 < q ≤ 1/7`, and either `2 ≤ τ ≤ T = r_A/q` or `τ = 2`, the floor-weighted face value is
 nondecreasing in `u` (it is affine with slope `1/r_A + λS - 2d + (τ + ½)d(d - λS) > 0`). -/
-theorem hs0_uslope {x be al q τ ℓ u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
-    (hax : al ≤ x) (hxb : x ≤ be) (hab : al < be) (hDQ : hsDg x be al < al * (al + be))
-    (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hτ : (2 ≤ τ ∧ τ * q ≤ hsRA al be) ∨ τ = 2) (huu : u ≤ u') :
-    hsF x be al u q τ ℓ (1 / 2) ≤ hsF x be al u' q τ ℓ (1 / 2) := by
+theorem lgr_uslope {x be al q τ ℓ u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
+    (hax : al ≤ x) (hxb : x ≤ be) (hab : al < be) (hDQ : ssDg x be al < al * (al + be))
+    (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hτ : (2 ≤ τ ∧ τ * q ≤ ssRA al be) ∨ τ = 2) (huu : u ≤ u') :
+    ssF x be al u q τ ℓ (1 / 2) ≤ ssF x be al u' q τ ℓ (1 / 2) := by
   have hal0 : 0 < al := by linarith
   have ha2 : 0 < al ^ 2 := by positivity
   have hε : 0 ≤ 1 - 1 / al ^ 2 := by
@@ -352,42 +352,42 @@ theorem hs0_uslope {x be al q τ ℓ u u' : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x �
   have hε1 : 1 - 1 / al ^ 2 ≤ 1 := by
     have : 0 ≤ 1 / al ^ 2 := by positivity
     linarith
-  have hri : 2 < 1 / hsRA al be := by
-    unfold hsRA
+  have hri : 2 < 1 / ssRA al be := by
+    unfold ssRA
     rw [one_div_div, lt_div_iff₀ hal0]; linarith
   -- `D/α² ≤ 2 + (1 + 2x - x²)/α²`
-  have hDle : hsDg x be al ≤ 2 * al ^ 2 + (1 + 2 * x - x ^ 2) := by
-    unfold hsDg
+  have hDle : ssDg x be al ≤ 2 * al ^ 2 + (1 + 2 * x - x ^ 2) := by
+    unfold ssDg
     nlinarith [mul_le_mul_of_nonneg_right hxb (by linarith : (0 : ℝ) ≤ x - al), sq_nonneg (x - al)]
-  have hΔ : hsDg x be al / al ^ 2 ≤ 51 / 25 := by
+  have hΔ : ssDg x be al / al ^ 2 ≤ 51 / 25 := by
     rw [div_le_iff₀ ha2]
     have : 1 + 2 * x - x ^ 2 ≤ 1 / 25 := by nlinarith
     nlinarith
-  have hΔ2 : 7 / 2 ≤ 1 + x → hsDg x be al / al ^ 2 ≤ 2 := by
+  have hΔ2 : 7 / 2 ≤ 1 + x → ssDg x be al / al ^ 2 ≤ 2 := by
     intro h
     rw [div_le_iff₀ ha2]
     have : 1 + 2 * x - x ^ 2 ≤ 0 := by nlinarith
     linarith
   have hτ2 : 2 ≤ τ := by rcases hτ with h | h <;> [exact h.1; exact h.ge]
-  have hτd : 0 ≤ hsDg x be al / al ^ 2 → τ * (q * (hsDg x be al / al ^ 2)) < 1 := by
+  have hτd : 0 ≤ ssDg x be al / al ^ 2 → τ * (q * (ssDg x be al / al ^ 2)) < 1 := by
     intro hD
     rcases hτ with ⟨_, h⟩ | h
     · have hQ : 0 < al * (al + be) := mul_pos hal0 (by linarith)
-      have e : hsRA al be * (hsDg x be al / al ^ 2) = hsDg x be al / (al * (al + be)) := by
-        unfold hsRA; field_simp
-      have h1 : τ * q * (hsDg x be al / al ^ 2) ≤ hsRA al be * (hsDg x be al / al ^ 2) :=
+      have e : ssRA al be * (ssDg x be al / al ^ 2) = ssDg x be al / (al * (al + be)) := by
+        unfold ssRA; field_simp
+      have h1 : τ * q * (ssDg x be al / al ^ 2) ≤ ssRA al be * (ssDg x be al / al ^ 2) :=
         mul_le_mul_of_nonneg_right h hD
-      have h2 : hsDg x be al / (al * (al + be)) < 1 := by rwa [div_lt_one hQ]
+      have h2 : ssDg x be al / (al * (al + be)) < 1 := by rwa [div_lt_one hQ]
       linarith
     · subst h
       have := mul_le_mul_of_nonneg_left hΔ hq.le
       linarith
-  have hpos := hs0_slope_pos (S := 1 + x) (by linarith) (by linarith) hε hε1 hq hq7 hri hτ2 hτd hΔ
+  have hpos := lgr_slope_pos (S := 1 + x) (by linarith) (by linarith) hε hε1 hq hq7 hri hτ2 hτd hΔ
     hΔ2
-  have e := hs02_F_u_sub x be al u u' q τ ℓ (1 / 2)
+  have e := ss_F_u_sub x be al u u' q τ ℓ (1 / 2)
   linarith [mul_nonneg (sub_nonneg.2 huu) hpos.le]
 
-private theorem hs0_P1a {S : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) :
+private theorem lgr_P1a {S : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) :
     0 < -83 * S ^ 4 / 1800 + 497 * S ^ 3 / 900 - 863 * S ^ 2 / 1200 - 343 * S / 225 - 1 / 225 := by
   obtain ⟨t, rfl⟩ : ∃ t, S = t + 5 := ⟨S - 5, by ring⟩
   have ht : 0 ≤ t := by linarith
@@ -402,7 +402,7 @@ private theorem hs0_P1a {S : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) :
   have h4 : t ^ 4 ≤ 125 * t := by nlinarith [mul_nonneg (mul_nonneg ht ht) ht5]
   nlinarith [sq_nonneg (t - 4)]
 
-private theorem hs0_P1b {S : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) :
+private theorem lgr_P1b {S : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) :
     0 < -221 * S ^ 4 / 6400 + 1547 * S ^ 3 / 3200 - 14173 * S ^ 2 / 14400 - 2969 * S / 1800 -
       1 / 225 := by
   obtain ⟨t, rfl⟩ : ∃ t, S = t + 5 := ⟨S - 5, by ring⟩
@@ -417,7 +417,7 @@ private theorem hs0_P1b {S : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) :
   have h4 : t ^ 4 ≤ 125 * t := by nlinarith [mul_nonneg (mul_nonneg ht ht) ht5]
   nlinarith [sq_nonneg (t - 4)]
 
-private theorem hs0_P0 {S u : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) (hu : 3 / 4 ≤ u)
+private theorem lgr_P0 {S u : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 13 / 16) :
     0 < -S ^ 4 * u ^ 2 / 16 + S ^ 4 * u / 8 - S ^ 4 / 16 - 2 * S ^ 3 * u ^ 2 + 2 * S ^ 3 * u -
       4 * S ^ 2 * u ^ 2 + 17 * S ^ 2 * u / 8 + S ^ 2 / 8 - 2 * S * u - 1 / 16 := by
@@ -436,15 +436,15 @@ private theorem hs0_P0 {S u : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) (hu : 3 / 4 
 
 /-- The completed-square numerator of the `A₂ < 0` slope bound, multiplied by `S²`, is positive on
 `5 ≤ S ≤ 10`, `3/4 ≤ u ≤ 13/16`, `0 ≤ a ≤ 11/45` (concave in `a` and, at `a = 11/45`, in `u`). -/
-private theorem hs0_P_pos {S u a : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) (hu : 3 / 4 ≤ u)
+private theorem lgr_P_pos {S u a : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 13 / 16) (ha0 : 0 ≤ a) (ha : a ≤ 11 / 45) :
     0 < -9*S^4*a^2*u^2/16 + 9*S^4*a^2*u/8 - 9*S^4*a^2/16 + 3*S^4*a*u^2/8 - 3*S^4*a/8 -
       S^4*u^2/16 + S^4*u/8 - S^4/16 - 9*S^3*a^2*u/8 + 9*S^3*a^2/8 + 3*S^3*a*u/8 + 3*S^3*a/8 -
       2*S^3*u^2 + 2*S^3*u + 9*S^2*a^2*u/8 - 27*S^2*a^2/16 - 3*S^2*a*u/4 - 4*S^2*u^2 +
       17*S^2*u/8 + S^2/8 + 9*S*a^2/8 - 3*S*a/8 - 2*S*u - 9*a^2/16 + 3*a/8 - 1/16 := by
-  have h1 := hs0_P1a hS hS10
-  have h2 := hs0_P1b hS hS10
-  have h0 := hs0_P0 hS hS10 hu hu'
+  have h1 := lgr_P1a hS hS10
+  have h2 := lgr_P1b hS hS10
+  have h0 := lgr_P0 hS hS10 hu hu'
   set P1a := -83 * S ^ 4 / 1800 + 497 * S ^ 3 / 900 - 863 * S ^ 2 / 1200 - 343 * S / 225 - 1 / 225
   set P1b := -221 * S ^ 4 / 6400 + 1547 * S ^ 3 / 3200 - 14173 * S ^ 2 / 14400 - 2969 * S / 1800 -
       1 / 225
@@ -482,7 +482,7 @@ private theorem hs0_P_pos {S u a : ℝ} (hS : 5 ≤ S) (hS10 : S ≤ 10) (hu : 3
     linarith
 
 /-- `16S²(K̄² - 3𝒜) < 0` for `17/5 ≤ S ≤ 5`, `0 ≤ z < 11/5`. -/
-private theorem hs0_Kbar {S z : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S ≤ 5) (hz0 : 0 ≤ z)
+private theorem lgr_Kbar {S z : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S ≤ 5) (hz0 : 0 ≤ z)
     (hz : z < 11 / 5) : S ^ 4 - 56 * S ^ 2 + 16 + 2 * (7 * S ^ 2 - 4) * z + z ^ 2 < 0 := by
   have h1 : 0 ≤ (25 - S ^ 2) * (S ^ 2 - 289 / 25) := mul_nonneg (by nlinarith) (by nlinarith)
   have h2 : 2 * (7 * S ^ 2 - 4) * z ≤ 2 * (7 * S ^ 2 - 4) * (11 / 5) :=
@@ -491,7 +491,7 @@ private theorem hs0_Kbar {S z : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S ≤ 5) (hz0 : 
   nlinarith
 
 /-- The completed-square numerator in polynomial form. -/
-private theorem hs0_eP {S u a H : ℝ} (hS : S ≠ 0) (hH : H = S * (1 - u) - 1 / S) :
+private theorem lgr_eP {S u a H : ℝ} (hS : S ≠ 0) (hH : H = S * (1 - u) - 1 / S) :
     S ^ 2 * (3 * u * (3 / 4 * ((1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2) + 1 +
       ((1 - a) * H + (2 * S - 1) * a) - (1 - a) - S * a / 2) -
       (3 / 4 * ((1 - a) * H + (2 * S - 1) * a) + 2 * u - H / 2) ^ 2) =
@@ -502,7 +502,7 @@ private theorem hs0_eP {S u a H : ℝ} (hS : S ≠ 0) (hH : H = S * (1 - u) - 1 
   rw [hH]; field_simp; ring
 
 /-- For `S ≤ 5` and `z < 11/5`, `A₂ ≥ 𝒜 - K̄²/3 > 0`. -/
-private theorem hs0_A2_pos_small {S u a Δ H : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S ≤ 5) (hu : 3 / 4 ≤ u)
+private theorem lgr_A2_pos_small {S u a Δ H : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S ≤ 5) (hu : 3 / 4 ≤ u)
     (ha0 : 0 < a) (ha1 : a ≤ 1) (hΔ : 0 < Δ) (hz' : (S - 2) ^ 2 * a < 11 / 5)
     (hHb : H ≤ S / 4 - 1 / S) :
     0 < (1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2 - Δ * ((1 - a) * H + (2 * S - 1) * a) +
@@ -524,7 +524,7 @@ private theorem hs0_A2_pos_small {S u a Δ H : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S
   have e : 16 * S ^ 2 * (Kb ^ 2 - 3 * Am) = S ^ 4 - 56 * S ^ 2 + 16 +
       2 * (7 * S ^ 2 - 4) * ((S - 2) ^ 2 * a) + ((S - 2) ^ 2 * a) ^ 2 := by
     rw [hKb, hAm]; field_simp; ring
-  have h3 := hs0_Kbar hS hS5 hz0 hz'
+  have h3 := lgr_Kbar hS hS5 hz0 hz'
   have h4 : Kb ^ 2 - 3 * Am < 0 := by
     by_contra h5
     push Not at h5
@@ -535,7 +535,7 @@ private theorem hs0_A2_pos_small {S u a Δ H : ℝ} (hS : 17 / 5 ≤ S) (hS5 : S
 /-- **Negative `A₂` gives a positive slope**: with `a = α⁻²`, `Δ = D/α²`, `E₀ = S(u - 1) + 1/S`, if
 `A₂ < 0` then `(3/4)A₂ + 1 - A₃ - A₁/2 > 0`. The hypothesis `hz` is `D > 0 ⇒ (x - 1)² < (11/5)α²`.
 The cap `z < 11/5` avoids `√2`; then `S > 5`, `a < 11/45`. -/
-private theorem hs0_A2neg {S u a Δ : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10) (hu : 3 / 4 ≤ u)
+private theorem lgr_A2neg {S u a Δ : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10) (hu : 3 / 4 ≤ u)
     (hu' : u ≤ 13 / 16) (ha0 : 0 < a) (ha1 : a ≤ 1) (hz : 0 < Δ → (S - 2) ^ 2 * a < 11 / 5)
     (hA2 : (1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2 + Δ ^ 2 * u +
       Δ * (1 - a) * (S * (u - 1) + 1 / S) - Δ * (2 * S - 1) * a < 0) :
@@ -578,7 +578,7 @@ private theorem hs0_A2neg {S u a Δ : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10)
   have hS5 : 5 < S := by
     by_contra h
     push Not at h
-    have := hs0_A2_pos_small hS h hu ha0 ha1 hΔ hz' hHb
+    have := lgr_A2_pos_small hS h hu ha0 ha1 hΔ hz' hHb
     rw [← hAm, ← hK] at this
     linarith
   have ha45 : a ≤ 11 / 45 := by
@@ -591,10 +591,10 @@ private theorem hs0_A2neg {S u a Δ : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10)
       (2 * (1 - a) + S * a + Δ * -H) / 2 = 3 / 4 * u * Δ ^ 2 - B * Δ + C := by
     rw [hB, hC, hK]; ring
   rw [eG]
-  have eP := hs0_eP (a := a) hS0.ne' hH
+  have eP := lgr_eP (a := a) hS0.ne' hH
   rw [← hK, ← hAm] at eP
   rw [← hB, ← hC] at eP
-  have hP := hs0_P_pos hS5.le hS10 hu hu' ha0.le ha45
+  have hP := lgr_P_pos hS5.le hS10 hu hu' ha0.le ha45
   rw [← eP] at hP
   have hcs : 0 < 3 * u * C - B ^ 2 := by
     by_contra h
@@ -608,16 +608,16 @@ private theorem hs0_A2neg {S u a Δ : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10)
   exact pos_of_mul_pos_right this (by linarith)
 
 /-- `D > 0` forces `(x - 1)² < (11/5)α²` (with the rational cap `11/5`). -/
-private theorem hs0_z_lt {x be al : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hxb : x ≤ be)
-    (hD : 0 < hsDg x be al) : (x - 1) ^ 2 < 11 / 5 * al ^ 2 := by
+private theorem lgr_z_lt {x be al : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hxb : x ≤ be)
+    (hD : 0 < ssDg x be al) : (x - 1) ^ 2 < 11 / 5 * al ^ 2 := by
   by_contra h
   push Not at h
   have hal' : al ≤ 27 / 40 * (x - 1) := by
     by_contra h'
     push Not at h'
     nlinarith [mul_lt_mul'' h' h' (by nlinarith) (by linarith)]
-  have hDle : hsDg x be al ≤ al ^ 2 + 2 * al * x + 1 + 2 * x - 2 * x ^ 2 := by
-    unfold hsDg
+  have hDle : ssDg x be al ≤ al ^ 2 + 2 * al * x + 1 + 2 * x - 2 * x ^ 2 := by
+    unfold ssDg
     nlinarith [mul_le_mul_of_nonneg_right hxb (by linarith : (0 : ℝ) ≤ x - al)]
   nlinarith [mul_le_mul hal' hal' (by linarith) (by nlinarith),
     mul_le_mul_of_nonneg_right hal' (by linarith : (0 : ℝ) ≤ 2 * x)]
@@ -628,62 +628,62 @@ private theorem hs0_z_lt {x be al : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (h
 slope `> 1/10`, if `A₂ < 0`).
 With the cap `D > 0 ⇒ (x - 1)² < (11/5)α²` (no `√2`), `A₂ < 0` forces `S > 5`, `α⁻² ≤ 11/45`;
 the slope bound is taken at `p = 1/2` (decreasing in `p`). -/
-theorem hs0_endpoint_alt {x be al u p qm q : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
+theorem lgr_endpoint_alt {x be al u p qm q : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hp : 0 < p)
-    (hpr : p ≤ hsRA al be) (hqm : 0 ≤ qm) (hqmp : qm ≤ p / 2) (hq : 0 ≤ q) (hqq : q ≤ qm) :
-    hsPhi x be al u p (1 / 2) q ≤
-      max (hsPhi x be al u p (1 / 2) 0) (hsPhi x be al u p (1 / 2) qm) := by
-  rcases le_or_gt 0 (hsA2 x be al u) with hA | hA
-  · exact hs_phi_convex_max (by norm_num) hA hq hqq
+    (hpr : p ≤ ssRA al be) (hqm : 0 ≤ qm) (hqmp : qm ≤ p / 2) (hq : 0 ≤ q) (hqq : q ≤ qm) :
+    ssPhi x be al u p (1 / 2) q ≤
+      max (ssPhi x be al u p (1 / 2) 0) (ssPhi x be al u p (1 / 2) qm) := by
+  rcases le_or_gt 0 (ssA2 x be al u) with hA | hA
+  · exact ss_phi_convex_max (by norm_num) hA hq hqq
   have hal0 : 0 < al := by linarith
   have ha2 : 0 < al ^ 2 := by positivity
-  have hz : 0 < hsDg x be al / al ^ 2 → ((1 + x) - 2) ^ 2 * (1 / al ^ 2) < 11 / 5 := by
+  have hz : 0 < ssDg x be al / al ^ 2 → ((1 + x) - 2) ^ 2 * (1 / al ^ 2) < 11 / 5 := by
     intro hΔ
-    have := hs0_z_lt hx hal hxb (by
+    have := lgr_z_lt hx hal hxb (by
       by_contra h; push Not at h
-      have : hsDg x be al / al ^ 2 ≤ 0 := div_nonpos_of_nonpos_of_nonneg h ha2.le
+      have : ssDg x be al / al ^ 2 ≤ 0 := div_nonpos_of_nonpos_of_nonneg h ha2.le
       linarith)
     rw [show ((1 + x) - 2) ^ 2 * (1 / al ^ 2) = (x - 1) ^ 2 / al ^ 2 by ring, div_lt_iff₀ ha2]
     linarith
-  have eA2 : hsA2 x be al u = (1 - 1 / al ^ 2) ^ 2 + (1 - 1 / al ^ 2) * ((1 + x) * (1 / al ^ 2)) +
-      ((1 + x) * (1 / al ^ 2)) ^ 2 + (hsDg x be al / al ^ 2) ^ 2 * u +
-      hsDg x be al / al ^ 2 * (1 - 1 / al ^ 2) * ((1 + x) * (u - 1) + 1 / (1 + x)) -
-      hsDg x be al / al ^ 2 * (2 * (1 + x) - 1) * (1 / al ^ 2) := by
-    unfold hsA2 hsE0; ring
-  have hcore := hs0_A2neg (S := 1 + x) (u := u) (a := 1 / al ^ 2) (Δ := hsDg x be al / al ^ 2)
+  have eA2 : ssA2 x be al u = (1 - 1 / al ^ 2) ^ 2 + (1 - 1 / al ^ 2) * ((1 + x) * (1 / al ^ 2)) +
+      ((1 + x) * (1 / al ^ 2)) ^ 2 + (ssDg x be al / al ^ 2) ^ 2 * u +
+      ssDg x be al / al ^ 2 * (1 - 1 / al ^ 2) * ((1 + x) * (u - 1) + 1 / (1 + x)) -
+      ssDg x be al / al ^ 2 * (2 * (1 + x) - 1) * (1 / al ^ 2) := by
+    unfold ssA2 ssE0; ring
+  have hcore := lgr_A2neg (S := 1 + x) (u := u) (a := 1 / al ^ 2) (Δ := ssDg x be al / al ^ 2)
     (by linarith) (by linarith) hu hu' (by positivity)
     (by rw [div_le_one ha2]; exact one_le_pow₀ hal) hz (by rw [← eA2]; exact hA)
   rw [← eA2] at hcore
-  have eG : 2 * (hsDg x be al / al ^ 2) * u + (1 - 1 / al ^ 2) * ((1 + x) * (u - 1) + 1 / (1 + x)) -
-      (2 * (1 + x) - 1) * (1 / al ^ 2) = hsA3 x be al u := by unfold hsA3 hsE0; ring
+  have eG : 2 * (ssDg x be al / al ^ 2) * u + (1 - 1 / al ^ 2) * ((1 + x) * (u - 1) + 1 / (1 + x)) -
+      (2 * (1 + x) - 1) * (1 / al ^ 2) = ssA3 x be al u := by unfold ssA3 ssE0; ring
   have eG1 : 2 * (1 - 1 / al ^ 2) + (1 + x) * (1 / al ^ 2) +
-      hsDg x be al / al ^ 2 * ((1 + x) * (u - 1) + 1 / (1 + x)) = hsA1 x be al u := by
-    unfold hsA1 hsE0; ring
+      ssDg x be al / al ^ 2 * ((1 + x) * (u - 1) + 1 / (1 + x)) = ssA1 x be al u := by
+    unfold ssA1 ssE0; ring
   rw [eG, eG1] at hcore
   -- the bracket of `Φ(q_m) - Φ(q)` exceeds `(3/4)A₂ + 1 - A₃ - A₁/2`
   have hp2 : p ≤ 1 / 2 := by
-    have : hsRA al be ≤ 1 / 2 := by
-      unfold hsRA; rw [div_le_iff₀ (by linarith)]; linarith
+    have : ssRA al be ≤ 1 / 2 := by
+      unfold ssRA; rw [div_le_iff₀ (by linarith)]; linarith
     linarith
-  have hbr : 3 / 4 * hsA2 x be al u + 1 - hsA3 x be al u - hsA1 x be al u / 2 ≤
-      hsLp x be al u p - 1 / 2 * hsA1 x be al u + 1 / 2 * (q + qm) * hsA2 x be al u := by
-    unfold hsLp
-    have h1 : (1 / 2) * hsA2 x be al u * p ≤ (1 / 2) * (q + qm) * hsA2 x be al u := by
+  have hbr : 3 / 4 * ssA2 x be al u + 1 - ssA3 x be al u - ssA1 x be al u / 2 ≤
+      ssLp x be al u p - 1 / 2 * ssA1 x be al u + 1 / 2 * (q + qm) * ssA2 x be al u := by
+    unfold ssLp
+    have h1 : (1 / 2) * ssA2 x be al u * p ≤ (1 / 2) * (q + qm) * ssA2 x be al u := by
       nlinarith
-    have h2 : 3 / 4 * hsA2 x be al u ≤ 3 / 2 * p * hsA2 x be al u := by nlinarith
+    have h2 : 3 / 4 * ssA2 x be al u ≤ 3 / 2 * p * ssA2 x be al u := by nlinarith
     have h3 : 2 ≤ 1 / p := by rw [le_div_iff₀ hp]; linarith
     linarith
-  have e : hsPhi x be al u p (1 / 2) qm - hsPhi x be al u p (1 / 2) q = (qm - q) *
-      (hsLp x be al u p - 1 / 2 * hsA1 x be al u + 1 / 2 * (q + qm) * hsA2 x be al u) := by
-    unfold hsPhi; ring
-  have : 0 ≤ hsPhi x be al u p (1 / 2) qm - hsPhi x be al u p (1 / 2) q := by
+  have e : ssPhi x be al u p (1 / 2) qm - ssPhi x be al u p (1 / 2) q = (qm - q) *
+      (ssLp x be al u p - 1 / 2 * ssA1 x be al u + 1 / 2 * (q + qm) * ssA2 x be al u) := by
+    unfold ssPhi; ring
+  have : 0 ≤ ssPhi x be al u p (1 / 2) qm - ssPhi x be al u p (1 / 2) q := by
     rw [e]; exact mul_nonneg (by linarith) (by linarith)
   exact le_max_of_le_right (by linarith)
 
 /-- The value at `r_A = 3/7` is `-P(x)/(168x²(x + 1)(35x + 13))`. -/
-private theorem hs0_N37 {x : ℝ} (hx : 12 / 5 ≤ x) :
-    (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * ((1 + x) * (hsVbar x - 1) + 1 / (1 + x)) +
-      7 / 3 * (hsVbar x - 1) + 9 / 8 - 3 / 7 * (1 + (x - 1) / x ^ 2) < 0 := by
+private theorem lgr_N37 {x : ℝ} (hx : 12 / 5 ≤ x) :
+    (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * ((1 + x) * (ssVbar x - 1) + 1 / (1 + x)) +
+      7 / 3 * (ssVbar x - 1) + 9 / 8 - 3 / 7 * (1 + (x - 1) / x ^ 2) < 0 := by
   have hx0 : 0 < x := by linarith
   have hP : 0 < 648 * x ^ 5 - 237 * x ^ 4 - 2290 * x ^ 3 - 305 * x ^ 2 + 450 * x - 90 := by
     obtain ⟨z, rfl⟩ : ∃ z, x = (z + 12) / 5 := ⟨5 * x - 12, by ring⟩
@@ -692,17 +692,17 @@ private theorem hs0_N37 {x : ℝ} (hx : 12 / 5 ≤ x) :
         305 * ((z + 12) / 5) ^ 2 + 450 * ((z + 12) / 5) - 90 = (648 * z ^ 5 + 37695 * z ^ 4 +
         818990 * z ^ 3 + 8074475 * z ^ 2 + 33628170 * z + 35346726) / 3125 := by ring
     rw [e]; positivity
-  have e : (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * ((1 + x) * (hsVbar x - 1) + 1 / (1 + x)) +
-      7 / 3 * (hsVbar x - 1) + 9 / 8 - 3 / 7 * (1 + (x - 1) / x ^ 2) =
+  have e : (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * ((1 + x) * (ssVbar x - 1) + 1 / (1 + x)) +
+      7 / 3 * (ssVbar x - 1) + 9 / 8 - 3 / 7 * (1 + (x - 1) / x ^ 2) =
       -(648 * x ^ 5 - 237 * x ^ 4 - 2290 * x ^ 3 - 305 * x ^ 2 + 450 * x - 90) /
         (168 * x ^ 2 * (x + 1) * (35 * x + 13)) := by
-    unfold hsVbar; field_simp; ring
+    unfold ssVbar; field_simp; ring
   rw [e]
   exact div_neg_of_neg_of_pos (by linarith) (by positivity)
 
 /-- `(49/9)(1 - V̄) ≥ 1 + (x - 1)/x²` for `x ≥ 12/5`. -/
-private theorem hs0_Nd {x : ℝ} (hx : 12 / 5 ≤ x) :
-    1 + (x - 1) / x ^ 2 ≤ 49 / 9 * (1 - hsVbar x) := by
+private theorem lgr_Nd {x : ℝ} (hx : 12 / 5 ≤ x) :
+    1 + (x - 1) / x ^ 2 ≤ 49 / 9 * (1 - ssVbar x) := by
   have hx0 : 0 < x := by linarith
   have hN4 : 0 < 63 * x ^ 4 + 148 * x ^ 3 - 691 * x ^ 2 + 1260 * x + 468 := by
     obtain ⟨z, rfl⟩ : ∃ z, x = (z + 12) / 5 := ⟨5 * x - 12, by ring⟩
@@ -711,19 +711,19 @@ private theorem hs0_Nd {x : ℝ} (hx : 12 / 5 ≤ x) :
         1260 * ((z + 12) / 5) + 468 = (63 * z ^ 4 + 3764 * z ^ 3 + 63797 * z ^ 2 + 498036 * z +
         2279988) / 625 := by ring
     rw [e]; positivity
-  have e : 49 / 9 * (1 - hsVbar x) - (1 + (x - 1) / x ^ 2) =
+  have e : 49 / 9 * (1 - ssVbar x) - (1 + (x - 1) / x ^ 2) =
       (63 * x ^ 4 + 148 * x ^ 3 - 691 * x ^ 2 + 1260 * x + 468) /
         (36 * x ^ 2 * (x + 1) * (35 * x + 13)) := by
-    unfold hsVbar; field_simp; ring
-  have : 0 ≤ 49 / 9 * (1 - hsVbar x) - (1 + (x - 1) / x ^ 2) := by rw [e]; positivity
+    unfold ssVbar; field_simp; ring
+  have : 0 ≤ 49 / 9 * (1 - ssVbar x) - (1 + (x - 1) / x ^ 2) := by rw [e]; positivity
   linarith
 
 /-- `M₀ = E₀ + (u - 1)/r_A + r_A + 1/8 < 0`. -/
-private theorem hs0_M0_neg {x u r : ℝ} (hx : 12 / 5 ≤ x) (hu' : u ≤ 13 / 16) (hr0 : 0 < r)
-    (hrA : r ≤ 3 / 7) : hsE0 x u + (u - 1) / r + r + 1 / 8 < 0 := by
+private theorem lgr_M0_neg {x u r : ℝ} (hx : 12 / 5 ≤ x) (hu' : u ≤ 13 / 16) (hr0 : 0 < r)
+    (hrA : r ≤ 3 / 7) : ssE0 x u + (u - 1) / r + r + 1 / 8 < 0 := by
   have hS : 0 < 1 + x := by linarith
-  have hE0 : hsE0 x u ≤ -(3 / 16) * (1 + x) + 1 / (1 + x) := by
-    unfold hsE0; nlinarith
+  have hE0 : ssE0 x u ≤ -(3 / 16) * (1 + x) + 1 / (1 + x) := by
+    unfold ssE0; nlinarith
   have hE0n : 1 / (1 + x) ≤ 5 / 17 := by rw [div_le_iff₀ hS]; linarith
   have h1 : (u - 1) / r ≤ -(3 / 16) / r := div_le_div_of_nonneg_right (by linarith) hr0.le
   have h2 : 7 / 16 ≤ 3 / 16 / r := by rw [le_div_iff₀ hr0]; linarith
@@ -731,19 +731,19 @@ private theorem hs0_M0_neg {x u r : ℝ} (hx : 12 / 5 ≤ x) (hu' : u ≤ 13 / 1
   linarith
 
 /-- `M(r_A) = E₀(1 - D/Q) + (u - 1)/r_A + 9/8 - r_A - (x - 1)/Q < 0`; `Qi = 1/Q`, `k = D/Q`. -/
-private theorem hs0_Mr_neg {x u r vb k Qi : ℝ} (hx : 12 / 5 ≤ x) (hu' : u ≤ 13 / 16)
+private theorem lgr_Mr_neg {x u r vb k Qi : ℝ} (hx : 12 / 5 ≤ x) (hu' : u ≤ 13 / 16)
     (huV : u ≤ vb) (hr0 : 0 < r) (hrA : r ≤ 3 / 7) (hrQ : r / x ^ 2 ≤ Qi)
     (hk : k ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2))
     (hN : (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * ((1 + x) * (vb - 1) + 1 / (1 + x)) +
       7 / 3 * (vb - 1) + 9 / 8 - 3 / 7 * (1 + (x - 1) / x ^ 2) < 0)
     (hNd : 1 + (x - 1) / x ^ 2 ≤ 49 / 9 * (1 - vb)) :
-    hsE0 x u * (1 - k) + (u - 1) / r + 9 / 8 - r - (x - 1) * Qi < 0 := by
+    ssE0 x u * (1 - k) + (u - 1) / r + 9 / 8 - r - (x - 1) * Qi < 0 := by
   have hx0 : 0 < x := by linarith
   have hS : 0 < 1 + x := by linarith
-  have hE0 : hsE0 x u ≤ -(3 / 16) * (1 + x) + 1 / (1 + x) := by
-    unfold hsE0; nlinarith
+  have hE0 : ssE0 x u ≤ -(3 / 16) * (1 + x) + 1 / (1 + x) := by
+    unfold ssE0; nlinarith
   have hE0n : 1 / (1 + x) ≤ 5 / 17 := by rw [div_le_iff₀ hS]; linarith
-  have hE0neg : hsE0 x u ≤ 0 := by linarith
+  have hE0neg : ssE0 x u ≤ 0 := by linarith
   have hK0 : 0 < 1 + (x - 1) / x ^ 2 := by
     have : 0 ≤ (x - 1) / x ^ 2 := div_nonneg (by linarith) (by positivity)
     linarith
@@ -752,13 +752,13 @@ private theorem hs0_Mr_neg {x u r vb k Qi : ℝ} (hx : 12 / 5 ≤ x) (hu' : u �
     have e : (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) = 1 - 3 * (1 + x) ^ 2 / (7 * x ^ 2) := by
       field_simp; ring
     linarith
-  have h1 : hsE0 x u * (1 - k) ≤ (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * hsE0 x u := by
+  have h1 : ssE0 x u * (1 - k) ≤ (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * ssE0 x u := by
     have := mul_le_mul_of_nonpos_left hcDQ hE0neg
     linarith
-  have h2 : (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * hsE0 x u ≤
+  have h2 : (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * ssE0 x u ≤
       (4 * x ^ 2 - 6 * x - 3) / (7 * x ^ 2) * ((1 + x) * (vb - 1) + 1 / (1 + x)) := by
     apply mul_le_mul_of_nonneg_left _ hc0
-    unfold hsE0
+    unfold ssE0
     have := mul_le_mul_of_nonneg_left huV hS.le
     linarith
   have h3 : (u - 1) / r ≤ (vb - 1) / r := div_le_div_of_nonneg_right (by linarith) hr0.le
@@ -784,52 +784,52 @@ private theorem hs0_Mr_neg {x u r vb k Qi : ℝ} (hx : 12 / 5 ≤ x) (hu' : u �
 /-- **The zero-scale endpoint is negative**: for `x ≥ 12/5`, `1 ≤ α ≤ x ≤ β`, `r_A ≤ 3/7`,
 `D ≤ (3(1 + x)²/(7x²))·α(α + β)`, `3/4 ≤ u ≤ 13/16`, `u ≤ V̄(x)` and `0 < p ≤ r_A`:
 `𝒢(0) = C(p) + 1/8 < 0`. -/
-theorem hs0_G_zero_neg {x be al u p : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x)
-    (hxb : x ≤ be) (hrA : hsRA al be ≤ 3 / 7)
-    (hDQ : hsDg x be al ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2) * (al * (al + be))) (hu : 3 / 4 ≤ u)
-    (hu' : u ≤ 13 / 16) (huV : u ≤ hsVbar x) (hp : 0 < p) (hpr : p ≤ hsRA al be) :
-    hsPhi x be al u p (1 / 2) 0 < 0 := by
+theorem lgr_G_zero_neg {x be al u p : ℝ} (hx : 12 / 5 ≤ x) (hal : 1 ≤ al) (hax : al ≤ x)
+    (hxb : x ≤ be) (hrA : ssRA al be ≤ 3 / 7)
+    (hDQ : ssDg x be al ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2) * (al * (al + be))) (hu : 3 / 4 ≤ u)
+    (hu' : u ≤ 13 / 16) (huV : u ≤ ssVbar x) (hp : 0 < p) (hpr : p ≤ ssRA al be) :
+    ssPhi x be al u p (1 / 2) 0 < 0 := by
   have hal0 : 0 < al := by linarith
   have hbe0 : 0 < be := by linarith
   have hQ : 0 < al * (al + be) := by positivity
-  have e0 : hsPhi x be al u p (1 / 2) 0 = hsE0 x u + (u - 1) / hsRA al be + hsRA al be + 1 -
-      p * hsA1 x be al u + log (p / hsRA al be) + 1 / 8 := by
-    unfold hsPhi hsCp; ring
+  have e0 : ssPhi x be al u p (1 / 2) 0 = ssE0 x u + (u - 1) / ssRA al be + ssRA al be + 1 -
+      p * ssA1 x be al u + log (p / ssRA al be) + 1 / 8 := by
+    unfold ssPhi ssCp; ring
   rw [e0]
-  have hrA1 := hs02_rA_A1 (x := x) (u := u) hal0 hbe0
-  have hr0 : 0 < hsRA al be := by unfold hsRA; positivity
-  have hrQ : hsRA al be / x ^ 2 ≤ 1 / (al * (al + be)) := by
-    have e : 1 / (al * (al + be)) = hsRA al be / al ^ 2 := by unfold hsRA; field_simp
+  have hrA1 := ss_rA_A1 (x := x) (u := u) hal0 hbe0
+  have hr0 : 0 < ssRA al be := by unfold ssRA; positivity
+  have hrQ : ssRA al be / x ^ 2 ≤ 1 / (al * (al + be)) := by
+    have e : 1 / (al * (al + be)) = ssRA al be / al ^ 2 := by unfold ssRA; field_simp
     rw [e]
     exact div_le_div_of_nonneg_left hr0.le (by positivity) (pow_le_pow_left₀ hal0.le hax 2)
-  have hk : hsDg x be al / (al * (al + be)) ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2) := by
+  have hk : ssDg x be al / (al * (al + be)) ≤ 3 * (1 + x) ^ 2 / (7 * x ^ 2) := by
     rw [div_le_iff₀ hQ]; exact hDQ
-  have hM0 := hs0_M0_neg hx hu' hr0 hrA
-  have hMr := hs0_Mr_neg hx hu' huV hr0 hrA hrQ hk (hs0_N37 hx) (hs0_Nd hx)
-  generalize hsRA al be = r at *
-  generalize hsA1 x be al u = A1 at *
+  have hM0 := lgr_M0_neg hx hu' hr0 hrA
+  have hMr := lgr_Mr_neg hx hu' huV hr0 hrA hrQ hk (lgr_N37 hx) (lgr_Nd hx)
+  generalize ssRA al be = r at *
+  generalize ssA1 x be al u = A1 at *
   have hlog : log (p / r) ≤ p / r - 1 := Real.log_le_sub_one_of_pos (div_pos hp hr0)
-  have hMr' : hsE0 x u + (u - 1) / r + r + 1 / 8 + 1 - r * A1 < 0 := by
+  have hMr' : ssE0 x u + (u - 1) / r + r + 1 / 8 + 1 - r * A1 < 0 := by
     rw [hrA1]
     have e : (x - 1) / (al * (al + be)) = (x - 1) * (1 / (al * (al + be))) := by ring
     linarith only [hMr, e]
   -- the affine combination in `p`
   have hpr' : p / r ≤ 1 := by rw [div_le_one hr0]; exact hpr
   have hp0 : 0 < p / r := div_pos hp hr0
-  have e2 : hsE0 x u + (u - 1) / r + r + 1 - p * A1 + (p / r - 1) + 1 / 8 =
-      (1 - p / r) * (hsE0 x u + (u - 1) / r + r + 1 / 8) +
-        p / r * (hsE0 x u + (u - 1) / r + r + 1 / 8 + 1 - r * A1) := by
+  have e2 : ssE0 x u + (u - 1) / r + r + 1 - p * A1 + (p / r - 1) + 1 / 8 =
+      (1 - p / r) * (ssE0 x u + (u - 1) / r + r + 1 / 8) +
+        p / r * (ssE0 x u + (u - 1) / r + r + 1 / 8 + 1 - r * A1) := by
     have hpr2 : p / r * r = p := div_mul_cancel₀ p hr0.ne'
     linear_combination A1 * hpr2
-  have h1 : (1 - p / r) * (hsE0 x u + (u - 1) / r + r + 1 / 8) ≤ 0 :=
+  have h1 : (1 - p / r) * (ssE0 x u + (u - 1) / r + r + 1 / 8) ≤ 0 :=
     mul_nonpos_of_nonneg_of_nonpos (by linarith only [hpr']) hM0.le
-  have h2 : p / r * (hsE0 x u + (u - 1) / r + r + 1 / 8 + 1 - r * A1) < 0 :=
+  have h2 : p / r * (ssE0 x u + (u - 1) / r + r + 1 / 8 + 1 - r * A1) < 0 :=
     mul_neg_of_pos_of_neg hp0 hMr'
   linarith only [e2, hlog, h1, h2]
 
 /-- `N₀(0) = 20u - (2u - 5H/2)² > 0`; for `H ≥ 2` the incoming floor supplies `u ≥ 77/100`,
 `H ≤ 76/35`. -/
-private theorem hs0_N00 {u H : ℝ} (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hH0 : 0 ≤ H)
+private theorem lgr_N00 {u H : ℝ} (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hH0 : 0 ≤ H)
     (hH2 : 2 ≤ H → 77 / 100 ≤ u ∧ H ≤ 76 / 35) :
     0 < -25 * H ^ 2 / 4 + 10 * H * u - 4 * u ^ 2 + 20 * u := by
   have e : -25 * H ^ 2 / 4 + 10 * H * u - 4 * u ^ 2 + 20 * u = 20 * u - (2 * u
@@ -844,13 +844,13 @@ private theorem hs0_N00 {u H : ℝ} (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hH
       (by linarith : (0 : ℝ) ≤ 5 * H / 2 - 2 * u)]
 
 /-- `N₀(1/7) > 0`. -/
-private theorem hs0_N017 {u H : ℝ} (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hH0 : 0 ≤ H)
+private theorem lgr_N017 {u H : ℝ} (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hH0 : 0 ≤ H)
     (hH : H ≤ 12 / 5) : 0 < -625 * H ^ 2 / 196 + 10 * H * u - 4 * u ^ 2 + 240 * u / 49 := by
   nlinarith [mul_nonneg hH0 (sub_nonneg.2 hH), mul_nonneg (sub_nonneg.2 hu) (sub_nonneg.2 hu'),
     mul_nonneg hH0 (sub_nonneg.2 hu)]
 
 /-- `N₀(s) > 0` on `0 ≤ s ≤ 1/7` from the two endpoints. -/
-private theorem hs0_N0s {s u H : ℝ} (hs : 0 ≤ s) (hs7 : s ≤ 1 / 7) (hu : 3 / 4 ≤ u)
+private theorem lgr_N0s {s u H : ℝ} (hs : 0 ≤ s) (hs7 : s ≤ 1 / 7) (hu : 3 / 4 ≤ u)
     (h0 : 0 < -25 * H ^ 2 / 4 + 10 * H * u - 4 * u ^ 2 + 20 * u)
     (h7 : 0 < -625 * H ^ 2 / 196 + 10 * H * u - 4 * u ^ 2 + 240 * u / 49) :
     0 < -25 * H ^ 2 / 4 + 10 * H * u - 4 * u ^ 2 + 20 * u + s * (25 * H ^ 2 - 120 * u) +
@@ -882,7 +882,7 @@ private theorem hs0_N0s {s u H : ℝ} (hs : 0 ≤ s) (hs7 : s ≤ 1 / 7) (hu : 3
     linarith
 
 /-- `S²N₁(1/7) > 0` (concave in `u`). -/
-private theorem hs0_N117 {S u : ℝ} (hS : 17 / 5 ≤ S) (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) :
+private theorem lgr_N117 {S u : ℝ} (hS : 17 / 5 ≤ S) (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) :
     0 < -225 * S ^ 4 / 196 - 75 * S ^ 3 / 49 + 475 * S ^ 2 / 98 + 25 * S / 7 +
       u ^ 2 * (-25 * S ^ 4 / 4 - 10 * S ^ 3 - 4 * S ^ 2) +
       u * (725 * S ^ 4 / 98 + 45 * S ^ 3 / 7 + 65 * S ^ 2 / 14 - 10 * S) - 25 / 4 := by
@@ -912,13 +912,13 @@ private theorem hs0_N117 {S u : ℝ} (hS : 17 / 5 ≤ S) (hu : 3 / 4 ≤ u) (hu'
   · have := mul_pos (by linarith : (0 : ℝ) < 16 * (u - 3 / 4)) pb; linarith
 
 /-- `N₁(s) > 0` on `0 ≤ s ≤ 1/7`: concave in `s`, or convex with `N₁'(1/7) < 0`. -/
-private theorem hs0_N1s {s S u H : ℝ} (hs : 0 ≤ s) (hs7 : s ≤ 1 / 7) (hS : 17 / 5 ≤ S)
+private theorem lgr_N1s {s S u H : ℝ} (hs : 0 ≤ s) (hs7 : s ≤ 1 / 7) (hS : 17 / 5 ≤ S)
     (hu : 3 / 4 ≤ u) (hu' : u ≤ 13 / 16) (hH : H = S * (1 - u) - 1 / S)
     (h0 : 0 < -25 * H ^ 2 / 4 + 10 * H * u - 4 * u ^ 2 + 20 * u) :
     0 < -25 * H ^ 2 / 4 + 10 * H * u - 4 * u ^ 2 + 20 * u + s * (50 * H * S - 25 * H -
       50 * S * u - 20 * u) + s ^ 2 * (100 * S ^ 2 * u - 100 * S ^ 2 + 100 * S - 25) := by
   have hS0 : 0 < S := by linarith
-  have h7 := hs0_N117 hS hu hu'
+  have h7 := lgr_N117 hS hu hu'
   set N0 := -25 * H ^ 2 / 4 + 10 * H * u - 4 * u ^ 2 + 20 * u with hN0
   set L1 := 50 * H * S - 25 * H - 50 * S * u - 20 * u with hL1
   set Q1 := 100 * S ^ 2 * u - 100 * S ^ 2 + 100 * S - 25 with hQ1
@@ -975,7 +975,7 @@ private theorem hs0_N1s {s S u H : ℝ} (hs : 0 ≤ s) (hs7 : s ≤ 1 / 7) (hS :
 
 /-- **The `τ = 2` slope**: with `a = α⁻²`, `Δ = D/α²`, `H = -E₀`, the incoming floor
 `u ≥ 3/4 + (S - 2)²/(28S²)` and `0 ≤ σ ≤ 1/7`, `σG₂'(σ) = 1 - σ(5A₁/2 + 1 + A₃) + 5σ²A₂ > 0`. -/
-private theorem hs0_Psi_pos {S u a Δ σ H : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10)
+private theorem lgr_Psi_pos {S u a Δ σ H : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S ≤ 10)
     (hu' : u ≤ 13 / 16) (hf : 3 / 4 + (S - 2) ^ 2 / (28 * S ^ 2) ≤ u) (ha0 : 0 ≤ a)
     (ha1 : a ≤ 1) (hσ : 0 ≤ σ) (hσ7 : σ ≤ 1 / 7) (hH : H = S * (1 - u) - 1 / S) :
     0 < 1 - σ * (5 / 2 * (2 * (1 - a) + S * a + Δ * -H) + 1 +
@@ -1010,10 +1010,10 @@ private theorem hs0_Psi_pos {S u a Δ σ H : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S 
     · have : 35 * (S * H) ≤ 35 * ((6 * S ^ 2 + 4 * S - 32) / 28) := by rw [hSH]; linarith
       have : S * H ≤ S * (76 / 35) := by nlinarith
       exact le_of_mul_le_mul_left this hS0
-  have h00 := hs0_N00 hu hu' hH0 hH2
-  have h07 := hs0_N017 hu hu' hH0 hH24
-  have hN0 := hs0_N0s hσ hσ7 hu h00 h07
-  have hN1 := hs0_N1s hσ hσ7 hS hu hu' hH h00
+  have h00 := lgr_N00 hu hu' hH0 hH2
+  have h07 := lgr_N017 hu hu' hH0 hH24
+  have hN0 := lgr_N0s hσ hσ7 hu h00 h07
+  have hN1 := lgr_N1s hσ hσ7 hS hu hu' hH h00
   -- concavity in `a`
   have hf2 : 0 ≤ (2 * S - 1 - H) ^ 2 - 4 * u * (S ^ 2 - S + 1) := by
     have e : S ^ 2 * ((2 * S - 1 - H) ^ 2 - 4 * u * (S ^ 2 - S + 1)) =
@@ -1048,56 +1048,56 @@ private theorem hs0_Psi_pos {S u a Δ σ H : ℝ} (hS : 17 / 5 ≤ S) (hS10 : S 
   exact pos_of_mul_pos_right hpos (by linarith)
 
 /-- **The `τ = 2` face can be pushed**: for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ x ≤ β`, the *actual*
-`u = Sec(1, x, β) ≤ 13/16` (the uniform floor `hs_sec_gt_floor` is essential),
+`u = Sec(1, x, β) ≤ 13/16` (the uniform floor `ss_sec_gt_floor` is essential),
 `G₂(q) = R*_2 + ½(w_* - 3/4)` is strictly increasing on `(0, 1/7]`.
 The bound `log(q₂/q₁) ≥ 2(q₂ - q₁)/(q₂ + q₁)` (`ss_log_ge_pade`) reduces the increment to
 `σG₂'(σ) > 0` at the midpoint `σ`, with no derivative; the two quadratics in `σ` (`α⁻² = 0, 1`) are
 handled by a convex/concave case split. -/
-theorem hs0_tau_two {x be al u q₁ q₂ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
+theorem lgr_tau_two {x be al u q₁ q₂ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hax : al ≤ x) (hxb : x ≤ be) (hu : u = m2Sec 1 x be) (hu' : u ≤ 13 / 16) (hq₁ : 0 < q₁)
     (hq : q₁ < q₂) (hq₂ : q₂ ≤ 1 / 7) :
-    hsF x be al u q₁ 2 (log (2 * q₁ / hsRA al be)) (1 / 2) <
-      hsF x be al u q₂ 2 (log (2 * q₂ / hsRA al be)) (1 / 2) := by
+    ssF x be al u q₁ 2 (log (2 * q₁ / ssRA al be)) (1 / 2) <
+      ssF x be al u q₂ 2 (log (2 * q₂ / ssRA al be)) (1 / 2) := by
   have hx1 : 1 < x := by linarith
   have hal0 : 0 < al := by linarith
   have ha2 : 0 < al ^ 2 := by positivity
-  have hr0 : 0 < hsRA al be := by unfold hsRA; exact div_pos hal0 (by linarith)
+  have hr0 : 0 < ssRA al be := by unfold ssRA; exact div_pos hal0 (by linarith)
   have hq2 : 0 < q₂ := by linarith
   -- the incoming floor
-  have hfl := hs_sec_gt_floor hx1 hx9 hxb
+  have hfl := ss_sec_gt_floor hx1 hx9 hxb
   rw [← hu] at hfl
   have hf : 3 / 4 + ((1 + x) - 2) ^ 2 / (28 * (1 + x) ^ 2) ≤ u := by
-    unfold hsUf at hfl
+    unfold ssUf at hfl
     have e : ((1 + x) - 2) ^ 2 / (28 * (1 + x) ^ 2) = (x - 1) ^ 2 / (28 * (x + 1) ^ 2) := by ring
     rw [e]; linarith
   -- the slope at the midpoint
-  have hΨ := hs0_Psi_pos (S := 1 + x) (u := u) (a := 1 / al ^ 2) (Δ := hsDg x be al / al ^ 2)
-    (σ := (q₁ + q₂) / 2) (H := -hsE0 x u) (by linarith) (by linarith) hu' hf (by positivity)
+  have hΨ := lgr_Psi_pos (S := 1 + x) (u := u) (a := 1 / al ^ 2) (Δ := ssDg x be al / al ^ 2)
+    (σ := (q₁ + q₂) / 2) (H := -ssE0 x u) (by linarith) (by linarith) hu' hf (by positivity)
     (by rw [div_le_one ha2]; exact one_le_pow₀ hal) (by linarith) (by linarith)
-    (by unfold hsE0; ring)
-  have eA : 1 - (q₁ + q₂) / 2 * (5 / 2 * hsA1 x be al u + 1 + hsA3 x be al u) +
-      5 * ((q₁ + q₂) / 2) ^ 2 * hsA2 x be al u = 1 - (q₁ + q₂) / 2 * (5 / 2 * (2 * (1
+    (by unfold ssE0; ring)
+  have eA : 1 - (q₁ + q₂) / 2 * (5 / 2 * ssA1 x be al u + 1 + ssA3 x be al u) +
+      5 * ((q₁ + q₂) / 2) ^ 2 * ssA2 x be al u = 1 - (q₁ + q₂) / 2 * (5 / 2 * (2 * (1
           - 1 / al ^ 2) +
-      (1 + x) * (1 / al ^ 2) + hsDg x be al / al ^ 2 * - -hsE0 x u) + 1 +
-      (2 * (hsDg x be al / al ^ 2) * u + (1 - 1 / al ^ 2) * - -hsE0 x u -
+      (1 + x) * (1 / al ^ 2) + ssDg x be al / al ^ 2 * - -ssE0 x u) + 1 +
+      (2 * (ssDg x be al / al ^ 2) * u + (1 - 1 / al ^ 2) * - -ssE0 x u -
         (2 * (1 + x) - 1) * (1 / al ^ 2))) +
       5 * ((q₁ + q₂) / 2) ^ 2 * ((1 - 1 / al ^ 2) ^ 2 + (1 - 1 / al ^ 2) * ((1
           + x) * (1 / al ^ 2)) +
-        ((1 + x) * (1 / al ^ 2)) ^ 2 + (hsDg x be al / al ^ 2) ^ 2 * u +
-        hsDg x be al / al ^ 2 * (1 - 1 / al ^ 2) * - -hsE0 x u -
-        hsDg x be al / al ^ 2 * (2 * (1 + x) - 1) * (1 / al ^ 2)) := by
-    unfold hsA1 hsA2 hsA3; ring
+        ((1 + x) * (1 / al ^ 2)) ^ 2 + (ssDg x be al / al ^ 2) ^ 2 * u +
+        ssDg x be al / al ^ 2 * (1 - 1 / al ^ 2) * - -ssE0 x u -
+        ssDg x be al / al ^ 2 * (2 * (1 + x) - 1) * (1 / al ^ 2)) := by
+    unfold ssA1 ssA2 ssA3; ring
   rw [← eA] at hΨ
   -- the increment
-  have e : hsF x be al u q₂ 2 (log (2 * q₂ / hsRA al be)) (1 / 2) -
-      hsF x be al u q₁ 2 (log (2 * q₁ / hsRA al be)) (1 / 2) =
-      (q₂ - q₁) * (-(5 / 2) * hsA1 x be al u + 5 / 2 * (q₁ + q₂) * hsA2 x be al u - 1 -
-        hsA3 x be al u) + (log (2 * q₂ / hsRA al be) - log (2 * q₁ / hsRA al be)) := by
-    unfold hsF hsWs hsELs; ring
-  have hlog : 2 * (q₂ - q₁) / (q₂ + q₁) ≤ log (2 * q₂ / hsRA al be)
-      - log (2 * q₁ / hsRA al be) := by
+  have e : ssF x be al u q₂ 2 (log (2 * q₂ / ssRA al be)) (1 / 2) -
+      ssF x be al u q₁ 2 (log (2 * q₁ / ssRA al be)) (1 / 2) =
+      (q₂ - q₁) * (-(5 / 2) * ssA1 x be al u + 5 / 2 * (q₁ + q₂) * ssA2 x be al u - 1 -
+        ssA3 x be al u) + (log (2 * q₂ / ssRA al be) - log (2 * q₁ / ssRA al be)) := by
+    unfold ssF ssWs ssELs; ring
+  have hlog : 2 * (q₂ - q₁) / (q₂ + q₁) ≤ log (2 * q₂ / ssRA al be)
+      - log (2 * q₁ / ssRA al be) := by
     rw [← Real.log_div (by positivity) (by positivity)]
-    have ez : 2 * q₂ / hsRA al be / (2 * q₁ / hsRA al be) = q₂ / q₁ := by field_simp
+    have ez : 2 * q₂ / ssRA al be / (2 * q₁ / ssRA al be) = q₂ / q₁ := by field_simp
     rw [ez]
     have h1 : 1 ≤ q₂ / q₁ := by rw [le_div_iff₀ hq₁]; linarith
     have h2 := ss_log_ge_pade h1
@@ -1105,12 +1105,12 @@ theorem hs0_tau_two {x be al u q₁ q₂ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤
       field_simp
     linarith
   -- `(q₂ - q₁)·Ψ(σ)/σ > 0`
-  have key : 0 < (q₂ - q₁) * (-(5 / 2) * hsA1 x be al u + 5 / 2 * (q₁ + q₂) * hsA2 x be al u - 1 -
-      hsA3 x be al u) + 2 * (q₂ - q₁) / (q₂ + q₁) := by
-    have e2 : (q₂ - q₁) * (-(5 / 2) * hsA1 x be al u + 5 / 2 * (q₁ + q₂) * hsA2 x be al u - 1 -
-        hsA3 x be al u) + 2 * (q₂ - q₁) / (q₂ + q₁) = (q₂ - q₁) * (2 / (q₁ + q₂)) *
-        (1 - (q₁ + q₂) / 2 * (5 / 2 * hsA1 x be al u + 1 + hsA3 x be al u) +
-          5 * ((q₁ + q₂) / 2) ^ 2 * hsA2 x be al u) := by
+  have key : 0 < (q₂ - q₁) * (-(5 / 2) * ssA1 x be al u + 5 / 2 * (q₁ + q₂) * ssA2 x be al u - 1 -
+      ssA3 x be al u) + 2 * (q₂ - q₁) / (q₂ + q₁) := by
+    have e2 : (q₂ - q₁) * (-(5 / 2) * ssA1 x be al u + 5 / 2 * (q₁ + q₂) * ssA2 x be al u - 1 -
+        ssA3 x be al u) + 2 * (q₂ - q₁) / (q₂ + q₁) = (q₂ - q₁) * (2 / (q₁ + q₂)) *
+        (1 - (q₁ + q₂) / 2 * (5 / 2 * ssA1 x be al u + 1 + ssA3 x be al u) +
+          5 * ((q₁ + q₂) / 2) ^ 2 * ssA2 x be al u) := by
       field_simp; ring
     rw [e2]
     exact mul_pos (mul_pos (by linarith) (by positivity)) hΨ
@@ -1120,78 +1120,78 @@ theorem hs0_tau_two {x be al u q₁ q₂ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤
 
 /-- **The central face, `τ = 2` test**: on `Dom_c` (`12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12`,
 `x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`), at `q = q_c`, `u = û(x, β)`, `T = r_A/q_c`:
-`F(2, 5/(2T) - 11/9) < 0` for the floor-weighted face value. Proved in `Heavy/S0HandCen*` (beta
+`F(2, 5/(2T) - 11/9) < 0` for the floor-weighted face value. Proved in `SmallerShort/LargeRatio/CentralFace*` (beta
 convexity, the lower face and four upper faces). -/
-theorem hs0_central_tau_two {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
+theorem lgr_central_tau_two {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
-    hsF x be al (hsUhat x be) (hsQc x al) 2
-      (5 / (2 * (hsRA al be / hsQc x al)) - 11 / 9) (1 / 2) < 0 := by
-  apply hs0_central_tau_two_proof <;> assumption
+    ssF x be al (ssUhat x be) (ssQc x al) 2
+      (5 / (2 * (ssRA al be / ssQc x al)) - 11 / 9) (1 / 2) < 0 := by
+  apply lgr_central_tau_two_proof <;> assumption
 
 /-- **The central face, `τ = T` and `τ = 8T/9` tests**: on `Dom_c`, at `q = q_c`, `u = û`,
 `T = r_A/q_c`: `F(T, 0) < 0` and `F(8T/9, -1/9) < 0` (no condition `cT ≥ 2`). Proved in
-`Heavy/S0HandCen*` (beta convexity, the lower face and four upper faces). -/
-theorem hs0_central_duration {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
+`SmallerShort/LargeRatio/CentralFace*` (beta convexity, the lower face and four upper faces). -/
+theorem lgr_central_duration {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
-    hsF x be al (hsUhat x be) (hsQc x al) (hsRA al be / hsQc x al) 0 (1 / 2) < 0 ∧
-      hsF x be al (hsUhat x be) (hsQc x al) (8 * (hsRA al be / hsQc x al) / 9) (-1 / 9) (1 / 2) <
+    ssF x be al (ssUhat x be) (ssQc x al) (ssRA al be / ssQc x al) 0 (1 / 2) < 0 ∧
+      ssF x be al (ssUhat x be) (ssQc x al) (8 * (ssRA al be / ssQc x al) / 9) (-1 / 9) (1 / 2) <
         0 := by
-  apply hs0_central_duration_proof <;> assumption
+  apply lgr_central_duration_proof <;> assumption
 
 /-- **The outer face, three tests**: on `Dom_o` (`12/5 ≤ x ≤ 9`, `(22x + 20)/55 ≤ α ≤ x`,
 `x + 4x(α - 1)/(5x + 4) ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`), at `q = 1/7`, `u = ū(x, β)`,
 `T = 7r_A`: `F(T, 0) < 0`, `F(8T/9, -1/9) < 0`, `F(2, 5/(2T) - 11/9) < 0`. Proved in
-`Heavy/S0HandOut*` (the cubic comparison on the large shapes, beta convexity and five faces on the
+`SmallerShort/LargeRatio/OuterFace*` (the cubic comparison on the large shapes, beta convexity and five faces on the
 strip). -/
-theorem hs0_outer_tests {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
+theorem lgr_outer_tests {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (hal : (22 * x + 20) / 55 ≤ al) (hax : al ≤ x)
     (hb : x + 4 * x * (al - 1) / (5 * x + 4) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
-    hsF x be al (hsUbar x be) (1 / 7) (7 * hsRA al be) 0 (1 / 2) < 0 ∧
-      hsF x be al (hsUbar x be) (1 / 7) (8 * (7 * hsRA al be) / 9) (-1 / 9) (1 / 2) < 0 ∧
-      hsF x be al (hsUbar x be) (1 / 7) 2 (5 / (2 * (7 * hsRA al be)) - 11 / 9) (1 / 2) < 0 := by
-  apply hs0_outer_tests_proof <;> assumption
+    ssF x be al (ssUbar x be) (1 / 7) (7 * ssRA al be) 0 (1 / 2) < 0 ∧
+      ssF x be al (ssUbar x be) (1 / 7) (8 * (7 * ssRA al be) / 9) (-1 / 9) (1 / 2) < 0 ∧
+      ssF x be al (ssUbar x be) (1 / 7) 2 (5 / (2 * (7 * ssRA al be)) - 11 / 9) (1 / 2) < 0 := by
+  apply lgr_outer_tests_proof <;> assumption
 
-/-! ### Gate S0 -/
+/-! ### The large-ratio bound -/
 
-/-- One face of gate S0: the floor-weighted value at a face scale `q_f ≤ 1/7` with a duration
+/-- One face of the large-ratio bound: the floor-weighted value at a face scale `q_f ≤ 1/7` with a duration
 `τ ∈ [2, T]` (or `τ = 2`), after raising `u` to a ceiling `u_c`, is bounded by the largest of the
 three duration tests. -/
-private theorem hs0_face_step {x be al u uc qf τs T : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
+private theorem lgr_face_step {x be al u uc qf τs T : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
     (hal : 1 ≤ al) (hax : al ≤ x) (hxb : x ≤ be) (hab : al < be)
-    (hDQ : hsDg x be al < al * (al + be)) (hq : 0 < qf) (hq7 : qf ≤ 1 / 7) (hτs : 2 ≤ τs)
-    (hcase : τs * qf ≤ hsRA al be ∨ τs = 2) (huc : u ≤ uc)
-    (h0 : 0 ≤ hsF x be al u qf τs (log (τs * qf / hsRA al be)) (1 / 2))
-    (hT : T = hsRA al be / qf) :
-    0 ≤ max (hsF x be al uc qf 2 (5 / (2 * T) - 11 / 9) (1 / 2))
-      (max (hsF x be al uc qf (8 * T / 9) (-1 / 9) (1 / 2)) (hsF x be al uc qf T 0 (1 / 2))) := by
-  have hr0 : 0 < hsRA al be := by unfold hsRA; exact div_pos (by linarith) (by linarith)
-  have hτ' : (2 ≤ τs ∧ τs * qf ≤ hsRA al be) ∨ τs = 2 := by
+    (hDQ : ssDg x be al < al * (al + be)) (hq : 0 < qf) (hq7 : qf ≤ 1 / 7) (hτs : 2 ≤ τs)
+    (hcase : τs * qf ≤ ssRA al be ∨ τs = 2) (huc : u ≤ uc)
+    (h0 : 0 ≤ ssF x be al u qf τs (log (τs * qf / ssRA al be)) (1 / 2))
+    (hT : T = ssRA al be / qf) :
+    0 ≤ max (ssF x be al uc qf 2 (5 / (2 * T) - 11 / 9) (1 / 2))
+      (max (ssF x be al uc qf (8 * T / 9) (-1 / 9) (1 / 2)) (ssF x be al uc qf T 0 (1 / 2))) := by
+  have hr0 : 0 < ssRA al be := by unfold ssRA; exact div_pos (by linarith) (by linarith)
+  have hτ' : (2 ≤ τs ∧ τs * qf ≤ ssRA al be) ∨ τs = 2 := by
     rcases hcase with h | h
     · exact Or.inl ⟨hτs, h⟩
     · exact Or.inr h
-  have h1 : 0 ≤ hsF x be al uc qf τs (log (τs * qf / hsRA al be)) (1 / 2) :=
-    h0.trans (hs0_uslope hx hx9 hal hax hxb hab hDQ hq hq7 hτ' huc)
+  have h1 : 0 ≤ ssF x be al uc qf τs (log (τs * qf / ssRA al be)) (1 / 2) :=
+    h0.trans (lgr_uslope hx hx9 hal hax hxb hab hDQ hq hq7 hτ' huc)
   rcases hcase with h | h
-  · have e : τs * qf / hsRA al be = τs / T := by rw [hT]; field_simp
+  · have e : τs * qf / ssRA al be = τs / T := by rw [hT]; field_simp
     rw [e] at h1
     have hτT : τs ≤ T := by rw [hT, le_div_iff₀ hq]; exact h
-    exact h1.trans (hs02_F_dur hτs hτT)
+    exact h1.trans (ss_F_dur hτs hτT)
   · subst h
-    have hl : log (2 * qf / hsRA al be) ≤ 5 / (2 * T) - 11 / 9 := by
-      have := hs_log_le_tangent (div_pos (mul_pos two_pos hq) hr0)
-      have e : 5 * (2 * qf / hsRA al be) / 4 = 5 / (2 * T) := by rw [hT]; field_simp; ring
+    have hl : log (2 * qf / ssRA al be) ≤ 5 / (2 * T) - 11 / 9 := by
+      have := ss_log_le_tangent (div_pos (mul_pos two_pos hq) hr0)
+      have e : 5 * (2 * qf / ssRA al be) / 4 = 5 / (2 * T) := by rw [hT]; field_simp; ring
       linarith
-    exact (h1.trans (hs02_F_ell_mono hl)).trans (le_max_left _ _)
+    exact (h1.trans (ss_F_ell_mono hl)).trans (le_max_left _ _)
 
-namespace HsData
+namespace SmallerShortData
 
-variable (H : HsData)
+variable (H : SmallerShortData)
 
 /-- **The large-ratio exclusion**: `x ≥ 12/5` is impossible. -/
-private theorem hs0_large (hx : 12 / 5 ≤ H.x) : False := by
+private theorem lgr_large (hx : 12 / 5 ≤ H.x) : False := by
   have hx1 := H.one_lt_x
   have hx0 : 0 < H.x := by linarith
   have hx9 := H.x_le_nine
@@ -1203,84 +1203,84 @@ private theorem hs0_large (hx : 12 / 5 ≤ H.x) : False := by
   have hbe0 : 0 < H.be := by linarith
   have hQ : 0 < H.al * (H.al + H.be) := by positivity
   -- shape: `α/β < 3/4`, `D/Q < 1`
-  have h43 := hs0_al_be hx hal hax hxb (H.u_eq.symm.trans H.u_eq')
-  have hrA : hsRA H.al H.be < 3 / 7 := by
-    unfold hsRA; rw [div_lt_iff₀ (by linarith)]; linarith
-  have hDQ := hs0_DQ_le hx hal hax.le hxb h43.le
-  have hDQ' : hsDg H.x H.be H.al < H.al * (H.al + H.be) := by
+  have h43 := lgr_al_be hx hal hax hxb (H.u_eq.symm.trans H.u_eq')
+  have hrA : ssRA H.al H.be < 3 / 7 := by
+    unfold ssRA; rw [div_lt_iff₀ (by linarith)]; linarith
+  have hDQ := lgr_DQ_le hx hal hax.le hxb h43.le
+  have hDQ' : ssDg H.x H.be H.al < H.al * (H.al + H.be) := by
     have : 3 * (1 + H.x) ^ 2 / (7 * H.x ^ 2) < 1 := by
       rw [div_lt_one (by positivity)]; nlinarith
     nlinarith
   -- incoming norm
   have hu34 := H.u_ge_34
-  have hu1316 := H.hs02_u_le_1316
-  have huV : H.u ≤ hsVbar H.x := H.u_le_V.trans (hs_V_le_Vbar hx1)
+  have hu1316 := H.ss_u_le_1316
+  have huV : H.u ≤ ssVbar H.x := H.u_le_V.trans (ss_V_le_Vbar hx1)
   -- scale
-  have hq0 := H.hs02_q_pos
+  have hq0 := H.ss_q_pos
   have hq7 := H.q_lt_seventh
   have hqc := H.q_le_qc
   have hτ2 := H.two_lt_τ
-  have hτT : H.τ * H.q < hsRA H.al H.be := H.τ_lt
-  have h2q := H.hs02_two_q
-  have hr0 := H.hs02_rA_pos
+  have hτT : H.τ * H.q < ssRA H.al H.be := H.τ_lt
+  have h2q := H.ss_two_q
+  have hr0 := H.ss_rA_pos
   -- the comparison chain: `0 ≤ Φ(q)` at `p = τq`
   have hB : ∀ s ∈ Icc (H.rho * (1 + H.x)) H.t, 0 < 1 + (H.τ + 1 / 2) *
-      (hsLam H.al H.rho * s - hsLam H.al H.rho * H.rho * hsDg H.x H.be H.al) := by
+      (ssLam H.al H.rho * s - ssLam H.al H.rho * H.rho * ssDg H.x H.be H.al) := by
     intro s hs
-    have hτT' : H.τ * hsQ H.al H.rho < hsRA H.al H.be := H.τ_lt
-    have h2q' : 2 * hsQ H.al H.rho < hsRA H.al H.be := h2q
-    exact hs_B_pos_weighted (by linarith) hal hax.le hxb H.rho_pos hs.1 (by linarith)
+    have hτT' : H.τ * ssQ H.al H.rho < ssRA H.al H.be := H.τ_lt
+    have h2q' : 2 * ssQ H.al H.rho < ssRA H.al H.be := h2q
+    exact ss_B_pos_weighted (by linarith) hal hax.le hxb H.rho_pos hs.1 (by linarith)
       h2q'.le (by nlinarith)
-  have hphi := H.hs02_root_phi (by norm_num : (0 : ℝ) ≤ 1 / 2) hB
+  have hphi := H.ss_root_phi (by norm_num : (0 : ℝ) ≤ 1 / 2) hB
   set p := H.τ * H.q with hp
   have hp0 : 0 < p := by positivity
-  have hpr : p ≤ hsRA H.al H.be := hτT.le
+  have hpr : p ≤ ssRA H.al H.be := hτT.le
   have hq2 : H.q ≤ p / 2 := by rw [hp]; nlinarith
-  have hqc0 : 0 < hsQc H.x H.al := by unfold hsQc; positivity
-  set qh := min (hsQc H.x H.al) (1 / 7) with hqh
+  have hqc0 : 0 < ssQc H.x H.al := by unfold ssQc; positivity
+  set qh := min (ssQc H.x H.al) (1 / 7) with hqh
   have hqh0 : 0 < qh := lt_min hqc0 (by norm_num)
   have hqh7 : qh ≤ 1 / 7 := min_le_right _ _
   -- the endpoint alternative and the zero-scale endpoint
-  have halt := hs0_endpoint_alt (qm := min qh (p / 2)) hx hx9 hal hax.le hxb hu34 hu1316 hp0 hpr
+  have halt := lgr_endpoint_alt (qm := min qh (p / 2)) hx hx9 hal hax.le hxb hu34 hu1316 hp0 hpr
     (le_min hqh0.le (by linarith)) (min_le_right _ _) hq0.le
     (le_min (le_min hqc hq7.le) hq2)
-  have hz := hs0_G_zero_neg hx hal hax.le hxb hrA.le hDQ hu34 hu1316 huV hp0 hpr
-  have hm : 0 ≤ hsPhi H.x H.be H.al H.u p (1 / 2) (min qh (p / 2)) := by
-    rcases le_total (hsPhi H.x H.be H.al H.u p (1 / 2) 0)
-      (hsPhi H.x H.be H.al H.u p (1 / 2) (min qh (p / 2))) with h | h
+  have hz := lgr_G_zero_neg hx hal hax.le hxb hrA.le hDQ hu34 hu1316 huV hp0 hpr
+  have hm : 0 ≤ ssPhi H.x H.be H.al H.u p (1 / 2) (min qh (p / 2)) := by
+    rcases le_total (ssPhi H.x H.be H.al H.u p (1 / 2) 0)
+      (ssPhi H.x H.be H.al H.u p (1 / 2) (min qh (p / 2))) with h | h
     · rw [max_eq_right h] at halt; linarith
     · rw [max_eq_left h] at halt; linarith
   -- a nonnegative value on the face `q = q̂`
-  have hface : ∃ τs, 2 ≤ τs ∧ (τs * qh ≤ hsRA H.al H.be ∨ τs = 2) ∧
-      0 ≤ hsF H.x H.be H.al H.u qh τs (log (τs * qh / hsRA H.al H.be)) (1 / 2) := by
+  have hface : ∃ τs, 2 ≤ τs ∧ (τs * qh ≤ ssRA H.al H.be ∨ τs = 2) ∧
+      0 ≤ ssF H.x H.be H.al H.u qh τs (log (τs * qh / ssRA H.al H.be)) (1 / 2) := by
     rcases le_total qh (p / 2) with h | h
     · rw [min_eq_left h] at hm
       refine ⟨p / qh, by rw [le_div_iff₀ hqh0]; linarith, Or.inl ?_, ?_⟩
       · rw [div_mul_cancel₀ _ hqh0.ne']; exact hpr
-      · rw [div_mul_cancel₀ _ hqh0.ne', hs_phi_eq hp0 hqh0]; exact hm
+      · rw [div_mul_cancel₀ _ hqh0.ne', ss_phi_eq hp0 hqh0]; exact hm
     · rw [min_eq_right h] at hm
       refine ⟨2, le_refl _, Or.inr rfl, ?_⟩
-      rw [← hs_phi_eq hp0 (by positivity : (0 : ℝ) < p / 2)] at hm
+      rw [← ss_phi_eq hp0 (by positivity : (0 : ℝ) < p / 2)] at hm
       have e1 : p / (p / 2) = 2 := by field_simp
-      have e2 : p / hsRA H.al H.be = 2 * (p / 2) / hsRA H.al H.be := by ring
+      have e2 : p / ssRA H.al H.be = 2 * (p / 2) / ssRA H.al H.be := by ring
       rw [e1, e2] at hm
       rcases eq_or_lt_of_le h with h' | h'
       · rw [← h']; exact hm
-      · exact (hm.trans (hs0_tau_two hx hx9 hal hax.le hxb H.u_eq hu1316 (by positivity) h'
+      · exact (hm.trans (lgr_tau_two hx hx9 hal hax.le hxb H.u_eq hu1316 (by positivity) h'
           hqh7).le)
   obtain ⟨τs, hτs, hcase, h0⟩ := hface
-  rcases le_or_gt (hsQc H.x H.al) (1 / 7) with hc | hc
+  rcases le_or_gt (ssQc H.x H.al) (1 / 7) with hc | hc
   · -- the central face `q = q_c ≤ 1/7`
     rw [hqh, min_eq_left hc] at hcase h0
-    have h6 := (hs_qc_le_iff hx0).1 hc
-    have hal' := (hs0_face_alpha hx0 hal0.le).1 h6
-    have hb := H.hs02_strip_up
-    have huc : H.u ≤ hsUhat H.x H.be := by
+    have h6 := (ss_qc_le_iff hx0).1 hc
+    have hal' := (lgr_face_alpha hx0 hal0.le).1 h6
+    have hb := H.ss_strip_up
+    have huc : H.u ≤ ssUhat H.x H.be := by
       rw [H.u_eq]
-      exact (hs_sec_le_ubar hx1 hxb).trans (hs0_ubar_le_uhat hx hx9 hal hal' hxb hb)
-    have hmax := hs0_face_step hx hx9 hal hax.le hxb hab hDQ' hqc0 hc hτs hcase huc h0 rfl
-    have hc2 := hs0_central_tau_two hx hx9 hal hal' hxb hb
-    have hcd := hs0_central_duration hx hx9 hal hal' hxb hb
+      exact (ss_sec_le_ubar hx1 hxb).trans (lgr_ubar_le_uhat hx hx9 hal hal' hxb hb)
+    have hmax := lgr_face_step hx hx9 hal hax.le hxb hab hDQ' hqc0 hc hτs hcase huc h0 rfl
+    have hc2 := lgr_central_tau_two hx hx9 hal hal' hxb hb
+    have hcd := lgr_central_duration hx hx9 hal hal' hxb hb
     have := max_lt hc2 (max_lt hcd.2 hcd.1)
     linarith
   · -- the outer face `q = 1/7 < q_c`
@@ -1288,31 +1288,31 @@ private theorem hs0_large (hx : 12 / 5 ≤ H.x) : False := by
     have h6 : H.x * (H.x + 2) ≤ 6 * H.al ^ 2 := by
       by_contra h'
       push Not at h'
-      exact absurd ((hs_qc_le_iff hx0).2 h'.le) (not_le.2 hc)
-    have hal' := (hs0_face_alpha hx0 hal0.le).2 hx h6
-    have huc : H.u ≤ hsUbar H.x H.be := by rw [H.u_eq]; exact hs_sec_le_ubar hx1 hxb
-    have hmax := hs0_face_step (T := 7 * hsRA H.al H.be) hx hx9 hal hax.le hxb hab hDQ'
+      exact absurd ((ss_qc_le_iff hx0).2 h'.le) (not_le.2 hc)
+    have hal' := (lgr_face_alpha hx0 hal0.le).2 hx h6
+    have huc : H.u ≤ ssUbar H.x H.be := by rw [H.u_eq]; exact ss_sec_le_ubar hx1 hxb
+    have hmax := lgr_face_step (T := 7 * ssRA H.al H.be) hx hx9 hal hax.le hxb hab hDQ'
       (by norm_num) (le_refl _) hτs hcase huc h0 (by field_simp)
-    have ho := hs0_outer_tests hx hx9 hal' hax.le H.hs02_strip_54 H.hs02_strip_up
+    have ho := lgr_outer_tests hx hx9 hal' hax.le H.ss_strip_54 H.ss_strip_up
     have := max_lt ho.2.2 (max_lt ho.2.1 ho.1)
     linarith
 
-/-- **Gate S0**: `x < 12/5`, `D > 0`, `E_L > 0`.
-Proof: if `x ≥ 12/5`: `root_zero`, `w_ge` and `hs_env_weighted` (`m = 1/2`, factor positivity
-`hs_B_pos_weighted`) give `0 ≤ G*_τ(q)`; `hs0_al_be`, `hs0_DQ_le` give `r_A < 3/7`, `D/Q < 1`; `hs_phi_eq`,
-`q_le_qc`, `q_lt_seventh`, `hs0_endpoint_alt`, `hs0_G_zero_neg` (with `u_le_V`, `hs_V_le_Vbar`),
-`hs0_tau_two` move to a face; `hs0_uslope` with `hs_sec_le_ubar`, `hs0_ubar_le_uhat`; `hs_dur_three`;
-`hs0_face_alpha`, `strong_order`, `upper_order_54` place the shape in `Dom_c`/`Dom_o`; contradiction
-with `hs0_central_tau_two`, `hs0_central_duration`, `hs0_outer_tests`. Then `hs0_D_pos` (with
-`be_le_al_x`) and `EL_eq`, `hs_E_le_env`, `hs0_pairing` (with `hs_V_le_U0`, `u_le_V`) give
+/-- **The large-ratio bound**: `x < 12/5`, `D > 0`, `E_L > 0`.
+Proof: if `x ≥ 12/5`: `root_zero`, `w_ge` and `ss_env_weighted` (`m = 1/2`, factor positivity
+`ss_B_pos_weighted`) give `0 ≤ G*_τ(q)`; `lgr_al_be`, `lgr_DQ_le` give `r_A < 3/7`, `D/Q < 1`; `ss_phi_eq`,
+`q_le_qc`, `q_lt_seventh`, `lgr_endpoint_alt`, `lgr_G_zero_neg` (with `u_le_V`, `ss_V_le_Vbar`),
+`lgr_tau_two` move to a face; `lgr_uslope` with `ss_sec_le_ubar`, `lgr_ubar_le_uhat`; `ss_dur_three`;
+`lgr_face_alpha`, `strong_order`, `upper_order_54` place the shape in `Dom_c`/`Dom_o`; contradiction
+with `lgr_central_tau_two`, `lgr_central_duration`, `lgr_outer_tests`. Then `lgr_D_pos` (with
+`be_le_al_x`) and `EL_eq`, `ss_E_le_env`, `lgr_pairing` (with `ss_V_le_U0`, `u_le_V`) give
 `D > 0`, `E_L = λ(2ρDu - E) > 0`. -/
-theorem s0 : H.x < 12 / 5 ∧ 0 < hsDg H.x H.be H.al ∧ 0 < H.EL := by
+theorem ratio_lt_twelve_fifths : H.x < 12 / 5 ∧ 0 < ssDg H.x H.be H.al ∧ 0 < H.EL := by
   have hx1 := H.one_lt_x
   have hxlt : H.x < 12 / 5 := by
     by_contra h
     push Not at h
-    exact H.hs0_large h
-  have hD := hs0_D_pos hx1 hxlt.le H.one_le_al H.al_lt_x.le H.x_le_be H.be_le_al_x
+    exact H.lgr_large h
+  have hD := lgr_D_pos hx1 hxlt.le H.one_le_al H.al_lt_x.le H.x_le_be H.be_le_al_x
   refine ⟨hxlt, by linarith [hD.2], ?_⟩
   -- `E_L = λ(2ρDu - E) > 0`
   have hS : 0 < 1 + H.x := by linarith
@@ -1320,7 +1320,7 @@ theorem s0 : H.x < 12 / 5 ∧ 0 < hsDg H.x H.be H.al ∧ 0 < H.EL := by
     have h := H.rho_lt_rt
     rw [one_div_mul_eq_div, lt_div_iff₀ hS] at h
     linarith
-  have hE := hs_E_le_env (u := H.u) hx1 H.rho_pos ht0 H.t_le_r H.v_le
+  have hE := ss_E_le_env (u := H.u) hx1 H.rho_pos ht0 H.t_le_r H.v_le
   have hρr : H.rho ≤ 1 / (1 + H.x) ^ 2 := by
     have h1 := H.rho_lt_rt
     have h2 := H.t_le_r
@@ -1328,29 +1328,29 @@ theorem s0 : H.x < 12 / 5 ∧ 0 < hsDg H.x H.be H.al ∧ 0 < H.EL := by
       mul_le_mul_of_nonneg_left h2 (by positivity)
     rw [one_div_mul_one_div, ← sq] at this
     linarith
-  have hu0 : H.u ≤ hsU0 H.x := H.u_le_V.trans (hs_V_le_U0 hx1)
-  have hpair := hs0_pairing hx1 hxlt.le H.rho_pos.le hρr hD.1 H.u_ge_34 hu0
-  have hlam : 0 < hsLam H.al H.rho := by
-    unfold hsLam
+  have hu0 : H.u ≤ ssU0 H.x := H.u_le_V.trans (ss_V_le_U0 hx1)
+  have hpair := lgr_pairing hx1 hxlt.le H.rho_pos.le hρr hD.1 H.u_ge_34 hu0
+  have hlam : 0 < ssLam H.al H.rho := by
+    unfold ssLam
     have : 0 ≤ H.rho * (H.al ^ 2 - 1) := mul_nonneg H.rho_pos.le (by nlinarith [H.one_le_al])
     positivity
   rw [← H.E_eq] at hE
   rw [H.EL_eq]
-  unfold hsEL
+  unfold ssEL
   rw [← H.E_eq]
-  have : H.E < 2 * H.rho * hsDg H.x H.be H.al * H.u := by linarith
-  have e : 2 * (hsLam H.al H.rho * H.rho * hsDg H.x H.be H.al) * H.u - hsLam H.al H.rho * H.E =
-      hsLam H.al H.rho * (2 * H.rho * hsDg H.x H.be H.al * H.u - H.E) := by ring
+  have : H.E < 2 * H.rho * ssDg H.x H.be H.al * H.u := by linarith
+  have e : 2 * (ssLam H.al H.rho * H.rho * ssDg H.x H.be H.al) * H.u - ssLam H.al H.rho * H.E =
+      ssLam H.al H.rho * (2 * H.rho * ssDg H.x H.be H.al * H.u - H.E) := by ring
   rw [e]
   exact mul_pos hlam (by linarith)
 
-end HsData
+end SmallerShortData
 
-/-- **Gate S0 for the actual window**: `C/a < 12/5`, `D > 0`, `E_L > 0`. -/
-theorem M2Short.hs_S0 (D : M2Short) :
-    D.C / D.a < 12 / 5 ∧ 0 < hsDg (D.C / D.a) (D.B / D.a) (D.A / D.a) ∧ 0 < D.EL := by
-  have h := D.toHs.s0
-  rw [D.toHs_x, D.toHs_be, D.toHs_al, D.toHs_EL] at h
+/-- **The large-ratio bound for the actual window**: `C/a < 12/5`, `D > 0`, `E_L > 0`. -/
+theorem M2Short.ratio_lt_twelve_fifths (D : M2Short) :
+    D.C / D.a < 12 / 5 ∧ 0 < ssDg (D.C / D.a) (D.B / D.a) (D.A / D.a) ∧ 0 < D.EL := by
+  have h := D.toData.ratio_lt_twelve_fifths
+  rw [D.toData_x, D.toData_be, D.toData_al, D.toData_EL] at h
   exact h
 
 end SmoothedOctagon

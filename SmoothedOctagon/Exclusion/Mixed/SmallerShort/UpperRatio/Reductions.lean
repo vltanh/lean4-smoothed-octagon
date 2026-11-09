@@ -1,24 +1,24 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.S2Defs
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.Defs
 
 /-!
-# S2 hand signs: shared reductions
+# Smaller-short window, upper ratio: shared reductions
 
-Shared scalar steps for the hand proofs of the three S2 face signs (`hs2_central_sign`,
-`hs2_outer_sign_small`, `hs2_outer_sign_large`).
+Shared scalar steps for the proofs of the three upper-ratio face signs (`ur_central_sign`,
+`ur_outer_sign_small`, `ur_outer_sign_large`).
 
 ## Main API
 
-* `hl2_strip_c`: the strip coordinate `β = x + c(α - 1)`, `5/8 ≤ c ≤ 7/8`.
-* `hl2_hsF_face`: the face value `hsF` with `ℓ = log(τq/r_A)`, `m = 2 - 7τq/(4r_A)` is
+* `ur_strip_c`: the strip coordinate `β = x + c(α - 1)`, `5/8 ≤ c ≤ 7/8`.
+* `ur_hsF_face`: the face value `ssF` with `ℓ = log(τq/r_A)`, `m = 2 - 7τq/(4r_A)` is
   `G(τ) = (w - 1)τ + 1/τ + c + log(τk) + (2 - 7τk/4)(w - 3/4)`, `k = q/r_A`.
-* `hl2_tau_outer`: for `2 ≤ τ ≤ 1/k`, `G(τ) ≤ max(G(2), G(2) + (1/k - 2)A)`,
+* `ur_tau_outer`: for `2 ≤ τ ≤ 1/k`, `G(τ) ≤ max(G(2), G(2) + (1/k - 2)A)`,
   `A = (1 - 7k/4)(w - 3/4)`.
-* `hl2_le_max_of_deriv2`: a function with nonnegative second derivative on `[a, b]` is at most
+* `ur_le_max_of_deriv2`: a function with nonnegative second derivative on `[a, b]` is at most
   the larger endpoint value.
-* Logarithm bounds: `hl2_log_le_quad` (`log y ≤ (y - 1) - (y - 1)²/2`, `0 < y ≤ 1`),
-  `hl2_log_le_cubic` (`log y ≤ (y - 1) - (y - 1)²/2 + (y - 1)³/3`, `y > 0`).
+* Logarithm bounds: `ur_log_le_quad` (`log y ≤ (y - 1) - (y - 1)²/2`, `0 < y ≤ 1`),
+  `ur_log_le_cubic` (`log y ≤ (y - 1) - (y - 1)²/2 + (y - 1)³/3`, `y > 0`).
 -/
 
 @[expose] public section
@@ -28,7 +28,7 @@ namespace SmoothedOctagon
 open Real Set
 
 /-- The strip coordinate: `β = x + c(α - 1)` with `5/8 ≤ c ≤ 7/8`. -/
-theorem hl2_strip_c {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 < al)
+theorem ur_strip_c {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 < al)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
     ∃ c : ℝ, 5 / 8 ≤ c ∧ c ≤ 7 / 8 ∧ be = x + c * (al - 1) := by
@@ -49,17 +49,17 @@ theorem hl2_strip_c {x al be : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (ha
   · field_simp
     ring
 
-/-- **The face value.** `hsF` with `ℓ = log(τq/r_A)` and `m = 2 - 7τq/(4r_A)` in terms of
+/-- **The face value.** `ssF` with `ℓ = log(τq/r_A)` and `m = 2 - 7τq/(4r_A)` in terms of
 `k = q/r_A`. -/
-theorem hl2_hsF_face (x be al u q τ : ℝ) :
-    hsF x be al u q τ (log (τ * q / hsRA al be)) (2 - 7 * τ * q / (4 * hsRA al be)) =
-      (hsWs x be al u q - 1) * τ + 1 / τ +
-        ((u - 1) / hsRA al be + hsRA al be + 1 - q - hsELs x be al u q) +
-        log (τ * (q / hsRA al be)) +
-          (2 - 7 * τ * (q / hsRA al be) / 4) * (hsWs x be al u q - 3 / 4) := by
-  unfold hsF
+theorem ur_hsF_face (x be al u q τ : ℝ) :
+    ssF x be al u q τ (log (τ * q / ssRA al be)) (2 - 7 * τ * q / (4 * ssRA al be)) =
+      (ssWs x be al u q - 1) * τ + 1 / τ +
+        ((u - 1) / ssRA al be + ssRA al be + 1 - q - ssELs x be al u q) +
+        log (τ * (q / ssRA al be)) +
+          (2 - 7 * τ * (q / ssRA al be) / 4) * (ssWs x be al u q - 3 / 4) := by
+  unfold ssF
   rw [mul_div_assoc τ q]
-  have : 7 * τ * q / (4 * hsRA al be) = 7 * τ * (q / hsRA al be) / 4 := by
+  have : 7 * τ * q / (4 * ssRA al be) = 7 * τ * (q / ssRA al be) / 4 := by
     rw [mul_div_assoc, mul_div_assoc, div_mul_eq_div_div]
     ring
   rw [this]
@@ -67,7 +67,7 @@ theorem hl2_hsF_face (x be al u q τ : ℝ) :
 
 /-- **Duration elimination, outer form**: for `2 ≤ τ ≤ 1/k`,
 `G(τ) ≤ max(G(2), G(2) + (1/k - 2)A)`, `A = (1 - 7k/4)(w - 3/4)`. -/
-theorem hl2_tau_outer {W c k τ : ℝ} (hk : 0 < k) (h2 : 2 ≤ τ) (hτ : τ * k ≤ 1) :
+theorem ur_tau_outer {W c k τ : ℝ} (hk : 0 < k) (h2 : 2 ≤ τ) (hτ : τ * k ≤ 1) :
     (W - 1) * τ + 1 / τ + c + log (τ * k) + (2 - 7 * τ * k / 4) * (W - 3 / 4) ≤
       max ((W - 1) * 2 + 1 / 2 + c + log (2 * k) + (2 - 7 * 2 * k / 4) * (W - 3 / 4))
         ((W - 1) * 2 + 1 / 2 + c + log (2 * k) + (2 - 7 * 2 * k / 4) * (W - 3 / 4) +
@@ -96,7 +96,7 @@ theorem hl2_tau_outer {W c k τ : ℝ} (hk : 0 < k) (h2 : 2 ≤ τ) (hτ : τ * 
 
 /-- **Convexity bound**: a function whose derivative has a nonnegative derivative on `[a, b]` is
 bounded on `[a, b]` by the larger of its two endpoint values. -/
-theorem hl2_le_max_of_deriv2 {f f' f'' : ℝ → ℝ} {a b r : ℝ} (har : a ≤ r) (hrb : r ≤ b)
+theorem ur_le_max_of_deriv2 {f f' f'' : ℝ → ℝ} {a b r : ℝ} (har : a ≤ r) (hrb : r ≤ b)
     (hf : ∀ s ∈ Icc a b, HasDerivAt f (f' s) s) (hf' : ∀ s ∈ Icc a b, HasDerivAt f' (f'' s) s)
     (h2 : ∀ s ∈ Icc a b, 0 ≤ f'' s) : f r ≤ max (f a) (f b) := by
   have hmono : ∀ s t, a ≤ s → s ≤ t → t ≤ b → f' s ≤ f' t := fun s t hs hst ht =>
@@ -114,7 +114,7 @@ theorem hl2_le_max_of_deriv2 {f f' f'' : ℝ → ℝ} {a b r : ℝ} (har : a ≤
 
 /-- `log y ≤ (y - 1) - (y - 1)²/2` for `0 < y ≤ 1` (the difference has derivative
 `-(y - 1)²/y ≤ 0`). -/
-theorem hl2_log_le_quad {y : ℝ} (hy : 0 < y) (hy1 : y ≤ 1) :
+theorem ur_log_le_quad {y : ℝ} (hy : 0 < y) (hy1 : y ≤ 1) :
     log y ≤ (y - 1) - (y - 1) ^ 2 / 2 := by
   have h := ss_le_of_deriv (f := fun s : ℝ => log s - ((s - 1) - (s - 1) ^ 2 / 2))
     (f' := fun s => (s - 1) ^ 2 / s) hy1 (fun s hs => ?_) (fun s hs => by
@@ -135,7 +135,7 @@ theorem hl2_log_le_quad {y : ℝ} (hy : 0 < y) (hy1 : y ≤ 1) :
 
 /-- `log y ≤ (y - 1) - (y - 1)²/2 + (y - 1)³/3` for `y > 0` (the difference has derivative
 `(y - 1)³/y`). -/
-theorem hl2_log_le_cubic {y : ℝ} (hy : 0 < y) :
+theorem ur_log_le_cubic {y : ℝ} (hy : 0 < y) :
     log y ≤ (y - 1) - (y - 1) ^ 2 / 2 + (y - 1) ^ 3 / 3 := by
   have hd : ∀ s : ℝ, 0 < s → HasDerivAt
       (fun s : ℝ => (s - 1) - (s - 1) ^ 2 / 2 + (s - 1) ^ 3 / 3 - log s) ((s - 1) ^ 3 / s) s := by

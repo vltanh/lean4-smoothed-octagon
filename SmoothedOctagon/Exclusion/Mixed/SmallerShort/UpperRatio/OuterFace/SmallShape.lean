@@ -1,21 +1,21 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandSmallLink
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.OuterFace.SmallShape.Terminal
 
 /-!
-# S2 hand signs: the outer face for small `α`
+# Smaller-short window, upper ratio: the outer face for small `α`
 
-`hs2_outer_sign_small_proof` proves the statement of `hs2_outer_sign_small`: the actual shape has
+`ur_outer_sign_small_proof` proves the statement of `ur_outer_sign_small`: the actual shape has
 `a_f(x) = (36x + 25)/84 ≤ α ≤ 3/2` and `5/8 ≤ c ≤ c_+(x) = (24x + 51)/128`; the
 incoming norm `u_s` is raised to `ū = u_s(x, x + c(a_f - 1))`; the fixed-norm reciprocal convexity
-(`S2HandRecip`) bounds each test by its values at `α = 3/2` (the middle terminal of
-`S2HandLarge`, since `ū ≤ u_v`) and at `α = a_f`; there the beta comparison (`S2HandSmallNorm`)
-reaches `c = c_+`, the terminal curve of `S2HandSmallLink`.
+(`OuterFace/Reciprocal`) bounds each test by its values at `α = 3/2` (the middle terminal of
+`OuterFace/LargeShape`, since `ū ≤ u_v`) and at `α = a_f`; there the beta comparison (`SmallShape/Norm`)
+reaches `c = c_+`, the terminal curve of `SmallShape/Terminal`.
 
 ## Main API
 
-* `hl2_af_lt`, `hl2_c_le_cplus`, `hl2_term_x`, `hl2_small_H0`, `hl2_small_H1`.
-* `hs2_outer_sign_small_proof`.
+* `ur_af_lt`, `ur_c_le_cplus`, `ur_term_x`, `ur_small_H0`, `ur_small_H1`.
+* `ur_outer_sign_small_proof`.
 -/
 
 @[expose] public section
@@ -25,7 +25,7 @@ namespace SmoothedOctagon
 open Real Set
 
 /-- `a_f(x) < α` from `x(x + 2) ≤ 6α²`. -/
-theorem hl2_af_lt {x al : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
+theorem ur_af_lt {x al : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al)
     (hqc : x * (x + 2) ≤ 6 * al ^ 2) : (36 * x + 25) / 84 < al := by
   by_contra h
   push Not at h
@@ -34,7 +34,7 @@ theorem hl2_af_lt {x al : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1
 
 /-- `c ≤ c_+(x) = (24x + 51)/128`, from `β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)` and
 `x(7x + 1)/(4x² + 11x + 1) ≤ c_+(x)` on `[13/6, 12/5]`. -/
-theorem hl2_c_le_cplus {x al be c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 < al)
+theorem ur_c_le_cplus {x al be c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 < al)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1))
     (hbe : be = x + c * (al - 1)) : c ≤ (24 * x + 51) / 128 := by
   have ha : 0 < al - 1 := by linarith
@@ -50,156 +50,156 @@ theorem hl2_c_le_cplus {x al be c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5
       mul_nonneg (mul_nonneg (sub_nonneg.2 hx) (sub_nonneg.2 hx)) (sub_nonneg.2 hx)]
   linarith
 
-/-- The terminal curve in the leaf's coordinates. -/
-theorem hl2_term_x {x : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) :
-    hl2H0 x ((24 * x + 51) / 128) (hsUs x (x + (24 * x + 51) / 128 * ((36 * x + 25) / 84 - 1)))
+/-- The terminal curve in the coordinates of the face sign. -/
+theorem ur_term_x {x : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) :
+    urH0 x ((24 * x + 51) / 128) (ssUs x (x + (24 * x + 51) / 128 * ((36 * x + 25) / 84 - 1)))
         (84 / (36 * x + 25)) < 0 ∧
-      hl2H1 x ((24 * x + 51) / 128) (hsUs x (x + (24 * x + 51) / 128 * ((36 * x + 25) / 84 - 1)))
+      urH1 x ((24 * x + 51) / 128) (ssUs x (x + (24 * x + 51) / 128 * ((36 * x + 25) / 84 - 1)))
         (84 / (36 * x + 25)) < 0 := by
-  obtain ⟨hr1, hr2, -⟩ := hl2_rf hx hx2
-  have key := hl2_term_r hr1 hr2
+  obtain ⟨hr1, hr2, -⟩ := ur_rf hx hx2
+  have key := ur_term_r hr1 hr2
   have hA : 0 < 36 * x + 25 := by linarith
   rw [show 7 / (3 * (84 / (36 * x + 25))) - 25 / 36 = x by field_simp; ring,
     show 1 / (84 / (36 * x + 25)) - 1 = (36 * x + 25) / 84 - 1 by field_simp] at key
   exact key
 
 /-- `5/2 < Z < 19/6` on the smaller rectangle. -/
-theorem hl2_Z_small {x c r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
+theorem ur_Z_small {x c r : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5) (hc : 5 / 8 ≤ c)
     (hc2 : c ≤ 7 / 8) (hr : 2 / 3 ≤ r) (hr2 : r ≤ 5 / 6) :
-    5 / 2 < hl2Zr x c r ∧ hl2Zr x c r < 19 / 6 := by
-  unfold hl2Zr; constructor <;> nlinarith
+    5 / 2 < urZr x c r ∧ urZr x c r < 19 / 6 := by
+  unfold urZr; constructor <;> nlinarith
 
 /-- The small-shape sign for `H₀`: raise the norm to `ū`, use convexity in `r` at fixed `ū`, the
 middle shape `α = 3/2`, and at `α = a_f` the beta comparison up to the terminal curve. -/
-theorem hl2_small_H0 {x al c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
+theorem ur_small_H0 {x al c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
     (haf : (36 * x + 25) / 84 ≤ al) (hal' : al ≤ 3 / 2) (hc : 5 / 8 ≤ c)
-    (hcp : c ≤ (24 * x + 51) / 128) : hl2H0 x c (hsUs x (x + c * (al - 1))) (1 / al) < 0 := by
+    (hcp : c ≤ (24 * x + 51) / 128) : urH0 x c (ssUs x (x + c * (al - 1))) (1 / al) < 0 := by
   have hc2 : c ≤ 7 / 8 := by linarith
   have hcp2 : (24 * x + 51) / 128 ≤ 7 / 8 := by linarith
-  obtain ⟨hr1, hr2, -⟩ := hl2_rf hx hx2
+  obtain ⟨hr1, hr2, -⟩ := ur_rf hx hx2
   have hal0 : 0 < al := by linarith
   have hA : 0 < 36 * x + 25 := by linarith
   have hr : 2 / 3 ≤ 1 / al := by rw [le_div_iff₀ hal0]; linarith
   have hrf : 1 / al ≤ 84 / (36 * x + 25) := by
     rw [div_le_div_iff₀ hal0 hA]; linarith
   have hx3 : 1 / x ≤ 2 / 3 := by rw [div_le_iff₀ (by linarith)]; linarith
-  set ub := hsUs x (x + c * ((36 * x + 25) / 84 - 1)) with hub
+  set ub := ssUs x (x + c * ((36 * x + 25) / 84 - 1)) with hub
   -- the fixed norm `ū`
   have hb0 : x ≤ x + c * ((36 * x + 25) / 84 - 1) := by nlinarith
   have hbb : x + c * ((36 * x + 25) / 84 - 1) ≤ x + c * (al - 1) := by nlinarith
-  obtain ⟨hule, -⟩ := hl2_Us_lip hx hx2 hb0 hbb
-  have hub1 : ub ≤ hsVbar x := hl2_ubar_le hx hx2 hc
-  have hub2 := (hl2_Vbar_le hx hx2).2
+  obtain ⟨hule, -⟩ := ur_Us_lip hx hx2 hb0 hbb
+  have hub1 : ub ≤ ssVbar x := ur_ubar_le hx hx2 hc
+  have hub2 := (ur_Vbar_le hx hx2).2
   have hub0 : 3 / 4 ≤ ub := by
     have hb1 : 0 < x + c * ((36 * x + 25) / 84 - 1) - 1 := by linarith
-    rw [hub, hl2_Us_eq hb1.ne']
-    have := (hl2_kx_bounds hx hx2).1
-    have : 0 ≤ hl2kx x / (x + c * ((36 * x + 25) / 84 - 1) - 1) := by positivity
+    rw [hub, ur_Us_eq hb1.ne']
+    have := (ur_kx_bounds hx hx2).1
+    have : 0 ≤ urkx x / (x + c * ((36 * x + 25) / 84 - 1) - 1) := by positivity
     linarith
   -- step A: raise the norm to `ū`
-  have hZ := hl2_Z_small hx hx2 hc hc2 hr (by linarith)
-  obtain ⟨hHu, -⟩ := hl2_Hu_pos (m := 4 - hl2Zr x c (1 / al) / 2) hx hx2 hc hc2 hr
+  have hZ := ur_Z_small hx hx2 hc hc2 hr (by linarith)
+  obtain ⟨hHu, -⟩ := ur_Hu_pos (m := 4 - urZr x c (1 / al) / 2) hx hx2 hc hc2 hr
     (by linarith) (by linarith) (by linarith)
-  have sA := hl2_Ht_u (4 - hl2Zr x c (1 / al) / 2) x c (hsUs x (x + c * (al - 1))) ub (1 / al)
-  have hA' : hl2H0 x c (hsUs x (x + c * (al - 1))) (1 / al) ≤ hl2H0 x c ub (1 / al) := by
-    unfold hl2H0
-    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ ub - hsUs x (x + c * (al - 1))) hHu.le]
+  have sA := ur_Ht_u (4 - urZr x c (1 / al) / 2) x c (ssUs x (x + c * (al - 1))) ub (1 / al)
+  have hA' : urH0 x c (ssUs x (x + c * (al - 1))) (1 / al) ≤ urH0 x c ub (1 / al) := by
+    unfold urH0
+    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ ub - ssUs x (x + c * (al - 1))) hHu.le]
   -- step B: convexity at fixed `ū`
-  have sB := hl2_H0_le_max hx hx2 hc hc2 hub0 (by linarith) hx3 hr hrf (by linarith)
+  have sB := ur_H0_le_max hx hx2 hc hc2 hub0 (by linarith) hx3 hr hrf (by linarith)
   -- step C: the middle shape
-  have hZm := hl2_Z_small hx hx2 hc hc2 (le_refl (2 / 3 : ℝ)) (by norm_num)
-  obtain ⟨hHum, -⟩ := hl2_Hu_pos (m := 4 - hl2Zr x c (2 / 3) / 2) hx hx2 hc hc2
+  have hZm := ur_Z_small hx hx2 hc hc2 (le_refl (2 / 3 : ℝ)) (by norm_num)
+  obtain ⟨hHum, -⟩ := ur_Hu_pos (m := 4 - urZr x c (2 / 3) / 2) hx hx2 hc hc2
     (le_refl (2 / 3 : ℝ)) (by norm_num) (by linarith) (by linarith)
-  have sC := hl2_Ht_u (4 - hl2Zr x c (2 / 3) / 2) x c ub (hsVbar x) (2 / 3)
-  have hmid : hl2H0 x c ub (2 / 3) < 0 := by
-    have := hl2_mid_H0 hx hx2 hc hc2
-    unfold hl2H0 at this ⊢
-    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ hsVbar x - ub) hHum.le]
+  have sC := ur_Ht_u (4 - urZr x c (2 / 3) / 2) x c ub (ssVbar x) (2 / 3)
+  have hmid : urH0 x c ub (2 / 3) < 0 := by
+    have := ur_mid_H0 hx hx2 hc hc2
+    unfold urH0 at this ⊢
+    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ ssVbar x - ub) hHum.le]
   -- step D: the beta comparison and the terminal
-  have sD := hl2_beta_H0 hx hx2 hc hcp hcp2
-  have sE := (hl2_term_x hx hx2).1
+  have sD := ur_beta_H0 hx hx2 hc hcp hcp2
+  have sE := (ur_term_x hx hx2).1
   rw [← hub] at sD
   exact lt_of_le_of_lt hA' (lt_of_le_of_lt sB (max_lt hmid (lt_of_le_of_lt sD sE)))
 
 /-- The small-shape sign for `H₁`, by the same four steps. -/
-theorem hl2_small_H1 {x al c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
+theorem ur_small_H1 {x al c : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
     (haf : (36 * x + 25) / 84 ≤ al) (hal' : al ≤ 3 / 2) (hc : 5 / 8 ≤ c)
-    (hcp : c ≤ (24 * x + 51) / 128) : hl2H1 x c (hsUs x (x + c * (al - 1))) (1 / al) < 0 := by
+    (hcp : c ≤ (24 * x + 51) / 128) : urH1 x c (ssUs x (x + c * (al - 1))) (1 / al) < 0 := by
   have hc2 : c ≤ 7 / 8 := by linarith
   have hcp2 : (24 * x + 51) / 128 ≤ 7 / 8 := by linarith
-  obtain ⟨hr1, hr2, -⟩ := hl2_rf hx hx2
+  obtain ⟨hr1, hr2, -⟩ := ur_rf hx hx2
   have hal0 : 0 < al := by linarith
   have hA : 0 < 36 * x + 25 := by linarith
   have hr : 2 / 3 ≤ 1 / al := by rw [le_div_iff₀ hal0]; linarith
   have hrf : 1 / al ≤ 84 / (36 * x + 25) := by
     rw [div_le_div_iff₀ hal0 hA]; linarith
   have hx3 : 1 / x ≤ 2 / 3 := by rw [div_le_iff₀ (by linarith)]; linarith
-  set ub := hsUs x (x + c * ((36 * x + 25) / 84 - 1)) with hub
+  set ub := ssUs x (x + c * ((36 * x + 25) / 84 - 1)) with hub
   have hb0 : x ≤ x + c * ((36 * x + 25) / 84 - 1) := by nlinarith
   have hbb : x + c * ((36 * x + 25) / 84 - 1) ≤ x + c * (al - 1) := by nlinarith
-  obtain ⟨hule, -⟩ := hl2_Us_lip hx hx2 hb0 hbb
-  have hub1 : ub ≤ hsVbar x := hl2_ubar_le hx hx2 hc
-  have hub2 := (hl2_Vbar_le hx hx2).2
+  obtain ⟨hule, -⟩ := ur_Us_lip hx hx2 hb0 hbb
+  have hub1 : ub ≤ ssVbar x := ur_ubar_le hx hx2 hc
+  have hub2 := (ur_Vbar_le hx hx2).2
   have hub0 : 3 / 4 ≤ ub := by
     have hb1 : 0 < x + c * ((36 * x + 25) / 84 - 1) - 1 := by linarith
-    rw [hub, hl2_Us_eq hb1.ne']
-    have := (hl2_kx_bounds hx hx2).1
-    have : 0 ≤ hl2kx x / (x + c * ((36 * x + 25) / 84 - 1) - 1) := by positivity
+    rw [hub, ur_Us_eq hb1.ne']
+    have := (ur_kx_bounds hx hx2).1
+    have : 0 ≤ urkx x / (x + c * ((36 * x + 25) / 84 - 1) - 1) := by positivity
     linarith
-  have hZ := hl2_Z_small hx hx2 hc hc2 hr (by linarith)
-  have hm1 : 7 / hl2Zr x c (1 / al) + 1 / 4 ≤ 13 / 4 := by
-    have : 7 / hl2Zr x c (1 / al) ≤ 3 := by rw [div_le_iff₀ (by linarith)]; linarith
+  have hZ := ur_Z_small hx hx2 hc hc2 hr (by linarith)
+  have hm1 : 7 / urZr x c (1 / al) + 1 / 4 ≤ 13 / 4 := by
+    have : 7 / urZr x c (1 / al) ≤ 3 := by rw [div_le_iff₀ (by linarith)]; linarith
     linarith
-  obtain ⟨hHu, -⟩ := hl2_Hu_pos (m := 7 / hl2Zr x c (1 / al) + 1 / 4) hx hx2 hc hc2 hr
-    (by linarith) (by have : 0 < 7 / hl2Zr x c (1 / al) := div_pos (by norm_num) (by linarith)
+  obtain ⟨hHu, -⟩ := ur_Hu_pos (m := 7 / urZr x c (1 / al) + 1 / 4) hx hx2 hc hc2 hr
+    (by linarith) (by have : 0 < 7 / urZr x c (1 / al) := div_pos (by norm_num) (by linarith)
                       linarith) hm1
-  have sA := hl2_Ht_u (7 / hl2Zr x c (1 / al) + 1 / 4) x c (hsUs x (x + c * (al - 1))) ub (1 / al)
-  have hA' : hl2H1 x c (hsUs x (x + c * (al - 1))) (1 / al) ≤ hl2H1 x c ub (1 / al) := by
-    unfold hl2H1
-    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ ub - hsUs x (x + c * (al - 1))) hHu.le]
-  have sB := hl2_H1_le_max hx hx2 hc hc2 hub0 (by linarith) hx3 hr hrf (by linarith)
-  have hZm := hl2_Z_small hx hx2 hc hc2 (le_refl (2 / 3 : ℝ)) (by norm_num)
-  have hm1' : 7 / hl2Zr x c (2 / 3) + 1 / 4 ≤ 13 / 4 := by
-    have : 7 / hl2Zr x c (2 / 3) ≤ 3 := by rw [div_le_iff₀ (by linarith)]; linarith
+  have sA := ur_Ht_u (7 / urZr x c (1 / al) + 1 / 4) x c (ssUs x (x + c * (al - 1))) ub (1 / al)
+  have hA' : urH1 x c (ssUs x (x + c * (al - 1))) (1 / al) ≤ urH1 x c ub (1 / al) := by
+    unfold urH1
+    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ ub - ssUs x (x + c * (al - 1))) hHu.le]
+  have sB := ur_H1_le_max hx hx2 hc hc2 hub0 (by linarith) hx3 hr hrf (by linarith)
+  have hZm := ur_Z_small hx hx2 hc hc2 (le_refl (2 / 3 : ℝ)) (by norm_num)
+  have hm1' : 7 / urZr x c (2 / 3) + 1 / 4 ≤ 13 / 4 := by
+    have : 7 / urZr x c (2 / 3) ≤ 3 := by rw [div_le_iff₀ (by linarith)]; linarith
     linarith
-  obtain ⟨hHum, -⟩ := hl2_Hu_pos (m := 7 / hl2Zr x c (2 / 3) + 1 / 4) hx hx2 hc hc2
+  obtain ⟨hHum, -⟩ := ur_Hu_pos (m := 7 / urZr x c (2 / 3) + 1 / 4) hx hx2 hc hc2
     (le_refl (2 / 3 : ℝ)) (by norm_num)
-    (by have : 0 < 7 / hl2Zr x c (2 / 3) := div_pos (by norm_num) (by linarith)
+    (by have : 0 < 7 / urZr x c (2 / 3) := div_pos (by norm_num) (by linarith)
         linarith) hm1'
-  have sC := hl2_Ht_u (7 / hl2Zr x c (2 / 3) + 1 / 4) x c ub (hsVbar x) (2 / 3)
-  have hmid : hl2H1 x c ub (2 / 3) < 0 := by
-    have := hl2_mid_H1 hx hx2 hc hc2
-    unfold hl2H1 at this ⊢
-    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ hsVbar x - ub) hHum.le]
-  have sD := hl2_beta_H1 hx hx2 hc hcp hcp2
-  have sE := (hl2_term_x hx hx2).2
+  have sC := ur_Ht_u (7 / urZr x c (2 / 3) + 1 / 4) x c ub (ssVbar x) (2 / 3)
+  have hmid : urH1 x c ub (2 / 3) < 0 := by
+    have := ur_mid_H1 hx hx2 hc hc2
+    unfold urH1 at this ⊢
+    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ ssVbar x - ub) hHum.le]
+  have sD := ur_beta_H1 hx hx2 hc hcp hcp2
+  have sE := (ur_term_x hx hx2).2
   rw [← hub] at sD
   exact lt_of_le_of_lt hA' (lt_of_le_of_lt sB (max_lt hmid (lt_of_le_of_lt sD sE)))
 
-/-- **The outer sharp-ratio face, small `α`** (the statement of `hs2_outer_sign_small`). -/
-theorem hs2_outer_sign_small_proof {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
+/-- **The outer sharp-ratio face, small `α`** (the statement of `ur_outer_sign_small`). -/
+theorem ur_outer_sign_small_proof {x al be τ : ℝ} (hx : 13 / 6 ≤ x) (hx2 : x ≤ 12 / 5)
     (hal : 1 ≤ al) (hal' : al ≤ 3 / 2) (_hax : al ≤ x) (hqc : x * (x + 2) ≤ 6 * al ^ 2)
     (hb : x + 8 * x * (al - 1) / (9 * x + 8) ≤ be)
     (hb' : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) (hτ : 2 ≤ τ)
-    (hτT : τ ≤ 7 * hsRA al be) :
-    hsF x be al (hsUs x be) (1 / 7) τ (log (τ * (1 / 7) / hsRA al be))
-      (2 - 7 * τ * (1 / 7) / (4 * hsRA al be)) < 0 := by
-  have haf := hl2_af_lt hx hx2 hal hqc
+    (hτT : τ ≤ 7 * ssRA al be) :
+    ssF x be al (ssUs x be) (1 / 7) τ (log (τ * (1 / 7) / ssRA al be))
+      (2 - 7 * τ * (1 / 7) / (4 * ssRA al be)) < 0 := by
+  have haf := ur_af_lt hx hx2 hal hqc
   have hal1 : 1 < al := by linarith
-  obtain ⟨c, hc1, hc2, hbe⟩ := hl2_strip_c hx hx2 hal1 hb hb'
-  have hcp := hl2_c_le_cplus hx hx2 hal1 hb' hbe
+  obtain ⟨c, hc1, hc2, hbe⟩ := ur_strip_c hx hx2 hal1 hb hb'
+  have hcp := ur_c_le_cplus hx hx2 hal1 hb' hbe
   have hal0 : 0 < al := by linarith
   have hB : 0 < al + be := by rw [hbe]; nlinarith
-  have hrA : 0 < hsRA al be := by unfold hsRA; positivity
-  have hk : 0 < 1 / 7 / hsRA al be := by positivity
-  have hτk : τ * (1 / 7 / hsRA al be) ≤ 1 := by
+  have hrA : 0 < ssRA al be := by unfold ssRA; positivity
+  have hk : 0 < 1 / 7 / ssRA al be := by positivity
+  have hτk : τ * (1 / 7 / ssRA al be) ≤ 1 := by
     rw [mul_div_assoc', div_le_one hrA]
     linarith
-  rw [hl2_hsF_face]
-  refine lt_of_le_of_lt (hl2_tau_outer hk hτ hτk) (max_lt ?_ ?_)
-  · rw [hl2_face_H0 hal0 hbe hB, hbe]
-    exact hl2_small_H0 hx hx2 haf.le hal' hc1 hcp
-  · rw [hl2_face_H1 hal0 hbe hB, hbe]
-    exact hl2_small_H1 hx hx2 haf.le hal' hc1 hcp
+  rw [ur_hsF_face]
+  refine lt_of_le_of_lt (ur_tau_outer hk hτ hτk) (max_lt ?_ ?_)
+  · rw [ur_face_H0 hal0 hbe hB, hbe]
+    exact ur_small_H0 hx hx2 haf.le hal' hc1 hcp
+  · rw [ur_face_H1 hal0 hbe hB, hbe]
+    exact ur_small_H1 hx hx2 haf.le hal' hc1 hcp
 
 end SmoothedOctagon

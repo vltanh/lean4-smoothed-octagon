@@ -1,39 +1,39 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Hand.Link
-public import SmoothedOctagon.Exclusion.Mixed.Hand.Gap
-public import SmoothedOctagon.Exclusion.Mixed.Hand.HighT
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.WindowData
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.CentreGap
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.HighRatio
 
 /-!
-# Case M2 by hand: necessary bounds of an actual window
+# Case M2, reverse successor: necessary bounds of an actual window
 
-The three actual-window bounds used by the hand exclusions, and their normalized forms
-(proved in `Hand/Gap`, `Hand/HighT`, `Hand/Scale`).
+The three actual-window bounds used by the exclusions of both successors, and their normalized forms
+(proved in `Nonshort/Reverse/CentreGap`, `Nonshort/Reverse/HighRatio`, `Nonshort/Reverse/CentralScale`).
 
-* `nh_centre_gap`: `d² + 2cd > 4` (Lemma 2 of `Hand/Gap`), i.e. `k < 2t + 2x + x²`
-  (`nh_centre_gap_k`).
-* `nh_high_t`: `t = a/(a + c) < 2/5` (the high-ratio exclusion of `Hand/HighT`).
-* `nh_scale_lt`: `a < 4/5` (the conditional scale bound of `Hand/Scale`), i.e. `k > 29t²/4`
-  (`nh_scale_k`).
+* `nsr_centre_gap`: `d² + 2cd > 4` (Lemma 2 of `Nonshort/Reverse/CentreGap`), i.e. `k < 2t + 2x + x²`
+  (`nsr_centre_gap_k`).
+* `nsr_high_t`: `t = a/(a + c) < 2/5` (the high-ratio exclusion of `Nonshort/Reverse/HighRatio`).
+* `nsr_scale_lt`: `a < 4/5` (the conditional scale bound of `Nonshort/Reverse/CentralScale`), i.e. `k > 29t²/4`
+  (`nsr_scale_k`).
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
 
-/-- **The centre gap** `d² + 2cd > 4` (`nh_centre_gap'`). -/
-theorem nh_centre_gap (W : M2Window) : 4 < W.d ^ 2 + 2 * W.c * W.d := nh_centre_gap' W
+/-- **The centre gap** `d² + 2cd > 4` (`nsr_centre_gap'`). -/
+theorem nsr_centre_gap (W : M2Window) : 4 < W.d ^ 2 + 2 * W.c * W.d := nsr_centre_gap' W
 
-/-- **The high-ratio exclusion** `t < 2/5` (`nh_high_t'`). -/
-theorem nh_high_t (W : M2Window) : W.nt < 2 / 5 := nh_high_t' W
+/-- **The high-ratio exclusion** `t < 2/5` (`nsr_high_t'`). -/
+theorem nsr_high_t (W : M2Window) : W.nt < 2 / 5 := nsr_high_t' W
 
-/-- **The nonshort scale** `a < 4/5` (the conditional scale bound `nh_scale_of_t` with
-`nh_high_t`). -/
-theorem nh_scale_lt (W : M2Window) : W.a < 4 / 5 := nh_scale_of_t W (nh_high_t' W).le
+/-- **The nonshort scale** `a < 4/5` (the conditional scale bound `nsr_scale_of_t` with
+`nsr_high_t`). -/
+theorem nsr_scale_lt (W : M2Window) : W.a < 4 / 5 := nsr_scale_of_t W (nsr_high_t' W).le
 
 /-- The centre gap in normalized form: `k < 2t + 2x + x²`. -/
-theorem nh_centre_gap_k (W : M2Window) : W.nk < 2 * W.nt + 2 * W.nx + W.nx ^ 2 := by
-  have h := nh_centre_gap W
+theorem nsr_centre_gap_k (W : M2Window) : W.nk < 2 * W.nt + 2 * W.nx + W.nx ^ 2 := by
+  have h := nsr_centre_gap W
   have hT : 0 < W.a + W.c := by linarith [W.a_pos, W.a_lt_c]
   unfold M2Window.nk M2Window.nt M2Window.nx
   rw [div_lt_iff₀ (by positivity)]
@@ -41,8 +41,8 @@ theorem nh_centre_gap_k (W : M2Window) : W.nk < 2 * W.nt + 2 * W.nx + W.nx ^ 2 :
   nlinarith
 
 /-- The scale in normalized form: `k > 29t²/4`. -/
-theorem nh_scale_k (W : M2Window) : 29 / 4 * W.nt ^ 2 < W.nk := by
-  have h := nh_scale_lt W
+theorem nsr_scale_k (W : M2Window) : 29 / 4 * W.nt ^ 2 < W.nk := by
+  have h := nsr_scale_lt W
   have ha := W.a_pos
   have hT : 0 < W.a + W.c := by linarith [W.a_lt_c]
   unfold M2Window.nk M2Window.nt

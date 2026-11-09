@@ -473,7 +473,7 @@ lemma cls_good_piece₂ {W : ℝ} (hW1 : 1 ≤ W) (hW2 : W ≤ √2) : ClsGood !
   have h2 := cls_sqrt2_sq
   have ha := cls_sqrt2_gt
   have hb := cls_sqrt2_lt'
-  have hsW : √2 ≤ √2 * W := by nlinarith
+  have ssW : √2 ≤ √2 * W := by nlinarith
   have hsW2 : √2 * W ≤ 2 := by nlinarith
   refine ⟨?_, fun μ hμ hmem ↦ ?_⟩
   · rw [cls_mem_iff]

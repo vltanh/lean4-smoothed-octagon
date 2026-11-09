@@ -12,11 +12,11 @@ The analytic half of the switch count (`Reduction/SwitchCount.lean`).
 
 Main API:
 
-* `qrsb_singularGapSq_pos`: under the clearance `‖𝒫‖² ≤ 251² Q²`, nontriviality gives `Q(t) > 0`.
-* `qrsb_exists_excluded_vertex`: if the costate is off the singular locus at `t₀` (`Q(t₀) > 0`),
+* `switch_singularGapSq_pos`: under the clearance `‖𝒫‖² ≤ 251² Q²`, nontriviality gives `Q(t) > 0`.
+* `switch_exists_excluded_vertex`: if the costate is off the singular locus at `t₀` (`Q(t₀) > 0`),
   there are `δ > 0` and vertices `j`, `k` with `H_j < 0` on `(t₀, t₀ + δ)` and `H_k < 0` on
   `(t₀ - δ, t₀)` (within `[0, T]`).
-* `qrsb_ae_coord_eq_zero`: where a vertex Hamiltonian is negative, that control coordinate
+* `switch_ae_coord_eq_zero`: where a vertex Hamiltonian is negative, that control coordinate
   vanishes a.e.
 -/
 
@@ -263,7 +263,7 @@ private theorem eq_zero_of_commutator_eq_zero {X A : Mat2} (hXtr : X.trace = 0)
 
 /-- Under the clearance `‖𝒫‖² ≤ 251² Q²`, the nontriviality of the costate gives `Q > 0`: the
 costate is off the singular locus. -/
-theorem qrsb_singularGapSq_pos {lam : ℝ} {Λ₁ ΛR : Mat2} (hnt : lam ≠ 0 ∨ Λ₁ ≠ 0 ∨ ΛR ≠ 0)
+theorem switch_singularGapSq_pos {lam : ℝ} {Λ₁ ΛR : Mat2} (hnt : lam ≠ 0 ∨ Λ₁ ≠ 0 ∨ ΛR ≠ 0)
     (hclear : covectorNormSq lam Λ₁ ΛR ≤ 251 ^ 2 * singularGapSq lam Λ₁ ΛR) :
     0 < singularGapSq lam Λ₁ ΛR := by
   have hpos : 0 < covectorNormSq lam Λ₁ ΛR := by
@@ -284,7 +284,7 @@ theorem qrsb_singularGapSq_pos {lam : ℝ} {Λ₁ ΛR : Mat2} (hnt : lam ≠ 0 �
 
 /-- Where the vertex Hamiltonian `H_j` is negative, the control coordinate `u_j` vanishes
 almost everywhere (`maximizing_control_support`). -/
-theorem qrsb_ae_coord_eq_zero {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2} {lam : ℝ}
+theorem switch_ae_coord_eq_zero {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2} {lam : ℝ}
     (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) {a b : ℝ} (ha : 0 ≤ a) (hb : b ≤ T)
     {j : Fin 3} (hj : ∀ t ∈ Ioo a b, hamiltonian lam (Λ₁ t) (ΛR t) (X t) (vertex j) < 0) :
     ∀ᵐ t, t ∈ Ioo a b → u t j = 0 := by
@@ -316,7 +316,7 @@ at `t₀` from positive to negative.
 
 The sign change at a tie comes from the first-order expansion `Λ_R(t) = (t - t₀) b + o(t - t₀)`.
 -/
-theorem qrsb_exists_excluded_vertex {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
+theorem switch_exists_excluded_vertex {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
     {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hK : ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t)) {t₀ : ℝ} (ht₀ : t₀ ∈ Icc 0 T)
     (hQ : 0 < singularGapSq lam (Λ₁ t₀) (ΛR t₀)) :

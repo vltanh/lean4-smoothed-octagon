@@ -5,25 +5,25 @@ public import Mathlib.Analysis.SpecialFunctions.Log.Deriv
 public import Mathlib.Analysis.Calculus.Deriv.MeanValue
 
 /-!
-# Case M2 by hand: the normalized incident-upper residual
+# Case M2, reverse successor: the normalized incident-upper residual
 
 The normalized residual of a smaller-nonshort window: in the coordinates `t = a/T`,
 `x = (d - a)/T`, `k = K/T²`, `q = WZ/Q` (`T = a + c`), with `W = 1 + x`, `X = x + 2`, `p = t + x`,
 `Y = x X`, `B = k + 2tx + x²`, the residual `R = R_d(U*; b*)/T` and its positive multiple
-`N = tBqW R`. `N` is a polynomial in `t, x, k, q, v` and `L = log q` (`nhN`; its identity with the
-window residual is `nh_link_N` in `Hand/Link`), affine in `k`, `v` and `L`.
+`N = tBqW R`. `N` is a polynomial in `t, x, k, q, v` and `L = log q` (`nsrN`; its identity with the
+window residual is `nsr_link_N` in `Nonshort/Reverse/WindowData`), affine in `k`, `v` and `L`.
 
 ## Main API
 
-* `nhN t x k q v L`; its `v`-, `L`- and `k`-coefficients `nhNv`, `nhNL`, `nhA`, and the affine
-  identities `nhN_sub_v`, `nhN_sub_L`, `nhN_sub_k`.
-* `nhA_pos`, `nhN_mono_k`: **shape monotonicity**: `N` is strictly increasing in `k` when
+* `nsrN t x k q v L`; its `v`-, `L`- and `k`-coefficients `nsrNv`, `nsrNL`, `nsrA`, and the affine
+  identities `nsrN_sub_v`, `nsrN_sub_L`, `nsrN_sub_k`.
+* `nsrA_pos`, `nsrN_mono_k`: **shape monotonicity**: `N` is strictly increasing in `k` when
   `v ≤ U(t)` and `L < q - 1`.
-* `nhNv_nonpos`, `nhNL_nonpos`: the signs of the `v`- and `log q`-coefficients.
-* The rational relaxations: `nhVbar` (`v̄`), `nhLp` (`L₊`), `nhFl` (`F_ℓ`), `nhSecN` (the exact
-  normalized secant); `nh_log_one_add_gt`, `nh_log_lt_Lp`, `nh_secN_lt_vbar`, `nh_m2F_gt_Fl`.
-* `nh_N_pos_of_relax`: the comparison `N ≥ N̄ ≥ N̄ - m (v̄ - F_ℓ)` used by every hand sign.
-* `nh_strictMonoOn_Ici`: strict monotonicity from a positive derivative on `[a, ∞)`.
+* `nsrNv_nonpos`, `nsrNL_nonpos`: the signs of the `v`- and `log q`-coefficients.
+* The rational relaxations: `nsrVbar` (`v̄`), `nsrLp` (`L₊`), `nsrFl` (`F_ℓ`), `nsrSecN` (the exact
+  normalized secant); `nsr_log_one_add_gt`, `nsr_log_lt_Lp`, `nsr_secN_lt_vbar`, `nsr_m2F_gt_Fl`.
+* `nsr_N_pos_of_relax`: the comparison `N ≥ N̄ ≥ N̄ - m (v̄ - F_ℓ)` used by every sign.
+* `nsr_strictMonoOn_Ici`: strict monotonicity from a positive derivative on `[a, ∞)`.
 -/
 
 @[expose] public section
@@ -32,7 +32,7 @@ namespace SmoothedOctagon
 
 /-- **The normalized residual** `N = tBqW R`, as a polynomial in `t, x, k, q, v` and
 `L = log q`. -/
-noncomputable def nhN (t x k q v L : ℝ) : ℝ :=
+noncomputable def nsrN (t x k q v L : ℝ) : ℝ :=
   -t * (t + x) ^ 2 * (1 + x) ^ 2
     - t * (2 * t ^ 3 * x + 5 * t ^ 2 * x ^ 2 - 2 * t ^ 2 * x - 2 * t ^ 2 + 2 * t * x ^ 3
       - 6 * t * x ^ 2 - 4 * t * x - 2 * x ^ 3 - x ^ 2) * q
@@ -49,38 +49,38 @@ noncomputable def nhN (t x k q v L : ℝ) : ℝ :=
 
 /-- The coefficient of `v` in `N`: `N_v = -xqI`,
 `I = k + tx + tW(k - 2t) + (q - 1)(kX + txX²)`. -/
-noncomputable def nhNv (t x k q : ℝ) : ℝ :=
+noncomputable def nsrNv (t x k q : ℝ) : ℝ :=
   -(x * q * (k + t * x + t * (1 + x) * (k - 2 * t)
     + (q - 1) * (k * (x + 2) + t * x * (x + 2) ^ 2)))
 
 /-- The coefficient of `L = log q` in `N`: `-tpqWB`. -/
-noncomputable def nhNL (t x k q : ℝ) : ℝ :=
+noncomputable def nsrNL (t x k q : ℝ) : ℝ :=
   -(q * t * (t + x) * (1 + x) * (k + 2 * t * x + x ^ 2))
 
 /-- The coefficient `A` of `k` in `N`. -/
-noncomputable def nhA (t x q v L : ℝ) : ℝ :=
+noncomputable def nsrA (t x q v L : ℝ) : ℝ :=
   (t ^ 3 * x + t ^ 2 * x ^ 2 - 2 * t ^ 2 * x - t ^ 2 - t * x ^ 2 - x ^ 2 - x) * q
     + (-t ^ 2 * x ^ 2 + 2 * t ^ 2 * x + t ^ 2 + 2 * t * x ^ 2 + x ^ 2 + 2 * x) * q ^ 2
     - t * (t + x) * (1 + x) * L * q
     + x * (1 - t) * (1 + x) * v * q
     - x * (x + 2) * v * q ^ 2
 
-theorem nhN_sub_v (t x k q v v' L : ℝ) :
-    nhN t x k q v L = nhN t x k q v' L + (v - v') * nhNv t x k q := by
-  unfold nhN nhNv; ring
+theorem nsrN_sub_v (t x k q v v' L : ℝ) :
+    nsrN t x k q v L = nsrN t x k q v' L + (v - v') * nsrNv t x k q := by
+  unfold nsrN nsrNv; ring
 
-theorem nhN_sub_L (t x k q v L L' : ℝ) :
-    nhN t x k q v L = nhN t x k q v L' + (L - L') * nhNL t x k q := by
-  unfold nhN nhNL; ring
+theorem nsrN_sub_L (t x k q v L L' : ℝ) :
+    nsrN t x k q v L = nsrN t x k q v L' + (L - L') * nsrNL t x k q := by
+  unfold nsrN nsrNL; ring
 
-theorem nhN_sub_k (t x k k' q v L : ℝ) :
-    nhN t x k q v L = nhN t x k' q v L + (k - k') * nhA t x q v L := by
-  unfold nhN nhA; ring
+theorem nsrN_sub_k (t x k k' q v L : ℝ) :
+    nsrN t x k q v L = nsrN t x k' q v L + (k - k') * nsrA t x q v L := by
+  unfold nsrN nsrA; ring
 
 /-- The `v`-coefficient is negative when `k ≥ 2t`. -/
-theorem nhNv_nonpos {t x k q : ℝ} (ht : 0 ≤ t) (hx : 0 ≤ x) (hq : 1 ≤ q) (hk : 2 * t ≤ k) :
-    nhNv t x k q ≤ 0 := by
-  unfold nhNv
+theorem nsrNv_nonpos {t x k q : ℝ} (ht : 0 ≤ t) (hx : 0 ≤ x) (hq : 1 ≤ q) (hk : 2 * t ≤ k) :
+    nsrNv t x k q ≤ 0 := by
+  unfold nsrNv
   have hk0 : 0 ≤ k := by linarith
   have h1 : 0 ≤ t * (1 + x) * (k - 2 * t) := by
     apply mul_nonneg (by positivity); linarith
@@ -94,20 +94,20 @@ theorem nhNv_nonpos {t x k q : ℝ} (ht : 0 ≤ t) (hx : 0 ≤ x) (hq : 1 ≤ q)
   linarith
 
 /-- The `log q`-coefficient is negative. -/
-theorem nhNL_nonpos {t x k q : ℝ} (ht : 0 ≤ t) (hx : 0 ≤ x) (hq : 0 ≤ q) (hk : 0 ≤ k) :
-    nhNL t x k q ≤ 0 := by
-  unfold nhNL
+theorem nsrNL_nonpos {t x k q : ℝ} (ht : 0 ≤ t) (hx : 0 ≤ x) (hq : 0 ≤ q) (hk : 0 ≤ k) :
+    nsrNL t x k q ≤ 0 := by
+  unfold nsrNL
   have : 0 ≤ q * t * (t + x) * (1 + x) * (k + 2 * t * x + x ^ 2) := by positivity
   linarith
 
 /-- **Shape monotonicity**: with `v ≤ U(t)` and `log q < q - 1`,
 `A > qtx(1 - t)[(q - 1)(2x + 1) + tx] > 0`. -/
-theorem nhA_pos {t x q v L : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x) (hq : 1 ≤ q)
-    (hv : v ≤ 1 - t + t ^ 2) (hL : L < q - 1) : 0 < nhA t x q v L := by
-  have e : nhA t x q v L = q * t * x * (1 - t) * ((q - 1) * (2 * x + 1) + t * x)
+theorem nsrA_pos {t x q v L : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x) (hq : 1 ≤ q)
+    (hv : v ≤ 1 - t + t ^ 2) (hL : L < q - 1) : 0 < nsrA t x q v L := by
+  have e : nsrA t x q v L = q * t * x * (1 - t) * ((q - 1) * (2 * x + 1) + t * x)
       + (1 - t + t ^ 2 - v) * (q * x * ((q - 1) * (x + 2) + 1 + t * (1 + x)))
       + (q - 1 - L) * (q * t * (t + x) * (1 + x)) := by
-    unfold nhA; ring
+    unfold nsrA; ring
   rw [e]
   have hq0 : 0 < q := by linarith
   have h1 : 0 ≤ q * t * x * (1 - t) * ((q - 1) * (2 * x + 1) + t * x) := by
@@ -128,16 +128,16 @@ theorem nhA_pos {t x q v L : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x) (hq : 
   linarith
 
 /-- `N` is nondecreasing in the shape `k` (strictly increasing; weak form). -/
-theorem nhN_mono_k {t x k k' q v L : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x) (hq : 1 ≤ q)
+theorem nsrN_mono_k {t x k k' q v L : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x) (hq : 1 ≤ q)
     (hv : v ≤ 1 - t + t ^ 2) (hL : L < q - 1) (hk : k ≤ k') :
-    nhN t x k q v L ≤ nhN t x k' q v L := by
-  rw [nhN_sub_k t x k' k q v L]
-  have := nhA_pos ht ht1 hx hq hv hL
+    nsrN t x k q v L ≤ nsrN t x k' q v L := by
+  rw [nsrN_sub_k t x k' k q v L]
+  have := nsrA_pos ht ht1 hx hq hv hL
   nlinarith
 
 /-- A function with a derivative on `[a, ∞)`, positive on `(a, ∞)`, is strictly increasing
 on `[a, ∞)`. -/
-theorem nh_strictMonoOn_Ici {f f' : ℝ → ℝ} {a : ℝ} (hd : ∀ z, a ≤ z → HasDerivAt f (f' z) z)
+theorem nsr_strictMonoOn_Ici {f f' : ℝ → ℝ} {a : ℝ} (hd : ∀ z, a ≤ z → HasDerivAt f (f' z) z)
     (hpos : ∀ z, a < z → 0 < f' z) : StrictMonoOn f (Set.Ici a) := by
   apply strictMonoOn_of_deriv_pos (convex_Ici a)
   · exact fun z hz => (hd z hz).continuousAt.continuousWithinAt
@@ -147,9 +147,9 @@ theorem nh_strictMonoOn_Ici {f f' : ℝ → ℝ} {a : ℝ} (hd : ∀ z, a ≤ z 
     exact hpos z hz
 
 /-- The two-term atanh lower bound `log(1 + x) > 2x/X + 2x³/(3X³)`, `X = x + 2`. -/
-theorem nh_log_one_add_gt {x : ℝ} (hx : 0 < x) :
+theorem nsr_log_one_add_gt {x : ℝ} (hx : 0 < x) :
     2 * x / (x + 2) + 2 * x ^ 3 / (3 * (x + 2) ^ 3) < Real.log (1 + x) := by
-  have hmono := nh_strictMonoOn_Ici (a := 0)
+  have hmono := nsr_strictMonoOn_Ici (a := 0)
     (f := fun z => Real.log (1 + z) - (2 * z / (z + 2) + 2 * z ^ 3 / (3 * (z + 2) ^ 3)))
     (f' := fun z => z ^ 4 / ((z + 1) * (z + 2) ^ 4)) (fun z hz => ?_) (fun z hz => by positivity)
   · have := hmono (Set.mem_Ici.2 le_rfl) (Set.mem_Ici.2 hx.le) hx
@@ -175,19 +175,19 @@ theorem nh_log_one_add_gt {x : ℝ} (hx : 0 < x) :
     ring
 
 /-- The rational upper bound `L₊(q) = (q - 1)(q² + 10q + 1)/(6q(q + 1))` for `log q`. -/
-noncomputable def nhLp (q : ℝ) : ℝ := (q - 1) * (q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))
+noncomputable def nsrLp (q : ℝ) : ℝ := (q - 1) * (q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))
 
 /-- `log q < L₊(q)` for `q > 1`. -/
-theorem nh_log_lt_Lp {q : ℝ} (hq : 1 < q) : Real.log q < nhLp q := by
-  have hmono := nh_strictMonoOn_Ici (a := 1) (f := fun z => nhLp z - Real.log z)
+theorem nsr_log_lt_Lp {q : ℝ} (hq : 1 < q) : Real.log q < nsrLp q := by
+  have hmono := nsr_strictMonoOn_Ici (a := 1) (f := fun z => nsrLp z - Real.log z)
     (f' := fun z => (z - 1) ^ 4 / (6 * z ^ 2 * (z + 1) ^ 2)) (fun z hz => ?_) (fun z hz => by
       have : 0 < z - 1 := by linarith
       have : 0 < z := by linarith
       positivity)
   · have := hmono (Set.mem_Ici.2 le_rfl) (Set.mem_Ici.2 hq.le) hq
-    simp only [nhLp, Real.log_one] at this
+    simp only [nsrLp, Real.log_one] at this
     norm_num at this
-    unfold nhLp
+    unfold nsrLp
     linarith
   · have hz : 0 < z := by linarith
     have h1 : HasDerivAt (fun z : ℝ => (z - 1) * (z ^ 2 + 10 * z + 1))
@@ -209,17 +209,17 @@ theorem nh_log_lt_Lp {q : ℝ} (hq : 1 < q) : Real.log q < nhLp q := by
 
 /-- The exact normalized incoming secant `v = Sec(t, 1 - t, t + x)`
 `= 1 + (1 - t)²/W - (1 - t) log W/x`. -/
-noncomputable def nhSecN (t x : ℝ) : ℝ :=
+noncomputable def nsrSecN (t x : ℝ) : ℝ :=
   1 + (1 - t) ^ 2 / (1 + x) - (1 - t) * Real.log (1 + x) / x
 
 /-- The rational secant upper bound `v̄ = 1 + (1 - t)²/W - (2(1 - t)/X)(1 + x²/(3X²))`. -/
-noncomputable def nhVbar (t x : ℝ) : ℝ :=
+noncomputable def nsrVbar (t x : ℝ) : ℝ :=
   1 + (1 - t) ^ 2 / (1 + x) - 2 * (1 - t) / (x + 2) * (1 + x ^ 2 / (3 * (x + 2) ^ 2))
 
-/-- `v < v̄` (from `nh_log_one_add_gt`). -/
-theorem nh_secN_lt_vbar {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nhSecN t x < nhVbar t x := by
-  have h := nh_log_one_add_gt hx
-  unfold nhSecN nhVbar
+/-- `v < v̄` (from `nsr_log_one_add_gt`). -/
+theorem nsr_secN_lt_vbar {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nsrSecN t x < nsrVbar t x := by
+  have h := nsr_log_one_add_gt hx
+  unfold nsrSecN nsrVbar
   have h1 : 0 < 1 - t := by linarith
   have e : 2 * (1 - t) / (x + 2) * (1 + x ^ 2 / (3 * (x + 2) ^ 2)) =
       (1 - t) * (2 * x / (x + 2) + 2 * x ^ 3 / (3 * (x + 2) ^ 3)) / x := by
@@ -232,16 +232,16 @@ theorem nh_secN_lt_vbar {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nhSecN t x < nhV
   linarith
 
 /-- The rational floor `F_ℓ = 1 + p²q/W² - (p/W)(q² + 10q + 1)/(6(q + 1))`. -/
-noncomputable def nhFl (t x q : ℝ) : ℝ :=
+noncomputable def nsrFl (t x q : ℝ) : ℝ :=
   1 + (t + x) ^ 2 * q / (1 + x) ^ 2 - (t + x) / (1 + x) * ((q ^ 2 + 10 * q + 1) / (6 * (q + 1)))
 
 /-- `F_{p/W}(q) > F_ℓ` for `q > 1`. -/
-theorem nh_m2F_gt_Fl {t x q : ℝ} (hq : 1 < q) (hp : 0 < t + x) (hx : 0 < 1 + x) :
-    nhFl t x q < m2F ((t + x) / (1 + x)) q := by
+theorem nsr_m2F_gt_Fl {t x q : ℝ} (hq : 1 < q) (hp : 0 < t + x) (hx : 0 < 1 + x) :
+    nsrFl t x q < m2F ((t + x) / (1 + x)) q := by
   rw [m2F_of_ne hq.ne']
-  have hL := nh_log_lt_Lp hq
-  unfold nhFl
-  unfold nhLp at hL
+  have hL := nsr_log_lt_Lp hq
+  unfold nsrFl
+  unfold nsrLp at hL
   have hq1 : 0 < q - 1 := by linarith
   have hq0 : 0 < q := by linarith
   have he : 0 < (t + x) / (1 + x) := by positivity
@@ -260,12 +260,12 @@ theorem nh_m2F_gt_Fl {t x q : ℝ} (hq : 1 < q) (hp : 0 < t + x) (hx : 0 < 1 + x
 /-- **The relaxation comparison**: if
 `v ≤ v̄`, `L ≤ L̄`, the `v`- and `L`-coefficients are nonpositive, `F_ℓ ≤ v`, `m ≥ 0` and
 `N(v̄, L̄) - m(v̄ - F_ℓ) > 0`, then `N(v, L) > 0`. -/
-theorem nh_N_pos_of_relax {t x k q v L vb Lb Fl m : ℝ} (hv : v ≤ vb) (hL : L ≤ Lb)
-    (hNv : nhNv t x k q ≤ 0) (hNL : nhNL t x k q ≤ 0) (hF : Fl ≤ v) (hm : 0 ≤ m)
-    (hP : 0 < nhN t x k q vb Lb - m * (vb - Fl)) : 0 < nhN t x k q v L := by
-  rw [nhN_sub_v t x k q v vb L, nhN_sub_L t x k q vb L Lb]
-  have h1 : 0 ≤ (v - vb) * nhNv t x k q := mul_nonneg_of_nonpos_of_nonpos (by linarith) hNv
-  have h2 : 0 ≤ (L - Lb) * nhNL t x k q := mul_nonneg_of_nonpos_of_nonpos (by linarith) hNL
+theorem nsr_N_pos_of_relax {t x k q v L vb Lb Fl m : ℝ} (hv : v ≤ vb) (hL : L ≤ Lb)
+    (hNv : nsrNv t x k q ≤ 0) (hNL : nsrNL t x k q ≤ 0) (hF : Fl ≤ v) (hm : 0 ≤ m)
+    (hP : 0 < nsrN t x k q vb Lb - m * (vb - Fl)) : 0 < nsrN t x k q v L := by
+  rw [nsrN_sub_v t x k q v vb L, nsrN_sub_L t x k q vb L Lb]
+  have h1 : 0 ≤ (v - vb) * nsrNv t x k q := mul_nonneg_of_nonpos_of_nonpos (by linarith) hNv
+  have h2 : 0 ≤ (L - Lb) * nsrNL t x k q := mul_nonneg_of_nonpos_of_nonpos (by linarith) hNL
   have h3 : 0 ≤ m * (vb - Fl) := mul_nonneg hm (by linarith)
   linarith
 

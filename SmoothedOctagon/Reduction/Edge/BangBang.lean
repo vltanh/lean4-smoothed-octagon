@@ -6,7 +6,7 @@ public import SmoothedPolygons.Ch6.MatrixMinimizer
 /-!
 # Bang-bang structure of an edge extremal
 
-From the conclusions of the free-time maximum principle for the edge system `e4_edgeField`
+From the conclusions of the free-time maximum principle for the edge system `edge_edgeField`
 (`System.lean`) along an admissible pair `(v, q)` on `[0, T]`, the control is a.e. a concatenation
 of at most four constant pieces with values in `{0, 1}`.
 
@@ -23,7 +23,7 @@ With `q = (a, c, s)`, `p_a = p(1, 0, 0)`, `p_c = p(0, 1, 0)`, `p_s = p(0, 0, 1)`
 
 Main API:
 
-* `e4_bangBang`: the conclusion, at most four pieces with values in `{0, 1}`.
+* `edge_bangBang`: the conclusion, at most four pieces with values in `{0, 1}`.
 -/
 
 @[expose] public section
@@ -34,7 +34,7 @@ open SmoothedPolygons MeasureTheory Set Filter Pontryagin ControlSystem
 open scoped Topology
 
 /-- A covector on `ℝ³` in coordinates. -/
-theorem e4_dual_apply (ℓ : StrongDual ℝ (ℝ × ℝ × ℝ)) (x y z : ℝ) :
+theorem edge_dual_apply (ℓ : StrongDual ℝ (ℝ × ℝ × ℝ)) (x y z : ℝ) :
     ℓ (x, y, z) = x * ℓ (1, 0, 0) + y * ℓ (0, 1, 0) + z * ℓ (0, 0, 1) := by
   have : ((x, y, z) : ℝ × ℝ × ℝ) = x • ((1 : ℝ), (0 : ℝ), (0 : ℝ)) +
       y • ((0 : ℝ), (1 : ℝ), (0 : ℝ)) +
@@ -43,80 +43,80 @@ theorem e4_dual_apply (ℓ : StrongDual ℝ (ℝ × ℝ × ℝ)) (x y z : ℝ) :
   rw [this, map_add, map_add, map_smul, map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul]
 
 /-- A linear coordinate of an admissible pair is in integral form. -/
-theorem e4_coord {Te : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
-    (hadm : IsAdmissibleIn e4_edgeField e4_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q)
+theorem edge_coord {Te : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
+    (hadm : IsAdmissibleIn edge_edgeField edge_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q)
     (L : (ℝ × ℝ × ℝ) →L[ℝ] ℝ) :
-    IntervalIntegrable (fun s ↦ L (e4_edgeField (q s) (v s))) volume 0 Te ∧
-      ∀ t ∈ Icc 0 Te, L (q t) = L (q 0) + ∫ s in (0 : ℝ)..t, L (e4_edgeField (q s) (v s)) := by
+    IntervalIntegrable (fun s ↦ L (edge_edgeField (q s) (v s))) volume 0 Te ∧
+      ∀ t ∈ Icc 0 Te, L (q t) = L (q 0) + ∫ s in (0 : ℝ)..t, L (edge_edgeField (q s) (v s)) := by
   obtain ⟨⟨-, -, -, hint, heq⟩, -⟩ := hadm
   refine ⟨⟨L.integrable_comp hint.1, L.integrable_comp hint.2⟩, fun t ht ↦ ?_⟩
-  have hint' : IntervalIntegrable (fun s ↦ e4_edgeField (q s) (v s)) volume 0 t := hint.mono_set (by
+  have hint' : IntervalIntegrable (fun s ↦ edge_edgeField (q s) (v s)) volume 0 t := hint.mono_set (by
     rw [uIcc_of_le ht.1, uIcc_of_le (ht.1.trans ht.2)]
     exact Icc_subset_Icc_right ht.2)
   conv_lhs => rw [heq t ht]
   rw [map_add, L.intervalIntegral_comp_comm hint']
 
 /-- The coordinates `a` and `c` of an admissible pair, in integral form. -/
-theorem e4_coord_a {Te : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
-    (hadm : IsAdmissibleIn e4_edgeField e4_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q) :
-    IntervalIntegrable (fun s ↦ (e4_edgeField (q s) (v s)).1) volume 0 Te ∧
-      ∀ t ∈ Icc 0 Te, (q t).1 = (q 0).1 + ∫ s in (0 : ℝ)..t, (e4_edgeField (q s) (v s)).1 :=
-  e4_coord hadm (ContinuousLinearMap.fst ℝ ℝ (ℝ × ℝ))
+theorem edge_coord_a {Te : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
+    (hadm : IsAdmissibleIn edge_edgeField edge_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q) :
+    IntervalIntegrable (fun s ↦ (edge_edgeField (q s) (v s)).1) volume 0 Te ∧
+      ∀ t ∈ Icc 0 Te, (q t).1 = (q 0).1 + ∫ s in (0 : ℝ)..t, (edge_edgeField (q s) (v s)).1 :=
+  edge_coord hadm (ContinuousLinearMap.fst ℝ ℝ (ℝ × ℝ))
 
-theorem e4_coord_c {Te : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
-    (hadm : IsAdmissibleIn e4_edgeField e4_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q) :
-    IntervalIntegrable (fun s ↦ (e4_edgeField (q s) (v s)).2.1) volume 0 Te ∧
-      ∀ t ∈ Icc 0 Te, (q t).2.1 = (q 0).2.1 + ∫ s in (0 : ℝ)..t, (e4_edgeField (q s) (v s)).2.1 :=
-  e4_coord hadm ((ContinuousLinearMap.fst ℝ ℝ ℝ).comp (ContinuousLinearMap.snd ℝ ℝ (ℝ × ℝ)))
+theorem edge_coord_c {Te : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
+    (hadm : IsAdmissibleIn edge_edgeField edge_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q) :
+    IntervalIntegrable (fun s ↦ (edge_edgeField (q s) (v s)).2.1) volume 0 Te ∧
+      ∀ t ∈ Icc 0 Te, (q t).2.1 = (q 0).2.1 + ∫ s in (0 : ℝ)..t, (edge_edgeField (q s) (v s)).2.1 :=
+  edge_coord hadm ((ContinuousLinearMap.fst ℝ ℝ ℝ).comp (ContinuousLinearMap.snd ℝ ℝ (ℝ × ℝ)))
 
-theorem e4_coord_s {Te : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
-    (hadm : IsAdmissibleIn e4_edgeField e4_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q) :
-    IntervalIntegrable (fun s ↦ (e4_edgeField (q s) (v s)).2.2) volume 0 Te ∧
-      ∀ t ∈ Icc 0 Te, (q t).2.2 = (q 0).2.2 + ∫ s in (0 : ℝ)..t, (e4_edgeField (q s) (v s)).2.2 :=
-  e4_coord hadm ((ContinuousLinearMap.snd ℝ ℝ ℝ).comp (ContinuousLinearMap.snd ℝ ℝ (ℝ × ℝ)))
+theorem edge_coord_s {Te : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
+    (hadm : IsAdmissibleIn edge_edgeField edge_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q) :
+    IntervalIntegrable (fun s ↦ (edge_edgeField (q s) (v s)).2.2) volume 0 Te ∧
+      ∀ t ∈ Icc 0 Te, (q t).2.2 = (q 0).2.2 + ∫ s in (0 : ℝ)..t, (edge_edgeField (q s) (v s)).2.2 :=
+  edge_coord hadm ((ContinuousLinearMap.snd ℝ ℝ ℝ).comp (ContinuousLinearMap.snd ℝ ℝ (ℝ × ℝ)))
 
 /-- The integrand of the adjoint equation. -/
-noncomputable def e4_adj (ν : ℝ) (v : ℝ → ℝ) (q : ℝ → ℝ × ℝ × ℝ) (p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ))
+noncomputable def edge_adj (ν : ℝ) (v : ℝ → ℝ) (q : ℝ → ℝ × ℝ × ℝ) (p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ))
     (r : ℝ) : StrongDual ℝ (ℝ × ℝ × ℝ) :=
-  (p r).comp (linearization e4_edgeField v q r) + ν • fderiv ℝ (e4_edgeCost · (v r)) (q r)
+  (p r).comp (linearization edge_edgeField v q r) + ν • fderiv ℝ (edge_edgeCost · (v r)) (q r)
 
 /-- `p_s` is constant. -/
-theorem e4_ps_const {Te ν : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ} {p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ)}
-    (hadm : IsAdmissibleIn e4_edgeField e4_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q)
-    (hA : IsAdjoint e4_edgeField e4_edgeCost ν v q Te p) :
+theorem edge_ps_const {Te ν : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ} {p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ)}
+    (hadm : IsAdmissibleIn edge_edgeField edge_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q)
+    (hA : IsAdjoint edge_edgeField edge_edgeCost ν v q Te p) :
     ∀ t ∈ Icc 0 Te, p t (0, 0, 1) = p Te (0, 0, 1) := by
   intro t ht
-  have hint : IntervalIntegrable (e4_adj ν v q p) volume t Te := hA.1.mono_set (by
+  have hint : IntervalIntegrable (edge_adj ν v q p) volume t Te := hA.1.mono_set (by
     rw [uIcc_of_le ht.2, uIcc_of_le (ht.1.trans ht.2)]
     exact Icc_subset_Icc_left ht.1)
-  have h0 : ∫ r in t..Te, e4_adj ν v q p r (0, 0, 1) = 0 := by
+  have h0 : ∫ r in t..Te, edge_adj ν v q p r (0, 0, 1) = 0 := by
     rw [intervalIntegral.integral_congr (g := fun _ ↦ (0 : ℝ)) ?_]
     · simp
     intro r hr
     rw [uIcc_of_le ht.2] at hr
     have hr' : r ∈ Icc 0 Te := ⟨ht.1.trans hr.1, hr.2⟩
-    simp only [e4_adj, linearization, add_apply,
+    simp only [edge_adj, linearization, add_apply,
       ContinuousLinearMap.coe_comp, Function.comp_apply, FunLike.coe_smul,
       Pi.smul_apply, smul_eq_mul]
-    rw [e4_fderiv_edgeField_s (hadm.2 r hr') (hadm.1.2.1 r hr'),
-      e4_fderiv_edgeCost_s (hadm.2 r hr') (hadm.1.2.1 r hr')]
+    rw [edge_fderiv_edgeField_s (hadm.2 r hr') (hadm.1.2.1 r hr'),
+      edge_fderiv_edgeCost_s (hadm.2 r hr') (hadm.1.2.1 r hr')]
     simp
   have e := hA.2 t ht
   rw [e, add_apply]
-  change p Te (0, 0, 1) + (∫ r in t..Te, e4_adj ν v q p r) (0, 0, 1) = p Te (0, 0, 1)
+  change p Te (0, 0, 1) + (∫ r in t..Te, edge_adj ν v q p r) (0, 0, 1) = p Te (0, 0, 1)
   rw [ContinuousLinearMap.intervalIntegral_apply hint, h0, add_zero]
 
 /-- The costate is differentiable a.e., `p' = -(p ∘ ∂f + ν ∂φ)`. -/
-theorem e4_ae_hasDerivAt_p {Te ν : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
-    {p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ)} (hA : IsAdjoint e4_edgeField e4_edgeCost ν v q Te p) :
-    ∀ᵐ t, t ∈ Ioo 0 Te → HasDerivAt p (-e4_adj ν v q p t) t := by
-  refine ae_hasDerivAt_of_eq_add_integral (w := fun r ↦ -e4_adj ν v q p r) hA.1.neg
+theorem edge_ae_hasDerivAt_p {Te ν : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
+    {p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ)} (hA : IsAdjoint edge_edgeField edge_edgeCost ν v q Te p) :
+    ∀ᵐ t, t ∈ Ioo 0 Te → HasDerivAt p (-edge_adj ν v q p t) t := by
+  refine ae_hasDerivAt_of_eq_add_integral (w := fun r ↦ -edge_adj ν v q p r) hA.1.neg
     ⟨hTe, le_rfl⟩ (x₀ := p Te) fun t ht ↦ ?_
   rw [hA.2 t ht, intervalIntegral.integral_neg, intervalIntegral.integral_symm]
   rfl
 
 /-- `t ↦ 1/c(t)` is absolutely continuous when `c` is, and positive on `[0, T]`. -/
-theorem e4_ac_inv {c : ℝ → ℝ} {T : ℝ} (hT : 0 ≤ T) (hc : AbsolutelyContinuousOnInterval c 0 T)
+theorem edge_ac_inv {c : ℝ → ℝ} {T : ℝ} (hT : 0 ≤ T) (hc : AbsolutelyContinuousOnInterval c 0 T)
     (hpos : ∀ t ∈ Icc 0 T, 0 < c t) : AbsolutelyContinuousOnInterval (fun t ↦ (c t)⁻¹) 0 T := by
   have hcont : ContinuousOn c (Icc 0 T) := by
     have := hc.continuousOn
@@ -140,40 +140,40 @@ theorem e4_ac_inv {c : ℝ → ℝ} {T : ℝ} (hT : 0 ≤ T) (hc : AbsolutelyCon
   exact hmin ht
 
 /-- `(a, c)` is absolutely continuous and differentiable a.e. with the field as derivative. -/
-theorem e4_ac_ae {Te : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
-    (hadm : IsAdmissibleIn e4_edgeField e4_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q) :
+theorem edge_ac_ae {Te : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
+    (hadm : IsAdmissibleIn edge_edgeField edge_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q) :
     AbsolutelyContinuousOnInterval (fun t ↦ (q t).1) 0 Te ∧
       AbsolutelyContinuousOnInterval (fun t ↦ (q t).2.1) 0 Te ∧
-      ∀ᵐ t, t ∈ Ioo 0 Te → HasDerivAt (fun t ↦ (q t).1) (e4_edgeField (q t) (v t)).1 t ∧
-        HasDerivAt (fun t ↦ (q t).2.1) (e4_edgeField (q t) (v t)).2.1 t := by
-  refine ⟨e4_ac_of_eq_add_integral hTe (e4_coord_a hadm).1 (e4_coord_a hadm).2,
-    e4_ac_of_eq_add_integral hTe (e4_coord_c hadm).1 (e4_coord_c hadm).2, ?_⟩
-  filter_upwards [e4_ae_hasDerivAt (e4_coord_a hadm).1 (e4_coord_a hadm).2,
-    e4_ae_hasDerivAt (e4_coord_c hadm).1 (e4_coord_c hadm).2] with t h1 h2 ht
+      ∀ᵐ t, t ∈ Ioo 0 Te → HasDerivAt (fun t ↦ (q t).1) (edge_edgeField (q t) (v t)).1 t ∧
+        HasDerivAt (fun t ↦ (q t).2.1) (edge_edgeField (q t) (v t)).2.1 t := by
+  refine ⟨edge_ac_of_eq_add_integral hTe (edge_coord_a hadm).1 (edge_coord_a hadm).2,
+    edge_ac_of_eq_add_integral hTe (edge_coord_c hadm).1 (edge_coord_c hadm).2, ?_⟩
+  filter_upwards [edge_ae_hasDerivAt (edge_coord_a hadm).1 (edge_coord_a hadm).2,
+    edge_ae_hasDerivAt (edge_coord_c hadm).1 (edge_coord_c hadm).2] with t h1 h2 ht
   exact ⟨h1 ht, h2 ht⟩
 
 /-- **The clock.** `x = a/c` is strictly increasing on `[0, T]` (`x' = 1/c > 0`). -/
-theorem e4_x_strictMonoOn {Te : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
-    (hadm : IsAdmissibleIn e4_edgeField e4_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q) :
+theorem edge_x_strictMonoOn {Te : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
+    (hadm : IsAdmissibleIn edge_edgeField edge_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q) :
     StrictMonoOn (fun t ↦ (q t).1 / (q t).2.1) (Icc 0 Te) := by
-  obtain ⟨ha, hc, hd⟩ := e4_ac_ae hTe hadm
+  obtain ⟨ha, hc, hd⟩ := edge_ac_ae hTe hadm
   have hpos : ∀ t ∈ Icc 0 Te, 0 < (q t).2.1 := fun t ht ↦ (hadm.2 t ht).1
   have hqc : ContinuousOn q (Icc 0 Te) := hadm.1.2.2.1
   have hcc : ContinuousOn (fun t ↦ (q t).2.1) (Icc 0 Te) :=
     (continuous_fst.comp continuous_snd).comp_continuousOn hqc
   have hac : ContinuousOn (fun t ↦ (q t).1) (Icc 0 Te) := continuous_fst.comp_continuousOn hqc
   have hxac : AbsolutelyContinuousOnInterval (fun t ↦ (q t).1 / (q t).2.1) 0 Te :=
-    (ha.fun_mul (e4_ac_inv hTe hc hpos)).congr fun t _ ↦ by simp [div_eq_mul_inv]
+    (ha.fun_mul (edge_ac_inv hTe hc hpos)).congr fun t _ ↦ by simp [div_eq_mul_inv]
   have hxd : ∀ᵐ t, t ∈ Ioo 0 Te → HasDerivAt (fun t ↦ (q t).1 / (q t).2.1) (1 / (q t).2.1) t := by
     filter_upwards [hd] with t ht htI
     obtain ⟨h1, h2⟩ := ht htI
     have htI' := Ioo_subset_Icc_self htI
     have hcne := (hpos t htI').ne'
-    have hD := (e4_edgeDenom_pos (hadm.2 t htI') (hadm.1.2.1 t htI')).ne'
+    have hD := (edge_edgeDenom_pos (hadm.2 t htI') (hadm.1.2.1 t htI')).ne'
     convert h1.div h2 hcne using 1
-    simp only [e4_edgeField]
+    simp only [edge_edgeField]
     field_simp
-  have hx := e4_hasDerivAt_of_ac hTe hxac hxd
+  have hx := edge_hasDerivAt_of_ac hTe hxac hxd
     (continuousOn_const.div hcc fun t ht ↦ (hpos t ht).ne')
   refine strictMonoOn_of_deriv_pos (convex_Icc 0 Te) (hac.div hcc fun t ht ↦ (hpos t ht).ne')
     fun t ht ↦ ?_
@@ -183,16 +183,16 @@ theorem e4_x_strictMonoOn {Te : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ} {q : ℝ
 
 /-- **The switching function.** `σ = p(a, c, 0)` has derivative `-c (2 p_s + 3ν(1 + x²))` at every
 interior time. -/
-theorem e4_switching_hasDerivAt {Te ν : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
+theorem edge_switching_hasDerivAt {Te ν : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
     {p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ)}
-    (hadm : IsAdmissibleIn e4_edgeField e4_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q)
+    (hadm : IsAdmissibleIn edge_edgeField edge_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q)
     (hlip : ∃ K, LipschitzOnWith K p (Icc 0 Te))
-    (hA : IsAdjoint e4_edgeField e4_edgeCost ν v q Te p)
+    (hA : IsAdjoint edge_edgeField edge_edgeCost ν v q Te p)
     (hH : ∀ᵐ t ∂(volume.restrict (Icc 0 Te)),
-      controlHamiltonian e4_edgeField e4_edgeCost ν (q t) (p t) (v t) = 0) :
+      controlHamiltonian edge_edgeField edge_edgeCost ν (q t) (p t) (v t) = 0) :
     ∀ t ∈ Ioo 0 Te, HasDerivAt (fun t ↦ p t ((q t).1, (q t).2.1, 0))
       (-(q t).2.1 * (2 * p Te (0, 0, 1) + 3 * ν * (1 + ((q t).1 / (q t).2.1) ^ 2))) t := by
-  obtain ⟨ha, hc, hd⟩ := e4_ac_ae hTe hadm
+  obtain ⟨ha, hc, hd⟩ := edge_ac_ae hTe hadm
   obtain ⟨K, hK⟩ := hlip
   have hpos : ∀ t ∈ Icc 0 Te, 0 < (q t).2.1 := fun t ht ↦ (hadm.2 t ht).1
   have hπ : ∀ e : ℝ × ℝ × ℝ, AbsolutelyContinuousOnInterval (fun t ↦ p t e) 0 Te := by
@@ -203,7 +203,7 @@ theorem e4_switching_hasDerivAt {Te ν : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ}
   have hσeq : (fun t ↦ p t ((q t).1, (q t).2.1, 0)) =
       fun t ↦ (q t).1 * p t (1, 0, 0) + (q t).2.1 * p t (0, 1, 0) := by
     funext t
-    rw [e4_dual_apply]
+    rw [edge_dual_apply]
     ring
   rw [hσeq]
   have hσac := (ha.fun_mul (hπ ((1 : ℝ), (0 : ℝ), (0 : ℝ)))).fun_add
@@ -212,42 +212,42 @@ theorem e4_switching_hasDerivAt {Te ν : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ}
   have hcc : ContinuousOn (fun t ↦ (q t).2.1) (Icc 0 Te) :=
     (continuous_fst.comp continuous_snd).comp_continuousOn hqc
   have hac : ContinuousOn (fun t ↦ (q t).1) (Icc 0 Te) := continuous_fst.comp_continuousOn hqc
-  refine e4_hasDerivAt_of_ac hTe hσac ?_ ?_
-  · filter_upwards [hd, e4_ae_hasDerivAt_p hTe hA, (ae_restrict_iff' measurableSet_Icc).1 hH]
+  refine edge_hasDerivAt_of_ac hTe hσac ?_ ?_
+  · filter_upwards [hd, edge_ae_hasDerivAt_p hTe hA, (ae_restrict_iff' measurableSet_Icc).1 hH]
       with t ht hp hHt htI
     obtain ⟨h1, h2⟩ := ht htI
     have htI' := Ioo_subset_Icc_self htI
     have hz := hadm.2 t htI'
     have hv := hadm.1.2.1 t htI'
     have hcne := (hpos t htI').ne'
-    have hpa : HasDerivAt (fun s ↦ p s (1, 0, 0)) (-e4_adj ν v q p t (1, 0, 0)) t :=
+    have hpa : HasDerivAt (fun s ↦ p s (1, 0, 0)) (-edge_adj ν v q p t (1, 0, 0)) t :=
       (ContinuousLinearMap.apply ℝ ℝ ((1 : ℝ), (0 : ℝ), (0 : ℝ))).hasFDerivAt.comp_hasDerivAt
         t (hp htI)
-    have hpc : HasDerivAt (fun s ↦ p s (0, 1, 0)) (-e4_adj ν v q p t (0, 1, 0)) t :=
+    have hpc : HasDerivAt (fun s ↦ p s (0, 1, 0)) (-edge_adj ν v q p t (0, 1, 0)) t :=
       (ContinuousLinearMap.apply ℝ ℝ ((0 : ℝ), (1 : ℝ), (0 : ℝ))).hasFDerivAt.comp_hasDerivAt
         t (hp htI)
     convert (h1.mul hpa).add (h2.mul hpc) using 1
     -- the algebra
-    have hAdecomp := e4_dual_apply (e4_adj ν v q p t) (q t).1 (q t).2.1 0
-    have hAval : e4_adj ν v q p t ((q t).1, (q t).2.1, 0) =
+    have hAdecomp := edge_dual_apply (edge_adj ν v q p t) (q t).1 (q t).2.1 0
+    have hAval : edge_adj ν v q p t ((q t).1, (q t).2.1, 0) =
         (q t).2.1 * p t (0, 0, 1) + ν * (3 / 2 * ((q t).2.1 + ((q t).1 ^ 2 - 1) / (q t).2.1)) := by
-      simp only [e4_adj, linearization, add_apply, ContinuousLinearMap.coe_comp,
+      simp only [edge_adj, linearization, add_apply, ContinuousLinearMap.coe_comp,
         Function.comp_apply, FunLike.coe_smul, Pi.smul_apply, smul_eq_mul]
-      rw [e4_fderiv_edgeField_scale hz hv, e4_fderiv_edgeCost_scale hz hv, e4_dual_apply (p t) 0 0]
+      rw [edge_fderiv_edgeField_scale hz hv, edge_fderiv_edgeCost_scale hz hv, edge_dual_apply (p t) 0 0]
       ring
-    have hf : p t (e4_edgeField (q t) (v t)) = (e4_edgeField (q t) (v t)).1 * p t (1, 0, 0) +
-        (e4_edgeField (q t) (v t)).2.1 * p t (0, 1, 0) + (q t).2.1 * p t (0, 0, 1) :=
-      calc p t (e4_edgeField (q t) (v t)) = p t ((e4_edgeField (q t) (v t)).1,
-            (e4_edgeField (q t) (v t)).2.1, (q t).2.1) := rfl
-        _ = _ := e4_dual_apply _ _ _ _
-    have hHval : (e4_edgeField (q t) (v t)).1 * p t (1, 0, 0) +
-        (e4_edgeField (q t) (v t)).2.1 * p t (0, 1, 0) + (q t).2.1 * p t (0, 0, 1) +
+    have hf : p t (edge_edgeField (q t) (v t)) = (edge_edgeField (q t) (v t)).1 * p t (1, 0, 0) +
+        (edge_edgeField (q t) (v t)).2.1 * p t (0, 1, 0) + (q t).2.1 * p t (0, 0, 1) :=
+      calc p t (edge_edgeField (q t) (v t)) = p t ((edge_edgeField (q t) (v t)).1,
+            (edge_edgeField (q t) (v t)).2.1, (q t).2.1) := rfl
+        _ = _ := edge_dual_apply _ _ _ _
+    have hHval : (edge_edgeField (q t) (v t)).1 * p t (1, 0, 0) +
+        (edge_edgeField (q t) (v t)).2.1 * p t (0, 1, 0) + (q t).2.1 * p t (0, 0, 1) +
         ν * (3 / 2 * ((q t).2.1 + (1 + (q t).1 ^ 2) / (q t).2.1)) = 0 := by
       have := hHt htI'
-      simp only [controlHamiltonian, e4_edgeCost] at this
+      simp only [controlHamiltonian, edge_edgeCost] at this
       rw [← hf]
       exact this
-    have hps := e4_ps_const hadm hA t htI'
+    have hps := edge_ps_const hadm hA t htI'
     have hE : 3 / 2 * ((q t).2.1 + (1 + (q t).1 ^ 2) / (q t).2.1) +
         3 / 2 * ((q t).2.1 + ((q t).1 ^ 2 - 1) / (q t).2.1) =
         (q t).2.1 * (3 * (1 + ((q t).1 / (q t).2.1) ^ 2)) := by
@@ -258,24 +258,24 @@ theorem e4_switching_hasDerivAt {Te ν : ℝ} (hTe : 0 ≤ Te) {v : ℝ → ℝ}
       ((hac.div hcc fun t ht ↦ (hpos t ht).ne').pow 2))))
 
 /-- The Hamiltonian difference between two controls is proportional to the switching function. -/
-theorem e4_ham_sub {z : ℝ × ℝ × ℝ} (hz : z ∈ e4_edgeDomain) {w w' : ℝ} (hw : w ∈ Icc (0 : ℝ) 1)
+theorem edge_ham_sub {z : ℝ × ℝ × ℝ} (hz : z ∈ edge_edgeDomain) {w w' : ℝ} (hw : w ∈ Icc (0 : ℝ) 1)
     (hw' : w' ∈ Icc (0 : ℝ) 1) (ν : ℝ) (ℓ : StrongDual ℝ (ℝ × ℝ × ℝ)) :
-    controlHamiltonian e4_edgeField e4_edgeCost ν z ℓ w -
-      controlHamiltonian e4_edgeField e4_edgeCost ν z ℓ w' =
-      3 * z.2.1 * (e4_edgeAlpha w - e4_edgeAlpha w') /
-        ((z.2.1 - 3 * e4_edgeAlpha w * z.1) * (z.2.1 - 3 * e4_edgeAlpha w' * z.1)) *
+    controlHamiltonian edge_edgeField edge_edgeCost ν z ℓ w -
+      controlHamiltonian edge_edgeField edge_edgeCost ν z ℓ w' =
+      3 * z.2.1 * (edge_edgeAlpha w - edge_edgeAlpha w') /
+        ((z.2.1 - 3 * edge_edgeAlpha w * z.1) * (z.2.1 - 3 * edge_edgeAlpha w' * z.1)) *
         ℓ (z.1, z.2.1, 0) := by
-  have hD := (e4_edgeDenom_pos hz hw).ne'
-  have hD' := (e4_edgeDenom_pos hz hw').ne'
+  have hD := (edge_edgeDenom_pos hz hw).ne'
+  have hD' := (edge_edgeDenom_pos hz hw').ne'
   obtain ⟨A, hA⟩ : ∃ A, ℓ (1, 0, 0) = A := ⟨_, rfl⟩
   obtain ⟨B, hB⟩ : ∃ B, ℓ (0, 1, 0) = B := ⟨_, rfl⟩
   obtain ⟨C, hC⟩ : ∃ C, ℓ (0, 0, 1) = C := ⟨_, rfl⟩
   have key : ∀ x y z, ℓ (x, y, z) = x * A + y * B + z * C := fun x y z ↦ by
-    rw [e4_dual_apply, hA, hB, hC]
-  simp only [controlHamiltonian, e4_edgeCost, e4_edgeField, key]
+    rw [edge_dual_apply, hA, hB, hC]
+  simp only [controlHamiltonian, edge_edgeCost, edge_edgeField, key]
   have hc : z.2.1 ≠ 0 := hz.1.ne'
-  generalize e4_edgeAlpha w = α at hD ⊢
-  generalize e4_edgeAlpha w' = α' at hD' ⊢
+  generalize edge_edgeAlpha w = α at hD ⊢
+  generalize edge_edgeAlpha w' = α' at hD' ⊢
   generalize z.1 = a at hD hD' ⊢
   generalize z.2.1 = c at hc hD hD' ⊢
   simp only [div_eq_mul_inv, mul_inv]
@@ -283,46 +283,46 @@ theorem e4_ham_sub {z : ℝ × ℝ × ℝ} (hz : z ∈ e4_edgeDomain) {w w' : �
     ((c * A + 3 * α' * c * B) * (c - 3 * α' * a)⁻¹) * mul_inv_cancel₀ hD
 
 /-- **Bang-bang.** The maximum condition gives `v = 1` where `σ > 0` and `v = 0` where `σ < 0`. -/
-theorem e4_bang {Te ν : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ} {p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ)}
-    (hadm : IsAdmissibleIn e4_edgeField e4_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q)
-    (hM : IsMaximal e4_edgeField e4_edgeCost ν (Icc 0 1) v q Te p) :
+theorem edge_bang {Te ν : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ} {p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ)}
+    (hadm : IsAdmissibleIn edge_edgeField edge_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q)
+    (hM : IsMaximal edge_edgeField edge_edgeCost ν (Icc 0 1) v q Te p) :
     ∀ᵐ t, t ∈ Icc 0 Te → (0 < p t ((q t).1, (q t).2.1, 0) → v t = 1) ∧
       (p t ((q t).1, (q t).2.1, 0) < 0 → v t = 0) := by
   filter_upwards [(ae_restrict_iff' measurableSet_Icc).1 hM] with t hmax ht
   have hz := hadm.2 t ht
   have hv := hadm.1.2.1 t ht
   have hc := hz.1
-  have hD := e4_edgeDenom_pos hz hv
+  have hD := edge_edgeDenom_pos hz hv
   have h3 : (0 : ℝ) < √3 := by positivity
   refine ⟨fun hσ ↦ ?_, fun hσ ↦ ?_⟩
   · by_contra hne
     have hlt : v t < 1 := lt_of_le_of_ne hv.2 hne
     have h1 : (1 : ℝ) ∈ Icc (0 : ℝ) 1 := ⟨zero_le_one, le_rfl⟩
     have hle := sub_nonpos.2 (hmax ht 1 h1)
-    rw [e4_ham_sub hz h1 hv] at hle
-    have hα : 0 < e4_edgeAlpha 1 - e4_edgeAlpha (v t) := by
-      simp only [e4_edgeAlpha]
+    rw [edge_ham_sub hz h1 hv] at hle
+    have hα : 0 < edge_edgeAlpha 1 - edge_edgeAlpha (v t) := by
+      simp only [edge_edgeAlpha]
       rw [← sub_div]
       exact div_pos (by linarith) h3
-    have hD1 := e4_edgeDenom_pos hz h1
-    have : 0 < 3 * (q t).2.1 * (e4_edgeAlpha 1 - e4_edgeAlpha (v t)) /
-        (((q t).2.1 - 3 * e4_edgeAlpha 1 * (q t).1) *
-          ((q t).2.1 - 3 * e4_edgeAlpha (v t) * (q t).1)) *
+    have hD1 := edge_edgeDenom_pos hz h1
+    have : 0 < 3 * (q t).2.1 * (edge_edgeAlpha 1 - edge_edgeAlpha (v t)) /
+        (((q t).2.1 - 3 * edge_edgeAlpha 1 * (q t).1) *
+          ((q t).2.1 - 3 * edge_edgeAlpha (v t) * (q t).1)) *
         p t ((q t).1, (q t).2.1, 0) := by positivity
     linarith
   · by_contra hne
     have hlt : 0 < v t := lt_of_le_of_ne hv.1 (Ne.symm hne)
     have h0 : (0 : ℝ) ∈ Icc (0 : ℝ) 1 := ⟨le_rfl, zero_le_one⟩
     have hle := sub_nonpos.2 (hmax ht 0 h0)
-    rw [e4_ham_sub hz h0 hv] at hle
-    have hα : e4_edgeAlpha 0 - e4_edgeAlpha (v t) < 0 := by
-      simp only [e4_edgeAlpha]
+    rw [edge_ham_sub hz h0 hv] at hle
+    have hα : edge_edgeAlpha 0 - edge_edgeAlpha (v t) < 0 := by
+      simp only [edge_edgeAlpha]
       rw [← sub_div]
       exact div_neg_of_neg_of_pos (by linarith) h3
-    have hD0 := e4_edgeDenom_pos hz h0
-    have : 0 < 3 * (q t).2.1 * (e4_edgeAlpha 0 - e4_edgeAlpha (v t)) /
-        (((q t).2.1 - 3 * e4_edgeAlpha 0 * (q t).1) *
-          ((q t).2.1 - 3 * e4_edgeAlpha (v t) * (q t).1)) *
+    have hD0 := edge_edgeDenom_pos hz h0
+    have : 0 < 3 * (q t).2.1 * (edge_edgeAlpha 0 - edge_edgeAlpha (v t)) /
+        (((q t).2.1 - 3 * edge_edgeAlpha 0 * (q t).1) *
+          ((q t).2.1 - 3 * edge_edgeAlpha (v t) * (q t).1)) *
         p t ((q t).1, (q t).2.1, 0) := by
       apply mul_pos_of_neg_of_neg _ hσ
       apply div_neg_of_neg_of_pos _ (by positivity)
@@ -331,7 +331,7 @@ theorem e4_bang {Te ν : ℝ} {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ} 
 
 /-- **Partition by the zeros.** A continuous function on `[0, T]` without four zeros in `(0, T)`
 has constant strict sign on each piece of a partition of `[0, T]` into at most four intervals. -/
-theorem e4_partition {σ : ℝ → ℝ} {Te : ℝ} (hTe : 0 < Te) (hσ : ContinuousOn σ (Icc 0 Te))
+theorem edge_partition {σ : ℝ → ℝ} {Te : ℝ} (hTe : 0 < Te) (hσ : ContinuousOn σ (Icc 0 Te))
     (h4 : ∀ t₁ t₂ t₃ t₄ : ℝ, 0 < t₁ → t₁ < t₂ → t₂ < t₃ → t₃ < t₄ → t₄ < Te →
       σ t₁ = 0 → σ t₂ = 0 → σ t₃ = 0 → σ t₄ = 0 → False) :
     ∃ n ≤ 4, ∃ τ : ℕ → ℝ, τ 0 = 0 ∧ τ n = Te ∧ (∀ k < n, τ k < τ (k + 1)) ∧
@@ -446,21 +446,21 @@ theorem e4_partition {σ : ℝ → ℝ} {Te : ℝ} (hTe : 0 < Te) (hσ : Continu
 /-- **The edge bound in the edge system.** Under the conclusions of the free-time maximum
 principle, the control is a.e. a concatenation of at most four constant pieces with values in
 `{0, 1}`. -/
-theorem e4_bangBang {Te ν : ℝ} (hTe : 0 < Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
+theorem edge_bangBang {Te ν : ℝ} (hTe : 0 < Te) {v : ℝ → ℝ} {q : ℝ → ℝ × ℝ × ℝ}
     {p : ℝ → StrongDual ℝ (ℝ × ℝ × ℝ)}
-    (hadm : IsAdmissibleIn e4_edgeField e4_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q)
+    (hadm : IsAdmissibleIn edge_edgeField edge_edgeDomain (Icc (0 : ℝ) 1) (q 0) Te v q)
     (hlip : ∃ K, LipschitzOnWith K p (Icc 0 Te)) (hN : ∀ t ∈ Icc 0 Te, (ν, p t) ≠ 0)
-    (hA : IsAdjoint e4_edgeField e4_edgeCost ν v q Te p)
-    (hM : IsMaximal e4_edgeField e4_edgeCost ν (Icc 0 1) v q Te p)
+    (hA : IsAdjoint edge_edgeField edge_edgeCost ν v q Te p)
+    (hM : IsMaximal edge_edgeField edge_edgeCost ν (Icc 0 1) v q Te p)
     (hH : ∀ᵐ t ∂(volume.restrict (Icc 0 Te)),
-      controlHamiltonian e4_edgeField e4_edgeCost ν (q t) (p t) (v t) = 0) :
+      controlHamiltonian edge_edgeField edge_edgeCost ν (q t) (p t) (v t) = 0) :
     ∃ n ≤ 4, ∃ (τ : ℕ → ℝ) (b : ℕ → ℝ), τ 0 = 0 ∧ τ n = Te ∧ (∀ k < n, τ k < τ (k + 1)) ∧
       (∀ k ≤ n, τ k ∈ Icc 0 Te) ∧ (∀ k < n, b k = 0 ∨ b k = 1) ∧
       ∀ k < n, ∀ᵐ t, t ∈ Ioo (τ k) (τ (k + 1)) → v t = b k := by
   classical
   set σ : ℝ → ℝ := fun t ↦ p t ((q t).1, (q t).2.1, 0) with hσdef
   have hpos : ∀ t ∈ Icc 0 Te, 0 < (q t).2.1 := fun t ht ↦ (hadm.2 t ht).1
-  have hσd := e4_switching_hasDerivAt hTe.le hadm hlip hA hH
+  have hσd := edge_switching_hasDerivAt hTe.le hadm hlip hA hH
   have hqc : ContinuousOn q (Icc 0 Te) := hadm.1.2.2.1
   have hσc : ContinuousOn σ (Icc 0 Te) := by
     obtain ⟨K, hK⟩ := hlip
@@ -468,7 +468,7 @@ theorem e4_bangBang {Te ν : ℝ} (hTe : 0 < Te) {v : ℝ → ℝ} {q : ℝ → 
       (continuous_fst.comp_continuousOn hqc).prodMk
         (((continuous_fst.comp continuous_snd).comp_continuousOn hqc).prodMk continuousOn_const)
     exact hK.continuousOn.clm_apply hw
-  have hx := e4_x_strictMonoOn hTe.le hadm
+  have hx := edge_x_strictMonoOn hTe.le hadm
   -- the zero of the switching function's derivative
   have hQ : ∀ r ∈ Ioo 0 Te,
       -(q r).2.1 * (2 * p Te (0, 0, 1) + 3 * ν * (1 + ((q r).1 / (q r).2.1) ^ 2)) = 0 →
@@ -516,30 +516,30 @@ theorem e4_bangBang {Te ν : ℝ} (hTe : 0 < Te) {v : ℝ → ℝ} {q : ℝ → 
       obtain ⟨t, hHt, htI⟩ := (hH.and (ae_restrict_mem measurableSet_Icc)).exists
       have hz := hadm.2 t htI
       have hv := hadm.1.2.1 t htI
-      have hD := (e4_edgeDenom_pos hz hv).ne'
+      have hD := (edge_edgeDenom_pos hz hv).ne'
       have hc := (hpos t htI).ne'
-      have hpst : p t (0, 0, 1) = 0 := (e4_ps_const hadm hA t htI).trans hps
+      have hpst : p t (0, 0, 1) = 0 := (edge_ps_const hadm hA t htI).trans hps
       have hσt := hσ0 t htI
       simp only [hσdef] at hσt
-      rw [e4_dual_apply, hpst] at hσt
+      rw [edge_dual_apply, hpst] at hσt
       simp only [controlHamiltonian, hν, zero_mul, add_zero] at hHt
-      have hf : p t (e4_edgeField (q t) (v t)) = (e4_edgeField (q t) (v t)).1 * p t (1, 0, 0) +
-          (e4_edgeField (q t) (v t)).2.1 * p t (0, 1, 0) + (q t).2.1 * p t (0, 0, 1) :=
-        calc p t (e4_edgeField (q t) (v t)) = p t ((e4_edgeField (q t) (v t)).1,
-              (e4_edgeField (q t) (v t)).2.1, (q t).2.1) := rfl
-          _ = _ := e4_dual_apply _ _ _ _
+      have hf : p t (edge_edgeField (q t) (v t)) = (edge_edgeField (q t) (v t)).1 * p t (1, 0, 0) +
+          (edge_edgeField (q t) (v t)).2.1 * p t (0, 1, 0) + (q t).2.1 * p t (0, 0, 1) :=
+        calc p t (edge_edgeField (q t) (v t)) = p t ((edge_edgeField (q t) (v t)).1,
+              (edge_edgeField (q t) (v t)).2.1, (q t).2.1) := rfl
+          _ = _ := edge_dual_apply _ _ _ _
       rw [hf, hpst] at hHt
-      simp only [e4_edgeField] at hHt
-      have hdet : (q t).2.1 / ((q t).2.1 - 3 * e4_edgeAlpha (v t) * (q t).1) * (q t).2.1 -
-          3 * e4_edgeAlpha (v t) * (q t).2.1 / ((q t).2.1 - 3 * e4_edgeAlpha (v t) * (q t).1) *
+      simp only [edge_edgeField] at hHt
+      have hdet : (q t).2.1 / ((q t).2.1 - 3 * edge_edgeAlpha (v t) * (q t).1) * (q t).2.1 -
+          3 * edge_edgeAlpha (v t) * (q t).2.1 / ((q t).2.1 - 3 * edge_edgeAlpha (v t) * (q t).1) *
             (q t).1 = (q t).2.1 := by
         field_simp
       have hpa : p t (1, 0, 0) = 0 := by
         have : (q t).2.1 * p t (1, 0, 0) = 0 := by
           rw [← hdet]
           linear_combination (q t).2.1 * hHt -
-            3 * e4_edgeAlpha (v t) * (q t).2.1 /
-              ((q t).2.1 - 3 * e4_edgeAlpha (v t) * (q t).1) * hσt
+            3 * edge_edgeAlpha (v t) * (q t).2.1 /
+              ((q t).2.1 - 3 * edge_edgeAlpha (v t) * (q t).1) * hσt
         exact (mul_eq_zero.1 this).resolve_left hc
       have hpc : p t (0, 1, 0) = 0 := by
         rw [hpa] at hσt
@@ -550,7 +550,7 @@ theorem e4_bangBang {Te ν : ℝ} (hTe : 0 < Te) {v : ℝ → ℝ} {q : ℝ → 
       refine Prod.ext rfl (ContinuousLinearMap.ext fun w ↦ ?_)
       obtain ⟨w₁, w₂, w₃⟩ := w
       simp only [Prod.snd_zero, zero_apply]
-      rw [e4_dual_apply, hpa, hpc, hpst]
+      rw [edge_dual_apply, hpa, hpc, hpst]
       ring
     · -- three distinct values of `x` with the same square
       have hr₁' : r₁ ∈ Icc 0 Te := ⟨by linarith [hr₁.1], by linarith [hr₁.2]⟩
@@ -577,8 +577,8 @@ theorem e4_bangBang {Te ν : ℝ} (hTe : 0 < Te) {v : ℝ → ℝ} {q : ℝ → 
         have : (x₂ - x₃) * (x₂ + x₃) = 0 := by linear_combination e23
         exact (mul_eq_zero.1 this).resolve_left (sub_ne_zero.2 hx23.ne)
       linarith
-  obtain ⟨n, hn, τ, hτ0, hτn, hτlt, hτmem, hsign⟩ := e4_partition hTe hσc h4
-  have hbang := e4_bang hadm hM
+  obtain ⟨n, hn, τ, hτ0, hτn, hτlt, hτmem, hsign⟩ := edge_partition hTe hσc h4
+  have hbang := edge_bang hadm hM
   refine ⟨n, hn, τ, fun k ↦ if ∀ t ∈ Ioo (τ k) (τ (k + 1)), 0 < σ t then 1 else 0, hτ0, hτn,
     hτlt, hτmem, fun k _ ↦ ?_, fun k hk ↦ ?_⟩
   · dsimp only

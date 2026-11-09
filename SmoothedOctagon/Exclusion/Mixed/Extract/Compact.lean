@@ -14,10 +14,10 @@ twisted seam.
 
 ## Main API
 
-* `wx_half_le_margin_add`: on `𝔥**`, `1/2 ≤ p_i + p_j` for `i ≠ j`.
-* `NormalPeriod.wx_m_ge`: `2/15 ≤ m k j`.
-* `NormalPeriod.wx_half_le_m_add`: `1/2 ≤ m k j + m k j'` for `j ≠ j'`.
-* `NormalPeriod.wx_m_le`: `m k j ≤ 8`.
+* `extr_half_le_margin_add`: on `𝔥**`, `1/2 ≤ p_i + p_j` for `i ≠ j`.
+* `NormalPeriod.extr_m_ge`: `2/15 ≤ m k j`.
+* `NormalPeriod.extr_half_le_m_add`: `1/2 ≤ m k j + m k j'` for `j ≠ j'`.
+* `NormalPeriod.extr_m_le`: `m k j ≤ 8`.
 -/
 
 @[expose] public section
@@ -28,7 +28,7 @@ open SmoothedPolygons Set
 
 /-- **Pair sums on `𝔥**`**: every pair sum of the margins
 of a state in `𝔥**` is at least `1/2` (in fact at least `8/(9√3)`). -/
-theorem wx_half_le_margin_add {X : Mat2} (hX : Cited.HalesVajjha.InCompactDomain X) {i j : Fin 3}
+theorem extr_half_le_margin_add {X : Mat2} (hX : Cited.HalesVajjha.InCompactDomain X) {i j : Fin 3}
     (hij : i ≠ j) : 1 / 2 ≤ margin i X + margin j X := by
   obtain ⟨x, y, rfl, hmem⟩ := hX
   obtain ⟨⟨hy, -, -, -⟩, hy9, hd1, hd2, -, -, -⟩ := hmem
@@ -75,27 +75,27 @@ namespace NormalPeriod
 variable (P : NormalPeriod)
 
 /-- The switching time read by the cycle at the switch `k`. -/
-theorem wx_τ_mem (k : ℤ) : P.rep.τ (k % P.N) ∈ Icc 0 P.T :=
+theorem extr_τ_mem (k : ℤ) : P.rep.τ (k % P.N) ∈ Icc 0 P.T :=
   ⟨P.rep.τ_nonneg (term_emod_nonneg P k), P.rep.τ_le_T (term_emod_lt P k).le⟩
 
 /-- **Compact lower margin**: every switch margin of a
 period in `𝔥**` is at least `2/15`. -/
-theorem wx_m_ge (hK : P.InCompactDomain) (k : ℤ) (j : Fin 3) : 2 / 15 ≤ P.costateCycle.m k j := by
+theorem extr_m_ge (hK : P.InCompactDomain) (k : ℤ) (j : Fin 3) : 2 / 15 ≤ P.costateCycle.m k j := by
   rw [costateCycle_m, termMargin_eq_cut]
-  exact Reduction.two_div_fifteen_le_margin (hK _ (P.wx_τ_mem k)) _
+  exact Reduction.two_div_fifteen_le_margin (hK _ (P.extr_τ_mem k)) _
 
 /-- **Compact pair sums**: two distinct switch margins of a
 period in `𝔥**` sum to at least `1/2`. -/
-theorem wx_half_le_m_add (hK : P.InCompactDomain) (k : ℤ) {j j' : Fin 3} (h : j ≠ j') :
+theorem extr_half_le_m_add (hK : P.InCompactDomain) (k : ℤ) {j j' : Fin 3} (h : j ≠ j') :
     1 / 2 ≤ P.costateCycle.m k j + P.costateCycle.m k j' := by
   rw [costateCycle_m, costateCycle_m, termMargin_eq_cut, termMargin_eq_cut]
-  exact wx_half_le_margin_add (hK _ (P.wx_τ_mem k)) (fun e => h (sub_left_injective e))
+  exact extr_half_le_margin_add (hK _ (P.extr_τ_mem k)) (fun e => h (sub_left_injective e))
 
 /-- **Compact upper margin**: every switch margin of a period
 in `𝔥**` is at most `8`. -/
-theorem wx_m_le (hK : P.InCompactDomain) (k : ℤ) (j : Fin 3) : P.costateCycle.m k j ≤ 8 := by
+theorem extr_m_le (hK : P.InCompactDomain) (k : ℤ) (j : Fin 3) : P.costateCycle.m k j ≤ 8 := by
   have hq := P.costateCycle.m2_quad_rot k j
-  have hs := P.wx_half_le_m_add hK k (j := j + 1) (j' := j - 1)
+  have hs := P.extr_half_le_m_add hK k (j := j + 1) (j' := j - 1)
     ((by decide : ∀ x : Fin 3, x + 1 ≠ x - 1) j)
   have h0 := P.costateCycle.m_pos k j
   have h1 := P.costateCycle.m_pos k (j + 1)

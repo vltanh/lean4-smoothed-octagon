@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.PolyDeriv
+public import SmoothedOctagon.Exclusion.Mixed.PolyDeriv
 
 /-!
-# Case M2, forward successor by hand: the derivative signs of the high-ratio `h`-reduction
+# Case M2, forward successor: the derivative signs of the high-ratio `h`-reduction
 
 The univariate and monomial sign arguments of the high-ratio `h`-reduction. Write `𝓗` for the
 derivative in `h` along `t = (1 - h)/2`, `x = h + j`. For `3/8 ≤ t ≤ 2/5`, `7/30 ≤ x ≤ 3/7`,
@@ -751,19 +751,19 @@ theorem hrl_Lx_pos {x : ℝ} (h1 : 1 / 5 ≤ x) (h2 : x ≤ 1 / 2) : 0 < hrlLx x
     have := mul_le_mul_of_nonneg_left h2 x3n; nlinarith
   unfold hrlLx; linarith
 
-theorem hrl_R0_dx (t s : ℝ) : HasDerivAt (lrhHorner (hrlR0L t)) (hrlDR0 t s) s := by
-  have H := lrh_hasDerivAt_horner (hrlR0L t) s
-  have e : lrhHornerD (hrlR0L t) s = hrlDR0 t s := by
-    simp only [hrlR0L, lrhHornerD, lrhHorner]; unfold hrlDR0; ring
+theorem hrl_R0_dx (t s : ℝ) : HasDerivAt (polyHorner (hrlR0L t)) (hrlDR0 t s) s := by
+  have H := poly_hasDerivAt_horner (hrlR0L t) s
+  have e : polyHornerD (hrlR0L t) s = hrlDR0 t s := by
+    simp only [hrlR0L, polyHornerD, polyHorner]; unfold hrlDR0; ring
   rw [e] at H; exact H
 
-theorem hrl_R0_eq (t x : ℝ) : hrlR0 t x = lrhHorner (hrlR0L t) x := by
-  simp only [hrlR0L, lrhHorner]; unfold hrlR0; ring
+theorem hrl_R0_eq (t x : ℝ) : hrlR0 t x = polyHorner (hrlR0L t) x := by
+  simp only [hrlR0L, polyHorner]; unfold hrlR0; ring
 
 /-- `R₀ > 0` on the rectangle: `R₀` increases in `x`, and `R₀(t, 1/5) ≥ 1000K₀ > 0`. -/
 theorem hrl_R0_pos {t x : ℝ} (h1 : 3 / 8 ≤ t) (h2 : t ≤ 2 / 5) (hx1 : 1 / 5 ≤ x) (hx2 : x ≤ 1 / 2) :
     0 < hrlR0 t x := by
-  have mono := hrl_mono (hrl_R0_dx t) (a := 1 / 5) (b := 1 / 2)
+  have mono := poly_mono (hrl_R0_dx t) (a := 1 / 5) (b := 1 / 2)
     (fun s s1 s2 => by
       have := hrl_DR0_ge h1 h2 (by linarith : (0 : ℝ) ≤ s); have := hrl_Lx_pos s1 s2; linarith)
     le_rfl hx1 hx2

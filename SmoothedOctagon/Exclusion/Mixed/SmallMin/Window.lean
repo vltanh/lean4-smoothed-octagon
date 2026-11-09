@@ -15,9 +15,9 @@ small-minimum window `sf_Win` of a costate cycle at such a run.
 ## Main API
 
 * `CostateCycle.sf_rows`: the left and right rows at the piece `m`
-  (from `ifc_stat_w` at `m - 1, m, m + 1`, `ifc_w_rel` at `m, m + 1`, `factor_pp`).
-* `CostateCycle.sf_floors`: the exterior floors (`ifc_floor_out` at `m - 1`,
-  `ifc_floor_in` at `m + 1`).
+  (from `wire_stat_w` at `m - 1, m, m + 1`, `wire_w_rel` at `m, m + 1`, `factor_pp`).
+* `CostateCycle.sf_floors`: the exterior floors (`wire_floor_out` at `m - 1`,
+  `wire_floor_in` at `m + 1`).
 * `CostateCycle.sf_window`: the window `sf_Win` at `m` when `a_m` is the minimum of the five
   margins; `CostateCycle.sf_act_sq_gt`: then `a_m² > 4/3`.
 -/
@@ -60,13 +60,13 @@ theorem sf_rows {m : ℤ} (hf2 : C.m2Fwd (m - 2)) (hf1 : C.m2Fwd (m - 1)) (hf0 :
   have sg : ∀ k, C.lab k = C.lab (k - 1) + 1 → C.lab (k + 1) = C.lab k + 1 →
       C.sgn (k - 1) = C.sgn k := fun k h1 h2 ↦ by
     rw [C.sgn_fwd (by rw [sub_add_cancel]; exact h1), C.sgn_fwd h2]
-  have sL := C.ifc_stat_w (sg _ i1 hF1)
-  have s0 := C.ifc_stat_w (sg _ i0 hF0)
-  have sR := C.ifc_stat_w (sg _ i3 hF3)
+  have sL := C.wire_stat_w (sg _ i1 hF1)
+  have s0 := C.wire_stat_w (sg _ i0 hF0)
+  have sR := C.wire_stat_w (sg _ i3 hF3)
   rw [show m - 1 - 1 = m - 2 by ring, sub_add_cancel] at sL
   rw [add_sub_cancel_right, show m + 1 + 1 = m + 2 by ring] at sR
-  have rL := C.ifc_w_rel (k := m) (by rw [show m - 2 = m - 1 - 1 by ring]; exact i1) i0 hF0
-  have rR := C.ifc_w_rel (k := m + 1) (by
+  have rL := C.wire_w_rel (k := m) (by rw [show m - 2 = m - 1 - 1 by ring]; exact i1) i0 hF0
+  have rR := C.wire_w_rel (k := m + 1) (by
       rw [show m + 1 - 2 = m - 1 by ring, add_sub_cancel_right]; exact i0) i3 hF3
   rw [show m + 1 - 2 = m - 1 by ring, add_sub_cancel_right, show m + 1 + 1 = m + 2 by ring] at rR
   have fL := C.factor_pp i1 hF1
@@ -76,7 +76,7 @@ theorem sf_rows {m : ℤ} (hf2 : C.m2Fwd (m - 2)) (hf1 : C.m2Fwd (m - 1)) (hf0 :
     add_sub_cancel_right, show m + 1 + 1 = m + 2 by ring, show m - 2 + 1 = m - 1 by ring] at fL f0 fR
   have ew : ∀ k, C.ff_wt k = C.wt k := fun _ ↦ rfl
   simp only [ff_u, ff_v, ew]
-  exact (ifc_rows_alg (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) fL f0
+  exact (wire_rows_alg (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) (C.act_pos _) fL f0
     fR rL rR sL s0 sR).2
 
 /-- **The two exterior floors at a run of four forward switches**: `ff_floors` with the
@@ -90,8 +90,8 @@ theorem sf_floors {m : ℤ} (hf2 : C.m2Fwd (m - 2)) (hf1 : C.m2Fwd (m - 1)) (hf0
   obtain ⟨i1, -, i3⟩ := C.sf_labs hf2 hf1 hf0
   have hF1 : C.lab (m - 1 + 1) = C.lab (m - 1) + 1 := hf1
   have hF3 : C.lab (m + 1 + 1) = C.lab (m + 1) + 1 := hf3
-  have fo := C.ifc_floor_out i1 hF1
-  have fi := C.ifc_floor_in i3 hF3
+  have fo := C.wire_floor_out i1 hF1
+  have fi := C.wire_floor_in i3 hF3
   rw [sub_add_cancel] at fo
   rw [add_sub_cancel_right] at fi
   have fL := C.factor_pp i1 hF1

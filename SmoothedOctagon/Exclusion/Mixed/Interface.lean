@@ -12,7 +12,7 @@ structure `NormalPeriod.M2Calculus`. Its existence `NormalPeriod.m2_calculus` is
 `Period/Elliptic.lean` (through `Exclusion/Forward/Wire` and `Exclusion/Mixed/Wire`) with
 `M i = CostateCycle.Mloc i`, `Γ = gam2 0`: the boundary identity `∂J/∂a_i = tr(U V_i)`,
 the turn secants, the switching inequalities, the missing-control inequality and the spectral
-cost–Casimir bound. The lower Casimir bound `cas_gt` is `NormalPeriod.ifc_cas_gt`, proved from the
+cost–Casimir bound. The lower Casimir bound `cas_gt` is `NormalPeriod.wire_cas_gt`, proved from the
 whole-period winding of the costate-metric angles (`Exclusion/Mixed/Density/`). Everything else in
 case M2 is derived from it.
 
@@ -138,10 +138,10 @@ theorem m2_calculus (P : NormalPeriod) : Nonempty P.M2Calculus := by
   have hnorm : ∀ i, C.m2Norm C.Mloc i = 8 * C.swd i := fun i ↦ by
     unfold CostateCycle.m2Norm
     split_ifs with h
-    · exact C.ifc_norm_fwd h
+    · exact C.wire_norm_fwd h
     · rcases C.lab_cases i with h' | h'
       · exact absurd h' h
-      · exact C.ifc_norm_rev h'
+      · exact C.wire_norm_rev h'
   have hsgn : ∀ i, (C.m2Fwd (i - 1) ↔ C.m2Fwd i) → C.sgn (i - 1) = C.sgn i := by
     intro i h
     simp only [CostateCycle.sgn]
@@ -174,31 +174,31 @@ theorem m2_calculus (P : NormalPeriod) : Nonempty P.M2Calculus := by
   · intro i
     rw [hA, Matrix.inv_eq_left_inv (C.Ainv_Amat i), C.Mloc_succ]
   · intro i h
-    rw [hnorm, hnorm, ifc_m2Stat_eq]
-    exact C.ifc_stat_M (hsgn i h)
+    rw [hnorm, hnorm, wire_m2Stat_eq]
+    exact C.wire_stat_M (hsgn i h)
   · intro i h
     rw [hnorm, hnorm]
-    exact C.ifc_turn_sec (hturn i h)
+    exact C.wire_turn_sec (hturn i h)
   · intro i h
-    rw [hnorm, ifc_m2g_eq]
+    rw [hnorm, wire_m2g_eq]
     have := C.swd_fwd (k := i) h
     linarith
   · intro i h
-    rw [hnorm, ifc_m2g_eq]
+    rw [hnorm, wire_m2g_eq]
     rcases C.lab_cases i with h' | h'
     · exact absurd h' h
     · have := C.swd_rev h'
       linarith
   · intro i h1 h2
-    rw [hnorm, ifc_m2F_eq (C.one_lt_q i)]
-    exact C.ifc_floor_in (hin i h1) h2
+    rw [hnorm, wire_m2F_eq (C.one_lt_q i)]
+    exact C.wire_floor_in (hin i h1) h2
   · intro i h1 h2
-    rw [hnorm, ifc_m2F_eq (C.one_lt_q i)]
-    exact C.ifc_floor_out (hin i h1) h2
+    rw [hnorm, wire_m2F_eq (C.one_lt_q i)]
+    exact C.wire_floor_out (hin i h1) h2
   · intro i h
-    exact C.ifc_mc (hin i h)
-  · exact fun hc ↦ P.ifc_cas_lt hc
-  · exact fun hc hD hmix ↦ P.ifc_cas_gt hc hD hmix
+    exact C.wire_mc (hin i h)
+  · exact fun hc ↦ P.wire_cas_lt hc
+  · exact fun hc hD hmix ↦ P.wire_cas_gt hc hD hmix
 
 end NormalPeriod
 

@@ -1,10 +1,10 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTCurv
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTInit
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Curvature
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.InitialDerivative
 
 /-!
-# Case M2, forward successor by hand: the low-`t` circuit increases in `h`
+# Case M2, forward successor: the low-`t` circuit increases in `h`
 
 On the low-`t` unit domain `1/4 ≤ h ≤ 1/3`, `1/30 ≤ j ≤ 5h/7`, `0 ≤ y`, `y(1 + 2j) ≤ h - j`, the
 circuit `S` satisfies `𝓗S = ∂_hS > 0` (`nlt_HS_pos`).
@@ -118,13 +118,13 @@ noncomputable def nltTBL5 : List ℝ :=
 noncomputable def nltTBL6 : List ℝ :=
   [((4748103 / 3200) : ℝ), ((-(445233 / 80)) : ℝ), ((-(516999 / 25)) : ℝ), ((-(3422921 / 400)) : ℝ), ((17799707 / 800) : ℝ), ((9057747 / 200) : ℝ), ((533528 / 25) : ℝ), ((398882 / 25) : ℝ), ((115464 / 25) : ℝ)]
 
-theorem nlt_TA_eq (u y : ℝ) : nltT u y (nltAA u y) = lrhHorner nltTAL0 u + lrhHorner nltTAL1 u * y + lrhHorner nltTAL2 u * y ^ 2 + lrhHorner nltTAL3 u * y ^ 3 + lrhHorner nltTAL4 u * y ^ 4 + lrhHorner nltTAL5 u * y ^ 5 + lrhHorner nltTAL6 u * y ^ 6 + lrhHorner nltTAL7 u * y ^ 7 + lrhHorner nltTAL8 u * y ^ 8 := by
-  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, lrhHorner]
+theorem nlt_TA_eq (u y : ℝ) : nltT u y (nltAA u y) = polyHorner nltTAL0 u + polyHorner nltTAL1 u * y + polyHorner nltTAL2 u * y ^ 2 + polyHorner nltTAL3 u * y ^ 3 + polyHorner nltTAL4 u * y ^ 4 + polyHorner nltTAL5 u * y ^ 5 + polyHorner nltTAL6 u * y ^ 6 + polyHorner nltTAL7 u * y ^ 7 + polyHorner nltTAL8 u * y ^ 8 := by
+  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, polyHorner]
   unfold nltAA nltT nltP0 nltP1 nltP2 nltc0 nltE0 nltR0 nltc1 nltE1 nltR1 nltc2 nltE2 nltR2 nltc3 nltE3 nltR3 nltc4 nltE4 nltR4 nltc5 nltE5 nltR5 nltc6 nltE6 nltR6
   ring
 
-theorem nlt_TB_eq (u y : ℝ) : nltT u y (nltBB u) = lrhHorner nltTBL0 u + lrhHorner nltTBL1 u * y + lrhHorner nltTBL2 u * y ^ 2 + lrhHorner nltTBL3 u * y ^ 3 + lrhHorner nltTBL4 u * y ^ 4 + lrhHorner nltTBL5 u * y ^ 5 + lrhHorner nltTBL6 u * y ^ 6 := by
-  simp only [nltTBL0, nltTBL1, nltTBL2, nltTBL3, nltTBL4, nltTBL5, nltTBL6, lrhHorner]
+theorem nlt_TB_eq (u y : ℝ) : nltT u y (nltBB u) = polyHorner nltTBL0 u + polyHorner nltTBL1 u * y + polyHorner nltTBL2 u * y ^ 2 + polyHorner nltTBL3 u * y ^ 3 + polyHorner nltTBL4 u * y ^ 4 + polyHorner nltTBL5 u * y ^ 5 + polyHorner nltTBL6 u * y ^ 6 := by
+  simp only [nltTBL0, nltTBL1, nltTBL2, nltTBL3, nltTBL4, nltTBL5, nltTBL6, polyHorner]
   unfold nltBB nltT nltP0 nltP1 nltP2 nltc0 nltE0 nltR0 nltc1 nltE1 nltR1 nltc2 nltE2 nltR2 nltc3 nltE3 nltR3 nltc4 nltE4 nltR4 nltc5 nltE5 nltR5 nltc6 nltE6 nltR6
   ring
 
@@ -154,8 +154,8 @@ theorem nltTf0_pos {y : ℝ} (h1 : (1 / 7) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < nl
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-theorem nlt_Tf0_eq (y : ℝ) : lrhHorner (nltDer nltTAL0) ((17 / 60)) + lrhHorner (nltDer nltTAL1) ((17 / 60)) * y + lrhHorner (nltDer nltTAL2) ((17 / 60)) * y ^ 2 + lrhHorner (nltDer nltTAL3) ((17 / 60)) * y ^ 3 + lrhHorner (nltDer nltTAL4) ((17 / 60)) * y ^ 4 + lrhHorner (nltDer nltTAL5) ((17 / 60)) * y ^ 5 + lrhHorner (nltDer nltTAL6) ((17 / 60)) * y ^ 6 + lrhHorner (nltDer nltTAL7) ((17 / 60)) * y ^ 7 + lrhHorner (nltDer nltTAL8) ((17 / 60)) * y ^ 8 = nltTf0 y := by
-  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, lrhHorner]; unfold nltTf0; ring
+theorem nlt_Tf0_eq (y : ℝ) : polyHorner (nltDer nltTAL0) ((17 / 60)) + polyHorner (nltDer nltTAL1) ((17 / 60)) * y + polyHorner (nltDer nltTAL2) ((17 / 60)) * y ^ 2 + polyHorner (nltDer nltTAL3) ((17 / 60)) * y ^ 3 + polyHorner (nltDer nltTAL4) ((17 / 60)) * y ^ 4 + polyHorner (nltDer nltTAL5) ((17 / 60)) * y ^ 5 + polyHorner (nltDer nltTAL6) ((17 / 60)) * y ^ 6 + polyHorner (nltDer nltTAL7) ((17 / 60)) * y ^ 7 + polyHorner (nltDer nltTAL8) ((17 / 60)) * y ^ 8 = nltTf0 y := by
+  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, polyHorner]; unfold nltTf0; ring
 
 /-- `f(1/3, y)`. -/
 noncomputable def nltTf1 (y : ℝ) : ℝ := -(57347207 / 3456) + (14207375041 / 559872) * y + (44964461615 / 31104) * y ^ 2 + (163866466549 / 62208) * y ^ 3 - (1696801885331 / 279936) * y ^ 4 - (4085253960133 / 186624) * y ^ 5 - (4547921528399 / 279936) * y ^ 6 - (649091264443 / 559872) * y ^ 7 + (40043437 / 288) * y ^ 8
@@ -183,8 +183,8 @@ theorem nltTf1_pos {y : ℝ} (h1 : (1 / 10) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-theorem nlt_Tf1_eq (y : ℝ) : lrhHorner (nltDer nltTAL0) ((1 / 3)) + lrhHorner (nltDer nltTAL1) ((1 / 3)) * y + lrhHorner (nltDer nltTAL2) ((1 / 3)) * y ^ 2 + lrhHorner (nltDer nltTAL3) ((1 / 3)) * y ^ 3 + lrhHorner (nltDer nltTAL4) ((1 / 3)) * y ^ 4 + lrhHorner (nltDer nltTAL5) ((1 / 3)) * y ^ 5 + lrhHorner (nltDer nltTAL6) ((1 / 3)) * y ^ 6 + lrhHorner (nltDer nltTAL7) ((1 / 3)) * y ^ 7 + lrhHorner (nltDer nltTAL8) ((1 / 3)) * y ^ 8 = nltTf1 y := by
-  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, lrhHorner]; unfold nltTf1; ring
+theorem nlt_Tf1_eq (y : ℝ) : polyHorner (nltDer nltTAL0) ((1 / 3)) + polyHorner (nltDer nltTAL1) ((1 / 3)) * y + polyHorner (nltDer nltTAL2) ((1 / 3)) * y ^ 2 + polyHorner (nltDer nltTAL3) ((1 / 3)) * y ^ 3 + polyHorner (nltDer nltTAL4) ((1 / 3)) * y ^ 4 + polyHorner (nltDer nltTAL5) ((1 / 3)) * y ^ 5 + polyHorner (nltDer nltTAL6) ((1 / 3)) * y ^ 6 + polyHorner (nltDer nltTAL7) ((1 / 3)) * y ^ 7 + polyHorner (nltDer nltTAL8) ((1 / 3)) * y ^ 8 = nltTf1 y := by
+  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, polyHorner]; unfold nltTf1; ring
 
 /-- `f(3/8, y)`. -/
 noncomputable def nltTf2 (y : ℝ) : ℝ := -(3992152639 / 262144) + (1639082844005 / 12582912) * y + (16282036832083 / 8388608) * y ^ 2 + (19939497698075 / 6291456) * y ^ 3 - (72123188257463 / 8388608) * y ^ 4 - (4030800139625 / 131072) * y ^ 5 - (49061211085111 / 2097152) * y ^ 6 - (1089892292917 / 524288) * y ^ 7 + (5750717175 / 32768) * y ^ 8
@@ -212,8 +212,8 @@ theorem nltTf2_pos {y : ℝ} (h1 : (1 / 13) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-theorem nlt_Tf2_eq (y : ℝ) : lrhHorner (nltDer nltTAL0) ((3 / 8)) + lrhHorner (nltDer nltTAL1) ((3 / 8)) * y + lrhHorner (nltDer nltTAL2) ((3 / 8)) * y ^ 2 + lrhHorner (nltDer nltTAL3) ((3 / 8)) * y ^ 3 + lrhHorner (nltDer nltTAL4) ((3 / 8)) * y ^ 4 + lrhHorner (nltDer nltTAL5) ((3 / 8)) * y ^ 5 + lrhHorner (nltDer nltTAL6) ((3 / 8)) * y ^ 6 + lrhHorner (nltDer nltTAL7) ((3 / 8)) * y ^ 7 + lrhHorner (nltDer nltTAL8) ((3 / 8)) * y ^ 8 = nltTf2 y := by
-  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, lrhHorner]; unfold nltTf2; ring
+theorem nlt_Tf2_eq (y : ℝ) : polyHorner (nltDer nltTAL0) ((3 / 8)) + polyHorner (nltDer nltTAL1) ((3 / 8)) * y + polyHorner (nltDer nltTAL2) ((3 / 8)) * y ^ 2 + polyHorner (nltDer nltTAL3) ((3 / 8)) * y ^ 3 + polyHorner (nltDer nltTAL4) ((3 / 8)) * y ^ 4 + polyHorner (nltDer nltTAL5) ((3 / 8)) * y ^ 5 + polyHorner (nltDer nltTAL6) ((3 / 8)) * y ^ 6 + polyHorner (nltDer nltTAL7) ((3 / 8)) * y ^ 7 + polyHorner (nltDer nltTAL8) ((3 / 8)) * y ^ 8 = nltTf2 y := by
+  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, polyHorner]; unfold nltTf2; ring
 
 /-- `f(2/5, y)`. -/
 noncomputable def nltTf3 (y : ℝ) : ℝ := -(383235073981 / 30000000) + (63359240015503 / 300000000) * y + (346361941782133 / 150000000) * y ^ 2 + (1069605737483113 / 300000000) * y ^ 3 - (1588656570673987 / 150000000) * y ^ 4 - (150339126748113 / 4000000) * y ^ 5 - (289096484049999 / 10000000) * y ^ 6 - (2265298149147 / 800000) * y ^ 7 + (251164949061 / 1250000) * y ^ 8
@@ -241,8 +241,8 @@ theorem nltTf3_pos {y : ℝ} (h1 : (1 / 19) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-theorem nlt_Tf3_eq (y : ℝ) : lrhHorner (nltDer nltTAL0) ((2 / 5)) + lrhHorner (nltDer nltTAL1) ((2 / 5)) * y + lrhHorner (nltDer nltTAL2) ((2 / 5)) * y ^ 2 + lrhHorner (nltDer nltTAL3) ((2 / 5)) * y ^ 3 + lrhHorner (nltDer nltTAL4) ((2 / 5)) * y ^ 4 + lrhHorner (nltDer nltTAL5) ((2 / 5)) * y ^ 5 + lrhHorner (nltDer nltTAL6) ((2 / 5)) * y ^ 6 + lrhHorner (nltDer nltTAL7) ((2 / 5)) * y ^ 7 + lrhHorner (nltDer nltTAL8) ((2 / 5)) * y ^ 8 = nltTf3 y := by
-  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, lrhHorner]; unfold nltTf3; ring
+theorem nlt_Tf3_eq (y : ℝ) : polyHorner (nltDer nltTAL0) ((2 / 5)) + polyHorner (nltDer nltTAL1) ((2 / 5)) * y + polyHorner (nltDer nltTAL2) ((2 / 5)) * y ^ 2 + polyHorner (nltDer nltTAL3) ((2 / 5)) * y ^ 3 + polyHorner (nltDer nltTAL4) ((2 / 5)) * y ^ 4 + polyHorner (nltDer nltTAL5) ((2 / 5)) * y ^ 5 + polyHorner (nltDer nltTAL6) ((2 / 5)) * y ^ 6 + polyHorner (nltDer nltTAL7) ((2 / 5)) * y ^ 7 + polyHorner (nltDer nltTAL8) ((2 / 5)) * y ^ 8 = nltTf3 y := by
+  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, polyHorner]; unfold nltTf3; ring
 
 /-- The `z^0`-jet of `∂_u f` at `u = 1/4 + z`. -/
 noncomputable def nltJ0 (y : ℝ) : ℝ :=
@@ -276,9 +276,9 @@ noncomputable def nltJ6 (y : ℝ) : ℝ :=
 noncomputable def nltJ7 (y : ℝ) : ℝ :=
   308448 * y + 947376 * y ^ 2 - 1674432 * y ^ 3 - 9848304 * y ^ 4 - 14100480 * y ^ 5 - 8372160 * y ^ 6 - 1762560 * y ^ 7
 
-theorem nlt_g_jet (z y : ℝ) : lrhHorner (nltDer (nltDer nltTAL0)) (1 / 4 + z) + lrhHorner (nltDer (nltDer nltTAL1)) (1 / 4 + z) * y + lrhHorner (nltDer (nltDer nltTAL2)) (1 / 4 + z) * y ^ 2 + lrhHorner (nltDer (nltDer nltTAL3)) (1 / 4 + z) * y ^ 3 + lrhHorner (nltDer (nltDer nltTAL4)) (1 / 4 + z) * y ^ 4 + lrhHorner (nltDer (nltDer nltTAL5)) (1 / 4 + z) * y ^ 5 + lrhHorner (nltDer (nltDer nltTAL6)) (1 / 4 + z) * y ^ 6 + lrhHorner (nltDer (nltDer nltTAL7)) (1 / 4 + z) * y ^ 7 + lrhHorner (nltDer (nltDer nltTAL8)) (1 / 4 + z) * y ^ 8 =
+theorem nlt_g_jet (z y : ℝ) : polyHorner (nltDer (nltDer nltTAL0)) (1 / 4 + z) + polyHorner (nltDer (nltDer nltTAL1)) (1 / 4 + z) * y + polyHorner (nltDer (nltDer nltTAL2)) (1 / 4 + z) * y ^ 2 + polyHorner (nltDer (nltDer nltTAL3)) (1 / 4 + z) * y ^ 3 + polyHorner (nltDer (nltDer nltTAL4)) (1 / 4 + z) * y ^ 4 + polyHorner (nltDer (nltDer nltTAL5)) (1 / 4 + z) * y ^ 5 + polyHorner (nltDer (nltDer nltTAL6)) (1 / 4 + z) * y ^ 6 + polyHorner (nltDer (nltDer nltTAL7)) (1 / 4 + z) * y ^ 7 + polyHorner (nltDer (nltDer nltTAL8)) (1 / 4 + z) * y ^ 8 =
     nltJ0 y * z ^ 0 + nltJ1 y * z ^ 1 + nltJ2 y * z ^ 2 + nltJ3 y * z ^ 3 + nltJ4 y * z ^ 4 + nltJ5 y * z ^ 5 + nltJ6 y * z ^ 6 + nltJ7 y * z ^ 7 := by
-  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, lrhHorner]
+  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, nltDer, nltDerAux, polyHorner]
   unfold nltJ0 nltJ1 nltJ2 nltJ3 nltJ4 nltJ5 nltJ6 nltJ7
   ring
 
@@ -514,57 +514,57 @@ theorem nltTq_pos {y : ℝ} (h1 : (13 / 64) ≤ y) (h2 : y ≤ (9 / 32)) : 0 < n
   rw [e]; linarith only [z0, z1, p2, q2, p3, q3, p4, q4, p5, q5, p6, q6, p7, q7, p8, q8]
 
 
-theorem nlt_Tq_eq (y : ℝ) : lrhHorner nltTAL0 (17 / 60) + lrhHorner nltTAL1 (17 / 60) * y + lrhHorner nltTAL2 (17 / 60) * y ^ 2 + lrhHorner nltTAL3 (17 / 60) * y ^ 3 + lrhHorner nltTAL4 (17 / 60) * y ^ 4 + lrhHorner nltTAL5 (17 / 60) * y ^ 5 + lrhHorner nltTAL6 (17 / 60) * y ^ 6 + lrhHorner nltTAL7 (17 / 60) * y ^ 7 + lrhHorner nltTAL8 (17 / 60) * y ^ 8 = nltTq y := by
-  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, lrhHorner]; unfold nltTq; ring
+theorem nlt_Tq_eq (y : ℝ) : polyHorner nltTAL0 (17 / 60) + polyHorner nltTAL1 (17 / 60) * y + polyHorner nltTAL2 (17 / 60) * y ^ 2 + polyHorner nltTAL3 (17 / 60) * y ^ 3 + polyHorner nltTAL4 (17 / 60) * y ^ 4 + polyHorner nltTAL5 (17 / 60) * y ^ 5 + polyHorner nltTAL6 (17 / 60) * y ^ 6 + polyHorner nltTAL7 (17 / 60) * y ^ 7 + polyHorner nltTAL8 (17 / 60) * y ^ 8 = nltTq y := by
+  simp only [nltTAL0, nltTAL1, nltTAL2, nltTAL3, nltTAL4, nltTAL5, nltTAL6, nltTAL7, nltTAL8, polyHorner]; unfold nltTq; ring
 
 /-- `U_0(u)`: the `u`-derivative of the `y^0`-coefficient of `T_B`. -/
 noncomputable def nltU0 (u : ℝ) : ℝ :=
   (61451961 / 800) - (244136781 / 400) * u + (288955339 / 400) * u ^ 2 + (178526227 / 400) * u ^ 3 + (30173563 / 80) * u ^ 4 + (17840823 / 10) * u ^ 5 + (22013397 / 25) * u ^ 6 + (1679328 / 25) * u ^ 7
 
-theorem nlt_U_eq0 (u : ℝ) : lrhHorner (nltDer nltTBL0) u = nltU0 u := by
-  simp only [nltTBL0, nltDer, nltDerAux, lrhHorner]; unfold nltU0; ring
+theorem nlt_U_eq0 (u : ℝ) : polyHorner (nltDer nltTBL0) u = nltU0 u := by
+  simp only [nltTBL0, nltDer, nltDerAux, polyHorner]; unfold nltU0; ring
 
 /-- `U_1(u)`: the `u`-derivative of the `y^1`-coefficient of `T_B`. -/
 noncomputable def nltU1 (u : ℝ) : ℝ :=
   -(110194151 / 1600) - (25291101 / 800) * u + (86262489 / 160) * u ^ 2 - (2486010049 / 800) * u ^ 3 + (3431817 / 160) * u ^ 4 + (1195862907 / 100) * u ^ 5 + (172971519 / 25) * u ^ 6 + (30269456 / 25) * u ^ 7 + (1889244 / 25) * u ^ 8
 
-theorem nlt_U_eq1 (u : ℝ) : lrhHorner (nltDer nltTBL1) u = nltU1 u := by
-  simp only [nltTBL1, nltDer, nltDerAux, lrhHorner]; unfold nltU1; ring
+theorem nlt_U_eq1 (u : ℝ) : polyHorner (nltDer nltTBL1) u = nltU1 u := by
+  simp only [nltTBL1, nltDer, nltDerAux, polyHorner]; unfold nltU1; ring
 
 /-- `U_2(u)`: the `u`-derivative of the `y^2`-coefficient of `T_B`. -/
 noncomputable def nltU2 (u : ℝ) : ℝ :=
   (40983299 / 600) + (709057637 / 400) * u - (963507471 / 800) * u ^ 2 - (354117588 / 25) * u ^ 3 - (1842852919 / 160) * u ^ 4 + (211620201 / 50) * u ^ 5 + (45000361 / 4) * u ^ 6 + (78674288 / 25) * u ^ 7 - (1754298 / 25) * u ^ 8
 
-theorem nlt_U_eq2 (u : ℝ) : lrhHorner (nltDer nltTBL2) u = nltU2 u := by
-  simp only [nltTBL2, nltDer, nltDerAux, lrhHorner]; unfold nltU2; ring
+theorem nlt_U_eq2 (u : ℝ) : polyHorner (nltDer nltTBL2) u = nltU2 u := by
+  simp only [nltTBL2, nltDer, nltDerAux, polyHorner]; unfold nltU2; ring
 
 /-- `U_3(u)`: the `u`-derivative of the `y^3`-coefficient of `T_B`. -/
 noncomputable def nltU3 (u : ℝ) : ℝ :=
   (4545323 / 150) + (837305953 / 800) * u + (2361568841 / 400) * u ^ 2 + (26286922649 / 800) * u ^ 3 - (1199783523 / 160) * u ^ 4 - (9587420751 / 100) * u ^ 5 - (530095573 / 10) * u ^ 6 - (197505008 / 25) * u ^ 7 - (2159136 / 5) * u ^ 8
 
-theorem nlt_U_eq3 (u : ℝ) : lrhHorner (nltDer nltTBL3) u = nltU3 u := by
-  simp only [nltTBL3, nltDer, nltDerAux, lrhHorner]; unfold nltU3; ring
+theorem nlt_U_eq3 (u : ℝ) : polyHorner (nltDer nltTBL3) u = nltU3 u := by
+  simp only [nltTBL3, nltDer, nltDerAux, polyHorner]; unfold nltU3; ring
 
 /-- `U_4(u)`: the `u`-derivative of the `y^4`-coefficient of `T_B`. -/
 noncomputable def nltU4 (u : ℝ) : ℝ :=
   -(69676949 / 800) - (568575099 / 200) * u + (289218753 / 40) * u ^ 2 + (3109324163 / 50) * u ^ 3 + (249052181 / 20) * u ^ 4 - (5777582229 / 50) * u ^ 5 - (294285411 / 4) * u ^ 6 - (302415336 / 25) * u ^ 7 - 404838 * u ^ 8
 
-theorem nlt_U_eq4 (u : ℝ) : lrhHorner (nltDer nltTBL4) u = nltU4 u := by
-  simp only [nltTBL4, nltDer, nltDerAux, lrhHorner]; unfold nltU4; ring
+theorem nlt_U_eq4 (u : ℝ) : polyHorner (nltDer nltTBL4) u = nltU4 u := by
+  simp only [nltTBL4, nltDer, nltDerAux, polyHorner]; unfold nltU4; ring
 
 /-- `U_5(u)`: the `u`-derivative of the `y^5`-coefficient of `T_B`. -/
 noncomputable def nltU5 (u : ℝ) : ℝ :=
   -(53679249 / 1600) - (1708508289 / 800) * u - (163305051 / 400) * u ^ 2 + (14966563273 / 800) * u ^ 3 + (1403903137 / 160) * u ^ 4 - (5140679427 / 200) * u ^ 5 - (761285903 / 50) * u ^ 6 - (52026284 / 25) * u ^ 7 - (539784 / 5) * u ^ 8
 
-theorem nlt_U_eq5 (u : ℝ) : lrhHorner (nltDer nltTBL5) u = nltU5 u := by
-  simp only [nltTBL5, nltDer, nltDerAux, lrhHorner]; unfold nltU5; ring
+theorem nlt_U_eq5 (u : ℝ) : polyHorner (nltDer nltTBL5) u = nltU5 u := by
+  simp only [nltTBL5, nltDer, nltDerAux, polyHorner]; unfold nltU5; ring
 
 /-- `U_6(u)`: the `u`-derivative of the `y^6`-coefficient of `T_B`. -/
 noncomputable def nltU6 (u : ℝ) : ℝ :=
   -(445233 / 80) - (1033998 / 25) * u - (10268763 / 400) * u ^ 2 + (17799707 / 200) * u ^ 3 + (9057747 / 40) * u ^ 4 + (3201168 / 25) * u ^ 5 + (2792174 / 25) * u ^ 6 + (923712 / 25) * u ^ 7
 
-theorem nlt_U_eq6 (u : ℝ) : lrhHorner (nltDer nltTBL6) u = nltU6 u := by
-  simp only [nltTBL6, nltDer, nltDerAux, lrhHorner]; unfold nltU6; ring
+theorem nlt_U_eq6 (u : ℝ) : polyHorner (nltDer nltTBL6) u = nltU6 u := by
+  simp only [nltTBL6, nltDer, nltDerAux, polyHorner]; unfold nltU6; ring
 
 /-- A coefficient bound for `∂_uT_B`: `U_0`. -/
 noncomputable def nltUb0 (u : ℝ) : ℝ := nltU0 u
@@ -770,7 +770,7 @@ theorem nlt_b_ge {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 3 / 7) (hy : y * (
 
 /-- `∂_u f ≥ 0` on `[17/60, 41/84] × [1/19, 9/32]`. -/
 theorem nlt_g_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 1 / 19 ≤ y)
-    (hy2 : y ≤ 9 / 32) : 0 ≤ lrhHorner (nltDer (nltDer nltTAL0)) u + lrhHorner (nltDer (nltDer nltTAL1)) u * y + lrhHorner (nltDer (nltDer nltTAL2)) u * y ^ 2 + lrhHorner (nltDer (nltDer nltTAL3)) u * y ^ 3 + lrhHorner (nltDer (nltDer nltTAL4)) u * y ^ 4 + lrhHorner (nltDer (nltDer nltTAL5)) u * y ^ 5 + lrhHorner (nltDer (nltDer nltTAL6)) u * y ^ 6 + lrhHorner (nltDer (nltDer nltTAL7)) u * y ^ 7 + lrhHorner (nltDer (nltDer nltTAL8)) u * y ^ 8 := by
+    (hy2 : y ≤ 9 / 32) : 0 ≤ polyHorner (nltDer (nltDer nltTAL0)) u + polyHorner (nltDer (nltDer nltTAL1)) u * y + polyHorner (nltDer (nltDer nltTAL2)) u * y ^ 2 + polyHorner (nltDer (nltDer nltTAL3)) u * y ^ 3 + polyHorner (nltDer (nltDer nltTAL4)) u * y ^ 4 + polyHorner (nltDer (nltDer nltTAL5)) u * y ^ 5 + polyHorner (nltDer (nltDer nltTAL6)) u * y ^ 6 + polyHorner (nltDer (nltDer nltTAL7)) u * y ^ 7 + polyHorner (nltDer (nltDer nltTAL8)) u * y ^ 8 := by
   obtain ⟨z, rfl⟩ : ∃ z, u = 1 / 4 + z := ⟨u - 1 / 4, by ring⟩
   rw [nlt_g_jet]
   have z0 : 1 / 30 ≤ z := by linarith
@@ -795,10 +795,10 @@ theorem nlt_g_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 1
 
 /-- `f = ∂_uT_A > 0` where `A ≥ 0`. -/
 theorem nlt_f_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 1 / 19 ≤ y)
-    (hy2 : y ≤ 9 / 32) (hA : 1 - 2 * u ≤ y * (1 + 4 * u)) : 0 < lrhHorner (nltDer nltTAL0) u + lrhHorner (nltDer nltTAL1) u * y + lrhHorner (nltDer nltTAL2) u * y ^ 2 + lrhHorner (nltDer nltTAL3) u * y ^ 3 + lrhHorner (nltDer nltTAL4) u * y ^ 4 + lrhHorner (nltDer nltTAL5) u * y ^ 5 + lrhHorner (nltDer nltTAL6) u * y ^ 6 + lrhHorner (nltDer nltTAL7) u * y ^ 7 + lrhHorner (nltDer nltTAL8) u * y ^ 8 := by
-  have hd : ∀ w, HasDerivAt (fun w => lrhHorner (nltDer nltTAL0) w + lrhHorner (nltDer nltTAL1) w * y + lrhHorner (nltDer nltTAL2) w * y ^ 2 + lrhHorner (nltDer nltTAL3) w * y ^ 3 + lrhHorner (nltDer nltTAL4) w * y ^ 4 + lrhHorner (nltDer nltTAL5) w * y ^ 5 + lrhHorner (nltDer nltTAL6) w * y ^ 6 + lrhHorner (nltDer nltTAL7) w * y ^ 7 + lrhHorner (nltDer nltTAL8) w * y ^ 8) (lrhHorner (nltDer (nltDer nltTAL0)) w + lrhHorner (nltDer (nltDer nltTAL1)) w * y + lrhHorner (nltDer (nltDer nltTAL2)) w * y ^ 2 + lrhHorner (nltDer (nltDer nltTAL3)) w * y ^ 3 + lrhHorner (nltDer (nltDer nltTAL4)) w * y ^ 4 + lrhHorner (nltDer (nltDer nltTAL5)) w * y ^ 5 + lrhHorner (nltDer (nltDer nltTAL6)) w * y ^ 6 + lrhHorner (nltDer (nltDer nltTAL7)) w * y ^ 7 + lrhHorner (nltDer (nltDer nltTAL8)) w * y ^ 8) w := fun w => (((((((((nlt_hasDerivAt_horner (nltDer nltTAL0) w).add ((nlt_hasDerivAt_horner (nltDer nltTAL1) w).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer nltTAL2) w).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer nltTAL3) w).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer nltTAL4) w).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer nltTAL5) w).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer nltTAL6) w).mul_const (y ^ 6))).add ((nlt_hasDerivAt_horner (nltDer nltTAL7) w).mul_const (y ^ 7))).add ((nlt_hasDerivAt_horner (nltDer nltTAL8) w).mul_const (y ^ 8)))
-  have mono : ∀ a, 17 / 60 ≤ a → a ≤ u → lrhHorner (nltDer nltTAL0) a + lrhHorner (nltDer nltTAL1) a * y + lrhHorner (nltDer nltTAL2) a * y ^ 2 + lrhHorner (nltDer nltTAL3) a * y ^ 3 + lrhHorner (nltDer nltTAL4) a * y ^ 4 + lrhHorner (nltDer nltTAL5) a * y ^ 5 + lrhHorner (nltDer nltTAL6) a * y ^ 6 + lrhHorner (nltDer nltTAL7) a * y ^ 7 + lrhHorner (nltDer nltTAL8) a * y ^ 8 ≤ lrhHorner (nltDer nltTAL0) u + lrhHorner (nltDer nltTAL1) u * y + lrhHorner (nltDer nltTAL2) u * y ^ 2 + lrhHorner (nltDer nltTAL3) u * y ^ 3 + lrhHorner (nltDer nltTAL4) u * y ^ 4 + lrhHorner (nltDer nltTAL5) u * y ^ 5 + lrhHorner (nltDer nltTAL6) u * y ^ 6 + lrhHorner (nltDer nltTAL7) u * y ^ 7 + lrhHorner (nltDer nltTAL8) u * y ^ 8 := fun a ha hau =>
-    hrl_mono hd (a := 17 / 60) (b := 41 / 84) (fun w w1 w2 => nlt_g_pos w1 w2 hy1 hy2) ha hau h2
+    (hy2 : y ≤ 9 / 32) (hA : 1 - 2 * u ≤ y * (1 + 4 * u)) : 0 < polyHorner (nltDer nltTAL0) u + polyHorner (nltDer nltTAL1) u * y + polyHorner (nltDer nltTAL2) u * y ^ 2 + polyHorner (nltDer nltTAL3) u * y ^ 3 + polyHorner (nltDer nltTAL4) u * y ^ 4 + polyHorner (nltDer nltTAL5) u * y ^ 5 + polyHorner (nltDer nltTAL6) u * y ^ 6 + polyHorner (nltDer nltTAL7) u * y ^ 7 + polyHorner (nltDer nltTAL8) u * y ^ 8 := by
+  have hd : ∀ w, HasDerivAt (fun w => polyHorner (nltDer nltTAL0) w + polyHorner (nltDer nltTAL1) w * y + polyHorner (nltDer nltTAL2) w * y ^ 2 + polyHorner (nltDer nltTAL3) w * y ^ 3 + polyHorner (nltDer nltTAL4) w * y ^ 4 + polyHorner (nltDer nltTAL5) w * y ^ 5 + polyHorner (nltDer nltTAL6) w * y ^ 6 + polyHorner (nltDer nltTAL7) w * y ^ 7 + polyHorner (nltDer nltTAL8) w * y ^ 8) (polyHorner (nltDer (nltDer nltTAL0)) w + polyHorner (nltDer (nltDer nltTAL1)) w * y + polyHorner (nltDer (nltDer nltTAL2)) w * y ^ 2 + polyHorner (nltDer (nltDer nltTAL3)) w * y ^ 3 + polyHorner (nltDer (nltDer nltTAL4)) w * y ^ 4 + polyHorner (nltDer (nltDer nltTAL5)) w * y ^ 5 + polyHorner (nltDer (nltDer nltTAL6)) w * y ^ 6 + polyHorner (nltDer (nltDer nltTAL7)) w * y ^ 7 + polyHorner (nltDer (nltDer nltTAL8)) w * y ^ 8) w := fun w => (((((((((nlt_hasDerivAt_horner (nltDer nltTAL0) w).add ((nlt_hasDerivAt_horner (nltDer nltTAL1) w).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer nltTAL2) w).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer nltTAL3) w).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer nltTAL4) w).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer nltTAL5) w).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer nltTAL6) w).mul_const (y ^ 6))).add ((nlt_hasDerivAt_horner (nltDer nltTAL7) w).mul_const (y ^ 7))).add ((nlt_hasDerivAt_horner (nltDer nltTAL8) w).mul_const (y ^ 8)))
+  have mono : ∀ a, 17 / 60 ≤ a → a ≤ u → polyHorner (nltDer nltTAL0) a + polyHorner (nltDer nltTAL1) a * y + polyHorner (nltDer nltTAL2) a * y ^ 2 + polyHorner (nltDer nltTAL3) a * y ^ 3 + polyHorner (nltDer nltTAL4) a * y ^ 4 + polyHorner (nltDer nltTAL5) a * y ^ 5 + polyHorner (nltDer nltTAL6) a * y ^ 6 + polyHorner (nltDer nltTAL7) a * y ^ 7 + polyHorner (nltDer nltTAL8) a * y ^ 8 ≤ polyHorner (nltDer nltTAL0) u + polyHorner (nltDer nltTAL1) u * y + polyHorner (nltDer nltTAL2) u * y ^ 2 + polyHorner (nltDer nltTAL3) u * y ^ 3 + polyHorner (nltDer nltTAL4) u * y ^ 4 + polyHorner (nltDer nltTAL5) u * y ^ 5 + polyHorner (nltDer nltTAL6) u * y ^ 6 + polyHorner (nltDer nltTAL7) u * y ^ 7 + polyHorner (nltDer nltTAL8) u * y ^ 8 := fun a ha hau =>
+    poly_mono hd (a := 17 / 60) (b := 41 / 84) (fun w w1 w2 => nlt_g_pos w1 w2 hy1 hy2) ha hau h2
   rcases le_total u (1 / 3) with c1 | c1
   · have hy : 1 / 7 ≤ y := by
       by_contra hc; push Not at hc
@@ -833,7 +833,7 @@ theorem nlt_f_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 1
 theorem nlt_TA_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 1 / 19 ≤ y)
     (hy2 : y ≤ 9 / 32) (hA : 0 ≤ nltAA u y) : 0 < nltT u y (nltAA u y) := by
   rw [nlt_TA_eq]
-  have hd : ∀ w, HasDerivAt (fun w => lrhHorner (nltTAL0) w + lrhHorner (nltTAL1) w * y + lrhHorner (nltTAL2) w * y ^ 2 + lrhHorner (nltTAL3) w * y ^ 3 + lrhHorner (nltTAL4) w * y ^ 4 + lrhHorner (nltTAL5) w * y ^ 5 + lrhHorner (nltTAL6) w * y ^ 6 + lrhHorner (nltTAL7) w * y ^ 7 + lrhHorner (nltTAL8) w * y ^ 8) (lrhHorner (nltDer nltTAL0) w + lrhHorner (nltDer nltTAL1) w * y + lrhHorner (nltDer nltTAL2) w * y ^ 2 + lrhHorner (nltDer nltTAL3) w * y ^ 3 + lrhHorner (nltDer nltTAL4) w * y ^ 4 + lrhHorner (nltDer nltTAL5) w * y ^ 5 + lrhHorner (nltDer nltTAL6) w * y ^ 6 + lrhHorner (nltDer nltTAL7) w * y ^ 7 + lrhHorner (nltDer nltTAL8) w * y ^ 8) w := fun w => (((((((((nlt_hasDerivAt_horner (nltTAL0) w).add ((nlt_hasDerivAt_horner (nltTAL1) w).mul_const y)).add ((nlt_hasDerivAt_horner (nltTAL2) w).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltTAL3) w).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltTAL4) w).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltTAL5) w).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltTAL6) w).mul_const (y ^ 6))).add ((nlt_hasDerivAt_horner (nltTAL7) w).mul_const (y ^ 7))).add ((nlt_hasDerivAt_horner (nltTAL8) w).mul_const (y ^ 8)))
+  have hd : ∀ w, HasDerivAt (fun w => polyHorner (nltTAL0) w + polyHorner (nltTAL1) w * y + polyHorner (nltTAL2) w * y ^ 2 + polyHorner (nltTAL3) w * y ^ 3 + polyHorner (nltTAL4) w * y ^ 4 + polyHorner (nltTAL5) w * y ^ 5 + polyHorner (nltTAL6) w * y ^ 6 + polyHorner (nltTAL7) w * y ^ 7 + polyHorner (nltTAL8) w * y ^ 8) (polyHorner (nltDer nltTAL0) w + polyHorner (nltDer nltTAL1) w * y + polyHorner (nltDer nltTAL2) w * y ^ 2 + polyHorner (nltDer nltTAL3) w * y ^ 3 + polyHorner (nltDer nltTAL4) w * y ^ 4 + polyHorner (nltDer nltTAL5) w * y ^ 5 + polyHorner (nltDer nltTAL6) w * y ^ 6 + polyHorner (nltDer nltTAL7) w * y ^ 7 + polyHorner (nltDer nltTAL8) w * y ^ 8) w := fun w => (((((((((nlt_hasDerivAt_horner (nltTAL0) w).add ((nlt_hasDerivAt_horner (nltTAL1) w).mul_const y)).add ((nlt_hasDerivAt_horner (nltTAL2) w).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltTAL3) w).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltTAL4) w).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltTAL5) w).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltTAL6) w).mul_const (y ^ 6))).add ((nlt_hasDerivAt_horner (nltTAL7) w).mul_const (y ^ 7))).add ((nlt_hasDerivAt_horner (nltTAL8) w).mul_const (y ^ 8)))
   have hAw : ∀ w, nltAA w y = ((1 + 4 * w) * y - (1 - 2 * w)) / 2 := fun w => by unfold nltAA; ring
   rw [hAw] at hA
   rcases le_total y (13 / 64) with cy | cy
@@ -843,7 +843,7 @@ theorem nlt_TA_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 
     have u0lo : 17 / 60 ≤ u0 := by rw [hu0, le_div_iff₀ hpos]; linarith
     have u0hi : u0 ≤ 3 / 7 := by rw [hu0, div_le_iff₀ hpos]; linarith
     have u0u : u0 ≤ u := by nlinarith
-    have mono := hrl_mono hd (a := u0) (b := u) (fun w w1 w2 =>
+    have mono := poly_mono hd (a := u0) (b := u) (fun w w1 w2 =>
       (nlt_f_pos (by linarith) (by linarith) hy1 hy2
         (by nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ 4 * y + 2) (by linarith : (0 : ℝ) ≤ w - u0)])).le)
       le_rfl u0u le_rfl
@@ -856,7 +856,7 @@ theorem nlt_TA_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 
       rw [e]; unfold nltP0; linarith
     rw [nlt_TA_eq] at base
     linarith
-  · have mono := hrl_mono hd (a := 17 / 60) (b := u) (fun w w1 w2 =>
+  · have mono := poly_mono hd (a := 17 / 60) (b := u) (fun w w1 w2 =>
       (nlt_f_pos w1 (by linarith) hy1 hy2
         (by nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ 4 * y + 2) (by linarith : (0 : ℝ) ≤ w - 17 / 60)])).le)
       le_rfl h1 le_rfl
@@ -869,8 +869,8 @@ theorem nlt_TA_pos {u y : ℝ} (h1 : 17 / 60 ≤ u) (h2 : u ≤ 41 / 84) (hy1 : 
 theorem nlt_TB_pos {u y : ℝ} (h1 : 3 / 7 ≤ u) (h2 : u ≤ 41 / 84) (hy0 : 0 ≤ y) (hy1 : y ≤ 2 / 31) :
     0 < nltT u y (nltBB u) := by
   rw [nlt_TB_eq]
-  have hd : ∀ w, HasDerivAt (fun w => lrhHorner (nltTBL0) w + lrhHorner (nltTBL1) w * y + lrhHorner (nltTBL2) w * y ^ 2 + lrhHorner (nltTBL3) w * y ^ 3 + lrhHorner (nltTBL4) w * y ^ 4 + lrhHorner (nltTBL5) w * y ^ 5 + lrhHorner (nltTBL6) w * y ^ 6) (lrhHorner (nltDer nltTBL0) w + lrhHorner (nltDer nltTBL1) w * y + lrhHorner (nltDer nltTBL2) w * y ^ 2 + lrhHorner (nltDer nltTBL3) w * y ^ 3 + lrhHorner (nltDer nltTBL4) w * y ^ 4 + lrhHorner (nltDer nltTBL5) w * y ^ 5 + lrhHorner (nltDer nltTBL6) w * y ^ 6) w := fun w => (((((((nlt_hasDerivAt_horner (nltTBL0) w).add ((nlt_hasDerivAt_horner (nltTBL1) w).mul_const y)).add ((nlt_hasDerivAt_horner (nltTBL2) w).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltTBL3) w).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltTBL4) w).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltTBL5) w).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltTBL6) w).mul_const (y ^ 6)))
-  have pos : ∀ w, 3 / 7 ≤ w → w ≤ 41 / 84 → 0 ≤ lrhHorner (nltDer nltTBL0) w + lrhHorner (nltDer nltTBL1) w * y + lrhHorner (nltDer nltTBL2) w * y ^ 2 + lrhHorner (nltDer nltTBL3) w * y ^ 3 + lrhHorner (nltDer nltTBL4) w * y ^ 4 + lrhHorner (nltDer nltTBL5) w * y ^ 5 + lrhHorner (nltDer nltTBL6) w * y ^ 6 := by
+  have hd : ∀ w, HasDerivAt (fun w => polyHorner (nltTBL0) w + polyHorner (nltTBL1) w * y + polyHorner (nltTBL2) w * y ^ 2 + polyHorner (nltTBL3) w * y ^ 3 + polyHorner (nltTBL4) w * y ^ 4 + polyHorner (nltTBL5) w * y ^ 5 + polyHorner (nltTBL6) w * y ^ 6) (polyHorner (nltDer nltTBL0) w + polyHorner (nltDer nltTBL1) w * y + polyHorner (nltDer nltTBL2) w * y ^ 2 + polyHorner (nltDer nltTBL3) w * y ^ 3 + polyHorner (nltDer nltTBL4) w * y ^ 4 + polyHorner (nltDer nltTBL5) w * y ^ 5 + polyHorner (nltDer nltTBL6) w * y ^ 6) w := fun w => (((((((nlt_hasDerivAt_horner (nltTBL0) w).add ((nlt_hasDerivAt_horner (nltTBL1) w).mul_const y)).add ((nlt_hasDerivAt_horner (nltTBL2) w).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltTBL3) w).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltTBL4) w).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltTBL5) w).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltTBL6) w).mul_const (y ^ 6)))
+  have pos : ∀ w, 3 / 7 ≤ w → w ≤ 41 / 84 → 0 ≤ polyHorner (nltDer nltTBL0) w + polyHorner (nltDer nltTBL1) w * y + polyHorner (nltDer nltTBL2) w * y ^ 2 + polyHorner (nltDer nltTBL3) w * y ^ 3 + polyHorner (nltDer nltTBL4) w * y ^ 4 + polyHorner (nltDer nltTBL5) w * y ^ 5 + polyHorner (nltDer nltTBL6) w * y ^ 6 := by
     intro w w1 w2
     rw [nlt_U_eq0, nlt_U_eq1, nlt_U_eq2, nlt_U_eq3, nlt_U_eq4, nlt_U_eq5, nlt_U_eq6]
     have b0 := nltUb0_pos w1 w2
@@ -891,8 +891,8 @@ theorem nlt_TB_pos {u y : ℝ} (h1 : 3 / 7 ≤ u) (h2 : u ≤ 41 / 84) (hy0 : 0 
     have y6 : y ^ 6 ≤ (2 / 31) ^ 6 := pow_le_pow_left₀ hy0 hy1 6
     norm_num at y2 y6
     linarith
-  have mono := hrl_mono hd pos le_rfl h1 h2
-  have base : 0 < lrhHorner (nltTBL0) (3 / 7) + lrhHorner (nltTBL1) (3 / 7) * y + lrhHorner (nltTBL2) (3 / 7) * y ^ 2 + lrhHorner (nltTBL3) (3 / 7) * y ^ 3 + lrhHorner (nltTBL4) (3 / 7) * y ^ 4 + lrhHorner (nltTBL5) (3 / 7) * y ^ 5 + lrhHorner (nltTBL6) (3 / 7) * y ^ 6 := by
+  have mono := poly_mono hd pos le_rfl h1 h2
+  have base : 0 < polyHorner (nltTBL0) (3 / 7) + polyHorner (nltTBL1) (3 / 7) * y + polyHorner (nltTBL2) (3 / 7) * y ^ 2 + polyHorner (nltTBL3) (3 / 7) * y ^ 3 + polyHorner (nltTBL4) (3 / 7) * y ^ 4 + polyHorner (nltTBL5) (3 / 7) * y ^ 5 + polyHorner (nltTBL6) (3 / 7) * y ^ 6 := by
     rw [← nlt_TB_eq]
     have hB : nltBB (3 / 7) = 0 := by unfold nltBB; norm_num
     rw [hB]
@@ -923,7 +923,7 @@ theorem nlt_case_y231b {u y : ℝ} (u1 : 17 / 60 ≤ u) (u2 : u ≤ 41 / 84)
 /-- **`𝓗S > 0`** on the low-`t` unit domain:
 `1/4 ≤ h ≤ 1/3`, `1/30 ≤ j ≤ 5h/7`, `0 ≤ y`, `y(1 + 2j) ≤ h - j`. -/
 theorem nlt_HS_pos {h j y : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j1 : 1 / 30 ≤ j)
-    (j2 : j ≤ 5 / 7 * h) (hy0 : 0 ≤ y) (hy : y * (1 + 2 * j) ≤ h - j) : 0 < lrhHorner (nltDer (nltL0 j)) h + lrhHorner (nltDer (nltL1 j)) h * y + lrhHorner (nltDer (nltL2 j)) h * y ^ 2 + lrhHorner (nltDer (nltL3 j)) h * y ^ 3 + lrhHorner (nltDer (nltL4 j)) h * y ^ 4 + lrhHorner (nltDer (nltL5 j)) h * y ^ 5 + lrhHorner (nltDer (nltL6 j)) h * y ^ 6 := by
+    (j2 : j ≤ 5 / 7 * h) (hy0 : 0 ≤ y) (hy : y * (1 + 2 * j) ≤ h - j) : 0 < polyHorner (nltDer (nltL0 j)) h + polyHorner (nltDer (nltL1 j)) h * y + polyHorner (nltDer (nltL2 j)) h * y ^ 2 + polyHorner (nltDer (nltL3 j)) h * y ^ 3 + polyHorner (nltDer (nltL4 j)) h * y ^ 4 + polyHorner (nltDer (nltL5 j)) h * y ^ 5 + polyHorner (nltDer (nltL6 j)) h * y ^ 6 := by
   have hy9 : y ≤ 9 / 32 := by nlinarith
   have u1 : 17 / 60 ≤ j + 1 / 4 := by linarith
   have u2 : j + 1 / 4 ≤ 41 / 84 := by linarith
@@ -935,11 +935,11 @@ theorem nlt_HS_pos {h j y : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j1 : 1 /
     unfold nltAA; ring
   have hBw : nltBB (j + 1 / 4) = (7 * (j + 1 / 4) - 3) / 5 := rfl
   -- the cubic Taylor bound
-  have hT : nltT (j + 1 / 4) y (h - 1 / 4) ≤ lrhHorner (nltDer (nltL0 j)) h + lrhHorner (nltDer (nltL1 j)) h * y + lrhHorner (nltDer (nltL2 j)) h * y ^ 2 + lrhHorner (nltDer (nltL3 j)) h * y ^ 3 + lrhHorner (nltDer (nltL4 j)) h * y ^ 4 + lrhHorner (nltDer (nltL5 j)) h * y ^ 5 + lrhHorner (nltDer (nltL6 j)) h * y ^ 6 := by
-    have hd0 : ∀ s, HasDerivAt (fun s => lrhHorner (nltDer (nltL0 j)) s + lrhHorner (nltDer (nltL1 j)) s * y + lrhHorner (nltDer (nltL2 j)) s * y ^ 2 + lrhHorner (nltDer (nltL3 j)) s * y ^ 3 + lrhHorner (nltDer (nltL4 j)) s * y ^ 4 + lrhHorner (nltDer (nltL5 j)) s * y ^ 5 + lrhHorner (nltDer (nltL6 j)) s * y ^ 6) (lrhHorner (nltDer (nltDer (nltL0 j))) s + lrhHorner (nltDer (nltDer (nltL1 j))) s * y + lrhHorner (nltDer (nltDer (nltL2 j))) s * y ^ 2 + lrhHorner (nltDer (nltDer (nltL3 j))) s * y ^ 3 + lrhHorner (nltDer (nltDer (nltL4 j))) s * y ^ 4 + lrhHorner (nltDer (nltDer (nltL5 j))) s * y ^ 5 + lrhHorner (nltDer (nltDer (nltL6 j))) s * y ^ 6) s := fun s => (((((((nlt_hasDerivAt_horner (nltDer (nltL0 j)) s).add ((nlt_hasDerivAt_horner (nltDer (nltL1 j)) s).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer (nltL2 j)) s).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer (nltL3 j)) s).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer (nltL4 j)) s).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer (nltL5 j)) s).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer (nltL6 j)) s).mul_const (y ^ 6)))
-    have hd1 : ∀ s, HasDerivAt (fun s => lrhHorner (nltDer (nltDer (nltL0 j))) s + lrhHorner (nltDer (nltDer (nltL1 j))) s * y + lrhHorner (nltDer (nltDer (nltL2 j))) s * y ^ 2 + lrhHorner (nltDer (nltDer (nltL3 j))) s * y ^ 3 + lrhHorner (nltDer (nltDer (nltL4 j))) s * y ^ 4 + lrhHorner (nltDer (nltDer (nltL5 j))) s * y ^ 5 + lrhHorner (nltDer (nltDer (nltL6 j))) s * y ^ 6) (lrhHorner (nltDer (nltDer (nltDer (nltL0 j)))) s + lrhHorner (nltDer (nltDer (nltDer (nltL1 j)))) s * y + lrhHorner (nltDer (nltDer (nltDer (nltL2 j)))) s * y ^ 2 + lrhHorner (nltDer (nltDer (nltDer (nltL3 j)))) s * y ^ 3 + lrhHorner (nltDer (nltDer (nltDer (nltL4 j)))) s * y ^ 4 + lrhHorner (nltDer (nltDer (nltDer (nltL5 j)))) s * y ^ 5 + lrhHorner (nltDer (nltDer (nltDer (nltL6 j)))) s * y ^ 6) s := fun s => (((((((nlt_hasDerivAt_horner (nltDer (nltDer (nltL0 j))) s).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL1 j))) s).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL2 j))) s).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL3 j))) s).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL4 j))) s).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL5 j))) s).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL6 j))) s).mul_const (y ^ 6)))
-    have hd2 : ∀ s, HasDerivAt (fun s => lrhHorner (nltDer (nltDer (nltDer (nltL0 j)))) s + lrhHorner (nltDer (nltDer (nltDer (nltL1 j)))) s * y + lrhHorner (nltDer (nltDer (nltDer (nltL2 j)))) s * y ^ 2 + lrhHorner (nltDer (nltDer (nltDer (nltL3 j)))) s * y ^ 3 + lrhHorner (nltDer (nltDer (nltDer (nltL4 j)))) s * y ^ 4 + lrhHorner (nltDer (nltDer (nltDer (nltL5 j)))) s * y ^ 5 + lrhHorner (nltDer (nltDer (nltDer (nltL6 j)))) s * y ^ 6) (lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL0 j))))) s + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL1 j))))) s * y + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL2 j))))) s * y ^ 2 + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL3 j))))) s * y ^ 3 + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL4 j))))) s * y ^ 4 + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL5 j))))) s * y ^ 5 + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL6 j))))) s * y ^ 6) s := fun s => (((((((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL0 j)))) s).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL1 j)))) s).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL2 j)))) s).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL3 j)))) s).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL4 j)))) s).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL5 j)))) s).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL6 j)))) s).mul_const (y ^ 6)))
-    have h3 : ∀ s, 1 / 4 ≤ s → s ≤ h → 500000 ≤ lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL0 j))))) s + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL1 j))))) s * y + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL2 j))))) s * y ^ 2 + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL3 j))))) s * y ^ 3 + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL4 j))))) s * y ^ 4 + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL5 j))))) s * y ^ 5 + lrhHorner (nltDer (nltDer (nltDer (nltDer (nltL6 j))))) s * y ^ 6 := fun s s1 s2 =>
+  have hT : nltT (j + 1 / 4) y (h - 1 / 4) ≤ polyHorner (nltDer (nltL0 j)) h + polyHorner (nltDer (nltL1 j)) h * y + polyHorner (nltDer (nltL2 j)) h * y ^ 2 + polyHorner (nltDer (nltL3 j)) h * y ^ 3 + polyHorner (nltDer (nltL4 j)) h * y ^ 4 + polyHorner (nltDer (nltL5 j)) h * y ^ 5 + polyHorner (nltDer (nltL6 j)) h * y ^ 6 := by
+    have hd0 : ∀ s, HasDerivAt (fun s => polyHorner (nltDer (nltL0 j)) s + polyHorner (nltDer (nltL1 j)) s * y + polyHorner (nltDer (nltL2 j)) s * y ^ 2 + polyHorner (nltDer (nltL3 j)) s * y ^ 3 + polyHorner (nltDer (nltL4 j)) s * y ^ 4 + polyHorner (nltDer (nltL5 j)) s * y ^ 5 + polyHorner (nltDer (nltL6 j)) s * y ^ 6) (polyHorner (nltDer (nltDer (nltL0 j))) s + polyHorner (nltDer (nltDer (nltL1 j))) s * y + polyHorner (nltDer (nltDer (nltL2 j))) s * y ^ 2 + polyHorner (nltDer (nltDer (nltL3 j))) s * y ^ 3 + polyHorner (nltDer (nltDer (nltL4 j))) s * y ^ 4 + polyHorner (nltDer (nltDer (nltL5 j))) s * y ^ 5 + polyHorner (nltDer (nltDer (nltL6 j))) s * y ^ 6) s := fun s => (((((((nlt_hasDerivAt_horner (nltDer (nltL0 j)) s).add ((nlt_hasDerivAt_horner (nltDer (nltL1 j)) s).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer (nltL2 j)) s).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer (nltL3 j)) s).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer (nltL4 j)) s).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer (nltL5 j)) s).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer (nltL6 j)) s).mul_const (y ^ 6)))
+    have hd1 : ∀ s, HasDerivAt (fun s => polyHorner (nltDer (nltDer (nltL0 j))) s + polyHorner (nltDer (nltDer (nltL1 j))) s * y + polyHorner (nltDer (nltDer (nltL2 j))) s * y ^ 2 + polyHorner (nltDer (nltDer (nltL3 j))) s * y ^ 3 + polyHorner (nltDer (nltDer (nltL4 j))) s * y ^ 4 + polyHorner (nltDer (nltDer (nltL5 j))) s * y ^ 5 + polyHorner (nltDer (nltDer (nltL6 j))) s * y ^ 6) (polyHorner (nltDer (nltDer (nltDer (nltL0 j)))) s + polyHorner (nltDer (nltDer (nltDer (nltL1 j)))) s * y + polyHorner (nltDer (nltDer (nltDer (nltL2 j)))) s * y ^ 2 + polyHorner (nltDer (nltDer (nltDer (nltL3 j)))) s * y ^ 3 + polyHorner (nltDer (nltDer (nltDer (nltL4 j)))) s * y ^ 4 + polyHorner (nltDer (nltDer (nltDer (nltL5 j)))) s * y ^ 5 + polyHorner (nltDer (nltDer (nltDer (nltL6 j)))) s * y ^ 6) s := fun s => (((((((nlt_hasDerivAt_horner (nltDer (nltDer (nltL0 j))) s).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL1 j))) s).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL2 j))) s).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL3 j))) s).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL4 j))) s).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL5 j))) s).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltL6 j))) s).mul_const (y ^ 6)))
+    have hd2 : ∀ s, HasDerivAt (fun s => polyHorner (nltDer (nltDer (nltDer (nltL0 j)))) s + polyHorner (nltDer (nltDer (nltDer (nltL1 j)))) s * y + polyHorner (nltDer (nltDer (nltDer (nltL2 j)))) s * y ^ 2 + polyHorner (nltDer (nltDer (nltDer (nltL3 j)))) s * y ^ 3 + polyHorner (nltDer (nltDer (nltDer (nltL4 j)))) s * y ^ 4 + polyHorner (nltDer (nltDer (nltDer (nltL5 j)))) s * y ^ 5 + polyHorner (nltDer (nltDer (nltDer (nltL6 j)))) s * y ^ 6) (polyHorner (nltDer (nltDer (nltDer (nltDer (nltL0 j))))) s + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL1 j))))) s * y + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL2 j))))) s * y ^ 2 + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL3 j))))) s * y ^ 3 + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL4 j))))) s * y ^ 4 + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL5 j))))) s * y ^ 5 + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL6 j))))) s * y ^ 6) s := fun s => (((((((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL0 j)))) s).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL1 j)))) s).mul_const y)).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL2 j)))) s).mul_const (y ^ 2))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL3 j)))) s).mul_const (y ^ 3))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL4 j)))) s).mul_const (y ^ 4))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL5 j)))) s).mul_const (y ^ 5))).add ((nlt_hasDerivAt_horner (nltDer (nltDer (nltDer (nltL6 j)))) s).mul_const (y ^ 6)))
+    have h3 : ∀ s, 1 / 4 ≤ s → s ≤ h → 500000 ≤ polyHorner (nltDer (nltDer (nltDer (nltDer (nltL0 j))))) s + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL1 j))))) s * y + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL2 j))))) s * y ^ 2 + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL3 j))))) s * y ^ 3 + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL4 j))))) s * y ^ 4 + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL5 j))))) s * y ^ 5 + polyHorner (nltDer (nltDer (nltDer (nltDer (nltL6 j))))) s * y ^ 6 := fun s s1 s2 =>
       nlt_H4_ge s1 (by linarith) (by linarith) (by linarith) hy0 hy9
     have tay := nlt_taylor3 hd0 hd1 hd2 h3 h1 le_rfl
     rw [nlt_c_eq0, nlt_c_eq1, nlt_c_eq2, nlt_c_eq3, nlt_c_eq4, nlt_c_eq5, nlt_c_eq6, nlt_E_eq0, nlt_E_eq1, nlt_E_eq2, nlt_E_eq3, nlt_E_eq4, nlt_E_eq5, nlt_E_eq6, nlt_R_eq0, nlt_R_eq1, nlt_R_eq2, nlt_R_eq3, nlt_R_eq4, nlt_R_eq5, nlt_R_eq6] at tay

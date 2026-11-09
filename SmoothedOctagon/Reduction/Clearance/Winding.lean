@@ -7,7 +7,7 @@ public import Mathlib.Analysis.SpecialFunctions.Complex.Log
 /-!
 # The left-and-right angular identity and the winding bound
 
-Write a frame `h = sI + tJ + uH + vK₀`, so `s + it = scb_zc h` and `s² + t² - u² - v² = det h = 1`.
+Write a frame `h = sI + tJ + uH + vK₀`, so `s + it = clr_zc h` and `s² + t² - u² - v² = det h = 1`.
 For an admissible trajectory `h' = hY` the `J` coefficients of `h⁻¹h'` and `h'h⁻¹` give
 `ρ + ρ_R = 2 Im(conj(z) z')` with `z = s + it`. The continuous logarithm `L(t) = ∫₀ᵗ z'/z` satisfies
 `z = exp L` (`z(0) = 1`), and `z(T) = e^{iπ/3}` because `h(T) = R`, so `Im L(T) ∈ π/3 + 2πℤ`; it is
@@ -16,11 +16,11 @@ positive since `Im(z'/z) = (ρ + ρ_R)/(2|z|²) > 0`, hence at least `π/3`, and
 
 Main API:
 
-* `scb_zc`: `z(M) = (M₀₀ + M₁₁)/2 + i (M₁₀ - M₀₁)/2`; `scb_zc_normSq_ge` (`|z|² ≥ 1` for
-  `det M = 1`), `scb_angular` (the angular identity).
-* `scb_continuousOn_rho`, `scb_continuousOn_rhoR`: continuity of `ρ(Y)` and `ρ_R(h, Y)` along an
+* `clr_zc`: `z(M) = (M₀₀ + M₁₁)/2 + i (M₁₀ - M₀₁)/2`; `clr_zc_normSq_ge` (`|z|² ≥ 1` for
+  `det M = 1`), `clr_angular` (the angular identity).
+* `clr_continuousOn_rho`, `clr_continuousOn_rhoR`: continuity of `ρ(Y)` and `ρ_R(h, Y)` along an
   admissible trajectory.
-* `scb_winding`: for an admissible `(T, u, h, Y)`, `2π/3 ≤ ∫₀ᵀ (ρ(Y) + ρ_R(h, Y))`.
+* `clr_winding`: for an admissible `(T, u, h, Y)`, `2π/3 ≤ ∫₀ᵀ (ρ(Y) + ρ_R(h, Y))`.
 -/
 
 @[expose] public section
@@ -30,95 +30,95 @@ namespace SmoothedOctagon.Reduction
 open SmoothedPolygons MeasureTheory Set Real Filter Topology
 
 /-- `z(M) = s + it` for `M = sI + tJ + uH + vK₀`. -/
-noncomputable def scb_zc (M : Mat2) : ℂ :=
+noncomputable def clr_zc (M : Mat2) : ℂ :=
   (((M 0 0 + M 1 1) / 2 : ℝ) : ℂ) + (((M 1 0 - M 0 1) / 2 : ℝ) : ℂ) * Complex.I
 
-theorem scb_zc_re (M : Mat2) : (scb_zc M).re = (M 0 0 + M 1 1) / 2 := by simp [scb_zc]
+theorem clr_zc_re (M : Mat2) : (clr_zc M).re = (M 0 0 + M 1 1) / 2 := by simp [clr_zc]
 
-theorem scb_zc_im (M : Mat2) : (scb_zc M).im = (M 1 0 - M 0 1) / 2 := by simp [scb_zc]
+theorem clr_zc_im (M : Mat2) : (clr_zc M).im = (M 1 0 - M 0 1) / 2 := by simp [clr_zc]
 
-theorem scb_continuous_zc : Continuous scb_zc := by
-  unfold scb_zc; fun_prop
+theorem clr_continuous_zc : Continuous clr_zc := by
+  unfold clr_zc; fun_prop
 
 /-- `|z|² = s² + t² = 1 + u² + v² ≥ 1` when `det M = 1`. -/
-theorem scb_zc_normSq_ge {M : Mat2} (hM : M.det = 1) : 1 ≤ Complex.normSq (scb_zc M) := by
-  rw [Complex.normSq_apply, scb_zc_re, scb_zc_im]
+theorem clr_zc_normSq_ge {M : Mat2} (hM : M.det = 1) : 1 ≤ Complex.normSq (clr_zc M) := by
+  rw [Complex.normSq_apply, clr_zc_re, clr_zc_im]
   rw [Matrix.det_fin_two] at hM
   nlinarith [sq_nonneg (M 0 0 - M 1 1), sq_nonneg (M 0 1 + M 1 0)]
 
 /-- **The angular identity**: `2(s t' - t s') = ρ(Y) det h + ρ_R(h, Y)` with `s + it = z(h)`,
 `s' + it' = z(hY)`, for traceless `Y`; both sides are expanded in the entries. -/
-theorem scb_angular (h : Mat2) {Y : Mat2} (hY : Y.trace = 0) :
-    2 * ((scb_zc h).re * (scb_zc (h * Y)).im - (scb_zc h).im * (scb_zc (h * Y)).re) =
-      scb_rho Y * h.det + scb_rhoR h Y := by
+theorem clr_angular (h : Mat2) {Y : Mat2} (hY : Y.trace = 0) :
+    2 * ((clr_zc h).re * (clr_zc (h * Y)).im - (clr_zc h).im * (clr_zc (h * Y)).re) =
+      clr_rho Y * h.det + clr_rhoR h Y := by
   have h11 : Y 1 1 = -Y 0 0 := by rw [Matrix.trace_fin_two] at hY; linarith
-  have key := scb_rhoR_eq h Y
-  rw [scb_zc_re, scb_zc_im, scb_zc_re, scb_zc_im, scb_rho_eq, Matrix.det_fin_two]
+  have key := clr_rhoR_eq h Y
+  rw [clr_zc_re, clr_zc_im, clr_zc_re, clr_zc_im, clr_rho_eq, Matrix.det_fin_two]
   simp only [Matrix.mul_apply, Fin.sum_univ_two]
   rw [h11] at key ⊢
   linear_combination (-1 / 2 : ℝ) * key
 
-theorem scb_continuous_rho : Continuous scb_rho := by
-  unfold scb_rho traceForm
+theorem clr_continuous_rho : Continuous clr_rho := by
+  unfold clr_rho traceForm
   exact continuous_const.mul (continuous_const.matrix_mul continuous_id).matrix_trace
 
-theorem scb_continuous_rhoR : Continuous fun p : Mat2 × Mat2 ↦ scb_rhoR p.1 p.2 := by
-  unfold scb_rhoR
-  exact scb_continuous_rho.comp ((continuous_fst.matrix_mul continuous_snd).matrix_mul
+theorem clr_continuous_rhoR : Continuous fun p : Mat2 × Mat2 ↦ clr_rhoR p.1 p.2 := by
+  unfold clr_rhoR
+  exact clr_continuous_rho.comp ((continuous_fst.matrix_mul continuous_snd).matrix_mul
     continuous_fst.matrix_adjugate)
 
 section Admissible
 
 variable {T : ℝ} {u : ℝ → Fin 3 → ℝ} {h Y : ℝ → Mat2}
 
-theorem scb_continuousOn_frame (hst : IsStateTrajectory T u h Y) :
+theorem clr_continuousOn_frame (hst : IsStateTrajectory T u h Y) :
     ContinuousOn h (Icc 0 T) :=
   Matrix.continuousOn_of_eq_add_integral hst.2.2.2.2.1
 
-theorem scb_continuousOn_state (hst : IsStateTrajectory T u h Y) :
+theorem clr_continuousOn_state (hst : IsStateTrajectory T u h Y) :
     ContinuousOn Y (Icc 0 T) :=
   Matrix.continuousOn_of_eq_add_integral hst.2.2.2.2.2
 
-theorem scb_continuousOn_rho (hst : IsStateTrajectory T u h Y) :
-    ContinuousOn (fun s ↦ scb_rho (Y s)) (Icc 0 T) :=
-  scb_continuous_rho.comp_continuousOn (scb_continuousOn_state hst)
+theorem clr_continuousOn_rho (hst : IsStateTrajectory T u h Y) :
+    ContinuousOn (fun s ↦ clr_rho (Y s)) (Icc 0 T) :=
+  clr_continuous_rho.comp_continuousOn (clr_continuousOn_state hst)
 
-theorem scb_continuousOn_rhoR (hst : IsStateTrajectory T u h Y) :
-    ContinuousOn (fun s ↦ scb_rhoR (h s) (Y s)) (Icc 0 T) := by
+theorem clr_continuousOn_rhoR (hst : IsStateTrajectory T u h Y) :
+    ContinuousOn (fun s ↦ clr_rhoR (h s) (Y s)) (Icc 0 T) := by
   have hp : ContinuousOn (fun s ↦ (h s, Y s)) (Icc 0 T) :=
-    (scb_continuousOn_frame hst).prodMk (scb_continuousOn_state hst)
-  exact scb_continuous_rhoR.comp_continuousOn (f := fun s ↦ (h s, Y s)) hp
+    (clr_continuousOn_frame hst).prodMk (clr_continuousOn_state hst)
+  exact clr_continuous_rhoR.comp_continuousOn (f := fun s ↦ (h s, Y s)) hp
 
 /-- The frame of a state trajectory has derivative `h(s) Y(s)` at interior times. -/
-theorem scb_hasDerivAtEntrywise_frame (hst : IsStateTrajectory T u h Y) {s : ℝ}
+theorem clr_hasDerivAtEntrywise_frame (hst : IsStateTrajectory T u h Y) {s : ℝ}
     (hs : s ∈ Ioo 0 T) : Matrix.HasDerivAtEntrywise h (h s * Y s) s :=
   Matrix.hasDerivAtEntrywise_of_eq_add_integral hst.2.2.2.2.1 hs
-    (((scb_continuousOn_frame hst).mul (scb_continuousOn_state hst)).continuousAt
+    (((clr_continuousOn_frame hst).mul (clr_continuousOn_state hst)).continuousAt
       (Icc_mem_nhds hs.1 hs.2))
 
-theorem scb_hasDerivAt_zc (hst : IsStateTrajectory T u h Y) {s : ℝ} (hs : s ∈ Ioo 0 T) :
-    HasDerivAt (fun r ↦ scb_zc (h r)) (scb_zc (h s * Y s)) s := by
-  have hd := scb_hasDerivAtEntrywise_frame hst hs
-  unfold scb_zc
+theorem clr_hasDerivAt_zc (hst : IsStateTrajectory T u h Y) {s : ℝ} (hs : s ∈ Ioo 0 T) :
+    HasDerivAt (fun r ↦ clr_zc (h r)) (clr_zc (h s * Y s)) s := by
+  have hd := clr_hasDerivAtEntrywise_frame hst hs
+  unfold clr_zc
   exact (((hd 0 0).add (hd 1 1)).div_const 2).ofReal_comp.add
     ((((hd 1 0).sub (hd 0 1)).div_const 2).ofReal_comp.mul_const Complex.I)
 
 /-- **The winding bound**. For an admissible trajectory (`h(0) = I`, `h(T) = R`),
 `∫₀ᵀ (ρ + ρ_R) ≥ 2π/3`, by the continuous logarithm of `z(h)` as in the module description. -/
-theorem scb_winding (hadm : IsReinhardtAdmissible T u h Y) :
-    2 * π / 3 ≤ ∫ s in (0 : ℝ)..T, (scb_rho (Y s) + scb_rhoR (h s) (Y s)) := by
+theorem clr_winding (hadm : IsReinhardtAdmissible T u h Y) :
+    2 * π / 3 ≤ ∫ s in (0 : ℝ)..T, (clr_rho (Y s) + clr_rhoR (h s) (Y s)) := by
   obtain ⟨hst, h0, hTR, -⟩ := hadm
   have hT : 0 < T := hst.1
   have hdet : ∀ s ∈ Icc 0 T, (h s).det = 1 := fun s hs ↦ (hst.2.2.2.1 s hs).1
   have hstar : ∀ s ∈ Icc 0 T, IsStarState (Y s) := fun s hs ↦ (hst.2.2.2.1 s hs).2
-  have hhc := scb_continuousOn_frame hst
-  have hYc := scb_continuousOn_state hst
-  set z : ℝ → ℂ := fun r ↦ scb_zc (h r) with hz
-  set zp : ℝ → ℂ := fun r ↦ scb_zc (h r * Y r) with hzp
-  have hzc : ContinuousOn z (Icc 0 T) := scb_continuous_zc.comp_continuousOn hhc
-  have hzpc : ContinuousOn zp (Icc 0 T) := scb_continuous_zc.comp_continuousOn (hhc.mul hYc)
+  have hhc := clr_continuousOn_frame hst
+  have hYc := clr_continuousOn_state hst
+  set z : ℝ → ℂ := fun r ↦ clr_zc (h r) with hz
+  set zp : ℝ → ℂ := fun r ↦ clr_zc (h r * Y r) with hzp
+  have hzc : ContinuousOn z (Icc 0 T) := clr_continuous_zc.comp_continuousOn hhc
+  have hzpc : ContinuousOn zp (Icc 0 T) := clr_continuous_zc.comp_continuousOn (hhc.mul hYc)
   have hnormSq : ∀ s ∈ Icc 0 T, 1 ≤ Complex.normSq (z s) := fun s hs ↦
-    scb_zc_normSq_ge (hdet s hs)
+    clr_zc_normSq_ge (hdet s hs)
   have hz0 : ∀ s ∈ Icc 0 T, z s ≠ 0 := fun s hs h0 ↦ by
     have := hnormSq s hs
     rw [h0, map_zero] at this
@@ -146,7 +146,7 @@ theorem scb_winding (hadm : IsReinhardtAdmissible T u h Y) :
     hzc.mul (Complex.continuous_exp.comp_continuousOn hLc.neg)
   have hφd : ∀ s ∈ Ioo 0 T, HasDerivAt φ 0 s := by
     intro s hs
-    have h1 := (scb_hasDerivAt_zc hst hs).mul (hLd s hs).neg.cexp
+    have h1 := (clr_hasDerivAt_zc hst hs).mul (hLd s hs).neg.cexp
     convert h1 using 1
     have hzs : z s ≠ 0 := hz0 s (Ioo_subset_Icc_self hs)
     simp only [hf]
@@ -158,11 +158,11 @@ theorem scb_winding (hadm : IsReinhardtAdmissible T u h Y) :
     rw [intervalIntegral.integral_zero] at this
     exact (sub_eq_zero.mp this.symm)
   have hφ0 : φ 0 = 1 := by
-    simp [hφ, hz, hL, h0, scb_zc]
+    simp [hφ, hz, hL, h0, clr_zc]
   have hzT : z T = Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I) := by
     rw [Complex.exp_mul_I, ← Complex.ofReal_cos, ← Complex.ofReal_sin, Real.cos_pi_div_three,
       Real.sin_pi_div_three]
-    simp only [hz, hTR, scb_zc, SmoothedPolygons.R]
+    simp only [hz, hTR, clr_zc, SmoothedPolygons.R]
     simp
   have hexpL : Complex.exp (L T) = Complex.exp (((π / 3 : ℝ) : ℂ) * Complex.I) := by
     rw [← hzT]
@@ -182,15 +182,15 @@ theorem scb_winding (hadm : IsReinhardtAdmissible T u h Y) :
     exact (Complex.imCLM.intervalIntegral_comp_comm hfi).symm
   -- `Im(z'/z) = (ρ + ρ_R)/(2|z|²)`
   have hfim : ∀ r ∈ Icc 0 T, (f r).im =
-      (scb_rho (Y r) + scb_rhoR (h r) (Y r)) / 2 / Complex.normSq (z r) := by
+      (clr_rho (Y r) + clr_rhoR (h r) (Y r)) / 2 / Complex.normSq (z r) := by
     intro r hr
-    have ha := scb_angular (h r) (hstar r hr).1
+    have ha := clr_angular (h r) (hstar r hr).1
     rw [hdet r hr, mul_one] at ha
     simp only [hf, hz, hzp, Complex.div_im]
     rw [← ha]
     ring
-  have hρpos : ∀ r ∈ Icc 0 T, 0 < scb_rho (Y r) + scb_rhoR (h r) (Y r) := fun r hr ↦
-    add_pos (scb_rho_pos (hstar r hr)) (scb_rhoR_pos (hdet r hr) (hstar r hr))
+  have hρpos : ∀ r ∈ Icc 0 T, 0 < clr_rho (Y r) + clr_rhoR (h r) (Y r) := fun r hr ↦
+    add_pos (clr_rho_pos (hstar r hr)) (clr_rhoR_pos (hdet r hr) (hstar r hr))
   have hfim_pos : ∀ r ∈ Icc 0 T, 0 < (f r).im := by
     intro r hr
     rw [hfim r hr]
@@ -198,7 +198,7 @@ theorem scb_winding (hadm : IsReinhardtAdmissible T u h Y) :
     have := hρpos r hr
     positivity
   have hfim_le : ∀ r ∈ Icc 0 T,
-      (f r).im ≤ (scb_rho (Y r) + scb_rhoR (h r) (Y r)) / 2 := by
+      (f r).im ≤ (clr_rho (Y r) + clr_rhoR (h r) (Y r)) / 2 := by
     intro r hr
     rw [hfim r hr]
     exact div_le_self (by linarith [hρpos r hr]) (hnormSq r hr)
@@ -215,12 +215,12 @@ theorem scb_winding (hadm : IsReinhardtAdmissible T u h Y) :
       push Not at hc
       nlinarith [Real.pi_pos]
     exact_mod_cast (show (-1 : ℤ) < n by exact_mod_cast hn')
-  have hρc : ContinuousOn (fun s ↦ scb_rho (Y s) + scb_rhoR (h s) (Y s)) (Icc 0 T) :=
-    (scb_continuousOn_rho hst).add (scb_continuousOn_rhoR hst)
-  have hρi : IntervalIntegrable (fun s ↦ (scb_rho (Y s) + scb_rhoR (h s) (Y s)) / 2) volume 0 T :=
+  have hρc : ContinuousOn (fun s ↦ clr_rho (Y s) + clr_rhoR (h s) (Y s)) (Icc 0 T) :=
+    (clr_continuousOn_rho hst).add (clr_continuousOn_rhoR hst)
+  have hρi : IntervalIntegrable (fun s ↦ (clr_rho (Y s) + clr_rhoR (h s) (Y s)) / 2) volume 0 T :=
     ((hρc.div_const 2).mono (by rw [uIcc_of_le hT.le])).intervalIntegrable
   have hmono : ∫ r in (0 : ℝ)..T, (f r).im ≤
-      ∫ r in (0 : ℝ)..T, (scb_rho (Y r) + scb_rhoR (h r) (Y r)) / 2 :=
+      ∫ r in (0 : ℝ)..T, (clr_rho (Y r) + clr_rhoR (h r) (Y r)) / 2 :=
     intervalIntegral.integral_mono_on hT.le hfimi hρi hfim_le
   rw [intervalIntegral.integral_div] at hmono
   rw [← hIm, hLim] at hmono

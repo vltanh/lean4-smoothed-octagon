@@ -30,7 +30,7 @@ are fixed by the secants and centre stationarity.
 
 namespace SmoothedOctagon
 
-open SmoothedPolygons Real Set Certificates.SmallerShort
+open SmoothedPolygons Real Set SmallerShort
 
 namespace NormalPeriod
 
@@ -41,10 +41,10 @@ noncomputable def df_calc (P : NormalPeriod) : P.M2Calculus := by
   have hnorm : ∀ i, C.m2Norm C.Mloc i = 8 * C.swd i := fun i ↦ by
     unfold CostateCycle.m2Norm
     split_ifs with h
-    · exact C.ifc_norm_fwd h
+    · exact C.wire_norm_fwd h
     · rcases C.lab_cases i with h' | h'
       · exact absurd h' h
-      · exact C.ifc_norm_rev h'
+      · exact C.wire_norm_rev h'
   have hsgn : ∀ i, (C.m2Fwd (i - 1) ↔ C.m2Fwd i) → C.sgn (i - 1) = C.sgn i := by
     intro i h
     simp only [CostateCycle.sgn]
@@ -77,31 +77,31 @@ noncomputable def df_calc (P : NormalPeriod) : P.M2Calculus := by
   · intro i
     rw [hA, Matrix.inv_eq_left_inv (C.Ainv_Amat i), C.Mloc_succ]
   · intro i h
-    rw [hnorm, hnorm, ifc_m2Stat_eq]
-    exact C.ifc_stat_M (hsgn i h)
+    rw [hnorm, hnorm, wire_m2Stat_eq]
+    exact C.wire_stat_M (hsgn i h)
   · intro i h
     rw [hnorm, hnorm]
-    exact C.ifc_turn_sec (hturn i h)
+    exact C.wire_turn_sec (hturn i h)
   · intro i h
-    rw [hnorm, ifc_m2g_eq]
+    rw [hnorm, wire_m2g_eq]
     have := C.swd_fwd (k := i) h
     linarith
   · intro i h
-    rw [hnorm, ifc_m2g_eq]
+    rw [hnorm, wire_m2g_eq]
     rcases C.lab_cases i with h' | h'
     · exact absurd h' h
     · have := C.swd_rev h'
       linarith
   · intro i h1 h2
-    rw [hnorm, ifc_m2F_eq (C.one_lt_q i)]
-    exact C.ifc_floor_in (hin i h1) h2
+    rw [hnorm, wire_m2F_eq (C.one_lt_q i)]
+    exact C.wire_floor_in (hin i h1) h2
   · intro i h1 h2
-    rw [hnorm, ifc_m2F_eq (C.one_lt_q i)]
-    exact C.ifc_floor_out (hin i h1) h2
+    rw [hnorm, wire_m2F_eq (C.one_lt_q i)]
+    exact C.wire_floor_out (hin i h1) h2
   · intro i h
-    exact C.ifc_mc (hin i h)
-  · exact fun hc ↦ P.ifc_cas_lt hc
-  · exact fun hc hD hmix ↦ P.ifc_cas_gt hc hD hmix
+    exact C.wire_mc (hin i h)
+  · exact fun hc ↦ P.wire_cas_lt hc
+  · exact fun hc hD hmix ↦ P.wire_cas_gt hc hD hmix
 
 theorem df_calc_M (P : NormalPeriod) : P.df_calc.M = P.costateCycle.Mloc := rfl
 
@@ -308,7 +308,7 @@ theorem df_defect (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixe
     unfold CostateCycle.m2Norm; simp only [h0, ↓reduceIte]; rfl
   rw [hv_eq] at hv'
   rw [hu_eq] at hu'
-  obtain ⟨x1, y1, z1, w1⟩ := Y.wx_next_rev K'.transport h0
+  obtain ⟨x1, y1, z1, w1⟩ := Y.extr_next_rev K'.transport h0
   rw [hM'] at x1 y1 z1 w1 e11 hE_eq hv' hu'
   have hqpos : 0 < Y.q m := Y.q_pos m
   have hh : Y.Mloc m 0 0 = E * (a ^ 2 + 4) / 16 := by
@@ -338,7 +338,7 @@ theorem df_defect (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixe
   -- the window
   have hd : 0 < Y.swd ((0 : ℕ) : ℤ) := by
     exact lt_of_lt_of_le (by norm_num) (P.swd_ge_of_mixed hmix ((0 : ℕ) : ℤ))
-  have h10 := (P.ifc_negEll hpos hd).2
+  have h10 := (P.wire_negEll hpos hd).2
   obtain ⟨θ, ρw, hθ0, hθ1, hρ4, hre, him, hcost⟩ := P.df_window hc hdet h10 hN (m + 1) h3
   rw [hMw, hLw, hkap, show df_Jt = triY (fun _ ↦ 2 / √3) from rfl] at hre him
   obtain ⟨hAA, hBB⟩ := df_alg_traces (B := B) (A := A) (v := v) (E := E) a0 c0 B0 A0 hptu hkpos

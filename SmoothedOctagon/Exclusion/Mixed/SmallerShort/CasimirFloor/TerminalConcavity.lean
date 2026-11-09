@@ -1,11 +1,11 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW6a
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.TerminalConcavity.Jets
 
 /-!
-# Gate S4, hand proof of W6: terminal concavity
+# Smaller-short window, Casimir floor: terminal concavity
 
-On `x = 13/6`, `e = 13/5`, `r = 13d ∈ [0, 13/19]`, the terminal source `hl46W6F` (`S4HandW6a`)
+On `x = 13/6`, `e = 13/5`, `r = 13d ∈ [0, 13/19]`, the terminal source `casW6F` (`TerminalConcavity/Jets`)
 has a positive third derivative (from six elementary terms and the exact logarithm), so its
 second derivative increases; at `r = 13/19` it is negative (exact rational value), hence `Ψ` is
 concave in `d` on the whole line.
@@ -14,7 +14,7 @@ The terminal value of `Ψ_rr` at `r = 13/19` is evaluated exactly by `norm_num`.
 
 ## Main API
 
-`hl46_W6`.
+`cas_W6`.
 -/
 
 @[expose] public section
@@ -25,10 +25,10 @@ open Set Real
 
 /-! ### Bounds on `[0, 13/19]` -/
 
-theorem hl46_w6_U_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
-    379 / 500 ≤ hl46W6U r ∧ hl46W6U r ≤ 19 / 25 ∧ -7 / 5000 ≤ hl46W6U1 r ∧
-      hl46W6U1 r ≤ -11 / 10000 ∧ 7 / 20000 ≤ hl46W6U2 r ∧ hl46W6U2 r ≤ 1 / 2500 ∧
-      -1 / 15000 ≤ hl46W6U3 r ∧ hl46W6U3 r ≤ -1 / 24000 := by
+theorem cas_w6_U_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
+    379 / 500 ≤ casW6U r ∧ casW6U r ≤ 19 / 25 ∧ -7 / 5000 ≤ casW6U1 r ∧
+      casW6U1 r ≤ -11 / 10000 ∧ 7 / 20000 ≤ casW6U2 r ∧ casW6U2 r ≤ 1 / 2500 ∧
+      -1 / 15000 ≤ casW6U3 r ∧ casW6U3 r ≤ -1 / 24000 := by
   have h7 : (7 : ℝ) ≤ r + 7 := by linarith
   have h77 : r + 7 ≤ 77 / 10 := by linarith
   have p2 : (49 : ℝ) ≤ (r + 7) ^ 2 := by nlinarith
@@ -37,48 +37,48 @@ theorem hl46_w6_U_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
   have p3' : (r + 7) ^ 3 ≤ (77 / 10) ^ 3 := pow_le_pow_left₀ (by linarith) h77 3
   have p4 : (7 : ℝ) ^ 4 ≤ (r + 7) ^ 4 := pow_le_pow_left₀ (by norm_num) h7 4
   have p4' : (r + 7) ^ 4 ≤ (77 / 10) ^ 4 := pow_le_pow_left₀ (by linarith) h77 4
-  have hU1 : ∀ y ∈ Icc (0 : ℝ) (13 / 19), hl46W6U1 y ≤ 0 := by
+  have hU1 : ∀ y ∈ Icc (0 : ℝ) (13 / 19), casW6U1 y ≤ 0 := by
     intro y hy
-    unfold hl46W6U1
+    unfold casW6U1
     have : 0 ≤ 160867 / 6319248 / (y + 7) ^ 2 := by have := hy.1; positivity
     have : (2 * y - 7) / 8112 ≤ 0 := by
       apply div_nonpos_of_nonpos_of_nonneg _ (by norm_num); linarith [hy.2]
     linarith
-  have m1 : hl46W6U r ≤ hl46W6U 0 :=
-    hl46_anti_of (fun y hy => (hl46_j3_U hy.1).1) hU1 le_rfl hr hr'
-  have m2 : hl46W6U (13 / 19) ≤ hl46W6U r :=
-    hl46_anti_of (fun y hy => (hl46_j3_U hy.1).1) hU1 hr hr' le_rfl
-  refine ⟨le_trans (by norm_num [hl46W6U]) m2, m1.trans (by norm_num [hl46W6U]), ?_, ?_, ?_, ?_,
+  have m1 : casW6U r ≤ casW6U 0 :=
+    jet_anti_of (fun y hy => (cas_j3_U hy.1).1) hU1 le_rfl hr hr'
+  have m2 : casW6U (13 / 19) ≤ casW6U r :=
+    jet_anti_of (fun y hy => (cas_j3_U hy.1).1) hU1 hr hr' le_rfl
+  refine ⟨le_trans (by norm_num [casW6U]) m2, m1.trans (by norm_num [casW6U]), ?_, ?_, ?_, ?_,
     ?_, ?_⟩
-  · unfold hl46W6U1
+  · unfold casW6U1
     have : 160867 / 6319248 / (r + 7) ^ 2 ≤ 160867 / 6319248 / 49 :=
       div_le_div_of_nonneg_left (by norm_num) (by norm_num) p2
     have : (2 * 0 - 7) / 8112 ≤ (2 * r - 7) / 8112 := by linarith
     norm_num at *
     linarith
-  · unfold hl46W6U1
+  · unfold casW6U1
     have : 160867 / 6319248 / (77 / 10) ^ 2 ≤ 160867 / 6319248 / (r + 7) ^ 2 :=
       div_le_div_of_nonneg_left (by norm_num) (by positivity) p2'
     have : (2 * r - 7) / 8112 ≤ (2 * (13 / 19) - 7) / 8112 := by linarith
     norm_num at *
     linarith
-  · unfold hl46W6U2
+  · unfold casW6U2
     have : 2 * (160867 / 6319248) / (77 / 10) ^ 3 ≤ 2 * (160867 / 6319248) / (r + 7) ^ 3 :=
       div_le_div_of_nonneg_left (by norm_num) (by positivity) p3'
     norm_num at *
     linarith
-  · unfold hl46W6U2
+  · unfold casW6U2
     have : 2 * (160867 / 6319248) / (r + 7) ^ 3 ≤ 2 * (160867 / 6319248) / 7 ^ 3 :=
       div_le_div_of_nonneg_left (by norm_num) (by norm_num) p3
     norm_num at *
     linarith
-  · unfold hl46W6U3
+  · unfold casW6U3
     have h : 6 * (160867 / 6319248) / (r + 7) ^ 4 ≤ 6 * (160867 / 6319248) / 7 ^ 4 :=
       div_le_div_of_nonneg_left (by norm_num) (by norm_num) p4
     have c : (6 * (160867 / 6319248) : ℝ) / 7 ^ 4 ≤ 1 / 15000 := by norm_num
     rw [neg_div ((r + 7) ^ 4)]
     linarith
-  · unfold hl46W6U3
+  · unfold casW6U3
     have : 6 * (160867 / 6319248) / (77 / 10) ^ 4 ≤ 6 * (160867 / 6319248) / (r + 7) ^ 4 :=
       div_le_div_of_nonneg_left (by norm_num) (by positivity) p4'
     rw [neg_div]
@@ -87,7 +87,7 @@ theorem hl46_w6_U_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
 
 /-! ### The six terms of the third derivative -/
 
-theorem hl46_w6_grpG {U U1 U2 U3 : ℝ} (hU : 379 / 500 ≤ U) (hU' : U ≤ 19 / 25) (h1 : U1 ≤ 0)
+theorem cas_w6_grpG {U U1 U2 U3 : ℝ} (hU : 379 / 500 ≤ U) (hU' : U ≤ 19 / 25) (h1 : U1 ≤ 0)
     (h2 : 0 ≤ U2) (h3 : -1 / 15000 ≤ U3) (h3' : U3 ≤ 0) :
     -1 / 60000 ≤ -47045881 / 60840000 * (U3 * U + 3 * (U2 * U1) + 3 * (U1 * U2) + U * U3) +
       83616986 / 60840000 * U3 := by
@@ -103,7 +103,7 @@ theorem hl46_w6_grpG {U U1 U2 U3 : ℝ} (hU : 379 / 500 ≤ U) (hU' : U ≤ 19 /
   have b : 0 ≤ -(U1 * U2) := by nlinarith
   nlinarith
 
-theorem hl46_w6_grpA {U U1 U2 U3 A : ℝ} (hU : 379 / 500 ≤ U) (h1 : U1 ≤ 0) (h2 : 0 ≤ U2)
+theorem cas_w6_grpA {U U1 U2 U3 A : ℝ} (hU : 379 / 500 ≤ U) (h1 : U1 ≤ 0) (h2 : 0 ≤ U2)
     (h3 : U3 ≤ 0) (hA : 5 ≤ A) (hA' : A ≤ 57 / 10) :
     (227 / 18 * U3 + 0) * (1 / A) + 3 * ((227 / 18 * U2 + 0) * (-1 / A ^ 2)) +
         3 * ((227 / 18 * U1 + 0) * (2 * 1 ^ 2 / A ^ 3)) +
@@ -126,7 +126,7 @@ theorem hl46_w6_grpA {U U1 U2 U3 A : ℝ} (hU : 379 / 500 ≤ U) (h1 : U1 ≤ 0)
   rw [e]
   linarith
 
-theorem hl46_w6_grpB {U U1 U2 U3 B : ℝ} (hU : 379 / 500 ≤ U) (hU' : U ≤ 19 / 25) (h1 : U1 ≤ 0)
+theorem cas_w6_grpB {U U1 U2 U3 B : ℝ} (hU : 379 / 500 ≤ U) (hU' : U ≤ 19 / 25) (h1 : U1 ≤ 0)
     (h2 : 0 ≤ U2) (h3 : U3 ≤ 0) (hB : 95 ≤ B) :
     (98342375 / 457919 * U3 + 0) * (1 / B) + 3 * ((98342375 / 457919 * U2 + 0) * (-11 / B ^ 2)) +
         3 * ((98342375 / 457919 * U1 + 0) * (2 * 11 ^ 2 / B ^ 3)) +
@@ -153,7 +153,7 @@ theorem hl46_w6_grpB {U U1 U2 U3 B : ℝ} (hU : 379 / 500 ≤ U) (hU' : U ≤ 19
   rw [e]
   linarith
 
-theorem hl46_w6_grpC {f f1 f2 f3 h h1 h2 h3 : ℝ} (hf' : f ≤ 14000) (hf1 : -600 ≤ f1)
+theorem cas_w6_grpC {f f1 f2 f3 h h1 h2 h3 : ℝ} (hf' : f ≤ 14000) (hf1 : -600 ≤ f1)
     (hf2 : 0 ≤ f2) (hf3 : f3 ≤ 0) (hh : 0 ≤ h) (hh1 : h1 ≤ 0)
     (hh2 : -(6 / 10 ^ 7) ≤ h2) (hh2' : h2 ≤ 0) (hh3 : 0 ≤ h3) (hh3' : h3 ≤ 21 / 10 ^ 8) :
     f3 * h + 3 * (f2 * h1) + 3 * (f1 * h2) + f * h3 ≤ 21 / 5000 := by
@@ -164,7 +164,7 @@ theorem hl46_w6_grpC {f f1 f2 f3 h h1 h2 h3 : ℝ} (hf' : f ≤ 14000) (hf1 : -6
   norm_num at t3 t4 ⊢
   linarith
 
-theorem hl46_w6_grpL {A B K K' : ℝ} (hA : 5 ≤ A) (hB : 95 ≤ B) (hK : 9025 ≤ K) (hK0 : 0 ≤ K')
+theorem cas_w6_grpL {A B K K' : ℝ} (hA : 5 ≤ A) (hB : 95 ≤ B) (hK : 9025 ≤ K) (hK0 : 0 ≤ K')
     (hK' : K' ≤ 410) :
     2 * 1 ^ 3 / A ^ 3 + 2 * 11 ^ 3 / B ^ 3 - (-(216 * K') / K ^ 2 + 2 * K' ^ 3 / K ^ 3) ≤
       21 / 1000 := by
@@ -182,8 +182,8 @@ theorem hl46_w6_grpL {A B K K' : ℝ} (hA : 5 ≤ A) (hB : 95 ≤ B) (hK : 9025 
   linarith
 
 /-- The building blocks of `1/K` and of `n - mu` on `[0, 13/19]`. -/
-theorem hl46_w6_C_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
-    let U := hl46W6U r; let U1 := hl46W6U1 r; let U2 := hl46W6U2 r; let U3 := hl46W6U3 r
+theorem cas_w6_C_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
+    let U := casW6U r; let U1 := casW6U1 r; let U2 := casW6U2 r; let U3 := casW6U3 r
     let n := 3690640915 / 249774 + 157928748 / 249774 * r
     let m := 697700705 / 249774 + 394433796 / 249774 * r
     0 ≤ n - m * U ∧ n - m * U ≤ 14000 ∧
@@ -191,20 +191,20 @@ theorem hl46_w6_C_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
       157928748 / 249774 - (394433796 / 249774 * U + m * U1) ≤ 0 ∧
       0 ≤ 0 - (0 * U + 2 * (394433796 / 249774 * U1) + m * U2) ∧
       0 - (0 * U + 3 * (0 * U1) + 3 * (394433796 / 249774 * U2) + m * U3) ≤ 0 ∧
-      0 ≤ 1 / hl46W6K r ∧ -(72 * r + 360) / hl46W6K r ^ 2 ≤ 0 ∧
-      -(6 / 10 ^ 7) ≤ (2 * (72 * r + 360) ^ 2 - 72 * hl46W6K r) / hl46W6K r ^ 3 ∧
-      (2 * (72 * r + 360) ^ 2 - 72 * hl46W6K r) / hl46W6K r ^ 3 ≤ 0 ∧
-      0 ≤ (432 * (72 * r + 360) * hl46W6K r - 6 * (72 * r + 360) ^ 3) / hl46W6K r ^ 4 ∧
-      (432 * (72 * r + 360) * hl46W6K r - 6 * (72 * r + 360) ^ 3) / hl46W6K r ^ 4 ≤
+      0 ≤ 1 / casW6K r ∧ -(72 * r + 360) / casW6K r ^ 2 ≤ 0 ∧
+      -(6 / 10 ^ 7) ≤ (2 * (72 * r + 360) ^ 2 - 72 * casW6K r) / casW6K r ^ 3 ∧
+      (2 * (72 * r + 360) ^ 2 - 72 * casW6K r) / casW6K r ^ 3 ≤ 0 ∧
+      0 ≤ (432 * (72 * r + 360) * casW6K r - 6 * (72 * r + 360) ^ 3) / casW6K r ^ 4 ∧
+      (432 * (72 * r + 360) * casW6K r - 6 * (72 * r + 360) ^ 3) / casW6K r ^ 4 ≤
         21 / 10 ^ 8 := by
   intro U U1 U2 U3 n m
-  obtain ⟨u0, u0', u1, u1', u2, u2', u3, u3'⟩ := hl46_w6_U_bounds hr hr'
+  obtain ⟨u0, u0', u1, u1', u2, u2', u3, u3'⟩ := cas_w6_U_bounds hr hr'
   have hn : 14700 ≤ n ∧ n ≤ 15300 := by constructor <;> (simp only [n]; linarith)
   have hm : 2700 ≤ m ∧ m ≤ 3900 := by constructor <;> (simp only [m]; linarith)
-  have hK : 9025 ≤ hl46W6K r := hl46_W6K_pos hr
-  have hK' : hl46W6K r ≤ 9289 := by unfold hl46W6K; nlinarith
+  have hK : 9025 ≤ casW6K r := cas_W6K_pos hr
+  have hK' : casW6K r ≤ 9289 := by unfold casW6K; nlinarith
   have hD : 360 ≤ 72 * r + 360 ∧ 72 * r + 360 ≤ 410 := by constructor <;> linarith
-  have hK0 : 0 < hl46W6K r := by linarith
+  have hK0 : 0 < casW6K r := by linarith
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, by positivity, ?_, ?_, ?_, ?_, ?_⟩
   · nlinarith
   · nlinarith
@@ -214,23 +214,23 @@ theorem hl46_w6_C_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
   · nlinarith
   · exact div_nonpos_of_nonpos_of_nonneg (by linarith) (by positivity)
   · rw [le_div_iff₀ (by positivity)]
-    have : (9025 : ℝ) ^ 3 ≤ hl46W6K r ^ 3 := pow_le_pow_left₀ (by norm_num) hK 3
+    have : (9025 : ℝ) ^ 3 ≤ casW6K r ^ 3 := pow_le_pow_left₀ (by norm_num) hK 3
     nlinarith
   · apply div_nonpos_of_nonpos_of_nonneg _ (by positivity)
     nlinarith
   · apply div_nonneg _ (by positivity)
-    have e : 432 * (72 * r + 360) * hl46W6K r - 6 * (72 * r + 360) ^ 3 =
-        6 * (72 * r + 360) * (72 * hl46W6K r - (72 * r + 360) ^ 2) := by ring
+    have e : 432 * (72 * r + 360) * casW6K r - 6 * (72 * r + 360) ^ 3 =
+        6 * (72 * r + 360) * (72 * casW6K r - (72 * r + 360) ^ 2) := by ring
     rw [e]
-    have a : 0 ≤ 72 * hl46W6K r - (72 * r + 360) ^ 2 := by nlinarith
+    have a : 0 ≤ 72 * casW6K r - (72 * r + 360) ^ 2 := by nlinarith
     have b : 0 ≤ 6 * (72 * r + 360) := by linarith
     exact mul_nonneg b a
   · rw [div_le_iff₀ (by positivity)]
-    have : (9025 : ℝ) ^ 4 ≤ hl46W6K r ^ 4 := pow_le_pow_left₀ (by norm_num) hK 4
-    have e : 432 * (72 * r + 360) * hl46W6K r - 6 * (72 * r + 360) ^ 3 =
-        6 * (72 * r + 360) * (72 * hl46W6K r - (72 * r + 360) ^ 2) := by ring
+    have : (9025 : ℝ) ^ 4 ≤ casW6K r ^ 4 := pow_le_pow_left₀ (by norm_num) hK 4
+    have e : 432 * (72 * r + 360) * casW6K r - 6 * (72 * r + 360) ^ 3 =
+        6 * (72 * r + 360) * (72 * casW6K r - (72 * r + 360) ^ 2) := by ring
     rw [e]
-    have a : 72 * hl46W6K r - (72 * r + 360) ^ 2 ≤ 72 * 9289 - 360 ^ 2 := by nlinarith
+    have a : 72 * casW6K r - (72 * r + 360) ^ 2 ≤ 72 * 9289 - 360 ^ 2 := by nlinarith
     have b := mul_le_mul hD.2 a (by nlinarith) (by norm_num)
     nlinarith
 
@@ -238,61 +238,61 @@ theorem hl46_w6_C_bounds {r : ℝ} (hr : 0 ≤ r) (hr' : r ≤ 13 / 19) :
 
 /-- A third derivative `≥ 0` on `[a, b]` and `f'' ≤ 0` at `b` make `f` concave there, so `f`
 exceeds any `c` below both ends. -/
-theorem hl46_concave_of_J3 {f f₁ f₂ f₃ : ℝ → ℝ} {a b c : ℝ}
-    (hJ : ∀ x ∈ Icc a b, HL46J3 f f₁ f₂ f₃ x) (h3 : ∀ x ∈ Icc a b, 0 ≤ f₃ x) (hb2 : f₂ b ≤ 0)
+theorem cas_concave_of_J3 {f f₁ f₂ f₃ : ℝ → ℝ} {a b c : ℝ}
+    (hJ : ∀ x ∈ Icc a b, ThirdJet f f₁ f₂ f₃ x) (h3 : ∀ x ∈ Icc a b, 0 ≤ f₃ x) (hb2 : f₂ b ≤ 0)
     (ha : c < f a) (hb : c < f b) {x : ℝ} (hx : x ∈ Icc a b) : c < f x :=
-  hl46_concave_lt (fun _ hy => (hJ _ hy).toJ)
-    (fun _ hy => (hl46_mono_of (fun z hz => (hJ z hz).2.2) h3 hy.1 hy.2 le_rfl).trans hb2) ha hb hx
+  jet_concave_lt (fun _ hy => (hJ _ hy).toJ)
+    (fun _ hy => (jet_mono_of (fun z hz => (hJ z hz).2.2) h3 hy.1 hy.2 le_rfl).trans hb2) ha hb hx
 
 /-- **W6**: at `x = 13/6`, `e = 13/5`, `Ψ` is concave in
 `d`, so it exceeds any `c` below both ends. -/
-theorem hl46_W6 {c d : ℝ} (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (h0 : c < hl46PsiC (13 / 6) 0 (13 / 5))
-    (h1 : c < hl46PsiC (13 / 6) (1 / 19) (13 / 5)) : c < hl46PsiC (13 / 6) d (13 / 5) := by
+theorem cas_W6 {c d : ℝ} (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (h0 : c < casPsiC (13 / 6) 0 (13 / 5))
+    (h1 : c < casPsiC (13 / 6) (1 / 19) (13 / 5)) : c < casPsiC (13 / 6) d (13 / 5) := by
   have hJ := fun x (hx : x ∈ Icc (0 : ℝ) (13 / 19)) =>
-    HL46J3.add (HL46J3.sub
-      (HL46J3.add (HL46J3.const_mul (-47045881 / 60840000)
-        (HL46J3.mul (hl46_j3_U hx.1) (hl46_j3_U hx.1)))
-        (HL46J3.const_mul (83616986 / 60840000) (hl46_j3_U hx.1)))
-      (HL46J3.const_mul (1 / 7) (HL46J3.add (HL46J3.add (HL46J3.add (HL46J3.add
-        (HL46J3.const_mul (25 / 66) (hl46_j3_U hx.1))
-        (HL46J3.mul (HL46J3.add (HL46J3.const_mul (227 / 18) (hl46_j3_U hx.1))
-          (hl46_j3_const (-2077 / 576) x)) (hl46_j3_inv 1 5 (by linarith [hx.1]))))
-        (HL46J3.mul (HL46J3.add (HL46J3.const_mul (98342375 / 457919) (hl46_j3_U hx.1))
-          (hl46_j3_const (-20425821365 / 87920448) x)) (hl46_j3_inv 11 95 (by linarith [hx.1]))))
-        (HL46J3.mul (HL46J3.sub (hl46_j3_aff (3690640915 / 249774) (157928748 / 249774) x)
-          (HL46J3.mul (hl46_j3_aff (697700705 / 249774) (394433796 / 249774) x) (hl46_j3_U hx.1)))
-          (hl46_j3_invK hx.1)))
-        (HL46J3.sub (HL46J3.add (hl46_j3_log 1 5 (by linarith [hx.1]))
-          (hl46_j3_log 11 95 (by linarith [hx.1]))) (hl46_j3_logK hx.1)))))
-      (hl46_j3_const (-25230529 / 60840000 - 1 / 7 * (-56 / 33 + log 12)) x)
-  have e0 := hl46_w6_eq (r := 0) le_rfl
-  have e1 := hl46_w6_eq (r := 13 / 19) (by norm_num)
-  have ed := hl46_w6_eq (r := 13 * d) (by linarith)
+    ThirdJet.add (ThirdJet.sub
+      (ThirdJet.add (ThirdJet.const_mul (-47045881 / 60840000)
+        (ThirdJet.mul (cas_j3_U hx.1) (cas_j3_U hx.1)))
+        (ThirdJet.const_mul (83616986 / 60840000) (cas_j3_U hx.1)))
+      (ThirdJet.const_mul (1 / 7) (ThirdJet.add (ThirdJet.add (ThirdJet.add (ThirdJet.add
+        (ThirdJet.const_mul (25 / 66) (cas_j3_U hx.1))
+        (ThirdJet.mul (ThirdJet.add (ThirdJet.const_mul (227 / 18) (cas_j3_U hx.1))
+          (cas_j3_const (-2077 / 576) x)) (cas_j3_inv 1 5 (by linarith [hx.1]))))
+        (ThirdJet.mul (ThirdJet.add (ThirdJet.const_mul (98342375 / 457919) (cas_j3_U hx.1))
+          (cas_j3_const (-20425821365 / 87920448) x)) (cas_j3_inv 11 95 (by linarith [hx.1]))))
+        (ThirdJet.mul (ThirdJet.sub (cas_j3_aff (3690640915 / 249774) (157928748 / 249774) x)
+          (ThirdJet.mul (cas_j3_aff (697700705 / 249774) (394433796 / 249774) x) (cas_j3_U hx.1)))
+          (cas_j3_invK hx.1)))
+        (ThirdJet.sub (ThirdJet.add (cas_j3_log 1 5 (by linarith [hx.1]))
+          (cas_j3_log 11 95 (by linarith [hx.1]))) (cas_j3_logK hx.1)))))
+      (cas_j3_const (-25230529 / 60840000 - 1 / 7 * (-56 / 33 + log 12)) x)
+  have e0 := cas_w6_eq (r := 0) le_rfl
+  have e1 := cas_w6_eq (r := 13 / 19) (by norm_num)
+  have ed := cas_w6_eq (r := 13 * d) (by linarith)
   rw [show (0 : ℝ) / 13 = 0 by norm_num] at e0
   rw [show (13 / 19 : ℝ) / 13 = 1 / 19 by norm_num] at e1
   rw [show 13 * d / 13 = d by ring] at ed
   rw [e0] at h0
   rw [e1] at h1
   rw [ed]
-  refine hl46_concave_of_J3 (f := hl46W6F) hJ (fun x hx => ?_) ?_ h0 h1
+  refine cas_concave_of_J3 (f := casW6F) hJ (fun x hx => ?_) ?_ h0 h1
     ⟨by linarith, by linarith⟩
   · obtain ⟨hx0, hx1⟩ := hx
-    obtain ⟨u0, u0', u1, u1', u2, u2', u3, u3'⟩ := hl46_w6_U_bounds hx0 hx1
-    obtain ⟨-, f0', f1, f1', f2, f3, k0, k1, k2, k2', k3, k3'⟩ := hl46_w6_C_bounds hx0 hx1
-    have G := hl46_w6_grpG (U1 := hl46W6U1 x) (U2 := hl46W6U2 x) u0 u0' (by linarith) (by linarith) u3
+    obtain ⟨u0, u0', u1, u1', u2, u2', u3, u3'⟩ := cas_w6_U_bounds hx0 hx1
+    obtain ⟨-, f0', f1, f1', f2, f3, k0, k1, k2, k2', k3, k3'⟩ := cas_w6_C_bounds hx0 hx1
+    have G := cas_w6_grpG (U1 := casW6U1 x) (U2 := casW6U2 x) u0 u0' (by linarith) (by linarith) u3
       (by linarith)
-    have A := hl46_w6_grpA (A := 1 * x + 5) (U1 := hl46W6U1 x) (U2 := hl46W6U2 x)
-      (U3 := hl46W6U3 x) u0 (by linarith) (by linarith) (by linarith)
+    have A := cas_w6_grpA (A := 1 * x + 5) (U1 := casW6U1 x) (U2 := casW6U2 x)
+      (U3 := casW6U3 x) u0 (by linarith) (by linarith) (by linarith)
       (by linarith) (by linarith)
-    have B := hl46_w6_grpB (B := 11 * x + 95) (U1 := hl46W6U1 x) (U2 := hl46W6U2 x)
-      (U3 := hl46W6U3 x) u0 u0' (by linarith) (by linarith) (by linarith)
+    have B := cas_w6_grpB (B := 11 * x + 95) (U1 := casW6U1 x) (U2 := casW6U2 x)
+      (U3 := casW6U3 x) u0 u0' (by linarith) (by linarith) (by linarith)
       (by linarith)
-    have C := hl46_w6_grpC f0' f1 f2 f3 k0 k1 k2 k2' k3 k3'
-    have L := hl46_w6_grpL (A := 1 * x + 5) (B := 11 * x + 95) (K := hl46W6K x)
-      (K' := 72 * x + 360) (by linarith) (by linarith) (hl46_W6K_pos hx0) (by linarith)
+    have C := cas_w6_grpC f0' f1 f2 f3 k0 k1 k2 k2' k3 k3'
+    have L := cas_w6_grpL (A := 1 * x + 5) (B := 11 * x + 95) (K := casW6K x)
+      (K' := 72 * x + 360) (by linarith) (by linarith) (cas_W6K_pos hx0) (by linarith)
       (by linarith)
-    have V : 25 / 66 * hl46W6U3 x ≤ 0 := by linarith
+    have V : 25 / 66 * casW6U3 x ≤ 0 := by linarith
     linarith only [G, A, B, C, L, V]
-  · norm_num [hl46W6U, hl46W6U1, hl46W6U2, hl46W6K]
+  · norm_num [casW6U, casW6U1, casW6U2, casW6K]
 
 end SmoothedOctagon

@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTCircuit
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Circuit
 
 /-!
-# Case M2, forward successor by hand: the low-`t` unit sign on the faces `h = 1/4` and `j = 5h/7`
+# Case M2, forward successor: the low-`t` unit sign on the faces `h = 1/4` and `j = 5h/7`
 
 The circuit `S = ∑ nltStᵢ(t, x) yⁱ` is positive
 

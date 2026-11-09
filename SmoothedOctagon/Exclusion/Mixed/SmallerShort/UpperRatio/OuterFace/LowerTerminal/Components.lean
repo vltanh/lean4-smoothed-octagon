@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandTermDefs
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.OuterFace.LowerTerminal.Defs
 
 /-!
-# S2 hand signs: the lower-shape terminal curve, component signs
+# Smaller-short window, upper ratio: the lower-shape terminal curve, component signs
 
 The univariate component signs of the lower-shape terminal curve on `3/4 ≤ r ≤ 49/60`, each
 stated for the cleared numerator of the bounded quantity (with its positive clearing factor
@@ -15,7 +15,7 @@ The rule is applied to each `n` separately.
 
 ## Main API
 
-* `hl2_rbox`, and `hl2_bAl_pos`, …, `hl2_bT` (19 signs).
+* `ur_rbox`, and `ur_bAl_pos`, …, `ur_bT` (19 signs).
 -/
 
 @[expose] public section
@@ -23,117 +23,117 @@ The rule is applied to each `n` separately.
 namespace SmoothedOctagon
 
 /-- The monomial facts of the termwise rule in `s = r - 3/4 ∈ [0, 1/15]`. -/
-theorem hl2_rbox {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+theorem ur_rbox {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
     (∀ n : ℕ, 0 ≤ (r - 3 / 4) ^ n) ∧ (∀ n : ℕ, (r - 3 / 4) ^ n ≤ (1 / 15) ^ n) :=
   ⟨fun n => pow_nonneg (by linarith) n, fun n => pow_le_pow_left₀ (by linarith) (by linarith) n⟩
 
-theorem hl2_bAl_pos {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < hl2Asl r := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Asl
+theorem ur_bAl_pos {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < urAsl r := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urAsl
   linarith [hp 6, hu 5, hp 4, hp 3, hu 2, hu 1]
 
-theorem hl2_bAl_lt5 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < 5 * 60197437440 * r ^ 2 - hl2Asl r := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Asl
+theorem ur_bAl_lt5 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < 5 * 60197437440 * r ^ 2 - urAsl r := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urAsl
   linarith [hu 6, hp 5, hu 4, hu 3, hp 2, hp 1]
 
-theorem hl2_bAdl_gt {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < 17 * 60197437440 * r ^ 3 + (r * hl2Asl1 r - 2 * hl2Asl r) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Asl hl2Asl1
+theorem ur_bAdl_gt {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < 17 * 60197437440 * r ^ 3 + (r * urAsl1 r - 2 * urAsl r) := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urAsl urAsl1
   linarith [hp 6, hu 5, hu 4, hp 3, hp 2, hp 1]
 
-theorem hl2_bAdl_neg {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < -(r * hl2Asl1 r - 2 * hl2Asl r) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Asl hl2Asl1
+theorem ur_bAdl_neg {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < -(r * urAsl1 r - 2 * urAsl r) := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urAsl urAsl1
   linarith [hu 6, hp 5, hp 4, hu 3, hu 2, hp 1]
 
-theorem hl2_bAddl_lt {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < 53 * 60197437440 * r ^ 4 - (r ^ 2 * hl2Asl2 r - 4 * r * hl2Asl1 r + 6 * hl2Asl r) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Asl hl2Asl1 hl2Asl2
+theorem ur_bAddl_lt {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < 53 * 60197437440 * r ^ 4 - (r ^ 2 * urAsl2 r - 4 * r * urAsl1 r + 6 * urAsl r) := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urAsl urAsl1 urAsl2
   linarith [hu 6, hp 5, hp 4, hp 3, hp 2, hp 1]
 
-theorem hl2_bLddl {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < -(80263249920 * r ^ 4) - (r ^ 2 * hl2Lsl2 r - 4 * r * hl2Lsl1 r + 6 * hl2Lsl r) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Lsl hl2Lsl1 hl2Lsl2
+theorem ur_bLddl {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < -(80263249920 * r ^ 4) - (r ^ 2 * urLsl2 r - 4 * r * urLsl1 r + 6 * urLsl r) := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urLsl urLsl1 urLsl2
   linarith [hu 6, hu 5, hu 4, hu 3, hu 2, hu 1]
 
-theorem hl2_bQddl {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < -(17 / 10) * (887040 * r + 6773760) ^ 3 - (hl2Qsl2 r * (887040 * r + 6773760) ^ 2 - 2 * 887040 * hl2Qsl1 r * (887040 * r + 6773760) + 2 * 887040 ^ 2 * hl2Qsl r) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Qsl hl2Qsl1 hl2Qsl2
+theorem ur_bQddl {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < -(17 / 10) * (887040 * r + 6773760) ^ 3 - (urQsl2 r * (887040 * r + 6773760) ^ 2 - 2 * 887040 * urQsl1 r * (887040 * r + 6773760) + 2 * 887040 ^ 2 * urQsl r) := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urQsl urQsl1 urQsl2
   linarith [hu 5, hu 4, hu 3, hp 2, hu 1]
 
-theorem hl2_bAh_pos {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < hl2Ash r := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Ash
+theorem ur_bAh_pos {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < urAsh r := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urAsh
   linarith [hp 6, hu 5, hp 4, hp 3, hu 2, hu 1]
 
-theorem hl2_bAh_lt5 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < 5 * 8360755200 * r ^ 2 - hl2Ash r := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Ash
+theorem ur_bAh_lt5 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < 5 * 8360755200 * r ^ 2 - urAsh r := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urAsh
   linarith [hu 6, hp 5, hu 4, hu 3, hp 2, hp 1]
 
-theorem hl2_bAdh_gt {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < 17 * 8360755200 * r ^ 3 + (r * hl2Ash1 r - 2 * hl2Ash r) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Ash hl2Ash1
+theorem ur_bAdh_gt {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < 17 * 8360755200 * r ^ 3 + (r * urAsh1 r - 2 * urAsh r) := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urAsh urAsh1
   linarith [hp 6, hu 5, hu 4, hp 3, hp 2, hp 1]
 
-theorem hl2_bAdh_neg {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < -(r * hl2Ash1 r - 2 * hl2Ash r) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Ash hl2Ash1
+theorem ur_bAdh_neg {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < -(r * urAsh1 r - 2 * urAsh r) := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urAsh urAsh1
   linarith [hu 6, hp 5, hp 4, hu 3, hu 2, hp 1]
 
-theorem hl2_bAddh_lt {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < 53 * 8360755200 * r ^ 4 - (r ^ 2 * hl2Ash2 r - 4 * r * hl2Ash1 r + 6 * hl2Ash r) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Ash hl2Ash1 hl2Ash2
+theorem ur_bAddh_lt {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < 53 * 8360755200 * r ^ 4 - (r ^ 2 * urAsh2 r - 4 * r * urAsh1 r + 6 * urAsh r) := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urAsh urAsh1 urAsh2
   linarith [hu 6, hp 5, hp 4, hp 3, hp 2, hp 1]
 
-theorem hl2_bLddh {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < -(11147673600 * r ^ 4) - (r ^ 2 * hl2Lsh2 r - 4 * r * hl2Lsh1 r + 6 * hl2Lsh r) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Lsh hl2Lsh2 hl2Lsh1
+theorem ur_bLddh {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < -(11147673600 * r ^ 4) - (r ^ 2 * urLsh2 r - 4 * r * urLsh1 r + 6 * urLsh r) := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urLsh urLsh2 urLsh1
   linarith [hu 6, hu 5, hu 4, hu 3, hu 2, hu 1]
 
-theorem hl2_bQddh {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
-    0 < -(17 / 10) * (123200 * r + 940800) ^ 3 - (hl2Qsh2 r * (123200 * r + 940800) ^ 2 - 2 * 123200 * hl2Qsh1 r * (123200 * r + 940800) + 2 * 123200 ^ 2 * hl2Qsh r) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
-  unfold hl2Qsh hl2Qsh2 hl2Qsh1
+theorem ur_bQddh {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+    0 < -(17 / 10) * (123200 * r + 940800) ^ 3 - (urQsh2 r * (123200 * r + 940800) ^ 2 - 2 * 123200 * urQsh1 r * (123200 * r + 940800) + 2 * 123200 ^ 2 * urQsh r) := by
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
+  unfold urQsh urQsh2 urQsh1
   linarith [hu 5, hu 4, hu 3, hp 2, hu 1]
 
-theorem hl2_bK0 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+theorem ur_bK0 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
     0 < 11 / 400 * (504 + 2493 * r - 2261 * r ^ 2) - (r * (84 - 61 * r)) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
   linarith [hu 2, hu 1]
 
-theorem hl2_bK1 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+theorem ur_bK1 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
     0 < ((84 - 122 * r) * (504 + 2493 * r - 2261 * r ^ 2) - (r * (84 - 61 * r)) * (2493 - 4522 * r)) - 7 / 500 * (504 + 2493 * r - 2261 * r ^ 2) ^ 2 := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
   linarith [hu 4, hu 3, hp 2, hp 1]
 
-theorem hl2_bK2 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+theorem ur_bK2 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
     0 < 1 / 50 * (504 + 2493 * r - 2261 * r ^ 2) ^ 2 - ((84 - 122 * r) * (504 + 2493 * r - 2261 * r ^ 2) - (r * (84 - 61 * r)) * (2493 - 4522 * r)) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
   linarith [hp 4, hp 3, hu 2, hu 1]
 
-theorem hl2_bK3 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+theorem ur_bK3 {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
     0 < 1 / 12 * (504 + 2493 * r - 2261 * r ^ 2) ^ 3 - ((-122 * (504 + 2493 * r - 2261 * r ^ 2) - (r * (84 - 61 * r)) * (-4522)) * (504 + 2493 * r - 2261 * r ^ 2) - 2 * (2493 - 4522 * r) * ((84 - 122 * r) * (504 + 2493 * r - 2261 * r ^ 2) - (r * (84 - 61 * r)) * (2493 - 4522 * r))) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
   linarith [hu 6, hu 5, hp 4, hp 3, hu 2, hu 1]
 
-theorem hl2_bT {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
+theorem ur_bT {r : ℝ} (h0 : 3 / 4 ≤ r) (h1 : r ≤ 49 / 60) :
     0 < 7 / 20 * r ^ 2 * (504 + 3645 * r - 1109 * r ^ 2) ^ 3 - (1152 * (-r * (-2218) * (504 + 3645 * r - 1109 * r ^ 2) - 2 * (3645 - 2218 * r) * ((504 + 3645 * r - 1109 * r ^ 2) - r * (3645 - 2218 * r))) * r ^ 2 + (((-2218) * (504 + 3645 * r - 1109 * r ^ 2) - (3645 - 2218 * r) ^ 2) * (504 + 3645 * r - 1109 * r ^ 2) * r ^ 2 + (504 + 3645 * r - 1109 * r ^ 2) ^ 3)) := by
-  obtain ⟨hp, hu⟩ := hl2_rbox h0 h1
+  obtain ⟨hp, hu⟩ := ur_rbox h0 h1
   linarith [hu 8, hp 7, hp 6, hu 5, hu 4, hp 3, hp 2, hp 1]
 
 

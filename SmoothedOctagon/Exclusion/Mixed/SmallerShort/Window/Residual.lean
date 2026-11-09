@@ -1,8 +1,8 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.Window
-public import SmoothedOctagon.Exclusion.Mixed.Short.Point
-public import SmoothedOctagon.Exclusion.Mixed.Short.Centre
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Secant
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Centre
 
 /-!
 # Case M2, smaller-short side: the window data in the cover's coordinates
@@ -25,7 +25,7 @@ quantities are those of the window (`ss_pt_u`: the cover's `u` is the actual com
 
 namespace SmoothedOctagon
 
-open Certificates.SmallerShort
+open SmallerShort
 
 namespace M2Short
 

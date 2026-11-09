@@ -11,9 +11,9 @@ descriptions (`IsPiecewiseVertex`) of neighbouring intervals concatenate, and a 
 
 Main API:
 
-* `qrsb_isPiecewiseVertex_append`: `n` pieces on `[a, b]` and `m` pieces on `[b, c]` give `n + m`
+* `switch_isPiecewiseVertex_append`: `n` pieces on `[a, b]` and `m` pieces on `[b, c]` give `n + m`
   pieces on `[a, c]` (no merging).
-* `qrsb_isPiecewiseVertex_of_local`: if every `t₀ ∈ [0, T]` has a `δ > 0` such that every
+* `switch_isPiecewiseVertex_of_local`: if every `t₀ ∈ [0, T]` has a `δ > 0` such that every
   subinterval `[a, b]` of `[0, T]` inside `(t₀ - δ, t₀ + δ)` has a finite vertex description, then
   so has `[0, T]` (Lebesgue number lemma, then induction along a uniform partition).
 -/
@@ -25,7 +25,7 @@ namespace SmoothedOctagon.Reduction
 open SmoothedPolygons MeasureTheory Set
 
 /-- Concatenation of finite vertex descriptions of `[a, b]` and `[b, c]`. -/
-theorem qrsb_isPiecewiseVertex_append {u : ℝ → Fin 3 → ℝ} {a b c : ℝ} {n m : ℕ}
+theorem switch_isPiecewiseVertex_append {u : ℝ → Fin 3 → ℝ} {a b c : ℝ} {n m : ℕ}
     (h₁ : IsPiecewiseVertex u a b n) (h₂ : IsPiecewiseVertex u b c m) :
     IsPiecewiseVertex u a c (n + m) := by
   obtain ⟨τ, l, hτ0, hτn, hmono, hpiece⟩ := h₁
@@ -61,7 +61,7 @@ theorem qrsb_isPiecewiseVertex_append {u : ℝ → Fin 3 → ℝ} {a b c : ℝ} 
 
 /-- **Local to global.** If every point of `[0, T]` has a neighbourhood in which every subinterval
 of `[0, T]` has a finite vertex description, then `[0, T]` has one. -/
-theorem qrsb_isPiecewiseVertex_of_local {u : ℝ → Fin 3 → ℝ} {T : ℝ} (hT : 0 ≤ T)
+theorem switch_isPiecewiseVertex_of_local {u : ℝ → Fin 3 → ℝ} {T : ℝ} (hT : 0 ≤ T)
     (hloc : ∀ t₀ ∈ Icc 0 T, ∃ δ > 0, ∀ a b, 0 ≤ a → a < b → b ≤ T → t₀ - δ < a →
       b < t₀ + δ → ∃ n, IsPiecewiseVertex u a b n) :
     ∃ n, IsPiecewiseVertex u 0 T n := by
@@ -103,7 +103,7 @@ theorem qrsb_isPiecewiseVertex_of_local {u : ℝ → Fin 3 → ℝ} {T : ℝ} (h
           positivity
         obtain ⟨n, hn⟩ := ih _ hy (hle.le.trans hxT) le_rfl
         obtain ⟨m, hm⟩ := hshort _ x hy.le hle hxT (by linarith)
-        exact ⟨n + m, qrsb_isPiecewiseVertex_append hn hm⟩
+        exact ⟨n + m, switch_isPiecewiseVertex_append hn hm⟩
   rcases hT.eq_or_lt with rfl | hT
   · exact ⟨0, fun _ ↦ 0, fun _ ↦ 0, rfl, rfl, fun k hk ↦ absurd hk (Nat.not_lt_zero k),
       fun k hk ↦ absurd hk (Nat.not_lt_zero k)⟩

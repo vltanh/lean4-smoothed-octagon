@@ -7,7 +7,7 @@ public import SmoothedOctagon.Exclusion.Reverse
 public import SmoothedOctagon.Exclusion.MinimumStructure
 public import SmoothedOctagon.Exclusion.ShortRuns
 public import SmoothedOctagon.Exclusion.Forward
-public import SmoothedOctagon.Exclusion.Nonshort
+public import SmoothedOctagon.Exclusion.Mixed
 public import SmoothedOctagon.Terminal.Comparison
 
 /-!
@@ -25,7 +25,7 @@ public import SmoothedOctagon.Terminal.Comparison
    therefore costs at least `A_oct` (`controlLowerBound`), and every centrally symmetric convex disk
    has density at least `δ_oct` (`reinhardtConjecture`).
 
-There is no hypothesis: every case is proved by hand, and Hales–Vajjha's Theorem 5.0.2, used in
+There is no hypothesis: every case is proved here, and Hales–Vajjha's Theorem 5.0.2, used in
 step 1, is proved in `SmoothedPolygons` (`theorem5_0_2`).
 -/
 

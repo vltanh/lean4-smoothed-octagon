@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandDefs
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.ShapeCurve
 
 /-!
-# Gate S4, hand proof W4: the separately concave numerator `N`
+# Smaller-short window, Casimir floor: the separately concave numerator `N`
 
 On the boundary `d = 1/19` (`b = 20x/19`, `a` fixed) with the affine lower incoming curve
 `v = 757/1000 + 9(x - 2)/1000`, the numerator of `f + 9/200` is the eight-term product source
@@ -12,7 +12,7 @@ On the boundary `d = 1/19` (`b = 20x/19`, `a` fixed) with the affine lower incom
   45125aC*²(Q'K - QK')K + 45125·19aC*B'K³ - 45125aC*²K'K² + (9/200)45125aC*²K³`,
 
 `C* = 19a + 20x`, `B = C*/19`, `W = M + vD² - DE`, `Q = 2vD - E`, primes = `x`-derivatives.
-Its two second derivatives are computed by composing second-order jets (`HL46J`) of the
+Its two second derivatives are computed by composing second-order jets (`SecondJet`) of the
 factors before any expansion: `-N_aa = P_A(c, h)`, `-N_xx = P_X(c, h)` (`c = a - 1`, `h = x - 2`,
 explicit polynomials). On `1/8 ≤ c ≤ 1/6`, `0 ≤ h ≤ 1/6` both are positive by the
 monomial rule (`c = 1/8` in positive, `c = 1/6` in negative terms, then `h = 1/6` in the
@@ -22,12 +22,12 @@ end values of `a`).
 
 ## Main API
 
-* Building blocks `hl46W4v`, `hl46W4M`, `hl46W4Mx`, `hl46W4E`, `hl46W4Ex`, `hl46W4K`, `hl46W4Cs`,
-  `hl46W4D`, `hl46W4Dx`, `hl46W4W`, `hl46W4Wx`, `hl46W4Q`, `hl46W4Qx`; the source `hl46W4N`;
-  `hl46W4PA`, `hl46W4PX`.
-* `hl46W4_N_jet_a`, `hl46W4_N_jet_x`: `N_aa = -P_A`, `N_xx = -P_X`.
-* `hl46W4_mlo`, `hl46W4_mhi` (monomial rule), `hl46W4_PA_pos`, `hl46W4_PX_pos`,
-  `hl46W4_N_corners`, `hl46W4_N_pos`.
+* Building blocks `casW4v`, `casW4M`, `casW4Mx`, `casW4E`, `casW4Ex`, `casW4K`, `casW4Cs`,
+  `casW4D`, `casW4Dx`, `casW4W`, `casW4Wx`, `casW4Q`, `casW4Qx`; the source `casW4N`;
+  `casW4PA`, `casW4PX`.
+* `casW4_N_jet_a`, `casW4_N_jet_x`: `N_aa = -P_A`, `N_xx = -P_X`.
+* `casW4_mlo`, `casW4_mhi` (monomial rule), `casW4_PA_pos`, `casW4_PX_pos`,
+  `casW4_N_corners`, `casW4_N_pos`.
 -/
 
 @[expose] public section
@@ -37,64 +37,64 @@ namespace SmoothedOctagon
 open Set
 
 /-- The affine lower incoming curve `v(x) = 757/1000 + 9(x - 2)/1000`. -/
-noncomputable def hl46W4v (x : ℝ) : ℝ := 757 / 1000 + 9 / 1000 * (x - 2)
+noncomputable def casW4v (x : ℝ) : ℝ := 757 / 1000 + 9 / 1000 * (x - 2)
 
 /-- `M = S²(S² - S + 1)`, `S = 1 + x`. -/
-noncomputable def hl46W4M (x : ℝ) : ℝ := (1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1)
+noncomputable def casW4M (x : ℝ) : ℝ := (1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1)
 
 /-- `M' = 4S³ - 3S² + 2S`. -/
-noncomputable def hl46W4Mx (x : ℝ) : ℝ := 4 * (1 + x) ^ 3 - 3 * (1 + x) ^ 2 + 2 * (1 + x)
+noncomputable def casW4Mx (x : ℝ) : ℝ := 4 * (1 + x) ^ 3 - 3 * (1 + x) ^ 2 + 2 * (1 + x)
 
 /-- `E = S³(v - 1) + 3S - 1` on the lower curve `u = v(x)`. -/
-noncomputable def hl46W4E (x : ℝ) : ℝ := hh46S4P x (hl46W4v x)
+noncomputable def casW4E (x : ℝ) : ℝ := casClosedP x (casW4v x)
 
 /-- `E' = 3S²(v - 1) + S³v' + 3`, `v' = 9/1000`. -/
-noncomputable def hl46W4Ex (x : ℝ) : ℝ :=
-  3 * (1 + x) ^ 2 * (hl46W4v x - 1) + (1 + x) ^ 3 * (9 / 1000) + 3
+noncomputable def casW4Ex (x : ℝ) : ℝ :=
+  3 * (1 + x) ^ 2 * (casW4v x - 1) + (1 + x) ^ 3 * (9 / 1000) + 3
 
 /-- `K = x(x + 2) + a²`. -/
-noncomputable def hl46W4K (x a : ℝ) : ℝ := x * (x + 2) + a ^ 2
+noncomputable def casW4K (x a : ℝ) : ℝ := x * (x + 2) + a ^ 2
 
 /-- `C* = 19a + 20x = 19B`. -/
-noncomputable def hl46W4Cs (x a : ℝ) : ℝ := 19 * a + 20 * x
+noncomputable def casW4Cs (x a : ℝ) : ℝ := 19 * a + 20 * x
 
 /-- `D = a² + 2ab + 1 + 2x - 2bx` at `b = 20x/19`. -/
-noncomputable def hl46W4D (x a : ℝ) : ℝ := hsDg x (x * (1 + 1 / 19)) a
+noncomputable def casW4D (x a : ℝ) : ℝ := ssDg x (x * (1 + 1 / 19)) a
 
 /-- `D' = 40a/19 + 2 - 80x/19`. -/
-noncomputable def hl46W4Dx (x a : ℝ) : ℝ := 2 * a * (1 + 1 / 19) + 2 - 4 * x * (1 + 1 / 19)
+noncomputable def casW4Dx (x a : ℝ) : ℝ := 2 * a * (1 + 1 / 19) + 2 - 4 * x * (1 + 1 / 19)
 
 /-- `W = M + vD² - DE` (so `w = W/K²` at `u = v`). -/
-noncomputable def hl46W4W (x a : ℝ) : ℝ :=
-  hl46W4M x + hl46W4D x a ^ 2 * hl46W4v x - hl46W4D x a * hl46W4E x
+noncomputable def casW4W (x a : ℝ) : ℝ :=
+  casW4M x + casW4D x a ^ 2 * casW4v x - casW4D x a * casW4E x
 
 /-- `W' = M' + 2vDD' + v'D² - D'E - DE'`. -/
-noncomputable def hl46W4Wx (x a : ℝ) : ℝ :=
-  hl46W4Mx x + 2 * hl46W4D x a * hl46W4Dx x a * hl46W4v x + hl46W4D x a ^ 2 * (9 / 1000) -
-    hl46W4Dx x a * hl46W4E x - hl46W4D x a * hl46W4Ex x
+noncomputable def casW4Wx (x a : ℝ) : ℝ :=
+  casW4Mx x + 2 * casW4D x a * casW4Dx x a * casW4v x + casW4D x a ^ 2 * (9 / 1000) -
+    casW4Dx x a * casW4E x - casW4D x a * casW4Ex x
 
 /-- `Q = 2vD - E` (so `E_L = Q/K` at `u = v`). -/
-noncomputable def hl46W4Q (x a : ℝ) : ℝ := 2 * hl46W4D x a * hl46W4v x - hl46W4E x
+noncomputable def casW4Q (x a : ℝ) : ℝ := 2 * casW4D x a * casW4v x - casW4E x
 
 /-- `Q' = 2vD' + 2v'D - E'`. -/
-noncomputable def hl46W4Qx (x a : ℝ) : ℝ :=
-  2 * hl46W4Dx x a * hl46W4v x + 2 * hl46W4D x a * (9 / 1000) - hl46W4Ex x
+noncomputable def casW4Qx (x a : ℝ) : ℝ :=
+  2 * casW4Dx x a * casW4v x + 2 * casW4D x a * (9 / 1000) - casW4Ex x
 
 /-- The eight-term product source `N = 45125aC*²K³(f + 9/200)`. -/
-noncomputable def hl46W4N (x a : ℝ) : ℝ :=
-  90250 * a * hl46W4Cs x a ^ 2 * (hl46W4Wx x a * hl46W4K x a - 2 * hl46W4W x a * (2 * x + 2)) +
-  45125 * hl46W4Cs x a ^ 2 * hl46W4K x a ^ 3 *
-    (9 / 1000 * (hl46W4Cs x a / 19) + (hl46W4v x - 1) * (20 / 19)) -
-  45125 * 361 * a ^ 2 * (20 / 19) * hl46W4K x a ^ 3 +
-  45125 * a ^ 3 * hl46W4Cs x a ^ 2 * (2 * x + 2) * hl46W4K x a -
-  45125 * a * hl46W4Cs x a ^ 2 * (hl46W4Qx x a * hl46W4K x a - hl46W4Q x a * (2 * x + 2)) *
-    hl46W4K x a +
-  45125 * 19 * a * hl46W4Cs x a * (20 / 19) * hl46W4K x a ^ 3 -
-  45125 * a * hl46W4Cs x a ^ 2 * (2 * x + 2) * hl46W4K x a ^ 2 +
-  9 / 200 * 45125 * a * hl46W4Cs x a ^ 2 * hl46W4K x a ^ 3
+noncomputable def casW4N (x a : ℝ) : ℝ :=
+  90250 * a * casW4Cs x a ^ 2 * (casW4Wx x a * casW4K x a - 2 * casW4W x a * (2 * x + 2)) +
+  45125 * casW4Cs x a ^ 2 * casW4K x a ^ 3 *
+    (9 / 1000 * (casW4Cs x a / 19) + (casW4v x - 1) * (20 / 19)) -
+  45125 * 361 * a ^ 2 * (20 / 19) * casW4K x a ^ 3 +
+  45125 * a ^ 3 * casW4Cs x a ^ 2 * (2 * x + 2) * casW4K x a -
+  45125 * a * casW4Cs x a ^ 2 * (casW4Qx x a * casW4K x a - casW4Q x a * (2 * x + 2)) *
+    casW4K x a +
+  45125 * 19 * a * casW4Cs x a * (20 / 19) * casW4K x a ^ 3 -
+  45125 * a * casW4Cs x a ^ 2 * (2 * x + 2) * casW4K x a ^ 2 +
+  9 / 200 * 45125 * a * casW4Cs x a ^ 2 * casW4K x a ^ 3
 
 /-- The polynomial `P_A(c, h) = -N_aa`. -/
-noncomputable def hl46W4PA (c h : ℝ) : ℝ :=
+noncomputable def casW4PA (c h : ℝ) : ℝ :=
   -63336006 * c ^ 7 - 190131480 * c ^ 6 * h - 3411515702 * c ^ 6 + 24630669 * c ^ 5 * h ^ 3 -
     (1339539957 / 2) * c ^ 5 * h ^ 2 - 12899389902 * c ^ 5 * h - 38269433832 * c ^ 5 +
     129635100 * c ^ 4 * h ^ 4 - 1384476705 * c ^ 4 * h ^ 3 + (1869625365 / 2) * c ^ 4 * h ^ 2 -
@@ -110,7 +110,7 @@ noncomputable def hl46W4PA (c h : ℝ) : ℝ :=
     (304669396099 / 2) * h ^ 2 - 126156559259 * h - 22982058630
 
 /-- The polynomial `P_X(c, h) = -N_xx`. -/
-noncomputable def hl46W4PX (c h : ℝ) : ℝ :=
+noncomputable def casW4PX (c h : ℝ) : ℝ :=
   3518667 * c ^ 7 * h - (63787617 / 2) * c ^ 7 + 51854040 * c ^ 6 * h ^ 2 - 276895341 * c ^ 6 * h +
     (124641691 / 2) * c ^ 6 + 51285465 * c ^ 5 * h ^ 3 + 247185135 * c ^ 5 * h ^ 2 +
     3969895740 * c ^ 5 * h + (25791991591 / 2) * c ^ 5 - 168366600 * c ^ 4 * h ^ 4 +
@@ -129,16 +129,16 @@ noncomputable def hl46W4PX (c h : ℝ) : ℝ :=
 /-! ### Second-order jets of `N` -/
 
 /-- Jet of a constant. -/
-private theorem jc (c y : ℝ) : HL46J (fun _ => c) (fun _ => 0) (fun _ => 0) y :=
+private theorem jc (c y : ℝ) : SecondJet (fun _ => c) (fun _ => 0) (fun _ => 0) y :=
   ⟨hasDerivAt_const y c, hasDerivAt_const y 0⟩
 
 /-- Jet of the identity. -/
-private theorem jid (y : ℝ) : HL46J (fun y => y) (fun _ => 1) (fun _ => 0) y :=
+private theorem jid (y : ℝ) : SecondJet (fun y => y) (fun _ => 1) (fun _ => 0) y :=
   ⟨hasDerivAt_id' y, hasDerivAt_const y 1⟩
 
 /-- Jet of a quadratic. -/
 private theorem jquad (p q r y : ℝ) :
-    HL46J (fun y => p + q * y + r * y ^ 2) (fun y => q + 2 * r * y) (fun _ => 2 * r) y := by
+    SecondJet (fun y => p + q * y + r * y ^ 2) (fun y => q + 2 * r * y) (fun _ => 2 * r) y := by
   constructor
   · refine (((hasDerivAt_id' y).const_mul q).const_add p |>.fun_add
       ((hasDerivAt_pow 2 y).const_mul r)).congr_deriv ?_
@@ -147,51 +147,51 @@ private theorem jquad (p q r y : ℝ) :
     ring
 
 /-- Replace the function of a jet by an equal one. -/
-private theorem jfun {f g f₁ f₂ : ℝ → ℝ} {y : ℝ} (h : HL46J f f₁ f₂ y) (hf : ∀ z, f z = g z) :
-    HL46J g f₁ f₂ y := by
+private theorem jfun {f g f₁ f₂ : ℝ → ℝ} {y : ℝ} (h : SecondJet f f₁ f₂ y) (hf : ∀ z, f z = g z) :
+    SecondJet g f₁ f₂ y := by
   have e : f = g := funext hf
   subst e; exact h
 
 /-- Replace the second derivative at the point. -/
-private theorem jsnd {f f₁ f₂ g₂ : ℝ → ℝ} {y : ℝ} (h : HL46J f f₁ f₂ y) (e : f₂ y = g₂ y) :
-    HL46J f f₁ g₂ y := ⟨h.1, e ▸ h.2⟩
+private theorem jsnd {f f₁ f₂ g₂ : ℝ → ℝ} {y : ℝ} (h : SecondJet f f₁ f₂ y) (e : f₂ y = g₂ y) :
+    SecondJet f f₁ g₂ y := ⟨h.1, e ▸ h.2⟩
 
 /-- `N_aa = -P_A(a - 1, x - 2)` at fixed `x` (jets of the factors composed before expansion). -/
-theorem hl46W4_N_jet_a (x : ℝ) : ∃ F₁ : ℝ → ℝ, ∀ a : ℝ,
-    HL46J (fun a => hl46W4N x a) F₁ (fun a => -hl46W4PA (a - 1) (x - 2)) a := by
+theorem casW4_N_jet_a (x : ℝ) : ∃ F₁ : ℝ → ℝ, ∀ a : ℝ,
+    SecondJet (fun a => casW4N x a) F₁ (fun a => -casW4PA (a - 1) (x - 2)) a := by
   exact ⟨_, fun a => by
-    have jK : HL46J (fun a => hl46W4K x a) _ _ a :=
-      jfun (jquad (x * (x + 2)) 0 1 a) (fun z => by unfold hl46W4K; ring)
-    have jC : HL46J (fun a => hl46W4Cs x a) _ _ a :=
-      jfun (jquad (20 * x) 19 0 a) (fun z => by unfold hl46W4Cs; ring)
-    have jD : HL46J (fun a => hl46W4D x a) _ _ a :=
+    have jK : SecondJet (fun a => casW4K x a) _ _ a :=
+      jfun (jquad (x * (x + 2)) 0 1 a) (fun z => by unfold casW4K; ring)
+    have jC : SecondJet (fun a => casW4Cs x a) _ _ a :=
+      jfun (jquad (20 * x) 19 0 a) (fun z => by unfold casW4Cs; ring)
+    have jD : SecondJet (fun a => casW4D x a) _ _ a :=
       jfun (jquad (1 + 2 * x - 2 * (x * (1 + 1 / 19)) * x) (2 * (x * (1 + 1 / 19))) 1 a)
-        (fun z => by unfold hl46W4D hsDg; ring)
-    have jDx : HL46J (fun a => hl46W4Dx x a) _ _ a :=
+        (fun z => by unfold casW4D ssDg; ring)
+    have jDx : SecondJet (fun a => casW4Dx x a) _ _ a :=
       jfun (jquad (2 - 4 * x * (1 + 1 / 19)) (2 * (1 + 1 / 19)) 0 a)
-        (fun z => by unfold hl46W4Dx; ring)
-    have jW : HL46J (fun a => hl46W4W x a) _ _ a :=
-      jfun (((jc (hl46W4M x) a).add ((jD.mul jD).mul (jc (hl46W4v x) a))).sub
-        (jD.mul (jc (hl46W4E x) a))) (fun z => by unfold hl46W4W; ring)
-    have jWx : HL46J (fun a => hl46W4Wx x a) _ _ a :=
-      jfun (((((jc (hl46W4Mx x) a).add
-        (((jc 2 a).mul jD).mul (jDx.mul (jc (hl46W4v x) a)))).add
-        ((jD.mul jD).mul (jc (9 / 1000) a))).sub (jDx.mul (jc (hl46W4E x) a))).sub
-        (jD.mul (jc (hl46W4Ex x) a))) (fun z => by unfold hl46W4Wx; ring)
-    have jQ : HL46J (fun a => hl46W4Q x a) _ _ a :=
-      jfun ((((jc 2 a).mul jD).mul (jc (hl46W4v x) a)).sub (jc (hl46W4E x) a))
-        (fun z => by unfold hl46W4Q; ring)
-    have jQx : HL46J (fun a => hl46W4Qx x a) _ _ a :=
-      jfun (((((jc 2 a).mul jDx).mul (jc (hl46W4v x) a)).add
-        (((jc 2 a).mul jD).mul (jc (9 / 1000) a))).sub (jc (hl46W4Ex x) a))
-        (fun z => by unfold hl46W4Qx; ring)
+        (fun z => by unfold casW4Dx; ring)
+    have jW : SecondJet (fun a => casW4W x a) _ _ a :=
+      jfun (((jc (casW4M x) a).add ((jD.mul jD).mul (jc (casW4v x) a))).sub
+        (jD.mul (jc (casW4E x) a))) (fun z => by unfold casW4W; ring)
+    have jWx : SecondJet (fun a => casW4Wx x a) _ _ a :=
+      jfun (((((jc (casW4Mx x) a).add
+        (((jc 2 a).mul jD).mul (jDx.mul (jc (casW4v x) a)))).add
+        ((jD.mul jD).mul (jc (9 / 1000) a))).sub (jDx.mul (jc (casW4E x) a))).sub
+        (jD.mul (jc (casW4Ex x) a))) (fun z => by unfold casW4Wx; ring)
+    have jQ : SecondJet (fun a => casW4Q x a) _ _ a :=
+      jfun ((((jc 2 a).mul jD).mul (jc (casW4v x) a)).sub (jc (casW4E x) a))
+        (fun z => by unfold casW4Q; ring)
+    have jQx : SecondJet (fun a => casW4Qx x a) _ _ a :=
+      jfun (((((jc 2 a).mul jDx).mul (jc (casW4v x) a)).add
+        (((jc 2 a).mul jD).mul (jc (9 / 1000) a))).sub (jc (casW4Ex x) a))
+        (fun z => by unfold casW4Qx; ring)
     have jA := jid a
     have jKp := jc (2 * x + 2) a
     have jCC := jC.mul jC
     have jK3 := (jK.mul jK).mul jK
     have t1 := ((jc 90250 a).mul jA).mul (jCC.mul ((jWx.mul jK).sub (((jc 2 a).mul jW).mul jKp)))
     have t2 := ((jc 45125 a).mul (jCC.mul jK3)).mul
-      (((jc (9 / 1000 / 19) a).mul jC).add (jc ((hl46W4v x - 1) * (20 / 19)) a))
+      (((jc (9 / 1000 / 19) a).mul jC).add (jc ((casW4v x - 1) * (20 / 19)) a))
     have t3 := ((jc (45125 * 361 * (20 / 19)) a).mul (jA.mul jA)).mul jK3
     have t4 := ((jc 45125 a).mul ((jA.mul jA).mul jA)).mul ((jCC.mul jKp).mul jK)
     have t5 := (((jc 45125 a).mul jA).mul jCC).mul (((jQx.mul jK).sub (jQ.mul jKp)).mul jK)
@@ -199,54 +199,54 @@ theorem hl46W4_N_jet_a (x : ℝ) : ∃ F₁ : ℝ → ℝ, ∀ a : ℝ,
     have t7 := (((jc 45125 a).mul jA).mul jCC).mul (jKp.mul (jK.mul jK))
     have t8 := (((jc (9 / 200 * 45125) a).mul jA).mul jCC).mul jK3
     have jN := ((((((t1.add t2).sub t3).add t4).sub t5).add t6).sub t7).add t8
-    refine jsnd (jfun (g := fun a => hl46W4N x a) jN (fun z => by unfold hl46W4N; ring)) ?_
-    unfold hl46W4PA hl46W4W hl46W4Wx hl46W4Q hl46W4Qx
-    unfold hl46W4K hl46W4Cs hl46W4D hsDg hl46W4Dx hl46W4M hl46W4Mx hl46W4E hl46W4Ex hh46S4P hl46W4v
+    refine jsnd (jfun (g := fun a => casW4N x a) jN (fun z => by unfold casW4N; ring)) ?_
+    unfold casW4PA casW4W casW4Wx casW4Q casW4Qx
+    unfold casW4K casW4Cs casW4D ssDg casW4Dx casW4M casW4Mx casW4E casW4Ex casClosedP casW4v
     ring⟩
 
 /-- `N_xx = -P_X(a - 1, x - 2)` at fixed `a`. -/
-theorem hl46W4_N_jet_x (a : ℝ) : ∃ F₁ : ℝ → ℝ, ∀ x : ℝ,
-    HL46J (fun x => hl46W4N x a) F₁ (fun x => -hl46W4PX (a - 1) (x - 2)) x := by
+theorem casW4_N_jet_x (a : ℝ) : ∃ F₁ : ℝ → ℝ, ∀ x : ℝ,
+    SecondJet (fun x => casW4N x a) F₁ (fun x => -casW4PX (a - 1) (x - 2)) x := by
   exact ⟨_, fun x => by
     have jX := jid x
-    have jS : HL46J (fun x => 1 + x) _ _ x := jfun (jquad 1 1 0 x) (fun z => by ring)
-    have jv : HL46J (fun x => hl46W4v x) _ _ x :=
-      jfun (jquad (757 / 1000 - 18 / 1000) (9 / 1000) 0 x) (fun z => by unfold hl46W4v; ring)
-    have jK : HL46J (fun x => hl46W4K x a) _ _ x :=
-      jfun (jquad (a ^ 2) 2 1 x) (fun z => by unfold hl46W4K; ring)
-    have jC : HL46J (fun x => hl46W4Cs x a) _ _ x :=
-      jfun (jquad (19 * a) 20 0 x) (fun z => by unfold hl46W4Cs; ring)
-    have jKp : HL46J (fun x => 2 * x + 2) _ _ x :=
+    have jS : SecondJet (fun x => 1 + x) _ _ x := jfun (jquad 1 1 0 x) (fun z => by ring)
+    have jv : SecondJet (fun x => casW4v x) _ _ x :=
+      jfun (jquad (757 / 1000 - 18 / 1000) (9 / 1000) 0 x) (fun z => by unfold casW4v; ring)
+    have jK : SecondJet (fun x => casW4K x a) _ _ x :=
+      jfun (jquad (a ^ 2) 2 1 x) (fun z => by unfold casW4K; ring)
+    have jC : SecondJet (fun x => casW4Cs x a) _ _ x :=
+      jfun (jquad (19 * a) 20 0 x) (fun z => by unfold casW4Cs; ring)
+    have jKp : SecondJet (fun x => 2 * x + 2) _ _ x :=
       jfun (jquad 2 2 0 x) (fun z => by ring)
-    have jD : HL46J (fun x => hl46W4D x a) _ _ x :=
+    have jD : SecondJet (fun x => casW4D x a) _ _ x :=
       jfun (jquad (a ^ 2 + 1) (2 * a * (1 + 1 / 19) + 2) (-(2 * (1 + 1 / 19))) x)
-        (fun z => by unfold hl46W4D hsDg; ring)
-    have jDx : HL46J (fun x => hl46W4Dx x a) _ _ x :=
+        (fun z => by unfold casW4D ssDg; ring)
+    have jDx : SecondJet (fun x => casW4Dx x a) _ _ x :=
       jfun (jquad (2 * a * (1 + 1 / 19) + 2) (-(4 * (1 + 1 / 19))) 0 x)
-        (fun z => by unfold hl46W4Dx; ring)
-    have jM : HL46J (fun x => hl46W4M x) _ _ x :=
-      jfun ((jS.mul jS).mul (((jS.mul jS).sub jS).add (jc 1 x))) (fun z => by unfold hl46W4M; ring)
-    have jMx : HL46J (fun x => hl46W4Mx x) _ _ x :=
+        (fun z => by unfold casW4Dx; ring)
+    have jM : SecondJet (fun x => casW4M x) _ _ x :=
+      jfun ((jS.mul jS).mul (((jS.mul jS).sub jS).add (jc 1 x))) (fun z => by unfold casW4M; ring)
+    have jMx : SecondJet (fun x => casW4Mx x) _ _ x :=
       jfun ((((jc 4 x).mul ((jS.mul jS).mul jS)).sub ((jc 3 x).mul (jS.mul jS))).add
-        ((jc 2 x).mul jS)) (fun z => by unfold hl46W4Mx; ring)
-    have jE : HL46J (fun x => hl46W4E x) _ _ x :=
+        ((jc 2 x).mul jS)) (fun z => by unfold casW4Mx; ring)
+    have jE : SecondJet (fun x => casW4E x) _ _ x :=
       jfun (((((jS.mul jS).mul jS).mul (jv.sub (jc 1 x))).add ((jc 3 x).mul jS)).sub (jc 1 x))
-        (fun z => by unfold hl46W4E hh46S4P; ring)
-    have jEx : HL46J (fun x => hl46W4Ex x) _ _ x :=
+        (fun z => by unfold casW4E casClosedP; ring)
+    have jEx : SecondJet (fun x => casW4Ex x) _ _ x :=
       jfun (((((jc 3 x).mul (jS.mul jS)).mul (jv.sub (jc 1 x))).add
         (((jS.mul jS).mul jS).mul (jc (9 / 1000) x))).add (jc 3 x))
-        (fun z => by unfold hl46W4Ex; ring)
-    have jW : HL46J (fun x => hl46W4W x a) _ _ x :=
-      jfun ((jM.add ((jD.mul jD).mul jv)).sub (jD.mul jE)) (fun z => by unfold hl46W4W; ring)
-    have jWx : HL46J (fun x => hl46W4Wx x a) _ _ x :=
+        (fun z => by unfold casW4Ex; ring)
+    have jW : SecondJet (fun x => casW4W x a) _ _ x :=
+      jfun ((jM.add ((jD.mul jD).mul jv)).sub (jD.mul jE)) (fun z => by unfold casW4W; ring)
+    have jWx : SecondJet (fun x => casW4Wx x a) _ _ x :=
       jfun ((((jMx.add (((jc 2 x).mul jD).mul (jDx.mul jv))).add
         ((jD.mul jD).mul (jc (9 / 1000) x))).sub (jDx.mul jE)).sub
-        (jD.mul jEx)) (fun z => by unfold hl46W4Wx; ring)
-    have jQ : HL46J (fun x => hl46W4Q x a) _ _ x :=
-      jfun ((((jc 2 x).mul jD).mul jv).sub jE) (fun z => by unfold hl46W4Q; ring)
-    have jQx : HL46J (fun x => hl46W4Qx x a) _ _ x :=
+        (jD.mul jEx)) (fun z => by unfold casW4Wx; ring)
+    have jQ : SecondJet (fun x => casW4Q x a) _ _ x :=
+      jfun ((((jc 2 x).mul jD).mul jv).sub jE) (fun z => by unfold casW4Q; ring)
+    have jQx : SecondJet (fun x => casW4Qx x a) _ _ x :=
       jfun (((((jc 2 x).mul jDx).mul jv).add (((jc 2 x).mul jD).mul (jc (9 / 1000) x))).sub jEx)
-        (fun z => by unfold hl46W4Qx; ring)
+        (fun z => by unfold casW4Qx; ring)
     have jA := jc a x
     have jCC := jC.mul jC
     have jK3 := (jK.mul jK).mul jK
@@ -260,58 +260,58 @@ theorem hl46W4_N_jet_x (a : ℝ) : ∃ F₁ : ℝ → ℝ, ∀ x : ℝ,
     have t7 := (((jc 45125 x).mul jA).mul jCC).mul (jKp.mul (jK.mul jK))
     have t8 := (((jc (9 / 200 * 45125) x).mul jA).mul jCC).mul jK3
     have jN := ((((((t1.add t2).sub t3).add t4).sub t5).add t6).sub t7).add t8
-    refine jsnd (jfun (g := fun x => hl46W4N x a) jN (fun z => by unfold hl46W4N; ring)) ?_
-    unfold hl46W4PX hl46W4W hl46W4Wx hl46W4Q hl46W4Qx
-    unfold hl46W4K hl46W4Cs hl46W4D hsDg hl46W4Dx hl46W4M hl46W4Mx hl46W4E hl46W4Ex hh46S4P hl46W4v
+    refine jsnd (jfun (g := fun x => casW4N x a) jN (fun z => by unfold casW4N; ring)) ?_
+    unfold casW4PX casW4W casW4Wx casW4Q casW4Qx
+    unfold casW4K casW4Cs casW4D ssDg casW4Dx casW4M casW4Mx casW4E casW4Ex casClosedP casW4v
     ring⟩
 
 /-! ### Positivity of `P_A`, `P_X` (monomial rule) -/
 
 /-- Monomial rule, positive terms: `c ≥ 1/8`. -/
-theorem hl46W4_mlo {c h : ℝ} (hc : 1 / 8 ≤ c) (hh : 0 ≤ h) (i j : ℕ) :
+theorem casW4_mlo {c h : ℝ} (hc : 1 / 8 ≤ c) (hh : 0 ≤ h) (i j : ℕ) :
     (1 / 8 : ℝ) ^ i * h ^ j ≤ c ^ i * h ^ j :=
   mul_le_mul_of_nonneg_right (pow_le_pow_left₀ (by norm_num) hc i) (pow_nonneg hh j)
 
 /-- Monomial rule, negative terms: `c ≤ 1/6`. -/
-theorem hl46W4_mhi {c h : ℝ} (hc0 : 0 ≤ c) (hc : c ≤ 1 / 6) (hh : 0 ≤ h) (i j : ℕ) :
+theorem casW4_mhi {c h : ℝ} (hc0 : 0 ≤ c) (hc : c ≤ 1 / 6) (hh : 0 ≤ h) (i j : ℕ) :
     c ^ i * h ^ j ≤ (1 / 6 : ℝ) ^ i * h ^ j :=
   mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hc0 hc i) (pow_nonneg hh j)
 
 /-- `P_A > 0` (the monomial rule gives `P_A ≥ L_A > 5·10⁹`). -/
-theorem hl46W4_PA_pos {c h : ℝ} (hc : 1 / 8 ≤ c) (hc' : c ≤ 1 / 6) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
-    0 < hl46W4PA c h := by
+theorem casW4_PA_pos {c h : ℝ} (hc : 1 / 8 ≤ c) (hc' : c ≤ 1 / 6) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
+    0 < casW4PA c h := by
   have hc0 : 0 ≤ c := by linarith
-  unfold hl46W4PA
-  linarith [hl46W4_mlo hc hh 5 3, hl46W4_mlo hc hh 4 4, hl46W4_mlo hc hh 4 2, hl46W4_mlo hc hh 3 5,
-    hl46W4_mlo hc hh 3 4, hl46W4_mlo hc hh 3 3, hl46W4_mlo hc hh 3 2, hl46W4_mlo hc hh 3 1,
-    hl46W4_mlo hc hh 3 0, hl46W4_mlo hc hh 2 5, hl46W4_mlo hc hh 2 4, hl46W4_mlo hc hh 2 3,
-    hl46W4_mlo hc hh 2 2, hl46W4_mlo hc hh 2 1, hl46W4_mlo hc hh 2 0, hl46W4_mlo hc hh 1 6,
-    hl46W4_mlo hc hh 1 5, hl46W4_mlo hc hh 1 2, hl46W4_mlo hc hh 1 1, hl46W4_mlo hc hh 1 0,
-    hl46W4_mhi hc0 hc' hh 7 0, hl46W4_mhi hc0 hc' hh 6 1, hl46W4_mhi hc0 hc' hh 6 0,
-    hl46W4_mhi hc0 hc' hh 5 2, hl46W4_mhi hc0 hc' hh 5 1, hl46W4_mhi hc0 hc' hh 5 0,
-    hl46W4_mhi hc0 hc' hh 4 3, hl46W4_mhi hc0 hc' hh 4 1, hl46W4_mhi hc0 hc' hh 4 0,
-    hl46W4_mhi hc0 hc' hh 2 6, hl46W4_mhi hc0 hc' hh 1 7, hl46W4_mhi hc0 hc' hh 1 4,
-    hl46W4_mhi hc0 hc' hh 1 3, pow_nonneg hh 1, pow_nonneg hh 2, pow_nonneg hh 3, pow_nonneg hh 4,
+  unfold casW4PA
+  linarith [casW4_mlo hc hh 5 3, casW4_mlo hc hh 4 4, casW4_mlo hc hh 4 2, casW4_mlo hc hh 3 5,
+    casW4_mlo hc hh 3 4, casW4_mlo hc hh 3 3, casW4_mlo hc hh 3 2, casW4_mlo hc hh 3 1,
+    casW4_mlo hc hh 3 0, casW4_mlo hc hh 2 5, casW4_mlo hc hh 2 4, casW4_mlo hc hh 2 3,
+    casW4_mlo hc hh 2 2, casW4_mlo hc hh 2 1, casW4_mlo hc hh 2 0, casW4_mlo hc hh 1 6,
+    casW4_mlo hc hh 1 5, casW4_mlo hc hh 1 2, casW4_mlo hc hh 1 1, casW4_mlo hc hh 1 0,
+    casW4_mhi hc0 hc' hh 7 0, casW4_mhi hc0 hc' hh 6 1, casW4_mhi hc0 hc' hh 6 0,
+    casW4_mhi hc0 hc' hh 5 2, casW4_mhi hc0 hc' hh 5 1, casW4_mhi hc0 hc' hh 5 0,
+    casW4_mhi hc0 hc' hh 4 3, casW4_mhi hc0 hc' hh 4 1, casW4_mhi hc0 hc' hh 4 0,
+    casW4_mhi hc0 hc' hh 2 6, casW4_mhi hc0 hc' hh 1 7, casW4_mhi hc0 hc' hh 1 4,
+    casW4_mhi hc0 hc' hh 1 3, pow_nonneg hh 1, pow_nonneg hh 2, pow_nonneg hh 3, pow_nonneg hh 4,
     pow_nonneg hh 5, pow_nonneg hh 6, pow_nonneg hh 7, pow_nonneg hh 8, pow_le_pow_left₀ hh hh' 1,
     pow_le_pow_left₀ hh hh' 2, pow_le_pow_left₀ hh hh' 3, pow_le_pow_left₀ hh hh' 4,
     pow_le_pow_left₀ hh hh' 5, pow_le_pow_left₀ hh hh' 6, pow_le_pow_left₀ hh hh' 7,
     pow_le_pow_left₀ hh hh' 8]
 
 /-- `P_X > 0` (the monomial rule gives `P_X ≥ L_X > 10¹¹`). -/
-theorem hl46W4_PX_pos {c h : ℝ} (hc : 1 / 8 ≤ c) (hc' : c ≤ 1 / 6) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
-    0 < hl46W4PX c h := by
+theorem casW4_PX_pos {c h : ℝ} (hc : 1 / 8 ≤ c) (hc' : c ≤ 1 / 6) (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) :
+    0 < casW4PX c h := by
   have hc0 : 0 ≤ c := by linarith
-  unfold hl46W4PX
-  linarith [hl46W4_mlo hc hh 7 1, hl46W4_mlo hc hh 6 2, hl46W4_mlo hc hh 6 0, hl46W4_mlo hc hh 5 3,
-    hl46W4_mlo hc hh 5 2, hl46W4_mlo hc hh 5 1, hl46W4_mlo hc hh 5 0, hl46W4_mlo hc hh 4 3,
-    hl46W4_mlo hc hh 4 2, hl46W4_mlo hc hh 4 1, hl46W4_mlo hc hh 4 0, hl46W4_mlo hc hh 3 4,
-    hl46W4_mlo hc hh 3 3, hl46W4_mlo hc hh 3 0, hl46W4_mlo hc hh 2 4, hl46W4_mlo hc hh 2 3,
-    hl46W4_mlo hc hh 1 5, hl46W4_mlo hc hh 1 4, hl46W4_mlo hc hh 1 3, hl46W4_mlo hc hh 1 2,
-    hl46W4_mlo hc hh 1 1, hl46W4_mhi hc0 hc' hh 7 0, hl46W4_mhi hc0 hc' hh 6 1,
-    hl46W4_mhi hc0 hc' hh 4 4, hl46W4_mhi hc0 hc' hh 3 5, hl46W4_mhi hc0 hc' hh 3 2,
-    hl46W4_mhi hc0 hc' hh 3 1, hl46W4_mhi hc0 hc' hh 2 6, hl46W4_mhi hc0 hc' hh 2 5,
-    hl46W4_mhi hc0 hc' hh 2 2, hl46W4_mhi hc0 hc' hh 2 1, hl46W4_mhi hc0 hc' hh 2 0,
-    hl46W4_mhi hc0 hc' hh 1 7, hl46W4_mhi hc0 hc' hh 1 6, hl46W4_mhi hc0 hc' hh 1 0,
+  unfold casW4PX
+  linarith [casW4_mlo hc hh 7 1, casW4_mlo hc hh 6 2, casW4_mlo hc hh 6 0, casW4_mlo hc hh 5 3,
+    casW4_mlo hc hh 5 2, casW4_mlo hc hh 5 1, casW4_mlo hc hh 5 0, casW4_mlo hc hh 4 3,
+    casW4_mlo hc hh 4 2, casW4_mlo hc hh 4 1, casW4_mlo hc hh 4 0, casW4_mlo hc hh 3 4,
+    casW4_mlo hc hh 3 3, casW4_mlo hc hh 3 0, casW4_mlo hc hh 2 4, casW4_mlo hc hh 2 3,
+    casW4_mlo hc hh 1 5, casW4_mlo hc hh 1 4, casW4_mlo hc hh 1 3, casW4_mlo hc hh 1 2,
+    casW4_mlo hc hh 1 1, casW4_mhi hc0 hc' hh 7 0, casW4_mhi hc0 hc' hh 6 1,
+    casW4_mhi hc0 hc' hh 4 4, casW4_mhi hc0 hc' hh 3 5, casW4_mhi hc0 hc' hh 3 2,
+    casW4_mhi hc0 hc' hh 3 1, casW4_mhi hc0 hc' hh 2 6, casW4_mhi hc0 hc' hh 2 5,
+    casW4_mhi hc0 hc' hh 2 2, casW4_mhi hc0 hc' hh 2 1, casW4_mhi hc0 hc' hh 2 0,
+    casW4_mhi hc0 hc' hh 1 7, casW4_mhi hc0 hc' hh 1 6, casW4_mhi hc0 hc' hh 1 0,
     pow_nonneg hh 1,
     pow_nonneg hh 2, pow_nonneg hh 3, pow_nonneg hh 4, pow_nonneg hh 5, pow_nonneg hh 6,
     pow_nonneg hh 7, pow_nonneg hh 8, pow_le_pow_left₀ hh hh' 1, pow_le_pow_left₀ hh hh' 2,
@@ -320,28 +320,28 @@ theorem hl46W4_PX_pos {c h : ℝ} (hc : 1 / 8 ≤ c) (hc' : c ≤ 1 / 6) (hh : 0
 
 
 /-- The four corner values of `N` are positive. -/
-theorem hl46W4_N_corners : 0 < hl46W4N 2 (108 / 95) ∧ 0 < hl46W4N 2 (22 / 19) ∧
-    0 < hl46W4N (13 / 6) (108 / 95) ∧ 0 < hl46W4N (13 / 6) (22 / 19) := by
+theorem casW4_N_corners : 0 < casW4N 2 (108 / 95) ∧ 0 < casW4N 2 (22 / 19) ∧
+    0 < casW4N (13 / 6) (108 / 95) ∧ 0 < casW4N (13 / 6) (22 / 19) := by
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
-    norm_num [hl46W4N, hl46W4W, hl46W4Wx, hl46W4Q, hl46W4Qx, hl46W4K, hl46W4Cs, hl46W4D, hsDg,
-      hl46W4Dx, hl46W4M, hl46W4Mx, hl46W4E, hl46W4Ex, hh46S4P, hl46W4v]
+    norm_num [casW4N, casW4W, casW4Wx, casW4Q, casW4Qx, casW4K, casW4Cs, casW4D, ssDg,
+      casW4Dx, casW4M, casW4Mx, casW4E, casW4Ex, casClosedP, casW4v]
 
 /-- `N > 0` on `[2, 13/6] × [108/95, 22/19]`: concave in `a`, and in `x` at the end values. -/
-theorem hl46W4_N_pos {x a : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha : 108 / 95 ≤ a)
-    (ha' : a ≤ 22 / 19) : 0 < hl46W4N x a := by
-  obtain ⟨c1, c2, c3, c4⟩ := hl46W4_N_corners
-  have edge : ∀ a0 : ℝ, 1 / 8 ≤ a0 - 1 → a0 - 1 ≤ 1 / 6 → 0 < hl46W4N 2 a0 →
-      0 < hl46W4N (13 / 6) a0 → 0 < hl46W4N x a0 := by
+theorem casW4_N_pos {x a : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (ha : 108 / 95 ≤ a)
+    (ha' : a ≤ 22 / 19) : 0 < casW4N x a := by
+  obtain ⟨c1, c2, c3, c4⟩ := casW4_N_corners
+  have edge : ∀ a0 : ℝ, 1 / 8 ≤ a0 - 1 → a0 - 1 ≤ 1 / 6 → 0 < casW4N 2 a0 →
+      0 < casW4N (13 / 6) a0 → 0 < casW4N x a0 := by
     intro a0 h1 h2 e0 e1
-    obtain ⟨F₁, hF⟩ := hl46W4_N_jet_x a0
-    exact hl46_concave_lt (f := fun x => hl46W4N x a0) (fun y _ => hF y)
+    obtain ⟨F₁, hF⟩ := casW4_N_jet_x a0
+    exact jet_concave_lt (f := fun x => casW4N x a0) (fun y _ => hF y)
       (fun y hy => by
-        have := hl46W4_PX_pos (h := y - 2) h1 h2 (by linarith [hy.1]) (by linarith [hy.2])
+        have := casW4_PX_pos (h := y - 2) h1 h2 (by linarith [hy.1]) (by linarith [hy.2])
         linarith) e0 e1 ⟨hx, hx'⟩
-  obtain ⟨F₁, hF⟩ := hl46W4_N_jet_a x
-  exact hl46_concave_lt (f := fun a => hl46W4N x a) (fun y _ => hF y)
+  obtain ⟨F₁, hF⟩ := casW4_N_jet_a x
+  exact jet_concave_lt (f := fun a => casW4N x a) (fun y _ => hF y)
     (fun y hy => by
-      have := hl46W4_PA_pos (c := y - 1) (h := x - 2) (by linarith [hy.1]) (by linarith [hy.2])
+      have := casW4_PA_pos (c := y - 1) (h := x - 2) (by linarith [hy.1]) (by linarith [hy.2])
         (by linarith) (by linarith)
       linarith)
     (edge _ (by norm_num) (by norm_num) c1 c3) (edge _ (by norm_num) (by norm_num) c2 c4) ⟨ha, ha'⟩

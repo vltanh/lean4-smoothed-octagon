@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Envelope
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope
 
 /-!
-# Gate S3 helper: the zero-scale face
+# Smaller-short window, displacement: the zero-scale face
 
 At scale `q = 0` the displacement-weighted envelope at fixed normalized duration `p = y r_A` is
 `Φ(0) = C(p) + m/4`, `m = 4(4 - 3y)/(5α - 1)`. It increases with the incoming norm `u`, so it is at
@@ -17,7 +17,7 @@ The two monotonicity steps are done separately and algebraically: `x` is lowered
 
 ## Main API
 
-* `hs35_zero_neg`: the statement of `hs3_zero_neg`.
+* `dspf_zero_neg`: the statement of `dsp_zero_neg`.
 -/
 
 @[expose] public section
@@ -64,15 +64,15 @@ private lemma log_le_quad {y : ℝ} (hy : 0 < y) (hy1 : y ≤ 1) :
 
 /-- `d₀ = r_A D/α²`. -/
 private lemma d0_eq {x be al : ℝ} (hal : 0 < al) (hab : 0 < al + be) :
-    hsRA al be * hsDg x be al / al ^ 2 = zD x al (hsRA al be) := by
-  unfold hsRA hsDg zD zB
+    ssRA al be * ssDg x be al / al ^ 2 = zD x al (ssRA al be) := by
+  unfold ssRA ssDg zD zB
   field_simp
   ring
 
 /-- `D < Q` at `β ≥ b₀(X, α)`. -/
 private lemma D_lt_Q {X be a : ℝ} (hX : 2 ≤ X) (ha : 1 ≤ a) (haX : a ≤ X)
-    (hb : X * (9 * X + 8 * a) / (9 * X + 8) ≤ be) : hsDg X be a < a * (a + be) := by
-  unfold hsDg
+    (hb : X * (9 * X + 8 * a) / (9 * X + 8) ≤ be) : ssDg X be a < a * (a + be) := by
+  unfold ssDg
   have h9 : 0 < 9 * X + 8 := by linarith
   rw [div_le_iff₀ h9] at hb
   nlinarith [mul_nonneg (sub_nonneg.2 hb) (by linarith : (0 : ℝ) ≤ 2 * X - a),
@@ -90,8 +90,8 @@ private lemma b0_mono {x' x a : ℝ} (hx' : 0 ≤ x') (hxx : x' ≤ x) (ha : 0 �
 
 /-- `r_A ≤ r₀(α, X)` from `β ≥ b₀(X, α)`. -/
 private lemma rA_le_R0 {X be a : ℝ} (hX : 0 < X) (ha : 0 < a) (hab : 0 < a + be)
-    (hb : X * (9 * X + 8 * a) / (9 * X + 8) ≤ be) : hsRA a be ≤ zR0 a X := by
-  unfold hsRA zR0
+    (hb : X * (9 * X + 8 * a) / (9 * X + 8) ≤ be) : ssRA a be ≤ zR0 a X := by
+  unfold ssRA zR0
   rw [div_le_iff₀ (by linarith)] at hb
   rw [div_le_div_iff₀ hab (by positivity)]
   nlinarith
@@ -104,46 +104,46 @@ private lemma R0_le {X a : ℝ} (hX : 2 ≤ X) (ha : 0 < a) (haX : a ≤ X) : zR
 
 /-- **Raise the incoming norm**: `Φ(0) ≤ Z(x, α, r_A, p/r_A)`. -/
 private lemma phi0_le {x be al u p : ℝ} (hx : 2 ≤ x) (hal : 1 < al) (hxb : x ≤ be)
-    (hurA : u ≤ m2U (hsRA al be)) (hDQ : hsDg x be al < al * (al + be)) (hp : 0 < p)
-    (hpr : p ≤ hsRA al be) :
-    hsPhi x be al u p (4 * (4 - 3 * (p / hsRA al be)) / (5 * al - 1)) 0 ≤
-      zZ x al (hsRA al be) (p / hsRA al be) := by
+    (hurA : u ≤ m2U (ssRA al be)) (hDQ : ssDg x be al < al * (al + be)) (hp : 0 < p)
+    (hpr : p ≤ ssRA al be) :
+    ssPhi x be al u p (4 * (4 - 3 * (p / ssRA al be)) / (5 * al - 1)) 0 ≤
+      zZ x al (ssRA al be) (p / ssRA al be) := by
   have hal0 : 0 < al := by linarith
   have hab : 0 < al + be := by linarith
-  have hr0 : 0 < hsRA al be := div_pos hal0 hab
+  have hr0 : 0 < ssRA al be := div_pos hal0 hab
   have hd := d0_eq (x := x) hal0 hab
-  set r := hsRA al be with hr
-  simp only [hsPhi, zero_mul, mul_zero, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow,
+  set r := ssRA al be with hr
+  simp only [ssPhi, zero_mul, mul_zero, ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow,
     add_zero]
   -- the slope in `u`
-  have hpD : p * hsDg x be al < al ^ 2 := by
-    rcases le_or_gt (hsDg x be al) 0 with hD | hD
+  have hpD : p * ssDg x be al < al ^ 2 := by
+    rcases le_or_gt (ssDg x be al) 0 with hD | hD
     · nlinarith
-    · have h1 : p * hsDg x be al ≤ r * hsDg x be al := mul_le_mul_of_nonneg_right hpr hD.le
-      have h2 : r * hsDg x be al < al ^ 2 := by
-        rw [hr, hsRA, div_mul_eq_mul_div, div_lt_iff₀ hab]
+    · have h1 : p * ssDg x be al ≤ r * ssDg x be al := mul_le_mul_of_nonneg_right hpr hD.le
+      have h2 : r * ssDg x be al < al ^ 2 := by
+        rw [hr, ssRA, div_mul_eq_mul_div, div_lt_iff₀ hab]
         nlinarith
       linarith
-  have hslope : 0 < (1 + x) * (1 - p * (hsDg x be al / al ^ 2)) + 1 / r := by
-    have : p * (hsDg x be al / al ^ 2) < 1 := by
+  have hslope : 0 < (1 + x) * (1 - p * (ssDg x be al / al ^ 2)) + 1 / r := by
+    have : p * (ssDg x be al / al ^ 2) < 1 := by
       rw [← mul_div_assoc, div_lt_one (by positivity)]
       exact hpD
     have : 0 < 1 / r := by positivity
     nlinarith
-  have hmono : hsCp x be al u p ≤ hsCp x be al (m2U r) p := by
-    have hid : hsCp x be al (m2U r) p - hsCp x be al u p =
-        (m2U r - u) * ((1 + x) * (1 - p * (hsDg x be al / al ^ 2)) + 1 / r) := by
-      unfold hsCp hsA1 hsE0
+  have hmono : ssCp x be al u p ≤ ssCp x be al (m2U r) p := by
+    have hid : ssCp x be al (m2U r) p - ssCp x be al u p =
+        (m2U r - u) * ((1 + x) * (1 - p * (ssDg x be al / al ^ 2)) + 1 / r) := by
+      unfold ssCp ssA1 ssE0
       rw [← hr]
       ring
     nlinarith [mul_nonneg (sub_nonneg.2 hurA) hslope.le]
   -- the identity at `u = U(r)`
-  have hD' : hsDg x be al / al ^ 2 = zD x al r / r := by
+  have hD' : ssDg x be al / al ^ 2 = zD x al r / r := by
     rw [← hd]
     field_simp
-  have hid : hsCp x be al (m2U r) p + 4 * (4 - 3 * (p / r)) / (5 * al - 1) / 4 =
+  have hid : ssCp x be al (m2U r) p + 4 * (4 - 3 * (p / r)) / (5 * al - 1) / 4 =
       zZ x al r (p / r) := by
-    unfold hsCp hsA1 hsE0 m2U zZ zH zC
+    unfold ssCp ssA1 ssE0 m2U zZ zH zC
     rw [← hr, hD', show 4 * (4 - 3 * (p / r)) / (5 * al - 1) / 4 =
       (4 - 3 * (p / r)) / (5 * al - 1) by ring]
     generalize log (p / r) = ℓ
@@ -387,33 +387,33 @@ private lemma edge_diag {a y : ℝ} (ha : 2 ≤ a) (ha2 : a ≤ 13 / 6) (hy : 0 
     have p12 : 0 ≤ v ^ 12 := by positivity
     linarith
 
-/-- **The zero-scale face**: the statement of `hs3_zero_neg`. -/
-theorem hs35_zero_neg {x be al u p : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 < al)
+/-- **The zero-scale face**: the statement of `dsp_zero_neg`. -/
+theorem dspf_zero_neg {x be al u p : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 1 < al)
     (hax : al ≤ x) (hxb : x ≤ be) (hU : x * (9 * x + 8 * al) / (9 * x + 8) ≤ be)
-    (hrA : 1 / 3 < hsRA al be) (hrA' : hsRA al be ≤ 13 / 30) (hu : 3 / 4 ≤ u)
-    (hurA : u ≤ m2U (hsRA al be)) (hDQ : hsDg x be al < al * (al + be)) (hp : 0 < p)
-    (hpr : p ≤ hsRA al be) :
-    hsPhi x be al u p (4 * (4 - 3 * (p / hsRA al be)) / (5 * al - 1)) 0 < 0 := by
+    (hrA : 1 / 3 < ssRA al be) (hrA' : ssRA al be ≤ 13 / 30) (hu : 3 / 4 ≤ u)
+    (hurA : u ≤ m2U (ssRA al be)) (hDQ : ssDg x be al < al * (al + be)) (hp : 0 < p)
+    (hpr : p ≤ ssRA al be) :
+    ssPhi x be al u p (4 * (4 - 3 * (p / ssRA al be)) / (5 * al - 1)) 0 < 0 := by
   have _ : 3 / 4 ≤ u := hu  -- `u ≥ 3/4` is not needed (only `u ≤ U(r_A)`)
   have hal0 : 0 < al := by linarith
   have hab : 0 < al + be := by linarith
   refine lt_of_le_of_lt (phi0_le hx hal hxb hurA hDQ hp hpr) ?_
-  have hr0 : 0 < hsRA al be := by linarith
-  have hy0 : 0 < p / hsRA al be := div_pos hp hr0
-  have hy1 : p / hsRA al be ≤ 1 := (div_le_one hr0).2 hpr
+  have hr0 : 0 < ssRA al be := by linarith
+  have hy0 : 0 < p / ssRA al be := div_pos hp hr0
+  have hy1 : p / ssRA al be ≤ 1 := (div_le_one hr0).2 hpr
   -- lowering `x` to `X = max 2 α`, then raising `r` to `r₀(α, X)`
   have key : ∀ X, 2 ≤ X → X ≤ x → al ≤ X →
-      zZ x al (hsRA al be) (p / hsRA al be) ≤ zZ X al (zR0 al X) (p / hsRA al be) := by
+      zZ x al (ssRA al be) (p / ssRA al be) ≤ zZ X al (zR0 al X) (p / ssRA al be) := by
     intro X hX hXx haX
     have hb : X * (9 * X + 8 * al) / (9 * X + 8) ≤ be :=
       le_trans (b0_mono (by linarith) hXx hal0.le) hU
-    have hd : zD X al (hsRA al be) ≤ 1 := by
-      rw [← d0_eq hal0 hab, div_le_one (by positivity), hsRA, div_mul_eq_mul_div,
+    have hd : zD X al (ssRA al be) ≤ 1 := by
+      rw [← d0_eq hal0 hab, div_le_one (by positivity), ssRA, div_mul_eq_mul_div,
         div_le_iff₀ hab]
       nlinarith [D_lt_Q hX hal.le haX hb]
-    calc zZ x al (hsRA al be) (p / hsRA al be) ≤ zZ X al (hsRA al be) (p / hsRA al be) :=
+    calc zZ x al (ssRA al be) (p / ssRA al be) ≤ zZ X al (ssRA al be) (p / ssRA al be) :=
           Z_x_mono hX hXx hal.le hrA.le hrA' hd hy0.le hy1
-      _ ≤ zZ X al (zR0 al X) (p / hsRA al be) :=
+      _ ≤ zZ X al (zR0 al X) (p / ssRA al be) :=
           Z_r_mono hX (by linarith) hal.le haX hrA.le (rA_le_R0 (by linarith) hal0 hab hb)
             (R0_le hX hal0 haX) hy0.le hy1
   rcases le_or_gt al 2 with h2 | h2

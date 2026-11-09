@@ -1,28 +1,28 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Basic
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Basic
 
 /-!
-# Gate S6 helper: the angle bound at the normalized point
+# Smaller-short window, cost: the angle bound at the normalized point
 
 The window's endpoint traces `𝒜 = Point.AA`, `ℬ = Point.BB` at the normalized point
 `⟨1/(1 + x), β/x - 1, α, ρ, v, E⟩` are compared with the fixed lower row `(n, √3μ)`, `μ = βx - α`,
 `n = (2x + 1)α + (x + 2)β`, of the relative frame.
 
 The frame `m` and the costate are rotated by `O' = [[x + 2, -√3x], [√3x, x + 2]]` (`O'ᵀO' = 4K_x`).
-The traces become a bilinear identity in the rotated entries (`hs6_rot_traces`, 172 monomials, atoms
+The traces become a bilinear identity in the rotated entries (`cost_rot_traces`, 172 monomials, atoms
 `m_ij`, `h_ij`), and the point enters only through four short facts: the lower row
-(`hs6_rot_lower`), the shear row (`hs6_rot_shear`), `det m = 1` (`hs6_m_det`, from `det P = -2U`,
+(`cost_rot_lower`), the shear row (`cost_rot_shear`), `det m = 1` (`cost_m_det`, from `det P = -2U`,
 `det F = 1`, `det Q⁻¹ = -1/(2U)`) and the costate in the rotated basis with its Casimir
-(`hs6_rot_costate`). The angle comparison is the quadratic-in-`ξ` supporting-line bound `hs6_ab2`.
+(`cost_rot_costate`). The angle comparison is the quadratic-in-`ξ` supporting-line bound `cost_ab2`.
 
 ## Main API
 
-* `hs6_pt_coords`, `hs6_m_closed`, `hs6_m_det`: the coordinates and frame of `Point` at the
+* `cost_pt_coords`, `cost_m_closed`, `cost_m_det`: the coordinates and frame of `Point` at the
   normalized point.
-* `hs6Rb1`, `hs6Rb2`, `hs6Ra1`, `hs6Ra2`, `hs6Rk1`, `hs6Rk2`, `hs6Rk3`, `hs6_rot_traces`.
-* `hs6_rot_lower`, `hs6_rot_shear`, `hs6_rot_costate`, `hs6_ab2`.
-* `hs6_angle_core`: `√3 cos δ (nℬ - μ𝒜) - sin δ (n𝒜 + 3μℬ) ≤ 0` when
+* `costRb1`, `costRb2`, `costRa1`, `costRa2`, `costRk1`, `costRk2`, `costRk3`, `cost_rot_traces`.
+* `cost_rot_lower`, `cost_rot_shear`, `cost_rot_costate`, `cost_ab2`.
+* `cost_angle_core`: `√3 cos δ (nℬ - μ𝒜) - sin δ (n𝒜 + 3μℬ) ≤ 0` when
   `√(A² + h²) ≤ K_κ sin δ + h cos δ`, `K_κ = A + 2 + 2κ/J₀`.
 -/
 
@@ -30,7 +30,7 @@ The traces become a bilinear identity in the rotated entries (`hs6_rot_traces`, 
 
 namespace SmoothedOctagon
 
-open Real Certificates.SmallerShort
+open Real SmallerShort
 
 section Closed
 
@@ -38,7 +38,7 @@ variable {x be al ρ v E : ℝ}
 
 /-- The derived coordinates of `Point` at the normalized point
 `⟨1/(1 + x), β/x - 1, α, ρ, v, E⟩`. -/
-theorem hs6_pt_coords (hx : 1 < x) :
+theorem cost_pt_coords (hx : 1 < x) :
     (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).x = x ∧
     (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).be = be ∧
     (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).S = 1 + x ∧
@@ -54,7 +54,7 @@ theorem hs6_pt_coords (hx : 1 < x) :
 
 /-- **The frame `m = P F Q⁻¹` of `Point` in closed form** at the normalized point (common
 denominator `2(α + β)(1 - ρ)(1 + x)`). -/
-theorem hs6_m_closed (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
+theorem cost_m_closed (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
     (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00 =
         (-al ^ 2 * be * ρ * x - 2 * al ^ 2 * be * ρ + 2 * al * be * ρ * x ^ 2 + 4 * al * be * ρ * x -
           al * ρ * x ^ 2 - 4 * al * ρ * x - 3 * al * ρ + 2 * al * x + 3 * al - be * ρ * x -
@@ -71,7 +71,7 @@ theorem hs6_m_closed (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (
         -(-al ^ 2 * be * ρ * x - 2 * al * be ^ 2 * ρ * x + 2 * al * be * ρ * x ^ 2 - al * ρ * x ^ 2 +
           2 * al * ρ * x + al * ρ - 2 * al * x - al + 4 * be ^ 2 * ρ * x ^ 2 - 2 * be * ρ * x ^ 2 +
           3 * be * ρ * x + 2 * be * ρ - 3 * be * x - 2 * be) / (2 * (al + be) * (1 - ρ) * (1 + x)) := by
-  obtain ⟨hx', hb', hS, hA, hB, hU⟩ := hs6_pt_coords (be := be) (al := al) (ρ := ρ) (v := v) (E := E) hx
+  obtain ⟨hx', hb', hS, hA, hB, hU⟩ := cost_pt_coords (be := be) (al := al) (ρ := ρ) (v := v) (E := E) hx
   have h1 : 0 < 1 - ρ := by linarith
   have h2 : 0 < al + be := by linarith
   have h3 : 0 < 1 + x := by linarith
@@ -82,12 +82,12 @@ theorem hs6_m_closed (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (
   refine ⟨?_, ?_, ?_, ?_⟩ <;> field_simp <;> ring
 
 /-- **`det m = 1`** at the normalized point (`det P = -2U`, `det F = 1`, `det Q⁻¹ = -1/(2U)`). -/
-theorem hs6_m_det (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
+theorem cost_m_det (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
     (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00 *
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m11 -
       (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m01 *
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m10 = 1 := by
-  obtain ⟨hx', hb', hS, hA, hB, hU⟩ := hs6_pt_coords (be := be) (al := al) (ρ := ρ) (v := v) (E := E) hx
+  obtain ⟨hx', hb', hS, hA, hB, hU⟩ := cost_pt_coords (be := be) (al := al) (ρ := ρ) (v := v) (E := E) hx
   set p : Point := ⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩
   have e1 : p.m00 * p.m11 - p.m01 * p.m10 =
       (p.PF00 * p.PF11 - p.PF01 * p.PF10) * (p.Qi00 * p.Qi11 - p.Qi01 * p.Qi10) := by
@@ -117,67 +117,67 @@ end Closed
 
 /-- The upper-left entry `b₁` of `O'ᵀMO'`, `O' = [[x + 2, -√3x], [√3x, x + 2]]`,
 `M = diag(1/√3, 1) m diag(√3, 1)`. -/
-noncomputable def hs6Rb1 (x m00 m01 m10 m11 : ℝ) : ℝ :=
+noncomputable def costRb1 (x m00 m01 m10 m11 : ℝ) : ℝ :=
   (x + 2) ^ 2 * m00 + (x + 2) * x * m01 + 3 * (x + 2) * x * m10 + 3 * x ^ 2 * m11
 
 /-- The upper-right entry of `O'ᵀMO'`, divided by `√3`. -/
-noncomputable def hs6Rb2 (x m00 m01 m10 m11 : ℝ) : ℝ :=
+noncomputable def costRb2 (x m00 m01 m10 m11 : ℝ) : ℝ :=
   -((x + 2) * x * m00) + (x + 2) ^ 2 / 3 * m01 - 3 * x ^ 2 * m10 + (x + 2) * x * m11
 
 /-- The lower-left entry of `O'ᵀMO'`, divided by `√3`. -/
-noncomputable def hs6Ra1 (x m00 m01 m10 m11 : ℝ) : ℝ :=
+noncomputable def costRa1 (x m00 m01 m10 m11 : ℝ) : ℝ :=
   -((x + 2) * x * m00) - x ^ 2 * m01 + (x + 2) ^ 2 * m10 + (x + 2) * x * m11
 
 /-- The lower-right entry of `O'ᵀMO'`. -/
-noncomputable def hs6Ra2 (x m00 m01 m10 m11 : ℝ) : ℝ :=
+noncomputable def costRa2 (x m00 m01 m10 m11 : ℝ) : ℝ :=
   3 * x ^ 2 * m00 - (x + 2) * x * m01 - 3 * (x + 2) * x * m10 + (x + 2) ^ 2 * m11
 
 /-- The upper-left entry of `O'ᵀ𝓚O'`, `𝓚 = [[-3h₂₁, -√3h₁₁], [-√3h₁₁, h₁₂]]`. -/
-noncomputable def hs6Rk1 (x h11 h12 h21 : ℝ) : ℝ :=
+noncomputable def costRk1 (x h11 h12 h21 : ℝ) : ℝ :=
   3 * x ^ 2 * h12 - 6 * x * (x + 2) * h11 - 3 * (x + 2) ^ 2 * h21
 
 /-- The off-diagonal entry of `O'ᵀ𝓚O'`, divided by `√3`. -/
-noncomputable def hs6Rk2 (x h11 h12 h21 : ℝ) : ℝ :=
+noncomputable def costRk2 (x h11 h12 h21 : ℝ) : ℝ :=
   2 * h11 * x ^ 2 - 4 * h11 * x - 4 * h11 + h12 * x * (x + 2) + 3 * h21 * x * (x + 2)
 
 /-- The lower-right entry of `O'ᵀ𝓚O'`. -/
-noncomputable def hs6Rk3 (x h11 h12 h21 : ℝ) : ℝ :=
+noncomputable def costRk3 (x h11 h12 h21 : ℝ) : ℝ :=
   6 * h11 * x * (x + 2) + h12 * (x + 2) ^ 2 - 9 * h21 * x ^ 2
 
 /-- **The rotated trace identity** (at the matrix level): with
 `𝒜 = T_κ tr m + h₁₂m₁₁ - h₁₁(m₀₁ + 3m₁₀) - 3h₂₁m₀₀` and
 `ℬ = h₁₁(m₁₁ - m₀₀) + h₁₂m₁₀ + h₂₁m₀₁ + (T_κ/3)(3m₁₀ - m₀₁)` (`Point.AA`, `Point.BB`), the rotated
-entries `a₁ = √3·hs6Ra1`, `a₂ = hs6Ra2`, `Δ = a₂b₁ - a₁b₂`, `σ = (a₁b₁ + a₂b₂)/√3`,
+entries `a₁ = √3·costRa1`, `a₂ = costRa2`, `Δ = a₂b₁ - a₁b₂`, `σ = (a₁b₁ + a₂b₂)/√3`,
 `Λ = a₁² + a₂²`, `c = 4K_xT_κ`: `(a₂ - ia₁)(𝒜 + i√3ℬ)·16K_x² = (c + k₁)Δ + k₂Σ + (c + k₃)Λ +
 i(k₂(Δ - Λ) - (c + k₁)Σ)`, in rational form. -/
-theorem hs6_rot_traces (x m00 m01 m10 m11 h11 h12 h21 Tk : ℝ) :
-    16 * (x ^ 2 + x + 1) ^ 2 * (hs6Ra2 x m00 m01 m10 m11 *
+theorem cost_rot_traces (x m00 m01 m10 m11 h11 h12 h21 Tk : ℝ) :
+    16 * (x ^ 2 + x + 1) ^ 2 * (costRa2 x m00 m01 m10 m11 *
         (Tk * (m00 + m11) + h12 * m11 - h11 * (m01 + 3 * m10) - 3 * h21 * m00) +
-      3 * hs6Ra1 x m00 m01 m10 m11 *
+      3 * costRa1 x m00 m01 m10 m11 *
         (h11 * (m11 - m00) + h12 * m10 + h21 * m01 + Tk / 3 * (3 * m10 - m01))) =
-      (4 * (x ^ 2 + x + 1) * Tk + hs6Rk1 x h11 h12 h21) *
-          (hs6Ra2 x m00 m01 m10 m11 * hs6Rb1 x m00 m01 m10 m11 -
-            3 * hs6Ra1 x m00 m01 m10 m11 * hs6Rb2 x m00 m01 m10 m11) +
-        3 * hs6Rk2 x h11 h12 h21 * (hs6Ra1 x m00 m01 m10 m11 * hs6Rb1 x m00 m01 m10 m11 +
-          hs6Ra2 x m00 m01 m10 m11 * hs6Rb2 x m00 m01 m10 m11) +
-        (4 * (x ^ 2 + x + 1) * Tk + hs6Rk3 x h11 h12 h21) *
-          (3 * hs6Ra1 x m00 m01 m10 m11 ^ 2 + hs6Ra2 x m00 m01 m10 m11 ^ 2) ∧
-    16 * (x ^ 2 + x + 1) ^ 2 * (hs6Ra2 x m00 m01 m10 m11 *
+      (4 * (x ^ 2 + x + 1) * Tk + costRk1 x h11 h12 h21) *
+          (costRa2 x m00 m01 m10 m11 * costRb1 x m00 m01 m10 m11 -
+            3 * costRa1 x m00 m01 m10 m11 * costRb2 x m00 m01 m10 m11) +
+        3 * costRk2 x h11 h12 h21 * (costRa1 x m00 m01 m10 m11 * costRb1 x m00 m01 m10 m11 +
+          costRa2 x m00 m01 m10 m11 * costRb2 x m00 m01 m10 m11) +
+        (4 * (x ^ 2 + x + 1) * Tk + costRk3 x h11 h12 h21) *
+          (3 * costRa1 x m00 m01 m10 m11 ^ 2 + costRa2 x m00 m01 m10 m11 ^ 2) ∧
+    16 * (x ^ 2 + x + 1) ^ 2 * (costRa2 x m00 m01 m10 m11 *
         (h11 * (m11 - m00) + h12 * m10 + h21 * m01 + Tk / 3 * (3 * m10 - m01)) -
-      hs6Ra1 x m00 m01 m10 m11 *
+      costRa1 x m00 m01 m10 m11 *
         (Tk * (m00 + m11) + h12 * m11 - h11 * (m01 + 3 * m10) - 3 * h21 * m00)) =
-      hs6Rk2 x h11 h12 h21 * (hs6Ra2 x m00 m01 m10 m11 * hs6Rb1 x m00 m01 m10 m11 -
-          3 * hs6Ra1 x m00 m01 m10 m11 * hs6Rb2 x m00 m01 m10 m11 -
-          (3 * hs6Ra1 x m00 m01 m10 m11 ^ 2 + hs6Ra2 x m00 m01 m10 m11 ^ 2)) -
-        (4 * (x ^ 2 + x + 1) * Tk + hs6Rk1 x h11 h12 h21) *
-          (hs6Ra1 x m00 m01 m10 m11 * hs6Rb1 x m00 m01 m10 m11 +
-            hs6Ra2 x m00 m01 m10 m11 * hs6Rb2 x m00 m01 m10 m11) ∧
-    hs6Ra2 x m00 m01 m10 m11 * hs6Rb1 x m00 m01 m10 m11 -
-        3 * hs6Ra1 x m00 m01 m10 m11 * hs6Rb2 x m00 m01 m10 m11 =
+      costRk2 x h11 h12 h21 * (costRa2 x m00 m01 m10 m11 * costRb1 x m00 m01 m10 m11 -
+          3 * costRa1 x m00 m01 m10 m11 * costRb2 x m00 m01 m10 m11 -
+          (3 * costRa1 x m00 m01 m10 m11 ^ 2 + costRa2 x m00 m01 m10 m11 ^ 2)) -
+        (4 * (x ^ 2 + x + 1) * Tk + costRk1 x h11 h12 h21) *
+          (costRa1 x m00 m01 m10 m11 * costRb1 x m00 m01 m10 m11 +
+            costRa2 x m00 m01 m10 m11 * costRb2 x m00 m01 m10 m11) ∧
+    costRa2 x m00 m01 m10 m11 * costRb1 x m00 m01 m10 m11 -
+        3 * costRa1 x m00 m01 m10 m11 * costRb2 x m00 m01 m10 m11 =
       16 * (x ^ 2 + x + 1) ^ 2 * (m00 * m11 - m01 * m10) ∧
-    hs6Rk1 x h11 h12 h21 * hs6Rk3 x h11 h12 h21 - 3 * hs6Rk2 x h11 h12 h21 ^ 2 =
+    costRk1 x h11 h12 h21 * costRk3 x h11 h12 h21 - 3 * costRk2 x h11 h12 h21 ^ 2 =
       16 * (x ^ 2 + x + 1) ^ 2 * (-3 * h21 * h12 - 3 * h11 ^ 2) := by
-  unfold hs6Ra1 hs6Ra2 hs6Rb1 hs6Rb2 hs6Rk1 hs6Rk2 hs6Rk3
+  unfold costRa1 costRa2 costRb1 costRb2 costRk1 costRk2 costRk3
   refine ⟨by ring, by ring, by ring, by ring⟩
 
 /-- **The supporting line for every costate** (real form):
@@ -185,7 +185,7 @@ with `t = c + k₁`, `k₁ > 0`, `k₁k₃ = c² + k₂²` (`det = 1`), `sin δ 
 `A² + h² ≤ (K_s sin δ + h cos δ)²`, `K_s = A + 2 + 2c/k₁`:
 `cos δ (k₂A - th) - sin δ (t(1 + A) + k₂h + c + k₃) ≤ 0`. The left side times `4k₁ sin δ` is
 `-(2k₂ sin δ - k₁(A cos δ - h sin δ))² - (k₁K_s sin δ + k₁h cos δ)² + k₁²(A² + h²)`. -/
-theorem hs6_ab2 {A h c k₁ k₂ k₃ s co : ℝ} (hk1 : 0 < k₁) (hs : 0 < s) (hsc : s ^ 2 + co ^ 2 = 1)
+theorem cost_ab2 {A h c k₁ k₂ k₃ s co : ℝ} (hk1 : 0 < k₁) (hs : 0 < s) (hsc : s ^ 2 + co ^ 2 = 1)
     (hdet : k₁ * k₃ = c ^ 2 + k₂ ^ 2)
     (hsup : A ^ 2 + h ^ 2 ≤ ((A + 2 + 2 * c / k₁) * s + h * co) ^ 2) :
     co * (k₂ * A - (c + k₁) * h) - s * ((c + k₁) * (1 + A) + k₂ * h + c + k₃) ≤ 0 := by
@@ -213,34 +213,34 @@ variable {x be al ρ v E u : ℝ}
 
 /-- **The fixed lower row**: at the normalized point,
 `a₁/√3 = 2S(βx - α)/(α + β)` and `a₂ = 2S((2x + 1)α + (x + 2)β)/(α + β)`. -/
-theorem hs6_rot_lower (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
-    hs6Ra1 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00
+theorem cost_rot_lower (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
+    costRa1 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m01
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m10
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m11 =
       2 * (1 + x) * (be * x - al) / (al + be) ∧
-    hs6Ra2 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00
+    costRa2 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m01
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m10
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m11 =
       2 * (1 + x) * ((2 * x + 1) * al + (x + 2) * be) / (al + be) := by
-  obtain ⟨h00, h01, h10, h11⟩ := hs6_m_closed (v := v) (E := E) hx hal hbe hρ hρ1
+  obtain ⟨h00, h01, h10, h11⟩ := cost_m_closed (v := v) (E := E) hx hal hbe hρ hρ1
   rw [h00, h01, h10, h11]
   have h1 : 0 < 1 - ρ := by linarith
   have h2 : 0 < al + be := by linarith
   have h3 : 0 < 1 + x := by linarith
-  unfold hs6Ra1 hs6Ra2
+  unfold costRa1 costRa2
   constructor <;> field_simp <;> ring
 
 /-- **The shear row**: at the normalized point,
 `(βx - α)b₁ + ((2x + 1)α + (x + 2)β)b₂/√3 = 8SK_xK_A η/(α + β)` with `η = h/√3`,
-`h` the physical shear (`hsShear`). -/
-theorem hs6_rot_shear (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
-    (be * x - al) * hs6Rb1 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00
+`h` the physical shear (`ssShear`). -/
+theorem cost_rot_shear (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1) :
+    (be * x - al) * costRb1 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m01
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m10
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m11 +
-      ((2 * x + 1) * al + (x + 2) * be) * hs6Rb2 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00
+      ((2 * x + 1) * al + (x + 2) * be) * costRb2 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m00
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m01
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m10
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).m11 =
@@ -248,25 +248,25 @@ theorem hs6_rot_shear (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) 
         (1 / 3 * ((be * x - al) * ((x + 2) * al + (2 * x + 1) * be) /
           ((1 + x) ^ 2 * (al ^ 2 + al * be + be ^ 2)) -
           2 * ((x ^ 2 + x + 1) / (1 + x) ^ 2) * (2 * be * x - x - al * be) * (ρ / (1 - ρ)))) := by
-  obtain ⟨h00, h01, h10, h11⟩ := hs6_m_closed (v := v) (E := E) hx hal hbe hρ hρ1
+  obtain ⟨h00, h01, h10, h11⟩ := cost_m_closed (v := v) (E := E) hx hal hbe hρ hρ1
   rw [h00, h01, h10, h11]
   have h1 : 0 < 1 - ρ := by linarith
   have h2 : 0 < al + be := by linarith
   have h3 : 0 < 1 + x := by linarith
   have h4 : 0 < al ^ 2 + al * be + be ^ 2 := by positivity
-  unfold hs6Rb1 hs6Rb2
+  unfold costRb1 costRb2
   field_simp
   ring
 
 /-- **The costate in the rotated basis**: at the normalized point with incoming norm `u`,
 `k₁ = 12uS²(1 - ρ)²`, `k₂/√3 = 4(1 - ρ)(uSW - EK_x)` with `W = 1 - x + ρS(2x + 1)`, and
 `-(h₂₁h₁₂ + h₁₁²) = (4uv - E²)(1 - ρ)²`. -/
-theorem hs6_rot_costate (hx : 1 < x)
+theorem cost_rot_costate (hx : 1 < x)
     (hu : (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).u = u) :
-    hs6Rk1 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h11
+    costRk1 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h11
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h12
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h21 = 12 * u * (1 + x) ^ 2 * (1 - ρ) ^ 2 ∧
-    hs6Rk2 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h11
+    costRk2 x (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h11
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h12
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h21 =
       4 * (1 - ρ) * (u * (1 + x) * (1 - x + ρ * (1 + x) * (2 * x + 1)) - E * (x ^ 2 + x + 1)) ∧
@@ -274,24 +274,24 @@ theorem hs6_rot_costate (hx : 1 < x)
           (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h12 +
         (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h11 ^ 2) =
       (4 * u * v - E ^ 2) * (1 - ρ) ^ 2 := by
-  obtain ⟨-, -, hS, -, -, -⟩ := hs6_pt_coords (be := be) (al := al) (ρ := ρ) (v := v) (E := E) hx
+  obtain ⟨-, -, hS, -, -, -⟩ := cost_pt_coords (be := be) (al := al) (ρ := ρ) (v := v) (E := E) hx
   have h3 : 0 < 1 + x := by linarith
   simp only [Point.h11, Point.h12, Point.h21, hu, hS]
-  unfold hs6Rk1 hs6Rk2
+  unfold costRk1 costRk2
   refine ⟨?_, ?_, ?_⟩ <;> field_simp <;> ring
 
 /-- **The angle inequality at the normalized point**: if
 `√(A² + h²) ≤ K_κ sin δ + h cos δ` with `K_κ = A + 2 + 2κ/J₀`, `J₀ = 3u/(2U₁)`, `sin δ > 0`, then
 `√3 cos δ (n ℬ - μ 𝒜) - sin δ (n 𝒜 + 3μ ℬ) ≤ 0`, where `μ = βx - α`, `n = (2x + 1)α + (x + 2)β`
 (so `(n, √3μ)` is the direction of the fixed lower row, angle `ψ`).
-The proof uses the rotated trace identity `hs6_rot_traces` and the quadratic-in-`ξ` bound
-`hs6_ab2`. -/
-theorem hs6_angle_core (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1)
+The proof uses the rotated trace identity `cost_rot_traces` and the quadratic-in-`ξ` bound
+`cost_ab2`. -/
+theorem cost_angle_core (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ) (hρ1 : ρ < 1)
     (hu0 : 0 < u) (hu : (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).u = u)
     (hk : 0 < (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).kap) {δ : ℝ} (hs : 0 < sin δ)
-    (hsup : √(hsAn x be al ^ 2 + hsShear x be al ρ ^ 2) ≤
-      (hsAn x be al + 2 + 2 * (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).kap /
-        (3 * u / (2 * m2U (1 / (1 + x))))) * sin δ + hsShear x be al ρ * cos δ) :
+    (hsup : √(ssAn x be al ^ 2 + ssShear x be al ρ ^ 2) ≤
+      (ssAn x be al + 2 + 2 * (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).kap /
+        (3 * u / (2 * m2U (1 / (1 + x))))) * sin δ + ssShear x be al ρ * cos δ) :
     √3 * cos δ * (((2 * x + 1) * al + (x + 2) * be) * (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).BB -
         (be * x - al) * (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).AA) -
       sin δ * (((2 * x + 1) * al + (x + 2) * be) * (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).AA +
@@ -302,10 +302,10 @@ theorem hs6_angle_core (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ)
   have hKx : 0 < x ^ 2 + x + 1 := by positivity
   have hKA : 0 < al ^ 2 + al * be + be ^ 2 := by positivity
   -- the facts at the point
-  have hdetm := hs6_m_det (v := v) (E := E) hx hal hbe hρ hρ1
-  obtain ⟨hl1, hl2⟩ := hs6_rot_lower (v := v) (E := E) hx hal hbe hρ hρ1
-  have hsh := hs6_rot_shear (v := v) (E := E) hx hal hbe hρ hρ1
-  obtain ⟨hk1, hk2, hcas⟩ := hs6_rot_costate hx hu
+  have hdetm := cost_m_det (v := v) (E := E) hx hal hbe hρ hρ1
+  obtain ⟨hl1, hl2⟩ := cost_rot_lower (v := v) (E := E) hx hal hbe hρ hρ1
+  have hsh := cost_rot_shear (v := v) (E := E) hx hal hbe hρ hρ1
+  obtain ⟨hk1, hk2, hcas⟩ := cost_rot_costate hx hu
   have hgam : (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).gam =
       (4 * u * v - E ^ 2) / (16 * (1 - ρ) ^ 2) := by rw [Point.gam, hu]
   have hkap2 : (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).kap ^ 2 =
@@ -326,7 +326,7 @@ theorem hs6_angle_core (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ)
   generalize (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).h21 = h21 at *
   generalize (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).Tk = Tk at *
   generalize (⟨1 / (1 + x), be / x - 1, al, ρ, v, E⟩ : Point).kap = kap at *
-  obtain ⟨hRe, hIm, hΔ, hdK⟩ := hs6_rot_traces x m00 m01 m10 m11 h11 h12 h21 Tk
+  obtain ⟨hRe, hIm, hΔ, hdK⟩ := cost_rot_traces x m00 m01 m10 m11 h11 h12 h21 Tk
   rw [hdetm] at hΔ
   rw [hl1, hl2] at hRe hIm hΔ
   rw [hk1] at hRe hIm hdK
@@ -334,14 +334,14 @@ theorem hs6_angle_core (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ)
   set η := 1 / 3 * ((be * x - al) * ((x + 2) * al + (2 * x + 1) * be) /
     ((1 + x) ^ 2 * (al ^ 2 + al * be + be ^ 2)) -
       2 * ((x ^ 2 + x + 1) / (1 + x) ^ 2) * (2 * be * x - x - al * be) * (ρ / (1 - ρ))) with hη
-  have hsh3 : hsShear x be al ρ = √3 * η := by rw [hsShear, hη]; ring
+  have hsh3 : ssShear x be al ρ = √3 * η := by rw [ssShear, hη]; ring
   have hs3 : √3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   -- the lower-row identities
-  set A := hsAn x be al with hA
+  set A := ssAn x be al with hA
   have hAΛ : (1 + A) * (3 * (2 * (1 + x) * (be * x - al) / (al + be)) ^ 2 +
       (2 * (1 + x) * ((2 * x + 1) * al + (x + 2) * be) / (al + be)) ^ 2) =
       16 * (x ^ 2 + x + 1) ^ 2 := by
-    rw [hA, hsAn]; field_simp; ring
+    rw [hA, ssAn]; field_simp; ring
   have hGΛ : 2 * (1 + x) / (al + be) * (8 * (1 + x) * (x ^ 2 + x + 1) *
       (al ^ 2 + al * be + be ^ 2) / (al + be)) =
       3 * (2 * (1 + x) * (be * x - al) / (al + be)) ^ 2 +
@@ -351,22 +351,22 @@ theorem hs6_angle_core (hx : 1 < x) (hal : 0 < al) (hbe : 0 < be) (hρ : 0 < ρ)
       A + 2 + 2 * kap / (3 * u / (2 * m2U (1 / (1 + x)))) := by
     rw [hTk, m2U]; field_simp; ring
   -- generalize the atoms
-  generalize hb1 : hs6Rb1 x m00 m01 m10 m11 = b₁ at hRe hIm hΔ hsh
-  generalize hb2 : hs6Rb2 x m00 m01 m10 m11 = b₂ at hRe hIm hΔ hsh
-  generalize hκ2 : hs6Rk2 x h11 h12 h21 = κ₂ at hRe hIm hdK hk2
-  generalize hk3 : hs6Rk3 x h11 h12 h21 = k₃ at hRe hIm hdK
+  generalize hb1 : costRb1 x m00 m01 m10 m11 = b₁ at hRe hIm hΔ hsh
+  generalize hb2 : costRb2 x m00 m01 m10 m11 = b₂ at hRe hIm hΔ hsh
+  generalize hκ2 : costRk2 x h11 h12 h21 = κ₂ at hRe hIm hdK hk2
+  generalize hk3 : costRk3 x h11 h12 h21 = k₃ at hRe hIm hdK
   have hdet : 12 * u * (1 + x) ^ 2 * (1 - ρ) ^ 2 * k₃ =
       (4 * (x ^ 2 + x + 1) * Tk) ^ 2 + (√3 * κ₂) ^ 2 := by
     rw [hTk, mul_pow √3, hs3]
     linear_combination hdK + 48 * (x ^ 2 + x + 1) ^ 2 * hcas -
       64 * (x ^ 2 + x + 1) ^ 2 * (1 - ρ) ^ 2 * hkap2'
-  have hsup2 : A ^ 2 + hsShear x be al ρ ^ 2 ≤
+  have hsup2 : A ^ 2 + ssShear x be al ρ ^ 2 ≤
       ((A + 2 + 2 * (4 * (x ^ 2 + x + 1) * Tk) / (12 * u * (1 + x) ^ 2 * (1 - ρ) ^ 2)) * sin δ +
-        hsShear x be al ρ * cos δ) ^ 2 := by
+        ssShear x be al ρ * cos δ) ^ 2 := by
     rw [hKs, ← Real.sqrt_le_left]
     · exact hsup
     · exact le_trans (Real.sqrt_nonneg _) hsup
-  have hg := hs6_ab2 (k₂ := √3 * κ₂) (by positivity) hs (sin_sq_add_cos_sq δ) hdet hsup2
+  have hg := cost_ab2 (k₂ := √3 * κ₂) (by positivity) hs (sin_sq_add_cos_sq δ) hdet hsup2
   rw [hsh3] at hg
   generalize Tk * (m00 + m11) + h12 * m11 - h11 * (m01 + 3 * m10) - 3 * h21 * m00 = AA at hRe hIm ⊢
   generalize h11 * (m11 - m00) + h12 * m10 + h21 * m01 + Tk / 3 * (3 * m10 - m01) = BB at hRe hIm ⊢

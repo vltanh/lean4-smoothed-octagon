@@ -6,23 +6,23 @@ public import SmoothedOctagon.Exclusion.Mixed.Density.Local
 /-!
 # The lower Casimir bound of a competitive mixed period
 
-A competitive mixed normal period has `γ² > 27/256` (`NormalPeriod.cg_cas_gt`).
+A competitive mixed normal period has `γ² > 27/256` (`NormalPeriod.dens_cas_gt`).
 
 Proof. Suppose `γ² ≤ 27/256`. At every piece with equal incident signs the Gram identity
-`d_- d_+ - e² = γ²/K²`, `K > 4`, `d_± ≥ 3/32` forces `4 e² > d_- d_+` (`cg_good`), i.e. the
+`d_- d_+ - e² = γ²/K²`, `K > 4`, `d_± ≥ 3/32` forces `4 e² > d_- d_+` (`dens_good`), i.e. the
 costate angle avoids `[π/3, 2π/3]`. At a forward piece `+ +` the angle is at most `2π/3`
-(`CostateCycle.cg_pp_bound`), hence below `π/3`: its increment `δ = π/3 - angle` is positive
-(`cg_angle_pp`). At a reverse centre `- -` the angle exceeds `2π/5` (`m1_angle_gap` through
-`NormalPeriod.cg_centreData`), hence `2π/3`: its increment `δ = angle - π/3` exceeds `π/3`
-(`cg_angle_mm`). At a turn `δ = 0`. A mixed period has a reverse centre, so `∑ δ > π/3`,
-against the winding identity `∑ δ = π/3` (`cg_winding`).
+(`CostateCycle.dens_pp_bound`), hence below `π/3`: its increment `δ = π/3 - angle` is positive
+(`dens_angle_pp`). At a reverse centre `- -` the angle exceeds `2π/5` (`m1_angle_gap` through
+`NormalPeriod.dens_centreData`), hence `2π/3`: its increment `δ = angle - π/3` exceeds `π/3`
+(`dens_angle_mm`). At a turn `δ = 0`. A mixed period has a reverse centre, so `∑ δ > π/3`,
+against the winding identity `∑ δ = π/3` (`dens_winding`).
 
 The whole-period winding is used in its telescoped form `∑ δ = π/3`. Of the reverse bound
 `cos φ < 3/10` only `cos φ < 1/2` is needed.
 
 ## Main API
 
-* `NormalPeriod.cg_cas_gt`.
+* `NormalPeriod.dens_cas_gt`.
 -/
 
 @[expose] public section
@@ -35,7 +35,7 @@ open scoped Matrix
 namespace NormalPeriod
 
 /-- **The lower Casimir bound of a competitive mixed period**: `γ² > 27/256`. -/
-theorem cg_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixed) :
+theorem dens_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixed) :
     27 / 256 < P.costateCycle.gam2 0 := by
   set C := P.costateCycle with hC
   by_contra hle
@@ -52,7 +52,7 @@ theorem cg_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixe
     by_contra h4
     push Not at h4
     rw [C.gam2_eq] at hg
-    have := cg_good (C.act_pos k) (hdge (k - 1)) (hdge k) hg h4
+    have := dens_good (C.act_pos k) (hdge (k - 1)) (hdge k) hg h4
     linarith
   have hW : ∀ k : ℤ, 0 < √(C.swd (k - 1) * C.swd k) := fun k ↦
     Real.sqrt_pos.2 (mul_pos (by linarith [hdge (k - 1)]) (by linarith [hdge k]))
@@ -79,16 +79,16 @@ theorem cg_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixe
     rcases lt_or_gt_of_ne hne with h | h
     · nlinarith
     · exact h
-  obtain ⟨Q, hQ, hS⟩ := wd_chol hsym hS00 (by rw [hdetS]; exact hpos)
-  have hL : 0 < (Q * wd_K P).det := by
-    rw [Matrix.det_mul, wd_det_K]; have : (0 : ℝ) < √3 := by positivity
+  obtain ⟨Q, hQ, hS⟩ := wind_chol hsym hS00 (by rw [hdetS]; exact hpos)
+  have hL : 0 < (Q * wind_K P).det := by
+    rw [Matrix.det_mul, wind_det_K]; have : (0 : ℝ) < √3 := by positivity
     nlinarith
-  obtain ⟨Φ, hΦc, hΦT, hΦ⟩ := wd_polar P hc
+  obtain ⟨Φ, hΦc, hΦT, hΦ⟩ := wind_polar P hc
   set δ : ℕ → ℝ := fun n ↦
-    wd_kap (Q * wd_K P) (P.g (P.rep.τ n)) (P.X (P.rep.τ n)) (Φ (P.rep.τ n)) (cg_outB P n) -
-      wd_kap (Q * wd_K P) (P.g (P.rep.τ n)) (P.X (P.rep.τ n)) (Φ (P.rep.τ n)) (cg_inB P n)
+    wind_kap (Q * wind_K P) (P.g (P.rep.τ n)) (P.X (P.rep.τ n)) (Φ (P.rep.τ n)) (dens_outB P n) -
+      wind_kap (Q * wind_K P) (P.g (P.rep.τ n)) (P.X (P.rep.τ n)) (Φ (P.rep.τ n)) (dens_inB P n)
     with hδ
-  have hw : ∑ n ∈ Finset.range P.N, δ n = π / 3 := cg_winding P hΦc hΦT hΦ hL
+  have hw : ∑ n ∈ Finset.range P.N, δ n = π / 3 := dens_winding P hΦc hΦT hΦ hL
   -- a reverse centre has `δ > π/3`
   have hmm : ∀ n : ℕ, n < P.N → P.rep.IsReverse ((n : ℤ) - 1) → P.rep.IsReverse n →
       π / 3 < δ n := by
@@ -102,7 +102,7 @@ theorem cg_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixe
       have h : P.rep.label ((n : ℤ) - 1 + 1) = P.rep.label ((n : ℤ) - 1) - 1 := hr1
       rwa [sub_add_cancel] at h
     have hout : P.rep.label ((n : ℤ) + 1) = P.rep.label n - 1 := hr0
-    have hD := P.cg_centreData hmix hf.1 hr1 hr0 hf.2
+    have hD := P.dens_centreData hmix hf.1 hr1 hr0 hf.2
     have hgap := m1_angle_gap hD hcap
     simp only [m1_E, m1_u, m1_v] at hgap
     rw [show 8 * C.swd ((n : ℤ) - 1) * (8 * C.swd n) =
@@ -118,8 +118,8 @@ theorem cg_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixe
       have h1 : 0 ≤ √(C.swd ((n : ℤ) - 1) * C.swd n) / 2 + C.cre n := by linarith
       have h2 : 0 ≤ √(C.swd ((n : ℤ) - 1) * C.swd n) / 2 - C.cre n := by linarith
       nlinarith [mul_nonneg h1 h2]
-    have hang := cg_angle_mm P hΦ hQ hS hn hin hout
-    have := cg_arccos_gt hx
+    have hang := dens_angle_mm P hΦ hQ hS hn hin hout
+    have := dens_arccos_gt hx
     rw [hang] at this
     simp only [hδ]
     linarith
@@ -135,7 +135,7 @@ theorem cg_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixe
         rwa [sub_add_cancel] at h
       have hout : P.rep.label ((n : ℤ) + 1) = P.rep.label n + 1 := hf0
       have hg := hbad n (C.gram_pp hin hout)
-      have hb := C.cg_pp_bound (k := n) hin hout
+      have hb := C.dens_pp_bound (k := n) hin hout
       have he : 0 ≤ C.cre n := by
         rcases hb with h | h
         · exact h
@@ -149,8 +149,8 @@ theorem cg_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixe
         have h2 : C.cre n ≤ √(C.swd ((n : ℤ) - 1) * C.swd n) / 2 := by linarith
         have h3 := pow_le_pow_left₀ he h2 2
         nlinarith
-      have hang := cg_angle_pp P hΦ hQ hS hnN hin hout
-      have := cg_arccos_lt hx
+      have hang := dens_angle_pp P hΦ hQ hS hnN hin hout
+      have := dens_arccos_lt hx
       rw [hang] at this
       simp only [hδ]
       linarith
@@ -158,12 +158,12 @@ theorem cg_cas_gt (P : NormalPeriod) (hc : P.IsCompetitive) (hmix : P.rep.IsMixe
       have hin : P.rep.label n = P.rep.label ((n : ℤ) - 1) + 1 := by
         have h : P.rep.label ((n : ℤ) - 1 + 1) = P.rep.label ((n : ℤ) - 1) + 1 := hf1
         rwa [sub_add_cancel] at h
-      simp only [hδ, cg_turn_fr P hin hr0, sub_self, le_refl]
+      simp only [hδ, dens_turn_fr P hin hr0, sub_self, le_refl]
     · -- the turn `- +`
       have hin : P.rep.label n = P.rep.label ((n : ℤ) - 1) - 1 := by
         have h : P.rep.label ((n : ℤ) - 1 + 1) = P.rep.label ((n : ℤ) - 1) - 1 := hr1
         rwa [sub_add_cancel] at h
-      simp only [hδ, cg_turn_rf P hin hf0, sub_self, le_refl]
+      simp only [hδ, dens_turn_rf P hin hf0, sub_self, le_refl]
     · -- `- -`
       have := hmm n hnN hr1 hr0
       have := Real.pi_pos

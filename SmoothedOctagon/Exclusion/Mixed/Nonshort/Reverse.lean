@@ -1,11 +1,11 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.Comparison
-public import SmoothedOctagon.Exclusion.Mixed.Hand.ReverseCore
-public import SmoothedOctagon.Exclusion.Mixed.Hand.Prereq
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.Core
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse.NecessaryBounds
 
 /-!
-# Case M2: the reverse successor, by hand
+# Case M2: the reverse successor
 
 In the normalized coordinates `t = a/T`, `x = (d - a)/T`, `k = K/T²`, `q = WZ/Q` (`T = a + c`) the
 actual reverse-next window satisfies the necessary conditions
@@ -14,21 +14,22 @@ actual reverse-next window satisfies the necessary conditions
 from
 
 * `N_k < 0`: the boundary comparison `G(b*) < 0` (`m2_comparison`);
-* `k ≥ 2t + x`: the reverse order bound `d ≤ b*` (`nh_reverse_order`; the only use of the reverse
+* `k ≥ 2t + x`: the reverse order bound `d ≤ b*` (`nsr_reverse_order`; the only use of the reverse
   successor, with `w ≤ Sec(a, r, d)` from `M2Window.ReverseNext`);
-* `k ≥ 29t²/4`: the scale `a < 4/5` (`nh_scale_lt`, from the high-ratio exclusion `t < 2/5`,
-  `nh_high_t`);
-* `k < 2t + 2x + x²`: the centre gap `d² + 2cd > 4` (`nh_centre_gap`);
-* `x < 7/3 - (10/3)t`: the duration bound `d < 7c/3` (`nh_window_dur`);
+* `k ≥ 29t²/4`: the scale `a < 4/5` (`nsr_scale_lt`, from the high-ratio exclusion `t < 2/5`,
+  `nsr_high_t`);
+* `k < 2t + 2x + x²`: the centre gap `d² + 2cd > 4` (`nsr_centre_gap`);
+* `x < 7/3 - (10/3)t`: the duration bound `d < 7c/3` (`nsr_window_dur`);
 
 and the three exhaustive cases (the unit shape, the order face and the scale strip) each give
 `N_{k'} > 0` at a smaller shape `k' ≤ k`, contradicting the strict increase of `N` in `k`.
 
-The scalar argument is `nh_reverse_core` (`Hand/ReverseCore`), the window-level bounds are in
-`Hand/Link`, `Hand/Order`, `Hand/Gap`, `Hand/Scale`, `Hand/HighT` (`Hand/Prereq`).
+The scalar argument is `nsr_reverse_core` (`Nonshort/Reverse/Core`), the window-level bounds are in
+`Nonshort/Reverse/WindowData`, `OrderBounds`, `CentreGap`, `CentralScale` and `HighRatio`
+(`Nonshort/Reverse/NecessaryBounds`).
 
 The polynomial signs of the unit shape, the order face and the high-ratio exclusion are proved by
-generated Bernstein certificates checked by `ring` (`Hand/Cert*`); the scale strip is closed by
+Bernstein certificates checked by `ring` (the `Signs` modules); the scale strip is closed by
 the six unit-shape signs at `k = 29t²/4` directly; `t < 2/5` uses row bounds on `C₁, C₂, C₃` on the
 whole rectangle; `a < 4/5` uses the window's `a² < 12/17` (`ρ < 3/20`) and a discriminant form of
 the turn floor.
@@ -38,11 +39,11 @@ the turn floor.
 namespace SmoothedOctagon
 
 /-- **The reverse successor is excluded**: the actual normalized data satisfy every condition of
-`nh_reverse_core`, which gives `N_k > 0`, contrary to `N_k < 0` (`nh_window_N_neg`). -/
-theorem m2_reverse_hand (W : M2Window) (hR : W.ReverseNext) : False := by
-  obtain ⟨ht, -, hx, hk1, hq, hqW, hv, hvU, -, hF, -⟩ := nh_window_basic W
-  have hN := nh_reverse_core ht (nh_high_t W) hx hk1.le (nh_reverse_order_k W hR)
-    (nh_scale_k W).le (nh_centre_gap_k W) (nh_window_dur_x W) hq hqW hv hvU hF
-  linarith [nh_window_N_neg W]
+`nsr_reverse_core`, which gives `N_k > 0`, contrary to `N_k < 0` (`nsr_window_N_neg`). -/
+theorem m2_reverse_exclusion (W : M2Window) (hR : W.ReverseNext) : False := by
+  obtain ⟨ht, -, hx, hk1, hq, hqW, hv, hvU, -, hF, -⟩ := nsr_window_basic W
+  have hN := nsr_reverse_core ht (nsr_high_t W) hx hk1.le (nsr_reverse_order_k W hR)
+    (nsr_scale_k W).le (nsr_centre_gap_k W) (nsr_window_dur_x W) hq hqW hv hvU hF
+  linarith [nsr_window_N_neg W]
 
 end SmoothedOctagon

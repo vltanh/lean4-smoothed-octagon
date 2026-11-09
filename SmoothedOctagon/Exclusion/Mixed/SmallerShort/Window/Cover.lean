@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Short.Residual
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Residual
 public import Mathlib.Analysis.Real.Pi.Bounds
 public import Mathlib.Analysis.Complex.ExponentialBounds
 
@@ -21,7 +21,7 @@ For the data `D : M2Short` of a smaller-short window, the point `D.ss_pt` lies i
 
 namespace SmoothedOctagon
 
-open Certificates.SmallerShort Real
+open SmallerShort Real
 
 /-- `A_oct < 2501/800` (as `ff_octagonCost_lt'` of case F). -/
 private lemma ss_octagonCost_lt : octagonCost < 2501 / 800 := by

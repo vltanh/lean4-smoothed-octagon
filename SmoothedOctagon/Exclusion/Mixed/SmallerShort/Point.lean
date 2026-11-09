@@ -11,15 +11,15 @@ The coordinates `(r, δ, α, ρ, v, E)` of a smaller-short window and the quanti
 them, with ASCII names (`delta = δ`, `al = α`, `rho = ρ`, …). `M2Short` states its middle-switch
 slack (`Point.fmid`) and its window-defect inequality (`Point.AA`, `Point.BB`, `Point.Tk`,
 `Point.cost`, `Point.kap`) with them. The residuals `f₀, …, f₂₇` are inequalities that the point of
-every smaller-short window satisfies (`Exclusion/Mixed/Short/Cover.lean`).
+every smaller-short window satisfies (`Exclusion/Mixed/SmallerShort/Window/Cover.lean`).
 
-Smaller-short windows are excluded by the hand proof in `Exclusion/Mixed/ShortHand/`. `logDiv` is
+Smaller-short windows are excluded in `Exclusion/Mixed/SmallerShort/`. `logDiv` is
 the analytic continuation of `log q/(q - 1)`, equal to `1` at `q = 1`.
 -/
 
 @[expose] public section
 
-namespace SmoothedOctagon.Certificates
+namespace SmoothedOctagon
 
 namespace SmallerShort
 
@@ -350,4 +350,4 @@ end Point
 
 end SmallerShort
 
-end SmoothedOctagon.Certificates
+end SmoothedOctagon

@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.ShortRun.Centre
+public import SmoothedOctagon.Exclusion.ShortRuns.Centre
 
 /-!
 # Case M1: the two-centre period
@@ -367,7 +367,7 @@ theorem m1_two_centre (P : NormalPeriod) (hc : P.IsCompetitive) {k₀ : ℤ}
     have hK0a : K0 = a ^ 2 + 4 := rfl
     linarith
   have hnum := m1_two_centre_numeric ha rfl m1 m2 m3 m4 hD0' hD1' l0 l1
-  have hA := Reduction.scb_octagonCost_lt
+  have hA := Reduction.clr_octagonCost_lt
   have hcp : P.cost ≤ octagonCost := hc
   rw [hcost, div_le_iff₀ hK0] at hcp
   have := mul_lt_mul_of_pos_right hA hK0

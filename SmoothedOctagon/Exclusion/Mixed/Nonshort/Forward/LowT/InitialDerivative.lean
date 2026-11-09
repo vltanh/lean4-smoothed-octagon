@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.LowTHorner
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Horner
 
 /-!
-# Case M2, forward successor by hand: the initial `h`-derivative of the low-`t` circuit
+# Case M2, forward successor: the initial `h`-derivative of the low-`t` circuit
 
 At `h = 1/4` (`t = 3/8`, `x = j + 1/4`), `P₀ = 𝓗S = ∑ cᵢ(x) yⁱ` (`nltc0`, …, `nlt_c_eq0`, …)
 satisfies `P₀ ≥ 68` on `17/60 ≤ x ≤ 3/7`, `0 ≤ y ≤ b(x) = 3931/8640 - 8x/9` (`nlt_P0_pos`). The
@@ -27,50 +27,50 @@ namespace SmoothedOctagon
 noncomputable def nltc0 (x : ℝ) : ℝ :=
   2470 + (3961 / 6) * x - (11376409 / 768) * x ^ 2 + (876287 / 48) * x ^ 3 - (1213663 / 64) * x ^ 4 - (192815 / 16) * x ^ 5 - (1785 / 4) * x ^ 6
 
-theorem nlt_c_eq0 (j : ℝ) : lrhHorner (nltDer (nltL0 j)) (1 / 4) = nltc0 (j + 1 / 4) := by
-  simp only [nltL0, nltDer, nltDerAux, lrhHorner]; unfold nltc0; ring
+theorem nlt_c_eq0 (j : ℝ) : polyHorner (nltDer (nltL0 j)) (1 / 4) = nltc0 (j + 1 / 4) := by
+  simp only [nltL0, nltDer, nltDerAux, polyHorner]; unfold nltc0; ring
 
 /-- `c_1(x)`: the `y^1`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc1 (x : ℝ) : ℝ :=
   (26147 / 16) - (205551 / 16) * x + (9390957 / 512) * x ^ 2 + (1105573 / 32) * x ^ 3 - (20610059 / 128) * x ^ 4 - (3096829 / 32) * x ^ 5 - (24953 / 4) * x ^ 6 - (1687 / 4) * x ^ 7
 
-theorem nlt_c_eq1 (j : ℝ) : lrhHorner (nltDer (nltL1 j)) (1 / 4) = nltc1 (j + 1 / 4) := by
-  simp only [nltL1, nltDer, nltDerAux, lrhHorner]; unfold nltc1; ring
+theorem nlt_c_eq1 (j : ℝ) : polyHorner (nltDer (nltL1 j)) (1 / 4) = nltc1 (j + 1 / 4) := by
+  simp only [nltL1, nltDer, nltDerAux, polyHorner]; unfold nltc1; ring
 
 /-- `c_2(x)`: the `y^2`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc2 (x : ℝ) : ℝ :=
   -(5443517 / 192) - (6826585 / 96) * x + (6734773 / 384) * x ^ 2 + (108121 / 16) * x ^ 3 - (2659679 / 16) * x ^ 4 - (4429505 / 32) * x ^ 5 - (304129 / 16) * x ^ 6 + (135469 / 8) * x ^ 7 + 2856 * x ^ 8
 
-theorem nlt_c_eq2 (j : ℝ) : lrhHorner (nltDer (nltL2 j)) (1 / 4) = nltc2 (j + 1 / 4) := by
-  simp only [nltL2, nltDer, nltDerAux, lrhHorner]; unfold nltc2; ring
+theorem nlt_c_eq2 (j : ℝ) : polyHorner (nltDer (nltL2 j)) (1 / 4) = nltc2 (j + 1 / 4) := by
+  simp only [nltL2, nltDer, nltDerAux, polyHorner]; unfold nltc2; ring
 
 /-- `c_3(x)`: the `y^3`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc3 (x : ℝ) : ℝ :=
   -(11571361 / 384) - (256361 / 32) * x + (389312905 / 768) * x ^ 2 + (150040261 / 96) * x ^ 3 + (233452331 / 128) * x ^ 4 + (23757343 / 32) * x ^ 5 + (327123 / 8) * x ^ 6 + 2425 * x ^ 7 + 68 * x ^ 8
 
-theorem nlt_c_eq3 (j : ℝ) : lrhHorner (nltDer (nltL3 j)) (1 / 4) = nltc3 (j + 1 / 4) := by
-  simp only [nltL3, nltDer, nltDerAux, lrhHorner]; unfold nltc3; ring
+theorem nlt_c_eq3 (j : ℝ) : polyHorner (nltDer (nltL3 j)) (1 / 4) = nltc3 (j + 1 / 4) := by
+  simp only [nltL3, nltDer, nltDerAux, polyHorner]; unfold nltc3; ring
 
 /-- `c_4(x)`: the `y^4`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc4 (x : ℝ) : ℝ :=
   -(4352657 / 128) - (691873 / 8) * x + (113788653 / 256) * x ^ 2 + (15305443 / 8) * x ^ 3 + (19033415 / 8) * x ^ 4 + (8180407 / 8) * x ^ 5 + (532071 / 8) * x ^ 6 - (95565 / 8) * x ^ 7 - 1972 * x ^ 8
 
-theorem nlt_c_eq4 (j : ℝ) : lrhHorner (nltDer (nltL4 j)) (1 / 4) = nltc4 (j + 1 / 4) := by
-  simp only [nltL4, nltDer, nltDerAux, lrhHorner]; unfold nltc4; ring
+theorem nlt_c_eq4 (j : ℝ) : polyHorner (nltDer (nltL4 j)) (1 / 4) = nltc4 (j + 1 / 4) := by
+  simp only [nltL4, nltDer, nltDerAux, polyHorner]; unfold nltc4; ring
 
 /-- `c_5(x)`: the `y^5`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc5 (x : ℝ) : ℝ :=
   -(4156227 / 128) - (8970893 / 64) * x - (42983895 / 512) * x ^ 2 + (5365343 / 16) * x ^ 3 + (67540595 / 128) * x ^ 4 + (3581741 / 16) * x ^ 5 + (375341 / 32) * x ^ 6 + (7295 / 2) * x ^ 7 + 1088 * x ^ 8
 
-theorem nlt_c_eq5 (j : ℝ) : lrhHorner (nltDer (nltL5 j)) (1 / 4) = nltc5 (j + 1 / 4) := by
-  simp only [nltL5, nltDer, nltDerAux, lrhHorner]; unfold nltc5; ring
+theorem nlt_c_eq5 (j : ℝ) : polyHorner (nltDer (nltL5 j)) (1 / 4) = nltc5 (j + 1 / 4) := by
+  simp only [nltL5, nltDer, nltDerAux, polyHorner]; unfold nltc5; ring
 
 /-- `c_6(x)`: the `y^6`-coefficient of `𝓗S` at `h = 1/4`. -/
 noncomputable def nltc6 (x : ℝ) : ℝ :=
   -(14967 / 16) - (220227 / 64) * x - (640115 / 128) * x ^ 2 - (74907 / 16) * x ^ 3 - (72295 / 32) * x ^ 4 - (7881 / 8) * x ^ 5 - (767 / 4) * x ^ 6 + 270 * x ^ 7 + 68 * x ^ 8
 
-theorem nlt_c_eq6 (j : ℝ) : lrhHorner (nltDer (nltL6 j)) (1 / 4) = nltc6 (j + 1 / 4) := by
-  simp only [nltL6, nltDer, nltDerAux, lrhHorner]; unfold nltc6; ring
+theorem nlt_c_eq6 (j : ℝ) : polyHorner (nltDer (nltL6 j)) (1 / 4) = nltc6 (j + 1 / 4) := by
+  simp only [nltL6, nltDer, nltDerAux, polyHorner]; unfold nltc6; ring
 
 /-- `-c₁(x)`, a coefficient sign for `∂_yP₀ < 0`. -/
 noncomputable def nltIc1 (x : ℝ) : ℝ := -nltc1 x
@@ -367,14 +367,14 @@ theorem nlt_P0_pos {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 : 0 
   unfold nltIc1 nltIc2 nltIc3 nltIc4 nltIc5 nltIc6 nltIcb nltIline at *
   have hx3 : 0 ≤ x ^ 3 := by positivity
   set cs : List ℝ := [nltc0 x, nltc1 x, nltc2 x, nltc3 x, nltc4 x, nltc5 x, nltc6 x] with hcs
-  have hf : ∀ w, lrhHorner cs w = nltc0 x + nltc1 x * w + nltc2 x * w ^ 2 + nltc3 x * w ^ 3
+  have hf : ∀ w, polyHorner cs w = nltc0 x + nltc1 x * w + nltc2 x * w ^ 2 + nltc3 x * w ^ 3
       + nltc4 x * w ^ 4 + nltc5 x * w ^ 5 + nltc6 x * w ^ 6 := fun w => by
-    rw [hcs]; simp only [lrhHorner]; ring
-  have hf1 : ∀ w, lrhHorner (nltDer cs) w = nltc1 x + 2 * nltc2 x * w + 3 * nltc3 x * w ^ 2
+    rw [hcs]; simp only [polyHorner]; ring
+  have hf1 : ∀ w, polyHorner (nltDer cs) w = nltc1 x + 2 * nltc2 x * w + 3 * nltc3 x * w ^ 2
       + 4 * nltc4 x * w ^ 3 + 5 * nltc5 x * w ^ 4 + 6 * nltc6 x * w ^ 5 := fun w => by
-    rw [hcs]; simp only [nltDer, nltDerAux, lrhHorner]; ring
+    rw [hcs]; simp only [nltDer, nltDerAux, polyHorner]; ring
   -- `∂_yP₀ < 0` on `[0, b(x)]`
-  have neg : ∀ w, y ≤ w → w ≤ 3931 / 8640 - 8 / 9 * x → lrhHorner (nltDer cs) w ≤ 0 := by
+  have neg : ∀ w, y ≤ w → w ≤ 3931 / 8640 - 8 / 9 * x → polyHorner (nltDer cs) w ≤ 0 := by
     intro w w0 w1
     rw [hf1]
     have w0' : 0 ≤ w := by linarith
@@ -397,9 +397,9 @@ theorem nlt_P0_pos {x y : ℝ} (h1 : 17 / 60 ≤ x) (h2 : x ≤ 3 / 7) (hy0 : 0 
     have k6 : nltc6 x * w ^ 5 ≤ 0 := mul_nonpos_of_nonpos_of_nonneg (by linarith) (pow_nonneg w0' 5)
     have k2 : nltc2 x * w ≤ -48000 * w := mul_le_mul_of_nonneg_right (by linarith) w0'
     nlinarith
-  have hd : ∀ s, HasDerivAt (lrhHorner cs) (lrhHorner (nltDer cs) s) s :=
+  have hd : ∀ s, HasDerivAt (polyHorner cs) (polyHorner (nltDer cs) s) s :=
     fun s => nlt_hasDerivAt_horner cs s
-  have anti := hrl_anti hd neg le_rfl hy le_rfl
+  have anti := poly_anti hd neg le_rfl hy le_rfl
   rw [hf, hf] at anti
   linarith
 

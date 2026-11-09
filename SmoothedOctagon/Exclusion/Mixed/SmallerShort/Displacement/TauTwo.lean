@@ -1,13 +1,13 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Envelope
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope
 
 /-!
-# Hand proof of the smaller-short case, gate S3: the `τ = 2` continuation
+# Smaller-short window, displacement: the `τ = 2` continuation
 
 On the domain `2 ≤ x ≤ 13/6`, `11/10 ≤ α ≤ x ≤ β`, `1/3 ≤ r_A`, `3/4 ≤ u ≤ 19/25`,
 `0 < D < 3α²`, the weighted face value
-`G*_2(q) = hsF x β α u q 2 (log(2q/r_A)) (4(4 - 6q/r_A)/(5α - 1))` is strictly increasing in the
+`G*_2(q) = ssF x β α u q 2 (log(2q/r_A)) (4(4 - 6q/r_A)/(5α - 1))` is strictly increasing in the
 scale `q ∈ (0, 1/7]`.
 
 The proof: `G*_2(q)` is a cubic polynomial in `q` plus `log(2q/r_A)`, and
@@ -22,7 +22,7 @@ with a positive Bernstein form in `S ∈ [3, 19/6]` whose coefficients are polyn
 
 ## Main API
 
-* `hs35_tau2_cont`: the statement of `hs3_tau2_cont` (gate S3).
+* `dspf_tau2_cont`: the statement of `dsp_tau2_cont` (the displacement bound).
 -/
 
 @[expose] public section
@@ -32,18 +32,18 @@ namespace SmoothedOctagon
 open Set Real
 
 /-- `H = S(1 - u) - 1/S`. -/
-private noncomputable def hs35cH (S u : ℝ) : ℝ := S * (1 - u) - 1 / S
+private noncomputable def dspfcH (S u : ℝ) : ℝ := S * (1 - u) - 1 / S
 
 /-- `B = 2e + Sb`, `b = 1/a²`, `e = 1 - b`. -/
-private noncomputable def hs35cB (a S : ℝ) : ℝ := 2 * (1 - 1 / a ^ 2) + S / a ^ 2
+private noncomputable def dspfcB (a S : ℝ) : ℝ := 2 * (1 - 1 / a ^ 2) + S / a ^ 2
 
 /-- `A = e² + eSb + S²b²`. -/
-private noncomputable def hs35cA (a S : ℝ) : ℝ :=
+private noncomputable def dspfcA (a S : ℝ) : ℝ :=
   (1 - 1 / a ^ 2) ^ 2 + (1 - 1 / a ^ 2) * (S / a ^ 2) + (S / a ^ 2) ^ 2
 
 /-- `K = eH + (2S - 1)b`. -/
-private noncomputable def hs35cK (a S u : ℝ) : ℝ :=
-  (1 - 1 / a ^ 2) * hs35cH S u + (2 * S - 1) / a ^ 2
+private noncomputable def dspfcK (a S u : ℝ) : ℝ :=
+  (1 - 1 / a ^ 2) * dspfcH S u + (2 * S - 1) / a ^ 2
 
 /-! ### The Bernstein coefficients `B₂`, `B₃`
 
@@ -63,13 +63,13 @@ private noncomputable def t3c2 (a v : ℝ) : ℝ :=
 /-- A coefficient `B_i = c₀ + c₁A₁ + c₂A₂ + c₃A₃` of the Bernstein form, with
 `A₁ = B - ΔH`, `A₂ = A - ΔK + uΔ²`, `A₃ = 2uΔ - K`. -/
 private noncomputable def qB (c0 c1 c2 c3 a S u Δ : ℝ) : ℝ :=
-  c0 + c1 * (hs35cB a S - Δ * hs35cH S u) + c2 * (hs35cA a S - Δ * hs35cK a S u + u * Δ ^ 2) +
-    c3 * (2 * u * Δ - hs35cK a S u)
+  c0 + c1 * (dspfcB a S - Δ * dspfcH S u) + c2 * (dspfcA a S - Δ * dspfcK a S u + u * Δ ^ 2) +
+    c3 * (2 * u * Δ - dspfcK a S u)
 
 /-- The `Δ`-discriminant of `qB`, sign-reversed: `4β₂β₀ - β₁²`. -/
 private noncomputable def qDisc (c0 c1 c2 c3 a S u : ℝ) : ℝ :=
-  4 * (c2 * u) * (c0 + c1 * hs35cB a S + c2 * hs35cA a S - c3 * hs35cK a S u) -
-    (-c1 * hs35cH S u - c2 * hs35cK a S u + 2 * u * c3) ^ 2
+  4 * (c2 * u) * (c0 + c1 * dspfcB a S + c2 * dspfcA a S - c3 * dspfcK a S u) -
+    (-c1 * dspfcH S u - c2 * dspfcK a S u + 2 * u * c3) ^ 2
 
 /-- The discriminant of `B₂` at `(u, v)`. -/
 private noncomputable def disc2 (a S u v : ℝ) : ℝ :=
@@ -156,7 +156,7 @@ private theorem disc_b2_34_3 {a S : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS
   have hS0 : 0 < S := by linarith
   have key : disc2 a S (3 / 4) 3 * (S ^ 2 * a ^ 4 * (5 * a - 1) ^ 2) =
       1 / 21609 * P_b2_34_3 a S := by
-    unfold disc2 qDisc t2c0 t2c1 t2c2 hs35cK hs35cH hs35cB hs35cA P_b2_34_3
+    unfold disc2 qDisc t2c0 t2c1 t2c2 dspfcK dspfcH dspfcB dspfcA P_b2_34_3
     field_simp
     ring
   have h : 0 < 1 / 21609 * P_b2_34_3 a S := mul_pos (by norm_num) (P_b2_34_3_pos ha hS hS2)
@@ -245,7 +245,7 @@ private theorem disc_b2_34_a {a S : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS
   have hS0 : 0 < S := by linarith
   have key : disc2 a S (3 / 4) (1 + 2 / a) * (S ^ 2 * a ^ 6 * (5 * a - 1) ^ 2) =
       1 / 21609 * P_b2_34_a a S := by
-    unfold disc2 qDisc t2c0 t2c1 t2c2 hs35cK hs35cH hs35cB hs35cA P_b2_34_a
+    unfold disc2 qDisc t2c0 t2c1 t2c2 dspfcK dspfcH dspfcB dspfcA P_b2_34_a
     field_simp
     ring
   have h : 0 < 1 / 21609 * P_b2_34_a a S := mul_pos (by norm_num) (P_b2_34_a_pos ha hS hS2)
@@ -322,7 +322,7 @@ private theorem disc_b2_19_3 {a S : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS
   have hS0 : 0 < S := by linarith
   have key : disc2 a S (19 / 25) 3 * (S ^ 2 * a ^ 4 * (5 * a - 1) ^ 2) =
       16 / 13505625 * P_b2_19_3 a S := by
-    unfold disc2 qDisc t2c0 t2c1 t2c2 hs35cK hs35cH hs35cB hs35cA P_b2_19_3
+    unfold disc2 qDisc t2c0 t2c1 t2c2 dspfcK dspfcH dspfcB dspfcA P_b2_19_3
     field_simp
     ring
   have h : 0 < 16 / 13505625 * P_b2_19_3 a S := mul_pos (by norm_num) (P_b2_19_3_pos ha hS hS2)
@@ -411,7 +411,7 @@ private theorem disc_b2_19_a {a S : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS
   have hS0 : 0 < S := by linarith
   have key : disc2 a S (19 / 25) (1 + 2 / a) * (S ^ 2 * a ^ 6 * (5 * a - 1) ^ 2) =
       16 / 13505625 * P_b2_19_a a S := by
-    unfold disc2 qDisc t2c0 t2c1 t2c2 hs35cK hs35cH hs35cB hs35cA P_b2_19_a
+    unfold disc2 qDisc t2c0 t2c1 t2c2 dspfcK dspfcH dspfcB dspfcA P_b2_19_a
     field_simp
     ring
   have h : 0 < 16 / 13505625 * P_b2_19_a a S := mul_pos (by norm_num) (P_b2_19_a_pos ha hS hS2)
@@ -487,7 +487,7 @@ private theorem disc_b3_34_3 {a S : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS
   have hS0 : 0 < S := by linarith
   have key : disc3 a S (3 / 4) 3 * (S ^ 2 * a ^ 4 * (5 * a - 1) ^ 2) =
       1 / 470596 * P_b3_34_3 a S := by
-    unfold disc3 qDisc t3c0 t3c1 t3c2 hs35cK hs35cH hs35cB hs35cA P_b3_34_3
+    unfold disc3 qDisc t3c0 t3c1 t3c2 dspfcK dspfcH dspfcB dspfcA P_b3_34_3
     field_simp
     ring
   have h : 0 < 1 / 470596 * P_b3_34_3 a S := mul_pos (by norm_num) (P_b3_34_3_pos ha hS hS2)
@@ -579,7 +579,7 @@ private theorem disc_b3_34_a {a S : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS
   have hS0 : 0 < S := by linarith
   have key : disc3 a S (3 / 4) (1 + 2 / a) * (S ^ 2 * a ^ 6 * (5 * a - 1) ^ 2) =
       1 / 470596 * P_b3_34_a a S := by
-    unfold disc3 qDisc t3c0 t3c1 t3c2 hs35cK hs35cH hs35cB hs35cA P_b3_34_a
+    unfold disc3 qDisc t3c0 t3c1 t3c2 dspfcK dspfcH dspfcB dspfcA P_b3_34_a
     field_simp
     ring
   have h : 0 < 1 / 470596 * P_b3_34_a a S := mul_pos (by norm_num) (P_b3_34_a_pos ha hS hS2)
@@ -656,7 +656,7 @@ private theorem disc_b3_19_3 {a S : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS
   have hS0 : 0 < S := by linarith
   have key : disc3 a S (19 / 25) 3 * (S ^ 2 * a ^ 4 * (5 * a - 1) ^ 2) =
       4 / 73530625 * P_b3_19_3 a S := by
-    unfold disc3 qDisc t3c0 t3c1 t3c2 hs35cK hs35cH hs35cB hs35cA P_b3_19_3
+    unfold disc3 qDisc t3c0 t3c1 t3c2 dspfcK dspfcH dspfcB dspfcA P_b3_19_3
     field_simp
     ring
   have h : 0 < 4 / 73530625 * P_b3_19_3 a S := mul_pos (by norm_num) (P_b3_19_3_pos ha hS hS2)
@@ -749,7 +749,7 @@ private theorem disc_b3_19_a {a S : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS
   have hS0 : 0 < S := by linarith
   have key : disc3 a S (19 / 25) (1 + 2 / a) * (S ^ 2 * a ^ 6 * (5 * a - 1) ^ 2) =
       4 / 73530625 * P_b3_19_a a S := by
-    unfold disc3 qDisc t3c0 t3c1 t3c2 hs35cK hs35cH hs35cB hs35cA P_b3_19_a
+    unfold disc3 qDisc t3c0 t3c1 t3c2 dspfcK dspfcH dspfcB dspfcA P_b3_19_a
     field_simp
     ring
   have h : 0 < 4 / 73530625 * P_b3_19_a a S := mul_pos (by norm_num) (P_b3_19_a_pos ha hS hS2)
@@ -762,7 +762,7 @@ private theorem disc_b3_19_a {a S : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS
 private theorem qB_pos {c0 c1 c2 c3 a S u Δ : ℝ} (h2 : 0 < c2 * u)
     (hd : 0 < qDisc c0 c1 c2 c3 a S u) : 0 < qB c0 c1 c2 c3 a S u Δ := by
   have e : 4 * (c2 * u) * qB c0 c1 c2 c3 a S u Δ =
-      (2 * (c2 * u) * Δ + (-c1 * hs35cH S u - c2 * hs35cK a S u + 2 * u * c3)) ^ 2 +
+      (2 * (c2 * u) * Δ + (-c1 * dspfcH S u - c2 * dspfcK a S u + 2 * u * c3)) ^ 2 +
         qDisc c0 c1 c2 c3 a S u := by
     unfold qB qDisc; ring
   have h : 0 < 4 * (c2 * u) * qB c0 c1 c2 c3 a S u Δ := by
@@ -817,7 +817,7 @@ private theorem B2_pos {a S u v Δ : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (h
     (qB_pos (by positivity) (disc_b2_34_3 ha hS hS2))
     (qB_pos (by positivity) (disc_b2_19_a ha hS hS2))
     (qB_pos (by positivity) (disc_b2_19_3 ha hS hS2))
-  all_goals (unfold qB t2c0 t2c1 hs35cK hs35cH; ring)
+  all_goals (unfold qB t2c0 t2c1 dspfcK dspfcH; ring)
 
 /-- **`B₃ > 0`** on the same domain. -/
 private theorem B3_pos {a S u v Δ : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS2 : S ≤ 19 / 6)
@@ -845,19 +845,19 @@ private theorem B3_pos {a S u v Δ : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (h
     (qB_pos (mul_pos (hc2 _ le_rfl) (by norm_num)) (disc_b3_34_3 ha hS hS2))
     (qB_pos (mul_pos (hc2 _ hva) (by norm_num)) (disc_b3_19_a ha hS hS2))
     (qB_pos (mul_pos (hc2 _ le_rfl) (by norm_num)) (disc_b3_19_3 ha hS hS2))
-  all_goals (unfold qB t3c0 t3c1 t3c2 hs35cK hs35cH; ring)
+  all_goals (unfold qB t3c0 t3c1 t3c2 dspfcK dspfcH; ring)
 
 /-- **`B₁ > 0`** (from `K₁ < 21`). -/
 private theorem B1_pos {a S u v Δ : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (hS2 : S ≤ 19 / 6)
     (hu' : u ≤ 19 / 25) (hv' : v ≤ 3) (hΔ : 0 < Δ) (hΔ3 : Δ < 3) :
-    0 < 1 + -((2 + 16 / (5 * a - 1)) * (hs35cB a S - Δ * hs35cH S u) + 1 +
-      (2 * u * Δ - hs35cK a S u) + 6 * v / (5 * a - 1)) / 21 := by
+    0 < 1 + -((2 + 16 / (5 * a - 1)) * (dspfcB a S - Δ * dspfcH S u) + 1 +
+      (2 * u * Δ - dspfcK a S u) + 6 * v / (5 * a - 1)) / 21 := by
   have ha0 : 0 < a := by linarith
   have hk : 9 / 2 ≤ 5 * a - 1 := by linarith
   have hk0 : 0 < 5 * a - 1 := by linarith
   have hS0 : 0 < S := by linarith
   set b := 1 / a ^ 2 with hb
-  set H := hs35cH S u with hH
+  set H := dspfcH S u with hH
   have hb0 : 0 < b := by positivity
   have hb1 : b ≤ 100 / 121 := by
     rw [hb, div_le_div_iff₀ (by positivity) (by norm_num)]
@@ -868,10 +868,10 @@ private theorem B1_pos {a S u v Δ : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (h
   have hH0 : 29 / 75 ≤ H := by
     have : 3 * (6 / 25) ≤ S * (1 - u) :=
       mul_le_mul hS (by linarith) (by norm_num) hS0.le
-    rw [hH]; unfold hs35cH; linarith
+    rw [hH]; unfold dspfcH; linarith
   have hHu : 2 * u - 2 * H ≤ 56 / 75 := by
     have : 0 ≤ (19 / 25 - u) * (1 + S) := mul_nonneg (by linarith) (by linarith)
-    rw [hH]; unfold hs35cH; linarith
+    rw [hH]; unfold dspfcH; linarith
   set M := 16 / (5 * a - 1) with hM
   have hM0 : 0 < M := by positivity
   have hM1 : M ≤ 32 / 9 := by rw [hM, div_le_iff₀ hk0]; linarith
@@ -892,10 +892,10 @@ private theorem B1_pos {a S u v Δ : ℝ} (ha : 11 / 10 ≤ a) (hS : 3 ≤ S) (h
     have : 2 * u - (2 + M) * H ≤ 56 / 75 := by linarith
     have : Δ * (2 * u - (2 + M) * H) ≤ Δ * (56 / 75) := mul_le_mul_of_nonneg_left this hΔ.le
     linarith
-  have e : (2 + M) * (hs35cB a S - Δ * H) + 1 + (2 * u * Δ - hs35cK a S u) +
+  have e : (2 + M) * (dspfcB a S - Δ * H) + 1 + (2 * u * Δ - dspfcK a S u) +
       6 * v / (5 * a - 1) = 5 + (2 * M + 6 * v / (5 * a - 1)) + b * (M * (S - 2) - 3) -
       (1 - b) * H + Δ * (2 * u - (2 + M) * H) := by
-    rw [hb, hH]; unfold hs35cB hs35cK; ring
+    rw [hb, hH]; unfold dspfcB dspfcK; ring
   rw [e]
   linarith
 
@@ -922,75 +922,75 @@ The cubic `q(G*₂)'` is written in the Bernstein basis of `[0, 1/7]`; `B₂, B�
 in `u` and in `1/r_A` and convex quadratics in `Δ`, so their positivity reduces to a negative
 `Δ`-discriminant at the four corners `u ∈ {3/4, 19/25}`, `r_A ∈ {1/3, α/(α + 2)}` (eight
 two-variable polynomials, each with a positive Bernstein form in `S` on `[3, 19/6]`). -/
-theorem hs35_tau2_cont {x be al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 11 / 10 ≤ al)
-    (hax : al ≤ x) (hxb : x ≤ be) (hrA : 1 / 3 ≤ hsRA al be) (hu : 3 / 4 ≤ u) (hu' : u ≤ 19 / 25)
-    (hD : 0 < hsDg x be al) (hD3 : hsDg x be al < 3 * al ^ 2) (hq₁ : 0 < q₁) (hq : q₁ < q₂)
+theorem dspf_tau2_cont {x be al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal : 11 / 10 ≤ al)
+    (hax : al ≤ x) (hxb : x ≤ be) (hrA : 1 / 3 ≤ ssRA al be) (hu : 3 / 4 ≤ u) (hu' : u ≤ 19 / 25)
+    (hD : 0 < ssDg x be al) (hD3 : ssDg x be al < 3 * al ^ 2) (hq₁ : 0 < q₁) (hq : q₁ < q₂)
     (hq₂ : q₂ ≤ 1 / 7) :
-    hsF x be al u q₁ 2 (log (2 * q₁ / hsRA al be))
-        (4 * (4 - 3 * (2 * q₁ / hsRA al be)) / (5 * al - 1)) <
-      hsF x be al u q₂ 2 (log (2 * q₂ / hsRA al be))
-        (4 * (4 - 3 * (2 * q₂ / hsRA al be)) / (5 * al - 1)) := by
+    ssF x be al u q₁ 2 (log (2 * q₁ / ssRA al be))
+        (4 * (4 - 3 * (2 * q₁ / ssRA al be)) / (5 * al - 1)) <
+      ssF x be al u q₂ 2 (log (2 * q₂ / ssRA al be))
+        (4 * (4 - 3 * (2 * q₂ / ssRA al be)) / (5 * al - 1)) := by
   have _hal2 : al ≤ 13 / 6 := hax.trans hx2
   have hal0 : 0 < al := by linarith
   have hbe0 : 0 < be := by linarith
   have hk0 : 0 < 5 * al - 1 := by linarith
-  have hr0 : 0 < hsRA al be := by unfold hsRA; positivity
+  have hr0 : 0 < ssRA al be := by unfold ssRA; positivity
   -- the domain of the corner reduction
-  have hv3 : 1 / hsRA al be ≤ 3 := by
+  have hv3 : 1 / ssRA al be ≤ 3 := by
     rw [div_le_iff₀ hr0]; linarith
-  have hva : 1 + 2 / al ≤ 1 / hsRA al be := by
-    have e : 1 / hsRA al be = 1 + be / al := by unfold hsRA; field_simp
+  have hva : 1 + 2 / al ≤ 1 / ssRA al be := by
+    have e : 1 / ssRA al be = 1 + be / al := by unfold ssRA; field_simp
     rw [e]
     have : 2 / al ≤ be / al := div_le_div_of_nonneg_right (by linarith) hal0.le
     linarith
-  have hΔ : 0 < hsDg x be al / al ^ 2 := by positivity
-  have hΔ3 : hsDg x be al / al ^ 2 < 3 := by rw [div_lt_iff₀ (by positivity)]; linarith
+  have hΔ : 0 < ssDg x be al / al ^ 2 := by positivity
+  have hΔ3 : ssDg x be al / al ^ 2 < 3 := by rw [div_lt_iff₀ (by positivity)]; linarith
   have hS : 3 ≤ 1 + x := by linarith
   have hS2 : 1 + x ≤ 19 / 6 := by linarith
   -- the coefficients in the variables `B`, `A`, `H`, `K`, `Δ`
-  have hA1 : hsA1 x be al u = hs35cB al (1 + x) - hsDg x be al / al ^ 2 * hs35cH (1 + x) u := by
-    unfold hsA1 hsE0 hs35cB hs35cH; ring
-  have hA2 : hsA2 x be al u = hs35cA al (1 + x) - hsDg x be al / al ^ 2 * hs35cK al (1 + x) u +
-      u * (hsDg x be al / al ^ 2) ^ 2 := by
-    unfold hsA2 hsE0 hs35cA hs35cK hs35cH; ring
-  have hA3 : hsA3 x be al u = 2 * u * (hsDg x be al / al ^ 2) - hs35cK al (1 + x) u := by
-    unfold hsA3 hsE0 hs35cK hs35cH; ring
+  have hA1 : ssA1 x be al u = dspfcB al (1 + x) - ssDg x be al / al ^ 2 * dspfcH (1 + x) u := by
+    unfold ssA1 ssE0 dspfcB dspfcH; ring
+  have hA2 : ssA2 x be al u = dspfcA al (1 + x) - ssDg x be al / al ^ 2 * dspfcK al (1 + x) u +
+      u * (ssDg x be al / al ^ 2) ^ 2 := by
+    unfold ssA2 ssE0 dspfcA dspfcK dspfcH; ring
+  have hA3 : ssA3 x be al u = 2 * u * (ssDg x be al / al ^ 2) - dspfcK al (1 + x) u := by
+    unfold ssA3 ssE0 dspfcK dspfcH; ring
   -- the cubic coefficients
-  obtain ⟨c1, hc1⟩ : ∃ c, c = -((2 + 16 / (5 * al - 1)) * hsA1 x be al u + 1 + hsA3 x be al u +
-      6 * (1 / hsRA al be) / (5 * al - 1)) := ⟨_, rfl⟩
-  obtain ⟨c2, hc2⟩ : ∃ c, c = (2 + 16 / (5 * al - 1)) * hsA2 x be al u +
-      24 * (1 / hsRA al be) / (5 * al - 1) * hsA1 x be al u := ⟨_, rfl⟩
-  obtain ⟨c3, hc3⟩ : ∃ c, c = -(24 * (1 / hsRA al be) / (5 * al - 1)) * hsA2 x be al u :=
+  obtain ⟨c1, hc1⟩ : ∃ c, c = -((2 + 16 / (5 * al - 1)) * ssA1 x be al u + 1 + ssA3 x be al u +
+      6 * (1 / ssRA al be) / (5 * al - 1)) := ⟨_, rfl⟩
+  obtain ⟨c2, hc2⟩ : ∃ c, c = (2 + 16 / (5 * al - 1)) * ssA2 x be al u +
+      24 * (1 / ssRA al be) / (5 * al - 1) * ssA1 x be al u := ⟨_, rfl⟩
+  obtain ⟨c3, hc3⟩ : ∃ c, c = -(24 * (1 / ssRA al be) / (5 * al - 1)) * ssA2 x be al u :=
     ⟨_, rfl⟩
-  obtain ⟨c0, hc0⟩ : ∃ c, c = 1 / 2 + (u - 1) / hsRA al be + hsRA al be + 1 + hsE0 x u +
+  obtain ⟨c0, hc0⟩ : ∃ c, c = 1 / 2 + (u - 1) / ssRA al be + ssRA al be + 1 + ssE0 x u +
       4 / (5 * al - 1) := ⟨_, rfl⟩
   have hB1 : 0 < 1 + c1 / 21 := by
     rw [hc1, hA1, hA3]
     exact B1_pos hal hS hS2 hu' hv3 hΔ hΔ3
   have hB2 : 0 < 1 + 2 * c1 / 21 + 2 * c2 / 147 := by
-    have := B2_pos (Δ := hsDg x be al / al ^ 2) hal hS hS2 hu hu' hva hv3
+    have := B2_pos (Δ := ssDg x be al / al ^ 2) hal hS hS2 hu hu' hva hv3
     convert this using 1
     rw [hc1, hc2, hA1, hA2, hA3]; unfold qB t2c0 t2c1 t2c2; ring
   have hB3 : 0 < 1 + c1 / 7 + 2 * c2 / 49 + 3 * c3 / 343 := by
-    have := B3_pos (Δ := hsDg x be al / al ^ 2) hal hS hS2 hu hu' hva hv3
+    have := B3_pos (Δ := ssDg x be al / al ^ 2) hal hS hS2 hu hu' hva hv3
     convert this using 1
     rw [hc1, hc2, hc3, hA1, hA2, hA3]; unfold qB t3c0 t3c1 t3c2; ring
   -- the face value as a cubic plus a logarithm
-  have hG : ∀ q, hsF x be al u q 2 (log (2 * q / hsRA al be))
-      (4 * (4 - 3 * (2 * q / hsRA al be)) / (5 * al - 1)) =
-      c0 + c1 * q + c2 * q ^ 2 + c3 * q ^ 3 + log (2 * q / hsRA al be) := by
+  have hG : ∀ q, ssF x be al u q 2 (log (2 * q / ssRA al be))
+      (4 * (4 - 3 * (2 * q / ssRA al be)) / (5 * al - 1)) =
+      c0 + c1 * q + c2 * q ^ 2 + c3 * q ^ 3 + log (2 * q / ssRA al be) := by
     intro q
     rw [hc0, hc1, hc2, hc3]
-    unfold hsF hsWs hsELs
+    unfold ssF ssWs ssELs
     ring
-  refine ss_lt_of_deriv (f := fun q => hsF x be al u q 2 (log (2 * q / hsRA al be))
-      (4 * (4 - 3 * (2 * q / hsRA al be)) / (5 * al - 1)))
+  refine ss_lt_of_deriv (f := fun q => ssF x be al u q 2 (log (2 * q / ssRA al be))
+      (4 * (4 - 3 * (2 * q / ssRA al be)) / (5 * al - 1)))
     (f' := fun z => c1 + 2 * c2 * z + 3 * c3 * z ^ 2 + 1 / z) hq ?_ ?_
   · intro z hz
     have hz0 : 0 < z := by linarith [hz.1]
-    have hfun : (fun q => hsF x be al u q 2 (log (2 * q / hsRA al be))
-        (4 * (4 - 3 * (2 * q / hsRA al be)) / (5 * al - 1))) =
-        fun q => (c0 + c1 * q + c2 * q ^ 2 + c3 * q ^ 3) + log (2 * q / hsRA al be) :=
+    have hfun : (fun q => ssF x be al u q 2 (log (2 * q / ssRA al be))
+        (4 * (4 - 3 * (2 * q / ssRA al be)) / (5 * al - 1))) =
+        fun q => (c0 + c1 * q + c2 * q ^ 2 + c3 * q ^ 3) + log (2 * q / ssRA al be) :=
       funext hG
     rw [hfun]
     have hp : HasDerivAt (fun q => c0 + c1 * q + c2 * q ^ 2 + c3 * q ^ 3)
@@ -1000,8 +1000,8 @@ theorem hs35_tau2_cont {x be al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 1
       convert this using 1
       · funext q; simp only [Pi.add_apply, id]; ring
       · push_cast; ring
-    have hl : HasDerivAt (fun q => log (2 * q / hsRA al be)) (1 / z) z := by
-      have h2 : HasDerivAt (fun q => 2 * q / hsRA al be) (2 * 1 / hsRA al be) z :=
+    have hl : HasDerivAt (fun q => log (2 * q / ssRA al be)) (1 / z) z := by
+      have h2 : HasDerivAt (fun q => 2 * q / ssRA al be) (2 * 1 / ssRA al be) z :=
         ((hasDerivAt_id z).const_mul 2).div_const _
       have := h2.log (by positivity)
       convert this using 1

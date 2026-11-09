@@ -1,17 +1,17 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.Clear
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.HighRatioLowerFace
-public import SmoothedOctagon.Exclusion.Mixed.FwdHand.HighRatioLowerBounds
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Clearing
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape.TerminalFace
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape.Derivatives
 
 /-!
-# Case M2, forward successor by hand: the high-ratio lower-shape sign
+# Case M2, forward successor: the high-ratio lower-shape sign
 
 On the high-ratio large-gap domain the combined residual at the lower shape `k₀ = 29t²/4`, with
-`v_G`, `L₊`, `F_ℓ`, is positive; `fh_LGB_core` uses this sign.
+`v_G`, `L₊`, `F_ℓ`, is positive; `nsf_LGB_core` uses this sign.
 
 With the incoming majorant `V_L ≥ V_G` (`hrl_VG_le_VL`), the cleared residual is the circuit
-`S = 24(q + 1)WD · fhComb 4 1 t x k₀ q V_L L₊ F_ℓ` (`hrl_link`). Along `t = (1 - h)/2`, `x = h + j`
+`S = 24(q + 1)WD · nsfComb 4 1 t x k₀ q V_L L₊ F_ℓ` (`hrl_link`). Along `t = (1 - h)/2`, `x = h + j`
 at fixed `j, y`: `-∂_h²S = ∑ Rᵢ yⁱ > 0` (`hrl_R_pos`) and `-∂_hS = ∑ Bᵢ yⁱ > 0` at `h = 1/5`
 (`hrl_B_pos`), so `S(h) ≥ S(1/4)` (`hrl_h_reduce`); at `h = 1/4` the terminal face gives
 `S ≥ 13/4` (`hrl_face`). Since the `v`-coefficient is negative,
@@ -20,7 +20,7 @@ at fixed `j, y`: `-∂_h²S = ∑ Rᵢ yⁱ > 0` (`hrl_R_pos`) and `-∂_hS = �
 The `h`-derivatives are taken of the `y`-coefficients `S₀, …, S₆` of the expanded circuit
 (`hrlSt0`, …, each a bivariate polynomial of at most 62 monomials after `t = (1 - h)/2`,
 `x = h + j`); the `x`-monotonicity of `R₀` and the univariate signs are proved in
-`FwdHand/HighRatioLowerBounds`.
+`Nonshort/Forward/HighRatio/LowerShape/Derivatives`.
 
 ## Main API
 
@@ -36,8 +36,8 @@ namespace SmoothedOctagon
 /-! ### The circuit
 
 At `k₀ = 29t²/4`, with `W = 1 + x`, `p = t + x`: the `v`-coefficient is
-`fhCv 4 1 t x k₀ q = 4W ∑ Aᵢ qⁱ`, the `log q`-coefficient satisfies
-`(q - 1) fhCL = -4q²pW(∑ Bᵢ qⁱ - 1)`, and the residual at `v = L = F = 0` is
+`nsfCv 4 1 t x k₀ q = 4W ∑ Aᵢ qⁱ`, the `log q`-coefficient satisfies
+`(q - 1) nsfCL = -4q²pW(∑ Bᵢ qⁱ - 1)`, and the residual at `v = L = F = 0` is
 `∑ Cᵢ qⁱ - 4qW² - 4p²q²`. -/
 
 /-- The coefficient `A_0(t, x)` of `q^0` in the `v`-coefficient at `k₀`. -/
@@ -114,40 +114,40 @@ noncomputable def hrlS (t x q : ℝ) : ℝ :=
     - 16 * (1 + x) ^ (2 : ℕ) * (17 * x + 76) * (t + x) * q * (hrlBs0 t x * q ^ (0 : ℕ) + hrlBs1 t x * q ^ (1 : ℕ) + hrlBs2 t x * q ^ (2 : ℕ) + hrlBs3 t x * q ^ (3 : ℕ)) * (q ^ (2 : ℕ) + 10 * q + 1)
 
 /-- `V_G ≤ V_L` for `x ≥ 0`, `t ≤ 1`. -/
-theorem hrl_VG_le_VL {t x : ℝ} (hx : 0 ≤ x) (ht : t ≤ 1) : fhVG t x ≤ hrlVL t x := by
+theorem hrl_VG_le_VL {t x : ℝ} (hx : 0 ≤ x) (ht : t ≤ 1) : nsfVG t x ≤ hrlVL t x := by
   have hW : 0 < 1 + x := by linarith
-  have e : hrlVL t x - fhVG t x = (1 - t) * x / (1 + x) ^ (2 : ℕ) *
+  have e : hrlVL t x - nsfVG t x = (1 - t) * x / (1 + x) ^ (2 : ℕ) *
       (5 * x * (7 * x - 3) ^ (2 : ℕ) / (24 * (17 * x + 76) * (x ^ (2 : ℕ) + 10 * x + 15))) := by
-    unfold hrlVL fhVG; field_simp; ring
-  have : 0 ≤ hrlVL t x - fhVG t x := by
+    unfold hrlVL nsfVG; field_simp; ring
+  have : 0 ≤ hrlVL t x - nsfVG t x := by
     rw [e]; apply mul_nonneg (div_nonneg (mul_nonneg (by linarith) hx) (by positivity)); positivity
   linarith
 
 /-- **The link**: clearing the denominators of `V_L`, `L₊` and `F_ℓ`,
-`24(q + 1)WD · fhComb 4 1 t x (29t²/4) q V_L L₊ F_ℓ = S`. -/
+`24(q + 1)WD · nsfComb 4 1 t x (29t²/4) q V_L L₊ F_ℓ = S`. -/
 theorem hrl_link (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
     24 * (q + 1) * (1 + x) * (17 * x + 76) *
-        fhComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (hrlVL t x) (nhLp q) (nhFl t x q) = hrlS t x q := by
+        nsfComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (hrlVL t x) (nsrLp q) (nsrFl t x q) = hrlS t x q := by
   have hW : (1 : ℝ) + x ≠ 0 := by positivity
   have hD : (17 : ℝ) * x + 76 ≠ 0 := by positivity
   have hq1 : q + 1 ≠ 0 := by positivity
   have hq0 : q ≠ 0 := hq.ne'
-  have hA : fhCv 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q = 4 * (1 + x) * (hrlA0 t x * q ^ (0 : ℕ) + hrlA1 t x * q ^ (1 : ℕ) + hrlA2 t x * q ^ (2 : ℕ) + hrlA3 t x * q ^ (3 : ℕ) + hrlA4 t x * q ^ (4 : ℕ)) := by
-    unfold fhCv nhNv fhTPv hrlA0 hrlA1 hrlA2 hrlA3 hrlA4; ring
-  have hC : fhComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q 0 0 0 =
+  have hA : nsfCv 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q = 4 * (1 + x) * (hrlA0 t x * q ^ (0 : ℕ) + hrlA1 t x * q ^ (1 : ℕ) + hrlA2 t x * q ^ (2 : ℕ) + hrlA3 t x * q ^ (3 : ℕ) + hrlA4 t x * q ^ (4 : ℕ)) := by
+    unfold nsfCv nsrNv nsfTPv hrlA0 hrlA1 hrlA2 hrlA3 hrlA4; ring
+  have hC : nsfComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q 0 0 0 =
       (hrlCs0 t x * q ^ (0 : ℕ) + hrlCs1 t x * q ^ (1 : ℕ) + hrlCs2 t x * q ^ (2 : ℕ) + hrlCs3 t x * q ^ (3 : ℕ) + hrlCs4 t x * q ^ (4 : ℕ) + hrlCs5 t x * q ^ (5 : ℕ)) - 4 * q * (1 + x) ^ (2 : ℕ) - 4 * (t + x) ^ (2 : ℕ) * q ^ (2 : ℕ) := by
-    unfold fhComb fhTP fhKt fhHt fhE0 nhN hrlCs0 hrlCs1 hrlCs2 hrlCs3 hrlCs4 hrlCs5; ring
-  have hB : fhCL 4 t x (29 / 4 * t ^ (2 : ℕ)) q * (q - 1) =
+    unfold nsfComb nsfTP nsfKt nsfHt nsfE0 nsrN hrlCs0 hrlCs1 hrlCs2 hrlCs3 hrlCs4 hrlCs5; ring
+  have hB : nsfCL 4 t x (29 / 4 * t ^ (2 : ℕ)) q * (q - 1) =
       -4 * q ^ (2 : ℕ) * (t + x) * (1 + x) * ((hrlBs0 t x * q ^ (0 : ℕ) + hrlBs1 t x * q ^ (1 : ℕ) + hrlBs2 t x * q ^ (2 : ℕ) + hrlBs3 t x * q ^ (3 : ℕ)) - 1) := by
-    unfold fhCL nhNL hrlBs0 hrlBs1 hrlBs2 hrlBs3; ring
+    unfold nsfCL nsrNL hrlBs0 hrlBs1 hrlBs2 hrlBs3; ring
   have hV : hrlVL t x = hrlVn t x / (24 * (17 * x + 76) * (1 + x) ^ (2 : ℕ)) := by
     unfold hrlVL hrlVn; field_simp <;> ring
-  rw [fh_comb_dec, hA, hC, hV]
-  have hL : nhLp q * fhCL 4 t x (29 / 4 * t ^ (2 : ℕ)) q =
-      (q ^ (2 : ℕ) + 10 * q + 1) / (6 * q * (q + 1)) * (fhCL 4 t x (29 / 4 * t ^ (2 : ℕ)) q * (q - 1)) := by
-    unfold nhLp; field_simp <;> ring
+  rw [nsf_comb_dec, hA, hC, hV]
+  have hL : nsrLp q * nsfCL 4 t x (29 / 4 * t ^ (2 : ℕ)) q =
+      (q ^ (2 : ℕ) + 10 * q + 1) / (6 * q * (q + 1)) * (nsfCL 4 t x (29 / 4 * t ^ (2 : ℕ)) q * (q - 1)) := by
+    unfold nsrLp; field_simp <;> ring
   rw [hL, hB]
-  unfold nhFl hrlS
+  unfold nsrFl hrlS
   field_simp
   ring
 
@@ -256,156 +256,156 @@ noncomputable def hrlL6 (j : ℝ) : List ℝ :=
 noncomputable def hrlLd6 (j : ℝ) : List ℝ :=
   [((70409 / 128) + (402863 / 32) * j + (425425 / 16) * j ^ (2 : ℕ) + (1463285 / 64) * j ^ (3 : ℕ) + (951847 / 64) * j ^ (4 : ℕ) + (11645 / 2) * j ^ (5 : ℕ) + 595 * j ^ (6 : ℕ) + 236 * j ^ (7 : ℕ) + 68 * j ^ (8 : ℕ)), ((774383 / 64) + (1048509 / 64) * j - (1028555 / 64) * j ^ (2 : ℕ) - (27715 / 16) * j ^ (3 : ℕ) + (64137 / 16) * j ^ (4 : ℕ) - 6458 * j ^ (5 : ℕ) + 630 * j ^ (6 : ℕ) + 680 * j ^ (7 : ℕ)), (-(1994367 / 128) - 80802 * j - (554631 / 32) * j ^ (2 : ℕ) + (371919 / 32) * j ^ (3 : ℕ) - (1108587 / 32) * j ^ (4 : ℕ) + (465 / 2) * j ^ (5 : ℕ) + 3315 * j ^ (6 : ℕ)), (-(847089 / 32) + (2104755 / 32) * j + (2445003 / 32) * j ^ (2 : ℕ) - (1187497 / 16) * j ^ (3 : ℕ) + (34345 / 16) * j ^ (4 : ℕ) + 10727 * j ^ (5 : ℕ)), ((6298905 / 128) + (1828245 / 32) * j - (2058015 / 16) * j ^ (2 : ℕ) + (293845 / 64) * j ^ (3 : ℕ) + (1486055 / 64) * j ^ (4 : ℕ)), ((205167 / 64) - (7704459 / 64) * j + (810189 / 64) * j ^ (2 : ℕ) + (276777 / 8) * j ^ (3 : ℕ)), (-(5147849 / 128) + 20426 * j + (1100631 / 32) * j ^ (2 : ℕ)), ((160801 / 16) + (39831 / 2) * j), ((315027 / 64))]
 
-theorem hrl_St_h0 (h j : ℝ) : hrlSt0 ((1 - h) / 2) (h + j) = lrhHorner (hrlL0 j) h := by
-  simp only [hrlL0, lrhHorner]; unfold hrlSt0; ring
+theorem hrl_St_h0 (h j : ℝ) : hrlSt0 ((1 - h) / 2) (h + j) = polyHorner (hrlL0 j) h := by
+  simp only [hrlL0, polyHorner]; unfold hrlSt0; ring
 
-theorem hrl_L_d0 (j s : ℝ) : HasDerivAt (lrhHorner (hrlL0 j)) (lrhHorner (hrlLd0 j) s) s := by
-  have H := lrh_hasDerivAt_horner (hrlL0 j) s
-  have e : lrhHornerD (hrlL0 j) s = lrhHorner (hrlLd0 j) s := by
-    simp only [hrlL0, hrlLd0, lrhHornerD, lrhHorner]; ring
+theorem hrl_L_d0 (j s : ℝ) : HasDerivAt (polyHorner (hrlL0 j)) (polyHorner (hrlLd0 j) s) s := by
+  have H := poly_hasDerivAt_horner (hrlL0 j) s
+  have e : polyHornerD (hrlL0 j) s = polyHorner (hrlLd0 j) s := by
+    simp only [hrlL0, hrlLd0, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
 theorem hrl_Ld_d0 (j s : ℝ) :
-    HasDerivAt (lrhHorner (hrlLd0 j)) (-hrlR0 ((1 - s) / 2) (s + j)) s := by
-  have H := lrh_hasDerivAt_horner (hrlLd0 j) s
-  have e : lrhHornerD (hrlLd0 j) s = -hrlR0 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd0, lrhHornerD, lrhHorner]; unfold hrlR0; ring
+    HasDerivAt (polyHorner (hrlLd0 j)) (-hrlR0 ((1 - s) / 2) (s + j)) s := by
+  have H := poly_hasDerivAt_horner (hrlLd0 j) s
+  have e : polyHornerD (hrlLd0 j) s = -hrlR0 ((1 - s) / 2) (s + j) := by
+    simp only [hrlLd0, polyHornerD, polyHorner]; unfold hrlR0; ring
   rw [e] at H; exact H
 
-theorem hrl_Ld_fifth0 (j : ℝ) : lrhHorner (hrlLd0 j) (1 / 5) = -hrlBb0 (1 / 5 + j) := by
-  simp only [hrlLd0, lrhHorner]; unfold hrlBb0; ring
+theorem hrl_Ld_fifth0 (j : ℝ) : polyHorner (hrlLd0 j) (1 / 5) = -hrlBb0 (1 / 5 + j) := by
+  simp only [hrlLd0, polyHorner]; unfold hrlBb0; ring
 
 theorem hrl_St_face0 (x : ℝ) : hrlSt0 (3 / 8) x = hrlCF0 x := by
   unfold hrlSt0 hrlCF0; ring
 
-theorem hrl_St_h1 (h j : ℝ) : hrlSt1 ((1 - h) / 2) (h + j) = lrhHorner (hrlL1 j) h := by
-  simp only [hrlL1, lrhHorner]; unfold hrlSt1; ring
+theorem hrl_St_h1 (h j : ℝ) : hrlSt1 ((1 - h) / 2) (h + j) = polyHorner (hrlL1 j) h := by
+  simp only [hrlL1, polyHorner]; unfold hrlSt1; ring
 
-theorem hrl_L_d1 (j s : ℝ) : HasDerivAt (lrhHorner (hrlL1 j)) (lrhHorner (hrlLd1 j) s) s := by
-  have H := lrh_hasDerivAt_horner (hrlL1 j) s
-  have e : lrhHornerD (hrlL1 j) s = lrhHorner (hrlLd1 j) s := by
-    simp only [hrlL1, hrlLd1, lrhHornerD, lrhHorner]; ring
+theorem hrl_L_d1 (j s : ℝ) : HasDerivAt (polyHorner (hrlL1 j)) (polyHorner (hrlLd1 j) s) s := by
+  have H := poly_hasDerivAt_horner (hrlL1 j) s
+  have e : polyHornerD (hrlL1 j) s = polyHorner (hrlLd1 j) s := by
+    simp only [hrlL1, hrlLd1, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
 theorem hrl_Ld_d1 (j s : ℝ) :
-    HasDerivAt (lrhHorner (hrlLd1 j)) (-hrlR1 ((1 - s) / 2) (s + j)) s := by
-  have H := lrh_hasDerivAt_horner (hrlLd1 j) s
-  have e : lrhHornerD (hrlLd1 j) s = -hrlR1 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd1, lrhHornerD, lrhHorner]; unfold hrlR1; ring
+    HasDerivAt (polyHorner (hrlLd1 j)) (-hrlR1 ((1 - s) / 2) (s + j)) s := by
+  have H := poly_hasDerivAt_horner (hrlLd1 j) s
+  have e : polyHornerD (hrlLd1 j) s = -hrlR1 ((1 - s) / 2) (s + j) := by
+    simp only [hrlLd1, polyHornerD, polyHorner]; unfold hrlR1; ring
   rw [e] at H; exact H
 
-theorem hrl_Ld_fifth1 (j : ℝ) : lrhHorner (hrlLd1 j) (1 / 5) = -hrlBb1 (1 / 5 + j) := by
-  simp only [hrlLd1, lrhHorner]; unfold hrlBb1; ring
+theorem hrl_Ld_fifth1 (j : ℝ) : polyHorner (hrlLd1 j) (1 / 5) = -hrlBb1 (1 / 5 + j) := by
+  simp only [hrlLd1, polyHorner]; unfold hrlBb1; ring
 
 theorem hrl_St_face1 (x : ℝ) : hrlSt1 (3 / 8) x = hrlCF1 x := by
   unfold hrlSt1 hrlCF1; ring
 
-theorem hrl_St_h2 (h j : ℝ) : hrlSt2 ((1 - h) / 2) (h + j) = lrhHorner (hrlL2 j) h := by
-  simp only [hrlL2, lrhHorner]; unfold hrlSt2; ring
+theorem hrl_St_h2 (h j : ℝ) : hrlSt2 ((1 - h) / 2) (h + j) = polyHorner (hrlL2 j) h := by
+  simp only [hrlL2, polyHorner]; unfold hrlSt2; ring
 
-theorem hrl_L_d2 (j s : ℝ) : HasDerivAt (lrhHorner (hrlL2 j)) (lrhHorner (hrlLd2 j) s) s := by
-  have H := lrh_hasDerivAt_horner (hrlL2 j) s
-  have e : lrhHornerD (hrlL2 j) s = lrhHorner (hrlLd2 j) s := by
-    simp only [hrlL2, hrlLd2, lrhHornerD, lrhHorner]; ring
+theorem hrl_L_d2 (j s : ℝ) : HasDerivAt (polyHorner (hrlL2 j)) (polyHorner (hrlLd2 j) s) s := by
+  have H := poly_hasDerivAt_horner (hrlL2 j) s
+  have e : polyHornerD (hrlL2 j) s = polyHorner (hrlLd2 j) s := by
+    simp only [hrlL2, hrlLd2, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
 theorem hrl_Ld_d2 (j s : ℝ) :
-    HasDerivAt (lrhHorner (hrlLd2 j)) (-hrlR2 ((1 - s) / 2) (s + j)) s := by
-  have H := lrh_hasDerivAt_horner (hrlLd2 j) s
-  have e : lrhHornerD (hrlLd2 j) s = -hrlR2 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd2, lrhHornerD, lrhHorner]; unfold hrlR2; ring
+    HasDerivAt (polyHorner (hrlLd2 j)) (-hrlR2 ((1 - s) / 2) (s + j)) s := by
+  have H := poly_hasDerivAt_horner (hrlLd2 j) s
+  have e : polyHornerD (hrlLd2 j) s = -hrlR2 ((1 - s) / 2) (s + j) := by
+    simp only [hrlLd2, polyHornerD, polyHorner]; unfold hrlR2; ring
   rw [e] at H; exact H
 
-theorem hrl_Ld_fifth2 (j : ℝ) : lrhHorner (hrlLd2 j) (1 / 5) = -hrlBb2 (1 / 5 + j) := by
-  simp only [hrlLd2, lrhHorner]; unfold hrlBb2; ring
+theorem hrl_Ld_fifth2 (j : ℝ) : polyHorner (hrlLd2 j) (1 / 5) = -hrlBb2 (1 / 5 + j) := by
+  simp only [hrlLd2, polyHorner]; unfold hrlBb2; ring
 
 theorem hrl_St_face2 (x : ℝ) : hrlSt2 (3 / 8) x = hrlCF2 x := by
   unfold hrlSt2 hrlCF2; ring
 
-theorem hrl_St_h3 (h j : ℝ) : hrlSt3 ((1 - h) / 2) (h + j) = lrhHorner (hrlL3 j) h := by
-  simp only [hrlL3, lrhHorner]; unfold hrlSt3; ring
+theorem hrl_St_h3 (h j : ℝ) : hrlSt3 ((1 - h) / 2) (h + j) = polyHorner (hrlL3 j) h := by
+  simp only [hrlL3, polyHorner]; unfold hrlSt3; ring
 
-theorem hrl_L_d3 (j s : ℝ) : HasDerivAt (lrhHorner (hrlL3 j)) (lrhHorner (hrlLd3 j) s) s := by
-  have H := lrh_hasDerivAt_horner (hrlL3 j) s
-  have e : lrhHornerD (hrlL3 j) s = lrhHorner (hrlLd3 j) s := by
-    simp only [hrlL3, hrlLd3, lrhHornerD, lrhHorner]; ring
+theorem hrl_L_d3 (j s : ℝ) : HasDerivAt (polyHorner (hrlL3 j)) (polyHorner (hrlLd3 j) s) s := by
+  have H := poly_hasDerivAt_horner (hrlL3 j) s
+  have e : polyHornerD (hrlL3 j) s = polyHorner (hrlLd3 j) s := by
+    simp only [hrlL3, hrlLd3, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
 theorem hrl_Ld_d3 (j s : ℝ) :
-    HasDerivAt (lrhHorner (hrlLd3 j)) (-hrlR3 ((1 - s) / 2) (s + j)) s := by
-  have H := lrh_hasDerivAt_horner (hrlLd3 j) s
-  have e : lrhHornerD (hrlLd3 j) s = -hrlR3 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd3, lrhHornerD, lrhHorner]; unfold hrlR3; ring
+    HasDerivAt (polyHorner (hrlLd3 j)) (-hrlR3 ((1 - s) / 2) (s + j)) s := by
+  have H := poly_hasDerivAt_horner (hrlLd3 j) s
+  have e : polyHornerD (hrlLd3 j) s = -hrlR3 ((1 - s) / 2) (s + j) := by
+    simp only [hrlLd3, polyHornerD, polyHorner]; unfold hrlR3; ring
   rw [e] at H; exact H
 
-theorem hrl_Ld_fifth3 (j : ℝ) : lrhHorner (hrlLd3 j) (1 / 5) = -hrlBb3 (1 / 5 + j) := by
-  simp only [hrlLd3, lrhHorner]; unfold hrlBb3; ring
+theorem hrl_Ld_fifth3 (j : ℝ) : polyHorner (hrlLd3 j) (1 / 5) = -hrlBb3 (1 / 5 + j) := by
+  simp only [hrlLd3, polyHorner]; unfold hrlBb3; ring
 
 theorem hrl_St_face3 (x : ℝ) : hrlSt3 (3 / 8) x = hrlCF3 x := by
   unfold hrlSt3 hrlCF3; ring
 
-theorem hrl_St_h4 (h j : ℝ) : hrlSt4 ((1 - h) / 2) (h + j) = lrhHorner (hrlL4 j) h := by
-  simp only [hrlL4, lrhHorner]; unfold hrlSt4; ring
+theorem hrl_St_h4 (h j : ℝ) : hrlSt4 ((1 - h) / 2) (h + j) = polyHorner (hrlL4 j) h := by
+  simp only [hrlL4, polyHorner]; unfold hrlSt4; ring
 
-theorem hrl_L_d4 (j s : ℝ) : HasDerivAt (lrhHorner (hrlL4 j)) (lrhHorner (hrlLd4 j) s) s := by
-  have H := lrh_hasDerivAt_horner (hrlL4 j) s
-  have e : lrhHornerD (hrlL4 j) s = lrhHorner (hrlLd4 j) s := by
-    simp only [hrlL4, hrlLd4, lrhHornerD, lrhHorner]; ring
+theorem hrl_L_d4 (j s : ℝ) : HasDerivAt (polyHorner (hrlL4 j)) (polyHorner (hrlLd4 j) s) s := by
+  have H := poly_hasDerivAt_horner (hrlL4 j) s
+  have e : polyHornerD (hrlL4 j) s = polyHorner (hrlLd4 j) s := by
+    simp only [hrlL4, hrlLd4, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
 theorem hrl_Ld_d4 (j s : ℝ) :
-    HasDerivAt (lrhHorner (hrlLd4 j)) (-hrlR4 ((1 - s) / 2) (s + j)) s := by
-  have H := lrh_hasDerivAt_horner (hrlLd4 j) s
-  have e : lrhHornerD (hrlLd4 j) s = -hrlR4 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd4, lrhHornerD, lrhHorner]; unfold hrlR4; ring
+    HasDerivAt (polyHorner (hrlLd4 j)) (-hrlR4 ((1 - s) / 2) (s + j)) s := by
+  have H := poly_hasDerivAt_horner (hrlLd4 j) s
+  have e : polyHornerD (hrlLd4 j) s = -hrlR4 ((1 - s) / 2) (s + j) := by
+    simp only [hrlLd4, polyHornerD, polyHorner]; unfold hrlR4; ring
   rw [e] at H; exact H
 
-theorem hrl_Ld_fifth4 (j : ℝ) : lrhHorner (hrlLd4 j) (1 / 5) = -hrlBb4 (1 / 5 + j) := by
-  simp only [hrlLd4, lrhHorner]; unfold hrlBb4; ring
+theorem hrl_Ld_fifth4 (j : ℝ) : polyHorner (hrlLd4 j) (1 / 5) = -hrlBb4 (1 / 5 + j) := by
+  simp only [hrlLd4, polyHorner]; unfold hrlBb4; ring
 
 theorem hrl_St_face4 (x : ℝ) : hrlSt4 (3 / 8) x = hrlCF4 x := by
   unfold hrlSt4 hrlCF4; ring
 
-theorem hrl_St_h5 (h j : ℝ) : hrlSt5 ((1 - h) / 2) (h + j) = lrhHorner (hrlL5 j) h := by
-  simp only [hrlL5, lrhHorner]; unfold hrlSt5; ring
+theorem hrl_St_h5 (h j : ℝ) : hrlSt5 ((1 - h) / 2) (h + j) = polyHorner (hrlL5 j) h := by
+  simp only [hrlL5, polyHorner]; unfold hrlSt5; ring
 
-theorem hrl_L_d5 (j s : ℝ) : HasDerivAt (lrhHorner (hrlL5 j)) (lrhHorner (hrlLd5 j) s) s := by
-  have H := lrh_hasDerivAt_horner (hrlL5 j) s
-  have e : lrhHornerD (hrlL5 j) s = lrhHorner (hrlLd5 j) s := by
-    simp only [hrlL5, hrlLd5, lrhHornerD, lrhHorner]; ring
+theorem hrl_L_d5 (j s : ℝ) : HasDerivAt (polyHorner (hrlL5 j)) (polyHorner (hrlLd5 j) s) s := by
+  have H := poly_hasDerivAt_horner (hrlL5 j) s
+  have e : polyHornerD (hrlL5 j) s = polyHorner (hrlLd5 j) s := by
+    simp only [hrlL5, hrlLd5, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
 theorem hrl_Ld_d5 (j s : ℝ) :
-    HasDerivAt (lrhHorner (hrlLd5 j)) (-hrlR5 ((1 - s) / 2) (s + j)) s := by
-  have H := lrh_hasDerivAt_horner (hrlLd5 j) s
-  have e : lrhHornerD (hrlLd5 j) s = -hrlR5 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd5, lrhHornerD, lrhHorner]; unfold hrlR5; ring
+    HasDerivAt (polyHorner (hrlLd5 j)) (-hrlR5 ((1 - s) / 2) (s + j)) s := by
+  have H := poly_hasDerivAt_horner (hrlLd5 j) s
+  have e : polyHornerD (hrlLd5 j) s = -hrlR5 ((1 - s) / 2) (s + j) := by
+    simp only [hrlLd5, polyHornerD, polyHorner]; unfold hrlR5; ring
   rw [e] at H; exact H
 
-theorem hrl_Ld_fifth5 (j : ℝ) : lrhHorner (hrlLd5 j) (1 / 5) = -hrlBb5 (1 / 5 + j) := by
-  simp only [hrlLd5, lrhHorner]; unfold hrlBb5; ring
+theorem hrl_Ld_fifth5 (j : ℝ) : polyHorner (hrlLd5 j) (1 / 5) = -hrlBb5 (1 / 5 + j) := by
+  simp only [hrlLd5, polyHorner]; unfold hrlBb5; ring
 
 theorem hrl_St_face5 (x : ℝ) : hrlSt5 (3 / 8) x = hrlCF5 x := by
   unfold hrlSt5 hrlCF5; ring
 
-theorem hrl_St_h6 (h j : ℝ) : hrlSt6 ((1 - h) / 2) (h + j) = lrhHorner (hrlL6 j) h := by
-  simp only [hrlL6, lrhHorner]; unfold hrlSt6; ring
+theorem hrl_St_h6 (h j : ℝ) : hrlSt6 ((1 - h) / 2) (h + j) = polyHorner (hrlL6 j) h := by
+  simp only [hrlL6, polyHorner]; unfold hrlSt6; ring
 
-theorem hrl_L_d6 (j s : ℝ) : HasDerivAt (lrhHorner (hrlL6 j)) (lrhHorner (hrlLd6 j) s) s := by
-  have H := lrh_hasDerivAt_horner (hrlL6 j) s
-  have e : lrhHornerD (hrlL6 j) s = lrhHorner (hrlLd6 j) s := by
-    simp only [hrlL6, hrlLd6, lrhHornerD, lrhHorner]; ring
+theorem hrl_L_d6 (j s : ℝ) : HasDerivAt (polyHorner (hrlL6 j)) (polyHorner (hrlLd6 j) s) s := by
+  have H := poly_hasDerivAt_horner (hrlL6 j) s
+  have e : polyHornerD (hrlL6 j) s = polyHorner (hrlLd6 j) s := by
+    simp only [hrlL6, hrlLd6, polyHornerD, polyHorner]; ring
   rw [e] at H; exact H
 
 theorem hrl_Ld_d6 (j s : ℝ) :
-    HasDerivAt (lrhHorner (hrlLd6 j)) (-hrlR6 ((1 - s) / 2) (s + j)) s := by
-  have H := lrh_hasDerivAt_horner (hrlLd6 j) s
-  have e : lrhHornerD (hrlLd6 j) s = -hrlR6 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd6, lrhHornerD, lrhHorner]; unfold hrlR6; ring
+    HasDerivAt (polyHorner (hrlLd6 j)) (-hrlR6 ((1 - s) / 2) (s + j)) s := by
+  have H := poly_hasDerivAt_horner (hrlLd6 j) s
+  have e : polyHornerD (hrlLd6 j) s = -hrlR6 ((1 - s) / 2) (s + j) := by
+    simp only [hrlLd6, polyHornerD, polyHorner]; unfold hrlR6; ring
   rw [e] at H; exact H
 
-theorem hrl_Ld_fifth6 (j : ℝ) : lrhHorner (hrlLd6 j) (1 / 5) = -hrlBb6 (1 / 5 + j) := by
-  simp only [hrlLd6, lrhHorner]; unfold hrlBb6; ring
+theorem hrl_Ld_fifth6 (j : ℝ) : polyHorner (hrlLd6 j) (1 / 5) = -hrlBb6 (1 / 5 + j) := by
+  simp only [hrlLd6, polyHorner]; unfold hrlBb6; ring
 
 theorem hrl_St_face6 (x : ℝ) : hrlSt6 (3 / 8) x = hrlCF6 x := by
   unfold hrlSt6 hrlCF6; ring
@@ -416,12 +416,12 @@ theorem hrl_St_face6 (x : ℝ) : hrlSt6 (3 / 8) x = hrlCF6 x := by
 decreasing on `[1/5, 1/4]` (`hrl_R_pos`) and negative at `h = 1/5` (`hrl_B_pos`). -/
 theorem hrl_h_reduce {h j y : ℝ} (h1 : 1 / 5 ≤ h) (h2 : h ≤ 1 / 4) (hj0 : 1 / 30 ≤ j)
     (hj1 : j ≤ 5 / 28) (hy0 : 0 ≤ y) (hy1 : y ≤ 1 / 4) :
-    lrhHorner (hrlL0 j) (1 / 4) + lrhHorner (hrlL1 j) (1 / 4) * y + lrhHorner (hrlL2 j) (1 / 4) * y ^ (2 : ℕ) + lrhHorner (hrlL3 j) (1 / 4) * y ^ (3 : ℕ) + lrhHorner (hrlL4 j) (1 / 4) * y ^ (4 : ℕ) + lrhHorner (hrlL5 j) (1 / 4) * y ^ (5 : ℕ) + lrhHorner (hrlL6 j) (1 / 4) * y ^ (6 : ℕ) ≤ lrhHorner (hrlL0 j) h + lrhHorner (hrlL1 j) h * y + lrhHorner (hrlL2 j) h * y ^ (2 : ℕ) + lrhHorner (hrlL3 j) h * y ^ (3 : ℕ) + lrhHorner (hrlL4 j) h * y ^ (4 : ℕ) + lrhHorner (hrlL5 j) h * y ^ (5 : ℕ) + lrhHorner (hrlL6 j) h * y ^ (6 : ℕ) := by
-  have dG : ∀ s, HasDerivAt (fun s => lrhHorner (hrlL0 j) s + lrhHorner (hrlL1 j) s * y + lrhHorner (hrlL2 j) s * y ^ (2 : ℕ) + lrhHorner (hrlL3 j) s * y ^ (3 : ℕ) + lrhHorner (hrlL4 j) s * y ^ (4 : ℕ) + lrhHorner (hrlL5 j) s * y ^ (5 : ℕ) + lrhHorner (hrlL6 j) s * y ^ (6 : ℕ)) (lrhHorner (hrlLd0 j) s + lrhHorner (hrlLd1 j) s * y + lrhHorner (hrlLd2 j) s * y ^ (2 : ℕ) + lrhHorner (hrlLd3 j) s * y ^ (3 : ℕ) + lrhHorner (hrlLd4 j) s * y ^ (4 : ℕ) + lrhHorner (hrlLd5 j) s * y ^ (5 : ℕ) + lrhHorner (hrlLd6 j) s * y ^ (6 : ℕ)) s := fun s =>
+    polyHorner (hrlL0 j) (1 / 4) + polyHorner (hrlL1 j) (1 / 4) * y + polyHorner (hrlL2 j) (1 / 4) * y ^ (2 : ℕ) + polyHorner (hrlL3 j) (1 / 4) * y ^ (3 : ℕ) + polyHorner (hrlL4 j) (1 / 4) * y ^ (4 : ℕ) + polyHorner (hrlL5 j) (1 / 4) * y ^ (5 : ℕ) + polyHorner (hrlL6 j) (1 / 4) * y ^ (6 : ℕ) ≤ polyHorner (hrlL0 j) h + polyHorner (hrlL1 j) h * y + polyHorner (hrlL2 j) h * y ^ (2 : ℕ) + polyHorner (hrlL3 j) h * y ^ (3 : ℕ) + polyHorner (hrlL4 j) h * y ^ (4 : ℕ) + polyHorner (hrlL5 j) h * y ^ (5 : ℕ) + polyHorner (hrlL6 j) h * y ^ (6 : ℕ) := by
+  have dG : ∀ s, HasDerivAt (fun s => polyHorner (hrlL0 j) s + polyHorner (hrlL1 j) s * y + polyHorner (hrlL2 j) s * y ^ (2 : ℕ) + polyHorner (hrlL3 j) s * y ^ (3 : ℕ) + polyHorner (hrlL4 j) s * y ^ (4 : ℕ) + polyHorner (hrlL5 j) s * y ^ (5 : ℕ) + polyHorner (hrlL6 j) s * y ^ (6 : ℕ)) (polyHorner (hrlLd0 j) s + polyHorner (hrlLd1 j) s * y + polyHorner (hrlLd2 j) s * y ^ (2 : ℕ) + polyHorner (hrlLd3 j) s * y ^ (3 : ℕ) + polyHorner (hrlLd4 j) s * y ^ (4 : ℕ) + polyHorner (hrlLd5 j) s * y ^ (5 : ℕ) + polyHorner (hrlLd6 j) s * y ^ (6 : ℕ)) s := fun s =>
     (((((((hrl_L_d0 j s).add ((hrl_L_d1 j s).mul_const y)).add ((hrl_L_d2 j s).mul_const (y ^ (2 : ℕ)))).add
       ((hrl_L_d3 j s).mul_const (y ^ (3 : ℕ)))).add ((hrl_L_d4 j s).mul_const (y ^ (4 : ℕ)))).add
       ((hrl_L_d5 j s).mul_const (y ^ (5 : ℕ)))).add ((hrl_L_d6 j s).mul_const (y ^ (6 : ℕ))))
-  have dG1 : ∀ s, HasDerivAt (fun s => lrhHorner (hrlLd0 j) s + lrhHorner (hrlLd1 j) s * y + lrhHorner (hrlLd2 j) s * y ^ (2 : ℕ) + lrhHorner (hrlLd3 j) s * y ^ (3 : ℕ) + lrhHorner (hrlLd4 j) s * y ^ (4 : ℕ) + lrhHorner (hrlLd5 j) s * y ^ (5 : ℕ) + lrhHorner (hrlLd6 j) s * y ^ (6 : ℕ))
+  have dG1 : ∀ s, HasDerivAt (fun s => polyHorner (hrlLd0 j) s + polyHorner (hrlLd1 j) s * y + polyHorner (hrlLd2 j) s * y ^ (2 : ℕ) + polyHorner (hrlLd3 j) s * y ^ (3 : ℕ) + polyHorner (hrlLd4 j) s * y ^ (4 : ℕ) + polyHorner (hrlLd5 j) s * y ^ (5 : ℕ) + polyHorner (hrlLd6 j) s * y ^ (6 : ℕ))
       (-(hrlR0 ((1 - s) / 2) (s + j) + hrlR1 ((1 - s) / 2) (s + j) * y
         + hrlR2 ((1 - s) / 2) (s + j) * y ^ (2 : ℕ) + hrlR3 ((1 - s) / 2) (s + j) * y ^ (3 : ℕ)
         + hrlR4 ((1 - s) / 2) (s + j) * y ^ (4 : ℕ) + hrlR5 ((1 - s) / 2) (s + j) * y ^ (5 : ℕ)
@@ -437,23 +437,23 @@ theorem hrl_h_reduce {h j y : ℝ} (h1 : 1 / 5 ≤ h) (h2 : h ≤ 1 / 4) (hj0 : 
     have := hrl_R_pos (t := (1 - s) / 2) (x := s + j) (by linarith) (by linarith) (by linarith)
       (by linarith) hy0 hy1
     linarith
-  have g1 : lrhHorner (hrlLd0 j) (1 / 5) + lrhHorner (hrlLd1 j) (1 / 5) * y + lrhHorner (hrlLd2 j) (1 / 5) * y ^ (2 : ℕ) + lrhHorner (hrlLd3 j) (1 / 5) * y ^ (3 : ℕ) + lrhHorner (hrlLd4 j) (1 / 5) * y ^ (4 : ℕ) + lrhHorner (hrlLd5 j) (1 / 5) * y ^ (5 : ℕ) + lrhHorner (hrlLd6 j) (1 / 5) * y ^ (6 : ℕ) < 0 := by
+  have g1 : polyHorner (hrlLd0 j) (1 / 5) + polyHorner (hrlLd1 j) (1 / 5) * y + polyHorner (hrlLd2 j) (1 / 5) * y ^ (2 : ℕ) + polyHorner (hrlLd3 j) (1 / 5) * y ^ (3 : ℕ) + polyHorner (hrlLd4 j) (1 / 5) * y ^ (4 : ℕ) + polyHorner (hrlLd5 j) (1 / 5) * y ^ (5 : ℕ) + polyHorner (hrlLd6 j) (1 / 5) * y ^ (6 : ℕ) < 0 := by
     rw [hrl_Ld_fifth0, hrl_Ld_fifth1, hrl_Ld_fifth2, hrl_Ld_fifth3, hrl_Ld_fifth4, hrl_Ld_fifth5,
       hrl_Ld_fifth6]
     have := hrl_B_pos (x := 1 / 5 + j) (by linarith) (by linarith) hy0 hy1
     linarith
-  have neg1 : ∀ s, 1 / 5 ≤ s → s ≤ 1 / 4 → lrhHorner (hrlLd0 j) s + lrhHorner (hrlLd1 j) s * y + lrhHorner (hrlLd2 j) s * y ^ (2 : ℕ) + lrhHorner (hrlLd3 j) s * y ^ (3 : ℕ) + lrhHorner (hrlLd4 j) s * y ^ (4 : ℕ) + lrhHorner (hrlLd5 j) s * y ^ (5 : ℕ) + lrhHorner (hrlLd6 j) s * y ^ (6 : ℕ) ≤ 0 := fun s s1 s2 => by
-    have := hrl_anti dG1 neg2 le_rfl s1 s2
+  have neg1 : ∀ s, 1 / 5 ≤ s → s ≤ 1 / 4 → polyHorner (hrlLd0 j) s + polyHorner (hrlLd1 j) s * y + polyHorner (hrlLd2 j) s * y ^ (2 : ℕ) + polyHorner (hrlLd3 j) s * y ^ (3 : ℕ) + polyHorner (hrlLd4 j) s * y ^ (4 : ℕ) + polyHorner (hrlLd5 j) s * y ^ (5 : ℕ) + polyHorner (hrlLd6 j) s * y ^ (6 : ℕ) ≤ 0 := fun s s1 s2 => by
+    have := poly_anti dG1 neg2 le_rfl s1 s2
     linarith
-  exact hrl_anti dG neg1 h1 h2 le_rfl
+  exact poly_anti dG neg1 h1 h2 le_rfl
 
 /-- **The high-ratio lower-shape sign**: on the high-ratio
 large-gap domain, the combined residual at `k₀ = 29t²/4` with `v_G`, `L₊`, `F_ℓ` is positive. The
-negative `v`-coefficient (`fh_LGB_Cv`) is supplied by the caller. -/
+negative `v`-coefficient (`nsf_LGB_Cv`) is supplied by the caller. -/
 theorem hrl_lower_pos {t x q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
     (hjh : 7 * x < 12 * (1 - 2 * t)) (hq : 1 ≤ q) (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x)
-    (hCv : fhCv 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q < 0) :
-    0 < fhComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (fhVG t x) (nhLp q) (nhFl t x q) := by
+    (hCv : nsfCv 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q < 0) :
+    0 < nsfComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (nsfVG t x) (nsrLp q) (nsrFl t x q) := by
   have hx : 0 < x := by linarith
   have hq0 : 0 < q := by linarith
   -- `y(1 + 2j) ≤ h - j`
@@ -479,11 +479,11 @@ theorem hrl_lower_pos {t x q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj : 
     unfold hrlP at face
     linarith
   rw [← hrl_link t x q hq0 hx] at hS
-  have hL : 0 < fhComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (hrlVL t x) (nhLp q) (nhFl t x q) :=
+  have hL : 0 < nsfComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (hrlVL t x) (nsrLp q) (nsrFl t x q) :=
     pos_of_mul_pos_right hS (by positivity)
-  have e := fh_comb_sub_v 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (fhVG t x) (hrlVL t x) (nhLp q) (nhFl t x q)
+  have e := nsf_comb_sub_v 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (nsfVG t x) (hrlVL t x) (nsrLp q) (nsrFl t x q)
   have := hrl_VG_le_VL hx.le (by linarith : t ≤ 1)
-  have : 0 ≤ (fhVG t x - hrlVL t x) * fhCv 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q :=
+  have : 0 ≤ (nsfVG t x - hrlVL t x) * nsfCv 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q :=
     mul_nonneg_of_nonpos_of_nonpos (by linarith) hCv.le
   linarith
 

@@ -15,13 +15,13 @@ rebasing the period.
 
 Main API:
 
-* `scb_octagonCost_lt`: `A_oct < 3.127` (`A_oct ≈ 3.12605`).
-* `scb_budget`: the budget inequality at the initial time of an admissible trajectory with
+* `clr_octagonCost_lt`: `A_oct < 3.127` (`A_oct ≈ 3.12605`).
+* `clr_budget`: the budget inequality at the initial time of an admissible trajectory with
   `tr((h⁻¹ M h + (3/2)μJ) Y) ≤ 0`: `μ ≤ 100 ‖M + (3/2)μJ‖_F`.
-* `scb_conservation`: `Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)` on `[0, T]` (Corollary 6.5.3).
-* `scb_traceForm_le_zero`: `tr((Λ₁ - (3/2)λJ) X) ≤ 0` at every time.
-* `scb_twisted_traceForm_le`: the same inequality along the twisted extension, for `t ≥ 0`.
-* `scb_lam_sq_le`: `λ² ≤ 10⁴ ‖Λ₁(t) - (3/2)λJ‖_F²` at every `t ∈ [0, T]`.
+* `clr_conservation`: `Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)` on `[0, T]` (Corollary 6.5.3).
+* `clr_traceForm_le_zero`: `tr((Λ₁ - (3/2)λJ) X) ≤ 0` at every time.
+* `clr_twisted_traceForm_le`: the same inequality along the twisted extension, for `t ≥ 0`.
+* `clr_lam_sq_le`: `λ² ≤ 10⁴ ‖Λ₁(t) - (3/2)λJ‖_F²` at every `t ∈ [0, T]`.
 -/
 
 @[expose] public section
@@ -34,7 +34,7 @@ open SmoothedPolygons MeasureTheory Set Real
 
 /-- `A_oct < 3.127` (`A_oct = √12 (8 - √32 - log 2)/(√8 - 1) ≈ 3.12605`), from rational
 enclosures of `√12`, `√32`, `√8` and `log 2`. -/
-theorem scb_octagonCost_lt : octagonCost < 3.127 := by
+theorem clr_octagonCost_lt : octagonCost < 3.127 := by
   have h12 : √12 < 3.46411 := by
     rw [Real.sqrt_lt' (by norm_num)]; norm_num
   have h32 : 5.65685 < √32 := by
@@ -64,12 +64,12 @@ Proof: with `A₀ = M + (3/2)μJ` and `V = h Y h⁻¹`, the hypothesis reads
 `tr(A₀ V) ≥ -2‖A₀‖ ρ_R`. Integrating, `(3μ - 2‖A₀‖) ∫ρ_R ≤ 3μ ∫ρ`. If `μ > 100 ‖A₀‖`, then
 `3μ - 2‖A₀‖ > (149/50) μ`, and the winding bound `∫ρ_R ≥ 2π/3 - ∫ρ` gives
 `(149/50)(2π/3 - ∫ρ) < 3∫ρ`, which fails because the cost `3∫ρ` is below `3.127`. -/
-theorem scb_budget {T : ℝ} {u : ℝ → Fin 3 → ℝ} {h Y : ℝ → Mat2}
+theorem clr_budget {T : ℝ} {u : ℝ → Fin 3 → ℝ} {h Y : ℝ → Mat2}
     (hadm : IsReinhardtAdmissible T u h Y) (hcost : reinhardtCost T Y ≤ octagonCost)
     {M : Mat2} {μ : ℝ}
     (hmax : ∀ s ∈ Icc 0 T, traceForm ((h s)⁻¹ * M * h s + (3 / 2 * μ) • J) (Y s) ≤ 0) :
     μ ≤ 100 * √(frobSq (M + (3 / 2 * μ) • J)) := by
-  have hwind := scb_winding hadm
+  have hwind := clr_winding hadm
   obtain ⟨hst, -, -, -⟩ := hadm
   have hT : 0 < T := hst.1
   have hdet : ∀ s ∈ Icc 0 T, (h s).det = 1 := fun s hs ↦ (hst.2.2.2.1 s hs).1
@@ -79,14 +79,14 @@ theorem scb_budget {T : ℝ} {u : ℝ → Fin 3 → ℝ} {h Y : ℝ → Mat2}
   have ha₀0 : 0 ≤ a₀ := Real.sqrt_nonneg _
   -- the pointwise inequality `3μρ_R + tr(A₀ V) ≤ 3μρ` with `tr(A₀ V) ≥ -2 a₀ ρ_R`
   have hpt : ∀ s ∈ Icc 0 T,
-      (3 * μ - 2 * a₀) * scb_rhoR (h s) (Y s) ≤ 3 * μ * scb_rho (Y s) := by
+      (3 * μ - 2 * a₀) * clr_rhoR (h s) (Y s) ≤ 3 * μ * clr_rho (Y s) := by
     intro s hs
     have hm := hmax s hs
     have hinv : (h s)⁻¹ = (h s).adjugate := by
       rw [Matrix.inv_def, hdet s hs, Ring.inverse_one, one_smul]
     set V := h s * Y s * (h s).adjugate with hV
     have e1 : traceForm ((h s)⁻¹ * M * h s + (3 / 2 * μ) • J) (Y s) =
-        traceForm A₀ V + 3 * μ * scb_rhoR (h s) (Y s) - 3 * μ * scb_rho (Y s) := by
+        traceForm A₀ V + 3 * μ * clr_rhoR (h s) (Y s) - 3 * μ * clr_rho (Y s) := by
       have t1 : traceForm ((h s).adjugate * M * h s) (Y s) = traceForm M V := by
         simp only [traceForm, hV, Matrix.mul_assoc]
         rw [Matrix.trace_mul_comm]
@@ -98,40 +98,40 @@ theorem scb_budget {T : ℝ} {u : ℝ → Fin 3 → ℝ} {h Y : ℝ → Mat2}
           traceForm ((h s).adjugate * M * h s) (Y s) + 3 / 2 * μ * traceForm J (Y s) := by
         simp only [traceForm, Matrix.add_mul, Matrix.trace_add, Matrix.smul_mul,
           Matrix.trace_smul, smul_eq_mul]
-      rw [hinv, t3, t1, scb_rhoR, scb_rho, scb_rho, ← hV]
+      rw [hinv, t3, t1, clr_rhoR, clr_rho, clr_rho, ← hV]
       linarith
     rw [e1] at hm
     -- Cauchy–Schwarz and `‖V‖_F² = 4ρ_R² - 2`
-    have hR := scb_rhoR_pos (hdet s hs) (hstar s hs)
-    have hfV := scb_frobSq_conj (hdet s hs) (hstar s hs)
-    have hCS := scb_traceForm_sq_le A₀ V
+    have hR := clr_rhoR_pos (hdet s hs) (hstar s hs)
+    have hfV := clr_frobSq_conj (hdet s hs) (hstar s hs)
+    have hCS := clr_traceForm_sq_le A₀ V
     rw [← hV] at hfV
     rw [hfV] at hCS
-    have hsq : traceForm A₀ V ^ 2 ≤ frobSq A₀ * (2 * scb_rhoR (h s) (Y s)) ^ 2 := by
-      have := scb_frobSq_nonneg A₀
+    have hsq : traceForm A₀ V ^ 2 ≤ frobSq A₀ * (2 * clr_rhoR (h s) (Y s)) ^ 2 := by
+      have := clr_frobSq_nonneg A₀
       nlinarith
     have habs := Real.abs_le_sqrt hsq
-    rw [Real.sqrt_mul (scb_frobSq_nonneg A₀), Real.sqrt_sq (by linarith), ← ha₀] at habs
+    rw [Real.sqrt_mul (clr_frobSq_nonneg A₀), Real.sqrt_sq (by linarith), ← ha₀] at habs
     have := neg_abs_le (traceForm A₀ V)
     nlinarith
   -- integrate
-  have hρc := scb_continuousOn_rho hst
-  have hρRc := scb_continuousOn_rhoR hst
+  have hρc := clr_continuousOn_rho hst
+  have hρRc := clr_continuousOn_rhoR hst
   have hsub : uIcc 0 T ⊆ Icc 0 T := by rw [uIcc_of_le hT.le]
-  have hρi : IntervalIntegrable (fun s ↦ scb_rho (Y s)) volume 0 T :=
+  have hρi : IntervalIntegrable (fun s ↦ clr_rho (Y s)) volume 0 T :=
     (hρc.mono hsub).intervalIntegrable
-  have hρRi : IntervalIntegrable (fun s ↦ scb_rhoR (h s) (Y s)) volume 0 T :=
+  have hρRi : IntervalIntegrable (fun s ↦ clr_rhoR (h s) (Y s)) volume 0 T :=
     (hρRc.mono hsub).intervalIntegrable
   have hint := intervalIntegral.integral_mono_on hT.le (hρRi.const_mul (3 * μ - 2 * a₀))
     (hρi.const_mul (3 * μ)) hpt
   rw [intervalIntegral.integral_const_mul, intervalIntegral.integral_const_mul] at hint
   rw [intervalIntegral.integral_add hρi hρRi] at hwind
-  have hcostI : reinhardtCost T Y = 3 * ∫ s in (0 : ℝ)..T, scb_rho (Y s) := by
+  have hcostI : reinhardtCost T Y = 3 * ∫ s in (0 : ℝ)..T, clr_rho (Y s) := by
     rw [reinhardtCost, ← intervalIntegral.integral_const_mul, ← intervalIntegral.integral_const_mul]
-    congr 1; funext s; simp only [scb_rho]; ring
-  set I := ∫ s in (0 : ℝ)..T, scb_rho (Y s)
-  set IR := ∫ s in (0 : ℝ)..T, scb_rhoR (h s) (Y s)
-  have hoc := scb_octagonCost_lt
+    congr 1; funext s; simp only [clr_rho]; ring
+  set I := ∫ s in (0 : ℝ)..T, clr_rho (Y s)
+  set IR := ∫ s in (0 : ℝ)..T, clr_rhoR (h s) (Y s)
+  have hoc := clr_octagonCost_lt
   have hpi := Real.pi_gt_d6
   have hI : I < 3.127 / 3 := by linarith
   by_contra hcon
@@ -154,7 +154,7 @@ variable {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2} {l
 
 /-- **Spatial conservation** (Hales–Vajjha, Corollary 6.5.3): `Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)` on
 `[0, T]`. -/
-theorem scb_conservation (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) :
+theorem clr_conservation (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) :
     ∀ t ∈ Icc 0 T, Λ₁ t = (g t)⁻¹ * Λ₁ 0 * g t := by
   obtain ⟨hst, hg0, -, -, -, -, -, -, hΛ, -, -⟩ := hext
   obtain ⟨-, -, -, hsd, hgI, hXI⟩ := hst
@@ -170,17 +170,17 @@ theorem scb_conservation (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) :
   exact fun t ht ↦ (corollary6_5_3 T g X Λ₁ hg hg0 (fun t ht ↦ (hsd t ht).1) hΛ' t ht).1
 
 /-- **The equilibrium inequality at every time**: `tr((Λ₁ - (3/2)λJ) X) ≤ 0` on `[0, T]`. Every
-vertex Hamiltonian is `≤ 0`, and `scb_vertex_bounds` turns this into the inequality. -/
-theorem scb_traceForm_le_zero (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) :
+vertex Hamiltonian is `≤ 0`, and `clr_vertex_bounds` turns this into the inequality. -/
+theorem clr_traceForm_le_zero (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam) :
     ∀ t ∈ Icc 0 T, traceForm (Λ₁ t - (3 / 2 * lam) • J) (X t) ≤ 0 := by
   intro t ht
   have hH := (IsPontryaginExtremal.vertexHamiltonian_max_eq_zero hext t ht).1
   obtain ⟨-, hWtr, hWX, -⟩ := hext.2.2.2.2.2.2.2.1 t ht
-  exact (scb_vertex_bounds (hext.1.2.2.2.1 t ht).2 hWtr hWX hH).1
+  exact (clr_vertex_bounds (hext.1.2.2.2.1 t ht).2 hWtr hWX hH).1
 
 /-- The equilibrium inequality along the twisted extension `G(τ) = g(τ - nT) Rⁿ`,
 `Y(τ) = R⁻ⁿ X(τ - nT) Rⁿ`, with the costate `G(τ)⁻¹ Λ₁(0) G(τ)`, for every `τ ≥ 0`. -/
-theorem scb_twisted_traceForm_le (hT : 0 < T) {c : ℝ}
+theorem clr_twisted_traceForm_le (hT : 0 < T) {c : ℝ}
     (hcons : ∀ t ∈ Icc 0 T, Λ₁ t = (g t)⁻¹ * Λ₁ 0 * g t)
     (hle : ∀ t ∈ Icc 0 T, traceForm (Λ₁ t + c • J) (X t) ≤ 0) {τ : ℝ} (hτ : 0 ≤ τ) :
     traceForm ((twistedFrame T g τ)⁻¹ * Λ₁ 0 * twistedFrame T g τ + c • J)
@@ -199,15 +199,15 @@ theorem scb_twisted_traceForm_le (hT : 0 < T) {c : ℝ}
   exact hle r hr
 
 /-- **The budget inequality at every time**. For a Pontryagin extremal of cost at most `A_oct`,
-`λ² ≤ 10⁴ ‖Λ₁(t) - (3/2)λJ‖_F²` at every `t ∈ [0, T]`: apply `scb_budget` to the period rebased at
+`λ² ≤ 10⁴ ‖Λ₁(t) - (3/2)λJ‖_F²` at every `t ∈ [0, T]`: apply `clr_budget` to the period rebased at
 `t` (`ĝ(s) = G(t)⁻¹ G(t + s)`, `X̂(s) = Y(t + s)`, initial costate `Λ₁(t)`), which is admissible
 with the same cost. -/
-theorem scb_lam_sq_le (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
+theorem clr_lam_sq_le (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hcost : reinhardtCost T X ≤ octagonCost) :
     ∀ t ∈ Icc 0 T, lam ^ 2 ≤ 10 ^ 4 * frobSq (Λ₁ t - (3 / 2 * lam) • J) := by
   intro t₀ ht₀
-  have hcons := scb_conservation hext
-  have htr := scb_traceForm_le_zero hext
+  have hcons := clr_conservation hext
+  have htr := clr_traceForm_le_zero hext
   obtain ⟨hst, hg0, hgT, hXT, -, -, hlam, -⟩ := hext
   have hT : 0 < T := hst.1
   have hadm : IsReinhardtAdmissible T u g X := ⟨hst, hg0, hgT, hXT⟩
@@ -234,12 +234,12 @@ theorem scb_lam_sq_le (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
       rw [← Matrix.mul_assoc (g t₀) (g t₀)⁻¹, Matrix.mul_nonsing_inv _ hunit, Matrix.one_mul,
         ← Matrix.mul_assoc (g t₀) (g t₀)⁻¹, Matrix.mul_nonsing_inv _ hunit, Matrix.one_mul]
     rw [e]
-    exact scb_twisted_traceForm_le hT hcons hle hτ
-  have hb := scb_budget hadm' hcost' hmax
+    exact clr_twisted_traceForm_le hT hcons hle hτ
+  have hb := clr_budget hadm' hcost' hmax
   have e2 : Λ₁ t₀ + (3 / 2 * -lam) • J = Λ₁ t₀ - (3 / 2 * lam) • J := by
     rw [sub_eq_add_neg, ← neg_smul]; congr 2; ring
   rw [e2] at hb
-  have hf := scb_frobSq_nonneg (Λ₁ t₀ - (3 / 2 * lam) • J)
+  have hf := clr_frobSq_nonneg (Λ₁ t₀ - (3 / 2 * lam) • J)
   have hs := Real.sq_sqrt hf
   have hl : 0 ≤ -lam := by linarith
   nlinarith [Real.sqrt_nonneg (frobSq (Λ₁ t₀ - (3 / 2 * lam) • J))]

@@ -14,10 +14,10 @@ is `w`; one more forward transport gives the next norm `t`.
 
 ## Main API
 
-* `wx_alg_hd`: `h_d = h + vY/8` (`m2hd`).
-* `wx_alg_w`: `8 q_d² (U_d)₂₁/Z² = (uK² + 16hY + vY²)/Q²` (`m2wOf`).
-* `wx_alg_t`: `8 q_r² (U_r)₂₁/(r + s)² = (Q²v - 16 h_d Z² + w Z⁴)/K_r²`.
-* `wx_alg_cas`: `det U_a = uvK²/64 - h²` (`m2Cas`).
+* `extr_alg_hd`: `h_d = h + vY/8` (`m2hd`).
+* `extr_alg_w`: `8 q_d² (U_d)₂₁/Z² = (uK² + 16hY + vY²)/Q²` (`m2wOf`).
+* `extr_alg_t`: `8 q_r² (U_r)₂₁/(r + s)² = (Q²v - 16 h_d Z² + w Z⁴)/K_r²`.
+* `extr_alg_cas`: `det U_a = uvK²/64 - h²` (`m2Cas`).
 -/
 
 @[expose] public section
@@ -25,7 +25,7 @@ is `w`; one more forward transport gives the next norm `t`.
 namespace SmoothedOctagon
 
 /-- The diagonal of the frame of `d`. -/
-theorem wx_alg_hd {a b c d h y0 qm q1 : ℝ} (ha : 0 < a) (hc : 0 < c)
+theorem extr_alg_hd {a b c d h y0 qm q1 : ℝ} (ha : 0 < a) (hc : 0 < c)
     (hqm : qm = (a ^ 2 + 4) / ((b + a) * (a + c))) (hq1 : q1 = (c + d) / (a + c)) :
     q1 ^ 2 * -(y0 / qm ^ 2) + (h + y0 / qm ^ 2) =
       m2hd a c d (-8 * y0 / (qm ^ 2 * (a + c) ^ 2)) h := by
@@ -36,7 +36,7 @@ theorem wx_alg_hd {a b c d h y0 qm q1 : ℝ} (ha : 0 < a) (hc : 0 < c)
   ring
 
 /-- The outgoing norm of `d`. -/
-theorem wx_alg_w {a b c d r h y0 z0 qm q1 q2 : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+theorem extr_alg_w {a b c d r h y0 z0 qm q1 q2 : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hd : 0 < d) (hr : 0 < r)
     (hqm : qm = (a ^ 2 + 4) / ((b + a) * (a + c))) (hq1 : q1 = (c + d) / (a + c))
     (hq2 : q2 = (c + d) * (d + r) / (d ^ 2 + 4)) :
@@ -50,7 +50,7 @@ theorem wx_alg_w {a b c d r h y0 z0 qm q1 q2 : ℝ} (ha : 0 < a) (hb : 0 < b) (h
   ring
 
 /-- The norm of a forward switch after `r`, to an active margin `s`. -/
-theorem wx_alg_t {c d r s v w X2 Z2 q2 q3 : ℝ} (hc : 0 < c) (hd : 0 < d) (hr : 0 < r)
+theorem extr_alg_t {c d r s v w X2 Z2 q2 q3 : ℝ} (hc : 0 < c) (hd : 0 < d) (hr : 0 < r)
     (hs : 0 < s) (hq2 : q2 = (c + d) * (d + r) / (d ^ 2 + 4))
     (hq3 : q3 = (d + r) * (r + s) / (r ^ 2 + 4)) (hw : w = 8 * q2 ^ 2 * Z2 / (d + r) ^ 2) :
     8 * q3 ^ 2 * (-X2 + q2 ^ 2 * Z2 - -((c + d) ^ 2 * v / 8) / q2 ^ 2 + -X2) / (r + s) ^ 2 =
@@ -60,7 +60,7 @@ theorem wx_alg_t {c d r s v w X2 Z2 q2 q3 : ℝ} (hc : 0 < c) (hd : 0 < d) (hr :
   ring
 
 /-- The squared Casimir in the centre frame. -/
-theorem wx_alg_cas {a b c h y0 z0 qm : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
+theorem extr_alg_cas {a b c h y0 z0 qm : ℝ} (ha : 0 < a) (hb : 0 < b) (hc : 0 < c)
     (hqm : qm = (a ^ 2 + 4) / ((b + a) * (a + c))) :
     h * -h - y0 * z0 = m2Cas a (8 * z0 / (b + a) ^ 2) (-8 * y0 / (qm ^ 2 * (a + c) ^ 2)) h := by
   subst hqm

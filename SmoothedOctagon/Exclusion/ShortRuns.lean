@@ -1,8 +1,8 @@
 module
 
 public import SmoothedOctagon.Period.Defs
-public import SmoothedOctagon.Exclusion.ShortRun.Winding
-public import SmoothedOctagon.Exclusion.ShortRun.TwoCentre
+public import SmoothedOctagon.Exclusion.ShortRuns.Winding
+public import SmoothedOctagon.Exclusion.ShortRuns.TwoCentre
 
 /-!
 # Case M1: no competitive all-short mixed period

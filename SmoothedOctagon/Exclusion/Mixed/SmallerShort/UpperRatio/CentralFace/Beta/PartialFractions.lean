@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S2HandCenDefs
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.CentralFace.Defs
 
 /-!
-# S2 hand signs: the central beta monotonicity, partial fractions
+# Smaller-short window, upper ratio: the central beta monotonicity, partial fractions
 
 With the incoming pole kept visible,
 `u = u_f + J/(b - 1)` (`u_f = 2401/3200`, `J = (x - 1)(680(x - 1)² - 3S²)/(9600S²)`) and
@@ -18,12 +18,12 @@ the constants being independent of `b`.
 
 ## Main API
 
-* The coefficients `hl2cbJ`, `hl2cbd`, `hl2cbD0`, `hl2cbEf`, `hl2cbM`, `hl2cbc2`, `hl2cbc1`,
-  `hl2cbc0`, `hl2cbcv`, `hl2cbe1`, `hl2cbe0`, `hl2cbce`, `hl2cbl1`, `hl2cbl0`, `hl2cbcb`,
-  `hl2cbl`, `hl2cbp3`, `hl2cbp2`, `hl2cbp1`, `hl2cbp0`, `hl2cbpc`, `hl2cbq1`, `hl2cbq0`,
-  `hl2cbA1`, `hl2cbPc` (functions of `x, a` only).
-* `hl2cb_F0_pf`, `hl2cb_F1_pf`: the two partial-fraction forms.
-* `hl2cb_hd`, `hl2cb_hd2`: first and second derivatives of the common template
+* The coefficients `urcbJ`, `urcbd`, `urcbD0`, `urcbEf`, `urcbM`, `urcbc2`, `urcbc1`,
+  `urcbc0`, `urcbcv`, `urcbe1`, `urcbe0`, `urcbce`, `urcbl1`, `urcbl0`, `urcbcb`,
+  `urcbl`, `urcbp3`, `urcbp2`, `urcbp1`, `urcbp0`, `urcbpc`, `urcbq1`, `urcbq0`,
+  `urcbA1`, `urcbPc` (functions of `x, a` only).
+* `urcb_F0_pf`, `urcb_F1_pf`: the two partial-fraction forms.
+* `urcb_hd`, `urcb_hd2`: first and second derivatives of the common template
   `α₃B³ + α₂B² + α₁B + β/B + γ/(s - 1) + log B`, `B = a + s`.
 -/
 
@@ -34,111 +34,111 @@ namespace SmoothedOctagon
 open Real Set
 
 /-- `J = (x - 1)(680(x - 1)² - 3S²)/(9600S²)`. -/
-noncomputable def hl2cbJ (x : ℝ) : ℝ :=
+noncomputable def urcbJ (x : ℝ) : ℝ :=
   (x - 1) * (680 * (x - 1) ^ 2 - 3 * (1 + x) ^ 2) / (9600 * (1 + x) ^ 2)
 
 /-- `δ = 2(a - x)`. -/
-noncomputable def hl2cbd (x a : ℝ) : ℝ := 2 * (a - x)
+noncomputable def urcbd (x a : ℝ) : ℝ := 2 * (a - x)
 
 /-- `D₀ = C² - δC = (a + 1)(2x + 1 - a)`. -/
-noncomputable def hl2cbD0 (x a : ℝ) : ℝ := (a + 1) ^ 2 - hl2cbd x a * (a + 1)
+noncomputable def urcbD0 (x a : ℝ) : ℝ := (a + 1) ^ 2 - urcbd x a * (a + 1)
 
 /-- `E_f = S³(u_f - 1) + 3S - 1`. -/
-noncomputable def hl2cbEf (x : ℝ) : ℝ := (1 + x) ^ 3 * (2401 / 3200 - 1) + 3 * (1 + x) - 1
+noncomputable def urcbEf (x : ℝ) : ℝ := (1 + x) ^ 3 * (2401 / 3200 - 1) + 3 * (1 + x) - 1
 
 /-- `M = S²(S² - S + 1)`. -/
-noncomputable def hl2cbM (x : ℝ) : ℝ := (1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1)
+noncomputable def urcbM (x : ℝ) : ℝ := (1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1)
 
 /-- `c₂ = u_f δ²/K²`. -/
-noncomputable def hl2cbc2 (x a : ℝ) : ℝ := 2401 / 3200 * hl2cbd x a ^ 2 / hl2cK x a ^ 2
+noncomputable def urcbc2 (x a : ℝ) : ℝ := 2401 / 3200 * urcbd x a ^ 2 / urcK x a ^ 2
 
 /-- `c₁ = (δ(2u_f D₀ - E_f) + Jδ²)/K²`. -/
-noncomputable def hl2cbc1 (x a : ℝ) : ℝ :=
-  (hl2cbd x a * (2 * (2401 / 3200) * hl2cbD0 x a - hl2cbEf x) + hl2cbJ x * hl2cbd x a ^ 2) /
-    hl2cK x a ^ 2
+noncomputable def urcbc1 (x a : ℝ) : ℝ :=
+  (urcbd x a * (2 * (2401 / 3200) * urcbD0 x a - urcbEf x) + urcbJ x * urcbd x a ^ 2) /
+    urcK x a ^ 2
 
 /-- `c₀ = (M + u_f D₀² - D₀E_f + Jδ(2D₀ - S³ + δC))/K²`. -/
-noncomputable def hl2cbc0 (x a : ℝ) : ℝ :=
-  (hl2cbM x + 2401 / 3200 * hl2cbD0 x a ^ 2 - hl2cbD0 x a * hl2cbEf x +
-    hl2cbJ x * hl2cbd x a * (2 * hl2cbD0 x a - (1 + x) ^ 3 + hl2cbd x a * (a + 1))) /
-      hl2cK x a ^ 2
+noncomputable def urcbc0 (x a : ℝ) : ℝ :=
+  (urcbM x + 2401 / 3200 * urcbD0 x a ^ 2 - urcbD0 x a * urcbEf x +
+    urcbJ x * urcbd x a * (2 * urcbD0 x a - (1 + x) ^ 3 + urcbd x a * (a + 1))) /
+      urcK x a ^ 2
 
 /-- `c_v = c_w/C = JC(C² - S³)/K²`. -/
-noncomputable def hl2cbcv (x a : ℝ) : ℝ :=
-  hl2cbJ x * (a + 1) * ((a + 1) ^ 2 - (1 + x) ^ 3) / hl2cK x a ^ 2
+noncomputable def urcbcv (x a : ℝ) : ℝ :=
+  urcbJ x * (a + 1) * ((a + 1) ^ 2 - (1 + x) ^ 3) / urcK x a ^ 2
 
 /-- `e₁ = 2u_f δ/K`. -/
-noncomputable def hl2cbe1 (x a : ℝ) : ℝ := 2 * (2401 / 3200) * hl2cbd x a / hl2cK x a
+noncomputable def urcbe1 (x a : ℝ) : ℝ := 2 * (2401 / 3200) * urcbd x a / urcK x a
 
 /-- `e₀ = (2u_f D₀ - E_f + 2Jδ)/K`. -/
-noncomputable def hl2cbe0 (x a : ℝ) : ℝ :=
-  (2 * (2401 / 3200) * hl2cbD0 x a - hl2cbEf x + 2 * hl2cbJ x * hl2cbd x a) / hl2cK x a
+noncomputable def urcbe0 (x a : ℝ) : ℝ :=
+  (2 * (2401 / 3200) * urcbD0 x a - urcbEf x + 2 * urcbJ x * urcbd x a) / urcK x a
 
 /-- `c_e = J(2C² - S³)/K`. -/
-noncomputable def hl2cbce (x a : ℝ) : ℝ := hl2cbJ x * (2 * (a + 1) ^ 2 - (1 + x) ^ 3) / hl2cK x a
+noncomputable def urcbce (x a : ℝ) : ℝ := urcbJ x * (2 * (a + 1) ^ 2 - (1 + x) ^ 3) / urcK x a
 
 /-- `l₁ = (u_f - 1)/a - e₁`. -/
-noncomputable def hl2cbl1 (x a : ℝ) : ℝ := (2401 / 3200 - 1) / a - hl2cbe1 x a
+noncomputable def urcbl1 (x a : ℝ) : ℝ := (2401 / 3200 - 1) / a - urcbe1 x a
 
 /-- `l₀ = J/a + 1 - a²/K - e₀`. -/
-noncomputable def hl2cbl0 (x a : ℝ) : ℝ := hl2cbJ x / a + 1 - a ^ 2 / hl2cK x a - hl2cbe0 x a
+noncomputable def urcbl0 (x a : ℝ) : ℝ := urcbJ x / a + 1 - a ^ 2 / urcK x a - urcbe0 x a
 
 /-- `c_b = JC/a - c_e`. -/
-noncomputable def hl2cbcb (x a : ℝ) : ℝ := hl2cbJ x * (a + 1) / a - hl2cbce x a
+noncomputable def urcbcb (x a : ℝ) : ℝ := urcbJ x * (a + 1) / a - urcbce x a
 
 /-- `ℓ = 7a/(2K)`, so that `7k/2 = ℓB`. -/
-noncomputable def hl2cbl (x a : ℝ) : ℝ := 7 * a / (2 * hl2cK x a)
+noncomputable def urcbl (x a : ℝ) : ℝ := 7 * a / (2 * urcK x a)
 
 /-- `p₃ = -ℓc₂`. -/
-noncomputable def hl2cbp3 (x a : ℝ) : ℝ := -(hl2cbl x a * hl2cbc2 x a)
+noncomputable def urcbp3 (x a : ℝ) : ℝ := -(urcbl x a * urcbc2 x a)
 
 /-- `p₂ = 4c₂ - ℓc₁`. -/
-noncomputable def hl2cbp2 (x a : ℝ) : ℝ := 4 * hl2cbc2 x a - hl2cbl x a * hl2cbc1 x a
+noncomputable def urcbp2 (x a : ℝ) : ℝ := 4 * urcbc2 x a - urcbl x a * urcbc1 x a
 
 /-- `p₁ = l₁ + 4c₁ - ℓ(c₀ - 3/4)`. -/
-noncomputable def hl2cbp1 (x a : ℝ) : ℝ :=
-  hl2cbl1 x a + 4 * hl2cbc1 x a - hl2cbl x a * (hl2cbc0 x a - 3 / 4)
+noncomputable def urcbp1 (x a : ℝ) : ℝ :=
+  urcbl1 x a + 4 * urcbc1 x a - urcbl x a * (urcbc0 x a - 3 / 4)
 
 /-- `p₀ = l₀ + 4(c₀ - 3/4) - ℓc_w`. -/
-noncomputable def hl2cbp0 (x a : ℝ) : ℝ :=
-  hl2cbl0 x a + 4 * (hl2cbc0 x a - 3 / 4) - hl2cbl x a * ((a + 1) * hl2cbcv x a)
+noncomputable def urcbp0 (x a : ℝ) : ℝ :=
+  urcbl0 x a + 4 * (urcbc0 x a - 3 / 4) - urcbl x a * ((a + 1) * urcbcv x a)
 
 /-- `p_c = c_b + (4 - ℓC)c_w`. -/
-noncomputable def hl2cbpc (x a : ℝ) : ℝ :=
-  hl2cbcb x a + (4 - hl2cbl x a * (a + 1)) * ((a + 1) * hl2cbcv x a)
+noncomputable def urcbpc (x a : ℝ) : ℝ :=
+  urcbcb x a + (4 - urcbl x a * (a + 1)) * ((a + 1) * urcbcv x a)
 
 /-- `q₁ = l₁ + Kc₂/a + c₁/4`. -/
-noncomputable def hl2cbq1 (x a : ℝ) : ℝ :=
-  hl2cbl1 x a + hl2cK x a * hl2cbc2 x a / a + hl2cbc1 x a / 4
+noncomputable def urcbq1 (x a : ℝ) : ℝ :=
+  urcbl1 x a + urcK x a * urcbc2 x a / a + urcbc1 x a / 4
 
 /-- `q₀ = l₀ + Kc₁/a + (c₀ - 3/4)/4`. -/
-noncomputable def hl2cbq0 (x a : ℝ) : ℝ :=
-  hl2cbl0 x a + hl2cK x a * hl2cbc1 x a / a + (hl2cbc0 x a - 3 / 4) / 4
+noncomputable def urcbq0 (x a : ℝ) : ℝ :=
+  urcbl0 x a + urcK x a * urcbc1 x a / a + (urcbc0 x a - 3 / 4) / 4
 
 /-- `A₁ = a + K(c₀ - 3/4)/a - Kc_w/(aC)`. -/
-noncomputable def hl2cbA1 (x a : ℝ) : ℝ :=
-  a + hl2cK x a * (hl2cbc0 x a - 3 / 4) / a - hl2cK x a * hl2cbcv x a / a
+noncomputable def urcbA1 (x a : ℝ) : ℝ :=
+  a + urcK x a * (urcbc0 x a - 3 / 4) / a - urcK x a * urcbcv x a / a
 
 /-- `P_c = c_b + Kc_w/(aC) + c_w/4`. -/
-noncomputable def hl2cbPc (x a : ℝ) : ℝ :=
-  hl2cbcb x a + hl2cK x a * hl2cbcv x a / a + (a + 1) * hl2cbcv x a / 4
+noncomputable def urcbPc (x a : ℝ) : ℝ :=
+  urcbcb x a + urcK x a * urcbcv x a / a + (a + 1) * urcbcv x a / 4
 
-theorem hl2cb_K_pos {x a : ℝ} (hx : 0 < x) : 0 < hl2cK x a := by unfold hl2cK; positivity
+theorem urcb_K_pos {x a : ℝ} (hx : 0 < x) : 0 < urcK x a := by unfold urcK; positivity
 
 /-- The incoming ceiling with its pole visible: `u = u_f + J/(b - 1)`. -/
-theorem hl2cb_u {x b : ℝ} (hb : b - 1 ≠ 0) (hS : 1 + x ≠ 0) :
-    hsUC x b = 2401 / 3200 + hl2cbJ x / (b - 1) := by
-  unfold hsUC hl2cbJ
+theorem urcb_u {x b : ℝ} (hb : b - 1 ≠ 0) (hS : 1 + x ≠ 0) :
+    ssUC x b = 2401 / 3200 + urcbJ x / (b - 1) := by
+  unfold ssUC urcbJ
   field_simp
   ring
 
 /-- `D = C² + δ(b - 1)`. -/
-theorem hl2cb_D (x a b : ℝ) : hsDg x b a = (a + 1) ^ 2 + hl2cbd x a * (b - 1) := by
-  unfold hsDg hl2cbd
+theorem urcb_D (x a b : ℝ) : ssDg x b a = (a + 1) ^ 2 + urcbd x a * (b - 1) := by
+  unfold ssDg urcbd
   ring
 
 /-- Partial fractions of `w` in atoms. -/
-theorem hl2cb_w_alg {y C δ J K S M D0 Ef B : ℝ} (hy : y ≠ 0) (hK : K ≠ 0) (hB : B = C + y)
+theorem urcb_w_alg {y C δ J K S M D0 Ef B : ℝ} (hy : y ≠ 0) (hK : K ≠ 0) (hB : B = C + y)
     (hD0 : D0 = C ^ 2 - δ * C) (hEf : Ef = S ^ 3 * (2401 / 3200 - 1) + 3 * S - 1) :
     (M + (C ^ 2 + δ * y) ^ 2 * (2401 / 3200 + J / y) -
         (C ^ 2 + δ * y) * (S ^ 3 * (2401 / 3200 + J / y - 1) + 3 * S - 1)) / K ^ 2 =
@@ -151,16 +151,16 @@ theorem hl2cb_w_alg {y C δ J K S M D0 Ef B : ℝ} (hy : y ≠ 0) (hK : K ≠ 0)
   ring
 
 /-- Partial fractions of `w`: `w = c₂B² + c₁B + c₀ + Cc_v/(b - 1)`. -/
-theorem hl2cb_w {x a b : ℝ} (hb : b - 1 ≠ 0) (hS : 1 + x ≠ 0) (hK : hl2cK x a ≠ 0) :
-    hl2cw x a b (hsUC x b) = hl2cbc2 x a * (a + b) ^ 2 + hl2cbc1 x a * (a + b) + hl2cbc0 x a +
-      (a + 1) * hl2cbcv x a / (b - 1) := by
-  rw [hl2cb_u hb hS]
-  unfold hl2cw
-  rw [hl2cb_D]
-  exact hl2cb_w_alg hb hK (by ring) rfl rfl
+theorem urcb_w {x a b : ℝ} (hb : b - 1 ≠ 0) (hS : 1 + x ≠ 0) (hK : urcK x a ≠ 0) :
+    urcw x a b (ssUC x b) = urcbc2 x a * (a + b) ^ 2 + urcbc1 x a * (a + b) + urcbc0 x a +
+      (a + 1) * urcbcv x a / (b - 1) := by
+  rw [urcb_u hb hS]
+  unfold urcw
+  rw [urcb_D]
+  exact urcb_w_alg hb hK (by ring) rfl rfl
 
 /-- Partial fractions of `E_L` in atoms. -/
-theorem hl2cb_EL_alg {y C δ J K S D0 Ef B : ℝ} (hy : y ≠ 0) (hK : K ≠ 0) (hB : B = C + y)
+theorem urcb_EL_alg {y C δ J K S D0 Ef B : ℝ} (hy : y ≠ 0) (hK : K ≠ 0) (hB : B = C + y)
     (hD0 : D0 = C ^ 2 - δ * C) (hEf : Ef = S ^ 3 * (2401 / 3200 - 1) + 3 * S - 1) :
     (2 * (C ^ 2 + δ * y) * (2401 / 3200 + J / y) -
         (S ^ 3 * (2401 / 3200 + J / y - 1) + 3 * S - 1)) / K =
@@ -171,15 +171,15 @@ theorem hl2cb_EL_alg {y C δ J K S D0 Ef B : ℝ} (hy : y ≠ 0) (hK : K ≠ 0) 
   ring
 
 /-- Partial fractions of `E_L`: `E_L = e₁B + e₀ + c_e/(b - 1)`. -/
-theorem hl2cb_EL {x a b : ℝ} (hb : b - 1 ≠ 0) (hS : 1 + x ≠ 0) (hK : hl2cK x a ≠ 0) :
-    hl2cEL x a b (hsUC x b) = hl2cbe1 x a * (a + b) + hl2cbe0 x a + hl2cbce x a / (b - 1) := by
-  rw [hl2cb_u hb hS]
-  unfold hl2cEL
-  rw [hl2cb_D]
-  exact hl2cb_EL_alg hb hK (by ring) rfl rfl
+theorem urcb_EL {x a b : ℝ} (hb : b - 1 ≠ 0) (hS : 1 + x ≠ 0) (hK : urcK x a ≠ 0) :
+    urcEL x a b (ssUC x b) = urcbe1 x a * (a + b) + urcbe0 x a + urcbce x a / (b - 1) := by
+  rw [urcb_u hb hS]
+  unfold urcEL
+  rw [urcb_D]
+  exact urcb_EL_alg hb hK (by ring) rfl rfl
 
 /-- Partial fractions of `R` in atoms. -/
-theorem hl2cb_R_alg {y C J K a B e1 e0 ce : ℝ} (hy : y ≠ 0) (hK : K ≠ 0) (ha : a ≠ 0)
+theorem urcb_R_alg {y C J K a B e1 e0 ce : ℝ} (hy : y ≠ 0) (hK : K ≠ 0) (ha : a ≠ 0)
     (hB0 : B ≠ 0) (hB : B = C + y) (hC : C = a + 1) :
     (2401 / 3200 + J / y - 1) * B / a + a / B + 1 - a ^ 2 / K - (e1 * B + e0 + ce / y) =
       ((2401 / 3200 - 1) / a - e1) * B + (J / a + 1 - a ^ 2 / K - e0) + a / B +
@@ -189,16 +189,16 @@ theorem hl2cb_R_alg {y C J K a B e1 e0 ce : ℝ} (hy : y ≠ 0) (hK : K ≠ 0) (
   ring
 
 /-- Partial fractions of `R`: `R = l₁B + l₀ + a/B + c_b/(b - 1)`. -/
-theorem hl2cb_R {x a b : ℝ} (hb : b - 1 ≠ 0) (hS : 1 + x ≠ 0) (hK : hl2cK x a ≠ 0) (ha : a ≠ 0)
+theorem urcb_R {x a b : ℝ} (hb : b - 1 ≠ 0) (hS : 1 + x ≠ 0) (hK : urcK x a ≠ 0) (ha : a ≠ 0)
     (hB : a + b ≠ 0) :
-    hl2cR x a b (hsUC x b) =
-      hl2cbl1 x a * (a + b) + hl2cbl0 x a + a / (a + b) + hl2cbcb x a / (b - 1) := by
-  unfold hl2cR
-  rw [hl2cb_EL hb hS hK, hl2cb_u hb hS]
-  exact hl2cb_R_alg hb hK ha hB (by ring) rfl
+    urcR x a b (ssUC x b) =
+      urcbl1 x a * (a + b) + urcbl0 x a + a / (a + b) + urcbcb x a / (b - 1) := by
+  unfold urcR
+  rw [urcb_EL hb hS hK, urcb_u hb hS]
+  exact urcb_R_alg hb hK ha hB (by ring) rfl
 
 /-- The first test in atoms. -/
-theorem hl2cb_G_alg {y C K a B c2 c1 c0 cv l1 l0 cb l : ℝ} (hy : y ≠ 0) (hB0 : B ≠ 0)
+theorem urcb_G_alg {y C K a B c2 c1 c0 cv l1 l0 cb l : ℝ} (hy : y ≠ 0) (hB0 : B ≠ 0)
     (hB : B = C + y) (hl : 7 * (a * B / K) / 2 = l * B) :
     (l1 * B + l0 + a / B + cb / y) + (4 - 7 * (a * B / K) / 2) *
         (c2 * B ^ 2 + c1 * B + c0 + C * cv / y - 3 / 4) =
@@ -211,37 +211,37 @@ theorem hl2cb_G_alg {y C K a B c2 c1 c0 cv l1 l0 cb l : ℝ} (hy : y ≠ 0) (hB0
 
 /-- **Partial fractions of `F₀`**: for `b > 1`,
 `F₀ = p₃B³ + p₂B² + p₁B + a/B + p_c/(b - 1) + log B + κ₀`, `κ₀` independent of `b`. -/
-theorem hl2cb_F0_pf {t x a b : ℝ} (ht : 0 < t) (hx : 0 < x) (ha : 0 < a) (hb : 1 < b) :
-    hl2cF0 t x a b (hsUC x b) =
-      hl2cbp3 x a * (a + b) ^ 3 + hl2cbp2 x a * (a + b) ^ 2 + hl2cbp1 x a * (a + b) +
-        a / (a + b) + hl2cbpc x a / (b - 1) + log (a + b) +
-        (hl2cbp0 x a + 4 / t - 2 / t ^ 2 - 3 / 2 + log (t * a / hl2cK x a)) := by
-  have hK : 0 < hl2cK x a := by unfold hl2cK; positivity
+theorem urcb_F0_pf {t x a b : ℝ} (ht : 0 < t) (hx : 0 < x) (ha : 0 < a) (hb : 1 < b) :
+    urcF0 t x a b (ssUC x b) =
+      urcbp3 x a * (a + b) ^ 3 + urcbp2 x a * (a + b) ^ 2 + urcbp1 x a * (a + b) +
+        a / (a + b) + urcbpc x a / (b - 1) + log (a + b) +
+        (urcbp0 x a + 4 / t - 2 / t ^ 2 - 3 / 2 + log (t * a / urcK x a)) := by
+  have hK : 0 < urcK x a := by unfold urcK; positivity
   have hb1 : b - 1 ≠ 0 := by linarith
   have hS : 1 + x ≠ 0 := by linarith
   have hB : 0 < a + b := by linarith
-  have hlog : log (t * hl2ck x a b) = log (t * a / hl2cK x a) + log (a + b) := by
+  have hlog : log (t * urck x a b) = log (t * a / urcK x a) + log (a + b) := by
     rw [← log_mul (by positivity) hB.ne']
-    unfold hl2ck
+    unfold urck
     congr 1
     field_simp
-  unfold hl2cF0
-  rw [hlog, hl2cb_R hb1 hS hK.ne' ha.ne' hB.ne', hl2cb_w hb1 hS hK.ne']
-  have hl : 7 * hl2ck x a b / 2 = hl2cbl x a * (a + b) := by
-    unfold hl2ck hl2cbl
+  unfold urcF0
+  rw [hlog, urcb_R hb1 hS hK.ne' ha.ne' hB.ne', urcb_w hb1 hS hK.ne']
+  have hl : 7 * urck x a b / 2 = urcbl x a * (a + b) := by
+    unfold urck urcbl
     field_simp
-  have e := hl2cb_G_alg (y := b - 1) (C := a + 1) (K := hl2cK x a) (a := a) (B := a + b)
-    (c2 := hl2cbc2 x a) (c1 := hl2cbc1 x a) (c0 := hl2cbc0 x a) (cv := hl2cbcv x a)
-    (l1 := hl2cbl1 x a) (l0 := hl2cbl0 x a) (cb := hl2cbcb x a) (l := hl2cbl x a) hb1 hB.ne'
-    (by ring) (by rw [← hl]; unfold hl2ck; ring)
-  have e2 : (4 - 7 * hl2ck x a b / 2) = (4 - 7 * (a * (a + b) / hl2cK x a) / 2) := by
-    unfold hl2ck; ring
+  have e := urcb_G_alg (y := b - 1) (C := a + 1) (K := urcK x a) (a := a) (B := a + b)
+    (c2 := urcbc2 x a) (c1 := urcbc1 x a) (c0 := urcbc0 x a) (cv := urcbcv x a)
+    (l1 := urcbl1 x a) (l0 := urcbl0 x a) (cb := urcbcb x a) (l := urcbl x a) hb1 hB.ne'
+    (by ring) (by rw [← hl]; unfold urck; ring)
+  have e2 : (4 - 7 * urck x a b / 2) = (4 - 7 * (a * (a + b) / urcK x a) / 2) := by
+    unfold urck; ring
   rw [e2]
-  unfold hl2cbp3 hl2cbp2 hl2cbp1 hl2cbp0 hl2cbpc
+  unfold urcbp3 urcbp2 urcbp1 urcbp0 urcbpc
   linear_combination e
 
 /-- The second test in atoms (`T = K/(aB)`). -/
-theorem hl2cb_H_alg {y C K a B c2 c1 c0 cv l1 l0 cb φ : ℝ} (hy : y ≠ 0) (hB0 : B ≠ 0)
+theorem urcb_H_alg {y C K a B c2 c1 c0 cv l1 l0 cb φ : ℝ} (hy : y ≠ 0) (hB0 : B ≠ 0)
     (ha : a ≠ 0) (hB : B = C + y) :
     (l1 * B + l0 + a / B + cb / y) + (K / (a * B) + 1 / 4) *
         (c2 * B ^ 2 + c1 * B + c0 + C * cv / y - 3 / 4) + K / (a * B) * φ =
@@ -254,36 +254,36 @@ theorem hl2cb_H_alg {y C K a B c2 c1 c0 cv l1 l0 cb φ : ℝ} (hy : y ≠ 0) (hB
 
 /-- **Partial fractions of `F₁`**: for `b > 1`,
 `F₁ = (c₂/4)B² + q₁B + (A₁ + Kφ/a)/B + P_c/(b - 1) + log B + κ₁`, `φ = (t - 1)/t² - 1/4`. -/
-theorem hl2cb_F1_pf {t x a b : ℝ} (ht : 0 < t) (hx : 0 < x) (ha : 0 < a) (hb : 1 < b) :
-    hl2cF1 t x a b (hsUC x b) =
-      hl2cbc2 x a / 4 * (a + b) ^ 2 + hl2cbq1 x a * (a + b) +
-        (hl2cbA1 x a + hl2cK x a * ((t - 1) / t ^ 2 - 1 / 4) / a) / (a + b) +
-        hl2cbPc x a / (b - 1) + log (a + b) +
-        (hl2cbq0 x a + 2 / t - 1 + log (t * a / hl2cK x a)) := by
-  have hK : 0 < hl2cK x a := by unfold hl2cK; positivity
+theorem urcb_F1_pf {t x a b : ℝ} (ht : 0 < t) (hx : 0 < x) (ha : 0 < a) (hb : 1 < b) :
+    urcF1 t x a b (ssUC x b) =
+      urcbc2 x a / 4 * (a + b) ^ 2 + urcbq1 x a * (a + b) +
+        (urcbA1 x a + urcK x a * ((t - 1) / t ^ 2 - 1 / 4) / a) / (a + b) +
+        urcbPc x a / (b - 1) + log (a + b) +
+        (urcbq0 x a + 2 / t - 1 + log (t * a / urcK x a)) := by
+  have hK : 0 < urcK x a := by unfold urcK; positivity
   have hb1 : b - 1 ≠ 0 := by linarith
   have hS : 1 + x ≠ 0 := by linarith
   have hB : 0 < a + b := by linarith
-  have hlog : log (t * hl2ck x a b) = log (t * a / hl2cK x a) + log (a + b) := by
+  have hlog : log (t * urck x a b) = log (t * a / urcK x a) + log (a + b) := by
     rw [← log_mul (by positivity) hB.ne']
-    unfold hl2ck
+    unfold urck
     congr 1
     field_simp
-  have hT : 1 / hl2ck x a b = hl2cK x a / (a * (a + b)) := by
-    unfold hl2ck
+  have hT : 1 / urck x a b = urcK x a / (a * (a + b)) := by
+    unfold urck
     field_simp
-  unfold hl2cF1
-  rw [hlog, hT, hl2cb_R hb1 hS hK.ne' ha.ne' hB.ne', hl2cb_w hb1 hS hK.ne']
-  have e := hl2cb_H_alg (y := b - 1) (C := a + 1) (K := hl2cK x a) (a := a) (B := a + b)
-    (c2 := hl2cbc2 x a) (c1 := hl2cbc1 x a) (c0 := hl2cbc0 x a) (cv := hl2cbcv x a)
-    (l1 := hl2cbl1 x a) (l0 := hl2cbl0 x a) (cb := hl2cbcb x a) (φ := (t - 1) / t ^ 2 - 1 / 4)
+  unfold urcF1
+  rw [hlog, hT, urcb_R hb1 hS hK.ne' ha.ne' hB.ne', urcb_w hb1 hS hK.ne']
+  have e := urcb_H_alg (y := b - 1) (C := a + 1) (K := urcK x a) (a := a) (B := a + b)
+    (c2 := urcbc2 x a) (c1 := urcbc1 x a) (c0 := urcbc0 x a) (cv := urcbcv x a)
+    (l1 := urcbl1 x a) (l0 := urcbl0 x a) (cb := urcbcb x a) (φ := (t - 1) / t ^ 2 - 1 / 4)
     hb1 hB.ne' ha.ne' (by ring)
-  unfold hl2cbq1 hl2cbq0 hl2cbA1 hl2cbPc
+  unfold urcbq1 urcbq0 urcbA1 urcbPc
   linear_combination e
 
 /-- The common template `α₃B³ + α₂B² + α₁B + β/B + γ/(s - 1) + log B`, `B = a + s`, and its
 derivative. -/
-theorem hl2cb_hd {a α3 α2 α1 β γ s : ℝ} (hs : 0 < a + s) (hs1 : s - 1 ≠ 0) :
+theorem urcb_hd {a α3 α2 α1 β γ s : ℝ} (hs : 0 < a + s) (hs1 : s - 1 ≠ 0) :
     HasDerivAt (fun s => α3 * (a + s) ^ 3 + α2 * (a + s) ^ 2 + α1 * (a + s) + β / (a + s) +
         γ / (s - 1) + log (a + s))
       (3 * α3 * (a + s) ^ 2 + 2 * α2 * (a + s) + α1 - β / (a + s) ^ 2 - γ / (s - 1) ^ 2 +
@@ -303,7 +303,7 @@ theorem hl2cb_hd {a α3 α2 α1 β γ s : ℝ} (hs : 0 < a + s) (hs1 : s - 1 ≠
     ring
 
 /-- The second derivative of the template. -/
-theorem hl2cb_hd2 {a α3 α2 α1 β γ s : ℝ} (hs : 0 < a + s) (hs1 : s - 1 ≠ 0) :
+theorem urcb_hd2 {a α3 α2 α1 β γ s : ℝ} (hs : 0 < a + s) (hs1 : s - 1 ≠ 0) :
     HasDerivAt (fun s => 3 * α3 * (a + s) ^ 2 + 2 * α2 * (a + s) + α1 - β / (a + s) ^ 2 -
         γ / (s - 1) ^ 2 + 1 / (a + s))
       (6 * α3 * (a + s) + 2 * α2 + 2 * β / (a + s) ^ 3 + 2 * γ / (s - 1) ^ 3 -

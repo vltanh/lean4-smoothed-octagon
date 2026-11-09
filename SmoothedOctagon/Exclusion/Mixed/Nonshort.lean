@@ -1,17 +1,16 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ForwardHand
-public import SmoothedOctagon.Exclusion.Mixed.ReverseHand
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse
 
 /-!
 # Case M2: the scalar exclusion of the smaller-nonshort window
 
-The first actual switch after `r` is forward or reverse. A reverse successor is excluded by hand
-(`m2_reverse_hand`), and so is a forward successor (`m2_forward_hand`).
+The first actual switch after `r` is forward or reverse. A reverse successor is excluded
+(`m2_reverse_exclusion`), and so is a forward successor (`m2_forward_exclusion`).
 
 ## Main API
 
-* `m2_forward_exclusion`: no actual window has a forward successor.
 * `m2_nonshort_scalar`: no actual window exists.
 -/
 
@@ -19,18 +18,12 @@ The first actual switch after `r` is forward or reverse. A reverse successor is 
 
 namespace SmoothedOctagon
 
-open Certificates
-
-/-- **The forward successor is excluded** (`m2_forward_hand`). -/
-theorem m2_forward_exclusion (W : M2Window) (hF : W.ForwardNext) : False :=
-  m2_forward_hand W hF
-
 /-- **No actual smaller-nonshort window**: both successor alternatives, forward and reverse, are
 excluded. -/
 theorem m2_nonshort_scalar (W : M2Window)
     (h : W.ForwardNext ∨ W.ReverseNext) : False := by
   rcases h with hF | hR
   · exact m2_forward_exclusion W hF
-  · exact m2_reverse_hand W hR
+  · exact m2_reverse_exclusion W hR
 
 end SmoothedOctagon

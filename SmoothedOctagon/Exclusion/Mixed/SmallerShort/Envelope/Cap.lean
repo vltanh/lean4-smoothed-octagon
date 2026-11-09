@@ -1,20 +1,20 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Envelope
-public import SmoothedOctagon.Exclusion.Mixed.Short.Calc
-public import SmoothedOctagon.Exclusion.Mixed.Short.Centre
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.LogSecant
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Centre
 
 /-!
-# Gates S1/S4 helpers: the corrected envelope cap
+# Smaller-short window: the corrected envelope cap
 
 Two-segment monotonicity of `Γ - cR_τ` along the opposite-turn path
 `(t, v) → (t, U(t)) → (t₀, U(t₀))`, `t₀ = ρ(1 + x)`, under a bound `c` on the derivative ratio.
 
 ## Main API
 
-* `hs14_root_cap`: the retained root bound `E_L ≤ 3q - J_A`, `J_A = (U(r_A) - u)/r_A`.
+* `env_root_cap`: the retained root bound `E_L ≤ 3q - J_A`, `J_A = (U(r_A) - u)/r_A`.
 
-* `hs14_cap`: if at every `s ∈ [t₀, t]` and every pairing `E' ≥ E(t, v)` the derivative ratio
+* `env_cap`: if at every `s ∈ [t₀, t]` and every pairing `E' ≥ E(t, v)` the derivative ratio
   satisfies `λ(2us - E') ≤ 8cλ²(1 - ρ)²B_τ(s)`, then
   `Γ(t₀, U(t₀)) - cR_τ(t₀, U(t₀)) ≤ Γ(t, v) - cR_τ(t, v)`.
 -/
@@ -27,7 +27,7 @@ open Set Real
 
 /-- **The retained incoming deficit at the outer root** (`ss_E_le_three` with the incoming norm
 at its ceiling `U(r_A)`). -/
-theorem hs14_root_cap {rA τ q u w EL : ℝ} (hrA : 0 < rA) (hrA2 : rA ≤ 1 / 2) (hτ : 2 ≤ τ)
+theorem env_root_cap {rA τ q u w EL : ℝ} (hrA : 0 < rA) (hrA2 : rA ≤ 1 / 2) (hτ : 2 ≤ τ)
     (hq : 0 < q) (hτq : τ * q ≤ rA) (hw : w ≤ m2U (1 / τ))
     (hEL : EL = (w - 1) * τ + 1 / τ + (u - 1) / rA + rA + 1 - q + log (τ * q / rA)) :
     EL ≤ 3 * q - (m2U rA - u) / rA := by
@@ -44,8 +44,8 @@ theorem hs14_root_cap {rA τ q u w EL : ℝ} (hrA : 0 < rA) (hrA2 : rA ≤ 1 / 2
   linarith
 
 /-- The derivative of the centre pairing along `v = U(s)`: `d/ds E(s, U(s)) = 2 - 1/s`. -/
-private theorem hs14_Eb_deriv {x rho u s : ℝ} (hx : 0 < 1 + x) (hρ : 0 < rho) (hs : 0 < s) :
-    HasDerivAt (fun s => hsE x rho u s (m2U s)) (2 - 1 / s) s := by
+private theorem env_Eb_deriv {x rho u s : ℝ} (hx : 0 < 1 + x) (hρ : 0 < rho) (hs : 0 < s) :
+    HasDerivAt (fun s => ssE x rho u s (m2U s)) (2 - 1 / s) s := by
   have h1 : HasDerivAt (fun s : ℝ => (1 - s + s ^ 2 - 1) / s) 1 s := by
     have := ((((hasDerivAt_id' s).const_sub 1).add ((hasDerivAt_id' s).pow 2)).sub_const 1).div
       (hasDerivAt_id' s) hs.ne'
@@ -64,46 +64,46 @@ private theorem hs14_Eb_deriv {x rho u s : ℝ} (hx : 0 < 1 + x) (hρ : 0 < rho)
   have := ((((h1.const_add ((u - 1) * (1 + x))).add_const (1 + 1 / (1 + x))).add
     (hasDerivAt_id' s)).sub_const rho).add h2
   convert this using 1
-  · funext s; unfold hsE m2U; simp only [Pi.add_apply]; ring
+  · funext s; unfold ssE m2U; simp only [Pi.add_apply]; ring
   · ring
 
 /-- **The corrected envelope cap**: if at every `s ∈ [t₀, t]` and every pairing `E' ≥ E(t, v)`
 the derivative ratio satisfies `λ(2us - E') ≤ 8cλ²(1 - ρ)²B_τ(s)`, then
 `Γ(t₀, U(t₀)) - cR_τ(t₀, U(t₀)) ≤ Γ(t, v) - cR_τ(t, v)`. -/
-theorem hs14_cap {x be al rho u τ t v c : ℝ} (hx : 1 < x) (hρ : 0 < rho)
+theorem env_cap {x be al rho u τ t v c : ℝ} (hx : 1 < x) (hρ : 0 < rho)
     (hρ1 : rho < 1) (ht0 : rho * (1 + x) ≤ t) (htr : t ≤ 1 / (1 + x)) (hv : v ≤ m2U t)
-    (hratio : ∀ s ∈ Icc (rho * (1 + x)) t, ∀ E', hsE x rho u t v ≤ E' →
-      hsLam al rho * (2 * u * s - E') ≤ 8 * c * (hsLam al rho * (1 - rho)) ^ 2 *
-        (1 + τ * (hsLam al rho * s - hsLam al rho * rho * hsDg x be al))) :
-    hsGam rho u (m2U (rho * (1 + x))) (hsE x rho u (rho * (1 + x)) (m2U (rho * (1 + x)))) -
-        c * hsR x be al rho u τ (rho * (1 + x)) (m2U (rho * (1 + x))) ≤
-      hsGam rho u v (hsE x rho u t v) - c * hsR x be al rho u τ t v := by
+    (hratio : ∀ s ∈ Icc (rho * (1 + x)) t, ∀ E', ssE x rho u t v ≤ E' →
+      ssLam al rho * (2 * u * s - E') ≤ 8 * c * (ssLam al rho * (1 - rho)) ^ 2 *
+        (1 + τ * (ssLam al rho * s - ssLam al rho * rho * ssDg x be al))) :
+    ssGam rho u (m2U (rho * (1 + x))) (ssE x rho u (rho * (1 + x)) (m2U (rho * (1 + x)))) -
+        c * ssR x be al rho u τ (rho * (1 + x)) (m2U (rho * (1 + x))) ≤
+      ssGam rho u v (ssE x rho u t v) - c * ssR x be al rho u τ t v := by
   have hS : 0 < 1 + x := by linarith
   have ht0p : 0 < rho * (1 + x) := by positivity
   have htp : 0 < t := lt_of_lt_of_le ht0p ht0
   have ht2 : t < 1 / 2 := by
     calc t ≤ 1 / (1 + x) := htr
       _ < 1 / 2 := by apply one_div_lt_one_div_of_lt (by norm_num); linarith
-  have hlam : 0 < hsLam al rho := by
-    unfold hsLam; apply div_pos one_pos; nlinarith
+  have hlam : 0 < ssLam al rho := by
+    unfold ssLam; apply div_pos one_pos; nlinarith
   have h1ρ : 0 < 1 - rho := by linarith
-  set lam := hsLam al rho with hlamdef
-  set d := hsLam al rho * rho * hsDg x be al with hddef
+  set lam := ssLam al rho with hlamdef
+  set d := ssLam al rho * rho * ssDg x be al with hddef
   -- (a) the v-segment at fixed t
-  have hva : hsGam rho u (m2U t) (hsE x rho u t (m2U t)) - c * hsR x be al rho u τ t (m2U t) ≤
-      hsGam rho u v (hsE x rho u t v) - c * hsR x be al rho u τ t v := by
-    set E₁ := hsE x rho u t v with hE₁
+  have hva : ssGam rho u (m2U t) (ssE x rho u t (m2U t)) - c * ssR x be al rho u τ t (m2U t) ≤
+      ssGam rho u v (ssE x rho u t v) - c * ssR x be al rho u τ t v := by
+    set E₁ := ssE x rho u t v with hE₁
     set e := (m2U t - v) / t with he
     have he0 : 0 ≤ e := div_nonneg (by linarith) htp.le
-    have hE₂ : hsE x rho u t (m2U t) = E₁ + e := by
-      rw [hE₁, he]; unfold hsE; field_simp; ring
+    have hE₂ : ssE x rho u t (m2U t) = E₁ + e := by
+      rw [hE₁, he]; unfold ssE; field_simp; ring
     have hU : m2U t = v + e * t := by rw [he]; field_simp; ring
-    have hΓ : hsGam rho u (m2U t) (hsE x rho u t (m2U t)) - hsGam rho u v E₁ =
+    have hΓ : ssGam rho u (m2U t) (ssE x rho u t (m2U t)) - ssGam rho u v E₁ =
         e * (4 * u * t - 2 * E₁ - e) / (16 * (1 - rho) ^ 2) := by
-      rw [hE₂, hU]; unfold hsGam; field_simp; ring
-    have hR : hsR x be al rho u τ t (m2U t) - hsR x be al rho u τ t v =
+      rw [hE₂, hU]; unfold ssGam; field_simp; ring
+    have hR : ssR x be al rho u τ t (m2U t) - ssR x be al rho u τ t v =
         e * lam * (1 + τ * (lam * t - d)) := by
-      unfold hsR hsW hsEL
+      unfold ssR ssW ssEL
       rw [hE₂, ← hE₁, hU]
       ring
     have hrat := hratio t ⟨ht0, le_rfl⟩ E₁ le_rfl
@@ -123,31 +123,31 @@ theorem hs14_cap {x be al rho u τ t v c : ℝ} (hx : 1 < x) (hρ : 0 < rho)
           e * (2 * (8 * c * lam * (1 - rho) ^ 2 * (1 + τ * (lam * t - d)))) := by
         apply mul_le_mul_of_nonneg_left _ he0; linarith
       nlinarith
-    have hR' : c * hsR x be al rho u τ t (m2U t) - c * hsR x be al rho u τ t v =
+    have hR' : c * ssR x be al rho u τ t (m2U t) - c * ssR x be al rho u τ t v =
         c * (e * lam * (1 + τ * (lam * t - d))) := by rw [← hR]; ring
     linarith
   -- (b) the t-segment along v = U(s)
   have h16 : (16 * (1 - rho) ^ 2) ≠ 0 := by positivity
-  obtain ⟨K, hK⟩ : ∃ K, K = (u - 1) / hsRA al be + hsRA al be + 1 - hsQ al rho +
-      log (τ * hsQ al rho / hsRA al be) := ⟨_, rfl⟩
-  have hgF : ∀ s, hsGam rho u (m2U s) (hsE x rho u s (m2U s)) -
-      c * hsR x be al rho u τ s (m2U s) =
-      (4 * u * m2U s - hsE x rho u s (m2U s) ^ 2) / (16 * (1 - rho) ^ 2) -
-      c * ((lam ^ 2 * m2U s + d ^ 2 * u - d * lam * hsE x rho u s (m2U s) - 1) * τ + 1 / τ + K -
-        (2 * d * u - lam * hsE x rho u s (m2U s))) := by
+  obtain ⟨K, hK⟩ : ∃ K, K = (u - 1) / ssRA al be + ssRA al be + 1 - ssQ al rho +
+      log (τ * ssQ al rho / ssRA al be) := ⟨_, rfl⟩
+  have hgF : ∀ s, ssGam rho u (m2U s) (ssE x rho u s (m2U s)) -
+      c * ssR x be al rho u τ s (m2U s) =
+      (4 * u * m2U s - ssE x rho u s (m2U s) ^ 2) / (16 * (1 - rho) ^ 2) -
+      c * ((lam ^ 2 * m2U s + d ^ 2 * u - d * lam * ssE x rho u s (m2U s) - 1) * τ + 1 / τ + K -
+        (2 * d * u - lam * ssE x rho u s (m2U s))) := by
     intro s
     rw [hK]
-    unfold hsGam hsR hsW hsEL
+    unfold ssGam ssR ssW ssEL
     ring
   have hderiv : ∀ s ∈ Icc (rho * (1 + x)) t, HasDerivAt (fun s =>
-      (4 * u * m2U s - hsE x rho u s (m2U s) ^ 2) / (16 * (1 - rho) ^ 2) -
-      c * ((lam ^ 2 * m2U s + d ^ 2 * u - d * lam * hsE x rho u s (m2U s) - 1) * τ + 1 / τ + K -
-        (2 * d * u - lam * hsE x rho u s (m2U s))))
-      (((2 * s - 1) / s) * ((4 * u * s - 2 * hsE x rho u s (m2U s)) / (16 * (1 - rho) ^ 2) -
+      (4 * u * m2U s - ssE x rho u s (m2U s) ^ 2) / (16 * (1 - rho) ^ 2) -
+      c * ((lam ^ 2 * m2U s + d ^ 2 * u - d * lam * ssE x rho u s (m2U s) - 1) * τ + 1 / τ + K -
+        (2 * d * u - lam * ssE x rho u s (m2U s))))
+      (((2 * s - 1) / s) * ((4 * u * s - 2 * ssE x rho u s (m2U s)) / (16 * (1 - rho) ^ 2) -
         c * lam * (1 + τ * (lam * s - d)))) s := by
     intro s hs
     have hs0 : 0 < s := lt_of_lt_of_le ht0p hs.1
-    have hE := hs14_Eb_deriv (u := u) hS hρ hs0
+    have hE := env_Eb_deriv (u := u) hS hρ hs0
     have hU : HasDerivAt m2U (2 * s - 1) s := by
       unfold m2U
       have := ((hasDerivAt_id' s).const_sub 1).add ((hasDerivAt_id' s).pow 2)
@@ -163,14 +163,14 @@ theorem hs14_cap {x be al rho u τ t v c : ℝ} (hx : 1 < x) (hρ : 0 < rho)
     field_simp
     ring
   have hnn : ∀ s ∈ Ioo (rho * (1 + x)) t,
-      0 ≤ ((2 * s - 1) / s) * ((4 * u * s - 2 * hsE x rho u s (m2U s)) / (16 * (1 - rho) ^ 2) -
+      0 ≤ ((2 * s - 1) / s) * ((4 * u * s - 2 * ssE x rho u s (m2U s)) / (16 * (1 - rho) ^ 2) -
         c * lam * (1 + τ * (lam * s - d))) := by
     intro s hs
     have hs0 : 0 < s := lt_of_lt_of_le ht0p hs.1.le
     have hst : s ≤ t := hs.2.le
     -- E(s, U(s)) ≥ E(t, U(t)) ≥ E(t, v)
-    have hEbt : hsE x rho u t (m2U t) ≤ hsE x rho u s (m2U s) := by
-      unfold hsE m2U
+    have hEbt : ssE x rho u t (m2U t) ≤ ssE x rho u s (m2U s) := by
+      unfold ssE m2U
       have hlog : log (rho * (1 + x) / s) - log (rho * (1 + x) / t) = log (t / s) := by
         rw [← Real.log_div (by positivity) (by positivity)]
         congr 1; field_simp
@@ -183,18 +183,18 @@ theorem hs14_cap {x be al rho u τ t v c : ℝ} (hx : 1 < x) (hρ : 0 < rho)
       have h4 : 2 * (t - s) ≤ (t - s) / t := by
         rw [le_div_iff₀ htp]; nlinarith
       linarith
-    have hEtv : hsE x rho u t v ≤ hsE x rho u t (m2U t) := by
-      unfold hsE
+    have hEtv : ssE x rho u t v ≤ ssE x rho u t (m2U t) := by
+      unfold ssE
       have : (v - 1) / t ≤ (m2U t - 1) / t := div_le_div_of_nonneg_right (by linarith) htp.le
       linarith
-    have hrat := hratio s ⟨hs.1.le, hst⟩ (hsE x rho u s (m2U s)) (hEtv.trans hEbt)
-    have hbr : (4 * u * s - 2 * hsE x rho u s (m2U s)) / (16 * (1 - rho) ^ 2) -
+    have hrat := hratio s ⟨hs.1.le, hst⟩ (ssE x rho u s (m2U s)) (hEtv.trans hEbt)
+    have hbr : (4 * u * s - 2 * ssE x rho u s (m2U s)) / (16 * (1 - rho) ^ 2) -
         c * lam * (1 + τ * (lam * s - d)) ≤ 0 := by
-      have h2 : 2 * u * s - hsE x rho u s (m2U s) ≤
+      have h2 : 2 * u * s - ssE x rho u s (m2U s) ≤
           8 * c * lam * (1 - rho) ^ 2 * (1 + τ * (lam * s - d)) := by
-        have : lam * (2 * u * s - hsE x rho u s (m2U s)) ≤ lam * (8 * c * lam * (1 - rho) ^ 2 *
+        have : lam * (2 * u * s - ssE x rho u s (m2U s)) ≤ lam * (8 * c * lam * (1 - rho) ^ 2 *
             (1 + τ * (lam * s - d))) := by
-          calc lam * (2 * u * s - hsE x rho u s (m2U s)) ≤ 8 * c * (lam * (1 - rho)) ^ 2 *
+          calc lam * (2 * u * s - ssE x rho u s (m2U s)) ≤ 8 * c * (lam * (1 - rho)) ^ 2 *
               (1 + τ * (lam * s - d)) := hrat
             _ = lam * (8 * c * lam * (1 - rho) ^ 2 * (1 + τ * (lam * s - d))) := by ring
         exact le_of_mul_le_mul_left this hlam

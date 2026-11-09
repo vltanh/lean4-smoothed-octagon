@@ -1,23 +1,23 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Heavy.S4HandW3d
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.PsiRatio.LowerNorm
 
 /-!
-# Gate S4, hand proof W3 (e): the normalized cost numerator is positive
+# Smaller-short window, Casimir floor: the normalized cost numerator is positive
 
 For fixed `x`, every atom of the numerator `N = (781250/3)n` (`a, B, K, D, v, E, B_x, D_x, E_x`) is
 a polynomial of degree at most two in `d`; their second-order jets in `d` are composed by the
-product rule (`HL46J`) before any expansion, and the resulting second derivative is the explicit
-polynomial `N_dd = P(d, x - 2)` (`hl46_w3_n_jet`). The monomial rule gives `P > 0`,
+product rule (`SecondJet`) before any expansion, and the resulting second derivative is the explicit
+polynomial `N_dd = P(d, x - 2)` (`cas_w3_n_jet`). The monomial rule gives `P > 0`,
 `N_d(2 + h, 0) > 0` and `N(2 + h, 0) > 0`, hence `N_d > 0` and `N(x, d) ≥ N(x, 0) > 0`
-(`hl46_w3_n_pos`), i.e. `f > -1/25`.
+(`cas_w3_n_pos`), i.e. `f > -1/25`.
 
 `N(2 + h, 0) > 0` is read off directly by the monomial rule (only its `h⁷`, `h⁸` coefficients
 are positive).
 
 ## Main API
 
-* `hl46W3P`, `hl46W3Nd0`, `hl46W3N0`, `hl46_w3_n_jet`, `hl46_w3_n_pos`.
+* `casW3P`, `casW3Nd0`, `casW3N0`, `cas_w3_n_jet`, `cas_w3_n_pos`.
 -/
 
 @[expose] public section
@@ -27,7 +27,7 @@ namespace SmoothedOctagon
 open Set
 
 /-- The polynomial `N_dd = P(d, h)`. -/
-noncomputable def hl46W3P (d h : ℝ) : ℝ :=
+noncomputable def casW3P (d h : ℝ) : ℝ :=
   -11995620 * d ^ 6 * h ^ 2 - 110359704 * d ^ 6 * h - 172736928 * d ^ 6 + 36678915 * d ^ 5 * h ^ 3 +
     (488636967 / 2) * d ^ 5 * h ^ 2 + 1247667512 * d ^ 5 * h + (6590962651 / 5) * d ^ 5 -
     20723625 * d ^ 4 * h ^ 4 - 941376475 * d ^ 4 * h ^ 3 - (16599016915 / 2) * d ^ 4 * h ^ 2 -
@@ -43,19 +43,19 @@ noncomputable def hl46W3P (d h : ℝ) : ℝ :=
     (3847984625 / 3) * h + 611261375
 
 /-- The polynomial `N_d(2 + h, 0)`. -/
-noncomputable def hl46W3Nd0 (h : ℝ) : ℝ :=
+noncomputable def casW3Nd0 (h : ℝ) : ℝ :=
   28125 * h ^ 8 + (383125 / 3) * h ^ 7 - 1931875 * h ^ 6 - 16751875 * h ^ 5 - (86249375 / 2) * h ^ 4 -
     18388125 * h ^ 3 + 78990000 * h ^ 2 + (344264375 / 3) * h + (311725625 / 6)
 
 /-- The polynomial `N(2 + h, 0)`. -/
-noncomputable def hl46W3N0 (h : ℝ) : ℝ :=
+noncomputable def casW3N0 (h : ℝ) : ℝ :=
   (28125 / 2) * h ^ 8 + (143750 / 3) * h ^ 7 - (4009375 / 3) * h ^ 6 - (36331250 / 3) * h ^ 5 -
     (126812500 / 3) * h ^ 4 - (214831250 / 3) * h ^ 3 - 56421875 * h ^ 2 - 12618750 * h +
     (8746875 / 2)
 
 /-- `P > 0`: discard positive `d`-terms and put `d = 1/19` in the negative ones. -/
-theorem hl46_w3_P_pos {d h : ℝ} (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (hh : 0 ≤ h) : 0 < hl46W3P d h := by
-  unfold hl46W3P
+theorem cas_w3_P_pos {d h : ℝ} (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (hh : 0 ≤ h) : 0 < casW3P d h := by
+  unfold casW3P
   linarith [mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hd hd' 6) (pow_nonneg hh 2),
     mul_le_mul_of_nonneg_right (pow_le_pow_left₀ hd hd' 6) (pow_nonneg hh 1),
     pow_le_pow_left₀ hd hd' 6,
@@ -99,8 +99,8 @@ theorem hl46_w3_P_pos {d h : ℝ} (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) (hh : 0 �
     pow_nonneg hh 1]
 
 /-- `N_d(2 + h, 0) > 0` on `0 ≤ h ≤ 1/6`. -/
-theorem hl46_w3_Nd0_pos {h : ℝ} (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) : 0 < hl46W3Nd0 h := by
-  unfold hl46W3Nd0
+theorem cas_w3_Nd0_pos {h : ℝ} (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) : 0 < casW3Nd0 h := by
+  unfold casW3Nd0
   linarith [pow_nonneg hh 8,
     pow_nonneg hh 7,
     pow_le_pow_left₀ hh hh' 6,
@@ -111,8 +111,8 @@ theorem hl46_w3_Nd0_pos {h : ℝ} (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) : 0 < hl46W
     pow_nonneg hh 1]
 
 /-- `N(2 + h, 0) > 0` on `0 ≤ h ≤ 1/6`. -/
-theorem hl46_w3_N0_pos {h : ℝ} (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) : 0 < hl46W3N0 h := by
-  unfold hl46W3N0
+theorem cas_w3_N0_pos {h : ℝ} (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) : 0 < casW3N0 h := by
+  unfold casW3N0
   linarith [pow_nonneg hh 8,
     pow_nonneg hh 7,
     pow_le_pow_left₀ hh hh' 6,
@@ -123,15 +123,15 @@ theorem hl46_w3_N0_pos {h : ℝ} (hh : 0 ≤ h) (hh' : h ≤ 1 / 6) : 0 < hl46W3
     pow_le_pow_left₀ hh hh' 1]
 
 /-- Jets are unchanged by a pointwise equal function. -/
-theorem hl46_w3_jet_congr {f g f₁ f₂ : ℝ → ℝ} {x : ℝ} (h : ∀ y, f y = g y)
-    (hg : HL46J g f₁ f₂ x) : HL46J f f₁ f₂ x := by
+theorem cas_w3_jet_congr {f g f₁ f₂ : ℝ → ℝ} {x : ℝ} (h : ∀ y, f y = g y)
+    (hg : SecondJet g f₁ f₂ x) : SecondJet f f₁ f₂ x := by
   have : f = g := funext h
   subst this
   exact hg
 
 /-- The jet of a quadratic polynomial. -/
-theorem hl46_w3_qjet (c0 c1 c2 d : ℝ) :
-    HL46J (fun d => c0 + c1 * d + c2 * d ^ 2) (fun d => c1 + 2 * c2 * d) (fun _ => 2 * c2) d := by
+theorem cas_w3_qjet (c0 c1 c2 d : ℝ) :
+    SecondJet (fun d => c0 + c1 * d + c2 * d ^ 2) (fun d => c1 + 2 * c2 * d) (fun _ => 2 * c2) d := by
   constructor
   · have := (((hasDerivAt_id' d).const_mul c1).const_add c0).fun_add
       ((hasDerivAt_pow 2 d).const_mul c2)
@@ -143,43 +143,43 @@ theorem hl46_w3_qjet (c0 c1 c2 d : ℝ) :
     ring
 
 /-- The jet of a constant. -/
-theorem hl46_w3_cjet (c d : ℝ) : HL46J (fun _ => c) (fun _ => 0) (fun _ => 0) d :=
+theorem cas_w3_cjet (c d : ℝ) : SecondJet (fun _ => c) (fun _ => 0) (fun _ => 0) d :=
   ⟨hasDerivAt_const d c, hasDerivAt_const d 0⟩
 
 /-- **The second-order `d`-jet of `n`**: the product rule on the atoms, then
 `N_dd = (781250/3)n_dd = P(d, x - 2)` and `N_d(x, 0) = N_d(2 + h, 0)`. -/
-theorem hl46_w3_n_jet (x : ℝ) : ∃ n₁ n₂ : ℝ → ℝ, (∀ d, HL46J (fun d => hl46W3n x d) n₁ n₂ d) ∧
-    (∀ d, 781250 / 3 * n₂ d = hl46W3P d (x - 2)) ∧ 781250 / 3 * n₁ 0 = hl46W3Nd0 (x - 2) := by
-  have ja := fun d => hl46_w3_jet_congr (f := fun d : ℝ => 1 + 13 / 5 * d)
-    (fun y => by ring) (hl46_w3_qjet 1 (13 / 5) 0 d)
-  have jB := fun d => hl46_w3_jet_congr (f := fun d => hl46W3B x d)
-    (fun y => by unfold hl46W3B; ring) (hl46_w3_qjet (1 + x) (13 / 5 + x) 0 d)
-  have jK := fun d => hl46_w3_jet_congr (f := fun d => hl46W3K x d)
-    (fun y => by unfold hl46W3K; ring) (hl46_w3_qjet ((1 + x) ^ 2) (26 / 5) (169 / 25) d)
-  have jD := fun d => hl46_w3_jet_congr (f := fun d => hl46W3D x d)
-    (fun y => by unfold hl46W3D hsDg; ring)
-    (hl46_w3_qjet (-2 * (x ^ 2 - 2 * x - 1)) (-2 * (5 * x ^ 2 - 18 * x - 13) / 5)
+theorem cas_w3_n_jet (x : ℝ) : ∃ n₁ n₂ : ℝ → ℝ, (∀ d, SecondJet (fun d => casW3n x d) n₁ n₂ d) ∧
+    (∀ d, 781250 / 3 * n₂ d = casW3P d (x - 2)) ∧ 781250 / 3 * n₁ 0 = casW3Nd0 (x - 2) := by
+  have ja := fun d => cas_w3_jet_congr (f := fun d : ℝ => 1 + 13 / 5 * d)
+    (fun y => by ring) (cas_w3_qjet 1 (13 / 5) 0 d)
+  have jB := fun d => cas_w3_jet_congr (f := fun d => casW3B x d)
+    (fun y => by unfold casW3B; ring) (cas_w3_qjet (1 + x) (13 / 5 + x) 0 d)
+  have jK := fun d => cas_w3_jet_congr (f := fun d => casW3K x d)
+    (fun y => by unfold casW3K; ring) (cas_w3_qjet ((1 + x) ^ 2) (26 / 5) (169 / 25) d)
+  have jD := fun d => cas_w3_jet_congr (f := fun d => casW3D x d)
+    (fun y => by unfold casW3D ssDg; ring)
+    (cas_w3_qjet (-2 * (x ^ 2 - 2 * x - 1)) (-2 * (5 * x ^ 2 - 18 * x - 13) / 5)
       (13 * (10 * x + 13) / 25) d)
-  have jv := fun d => hl46_w3_jet_congr (f := fun d => hl46W3v x d)
-    (fun y => by unfold hl46W3v; ring) (hl46_w3_qjet ((9 * x + 740) / 1000) (-9 / 500) 0 d)
-  have jE := fun d => hl46_w3_jet_congr (f := fun d => hl46W3E x d)
-    (fun y => by unfold hl46W3E hh46S4P hl46W3v; ring)
-    (hl46_w3_qjet ((1 + x) ^ 3 * ((9 * x + 740) / 1000 - 1) + 3 * (1 + x) - 1)
+  have jv := fun d => cas_w3_jet_congr (f := fun d => casW3v x d)
+    (fun y => by unfold casW3v; ring) (cas_w3_qjet ((9 * x + 740) / 1000) (-9 / 500) 0 d)
+  have jE := fun d => cas_w3_jet_congr (f := fun d => casW3E x d)
+    (fun y => by unfold casW3E casClosedP casW3v; ring)
+    (cas_w3_qjet ((1 + x) ^ 3 * ((9 * x + 740) / 1000 - 1) + 3 * (1 + x) - 1)
       (-9 / 500 * (1 + x) ^ 3) 0 d)
-  have jBx := fun d => hl46_w3_jet_congr (f := fun d : ℝ => 1 + d)
-    (fun y => by ring) (hl46_w3_qjet 1 1 0 d)
-  have jDx := fun d => hl46_w3_jet_congr (f := fun d => hl46W3Dx x d)
-    (fun y => by unfold hl46W3Dx; ring)
-    (hl46_w3_qjet (-4 * (x - 1)) (-4 * (5 * x - 9) / 5) (26 / 5) d)
-  have jEx := fun d => hl46_w3_jet_congr (f := fun d => hl46W3Ex x d)
-    (fun y => by unfold hl46W3Ex hl46W3v; ring)
-    (hl46_w3_qjet (3 * (1 + x) ^ 2 * ((9 * x + 740) / 1000 - 1) + (1 + x) ^ 3 * (9 / 1000) + 3)
+  have jBx := fun d => cas_w3_jet_congr (f := fun d : ℝ => 1 + d)
+    (fun y => by ring) (cas_w3_qjet 1 1 0 d)
+  have jDx := fun d => cas_w3_jet_congr (f := fun d => casW3Dx x d)
+    (fun y => by unfold casW3Dx; ring)
+    (cas_w3_qjet (-4 * (x - 1)) (-4 * (5 * x - 9) / 5) (26 / 5) d)
+  have jEx := fun d => cas_w3_jet_congr (f := fun d => casW3Ex x d)
+    (fun y => by unfold casW3Ex casW3v; ring)
+    (cas_w3_qjet (3 * (1 + x) ^ 2 * ((9 * x + 740) / 1000 - 1) + (1 + x) ^ 3 * (9 / 1000) + 3)
       (-27 / 500 * (1 + x) ^ 2) 0 d)
-  have j1 := hl46_w3_cjet 1
-  have jM := hl46_w3_cjet ((1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1))
-  have jKx := hl46_w3_cjet (2 * x + 2)
-  have jMx := hl46_w3_cjet (4 * (1 + x) ^ 3 - 3 * (1 + x) ^ 2 + 2 * (1 + x))
-  have jvx := hl46_w3_cjet (9 / 1000)
+  have j1 := cas_w3_cjet 1
+  have jM := cas_w3_cjet ((1 + x) ^ 2 * ((1 + x) ^ 2 - (1 + x) + 1))
+  have jKx := cas_w3_cjet (2 * x + 2)
+  have jMx := cas_w3_cjet (4 * (1 + x) ^ 3 - 3 * (1 + x) ^ 2 + 2 * (1 + x))
+  have jvx := cas_w3_cjet (9 / 1000)
   have jn : ∀ d, _ := fun d =>
     -- `T`
     let jvm1 := (jv d).sub (j1 d)
@@ -204,42 +204,42 @@ theorem hl46_w3_n_jet (x : ℝ) : ∃ n₁ n₂ : ℝ → ℝ, (∀ d, HL46J (fu
     ((((jTx.mul (jB d)).mul (jK d)).sub (jT.mul (((jBx d).mul (jK d)).add ((jB d).mul (jKx d))))).add
       ((((ja d).mul (jB d)).mul (jK d)).mul (((jK d).mul (jBx d)).sub ((jB d).mul (jKx d))))).add
       (((((ja d).mul (jB d)).mul (jB d)).mul (jK d)).mul (jK d) |>.const_mul (1 / 25))
-  refine ⟨_, _, fun d => hl46_w3_jet_congr (fun y => ?_) (jn d), fun d => ?_, ?_⟩
-  · unfold hl46W3n hl46W3TxC hl46W3TC hl46W3Tx hl46W3T
+  refine ⟨_, _, fun d => cas_w3_jet_congr (fun y => ?_) (jn d), fun d => ?_, ?_⟩
+  · unfold casW3n casW3TxC casW3TC casW3Tx casW3T
     ring
-  · unfold hl46W3P hl46W3E hl46W3Ex hh46S4P hl46W3v hl46W3B hl46W3K hl46W3D hsDg hl46W3Dx
+  · unfold casW3P casW3E casW3Ex casClosedP casW3v casW3B casW3K casW3D ssDg casW3Dx
     ring
-  · unfold hl46W3Nd0 hl46W3E hl46W3Ex hh46S4P hl46W3v hl46W3B hl46W3K hl46W3D hsDg hl46W3Dx
+  · unfold casW3Nd0 casW3E casW3Ex casClosedP casW3v casW3B casW3K casW3D ssDg casW3Dx
     ring
 
 /-- The boundary value: `N(x, 0) = N(2 + h, 0)`. -/
-theorem hl46_w3_n0 (x : ℝ) : 781250 / 3 * hl46W3n x 0 = hl46W3N0 (x - 2) := by
-  unfold hl46W3n hl46W3TxC hl46W3TC hl46W3Tx hl46W3T hl46W3N0 hl46W3E hl46W3Ex hh46S4P hl46W3v
-    hl46W3B hl46W3K hl46W3D hsDg hl46W3Dx
+theorem cas_w3_n0 (x : ℝ) : 781250 / 3 * casW3n x 0 = casW3N0 (x - 2) := by
+  unfold casW3n casW3TxC casW3TC casW3Tx casW3T casW3N0 casW3E casW3Ex casClosedP casW3v
+    casW3B casW3K casW3D ssDg casW3Dx
   ring
 
 /-- **`N > 0`**: `N_dd = P > 0` and `N_d(x, 0) > 0` give `N_d > 0`, so
 `N(x, d) ≥ N(x, 0) > 0`. -/
-theorem hl46_w3_n_pos {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) :
-    0 < hl46W3n x d := by
-  obtain ⟨n₁, n₂, hJ, hP, hN1⟩ := hl46_w3_n_jet x
+theorem cas_w3_n_pos {x d : ℝ} (hx : 2 ≤ x) (hx' : x ≤ 13 / 6) (hd : 0 ≤ d) (hd' : d ≤ 1 / 19) :
+    0 < casW3n x d := by
+  obtain ⟨n₁, n₂, hJ, hP, hN1⟩ := cas_w3_n_jet x
   have h0 : 0 ≤ x - 2 := by linarith
   have h6 : x - 2 ≤ 1 / 6 := by linarith
   have hn10 : 0 < n₁ 0 := by
-    have := hl46_w3_Nd0_pos h0 h6
+    have := cas_w3_Nd0_pos h0 h6
     linarith
   have hn1 : ∀ y ∈ Icc (0 : ℝ) (1 / 19), 0 < n₁ y := fun y hy => by
-    have := hl46_mono_of (f := n₁) (f₁ := n₂) (a := 0) (b := 1 / 19) (fun z _ => (hJ z).2)
+    have := jet_mono_of (f := n₁) (f₁ := n₂) (a := 0) (b := 1 / 19) (fun z _ => (hJ z).2)
       (fun z hz => by
         have h1 := hP z
-        have h2 := hl46_w3_P_pos hz.1 hz.2 h0
+        have h2 := cas_w3_P_pos hz.1 hz.2 h0
         linarith) le_rfl hy.1 hy.2
     linarith
-  have hmono := hl46_mono_of (f := fun d => hl46W3n x d) (f₁ := n₁) (a := 0) (b := 1 / 19)
+  have hmono := jet_mono_of (f := fun d => casW3n x d) (f₁ := n₁) (a := 0) (b := 1 / 19)
     (fun z _ => (hJ z).1) (fun z hz => (hn1 z hz).le) le_rfl hd hd'
-  have hN0 : 0 < hl46W3n x 0 := by
-    have h1 := hl46_w3_n0 x
-    have h2 := hl46_w3_N0_pos h0 h6
+  have hN0 : 0 < casW3n x 0 := by
+    have h1 := cas_w3_n0 x
+    have h2 := cas_w3_N0_pos h0 h6
     linarith
   linarith
 

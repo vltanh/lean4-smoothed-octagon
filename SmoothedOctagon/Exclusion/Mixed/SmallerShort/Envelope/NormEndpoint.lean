@@ -1,9 +1,9 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.ShortHand.Envelope
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope
 
 /-!
-# Gates S1/S4 helpers: the lower norm endpoint of the two slope inequalities
+# Smaller-short window: the lower norm endpoint of the two slope inequalities
 
 At `u = 3/4` the slope inequalities `κH(2S - 1) < 3α²L(p)` reduce, with `p = α/(α + β₀ + k)`, to
 explicit polynomial identities in `z = α - 1`, `y = x - α`, `k ≥ 0` with nonnegative coefficients
@@ -11,17 +11,17 @@ explicit polynomial identities in `z = α - 1`, `y = x - α`, `k ≥ 0` with non
 
 ## Main API
 
-* `hs14_bot_ccs`: `4H(2S - 1) < 3α²L(p)` at `β = x`, `u = 3/4`, `0 < p ≤ α/(α + x)`.
-* `hs14_bot_sharp`: `7H(2S - 1) < 3α²L(p)` at `β = β₀`, `u = 3/4`, `0 < p ≤ α/(α + β₀)`.
+* `env_bot_ccs`: `4H(2S - 1) < 3α²L(p)` at `β = x`, `u = 3/4`, `0 < p ≤ α/(α + x)`.
+* `env_bot_sharp`: `7H(2S - 1) < 3α²L(p)` at `β = β₀`, `u = 3/4`, `0 < p ≤ α/(α + β₀)`.
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
 
-private theorem hs14_ccs_id {z y k al x : ℝ} (hz : 0 ≤ z) (hy : 0 ≤ y) (hk : 0 ≤ k) (ha : al = 1 + z)
+private theorem env_ccs_id {z y k al x : ℝ} (hz : 0 ≤ z) (hy : 0 ≤ y) (hk : 0 ≤ k) (ha : al = 1 + z)
     (hx : x = 1 + z + y) :
-    4 * (1 + x) * al * (al + x + k) * (3 * al ^ 2 * hsLp x x al (3 / 4) (al / (al + x + k)) -
+    4 * (1 + x) * al * (al + x + k) * (3 * al ^ 2 * ssLp x x al (3 / 4) (al / (al + x + k)) -
       4 * ((1 + x) * (m2U (1 / (1 + x)) - 3 / 4)) * (2 * (1 + x) - 1)) =
     12 * (1 + x) * al ^ 2 * k ^ 2 + al * (3 * z ^ 4 + 6 * z ^ 3 * y + 3 * z ^ 2 * y ^ 2 + 28 * z ^ 3 + 78 * z ^ 2 * y + 78 * z * y ^ 2 + 28 * y ^ 3 + 72 * z ^ 2 + 192 * z * y + 108 * y ^ 2 + 48 * z + 96 * y) * k +
     (8 * z ^ 3 + 72 * y ^ 2 + (3 * z ^ 6 + 15 * z ^ 5 * y + 27 * z ^ 4 * y ^ 2 + 21 * z ^ 3 * y ^ 3 + 6 * z ^ 2 * y ^ 4 + 11 * z ^ 5 + 88 * z ^ 4 * y + 222 * z ^ 3 * y ^ 2 + 257 * z ^ 2 * y ^ 3 + 148 * z * y ^ 4 + 36 * y ^ 5 + 16 * z ^ 4 + 208 * z ^ 3 * y + 516 * z ^ 2 * y ^ 2 + 466 * z * y ^ 3 + 148 * y ^ 4 + 180 * z ^ 2 * y + 372 * z * y ^ 2 + 188 * y ^ 3 + 48 * z * y)) := by
@@ -29,16 +29,16 @@ private theorem hs14_ccs_id {z y k al x : ℝ} (hz : 0 ≤ z) (hy : 0 ≤ y) (hk
   have h1 : (1 + z) ≠ 0 := by positivity
   have h2 : (1 + z + (1 + z + y) + k) ≠ 0 := by positivity
   have h3 : (1 + (1 + z + y)) ≠ 0 := by positivity
-  unfold hsLp hsA2 hsA3 hsE0 hsDg m2U
+  unfold ssLp ssA2 ssA3 ssE0 ssDg m2U
   field_simp
   ring
 
 /-- **The lower norm endpoint of the slope inequality at `β = x`**: `4H(2S - 1) < 3α²L(p)` at
 `u = 3/4`, `0 < p ≤ α/(α + x)`. -/
-theorem hs14_bot_ccs {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x) (hp : 0 < p)
+theorem env_bot_ccs {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x) (hp : 0 < p)
     (hpr : p ≤ al / (al + x)) :
     4 * ((1 + x) * (m2U (1 / (1 + x)) - 3 / 4)) * (2 * (1 + x) - 1) <
-      3 * al ^ 2 * hsLp x x al (3 / 4) p := by
+      3 * al ^ 2 * ssLp x x al (3 / 4) p := by
   have hal0 : 0 < al := by linarith
   set k := al / p - al - x with hkdef
   have hk : 0 ≤ k := by
@@ -50,7 +50,7 @@ theorem hs14_bot_ccs {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ 
     rw [this]; field_simp
   have hz : 0 ≤ al - 1 := by linarith
   have hy : 0 ≤ x - al := by linarith
-  have hid := hs14_ccs_id (z := al - 1) (y := x - al) (al := al) (x := x) hz hy hk (by ring) (by ring)
+  have hid := env_ccs_id (z := al - 1) (y := x - al) (al := al) (x := x) hz hy hk (by ring) (by ring)
   rw [← hpk] at hid
   have hQ : 0 < 8 * (al - 1) ^ 3 + 72 * (x - al) ^ 2 := by
     rcases eq_or_lt_of_le hy with h | h
@@ -66,10 +66,10 @@ theorem hs14_bot_ccs {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ 
   have := pos_of_mul_pos_right hR hpos.le
   linarith
 
-private theorem hs14_sharp_id {z y k al x : ℝ} (hz : 0 ≤ z) (hy : 0 ≤ y) (hk : 0 ≤ k) (ha : al = 1 + z)
+private theorem env_sharp_id {z y k al x : ℝ} (hz : 0 ≤ z) (hy : 0 ≤ y) (hk : 0 ≤ k) (ha : al = 1 + z)
     (hx : x = 1 + z + y) :
     4 * (1 + x) * al * (al * (9 * x + 8) + x * (9 * x + 8 * al) + k * (9 * x + 8)) * (9 * x + 8) *
-      (3 * al ^ 2 * hsLp x (x * (9 * x + 8 * al) / (9 * x + 8)) al (3 / 4)
+      (3 * al ^ 2 * ssLp x (x * (9 * x + 8 * al) / (9 * x + 8)) al (3 / 4)
         (al * (9 * x + 8) / (al * (9 * x + 8) + x * (9 * x + 8 * al) + k * (9 * x + 8))) -
       7 * ((1 + x) * (m2U (1 / (1 + x)) - 3 / 4)) * (2 * (1 + x) - 1)) =
     12 * (1 + x) * al ^ 2 * (9 * x + 8) ^ 2 * k ^ 2 + (243 * z ^ 7 + 972 * z ^ 6 * y + 1458 * z ^ 5 * y ^ 2 + 972 * z ^ 4 * y ^ 3 + 243 * z ^ 3 * y ^ 4 + 4671 * z ^ 6 + 19926 * z ^ 5 * y + 33534 * z ^ 4 * y ^ 2 + 27756 * z ^ 3 * y ^ 3 + 11259 * z ^ 2 * y ^ 4 + 1782 * z * y ^ 5 + 27306 * z ^ 5 + 104832 * z ^ 4 * y + 149949 * z ^ 3 * y ^ 2 + 96408 * z ^ 2 * y ^ 3 + 25767 * z * y ^ 4 + 1782 * y ^ 5 + 74098 * z ^ 4 + 241308 * z ^ 3 * y + 266511 * z ^ 2 * y ^ 2 + 114052 * z * y ^ 3 + 14751 * y ^ 4 + 103891 * z ^ 3 + 272820 * z ^ 2 * y + 206625 * z * y ^ 2 + 44428 * y ^ 3 + 73071 * z ^ 2 + 145134 * z * y + 57987 * y ^ 2 + 20400 * z + 27744 * y) * k +
@@ -80,16 +80,16 @@ private theorem hs14_sharp_id {z y k al x : ℝ} (hz : 0 ≤ z) (hy : 0 ≤ y) (
   have h4 : (9 * (1 + z + y) + 8) ≠ 0 := by positivity
   have h2 : ((1 + z) * (9 * (1 + z + y) + 8) + (1 + z + y) * (9 * (1 + z + y) + 8 * (1 + z)) +
     k * (9 * (1 + z + y) + 8)) ≠ 0 := by positivity
-  unfold hsLp hsA2 hsA3 hsE0 hsDg m2U
+  unfold ssLp ssA2 ssA3 ssE0 ssDg m2U
   field_simp
   ring
 
 /-- **The lower norm endpoint of the sharper slope at `β₀ = x(9x + 8α)/(9x + 8)`**:
 `7H(2S - 1) < 3α²L(p)` at `u = 3/4`, `0 < p ≤ α/(α + β₀)`. -/
-theorem hs14_bot_sharp {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x) (hp : 0 < p)
+theorem env_bot_sharp {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x) (hp : 0 < p)
     (hpr : p ≤ al / (al + x * (9 * x + 8 * al) / (9 * x + 8))) :
     7 * ((1 + x) * (m2U (1 / (1 + x)) - 3 / 4)) * (2 * (1 + x) - 1) <
-      3 * al ^ 2 * hsLp x (x * (9 * x + 8 * al) / (9 * x + 8)) al (3 / 4) p := by
+      3 * al ^ 2 * ssLp x (x * (9 * x + 8 * al) / (9 * x + 8)) al (3 / 4) p := by
   have hal0 : 0 < al := by linarith
   have hM : 0 < 9 * x + 8 := by linarith
   have hb0 : 0 < x * (9 * x + 8 * al) / (9 * x + 8) := by positivity
@@ -104,7 +104,7 @@ theorem hs14_bot_sharp {x al p : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al �
     rw [this]; field_simp
   have hz : 0 ≤ al - 1 := by linarith
   have hy : 0 ≤ x - al := by linarith
-  have hid := hs14_sharp_id (z := al - 1) (y := x - al) (al := al) (x := x) hz hy hk (by ring)
+  have hid := env_sharp_id (z := al - 1) (y := x - al) (al := al) (x := x) hz hy hk (by ring)
     (by ring)
   rw [← hpk] at hid
   have hQ : 0 < 2862 * (al - 1) ^ 2 + 16524 * (al - 1) * (x - al) + 15606 * (x - al) ^ 2 := by
