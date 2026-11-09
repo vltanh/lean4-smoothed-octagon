@@ -117,7 +117,7 @@ more steps fall into five families, and none of them can be the cheapest. Those 
 steps are compared directly, and the cheapest is the octagon's four equal steps. No other pattern
 matches its cost, so the octagon is the only worst shape, up to stretching and shearing.
 
-The [Smoothed Octagon Playground](https://vltanh.me/smoothed-octagon/) lets you try this by hand:
+The [Smoothed Octagon Playground](https://vltanh.me/smoothed-octagon/) lets you try this yourself:
 pack the octagon yourself, build it corner by corner, look for a worse packer, and watch its
 sliding packings.
 
@@ -125,7 +125,7 @@ sliding packings.
 
 [`SmoothedOctagon.lean`](SmoothedOctagon.lean), the root of the library, restates the three
 theorems of [`Palomar/Challenge.lean`](Palomar/Challenge.lean) word for word and proves them,
-with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 8,295 declarations of the
+with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 8,294 declarations of the
 library, and the three theorems, depend only on the standard axioms.
 
 | Stage | Lean |
@@ -181,10 +181,17 @@ SmoothedOctagon/
   Foundations/                 geometry ↔ control: realization, reverse comparison
   Reduction/                   minimizer → finite normal period
   Period/                      vertex periods, flows, twist, Hamiltonians, the sign partition
-  Exclusion/                   the five cases R, M3, M1, F, M2
+  Exclusion/                   the five classes of sign sequences, each excluded
+    Reverse/                   R: entirely reverse
+    MinimumStructure/          M3: a reverse run of length other than two
+    ShortRuns/                 M1: every forward run of length one
+    Forward/                   F: entirely forward
+    Mixed/                     M2: the windows around the global minimum of the active margins
+      Nonshort/                the smaller-nonshort window: its reverse and forward successors
+      SmallerShort/            the smaller-short window: the large-ratio, lower-ratio, upper-ratio,
+                               displacement, Casimir-floor, shear and cost bounds
   Terminal/                    periods with at most five pieces
   Equality/                    rigidity and its converse
-  Certificates/                the six-variable point of a smaller-short window
   Bridge/                      the Challenge's terms; Hales's octagon is a linear image of Reinhardt's
   Defs.lean                    the definitions of the statements, shared with the Challenge
   LowerBound.lean              the assembly
