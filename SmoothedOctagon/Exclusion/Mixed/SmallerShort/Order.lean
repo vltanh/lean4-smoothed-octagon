@@ -4,6 +4,7 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Basic
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Barrier
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Contacts
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Upper
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.SmallUpper
 
 /-!
 # Smaller-short window: the equal-secant orders
@@ -15,14 +16,15 @@ on the normalized comparison function `Φ(z) = avg(ℓ + k(1 - z), z) - avg(ℓ,
 `ss_order_norm` with the first-contact lemma `ss_first_contact`; at a zero of `Φ` the sign of `Φ'`
 is the contact inequality below. The barrier machinery (any differentiable barrier, so also the
 non-affine barrier of `ss_quad_order`) is `SmallerShort/Order/Barrier.lean`. The global
-upper contacts use the integral comparisons and positive products in `Order/Upper.lean`;
-the other contact inequalities are in `Order/Contacts.lean`.
+upper contacts use the integral comparisons and positive products in `Order/Upper.lean`.
+The small-box upper order uses tilted weights and monotonicity in `Order/SmallUpper.lean`;
+the lower contact inequalities are in `Order/Contacts.lean`.
 
 ## Main API
 
 * Gap ratios: `ss_pade_gap`, `ss_gap_ratio_low`, `ss_gap_ratio_lower`.
 * Contact inequalities: `ss_strong_contact`, `ss_upper_contact_54`, `ss_upper_contact_98`,
-  `ss_small_contact`, `ss_quad_contact`.
+  `ss_small_contact_one`, `ss_small_contact_max`, `ss_quad_contact`.
 * Orders: `ss_strong_order` (`α ≥ β/x + k_s(x)(β - x)`), `ss_upper_order_54`, `ss_upper_order_98`,
   `ss_small_upper_order` (`α ≤ 1 + 3δ`), `ss_quad_order` (`α ≥ 1 + c(x)δ + δ²/(1 + 4δ)`).
 * Helpers: `ord_upper_contact_of_ratio`, `ord_affine_deriv`,
@@ -152,51 +154,6 @@ theorem ss_strong_contact {x q : ℝ} (hx : 1 < x) (hx9 : x ≤ 9)
   have hR := mul_nonneg (mul_nonneg hS1 (by linarith : (0:ℝ) ≤ x + 1)) hP.le
   rw [← ord_strong_eq hx] at hR
   exact nonneg_of_mul_nonneg_right hR (by positivity)
-
-/-- **The small-shape upper-barrier contact**: for `x = 1 + z`, `0 < z ≤ 7/6`, `q = 1 - h`,
-`0 ≤ h ≤ 1/20`, `h(z + 3) < z` (`⟺ p < q`), `p = (3 - 2q)/x`, `w = (q - p)/(2 + p + q)`, the
-two-term `artanh` majorant `ũ = 1 + 1/((1 + p)(1 + q)) - (2w + 2w³/3)/(q - p)` satisfies
-`2q(x - q)(g(p) - ũ) - x(2q(x + 1) - q² - 3)(ũ - g(q)) > 0` (the polynomial `K(z, h)`). -/
-theorem ss_small_contact {z h : ℝ} (hz : 0 < z) (hz7 : z ≤ 7 / 6) (hh : 0 ≤ h) (hh20 : h ≤ 1 / 20)
-    (hhz : h * (z + 3) < z) :
-    let x := 1 + z
-    let q := 1 - h
-    let p := (3 - 2 * q) / x
-    let w := (q - p) / (2 + p + q)
-    let ut := 1 + 1 / ((1 + p) * (1 + q)) - (2 * w + 2 / 3 * w ^ 3) / (q - p)
-    0 < 2 * q * (x - q) * (ss_gB 1 p - ut) - x * (2 * q * (x + 1) - q ^ 2 - 3) * (ut - ss_gB 1 q) := by
-  intro x q p w ut
-  have hx0 : 0 < x := by positivity
-  have hq0 : 0 < q := by simp only [q]; linarith
-  have hp0 : 0 < p := by
-    simp only [p, q]
-    exact div_pos (by linarith) hx0
-  have hpq : p < q := by
-    simp only [p, q, x]
-    rw [div_lt_iff₀ hx0]
-    linarith
-  obtain ⟨e1, e2⟩ := ord_ut_gaps hp0 hpq
-  have hKpos := ord_K_pos hz hz7 hh hh20 hhz
-  rw [← ord_K_eq (h := h) hz] at hKpos
-  have hd : 0 < 3 * (1 + p) ^ 2 * (1 + q) ^ 2 * (p + q + 2) ^ 3 := by positivity
-  have e : 2 * q * (x - q) * (ss_gB 1 p - ut) -
-      x * (2 * q * (x + 1) - q ^ 2 - 3) * (ut - ss_gB 1 q) =
-      (q - p) * (2 * q * (x - q) * (1 + q) *
-        (12 + 14 * q + 5 * q ^ 2 + 10 * p - 4 * p * q - 8 * p * q ^ 2 - 3 * p * q ^ 3 -
-          p ^ 2 - 14 * p ^ 2 * q - 4 * p ^ 2 * q ^ 2 - 2 * p ^ 3 - 5 * p ^ 3 * q) -
-        x * (2 * q * (x + 1) - q ^ 2 - 3) * (1 + p) *
-        (12 + 10 * q - q ^ 2 - 2 * q ^ 3 + 14 * p - 4 * p * q - 14 * p * q ^ 2 -
-          5 * p * q ^ 3 + 5 * p ^ 2 - 8 * p ^ 2 * q - 4 * p ^ 2 * q ^ 2 - 3 * p ^ 3 * q)) /
-        (3 * (1 + p) ^ 2 * (1 + q) ^ 2 * (p + q + 2) ^ 3) := by
-    rw [e1, e2]
-    have : 1 + p ≠ 0 := by positivity
-    have : 1 + q ≠ 0 := by positivity
-    have : p + q + 2 ≠ 0 := by positivity
-    field_simp
-  rw [e]
-  apply div_pos _ hd
-  apply mul_pos (by linarith)
-  exact pos_of_mul_pos_right hKpos (by positivity)
 
 /-- **The quadratic lower-barrier contact**: for
 `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 9/20`, `c = (4x² + 11x + 1)/(7x + 1)`, the barrier
@@ -376,12 +333,60 @@ theorem ss_upper_order_98 {x al be : ℝ} (hx : 1 < x) (hx5 : x ≤ 5) (hal : 1 
     ord_upper_contact_of_ratio (k := 9 / 8) hp0 hPz hz1 (by positivity)
       hgap (ss_upper_contact_98 hx hx5 hz1 hPz)
 
-/-- **The extended small-shape upper order**:
-for `1 < x ≤ 13/6`, `1 ≤ α < x ≤ β ≤ (20/19)x` (`0 ≤ δ ≤ 1/19`) with equal secants,
-`α ≤ 1 + 3δ`, `δ = β/x - 1` (barrier `k = 2/x`, `ss_small_contact`). -/
+/-- The unit-slope upper order on the middle range of the small box. -/
+private theorem small_order_one {x al be : ℝ} (hx : 16/9 ≤ x) (hx2 : x ≤ 2) (hal : 1 ≤ al) (hax : al < x)
+    (hxb : x ≤ be) (hδ : be ≤ 20/19*x) (heq : m2Sec 1 x be = m2Sec al be x) : al ≤ be / x + 1 * (be - x) := by
+  have hx0 : 0 < x := by linarith
+  have hx1 : 1 < x := by linarith
+  have hal0 : 0 < al := by linarith
+  have hbe0 : 0 < be := by linarith
+  have hq19 : 19/20 ≤ x/be := by rw [le_div_iff₀ hbe0]; linarith only [hδ]
+  have hp₁ : al / be < x / be := div_lt_div_of_pos_right hax hbe0
+  have hq₁ : x / be ≤ 1 := (div_le_one hbe0).2 hxb
+  have e : be / x + 1 * (be - x) = be * (1 / x + 1 * (1 - x / be)) := by field_simp
+  rw [e]
+  suffices h : al / be ≤ 1 / x + 1 * (1 - x / be) by
+    calc al = be * (al / be) := by field_simp
+      _ ≤ _ := mul_le_mul_of_nonneg_left h hbe0.le
+  rcases le_or_gt (x / be) (1 / x + 1 * (1 - x / be)) with hle | hlt
+  · linarith
+  refine ord_order_upper (P := fun z => 1 / x + 1 * (1 - z)) (P' := fun _ => -(1))
+    (q₁ := x / be) hx1 hp₁ hq₁ (ord_norm_eq hx0 hal0 hbe0 heq) (by simp)
+    (fun z _ => ord_affine_deriv _ _ z) (fun z hz => by
+      have : 0 ≤ 1 - z := by linarith [hz.2]
+      positivity) (ord_affine_lt (by norm_num) hlt) ?_
+  intro z hz _
+  have hz1 := hz.2
+  have hp0 : 0 < 1 / x + 1 * (1 - z) := by
+    have : 0 ≤ 1 - z := by linarith
+    positivity
+  have hPz : 1 / x + 1 * (1 - z) < z :=
+    ord_affine_lt (by norm_num) hlt z (Ioc_subset_Icc_self hz)
+  have hz19 : 19/20 ≤ z := hq19.trans hz.1.le
+  simpa only [one_mul,neg_neg,add_sub_assoc] using ss_small_contact_one hx hx2 hz19 hz1
+
+/-- The small-box upper order. The `9/8` global order covers `x ≤ 16/9`;
+the half tilt covers `16/9 ≤ x ≤ 2`; the maximal tilt covers `2 ≤ x ≤ 13/6`. -/
 theorem ss_small_upper_order {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 13 / 6) (hal : 1 ≤ al)
     (hax : al < x) (hxb : x ≤ be) (hδ : be ≤ 20 / 19 * x) (heq : m2Sec 1 x be = m2Sec al be x) :
     al ≤ 1 + 3 * (be / x - 1) := by
+  by_cases hxsmall : x ≤ 16/9
+  · have hs := ss_upper_order_98 hx (by linarith) hal hax hxb heq
+    have hx0 : 0 < x := by linarith
+    have hd : 0 ≤ be/x-1 := by rw [sub_nonneg,le_div_iff₀ hx0]; linarith only [hxb]
+    have hid : be/x+(9/8)*(be-x) = 1+(1+9*x/8)*(be/x-1) := by field_simp; ring
+    rw [hid] at hs
+    have hm := mul_le_mul_of_nonneg_right (show 1+9*x/8 ≤ 3 by linarith only [hxsmall]) hd
+    linarith only [hs,hm]
+  by_cases hxmid : x ≤ 2
+  · have hs := small_order_one (by linarith : 16/9 ≤ x) hxmid hal hax hxb hδ heq
+    have hx0 : 0 < x := by linarith
+    have hd : 0 ≤ be/x-1 := by rw [sub_nonneg,le_div_iff₀ hx0]; linarith only [hxb]
+    have hid : be/x+1*(be-x) = 1+(1+x)*(be/x-1) := by field_simp; ring
+    rw [hid] at hs
+    have hm := mul_le_mul_of_nonneg_right (show 1+x ≤ 3 by linarith only [hxmid]) hd
+    linarith only [hs,hm]
+  have hxlarge : 2 ≤ x := le_of_lt (lt_of_not_ge hxmid)
   have hx0 : 0 < x := by linarith
   have hal0 : 0 < al := by linarith
   have hbe0 : 0 < be := by linarith
@@ -409,43 +414,9 @@ theorem ss_small_upper_order {x al be : ℝ} (hx : 1 < x) (hx2 : x ≤ 13 / 6) (
       convert this using 1
       ring)
     (fun z hz => div_pos (by linarith [hz.2]) hx0) hlt' ?_
-  intro z hz hzeq
-  have hz1 := hz.2
-  have hz19 : 19 / 20 < z := lt_of_le_of_lt hq₁19 hz.1
-  have hPz := hlt' z (Ioc_subset_Icc_self hz)
-  have hp0 : 0 < (3 - 2 * z) / x := div_pos (by linarith) hx0
-  obtain ⟨hM, hξ, hη, -⟩ := ord_contact_pos hx hp0 hPz hz1
-  have hhz : (1 - z) * (x - 1 + 3) < x - 1 := by
-    rw [div_lt_iff₀ hx0] at hPz
-    linarith
-  have hsc := ss_small_contact (z := x - 1) (h := 1 - z) (by linarith) (by linarith)
-    (by linarith) (by linarith) hhz
-  simp only [show 1 + (x - 1) = x by ring, show 1 - (1 - z) = z by ring] at hsc
-  -- `u ≤ ũ` (two terms of `2 artanh`, `ss_log_ge_cubic`)
-  have hu := ord_sec_le_ut hp0 hPz
-  set ut := 1 + 1 / ((1 + (3 - 2 * z) / x) * (1 + z)) -
-      (2 * ((z - (3 - 2 * z) / x) / (2 + (3 - 2 * z) / x + z)) +
-        2 / 3 * ((z - (3 - 2 * z) / x) / (2 + (3 - 2 * z) / x + z)) ^ 3) /
-        (z - (3 - 2 * z) / x) with hut
-  have hMe : (2 * z - (3 - 2 * z) / x) * x - z ^ 2 = 2 * z * (x + 1) - z ^ 2 - 3 := by
-    field_simp; ring
-  rw [hMe] at hM ⊢
-  have k1 := mul_le_mul_of_nonneg_left
-    (mul_le_mul_of_nonneg_right (by linarith : m2Sec ((3 - 2 * z) / x) 1 z - ss_gB 1 z ≤
-      ut - ss_gB 1 z) hM.le) hx0.le
-  have k2 := mul_le_mul_of_nonneg_left (by linarith :
-    ss_gB 1 ((3 - 2 * z) / x) - ut ≤ ss_gB 1 ((3 - 2 * z) / x) - m2Sec ((3 - 2 * z) / x) 1 z)
-    (mul_nonneg (by positivity) (by linarith) : (0:ℝ) ≤ 2 * z * (x - z))
-  have key : x * ((m2Sec ((3 - 2 * z) / x) 1 z - ss_gB 1 z) * (2 * z * (x + 1) - z ^ 2 - 3)) <
-      x * (-(-(2 / x)) * (ss_gB 1 ((3 - 2 * z) / x) - m2Sec ((3 - 2 * z) / x) 1 z) * z *
-        (x - z)) := by
-    have e2 : x * (-(-(2 / x)) * (ss_gB 1 ((3 - 2 * z) / x) - m2Sec ((3 - 2 * z) / x) 1 z) * z *
-        (x - z)) = 2 * z * (x - z) *
-          (ss_gB 1 ((3 - 2 * z) / x) - m2Sec ((3 - 2 * z) / x) 1 z) := by
-      field_simp
-    rw [e2]
-    linarith
-  exact lt_of_mul_lt_mul_left key hx0.le
+  intro z hz _
+  simpa only [neg_neg] using ss_small_contact_max hxlarge hx2
+    (hq₁19.trans hz.1.le) hz.2
 
 /-- The quadratic barrier `B(δ) = 1 + c(x)δ + δ²/(1 + 4δ)` of the rational quadratic order. -/
 noncomputable def ordQB (x d : ℝ) : ℝ :=

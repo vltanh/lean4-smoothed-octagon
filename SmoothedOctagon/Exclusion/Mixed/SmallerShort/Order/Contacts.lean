@@ -6,8 +6,8 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Basic
 # Smaller-short window: certificates of the order contacts
 
 The logarithm bounds and the polynomial identities behind the contact inequalities of
-`SmallerShort/Order.lean` (the Padé gap, the strong lower order, the small-shape upper
-order and the rational quadratic order). Every identity is a
+`SmallerShort/Order.lean` (the Padé gap, the strong lower order and the rational
+quadratic order). Every identity is a
 two-variable rational identity checked by `field_simp`/`ring`; every sign is a positive Bernstein
 form, a termwise bound or a one-sign-change row.
 
@@ -18,8 +18,6 @@ form, a termwise bound or a one-sign-change row.
 * Strong contact: the quartic `ordSP`, `ord_strong_eq` (the factored contact function),
   `ord_strong_bern` (its
   Bernstein form on `[q_min, 1]`, without `x ≤ 9`).
-* Small-shape contact: `ord_ut_gaps`, `ord_sec_le_ut`, `ord_K_eq`,
-  `ord_K_pos`.
 * Quadratic contact: the rows `ordQ0`, …, `ordQ7` of the table and their signs `ord_row0`, …,
   `ord_row7`, `ord_quad_Q_nonneg`, `ord_quad_eq` (the cleared contact function is `d Q(d, x)`).
 -/
@@ -116,162 +114,6 @@ theorem ord_strong_bern (x q : ℝ) : (7 * x + 1) ^ 3 * (x - 1) ^ 2 * ordSP x q 
           (x * (11 * x + 5) * q - (4 * x ^ 2 + 11 * x + 1)) ^ 3 * (1 - q) +
         2 * (313 * x ^ 2 + 38 * x + 1) * (x * (11 * x + 5) * q - (4 * x ^ 2 + 11 * x + 1)) ^ 4 := by
   unfold ordSP
-  ring
-
-/-- The two-term `artanh` majorant of the secant against its endpoints:
-`g(p) - ũ` and `ũ - g(q)` in closed form. -/
-
-theorem ord_ut_gaps {p q : ℝ} (hp : 0 < p) (hpq : p < q) :
-    ss_gB 1 p - (1 + 1 / ((1 + p) * (1 + q)) -
-        (2 * ((q - p) / (2 + p + q)) + 2 / 3 * ((q - p) / (2 + p + q)) ^ 3) / (q - p)) =
-      (q - p) * (12 + 14 * q + 5 * q ^ 2 + 10 * p - 4 * p * q - 8 * p * q ^ 2 - 3 * p * q ^ 3 -
-        p ^ 2 - 14 * p ^ 2 * q - 4 * p ^ 2 * q ^ 2 - 2 * p ^ 3 - 5 * p ^ 3 * q) /
-        (3 * (1 + p) ^ 2 * (1 + q) * (p + q + 2) ^ 3) ∧
-    (1 + 1 / ((1 + p) * (1 + q)) -
-        (2 * ((q - p) / (2 + p + q)) + 2 / 3 * ((q - p) / (2 + p + q)) ^ 3) / (q - p)) -
-        ss_gB 1 q =
-      (q - p) * (12 + 10 * q - q ^ 2 - 2 * q ^ 3 + 14 * p - 4 * p * q - 14 * p * q ^ 2 -
-        5 * p * q ^ 3 + 5 * p ^ 2 - 8 * p ^ 2 * q - 4 * p ^ 2 * q ^ 2 - 3 * p ^ 3 * q) /
-        (3 * (1 + p) * (1 + q) ^ 2 * (p + q + 2) ^ 3) := by
-  have hq : 0 < q := by linarith
-  have h1 : (1 + p) ≠ 0 := by positivity
-  have h2 : (1 + q) ≠ 0 := by positivity
-  have h3 : (2 + p + q) ≠ 0 := by positivity
-  have h4 : (p + q + 2) ≠ 0 := by positivity
-  have h5 : q - p ≠ 0 := by linarith
-  unfold ss_gB
-  constructor
-  · field_simp
-    ring
-  · field_simp
-    ring
-
-/-- The two-term `artanh` majorant: `avg(p, q) ≤ ũ` for `0 < p < q`
-(`ss_log_ge_cubic` at `(1 + q)/(1 + p)`). -/
-theorem ord_sec_le_ut {p q : ℝ} (hp : 0 < p) (hpq : p < q) :
-    m2Sec p 1 q ≤ 1 + 1 / ((1 + p) * (1 + q)) -
-      (2 * ((q - p) / (2 + p + q)) + 2 / 3 * ((q - p) / (2 + p + q)) ^ 3) / (q - p) := by
-  have hq : 0 < q := hp.trans hpq
-  have hqp : 0 < q - p := by linarith
-  have hY : 1 ≤ (q + 1) / (p + 1) := by rw [le_div_iff₀ (by positivity)]; linarith
-  have hlog := ss_log_ge_cubic hY
-  have hw : ((q + 1) / (p + 1) - 1) / ((q + 1) / (p + 1) + 1) = (q - p) / (2 + p + q) := by
-    have : p + 1 ≠ 0 := by positivity
-    have : 2 + p + q ≠ 0 := by positivity
-    field_simp
-    ring
-  rw [hw] at hlog
-  rw [m2Sec_of_ne hpq.ne]
-  have k := mul_le_mul_of_nonneg_left hlog (by positivity : (0:ℝ) ≤ 1 / (q - p))
-  have e1 : (1:ℝ) ^ 2 / ((p + 1) * (q + 1)) = 1 / ((1 + p) * (1 + q)) := by ring
-  have e2 : (2 * ((q - p) / (2 + p + q)) + 2 / 3 * ((q - p) / (2 + p + q)) ^ 3) / (q - p) =
-      1 / (q - p) * (2 * ((q - p) / (2 + p + q)) + 2 / 3 * ((q - p) / (2 + p + q)) ^ 3) := by ring
-  rw [e1, e2]
-  linarith
-
-/-- The polynomial `K(z, h)` of `ord_K_eq` is positive on the small-shape contact
-domain. -/
-
-theorem ord_K_pos {z h : ℝ} (hz : 0 < z) (hz7 : z ≤ 7 / 6) (hh : 0 ≤ h) (hh20 : h ≤ 1 / 20)
-    (hhz : h * (z + 3) < z) :
-    0 < -2 * z ^ 2 * (19 * z ^ 3 + 24 * z ^ 2 - 48 * z - 64) +
-      6 * h * z ^ 2 * (7 * z ^ 3 - 31 * z ^ 2 - 92 * z - 48) +
-      h ^ 2 * (10 * z ^ 5 + 303 * z ^ 4 + 450 * z ^ 3 + 248 * z ^ 2 - 96 * z - 384) +
-      h ^ 3 * (-18 * z ^ 5 + 72 * z ^ 4 + 435 * z ^ 3 + 1178 * z ^ 2 + 2040 * z + 864) +
-      h ^ 4 * (4 * z ^ 5 - 135 * z ^ 4 + 180 * z ^ 3 + 257 * z ^ 2 + 108 * z + 456) +
-      h ^ 5 * (30 * z ^ 4 - 297 * z ^ 3 - 4 * z ^ 2 + 111 * z + 120) +
-      6 * h ^ 6 * (11 * z ^ 3 - 20 * z ^ 2 + 19 * z + 6) + 32 * h ^ 7 * (z ^ 2 + 3) := by
-  have hz0 := hz.le
-  have hz2 : 0 < z ^ 2 := by positivity
-  have hzz2 : z ^ 2 ≤ (7 / 6) ^ 2 := pow_le_pow_left₀ hz0 hz7 2
-  have hzz3 : z ^ 3 ≤ (7 / 6) ^ 3 := pow_le_pow_left₀ hz0 hz7 3
-  have hz3 := pow_nonneg hz0 3
-  have hz4 := pow_nonneg hz0 4
-  have hz5 := pow_nonneg hz0 5
-  -- `h ≤ z/3`, `(h(z + 3))² ≤ z²` and `9h² ≤ z²`
-  have hh3 : 3 * h ≤ z := by have := mul_nonneg hh hz0; linarith
-  have hhsq : (h * (z + 3)) ^ 2 ≤ z ^ 2 := pow_le_pow_left₀ (by positivity) hhz.le 2
-  have hh2 : (3 * h) ^ 2 ≤ z ^ 2 := pow_le_pow_left₀ (by positivity) hh3 2
-  -- the nonnegative higher terms
-  have t3 :
-      0 ≤ h ^ 3 * (-18 * z ^ 5 + 72 * z ^ 4 + 435 * z ^ 3 + 1178 * z ^ 2 + 2040 * z + 864) := by
-    have := mul_le_mul_of_nonneg_left hzz2 hz3
-    have : 0 ≤ -18 * z ^ 5 + 72 * z ^ 4 + 435 * z ^ 3 + 1178 * z ^ 2 + 2040 * z + 864 := by
-      linarith
-    positivity
-  have t4 :
-      0 ≤ h ^ 4 * (4 * z ^ 5 - 135 * z ^ 4 + 180 * z ^ 3 + 257 * z ^ 2 + 108 * z + 456) := by
-    have := mul_le_mul_of_nonneg_left hz7 hz3
-    have : 0 ≤ 4 * z ^ 5 - 135 * z ^ 4 + 180 * z ^ 3 + 257 * z ^ 2 + 108 * z + 456 := by
-      linarith
-    positivity
-  have t6 : 0 ≤ 6 * h ^ 6 * (11 * z ^ 3 - 20 * z ^ 2 + 19 * z + 6) := by
-    have := mul_nonneg hz0 (sq_nonneg (z - 10 / 11))
-    have : 0 ≤ 11 * z ^ 3 - 20 * z ^ 2 + 19 * z + 6 := by linarith
-    positivity
-  have t7 : 0 ≤ 32 * h ^ 7 * (z ^ 2 + 3) := by positivity
-  -- `h⁵`: the coefficient is at least `-478`, and `478 h⁵ ≤ z²/100`
-  have t5 : -(z ^ 2 / 100) ≤ h ^ 5 * (30 * z ^ 4 - 297 * z ^ 3 - 4 * z ^ 2 + 111 * z + 120) := by
-    have hc : -478 ≤ 30 * z ^ 4 - 297 * z ^ 3 - 4 * z ^ 2 + 111 * z + 120 := by linarith
-    have h5 : 0 ≤ h ^ 5 := by positivity
-    have k1 := mul_le_mul_of_nonneg_left hc h5
-    have hh35 : h ^ 3 ≤ (1 / 20) ^ 3 := pow_le_pow_left₀ hh hh20 3
-    have k2 := mul_le_mul_of_nonneg_right hh35 (sq_nonneg h)
-    linarith
-  -- `h`: drop `42 h z⁵`, use `h ≤ 1/20`
-  have t1 : -(3 / 10) * (z ^ 2 * (31 * z ^ 2 + 92 * z + 48)) ≤
-      6 * h * z ^ 2 * (7 * z ^ 3 - 31 * z ^ 2 - 92 * z - 48) := by
-    have hA : 0 ≤ z ^ 2 * (31 * z ^ 2 + 92 * z + 48) := by positivity
-    have k1 := mul_le_mul_of_nonneg_right hh20 hA
-    have k2 : 0 ≤ h * z ^ 5 := by positivity
-    linarith
-  -- `h²`: `(96z + 384)h² ≤ (128/3)(z + 3)²h² ≤ (128/3)z²`
-  have t2 : -(128 / 3) * z ^ 2 ≤
-      h ^ 2 * (10 * z ^ 5 + 303 * z ^ 4 + 450 * z ^ 3 + 248 * z ^ 2 - 96 * z - 384) := by
-    have hpos : 0 ≤ h ^ 2 * (10 * z ^ 5 + 303 * z ^ 4 + 450 * z ^ 3 + 248 * z ^ 2) := by
-      positivity
-    have hle : 96 * z + 384 ≤ 128 / 3 * (z + 3) ^ 2 := by have := sq_nonneg z; linarith
-    have k := mul_le_mul_of_nonneg_right hle (sq_nonneg h)
-    linarith
-  -- the cubic `J̃` is positive on `[0, 7/6]`
-  have hJ : 0 < -38 * z ^ 3 - 573 / 10 * z ^ 2 + 342 / 5 * z + 21277 / 300 := by
-    have k1 := mul_nonneg hz0 (by linarith : (0:ℝ) ≤ 7 / 6 - z)
-    have k2 := mul_nonneg (sq_nonneg z) (by linarith : (0:ℝ) ≤ 7 / 6 - z)
-    linarith
-  have hJ2 : 0 < z ^ 2 * (-38 * z ^ 3 - 573 / 10 * z ^ 2 + 342 / 5 * z + 21277 / 300) :=
-    mul_pos hz2 hJ
-  linarith
-
-/-- `K = x³[2q(x - q)(1 + q)b(p, q) - x M (1 + p)c(p, q)]` at the contact `p = (3 - 2q)/x`. -/
-theorem ord_K_eq {z h : ℝ} (hz : 0 < z) :
-    (1 + z) ^ 3 * (2 * (1 - h) * (1 + z - (1 - h)) * (1 + (1 - h)) *
-        (12 + 14 * (1 - h) + 5 * (1 - h) ^ 2 + 10 * ((3 - 2 * (1 - h)) / (1 + z)) -
-          4 * ((3 - 2 * (1 - h)) / (1 + z)) * (1 - h) -
-          8 * ((3 - 2 * (1 - h)) / (1 + z)) * (1 - h) ^ 2 -
-          3 * ((3 - 2 * (1 - h)) / (1 + z)) * (1 - h) ^ 3 - ((3 - 2 * (1 - h)) / (1 + z)) ^ 2 -
-          14 * ((3 - 2 * (1 - h)) / (1 + z)) ^ 2 * (1 - h) -
-          4 * ((3 - 2 * (1 - h)) / (1 + z)) ^ 2 * (1 - h) ^ 2 -
-          2 * ((3 - 2 * (1 - h)) / (1 + z)) ^ 3 -
-          5 * ((3 - 2 * (1 - h)) / (1 + z)) ^ 3 * (1 - h)) -
-      (1 + z) * (2 * (1 - h) * (1 + z + 1) - (1 - h) ^ 2 - 3) *
-        (1 + (3 - 2 * (1 - h)) / (1 + z)) *
-        (12 + 10 * (1 - h) - (1 - h) ^ 2 - 2 * (1 - h) ^ 3 + 14 * ((3 - 2 * (1 - h)) / (1 + z)) -
-          4 * ((3 - 2 * (1 - h)) / (1 + z)) * (1 - h) -
-          14 * ((3 - 2 * (1 - h)) / (1 + z)) * (1 - h) ^ 2 -
-          5 * ((3 - 2 * (1 - h)) / (1 + z)) * (1 - h) ^ 3 +
-          5 * ((3 - 2 * (1 - h)) / (1 + z)) ^ 2 -
-          8 * ((3 - 2 * (1 - h)) / (1 + z)) ^ 2 * (1 - h) -
-          4 * ((3 - 2 * (1 - h)) / (1 + z)) ^ 2 * (1 - h) ^ 2 -
-          3 * ((3 - 2 * (1 - h)) / (1 + z)) ^ 3 * (1 - h))) =
-    -2 * z ^ 2 * (19 * z ^ 3 + 24 * z ^ 2 - 48 * z - 64) +
-      6 * h * z ^ 2 * (7 * z ^ 3 - 31 * z ^ 2 - 92 * z - 48) +
-      h ^ 2 * (10 * z ^ 5 + 303 * z ^ 4 + 450 * z ^ 3 + 248 * z ^ 2 - 96 * z - 384) +
-      h ^ 3 * (-18 * z ^ 5 + 72 * z ^ 4 + 435 * z ^ 3 + 1178 * z ^ 2 + 2040 * z + 864) +
-      h ^ 4 * (4 * z ^ 5 - 135 * z ^ 4 + 180 * z ^ 3 + 257 * z ^ 2 + 108 * z + 456) +
-      h ^ 5 * (30 * z ^ 4 - 297 * z ^ 3 - 4 * z ^ 2 + 111 * z + 120) +
-      6 * h ^ 6 * (11 * z ^ 3 - 20 * z ^ 2 + 19 * z + 6) + 32 * h ^ 7 * (z ^ 2 + 3) := by
-  have : 1 + z ≠ 0 := by positivity
-  field_simp
   ring
 
 /-- Row 0 of the quadratic contact table: the coefficient `Q_0(d)` of `X^0` in `Q(d, 2 + X)`. -/
