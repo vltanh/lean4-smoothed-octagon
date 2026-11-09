@@ -126,7 +126,9 @@ sliding packings.
 [`SmoothedOctagon.lean`](SmoothedOctagon.lean), the root of the library, restates the three
 theorems of [`Palomar/Challenge.lean`](Palomar/Challenge.lean) word for word and proves them,
 with no hypothesis and no `sorry`. `scripts/Audit.lean` checks that all 8,294 declarations of the
-library, and the three theorems, depend only on the standard axioms.
+library, and the three theorems, depend only on the standard axioms. The library builds with no
+warning; the only ones in a build are the three `sorry`s of the Challenge, which states the
+theorems without proving them.
 
 | Stage | Lean |
 | --- | --- |
