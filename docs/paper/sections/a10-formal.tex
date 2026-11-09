@@ -50,9 +50,10 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 
 \subsection{The scalar estimates}\label{app:formal-scalar}
 
-\noindent\textit{Working-draft progress.}
-The current pass covers groups 1--24; groups 25--38 are deferred.
-Group numbers stay fixed as entries move between statuses.
+\noindent\textit{Replacement status (working draft).}
+Of the 24 groups in the current pass, 12 are complete and committed,
+one is being integrated, and 11 remain. Groups 25--38 are deferred.
+The numbers identify the same groups throughout this list.
 
 \begin{center}
 \begin{tabular}{@{}lrl@{}}
@@ -61,26 +62,29 @@ Status & Count & Group numbers\\
 \midrule
 Complete & 12 & 1, 7--8, 13--21\\
 In progress & 1 & 22\\
-Remaining & 11 & 2--6, 9--12, 23--24\\
+Pending & 11 & 2--6, 9--12, 23--24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\medskip\noindent\textbf{In progress.}
-These proofs are being formalized and integrated; this group is not yet complete.
+\medskip\noindent\textbf{In progress: 1 group.}
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
 \item[22.] \emph{S6 additional angle and shape concavity.}
-The exact integral cancellation for the additional shear angle and the three
-derivative signs for shape concavity compile in isolation. Connect these proofs
-to the physical score estimate and the shape-endpoint reduction, replacing the
-fixed angle allowance $1/800000$ by the exact arctangent estimate.
-The final polynomial endpoint comparisons remain in group~24.
+\begin{itemize}[leftmargin=1.3em,itemsep=2pt,topsep=2pt]
+\item Proved in a compiled draft: the exact integral cancellation for the
+additional shear angle, shape concavity, and their use through the physical
+score and completion theorem. The score estimate has no fixed angle allowance.
+\item Next: integrate the draft into the library, run the full build and axiom
+audit, and check the installed proof against the paper.
+\item Still assigned to group~24: the final polynomial endpoint comparisons
+and octagon-cost constants.
+\end{itemize}
 \end{enumerate}
 
-\medskip\noindent\textbf{Remaining in the current pass.}
-Each item states the work needed to integrate the paper's argument into Lean.
+\medskip\noindent\textbf{Pending: 11 groups.}
+Each item gives the next proof or integration step.
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
 \item[2.] \emph{Octagon cost and spectral caps.}
@@ -142,7 +146,7 @@ Formalize the corner arithmetic and the direct octagon-cost comparison from
 group~2, replacing the quadratic norm floor, polynomial angle bounds and box signs.
 \end{enumerate}
 
-\medskip\noindent\textbf{Complete and committed.}
+\medskip\noindent\textbf{Complete and committed: 12 groups.}
 Each group below is integrated into the paper and Lean and has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
@@ -195,7 +199,7 @@ along the exact tangent curve. The physical continuation and completion theorems
 accept $-hR_x>2\nu$.
 \end{enumerate}
 
-\medskip\noindent\textbf{Deferred: outside the current pass.}
+\medskip\noindent\textbf{Deferred: 14 groups, outside the current pass.}
 The existing Lean proofs remain in use for these groups.
 
 \begin{enumerate}[start=25,label=\arabic*.,leftmargin=2em,itemsep=3pt]
