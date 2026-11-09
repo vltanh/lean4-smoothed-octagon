@@ -60,12 +60,7 @@ JOBS = {
  'nsfCQC': dict(pkl='QC2.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
  'nsfCEn': dict(pkl='Ehat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
  'nsfCPn': dict(pkl='Phat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
- 'nsfCLRa': dict(pkl='lr_k1.pkl', h0=R(1,3), h1=R(1,2), jlo=0, g=[R(0),R(1)], gstr='h', kind='zpar'),
  'nsfCLRb': dict(pkl='lr_ko.pkl', h0=R(1,3), h1=R(1,2), jlo=0, g=[R(0),R(1)], gstr='h', kind='sym', Yc=R(1)),
- 'nsfCLGa': dict(pkl='lgA1.pkl', h0=R(1,4), h1=R(1,3), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
- 'nsfCLGb': dict(pkl='lgA2.pkl', h0=R(1,4), h1=R(1,3), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
- 'nsfCLGc': dict(pkl='lgB1.pkl', h0=R(1,5), h1=R(1,4), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
- 'nsfCLGd': dict(pkl='lgB2.pkl', h0=R(1,5), h1=R(1,4), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
 }
 DOC = {
  'nsfCChi': 'the unit-shape residual `N₁` with `v ↦ V₂`, `log q ↦ L₊` for `q ≤ 4W/(7p)`',
@@ -73,21 +68,14 @@ DOC = {
  'nsfCQC': 'the leading coefficient `𝒟C₂` at `k = 1`, `v = V`)',
  'nsfCEn': 'the norm derivative `-2t²p²W³N_v(3/4)`-(8))',
  'nsfCPn': 'the Casimir excess `3125t²p²W⁴Q²(N(V) - 16s²·9193/50000)`-(11))',
- 'nsfCLRa': 'the low-ratio residual `Ĝ` at the unit shape `k = 1`)',
  'nsfCLRb': 'the low-ratio residual `Ĝ` at the order shape `k = 2t + x`',
- 'nsfCLGa': 'the large-gap residual `G` at `k = 1`',
- 'nsfCLGb': 'the large-gap residual `G` at `k = 1 + j`',
- 'nsfCLGc': 'the high-ratio residual `G₄` at `k = 29t²/4`)',
- 'nsfCLGd': 'the high-ratio residual `G₄` at `k = 1 + j`',
 }
 # the output module and the title of each certificate
 OUT = {
  'nsfCChi': 'SmallGap/ChiSigns.lean', 'nsfCQD': 'EventFactor/DiscriminantSigns.lean',
  'nsfCQC': 'EventFactor/LeadingSigns.lean', 'nsfCEn': 'SmallGap/NormDerivativeSigns.lean',
- 'nsfCPn': 'SmallGap/CasimirExcessSigns.lean', 'nsfCLRa': 'LowRatio/UnitShapeSigns.lean',
- 'nsfCLRb': 'LowRatio/OrderShapeSigns.lean', 'nsfCLGa': 'LargeGap/UnitShapeSigns.lean',
- 'nsfCLGb': 'LargeGap/UpperShapeSigns.lean', 'nsfCLGc': 'LargeGap/HighRatioSigns.lean',
- 'nsfCLGd': 'LargeGap/HighRatioUpperSigns.lean',
+ 'nsfCPn': 'SmallGap/CasimirExcessSigns.lean',
+ 'nsfCLRb': 'LowRatio/OrderShapeSigns.lean',
 }
 TITLE = {
  'nsfCChi': 'the unit-shape residual of the small-gap ratio bound',
@@ -95,12 +83,7 @@ TITLE = {
  'nsfCQC': 'the sign of the event-factor leading coefficient',
  'nsfCEn': 'the sign of the norm derivative',
  'nsfCPn': 'the sign of the Casimir excess',
- 'nsfCLRa': 'the low-ratio residual at the unit shape',
  'nsfCLRb': 'the low-ratio residual at the order shape',
- 'nsfCLGa': 'the large-gap residual at the unit shape',
- 'nsfCLGb': 'the large-gap residual at the upper shape',
- 'nsfCLGc': 'the high-ratio residual at the scale face',
- 'nsfCLGd': 'the high-ratio residual at the upper shape',
 }
 if __name__ == '__main__':
     names = sys.argv[1:]
