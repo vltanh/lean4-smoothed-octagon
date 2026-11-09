@@ -455,10 +455,14 @@ also gives the winding bound behind the singular clearance (\cref{prop:clearance
 
 \begin{proof}[Proof of \cref{cor:casimir-cap}]
 By the discussion before \cref{prop:cost-casimir}, $\Lambda_1(0)$ is negative elliptic with
-$\kappa^2=12\gamma^2$. The function $4\pi\kappa/(2\kappa+3)$ increases in $\kappa>0$.
-At $\kappa_0=2\sqrt5/3$ its value is $8\pi\sqrt5/(9+4\sqrt5)$, which exceeds $\Aoct$
-by \cref{lem:octagon-cost-comparison}. Since competitiveness bounds the cost by $\Aoct$,
-\cref{prop:cost-casimir} forces $\kappa<\kappa_0$ and hence $\gamma^2<5/27$.
+$\kappa^2=12\gamma^2$.
+Competitiveness, \cref{prop:cost-casimir} and \cref{lem:octagon-cost-comparison} give
+\[
+ \frac{4\kappa}{2\kappa+3}\le\frac{\cost}{\pi}
+ \le\frac{\Aoct}{\pi}<\frac{8\sqrt5}{9+4\sqrt5}.
+\]
+Clearing the positive denominators gives $\kappa<2\sqrt5/3$,
+and hence $\gamma^2<5/27$.
 For a mixed period, $\gamma^2>0$ by \cref{prop:ellipticity}, and $d_0\ge3/32$ by
 \cref{cor:rev-mixed}.
 \end{proof}

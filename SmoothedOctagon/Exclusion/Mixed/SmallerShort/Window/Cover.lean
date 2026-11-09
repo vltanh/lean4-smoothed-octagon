@@ -1,8 +1,7 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Residual
-public import Mathlib.Analysis.Real.Pi.Bounds
-public import Mathlib.Analysis.Complex.ExponentialBounds
+public import SmoothedOctagon.Period.OctagonCost
 
 /-!
 # Case M2, smaller-short side: the window point satisfies every residual of the cover
@@ -23,25 +22,8 @@ namespace SmoothedOctagon
 
 open SmallerShort Real
 
-/-- `A_oct < 2501/800` (as `ff_octagonCost_lt'` of case F). -/
-private lemma ss_octagonCost_lt : octagonCost < 2501 / 800 := by
-  have h12 : √12 < 3.4641017 := by
-    rw [Real.sqrt_lt' (by norm_num)]; norm_num
-  have h32 : 5.6568542 < √32 := by
-    rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have h8 : 2.8284271 < √8 := by
-    rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have hl := Real.log_two_gt_d9
-  have h12p : 0 ≤ √12 := Real.sqrt_nonneg _
-  have hD : 0 < √8 - 1 := by linarith
-  have hN : 0 ≤ 8 - √32 - Real.log 2 := by
-    have : √32 < 5.6569 := by rw [Real.sqrt_lt' (by norm_num)]; norm_num
-    have := Real.log_two_lt_d9
-    linarith
-  rw [octagonCost, octagonDensity, mul_div_assoc', div_lt_iff₀ hD]
-  have : √12 * (8 - √32 - Real.log 2) ≤ 3.4641017 * (8 - √32 - Real.log 2) :=
-    mul_le_mul_of_nonneg_right h12.le hN
-  nlinarith
+/-- The positive log moments give the cover's cost ceiling. -/
+private lemma ss_octagonCost_lt : octagonCost < 2501/800 := octagonCost_lt_cover
 
 /-- **The centred angle**: `arctan(√3 Y/X) = π/6 + arctan s`,
 `s = (3Y - X)/(√3(X + Y))`, for `X, Y > 0`. -/
@@ -326,7 +308,7 @@ theorem ss_f27 : 0 ≤ D.ss_pt.f27 := by
   rw [ss_arctan_split hAA h2] at h5
   rw [Point.f27, Point.excess, Point.thetaCentered]
   have hk : 0 ≤ D.ss_pt.kap := Real.sqrt_nonneg _
-  have hpi := Real.pi_gt_d4
+  have hpi := octagon_pi_gt_cover
   have hoct := ss_octagonCost_lt
   have : (D.ss_pt.kap + 3 / 2) * (6283 / 12000 - arctan ((3 * D.ss_pt.BB - D.ss_pt.AA) /
       (√3 * (D.ss_pt.AA + D.ss_pt.BB)))) ≤ (D.ss_pt.kap + 3 / 2) * (π / 3 - (π / 6 +

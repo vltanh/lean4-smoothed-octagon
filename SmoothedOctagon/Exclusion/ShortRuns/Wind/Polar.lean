@@ -81,9 +81,7 @@ theorem wind_polar (P : NormalPeriod) (hc : P.IsCompetitive) :
   have hlow : reinhardtCost P.T Y < Real.pi := by
     rw [hcosteq]
     have h1 : reinhardtCost P.T P.X ≤ octagonCost := hc
-    have h2 := Reduction.clr_octagonCost_lt
-    have h3 := Real.pi_gt_d2
-    linarith
+    exact lt_of_le_of_lt h1 Reduction.octagonCost_lt_pi
   have hα := lowCost_reflectedFirstRow_angle hT hGC hdet hYC hD hstar hG0 hGT hlow
   -- the polar curve
   set zc : ℝ → Fin 2 → ℝ := fun t ↦ ![(G t 0 0 + G t 1 1) / 2, (G t 1 0 - G t 0 1) / 2]

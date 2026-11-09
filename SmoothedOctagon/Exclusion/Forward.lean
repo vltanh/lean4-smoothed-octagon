@@ -25,6 +25,47 @@ These form an `ff_Win`, which the scalar argument of `Forward/Core.lean` exclude
 
 namespace SmoothedOctagon
 
+open Real
+
+private theorem forward_spectral_exact_cap {x c : ℝ} (hx : 0 < x)
+    (h : π/3*(sqrt x+3/2) ≤ c) (hc : c ≤ octagonCost) :
+    x/12 ≤ (3*octagonCost/π-3/2)^2/12 ∧
+      (3*octagonCost/π-3/2)^2/12 < 9193/50000 := by
+  let M : ℝ := 3*octagonCost/π-3/2
+  have hs : sqrt x ≤ M := by
+    dsimp [M]
+    rw [le_sub_iff_add_le,le_div_iff₀ Real.pi_pos]
+    nlinarith only [h.trans hc]
+  have hM : 0 < M := lt_of_lt_of_le (sqrt_pos.2 hx) hs
+  have hMu : M < 101/68 := by
+    dsimp [M]
+    rw [mul_div_assoc]
+    linarith only [octagonCost_ratio_lt]
+  have hs2 : x ≤ M^2 := by
+    have hh := (sq_le_sq₀ (sqrt_nonneg x) hM.le).mpr hs
+    rwa [sq_sqrt hx.le] at hh
+  have hM2 : M^2 < (101/68:ℝ)^2 :=
+    (sq_lt_sq₀ hM.le (by norm_num)).mpr hMu
+  constructor
+  · change x/12 ≤ M^2/12
+    exact div_le_div_of_nonneg_right hs2 (by norm_num)
+  · change M^2/12 < 9193/50000
+    nlinarith only [hM2]
+
+namespace NormalPeriod
+variable (P : NormalPeriod)
+
+/-- A competitive all-forward period satisfies the exact octagon spectral cap. -/
+theorem ff_competitive_cap_exact (hc : P.IsCompetitive) (hF : P.rep.AllForward) :
+    P.costateCycle.gam2 0 ≤ (3*octagonCost/π-3/2)^2/12 ∧
+      (3*octagonCost/π-3/2)^2/12 < 9193/50000 := by
+  obtain ⟨hdet,hcc⟩ := P.ff_cost_casimir hF
+  have hcap := forward_spectral_exact_cap hdet hcc hc
+  rw [P.det_Λ₁_zero] at hcap
+  exact ⟨by nlinarith only [hcap.1],hcap.2⟩
+
+end NormalPeriod
+
 /-- **Case F.** No competitive normal vertex period with at least six pieces has every switch
 forward. -/
 theorem forward_exclusion (P : NormalPeriod)

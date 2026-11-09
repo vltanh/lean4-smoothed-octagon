@@ -203,9 +203,8 @@ theorem df_window0 (hc : P.IsCompetitive) (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P
     have hb := hbd 0 P.T le_rfl hT.le le_rfl
     rw [← hcost] at hb
     have hc' : P.cost ≤ octagonCost := hc
-    have hA := wire_octagonCost_lt
-    have hpi := Real.pi_gt_three
-    have hpi' := Real.pi_lt_d2
+    have hA := Reduction.octagonCost_lt_pi
+    have hpi := Real.pi_pos
     have hn0 : n = 0 := by
       have h1 : (-1 : ℝ) < n := by
         by_contra h; push Not at h

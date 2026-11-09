@@ -340,6 +340,9 @@ import all SmoothedOctagon.Period.Costate
 import all SmoothedOctagon.Period.Defs
 import all SmoothedOctagon.Period.Elliptic
 import all SmoothedOctagon.Period.Hamiltonian
+import all SmoothedOctagon.Period.OctagonCost
+import all SmoothedOctagon.Period.OctagonCost.LogMoment
+import all SmoothedOctagon.Period.OctagonCost.PiMoment
 import all SmoothedOctagon.Period.Partition
 import all SmoothedOctagon.Period.Twist
 import all SmoothedOctagon.Period.VertexFlow

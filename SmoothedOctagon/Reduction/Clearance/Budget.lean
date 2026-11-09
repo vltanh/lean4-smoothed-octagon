@@ -3,7 +3,6 @@ module
 public import SmoothedOctagon.Reduction.Clearance.Winding
 public import SmoothedOctagon.Period.Twist
 public import SmoothedOctagon.Period.Hamiltonian
-public import Mathlib.Analysis.Complex.ExponentialBounds
 
 /-!
 # The complete-period budget inequality
@@ -21,29 +20,6 @@ Main API: `clr_budgetCoeff`, `clr_budgetOct`, `clr_budget`, `clr_abs_lam_le`,
 namespace SmoothedOctagon.Reduction
 
 open SmoothedPolygons MeasureTheory Set Real
-
-/-! ### The numerical margin -/
-
-/-- `A_oct < 3.127` (`A_oct = √12 (8 - √32 - log 2)/(√8 - 1) ≈ 3.12605`), from rational
-enclosures of `√12`, `√32`, `√8` and `log 2`. -/
-theorem clr_octagonCost_lt : octagonCost < 3.127 := by
-  have h12 : √12 < 3.46411 := by
-    rw [Real.sqrt_lt' (by norm_num)]; norm_num
-  have h32 : 5.65685 < √32 := by
-    rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have h32' : √32 < 5.6569 := by
-    rw [Real.sqrt_lt' (by norm_num)]; norm_num
-  have h8 : 2.828427 < √8 := by
-    rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have hl := Real.log_two_gt_d9
-  have hl' := Real.log_two_lt_d9
-  have h12p : 0 ≤ √12 := Real.sqrt_nonneg _
-  have hD : 0 < √8 - 1 := by linarith
-  have hN : 0 ≤ 8 - √32 - Real.log 2 := by linarith
-  rw [octagonCost, octagonDensity, mul_div_assoc', div_lt_iff₀ hD]
-  have : √12 * (8 - √32 - Real.log 2) ≤ 3.46411 * (8 - √32 - Real.log 2) :=
-    mul_le_mul_of_nonneg_right h12.le hN
-  nlinarith
 
 /-! ### The budget inequality at the initial time -/
 

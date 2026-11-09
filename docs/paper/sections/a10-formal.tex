@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 116{,}000 lines in 373 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 117{,}000 lines in 376 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -50,8 +50,8 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 
 \subsection{Scalar proof replacement status}\label{app:formal-scalar}
 
-Groups 1--24 are the current scope: 15 are complete and committed,
-one is in progress, and eight are pending. Groups 25--38 are deferred.
+Groups 1--24 are the current scope: 16 are complete and committed,
+two are in progress, and six are pending. Groups 25--38 are deferred.
 Group numbers stay fixed as their status changes.
 
 \begin{center}
@@ -59,39 +59,36 @@ Group numbers stay fixed as their status changes.
 \toprule
 Status & Count & Group numbers\\
 \midrule
-Complete & 15 & 1, 4--5, 7--8, 13--22\\
-In progress & 1 & 2\\
-Pending & 8 & 3, 6, 9--12, 23--24\\
+Complete & 16 & 1--2, 4--5, 7--8, 13--22\\
+In progress & 2 & 3, 6\\
+Pending & 6 & 9--12, 23--24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\medskip\noindent\textbf{In progress (1).}
-
-\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
-\item[2.] \emph{Octagon cost and spectral caps.}
-The logarithm and inverse-sine moments, exact octagon-cost comparisons, and
-general and forward spectral caps compile in Lean.
-Remaining: finish the cover's fixed-constant comparisons, check the updated
-callers and complete the full verification.
-The M1 angle-gap domain belongs to group~3; the final smaller-short endpoint
-comparison and its cost constants belong to group~24.
-\end{enumerate}
-
-\medskip\noindent\textbf{Pending (8).}
+\medskip\noindent\textbf{In progress (2).}
+The auxiliary lemmas described here compile; integration into the full
+exclusion proofs remains.
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
 \item[3.] \emph{M1 symmetric angle gap.}
-Prove the angle gap on the paper's full domain $\gamma^2\le5/27$ and update
-both M1 callers; Lean currently uses $\gamma^2\le97969/529200$.
-The proof minimizes the reduced Gram expression at the symmetric centre
-and applies one logarithm bound.
+The constrained root exists uniquely, its derivative is proved, and the
+logarithmic shape ratio is minimized at the symmetric centre.
+Remaining: the radial logarithm comparison, the angle-gap conclusion on
+$\gamma^2\le5/27$, and both M1 callers. Their current domain is
+$\gamma^2\le97969/529200$.
 
 \item[6.] \emph{Forward sum tangent endpoints.}
-Prove the fixed tangent and endpoint signs using paired reciprocal integrals.
-Update the callers with group~10 to use the paper's norm-sum threshold $1/32$;
+The paired reciprocal integrals, logarithm identity and fixed tangent are proved.
+Remaining: connect the original row, prove the endpoint signs and update the
+callers with group~10 to use the paper's norm-sum threshold $1/32$;
 Lean currently uses $1/35$.
+\end{enumerate}
+
+\medskip\noindent\textbf{Pending (6).}
+
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
 
 \item[9.] \emph{Forward asymmetric neighbour.}
 Prove convexity in the neighbour shape after division by the positive row
@@ -107,7 +104,7 @@ bound $9193/50000$; Lean currently uses $23/125$.
 
 \item[11.] \emph{Mixed norm ceilings and duration.}
 Apply the proved logarithm bound to the incoming and central bridge-norm
-ceilings, and prove the duration comparison by Jensen's inequality.
+ceilings, and integrate the compiled Jensen-based duration proof.
 
 \item[12.] \emph{Mixed transported ceiling for $t<2/5$.}
 Reduce scale and increase the middle margin to reach one boundary.
@@ -127,7 +124,7 @@ from group~2.
 Update the final score callers together with group~23.
 \end{enumerate}
 
-\medskip\noindent\textbf{Complete and committed (15).}
+\newpage\noindent\textbf{Complete and committed (16).}
 These groups are integrated into the paper and Lean. Each has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
@@ -135,6 +132,12 @@ Lean build, standard-axiom audit, paper check and independent source review.
 \item[1.] \emph{Symbolic reduction.}
 Symbolic bounds on an arbitrary compact region prove the clearance and budget
 estimates, with the equilibrium, projective and finite-switch arguments.
+
+\item[2.] \emph{Octagon cost and spectral caps.}
+Positive logarithm and inverse-sine remainders prove the cost comparisons.
+The golden-unit threshold gives $\gamma^2<5/27$, and the spectral inequality
+gives the exact cap $\Gamma_{\rm oct}$. The cover comparisons use the same
+moments. The M1 domain and final S6 score comparison remain in groups~3 and~24.
 
 \item[4.] \emph{M1 two-centre product.}
 The exact centre-product bound gives a period cost greater than
@@ -293,7 +296,7 @@ Result & Lean declarations\\
 \cref{lem:gram} & \lean{CostateCycle.gram_pp}, \lean{CostateCycle.gram_mm} \\
 \cref{prop:ellipticity} & \lean{NormalPeriod.gam2_pos_of_mixed}, \lean{NormalPeriod.wire_gam2_pos_of_allForward} \\
 \cref{prop:cost-casimir} & \lean{NormalPeriod.cost_casimir}, \lean{el_winding} \\
-\cref{cor:casimir-cap} & New analytic proof of a weaker cap; compare \lean{NormalPeriod.gam2_le_cap} \\
+\cref{cor:casimir-cap} & \lean{NormalPeriod.gam2_lt_cap} \\
 \cref{thm:at-most-five} & \lean{period_le_five} \\
 \cref{lem:rev-N} & \lean{cstRevN_neg} \\
 \cref{lem:rev-identities} & \lean{cst_rev4_third_identity}, \lean{cst_rev4_second_identity} \\
@@ -306,7 +309,7 @@ Result & Lean declarations\\
 \cref{lem:rev-three-gram} & \lean{el_three_gram} \\
 \cref{lem:rev-cross-signs} & \lean{CostateCycle.cre_pos_pp}, \lean{CostateCycle.cre_neg_mm}, \lean{el_cross_bound} \\
 \cref{lem:rev-pade} & \lean{cst_log_pade}, \lean{cst_zeta_gt}, \lean{cst_eta_lt_zeta} \\
-\cref{lem:octagon-cost-comparison} & New analytic lemma in the text; not separately formalized \\
+\cref{lem:octagon-cost-comparison} & \lean{octagonCost_ratio_lt}, \lean{octagon_moment_ratio_lt_golden}, \lean{octagonCost_lt_score} \\
 \addlinespace
 \multicolumn{2}{@{}l}{\emph{\Cref{sec:short-runs}}}\\[2pt]
 \cref{thm:class-M1} & \lean{shortRuns_exclusion} \\
@@ -333,7 +336,7 @@ Result & Lean declarations\\
 \cref{prop:fwd-window} & \lean{CostateCycle.ff_rows}, \lean{CostateCycle.ff_floors}, \lean{CostateCycle.ff_gram}, \lean{NormalPeriod.ff_gam2_eq}, \lean{ff_Win.toDim} \\
 \cref{prop:fwd-spectral} & \lean{NormalPeriod.ff_cost_casimir}, \lean{NormalPeriod.wire_gam2_pos_of_allForward}, \lean{NormalPeriod.wire_spectral} \\
 \eqref{eq:spectral-subinterval} & \lean{NormalPeriod.df_angle} \\
-\cref{cor:fwd-cap} & \lean{wire_gam2_cap}, \lean{wire_octagonCost_lt} \\
+\cref{cor:fwd-cap} & \lean{NormalPeriod.ff_competitive_cap_exact}, \lean{octagon_spectral_cap} \\
 \cref{lem:fwd-small} & \lean{ff_Dim.U_lt_three}, \lean{fs_U_lt_three}, \lean{fs_H5P_pos} \\
 \cref{lem:fwd-threshold} & \lean{ff_Dim.eleven_fifths_lt}, \lean{ff_octagonCost_lt_sqrt} \\
 \cref{lem:fwd-joint-concavity} & \lean{ff_budgetCost_strictConcaveOn} \\

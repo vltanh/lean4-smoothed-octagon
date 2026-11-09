@@ -2,6 +2,7 @@ module
 
 public import SmoothedOctagon.Exclusion.MinimumStructure
 public import SmoothedOctagon.Reduction.Clearance.Budget
+public import SmoothedOctagon.Period.OctagonCost
 
 /-!
 # The normal multiplier of a costate cycle: switch norms, stationarity, ellipticity, Casimir
@@ -63,7 +64,8 @@ tangent closure), switch vectors `yv n = P_n (outgoing vector)` with `yv_norm` (
   triangular change reverses orientation, `el_ell_sign`).
 * **`NormalPeriod.cost_casimir`**: `C ≥ 4πκ/(2κ + 3)` for negative elliptic `Λ₁(0)`
   (`el_winding`, `el_negEll_repr`).
-* **`NormalPeriod.gam2_le_cap`**: competitive, `γ² > 0`, `d₀ > 0` ⇒ `γ² ≤ 97969/529200`.
+* **`NormalPeriod.gam2_lt_cap`**: competitive, `γ² > 0`, `d₀ > 0` ⇒ `γ² < 5/27`.
+* `NormalPeriod.gam2_le_cap` supplies the stronger bound used by the M1 scalar interface.
 -/
 
 @[expose] public section
@@ -2817,11 +2819,9 @@ theorem cost_casimir (hdet : 0 < (P.Λ₁ 0).det) (h10 : (P.Λ₁ 0) 1 0 < 0) :
   field_simp at this
   nlinarith [Real.pi_pos]
 
-/-- **The competitive Casimir cap**. If `γ² > 0` and the first switch norm is positive (so
-`S = -J₀U` is positive definite and `Λ₁` negative elliptic), then a competitive period has
-`γ² ≤ 97969/529200`. -/
-theorem gam2_le_cap (hc : P.IsCompetitive) (hpos : 0 < P.costateCycle.gam2 0)
-    (hd : 0 < P.costateCycle.swd 0) : P.costateCycle.gam2 0 ≤ 97969 / 529200 := by
+/-- Positive Casimir and switch norm determine the negative elliptic branch. -/
+private theorem negEll_of_gam2_swd (hpos : 0 < P.costateCycle.gam2 0)
+    (hd : 0 < P.costateCycle.swd 0) : 0 < (P.Λ₁ 0).det ∧ (P.Λ₁ 0) 1 0 < 0 := by
   set C := P.costateCycle
   -- `S₀₀ > 0`
   obtain ⟨-, s01, s10, -⟩ := C.Sloc_apply 0
@@ -2845,25 +2845,58 @@ theorem gam2_le_cap (hc : P.IsCompetitive) (hpos : 0 < P.costateCycle.gam2 0)
     · exact h
   have h10 := P.Λ₁_zero_neg hpos hS00
   have hdet : 0 < (P.Λ₁ 0).det := by rw [P.det_Λ₁_zero]; positivity
+  exact ⟨hdet,h10⟩
+
+/-- The exact moment comparison supplies a strict general Casimir threshold. -/
+private theorem gam2_lt_moment_cap (hc : P.IsCompetitive) (hpos : 0 < P.costateCycle.gam2 0)
+    (hd : 0 < P.costateCycle.swd 0) : P.costateCycle.gam2 0 < (609/410:ℝ)^2/12 := by
+  set C := P.costateCycle
+  obtain ⟨hdet,h10⟩ := P.negEll_of_gam2_swd hpos hd
   have hcc := P.cost_casimir hdet h10
   rw [P.det_Λ₁_zero] at hcc
   set κ := √(12 * C.gam2 0) with hκ
   have hκpos : 0 < κ := Real.sqrt_pos.2 (by positivity)
   have hκ2 : κ ^ 2 = 12 * C.gam2 0 := Real.sq_sqrt (by positivity)
-  have hA := Reduction.clr_octagonCost_lt
-  have hpi := Real.pi_gt_d2
-  have hcost : P.cost < 3.127 := lt_of_le_of_lt hc hA
-  rw [div_le_iff₀ (by positivity)] at hcc
-  have e1 : 3.14 * κ < Real.pi * κ := mul_lt_mul_of_pos_right hpi hκpos
-  have e2 : P.cost * (2 * κ + 3) < 3.127 * (2 * κ + 3) :=
-    mul_lt_mul_of_pos_right hcost (by positivity)
-  have hκlt : κ < 14877 / 10000 := by
-    by_contra h; push Not at h
-    norm_num at e1 e2
-    linarith
-  have : κ ^ 2 < (14877 / 10000) ^ 2 := by nlinarith
-  rw [hκ2] at this
-  linarith
+  have hk := octagon_general_kappa_lt hκpos hcc hc
+  have hs : κ^2 < (609/410:ℝ)^2 :=
+    (sq_lt_sq₀ hκpos.le (by norm_num)).mpr hk
+  rw [hκ2] at hs
+  nlinarith only [hs]
+
+open Real in
+/-- The golden-unit cost threshold gives the natural Casimir scale. -/
+private theorem kappa_lt_golden {κ c : ℝ} (hκ : 0 < κ)
+    (h : 4*π*κ/(2*κ+3) ≤ c) (hc : c ≤ octagonCost) : κ < 2*sqrt 5/3 := by
+  have hratio := octagonCost_ratio_lt.trans octagon_moment_ratio_lt_golden
+  have hcost := (div_lt_iff₀ Real.pi_pos).mp hratio
+  have hi := h.trans_lt (hc.trans_lt hcost)
+  rw [div_lt_iff₀ (by positivity)] at hi
+  have hnum : 4*κ < (8*sqrt 5/(9+4*sqrt 5))*(2*κ+3) := by
+    apply (mul_lt_mul_iff_right₀ Real.pi_pos).mp
+    nlinarith only [hi]
+  rw [div_mul_eq_mul_div,lt_div_iff₀ (by positivity)] at hnum
+  nlinarith only [hnum]
+
+
+/-- A competitive period with positive Casimir and first switch norm satisfies `γ² < 5/27`. -/
+theorem gam2_lt_cap (hc : P.IsCompetitive) (hpos : 0 < P.costateCycle.gam2 0)
+    (hd : 0 < P.costateCycle.swd 0) : P.costateCycle.gam2 0 < 5/27 := by
+  obtain ⟨hdet,h10⟩ := P.negEll_of_gam2_swd hpos hd
+  have hcc := P.cost_casimir hdet h10
+  rw [P.det_Λ₁_zero] at hcc
+  have hp : 0 < 12*P.costateCycle.gam2 0 := by positivity
+  have hk := kappa_lt_golden (Real.sqrt_pos.2 hp) hcc hc
+  have hs : (√(12*P.costateCycle.gam2 0))^2 < (2*Real.sqrt 5/3)^2 :=
+    (sq_lt_sq₀ (Real.sqrt_nonneg _) (by positivity)).mpr hk
+  rw [Real.sq_sqrt hp.le] at hs
+  have h5 := Real.sq_sqrt (by norm_num : (0:ℝ) ≤ 5)
+  nlinarith only [hs,h5]
+
+/-- The moment threshold also implies the bound used by the M1 scalar interface. -/
+theorem gam2_le_cap (hc : P.IsCompetitive) (hpos : 0 < P.costateCycle.gam2 0)
+    (hd : 0 < P.costateCycle.swd 0) : P.costateCycle.gam2 0 ≤ 97969/529200 := by
+  have h := P.gam2_lt_moment_cap hc hpos hd
+  linarith only [h]
 
 end NormalPeriod
 
