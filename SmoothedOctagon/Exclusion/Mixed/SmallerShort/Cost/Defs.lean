@@ -2,7 +2,7 @@ module
 
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Interface
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Angle
-public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.AngleConcavity
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactConcavity
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.CentralShear
 
 /-!

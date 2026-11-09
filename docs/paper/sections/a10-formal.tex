@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 116{,}000 lines in 369 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 116{,}000 lines in 372 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -51,8 +51,8 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 \subsection{The scalar estimates}\label{app:formal-scalar}
 
 \noindent\textit{Replacement status (working draft).}
-Of the 24 groups in the current pass, 12 are complete and committed,
-one is being integrated, and 11 remain. Groups 25--38 are deferred.
+Of the 24 groups in the current pass, 13 are complete and committed
+and 11 remain. Groups 25--38 are deferred.
 The numbers identify the same groups throughout this list.
 
 \begin{center}
@@ -60,28 +60,13 @@ The numbers identify the same groups throughout this list.
 \toprule
 Status & Count & Group numbers\\
 \midrule
-Complete & 12 & 1, 7--8, 13--21\\
-In progress & 1 & 22\\
+Complete & 13 & 1, 7--8, 13--22\\
+In progress & 0 & ---\\
 Pending & 11 & 2--6, 9--12, 23--24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
 \end{center}
-
-\medskip\noindent\textbf{In progress: 1 group.}
-
-\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
-\item[22.] \emph{S6 additional angle and shape concavity.}
-\begin{itemize}[leftmargin=1.3em,itemsep=2pt,topsep=2pt]
-\item Proved in a compiled draft: the exact integral cancellation for the
-additional shear angle, shape concavity, and their use through the physical
-score and completion theorem. The score estimate has no fixed angle allowance.
-\item Next: integrate the draft into the library, run the full build and axiom
-audit, and check the installed proof against the paper.
-\item Still assigned to group~24: the final polynomial endpoint comparisons
-and octagon-cost constants.
-\end{itemize}
-\end{enumerate}
 
 \medskip\noindent\textbf{Pending: 11 groups.}
 Each item gives the next proof or integration step.
@@ -146,7 +131,7 @@ Formalize the corner arithmetic and the direct octagon-cost comparison from
 group~2, replacing the quadratic norm floor, polynomial angle bounds and box signs.
 \end{enumerate}
 
-\medskip\noindent\textbf{Complete and committed: 12 groups.}
+\medskip\noindent\textbf{Complete and committed: 13 groups.}
 Each group below is integrated into the paper and Lean and has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
@@ -197,6 +182,12 @@ $-hR_x>2\nu$, which the continuation caller uses directly.
 Three explicit loss bounds and a natural central-shear bound prove strict decrease
 along the exact tangent curve. The physical continuation and completion theorems
 accept $-hR_x>2\nu$.
+\item[22.] \emph{S6 additional angle and shape concavity.}
+The positive arctangent remainder cancels the square-root error and gives the
+exact central-score bound. The exact score is strictly concave in $T$ on
+$27R/31\le T\le R$; its chord reduces the shape comparison to two endpoints,
+including zero displacement. The norm floor, shear-envelope proofs and final
+endpoint comparisons remain in groups~23--24.
 \end{enumerate}
 
 \medskip\noindent\textbf{Deferred: 14 groups, outside the current pass.}
@@ -407,7 +398,7 @@ Result & Lean declarations\\
 \cref{prop:ss-face-S2} & \lean{ur_central_sign}, \lean{ur_outer_sign_small}, \lean{ur_outer_sign_large} \\
 \cref{prop:ss-face-S3} & \lean{dsp_central_alpha_proof}, \lean{dsp_outer_face_proof} \\
 \cref{prop:ss-face-S4} & \lean{cas_floor_box} \\
-\cref{prop:ss-face-S6} & \lean{cost_B_concave}, \lean{cost_B_endpoint} \\
+\cref{prop:ss-face-S6} & \lean{costBExact_shape_min}, \lean{costB_polynomial_endpoints_le_exact}, \lean{cost_B_endpoint} \\
 \addlinespace
 \multicolumn{2}{@{}l}{\emph{\Cref{sec:terminal,sec:equality}}}\\[2pt]
 \cref{def:term-cycle} & \lean{Term.Cycle}, \lean{Term.Cycle.rawCost}, \lean{Term.rawArc} \\

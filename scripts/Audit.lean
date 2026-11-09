@@ -151,12 +151,15 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.TerminalCon
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.TerminalConcavity.Jets
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Angle
-import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.AngleConcavity
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.AngleCancellation
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.CentralShear
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Continuation
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Defs
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Endpoint
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.EndpointCurves
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactConcavity
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactScore
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactShape
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Score
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Displacement
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Displacement.CentralFace
@@ -251,7 +254,6 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Shape.J
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Shape.TConcavity
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Shape.TEndpoint
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Sign
-import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Ceiling
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.CentralFace
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.CentralFace.Beta
@@ -278,6 +280,7 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.OuterFace.Sma
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.OuterFace.SmallShape.Norm
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.OuterFace.SmallShape.Terminal
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.Reductions
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Ceiling
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Centre
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Covector
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Cover
