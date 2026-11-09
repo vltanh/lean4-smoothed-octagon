@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 110{,}000 lines in 359 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 116{,}000 lines in 369 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -59,9 +59,9 @@ Group numbers stay fixed as entries move between statuses.
 \toprule
 Status & Count & Group numbers\\
 \midrule
-Complete & 11 & 1, 7--8, 13--19, 21\\
-In progress & 1 & 20\\
-Remaining & 12 & 2--6, 9--12, 22--24\\
+Complete & 12 & 1, 7--8, 13--21\\
+In progress & 1 & 22\\
+Remaining & 11 & 2--6, 9--12, 23--24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
@@ -71,16 +71,12 @@ Deferred & 14 & 25--38\\
 These proofs are being formalized and integrated; this group is not yet complete.
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
-\item[20.] \emph{S5 norm ceiling, duration and shear.}
-The analytic argument has passed an independent mathematical review.
-Supporting Lean proofs compile in isolation for the norm ceiling, duration
-reduction, shear estimate and inner-shape concavity. The endpoint sign arguments,
-integration into the main proof and full verification remain.
-
-The target conclusions are $q>(15/16)q_c$, $\sqrt3hR_x+(7/2)\nu<0$ and
-$-hR_x>2\nu$. The integrated Lean proof still gives $q>(29/30)q_c$,
-$\sqrt3hR_x+(13/3)\nu<0$ and $-hR_x>5\nu/2$.
-Group~21 already accepts $-hR_x>2\nu$; its caller currently weakens the S5 bound.
+\item[22.] \emph{S6 additional angle and shape concavity.}
+The exact integral cancellation for the additional shear angle and the three
+derivative signs for shape concavity compile in isolation. Connect these proofs
+to the physical score estimate and the shape-endpoint reduction, replacing the
+fixed angle allowance $1/800000$ by the exact arctangent estimate.
+The final polynomial endpoint comparisons remain in group~24.
 \end{enumerate}
 
 \medskip\noindent\textbf{Remaining in the current pass.}
@@ -134,11 +130,6 @@ Reduce scale and increase the middle margin to reach one boundary. Compare with
 the switching floor using variance, Jensen's inequality and convexity of the
 resulting quadratic minimum.
 
-\item[22.] \emph{S6 additional angle and shape concavity.}
-Formalize the exact integral cancellation for the additional shear angle,
-removing the fixed allowance $1/800000$, and the three derivative signs for
-concavity in the second shape ratio.
-
 \item[23.] \emph{S6 norm floor and central-shear envelopes.}
 Formalize the mean-and-variance bound in a reciprocal integral and the curvature
 and initial-slope bounds for the exact central shear. Update the consumers of
@@ -190,6 +181,13 @@ a positive normalized budget.
 \item[19.] \emph{S4 norm comparison.}
 The two central floor tests decrease with the norm for every $u\ge3/4$.
 The remaining S4 shape signs are deferred in group~38.
+
+\item[20.] \emph{S5 norm ceiling, duration and shear.}
+The natural global norm ceiling and exact duration tangent reduce the residual
+to two shape endpoint signs. Resolvent derivatives, face tangents and outer-shape
+convexity prove these signs on the full enlarged rectangle.
+The physical theorem gives $q>(15/16)q_c$, $\sqrt3hR_x+(7/2)\nu<0$ and
+$-hR_x>2\nu$, which the continuation caller uses directly.
 
 \item[21.] \emph{S6 score continuation.}
 Three explicit loss bounds and a natural central-shear bound prove strict decrease

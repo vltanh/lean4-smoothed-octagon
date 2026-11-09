@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.LogSecant
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Ceiling
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Order
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Secant
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.ReverseScale
@@ -483,21 +483,17 @@ theorem ss_V_le_Vbar {x : ℝ} (hx : 1 < x) : m2Sec 1 x x ≤ ssVbar x := by
 theorem ss_V_lt_VG {x : ℝ} (hx : 1 < x) : m2Sec 1 x x < ssVG x := by
   exact ss_V_lt_VG_aux hx
 
-/-- `V ≤ u₀ = 3/4 + (x - 1)²/(12(x + 1)²)` for `x > 1`, from `V < V_G` (`ss_V_lt_VG`) and
-`u₀ - V_G = (x - 1)³(33x² + 26x + 1)/(96x(x + 1)²(13x² + 14x + 3)) ≥ 0`. -/
+/-- The natural global ceiling implies `V ≤ u₀ = 3/4 + (x - 1)²/(12(x + 1)²)`
+for `x > 1`: the difference of the two positive denominators is `(x - 1)(5x + 7)`. -/
 theorem ss_V_le_U0 {x : ℝ} (hx : 1 < x) : m2Sec 1 x x ≤ ssU0 x := by
-  refine (ss_V_lt_VG_aux hx).le.trans ?_
-  have hx0 : 0 < x := by linarith
-  have e : ssU0 x - ssVG x = (x - 1) ^ 3 * (33 * x ^ 2 + 26 * x + 1) /
-      (96 * x * (x + 1) ^ 2 * (13 * x ^ 2 + 14 * x + 3)) := by
-    unfold ssU0 ssVG
-    field_simp
-    ring
-  have : 0 ≤ (x - 1) ^ 3 * (33 * x ^ 2 + 26 * x + 1) /
-      (96 * x * (x + 1) ^ 2 * (13 * x ^ 2 + 14 * x + 3)) := by
-    have : 0 ≤ x - 1 := by linarith
-    positivity
-  linarith
+  refine (ss_V_lt_natural_ceiling hx).le.trans ?_
+  have hx0 : 0 < x := by linarith only [hx]
+  have hgap := mul_nonneg (show 0 ≤ x-1 by linarith only [hx])
+    (show 0 ≤ 5*x+7 by positivity)
+  have hden : 12*(x+1)^2 ≤ 17*x^2+26*x+5 := by nlinarith only [hgap]
+  change 3/4+(x-1)^2/(17*x^2+26*x+5) ≤ 3/4+(x-1)^2/(12*(x+1)^2)
+  have hfrac := div_le_div_of_nonneg_left (sq_nonneg (x-1)) (by positivity) hden
+  linarith only [hfrac]
 
 /-- The tail secant: `Sec(x, x, β) ≤ 3/4 + (β - x)²/(48x²)` for
 `0 < x ≤ β` (`(s + x)² ≥ 4x²` on `[x, β]`). -/

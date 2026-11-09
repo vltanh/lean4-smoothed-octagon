@@ -242,6 +242,16 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Upper
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Point
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.ReverseScale
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Duration
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Geometry
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Residual
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Shape
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Shape.Defs
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Shape.J
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Shape.TConcavity
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Shape.TEndpoint
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear.Sign
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Ceiling
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.CentralFace
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.CentralFace.Beta
