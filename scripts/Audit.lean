@@ -174,11 +174,13 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.CentralShear
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Continuation
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Defs
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Endpoint
-import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.EndpointCurves
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactConcavity
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactScore
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactShape
-import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Score
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.Displacement
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.Pair
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.FinalScore.RConcavity
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.VarianceFloor
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Displacement
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Displacement.CentralFace
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Displacement.CentralFace.Endpoint

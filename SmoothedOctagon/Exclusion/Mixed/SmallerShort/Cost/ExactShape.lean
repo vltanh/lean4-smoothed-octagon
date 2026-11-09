@@ -4,65 +4,13 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Defs
 public import Mathlib.Analysis.Convex.Jensen
 
 /-!
-# S6 shape endpoint reduction
-
-The shape ratio decreases with the shape slope and displacement. Exact-score
-concavity bounds the score below by the lesser endpoint value, including zero displacement.
+# S6: closed ratio geometry and the exact shape chord
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
-
-open Set Real
-
-/-- Alternating arctangent majorant from the positive derivative of its remainder. -/
-theorem s6_arctan_quintic_majorant {y : ℝ} (hy : 0 ≤ y) :
-    arctan y ≤ y-y^3/3+y^5/5 := by
-  have h := ss_le_of_deriv (f := fun t => t-t^3/3+t^5/5-arctan t)
-    (f' := fun t => t^6/(1+t^2)) hy (fun t _ => ?_) (fun t _ => by positivity)
-  · norm_num at h
-    linarith only [h]
-  · have hh := ((((hasDerivAt_id' t).sub ((hasDerivAt_pow 3 t).div_const 3)).add
-      ((hasDerivAt_pow 5 t).div_const 5)).sub (hasDerivAt_arctan t))
-    refine hh.congr_deriv ?_
-    have hp : 0 < 1+t^2 := by positivity
-    field_simp
-    push_cast
-    ring
-
-/-- The quintic polynomial is a lower bound for the exact fixed-row angle contribution. -/
-theorem costL_le_costLExact {z : ℝ} (hz : 0 ≤ z) : costL z ≤ costLExact z := by
-  have hs : 0 < sqrt (3:ℝ) := by positivity
-  have hs2 : (sqrt (3:ℝ))^2 = 3 := sq_sqrt (by norm_num)
-  have ha := s6_arctan_quintic_majorant (div_nonneg hz hs.le)
-  have hm := mul_le_mul_of_nonneg_left ha (show 0 ≤ (161/54:ℝ)/sqrt 3 by positivity)
-  have hid : z-((161/54)/sqrt 3)*((z/sqrt 3)-(z/sqrt 3)^3/3+(z/sqrt 3)^5/5) = costL z := by
-    have hs4 : (sqrt (3:ℝ))^4 = 9 := by nlinarith only [sq_nonneg ((sqrt (3:ℝ))^2-3),hs2]
-    have hs6 : (sqrt (3:ℝ))^6 = 27 := by
-      calc
-        (sqrt (3:ℝ))^6 = ((sqrt (3:ℝ))^2)^3 := by ring
-        _ = 27 := by rw [hs2]; norm_num
-    unfold costL
-    field_simp
-    ring_nf
-    simp only [hs6,hs4,hs2]
-    ring
-  unfold costLExact
-  linarith only [hm,hid]
-
-/-- The exact score dominates the polynomial score at nonnegative shape coordinates. -/
-theorem costB_le_costBExact {R T d u : ℝ} (hR : 0 ≤ R) (hT : 0 ≤ T) :
-    costB R T d u ≤ costBExact R T u (costZU R d) (costZL R d) := by
-  have hL := add_le_add (costL_le_costLExact hR) (costL_le_costLExact hT)
-  have hnu : (3+R^2)/(3+T^2)-1 = (R^2-T^2)/(3+T^2) := by
-    field_simp
-    ring
-  have hRrat : u/((3+R^2)/4) = 4*u/(3+R^2) := by field_simp
-  have hTrat : u/((3+T^2)/4) = 4*u/(3+T^2) := by field_simp
-  unfold costB costBExact
-  rw [hnu,hRrat,hTrat]
-  linarith only [hL]
+open Real Set MeasureTheory
 
 private noncomputable def s6ChordDen (R d e : ℝ) : ℝ :=
   2+(e+1-(e-1)*R)*d
@@ -154,18 +102,6 @@ theorem costT_correlated_bounds {R d e : ℝ} (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19
   have hshape := costT_antitone_shape hR0 hRlt hd he0 he1
   exact ⟨hcorner.trans (hdisp.trans hshape),hupper⟩
 
-/-- The quadratic floor is at least `3/4` by a completed square. -/
-theorem costuq_ge_three_quarters {R d : ℝ} (hR : 0 ≤ R) : 3/4 ≤ costuq R d := by
-  have hs : 0 < 2+R := by positivity
-  have hpol : 0 ≤ R^2-R*(1+R)*d/2+19*(1+R)^2*d^2/84 := by
-    have hp := sq_nonneg (R-(1+R)*d/4)
-    have hq := sq_nonneg ((1+R)*d)
-    nlinarith only [hp,hq]
-  unfold costuq
-  have hp : 0 ≤ (3*R^2+10*R+10)/(15*(2+R)^3)*
-      (R^2-R*(1+R)*d/2+19*(1+R)^2*d^2/84) := by positivity
-  linarith only [hp]
-
 /-- Positivity of the actual envelope expressions on their full closed box. -/
 theorem cost_shear_envelopes_pos {R d : ℝ} (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19)
     (hd : 0 ≤ d) (hd1 : d ≤ 1/19) : 0 < costZU R d ∧ 0 < costZL R d := by
@@ -185,37 +121,30 @@ theorem cost_shear_envelopes_pos {R d : ℝ} (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19)
   · unfold costZL
     exact mul_pos hbase (by linarith only [hd])
 
-/-- Exact-score chord in the shape slope. The closed-interval concavity
-principle also covers d=0, when both endpoints coincide with T=R. -/
-theorem costBExact_shape_min {R d e : ℝ} (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19)
+theorem costBExact_shape_min_of_floor {R d e u : ℝ} (hu : 3/4 ≤ u) (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19)
     (hd : 0 ≤ d) (hd1 : d ≤ 1/19) (he : 13/5 ≤ e) (he1 : e ≤ 3) :
-    min (costBExact R (costT R d 3) (costuq R d) (costZU R d) (costZL R d))
-      (costBExact R (costT R d (13/5)) (costuq R d) (costZU R d) (costZL R d)) ≤
-      costBExact R (costT R d e) (costuq R d) (costZU R d) (costZL R d) := by
+    min (costBExact R (costT R d 3) u (costZU R d) (costZL R d))
+      (costBExact R (costT R d (13/5)) u (costZU R d) (costZL R d)) ≤
+      costBExact R (costT R d e) u (costZU R d) (costZL R d) := by
   have hR0 : 0 ≤ R := by linarith only [hR]
   have hRlt : R < 1 := by linarith only [hR1]
   obtain ⟨hZU,hZL⟩ := cost_shear_envelopes_pos hR hR1 hd hd1
-  have hc := (costBExact_strictConcaveOn hR hR1 (costuq_ge_three_quarters (d := d) hR0) hZU.le hZL).concaveOn
+  have hc := (costBExact_strictConcaveOn hR hR1 hu hZU.le hZL).concaveOn
   have hleft := costT_correlated_bounds hR hR1 hd hd1 (by norm_num : (13/5:ℝ) ≤ 3) (le_refl 3)
   have hright := costT_correlated_bounds hR hR1 hd hd1 (le_refl (13/5)) (by norm_num : (13/5:ℝ) ≤ 3)
   have hlo := costT_antitone_shape hR0 hRlt hd (by linarith only [he] : 1 ≤ e) he1
   have hhi := costT_antitone_shape hR0 hRlt hd (by norm_num : (1:ℝ) ≤ 13/5) he
   exact hc.min_le_of_mem_Icc hleft hright ⟨hlo,hhi⟩
 
-/-- Polynomial endpoint lower bounds transfer through the exact-score chord. -/
-theorem costB_polynomial_endpoints_le_exact {R d e : ℝ} (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19)
+
+/-- Exact-score shape chord at the genuine variance floor, including d=0. -/
+theorem costBExact_shape_min {R d e : ℝ} (hR : 1/3 ≤ R) (hR1 : R ≤ 7/19)
     (hd : 0 ≤ d) (hd1 : d ≤ 1/19) (he : 13/5 ≤ e) (he1 : e ≤ 3) :
-    min (costB R (costT R d 3) d (costuq R d))
-      (costB R (costT R d (13/5)) d (costuq R d)) ≤
-      costBExact R (costT R d e) (costuq R d) (costZU R d) (costZL R d) := by
-  have hR0 : 0 ≤ R := by linarith only [hR]
-  have hleft := costT_correlated_bounds hR hR1 hd hd1 (by norm_num : (13/5:ℝ) ≤ 3) (le_refl 3)
-  have hright := costT_correlated_bounds hR hR1 hd hd1 (le_refl (13/5)) (by norm_num : (13/5:ℝ) ≤ 3)
-  have hTleft : 0 ≤ costT R d 3 := by linarith only [hleft.1,hR]
-  have hTright : 0 ≤ costT R d (13/5) := by linarith only [hright.1,hR]
-  have hl := costB_le_costBExact (d := d) (u := costuq R d) hR0 hTleft
-  have hr := costB_le_costBExact (d := d) (u := costuq R d) hR0 hTright
-  exact (min_le_min hl hr).trans (costBExact_shape_min hR hR1 hd hd1 he he1)
+    min (costBExact R (costT R d 3) (s6VarianceFloor R d) (costZU R d) (costZL R d))
+      (costBExact R (costT R d (13/5)) (s6VarianceFloor R d) (costZU R d) (costZL R d)) ≤
+      costBExact R (costT R d e) (s6VarianceFloor R d) (costZU R d) (costZL R d) := by
+  exact costBExact_shape_min_of_floor
+    (s6_variance_floor_ge_three_quarters (by linarith only [hR]) hd) hR hR1 hd hd1 he he1
 
 /-- The displacement-zero endpoint is explicitly included in the chord. -/
 theorem costT_zero_displacement (R e : ℝ) : costT R 0 e = R := by

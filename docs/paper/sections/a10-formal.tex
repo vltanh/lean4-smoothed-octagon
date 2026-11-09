@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 123{,}000 lines in 396 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 125{,}000 lines in 398 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -50,8 +50,7 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 
 \subsection{Scalar proof replacement status}\label{app:formal-scalar}
 
-Groups 1--24 are the current scope: 22 are complete and committed,
-and two are in progress. Groups 25--38 are deferred.
+Groups 1--24 are complete and committed. Groups 25--38 are deferred.
 Group numbers stay fixed as their status changes.
 
 \begin{center}
@@ -59,33 +58,17 @@ Group numbers stay fixed as their status changes.
 \toprule
 Status & Count & Group numbers\\
 \midrule
-Complete & 22 & 1--22\\
-In progress & 2 & 23--24\\
-Pending & 0 & None\\
+Complete & 24 & 1--24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\medskip\noindent\textbf{In progress (2).}
-
-\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
-\item[23.] \emph{S6 norm floor and central-shear envelopes.}
-The norm floor, exact shear envelopes and physical cost bounds are proved,
-including zero displacement. Remaining: integrate them with the final score
-comparison in group~24.
-
-\item[24.] \emph{S6 final score comparison.}
-The integral angle bound, four corner comparisons, decrease in displacement
-and direct octagon-cost comparison are proved. The concavity proof at maximal
-displacement is being checked. Remaining: update the final score callers.
-\end{enumerate}
-
-\newpage\noindent\textbf{Complete and committed (22).}
+\newpage\noindent\textbf{Complete and committed (24).}
 These groups are integrated into the paper and Lean. Each has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
-\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt,before=\interlinepenalty10000]
 \item[1.] \emph{Symbolic reduction.}
 Symbolic bounds on an arbitrary compact region prove the clearance and budget
 estimates, with the equilibrium, projective and finite-switch arguments.
@@ -94,7 +77,7 @@ estimates, with the equilibrium, projective and finite-switch arguments.
 Positive logarithm and inverse-sine remainders prove the cost comparisons.
 The golden-unit threshold gives $\gamma^2<5/27$, and the spectral inequality
 gives the exact cap $\Gamma_{\rm oct}$. The cover comparisons use the same
-moments. The final S6 score comparison remains in group~24.
+moments. The S6 score comparison uses these bounds in group~24.
 
 \item[3.] \emph{M1 symmetric angle gap.}
 The constrained root, radial monotonicity and symmetric minimum prove the
@@ -180,8 +163,18 @@ accept $-hR_x>2\nu$.
 \item[22.] \emph{S6 additional angle and shape concavity.}
 An arctangent remainder gives the exact central-score bound. Strict concavity
 in $T$ on $27R/31\le T\le R$ reduces the shape comparison to two endpoints,
-including zero displacement. Groups~23--24 cover the remaining norm floor,
+including zero displacement. Groups~23--24 give the norm floor,
 shear envelopes and final endpoint comparisons.
+
+\item[23.] \emph{S6 norm floor and central-shear envelopes.}
+A reciprocal integral with its mean and variance gives the incoming norm
+floor. The exact central shear's initial slope and curvature give both
+envelopes on the closed displacement interval.
+
+\item[24.] \emph{S6 final score comparison.}
+Displacement decrease and concavity reduce the exact score to four corners.
+Weighted Jensen gives the bound $9/4000$ there. The direct octagon-cost
+comparison then proves the physical completion bound.
 \end{enumerate}
 
 \medskip\noindent\textbf{Deferred (14): outside the current scope.}
@@ -235,7 +228,7 @@ Result & Lean declarations\\
 \endhead
 \bottomrule
 \endfoot
-\multicolumn{2}{@{}l}{\emph{\Cref{sec:intro,sec:setting}}}\\[2pt]
+\multicolumn{2}{@{}l}{\emph{\Cref{sec:intro,sec:setting}}}\\*[2pt]
 \cref{thm:control} & \lean{reinhardt_cost}, \lean{controlLowerBound} \\
 \cref{thm:main}(a) & \lean{ReinhardtChallenge.octagon_density}, \lean{smoothedOctagon_spec} \\
 \cref{thm:main}(b) & \lean{ReinhardtChallenge.reinhardt}, \lean{reinhardtConjecture} \\
@@ -384,7 +377,7 @@ Result & Lean declarations\\
 \cref{prop:ss-S3} & \lean{M2Short.displacement_lt}, \lean{SmallerShortData.displacement_lt} \\
 \cref{prop:ss-S4} & \lean{M2Short.upper_order_casimir_floor}, \lean{SmallerShortData.upper_order_casimir_floor}, \lean{SmallerShortData.cas_cap_env} \\
 \cref{prop:ss-S5} & \lean{M2Short.shear_neg}, \lean{SmallerShortData.shear_neg}, \lean{shr_residual_neg}, \lean{shr_shear_sign}, \lean{shr_norm_mono}, \lean{shr_small_shape_factor}, \lean{ss_A2_pos} \\
-\cref{prop:ss-S6} & \lean{M2Short.octagonCost_lt_completion}, \lean{SmallerShortData.octagonCost_lt_completion}, \lean{SmallerShortData.cost_angle}, \lean{SmallerShortData.cost_continuation}, \lean{cost_Fc_gt}, \lean{cost_constants} \\
+\cref{prop:ss-S6} & \lean{M2Short.octagonCost_lt_completion}, \lean{SmallerShortData.octagonCost_lt_completion}, \lean{SmallerShortData.cost_angle}, \lean{SmallerShortData.cost_continuation}, \lean{cost_Fc_gt}, \lean{octagonCost_lt_score} \\
 \cref{lem:ss-first-contact} & \lean{ss_first_contact} \\
 \cref{lem:ss-endpoint-gaps} & \lean{ss_gap_ratio_bounds}, \lean{ss_gap_ratio_tilted} \\
 \cref{lem:ss-outer-scale} & \lean{ss_reverseGram_mono}, \lean{ss_rev_centre_scale} \\
@@ -393,7 +386,8 @@ Result & Lean declarations\\
 \cref{prop:ss-face-S2} & \lean{ur_central_sign}, \lean{ur_outer_sign_small}, \lean{ur_outer_sign_large} \\
 \cref{prop:ss-face-S3} & \lean{dsp_central_alpha_proof}, \lean{dsp_outer_face_proof} \\
 \cref{prop:ss-face-S4} & \lean{cas_floor_box} \\
-\cref{prop:ss-face-S6} & \lean{costBExact_shape_min}, \lean{costB_polynomial_endpoints_le_exact}, \lean{cost_B_endpoint} \\
+\eqref{eq:ss-variance-floor} & \lean{s6_norm_gt_variance_floor}, \lean{cost_u_bounds} \\
+\cref{prop:ss-face-S6} & \lean{s6_final_score_antitone_displacement}, \lean{s6_final_score_concave_R}, \lean{s6_final_score_gt} \\
 \addlinespace
 \multicolumn{2}{@{}l}{\emph{\Cref{sec:terminal,sec:equality}}}\\[2pt]
 \cref{def:term-cycle} & \lean{Term.Cycle}, \lean{Term.Cycle.rawCost}, \lean{Term.rawArc} \\

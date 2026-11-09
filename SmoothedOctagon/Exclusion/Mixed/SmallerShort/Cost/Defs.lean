@@ -4,23 +4,17 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Interface
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Angle
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactConcavity
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.CentralShear
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.VarianceFloor
 
 /-!
-# Smaller-short window, cost: definitions
-
-The scalar functions of the cost bound, kept apart from `SmallerShort/Cost` so that the modules
-of `SmallerShort/Cost/` can state their signs with them.
+# S6: physical central quantities and exact comparison coordinates
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
+open Real Set MeasureTheory
 
-open Set Real SmallerShort
-
-/-! ### Central-scale objects -/
-
-/-- `J₀ = 3u/(2U₁)`, `U₁ = U(r) = (x² + x + 1)/(1 + x)²`. -/
 noncomputable def costJ0 (x u : ℝ) : ℝ := 3 * u / (2 * m2U (1 / (1 + x)))
 
 /-- `K = A + 2 + 2κ₀/J₀`, `κ₀ = 40/27`. -/
@@ -48,35 +42,13 @@ noncomputable def costCc (x be al u : ℝ) : ℝ :=
 noncomputable def costFc (x be al u : ℝ) : ℝ :=
   costCc x be al u + 161 / 54 * (π / 3 - costpsi x be al - costomega x be al u)
 
-/-- `L(z) = z/162 + 161z³/1458 - 161z⁵/7290`. -/
-noncomputable def costL (z : ℝ) : ℝ := z / 162 + 161 * z ^ 3 / 1458 - 161 * z ^ 5 / 7290
-
-/-- The quadratic incoming floor `u_q = 3/4 + H_R/(15(2 + R)³)·{R² - R(1 + R)d/2 +
-19(1 + R)²d²/84}`, `H_R = 3R² + 10R + 10`. -/
-noncomputable def costuq (R d : ℝ) : ℝ :=
-  3 / 4 + (3 * R ^ 2 + 10 * R + 10) / (15 * (2 + R) ^ 3) *
-    (R ^ 2 - R * (1 + R) * d / 2 + 19 * (1 + R) ^ 2 * d ^ 2 / 84)
-
-/-- `Z_U = 2R²(1 + R)/(3 - R) + (1 + 2R)d/(3(1 - R)) - 3d²/2`. -/
 noncomputable def costZU (R d : ℝ) : ℝ :=
   2 * R ^ 2 * (1 + R) / (3 - R) + (1 + 2 * R) / (3 * (1 - R)) * d - 3 / 2 * d ^ 2
 
 /-- `Z_L = (2R²(1 + R)/(3 - R))(1 + 11d/2)`. -/
 noncomputable def costZL (R d : ℝ) : ℝ := 2 * R ^ 2 * (1 + R) / (3 - R) * (1 + 11 * d / 2)
 
-/-- **The polynomial bound** `𝓑(u; R, T, d) = L(R) + L(T) - (b₁R + b₂T)/2 - (b₁ + b₂)Z_U/8 -
-cA²/(8Z_L)` with `U₁ = (3 + R²)/4`, `U₂ = (3 + T²)/4`, `b_i = 1 - u/U_i`, `A = U₁/U₂ - 1`. -/
-noncomputable def costB (R T d u : ℝ) : ℝ :=
-  costL R + costL T - ((1 - u / ((3 + R ^ 2) / 4)) * R + (1 - u / ((3 + T ^ 2) / 4)) * T) / 2 -
-    ((1 - u / ((3 + R ^ 2) / 4)) + (1 - u / ((3 + T ^ 2) / 4))) * costZU R d / 8 -
-    161 / 54 * ((3 + R ^ 2) / (3 + T ^ 2) - 1) ^ 2 / (8 * costZL R d)
-
-/-- `T_s` at `α = 1 + ed`, `β = x(1 + d)`, `x = (1 + R)/(1 - R)`:
-`T = (2R + ((e + 1)R - (e - 1))d)/(2 + (e + 1 - (e - 1)R)d)`. -/
 noncomputable def costT (R d e : ℝ) : ℝ :=
   (2 * R + ((e + 1) * R - (e - 1)) * d) / (2 + (e + 1 - (e - 1) * R) * d)
-
-/-- `b* = (A₀ - cπ₀/3 + 1/800000)/ℓ = 792669623/356040000000`. -/
-noncomputable def costbstar : ℝ := 792669623 / 356040000000
 
 end SmoothedOctagon

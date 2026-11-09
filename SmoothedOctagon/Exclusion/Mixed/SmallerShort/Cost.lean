@@ -4,37 +4,21 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Interface
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Angle
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactScore
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.ExactShape
-public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.CentralShear
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Continuation
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Defs
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Cost.Endpoint
+public import SmoothedOctagon.Period.OctagonCost
 
 /-!
-# Smaller-short window, cost: the completion cost is too large
-
-Three continuation-loss bounds compare the window cost plus completion with the
-central score. Exact arctangent cancellation bounds that score below by
-`cπ/3 + √3 costBExact`. Shape concavity gives the lesser endpoint value;
-polynomial endpoint lower bounds and the octagon-cost constants complete the comparison.
-
-## Main API
-
-* Central-scale objects: `costJ0`, `costK`, `costpsi`, `costZ`, `costomega`, `costCc`, `costFc`.
-* Exact score: `costLExact`, `costBExact`, `cost_Fc_gt`, `costBExact_shape_min`.
-* Norm and shear bounds: `cost_shape`, `cost_u_bounds`, `cost_central_shear`.
-* Continuation: `cost_score_deriv`, `cost_continuation_loss`, `cost_continuation_shape`,
-  `SmallerShortData.cost_angle`, `SmallerShortData.cost_continuation`.
-* Endpoints: `cost_T_eq`, `costB_polynomial_endpoints_le_exact`, `cost_B_endpoint`, `cost_constants`.
-* Physical bounds: `SmallerShortData.octagonCost_lt_completion`, `M2Short.octagonCost_lt_completion`.
+# Smaller-short completion: continuation, the genuine norm floor and exact score
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
+open Real Set MeasureTheory
 
-open Set Real SmallerShort
-
-/-! ### Scalar lemmas -/
+open SmallerShort
 
 /-- **Lowering `κ`**:
 `12·1829/10000 - (40/27)² = 23/1822500 > 0`, so `Γ > 1829/10000 ⇒ √(12Γ) > 40/27`. -/
@@ -103,52 +87,9 @@ theorem cost_shape {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 
     field_simp
     ring
 
-/-- The Padé-type logarithm majorant behind the incoming floor:
-`log(1 + R) < R(3R⁴ + 80R³ + 320R² + 480R + 240)/(30(R + 1)(R + 2)³)` for `R > 0` (derivative of the
-difference `R⁶/(10(R + 1)²(R + 2)⁴)`). -/
-private lemma cost_log_lt {R : ℝ} (hR : 0 < R) :
-    log (1 + R) < R * (3 * R ^ 4 + 80 * R ^ 3 + 320 * R ^ 2 + 480 * R + 240) /
-      (30 * (R + 1) * (R + 2) ^ 3) := by
-  have h := ss_lt_of_deriv
-    (f := fun t => (3 * t ^ 5 + 80 * t ^ 4 + 320 * t ^ 3 + 480 * t ^ 2 + 240 * t) /
-      (30 * t ^ 4 + 210 * t ^ 3 + 540 * t ^ 2 + 600 * t + 240) - log (1 + t))
-    (f' := fun t => t ^ 6 / (10 * (t + 1) ^ 2 * (t + 2) ^ 4)) hR (fun t ht => ?_) (fun t ht => by
-      have : 0 < t := ht.1
-      positivity)
-  · simp only [ne_eq, OfNat.ofNat_ne_zero, not_false_eq_true, zero_pow, mul_zero, add_zero,
-      zero_div, add_zero, log_one, sub_zero] at h
-    have e : R * (3 * R ^ 4 + 80 * R ^ 3 + 320 * R ^ 2 + 480 * R + 240) /
-        (30 * (R + 1) * (R + 2) ^ 3) = (3 * R ^ 5 + 80 * R ^ 4 + 320 * R ^ 3 + 480 * R ^ 2 + 240 * R) /
-        (30 * R ^ 4 + 210 * R ^ 3 + 540 * R ^ 2 + 600 * R + 240) := by
-      congr 1 <;> ring
-    rw [e]; linarith
-  have ht0 : 0 ≤ t := ht.1
-  have hD : 0 < 30 * t ^ 4 + 210 * t ^ 3 + 540 * t ^ 2 + 600 * t + 240 := by positivity
-  have hN : HasDerivAt (fun t : ℝ => 3 * t ^ 5 + 80 * t ^ 4 + 320 * t ^ 3 + 480 * t ^ 2 + 240 * t)
-      (15 * t ^ 4 + 320 * t ^ 3 + 960 * t ^ 2 + 960 * t + 240) t := by
-    have := (((((hasDerivAt_pow 5 t).const_mul 3).add ((hasDerivAt_pow 4 t).const_mul 80)).add
-      ((hasDerivAt_pow 3 t).const_mul 320)).add ((hasDerivAt_pow 2 t).const_mul 480)).add
-      ((hasDerivAt_id' t).const_mul 240)
-    convert this using 1; push_cast; ring
-  have hDd : HasDerivAt (fun t : ℝ => 30 * t ^ 4 + 210 * t ^ 3 + 540 * t ^ 2 + 600 * t + 240)
-      (120 * t ^ 3 + 630 * t ^ 2 + 1080 * t + 600) t := by
-    have := (((((hasDerivAt_pow 4 t).const_mul 30).add ((hasDerivAt_pow 3 t).const_mul 210)).add
-      ((hasDerivAt_pow 2 t).const_mul 540)).add ((hasDerivAt_id' t).const_mul 600)).add_const 240
-    convert this using 1; push_cast; ring
-  have hL : HasDerivAt (fun t : ℝ => log (1 + t)) (1 / (1 + t)) t := by
-    have := ((hasDerivAt_id' t).const_add 1).log (by linarith)
-    convert this using 1
-  refine ((hN.div hDd hD.ne').sub hL).congr_deriv ?_
-  have : 0 < 1 + t := by linarith
-  field_simp
-  ring
-
-/-- **The incoming norm, two-sided**: on the box of
-`cost_shape`, `u_q(R, δ) < Sec(1, x, β) ≤ 3/4 + R²/12`. The floor uses the Padé-type majorant
-`cost_log_lt` of `log(1 + R)` (derivative of the difference `R⁶/(10(R + 1)²(R + 2)⁴)`). -/
 theorem cost_u_bounds {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1 / 19)
     (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
-    costuq (ssRr x) δ < m2Sec 1 x (x * (1 + δ)) ∧
+    s6VarianceFloor (ssRr x) δ < m2Sec 1 x (x * (1 + δ)) ∧
       m2Sec 1 x (x * (1 + δ)) ≤ 3 / 4 + ssRr x ^ 2 / 12 := by
   have _ := hx2
   have _ := hal
@@ -165,78 +106,26 @@ theorem cost_u_bounds {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ :
   have hR2 : ssRr x ^ 2 = (x - 1) ^ 2 / (x + 1) ^ 2 := by rw [ssRr, div_pow]
   have hR9 : 1 / 108 ≤ ssRr x ^ 2 / 12 := by
     rw [hR2, div_div, le_div_iff₀ (by positivity)]; nlinarith only [hx, hx2]
-  constructor
-  · -- the floor: `V - 3/4 > R²H_R/(15(2 + R)³)` and the weight `(x - 1)/(β - 1) = 1/(1 + z)`
-    have hR0 : 0 < ssRr x := by
-      unfold ssRr; exact div_pos (by linarith only [hx1]) (by linarith only [hx1])
-    have hlog := cost_log_lt hR0
-    have hV : m2Sec 1 x x = 1 + x ^ 2 / ((1 + x) * (x + x)) -
-        x / (x - 1) * log (1 + ssRr x) := by
-      rw [m2Sec_of_ne (by linarith only [hx1])]
-      congr 3
-      unfold ssRr; field_simp; ring
-    set B := ssRr x ^ 2 * (3 * ssRr x ^ 2 + 10 * ssRr x + 10) / (15 * (2 + ssRr x) ^ 3) with hB
-    have hB0 : 0 < B := by rw [hB]; positivity
-    have hxR1 : x / (x - 1) = (1 + ssRr x) / (2 * ssRr x) := by
-      unfold ssRr; field_simp; ring
-    have hxR2 : x ^ 2 / ((1 + x) * (x + x)) = (1 + ssRr x) / 4 := by
-      unfold ssRr; field_simp; ring
-    have eR : (1 + ssRr x) / 4 + 1 / 4 - B = (1 + ssRr x) / (2 * ssRr x) *
-        (ssRr x * (3 * ssRr x ^ 4 + 80 * ssRr x ^ 3 + 320 * ssRr x ^ 2 + 480 * ssRr x + 240) /
-          (30 * (ssRr x + 1) * (ssRr x + 2) ^ 3)) := by
-      rw [hB]; field_simp; ring
-    have hVB : B < m2Sec 1 x x - 3 / 4 := by
-      have hpos : 0 < (1 + ssRr x) / (2 * ssRr x) := by positivity
-      have := mul_lt_mul_of_pos_left hlog hpos
-      rw [hV, hxR1, hxR2]
-      linarith only [this, eR]
-    set z := x * δ / (x - 1) with hz
-    have hz0 : 0 ≤ z := by rw [hz]; positivity
-    have hz2 : z ≤ 2 / 19 := by
-      rw [hz, div_le_iff₀ (by linarith only [hx1])]; nlinarith only [hδ, hδ2, hx, hx2]
-    have hβ : x * (1 + δ) - 1 = (x - 1) * (1 + z) := by rw [hz]; field_simp; ring
-    have huq : costuq (ssRr x) δ = 3 / 4 + B * (1 - z + 19 / 21 * z ^ 2) := by
-      rw [hB, hz]; unfold costuq ssRr; field_simp; ring
-    have hw : (1 - z + 19 / 21 * z ^ 2) * (1 + z) ≤ 1 := by
-      have := mul_nonpos_of_nonneg_of_nonpos (sq_nonneg z) (by linarith only [hz2] : 19 * z - 2 ≤ 0)
-      linarith only [this]
-    rw [huq]
-    have hmain : (x - 1) * B < (x * (1 + δ) - 1) * (m2Sec 1 x (x * (1 + δ)) - 3 / 4) := by
-      have h1 := mul_lt_mul_of_pos_left hVB (by linarith only [hx1] : (0 : ℝ) < x - 1)
-      have h2 := mul_nonneg (by linarith only [hbex] : (0 : ℝ) ≤ x * (1 + δ) - x)
-        (by linarith only [hT34] : (0 : ℝ) ≤ m2Sec x x (x * (1 + δ)) - 3 / 4)
-      linarith only [h1, h2, hsplit]
-    have hlow : (x * (1 + δ) - 1) * (B * (1 - z + 19 / 21 * z ^ 2)) ≤ (x - 1) * B := by
-      rw [hβ]
-      have := mul_le_mul_of_nonneg_left hw (mul_nonneg (by linarith only [hx1] : (0 : ℝ) ≤ x - 1) hB0.le)
-      linarith only [this]
-    have h3 : (x * (1 + δ) - 1) * (B * (1 - z + 19 / 21 * z ^ 2)) <
-        (x * (1 + δ) - 1) * (m2Sec 1 x (x * (1 + δ)) - 3 / 4) := by linarith only [hmain, hlow]
-    have := lt_of_mul_lt_mul_left h3 (by linarith only [hbe1])
-    linarith only [this]
-  · -- the ceiling: both pieces have mean at most `R²/12`
-    have hV := ss_V_le_U0 hx1
-    have hT := ss_sec_tail_le hx0 hbex
-    have hU0 : ssU0 x = 3 / 4 + ssRr x ^ 2 / 12 := by
-      rw [ssU0, hR2]; field_simp
-    have hTt : (x * (1 + δ) - x) ^ 2 / (48 * x ^ 2) ≤ ssRr x ^ 2 / 12 := by
-      have e : (x * (1 + δ) - x) ^ 2 / (48 * x ^ 2) = δ ^ 2 / 48 := by field_simp; ring
-      rw [e]
-      have : δ ^ 2 ≤ (1 / 19) ^ 2 := pow_le_pow_left₀ hδ hδ2 2
-      linarith only [this, hR9]
-    rw [hU0] at hV
-    have h1 : (x * (1 + δ) - 1) * m2Sec 1 x (x * (1 + δ)) ≤
-        (x * (1 + δ) - 1) * (3 / 4 + ssRr x ^ 2 / 12) := by
-      rw [hsplit]
-      have hT' : m2Sec x x (x * (1 + δ)) ≤ 3 / 4 + ssRr x ^ 2 / 12 := by linarith only [hT, hTt]
-      have h2 := mul_le_mul_of_nonneg_left hV (by linarith only [hx1] : (0 : ℝ) ≤ x - 1)
-      have h3 := mul_le_mul_of_nonneg_left hT' (by linarith only [hbex] : (0 : ℝ) ≤ x * (1 + δ) - x)
-      linarith only [h2, h3]
-    exact le_of_mul_le_mul_left h1 (by linarith only [hbe1])
+  refine ⟨s6_norm_gt_variance_floor hx1 hδ, ?_⟩
+  have hV := ss_V_le_U0 hx1
+  have hT := ss_sec_tail_le hx0 hbex
+  have hU0 : ssU0 x = 3 / 4 + ssRr x ^ 2 / 12 := by
+    rw [ssU0, hR2]; field_simp
+  have hTt : (x * (1 + δ) - x) ^ 2 / (48 * x ^ 2) ≤ ssRr x ^ 2 / 12 := by
+    have e : (x * (1 + δ) - x) ^ 2 / (48 * x ^ 2) = δ ^ 2 / 48 := by field_simp; ring
+    rw [e]
+    have : δ ^ 2 ≤ (1 / 19) ^ 2 := pow_le_pow_left₀ hδ hδ2 2
+    linarith only [this, hR9]
+  rw [hU0] at hV
+  have h1 : (x * (1 + δ) - 1) * m2Sec 1 x (x * (1 + δ)) ≤
+      (x * (1 + δ) - 1) * (3 / 4 + ssRr x ^ 2 / 12) := by
+    rw [hsplit]
+    have hT' : m2Sec x x (x * (1 + δ)) ≤ 3 / 4 + ssRr x ^ 2 / 12 := by linarith only [hT, hTt]
+    have h2 := mul_le_mul_of_nonneg_left hV (by linarith only [hx1] : (0 : ℝ) ≤ x - 1)
+    have h3 := mul_le_mul_of_nonneg_left hT' (by linarith only [hbex] : (0 : ℝ) ≤ x * (1 + δ) - x)
+    linarith only [h2, h3]
+  exact le_of_mul_le_mul_left h1 (by linarith only [hbe1])
 
-/-- **The central shear bounds**: on the box of `cost_shape`,
-`1/9 ≤ Z_L ≤ Z ≤ Z_U < 1/5`. Proof: `Z_U - Z` and `Z - Z_L` are `d·N/D` exactly, with explicit
-numerators bounded on the box (`SmallerShort.Cost.CentralShear`). -/
 theorem cost_central_shear {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
     1 / 9 ≤ costZL (ssRr x) δ ∧ costZL (ssRr x) δ ≤ costZ x (x * (1 + δ)) al ∧
@@ -267,7 +156,7 @@ theorem cost_central_shear {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (
   · show 2 * ssRr x ^ 2 * (1 + ssRr x) / (3 - ssRr x) + (1 + 2 * ssRr x) / (3 * (1 - ssRr x)) * δ -
       3 / 2 * δ ^ 2 < 1 / 5
     have h1R : 0 < 1 - ssRr x := by linarith
-    have e1 : 2 * ssRr x ^ 2 * (1 + ssRr x) / (3 - ssRr x) ≤ 2548 / 18050 := by
+    have e1 : 2 * ssRr x ^ 2 * (1 + ssRr x) / (3 - ssRr x) ≤ 1 / 7 := by
       rw [div_le_iff₀ h3R]
       have : ssRr x ^ 2 ≤ (7 / 19) ^ 2 := pow_le_pow_left₀ (by linarith) hR2 2
       have : ssRr x ^ 3 ≤ (7 / 19) ^ 3 := pow_le_pow_left₀ (by linarith) hR2 3
@@ -495,14 +384,13 @@ private lemma cost_cont_core {A K J₀ c ha hc : ℝ} (hA : 0 ≤ A) (hK : A < K
   rw [aeq, ceq] at key
   linarith
 
-/-- The actual central score has the exact-angle lower bound on the physical box. -/
 theorem cost_Fc_gt {x δ al u : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13/6)
     (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1/19)
     (hal : 13/5*δ ≤ al-1) (hal1 : al-1 ≤ 3*δ)
-    (hu : costuq (ssRr x) δ ≤ u) (hu1 : u ≤ 3/4+ssRr x^2/12)
+    (hu : s6VarianceFloor (ssRr x) δ ≤ u) (hu1 : u ≤ 3/4+ssRr x^2/12)
     (hu2 : u ≤ (3+ssTs al (x*(1+δ))^2)/4) :
     (161/54)*π/3+sqrt 3*costBExact (ssRr x) (ssTs al (x*(1+δ)))
-      (costuq (ssRr x) δ) (costZU (ssRr x) δ) (costZL (ssRr x) δ) <
+      (s6VarianceFloor (ssRr x) δ) (costZU (ssRr x) δ) (costZL (ssRr x) δ) <
       costFc x (x*(1+δ)) al u := by
   obtain ⟨hR1,hR2,hT1,hT2,hA0,hA1,-⟩ := cost_shape hx hx2 hδ hδ2 hal hal1
   obtain ⟨hZL1,hZLZ,hZZU,hZU5⟩ := cost_central_shear hx hx2 hδ hδ2 hal hal1
@@ -524,8 +412,8 @@ theorem cost_Fc_gt {x δ al u : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13/6)
       (sq_le_sq₀ (by norm_num) hZ0.le).2 hz
     rw [div_pow,hs2]
     nlinarith only [hA2,hZ2]
-  have hfloor := costuq_ge_three_quarters (d := δ)
-    (show 0 ≤ ssRr x by linarith only [hR1])
+  have hfloor := s6_variance_floor_ge_three_quarters (R := ssRr x) (d := δ)
+    (by linarith only [hR1]) hδ
   have hu0 : 0 < u := by linarith only [hfloor,hu]
   have hU1 : m2U (1/(1+x)) = (3+ssRr x^2)/4 := by unfold m2U ssRr; field_simp; ring
   have hJk : costJ0 x u < 40/27 := by
@@ -562,40 +450,16 @@ theorem cost_T_eq {x δ η : ℝ} (hx : 1 < x) (hδ : 0 ≤ δ) (hη : 0 ≤ η)
     congr 1 <;> field_simp <;> ring
   rw [h2, div_div_div_cancel_right₀ hx1.ne', ssTs, mul_div_mul_left _ _ (two_ne_zero)]
 
-/-- **The two endpoint polynomials**:
-for `1/3 ≤ R ≤ 7/19`, `0 ≤ δ ≤ 1/19` and `e ∈ {13/5, 3}`: `𝓑(u_q; R, T(e), δ) > b*`. Proved by
-in `SmallerShort/Cost/Endpoint` (concavity in `R`, then monotonicity in `δ`). -/
-theorem cost_B_endpoint {R δ e : ℝ} (hR : 1 / 3 ≤ R) (hR' : R ≤ 7 / 19) (hδ : 0 ≤ δ)
-    (hδ2 : δ ≤ 1 / 19) (he : e = 13 / 5 ∨ e = 3) :
-    costbstar < costB R (costT R δ e) δ (costuq R δ) := by
-  apply cost_B_endpoint_proof <;> assumption
+/-- The exact octagon comparison transfers every score above the natural S6 threshold. -/
+theorem cost_octagon_lt_exact_score {B : ℝ} (hB : 9/4000 < B) :
+    octagonCost < (161/54)*π/3+sqrt 3*B := by
+  have hs : 0 < sqrt (3:ℝ) := by positivity
+  have hm := mul_lt_mul_of_pos_left hB hs
+  have ho := octagonCost_lt_score
+  linarith only [hm,ho]
 
-/-- **The constants**:
-`A_oct < 3126055/10⁶`, `π > 314159265/10⁸`, `√3 > 989/571`. -/
-theorem cost_constants :
-    octagonCost < 3126055 / 1000000 ∧ (314159265 / 100000000 : ℝ) < π ∧ (989 / 571 : ℝ) < √3 := by
-  refine ⟨?_, by linarith [Real.pi_gt_d20], by rw [Real.lt_sqrt (by norm_num)]; norm_num⟩
-  have h12 : √12 < 3464101616 / 1000000000 := by
-    rw [Real.sqrt_lt' (by norm_num)]; norm_num
-  have h32 : 5656854249 / 1000000000 < √32 := by
-    rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have h8 : 2828427124 / 1000000000 < √8 := by
-    rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have hl := Real.log_two_gt_d9
-  have hD : 0 < √8 - 1 := by linarith
-  have hN : 0 ≤ 8 - √32 - Real.log 2 := by
-    have : √32 < 5.6569 := by rw [Real.sqrt_lt' (by norm_num)]; norm_num
-    have := Real.log_two_lt_d9
-    linarith
-  rw [octagonCost, octagonDensity, mul_div_assoc', div_lt_iff₀ hD]
-  have : √12 * (8 - √32 - Real.log 2) ≤ 3464101616 / 1000000000 * (8 - √32 - Real.log 2) :=
-    mul_le_mul_of_nonneg_right h12.le hN
-  nlinarith
-
-/-! ### Actual-data lemmas and the cost bound -/
 
 namespace SmallerShortData
-
 variable (H : SmallerShortData)
 
 /-- The cover's incoming norm at the normalized point. -/
@@ -965,9 +829,8 @@ theorem cost_continuation (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ)
   linarith only [hstep, hθ, hF]
 
 
-/-- On the small-shape domain, the window cost and completion exceed the octagon cost.
-Continuation, the exact central score and its shape chord reduce the comparison to the
-endpoint bounds and `cost_constants`. -/
+/-- The physical completion theorem uses the unconditional exact-score
+  comparison and the direct octagon-cost gap. -/
 theorem octagonCost_lt_completion (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ) (hh : ssShear H.x H.be H.al H.rho < 0)
     (hhR : 2 * ssAn H.x H.be H.al < -ssShear H.x H.be H.al H.rho * ssRr H.x) :
     octagonCost < H.pt.cost + (H.pt.kap + 3 / 2) * (π / 3 - arctan (√3 * H.pt.BB / H.pt.AA)) := by
@@ -994,7 +857,7 @@ theorem octagonCost_lt_completion (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ
   have hF := cost_Fc_gt hx2 hx13 hδ0 hδ19 hal hal' (u := H.u)
     hu1.le hu2 (by rw [hbe]; exact hu3)
   rw [hbe] at hF
-  have hB : costbstar < costBExact (ssRr H.x) (ssTs H.al H.be) (costuq (ssRr H.x) H.δ) (costZU (ssRr H.x) H.δ) (costZL (ssRr H.x) H.δ) := by
+  have hB : 9/4000 < costBExact (ssRr H.x) (ssTs H.al H.be) (s6VarianceFloor (ssRr H.x) H.δ) (costZU (ssRr H.x) H.δ) (costZL (ssRr H.x) H.δ) := by
     obtain ⟨hR1, hR2, -⟩ := cost_shape hx2 hx13 hδ0 hδ19 hal hal'
     obtain ⟨η, hη1, hη2, hη⟩ : ∃ η : ℝ, 13 / 5 ≤ η ∧ η ≤ 3 ∧ H.al = 1 + η * H.δ := by
       rcases hδ0.lt_or_eq with hpos | hzero
@@ -1006,18 +869,10 @@ theorem octagonCost_lt_completion (hS : H.SmallShape) (hΓ : 1829 / 10000 < H.Γ
         rw [← hzero] at hal1 hal2 ⊢
         linarith
     rw [← hbe, hη, cost_T_eq hx1 hδ0 (by linarith)]
-    exact lt_of_lt_of_le (lt_min (cost_B_endpoint hR1 hR2 hδ0 hδ19 (Or.inr rfl))
-      (cost_B_endpoint hR1 hR2 hδ0 hδ19 (Or.inl rfl)))
-      (costB_polynomial_endpoints_le_exact hR1 hR2 hδ0 hδ19 hη1 hη2)
-  obtain ⟨hA, hpi, hs3⟩ := cost_constants
-  have hb0 : 0 < costbstar := by norm_num [costbstar]
-  have hgap : 989 / 571 * costbstar <
-      √3 * costBExact (ssRr H.x) (ssTs H.al H.be) (costuq (ssRr H.x) H.δ) (costZU (ssRr H.x) H.δ) (costZL (ssRr H.x) H.δ) := by
-    nlinarith [mul_pos (sub_pos.2 hs3) hb0, Real.sqrt_nonneg 3]
-  have hexact : (3126055 / 1000000 : ℝ) =
-      161 / 54 * (314159265 / 100000000) / 3 + 989 / 571 * costbstar - 1 / 800000 := by
-    norm_num [costbstar]
-  linarith
+    exact s6_final_score_gt hR1 hR2 hδ0 hδ19 hη1 hη2
+  have ho := cost_octagon_lt_exact_score hB
+  linarith only [ho,hF,hcont]
+
 
 end SmallerShortData
 
