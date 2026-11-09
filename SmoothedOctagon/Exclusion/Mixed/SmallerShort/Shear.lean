@@ -7,14 +7,14 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Interface
 
 On the small-shape domain: the actual outer root (`SmallerShortData.root_zero`) and the envelope
 (`ss_env_weighted`, `m = 0`) give `𝓡(u; p, q) ≥ 0` at `p = τq`; the incoming monotonicity
-(`shr_u_mono`) and the rational majorant `û` (`shr_Vbar_le_uhat`) give `𝓡(û; p, q) ≥ 0`; this
+(`shr_norm_mono`) and the rational majorant `û` (`shr_Vbar_le_uhat`) give `𝓡(û; p, q) ≥ 0`; this
 contradicts `shr_residual_neg` unless `q > q_b = (29/30)q_c`; and `q > q_b` forces
 `√3hR + 13A/3 < 0` (`shr_shear_sign`).
 
 ## Main API
 
 * `ssUhat5` (`û = 755/996 + (x - 2)/100`), `shrJ2`, `shrJt` (the face values `J₂`, `J_τ`).
-* `shr_Vbar_le_uhat`, `shr_u_mono`, `shr_log_tangent`, `shr_J_neg`, `shr_residual_neg`,
+* `shr_Vbar_le_uhat`, `shr_norm_mono`, `shr_log_tangent`, `shr_J_neg`, `shr_residual_neg`,
   `shr_shear_sign`.
 * The bound: `SmallerShortData.shear_neg`, `M2Short.shear_neg`.
 -/
@@ -1186,83 +1186,80 @@ theorem shr_Vbar_le_uhat {x : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) : ssVbar 
     linarith [mul_nonneg ht (mul_nonneg ht ht), mul_nonneg ht ht]
   linarith
 
-/-- The `u`-slope of `𝓡(u; p, q) = C(p) + qL(p)`, bilinear in `(p, q)`. -/
-private noncomputable def shrsl (x be al p q : ℝ) : ℝ :=
-  (1 + x) + (al + be) / al - p * (ssDg x be al / al ^ 2) * (1 + x) +
-    q * (p * ((ssDg x be al / al ^ 2) ^ 2 + ssDg x be al / al ^ 2 * (1 - 1 / al ^ 2) * (1 + x)) -
-      2 * (ssDg x be al / al ^ 2) - (1 - 1 / al ^ 2) * (1 + x))
+/-- The residual's factored norm slope is positive while the duration stays below the
+incoming switching factor. -/
+private theorem shr_factored_slope_pos {S ε r g p q : ℝ} (hS : 0 < S) (hε1 : ε ≤ 1)
+    (hr : 0 < r) (hgr : g * r < 1) (hp : 0 ≤ p) (hpr : p ≤ r) (hq : 0 ≤ q) (hq2 : q < 1 / 2) :
+    0 < S * (1 - ε * q) * (1 - p * g) + 1 / r - q * g * (2 - p * g) := by
+  have hεq := mul_le_mul_of_nonneg_right hε1 hq
+  have hfirst : 0 < 1 - ε * q := by linarith
+  rcases le_or_gt g 0 with hg | hg
+  · have hpg := mul_nonpos_of_nonneg_of_nonpos hp hg
+    have hpg1 : 0 < 1 - p * g := by linarith
+    have hleft : 0 < S * (1 - ε * q) * (1 - p * g) := by positivity
+    have hright : q * g * (2 - p * g) ≤ 0 :=
+      mul_nonpos_of_nonpos_of_nonneg (mul_nonpos_of_nonneg_of_nonpos hq hg) (by linarith)
+    have : 0 < 1 / r := by positivity
+    linarith
+  · have hpg0 : 0 ≤ p * g := mul_nonneg hp hg.le
+    have hpg : p * g < 1 := lt_of_le_of_lt (mul_le_mul_of_nonneg_right hpr hg.le) (by nlinarith)
+    have hleft : 0 < S * (1 - ε * q) * (1 - p * g) := by positivity
+    have hright : (1 - 2 * q) / r ≤ 1 / r - q * g * (2 - p * g) := by
+      have hg_bound : g ≤ 1 / r := by rw [le_div_iff₀ hr]; exact hgr.le
+      have h1 : g * (2 - p * g) ≤ 2 / r := by
+        have h2 := mul_le_mul_of_nonneg_left (show 2 - p * g ≤ 2 by linarith) hg.le
+        calc _ ≤ 2 * g := by nlinarith only [h2]
+             _ ≤ 2 * (1 / r) := mul_le_mul_of_nonneg_left hg_bound (by norm_num)
+             _ = 2 / r := by ring
+      have := mul_le_mul_of_nonneg_left h1 hq
+      have he : (1 - 2 * q) / r = 1 / r - q * (2 / r) := by ring
+      rw [he]
+      nlinarith only [this]
+    have : 0 < (1 - 2 * q) / r := div_pos (by linarith) hr
+    linarith
 
-/-- The four corner values of the slope. -/
-private theorem shrsl_corners {x be al : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x)
-    (hxb : x ≤ be) :
-    0 ≤ shrsl x be al 0 0 ∧ 0 ≤ shrsl x be al 0 (1 / 7) ∧ 0 ≤ shrsl x be al (al / (al + be)) 0 ∧
-      0 ≤ shrsl x be al (al / (al + be)) (1 / 7) := by
+/-- The small-shape geometry gives `gr_A < 1`, directly from
+`β(2x - α) > 1 + 2x`. -/
+theorem shr_small_shape_factor {x be al : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hal2 : al < 3 / 2)
+    (hxb : x ≤ be) : ssDg x be al / al ^ 2 * ssRA al be < 1 := by
+  have hx0 : 0 < x := by linarith
   have hal0 : 0 < al := by linarith
-  have hab : 0 < al + be := by linarith
-  have e00 : shrsl x be al 0 0 = (1 + x) + (al + be) / al := by unfold shrsl; ring
-  have e01 : shrsl x be al 0 (1 / 7) =
-      (6 * x * al ^ 2 + 4 * x * be - 3 * x + 11 * al ^ 2 + 3 * al * be - 1) / (7 * al ^ 2) := by
-    unfold shrsl ssDg
+  have hbe0 : 0 < be := by linarith
+  have hshape : 1 + 2 * x < be * (2 * x - al) := by
+    have h1 := mul_le_mul_of_nonneg_right hxb (show 0 ≤ 2 * x - al by linarith)
+    have h2 := mul_lt_mul_of_pos_left hal2 hx0
+    have h3 := mul_nonneg (show 0 ≤ x - 2 by linarith) (show 0 ≤ 2 * x + 1 / 2 by linarith)
+    nlinarith
+  have e : ssDg x be al / al ^ 2 * ssRA al be =
+      1 - (be * (2 * x - al) - 1 - 2 * x) / (al * (al + be)) := by
+    unfold ssDg ssRA
     field_simp
     ring
-  have e10 : shrsl x be al (al / (al + be)) 0 =
-      (2 * x ^ 2 * be - 2 * x ^ 2 - x * al * be + 2 * x * be - 3 * x + al ^ 2 + al * be +
-        be ^ 2 - 1) / (al * (al + be)) := by
-    unfold shrsl ssDg
-    field_simp
-    ring
-  have e11 : shrsl x be al (al / (al + be)) (1 / 7) =
-      (12 * x ^ 2 * al ^ 2 * be - 12 * x ^ 2 * al ^ 2 + 4 * x ^ 2 * be ^ 2 - 6 * x ^ 2 * be +
-        2 * x ^ 2 - 6 * x * al ^ 3 * be + 12 * x * al ^ 2 * be - 18 * x * al ^ 2 -
-        4 * x * al * be ^ 2 + 3 * x * al * be - 2 * x * be + x + 6 * al ^ 4 + 6 * al ^ 3 * be +
-        7 * al ^ 2 * be ^ 2 - 6 * al ^ 2 + al * be) / (7 * al ^ 3 * (al + be)) := by
-    unfold shrsl ssDg
-    field_simp
-    ring
-  rw [e00, e01, e10, e11]
-  obtain ⟨z, hz, rfl⟩ : ∃ z, 0 ≤ z ∧ al = 1 + z := ⟨al - 1, by linarith, by ring⟩
-  obtain ⟨h, hh, rfl⟩ : ∃ h, 0 ≤ h ∧ x = 1 + z + h := ⟨x - (1 + z), by linarith, by ring⟩
-  obtain ⟨k, hk, rfl⟩ : ∃ k, 0 ≤ k ∧ be = 1 + z + h + k := ⟨be - (1 + z + h), by linarith, by ring⟩
-  refine ⟨by positivity, div_nonneg ?_ (by positivity), div_nonneg ?_ (by positivity),
-    div_nonneg ?_ (by positivity)⟩ <;> ring_nf <;> positivity
+  rw [e]
+  have : 0 < (be * (2 * x - al) - 1 - 2 * x) / (al * (al + be)) :=
+    div_pos (by linarith) (by positivity)
+  linarith
 
-/-- **The residual is monotone in the incoming norm**: for `x > 1`, `1 ≤ α ≤ x ≤ β`, `0 < q ≤ 1/7`,
-`0 < p ≤ r_A`, `𝓡(u; p, q) = C(p) + qL(p)` is nondecreasing in `u` (bilinear corner check of the
-slope). -/
-theorem shr_u_mono {x be al p q u u' : ℝ} (hx : 1 < x) (hal : 1 ≤ al) (hax : al ≤ x)
-    (hxb : x ≤ be) (hq : 0 < q) (hq7 : q ≤ 1 / 7) (hp : 0 < p) (hpr : p ≤ ssRA al be)
+/-- **Monotonicity in the bridge norm**: the affine norm slope factors into a positive
+term and a remainder bounded below by `(1 - 2q)/r_A`. -/
+theorem shr_norm_mono {x be al p q u u' : ℝ} (hx : 1 < x) (hal : 1 ≤ al)
+    (hbe : 0 < be) (hgr : ssDg x be al / al ^ 2 * ssRA al be < 1)
+    (hq : 0 ≤ q) (hq2 : q < 1 / 2) (hp : 0 < p) (hpr : p ≤ ssRA al be)
     (huu : u ≤ u') : ssPhi x be al u p 0 q ≤ ssPhi x be al u' p 0 q := by
   have hal0 : 0 < al := by linarith
-  have hab : 0 < al + be := by linarith
-  have hr0 : 0 < al / (al + be) := by positivity
-  have hpr' : p ≤ al / (al + be) := hpr
-  have key : ssPhi x be al u' p 0 q - ssPhi x be al u p 0 q = (u' - u) * shrsl x be al p q := by
-    unfold ssPhi ssCp ssLp ssA1 ssA2 ssA3 ssE0 shrsl ssRA
+  have hr : 0 < ssRA al be := by unfold ssRA; positivity
+  have hε1 : 1 - 1 / al ^ 2 ≤ 1 := by
+    have : 0 ≤ 1 / al ^ 2 := by positivity
+    linarith
+  have hslope := shr_factored_slope_pos (show 0 < 1 + x by linarith) hε1 hr hgr hp.le hpr hq hq2
+  have e : ssPhi x be al u' p 0 q - ssPhi x be al u p 0 q =
+      (u' - u) * ((1 + x) * (1 - (1 - 1 / al ^ 2) * q) *
+        (1 - p * (ssDg x be al / al ^ 2)) + 1 / ssRA al be -
+          q * (ssDg x be al / al ^ 2) * (2 - p * (ssDg x be al / al ^ 2))) := by
+    unfold ssPhi ssCp ssLp ssA1 ssA2 ssA3 ssE0 ssRA
     field_simp
     ring
-  have interp : shrsl x be al p q * (al / (al + be) / 7) =
-      (al / (al + be) - p) * (1 / 7 - q) * shrsl x be al 0 0 +
-        p * (1 / 7 - q) * shrsl x be al (al / (al + be)) 0 +
-        (al / (al + be) - p) * q * shrsl x be al 0 (1 / 7) +
-        p * q * shrsl x be al (al / (al + be)) (1 / 7) := by
-    unfold shrsl
-    ring
-  obtain ⟨c00, c01, c10, c11⟩ := shrsl_corners hx hal hax hxb
-  have w1 : 0 ≤ al / (al + be) - p := by linarith
-  have w2 : 0 ≤ 1 / 7 - q := by linarith
-  have hprod : 0 ≤ shrsl x be al p q * (al / (al + be) / 7) := by
-    rw [interp]
-    have := mul_nonneg (mul_nonneg w1 w2) c00
-    have := mul_nonneg (mul_nonneg hp.le w2) c10
-    have := mul_nonneg (mul_nonneg w1 hq.le) c01
-    have := mul_nonneg (mul_nonneg hp.le hq.le) c11
-    linarith
-  have hsl : 0 ≤ shrsl x be al p q := by
-    rcases le_or_gt 0 (shrsl x be al p q) with h | h
-    · exact h
-    · have := mul_neg_of_neg_of_pos h (show 0 < al / (al + be) / 7 by positivity)
-      linarith
-  have := mul_nonneg (sub_nonneg.2 huu) hsl
+  have := mul_nonneg (sub_nonneg.mpr huu) hslope.le
   linarith
 
 /-- **The second log tangent**: for `y > 0`,
@@ -1588,7 +1585,7 @@ theorem shr_residual_neg {x al be p q : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6)
     rw [e, lt_div_iff₀ (by positivity)]
     have := mul_le_mul hal' hal' hal0.le (by norm_num)
     linarith
-  have hA2 : 0 < ssA2 x be al (ssUhat5 x) := ss_A2_pos hx (by linarith) hal hu1 hu2
+  have hA2 : 0 < ssA2 x be al (ssUhat5 x) := ss_A2_pos hx (by linarith) hal hu1 (by linarith)
   have hqb0 : 0 < 29 / 30 * ssQc x al := by unfold ssQc; positivity
   have ePhi : ssPhi x be al (ssUhat5 x) p 0 q =
       (ssE0 x (ssUhat5 x) + (ssUhat5 x - 1) / ssRA al be + ssRA al be) + 1 -
@@ -1616,375 +1613,246 @@ theorem shr_residual_neg {x al be p q : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6)
   rw [ePhi]
   exact shr_resid_abstract hX hA1 hA2 hr6 hqb0 hq hqb hp hpq hpr hJ2 hJθ hJ1
 
-/-! ### Private helpers: the shear polynomials -/
+/-! ### The shape ratios and the physical shear -/
 
-/-- `W = (βx - α)m`, `m = (8x² + 8x - 3)α + (3x² - 8x - 8)β`. -/
-private noncomputable def shrW (x be al : ℝ) : ℝ :=
-  (be * x - al) * ((8 * x ^ 2 + 8 * x - 3) * al + (3 * x ^ 2 - 8 * x - 8) * be)
+private noncomputable def shrShapeF (s y : ℝ) : ℝ :=
+  ((3 + s) * y + 13 / 3 * (1 - y ^ 2)) / (3 + y ^ 2 * s)
 
-/-- `V = α²W + 3K_xK_AQ₀(x - 1)`. -/
-private noncomputable def shrV (x be al : ℝ) : ℝ :=
-  al ^ 2 * shrW x be al +
-    3 * (x ^ 2 + x + 1) * (al ^ 2 + al * be + be ^ 2) * (2 * be * x - x - al * be) * (x - 1)
+/-- The two shape comparisons reduce the fraction to its smallest shape parameters. -/
+private theorem shr_shape_fraction_bound {s y : ℝ} (hs : 1 / 9 ≤ s)
+    (hy0 : 27 / 31 ≤ y) (hy1 : y ≤ 1) : shrShapeF s y < 11 / 9 := by
+  have hy : 0 < y := by linarith
+  have hden : 0 < 3 + y ^ 2 * s := by positivity
+  have hden0 : 0 < 3 + y ^ 2 * (1 / 9 : ℝ) := by positivity
+  have hdec_s : shrShapeF s y ≤ shrShapeF (1 / 9) y := by
+    have e : shrShapeF (1 / 9) y - shrShapeF s y =
+        (s - 1 / 9) * y * (1 - y ^ 2) * (13 / 3 * y - 3) /
+          ((3 + y ^ 2 / 9) * (3 + y ^ 2 * s)) := by
+      unfold shrShapeF
+      field_simp
+      ring
+    have hnum : 0 ≤ (s - 1 / 9) * y * (1 - y ^ 2) * (13 / 3 * y - 3) :=
+      mul_nonneg (mul_nonneg (mul_nonneg (by linarith) hy.le) (by nlinarith)) (by linarith)
+    have h : 0 ≤ shrShapeF (1 / 9) y - shrShapeF s y := by rw [e]; positivity
+    linarith
+  have hdec_y : shrShapeF (1 / 9) y ≤ shrShapeF (1 / 9) (27 / 31) := by
+    have e : shrShapeF (1 / 9) (27 / 31) - shrShapeF (1 / 9) y =
+        (y - 27 / 31) * (3 + 1 / 9) *
+          (13 / 3 * (y + 27 / 31) - 3 + (1 / 9) * y * (27 / 31)) /
+            ((3 + (27 / 31) ^ 2 / 9) * (3 + y ^ 2 / 9)) := by
+      unfold shrShapeF
+      field_simp
+      ring
+    have hnum : 0 ≤ (y - 27 / 31) * (3 + 1 / 9) *
+        (13 / 3 * (y + 27 / 31) - 3 + (1 / 9) * y * (27 / 31)) :=
+      mul_nonneg (mul_nonneg (by linarith) (by norm_num)) (by linarith)
+    have h : 0 ≤ shrShapeF (1 / 9) (27 / 31) - shrShapeF (1 / 9) y := by rw [e]; positivity
+    linarith
+  have hend : shrShapeF (1 / 9) (27 / 31) < 11 / 9 := by norm_num [shrShapeF]
+  linarith
 
-private theorem shrPi_pos_id {s w n : ℝ} :
-    ((3800160360000 : ℚ) : ℝ) * (29 * shrV (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n /
-        5) * (w / 19)) - 30 * shrW (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w
-        / 19)) * ((2 + s / 6) * ((2 + s / 6) + 2) + (1 + (3 - 2 * n / 5) * (w / 19)) ^ 2)) =
-      (((((((7102499712840000) + ((-6420270924000000) * w + (5939650642680000) * s)) +
-          ((2110649065632000) * w * n + ((-91961775360000) * w ^ (2:ℕ) + (-2204093008800000) * s *
-          w))) + (((2042269513470000) * s ^ (2:ℕ) + ((7149775392000) * w ^ (2:ℕ) * n +
-          (-46672329600000) * w ^ (3:ℕ))) + ((1009922616936000) * s * w * n + ((-30936393180000) * s
-          * w ^ (2:ℕ) + (-133583414760000) * s ^ (2:ℕ) * w)))) + ((((374368575465000) * s ^ (3:ℕ) +
-          ((13672998028800) * w ^ (2:ℕ) * n ^ (2:ℕ) + (14965728480000) * w ^ (3:ℕ) * n)) +
-          ((-2053593000000) * w ^ (4:ℕ) + ((29364747912000) * s * w ^ (2:ℕ) * n + (-17279953560000)
-          * s * w ^ (3:ℕ)))) + (((189870234408000) * s ^ (2:ℕ) * w * n + ((11985593490000) * s ^
-          (2:ℕ) * w ^ (2:ℕ) + (36223750800000) * s ^ (3:ℕ) * w)) + ((39620190420000) * s ^ (4:ℕ) +
-          ((-1352034892800) * w ^ (3:ℕ) * n ^ (2:ℕ) + (611730144000) * w ^ (4:ℕ) * n))))) +
-          (((((3605485478400) * s * w ^ (2:ℕ) * n ^ (2:ℕ) + ((5903887176000) * s * w ^ (3:ℕ) * n +
-          (-895926420000) * s * w ^ (4:ℕ))) + ((7699974048000) * s ^ (2:ℕ) * w ^ (2:ℕ) * n +
-          ((-2063244960000) * s ^ (2:ℕ) * w ^ (3:ℕ) + (18122986980000) * s ^ (3:ℕ) * w * n))) +
-          (((4722275295000) * s ^ (3:ℕ) * w ^ (2:ℕ) + ((6970973175000) * s ^ (4:ℕ) * w +
-          (2435210786250) * s ^ (5:ℕ))) + ((44039531520) * w ^ (3:ℕ) * n ^ (3:ℕ) + ((-59290444800) *
-          w ^ (4:ℕ) * n ^ (2:ℕ) + (-514562803200) * s * w ^ (3:ℕ) * n ^ (2:ℕ))))) +
-          ((((257476968000) * s * w ^ (4:ℕ) * n + ((391034044800) * s ^ (2:ℕ) * w ^ (2:ℕ) * n ^
-          (2:ℕ) + (845926740000) * s ^ (2:ℕ) * w ^ (3:ℕ) * n)) + ((-149678280000) * s ^ (2:ℕ) * w ^
-          (4:ℕ) + ((806817672000) * s ^ (3:ℕ) * w ^ (2:ℕ) * n + (-58035690000) * s ^ (3:ℕ) * w ^
-          (3:ℕ)))) + (((931088673000) * s ^ (4:ℕ) * w * n + ((611713597500) * s ^ (4:ℕ) * w ^ (2:ℕ)
-          + (509435077500) * s ^ (5:ℕ) * w)) + (((81124822500) * s ^ (6:ℕ) + (1646023680) * w ^
-          (4:ℕ) * n ^ (3:ℕ)) + ((17026018560) * s * w ^ (3:ℕ) * n ^ (3:ℕ) + (-24656918400) * s * w ^
-          (4:ℕ) * n ^ (2:ℕ))))))) + ((((((-67696300800) * s ^ (2:ℕ) * w ^ (3:ℕ) * n ^ (2:ℕ) +
-          ((39928788000) * s ^ (2:ℕ) * w ^ (4:ℕ) * n + (24024405600) * s ^ (3:ℕ) * w ^ (2:ℕ) * n ^
-          (2:ℕ))) + ((57343140000) * s ^ (3:ℕ) * w ^ (3:ℕ) * n + ((-12677310000) * s ^ (3:ℕ) * w ^
-          (4:ℕ) + (41837373000) * s ^ (4:ℕ) * w ^ (2:ℕ) * n))) + (((7176870000) * s ^ (4:ℕ) * w ^
-          (3:ℕ) + ((24538072500) * s ^ (5:ℕ) * w * n + (38732141250) * s ^ (5:ℕ) * w ^ (2:ℕ))) +
-          ((17670498750) * s ^ (6:ℕ) * w + ((1140308750) * s ^ (7:ℕ) + (33592320) * w ^ (4:ℕ) * n ^
-          (4:ℕ))))) + ((((796573440) * s * w ^ (4:ℕ) * n ^ (3:ℕ) + ((2248663680) * s ^ (2:ℕ) * w ^
-          (3:ℕ) * n ^ (3:ℕ) + (-3534969600) * s ^ (2:ℕ) * w ^ (4:ℕ) * n ^ (2:ℕ))) + ((-3806870400) *
-          s ^ (3:ℕ) * w ^ (3:ℕ) * n ^ (2:ℕ) + ((3005424000) * s ^ (3:ℕ) * w ^ (4:ℕ) * n +
-          (930513600) * s ^ (4:ℕ) * w ^ (2:ℕ) * n ^ (2:ℕ)))) + (((1973853000) * s ^ (4:ℕ) * w ^
-          (3:ℕ) * n + ((-590692500) * s ^ (4:ℕ) * w ^ (4:ℕ) + (1116031500) * s ^ (5:ℕ) * w ^ (2:ℕ) *
-          n)) + ((701527500) * s ^ (5:ℕ) * w ^ (3:ℕ) + ((262356750) * s ^ (6:ℕ) * w * n +
-          (1235296875) * s ^ (6:ℕ) * w ^ (2:ℕ)))))) + (((((244351875) * s ^ (7:ℕ) * w + ((4976640) *
-          s * w ^ (4:ℕ) * n ^ (4:ℕ) + (115032960) * s ^ (2:ℕ) * w ^ (4:ℕ) * n ^ (3:ℕ))) +
-          ((125582400) * s ^ (3:ℕ) * w ^ (3:ℕ) * n ^ (3:ℕ) + ((-224920800) * s ^ (3:ℕ) * w ^ (4:ℕ) *
-          n ^ (2:ℕ) + (-80985600) * s ^ (4:ℕ) * w ^ (3:ℕ) * n ^ (2:ℕ)))) + (((118233000) * s ^ (4:ℕ)
-          * w ^ (4:ℕ) * n + ((18194400) * s ^ (5:ℕ) * w ^ (2:ℕ) * n ^ (2:ℕ) + (35910000) * s ^ (5:ℕ)
-          * w ^ (3:ℕ) * n)) + ((-14782500) * s ^ (5:ℕ) * w ^ (4:ℕ) + ((13808250) * s ^ (6:ℕ) * w ^
-          (2:ℕ) * n + (24795000) * s ^ (6:ℕ) * w ^ (3:ℕ))))) + ((((16245000) * s ^ (7:ℕ) * w ^ (2:ℕ)
-          + ((165888) * s ^ (2:ℕ) * w ^ (4:ℕ) * n ^ (4:ℕ) + (6609600) * s ^ (3:ℕ) * w ^ (4:ℕ) * n ^
-          (3:ℕ))) + ((2599200) * s ^ (4:ℕ) * w ^ (3:ℕ) * n ^ (3:ℕ) + ((-6289200) * s ^ (4:ℕ) * w ^
-          (4:ℕ) * n ^ (2:ℕ) + (-68400) * s ^ (5:ℕ) * w ^ (3:ℕ) * n ^ (2:ℕ)))) + (((2376000) * s ^
-          (5:ℕ) * w ^ (4:ℕ) * n + ((413250) * s ^ (6:ℕ) * w ^ (3:ℕ) * n + (-163125) * s ^ (6:ℕ) * w
-          ^ (4:ℕ))) + (((344375) * s ^ (7:ℕ) * w ^ (3:ℕ) + (136800) * s ^ (4:ℕ) * w ^ (4:ℕ) * n ^
-          (3:ℕ)) + ((-54000) * s ^ (5:ℕ) * w ^ (4:ℕ) * n ^ (2:ℕ) + (21750) * s ^ (6:ℕ) * w ^ (4:ℕ) *
-          n))))))) := by
-  unfold shrV shrW
-  push_cast
-  ring
-
-private theorem shrPi_pos {s w n : ℝ} (hs0 : 0 ≤ s) (hs1 : s ≤ 1) (hw0 : 0 ≤ w) (hw1 : w ≤ 1)
-    (hn0 : 0 ≤ n) (hn1 : n ≤ 1) :
-    0 < (29 * shrV (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) - 30 *
-        shrW (2 + s / 6) ((2 + s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) * ((2 + s / 6)
-        * ((2 + s / 6) + 2) + (1 + (3 - 2 * n / 5) * (w / 19)) ^ 2)) := by
-  have hp : 0 < (((((((7102499712840000) + ((-6420270924000000) * w + (5939650642680000) * s)) +
-      ((2110649065632000) * w * n + ((-91961775360000) * w ^ (2:ℕ) + (-2204093008800000) * s * w)))
-      + (((2042269513470000) * s ^ (2:ℕ) + ((7149775392000) * w ^ (2:ℕ) * n + (-46672329600000) * w
-      ^ (3:ℕ))) + ((1009922616936000) * s * w * n + ((-30936393180000) * s * w ^ (2:ℕ) +
-      (-133583414760000) * s ^ (2:ℕ) * w)))) + ((((374368575465000) * s ^ (3:ℕ) + ((13672998028800)
-      * w ^ (2:ℕ) * n ^ (2:ℕ) + (14965728480000) * w ^ (3:ℕ) * n)) + ((-2053593000000) * w ^ (4:ℕ) +
-      ((29364747912000) * s * w ^ (2:ℕ) * n + (-17279953560000) * s * w ^ (3:ℕ)))) +
-      (((189870234408000) * s ^ (2:ℕ) * w * n + ((11985593490000) * s ^ (2:ℕ) * w ^ (2:ℕ) +
-      (36223750800000) * s ^ (3:ℕ) * w)) + ((39620190420000) * s ^ (4:ℕ) + ((-1352034892800) * w ^
-      (3:ℕ) * n ^ (2:ℕ) + (611730144000) * w ^ (4:ℕ) * n))))) + (((((3605485478400) * s * w ^ (2:ℕ)
-      * n ^ (2:ℕ) + ((5903887176000) * s * w ^ (3:ℕ) * n + (-895926420000) * s * w ^ (4:ℕ))) +
-      ((7699974048000) * s ^ (2:ℕ) * w ^ (2:ℕ) * n + ((-2063244960000) * s ^ (2:ℕ) * w ^ (3:ℕ) +
-      (18122986980000) * s ^ (3:ℕ) * w * n))) + (((4722275295000) * s ^ (3:ℕ) * w ^ (2:ℕ) +
-      ((6970973175000) * s ^ (4:ℕ) * w + (2435210786250) * s ^ (5:ℕ))) + ((44039531520) * w ^ (3:ℕ)
-      * n ^ (3:ℕ) + ((-59290444800) * w ^ (4:ℕ) * n ^ (2:ℕ) + (-514562803200) * s * w ^ (3:ℕ) * n ^
-      (2:ℕ))))) + ((((257476968000) * s * w ^ (4:ℕ) * n + ((391034044800) * s ^ (2:ℕ) * w ^ (2:ℕ) *
-      n ^ (2:ℕ) + (845926740000) * s ^ (2:ℕ) * w ^ (3:ℕ) * n)) + ((-149678280000) * s ^ (2:ℕ) * w ^
-      (4:ℕ) + ((806817672000) * s ^ (3:ℕ) * w ^ (2:ℕ) * n + (-58035690000) * s ^ (3:ℕ) * w ^
-      (3:ℕ)))) + (((931088673000) * s ^ (4:ℕ) * w * n + ((611713597500) * s ^ (4:ℕ) * w ^ (2:ℕ) +
-      (509435077500) * s ^ (5:ℕ) * w)) + (((81124822500) * s ^ (6:ℕ) + (1646023680) * w ^ (4:ℕ) * n
-      ^ (3:ℕ)) + ((17026018560) * s * w ^ (3:ℕ) * n ^ (3:ℕ) + (-24656918400) * s * w ^ (4:ℕ) * n ^
-      (2:ℕ))))))) + ((((((-67696300800) * s ^ (2:ℕ) * w ^ (3:ℕ) * n ^ (2:ℕ) + ((39928788000) * s ^
-      (2:ℕ) * w ^ (4:ℕ) * n + (24024405600) * s ^ (3:ℕ) * w ^ (2:ℕ) * n ^ (2:ℕ))) + ((57343140000) *
-      s ^ (3:ℕ) * w ^ (3:ℕ) * n + ((-12677310000) * s ^ (3:ℕ) * w ^ (4:ℕ) + (41837373000) * s ^
-      (4:ℕ) * w ^ (2:ℕ) * n))) + (((7176870000) * s ^ (4:ℕ) * w ^ (3:ℕ) + ((24538072500) * s ^ (5:ℕ)
-      * w * n + (38732141250) * s ^ (5:ℕ) * w ^ (2:ℕ))) + ((17670498750) * s ^ (6:ℕ) * w +
-      ((1140308750) * s ^ (7:ℕ) + (33592320) * w ^ (4:ℕ) * n ^ (4:ℕ))))) + ((((796573440) * s * w ^
-      (4:ℕ) * n ^ (3:ℕ) + ((2248663680) * s ^ (2:ℕ) * w ^ (3:ℕ) * n ^ (3:ℕ) + (-3534969600) * s ^
-      (2:ℕ) * w ^ (4:ℕ) * n ^ (2:ℕ))) + ((-3806870400) * s ^ (3:ℕ) * w ^ (3:ℕ) * n ^ (2:ℕ) +
-      ((3005424000) * s ^ (3:ℕ) * w ^ (4:ℕ) * n + (930513600) * s ^ (4:ℕ) * w ^ (2:ℕ) * n ^ (2:ℕ))))
-      + (((1973853000) * s ^ (4:ℕ) * w ^ (3:ℕ) * n + ((-590692500) * s ^ (4:ℕ) * w ^ (4:ℕ) +
-      (1116031500) * s ^ (5:ℕ) * w ^ (2:ℕ) * n)) + ((701527500) * s ^ (5:ℕ) * w ^ (3:ℕ) +
-      ((262356750) * s ^ (6:ℕ) * w * n + (1235296875) * s ^ (6:ℕ) * w ^ (2:ℕ)))))) + (((((244351875)
-      * s ^ (7:ℕ) * w + ((4976640) * s * w ^ (4:ℕ) * n ^ (4:ℕ) + (115032960) * s ^ (2:ℕ) * w ^ (4:ℕ)
-      * n ^ (3:ℕ))) + ((125582400) * s ^ (3:ℕ) * w ^ (3:ℕ) * n ^ (3:ℕ) + ((-224920800) * s ^ (3:ℕ) *
-      w ^ (4:ℕ) * n ^ (2:ℕ) + (-80985600) * s ^ (4:ℕ) * w ^ (3:ℕ) * n ^ (2:ℕ)))) + (((118233000) * s
-      ^ (4:ℕ) * w ^ (4:ℕ) * n + ((18194400) * s ^ (5:ℕ) * w ^ (2:ℕ) * n ^ (2:ℕ) + (35910000) * s ^
-      (5:ℕ) * w ^ (3:ℕ) * n)) + ((-14782500) * s ^ (5:ℕ) * w ^ (4:ℕ) + ((13808250) * s ^ (6:ℕ) * w ^
-      (2:ℕ) * n + (24795000) * s ^ (6:ℕ) * w ^ (3:ℕ))))) + ((((16245000) * s ^ (7:ℕ) * w ^ (2:ℕ) +
-      ((165888) * s ^ (2:ℕ) * w ^ (4:ℕ) * n ^ (4:ℕ) + (6609600) * s ^ (3:ℕ) * w ^ (4:ℕ) * n ^
-      (3:ℕ))) + ((2599200) * s ^ (4:ℕ) * w ^ (3:ℕ) * n ^ (3:ℕ) + ((-6289200) * s ^ (4:ℕ) * w ^ (4:ℕ)
-      * n ^ (2:ℕ) + (-68400) * s ^ (5:ℕ) * w ^ (3:ℕ) * n ^ (2:ℕ)))) + (((2376000) * s ^ (5:ℕ) * w ^
-      (4:ℕ) * n + ((413250) * s ^ (6:ℕ) * w ^ (3:ℕ) * n + (-163125) * s ^ (6:ℕ) * w ^ (4:ℕ))) +
-      (((344375) * s ^ (7:ℕ) * w ^ (3:ℕ) + (136800) * s ^ (4:ℕ) * w ^ (4:ℕ) * n ^ (3:ℕ)) + ((-54000)
-      * s ^ (5:ℕ) * w ^ (4:ℕ) * n ^ (2:ℕ) + (21750) * s ^ (6:ℕ) * w ^ (4:ℕ) * n))))))) := by
-    linear_combination 6420270924000000 * mono3 (i := 0) (j := 1) (k := 0) (i' := 0) (j' := 0) (k'
-        := 0) hs0 hs1 hw0 hw1 hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      91961775360000 * mono3 (i := 0) (j := 2) (k := 0) (i' := 0) (j' := 0) (k' := 0) hs0 hs1 hw0
-          hw1 hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      46672329600000 * mono3 (i := 0) (j := 3) (k := 0) (i' := 0) (j' := 0) (k' := 0) hs0 hs1 hw0
-          hw1 hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      1352034892800 * mono3 (i := 0) (j := 3) (k := 2) (i' := 0) (j' := 3) (k' := 1) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      2053593000000 * mono3 (i := 0) (j := 4) (k := 0) (i' := 0) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      59290444800 * mono3 (i := 0) (j := 4) (k := 2) (i' := 0) (j' := 3) (k' := 1) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      2204093008800000 * mono3 (i := 1) (j := 1) (k := 0) (i' := 1) (j' := 0) (k' := 0) hs0 hs1 hw0
-          hw1 hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      30936393180000 * mono3 (i := 1) (j := 2) (k := 0) (i' := 1) (j' := 0) (k' := 0) hs0 hs1 hw0
-          hw1 hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      17279953560000 * mono3 (i := 1) (j := 3) (k := 0) (i' := 1) (j' := 0) (k' := 0) hs0 hs1 hw0
-          hw1 hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      514562803200 * mono3 (i := 1) (j := 3) (k := 2) (i' := 0) (j' := 3) (k' := 1) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      895926420000 * mono3 (i := 1) (j := 4) (k := 0) (i' := 1) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      24656918400 * mono3 (i := 1) (j := 4) (k := 2) (i' := 0) (j' := 3) (k' := 1) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      133583414760000 * mono3 (i := 2) (j := 1) (k := 0) (i' := 1) (j' := 0) (k' := 0) hs0 hs1 hw0
-          hw1 hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      2063244960000 * mono3 (i := 2) (j := 3) (k := 0) (i' := 1) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      67696300800 * mono3 (i := 2) (j := 3) (k := 2) (i' := 0) (j' := 3) (k' := 1) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      149678280000 * mono3 (i := 2) (j := 4) (k := 0) (i' := 1) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      3534969600 * mono3 (i := 2) (j := 4) (k := 2) (i' := 0) (j' := 3) (k' := 1) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      58035690000 * mono3 (i := 3) (j := 3) (k := 0) (i' := 1) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      3806870400 * mono3 (i := 3) (j := 3) (k := 2) (i' := 0) (j' := 3) (k' := 1) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      12677310000 * mono3 (i := 3) (j := 4) (k := 0) (i' := 1) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1
-          hn0 hn1 (by norm_num) (by norm_num) (by norm_num) +
-      224920800 * mono3 (i := 3) (j := 4) (k := 2) (i' := 3) (j' := 4) (k' := 1) hs0 hs1 hw0 hw1 hn0
-          hn1 (by norm_num) (by norm_num) (by norm_num) +
-      80985600 * mono3 (i := 4) (j := 3) (k := 2) (i' := 4) (j' := 1) (k' := 1) hs0 hs1 hw0 hw1 hn0
-          hn1 (by norm_num) (by norm_num) (by norm_num) +
-      590692500 * mono3 (i := 4) (j := 4) (k := 0) (i' := 1) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1 hn0
-          hn1 (by norm_num) (by norm_num) (by norm_num) +
-      6289200 * mono3 (i := 4) (j := 4) (k := 2) (i' := 0) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1 hn0
-          hn1 (by norm_num) (by norm_num) (by norm_num) +
-      68400 * mono3 (i := 5) (j := 3) (k := 2) (i' := 0) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1 hn0 hn1
-          (by norm_num) (by norm_num) (by norm_num) +
-      14782500 * mono3 (i := 5) (j := 4) (k := 0) (i' := 5) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1 hn0
-          hn1 (by norm_num) (by norm_num) (by norm_num) +
-      54000 * mono3 (i := 5) (j := 4) (k := 2) (i' := 0) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1 hn0 hn1
-          (by norm_num) (by norm_num) (by norm_num) +
-      163125 * mono3 (i := 6) (j := 4) (k := 0) (i' := 0) (j' := 0) (k' := 0) hs0 hs1 hw0 hw1 hn0
-          hn1 (by norm_num) (by norm_num) (by norm_num) +
-      2110649065632000 * nn3 (i := 0) (j := 1) (k := 1) hs0 hw0 hn0 +
-      7149775392000 * nn3 (i := 0) (j := 2) (k := 1) hs0 hw0 hn0 +
-      13672998028800 * nn3 (i := 0) (j := 2) (k := 2) hs0 hw0 hn0 +
-      12940145280000 * nn3 (i := 0) (j := 3) (k := 1) hs0 hw0 hn0 +
-      44039531520 * nn3 (i := 0) (j := 3) (k := 3) hs0 hw0 hn0 +
-      611730144000 * nn3 (i := 0) (j := 4) (k := 1) hs0 hw0 hn0 +
-      1646023680 * nn3 (i := 0) (j := 4) (k := 3) hs0 hw0 hn0 +
-      33592320 * nn3 (i := 0) (j := 4) (k := 4) hs0 hw0 hn0 +
-      3550577719027500 * nn3 (i := 1) (j := 0) (k := 0) hs0 hw0 hn0 +
-      1009922616936000 * nn3 (i := 1) (j := 1) (k := 1) hs0 hw0 hn0 +
-      29364747912000 * nn3 (i := 1) (j := 2) (k := 1) hs0 hw0 hn0 +
-      3605485478400 * nn3 (i := 1) (j := 2) (k := 2) hs0 hw0 hn0 +
-      5903887176000 * nn3 (i := 1) (j := 3) (k := 1) hs0 hw0 hn0 +
-      17026018560 * nn3 (i := 1) (j := 3) (k := 3) hs0 hw0 hn0 +
-      257476968000 * nn3 (i := 1) (j := 4) (k := 1) hs0 hw0 hn0 +
-      796573440 * nn3 (i := 1) (j := 4) (k := 3) hs0 hw0 hn0 +
-      4976640 * nn3 (i := 1) (j := 4) (k := 4) hs0 hw0 hn0 +
-      2042269513470000 * nn3 (i := 2) (j := 0) (k := 0) hs0 hw0 hn0 +
-      189870234408000 * nn3 (i := 2) (j := 1) (k := 1) hs0 hw0 hn0 +
-      11985593490000 * nn3 (i := 2) (j := 2) (k := 0) hs0 hw0 hn0 +
-      7699974048000 * nn3 (i := 2) (j := 2) (k := 1) hs0 hw0 hn0 +
-      391034044800 * nn3 (i := 2) (j := 2) (k := 2) hs0 hw0 hn0 +
-      845926740000 * nn3 (i := 2) (j := 3) (k := 1) hs0 hw0 hn0 +
-      2248663680 * nn3 (i := 2) (j := 3) (k := 3) hs0 hw0 hn0 +
-      39928788000 * nn3 (i := 2) (j := 4) (k := 1) hs0 hw0 hn0 +
-      115032960 * nn3 (i := 2) (j := 4) (k := 3) hs0 hw0 hn0 +
-      165888 * nn3 (i := 2) (j := 4) (k := 4) hs0 hw0 hn0 +
-      374368575465000 * nn3 (i := 3) (j := 0) (k := 0) hs0 hw0 hn0 +
-      36223750800000 * nn3 (i := 3) (j := 1) (k := 0) hs0 hw0 hn0 +
-      18122986980000 * nn3 (i := 3) (j := 1) (k := 1) hs0 hw0 hn0 +
-      4722275295000 * nn3 (i := 3) (j := 2) (k := 0) hs0 hw0 hn0 +
-      806817672000 * nn3 (i := 3) (j := 2) (k := 1) hs0 hw0 hn0 +
-      24024405600 * nn3 (i := 3) (j := 2) (k := 2) hs0 hw0 hn0 +
-      57343140000 * nn3 (i := 3) (j := 3) (k := 1) hs0 hw0 hn0 +
-      125582400 * nn3 (i := 3) (j := 3) (k := 3) hs0 hw0 hn0 +
-      2780503200 * nn3 (i := 3) (j := 4) (k := 1) hs0 hw0 hn0 +
-      6609600 * nn3 (i := 3) (j := 4) (k := 3) hs0 hw0 hn0 +
-      39620190420000 * nn3 (i := 4) (j := 0) (k := 0) hs0 hw0 hn0 +
-      6970973175000 * nn3 (i := 4) (j := 1) (k := 0) hs0 hw0 hn0 +
-      931007687400 * nn3 (i := 4) (j := 1) (k := 1) hs0 hw0 hn0 +
-      611713597500 * nn3 (i := 4) (j := 2) (k := 0) hs0 hw0 hn0 +
-      41837373000 * nn3 (i := 4) (j := 2) (k := 1) hs0 hw0 hn0 +
-      930513600 * nn3 (i := 4) (j := 2) (k := 2) hs0 hw0 hn0 +
-      7176870000 * nn3 (i := 4) (j := 3) (k := 0) hs0 hw0 hn0 +
-      1973853000 * nn3 (i := 4) (j := 3) (k := 1) hs0 hw0 hn0 +
-      2599200 * nn3 (i := 4) (j := 3) (k := 3) hs0 hw0 hn0 +
-      118233000 * nn3 (i := 4) (j := 4) (k := 1) hs0 hw0 hn0 +
-      136800 * nn3 (i := 4) (j := 4) (k := 3) hs0 hw0 hn0 +
-      2435196003750 * nn3 (i := 5) (j := 0) (k := 0) hs0 hw0 hn0 +
-      509435077500 * nn3 (i := 5) (j := 1) (k := 0) hs0 hw0 hn0 +
-      24538072500 * nn3 (i := 5) (j := 1) (k := 1) hs0 hw0 hn0 +
-      38732141250 * nn3 (i := 5) (j := 2) (k := 0) hs0 hw0 hn0 +
-      1116031500 * nn3 (i := 5) (j := 2) (k := 1) hs0 hw0 hn0 +
-      18194400 * nn3 (i := 5) (j := 2) (k := 2) hs0 hw0 hn0 +
-      701527500 * nn3 (i := 5) (j := 3) (k := 0) hs0 hw0 hn0 +
-      35910000 * nn3 (i := 5) (j := 3) (k := 1) hs0 hw0 hn0 +
-      2376000 * nn3 (i := 5) (j := 4) (k := 1) hs0 hw0 hn0 +
-      81124822500 * nn3 (i := 6) (j := 0) (k := 0) hs0 hw0 hn0 +
-      17670498750 * nn3 (i := 6) (j := 1) (k := 0) hs0 hw0 hn0 +
-      262356750 * nn3 (i := 6) (j := 1) (k := 1) hs0 hw0 hn0 +
-      1235296875 * nn3 (i := 6) (j := 2) (k := 0) hs0 hw0 hn0 +
-      13808250 * nn3 (i := 6) (j := 2) (k := 1) hs0 hw0 hn0 +
-      24795000 * nn3 (i := 6) (j := 3) (k := 0) hs0 hw0 hn0 +
-      413250 * nn3 (i := 6) (j := 3) (k := 1) hs0 hw0 hn0 +
-      21750 * nn3 (i := 6) (j := 4) (k := 1) hs0 hw0 hn0 +
-      1140308750 * nn3 (i := 7) (j := 0) (k := 0) hs0 hw0 hn0 +
-      244351875 * nn3 (i := 7) (j := 1) (k := 0) hs0 hw0 hn0 +
-      16245000 * nn3 (i := 7) (j := 2) (k := 0) hs0 hw0 hn0 +
-      344375 * nn3 (i := 7) (j := 3) (k := 0) hs0 hw0 hn0
-  have hL : (0 : ℝ) < ((3800160360000 : ℚ) : ℝ) := by norm_num
-  have h0 : ((3800160360000 : ℚ) : ℝ) * 0 < ((3800160360000 : ℚ) : ℝ) * (29 * shrV (2 + s / 6) ((2 +
-      s / 6) * (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) - 30 * shrW (2 + s / 6) ((2 + s / 6) *
-      (1 + w / 19)) (1 + (3 - 2 * n / 5) * (w / 19)) * ((2 + s / 6) * ((2 + s / 6) + 2) + (1 + (3 -
-      2 * n / 5) * (w / 19)) ^ 2)) := by
-    rw [mul_zero, shrPi_pos_id]
-    exact hp
-  exact lt_of_mul_lt_mul_left h0 hL.le
-
-/-- `Π = 29V - 30WC > 0` on the small-shape box `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`,
-`13δ/5 ≤ α - 1 ≤ 3δ` (parameters `x = 2 + s/6`, `δ = w/19`, `α = 1 + (3 - 2n/5)δ`,
-`s, w, n ∈ [0, 1]`). -/
-private theorem shr_Pi_pos {x δ al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
+/-- Dividing the two shape coordinates leaves a ratio in a fixed positive interval. -/
+private theorem shr_shape_ratio_bounds {x δ al : ℝ} (hx : 2 ≤ x) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) :
-    0 < 29 * shrV x (x * (1 + δ)) al - 30 * shrW x (x * (1 + δ)) al * (x * (x + 2) + al ^ 2) := by
-  obtain ⟨n, hn0, hn1, han⟩ : ∃ n : ℝ, 0 ≤ n ∧ n ≤ 1 ∧ al = 1 + (3 - 2 * n / 5) * δ := by
-    rcases eq_or_lt_of_le hδ with h | h
-    · subst h
-      exact ⟨0, le_refl _, by norm_num, by linarith⟩
-    · refine ⟨(3 - (al - 1) / δ) * 5 / 2, ?_, ?_, ?_⟩
-      · have : (al - 1) / δ ≤ 3 := by rw [div_le_iff₀ h]; linarith
-        linarith
-      · have : 13 / 5 ≤ (al - 1) / δ := by rw [le_div_iff₀ h]; linarith
-        linarith
-      · field_simp
-        ring
-  have h := shrPi_pos (s := 6 * (x - 2)) (w := 19 * δ) (n := n) (by linarith) (by linarith)
-    (by linarith) (by linarith) hn0 hn1
-  rw [show 2 + 6 * (x - 2) / 6 = x by ring, show 19 * δ / 19 = δ by ring, ← han] at h
-  exact h
+    1 / 3 ≤ ssRr x ∧ ssRr x < 1 ∧
+      27 / 31 ≤ ssTs al (x * (1 + δ)) / ssRr x ∧
+      ssTs al (x * (1 + δ)) / ssRr x ≤ 1 := by
+  have hx0 : 0 < x := by linarith
+  have hx1 : 0 < x - 1 := by linarith
+  have hxS : 0 < x + 1 := by linarith
+  have hd : 0 < 1 + δ := by linarith
+  have hal0 : 0 < al := by linarith
+  let c := al / (1 + δ)
+  have hc0 : 1 ≤ c := by dsimp [c]; rw [le_div_iff₀ hd]; linarith
+  have hc1 : c ≤ 11 / 10 := by dsimp [c]; rw [div_le_iff₀ hd]; linarith
+  have hxc : 0 < x + c := by linarith
+  have hbe : 0 < x * (1 + δ) + al := by positivity
+  have hy : ssTs al (x * (1 + δ)) / ssRr x =
+      (x - c) * (x + 1) / ((x + c) * (x - 1)) := by
+    unfold ssTs ssRr
+    dsimp [c]
+    field_simp
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · unfold ssRr; rw [le_div_iff₀ hxS]; linarith
+  · unfold ssRr; rw [div_lt_one hxS]; linarith
+  · rw [hy, le_div_iff₀ (mul_pos hxc hx1)]
+    have hp := mul_nonneg (show 0 ≤ 11 / 10 - c by linarith)
+      (show 0 ≤ 58 * x + 4 by linarith)
+    have hq := mul_nonneg (show 0 ≤ x - 2 by linarith)
+      (show 0 ≤ 4 * x + 11 / 5 by linarith)
+    nlinarith only [hp, hq]
+  · rw [hy, div_le_one (mul_pos hxc hx1)]
+    have := mul_nonneg (show 0 ≤ c - 1 by linarith) hx0.le
+    nlinarith only [this]
 
-/-- **The shear sign above `q_b`**: on
-`2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`, `13δ/5 ≤ α - 1 ≤ 3δ`,
-`β = x(1 + δ)`, for `0 < ρ < 1` with `q = α²λρ > (29/30)q_c`: `√3·h·R + 13A/3 < 0`
-(`(1 - q)(√3hR + 13A/3) = F - Gq`, `Π = 29V - 30WC > 0`).
-Proof: `Π > 0` by an exact monomial-absorption certificate on the parameter cube (`shrPi_pos`);
-`W > 0` from `m > 0`. -/
-theorem shr_shear_sign {x δ al rho : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
+/-- The scale floor and the separate shape losses give a lower bound for the shear loss. -/
+private theorem shr_shear_loss_lower {x δ al rho : ℝ} (hx : 2 ≤ x) (hδ : 0 ≤ δ)
+    (hδ2 : δ ≤ 1 / 19) (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ)
+    (hρ : 0 < rho) (hρ1 : rho < 1) (hq : 29 / 30 * ssQc x al < ssQ al rho) :
+    2 * ((x ^ 2 + x + 1) / (1 + x) ^ 2) *
+        (2 * (x * (1 + δ)) * x - x - al * (x * (1 + δ))) * (rho / (1 - rho)) / ssRr x >
+      2 * (20 / 21) * (3 + (ssRr x) ^ 2) / (3 - ssRr x) := by
+  have hx0 : 0 < x := by linarith
+  have hal0 : 0 < al := by linarith
+  have hal1 : 1 ≤ al := by linarith
+  have hal2 : al ≤ 22 / 19 := by linarith
+  have hS : 0 < 1 + x := by linarith
+  have hxm : 0 < x - 1 := by linarith
+  have hx2 : 0 ≤ x - 2 := by linarith
+  have halu : 0 ≤ 1 + 3 * δ - al := by linarith
+  let R := ssRr x
+  have ⟨hR0, hR1, _, _⟩ := shr_shape_ratio_bounds hx hδ hδ2 hal hal'
+  have hR : 0 < R := by dsimp [R]; linarith
+  have hRm : 0 < 3 - R := by dsimp [R]; linarith
+  let X := x * (x + 2)
+  let D := 2 * (x * (1 + δ)) * x - x - al * (x * (1 + δ))
+  let U1 := (x ^ 2 + x + 1) / (1 + x) ^ 2
+  let e : ℝ := 3 / (2 * 19 ^ 2)
+  let f0 : ℝ := (22 / 19) ^ 2 / 8
+  let lam : ℝ := 29 / 30
+  let ζ := lam * (1 - e) / (1 + (1 - lam) * f0)
+  let d0 := 2 * x * (x - 1) * (1 - e)
+  have hX : 8 ≤ X := by dsimp [X]; nlinarith only [hx]
+  have hU : 0 < U1 := by dsimp [U1]; positivity
+  have hd0 : 0 < d0 := by dsimp [d0, e]; positivity
+  have hδsq : δ ^ 2 ≤ (1 / 19 : ℝ) ^ 2 := by nlinarith only [hδ, hδ2]
+  have hD : d0 ≤ D := by
+    have h1 : 0 ≤ x * (1 + δ) * (1 + 3 * δ - al) := by positivity
+    have h2 : 0 ≤ 2 * x * (x - 2) * δ := by positivity
+    have h3 : 0 ≤ 3 * x * ((x - 1) / 19 ^ 2 - δ ^ 2) := by
+      apply mul_nonneg (by positivity)
+      nlinarith only [hx, hδsq]
+    have eD : D - d0 = x * (1 + δ) * (1 + 3 * δ - al) +
+        2 * x * (x - 2) * δ + 3 * x * ((x - 1) / 19 ^ 2 - δ ^ 2) := by
+      dsimp [D, d0, e]
+      ring
+    linarith only [h1, h2, h3, eD]
+  have hD0 : 0 < D := hd0.trans_le hD
+  have haX : al ^ 2 ≤ f0 * X := by
+    have ha2 : al ^ 2 ≤ (22 / 19 : ℝ) ^ 2 := by nlinarith only [hal0, hal2]
+    dsimp [f0]
+    nlinarith only [ha2, hX]
+  have hdenq : 0 < 1 + rho * (al ^ 2 - 1) := by
+    have : 0 ≤ rho * (al ^ 2 - 1) := mul_nonneg hρ.le (by nlinarith only [hal1])
+    linarith
+  have hXa : 0 < X + al ^ 2 := by positivity
+  have hden : 0 < X + (1 - lam) * al ^ 2 := by dsimp [lam]; positivity
+  have hq' : lam * al ^ 2 / (X + al ^ 2) < al ^ 2 * rho / (1 + rho * (al ^ 2 - 1)) := by
+    simpa [lam, X, ssQc, ssQ, ssLam, div_eq_mul_inv, mul_assoc, mul_left_comm, mul_comm] using hq
+  have hq'' := (div_lt_div_iff₀ hXa hdenq).mp hq'
+  have hcoef : lam < rho * (X + (1 - lam) * al ^ 2 + lam) := by
+    have h : 0 < al ^ 2 * (rho * (X + (1 - lam) * al ^ 2 + lam) - lam) := by
+      nlinarith only [hq'']
+    have := pos_of_mul_pos_right h (sq_nonneg al)
+    linarith only [this]
+  have hfloor : lam / (X + (1 - lam) * al ^ 2) < rho / (1 - rho) := by
+    rw [div_lt_div_iff₀ hden (by linarith)]
+    nlinarith only [hcoef]
+  have hdenb : X + (1 - lam) * al ^ 2 ≤ X * (1 + (1 - lam) * f0) := by
+    calc
+      X + (1 - lam) * al ^ 2 ≤ X + (1 - lam) * (f0 * X) :=
+        add_le_add (le_refl X)
+          (mul_le_mul_of_nonneg_left haX (show 0 ≤ 1 - lam by norm_num [lam]))
+      _ = X * (1 + (1 - lam) * f0) := by ring
+  have hfrac : lam / (X * (1 + (1 - lam) * f0)) ≤ lam / (X + (1 - lam) * al ^ 2) :=
+    div_le_div_of_nonneg_left (by norm_num [lam]) hden hdenb
+  have hf : 0 < lam / (X * (1 + (1 - lam) * f0)) := by dsimp [lam, f0]; positivity
+  have hLoss := mul_lt_mul_of_pos_left (hfrac.trans_lt hfloor)
+    (show 0 < 2 * U1 * D by positivity)
+  have hBase := mul_le_mul_of_nonneg_right hD
+    (show 0 ≤ 2 * U1 * (lam / (X * (1 + (1 - lam) * f0))) by positivity)
+  have hmin : 2 * U1 * d0 * (lam / (X * (1 + (1 - lam) * f0))) <
+      2 * U1 * D * (rho / (1 - rho)) := by
+    nlinarith only [hLoss, hBase]
+  have hbase : 2 * U1 * d0 * (lam / (X * (1 + (1 - lam) * f0))) / R =
+      2 * ζ * (3 + R ^ 2) / (3 - R) := by
+    dsimp [U1, d0, X, ζ, R, ssRr, e, f0, lam]
+    rw [show 3 - (x - 1) / (x + 1) = 2 * (x + 2) / (x + 1) by field_simp; ring]
+    field_simp
+    ring
+  have hratio := (div_lt_div_iff_of_pos_right hR).mpr hmin
+  rw [hbase] at hratio
+  have hζ : (20 / 21 : ℝ) < ζ := by norm_num [ζ, lam, e, f0]
+  have hshape : 0 < (3 + R ^ 2) / (3 - R) := by positivity
+  have hstrict := mul_lt_mul_of_pos_right hζ hshape
+  change 2 * (20 / 21) * (3 + R ^ 2) / (3 - R) <
+    2 * U1 * D * (rho / (1 - rho)) / R
+  calc
+    2 * (20 / 21) * (3 + R ^ 2) / (3 - R) =
+        2 * ((20 / 21) * ((3 + R ^ 2) / (3 - R))) := by ring
+    _ < 2 * (ζ * ((3 + R ^ 2) / (3 - R))) := mul_lt_mul_of_pos_left hstrict (by norm_num)
+    _ = 2 * ζ * (3 + R ^ 2) / (3 - R) := by ring
+    _ < _ := hratio
+
+/-- **The shear sign above `q_b`**: the scale floor and two monotone shape ratios give
+`√3·h·R + 13A/3 < 0` throughout the small-shape domain. The first ratio bounds the
+physical shear loss from below; the second controls the anisotropy contribution. -/
+theorem shr_shear_sign {x δ al rho : ℝ} (hx : 2 ≤ x) (_hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ)
     (hδ2 : δ ≤ 1 / 19) (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) (hρ : 0 < rho)
     (hρ1 : rho < 1) (hq : 29 / 30 * ssQc x al < ssQ al rho) :
     √3 * ssShear x (x * (1 + δ)) al rho * ssRr x + 13 / 3 * ssAn x (x * (1 + δ)) al < 0 := by
-  have hx0 : 0 < x := by linarith
-  have hal1 : 1 ≤ al := by linarith
+  obtain ⟨hR0, hR1, hy0, hy1⟩ := shr_shape_ratio_bounds hx hδ hδ2 hal hal'
+  let R := ssRr x
+  let T := ssTs al (x * (1 + δ))
+  let y := T / R
+  let A := ssAn x (x * (1 + δ)) al
+  let L := 2 * ((x ^ 2 + x + 1) / (1 + x) ^ 2) *
+    (2 * (x * (1 + δ)) * x - x - al * (x * (1 + δ))) * (rho / (1 - rho))
+  have hx0 : 0 < x := by linarith only [hx]
+  have hS : 0 < x + 1 := by linarith
+  have hxm : 0 < x - 1 := by linarith
   have hal0 : 0 < al := by linarith
-  have hPi := shr_Pi_pos hx hx2 hδ hδ2 hal hal'
-  have hbx : x ≤ x * (1 + δ) := by
-    have := mul_nonneg hx0.le hδ
-    linarith
-  have hbe20 : x * (1 + δ) ≤ 20 / 19 * x * al := by
-    have := mul_le_mul_of_nonneg_left (show 1 + δ ≤ 20 / 19 * al by linarith) hx0.le
-    linarith
-  generalize x * (1 + δ) = be at hPi hbx hbe20 ⊢
-  have hbe0 : 0 < be := by linarith
-  -- `W > 0`, `V > 0`
-  have hW : 0 < shrW x be al := by
-    unfold shrW
-    have hxx : 2 * x ≤ x * x := mul_le_mul_of_nonneg_right hx hx0.le
-    have h1 : 0 < be * x - al := by
-      have := mul_le_mul_of_nonneg_right hbx hx0.le
-      linarith
-    have hneg : 3 * x ^ 2 - 8 * x - 8 < 0 := by
-      have := mul_le_mul_of_nonneg_left hx2 hx0.le
-      linarith
-    have h3 := mul_le_mul_of_nonpos_left hbe20 hneg.le
-    have h4 : 0 < 60 * x ^ 3 - 8 * x ^ 2 - 8 * x - 57 := by
-      have := mul_le_mul_of_nonneg_right hxx hx0.le
-      linarith
-    have h2 : 0 < (8 * x ^ 2 + 8 * x - 3) * al + (3 * x ^ 2 - 8 * x - 8) * be := by
-      linarith [mul_pos hal0 h4]
-    exact mul_pos h1 h2
-  have hC : 0 < x * (x + 2) + al ^ 2 := by positivity
-  have hV : 0 < shrV x be al := by linarith [mul_pos hW hC]
-  -- the scale `q`
-  have hden : 0 < 1 + rho * (al ^ 2 - 1) := by
-    have : 0 ≤ rho * (al ^ 2 - 1) := mul_nonneg hρ.le (by linarith [one_le_pow₀ (n := 2) hal1])
-    linarith
-  have hqe : ssQ al rho = al ^ 2 * rho / (1 + rho * (al ^ 2 - 1)) := by
-    unfold ssQ ssLam; field_simp
-  have h1q : 1 - ssQ al rho = (1 - rho) / (1 + rho * (al ^ 2 - 1)) := by
-    rw [hqe]; field_simp; ring
-  have hq1 : 0 < 1 - ssQ al rho := by rw [h1q]; exact div_pos (by linarith) hden
-  have hκ : al ^ 2 * (rho / (1 - rho)) = ssQ al rho / (1 - ssQ al rho) := by
-    rw [h1q, hqe]
-    have : (1 - rho) ≠ 0 := by linarith
+  have hbe0 : 0 < x * (1 + δ) := by positivity
+  have hK : 0 < al ^ 2 + al * (x * (1 + δ)) + (x * (1 + δ)) ^ 2 := by positivity
+  have hR : 0 < R := by dsimp [R]; linarith
+  have hRm : 0 < 3 - R := by dsimp [R]; linarith
+  have hA : A = R ^ 2 * (1 - y ^ 2) / (3 + y ^ 2 * R ^ 2) := by
+    dsimp [A, R, y, T, ssAn, ssRr, ssTs]
     field_simp
-  -- the shear identity `T·M = α²W - (V - α²W)α²ρ/(1 - ρ)`
+    ring
+  have hTy : T = y * R := by dsimp [y]; field_simp
+  have hf : shrShapeF (R ^ 2) y = (1 + A) * y + 13 / 3 * A / R ^ 2 := by
+    rw [hA]
+    unfold shrShapeF
+    field_simp
+    ring
+  have hshape : 7 / 6 ≤ (3 + R ^ 2) / (3 - R) := by
+    rw [le_div_iff₀ hRm]
+    have h : 0 ≤ (R - 1 / 3) * (6 * R + 9) := by
+      apply mul_nonneg (by dsimp [R]; linarith) (by linarith)
+    nlinarith only [h]
+  have hfbound : shrShapeF (R ^ 2) y < 11 / 9 :=
+    shr_shape_fraction_bound (by dsimp [R]; nlinarith only [hR0]) hy0 hy1
+  have hloss : 2 * (20 / 21) * (3 + R ^ 2) / (3 - R) < L / R :=
+    shr_shear_loss_lower hx hδ hδ2 hal hal' hρ hρ1 hq
+  have hloss' : (40 / 21) * ((3 + R ^ 2) / (3 - R)) < L / R := by
+    convert hloss using 1; ring
+  have hneg : 1 + shrShapeF (R ^ 2) y - L / R < 0 := by
+    linarith only [hfbound, hshape, hloss']
   have h3 : √3 * √3 = 3 := Real.mul_self_sqrt (by norm_num)
-  have hS : √3 * ssShear x be al rho = √3 * √3 / 3 *
-      ((be * x - al) * ((x + 2) * al + (2 * x + 1) * be) /
-          ((1 + x) ^ 2 * (al ^ 2 + al * be + be ^ 2)) -
-        2 * ((x ^ 2 + x + 1) / (1 + x) ^ 2) * (2 * be * x - x - al * be) * (rho / (1 - rho))) := by
-    unfold ssShear
-    ring
-  have hK : 0 < al ^ 2 + al * be + be ^ 2 := by positivity
-  have hM : 0 < 3 * al ^ 2 * (1 + x) ^ 3 * (al ^ 2 + al * be + be ^ 2) / 2 := by positivity
-  have key : (√3 * ssShear x be al rho * ssRr x + 13 / 3 * ssAn x be al) *
-      (3 * al ^ 2 * (1 + x) ^ 3 * (al ^ 2 + al * be + be ^ 2) / 2) =
-      al ^ 2 * shrW x be al - (shrV x be al - al ^ 2 * shrW x be al) * (al ^ 2 * (rho / (1 - rho))) :=
-          by
-    rw [hS, h3]
-    unfold ssRr ssAn shrV shrW
-    have : (1 - rho) ≠ 0 := by linarith
+  have hshear : √3 * ssShear x (x * (1 + δ)) al rho = R + (1 + A) * T - L := by
+    have hclear : √3 * ssShear x (x * (1 + δ)) al rho =
+        (x * (1 + δ) * x - al) * ((x + 2) * al + (2 * x + 1) * (x * (1 + δ))) /
+          ((1 + x) ^ 2 * (al ^ 2 + al * (x * (1 + δ)) + (x * (1 + δ)) ^ 2)) - L := by
+      unfold ssShear
+      change √3 * (√3 / 3 * (_ - L)) = _ - L
+      have es : √3 * (√3 / 3) = 1 := by
+        calc
+          √3 * (√3 / 3) = (√3 * √3) / 3 := by ring
+          _ = 1 := by rw [h3]; norm_num
+      rw [← mul_assoc, es, one_mul]
+    rw [hclear]
+    dsimp [R, A, T, ssRr, ssAn, ssTs]
     field_simp
     ring
-  rw [hκ] at key
-  -- `α²W < Vq` from `q > q_b` and `Π > 0`
-  have hVq : al ^ 2 * shrW x be al < shrV x be al * ssQ al rho := by
-    have h1 := mul_lt_mul_of_pos_left hq hV
-    have h2 : al ^ 2 * shrW x be al ≤ shrV x be al * (29 / 30 * ssQc x al) := by
-      unfold ssQc
-      rw [show shrV x be al * (29 / 30 * (al ^ 2 / (x * (x + 2) + al ^ 2))) =
-        29 * al ^ 2 * shrV x be al / (30 * (x * (x + 2) + al ^ 2)) by field_simp,
-        le_div_iff₀ (by positivity)]
-      linarith [mul_pos (pow_pos hal0 2) hPi]
-    linarith
-  have hneg : al ^ 2 * shrW x be al - (shrV x be al - al ^ 2 * shrW x be al) *
-      (ssQ al rho / (1 - ssQ al rho)) < 0 := by
-    rw [show al ^ 2 * shrW x be al - (shrV x be al - al ^ 2 * shrW x be al) *
-        (ssQ al rho / (1 - ssQ al rho)) =
-        (al ^ 2 * shrW x be al - shrV x be al * ssQ al rho) / (1 - ssQ al rho) by
-      field_simp
-      ring]
-    exact div_neg_of_neg_of_pos (by linarith) hq1
-  rw [← key] at hneg
-  by_contra hcon
-  have := mul_nonneg (not_lt.mp hcon) hM.le
-  linarith
+  have hid : √3 * ssShear x (x * (1 + δ)) al rho * R + 13 / 3 * A =
+      R ^ 2 * (1 + shrShapeF (R ^ 2) y - L / R) := by
+    rw [hshear, hf, hTy]
+    field_simp
+    ring
+  change √3 * ssShear x (x * (1 + δ)) al rho * R + 13 / 3 * A < 0
+  rw [hid]
+  exact mul_neg_of_pos_of_neg (sq_pos_of_pos hR) hneg
 
 /-! ### The shear bound -/
 
@@ -1995,7 +1863,7 @@ variable (H : SmallerShortData)
 /-- **The shear bound**: on the small-shape domain, `q > (29/30)q_c`, `√3hR + 13A/3 < 0`, hence `h < 0`
 and `-hR > 5A/2` (`13/(3√3) > 5/2`, `A ≥ 0`, `R > 0`).
 Proof: if `q ≤ q_b`: `root_zero`, `ss_env_weighted` (`m = 0`, `ss_B_factor_pos`), `ss_env_scale`,
-`ss_phi_eq` give `0 ≤ 𝓡(u; τq, q)`; `shr_u_mono` with `u_le_V`, `ss_V_le_Vbar`,
+`ss_phi_eq` give `0 ≤ 𝓡(u; τq, q)`; `shr_norm_mono` with `u_le_V`, `ss_V_le_Vbar`,
 `shr_Vbar_le_uhat`; contradiction with `shr_residual_neg` (`2q < p = τq < r_A`). Then
 `shr_shear_sign`. -/
 theorem shear_neg (hS : H.SmallShape) :
@@ -2050,7 +1918,9 @@ theorem shear_neg (hS : H.SmallShape) :
     -- raise `u` to `û`, then the residual at `û` is negative
     have hu : H.u ≤ ssUhat5 H.x :=
       H.u_le_V.trans ((ss_V_le_Vbar hx1).trans (shr_Vbar_le_uhat hx hx2))
-    have h1 := shr_u_mono hx1 hal hax hxb hq0 hq7.le (by positivity) hτT.le hu
+    have hgr := shr_small_shape_factor hx hal (by linarith : H.al < 3 / 2) hxb
+    have h1 := shr_norm_mono hx1 hal (by linarith : 0 < H.be) hgr hq0.le
+      (by linarith : ssQ H.al H.rho < 1 / 2) (by positivity) hτT.le hu
     have hδx : H.x * (1 + (H.al - 1) / 3) ≤ H.be := by
       rw [hbe]
       exact mul_le_mul_of_nonneg_left (by linarith) hx0.le

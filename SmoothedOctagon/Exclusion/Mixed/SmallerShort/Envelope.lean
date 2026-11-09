@@ -356,74 +356,89 @@ theorem ss_D_lt_Q {x be al : ℝ} (hx : 2 ≤ x) (hal : 1 ≤ al) (hax : al ≤ 
       linarith [mul_nonpos_of_nonpos_of_nonneg hc h98.le]
     linarith
 
-/-- **`A₂ > 0`**: for `2 ≤ x ≤ 12/5`, `α ≥ 1`, `3/4 ≤ u ≤ 31/40` and every `β`, `A₂ > 0`.
-Proof: `4uA₂ = (2uΔ + K)² + 4u𝒜 - K²` with the exact `K = εE₀ - (2S - 1)a`, `a = α⁻²`, and
-`3𝒜 - K² = (1 - a)²(3 - E₀²) + (1 - a)a(3S + 2E₀(2S - 1)) + a²(3S² - (2S - 1)²) > 0` from
-`-189/340 ≤ E₀ ≤ -41/120`. -/
-theorem ss_A2_pos {x be al u : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 12 / 5) (hal : 1 ≤ al) (hu : 3 / 4 ≤ u)
-    (hu' : u ≤ 31 / 40) : 0 < ssA2 x be al u := by
+/-- **`A₂ > 0`**: for `2 ≤ x ≤ 5/2`, `α ≥ 1`, `3/4 ≤ u < 4/5` and every `β`.
+Completing a square reduces this to a comparison of two quadratic forms:
+`K² ≤ b²(X/2 + Y)² ≤ b²(X² + XY + Y²) < 3(X² + XY + Y²)`, with `b = 2 - 1/(1 + x)`. -/
+theorem ss_A2_pos {x be al u : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 5 / 2)
+    (hal : 1 ≤ al) (hu : 3 / 4 ≤ u) (hu' : u < 4 / 5) : 0 < ssA2 x be al u := by
   have hal0 : 0 < al := by linarith
-  have ha0 : 0 < 1 / al ^ 2 := by positivity
-  have ha1 : 1 / al ^ 2 ≤ 1 := by
+  let a := 1 / al ^ 2
+  let S := 1 + x
+  let X := 1 - a
+  let Y := S * a
+  let b := 2 - 1 / S
+  let H := S / 4 - 1 / S
+  let K := (2 * S - 1) * a - X * ssE0 x u
+  have ha0 : 0 < a := by dsimp [a]; positivity
+  have ha1 : a ≤ 1 := by
+    dsimp [a]
     rw [div_le_one (by positivity)]
-    linarith [mul_le_mul hal hal zero_le_one hal0.le]
-  have hS : 0 < 1 + x := by linarith
-  have hE0lo : -(189 / 340) ≤ ssE0 x u := by
-    unfold ssE0
-    have h1 : 5 / 17 ≤ 1 / (1 + x) := by rw [div_le_div_iff₀ (by norm_num) hS]; linarith
-    linarith [mul_nonneg_of_nonpos_of_nonpos (by linarith : 1 + x - 17 / 5 ≤ 0)
-      (by linarith : u - 1 ≤ 0)]
-  have hE0hi : ssE0 x u ≤ -(41 / 120) := by
-    unfold ssE0
-    have h1 : 1 / (1 + x) ≤ 1 / 3 := by rw [div_le_div_iff₀ hS (by norm_num)]; linarith
-    linarith [mul_nonpos_of_nonneg_of_nonpos (by linarith : (0 : ℝ) ≤ 1 + x - 3)
-      (by linarith : u - 1 ≤ 0)]
-  have e : ssA2 x be al u = (1 - 1 / al ^ 2) ^ 2 + (1 - 1 / al ^ 2) * ((1 + x) * (1 / al ^ 2)) +
-      ((1 + x) * (1 / al ^ 2)) ^ 2 + (ssDg x be al / al ^ 2) ^ 2 * u +
-      (ssDg x be al / al ^ 2) *
-        ((1 - 1 / al ^ 2) * ssE0 x u - (2 * (1 + x) - 1) * (1 / al ^ 2)) := by
-    unfold ssA2; ring
-  rw [e]
-  generalize 1 / al ^ 2 = a at ha0 ha1 ⊢
-  generalize ssDg x be al / al ^ 2 = Δ
-  generalize ssE0 x u = E0 at hE0lo hE0hi ⊢
-  set S := 1 + x with hSdef
-  have hS3 : 3 ≤ S := by linarith
-  have hS4 : S ≤ 17 / 5 := by linarith
-  have hA : 0 ≤ (1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2 := by
-    have : 0 ≤ 1 - a := by linarith
-    positivity
-  have h3 : 0 < 3 * ((1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2) -
-      ((1 - a) * E0 - (2 * S - 1) * a) ^ 2 := by
-    have e3 : 3 * ((1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2) -
-        ((1 - a) * E0 - (2 * S - 1) * a) ^ 2 = (1 - a) ^ 2 * (3 - E0 ^ 2) +
-        (1 - a) * a * (3 * S + 2 * E0 * (2 * S - 1)) + a ^ 2 * (3 * S ^ 2 - (2 * S - 1) ^ 2) := by
-      ring
-    rw [e3]
-    have c1 : 0 < 3 - E0 ^ 2 := by
-      linarith [mul_nonneg (by linarith : (0 : ℝ) ≤ 189 / 340 - E0)
-        (by linarith : (0 : ℝ) ≤ E0 + 189 / 340)]
-    have c2 : 0 < 3 * S + 2 * E0 * (2 * S - 1) := by
-      linarith [mul_nonneg (by linarith : (0 : ℝ) ≤ E0 + 189 / 340)
-        (by linarith : (0 : ℝ) ≤ 2 * S - 1)]
-    have c3 : 0 < 3 * S ^ 2 - (2 * S - 1) ^ 2 := by
-      linarith [mul_nonneg (by linarith : (0 : ℝ) ≤ S - 3) (by linarith : (0 : ℝ) ≤ 17 / 5 - S)]
-    have k1 : 0 ≤ (1 - a) ^ 2 * (3 - E0 ^ 2) := mul_nonneg (sq_nonneg _) c1.le
-    have k2 : 0 ≤ (1 - a) * a * (3 * S + 2 * E0 * (2 * S - 1)) :=
-      mul_nonneg (mul_nonneg (by linarith) ha0.le) c2.le
-    have k3 : 0 < a ^ 2 * (3 * S ^ 2 - (2 * S - 1) ^ 2) := mul_pos (pow_pos ha0 2) c3
+    nlinarith
+  have hS3 : 3 ≤ S := by dsimp [S]; linarith
+  have hS7 : S ≤ 7 / 2 := by dsimp [S]; linarith
+  have hS0 : 0 < S := by linarith
+  have hX : 0 ≤ X := by dsimp [X]; linarith
+  have hY : 0 < Y := mul_pos hS0 ha0
+  have hb : 0 < b := by
+    have : 1 / S ≤ 1 / 3 := by rw [div_le_div_iff₀ hS0 (by norm_num)]; linarith
+    dsimp [b]
     linarith
-  have e4 : 4 * u * ((1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2 + Δ ^ 2 * u +
-      Δ * ((1 - a) * E0 - (2 * S - 1) * a)) = (2 * u * Δ + ((1 - a) * E0 - (2 * S - 1) * a)) ^ 2 +
-      4 * u * ((1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2) -
-      ((1 - a) * E0 - (2 * S - 1) * a) ^ 2 := by ring
-  have h5 : 0 < 4 * u * ((1 - a) ^ 2 + (1 - a) * (S * a) + (S * a) ^ 2 + Δ ^ 2 * u +
-      Δ * ((1 - a) * E0 - (2 * S - 1) * a)) := by
-    rw [e4]
-    linarith [sq_nonneg (2 * u * Δ + ((1 - a) * E0 - (2 * S - 1) * a)),
-      mul_le_mul_of_nonneg_right hu hA]
-  have hu0 : 0 < 4 * u := by linarith
-  exact pos_of_mul_pos_right h5 hu0.le
+  have hb3 : b ^ 2 < 3 := by
+    have hSinv : 2 / 7 ≤ 1 / S := by rw [le_div_iff₀ hS0]; linarith
+    dsimp [b] at hb ⊢
+    nlinarith
+  have hElo : -H ≤ ssE0 x u := by
+    have := mul_nonneg (sub_nonneg.mpr hu) hS0.le
+    dsimp [H, S] at *
+    unfold ssE0
+    linarith
+  have hEhi : ssE0 x u < 0 := by
+    have hSinv : 1 / S ≤ 1 / 3 := by rw [div_le_div_iff₀ hS0 (by norm_num)]; linarith
+    have hmul := mul_lt_mul_of_pos_right hu' hS0
+    have e : ssE0 x u = (u - 1) * S + 1 / S := by unfold ssE0; dsimp [S]; ring
+    rw [e]
+    linarith
+  have hHb : H ≤ b / 2 := by
+    have hSinv : 0 < 1 / S := by positivity
+    dsimp [H, b]
+    linarith
+  have hK0 : 0 < K := by
+    have h1 : 0 < (2 * S - 1) * a := mul_pos (by linarith) ha0
+    have h2 := mul_nonpos_of_nonneg_of_nonpos hX hEhi.le
+    dsimp [K]
+    linarith
+  have hKbound : K ≤ b * (X / 2 + Y) := by
+    have h1 := mul_le_mul_of_nonneg_left hElo hX
+    have h2 := mul_le_mul_of_nonneg_right hHb hX
+    have e : b * Y = (2 * S - 1) * a := by
+      dsimp [b, Y]
+      field_simp
+    dsimp [K]
+    nlinarith
+  have hA : 0 < X ^ 2 + X * Y + Y ^ 2 := by positivity
+  have hAupper : (X / 2 + Y) ^ 2 ≤ X ^ 2 + X * Y + Y ^ 2 := by nlinarith [sq_nonneg X]
+  have hKsq : K ^ 2 ≤ b ^ 2 * (X ^ 2 + X * Y + Y ^ 2) := by
+    have hbY : 0 ≤ b * (X / 2 + Y) := by positivity
+    have h1 : K ^ 2 ≤ (b * (X / 2 + Y)) ^ 2 := by nlinarith
+    have h2 := mul_le_mul_of_nonneg_left hAupper (sq_nonneg b)
+    nlinarith
+  have hKsmall : K ^ 2 < 3 * (X ^ 2 + X * Y + Y ^ 2) := by
+    have := mul_lt_mul_of_pos_right hb3 hA
+    linarith
+  have e : ssA2 x be al u = X ^ 2 + X * Y + Y ^ 2 + u * (ssDg x be al / al ^ 2) ^ 2 -
+      K * (ssDg x be al / al ^ 2) := by
+    dsimp [X, Y, K, a, S]
+    unfold ssA2
+    ring
+  rw [e]
+  generalize ssDg x be al / al ^ 2 = g
+  have hmin := mul_le_mul_of_nonneg_right hu hA.le
+  have hclear : 4 * u * (X ^ 2 + X * Y + Y ^ 2 + u * g ^ 2 - K * g) =
+      (2 * u * g - K) ^ 2 + 4 * u * (X ^ 2 + X * Y + Y ^ 2) - K ^ 2 := by ring
+  have hpos : 0 < 4 * u * (X ^ 2 + X * Y + Y ^ 2 + u * g ^ 2 - K * g) := by
+    rw [hclear]
+    nlinarith [sq_nonneg (2 * u * g - K)]
+  exact pos_of_mul_pos_right hpos (by linarith : 0 ≤ 4 * u)
 
 /-- **Convex endpoint alternative**: if `m ≥ 0` and `A₂ ≥ 0`, the scale polynomial `Φ` is convex, so
 on `[0, q_m]`, `Φ(q) ≤ max{Φ(0), Φ(q_m)}`. -/

@@ -22,10 +22,11 @@ Main API:
 * `clr_traceForm_eq`: `tr(AB)` entry by entry; `clr_margin_eq`, `clr_sigma_eq`: the margins
   `p_i = -√3 tr(Z_i X)` and `σ_i = √3 tr(W Z_i)` of traceless matrices, entry by entry;
   `clr_hamiltonian_vertex`: `H_i = tr(AX) + σ_i / p_i` with `A = Λ₁ - (3/2)λJ`.
-* `clr_vertex_scalar`: the scalar core of the two bounds below.
-* `clr_vertex_bounds`: if every vertex Hamiltonian is `≤ 0` at a star state `X`, with `Λ_R`
-  traceless and `tr(Λ_R X) = 0`, then `tr(AX) ≤ 0`; if moreover every margin of `X` is at least
-  `2/15`, then `‖Λ_R‖_F² ≤ 2700 tr(AX)²`. -/
+* `clr_vertex_scalar`: the exact equilibrium inequality and scaled pairing bounds.
+* `clr_vertex_bounds`: a bound in terms of any positive lower bound for the pairwise margins.
+* `clr_equilibrium_compact`: on every compact set of star states, `‖W‖_F ≤ C (-tr(AX))`.
+* `clr_compact_costate_bound`: the corresponding uniform squared bound by `‖A‖_F²`.
+-/
 
 @[expose] public section
 
@@ -168,8 +169,6 @@ theorem clr_frobSq_conj {h Y : Mat2} (hh : h.det = 1) (hY : IsStarState Y) :
 
 /-! ### The equilibrium control and the vertex Hamiltonians -/
 
-private theorem clr_sqrt3_sq : √3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-
 /-- The margins of a traceless state, entry by entry. -/
 theorem clr_margin_eq {X : Mat2} (hX : X.trace = 0) :
     margin 0 X = -√3 * X 0 1 - √3 / 3 * X 1 0 ∧ margin 1 X = -2 * X 0 0 + 2 * √3 / 3 * X 1 0 ∧
@@ -207,20 +206,14 @@ theorem clr_hamiltonian_vertex (lam : ℝ) (Λ₁ W X : Mat2) (i : Fin 3) :
   rw [hamiltonian, e, div_div_eq_mul_div, div_neg, sub_neg_eq_add]
   ring
 
-/-- The scalar core of the equilibrium inequality. With positive margins `pᵢ`,
-`p₀p₁ + p₁p₂ + p₂p₀ = 4`, the equilibrium relation `Σ (p_j + p_k) σ_i = 0` and every vertex
-Hamiltonian `α + σ_i/p_i ≤ 0`: `α ≤ 0`, and if every `p_i ≥ 2/15`, then `σ_i² ≤ 900 α²`.
-
-Proof: `σ_i ≤ -α p_i`; multiplying by `p_j + p_k > 0` and summing, the equilibrium relation gives
-`0 ≤ -8α`. With `m = -α`, each `(p_j + p_k) σ_i` lies in `[-8m, 8m]` (the upper bound from
-`σ_i ≤ m p_i`, the lower one from the relation and the other two upper bounds), and
-`p_j + p_k ≥ 4/15` gives `σ_i² ≤ (15/4)² (8m)² = 900 m²`. -/
+/-- The equilibrium weights sum to one. Their zero weighted pairing gives `α ≤ 0`
+and bounds each scaled pairing by `-8α`, without a choice of margin constant. -/
 theorem clr_vertex_scalar {p₀ p₁ p₂ σ₀ σ₁ σ₂ α : ℝ} (h₀ : 0 < p₀) (h₁ : 0 < p₁) (h₂ : 0 < p₂)
     (hsum : p₀ * p₁ + p₁ * p₂ + p₂ * p₀ = 4)
     (heq : (p₁ + p₂) * σ₀ + (p₀ + p₂) * σ₁ + (p₀ + p₁) * σ₂ = 0)
     (hH₀ : α + σ₀ / p₀ ≤ 0) (hH₁ : α + σ₁ / p₁ ≤ 0) (hH₂ : α + σ₂ / p₂ ≤ 0) :
-    α ≤ 0 ∧ (2 / 15 ≤ p₀ → 2 / 15 ≤ p₁ → 2 / 15 ≤ p₂ →
-      σ₀ ^ 2 ≤ 900 * α ^ 2 ∧ σ₁ ^ 2 ≤ 900 * α ^ 2 ∧ σ₂ ^ 2 ≤ 900 * α ^ 2) := by
+    α ≤ 0 ∧ |(p₁ + p₂) * σ₀| ≤ -8 * α ∧
+      |(p₀ + p₂) * σ₁| ≤ -8 * α ∧ |(p₀ + p₁) * σ₂| ≤ -8 * α := by
   -- `σ_i ≤ m p_i` with `m = -α`
   have k₀ : σ₀ ≤ -α * p₀ := by
     have := mul_le_mul_of_nonneg_right hH₀ h₀.le
@@ -235,50 +228,45 @@ theorem clr_vertex_scalar {p₀ p₁ p₂ σ₀ σ₁ σ₂ α : ℝ} (h₀ : 0 
   have l₁ := mul_le_mul_of_nonneg_left k₁ (by positivity : (0 : ℝ) ≤ p₀ + p₂)
   have l₂ := mul_le_mul_of_nonneg_left k₂ (by positivity : (0 : ℝ) ≤ p₀ + p₁)
   have hα : α ≤ 0 := by nlinarith
-  refine ⟨hα, fun g₀ g₁ g₂ ↦ ?_⟩
-  set m := -α with hm
-  have hm0 : 0 ≤ m := by linarith
-  have hsq : α ^ 2 = m ^ 2 := by rw [hm]; ring
-  rw [hsq]
   have p01 : 0 ≤ p₀ * p₁ := by positivity
   have p12 : 0 ≤ p₁ * p₂ := by positivity
   have p20 : 0 ≤ p₂ * p₀ := by positivity
-  -- `|(p_j + p_k) σ_i| ≤ 8 m` and `p_j + p_k ≥ 4/15`
-  have bound : ∀ {s σ : ℝ}, 4 / 15 ≤ s → -(8 * m) ≤ s * σ → s * σ ≤ 8 * m →
-      σ ^ 2 ≤ 900 * m ^ 2 := by
-    intro s σ hs hlo hhi
-    have h1 : (s * σ) ^ 2 ≤ (8 * m) ^ 2 := by nlinarith
-    have h2 : (4 / 15) ^ 2 * σ ^ 2 ≤ s ^ 2 * σ ^ 2 := by
-      have : (4 / 15 : ℝ) ^ 2 ≤ s ^ 2 := by nlinarith
-      nlinarith [sq_nonneg σ]
-    nlinarith
-  refine ⟨bound (s := p₁ + p₂) (by linarith) ?_ ?_, bound (s := p₀ + p₂) (by linarith) ?_ ?_,
-    bound (s := p₀ + p₁) (by linarith) ?_ ?_⟩ <;> nlinarith [mul_nonneg hm0 p01,
-      mul_nonneg hm0 p12, mul_nonneg hm0 p20]
+  refine ⟨hα, ?_, ?_, ?_⟩ <;> rw [abs_le] <;> constructor <;>
+    nlinarith [mul_nonneg (neg_nonneg.mpr hα) p01,
+      mul_nonneg (neg_nonneg.mpr hα) p12, mul_nonneg (neg_nonneg.mpr hα) p20]
 
-/-- **The equilibrium inequality**. At a star state `X`, with `Λ_R` traceless and
-`tr(Λ_R X) = 0`, if every vertex Hamiltonian is `≤ 0` then `tr((Λ₁ - (3/2)λJ) X) ≤ 0`, and if
-moreover every margin is at least `2/15` then `‖Λ_R‖_F² ≤ 2700 tr((Λ₁ - (3/2)λJ) X)²`.
+/-- All three margins of a star state are positive. -/
+theorem clr_margin_pos {X : Mat2} (hX : IsStarState X) : ∀ i, 0 < margin i X := by
+  have hXtr := hX.1
+  obtain ⟨e0, e1, e2⟩ := margin_eq_two_mul_ρ hXtr
+  obtain ⟨-, -, r0, r1, r2⟩ := hX
+  intro i; fin_cases i
+  · simp only [Fin.zero_eta, Fin.isValue]; rw [e0]; linarith
+  · simp only [Fin.mk_one, Fin.isValue]; rw [e1]; linarith
+  · simp only [Fin.reduceFinMk, Fin.isValue]; rw [e2]; linarith
 
-The exact equilibrium weights `ϑ_i = p_i (p_j + p_k)/8` give `|(p_j + p_k) σ_i| ≤ 8 max_i h_i`,
-and `‖W‖_F² ≤ Σ σ_i²` with `σ_i = √3 tr(W Z_i)`. -/
+/-- The equilibrium inequality and its quantitative bound for any positive
+lower bound `δ` of the pairwise margins. -/
 theorem clr_vertex_bounds {lam : ℝ} {Λ₁ W X : Mat2} (hX : IsStarState X) (hW : W.trace = 0)
     (hWX : traceForm W X = 0) (hH : ∀ i, hamiltonian lam Λ₁ W X (vertex i) ≤ 0) :
-    traceForm (Λ₁ - (3 / 2 * lam) • J) X ≤ 0 ∧ ((∀ i, 2 / 15 ≤ margin i X) →
-      frobSq W ≤ 2700 * traceForm (Λ₁ - (3 / 2 * lam) • J) X ^ 2) := by
-  obtain ⟨e11, hdet, -, -⟩ := clr_star_entries hX
+    traceForm (Λ₁ - (3 / 2 * lam) • J) X ≤ 0 ∧
+      (∀ δ : ℝ, 0 < δ → δ ≤ margin 1 X + margin 2 X →
+        δ ≤ margin 0 X + margin 2 X → δ ≤ margin 0 X + margin 1 X →
+        frobSq W ≤ 3 * (8 / δ) ^ 2 * traceForm (Λ₁ - (3 / 2 * lam) • J) X ^ 2) := by
+  have e11 : X 1 1 = -X 0 0 := by
+    have ht := hX.1
+    rw [Matrix.trace_fin_two] at ht
+    linarith
+  have hdet : -X 0 0 ^ 2 - X 0 1 * X 1 0 = 1 := by
+    have hd := hX.2.1
+    rw [Matrix.det_fin_two, e11] at hd
+    nlinarith
   have hXtr : X.trace = 0 := hX.1
   obtain ⟨m0, m1, m2⟩ := clr_margin_eq hXtr
   obtain ⟨s0, s1, s2⟩ := clr_sigma_eq hW
-  have hpos : ∀ i, 0 < margin i X := by
-    obtain ⟨e0, e1, e2⟩ := margin_eq_two_mul_ρ hXtr
-    obtain ⟨-, -, r0, r1, r2⟩ := hX
-    intro i; fin_cases i
-    · simp only [Fin.zero_eta, Fin.isValue]; rw [e0]; linarith
-    · simp only [Fin.mk_one, Fin.isValue]; rw [e1]; linarith
-    · simp only [Fin.reduceFinMk, Fin.isValue]; rw [e2]; linarith
+  have hpos := clr_margin_pos hX
   have hW11 : W 1 1 = -W 0 0 := by rw [Matrix.trace_fin_two] at hW; linarith
-  have h3 := clr_sqrt3_sq
+  have h3 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hsum : margin 0 X * margin 1 X + margin 1 X * margin 2 X + margin 2 X * margin 0 X = 4 := by
     rw [m0, m1, m2]
     linear_combination (-4 * X 0 1 * X 1 0 / 3) * h3 + 4 * hdet
@@ -294,16 +282,112 @@ theorem clr_vertex_bounds {lam : ℝ} {Λ₁ W X : Mat2} (hX : IsStarState X) (h
     rw [← clr_hamiltonian_vertex]; exact hH i
   obtain ⟨hα, hσ⟩ := clr_vertex_scalar (hpos 0) (hpos 1) (hpos 2) hsum heq (hH' 0) (hH' 1)
     (hH' 2)
-  refine ⟨hα, fun hK ↦ ?_⟩
-  obtain ⟨b0, b1, b2⟩ := hσ (hK 0) (hK 1) (hK 2)
+  obtain ⟨b0, b1, b2⟩ := hσ
+  refine ⟨hα, fun δ hδ hp0 hp1 hp2 ↦ ?_⟩
+  have bound {σ p : ℝ} (hp : δ ≤ p) (hb : |p * σ| ≤ -8 *
+      traceForm (Λ₁ - (3 / 2 * lam) • J) X) :
+      σ ^ 2 ≤ (8 / δ) ^ 2 * traceForm (Λ₁ - (3 / 2 * lam) • J) X ^ 2 := by
+    have habs : δ * |σ| ≤ -8 * traceForm (Λ₁ - (3 / 2 * lam) • J) X := by
+      calc δ * |σ| ≤ p * |σ| := mul_le_mul_of_nonneg_right hp (abs_nonneg σ)
+        _ = |p * σ| := by rw [abs_mul, abs_of_pos (hδ.trans_le hp)]
+        _ ≤ _ := hb
+    have hlin : |σ| ≤ (8 / δ) * (-traceForm (Λ₁ - (3 / 2 * lam) • J) X) := by
+      calc |σ| ≤ (-8 * traceForm (Λ₁ - (3 / 2 * lam) • J) X) / δ :=
+          (le_div_iff₀ hδ).mpr (by nlinarith only [habs])
+        _ = _ := by ring
+    have hs := pow_le_pow_left₀ (abs_nonneg σ) hlin 2
+    simpa only [sq_abs, mul_pow, neg_sq] using hs
+  have bs0 := bound hp0 b0
+  have bs1 := bound hp1 b1
+  have bs2 := bound hp2 b2
   have hfro : frobSq W ≤ (√3 * traceForm W (controlMatrix (vertex 0))) ^ 2 +
       (√3 * traceForm W (controlMatrix (vertex 1))) ^ 2 +
       (√3 * traceForm W (controlMatrix (vertex 2))) ^ 2 := by
     rw [s0, s1, s2]
     unfold frobSq
     rw [hW11]
-    nlinarith [sq_nonneg (W 0 1 + W 1 0), sq_nonneg (W 0 1), sq_nonneg (W 1 0),
-      sq_nonneg (W 0 0)]
-  linarith
+    have he : (√3 * W 0 1 + √3 / 3 * W 1 0) ^ 2 +
+        (2 * W 0 0 - 2 * √3 / 3 * W 1 0) ^ 2 +
+        (-2 * W 0 0 - 2 * √3 / 3 * W 1 0) ^ 2 -
+        (W 0 0 ^ 2 + W 0 1 ^ 2 + W 1 0 ^ 2 + (-W 0 0) ^ 2) =
+        6 * W 0 0 ^ 2 + (W 0 1 + W 1 0) ^ 2 + W 0 1 ^ 2 + W 1 0 ^ 2 := by
+      linear_combination (W 0 1 ^ 2 + 2 / 3 * W 0 1 * W 1 0 + W 1 0 ^ 2) * h3
+    nlinarith only [he, sq_nonneg (W 0 1 + W 1 0), sq_nonneg (W 0 1),
+      sq_nonneg (W 1 0), sq_nonneg (W 0 0)]
+  nlinarith only [hfro, bs0, bs1, bs2]
+
+/-- The pairwise margins have a common positive minimum on a compact set of star states. -/
+theorem clr_compact_margin_gap {K : Set Mat2} (hK : IsCompact K)
+    (hstar : ∀ X ∈ K, IsStarState X) :
+    ∃ δ : ℝ, 0 < δ ∧ ∀ X ∈ K, δ ≤ margin 1 X + margin 2 X ∧
+      δ ≤ margin 0 X + margin 2 X ∧ δ ≤ margin 0 X + margin 1 X := by
+  rcases K.eq_empty_or_nonempty with rfl | hne
+  · exact ⟨1, by norm_num, by simp⟩
+  have hm : ∀ i : Fin 3, Continuous (fun X : Mat2 ↦ margin i X) := by
+    intro i
+    unfold margin traceForm
+    fun_prop
+  let f : Mat2 → ℝ := fun X ↦ min (margin 1 X + margin 2 X)
+    (min (margin 0 X + margin 2 X) (margin 0 X + margin 1 X))
+  have hf : Continuous f := ((hm 1).add (hm 2)).min
+    (((hm 0).add (hm 2)).min ((hm 0).add (hm 1)))
+  obtain ⟨X₀, hX₀, hmin⟩ := hK.exists_isMinOn hne hf.continuousOn
+  refine ⟨f X₀, ?_, ?_⟩
+  · have hp := clr_margin_pos (hstar X₀ hX₀)
+    exact lt_min (add_pos (hp 1) (hp 2))
+      (lt_min (add_pos (hp 0) (hp 2)) (add_pos (hp 0) (hp 1)))
+  · intro X hX
+    have h := hmin hX
+    exact ⟨h.trans (min_le_left _ _),
+      h.trans ((min_le_right _ _).trans (min_le_left _ _)),
+      h.trans ((min_le_right _ _).trans (min_le_right _ _))⟩
+
+/-- The equilibrium costate bound is uniform on each compact set of star states. -/
+theorem clr_equilibrium_compact {K : Set Mat2} (hK : IsCompact K)
+    (hstar : ∀ X ∈ K, IsStarState X) :
+    ∃ C : ℝ, 0 < C ∧ ∀ (lam : ℝ) (Λ₁ W X : Mat2), X ∈ K → W.trace = 0 →
+      traceForm W X = 0 → (∀ i, hamiltonian lam Λ₁ W X (vertex i) ≤ 0) →
+      √(frobSq W) ≤ C * (-traceForm (Λ₁ - (3 / 2 * lam) • J) X) := by
+  obtain ⟨δ, hδ, hp⟩ := clr_compact_margin_gap hK hstar
+  refine ⟨√3 * (8 / δ), by positivity, ?_⟩
+  intro lam Λ₁ W X hX hW hWX hH
+  obtain ⟨ha, hb⟩ := clr_vertex_bounds (hstar X hX) hW hWX hH
+  obtain ⟨hp0, hp1, hp2⟩ := hp X hX
+  have hbound := hb δ hδ hp0 hp1 hp2
+  have he : 3 * (8 / δ) ^ 2 * traceForm (Λ₁ - (3 / 2 * lam) • J) X ^ 2 =
+      (√3 * (8 / δ) * (-traceForm (Λ₁ - (3 / 2 * lam) • J) X)) ^ 2 := by
+    rw [mul_pow, mul_pow, neg_sq, Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 3)]
+  rw [he] at hbound
+  have hs := Real.sqrt_le_sqrt hbound
+  rw [Real.sqrt_sq (mul_nonneg (by positivity) (neg_nonneg.mpr ha))] at hs
+  exact hs
+
+/-- On a compact star set, the reduced costate is bounded by the shifted costate,
+with a constant depending only on the set. -/
+theorem clr_compact_costate_bound {K : Set Mat2} (hK : IsCompact K)
+    (hstar : ∀ X ∈ K, IsStarState X) :
+    ∃ D : ℝ, 0 ≤ D ∧ ∀ (lam : ℝ) (Λ₁ W X : Mat2), X ∈ K → W.trace = 0 →
+      traceForm W X = 0 → (∀ i, hamiltonian lam Λ₁ W X (vertex i) ≤ 0) →
+      frobSq W ≤ D * frobSq (Λ₁ - (3 / 2 * lam) • J) := by
+  obtain ⟨C, hC, hbound⟩ := clr_equilibrium_compact hK hstar
+  have hf : Continuous (fun X : Mat2 ↦ frobSq X) := by unfold frobSq; fun_prop
+  obtain ⟨B, hB⟩ := hK.exists_bound_of_continuousOn hf.continuousOn
+  refine ⟨C ^ 2 * max B 0, by positivity, ?_⟩
+  intro lam Λ₁ W X hX hW hWX hH
+  have heq := hbound lam Λ₁ W X hX hW hWX hH
+  have hsq := pow_le_pow_left₀ (Real.sqrt_nonneg _) heq 2
+  rw [Real.sq_sqrt (clr_frobSq_nonneg _), mul_pow, neg_sq] at hsq
+  have hXbound : frobSq X ≤ max B 0 := by
+    have hb := hB X hX
+    rw [Real.norm_eq_abs, abs_of_nonneg (clr_frobSq_nonneg X)] at hb
+    exact hb.trans (le_max_left _ _)
+  have hcs := clr_traceForm_sq_le (Λ₁ - (3 / 2 * lam) • J) X
+  have hA := clr_frobSq_nonneg (Λ₁ - (3 / 2 * lam) • J)
+  calc frobSq W ≤ C ^ 2 * traceForm (Λ₁ - (3 / 2 * lam) • J) X ^ 2 := hsq
+    _ ≤ C ^ 2 * (frobSq (Λ₁ - (3 / 2 * lam) • J) * frobSq X) :=
+      mul_le_mul_of_nonneg_left hcs (sq_nonneg C)
+    _ ≤ C ^ 2 * (frobSq (Λ₁ - (3 / 2 * lam) • J) * max B 0) :=
+      mul_le_mul_of_nonneg_left (mul_le_mul_of_nonneg_left hXbound hA) (sq_nonneg C)
+    _ = _ := by ring
 
 end SmoothedOctagon.Reduction

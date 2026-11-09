@@ -12,6 +12,7 @@ import all SmoothedOctagon.Equality.Frontier
 import all SmoothedOctagon.Equality.Transport
 import all SmoothedOctagon.Exclusion.Forward
 import all SmoothedOctagon.Exclusion.Forward.Budget
+import all SmoothedOctagon.Exclusion.Forward.Budget.Concavity
 import all SmoothedOctagon.Exclusion.Forward.Cap
 import all SmoothedOctagon.Exclusion.Forward.Casimir
 import all SmoothedOctagon.Exclusion.Forward.Core
@@ -22,9 +23,13 @@ import all SmoothedOctagon.Exclusion.Forward.Reduce
 import all SmoothedOctagon.Exclusion.Forward.Scalar
 import all SmoothedOctagon.Exclusion.Forward.Scalars.Canon
 import all SmoothedOctagon.Exclusion.Forward.Scalars.LargerNorm
+import all SmoothedOctagon.Exclusion.Forward.Scalars.LargerNorm.Endpoints
 import all SmoothedOctagon.Exclusion.Forward.Scalars.Neighbor
+import all SmoothedOctagon.Exclusion.Forward.Scalars.Neighbor.Slope
+import all SmoothedOctagon.Exclusion.Forward.Scalars.Neighbor.Value
 import all SmoothedOctagon.Exclusion.Forward.Scalars.SmallMin
 import all SmoothedOctagon.Exclusion.Forward.Scalars.SumSym
+import all SmoothedOctagon.Exclusion.Forward.Scalars.SumSym.Constant
 import all SmoothedOctagon.Exclusion.Forward.Window
 import all SmoothedOctagon.Exclusion.Forward.Wire
 import all SmoothedOctagon.Exclusion.MinimumStructure
@@ -89,7 +94,7 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.CasimirExce
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.Chi
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.ChiSigns
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.EnvelopeCasimir
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.NormDerivativeSigns
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.NormDerivative
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SwappedSecant
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Window
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.HighRatio
@@ -228,7 +233,9 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.Tools
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Barrier
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Contacts
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Order.Upper
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Point
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.ReverseScale
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Shear
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.CentralFace
@@ -259,7 +266,9 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.UpperRatio.Reductions
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Centre
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Covector
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Cover
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Gap
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.LogSecant
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Mean
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Order
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Residual
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Secant

@@ -19,8 +19,9 @@ In the centre coordinates `r = a/(a + b)`, `t = a/(a + c)`, `ρ = a²/(a² + 4)`
 `γ² ≥ (4μ² - B(ρ)²)/(16(1 - ρ)²)` with `B(ρ) = 1 - ρ + log ρ + 2ψ_μ(ζ)`; the cleared comparison
 `φ(ρ) = 4μ² - B(ρ)² - 16·cap·(1 - ρ)²` is increasing (`nsr_phi_mono`: its derivative is
 `2(1 - ρ)(16 cap - B/ρ)`) and positive at the left end of the excluded interval. For `a < 4/5` the
-floor is `μ = 94/125` (`nsr_turn_floor`: with `log q < L₊(q)` the turn secant minus `94/125` is
-bounded below by a quadratic in `q` with negative discriminant), and the excluded interval is
+turn floor is `(2√130 - 4)/25` (`nsr_turn_floor`), obtained by completing a square in the
+factor and minimizing in the turn ratio. The central-scale comparison uses this exact floor;
+its excluded interval is
 `ρ ∈ [4/29, 3/20)` (from the window's `a² < 12/17`).
 -/
 
@@ -202,24 +203,78 @@ theorem nsr_phi_mono {C D κ lam ρ0 ρ1 Bmax ρ : ℝ} (hl : 0 < lam) (hD : 0 �
       nlinarith [mul_le_mul_of_nonneg_left hz.1.le hD]
   exact hmono (Set.left_mem_Icc.2 (hρ01.trans hρ1)) ⟨hρ01, hρ1⟩ hρ01
 
-private theorem nsr_turn_disc_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 16320 * a * b ^ 3 + 91200 * a ^ 2 * b ^ 2 + 143040 * a ^ 3 * b + 53760 * a ^ 4 := by positivity
+/-- Completing a square minimizes the difference of two reciprocal terms. -/
+theorem nsr_reciprocal_min {a b q : ℝ} (ha : 0 ≤ a) (hb : 0 ≤ b) (hq : 0 < q) :
+    -(Real.sqrt b - Real.sqrt a) ^ 2 ≤ a / q - b / (q + 1) := by
+  have hq1 : 0 < q + 1 := by linarith
+  have e : a / q - b / (q + 1) + (Real.sqrt b - Real.sqrt a) ^ 2 =
+      (Real.sqrt a * (q + 1) - Real.sqrt b * q) ^ 2 / (q * (q + 1)) := by
+    field_simp
+    linear_combination (q + 1) * (Real.sq_sqrt ha).symm + q * Real.sq_sqrt hb
+  have := div_nonneg (sq_nonneg (Real.sqrt a * (q + 1) - Real.sqrt b * q))
+    (mul_pos hq hq1).le
+  rw [← e] at this
+  linarith
 
-private theorem nsr_turn_disc_l0 (η : ℝ) (h0 : (3 / 5) ≤ η) (h1 : η ≤ 1) :
-    0 < -((6 + 6 * η ^ 2 - 10 * η - 6 * (94 / 125)) ^ 2 - 4 * (6 - η - 6 * (94 / 125)) * (6 * η ^ 2 - η)) := by
-  linear_combination (1 / 250000 : ℝ) * nsr_turn_disc_bp0 (5 * η - 3) (5 - 5 * η) (by linarith) (by linarith)
+/-- The minimum of the rational turn-secant bound. -/
+private theorem nsr_turn_minimum_eq {η : ℝ} (hη : 1 / 2 ≤ η) :
+    1 - η / 6 - (Real.sqrt (4 * η / 3) - Real.sqrt (η * (η - 1 / 6))) ^ 2 =
+      1 - η ^ 2 - 4 * η / 3 + 2 * η / 3 * Real.sqrt (12 * η - 2) := by
+  have hη0 : 0 ≤ η := by linarith
+  have hηa : 0 ≤ η - 1 / 6 := by linarith
+  have ha : 0 ≤ η * (η - 1 / 6) := mul_nonneg hη0 hηa
+  have hb : 0 ≤ 4 * η / 3 := by positivity
+  have e : Real.sqrt (4 * η / 3) * Real.sqrt (η * (η - 1 / 6)) =
+      η / 3 * Real.sqrt (12 * η - 2) := by
+    rw [← Real.sqrt_mul hb]
+    have : 4 * η / 3 * (η * (η - 1 / 6)) = (η / 3) ^ 2 * (12 * η - 2) := by ring
+    rw [this, Real.sqrt_mul (sq_nonneg _), Real.sqrt_sq (by positivity)]
+  nlinarith [Real.sq_sqrt ha, Real.sq_sqrt hb]
 
-/-- The discriminant of the cleared turn-floor quadratic is negative for `3/5 ≤ η ≤ 1`
-(generated Bernstein certificate). -/
-theorem nsr_turn_disc (η : ℝ) (h0 : (3 / 5) ≤ η) (h1 : η ≤ 1) :
-    0 < -((6 + 6 * η ^ 2 - 10 * η - 6 * (94 / 125)) ^ 2 - 4 * (6 - η - 6 * (94 / 125)) * (6 * η ^ 2 - η)) := by
-  exact nsr_turn_disc_l0 η h0 h1
+/-- In the square-root parameter, the turn minimum is a concave quadratic in its square. -/
+private theorem nsr_turn_minimum_param {η : ℝ} (hη : 1 / 2 ≤ η) :
+    1 - η ^ 2 - 4 * η / 3 + 2 * η / 3 * Real.sqrt (12 * η - 2) =
+      3 / 4 + (Real.sqrt (12 * η - 2) - 2) ^ 2 *
+        (4 - (Real.sqrt (12 * η - 2) - 2) ^ 2) / 144 := by
+  have hs : (Real.sqrt (12 * η - 2)) ^ 2 = 12 * η - 2 :=
+    Real.sq_sqrt (by linarith)
+  linear_combination (Real.sqrt (12 * η - 2) ^ 2 - 8 * Real.sqrt (12 * η - 2) +
+    12 * η + 18) / 144 * hs
 
-/-- **The turn floor**: for a turn with `η = B/(A + B) ≥ 3/5` and `A < P`,
-`Sec(A, B, P) > 94/125`. In `q = (P + B)/(A + B)`, `Sec = 1 + η²/q - η log q/(q - 1)`; the bound
-`log q < L₊(q)` leaves a quadratic in `q` whose discriminant is negative (`nsr_turn_disc`). -/
-theorem nsr_turn_floor {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hAP : A < P) (hη : 3 / 5 ≤ B / (A + B)) :
-    94 / 125 < m2Sec A B P := by
+/-- The turn minimum increases with the ratio on `[1/2, 1]`. -/
+private theorem nsr_turn_minimum_mono {η ζ : ℝ} (hζ : 1 / 2 ≤ ζ) (hζη : ζ ≤ η) (hη1 : η ≤ 1) :
+    1 - ζ ^ 2 - 4 * ζ / 3 + 2 * ζ / 3 * Real.sqrt (12 * ζ - 2) ≤
+      1 - η ^ 2 - 4 * η / 3 + 2 * η / 3 * Real.sqrt (12 * η - 2) := by
+  have hη : 1 / 2 ≤ η := hζ.trans hζη
+  let u := Real.sqrt (12 * ζ - 2) - 2
+  let w := Real.sqrt (12 * η - 2) - 2
+  have hu0 : 0 ≤ u := by
+    have := Real.sqrt_le_sqrt (show (4 : ℝ) ≤ 12 * ζ - 2 by linarith)
+    norm_num at this
+    dsimp [u]
+    linarith
+  have huw : u ≤ w := by
+    dsimp [u, w]
+    exact sub_le_sub_right (Real.sqrt_le_sqrt (by linarith)) 2
+  have hw0 : 0 ≤ w := hu0.trans huw
+  have hsq : (w + 2) ^ 2 = 12 * η - 2 := by
+    dsimp [w]
+    simpa using Real.sq_sqrt (show 0 ≤ 12 * η - 2 by linarith)
+  have hw2 : w ^ 2 < 2 := by
+    by_contra h
+    have hw1 : 1 < w := by nlinarith
+    nlinarith
+  have huw2 : u ^ 2 ≤ w ^ 2 := by nlinarith
+  have hp : 0 ≤ (w ^ 2 - u ^ 2) * (4 - w ^ 2 - u ^ 2) := by
+    apply mul_nonneg (by linarith) (by linarith)
+  rw [nsr_turn_minimum_param hζ, nsr_turn_minimum_param hη]
+  change 3 / 4 + u ^ 2 * (4 - u ^ 2) / 144 ≤ 3 / 4 + w ^ 2 * (4 - w ^ 2) / 144
+  nlinarith
+
+/-- **The turn floor**: completing a square in the turn factor and minimizing in
+`η = B/(A + B)` gives the exact lower bound `(2√130 - 4)/25`. -/
+theorem nsr_turn_floor {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hAP : A < P)
+    (hη : 3 / 5 ≤ B / (A + B)) : (2 * Real.sqrt 130 - 4) / 25 < m2Sec A B P := by
   have hAB : 0 < A + B := by linarith
   set η := B / (A + B) with hηdef
   set q := (P + B) / (A + B) with hqdef
@@ -243,21 +298,27 @@ theorem nsr_turn_floor {A B P : ℝ} (hA : 0 < A) (hB : 0 < B) (hAP : A < P) (h�
     have e : η * ((q - 1) * (q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))) =
         η * ((q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))) * (q - 1) := by ring
     linarith
-  have hd := nsr_turn_disc η hη hη1
-  -- the cleared quadratic is positive
-  have hquad : 0 < (6 - η - 6 * (94 / 125)) * q ^ 2 + (6 + 6 * η ^ 2 - 10 * η - 6 * (94 / 125)) * q
-      + (6 * η ^ 2 - η) := by
-    have hlead : 0 < 6 - η - 6 * (94 / 125) := by linarith
-    nlinarith [sq_nonneg (2 * (6 - η - 6 * (94 / 125)) * q + (6 + 6 * η ^ 2 - 10 * η - 6 * (94 / 125)))]
-  have key : 94 / 125 < 1 + η ^ 2 / q - η * ((q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))) := by
-    have e : 1 + η ^ 2 / q - η * ((q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))) - 94 / 125 =
-        ((6 - η - 6 * (94 / 125)) * q ^ 2 + (6 + 6 * η ^ 2 - 10 * η - 6 * (94 / 125)) * q
-          + (6 * η ^ 2 - η)) / (6 * q * (q + 1)) := by
-      field_simp; ring
-    have : 0 < ((6 - η - 6 * (94 / 125)) * q ^ 2 + (6 + 6 * η ^ 2 - 10 * η - 6 * (94 / 125)) * q
-          + (6 * η ^ 2 - η)) / (6 * q * (q + 1)) := div_pos hquad (by positivity)
+  have hηhalf : 1 / 2 ≤ η := by linarith
+  have hηa : 0 ≤ η - 1 / 6 := by linarith
+  have hm := nsr_reciprocal_min (mul_nonneg (show 0 ≤ η by linarith) hηa)
+    (show 0 ≤ 4 * η / 3 by positivity) hq0
+  have hbound : 1 - η ^ 2 - 4 * η / 3 + 2 * η / 3 * Real.sqrt (12 * η - 2) ≤
+      1 + η ^ 2 / q - η * ((q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))) := by
+    rw [← nsr_turn_minimum_eq hηhalf]
+    have e : 1 + η ^ 2 / q - η * ((q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))) =
+        1 - η / 6 + (η * (η - 1 / 6)) / q - (4 * η / 3) / (q + 1) := by
+      field_simp
+      ring
+    rw [e]
     linarith
+  have hmono := nsr_turn_minimum_mono (by norm_num : (1 / 2 : ℝ) ≤ 3 / 5) hη hη1
+  have hroot : Real.sqrt (12 * (3 / 5 : ℝ) - 2) = Real.sqrt 130 / 5 := by
+    rw [show 12 * (3 / 5 : ℝ) - 2 = 130 / 25 by norm_num, Real.sqrt_div (by norm_num)]
+    norm_num
+  rw [hroot] at hmono
+  norm_num at hmono
   linarith
+
 
 /-- The centre data of the window: ratios, norm bounds, the diagonal `E` and its bound
 `E < -1 + 2r + 2t - rt`. -/
@@ -401,6 +462,7 @@ theorem nsr_a_sq (W : M2Window) : W.a ^ 2 < 2 / 3 := by
     rw [lt_div_iff₀ (by positivity)]; linarith
   linarith
 
+set_option maxHeartbeats 400000 in
 /-- **The conditional scale bound**: if
 `t = a/(a + c) ≤ 2/5`, then `a < 4/5`. -/
 theorem nsr_scale_of_t (W : M2Window) (ht25 : W.a / (W.a + W.c) ≤ 2 / 5) : W.a < 4 / 5 := by
@@ -415,10 +477,15 @@ theorem nsr_scale_of_t (W : M2Window) (ht25 : W.a / (W.a + W.c) ≤ 2 / 5) : W.a
   -- the turn floors
   have h1r : W.b / (W.a + W.b) = 1 - r := by rw [hr]; field_simp; ring
   have h1t : W.c / (W.a + W.c) = 1 - t := by rw [ht]; field_simp; ring
-  have hu : (94 / 125 : ℝ) ≤ W.u := by
+  let μ := (2 * Real.sqrt 130 - 4) / 25
+  have hs : Real.sqrt (130 : ℝ) ^ 2 = 130 := Real.sq_sqrt (by norm_num)
+  have hs0 := Real.sqrt_nonneg (130 : ℝ)
+  have hμ0 : 3 / 4 < μ := by dsimp [μ]; nlinarith only [hs0, hs]
+  have hμ1 : μ < 1 - (2 / 5 : ℝ) + (2 / 5 : ℝ) ^ 2 := by dsimp [μ]; nlinarith only [hs0, hs]
+  have hu : μ ≤ W.u := by
     rw [W.u_eq]
     exact (nsr_turn_floor ha hb W.a_lt_p (by rw [h1r]; linarith)).le
-  have hv : (94 / 125 : ℝ) ≤ W.v := by
+  have hv : μ ≤ W.v := by
     rw [W.v_eq]
     exact (nsr_turn_floor ha hc W.a_lt_d (by rw [h1t]; linarith)).le
   have hcas := W.cas_lt
@@ -429,69 +496,75 @@ theorem nsr_scale_of_t (W : M2Window) (ht25 : W.a / (W.a + W.c) ≤ 2 / 5) : W.a
   have hρ4 : 4 / 29 ≤ ρ := by
     rw [hρ, le_div_iff₀ hK0]; nlinarith
   have hr2 : r ≤ 2 / 5 := hrt.trans ht25
-  -- lower the norms to `(94 / 125 : ℝ)`
-  set E0 := 1 + r + t - ρ + Real.log (ρ / (r * t)) - (1 - (94 / 125 : ℝ)) / r - (1 - (94 / 125 : ℝ)) / t with hE0
-  have hEE0 : E = E0 + (W.u - (94 / 125 : ℝ)) / r + (W.v - (94 / 125 : ℝ)) / t := by
+  -- lower the norms to the exact turn minimum
+  set E0 := 1 + r + t - ρ + Real.log (ρ / (r * t)) - (1 - μ) / r - (1 - μ) / t with hE0
+  have hEE0 : E = E0 + (W.u - μ) / r + (W.v - μ) / t := by
     rw [hE, hE0]; field_simp; ring
-  have hEr : E ≤ 2 * (94 / 125 : ℝ) * r := by
-    have : 0 ≤ (2 / 5 - r) * (62 / 125 - t) := mul_nonneg (by linarith) (by linarith)
-    have e : -1 + 2 * r + 2 * t - r * t - 2 * (94 / 125 : ℝ) * r =
-        (-1 + 2 * t + 2 / 5 * (62 / 125 - t)) - (2 / 5 - r) * (62 / 125 - t) := by ring
-    linarith
-  have hEt : E ≤ 2 * (94 / 125 : ℝ) * t := by
-    have : 0 ≤ (2 / 5 - t) * (62 / 125 - r) := mul_nonneg (by linarith) (by linarith)
-    have e : -1 + 2 * r + 2 * t - r * t - 2 * (94 / 125 : ℝ) * t =
-        (-1 + 2 * r + 2 / 5 * (62 / 125 - r)) - (2 / 5 - t) * (62 / 125 - r) := by ring
-    linarith
+  have hEr : E ≤ 2 * μ * r := by
+    have hp := mul_nonneg (show 0 ≤ 2 / 5 - r by linarith)
+      (show 0 ≤ 1 / 2 - t by linarith)
+    have hm := mul_nonneg (show 0 ≤ μ - 3 / 4 by linarith) (le_of_lt hr0)
+    nlinarith only [hEb, hp, hm, ht25]
+  have hEt : E ≤ 2 * μ * t := by
+    have hp := mul_nonneg (show 0 ≤ 2 / 5 - t by linarith)
+      (show 0 ≤ 1 / 2 - r by linarith)
+    have hm := mul_nonneg (show 0 ≤ μ - 3 / 4 by linarith) (le_of_lt ht0)
+    nlinarith only [hEb, hp, hm, hr2]
   have hlow := nsr_lower_norms hr0 ht0 hu hv hEr hEt hEE0
   have hE0pos : 0 < E0 := by
     have hρ14 : ρ < 1 / 4 := by linarith
     have := nsr_E0_lower hr0 ht0 (by linarith) (by linarith) hρ0 hρrt hρ14
     have h8 : 1 / (8 * ρ) ≤ 29 / 32 := by rw [div_le_iff₀ (by positivity)]; linarith
     have e : E0 = (1 + r + t - ρ + Real.log (ρ / (r * t)) - 1 / 4 * r⁻¹ - 1 / 4 * t⁻¹) +
-        ((94 / 125 : ℝ) - 3 / 4) * (1 / r + 1 / t) := by rw [hE0]; field_simp; ring
-    have : 0 ≤ ((94 / 125 : ℝ) - 3 / 4) * (1 / r + 1 / t) := mul_nonneg (by norm_num) (by positivity)
+        (μ - 3 / 4) * (1 / r + 1 / t) := by rw [hE0]; field_simp; ring
+    have : 0 ≤ (μ - 3 / 4) * (1 / r + 1 / t) := mul_nonneg (by linarith) (by positivity)
     linarith
   -- raise the ratios to `2/5`
-  have hE0B : E0 ≤ 14 / 25 - ρ + Real.log (25 / 4 * ρ) := by
-    have h1 := nsr_psi_mono (μ := 94 / 125) hr0 hr2 (by norm_num) (by norm_num)
-    have h2 := nsr_psi_mono (μ := 94 / 125) ht0 ht25 (by norm_num) (by norm_num)
-    have e1 : E0 = 1 - ρ + Real.log ρ + (r - (1 - (94 / 125 : ℝ)) / r - Real.log r) +
-        (t - (1 - (94 / 125 : ℝ)) / t - Real.log t) := by
+  have hE0B : E0 ≤ (5 * μ - 16 / 5) - ρ + Real.log (25 / 4 * ρ) := by
+    have h1 := nsr_psi_mono (μ := μ) hr0 hr2 (by norm_num) hμ1.le
+    have h2 := nsr_psi_mono (μ := μ) ht0 ht25 (by norm_num) hμ1.le
+    have e1 : E0 = 1 - ρ + Real.log ρ + (r - (1 - μ) / r - Real.log r) +
+        (t - (1 - μ) / t - Real.log t) := by
       rw [hE0, Real.log_div hρ0.ne' (by positivity), Real.log_mul hr0.ne' ht0.ne']; ring
     have e2 : Real.log (25 / 4 * ρ) = 2 * Real.log (5 / 2) + Real.log ρ := by
       rw [Real.log_mul (by norm_num) hρ0.ne', show (25 / 4 : ℝ) = (5 / 2) ^ 2 by norm_num,
         Real.log_pow]
       push_cast; ring
-    have e3 : (2 / 5 : ℝ) - (1 - (94 / 125 : ℝ)) / (2 / 5) - Real.log (2 / 5) = -(11 / 50) + Real.log (5 / 2) := by
-      rw [show (2 / 5 : ℝ) = (5 / 2)⁻¹ by norm_num, Real.log_inv]; norm_num
+    have e3 : (2 / 5 : ℝ) - (1 - μ) / (2 / 5) - Real.log (2 / 5) =
+        (5 / 2 * μ - 21 / 10) + Real.log (5 / 2) := by
+      rw [show (2 / 5 : ℝ) = (5 / 2)⁻¹ by norm_num, Real.log_inv]; ring
     rw [e3] at h1 h2
     rw [e1, e2]; linarith
   -- the comparison function
   have hl1615 : (2 / 31 : ℝ) < Real.log (16 / 15) := by
     have := nsr_log_one_add_gt (x := 1 / 15) (by norm_num)
     norm_num at this ⊢; linarith
-  have hphi := nsr_phi_mono (C := 4 * (94 / 125 : ℝ) ^ 2) (D := 16 * (9193 / 50000)) (κ := 14 / 25)
-    (lam := 25 / 4) (ρ0 := 4 / 29) (ρ1 := 3 / 20) (Bmax := 41 / 100 - 2 / 31) (ρ := ρ)
+  have hphi := nsr_phi_mono (C := 4 * μ ^ 2) (D := 16 * (9193 / 50000)) (κ := 5 * μ - 16 / 5)
+    (lam := 25 / 4) (ρ0 := 4 / 29) (ρ1 := 3 / 20) (Bmax := 5 * μ - 16 / 5 - 3 / 20 - 2 / 31) (ρ := ρ)
     (by norm_num) (by norm_num) (by norm_num) hρ4 hρ3.le (by norm_num) (by
       rw [show (25 / 4 : ℝ) * (3 / 20) = (16 / 15)⁻¹ by norm_num, Real.log_inv]; linarith)
-    (by norm_num)
+    (by linarith)
   have hl2925 : (4 / 27 : ℝ) < Real.log (29 / 25) := by
     have := nsr_log_one_add_gt (x := 4 / 25) (by norm_num)
     norm_num at this ⊢; linarith
   have hl2925' : Real.log (29 / 25) ≤ 4 / 25 := by
     have := Real.log_le_sub_one_of_pos (show (0 : ℝ) < 29 / 25 by norm_num); linarith
-  have hB4 : 14 / 25 - 4 / 29 + Real.log (25 / 4 * (4 / 29)) = 306 / 725 - Real.log (29 / 25) := by
+  have hB4 : (5 * μ - 16 / 5) - 4 / 29 + Real.log (25 / 4 * (4 / 29)) =
+      (5 * μ - 16 / 5 - 4 / 29) - Real.log (29 / 25) := by
     rw [show (25 / 4 : ℝ) * (4 / 29) = (29 / 25)⁻¹ by norm_num, Real.log_inv]; ring
   rw [hB4] at hphi
-  have hB4sq : (306 / 725 - Real.log (29 / 25)) ^ 2 ≤ (306 / 725 - 4 / 27) ^ 2 := by
+  have hB4sq : ((5 * μ - 16 / 5 - 4 / 29) - Real.log (29 / 25)) ^ 2 ≤
+      ((5 * μ - 16 / 5 - 4 / 29) - 4 / 27) ^ 2 := by
     apply pow_le_pow_left₀ (by linarith) (by linarith)
-  have hphi0 : 0 < 4 * (94 / 125 : ℝ) ^ 2 - (306 / 725 - Real.log (29 / 25)) ^ 2 -
+  have hphi0 : 0 < 4 * μ ^ 2 - ((5 * μ - 16 / 5 - 4 / 29) - Real.log (29 / 25)) ^ 2 -
       16 * (9193 / 50000) * (1 - 4 / 29) ^ 2 := by
-    have : (0 : ℝ) < 4 * (94 / 125 : ℝ) ^ 2 - (306 / 725 - 4 / 27) ^ 2 - 16 * (9193 / 50000) * (1 - 4 / 29) ^ 2 := by
-      norm_num
+    have : (0 : ℝ) < 4 * μ ^ 2 - ((5 * μ - 16 / 5 - 4 / 29) - 4 / 27) ^ 2 -
+        16 * (9193 / 50000) * (1 - 4 / 29) ^ 2 := by
+      dsimp [μ]
+      nlinarith only [hs0, hs]
     linarith
-  have hE0sq : E0 ^ 2 ≤ (14 / 25 - ρ + Real.log (25 / 4 * ρ)) ^ 2 := pow_le_pow_left₀ hE0pos.le hE0B 2
+  have hE0sq : E0 ^ 2 ≤ ((5 * μ - 16 / 5) - ρ + Real.log (25 / 4 * ρ)) ^ 2 :=
+    pow_le_pow_left₀ hE0pos.le hE0B 2
   have h1ρ : 0 < 1 - ρ := by linarith
   have hge : 16 * (9193 / 50000) * (1 - ρ) ^ 2 < 4 * W.u * W.v - E ^ 2 := by
     linarith

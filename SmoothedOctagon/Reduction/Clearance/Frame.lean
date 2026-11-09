@@ -8,13 +8,13 @@ public import SmoothedOctagon.Reduction.Clearance.Budget
 A bound on the Frobenius norm of the frame. Along a state trajectory with
 `g(0) = I`, `f = ‖g‖_F² = tr(gᵀg)` satisfies `f' = 2 tr(X gᵀg) ≤ 2ρ f` (`X = ρJ + S`,
 `‖S‖² = 2(ρ² - 1)`, and `gᵀg` is positive definite with determinant one), so
-`f(t) ≤ 2 exp(2∫₀ᵗ ρ) ≤ 2 e^{2C/3}`, and `‖g‖_F² < 42` when the cost is at most `A_oct`.
+`f(t) ≤ 2 exp(2∫₀ᵗ ρ) ≤ 2 e^{2C/3}`, and `‖g‖_F² ≤ 2 exp(2A_oct/3)` when the cost is at most `A_oct`.
 
 Main API:
 
 * `clr_frame_deriv_le`: `Σᵢⱼ gᵢⱼ (gX)ᵢⱼ ≤ ρ(X) ‖g‖_F²` for `det g = 1` and a star state `X`.
 * `clr_frobSq_frame_le_exp`: `‖g(t)‖_F² ≤ 2 exp(2 ∫₀ᵗ ρ)` on `[0, T]`.
-* `clr_frobSq_frame_le`: `‖g(t)‖_F² ≤ 42` on `[0, T]` when the cost is at most `A_oct`.
+* `clr_frobSq_frame_le`: `‖g(t)‖_F² ≤ 2 exp(2A_oct/3)` on `[0, T]` when the cost is at most `A_oct`.
 * `clr_frobSq_conj_le`: `‖g⁻¹ M g‖_F² ≤ ‖g‖_F⁴ ‖M‖_F²` for `det g = 1`.
 -/
 
@@ -142,11 +142,9 @@ theorem clr_frobSq_frame_le_exp (hst : IsStateTrajectory T u g X) (hg0 : g 0 = 1
   rw [this]
   exact mul_le_mul_of_nonneg_right h hE.le
 
-/-- **The frame bound**. For a state trajectory with `g(0) = I` and cost at most `A_oct`,
-`‖g(t)‖_F² ≤ 42` on `[0, T]`: the cost is `3∫₀ᵀ ρ`, so `clr_frobSq_frame_le_exp` gives
-`‖g(t)‖_F² ≤ 2 e^{2A_oct/3} < 42`. -/
+/-- The complete cost bounds the frame by `2 exp(2 A_oct/3)` throughout the period. -/
 theorem clr_frobSq_frame_le (hst : IsStateTrajectory T u g X) (hg0 : g 0 = 1)
-    (hcost : reinhardtCost T X ≤ octagonCost) : ∀ t ∈ Icc 0 T, frobSq (g t) ≤ 42 := by
+    (hcost : reinhardtCost T X ≤ octagonCost) : ∀ t ∈ Icc 0 T, frobSq (g t) ≤ 2 * exp (2 * octagonCost / 3) := by
   intro t ht
   have hT : 0 < T := hst.1
   have hstar : ∀ s ∈ Icc 0 T, IsStarState (X s) := fun s hs ↦ (hst.2.2.2.1 s hs).2
@@ -161,18 +159,11 @@ theorem clr_frobSq_frame_le (hst : IsStateTrajectory T u g X) (hg0 : g 0 = 1)
     rw [reinhardtCost, ← intervalIntegral.integral_const_mul,
       ← intervalIntegral.integral_const_mul]
     congr 1; funext s; simp only [clr_rho]; ring
-  have hoc := clr_octagonCost_lt
-  have h3 : 2 * ∫ s in (0 : ℝ)..t, clr_rho (X s) ≤ 3 := by linarith
-  have he : Real.exp 3 < 21 := by
-    have e : Real.exp 3 = Real.exp 1 * Real.exp 1 * Real.exp 1 := by
-      rw [← Real.exp_add, ← Real.exp_add]; norm_num
-    rw [e]
-    have := Real.exp_one_lt_d9
-    have := Real.exp_pos 1
-    nlinarith
-  have := clr_frobSq_frame_le_exp hst hg0 t ht
-  have := Real.exp_le_exp.mpr h3
-  linarith
+  have hexp : 2 * ∫ s in (0 : ℝ)..t, clr_rho (X s) ≤ 2 * octagonCost / 3 := by
+    rw [hcostI] at hcost
+    linarith
+  exact (clr_frobSq_frame_le_exp hst hg0 t ht).trans
+    (mul_le_mul_of_nonneg_left (Real.exp_le_exp.mpr hexp) (by norm_num))
 
 /-- `‖g⁻¹ M g‖_F² ≤ ‖g‖_F⁴ ‖M‖_F²` for `det g = 1`. -/
 theorem clr_frobSq_conj_le {g : Mat2} (hg : g.det = 1) (M : Mat2) :

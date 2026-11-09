@@ -80,80 +80,94 @@ that need not be centrally symmetric, F\'ary~\cite{Fary1950} proved that triangl
 lattice packing density, and Kallus~\cite{Kallus2015} proved that the regular heptagon is a local
 minimum of the double-lattice packing density.
 
-\subsection{The control problem}\label{sec:intro-control}
+\subsection{The strategy of the lower bound}\label{sec:strategy}
 
-Hales's control problem (\cref{def:control-problem}) has a state $X(t)$ in the upper half-plane,
-viewed as a traceless matrix of determinant~$1$, and a frame $g(t)\in\SLtwo$, driven by a
-measurable control $u(t)$ in a triangle $\UT$; a trajectory is admissible if it closes up after a
-rotation by $\pi/3$, and its cost $\cost(T,X)$ is an integral of the state, equal to the area of the
-disk that the trajectory traces when it comes from a disk (\cref{sec:set-equivalence}). The smoothed
-octagon has a trajectory of cost $\Aoct=\sqrt{12}\,\doct$ (\cref{prop:octagon-trajectory}). We
-prove:
+By the theorem of Fejes T\'oth and Rogers, a centrally symmetric convex disk packs most densely in
+a lattice in which each translate touches six others, and the density is the area of the disk
+divided by the area of a cell. A linear map changes both areas by the same factor, so we may assume
+that the six contact points form a regular hexagon; the problem is then to minimize the area among
+the disks whose densest lattice is this one. A worst disk has a one-parameter family of densest
+lattices. As the lattice slides through the family, the six contact points run around the boundary
+of the disk and trace all of it. In Hales's formulation~\cite{Hales2017,HalesVajjha2024}, the frame $g(t)\in\SLtwo$ that carries the
+hexagon to its moving position, with the state $X(t)$ that records its velocity, obeys the control
+system of \cref{def:control-problem}. The control $u(t)$, taken from a triangle $\UT$ with vertices
+$\ee_0,\ee_1,\ee_2$, decides how sharply the contact points curve, the area of the traced disk is
+the cost $\cost(T,X)$, and a worst disk becomes a cheapest trajectory. A trajectory is admissible
+if it closes up after a rotation by $\pi/3$, and the octagon's trajectory costs
+$\Aoct=\sqrt{12}\,\doct$ (\cref{prop:octagon-trajectory}). We prove:
 
 \begin{theorem}\label{thm:control}
 Every admissible trajectory $(T,u,g,X)$ of the control problem satisfies
 $\cost(T,X)\ge\Aoct=\sqrt{12}\,\doct$.
 \end{theorem}
 
-By \cref{thm:equivalence}, \cref{thm:control} is equivalent to \cref{thm:main}(b). It holds for
-every terminal time $T>0$ and every measurable control.
+The theorem holds for every terminal time $T>0$ and every measurable control. Its proof has the
+following steps.
 
-\subsection{Strategy of the proof}\label{sec:strategy}
+\begin{enumerate}[label=(\arabic*)]
+\item \emph{From disks to a control problem.} A worst disk exists, and its trajectory is a global
+  minimizer of the control problem, of cost $\sqrt{12}$ times its density; so \cref{thm:main}(b) is
+  equivalent to \cref{thm:control} (\cref{thm:equivalence}). By Hales and Vajjha, the state
+  of a global minimizer stays in a compact domain $\hstarstar$ of the upper half-plane
+  (\cref{thm:compact-domain}).
+\item \emph{From a minimizer to a vertex period.} A global minimizer lifts to a Pontryagin
+  extremal. A budget inequality, which uses only that the cost is at most $\Aoct<\pi$, keeps the lift
+  away from the singular locus, where Fuller's chattering could occur, so the control is bang-bang:
+  it sits at one vertex of $\UT$ at a time and switches finitely often. After a change of the time
+  origin the lift is normal (\cref{thm:finite-normal}). On a piece where the control is the
+  vertex $\ee_i$, the margin $a$ of that vertex is constant, the two other margins move by
+  \[
+    b\mapsto(a+b)q-a,\qquad c\mapsto\frac{a+c}{q}-a,
+  \]
+  and the piece costs
+  $\frac{\sqrt3}{4}\,a\bigl((a+b)(q-1)+(a+c)(1-q^{-1})-a\log q\bigr)$, where $q>1$ is its
+  factor. A period is thus a finite word in the vertices with finitely many numbers attached.
+\item \emph{Signs, classes and the Casimir.} Each switch moves the control to the next vertex or
+  to the previous one, and we call it forward or reverse. The cyclic word of signs puts every
+  period in one of five classes (\cref{def:classes}). The costate carries a conserved quantity, the
+  Casimir $\gamma^2$, which is positive for a period with switches of both signs. Since the frame
+  must turn through $\pi/3$, such a period of cost $\cost$ has
+  \[
+    \cost\ge\frac{4\pi\kappa}{2\kappa+3},\qquad \kappa=\sqrt{12\gamma^2},
+  \]
+  so a competitive period, of cost at most $\Aoct$, has $\gamma^2<5/27$
+  (\cref{prop:ellipticity,prop:cost-casimir,cor:casimir-cap}).
+\item \emph{Six or more pieces.} Each class is excluded once the period has six or more pieces
+  (\cref{thm:at-most-five}). For the entirely reverse class and one mixed class, a local
+  obstruction at a few consecutive switches suffices. The mixed class with sign word $(--+)^m$ is
+  excluded by comparing how far its switch vectors turn at each centre with a winding identity for
+  the whole period. The entirely forward class and the last mixed class are excluded at a window
+  of a few pieces around the smallest active margin, where the switching conditions contradict the
+  cost, through the Casimir cap or directly.
+\item \emph{Five or fewer pieces.} The closing conditions leave four-piece periods with every
+  switch forward and a two-parameter family of five-piece periods. The four-piece periods cost at
+  least $\Aoct$, with equality only for the octagon, and the five-piece periods cost more
+  (\cref{thm:terminal}).
+\end{enumerate}
 
-The proof follows Hales's control formulation and uses the results of Hales and Vajjha. It has
-five steps.
-
-\runin{From disks to minimizers (\cref{sec:setting}).} A worst disk exists, and after a linear
-change of coordinates it is traced by an admissible trajectory whose cost is $\sqrt{12}$ times its
-density. That trajectory is a global minimizer of the control problem, and every global minimizer
-has the same cost (\cref{thm:equivalence}). Its state stays in the compact domain $\hstarstar$ of
-Hales and Vajjha (\cref{thm:compact-domain}).
-
-\runin{A finite normal period (\cref{sec:reduction}).} A global minimizer lifts to a Pontryagin
-extremal (\cref{thm:pmp-lift}). Its costate stays away from the singular locus
-(\cref{prop:clearance}), so its control is bang-bang, takes values at the vertices of $\UT$, and
-switches finitely often in a period (\cref{prop:finite-switches}). Rebasing the period at a switch
-(\cref{lem:word-reduction}) gives a global minimizer whose lift is normal (\cref{thm:normality}).
-The result is a \emph{vertex period}: $N$ pieces, on each of
-which the control sits at one vertex of $\UT$, with explicit one-piece formulas, together with the
-costate of a normal extremal (\cref{thm:finite-normal}).
-
-\runin{Five classes (\cref{sec:periods}).} Each switch moves the control to the next vertex or to
-the previous one, and we call it forward or reverse accordingly. The cyclic word of switch signs
-puts every period in one of five classes (\cref{def:classes}, \cref{prop:partition}). The costate
-gives a normal multiplier whose determinant $\gamma^2$, a Casimir of the motion, is constant on
-the period. A period that costs at most $\Aoct$ has a small Casimir (\cref{prop:cost-casimir},
-\cref{cor:casimir-cap}), and the Casimir of a mixed period is positive
-(\cref{prop:ellipticity}).
-
-\runin{Periods with six or more pieces (\cref{sec:reverse,sec:short-runs,sec:forward,sec:mixed,sec:smaller-short}).}
-Each class is excluded for $N\ge6$ by an estimate on the whole period: classes $\cls{R}$ and
-$\cls{M3}$ by the reverse-four principle and a three-piece log-concavity
-(\cref{thm:class-R,thm:class-M3}); class $\cls{M1}$, whose sign word is $(--+)^m$, by an angle gap
-at each centre and a winding identity (\cref{thm:class-M1}); class $\cls{F}$ by a window at the
-smallest margin and the Casimir cap (\cref{thm:class-F}); and class $\cls{M2}$ by locating the
-smallest margin at a reverse centre and comparing the windows around it with the cost
-(\cref{thm:class-M2,thm:m2-smaller-short}). Together these give \cref{thm:at-most-five}: a
-competitive normal vertex period in $\hstarstar$ has at most five pieces.
-
-\runin{Five or fewer pieces, and equality (\cref{sec:terminal,sec:equality}).} The closure
-condition leaves few words with at most five pieces: four pieces with every switch forward, as for
-the octagon, and five pieces with the word $0\,1\,0\,2\,0$ or with every switch reverse
-(\cref{prop:terminal-words}); the last are excluded by \cref{thm:class-R}. The four-piece periods cost at least $\Aoct$, with
-equality only for the octagon, and the five-piece periods cost more (\cref{thm:terminal}). This
-proves \cref{thm:control} and \cref{thm:main}(b). For the equality case, a worst disk is traced by
-a global minimizer, which by the above is the octagon's trajectory; transporting its six arcs
-shows that the disk is a linear image of the smoothed octagon (\cref{thm:rigidity}). Reinhardt's
-construction and Hales's trajectory give the same disk up to a linear map
-(\cref{prop:reinhardt-construction}), which proves \cref{thm:main}(a) and~(c).
-
-Most of the work is in the fourth step. The obstruction there is that the classes are not excluded
-by any local condition at a switch: each exclusion compares the cost of a whole period, or of a
+Steps (2) to (5) give, for a global minimizer $(T,u,g,X)$ and a worst disk $K_0$,
+\begin{equation}\label{eq:proof-chain}
+  \sqrt{12}\,\delta(K_0)=\cost(T,X)\ge\Aoct=\sqrt{12}\,\doct .
+\end{equation}
+Most of the work is in step (4). Each exclusion compares the cost of a whole period, or of a
 window of a few pieces around its smallest margin, with $\Aoct$, through scalar inequalities in a
-few variables. These are collected in \cref{app:reverse-estimates,app:short-run-estimates,app:forward-estimates,app:nonshort-estimates,app:short-estimates,app:terminal-estimates}.
-We prove them by identities, monotonicity and concavity arguments in one variable at a time and
-tangent-line bounds for the logarithm, and a few polynomial signs on boxes by expansion in the
-Bernstein basis of the box; no interval arithmetic is used.
+few variables. These comparisons use integral inequalities, monotonicity, convexity and
+bounds for the logarithm. Some mixed estimates still use polynomial signs on parameter
+boxes, checked by expansion in the Bernstein basis.
+
+\subsection{The strategy of the equality case}\label{sec:strategy-equality}
+
+Suppose that $\delta(K)=\doct$. Then $K$, translated to the origin, is a worst disk, and every
+inequality in~\eqref{eq:proof-chain} is an equality for the trajectory of $K$. Step~(5) then
+identifies that trajectory with the octagon's (\cref{prop:terminal-equality}), but only after
+three choices made along the way: the normalization of the disk, the rebasing of its trajectory at
+a switch, and a relabeling of the vertices of the simplex. These choices are undone one at a time,
+and transporting the six arcs of the octagon's trajectory back to the disk shows that $K$ is a
+linear image of the octagon $\KH$ of Hales's trajectory (\cref{thm:rigidity}). It matters here that
+the equality is applied to the trajectory of the given disk: the existence of some minimizer of
+cost $\Aoct$ would say nothing about $K$. Conversely, $\delta$ is invariant under invertible
+affine maps (\cref{prop:converse}), and Hales's octagon is a linear image of Reinhardt's
+(\cref{prop:reinhardt-construction}), which proves \cref{thm:main}(a) and~(c).
 
 \subsection{Formal verification}\label{sec:intro-formal}
 
@@ -164,17 +178,25 @@ proof uses only Lean's standard axioms. It builds on formalizations of the book 
 Vajjha~\cite{SmoothedPolygonLean} and of the Pontryagin maximum
 principle~\cite{OptimalControlLean}, and it is registered in the Palomar
 registry~\cite{Palomar}. \Cref{app:formal} describes what is formalized and how it is checked, and
-lists the Lean declaration that proves each numbered result of the paper. The text of the paper
+lists the corresponding Lean declarations and records the analytic variants used in this text.
+The text of the paper
 does not depend on the formalization: it is a self-contained mathematical proof.
 
 \subsection{Organization}\label{sec:intro-organization}
 
-\Cref{sec:setting} sets up packings, the smoothed octagon and the control problem, and reduces
-\cref{thm:main}(b) to \cref{thm:control}; \cref{tab:notation} at its end lists the notation.
-\Cref{sec:reduction} reduces a global minimizer to a finite normal vertex period, and
-\cref{sec:periods} develops the tools for such periods and states \cref{thm:at-most-five}.
-\Cref{sec:reverse,sec:short-runs,sec:forward,sec:mixed,sec:smaller-short} exclude the five classes
-for six or more pieces, \cref{sec:terminal} treats at most five pieces and proves
-\cref{thm:control}, and \cref{sec:equality} proves the equality case.
-\Cref{app:reverse-estimates,app:short-run-estimates,app:forward-estimates,app:nonshort-estimates,app:short-estimates,app:terminal-estimates}
-hold the scalar estimates, and \cref{app:formal} the formal verification.
+The main text states the steps of the proof and explains how each is proved; the appendices give
+the proofs. \Cref{sec:setting} sets up packings, the smoothed octagon and the control problem,
+and reduces \cref{thm:main}(b) to \cref{thm:control}; \cref{tab:notation} at its end lists the
+notation. \Cref{sec:outline-periods} turns a global minimizer into a finite normal vertex period,
+introduces the five classes and the Casimir, and states \cref{thm:at-most-five}.
+\Cref{sec:outline-classes} explains how each class is excluded for six or more pieces, and
+\cref{sec:outline-terminal} treats the periods with at most five pieces and proves
+\cref{thm:control,thm:main}.
+
+\Cref{sec:reduction} proves the reduction to finite normal periods, and \cref{sec:periods}
+develops the formulas and sign conditions of vertex periods. \Cref{sec:reverse} excludes the
+classes $\cls{R}$ and $\cls{M3}$, \cref{sec:short-runs} the class $\cls{M1}$, \cref{sec:forward}
+the class $\cls{F}$, and \cref{sec:mixed,sec:smaller-short} the class $\cls{M2}$; each of these
+appendices ends with the scalar estimates it uses. \Cref{sec:terminal} compares the periods with
+at most five pieces with the octagon, \cref{sec:equality} proves the equality case, and
+\cref{app:formal} describes the formal verification.

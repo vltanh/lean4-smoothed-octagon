@@ -191,7 +191,9 @@ theorem ff_resS_neg {U z h : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 4 / 3) (hU : 1 + 6
 
 /-- **The symmetric larger-norm sign**: `𝓔_v < 0` on the symmetric domain `1 ≤ z ≤ 4/3`,
 `1 + 6z/5 ≤ U < 3`, `S²/Z ≤ h ≤ S(5U - 2 - 3z)/(3Z)`. Proof (`fs_resV_neg`): concavity in `h` and
-the two tangent values, signed by logarithm bounds and Bernstein expansions. -/
+the affine tangent. Successive convexity arguments give its value at the least factor;
+concavity of the other endpoint's derivative makes it increase to the geometric boundary,
+where it equals that value. -/
 theorem ff_resV_neg {U z h : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 4 / 3) (hU : 1 + 6 * z / 5 ≤ U) (hU3 : U < 3)
     (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h)
     (hhu : h ≤ (1 + z) * (5 * U - 2 - 3 * z) / (3 * (z ^ 2 + U))) : ff_resV U z z h < 0 :=
@@ -345,15 +347,18 @@ theorem eleven_fifths_lt : 11 / 5 < W.U := by
   have t7 := hgt 1 1 le_rfl le_rfl (by linarith [W.z_lt, W.one_le_z])
   simp only [mul_one] at t1 t3 t4 t6 t7
   have hlog := ff_log_five_fourths_lt
-  have hA := ff_octagonCost_lt
-  have hs3 : (1.732 : ℝ) < √3 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
+  have hA := ff_octagonCost_lt_sqrt
   have hsum : 7 * ff_G a₀ a₀ ≤ ff_G W.a (W.a * W.P) + ff_G (W.a * W.P) (W.a * W.z) +
       ff_G (W.a * W.z) W.a + ff_G W.a (W.a * W.w) + ff_G (W.a * W.w) (W.a * W.D) +
       ff_G (W.a * W.D) W.a + ff_G W.a W.a := by linarith
   have hG0' : 23 / 22 ≤ ff_G a₀ a₀ := by rw [hG0]; linarith
   have : √3 / 4 * (7 * ff_G a₀ a₀) ≤ octagonCost :=
     le_trans (mul_le_mul_of_nonneg_left hsum (by positivity)) h7
-  nlinarith
+  have hbound : 29 * √3 / 16 < √3 / 4 * (7 * ff_G a₀ a₀) := by
+    have h := mul_le_mul_of_nonneg_left hG0' (Real.sqrt_nonneg 3)
+    have hs3 : 0 < √3 := by positivity
+    nlinarith only [h, hs3]
+  linarith only [this, hA, hbound]
 
 /-- **The exterior-factor budget**: `P + z + w + D < (5U + 1)/3`. Otherwise the seven-entry cost
 bound, the rectangle inequality and `ff_budget_g` give a cost above `A_oct`. -/

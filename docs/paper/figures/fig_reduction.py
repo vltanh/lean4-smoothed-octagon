@@ -3,7 +3,7 @@
 fig-reduction-hamiltonians.pdf: along one period [0, t_f] of the smoothed octagon's trajectory
 (word e2 e0 e1 e2, switching time t_sw), with its normal Pontryagin lift (lambda = -1), the three
 vertex Hamiltonians H_0, H_1, H_2 (left), and the ratio Q/||P|| of the distance of the costate from
-the singular locus to the norm of the extended covector, against the bound 1/251 of the clearance
+the singular locus to the norm of the extended covector, against the intrinsic bound c_oct^{-1}
 (right).
 
 The lift is the strong lift of the proof of Hales--Vajjha, Theorem 7.5.1:
@@ -13,7 +13,7 @@ and Lambda_R is integrated numerically from its costate equation, interval by in
 check what the caption states: the costate equations close up with the twisted endpoint conditions
 Lambda_1(T) = R^{-1} Lambda_1(0) R and Lambda_R(T) = R^{-1} Lambda_R(0) R; at every sample all three
 vertex Hamiltonians are <= 0 and the largest is 0; the active one is 0 on its piece; the outgoing
-and incoming ones vanish at the switches; and Q/||P|| > 1/251 throughout.
+and incoming ones vanish at the switches; and Q/||P|| > c_oct^{-1} throughout.
 """
 import math
 import os
@@ -55,6 +55,13 @@ def hamiltonian(lam, L1, LR, X, u):
 
 def frob(M):
     return float(np.sum(M * M))
+
+
+def clearance_constant():
+    """The cost-gap bound c_oct of Proposition `prop:clearance`."""
+    area = oc.AREA_OCT
+    budget = (2 * math.pi - area) / (3 * (math.pi - area))
+    return math.hypot(budget, 1 + 3 * budget / math.sqrt(2))
 
 
 def compute(n_per=400):
@@ -116,7 +123,7 @@ def compute(n_per=400):
     assert np.all(H <= 1e-8)
     assert np.allclose(H.max(axis=0), 0, atol=1e-8)
     assert np.allclose(H[active, np.arange(ts.size)], 0, atol=1e-8)
-    assert ratio.min() > 1 / 251
+    assert ratio.min() > 1 / clearance_constant()
     return P, ts, H, ratio
 
 
@@ -143,7 +150,7 @@ def make(out_dir):
     ax.set_ylabel('vertex Hamiltonians')
     ax.legend(loc='lower center', frameon=False, ncol=3)
     bx.plot(ts / P.tsw, ratio, color=ps.BLUE, lw=1.2, label=r'$Q/\Vert\mathcal{P}\Vert$')
-    bx.axhline(1 / 251, color=ps.RED, lw=0.9, ls='--', label=r'$1/251$')
+    bx.axhline(1 / clearance_constant(), color=ps.RED, lw=0.9, ls='--', label=r'$c_{\mathrm{oct}}^{-1}$')
     for k in range(5):
         bx.axvline(k, color=ps.GRID, lw=0.6, zorder=0)
     bx.set_xlim(0, 4)

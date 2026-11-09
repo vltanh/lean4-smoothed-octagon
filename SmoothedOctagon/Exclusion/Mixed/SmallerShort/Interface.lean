@@ -102,8 +102,6 @@ structure SmallerShortData where
   /-- Centre stationarity at `A` (`EL_eq`, `ss_EL'`), the actual outer root. -/
   root : EL = (w - 1) * τ + 1 / τ + (u - 1) / ssRA al be + ssRA al be + 1 - ssQ al rho +
     log (τ * ssQ al rho / ssRA al be)
-  /-- The outer scale cap `A² < 12/17` (`scale_A`). -/
-  q_lt : ssQ al rho < 3 / 20
   /-- The two Gram determinants and the Casimir bounds (`Γ_eq`, `Γ_eq'`, `cas_lt`, `cas_gt`). -/
   Γ_eq : Γ = ssGam rho u v E
   Γ_eq' : Γ = ssGam (ssQ al rho) u w EL
@@ -195,7 +193,7 @@ theorem q_lt_seventh : H.q < 1 / 7 := by
     positivity
   have hτq := H.τ_lt
   refine ss_rev_centre_scale (r := ssRA H.al H.be) (t := 1 / H.τ) (ρ := H.q) (u := H.u)
-    (v := H.w) (E := H.EL) hrA0 hrA2 (by positivity) ?_ hq0 ?_ H.q_lt H.u_ge_34 H.u_le_rA
+    (v := H.w) (E := H.EL) hrA0 hrA2 (by positivity) ?_ hq0 ?_ H.u_ge_34 H.u_le_rA
     H.w_ge H.w_le ?_ ?_
   · rw [div_lt_iff₀ hτ]; linarith [H.two_lt_τ]
   · rw [mul_one_div, lt_div_iff₀ hτ]
@@ -211,6 +209,12 @@ theorem q_lt_seventh : H.q < 1 / 7 := by
   · have h := H.cas_lt
     rw [H.Γ_eq'] at h
     exact h
+
+/-- The outer scale lies below the face cap. -/
+theorem q_lt : ssQ H.al H.rho < 3 / 20 := by
+  have h := H.q_lt_seventh
+  unfold q at h
+  linarith only [h]
 
 /-- **The strong lower order** at the actual shape (`ss_strong_order`). -/
 theorem strong_order : H.be / H.x + ssKs H.x * (H.be - H.x) ≤ H.al :=
@@ -314,7 +318,7 @@ theorem toData_spec : ∃ H : SmallerShortData, H.x = D.C / D.a ∧ H.be = D.B /
       τ_lt := ?_,
       w_ge := D.w_ge,
       w_le := by rw [e_tA]; exact D.ss_UtA,
-      root := ?_, q_lt := ?_,
+      root := ?_,
       Γ_eq := by rw [D.Γ_eq]; unfold m2Gam ssGam; ring,
       Γ_eq' := by rw [D.Γ_eq', e_q]; unfold m2Gam ssGam; ring,
       cas_lt := D.cas_lt, cas_gt := D.cas_gt,
@@ -368,8 +372,6 @@ theorem toData_spec : ∃ H : SmallerShortData, H.x = D.C / D.a ∧ H.be = D.B /
     rw [e1, e_tA]
     field_simp
     ring
-  · rw [e_q, div_lt_iff₀ (by positivity)]
-    linarith [D.scale_A]
 
 /-- The normalized actual data (`toData_spec`). -/
 noncomputable def toData : SmallerShortData := D.toData_spec.choose

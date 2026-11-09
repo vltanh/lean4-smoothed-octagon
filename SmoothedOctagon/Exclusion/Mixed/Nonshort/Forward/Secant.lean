@@ -165,36 +165,10 @@ noncomputable def nsfVq (t x : ℝ) : ℝ :=
 /-- `log(1 + x) > 3x(x + 2)/(x² + 6x + 6)` for `x > 0`. -/
 theorem nsf_log_gt_q {x : ℝ} (hx : 0 < x) :
     3 * x * (x + 2) / (x ^ 2 + 6 * x + 6) < Real.log (1 + x) := by
-  refine nsf_log_gt_of (N := fun z => 3 * z * (z + 2)) (D := fun z => z ^ 2 + 6 * z + 6)
-    (N' := fun z => 6 * z + 6) (D' := fun z => 2 * z + 6)
-    (by norm_num) (fun z hz => by positivity) (fun z => ?_) (fun z => ?_) (fun z hz => ?_) hx
-  · have h := ((hasDerivAt_pow 2 z).const_mul (3 : ℝ)).add ((hasDerivAt_id z).const_mul (6 : ℝ))
-    refine (h.congr_deriv (by norm_num; ring)).congr_of_eventuallyEq (Filter.Eventually.of_forall fun w => ?_)
-    simp; ring
-  · have h := ((hasDerivAt_pow 2 z).add ((hasDerivAt_id z).const_mul (6 : ℝ))).add_const (6 : ℝ)
-    refine (h.congr_deriv (by norm_num)).congr_of_eventuallyEq (Filter.Eventually.of_forall fun w => ?_)
-    simp
-  · have e : 1 / (1 + z) - ((6 * z + 6) * (z ^ 2 + 6 * z + 6) - 3 * z * (z + 2) * (2 * z + 6)) /
-        (z ^ 2 + 6 * z + 6) ^ 2 = z ^ 4 / ((1 + z) * (z ^ 2 + 6 * z + 6) ^ 2) := by
-      have : (1 + z) ≠ 0 := by linarith
-      have : z ^ 2 + 6 * z + 6 ≠ 0 := by positivity
-      field_simp
-      ring
-    rw [e]; positivity
+  exact nsr_log_one_add_jensen hx
 
 /-- `v < V`, from `nsf_log_gt_q`. -/
 theorem nsf_secN_lt_Vq {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nsrSecN t x < nsfVq t x := by
-  have hl := nsf_log_gt_q hx
-  have h1 : 0 < 1 - t := by linarith
-  have e : nsfVq t x - nsrSecN t x = (1 - t) / x * (Real.log (1 + x) -
-      3 * x * (x + 2) / (x ^ 2 + 6 * x + 6)) := by
-    unfold nsfVq nsrSecN
-    have : (1 + x) ≠ 0 := by linarith
-    have : x ^ 2 + 6 * x + 6 ≠ 0 := by positivity
-    field_simp
-    ring
-  have : 0 < (1 - t) / x * (Real.log (1 + x) - 3 * x * (x + 2) / (x ^ 2 + 6 * x + 6)) :=
-    mul_pos (div_pos h1 hx) (by linarith)
-  linarith
+  exact nsr_secN_lt_jensen hx ht
 
 end SmoothedOctagon

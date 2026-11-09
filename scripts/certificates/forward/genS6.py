@@ -27,7 +27,7 @@ pos_hyps=f"""  have hb : 0 < 1 - a := by linarith
   have hP3 : 0 < {P3s} := by nlinarith [mul_nonneg ha0 ht0.le, mul_nonneg (mul_nonneg ha0 ha0) ht0.le]"""
 res=pickle.load(open('S_parts.pkl','rb'))
 lin_info={}
-for name,boxes,strict in [('A0',[R1],False),('E3',[R1],True),('E4',[B1,B2],True)]:
+for name,boxes,strict in [('E3',[R1],True),('E4',[B1,B2],True)]:
     parts={}
     for nm in ['R','cI','cc']:
         n,d=res[name][nm]

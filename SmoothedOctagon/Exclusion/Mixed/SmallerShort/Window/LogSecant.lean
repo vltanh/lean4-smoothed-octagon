@@ -24,8 +24,8 @@ logarithm bounds, and the turn secant as the average of its integrand.
 * `ss_sec_add`: additivity of `(P - A) Sec(A, B, P)` over adjacent intervals.
 * Monotonicity of `g_B` (`ss_gB_sub`): `ss_sec_gt_right`, `ss_sec_ge_right`, `ss_sec_le_left`
   (`[A, P] ⊆ (0, B]`), `ss_sec_le_right` (`[B, P]`).
-* `ss_sec_cross`: `Sec(a, B, C) < Sec(a, C, B)` for `a < B < C`; `ss_V_le`:
-  `Sec(a, C, C) ≤ 13/16`.
+* `ss_sec_cross`: `Sec(a, B, C) < Sec(a, C, B)` for `a < B < C`.
+* `ss_V_lt_limit`: `Sec(a, C, C) < 3/2 - log 2`; `ss_V_le` gives a rational face cap.
 -/
 
 @[expose] public section
@@ -344,35 +344,103 @@ theorem ss_sec_cross {a B C : ℝ} (ha : 0 < a) (haB : a < B) (hBC : B < C) :
   rw [k1, k2, sub_div, sub_div]
   linarith
 
-/-- **The smaller-turn ceiling**: `V(x) = Sec(1, x, x) < 3/2 - log 2 < 13/16`; here
-`Sec(a, C, C) ≤ 13/16` for `a < C`, from `log z ≥ 2w + (2/3)w³`. -/
-theorem ss_V_le {a C : ℝ} (ha : 0 < a) (haC : a < C) : m2Sec a C C ≤ 13 / 16 := by
-  have hC : 0 < C := by linarith
-  have hz : 1 ≤ (C + C) / (a + C) := by rw [le_div_iff₀ (by positivity)]; linarith
-  have hlog := ss_log_ge_cubic hz
-  have hw : ((C + C) / (a + C) - 1) / ((C + C) / (a + C) + 1) = (C - a) / (3 * C + a) := by
-    have : a + C ≠ 0 := by positivity
-    have : 3 * C + a ≠ 0 := by positivity
-    field_simp
-    ring
-  rw [hw] at hlog
-  rw [m2Sec_of_ne haC.ne]
-  have hCa : 0 < C - a := by linarith
-  have k : C / (C - a) * (2 * ((C - a) / (3 * C + a)) + 2 / 3 * ((C - a) / (3 * C + a)) ^ 3) ≤
-      C / (C - a) * Real.log ((C + C) / (a + C)) :=
-    mul_le_mul_of_nonneg_left hlog (by positivity)
-  have e : C / (C - a) * (2 * ((C - a) / (3 * C + a)) + 2 / 3 * ((C - a) / (3 * C + a)) ^ 3) -
-      3 / 16 - C ^ 2 / ((a + C) * (C + C)) =
-      (5 * C - a) * (C ^ 3 + 55 * C ^ 2 * a + 31 * C * a ^ 2 + 9 * a ^ 3) /
-        (48 * (a + C) * (3 * C + a) ^ 3) := by
-    have : a + C ≠ 0 := by positivity
-    have : 3 * C + a ≠ 0 := by positivity
-    field_simp
-    ring
-  have hpos : 0 ≤ (5 * C - a) * (C ^ 3 + 55 * C ^ 2 * a + 31 * C * a ^ 2 + 9 * a ^ 3) /
-      (48 * (a + C) * (3 * C + a) ^ 3) := by
-    have : 0 ≤ 5 * C - a := by linarith
+local syntax "analytic_deriv" : tactic
+macro_rules
+| `(tactic| analytic_deriv) => `(tactic|
+  first
+  | assumption
+  | exact hasDerivAt_id' _
+  | exact hasDerivAt_const _ _
+  | apply HasDerivAt.add <;> analytic_deriv
+  | apply HasDerivAt.sub <;> analytic_deriv
+  | apply HasDerivAt.pow <;> analytic_deriv
+  | apply HasDerivAt.mul <;> analytic_deriv
+  | apply HasDerivAt.div <;> first | analytic_deriv | positivity | assumption
+  | apply HasDerivAt.neg <;> analytic_deriv
+  | apply HasDerivAt.log <;> first | analytic_deriv | positivity | assumption)
+
+
+
+/-- A strict upper bound on the integrand gives a strict upper bound on its mean. -/
+theorem ss_sec_lt {A B P L : ℝ} (hA : 0 < A) (hB : 0 < B) (hAP : A < P)
+    (h : ∀ t ∈ Ioo A P, ss_gB B t < L) : m2Sec A B P < L := by
+  have hP : 0 < P := by linarith
+  have hm := ss_lt_of_deriv (f := fun t => L * t - ss_FB B t) (f' := fun t => L - ss_gB B t) hAP
+    (fun t ht => by
+      have hd := ((hasDerivAt_id' t).const_mul L).sub (ss_FB_hasDerivAt hB (lt_of_lt_of_le hA ht.1))
+      convert hd using 1; ring)
+    (fun t ht => by linarith only [h t ht])
+  have he := ss_sec_mul hA hB hP
+  have : (P - A) * m2Sec A B P < L * (P - A) := by rw [he]; linarith only [hm]
+  nlinarith only [this, hAP]
+
+/-- On the decreasing side of the kernel, its interval mean is below its left value. -/
+theorem ss_sec_lt_left {A B P : ℝ} (hA : 0 < A) (hAP : A < P) (hPB : P ≤ B) :
+    m2Sec A B P < ss_gB B A := by
+  have hB : 0 < B := by linarith
+  refine ss_sec_lt hA hB hAP fun t ht => ?_
+  have ht0 : 0 < t := by linarith [ht.1]
+  have he := ss_gB_sub hB hA ht0
+  have hpos : 0 < B * (t - A) * (B ^ 2 - A * t) / ((B + A) ^ 2 * (B + t) ^ 2) := by
+    have h1 : 0 < t - A := by linarith [ht.1]
+    have h2 : 0 < B ^ 2 - A * t := by nlinarith [ht.2]
     positivity
-  linarith
+  linarith only [he, hpos]
+
+private noncomputable def ssMean_central (a : ℝ) : ℝ :=
+  1 + 1 / (2 * (1 + a)) - Real.log (2 / (1 + a)) / (1 - a)
+
+private theorem ssMean_eq {a : ℝ} (ha1 : a < 1) :
+    m2Sec a 1 1 = ssMean_central a := by
+  rw [m2Sec_of_ne (by linarith)]
+  unfold ssMean_central
+  rw [show a + 1 = 1 + a by ring]
+  norm_num
+  ring
+
+private theorem ssMean_deriv {a : ℝ} (ha : 0 ≤ a) (ha1 : a < 1) :
+    HasDerivAt ssMean_central ((ssMean_central a - ss_gB 1 a) / (1 - a)) a := by
+  have h1 : 0 < 1 + a := by linarith
+  have hb : 0 < 1 - a := by linarith
+  unfold ssMean_central ss_gB
+  apply HasDerivAt.congr_deriv
+  · analytic_deriv
+  · norm_num [npowRec]; field_simp; ring
+
+private theorem ssMean_lt_origin {a : ℝ} (ha : 0 < a) (ha1 : a < 1) :
+    ssMean_central a < 3 / 2 - Real.log 2 := by
+  have hm := ss_lt_of_deriv (f := fun s => -ssMean_central s)
+    (f' := fun s => -((ssMean_central s - ss_gB 1 s) / (1 - s))) ha
+    (fun s hs => (ssMean_deriv hs.1 (hs.2.trans_lt ha1)).neg)
+    (fun s hs => by
+      have hleft := ss_sec_lt_left (B := 1) hs.1 (hs.2.trans ha1) le_rfl
+      rw [ssMean_eq (hs.2.trans ha1)] at hleft
+      have hb : 0 < 1 - s := by linarith [hs.2]
+      exact neg_pos.mpr (div_neg_of_neg_of_pos (sub_neg.mpr hleft) hb))
+  have he : ssMean_central 0 = 3 / 2 - Real.log 2 := by norm_num [ssMean_central]
+  rw [he] at hm
+  linarith only [hm]
+
+/-- The exact global central secant ceiling, given by the full interval mean. -/
+theorem ss_V_lt_limit {a C : ℝ} (ha : 0 < a) (haC : a < C) : m2Sec a C C < 3 / 2 - Real.log 2 := by
+  have hC : 0 < C := by linarith
+  have hr : 0 < a / C := by positivity
+  have hr1 : a / C < 1 := (div_lt_one hC).mpr haC
+  have he : m2Sec a C C = ssMean_central (a / C) := by
+    rw [m2Sec_of_ne haC.ne]
+    unfold ssMean_central
+    have hl : (2 : ℝ) / (1 + a / C) = (C + C) / (a + C) := by field_simp; ring
+    rw [hl]
+    field_simp
+    ring
+  rw [he]
+  exact ssMean_lt_origin hr hr1
+
+/-- A rational face cap, obtained from the exact central mean and its logarithm bound. -/
+theorem ss_V_le {a C : ℝ} (ha : 0 < a) (haC : a < C) : m2Sec a C C ≤ 13 / 16 := by
+  have hlog := ss_log_ge_cubic (z := 2) (by norm_num)
+  norm_num at hlog
+  have hcap : 3 / 2 - Real.log 2 < 13 / 16 := by linarith only [hlog]
+  exact (ss_V_lt_limit ha haC).le.trans hcap.le
 
 end SmoothedOctagon

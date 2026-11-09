@@ -109,8 +109,8 @@ period $[0,\tf]$, with control word $\ee_2\ee_0\ee_1\ee_2$ and switching time $\
 lift is that of Hales and Vajjha's Theorem~7.5.1~\cite{HalesVajjha2024}, integrated numerically.
 Left: the vertex Hamiltonians $H_0,H_1,H_2$. All three are $\le0$, the vertex of the current piece
 has $H_i=0$, and at each switch the incoming vertex reaches $0$. Right: the ratio
-$Q/\norm{\mathcal P}$ of \cref{prop:clearance}, on a logarithmic scale. It stays near $0.055$,
-above the bound $1/251$ that the proposition gives for every competitive lift. The computation
+$Q/\norm{\mathcal P}$ of \cref{prop:clearance}, on a logarithmic scale. It stays above the
+uniform positive lower bound supplied by that proposition. The computation
 confirms the closing conditions $\Lambda_1(\tf)=R^{-1}\Lambda_1(0)R$ and
 $\Lambda_R(\tf)=R^{-1}\Lambda_R(0)R$ and every property stated here.}
 \label{fig:red-hamiltonians}
@@ -150,8 +150,8 @@ seen in the fixed frame.
 \begin{lemma}[Winding]\label{red:winding}
 For every admissible trajectory $(T,u,h,Y)$, with $h(0)=I$ and $h(T)=R$,
 \[
-\int_0^T\bigl(\omega(Y)+\omega_R(h,Y)\bigr)\,\dd t\ \ge\ \frac{2\pi}3
-\].
+\int_0^T\bigl(\omega(Y)+\omega_R(h,Y)\bigr)\,\dd t\ \ge\ \frac{2\pi}3.
+\]
 \end{lemma}
 
 \begin{proof}
@@ -171,73 +171,117 @@ weights of $u^*$ also bound $\Lambda_R$.
 
 \begin{lemma}[Equilibrium inequality]\label{red:equilibrium}
 Let $X$ be a star state, $\Lambda_R$ traceless with $\ip{\Lambda_R}{X}=0$, and suppose that every
-vertex Hamiltonian at $(\Lambda_1,\Lambda_R,X)$ is $\le0$. Then $\ip{A}{X}\le0$. If moreover every
-margin of $X$ is at least $2/15$, then $\norm{\Lambda_R}^2\le2700\,\ip{A}{X}^2$.
+vertex Hamiltonian at $(\Lambda_1,\Lambda_R,X)$ is $\le0$. Then $\ip{A}{X}\le0$. On each compact
+set of star states there is a constant $C$ such that
+$\norm{\Lambda_R}\le C\bigl(-\ip{A}{X}\bigr)$.
 \end{lemma}
 
 \begin{proof}
 With $\varsigma_i=\sqrt3\ip{\Lambda_R}{Z_{\ee_i}}$ and the margins $p_i$ of \cref{lem:margins}, the
 vertex Hamiltonians are $H_i=\ip{A}{X}+\varsigma_i/p_i$. The weights $\vartheta_i=p_i(p_j+p_k)/8$,
 $\{i,j,k\}=\{0,1,2\}$, sum to $1$ by $p_0p_1+p_1p_2+p_2p_0=4$, and
-$\sum_i\vartheta_i\varsigma_i/p_i=\frac18\sum_i(p_j+p_k)\varsigma_i$ is a multiple of
-$\ip{\Lambda_R}{X}=0$. Hence $\ip{A}{X}=\sum_i\vartheta_iH_i\le0$. Put $m=-\ip{A}{X}\ge0$. From
-$H_i\le0$, $(p_j+p_k)\varsigma_i\le8m\vartheta_i\le8m$, and since the three products
-$(p_j+p_k)\varsigma_i$ sum to zero, each is also $\ge-8m$. With $p_j+p_k\ge4/15$ this gives
-$\varsigma_i^2\le900m^2$, and $\norm{\Lambda_R}^2\le\sum_i\varsigma_i^2$.
+$\sum_i\vartheta_i\varsigma_i/p_i=\frac18\sum_i(p_j+p_k)\varsigma_i
+=\frac12\ip{\Lambda_R}{X}=0$. Hence $\ip{A}{X}=\sum_i\vartheta_iH_i\le0$. Put $m=-\ip{A}{X}\ge0$. From
+$H_i\le0$, $(p_j+p_k)\varsigma_i\le8m\vartheta_i$. Since the three products
+$(p_j+p_k)\varsigma_i$ sum to zero, each is at least the negative of the upper bounds for the
+other two, hence at least $-8m(1-\vartheta_i)\ge-8m$; its upper bound is also at most $8m$.
+On a compact set of star states every $p_j+p_k$ has a positive lower bound. Thus every
+$\abs{\varsigma_i}$ is bounded by a fixed multiple of $m$. The matrices $Z_{\ee_i}$ span
+$\sltwo$, and the trace form on $\sltwo$ is nondegenerate, so the linear map
+$\Lambda_R\mapsto(\varsigma_0,\varsigma_1,\varsigma_2)$ is invertible. Its inverse has bounded
+norm, proving the assertion.
 \end{proof}
+
+Only the strict gap between the octagon's cost and the circular cost enters the next estimate.
+For $0\le c<\pi$ write
+\[
+ b(c)=\frac{2\pi-c}{3(\pi-c)},\qquad b_{\mathrm{oct}}=b(\Aoct).
+\]
+The function $b$ is increasing, and it is finite precisely while the cost stays below $\pi$.
 
 \begin{proposition}[Budget inequality]\label{red:budget}
 Let $(T,u,h,Y)$ be admissible with $\cost(T,Y)\le\Aoct$, let $M\in\R^{2\times2}$ and $\mu\in\R$, and
 suppose $\ip{h(t)^{-1}Mh(t)+\frac32\mu J}{Y(t)}\le0$ for $t\in[0,T]$. Then
-$\mu\le100\,\norm{M+\frac32\mu J}$. Consequently every Pontryagin
+$\mu\le b_{\mathrm{oct}}\,\norm{M+\frac32\mu J}$. Consequently every Pontryagin
 extremal with cost at most $\Aoct$ satisfies
 \[
-\lambda^2\le10^4\,\bigl\lVert\Lambda_1(t)-\tfrac32\lambda J\bigr\rVert^2\qquad(0\le t\le T)
-\].
+\abs\lambda\le b_{\mathrm{oct}}\,\bigl\lVert\Lambda_1(t)-\tfrac32\lambda J\bigr\rVert
+\qquad(0\le t\le T).
+\]
 \end{proposition}
 
 \begin{proof}
 Put $A_0=M+\frac32\mu J$, $a_0=\norm{A_0}$ and $V=hYh^{-1}$. The hypothesis reads
 $\ip{A_0}{V}+3\mu\,\omega_R\le3\mu\,\omega$. By the Cauchy--Schwarz inequality and
 $\norm{V}^2=4\omega_R^2-2$, $\ip{A_0}{V}\ge-2a_0\omega_R$, so
-$(3\mu-2a_0)\omega_R\le3\mu\,\omega$ pointwise. Integrate, with $I=\int\omega=\cost/3$ and
-$I_R=\int\omega_R\ge2\pi/3-I$ by \cref{red:winding}. If $\mu>100a_0$, then
-$3\mu-2a_0>\frac{149}{50}\mu>0$ and $\frac{149}{50}\bigl(\frac{2\pi}3-I\bigr)<3I$, so
-$I>\frac{149}{50}\cdot\frac{2\pi}{3}\big/\bigl(3+\frac{149}{50}\bigr)>1.0437$, while
-$\Aoct<3.127$ gives $I<1.0424$. For the consequence, rebase
+$(3\mu-2a_0)\omega_R\le3\mu\,\omega$ pointwise. Let $c=\cost(T,Y)$,
+$I=\int\omega=c/3$ and $I_R=\int\omega_R$. If $3\mu\le2a_0$, then
+$\mu\le2a_0/3\le b(c)a_0$. Otherwise $3\mu-2a_0>0$, so integrating and using
+$I_R\ge2\pi/3-I$ from \cref{red:winding} gives
+\[
+ (3\mu-2a_0)(2\pi-c)\le3\mu c,
+ \qquad\text{hence}\qquad
+ 3\mu(\pi-c)\le a_0(2\pi-c).
+\]
+Since $c\le\Aoct<\pi$, division gives $\mu\le b(c)a_0\le b_{\mathrm{oct}}a_0$.
+For the consequence, rebase
 the twisted extension of the extremal at $t$ (\cref{red:rebase}). The rebased trajectory is
 admissible with the same cost, its costate at time $0$ is $\Lambda_1(t)$ by \cref{red:conservation},
 and \cref{red:equilibrium} gives the hypothesis with $M=\Lambda_1(t)$ and $\mu=-\lambda$.
 \end{proof}
 
-The gap between $\Aoct<3.127$ and $\pi$ is what makes the budget effective. It bounds the
+The gap $\pi-\Aoct>0$ is what makes the budget effective. It bounds the
 multiplier by the distance $\norm{A}$ from $\Lambda_1$ to $\frac32\lambda J$; adding
 $\norm{\Lambda_R}$ gives the clearance.
+
+Put
+\[
+ c_{\mathrm{oct}}=
+ \sqrt{b_{\mathrm{oct}}^2+\bigl(1+3b_{\mathrm{oct}}/\sqrt2\bigr)^2}.
+\]
 
 \begin{proposition}[Singular clearance]\label{prop:clearance}
 Let $(T,u,g,X,\Lambda_1,\Lambda_R,\lambda)$ be a Pontryagin extremal, normal or abnormal, with
 $\cost(T,X)\le\Aoct$ and $X(t)\in\hstarstar$ for $t\in[0,T]$. Then
 \[
-\norm{\mathcal P(t)}^2\le251^2\,Q(t)^2\qquad(0\le t\le T)
-\]. In particular $Q(t)>0$ for every $t$: the costate never meets the singular locus.
+\norm{\mathcal P(t)}\le c_{\mathrm{oct}}\,Q(t)\qquad(0\le t\le T).
+\]
+In particular $Q(t)>0$ for every $t$: the costate never meets the singular locus.
 \end{proposition}
 
 \begin{proof}
-Write $\Lambda_1=A+\frac32\lambda J$, so that
-$\norm{\Lambda_1}^2=\norm{A}^2+3\lambda(A_{10}-A_{01})+\frac92\lambda^2$, and use
-$\lambda^2\le10^4\norm{A}^2$ from \cref{red:budget} together with
-$(A_{10}-A_{01})^2\le2\norm{A}^2$. The positivity of $Q$ follows from the nontriviality
+Write $\Lambda_1=A+\frac32\lambda J$. Since $\norm{J}=\sqrt2$, the triangle inequality and
+\cref{red:budget} give
+\[
+ \norm{\Lambda_1}\le\norm{A}+\frac3{\sqrt2}\abs\lambda
+ \le\bigl(1+3b_{\mathrm{oct}}/\sqrt2\bigr)\norm{A}.
+\]
+Consequently
+$\norm{\mathcal P}^2\le c_{\mathrm{oct}}^2\norm{A}^2+\norm{\Lambda_R}^2
+\le c_{\mathrm{oct}}^2Q^2$, since $c_{\mathrm{oct}}>1$.
+The positivity of $Q$ follows from the nontriviality
 $\norm{\mathcal P}>0$.
 \end{proof}
 
 \begin{remark}\label{red:clearance-remark}
-The same ingredients give quantitative bounds. Gronwall's inequality for $\norm{g}^2$ gives
-$\norm{g(t)}^2\le42$ along a trajectory of cost at most $\Aoct$, and with \cref{red:equilibrium}
-on $\hstarstar$ it gives the projective bounds
-$10^{-16}\norm{\mathcal P(0)}^2<\norm{\mathcal P(t)}^2<10^{16}\norm{\mathcal P(0)}^2$. With such
-bounds, operator norms and a width estimate, the notes~\cite{Notes}
-(\texttt{SINGULAR\_COST\_BUDGET}, \texttt{QUANTITATIVE\_REGULAR\_SWITCH\_BOUND}) bound the number of
-switches by $10^{56}$. Only finiteness is needed below.
+These estimates are uniform on each compact set $K$ of star states. By
+\cref{red:equilibrium} and the boundedness of $\norm X$ on $K$, there is $D_K\ge0$ such that
+$\norm{\Lambda_R}^2\le D_K\norm A^2$. Put $F=2e^{2\Aoct/3}$. Along $g'=gX$,
+\[
+ \frac{\dd}{\dd t}\norm g^2=2\tr(Xg^{\mathsf T}g)
+ \le2\omega(X)\norm g^2,
+\]
+so Gronwall's inequality gives $\norm{g(t)}^2\le F$. Since
+$\norm{g^{-1}}=\norm g$ for $\det g=1$, spatial conservation
+(\cref{red:conservation}) bounds $\norm{\Lambda_1(t)}^2$ by
+$F^2\norm{\Lambda_1(0)}^2$ and conversely. Together with
+$\norm A^2\le2\norm{\Lambda_1}^2+9\lambda^2$, this yields
+\[
+ G_K^{-1}\norm{\mathcal P(0)}^2\le\norm{\mathcal P(t)}^2
+ \le G_K\norm{\mathcal P(0)}^2,
+ \qquad G_K=(1+9D_K)+(1+2D_K)F^2.
+\]
+The constant depends only on $K$ and $\Aoct$.
 \end{remark}
 
 \subsection{The edge bound}\label{red:edge-sec}
@@ -283,11 +327,6 @@ has at most four constant pieces. If $\nu=p_s=0$, then $\varsigma$ is constant, 
 because $\varsigma=0$ and $H=0$ would force $p=0$.
 \end{proof}
 
-The edge problem can also be written in the clock $x$, with a fixed-time maximum principle, as
-in~\cite{Notes} (\texttt{MEASURABLE\_EDGE\_PMP\_BOUND}). With the clock adjoined as a state, that
-version admits the multiplier $\nu=0$, $p=(\mathrm{const},0,0)$, which carries no information. In
-physical time the free-time principle gives $H=0$, which excludes it.
-
 \subsection{Finitely many switches}\label{red:switch-sec}
 
 \begin{lemma}[Local exclusion of a vertex]\label{red:local-exclusion}
@@ -329,10 +368,6 @@ the compact interval $[0,T]$ and induction along a uniform partition give a fini
 $[0,T]$.
 \end{proof}
 
-A tie of the three vertex Hamiltonians can be treated quantitatively, with three guard lines
-transported along the flow, which bounds the number of switches explicitly~\cite{Notes}. For
-finiteness the first-order expansion $\Lambda_R(t)=(t-t_0)[X(t_0),A(t_0)]+o(t-t_0)$ is enough.
-
 \subsection{Vertex representations and rebasing}\label{red:rebase}
 
 The pieces of \cref{prop:finite-switches} may have equal neighbouring labels, and the cut at $t=0$
@@ -352,16 +387,9 @@ minimizer is a global minimizer. Similarly the
 \emph{relabeling} $(g,X)\mapsto(R^{-r}gR^r,R^{-r}XR^r)$, with the control coordinates shifted $r$
 times, preserves admissibility and cost.
 
-\begin{definition}[Vertex representation]\label{def:vertex-representation}
-A \emph{vertex representation} of a control $u$ on $[0,T]$ consists of an integer $N\ge1$, a
-strictly increasing sequence $(\tau_k)_{k\in\Z}$ of \emph{switching times} with $\tau_0=0$ and
-$\tau_{k+N}=\tau_k+T$, and \emph{labels} $i_k\in\Z/3$ with $i_{k+N}=i_k+1$ and $i_{k+1}\ne i_k$ for
-every $k\in\Z$, such that for $0\le k<N$ the control equals $\ee_{i_k}$ almost everywhere on
-$(\tau_k,\tau_{k+1})$. The interval $(\tau_k,\tau_{k+1})$ is the
-$k$-th \emph{piece}, and $N$ is the number of pieces of the period.
-\end{definition}
 
-The condition $i_{k+1}\ne i_k$ for every $k$, including $k=N-1$, says that equal neighbours have
+
+In a vertex representation (\cref{def:vertex-representation}), the condition $i_{k+1}\ne i_k$ for every $k$, including $k=N-1$, says that equal neighbours have
 been merged also across the seam $t=T$, where the label after the last piece is $i_N=i_0+1$.
 
 \begin{lemma}[Merging and rebasing]\label{lem:word-reduction}
@@ -378,19 +406,9 @@ labels, shift by $-s$, and extend the reduced word to $\Z$ by the twist; the sea
 genuine switch at $s$.
 \end{proof}
 
-A genuine switch can also be obtained from the fixed-edge obstruction of~\cite{Notes}
-(\texttt{SWITCHING\_WORDS}), which uses the closing conditions; the count of increments modulo~$3$
-needs neither those conditions nor optimality.
-
 \subsection{Normality}\label{red:normal-sec}
 
-\begin{definition}[Normal period]\label{def:normal-period}
-A \emph{normal period} is a Pontryagin extremal $(T,u,g,X,\Lambda_1,\Lambda_R,\lambda)$ with
-$\lambda=-1$, together with a vertex representation of its control $u$. It is
-\emph{competitive} if $\cost(T,X)\le\Aoct$, and it lies in the
-compact domain if $X(t)\in\hstarstar$ for $t\in[0,T]$. The
-\emph{active margin} of the $k$-th piece is $a_k=p_{i_k}(X(\tau_k))$, with $k$ read modulo $N$.
-\end{definition}
+Recall the normal periods of \cref{def:normal-period}.
 
 \begin{theorem}[Normality]\label{thm:normality}
 Let $(T,u,g,X)$ be a global minimizer with a Pontryagin lift $(\Lambda_1,\Lambda_R,\lambda)$, and
@@ -461,29 +479,9 @@ a contradiction.
 The argument does not use the minimality of $(T,u,g,X)$: an abnormal lift of any trajectory with a
 vertex representation contradicts the twisted closing condition.
 
-Another argument~\cite{Notes} (\texttt{GLOBAL\_NORMALITY}) uses needle variations and an endpoint
-covector pulled back through the endpoint map, and an explicit four-arc matrix computation
-behind~(2) and~(3). In the coordinates $\mu(a)$, $\mu(b)$ every piece acts by the one-arc map, the
-needle inequalities become the maximum condition at the switching times, and both triple-tie
-implications follow from one forward identity.
-
 \subsection{The finite normal representation}\label{red:assembly}
 
-\begin{theorem}[Finite normal representation]\label{thm:finite-normal}
-Let $(T,u,g,X)$ be a global minimizer of the control problem. There are a normal period
-$(T,\hat u,\hat g,\hat X,\Lambda_1,\Lambda_R,-1)$, with a vertex representation of $\hat u$, and a
-time $s\in[0,T)$ such that
-\begin{enumerate}
-\item $\hat g(t)=G(s)^{-1}G(s+t)$ and $\hat X(t)=Y(s+t)$ for $t\in[0,T]$, where $(G,Y)$ is the
-  twisted extension of $(g,X)$;
-\item $\cost(T,\hat X)=\cost(T,X)$, and $(T,\hat u,\hat g,\hat X)$ is a global minimizer;
-\item $\hat X(t)\in\hstarstar$ for every $t\in[0,T]$.
-\end{enumerate}
-In particular the period is competitive,
-$\cost(T,\hat X)\le\Aoct$.
-\end{theorem}
-
-\begin{proof}
+\begin{proof}[Proof of \cref{thm:finite-normal}]
 The state of the minimizer stays in $\hstarstar$ (\cref{thm:compact-domain}), and its cost is at
 most $\Aoct$ since the octagon is a competitor. Take a Pontryagin lift (\cref{thm:pmp-lift}); it may
 be abnormal. It satisfies the clearance (\cref{prop:clearance}), and the minimizer has the edge

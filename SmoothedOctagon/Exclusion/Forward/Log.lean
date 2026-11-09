@@ -138,4 +138,48 @@ theorem ff_f_le_cube {t : ℝ} (ht : 0 ≤ t) : ff_f (1 + t) ≤ t ^ 3 / 6 := by
       nlinarith [hs.1]
     linarith
 
+/-- The hyperbolic-sine upper bound for the logarithm. -/
+theorem ff_log_lt_sqrt_quotient {v : ℝ} (hv : 1 < v) :
+    Real.log v < (v - 1) / √v := by
+  have hv0 : 0 < v := by linarith
+  have hr : 0 < √v := Real.sqrt_pos.2 hv0
+  have hr1 : 1 < √v := by rw [Real.lt_sqrt (by norm_num)]; simpa using hv
+  have h := Real.self_lt_sinh_iff.mpr (Real.log_pos hr1)
+  rw [Real.sinh_eq, Real.exp_neg, Real.exp_log hr] at h
+  rw [Real.log_sqrt hv0.le] at h
+  have e : √v - (√v)⁻¹ = (v - 1) / √v := by
+    field_simp
+    nlinarith only [Real.sq_sqrt hv0.le]
+  rw [← e]
+  linarith only [h]
+
+/-- Strict midpoint lower bound for the reciprocal integral. -/
+theorem ff_log_gt_midpoint {v : ℝ} (hv : 1 < v) :
+    2 * (v - 1) / (v + 1) < Real.log v := by
+  have hd : ∀ t ∈ Set.Icc (1 : ℝ) v,
+      HasDerivAt (fun t : ℝ => Real.log t - 2 * (t - 1) / (t + 1))
+        ((t - 1) ^ 2 / (t * (t + 1) ^ 2)) t := by
+    intro t ht
+    have ht0 : 0 < t := by linarith [ht.1]
+    have ht1 : 0 < t + 1 := by linarith
+    have h := (hasDerivAt_log ht0.ne').sub
+      ((((hasDerivAt_id t).sub_const 1).const_mul 2).div
+        ((hasDerivAt_id t).add_const 1) ht1.ne')
+    refine h.congr_deriv ?_
+    simp only [id_eq]
+    field_simp
+    ring
+  have hm : StrictMonoOn (fun t : ℝ => Real.log t - 2 * (t - 1) / (t + 1)) (Set.Icc 1 v) := by
+    apply strictMonoOn_of_deriv_pos (convex_Icc _ _)
+    · intro t ht
+      exact (hd t ht).continuousAt.continuousWithinAt
+    · intro t ht
+      rw [interior_Icc] at ht
+      rw [(hd t ⟨ht.1.le, ht.2.le⟩).deriv]
+      have ht0 : 0 < t := by linarith [ht.1]
+      exact div_pos (sq_pos_of_pos (by linarith [ht.1] : 0 < t - 1)) (by positivity)
+  have h := hm ⟨le_rfl, hv.le⟩ ⟨hv.le, le_rfl⟩ hv
+  norm_num at h
+  linarith only [h]
+
 end SmoothedOctagon

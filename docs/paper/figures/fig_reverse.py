@@ -12,8 +12,8 @@ fig-reverse-estimates.pdf, two panels:
     For a factor with b q < a (equivalently a_k a_{k+2} < a_{k+1}^2) it can stay <= 0; for b q > a
     the end condition forces chi > 0 somewhere, which the maximum principle forbids.
 (b) The cost-Casimir inequality (Proposition prop:cost-casimir): C >= 4 pi kappa/(2 kappa + 3),
-    against C <= A_oct; the cap kappa < kappa* = 3 A_oct/(4 pi - 2 A_oct) and the value
-    313/210 behind the cap gamma^2 <= 97969/529200 = (313/210)^2/12. The spectral bound
+    against C <= A_oct; the exact threshold kappa* = 3 A_oct/(4 pi - 2 A_oct)
+    lies below the M1 geometric threshold 2 sqrt5/3. The spectral bound
     (pi/3)(kappa + 3/2) of the forward case is drawn for comparison.
 
     python3 figures/fig_reverse.py      (from docs/paper; or through make_figures.py)
@@ -44,7 +44,7 @@ def chi_normalized(s, a, b, q):
 
 def panel_three_arc(ax):
     a, b = 1.0, 0.5
-    cases = [(1.3, ps.BLUE, r'$q=1.3$: $bq<a$'), (2.4, ps.RED, r'$q=2.4$: $bq>a$')]
+    cases = [(4 / 3, ps.BLUE, r'$q=4/3$: $bq<a$'), (5 / 2, ps.RED, r'$q=5/2$: $bq>a$')]
     for q, color, label in cases:
         s = np.linspace(1.0, q, 801)
         y = chi_normalized(s, a, b, q)
@@ -78,12 +78,19 @@ def panel_casimir(ax):
     assert abs(4 * math.pi * 1.5 / 6 - math.pi) < 1e-15
     k_star = 3 * A_OCT / (4 * math.pi - 2 * A_OCT)
     assert abs(4 * math.pi * k_star / (2 * k_star + 3) - A_OCT) < 1e-12
-    assert 1.485 < k_star < 1.4877 < 313 / 210          # Corollary cor:casimir-cap uses kappa < 1.4877
-    assert abs((313 / 210) ** 2 / 12 - 97969 / 529200) < 1e-15
+    # Natural integral/trigonometric comparisons used for the general cap.
+    pi_lower = 4 * (math.sqrt(6) - SQ2) - 1
+    cost_upper = math.sqrt(12) * (8 - 4 * SQ2 - 9 / 13) / (2 * SQ2 - 1)
+    assert math.log(2) > 9 / 13 and math.pi > pi_lower
+    assert A_OCT < cost_upper < (1 - 4 ** -4) * pi_lower
+    kappa_m1 = 2 * math.sqrt(5) / 3
+    assert k_star < kappa_m1
+    assert 4 * math.pi * kappa_m1 / (2 * kappa_m1 + 3) > A_OCT
+    assert abs(kappa_m1 ** 2 / 12 - 5 / 27) < 1e-15
     ax.plot(kappa, lower, color=ps.BLUE, label=r'$4\pi\kappa/(2\kappa+3)$')
     ax.plot(kappa, spectral, color=ps.PURPLE, ls='--', lw=1.0, label=r'$(\pi/3)(\kappa+3/2)$')
     ax.axhline(A_OCT, color=ps.ORANGE, lw=1.0)
-    ax.text(0.05, A_OCT + 0.1, r'$A_{\mathrm{oct}}=3.1260\ldots$', color=ps.ORANGE, fontsize=8)
+    ax.text(0.05, A_OCT + 0.1, r'$A_{\mathrm{oct}}$', color=ps.ORANGE, fontsize=8)
     ax.axvspan(k_star, kappa[-1], color=ps.RED, alpha=0.08, lw=0)
     ax.axvline(k_star, color=ps.RED, lw=0.8)
     ax.text(k_star + 0.04, 3.7, r'$\kappa_*$', color=ps.RED, fontsize=8)

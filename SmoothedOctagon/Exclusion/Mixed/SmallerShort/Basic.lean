@@ -3,7 +3,7 @@ module
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.LogSecant
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Order
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Secant
-public import SmoothedOctagon.Exclusion.Mixed.CentralScale
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.ReverseScale
 
 /-!
 # Smaller-short window: shared scalar functions
@@ -680,105 +680,5 @@ theorem ss_sec_gt_floor {x be : ℝ} (hx : 1 < x) (hx9 : x ≤ 9) (hxb : x ≤ b
     have : 0 < x - 1 := by linarith
     positivity
   linarith
-
-/-! ### The reverse-centre scale bound -/
-
-/-- **`ρ < 1/7` at a reverse centre** (the scalar core of `nsr_a_sq`): if
-`0 < r, t < 1/2`, `0 < ρ < rt`, `ρ < 3/20`, `3/4 ≤ u ≤ U(r)`, `3/4 ≤ v ≤ U(t)`,
-`E = 1 + r + t - ρ + log(ρ/(rt)) - (1 - u)/r - (1 - v)/t` and `(4uv - E²)/(16(1 - ρ)²) <
-9193/50000`, then `ρ < 1/7`. -/
-theorem ss_rev_centre_scale {r t ρ u v E : ℝ} (hr : 0 < r) (hr2 : r < 1 / 2) (ht : 0 < t)
-    (ht2 : t < 1 / 2) (hρ : 0 < ρ) (hρrt : ρ < r * t) (hρ320 : ρ < 3 / 20) (hu : 3 / 4 ≤ u)
-    (hur : u ≤ m2U r) (hv : 3 / 4 ≤ v) (hvt : v ≤ m2U t)
-    (hE : E = 1 + r + t - ρ + log (ρ / (r * t)) - (1 - u) / r - (1 - v) / t)
-    (hΓ : (4 * u * v - E ^ 2) / (16 * (1 - ρ) ^ 2) < 9193 / 50000) : ρ < 1 / 7 := by
-  by_contra hcon
-  push Not at hcon
-  unfold m2U at hur hvt
-  -- the diagonal bound `E < -1 + 2r + 2t - rt`
-  have hEb : E < -1 + 2 * r + 2 * t - r * t := by
-    have hℓ1 : -ρ + log (ρ / (r * t)) < -(r * t) := by
-      set y := ρ / (r * t) with hy
-      have hy0 : 0 < y := by positivity
-      have hl := Real.log_le_sub_one_of_pos hy0
-      have hy1 : y < 1 := (div_lt_one (by positivity)).2 hρrt
-      have hrt1 : r * t < 1 := by
-        have := mul_lt_mul'' hr2 ht2 hr.le ht.le; linarith only [this]
-      have e : ρ = y * (r * t) := by rw [hy]; field_simp
-      have e2 : (1 - y) * (1 - r * t) = 1 - r * t - y + ρ := by rw [e]; ring
-      have : 0 < (1 - y) * (1 - r * t) :=
-        mul_pos (by linarith only [hy1]) (by linarith only [hrt1])
-      linarith only [hl, e2, this]
-    have hur' : 1 - r ≤ (1 - u) / r := by
-      rw [le_div_iff₀ hr]; linarith only [hur, show (1 - r) * r = r - r ^ 2 by ring]
-    have hvt' : 1 - t ≤ (1 - v) / t := by
-      rw [le_div_iff₀ ht]; linarith only [hvt, show (1 - t) * t = t - t ^ 2 by ring]
-    rw [hE]
-    linarith only [hℓ1, hur', hvt']
-  -- lower the norms to `3/4`
-  set E0 := 1 + r + t - ρ + Real.log (ρ / (r * t)) - 1 / 4 * r⁻¹ - 1 / 4 * t⁻¹ with hE0
-  have hEE0 : E = E0 + (u - 3 / 4) / r + (v - 3 / 4) / t := by
-    rw [hE, hE0]; field_simp; ring
-  have hEr : E ≤ 2 * (3 / 4) * r := by
-    have : (2 - r) * (t - 1 / 2) < 0 := mul_neg_of_pos_of_neg (by linarith only [hr2])
-      (by linarith only [ht2])
-    linarith only [hEb, this,
-      show (2 - r) * (t - 1 / 2) = -1 + 2 * r + 2 * t - r * t - 3 / 2 * r by ring]
-  have hEt : E ≤ 2 * (3 / 4) * t := by
-    have : (2 - t) * (r - 1 / 2) < 0 := mul_neg_of_pos_of_neg (by linarith only [ht2])
-      (by linarith only [hr2])
-    linarith only [hEb, this,
-      show (2 - t) * (r - 1 / 2) = -1 + 2 * r + 2 * t - r * t - 3 / 2 * t by ring]
-  have hlow := nsr_lower_norms hr ht hu hv hEr hEt hEE0
-  have hρ14 : ρ < 1 / 4 := by linarith only [hρ320]
-  have hE0pos : 0 < E0 := by
-    have := nsr_E0_lower hr ht hr2 ht2 hρ hρrt hρ14
-    have h8 : 1 / (8 * ρ) ≤ 7 / 8 := by rw [div_le_iff₀ (by positivity)]; linarith only [hcon]
-    linarith only [this, h8, hcon, hE0]
-  -- raise the ratios to `1/2`
-  have hE0B : E0 ≤ 1 - ρ + Real.log (4 * ρ) := by
-    have h1 := nsr_phi34_mono hr hr2.le
-    have h2 := nsr_phi34_mono ht ht2.le
-    have hφ : (1 / 2 : ℝ) - 1 / 4 * (1 / 2)⁻¹ - Real.log (1 / 2) = Real.log 2 := by
-      rw [one_div, Real.log_inv]; norm_num
-    rw [hφ] at h1 h2
-    have e1 : E0 = 1 - ρ + Real.log ρ + (r - 1 / 4 * r⁻¹ - Real.log r) +
-        (t - 1 / 4 * t⁻¹ - Real.log t) := by
-      rw [hE0, Real.log_div hρ.ne' (by positivity), Real.log_mul hr.ne' ht.ne']; ring
-    have e2 : Real.log (4 * ρ) = 2 * Real.log 2 + Real.log ρ := by
-      rw [Real.log_mul (by norm_num) hρ.ne', show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]
-      push_cast; ring
-    rw [e1, e2]; linarith only [h1, h2]
-  -- the comparison function is increasing on `[1/7, 3/20]` and positive at `1/7`
-  have hl35 : Real.log (4 * (3 / 20)) ≤ -(1 / 2) := by
-    have := nsr_log_five_thirds
-    rw [show (4 : ℝ) * (3 / 20) = (5 / 3)⁻¹ by norm_num, Real.log_inv]; linarith only [this]
-  have hphi := nsr_phi_mono (C := 9 / 4) (D := 16 * (9193 / 50000)) (κ := 1) (lam := 4)
-    (ρ0 := 1 / 7) (ρ1 := 3 / 20) (Bmax := 7 / 20) (ρ := ρ) (by norm_num) (by norm_num)
-    (by norm_num) hcon hρ320.le (by norm_num) (by linarith only [hl35]) (by norm_num)
-  have hl74 : (450606 / 805255 : ℝ) < Real.log (7 / 4) := by
-    have := nsr_log_one_add_gt3 (x := 3 / 4) (by norm_num)
-    norm_num at this ⊢; linarith only [this]
-  have hl74' : Real.log (7 / 4) ≤ 3 / 4 := by
-    have := Real.log_le_sub_one_of_pos (show (0 : ℝ) < 7 / 4 by norm_num); linarith only [this]
-  have hB7 : 1 - 1 / 7 + Real.log (4 * (1 / 7)) = 6 / 7 - Real.log (7 / 4) := by
-    rw [show (4 : ℝ) * (1 / 7) = (7 / 4)⁻¹ by norm_num, Real.log_inv]; ring
-  rw [hB7] at hphi
-  have hB7sq : (6 / 7 - Real.log (7 / 4)) ^ 2 ≤ (6 / 7 - 450606 / 805255) ^ 2 :=
-    pow_le_pow_left₀ (by linarith only [hl74']) (by linarith only [hl74]) 2
-  have hphi0 : 0 < 9 / 4 - (6 / 7 - Real.log (7 / 4)) ^ 2 -
-      16 * (9193 / 50000) * (1 - 1 / 7) ^ 2 := by
-    have : (0 : ℝ) < 9 / 4 - (6 / 7 - 450606 / 805255) ^ 2 -
-        16 * (9193 / 50000) * (1 - 1 / 7) ^ 2 := by
-      norm_num
-    linarith only [this, hB7sq]
-  -- conclude `Γ ≥ cap`
-  have hE0sq : E0 ^ 2 ≤ (1 - ρ + Real.log (4 * ρ)) ^ 2 := pow_le_pow_left₀ hE0pos.le hE0B 2
-  have h1ρ : 0 < 1 - ρ := by linarith only [hρ320]
-  have hge : 16 * (9193 / 50000) * (1 - ρ) ^ 2 < 4 * u * v - E ^ 2 := by
-    linarith only [hlow, hE0sq, hphi, hphi0]
-  have : 9193 / 50000 < (4 * u * v - E ^ 2) / (16 * (1 - ρ) ^ 2) := by
-    rw [lt_div_iff₀ (by positivity)]; linarith only [hge]
-  linarith only [this, hΓ]
 
 end SmoothedOctagon

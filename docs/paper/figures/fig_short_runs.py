@@ -1,4 +1,4 @@
-"""Class M1 (Section 6): what the angle gap and the winding identity control.
+"""Class M1: what the angle gap and the winding identity control.
 
 fig-short-runs-gap.pdf has two panels.
 
@@ -10,9 +10,9 @@ z = 4 rho/(1 - S) satisfy
 
 so (S, z) lies in the shaded region where E_max >= (3/5) sqrt(Q). On it the Gram identity gives
 gamma^2 >= f(S, z) = (4Q - E_max^2)/(16 (1 - rho)^2), rho = (1 - S) z/4, and the colours show f.
-The two-variable inequality of the appendix says f > 97969/529200, the competitive Casimir cap: the level set of
-the cap (dashed) does not meet the region. The dotted lines are the ends of the four tangent-line
-intervals of the proof, and the region lies in S <= 2/5, z >= 31/50.
+The symmetric-minimum lemma locates the minimum at S=0 on the pairing constraint.
+It is greater than 5/27, which bounds the competitive Casimir cap.
+The level set f=5/27 (dashed) therefore does not meet the region.
 
 Right: the angle budget. The winding identity forces the m centre angles of a (--+)^m period to
 average (m + 1) pi/(3m); the angle gap forces each of them above 2 pi/5. For m = 5 the average is
@@ -26,7 +26,7 @@ from matplotlib.colors import LinearSegmentedColormap
 
 import paperstyle as ps
 
-CAP = 97969 / 529200
+CAP = 5 / 27
 
 
 def reduced_casimir(S, z):
@@ -49,7 +49,6 @@ def make(out_dir):
     assert feas.any()
     fmin = f[feas].min()
     assert fmin > CAP, (fmin, CAP)                      # the core inequality on the grid
-    assert SS[feas].max() <= 2 / 5 and ZZ[feas].min() >= 31 / 50
     assert abs(math.cos(2 * math.pi / 5) - (math.sqrt(5) - 1) / 4) < 1e-15
     assert math.cos(2 * math.pi / 5) > 3 / 10
     ms = [m for m in range(2, 30) if m % 3 == 2]
@@ -72,15 +71,11 @@ def make(out_dir):
                        rasterized=True)
     ax.contour(SS, ZZ, feas.astype(float), levels=[0.5], colors=ps.INK, linewidths=0.8)
     ax.contour(SS, ZZ, f, levels=[CAP], colors=ps.RED, linewidths=0.9, linestyles='--')
-    for zk in (7 / 10, 4 / 5, 9 / 10):
-        ax.axhline(zk, color=ps.FAINT, lw=0.6, ls=':')
-    ax.axhline(31 / 50, color=ps.FAINT, lw=0.6, ls=':')
-    ax.axvline(2 / 5, color=ps.FAINT, lw=0.6, ls=':')
     i = np.argmin(np.where(feas, f, np.inf))
     ax.plot(SS.flat[i], ZZ.flat[i], 'o', ms=3, color=ps.INK)
-    ax.annotate(r'min $\approx %.4f$' % fmin, (SS.flat[i], ZZ.flat[i]), xytext=(0.12, 0.6),
+    ax.annotate('symmetric minimum', (SS.flat[i], ZZ.flat[i]), xytext=(0.12, 0.6),
                 fontsize=7.5, arrowprops=dict(arrowstyle='-', lw=0.5, color=ps.INK))
-    ax.text(0.44, 0.71, r'$f=97969/529200$', color=ps.RED, fontsize=7.5, ha='right', va='top')
+    ax.text(0.44, 0.71, r'$f=5/27$', color=ps.RED, fontsize=7.5, ha='right', va='top')
     ax.set_xlim(0, 0.45)
     ax.set_ylim(0.55, 1.0)
     ax.set_xlabel(r'$S$')

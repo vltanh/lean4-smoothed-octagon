@@ -5,8 +5,8 @@ public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Bernstein
 /-!
 # Case M2, reverse successor: sign certificates for the unit shape
 
-Bernstein-form certificates (generated; every identity is checked by `ring`) for the six signs
-`J₀ = C₀`, `J₁, …, J₄`, `J_*` that exclude the unit shape `k = 1`, in the coordinates `(x, s)`,
+Bernstein-form certificates (generated; every identity is checked by `ring`) for the five signs
+`J₁, …, J₄`, `J_*` that exclude the unit shape `k = 1`, in the coordinates `(x, s)`,
 `s = 1 - 2t - x`, after division by `x²`. The domain
 `0 < t ≤ 13/35, 0 < x ≤ 1 - 2t, 1 < 2t + 2x + x²` is covered by the three pieces
 `x ∈ [3/25, 9/35], s ∈ [9/35 - x, x + x²]`; `x ∈ [9/35, 2/5], s ∈ [0, x + x²]`;
@@ -15,176 +15,13 @@ three in `s` with polynomial coefficients in `x`, each positive by a univariate 
 
 ## Main API
 
-* `nsrUJr i x s` (`i = 0, …, 5`): the polynomials `J_i/x²` at `t = (1 - x - s)/2`.
+* `nsrUJr i x s` (`i = 1, …, 5`): the polynomials `J_i/x²` at `t = (1 - x - s)/2`.
 * `nsrUJr_pos_a`, `_b`, `_c`: their positivity on the three pieces.
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
-
-/-- `J_0/x²` of the unit shape at `t = (1 - x - s)/2`. -/
-noncomputable def nsrUJr0 (x s : ℝ) : ℝ :=
-  12 * s + 24 * s ^ 2 + 12 * s ^ 3 + 4 * x + 66 * x * s + 96 * x * s ^ 2 + 34 * x * s ^ 3 + 22 * x ^ 2 + 155 * x ^ 2 * s + 160 * x ^ 2 * s ^ 2 + 39 * x ^ 2 * s ^ 3 + 52 * x ^ 3 + 204 * x ^ 3 * s + 146 * x ^ 3 * s ^ 2 + 24 * x ^ 3 * s ^ 3 + (139 / 2) * x ^ 4 + (333 / 2) * x ^ 4 * s + (161 / 2) * x ^ 4 * s ^ 2 + (17 / 2) * x ^ 4 * s ^ 3 + 58 * x ^ 5 + (175 / 2) * x ^ 5 * s + 27 * x ^ 5 * s ^ 2 + (3 / 2) * x ^ 5 * s ^ 3 + 31 * x ^ 6 + (57 / 2) * x ^ 6 * s + (9 / 2) * x ^ 6 * s ^ 2 + 10 * x ^ 7 + (9 / 2) * x ^ 7 * s + (3 / 2) * x ^ 8
-
-private theorem nsrUJr0_pos_a_g0_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 14176526887598592 * b ^ 5 + 64021273267353600 * a * b ^ 4 + 107979925680000000 * a ^ 2 * b ^ 3 + 80658285438720000 * a ^ 3 * b ^ 2 + 22524308558400000 * a ^ 4 * b := by positivity
-
-private theorem nsrUJr0_pos_a_g0_l0 (x : ℝ) (h0 : (3 / 25) ≤ x) (h1 : x ≤ (9 / 35)) :
-    0 < 418176 + 100672 * x - 1351328 * x ^ 2 - 1738528 * x ^ 3 - 855712 * x ^ 4 - 151008 * x ^ 5 := by
-  linear_combination (1 / 1306912320000000000 : ℝ) * nsrUJr0_pos_a_g0_bp0 (175 * x - 21) (45 - 175 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_a_g0 (x : ℝ) (h0 : (3 / 25) ≤ x) (h1 : x ≤ (9 / 35)) :
-    0 < 418176 + 100672 * x - 1351328 * x ^ 2 - 1738528 * x ^ 3 - 855712 * x ^ 4 - 151008 * x ^ 5 := by
-  exact nsrUJr0_pos_a_g0_l0 x h0 h1
-
-private theorem nsrUJr0_pos_a_g1_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 110056812270824466432 * a * b ^ 6 + 685052634862340591616 * a ^ 2 * b ^ 5 + 1776781673112275343360 * a ^ 3 * b ^ 4 + 2457802965802401423360 * a ^ 4 * b ^ 3 + 1912388905929885014016 * a ^ 5 * b ^ 2 + 793573005794917404672 * a ^ 6 * b + 137201210303360772096 * a ^ 7 := by positivity
-
-private theorem nsrUJr0_pos_a_g1_l0 (x : ℝ) (h0 : (3 / 25) ≤ x) (h1 : x ≤ (9 / 35)) :
-    0 < 665280 + 3659040 * x + 6966960 * x ^ 2 + 5698000 * x ^ 3 + 1595440 * x ^ 4 - 375760 * x ^ 5 - 283360 * x ^ 6 - 36960 * x ^ 7 := by
-  linear_combination (1 / 658683809280000000000000 : ℝ) * nsrUJr0_pos_a_g1_bp0 (175 * x - 21) (45 - 175 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_a_g1 (x : ℝ) (h0 : (3 / 25) ≤ x) (h1 : x ≤ (9 / 35)) :
-    0 < 665280 + 3659040 * x + 6966960 * x ^ 2 + 5698000 * x ^ 3 + 1595440 * x ^ 4 - 375760 * x ^ 5 - 283360 * x ^ 6 - 36960 * x ^ 7 := by
-  exact nsrUJr0_pos_a_g1_l0 x h0 h1
-
-private theorem nsrUJr0_pos_a_g2_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 207543924849121493262336 * a * b ^ 8 + 1763554928476790521626624 * a ^ 2 * b ^ 7 + 6560734606184768904953856 * a ^ 3 * b ^ 6 + 13956530935614222298742784 * a ^ 4 * b ^ 5 + 18568429994102245656182784 * a ^ 5 * b ^ 4 + 15821170837473847619321856 * a ^ 6 * b ^ 3 + 8430647811351285532852224 * a ^ 7 * b ^ 2 + 2568722983687736263213056 * a ^ 8 * b + 342623349256551318134784 * a ^ 9 := by positivity
-
-private theorem nsrUJr0_pos_a_g2_l0 (x : ℝ) (h0 : (3 / 25) ≤ x) (h1 : x ≤ (9 / 35)) :
-    0 < 264600 + 4571700 * x + 20822550 * x ^ 2 + 46292750 * x ^ 3 + 60409650 * x ^ 4 + 50198050 * x ^ 5 + 27550250 * x ^ 6 + 9959250 * x ^ 7 + 2202550 * x ^ 8 + 227850 * x ^ 9 := by
-  linear_combination (1 / 331976639877120000000000000000 : ℝ) * nsrUJr0_pos_a_g2_bp0 (175 * x - 21) (45 - 175 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_a_g2 (x : ℝ) (h0 : (3 / 25) ≤ x) (h1 : x ≤ (9 / 35)) :
-    0 < 264600 + 4571700 * x + 20822550 * x ^ 2 + 46292750 * x ^ 3 + 60409650 * x ^ 4 + 50198050 * x ^ 5 + 27550250 * x ^ 6 + 9959250 * x ^ 7 + 2202550 * x ^ 8 + 227850 * x ^ 9 := by
-  exact nsrUJr0_pos_a_g2_l0 x h0 h1
-
-private theorem nsrUJr0_pos_a_g3_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 92743200958920484805640192 * a * b ^ 10 + 994446221743268987858780160 * a ^ 2 * b ^ 9 + 4802337383356945281736212480 * a ^ 3 * b ^ 8 + 13754000637902953326500904960 * a ^ 4 * b ^ 7 + 25870966032018721066429906944 * a ^ 5 * b ^ 6 + 33393851472651965400714706944 * a ^ 6 * b ^ 5 + 29955333088269163257150504960 * a ^ 7 * b ^ 4 + 18438711398784126498975252480 * a ^ 8 * b ^ 3 + 7453346533431420022325084160 * a ^ 9 * b ^ 2 + 1786540668306570148465016832 * a ^ 10 * b + 192824161358279293496819712 * a ^ 11 := by positivity
-
-private theorem nsrUJr0_pos_a_g3_l0 (x : ℝ) (h0 : (3 / 25) ≤ x) (h1 : x ≤ (9 / 35)) :
-    0 < 1372000 * x + 10633000 * x ^ 2 + 36786750 * x ^ 3 + 74988375 * x ^ 4 + 100113125 * x ^ 5 + 91966875 * x ^ 6 + 59296125 * x ^ 7 + 26711125 * x ^ 8 + 8103375 * x ^ 9 + 1500625 * x ^ 10 + 128625 * x ^ 11 := by
-  linear_combination (1 / 167316226498068480000000000000000000 : ℝ) * nsrUJr0_pos_a_g3_bp0 (175 * x - 21) (45 - 175 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_a_g3 (x : ℝ) (h0 : (3 / 25) ≤ x) (h1 : x ≤ (9 / 35)) :
-    0 < 1372000 * x + 10633000 * x ^ 2 + 36786750 * x ^ 3 + 74988375 * x ^ 4 + 100113125 * x ^ 5 + 91966875 * x ^ 6 + 59296125 * x ^ 7 + 26711125 * x ^ 8 + 8103375 * x ^ 9 + 1500625 * x ^ 10 + 128625 * x ^ 11 := by
-  exact nsrUJr0_pos_a_g3_l0 x h0 h1
-
-theorem nsrUJr0_pos_a (x s : ℝ) (hx0 : (3 / 25) ≤ x) (hx1 : x ≤ (9 / 35))
-    (hs0 : (9 / 35) - x ≤ s) (hs1 : s ≤ x + x ^ 2) (hgap : (0 : ℝ) < (x + x ^ 2) - ((9 / 35) - x)) :
-    0 < nsrUJr0 x s := by
-  have hpos := nsr_bern_pos3 (a := (s - ((9 / 35) - x))) (b := ((x + x ^ 2) - s)) (by linarith) (by linarith) (hgap.trans_eq (by ring))
-    (nsrUJr0_pos_a_g0 x hx0 hx1) (nsrUJr0_pos_a_g1 x hx0 hx1) (nsrUJr0_pos_a_g2 x hx0 hx1) (nsrUJr0_pos_a_g3 x hx0 hx1)
-  have e : 85750 * ((x + x ^ 2) - ((9 / 35) - x)) ^ 3 * (nsrUJr0 x s) = (418176 + 100672 * x - 1351328 * x ^ 2 - 1738528 * x ^ 3 - 855712 * x ^ 4 - 151008 * x ^ 5) * ((x + x ^ 2) - s) ^ 3 + (665280 + 3659040 * x + 6966960 * x ^ 2 + 5698000 * x ^ 3 + 1595440 * x ^ 4 - 375760 * x ^ 5 - 283360 * x ^ 6 - 36960 * x ^ 7) * (s - ((9 / 35) - x)) * ((x + x ^ 2) - s) ^ 2 + (264600 + 4571700 * x + 20822550 * x ^ 2 + 46292750 * x ^ 3 + 60409650 * x ^ 4 + 50198050 * x ^ 5 + 27550250 * x ^ 6 + 9959250 * x ^ 7 + 2202550 * x ^ 8 + 227850 * x ^ 9) * (s - ((9 / 35) - x)) ^ 2 * ((x + x ^ 2) - s) + (1372000 * x + 10633000 * x ^ 2 + 36786750 * x ^ 3 + 74988375 * x ^ 4 + 100113125 * x ^ 5 + 91966875 * x ^ 6 + 59296125 * x ^ 7 + 26711125 * x ^ 8 + 8103375 * x ^ 9 + 1500625 * x ^ 10 + 128625 * x ^ 11) * (s - ((9 / 35) - x)) ^ 3 := by unfold nsrUJr0; ring
-  have h2 : 0 < 85750 * ((x + x ^ 2) - ((9 / 35) - x)) ^ 3 * (nsrUJr0 x s) := lt_of_lt_of_eq hpos e.symm
-  exact pos_of_mul_pos_right h2 (by positivity)
-
-private theorem nsrUJr0_pos_b_g0_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 20494880257280 * a * b ^ 7 + 152823722534560 * a ^ 2 * b ^ 6 + 488834593958480 * a ^ 3 * b ^ 5 + 869477885738175 * a ^ 4 * b ^ 4 + 928751707466800 * a ^ 5 * b ^ 3 + 595772377034380 * a ^ 6 * b ^ 2 + 212506449797560 * a ^ 7 * b + 32513647344880 * a ^ 8 := by positivity
-
-private theorem nsrUJr0_pos_b_g0_l0 (x : ℝ) (h0 : (9 / 35) ≤ x) (h1 : x ≤ (2 / 5)) :
-    0 < 8 * x + 44 * x ^ 2 + 104 * x ^ 3 + 139 * x ^ 4 + 116 * x ^ 5 + 62 * x ^ 6 + 20 * x ^ 7 + 3 * x ^ 8 := by
-  linear_combination (1 / 879638824462890625 : ℝ) * nsrUJr0_pos_b_g0_bp0 (35 * x - 9) (14 - 35 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_b_g0 (x : ℝ) (h0 : (9 / 35) ≤ x) (h1 : x ≤ (2 / 5)) :
-    0 < 8 * x + 44 * x ^ 2 + 104 * x ^ 3 + 139 * x ^ 4 + 116 * x ^ 5 + 62 * x ^ 6 + 20 * x ^ 7 + 3 * x ^ 8 := by
-  exact nsrUJr0_pos_b_g0_l0 x h0 h1
-
-private theorem nsrUJr0_pos_b_g1_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 5089255965530880 * a * b ^ 8 + 43220308454653440 * a ^ 2 * b ^ 7 + 160715596692321440 * a ^ 3 * b ^ 6 + 341777750642070680 * a ^ 4 * b ^ 5 + 454630068698112475 * a ^ 5 * b ^ 4 + 387343159046499530 * a ^ 6 * b ^ 3 + 206419976260816540 * a ^ 7 * b ^ 2 + 62907466969988840 * a ^ 8 * b + 8393787514009280 * a ^ 9 := by positivity
-
-private theorem nsrUJr0_pos_b_g1_l0 (x : ℝ) (h0 : (9 / 35) ≤ x) (h1 : x ≤ (2 / 5)) :
-    0 < 48 * x + 288 * x ^ 2 + 754 * x ^ 3 + 1135 * x ^ 4 + 1089 * x ^ 5 + 694 * x ^ 6 + 292 * x ^ 7 + 75 * x ^ 8 + 9 * x ^ 9 := by
-  linear_combination (1 / 153936794281005859375 : ℝ) * nsrUJr0_pos_b_g1_bp0 (35 * x - 9) (14 - 35 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_b_g1 (x : ℝ) (h0 : (9 / 35) ≤ x) (h1 : x ≤ (2 / 5)) :
-    0 < 48 * x + 288 * x ^ 2 + 754 * x ^ 3 + 1135 * x ^ 4 + 1089 * x ^ 5 + 694 * x ^ 6 + 292 * x ^ 7 + 75 * x ^ 8 + 9 * x ^ 9 := by
-  exact nsrUJr0_pos_b_g1_l0 x h0 h1
-
-private theorem nsrUJr0_pos_b_g2_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 346443165400780800 * a * b ^ 9 + 3306753016953619200 * a ^ 2 * b ^ 8 + 14039160458196684800 * a ^ 3 * b ^ 7 + 34797182071144693200 * a ^ 4 * b ^ 6 + 55488457532578422800 * a ^ 5 * b ^ 5 + 59034425146651736425 * a ^ 6 * b ^ 4 + 41903101361594701700 * a ^ 7 * b ^ 3 + 19134836878325137300 * a ^ 8 * b ^ 2 + 5100787469828668200 * a ^ 9 * b + 604752874611962800 * a ^ 10 := by positivity
-
-private theorem nsrUJr0_pos_b_g2_l0 (x : ℝ) (h0 : (9 / 35) ≤ x) (h1 : x ≤ (2 / 5)) :
-    0 < 72 * x + 492 * x ^ 2 + 1484 * x ^ 3 + 2605 * x ^ 4 + 2954 * x ^ 5 + 2267 * x ^ 6 + 1192 * x ^ 7 + 419 * x ^ 8 + 90 * x ^ 9 + 9 * x ^ 10 := by
-  linear_combination (1 / 26938938999176025390625 : ℝ) * nsrUJr0_pos_b_g2_bp0 (35 * x - 9) (14 - 35 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_b_g2 (x : ℝ) (h0 : (9 / 35) ≤ x) (h1 : x ≤ (2 / 5)) :
-    0 < 72 * x + 492 * x ^ 2 + 1484 * x ^ 3 + 2605 * x ^ 4 + 2954 * x ^ 5 + 2267 * x ^ 6 + 1192 * x ^ 7 + 419 * x ^ 8 + 90 * x ^ 9 + 9 * x ^ 10 := by
-  exact nsrUJr0_pos_b_g2_l0 x h0 h1
-
-private theorem nsrUJr0_pos_b_g3_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 7136535608202711040 * a * b ^ 10 + 75660216639162214400 * a ^ 2 * b ^ 9 + 361257661096742572800 * a ^ 3 * b ^ 8 + 1022996294600543788800 * a ^ 4 * b ^ 7 + 1902592793250396724400 * a ^ 5 * b ^ 6 + 2428288270033893151080 * a ^ 6 * b ^ 5 + 2153898678484207800525 * a ^ 7 * b ^ 4 + 1311052683943862307050 * a ^ 8 * b ^ 3 + 524088155746298823300 * a ^ 9 * b ^ 2 + 124239015845321041400 * a ^ 10 * b + 13262656877080355040 * a ^ 11 := by positivity
-
-private theorem nsrUJr0_pos_b_g3_l0 (x : ℝ) (h0 : (9 / 35) ≤ x) (h1 : x ≤ (2 / 5)) :
-    0 < 32 * x + 248 * x ^ 2 + 858 * x ^ 3 + 1749 * x ^ 4 + 2335 * x ^ 5 + 2145 * x ^ 6 + 1383 * x ^ 7 + 623 * x ^ 8 + 189 * x ^ 9 + 35 * x ^ 10 + 3 * x ^ 11 := by
-  linear_combination (1 / 4714314324855804443359375 : ℝ) * nsrUJr0_pos_b_g3_bp0 (35 * x - 9) (14 - 35 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_b_g3 (x : ℝ) (h0 : (9 / 35) ≤ x) (h1 : x ≤ (2 / 5)) :
-    0 < 32 * x + 248 * x ^ 2 + 858 * x ^ 3 + 1749 * x ^ 4 + 2335 * x ^ 5 + 2145 * x ^ 6 + 1383 * x ^ 7 + 623 * x ^ 8 + 189 * x ^ 9 + 35 * x ^ 10 + 3 * x ^ 11 := by
-  exact nsrUJr0_pos_b_g3_l0 x h0 h1
-
-theorem nsrUJr0_pos_b (x s : ℝ) (hx0 : (9 / 35) ≤ x) (hx1 : x ≤ (2 / 5))
-    (hs0 : 0 ≤ s) (hs1 : s ≤ x + x ^ 2) (hgap : (0 : ℝ) < (x + x ^ 2) - (0)) :
-    0 < nsrUJr0 x s := by
-  have hpos := nsr_bern_pos3 (a := (s - (0))) (b := ((x + x ^ 2) - s)) (by linarith) (by linarith) (hgap.trans_eq (by ring))
-    (nsrUJr0_pos_b_g0 x hx0 hx1) (nsrUJr0_pos_b_g1 x hx0 hx1) (nsrUJr0_pos_b_g2 x hx0 hx1) (nsrUJr0_pos_b_g3 x hx0 hx1)
-  have e : 2 * ((x + x ^ 2) - (0)) ^ 3 * (nsrUJr0 x s) = (8 * x + 44 * x ^ 2 + 104 * x ^ 3 + 139 * x ^ 4 + 116 * x ^ 5 + 62 * x ^ 6 + 20 * x ^ 7 + 3 * x ^ 8) * ((x + x ^ 2) - s) ^ 3 + (48 * x + 288 * x ^ 2 + 754 * x ^ 3 + 1135 * x ^ 4 + 1089 * x ^ 5 + 694 * x ^ 6 + 292 * x ^ 7 + 75 * x ^ 8 + 9 * x ^ 9) * (s - (0)) * ((x + x ^ 2) - s) ^ 2 + (72 * x + 492 * x ^ 2 + 1484 * x ^ 3 + 2605 * x ^ 4 + 2954 * x ^ 5 + 2267 * x ^ 6 + 1192 * x ^ 7 + 419 * x ^ 8 + 90 * x ^ 9 + 9 * x ^ 10) * (s - (0)) ^ 2 * ((x + x ^ 2) - s) + (32 * x + 248 * x ^ 2 + 858 * x ^ 3 + 1749 * x ^ 4 + 2335 * x ^ 5 + 2145 * x ^ 6 + 1383 * x ^ 7 + 623 * x ^ 8 + 189 * x ^ 9 + 35 * x ^ 10 + 3 * x ^ 11) * (s - (0)) ^ 3 := by unfold nsrUJr0; ring
-  have h2 : 0 < 2 * ((x + x ^ 2) - (0)) ^ 3 * (nsrUJr0 x s) := lt_of_lt_of_eq hpos e.symm
-  exact pos_of_mul_pos_right h2 (by positivity)
-
-private theorem nsrUJr0_pos_c_g0_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 34681416 * a * b ^ 7 + 299713596 * a ^ 2 * b ^ 6 + 1121524992 * a ^ 3 * b ^ 5 + 2354625615 * a ^ 4 * b ^ 4 + 2994085992 * a ^ 5 * b ^ 3 + 2304755496 * a ^ 6 * b ^ 2 + 993965856 * a ^ 7 * b + 185183232 * a ^ 8 := by positivity
-
-private theorem nsrUJr0_pos_c_g0_l0 (x : ℝ) (h0 : (2 / 5) ≤ x) (h1 : x ≤ 1) :
-    0 < 8 * x + 44 * x ^ 2 + 104 * x ^ 3 + 139 * x ^ 4 + 116 * x ^ 5 + 62 * x ^ 6 + 20 * x ^ 7 + 3 * x ^ 8 := by
-  linear_combination (1 / 2562890625 : ℝ) * nsrUJr0_pos_c_g0_bp0 (5 * x - 2) (5 - 5 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_c_g0 (x : ℝ) (h0 : (2 / 5) ≤ x) (h1 : x ≤ 1) :
-    0 < 8 * x + 44 * x ^ 2 + 104 * x ^ 3 + 139 * x ^ 4 + 116 * x ^ 5 + 62 * x ^ 6 + 20 * x ^ 7 + 3 * x ^ 8 := by
-  exact nsrUJr0_pos_c_g0_l0 x h0 h1
-
-private theorem nsrUJr0_pos_c_g1_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 32493468 * a * b ^ 6 + 230978034 * a ^ 2 * b ^ 5 + 690421140 * a ^ 3 * b ^ 4 + 1111008390 * a ^ 4 * b ^ 3 + 1015267284 * a ^ 5 * b ^ 2 + 499634928 * a ^ 6 * b + 103465704 * a ^ 7 := by positivity
-
-private theorem nsrUJr0_pos_c_g1_l0 (x : ℝ) (h0 : (2 / 5) ≤ x) (h1 : x ≤ 1) :
-    0 < 24 + 132 * x + 310 * x ^ 2 + 410 * x ^ 3 + 342 * x ^ 4 + 190 * x ^ 5 + 68 * x ^ 6 + 12 * x ^ 7 := by
-  linear_combination (1 / 170859375 : ℝ) * nsrUJr0_pos_c_g1_bp0 (5 * x - 2) (5 - 5 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_c_g1 (x : ℝ) (h0 : (2 / 5) ≤ x) (h1 : x ≤ 1) :
-    0 < 24 + 132 * x + 310 * x ^ 2 + 410 * x ^ 3 + 342 * x ^ 4 + 190 * x ^ 5 + 68 * x ^ 6 + 12 * x ^ 7 := by
-  exact nsrUJr0_pos_c_g1_l0 x h0 h1
-
-private theorem nsrUJr0_pos_c_g2_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 8741712 * a * b ^ 5 + 49852680 * a ^ 2 * b ^ 4 + 114421440 * a ^ 3 * b ^ 3 + 132182580 * a ^ 4 * b ^ 2 + 76906032 * a ^ 5 * b + 18042672 * a ^ 6 := by positivity
-
-private theorem nsrUJr0_pos_c_g2_l0 (x : ℝ) (h0 : (2 / 5) ≤ x) (h1 : x ≤ 1) :
-    0 < 96 + 336 * x + 472 * x ^ 2 + 352 * x ^ 3 + 164 * x ^ 4 + 56 * x ^ 5 + 12 * x ^ 6 := by
-  linear_combination (1 / 11390625 : ℝ) * nsrUJr0_pos_c_g2_bp0 (5 * x - 2) (5 - 5 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_c_g2 (x : ℝ) (h0 : (2 / 5) ≤ x) (h1 : x ≤ 1) :
-    0 < 96 + 336 * x + 472 * x ^ 2 + 352 * x ^ 3 + 164 * x ^ 4 + 56 * x ^ 5 + 12 * x ^ 6 := by
-  exact nsrUJr0_pos_c_g2_l0 x h0 h1
-
-private theorem nsrUJr0_pos_c_g3_bp0 (a b : ℝ) (ha : 0 ≤ a) (hb : 0 ≤ b) :
-    0 ≤ 5232 * a * b ^ 2 + 12264 * a ^ 2 * b + 7248 * a ^ 3 := by positivity
-
-private theorem nsrUJr0_pos_c_g3_l0 (x : ℝ) (h0 : (2 / 5) ≤ x) (h1 : x ≤ 1) :
-    0 < 96 + 208 * x + 152 * x ^ 2 + 40 * x ^ 3 := by
-  linear_combination (1 / 675 : ℝ) * nsrUJr0_pos_c_g3_bp0 (5 * x - 2) (5 - 5 * x) (by linarith) (by linarith)
-
-theorem nsrUJr0_pos_c_g3 (x : ℝ) (h0 : (2 / 5) ≤ x) (h1 : x ≤ 1) :
-    0 < 96 + 208 * x + 152 * x ^ 2 + 40 * x ^ 3 := by
-  exact nsrUJr0_pos_c_g3_l0 x h0 h1
-
-theorem nsrUJr0_pos_c (x s : ℝ) (hx0 : (2 / 5) ≤ x) (hx1 : x ≤ 1)
-    (hs0 : 0 ≤ s) (hs1 : s ≤ 1 - x) (hgap : (0 : ℝ) < (1 - x) - (0)) :
-    0 < nsrUJr0 x s := by
-  have hpos := nsr_bern_pos3 (a := (s - (0))) (b := ((1 - x) - s)) (by linarith) (by linarith) (hgap.trans_eq (by ring))
-    (nsrUJr0_pos_c_g0 x hx0 hx1) (nsrUJr0_pos_c_g1 x hx0 hx1) (nsrUJr0_pos_c_g2 x hx0 hx1) (nsrUJr0_pos_c_g3 x hx0 hx1)
-  have e : 2 * ((1 - x) - (0)) ^ 3 * (nsrUJr0 x s) = (8 * x + 44 * x ^ 2 + 104 * x ^ 3 + 139 * x ^ 4 + 116 * x ^ 5 + 62 * x ^ 6 + 20 * x ^ 7 + 3 * x ^ 8) * ((1 - x) - s) ^ 3 + (24 + 132 * x + 310 * x ^ 2 + 410 * x ^ 3 + 342 * x ^ 4 + 190 * x ^ 5 + 68 * x ^ 6 + 12 * x ^ 7) * (s - (0)) * ((1 - x) - s) ^ 2 + (96 + 336 * x + 472 * x ^ 2 + 352 * x ^ 3 + 164 * x ^ 4 + 56 * x ^ 5 + 12 * x ^ 6) * (s - (0)) ^ 2 * ((1 - x) - s) + (96 + 208 * x + 152 * x ^ 2 + 40 * x ^ 3) * (s - (0)) ^ 3 := by unfold nsrUJr0; ring
-  have h2 : 0 < 2 * ((1 - x) - (0)) ^ 3 * (nsrUJr0 x s) := lt_of_lt_of_eq hpos e.symm
-  exact pos_of_mul_pos_right h2 (by positivity)
 
 /-- `J_1/x²` of the unit shape at `t = (1 - x - s)/2`. -/
 noncomputable def nsrUJr1 (x s : ℝ) : ℝ :=

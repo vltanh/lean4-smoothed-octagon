@@ -8,8 +8,8 @@ disks of density $\doct$ these choices must be undone, and the trajectory to whi
 equality is applied must be the realization of the given disk; another minimizer of the same
 cost would say nothing about it. This section carries the identification back to the disk
 (\cref{sec:equality-rigidity}), proves the converse (\cref{sec:equality-converse}), identifies
-Hales's octagon $\KH$ with Reinhardt's $\Koct$ (\cref{sec:equality-construction}), and completes
-the proof of \cref{thm:main} (\cref{sec:equality-proofs}).
+Hales's octagon $\KH$ with Reinhardt's $\Koct$ (\cref{sec:equality-construction}). These results
+complete the proofs of \cref{thm:main}(a) and~(c) in \cref{sec:equality-proofs}.
 
 \subsection{Rigidity}\label{sec:equality-rigidity}
 
@@ -54,12 +54,7 @@ $\R^2\setminus\overline A$, so it lies in $\inter A$, which contains the origin.
 interiors are equal, and a convex body is the closure of its interior.
 \end{proof}
 
-\begin{theorem}[Rigidity]\label{thm:rigidity}
-Every worst disk is the image of the octagon $\KH$ under an invertible linear map of the plane.
-Explicitly, with the notation of the proof, $K=e^{-1}g(s)R^{r}(\KH)$.
-\end{theorem}
-
-\begin{proof}
+\begin{proof}[Proof of \cref{thm:rigidity}]
 Let $K$ be a worst disk, and take $e$, $\sigma$ and $(T,u,g,X)$ as in \cref{lem:eq-realization}.
 By \cref{lem:eq-frame-twist}, $g(t+T)=g(t)R$ on $\R$.
 
@@ -100,13 +95,7 @@ the lower bound only to know that its cost is $\Aoct$.
 
 The converse is the affine invariance of the greatest packing density.
 
-\begin{proposition}[Affine invariance]\label{prop:converse}
-Let $K$ be a convex disk symmetric about the origin, $A$ an invertible linear map of the plane and
-$b$ a vector. Then $\delta(AK)=\delta(K)$ and $\delta(K+b)=\delta(K)$. In particular
-$\delta(A\KH)=\doct$ for every invertible linear map $A$.
-\end{proposition}
-
-\begin{proof}
+\begin{proof}[Proof of \cref{prop:converse}]
 A translate, and more generally a congruent copy, of $K$ has the same packings by congruent copies,
 so its greatest packing density is the same. By
 Fejes T\'oth's theorem (\cref{thm:fejes-toth}), $\delta(K)$ is the greatest density
@@ -127,11 +116,7 @@ $\sigma^{\mathrm{oct}}_0$ of the octagon's trajectory over one period $[0,6\tf]$
 $\sigma^{\mathrm{oct}}_j([0,\tf])$. The two octagons differ by a vertical stretch of about $5.5\%$
 (\cref{fig:octagon}).
 
-\begin{proposition}[Reinhardt's octagon is Hales's octagon]\label{prop:reinhardt-construction}
-Let $A=\operatorname{diag}\bigl(1,(2\sqrt2-1)/\sqrt3\bigr)$. Then $A(\KH)=\Koct$.
-\end{proposition}
-
-\begin{proof}
+\begin{proof}[Proof of \cref{prop:reinhardt-construction}]
 Write $y_0^2=(2\sqrt2-1)/3$ and $W=\exp(\sqrt3\,y_0 s)$ for $s\in[0,\tsw]$, so that $W$ runs over
 $[1,\sqrt2]$; recall that $\sigma^{\mathrm{oct}}_0(0)=s_0=(1,0)$.
 
@@ -177,31 +162,3 @@ $\mu q\notin\Koct$ for $\mu>1$. Hence $p\in A\KH$.
 Each side of $\Koct$ keeps a straight middle part of length $2-\sqrt2$, between the points of
 tangency $(1,\pm(1-\sqrt2/2))$ on side~$0$. The proposition transfers the facts known for $\KH$ to
 $\Koct$; in particular, the affine images of the two octagons are the same sets.
-
-\subsection{Proofs of parts (a) and (c) of \texorpdfstring{\cref{thm:main}}{the main theorem}}\label{sec:equality-proofs}
-
-\begin{proof}[Proof of \cref{thm:main}\textup{(a)}]
-By \cref{prop:reinhardt-construction}, $\Koct=A\KH$. The octagon $\KH$ is a compact convex set
-with nonempty interior, symmetric about the origin, and $\delta(\KH)=\doct$
-(\cref{prop:octagon-trajectory}); these properties pass to its linear image, the density by
-\cref{prop:converse}.
-\end{proof}
-
-\begin{proof}[Proof of \cref{thm:main}\textup{(c)}]
-Let $K$ be a convex disk with centre $c$. Suppose first that $\delta(K)=\doct$. The translate
-$K-c$ is symmetric about the origin with $\delta(K-c)=\doct$, which by part~(b) is the least
-value; so $K-c$ is a worst disk. By
-\cref{thm:rigidity}, $K-c=L\KH$ for an invertible linear map $L$, and $K$ is the image of $\KH$
-under the affine map $x\mapsto Lx+c$. Conversely, an affine image $A'\KH$, with linear part $L$,
-is the translate $L\KH+A'(0)$, which has density $\doct$ by \cref{prop:converse}. This proves the
-equivalence with $\KH$ in place of $\Koct$, and the affine images of $\KH$ are those of $\Koct$
-by \cref{prop:reinhardt-construction}.
-\end{proof}
-
-In Hales's form, the equality disks are the affine images of the convex hull of the six arcs
-$g(t)s_j$, $t\in[0,\tf]$, of the trajectory $(g,X)$ of the octagon's control from $g(0)=I$ and
-$X(0)=\Phi(0,y_0)$ (\cref{prop:octagon-trajectory}); this hull is a centrally symmetric convex
-disk of area $\Aoct=\sqrt{12}\,\doct$ and greatest packing density $\doct$. The equality data are
-explicit: four
-forward pieces with the word $\ee_2\ee_0\ee_1\ee_2$, every factor equal to $\sqrt2$, every
-duration equal to $\log2/(2\sqrt{2\sqrt2-1})$, and initial state $\Phi(0,y_0)$.

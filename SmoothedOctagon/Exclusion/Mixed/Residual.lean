@@ -177,6 +177,33 @@ theorem nsr_log_one_add_gt {x : ℝ} (hx : 0 < x) :
 /-- The rational upper bound `L₊(q) = (q - 1)(q² + 10q + 1)/(6q(q + 1))` for `log q`. -/
 noncomputable def nsrLp (q : ℝ) : ℝ := (q - 1) * (q ^ 2 + 10 * q + 1) / (6 * q * (q + 1))
 
+/-- The reciprocal-mean lower bound for the logarithm. The difference increases from zero:
+its derivative is `x⁴ / ((1 + x)(x² + 6x + 6)²)`. -/
+theorem nsr_log_one_add_jensen {x : ℝ} (hx : 0 < x) :
+    3 * x * (x + 2) / (x ^ 2 + 6 * x + 6) < Real.log (1 + x) := by
+  have hmono := nsr_strictMonoOn_Ici (a := 0)
+    (f := fun z => Real.log (1 + z) - 3 * z * (z + 2) / (z ^ 2 + 6 * z + 6))
+    (f' := fun z => z ^ 4 / ((1 + z) * (z ^ 2 + 6 * z + 6) ^ 2))
+    (fun z hz => ?_) (fun z hz => by positivity)
+  · have := hmono (Set.mem_Ici.2 le_rfl) (Set.mem_Ici.2 hx.le) hx
+    norm_num at this
+    linarith
+  · have hW : 1 + z ≠ 0 := by linarith
+    have hD : z ^ 2 + 6 * z + 6 ≠ 0 := by positivity
+    have h1 : HasDerivAt (fun z : ℝ => 1 + z) 1 z := by
+      simpa using (hasDerivAt_id z).const_add 1
+    have h2 : HasDerivAt (fun z : ℝ => 3 * z * (z + 2)) (3 * (z + 2) + 3 * z * 1) z := by
+      have ha : HasDerivAt (fun z : ℝ => 3 * z) 3 z := by
+        simpa using (hasDerivAt_id z).const_mul (3 : ℝ)
+      have hb : HasDerivAt (fun z : ℝ => z + 2) 1 z := by
+        simpa using (hasDerivAt_id z).add_const 2
+      exact ha.mul hb
+    have h3 : HasDerivAt (fun z : ℝ => z ^ 2 + 6 * z + 6) (2 * z + 6) z := by
+      simpa using ((hasDerivAt_pow 2 z).add ((hasDerivAt_id z).const_mul (6 : ℝ))).add_const 6
+    refine ((h1.log hW).sub (h2.div h3 hD)).congr_deriv ?_
+    field_simp
+    ring
+
 /-- `log q < L₊(q)` for `q > 1`. -/
 theorem nsr_log_lt_Lp {q : ℝ} (hq : 1 < q) : Real.log q < nsrLp q := by
   have hmono := nsr_strictMonoOn_Ici (a := 1) (f := fun z => nsrLp z - Real.log z)
@@ -215,6 +242,22 @@ noncomputable def nsrSecN (t x : ℝ) : ℝ :=
 /-- The rational secant upper bound `v̄ = 1 + (1 - t)²/W - (2(1 - t)/X)(1 + x²/(3X²))`. -/
 noncomputable def nsrVbar (t x : ℝ) : ℝ :=
   1 + (1 - t) ^ 2 / (1 + x) - 2 * (1 - t) / (x + 2) * (1 + x ^ 2 / (3 * (x + 2) ^ 2))
+
+/-- The secant ceiling from the reciprocal-mean logarithm bound. -/
+noncomputable def nsrVJensen (t x : ℝ) : ℝ :=
+  1 + (1 - t) ^ 2 / (1 + x) - 3 * (1 - t) * (x + 2) / (x ^ 2 + 6 * x + 6)
+
+theorem nsr_secN_lt_jensen {t x : ℝ} (hx : 0 < x) (ht : t < 1) :
+    nsrSecN t x < nsrVJensen t x := by
+  have hc : 0 < 1 - t := by linarith
+  have hlog := div_lt_div_of_pos_right
+    (mul_lt_mul_of_pos_left (nsr_log_one_add_jensen hx) hc) hx
+  have e : (1 - t) * (3 * x * (x + 2) / (x ^ 2 + 6 * x + 6)) / x =
+      3 * (1 - t) * (x + 2) / (x ^ 2 + 6 * x + 6) := by
+    field_simp
+  unfold nsrSecN nsrVJensen
+  rw [e] at hlog
+  linarith
 
 /-- `v < v̄` (from `nsr_log_one_add_gt`). -/
 theorem nsr_secN_lt_vbar {t x : ℝ} (hx : 0 < x) (ht : t < 1) : nsrSecN t x < nsrVbar t x := by

@@ -11,8 +11,9 @@ On the face `k = 1`, for
 `v = Sec(t, 1 - t, t + x)` with its missing-control floor `v ≥ F_{p/W}(q)` gives `N > 0`.
 After the relaxations `v ↦ v̄`, `log q ↦ L₊` and the subtraction of `(q - 1)(v̄ - F_ℓ)`, the
 cleared residual is the cubic `P = C₀ + C₁y + C₂y² + C₃y³` in `y = q - 1` (`nsrU_P_eq`),
-positive by six coefficient signs (`nsr_cubic_pos`), which are proved by the generated
-certificates of `Nonshort/UnitShape/Signs`.
+positive by six coefficient signs (`nsr_cubic_pos`). The constant term follows from the midpoint
+secant ceiling and monotonicity in the shape; the remaining signs are proved in
+`Nonshort/UnitShape/Signs`.
 
 ## Main API
 
@@ -57,8 +58,67 @@ theorem nsrU_P_eq {t x q : ℝ} (hx : 0 < x) (hq : 0 < q) :
   field_simp
   ring
 
-theorem nsrU_J0 (t x : ℝ) : nsrUC0 t x = x ^ 2 * nsrUJr0 x (1 - 2 * t - x) := by
-  unfold nsrUC0 nsrUJr0; ring
+/-- At `q = 1`, the midpoint secant ceiling makes the shape slope a positive product.
+Lowering the shape to `2t + x` leaves another positive product. This proves the constant
+term without the switching floor or a coefficient certificate. -/
+theorem nsrUC0_pos {t x : ℝ} (ht : 0 < t) (ht2 : t < 1 / 2) (hx : 0 < x)
+    (hxt : x ≤ 1 - 2 * t) : 0 < nsrUC0 t x := by
+  have hc : 0 < 1 - t := by linarith
+  have hW : 0 < 1 + x := by positivity
+  have hX : 0 < x + 2 := by positivity
+  let V := 1 + (1 - t) ^ 2 / (1 + x) - 2 * (1 - t) / (x + 2)
+  have hgap : 0 < V - nsrVbar t x := by
+    have e : V - nsrVbar t x = 2 * (1 - t) * x ^ 2 / (3 * (x + 2) ^ 3) := by
+      dsimp [V, nsrVbar]
+      field_simp
+      ring
+    rw [e]
+    positivity
+  have hslope : 0 < (1 - V) * (1 + t * (1 + x)) - t * (1 - t ^ 2) := by
+    have e : (1 - V) * (1 + t * (1 + x)) - t * (1 - t ^ 2) =
+        (1 - t) ^ 2 * x / ((1 + x) * (x + 2)) := by
+      dsimp [V]
+      field_simp
+      ring
+    rw [e]
+    positivity
+  have hslope_bar : 0 < nsrA t x 1 (nsrVbar t x) 0 := by
+    have e : nsrA t x 1 (nsrVbar t x) 0 =
+        x * ((1 - V) * (1 + t * (1 + x)) - t * (1 - t ^ 2)
+          + (V - nsrVbar t x) * (1 + t * (1 + x))) := by
+      unfold nsrA
+      ring
+    rw [e]
+    positivity
+  have htail : 0 < 1 - t * (x + 2) := by
+    have := mul_le_mul_of_nonneg_left hxt ht.le
+    have := mul_pos hc (show 0 < 1 - 2 * t by linarith)
+    nlinarith
+  have hmid : 0 < nsrN t x (2 * t + x) 1 V 0 := by
+    have e : nsrN t x (2 * t + x) 1 V 0 =
+        (1 - t) ^ 2 * x ^ 3 * (1 - t * (x + 2)) / ((1 + x) * (x + 2)) := by
+      dsimp [V, nsrN]
+      field_simp
+      ring
+    rw [e]
+    positivity
+  have horder : 0 < nsrN t x (2 * t + x) 1 (nsrVbar t x) 0 := by
+    rw [nsrN_sub_v t x (2 * t + x) 1 (nsrVbar t x) V 0]
+    have hNv := nsrNv_nonpos ht.le hx.le (by norm_num : (1 : ℝ) ≤ 1)
+      (by linarith : 2 * t ≤ 2 * t + x)
+    have := mul_nonneg_of_nonpos_of_nonpos (show nsrVbar t x - V ≤ 0 by linarith) hNv
+    linarith
+  have hunit : 0 < nsrN t x 1 1 (nsrVbar t x) 0 := by
+    rw [nsrN_sub_k t x 1 (2 * t + x) 1 (nsrVbar t x) 0]
+    have := mul_nonneg (show 0 ≤ 1 - (2 * t + x) by linarith) hslope_bar.le
+    linarith
+  have e : nsrUC0 t x = 12 * (1 + x) ^ 2 * (x + 2) ^ 3 *
+      nsrN t x 1 1 (nsrVbar t x) 0 := by
+    unfold nsrUC0 nsrN nsrVbar
+    field_simp
+    ring
+  rw [e]
+  positivity
 
 theorem nsrU_J1 (t x : ℝ) :
     20 * x * nsrUC1 t x + 3 * nsrUC0 t x = x ^ 2 * nsrUJr1 x (1 - 2 * t - x) := by
@@ -109,7 +169,7 @@ theorem nsrU_signs {t x : ℝ} (ht : 0 < t) (ht' : t ≤ 13 / 35) (hx : 0 < x) (
       0 < 24 * x ^ 3 * nsrUC3 t x - nsrUC0 t x := by
   have hx2 : 0 < x ^ 2 := by positivity
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
-  · rw [nsrU_J0]; exact mul_pos hx2 (nsrU_dom ht ht' hx hxt hgap nsrUJr0_pos_a nsrUJr0_pos_b nsrUJr0_pos_c)
+  · exact nsrUC0_pos ht (by linarith) hx hxt
   · rw [nsrU_J1]; exact mul_pos hx2 (nsrU_dom ht ht' hx hxt hgap nsrUJr1_pos_a nsrUJr1_pos_b nsrUJr1_pos_c)
   · rw [nsrU_J2]; exact mul_pos hx2 (nsrU_dom ht ht' hx hxt hgap nsrUJr2_pos_a nsrUJr2_pos_b nsrUJr2_pos_c)
   · rw [nsrU_J3]; exact mul_pos hx2 (nsrU_dom ht ht' hx hxt hgap nsrUJr3_pos_a nsrUJr3_pos_b nsrUJr3_pos_c)

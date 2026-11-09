@@ -28,8 +28,7 @@ this reads
 \begin{equation}\label{eq:rev-min}
   A\le Z,\qquad bA+(b-1)Z\le B,\qquad (2c-1)A\le B.
 \end{equation}
-The obstruction is a variation of the period (\cite{Notes},
-\path{GLOBAL_REVERSE_PERIOD_EXCLUSION}): insert short pieces of the two
+The obstruction is a variation of the period: insert short pieces of the two
 inactive controls at the two interior switches (the control $i+1$ at $\tau_{k+1}$ and the
 control $i$ at $\tau_{k+2}$), and change the logarithms of the factors of the four pieces at
 rates chosen so that the end state and the end frame do not move. To first order the normalized
@@ -78,16 +77,7 @@ both sides are the same polynomial in the variables and in $\log b$, $\log c$.
 The coefficients $B(c-1)$ and $bD$ in~\eqref{eq:rev-third} are the weights of the two
 inserted pieces in the variation described above, and $N$ is its cost derivative.
 
-\begin{lemma}[Reverse-four principle]\label{lem:reverse-four}
-Let four consecutive pieces $k,\dots,k+3$ of a normal vertex period have three reverse switches
-between them. Then
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item it is not the case that $a_{k+2}\le a_k$, $a_{k+2}\le a_{k+1}$ and $a_{k+2}\le a_{k+3}$;
-\item it is not the case that $a_{k+1}\le a_k$, $a_{k+1}\le a_{k+2}$ and $a_{k+1}\le a_{k+3}$.
-\end{enumerate}
-\end{lemma}
-
-\begin{proof}
+\begin{proof}[Proof of \cref{lem:reverse-four}]
 (a) The labels $i+1$ at $\tau_{k+1}$ and $i$ at $\tau_{k+2}$ are inactive on both adjacent pieces,
 so their switching functions are $\le0$ (\cref{lem:costate-transport}(c)). The weights
 $B(c-1)$ and $bD$ are positive, so the left side of~\eqref{eq:rev-third} is $\le0$
@@ -100,18 +90,9 @@ $N(Z,B,A,c,b)<0$. The switching functions $\chi_{i-1}(k+3)$ and $\chi_i(k+2)$ ar
 \eqref{eq:rev-second} gives the contradiction as before.
 \end{proof}
 
-Part (b) also follows from (a) by a reflection of the trajectory combined with a reversal of
-time, which reverses the order of the four pieces and keeps the signs of the switches
-(\cite{Notes}, \path{MIXED_GLOBAL_MINIMUM_STRUCTURE}, \S\S1--4). The second identity
-\eqref{eq:rev-second} avoids this transformation of trajectories.
-
 \subsection{Class R}\label{sec:rev-R}
 
-\begin{theorem}[Class $\cls{R}$]\label{thm:class-R}
-No normal vertex period has every switch reverse.
-\end{theorem}
-
-\begin{proof}
+\begin{proof}[Proof of \cref{thm:class-R}]
 The active margins are $N$-periodic, so one of them, $a_m$, is a global minimum. Every switch is
 reverse, so the four pieces $m-2,\dots,m+1$ have three reverse switches between them, and
 $a_m\le a_{m-2},a_{m-1},a_{m+1}$. This contradicts \cref{lem:reverse-four}(a) for $k=m-2$.
@@ -129,17 +110,7 @@ middle piece is a turn, and its two outer pieces have the same control. The swit
 of that control vanishes at both ends of the middle piece and is $\le0$ in between. This forces
 a relation between the three active margins.
 
-\begin{lemma}[Three-arc log-concavity and turn ordering]\label{lem:three-arc}
-Let $k,k+1,k+2$ be consecutive pieces of a normal vertex period.
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item If $i_{k+2}=i_k$, then $a_ka_{k+2}<a_{k+1}^2$; in particular $a_{k+1}$ is not at most both
-  $a_k$ and $a_{k+2}$.
-\item If the switch $k$ is reverse and the switch $k+1$ forward, then $a_k<a_{k+2}$; if the switch
-  $k$ is forward and the switch $k+1$ reverse, then $a_{k+2}<a_k$.
-\end{enumerate}
-\end{lemma}
-
-\begin{proof}
+\begin{proof}[Proof of \cref{lem:three-arc}]
 (b) After a reverse switch the label $i_k$ is the growing label of piece $k+1$, so
 $a_{k+2}=(a_{k+1}+a_k)\,q_{k+1}-a_{k+1}>a_k$ by \cref{lem:one-arc}; after a forward switch it is
 the decreasing label and $a_{k+2}=(a_{k+1}+a_k)/q_{k+1}-a_{k+1}<a_k$.
@@ -180,23 +151,11 @@ so $\chi_i(q)<0$, contradicting $\chi_i(q)=0$.
 
 The proof uses one end of the middle piece in each case: the right end when the outer label grows,
 the left end when it decreases. \Cref{fig:reverse-estimates}(a) shows the switching function of
-the growing case for an admissible factor and for one with $bq>a$. Another proof of (a) works on
-the edge of the simplex that contains the two controls: in a clock in which the state moves at
-unit speed, one transforms the costate accordingly and compares the two switching abscissas
-(\cite{Notes}, \path{MIXED_GLOBAL_MINIMUM_STRUCTURE}~(12)).
+the growing case for an admissible factor and for one with $bq>a$.
 
 \subsection{Reverse runs}\label{sec:rev-runs}
 
-\begin{proposition}[Run structure]\label{prop:run-structure}
-Let $P$ be a mixed normal vertex period, and let the switches $k,\dots,k+L-1$ form a maximal
-reverse run. Then $L=2$, and the active margin of the centre piece $k+1$ is strictly smaller
-than those of the four pieces around it:
-\[
-  a_{k+1}<a_{k-1},\qquad a_{k+1}<a_k,\qquad a_{k+1}<a_{k+2},\qquad a_{k+1}<a_{k+3}.
-\]
-\end{proposition}
-
-\begin{proof}
+\begin{proof}[Proof of \cref{prop:run-structure}]
 The run is preceded by the forward switch $k-1$ and followed by the forward switch $k+L$.
 
 At the entry, the switches $k-1,k$ are forward then reverse, so $a_{k+1}<a_{k-1}$ by
@@ -219,11 +178,7 @@ $a_{k+1}<a_{k+3}$.
 The proof does not use mixedness beyond the existence of the run: a maximal reverse run is
 bounded by forward switches by definition, so a period that has one is mixed.
 
-\begin{theorem}[Class $\cls{M3}$]\label{thm:class-M3}
-No normal vertex period is mixed with a maximal reverse run of length other than two.
-\end{theorem}
-
-\begin{proof}
+\begin{proof}[Proof of \cref{thm:class-M3}]
 This is the first conclusion of \cref{prop:run-structure}.
 \end{proof}
 
@@ -311,7 +266,226 @@ over one period sum to a positive number. But $y_N=\pm y_0$ and $z$ depends only
 the vector, so the sum is $z_N-z_0=0$.
 \end{proof}
 
-The same telescoping can be organized with a factorization of the indefinite form $S$ in place
-of \cref{lem:rev-three-gram} (\cite{Notes}, \path{MIXED_GLOBAL_COSTATE_ELLIPTIC}, \S\S5--6). For an entirely
-forward period every piece is a forward same-sign piece and the same telescoping gives
+For an entirely forward period every piece is a forward same-sign piece and the same telescoping gives
 $\gamma^2>0$.
+
+\subsection{Costate identities for reverse switches}\label{app:reverse-estimates}
+
+This subsection gives the explicit formulas behind \cref{sec:periods,sec:reverse}: the one-piece
+costate map, the two reverse-four identities, the sign of the cost derivative $N$, and the
+elementary inequalities of the three-arc lemma, the switch norms and the Casimir cap. Each
+identity below is an identity of rational functions in the displayed variables and the
+logarithms that occur; it is verified by clearing denominators and expanding.
+
+\subsubsection{The one-piece costate map}\label{app:rev-one-arc}
+
+On a piece with active margin $a$, growing margin $b$ and decreasing margin $c$ at its start
+(\cref{lem:one-arc}), the inhomogeneous terms of \cref{lem:costate-transport}(b) at the factor
+$q$ are
+\begin{align*}
+  \mathrm{Act}(a,b,c,q)&=\tfrac{\sqrt3a}{2}\bigl((a+c)(1-q^{-1})-(a+b)(q-1)\bigr),\\
+  \mathrm{AG}(a,b,q)&=\tfrac{\sqrt3a}{2}\bigl(a(q^2-1)-(a+b)(q^2-q)\bigr),\\
+  \mathrm{AD}(a,c,q)&=\tfrac{\sqrt3a}{2}\bigl((a+c)(q^{-1}-q^{-2})-a(1-q^{-2})\bigr),\\
+  \mathrm{BG}(a,b,q)&=\sqrt3a\bigl((a+b)\,q\log q-2a(q-1)\bigr),\\
+  \mathrm{BD}(a,c,q)&=\sqrt3a\,q^{-1}\bigl(2a(q-1)-(a+c)\log q\bigr).
+\end{align*}
+The logarithms come from the cost term $-\frac32[J,X]$ of the costate
+equation, integrated against the exponentially moving margins.
+
+These formulas give the switching functions of the two inactive labels inside the piece. Let
+$i$ be the active label, and at the start of the piece let $Y=\alpha_i+\alpha_{i+1}$,
+$Y'=\alpha_i+\alpha_{i-1}$, $B=\beta_i+\beta_{i+1}$, $B'=\beta_i+\beta_{i-1}$. Since $\chi_i=0$ on
+the piece, at the intermediate factor $s\in[1,q]$
+\[
+  \chi_{i+1}(s)=2s^2Y+sB+\sqrt3\,a\,s\,F(s),\qquad
+  \chi_{i-1}(s)=\frac{2Y'}{s^2}+\frac{B'}{s}-\frac{\sqrt3\,a}{s}\,h(s),
+\]
+where
+\begin{align*}
+  F(s)&=(a+b)\log s-(a+b)(s-1)+a\,\frac{(s-1)^2}{s},\\
+  h(s)&=(a+c)\log s-a(s-1)-c\,(1-s^{-1}),
+\end{align*}
+because $2\mathrm{AG}+\mathrm{BG}=\sqrt3asF$ and $2\mathrm{AD}+\mathrm{BD}=-\sqrt3a\,h/s$. Both $F$ and
+$h$ vanish to second order at $s=1$: $F(1)=F'(1)=h(1)=h'(1)=0$. When the growing label was active
+on the previous piece, $\chi_{i+1}(1)=2Y+B=0$ and
+\[
+  \chi_{i+1}(s)=2s\Bigl(Y(s-1)+\frac{\sqrt3a}{2}F(s)\Bigr);
+\]
+when the decreasing label was, $B'=-2Y'$ and
+\[
+  \chi_{i-1}(s)=-\frac2s\Bigl(Y'(1-s^{-1})+\frac{\sqrt3a}{2}h(s)\Bigr).
+\]
+These are the forms used in \cref{lem:switch-norms}(a) and in \cref{lem:three-arc}. In each case the derivative at $s=1$ is $\pm2Y$ or $\pm2Y'$, which is how
+the sign condition at the start of a piece fixes the sign of $Y$ or $Y'$.
+
+\subsubsection{The reverse-four identities}\label{app:rev-identities}
+
+In the notation of \cref{sec:rev-four}, let $x_j,y_j$ be the coordinates $\alpha,\beta$ at the
+switch $\tau_{k+1}$ in the label order $(i,i+1,i-1)$, so that $j=0,1,2$ stands for the labels
+$i,i+1,i-1$, and let $u_j,v_j$ and $r_j,s_j$ be those at $\tau_{k+2}$ and $\tau_{k+3}$ in the same
+order. The transport over piece $k+1$ (active margin $Z$, growing margin $P$, decreasing margin
+$Q$, factor $b$) and over piece $k+2$ (active margin $A$, growing margin $Z$, decreasing margin
+$B$, factor $c$) gives
+\begin{align*}
+  u_2&=x_2+\mathrm{Act}(Z,P,Q,b),\\
+  u_0&=b^2(x_2+x_0)+\mathrm{AG}(Z,P,b)-u_2,\\
+  u_1&=b^{-2}(x_2+x_1)+\mathrm{AD}(Z,Q,b)-u_2,\\
+  r_1&=u_1+\mathrm{Act}(A,Z,B,c),\\
+  r_0&=c^{-2}(u_1+u_0)+\mathrm{AD}(A,B,c)-r_1,\\
+  r_2&=c^2(u_1+u_2)+\mathrm{AG}(A,Z,c)-r_1,
+\end{align*}
+and the same with $(\alpha,\mathrm{Act},\mathrm{AG},\mathrm{AD})$ replaced by
+$(\beta,-2\mathrm{Act},\mathrm{BG},\mathrm{BD})$ and the powers $b^{\pm2},c^{\pm2}$ by
+$b^{\pm1},c^{\pm1}$. The five relations are
+\begin{gather*}
+  h_1=2x_0+y_0,\quad h_2=2x_2+y_2,\quad h_3=2u_1+v_1,\quad h_4=2r_0+s_0,\\
+  h_5=y_0(Q+Z)+y_1(P+Z)+y_2(P+Q),
+\end{gather*}
+all equal to $0$: the active switching functions at the three switches, and
+$\ip{\Lambda_R}{X}=0$ at $\tau_{k+1}$. Then, with $D=A(c-1)+Z(b-1)$ and as identities in all the
+variables,
+\begin{align*}
+  B(c-1)&(2x_1+y_1)+bD(2u_0+v_0)+\sqrt3ZN(A,B,Z,b,c)\\
+  &=b^2(c-1)(Q-Zb+Z)\,h_1+(b^2-1)(c-1)(Pb+Q)\,h_2\\
+  &\quad+b(c-1)(Pb^2+Zb^2+Zbc-Zc-Z)\,h_3+Zbc^2(b-1)\,h_4\\
+  &\quad-b(b-1)(c-1)\,h_5,
+\end{align*}
+and
+\begin{align*}
+  (b-1)&B(2r_2+s_2)+cD(2u_0+v_0)+\sqrt3AN(Z,B,A,c,b)\\
+  &=bc(c-1)(Q-Zb+Z)\,h_1\\
+  &\quad+\tfrac{c(b-1)}{b}\bigl(Pb^2c+Qbc-Qb+Qc-Q+Zb^2-Zbc+Zc-Z\bigr)\,h_2\\
+  &\quad+(b-1)(c^2-1)(Pb+Zb+Zc-Z)\,h_3+Zc^3(b-1)\,h_4\\
+  &\quad-c(b-1)(c-1)\,h_5,
+\end{align*}
+with $A=(Z+Q)/b-Z$ and $B=(Z+P)b-Z$. Setting the five
+relations to zero gives \cref{lem:rev-identities}.
+
+\subsubsection{The sign of the cost derivative}\label{app:rev-N}
+
+Let $\eta(t)=t-1-\log t$ and $\zeta(t)=t\log t-t+1$. For $t>1$ both are positive.
+
+\begin{lemma}[Pad\'e bound]\label{lem:rev-pade}
+For $t>1$, $3(t^2-1)<(t^2+4t+1)\log t$; equivalently $(2t+1)\,\eta(t)<(t+2)\,\zeta(t)$. In
+particular $\eta(t)<\zeta(t)$.
+\end{lemma}
+
+\begin{proof}
+The function $\psi(t)=\log t-3(t^2-1)/(t^2+4t+1)$ vanishes at $1$ and
+$\psi'(t)=(t-1)^4/\bigl(t(t^2+4t+1)^2\bigr)>0$ for $t>1$. The second form follows from
+$(t+2)\zeta(t)-(2t+1)\eta(t)=(t^2+4t+1)\log t-3(t^2-1)$, and the third because $(2t+1)/(t+2)>1$
+and $\eta(t)>0$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{lem:rev-N}]
+Recall~\eqref{eq:rev-N} and the hypotheses $b,c>1$, $A,Z>0$, $A\le Z$, $bA+(b-1)Z\le B$ and
+$(2c-1)A\le B$. In particular $B>cA>0$.
+
+The first bracket of $N$ is negative: $Ac\,\eta(c)<Ac\,\zeta(c)<B\,\zeta(c)$.
+
+The second bracket, $T(B)=bA(B+bZ)\,\eta(b)-B(bA+Z)\,\zeta(b)$, is affine in $B$ with slope
+$bA\,\eta(b)-(bA+Z)\,\zeta(b)<0$, so $T(B)\le T(B_0)$ with $B_0=bA+(b-1)Z$. At $B_0$ we have
+$B_0+bZ=bA+(2b-1)Z$ and $B_0(bA+Z)=b^2A^2+b^2AZ+(b-1)Z^2>0$, and \cref{lem:rev-pade} at $t=b$ gives
+\begin{align*}
+  (b+2)\,T(B_0)&<\eta(b)\bigl[(b+2)\,bA\bigl(bA+(2b-1)Z\bigr)\\
+  &\qquad\qquad-(2b+1)\bigl(b^2A^2+b^2AZ+(b-1)Z^2\bigr)\bigr]\\
+  &=-(b-1)\,\eta(b)\bigl(b^2A^2+2bZ(Z-A)+Z^2\bigr),
+\end{align*}
+which is $\le0$ because $Z\ge A$. So $T(B)<0$, and
+$N=b(b-1)A\cdot(\text{first bracket})+(c-1)\,T(B)<0$.
+\end{proof}
+
+\subsubsection{Elementary inequalities}\label{app:rev-elementary}
+
+\runin{Logarithms.} For $q>1$, $2(q-1)<(q+1)\log q$ and $q-1<q\log q$: both differences vanish
+at $q=1$, with derivatives
+$\log q+q^{-1}-1>0$ and $\log q>0$. They give the signs in the proof of \cref{lem:three-arc}.
+
+\runin{The turn secant.} With $f(x)=x-x^{-1}-\log x$,
+\[
+  f'(x)-\tfrac34=\frac{(x-2)^2}{4x^2},\qquad 1-f'(x)=\frac{x-1}{x^2}.
+\]
+So every secant slope of $f$ on $(1,\infty)$ lies in $[3/4,1)$, and the switch norm at a turn,
+$d=\frac18\times$(secant slope), satisfies $3/32\le d<1/8$. At a forward switch the lower bound
+$d_k\ge3/32$ comes instead from
+$j_k/2-3/32=(a_k-a_{k+1})^2/(32s_k^2)\ge0$.
+
+\runin{The cross pairing bound.} With $a,p,n>0$ and $j(a,b)=(a^2+ab+b^2)/(4(a+b)^2)$,
+\begin{multline*}
+  \frac{1}{2a}\Bigl((a+p)\,\frac{j(p,a)}{2}+(a+n)\,\frac{j(a,n)}{2}
+  -\frac{G_a(a,p)+G_a(a,n)}{16}\Bigr)\\
+  =\frac{1}{16}\Bigl(-1+\frac{2a}{a+p}+\frac{2a}{a+n}-\frac{a^2}{a^2+4}
+  +\log\frac{(a+p)(a+n)}{a^2+4}\Bigr).
+\end{multline*}
+This is the quantity $X_k$ of \cref{lem:rev-cross-signs}: by
+\cref{lem:stationarity}, at a same-sign piece $e_k$ is an increasing affine function of
+$d_{k-1}$ and $d_k$, and $X_k$ is its value at $d=j/2$.
+
+\begin{lemma}[Octagon cost comparison]\label{lem:octagon-cost-comparison}
+The octagon cost satisfies
+\[
+ \frac{\Aoct}{\pi}<\frac{203}{204}<\frac{8\sqrt5}{9+4\sqrt5},\qquad
+ \Aoct<\frac{161\pi}{162}+\frac{9\sqrt3}{4000}.
+\]
+\end{lemma}
+
+\begin{proof}
+We use positive integral remainders in the exact formula for $\Aoct$.
+Set $s=\sin(\pi/12)=(\sqrt6-\sqrt2)/4$ and put
+\[
+ P=12s\left(1+\frac{s^2}{6}+\frac{3s^4}{40}+\frac{5s^6}{112}\right),\qquad
+ L=2\sum_{j=0}^{4}\frac{1}{(2j+1)3^{2j+1}}.
+\]
+The fourth derivative of $(1-x)^{-1/2}$ is positive on $[0,1)$.
+Its cubic Taylor polynomial at zero therefore gives
+\[
+ \pi=12\int_0^s\frac{\dd t}{\sqrt{1-t^2}}
+ >12\int_0^s\left(1+\frac{t^2}{2}+\frac{3t^4}{8}+\frac{5t^6}{16}\right)\dd t=P.
+\]
+Similarly, the geometric remainder gives
+\[
+ \log2=2\int_0^{1/3}\frac{\dd t}{1-t^2}
+ >2\int_0^{1/3}\sum_{j=0}^4t^{2j}\,\dd t=L.
+\]
+Thus
+\[
+ \Aoct<U:=\frac{\sqrt{12}(8-4\sqrt2-L)}{2\sqrt2-1}.
+\]
+We compare $U$ directly with $qP+b\sqrt3$, for the two pairs
+\[
+ (q,b)\in\left\{\left(\frac{203}{204},0\right),
+                       \left(\frac{161}{162},\frac9{4000}\right)\right\}.
+\]
+Write
+\[
+ \begin{gathered}
+ m=1+\frac1{12}+\frac{21}{640}+\frac{65}{3584},\qquad
+ n=\frac1{24}+\frac3{160}+\frac{75}{7168},\\
+ p=3(m+n),\qquad r=3(m+3n).
+ \end{gathered}
+\]
+The bracket in $P$ expands to $m-n\sqrt3$, so $P=p\sqrt6-r\sqrt2$.
+With
+\[
+ A=4qp-16+2L-b,\qquad B=8-qp+2b,\qquad C=qr,
+\]
+we have
+\[
+ (qP+b\sqrt3-U)(2\sqrt2-1)=(A+B\sqrt2)\sqrt3-C(4-\sqrt2).
+\]
+For each pair, direct rational substitution gives $B>0$, $A+B>0$, $C>0$ and
+\[
+ \begin{gathered}
+ R:=18C^2-3A^2-6B^2>0,\qquad T:=6AB+8C^2>0,\\
+ 2T^2-R^2>0.
+ \end{gathered}
+\]
+The quantities $(A+B\sqrt2)\sqrt3$ and $C(4-\sqrt2)$ are positive.
+Their squared difference is $T\sqrt2-R>0$, proving $U<qP+b\sqrt3$.
+Since $q>0$ and $P<\pi$, both cost bounds follow.
+Finally, $\lambda=\sqrt5-2=1/(\sqrt5+2)<1/4$ gives
+\[
+ \frac{8\sqrt5}{9+4\sqrt5}=1-\lambda^4
+ >1-4^{-4}>\frac{203}{204}.
+\]
+\end{proof}

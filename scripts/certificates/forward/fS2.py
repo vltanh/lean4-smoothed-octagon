@@ -3,7 +3,7 @@ from bern import *
 a,t=sp.symbols('a t')
 res=pickle.load(open('S_E34.pkl','rb'))
 box=((0,Fr(1,7)),(0,Fr(1,4)))
-for name in ['A0','E3','E4']:
+for name in ['E3','E4']:
     R,cI,cc,Bn,Bd=res[name]
     # sign of Bd at center
     s=sp.sign(Bd.subs({a:sp.Rational(1,14),t:sp.Rational(1,8)}))

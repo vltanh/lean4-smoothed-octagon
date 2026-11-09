@@ -110,6 +110,61 @@ theorem fs_Phi_sym {U z : ℝ} (hU : 0 < U) (hz : 0 < z) :
   field_simp
   ring
 
+/-- The factor curvature has the required sign by comparison with the geometric
+boundary `U = z + 1`, followed by monotonicity in the factor. -/
+theorem fs_factor_curvature_nonneg {U z s : ℝ} (hz : 1 ≤ z) (hz2 : z ^ 2 < 3)
+    (hU : z + 1 ≤ U) (hU3 : U ≤ 3) (hs : (1 + z) ^ 2 / (z ^ 2 + U) ≤ s) :
+    0 ≤ (U - z) * s ^ 2 * (2 * z * s - (1 + z)) + (z ^ 2 + U) * s - 2 * z * (1 + z) := by
+  have hz0 : 0 < z := by linarith
+  have hU0 : 0 < U := by linarith
+  have hZ : 0 < z ^ 2 + U := by positivity
+  have hI1 : 1 ≤ (1 + z) ^ 2 / (z ^ 2 + U) := by rw [le_div_iff₀ hZ]; nlinarith
+  have hQ : (1 - z) * U ^ 2 - z * (z ^ 3 + 7 * z ^ 2 + 5 * z + 3) * U +
+      z ^ 2 * (z ^ 4 + 2 * z ^ 3 + 6 * z ^ 2 + 5 * z + 2) ≤ 0 := by
+    have hinner : z ^ 2 * (z + 1) - 2 * z - 8 < 0 := by
+      have h := mul_lt_mul_of_pos_right hz2 (by linarith : 0 < z + 1)
+      nlinarith only [h, hz2]
+    have hbase : z ^ 3 * (z ^ 2 * (z + 1) - 2 * z - 8) - 7 * z ^ 2 - 2 * z + 1 < 0 := by
+      have h := mul_neg_of_pos_of_neg (pow_pos hz0 3) hinner
+      nlinarith only [h, hz, sq_nonneg z]
+    have hdrop : 0 ≤ (U - (z + 1)) *
+        ((z - 1) * (U + (z + 1)) + z * (z ^ 3 + 7 * z ^ 2 + 5 * z + 3)) := by
+      apply mul_nonneg (by linarith only [hU])
+      exact add_nonneg (mul_nonneg (by linarith only [hz]) (by linarith only [hz, hU]))
+        (by positivity)
+    have he : (1 - z) * U ^ 2 - z * (z ^ 3 + 7 * z ^ 2 + 5 * z + 3) * U +
+        z ^ 2 * (z ^ 4 + 2 * z ^ 3 + 6 * z ^ 2 + 5 * z + 2) =
+        z ^ 3 * (z ^ 2 * (z + 1) - 2 * z - 8) - 7 * z ^ 2 - 2 * z + 1 -
+        (U - (z + 1)) * ((z - 1) * (U + (z + 1)) + z * (z ^ 3 + 7 * z ^ 2 + 5 * z + 3)) := by ring
+    rw [he]
+    linarith only [hbase, hdrop]
+  set I := (1 + z) ^ 2 / (z ^ 2 + U) with hIdef
+  have hPI : 0 ≤ (U - z) * I ^ 2 * (2 * z * I - (1 + z)) + (z ^ 2 + U) * I - 2 * z * (1 + z) := by
+    have e : (U - z) * I ^ 2 * (2 * z * I - (1 + z)) + (z ^ 2 + U) * I - 2 * z * (1 + z) =
+        -((1 + z) * (2 * z + 1 - U) * ((1 - z) * U ^ 2 - z * (z ^ 3 + 7 * z ^ 2 + 5 * z + 3) * U +
+          z ^ 2 * (z ^ 4 + 2 * z ^ 3 + 6 * z ^ 2 + 5 * z + 2))) / (z ^ 2 + U) ^ 3 := by
+      rw [hIdef]; field_simp; ring
+    rw [e]
+    apply div_nonneg _ (by positivity)
+    have : 0 ≤ (1 + z) * (2 * z + 1 - U) := mul_nonneg (by linarith) (by linarith)
+    nlinarith
+  have hM : 0 ≤ (U - z) * (2 * z * (s ^ 2 + s * I + I ^ 2) - (1 + z) * (s + I)) + (z ^ 2 + U) := by
+    have hs1 : 1 ≤ s := le_trans hI1 hs
+    have h1 : (1 + z) * (s + I) ≤ 2 * z * (s ^ 2 + s * I + I ^ 2) := by
+      have : s + I ≤ s ^ 2 + s * I + I ^ 2 := by nlinarith
+      have : 0 ≤ s + I := by linarith
+      nlinarith
+    have : 0 ≤ U - z := by linarith
+    nlinarith
+  have e : (U - z) * s ^ 2 * (2 * z * s - (1 + z)) + (z ^ 2 + U) * s - 2 * z * (1 + z) =
+      ((U - z) * I ^ 2 * (2 * z * I - (1 + z)) + (z ^ 2 + U) * I - 2 * z * (1 + z)) +
+      (s - I) * ((U - z) * (2 * z * (s ^ 2 + s * I + I ^ 2) - (1 + z) * (s + I)) + (z ^ 2 + U)) := by
+    ring
+  rw [e]
+  have : 0 ≤ (s - I) * ((U - z) * (2 * z * (s ^ 2 + s * I + I ^ 2) - (1 + z) * (s + I)) + (z ^ 2 + U)) :=
+    mul_nonneg (by linarith) hM
+  linarith
+
 /-- **The Padé lower bound** `f(h) ≥ (h - 1)³/(3h(h + 1))` for `h ≥ 1` (derivative
 `(h - 1)⁴/(6h²(h + 1)²)` of the difference). -/
 theorem fs_f_ge_pade {h : ℝ} (hh : 1 ≤ h) : (h - 1) ^ 3 / (3 * h * (h + 1)) ≤ ff_f h := by

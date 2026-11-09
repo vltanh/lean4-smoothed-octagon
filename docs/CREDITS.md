@@ -17,6 +17,8 @@ from Hales and Vajjha's [*Packings of Smoothed Polygons*](https://arxiv.org/abs/
   [formalize-math-paper](https://github.com/vltanh/formalize-math-paper) skill. It also wrote the
   axiom audit, the figures, the playground and this documentation.
 
+Codex (OpenAI) refined the paper and its Lean proofs.
+
 No person has reviewed the proof. Lean's kernel checks every step.
 
 ## Libraries

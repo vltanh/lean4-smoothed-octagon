@@ -1,0 +1,132 @@
+\section{Five or fewer pieces, and the proofs of the main theorems}\label{sec:outline-terminal}
+
+This section compares the periods with at most five pieces with the octagon, completes the proofs
+of \cref{thm:control} and \cref{thm:main}(b), and then proves the equality case. The proofs of the
+results stated here are in \cref{sec:terminal,sec:equality}.
+
+\subsection{Periods with at most five pieces}\label{sec:outline-short}
+
+For so few pieces nothing has to be estimated abstractly. The tangent closure
+(\cref{lem:tangent-closure}) is a system of four scalar equations in the factors; with at most
+five factors it either has no solution or determines the factors up to one or two parameters. It
+leaves four pieces with every switch forward, and five pieces with the word $0\,1\,0\,2\,0$ or with
+every switch reverse (\cref{prop:terminal-words}); the last are excluded by \cref{thm:class-R}. The
+twist $X(T)=R^{-1}X(0)R$ then determines the initial state, and the cost becomes an explicit
+function of the parameters.
+
+The difficulty is that the comparison is sharp. The four-piece family is a curve $a^2+b^2=1$ that
+contains the octagon at $a=b=1/\sqrt2$, so its minimum must be located exactly
+(\cref{thm:four-density}); the sign of the derivative comes from a monotone weight and a lower
+bound for the logarithm. The five-piece family approaches the octagon at the edge of its domain,
+where one of its factors tends to~$1$ and the period degenerates into the octagon's four pieces.
+Its strict inequality (\cref{thm:five-density}) therefore has no margin near that edge, and is
+proved through a concave envelope in one variable.
+
+\begin{theorem}[Terminal comparison]\label{thm:terminal}
+Every normal vertex period with at most five pieces costs at least $\Aoct$.
+\end{theorem}
+
+\begin{proposition}[Terminal equality]\label{prop:terminal-equality}
+Let $P$ be a normal vertex period with at most five pieces and cost $\Aoct$. Then $T=\tf$, and
+there is $r\in\N$ such that, for $t\in[0,T]$,
+\[
+ R^{-r}g(t)R^{r}=g_{\mathrm{oct}}(t),\qquad R^{-r}X(t)R^{r}=X_{\mathrm{oct}}(t),
+\]
+where $(g_{\mathrm{oct}},X_{\mathrm{oct}})$ is the trajectory of the smoothed octagon
+(\cref{prop:octagon-trajectory}).
+\end{proposition}
+
+\subsection{Proofs of the lower bounds}\label{sec:terminal-proofs}
+
+The chain of reductions now closes. Recall that a global minimizer is an admissible trajectory
+whose cost is at most that of every admissible trajectory (\cref{def:global-minimizer}).
+
+\begin{theorem}[Cost of a minimizer]\label{thm:minimizer-cost}
+Every global minimizer of the control problem costs at least $\Aoct$.
+\end{theorem}
+
+\begin{proof}
+Let $(T,u,g,X)$ be a global minimizer. The octagon's trajectory is admissible and costs $\Aoct$
+(\cref{prop:octagon-trajectory}), so $\cost(T,X)\le\Aoct$: the minimizer is competitive. By
+\cref{thm:finite-normal}, rebased at a
+switch it is a normal vertex period $P$ with the same terminal time and cost, whose state stays
+in $\hstarstar$. By \cref{thm:at-most-five}, $P$ has at most five pieces, and by
+\cref{thm:terminal}, $\cost(P)\ge\Aoct$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:control}]
+Let $(T,u,g,X)$ be admissible, with any terminal time and any measurable control. By
+\cref{thm:equivalence} a global minimizer $(T',u',g',X')$ exists: the realization of a worst disk.
+By \cref{thm:minimizer-cost} and minimality, $\Aoct\le\cost(T',X')\le\cost(T,X)$, and
+$\Aoct=\sqrt{12}\,\doct$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:main}\textup{(b)}]
+By \cref{thm:equivalence} there is a worst disk $K_0$, a convex disk symmetric about the origin
+whose greatest packing density is the least among all such disks, and its realization is a global
+minimizer of cost $\sqrt{12}\,\delta(K_0)$. By \cref{thm:minimizer-cost},
+$\sqrt{12}\,\delta(K_0)\ge\Aoct$, that is, $\delta(K_0)\ge\doct$. Now let $K$ be a convex disk with
+a centre $c$, so that $2c-x\in K$ for $x\in K$. Its translate $K-c$ is a convex disk symmetric
+about the origin, and translation does not change the greatest packing density, since a translate
+is a congruent copy (\cref{prop:converse}). Hence $\delta(K)=\delta(K-c)\ge\delta(K_0)\ge\doct$.
+\end{proof}
+
+
+\subsection{The equality case}\label{sec:outline-equality}
+
+\Cref{prop:terminal-equality} identifies a period of cost $\Aoct$ with the octagon's trajectory,
+but only after three choices that the proof of the lower bound made along the way: the
+normalization of the disk to Reinhardt's normal position, the rebasing of its trajectory at a
+switch, and a relabeling of the vertices of the control simplex by a power of $R$. To classify the
+disks of density $\doct$ these choices must be undone, and the trajectory to which the terminal
+equality is applied must be the realization of the given disk; another minimizer of the same cost
+would say nothing about it. Undoing the three choices and transporting the six arcs of the
+octagon's trajectory back to the disk gives the following.
+
+\begin{theorem}[Rigidity]\label{thm:rigidity}
+Every worst disk is the image of the octagon $\KH$ under an invertible linear map of the plane.
+Explicitly, with the notation of the proof, $K=e^{-1}g(s)R^{r}(\KH)$.
+\end{theorem}
+
+The converse is the affine invariance of the greatest packing density.
+
+\begin{proposition}[Affine invariance]\label{prop:converse}
+Let $K$ be a convex disk symmetric about the origin, $A$ an invertible linear map of the plane and
+$b$ a vector. Then $\delta(AK)=\delta(K)$ and $\delta(K+b)=\delta(K)$. In particular
+$\delta(A\KH)=\doct$ for every invertible linear map $A$.
+\end{proposition}
+
+Finally, the octagon $\KH$ of Hales's trajectory and Reinhardt's smoothed octagon $\Koct$ differ by
+a linear map (\cref{fig:octagon}).
+
+\begin{proposition}[Reinhardt's octagon is Hales's octagon]\label{prop:reinhardt-construction}
+Let $A=\operatorname{diag}\bigl(1,(2\sqrt2-1)/\sqrt3\bigr)$. Then $A(\KH)=\Koct$.
+\end{proposition}
+
+\subsection{Proofs of parts (a) and (c) of \texorpdfstring{\cref{thm:main}}{the main theorem}}\label{sec:equality-proofs}
+
+\begin{proof}[Proof of \cref{thm:main}\textup{(a)}]
+By \cref{prop:reinhardt-construction}, $\Koct=A\KH$. The octagon $\KH$ is a compact convex set
+with nonempty interior, symmetric about the origin, and $\delta(\KH)=\doct$
+(\cref{prop:octagon-trajectory}); these properties pass to its linear image, the density by
+\cref{prop:converse}.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:main}\textup{(c)}]
+Let $K$ be a convex disk with centre $c$. Suppose first that $\delta(K)=\doct$. The translate
+$K-c$ is symmetric about the origin with $\delta(K-c)=\doct$, which by part~(b) is the least
+value; so $K-c$ is a worst disk. By
+\cref{thm:rigidity}, $K-c=L\KH$ for an invertible linear map $L$, and $K$ is the image of $\KH$
+under the affine map $x\mapsto Lx+c$. Conversely, an affine image $A'\KH$, with linear part $L$,
+is the translate $L\KH+A'(0)$, which has density $\doct$ by \cref{prop:converse}. This proves the
+equivalence with $\KH$ in place of $\Koct$, and the affine images of $\KH$ are those of $\Koct$
+by \cref{prop:reinhardt-construction}.
+\end{proof}
+
+In Hales's form, the equality disks are the affine images of the convex hull of the six arcs
+$g(t)s_j$, $t\in[0,\tf]$, of the trajectory $(g,X)$ of the octagon's control from $g(0)=I$ and
+$X(0)=\Phi(0,y_0)$ (\cref{prop:octagon-trajectory}); this hull is a centrally symmetric convex
+disk of area $\Aoct=\sqrt{12}\,\doct$ and greatest packing density $\doct$. The equality data are
+explicit: four
+forward pieces with the word $\ee_2\ee_0\ee_1\ee_2$, every factor equal to $\sqrt2$, every
+duration equal to $\log2/(2\sqrt{2\sqrt2-1})$, and initial state $\Phi(0,y_0)$.

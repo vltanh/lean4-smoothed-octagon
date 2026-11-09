@@ -12,9 +12,9 @@ every admissible opposite floor `V ≤ v`. The larger neighbour is lowered by a 
 (`fs_res_le`) to one of three comparison faces: `q = 1` when `S² ≤ K`; `w = z` with `U ≥ 2z + 1`
 (the low face); `w = z` with `U < 2z + 1` (the hard face). On each face `𝓔 < 0`. All three faces use
 one integral bound (`fs_res_integral`) with the exact values at `h = 1` (`fs_res_one`,
-`fs_res_slope`). On the hard face the bound is a rational envelope whose sign reduces to a cubic
-`P > 0`; the coefficients `R₀, …, R₃` of `(2 - m)³P` in `p = U - 3` are signed by Bernstein
-expansions in `μ = m/v`, `v`.
+`fs_res_slope`). On the hard face the rational envelope is negative by AM--GM. The physical order gives
+a strict lower bound for its linear term; a reciprocal square-root comparison and a
+completed square supply the remaining shape margin.
 
 ## Main API
 
@@ -277,216 +277,7 @@ theorem fs_Fw_hard {U z : ℝ} (hU : 3 ≤ U) (hzU : z < U) (hz : 1 ≤ z) :
     · exact le_trans (fs_Fw_mono hz hqz.le hq4) (fs_Fw_quarter hz hz3)
     · exact le_trans (fs_Fw_mono hz hqz.le hqS) (fs_Fw_S hz3)
 
-/-! ### The cubic `P` -/
-
-theorem fs_H5_R3 {m v : ℝ} (hm : 0 ≤ m) (hmv : m ≤ v) (hv1 : v ≤ 1) :
-    0 ≤ -(3) * m ^ (2:ℕ) * v - (3) * m ^ (2:ℕ) - (3) * m * v ^ (2:ℕ) + (6) * m + (6) * v := by
-  have b1 : 0 ≤ m := hm
-  have b2 : 0 ≤ v - m := by linarith
-  have b3 : 0 ≤ v := by linarith
-  have b4 : 0 ≤ 1 - v := by linarith
-  have key : v ^ 1 * (-(3) * m ^ (2:ℕ) * v - (3) * m ^ (2:ℕ) - (3) * m * v ^ (2:ℕ) + (6) * m + (6) * v) =
-      (6) * (v - m) ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (12) * (v - m) ^ (2:ℕ) * v * (1 - v) +
-      (6) * (v - m) ^ (2:ℕ) * v ^ (2:ℕ) +
-      (18) * m * (v - m) * (1 - v) ^ (2:ℕ) +
-      (36) * m * (v - m) * v * (1 - v) +
-      (15) * m * (v - m) * v ^ (2:ℕ) +
-      (12) * m ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (21) * m ^ (2:ℕ) * v * (1 - v) +
-      (3) * m ^ (2:ℕ) * v ^ (2:ℕ) := by ring
-  have h : 0 ≤ v ^ 1 * (-(3) * m ^ (2:ℕ) * v - (3) * m ^ (2:ℕ) - (3) * m * v ^ (2:ℕ) + (6) * m + (6) * v) := by rw [key]; clear key; positivity
-  rcases eq_or_lt_of_le b3 with hv0 | hv0
-  · have hm0 : m = 0 := by linarith
-    subst hm0; rw [← hv0]; norm_num
-  · exact nonneg_of_mul_nonneg_right (by linarith [h]) (pow_pos hv0 1)
-
-theorem fs_H5_R2 {m v : ℝ} (hm : 0 ≤ m) (hmv : m ≤ v) (hv1 : v ≤ 1) :
-    0 ≤ m ^ (4:ℕ) * v + (4) * m ^ (4:ℕ) - (3) * m ^ (3:ℕ) * v ^ (2:ℕ) - (13) * m ^ (3:ℕ) * v - (28) * m ^ (3:ℕ) + (3) * m ^ (2:ℕ) * v ^ (2:ℕ) - (14) * m ^ (2:ℕ) * v + (28) * m ^ (2:ℕ) - m * v ^ (3:ℕ) - (30) * m * v ^ (2:ℕ) + (24) * m * v + (24) * m + (2) * v ^ (3:ℕ) + (24) * v := by
-  have b1 : 0 ≤ m := hm
-  have b2 : 0 ≤ v - m := by linarith
-  have b3 : 0 ≤ v := by linarith
-  have b4 : 0 ≤ 1 - v := by linarith
-  have key : v ^ 3 * (m ^ (4:ℕ) * v + (4) * m ^ (4:ℕ) - (3) * m ^ (3:ℕ) * v ^ (2:ℕ) - (13) * m ^ (3:ℕ) * v - (28) * m ^ (3:ℕ) + (3) * m ^ (2:ℕ) * v ^ (2:ℕ) - (14) * m ^ (2:ℕ) * v + (28) * m ^ (2:ℕ) - m * v ^ (3:ℕ) - (30) * m * v ^ (2:ℕ) + (24) * m * v + (24) * m + (2) * v ^ (3:ℕ) + (24) * v) =
-      (24) * (v - m) ^ (4:ℕ) * (1 - v) ^ (4:ℕ) +
-      (96) * (v - m) ^ (4:ℕ) * v * (1 - v) ^ (3:ℕ) +
-      (146) * (v - m) ^ (4:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (100) * (v - m) ^ (4:ℕ) * v ^ (3:ℕ) * (1 - v) +
-      (26) * (v - m) ^ (4:ℕ) * v ^ (4:ℕ) +
-      (120) * m * (v - m) ^ (3:ℕ) * (1 - v) ^ (4:ℕ) +
-      (504) * m * (v - m) ^ (3:ℕ) * v * (1 - v) ^ (3:ℕ) +
-      (770) * m * (v - m) ^ (3:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (507) * m * (v - m) ^ (3:ℕ) * v ^ (3:ℕ) * (1 - v) +
-      (121) * m * (v - m) ^ (3:ℕ) * v ^ (4:ℕ) +
-      (216) * m ^ (2:ℕ) * (v - m) ^ (2:ℕ) * (1 - v) ^ (4:ℕ) +
-      (964) * m ^ (2:ℕ) * (v - m) ^ (2:ℕ) * v * (1 - v) ^ (3:ℕ) +
-      (1504) * m ^ (2:ℕ) * (v - m) ^ (2:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (980) * m ^ (2:ℕ) * (v - m) ^ (2:ℕ) * v ^ (3:ℕ) * (1 - v) +
-      (224) * m ^ (2:ℕ) * (v - m) ^ (2:ℕ) * v ^ (4:ℕ) +
-      (168) * m ^ (3:ℕ) * (v - m) * (1 - v) ^ (4:ℕ) +
-      (800) * m ^ (3:ℕ) * (v - m) * v * (1 - v) ^ (3:ℕ) +
-      (1254) * m ^ (3:ℕ) * (v - m) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (770) * m ^ (3:ℕ) * (v - m) * v ^ (3:ℕ) * (1 - v) +
-      (145) * m ^ (3:ℕ) * (v - m) * v ^ (4:ℕ) +
-      (48) * m ^ (4:ℕ) * (1 - v) ^ (4:ℕ) +
-      (244) * m ^ (4:ℕ) * v * (1 - v) ^ (3:ℕ) +
-      (374) * m ^ (4:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (201) * m ^ (4:ℕ) * v ^ (3:ℕ) * (1 - v) +
-      (21) * m ^ (4:ℕ) * v ^ (4:ℕ) := by ring
-  have h : 0 ≤ v ^ 3 * (m ^ (4:ℕ) * v + (4) * m ^ (4:ℕ) - (3) * m ^ (3:ℕ) * v ^ (2:ℕ) - (13) * m ^ (3:ℕ) * v - (28) * m ^ (3:ℕ) + (3) * m ^ (2:ℕ) * v ^ (2:ℕ) - (14) * m ^ (2:ℕ) * v + (28) * m ^ (2:ℕ) - m * v ^ (3:ℕ) - (30) * m * v ^ (2:ℕ) + (24) * m * v + (24) * m + (2) * v ^ (3:ℕ) + (24) * v) := by rw [key]; clear key; positivity
-  rcases eq_or_lt_of_le b3 with hv0 | hv0
-  · have hm0 : m = 0 := by linarith
-    subst hm0; rw [← hv0]; norm_num
-  · exact nonneg_of_mul_nonneg_right (by linarith [h]) (pow_pos hv0 3)
-
-theorem fs_H5_R1 {m v : ℝ} (hm : 0 ≤ m) (hmv : m ≤ v) (hv1 : v ≤ 1) :
-    0 ≤ -m ^ (6:ℕ) + (7) * m ^ (5:ℕ) * v + (14) * m ^ (5:ℕ) - (3) * m ^ (4:ℕ) * v ^ (2:ℕ) - (46) * m ^ (4:ℕ) * v - (40) * m ^ (4:ℕ) - (2) * m ^ (3:ℕ) * v ^ (3:ℕ) - (12) * m ^ (3:ℕ) * v ^ (2:ℕ) + (40) * m ^ (3:ℕ) * v - (48) * m ^ (3:ℕ) + (8) * m ^ (2:ℕ) * v ^ (3:ℕ) + (12) * m ^ (2:ℕ) * v ^ (2:ℕ) - (96) * m ^ (2:ℕ) * v + (160) * m ^ (2:ℕ) - (16) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (144) * m * v + (16) * v ^ (3:ℕ) := by
-  have b1 : 0 ≤ m := hm
-  have b2 : 0 ≤ v - m := by linarith
-  have b3 : 0 ≤ v := by linarith
-  have b4 : 0 ≤ 1 - v := by linarith
-  have key : v ^ 4 * (-m ^ (6:ℕ) + (7) * m ^ (5:ℕ) * v + (14) * m ^ (5:ℕ) - (3) * m ^ (4:ℕ) * v ^ (2:ℕ) - (46) * m ^ (4:ℕ) * v - (40) * m ^ (4:ℕ) - (2) * m ^ (3:ℕ) * v ^ (3:ℕ) - (12) * m ^ (3:ℕ) * v ^ (2:ℕ) + (40) * m ^ (3:ℕ) * v - (48) * m ^ (3:ℕ) + (8) * m ^ (2:ℕ) * v ^ (3:ℕ) + (12) * m ^ (2:ℕ) * v ^ (2:ℕ) - (96) * m ^ (2:ℕ) * v + (160) * m ^ (2:ℕ) - (16) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (144) * m * v + (16) * v ^ (3:ℕ)) =
-      (16) * (v - m) ^ (6:ℕ) * v * (1 - v) ^ (3:ℕ) +
-      (48) * (v - m) ^ (6:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (48) * (v - m) ^ (6:ℕ) * v ^ (3:ℕ) * (1 - v) +
-      (16) * (v - m) ^ (6:ℕ) * v ^ (4:ℕ) +
-      (144) * m * (v - m) ^ (5:ℕ) * (1 - v) ^ (4:ℕ) +
-      (576) * m * (v - m) ^ (5:ℕ) * v * (1 - v) ^ (3:ℕ) +
-      (848) * m * (v - m) ^ (5:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (544) * m * (v - m) ^ (5:ℕ) * v ^ (3:ℕ) * (1 - v) +
-      (128) * m * (v - m) ^ (5:ℕ) * v ^ (4:ℕ) +
-      (880) * m ^ (2:ℕ) * (v - m) ^ (4:ℕ) * (1 - v) ^ (4:ℕ) +
-      (3184) * m ^ (2:ℕ) * (v - m) ^ (4:ℕ) * v * (1 - v) ^ (3:ℕ) +
-      (4204) * m ^ (2:ℕ) * (v - m) ^ (4:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (2384) * m ^ (2:ℕ) * (v - m) ^ (4:ℕ) * v ^ (3:ℕ) * (1 - v) +
-      (484) * m ^ (2:ℕ) * (v - m) ^ (4:ℕ) * v ^ (4:ℕ) +
-      (2080) * m ^ (3:ℕ) * (v - m) ^ (3:ℕ) * (1 - v) ^ (4:ℕ) +
-      (7248) * m ^ (3:ℕ) * (v - m) ^ (3:ℕ) * v * (1 - v) ^ (3:ℕ) +
-      (9192) * m ^ (3:ℕ) * (v - m) ^ (3:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (4980) * m ^ (3:ℕ) * (v - m) ^ (3:ℕ) * v ^ (3:ℕ) * (1 - v) +
-      (954) * m ^ (3:ℕ) * (v - m) ^ (3:ℕ) * v ^ (4:ℕ) +
-      (2400) * m ^ (4:ℕ) * (v - m) ^ (2:ℕ) * (1 - v) ^ (4:ℕ) +
-      (8160) * m ^ (4:ℕ) * (v - m) ^ (2:ℕ) * v * (1 - v) ^ (3:ℕ) +
-      (10072) * m ^ (4:ℕ) * (v - m) ^ (2:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (5230) * m ^ (4:ℕ) * (v - m) ^ (2:ℕ) * v ^ (3:ℕ) * (1 - v) +
-      (909) * m ^ (4:ℕ) * (v - m) ^ (2:ℕ) * v ^ (4:ℕ) +
-      (1360) * m ^ (5:ℕ) * (v - m) * (1 - v) ^ (4:ℕ) +
-      (4528) * m ^ (5:ℕ) * (v - m) * v * (1 - v) ^ (3:ℕ) +
-      (5432) * m ^ (5:ℕ) * (v - m) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (2638) * m ^ (5:ℕ) * (v - m) * v ^ (3:ℕ) * (1 - v) +
-      (369) * m ^ (5:ℕ) * (v - m) * v ^ (4:ℕ) +
-      (304) * m ^ (6:ℕ) * (1 - v) ^ (4:ℕ) +
-      (992) * m ^ (6:ℕ) * v * (1 - v) ^ (3:ℕ) +
-      (1148) * m ^ (6:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (2:ℕ) +
-      (500) * m ^ (6:ℕ) * v ^ (3:ℕ) * (1 - v) +
-      (41) * m ^ (6:ℕ) * v ^ (4:ℕ) := by ring
-  have h : 0 ≤ v ^ 4 * (-m ^ (6:ℕ) + (7) * m ^ (5:ℕ) * v + (14) * m ^ (5:ℕ) - (3) * m ^ (4:ℕ) * v ^ (2:ℕ) - (46) * m ^ (4:ℕ) * v - (40) * m ^ (4:ℕ) - (2) * m ^ (3:ℕ) * v ^ (3:ℕ) - (12) * m ^ (3:ℕ) * v ^ (2:ℕ) + (40) * m ^ (3:ℕ) * v - (48) * m ^ (3:ℕ) + (8) * m ^ (2:ℕ) * v ^ (3:ℕ) + (12) * m ^ (2:ℕ) * v ^ (2:ℕ) - (96) * m ^ (2:ℕ) * v + (160) * m ^ (2:ℕ) - (16) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (144) * m * v + (16) * v ^ (3:ℕ)) := by rw [key]; clear key; positivity
-  rcases eq_or_lt_of_le b3 with hv0 | hv0
-  · have hm0 : m = 0 := by linarith
-    subst hm0; rw [← hv0]; norm_num
-  · exact nonneg_of_mul_nonneg_right (by linarith [h]) (pow_pos hv0 4)
-
-theorem fs_H5_R0 {m v : ℝ} (hm : 0 ≤ m) (hmv : m ≤ v) (hv1 : v ≤ 1) (hv : 0 < v) :
-    0 < (6) * m ^ (6:ℕ) * v - (4) * m ^ (6:ℕ) - m ^ (5:ℕ) * v ^ (3:ℕ) - (32) * m ^ (5:ℕ) * v + (56) * m ^ (5:ℕ) + (6) * m ^ (4:ℕ) * v ^ (3:ℕ) - (12) * m ^ (4:ℕ) * v ^ (2:ℕ) + (40) * m ^ (4:ℕ) * v - (224) * m ^ (4:ℕ) - (20) * m ^ (3:ℕ) * v ^ (3:ℕ) - (112) * m ^ (3:ℕ) * v + (256) * m ^ (3:ℕ) + (40) * m ^ (2:ℕ) * v ^ (3:ℕ) + (128) * m ^ (2:ℕ) * v - (48) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (32) * v ^ (3:ℕ) := by
-  have b3 : 0 ≤ v := hv.le
-  have b4 : 0 ≤ 1 - v := by linarith
-  have h : 0 ≤ v ^ 3 * ((6) * m ^ (6:ℕ) * v - (4) * m ^ (6:ℕ) - m ^ (5:ℕ) * v ^ (3:ℕ) - (32) * m ^ (5:ℕ) * v + (56) * m ^ (5:ℕ) + (6) * m ^ (4:ℕ) * v ^ (3:ℕ) - (12) * m ^ (4:ℕ) * v ^ (2:ℕ) + (40) * m ^ (4:ℕ) * v - (224) * m ^ (4:ℕ) - (20) * m ^ (3:ℕ) * v ^ (3:ℕ) - (112) * m ^ (3:ℕ) * v + (256) * m ^ (3:ℕ) + (40) * m ^ (2:ℕ) * v ^ (3:ℕ) + (128) * m ^ (2:ℕ) * v - (48) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (32) * v ^ (3:ℕ)) - 3 * v ^ 6 := by
-    rcases le_total (2 * m) v with hs | hs
-    · have b1 : 0 ≤ m := hm
-      have b2 : 0 ≤ 1 / 2 * v - m := by linarith
-      have key : v ^ 3 * ((6) * m ^ (6:ℕ) * v - (4) * m ^ (6:ℕ) - m ^ (5:ℕ) * v ^ (3:ℕ) - (32) * m ^ (5:ℕ) * v + (56) * m ^ (5:ℕ) + (6) * m ^ (4:ℕ) * v ^ (3:ℕ) - (12) * m ^ (4:ℕ) * v ^ (2:ℕ) + (40) * m ^ (4:ℕ) * v - (224) * m ^ (4:ℕ) - (20) * m ^ (3:ℕ) * v ^ (3:ℕ) - (112) * m ^ (3:ℕ) * v + (256) * m ^ (3:ℕ) + (40) * m ^ (2:ℕ) * v ^ (3:ℕ) + (128) * m ^ (2:ℕ) * v - (48) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (32) * v ^ (3:ℕ)) - 3 * v ^ 6 =
-          (1856) * (1 / 2 * v - m) ^ (6:ℕ) * (1 - v) ^ (5:ℕ) +
-      (9280) * (1 / 2 * v - m) ^ (6:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (18560) * (1 / 2 * v - m) ^ (6:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (18560) * (1 / 2 * v - m) ^ (6:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (9280) * (1 / 2 * v - m) ^ (6:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (1856) * (1 / 2 * v - m) ^ (6:ℕ) * v ^ (5:ℕ) +
-      (8064) * m * (1 / 2 * v - m) ^ (5:ℕ) * (1 - v) ^ (5:ℕ) +
-      (38784) * m * (1 / 2 * v - m) ^ (5:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (74496) * m * (1 / 2 * v - m) ^ (5:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (71424) * m * (1 / 2 * v - m) ^ (5:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (34176) * m * (1 / 2 * v - m) ^ (5:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (6528) * m * (1 / 2 * v - m) ^ (5:ℕ) * v ^ (5:ℕ) +
-      (14528) * m ^ (2:ℕ) * (1 / 2 * v - m) ^ (4:ℕ) * (1 - v) ^ (5:ℕ) +
-      (64960) * m ^ (2:ℕ) * (1 / 2 * v - m) ^ (4:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (115200) * m ^ (2:ℕ) * (1 / 2 * v - m) ^ (4:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (101120) * m ^ (2:ℕ) * (1 / 2 * v - m) ^ (4:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (43840) * m ^ (2:ℕ) * (1 / 2 * v - m) ^ (4:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (7488) * m ^ (2:ℕ) * (1 / 2 * v - m) ^ (4:ℕ) * v ^ (5:ℕ) +
-      (16640) * m ^ (3:ℕ) * (1 / 2 * v - m) ^ (3:ℕ) * (1 - v) ^ (5:ℕ) +
-      (66944) * m ^ (3:ℕ) * (1 / 2 * v - m) ^ (3:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (103936) * m ^ (3:ℕ) * (1 / 2 * v - m) ^ (3:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (76384) * m ^ (3:ℕ) * (1 / 2 * v - m) ^ (3:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (25536) * m ^ (3:ℕ) * (1 / 2 * v - m) ^ (3:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (2784) * m ^ (3:ℕ) * (1 / 2 * v - m) ^ (3:ℕ) * v ^ (5:ℕ) +
-      (15552) * m ^ (4:ℕ) * (1 / 2 * v - m) ^ (2:ℕ) * (1 - v) ^ (5:ℕ) +
-      (58816) * m ^ (4:ℕ) * (1 / 2 * v - m) ^ (2:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (83744) * m ^ (4:ℕ) * (1 / 2 * v - m) ^ (2:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (53328) * m ^ (4:ℕ) * (1 / 2 * v - m) ^ (2:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (12952) * m ^ (4:ℕ) * (1 / 2 * v - m) ^ (2:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (104) * m ^ (4:ℕ) * (1 / 2 * v - m) ^ (2:ℕ) * v ^ (5:ℕ) +
-      (10112) * m ^ (5:ℕ) * (1 / 2 * v - m) * (1 - v) ^ (5:ℕ) +
-      (38400) * m ^ (5:ℕ) * (1 / 2 * v - m) * v * (1 - v) ^ (4:ℕ) +
-      (55472) * m ^ (5:ℕ) * (1 / 2 * v - m) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (36496) * m ^ (5:ℕ) * (1 / 2 * v - m) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (9664) * m ^ (5:ℕ) * (1 / 2 * v - m) * v ^ (4:ℕ) * (1 - v) +
-      (350) * m ^ (5:ℕ) * (1 / 2 * v - m) * v ^ (5:ℕ) +
-      (2880) * m ^ (6:ℕ) * (1 - v) ^ (5:ℕ) +
-      (11072) * m ^ (6:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (16400) * m ^ (6:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (11292) * m ^ (6:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (3302) * m ^ (6:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (216) * m ^ (6:ℕ) * v ^ (5:ℕ) := by ring
-      rw [key]; clear key; positivity
-    · have b1 : 0 ≤ m - 1 / 2 * v := by linarith
-      have b2 : 0 ≤ v - m := by linarith
-      have key : v ^ 3 * ((6) * m ^ (6:ℕ) * v - (4) * m ^ (6:ℕ) - m ^ (5:ℕ) * v ^ (3:ℕ) - (32) * m ^ (5:ℕ) * v + (56) * m ^ (5:ℕ) + (6) * m ^ (4:ℕ) * v ^ (3:ℕ) - (12) * m ^ (4:ℕ) * v ^ (2:ℕ) + (40) * m ^ (4:ℕ) * v - (224) * m ^ (4:ℕ) - (20) * m ^ (3:ℕ) * v ^ (3:ℕ) - (112) * m ^ (3:ℕ) * v + (256) * m ^ (3:ℕ) + (40) * m ^ (2:ℕ) * v ^ (3:ℕ) + (128) * m ^ (2:ℕ) * v - (48) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (32) * v ^ (3:ℕ)) - 3 * v ^ 6 =
-          (2880) * (v - m) ^ (6:ℕ) * (1 - v) ^ (5:ℕ) +
-      (11072) * (v - m) ^ (6:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (16400) * (v - m) ^ (6:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (11292) * (v - m) ^ (6:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (3302) * (v - m) ^ (6:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (216) * (v - m) ^ (6:ℕ) * v ^ (5:ℕ) +
-      (24448) * (m - 1 / 2 * v) * (v - m) ^ (5:ℕ) * (1 - v) ^ (5:ℕ) +
-      (94464) * (m - 1 / 2 * v) * (v - m) ^ (5:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (141328) * (m - 1 / 2 * v) * (v - m) ^ (5:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (99008) * (m - 1 / 2 * v) * (v - m) ^ (5:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (29960) * (m - 1 / 2 * v) * (v - m) ^ (5:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (2242) * (m - 1 / 2 * v) * (v - m) ^ (5:ℕ) * v ^ (5:ℕ) +
-      (87232) * (m - 1 / 2 * v) ^ (2:ℕ) * (v - m) ^ (4:ℕ) * (1 - v) ^ (5:ℕ) +
-      (339136) * (m - 1 / 2 * v) ^ (2:ℕ) * (v - m) ^ (4:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (513024) * (m - 1 / 2 * v) ^ (2:ℕ) * (v - m) ^ (4:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (365888) * (m - 1 / 2 * v) ^ (2:ℕ) * (v - m) ^ (4:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (114432) * (m - 1 / 2 * v) ^ (2:ℕ) * (v - m) ^ (4:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (9564) * (m - 1 / 2 * v) ^ (2:ℕ) * (v - m) ^ (4:ℕ) * v ^ (5:ℕ) +
-      (164096) * (m - 1 / 2 * v) ^ (3:ℕ) * (v - m) ^ (3:ℕ) * (1 - v) ^ (5:ℕ) +
-      (639104) * (m - 1 / 2 * v) ^ (3:ℕ) * (v - m) ^ (3:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (971136) * (m - 1 / 2 * v) ^ (3:ℕ) * (v - m) ^ (3:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (697120) * (m - 1 / 2 * v) ^ (3:ℕ) * (v - m) ^ (3:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (219840) * (m - 1 / 2 * v) ^ (3:ℕ) * (v - m) ^ (3:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (18608) * (m - 1 / 2 * v) ^ (3:ℕ) * (v - m) ^ (3:ℕ) * v ^ (5:ℕ) +
-      (170176) * (m - 1 / 2 * v) ^ (4:ℕ) * (v - m) ^ (2:ℕ) * (1 - v) ^ (5:ℕ) +
-      (660160) * (m - 1 / 2 * v) ^ (4:ℕ) * (v - m) ^ (2:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (999680) * (m - 1 / 2 * v) ^ (4:ℕ) * (v - m) ^ (2:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (713088) * (m - 1 / 2 * v) ^ (4:ℕ) * (v - m) ^ (2:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (220832) * (m - 1 / 2 * v) ^ (4:ℕ) * (v - m) ^ (2:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (17120) * (m - 1 / 2 * v) ^ (4:ℕ) * (v - m) ^ (2:ℕ) * v ^ (5:ℕ) +
-      (92032) * (m - 1 / 2 * v) ^ (5:ℕ) * (v - m) * (1 - v) ^ (5:ℕ) +
-      (353664) * (m - 1 / 2 * v) ^ (5:ℕ) * (v - m) * v * (1 - v) ^ (4:ℕ) +
-      (529920) * (m - 1 / 2 * v) ^ (5:ℕ) * (v - m) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (371328) * (m - 1 / 2 * v) ^ (5:ℕ) * (v - m) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (110080) * (m - 1 / 2 * v) ^ (5:ℕ) * (v - m) * v ^ (4:ℕ) * (1 - v) +
-      (6816) * (m - 1 / 2 * v) ^ (5:ℕ) * (v - m) * v ^ (5:ℕ) +
-      (20288) * (m - 1 / 2 * v) ^ (6:ℕ) * (1 - v) ^ (5:ℕ) +
-      (76864) * (m - 1 / 2 * v) ^ (6:ℕ) * v * (1 - v) ^ (4:ℕ) +
-      (113280) * (m - 1 / 2 * v) ^ (6:ℕ) * v ^ (2:ℕ) * (1 - v) ^ (3:ℕ) +
-      (77184) * (m - 1 / 2 * v) ^ (6:ℕ) * v ^ (3:ℕ) * (1 - v) ^ (2:ℕ) +
-      (21312) * (m - 1 / 2 * v) ^ (6:ℕ) * v ^ (4:ℕ) * (1 - v) +
-      (768) * (m - 1 / 2 * v) ^ (6:ℕ) * v ^ (5:ℕ) := by ring
-      rw [key]; clear key; positivity
-  have h3 : 0 < 3 * v ^ 6 := by positivity
-  have h4 : 0 < v ^ 3 * ((6) * m ^ (6:ℕ) * v - (4) * m ^ (6:ℕ) - m ^ (5:ℕ) * v ^ (3:ℕ) - (32) * m ^ (5:ℕ) * v + (56) * m ^ (5:ℕ) + (6) * m ^ (4:ℕ) * v ^ (3:ℕ) - (12) * m ^ (4:ℕ) * v ^ (2:ℕ) + (40) * m ^ (4:ℕ) * v - (224) * m ^ (4:ℕ) - (20) * m ^ (3:ℕ) * v ^ (3:ℕ) - (112) * m ^ (3:ℕ) * v + (256) * m ^ (3:ℕ) + (40) * m ^ (2:ℕ) * v ^ (3:ℕ) + (128) * m ^ (2:ℕ) * v - (48) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (32) * v ^ (3:ℕ)) := by linarith
-  exact pos_of_mul_pos_right h4 (pow_pos hv 3).le
+/-! ### Positivity by AM--GM -/
 
 /-- The cubic `P` in `v` that controls the rational envelope of the hard face, with `l = λ`. -/
 noncomputable def fs_H5P (z l v : ℝ) : ℝ :=
@@ -494,32 +285,205 @@ noncomputable def fs_H5P (z l v : ℝ) : ℝ :=
     ((1 + l) * (1 - l) * (1 + z) * z * (3 * (z - 1) + (1 - l)) - 6 * (z + l) * (z - l) * (1 - z * l)) * v +
     (1 + l) * (1 - l) * (1 + z) * (3 * (z - 1) + (1 - l)) * (z - l)
 
-/-- **`P > 0`**: `(2 - m)³P = R₀ + R₁p + R₂p² + R₃p³`, `m = 1 - λ`,
-`p = (2 - m)z - (2 + m) = U - 3`, with `R₀ > 0` and `R₁, R₂, R₃ ≥ 0` by their Bernstein expansions.
--/
-theorem fs_H5P_pos {z l v : ℝ} (hl0 : 0 < l) (hl1 : l < 1) (hvm : 1 - l ≤ v) (hv1 : v ≤ 1)
-    (hv0 : 0 < v) (hp : 0 ≤ (1 + l) * z - (3 - l)) : 0 < fs_H5P z l v := by
-  obtain ⟨m, rfl⟩ : ∃ m, l = 1 - m := ⟨1 - l, by ring⟩
-  have hm0 : 0 ≤ m := by linarith
-  have hmv : m ≤ v := by linarith
-  have h0 := fs_H5_R0 hm0 hmv hv1 hv0
-  have h1 := fs_H5_R1 hm0 hmv hv1
-  have h2 := fs_H5_R2 hm0 hmv hv1
-  have h3 := fs_H5_R3 hm0 hmv hv1
-  have key : (2 - m) ^ 3 * fs_H5P z (1 - m) v =
-      ((6) * m ^ (6:ℕ) * v - (4) * m ^ (6:ℕ) - m ^ (5:ℕ) * v ^ (3:ℕ) - (32) * m ^ (5:ℕ) * v + (56) * m ^ (5:ℕ) + (6) * m ^ (4:ℕ) * v ^ (3:ℕ) - (12) * m ^ (4:ℕ) * v ^ (2:ℕ) + (40) * m ^ (4:ℕ) * v - (224) * m ^ (4:ℕ) - (20) * m ^ (3:ℕ) * v ^ (3:ℕ) - (112) * m ^ (3:ℕ) * v + (256) * m ^ (3:ℕ) + (40) * m ^ (2:ℕ) * v ^ (3:ℕ) + (128) * m ^ (2:ℕ) * v - (48) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (32) * v ^ (3:ℕ)) + (-m ^ (6:ℕ) + (7) * m ^ (5:ℕ) * v + (14) * m ^ (5:ℕ) - (3) * m ^ (4:ℕ) * v ^ (2:ℕ) - (46) * m ^ (4:ℕ) * v - (40) * m ^ (4:ℕ) - (2) * m ^ (3:ℕ) * v ^ (3:ℕ) - (12) * m ^ (3:ℕ) * v ^ (2:ℕ) + (40) * m ^ (3:ℕ) * v - (48) * m ^ (3:ℕ) + (8) * m ^ (2:ℕ) * v ^ (3:ℕ) + (12) * m ^ (2:ℕ) * v ^ (2:ℕ) - (96) * m ^ (2:ℕ) * v + (160) * m ^ (2:ℕ) - (16) * m * v ^ (3:ℕ) - (96) * m * v ^ (2:ℕ) + (144) * m * v + (16) * v ^ (3:ℕ)) * ((2 - m) * z - (2 + m)) +
-      (m ^ (4:ℕ) * v + (4) * m ^ (4:ℕ) - (3) * m ^ (3:ℕ) * v ^ (2:ℕ) - (13) * m ^ (3:ℕ) * v - (28) * m ^ (3:ℕ) + (3) * m ^ (2:ℕ) * v ^ (2:ℕ) - (14) * m ^ (2:ℕ) * v + (28) * m ^ (2:ℕ) - m * v ^ (3:ℕ) - (30) * m * v ^ (2:ℕ) + (24) * m * v + (24) * m + (2) * v ^ (3:ℕ) + (24) * v) * ((2 - m) * z - (2 + m)) ^ 2 +
-      (-(3) * m ^ (2:ℕ) * v - (3) * m ^ (2:ℕ) - (3) * m * v ^ (2:ℕ) + (6) * m + (6) * v) * ((2 - m) * z - (2 + m)) ^ 3 := by
-    unfold fs_H5P; ring
-  have hp' : 0 ≤ (2 - m) * z - (2 + m) := by linarith
-  have hpos : 0 < (2 - m) ^ 3 * fs_H5P z (1 - m) v := by
-    rw [key]
-    have := mul_nonneg h1 hp'
-    have := mul_nonneg h2 (pow_nonneg hp' 2)
-    have := mul_nonneg h3 (pow_nonneg hp' 3)
+private noncomputable def fsH5C (z μ : ℝ) : ℝ :=
+  (2 - μ) * μ * (1 + z) * z * (3 * (z - 1) + μ) -
+    6 * (z + 1 - μ) * (z - (1 - μ)) * (1 - z * (1 - μ))
+
+private noncomputable def fsH5D (z μ : ℝ) : ℝ :=
+  (2 - μ) * μ * (1 + z) * (3 * (z - 1) + μ) * (z - (1 - μ))
+
+/-- The order constraint gives a strict lower bound for the linear coefficient. -/
+private theorem fs_H5C_lower {z μ : ℝ} (hm0 : 0 < μ) (hm1 : μ < 1)
+    (hp : 2 + μ ≤ (2 - μ) * z) :
+    (4 - 3 * μ) * μ ^ 2 * (1 + z) ^ 2 < fsH5C z μ := by
+  have h2 : 0 < 2 - μ := by linarith
+  have hz : 1 < z := by
+    by_contra h
+    have hprod := mul_le_mul_of_nonneg_left (le_of_not_gt h) h2.le
     linarith
-  exact pos_of_mul_pos_right hpos (by have : 0 < 2 - m := by linarith
-                                      positivity)
+  have hz0 : 0 < z := by linarith
+  have hS : 0 < 1 + z := by linarith
+  have hell : 0 < z + 1 - μ := by linarith
+  have hzl : 0 < z - (1 - μ) := by linarith
+  have hgap : 0 ≤ (2 - μ) * (3 * (z - 1) + μ) - μ * (8 - μ) := by
+    nlinarith only [hp]
+  have hloss : 0 ≤ μ ^ 2 - (2 - μ) * (1 - z * (1 - μ)) := by
+    have := mul_nonneg (show 0 ≤ 1 - μ by linarith) (show 0 ≤ (2 - μ) * z - (2 + μ) by linarith)
+    nlinarith only [this]
+  let T := 4 * μ * (2 - μ) + 2 * (1 - μ ^ 2) * (z ^ 2 - 1) +
+    5 * μ * (2 - μ) * (z - 1)
+  have hT : 0 < T := by
+    have : 0 ≤ 1 - μ ^ 2 := by nlinarith only [hm0, hm1]
+    have : 0 ≤ z ^ 2 - 1 := by nlinarith only [hz]
+    dsimp [T]
+    positivity
+  have h1 : 0 ≤ (2 - μ) * μ * (1 + z) * z *
+      ((2 - μ) * (3 * (z - 1) + μ) - μ * (8 - μ)) := by positivity
+  have h2p : 0 ≤ 6 * (z + 1 - μ) * (z - (1 - μ)) *
+      (μ ^ 2 - (2 - μ) * (1 - z * (1 - μ))) := by positivity
+  have e : (2 - μ) * (fsH5C z μ - (4 - 3 * μ) * μ ^ 2 * (1 + z) ^ 2) =
+      μ ^ 2 * T +
+        (2 - μ) * μ * (1 + z) * z * ((2 - μ) * (3 * (z - 1) + μ) - μ * (8 - μ)) +
+        6 * (z + 1 - μ) * (z - (1 - μ)) * (μ ^ 2 - (2 - μ) * (1 - z * (1 - μ))) := by
+    dsimp [fsH5C, T]
+    ring
+  have hprod : 0 < (2 - μ) * (fsH5C z μ - (4 - 3 * μ) * μ ^ 2 * (1 + z) ^ 2) := by
+    rw [e]
+    have := mul_pos (sq_pos_of_pos hm0) hT
+    linarith only [this, h1, h2p]
+  have := pos_of_mul_pos_right hprod h2.le
+  linarith only [this]
+
+/-- A reciprocal square-root comparison supplies the AM--GM margin. -/
+private theorem fs_H5_sqrt_lower {μ : ℝ} (hm0 : 0 < μ) (hm1 : μ < 1) :
+    2 - μ + μ * (1 - μ) / 4 ≤ Real.sqrt (4 - 3 * μ) := by
+  have harg : 0 ≤ 4 - 3 * μ := by linarith
+  have hs0 := Real.sqrt_nonneg (4 - 3 * μ)
+  have hs := Real.sq_sqrt harg
+  have hp : 0 ≤ μ * (1 - μ) := mul_nonneg hm0.le (by linarith)
+  have hs2 : Real.sqrt (4 - 3 * μ) ≤ 2 := by nlinarith only [hs0, hs, hm0]
+  have hbase : 2 - μ ≤ Real.sqrt (4 - 3 * μ) := by nlinarith only [hs0, hs, hp, hm1]
+  have he : (Real.sqrt (4 - 3 * μ) - (2 - μ)) *
+      (Real.sqrt (4 - 3 * μ) + 2 - μ) = μ * (1 - μ) := by nlinarith only [hs]
+  have hprod := mul_nonneg (sub_nonneg.mpr hbase)
+    (show 0 ≤ 4 - (Real.sqrt (4 - 3 * μ) + 2 - μ) by linarith)
+  nlinarith only [he, hprod]
+
+/-- AM--GM and a completed square give positivity on the full physical shape range. -/
+private theorem fs_H5P_amgm {z μ v : ℝ} (hm0 : 0 < μ) (hm1 : μ < 1)
+    (hv0 : 0 < v) (hv1 : v ≤ 1) (hp : 2 + μ ≤ (2 - μ) * z) :
+    0 < fs_H5P z (1 - μ) v := by
+  have h2 : 0 < 2 - μ := by linarith
+  have hz : 1 < z := by
+    by_contra h
+    have hprod := mul_le_mul_of_nonneg_left (le_of_not_gt h) h2.le
+    linarith
+  have hz0 : 0 < z := by linarith
+  let S := 1 + z
+  let ell := z + 1 - μ
+  let C := fsH5C z μ
+  let D := fsH5D z μ
+  let r := μ * S * ell
+  let Q := (μ + z - 2) * (μ + 3 * z - 5)
+  have hS : 0 < S := by dsimp [S]; linarith
+  have hell : 1 ≤ ell := by dsimp [ell]; linarith
+  have hell0 : 0 < ell := by linarith
+  have hzl : 0 < z - (1 - μ) := by linarith
+  have h3z : 0 < 3 * (z - 1) + μ := by linarith
+  have hD : 0 < D := by dsimp [D, fsH5D]; positivity
+  have hr : 0 < r := by dsimp [r]; positivity
+  have hC : (4 - 3 * μ) * μ ^ 2 * S ^ 2 < C := fs_H5C_lower hm0 hm1 hp
+  have heq : fs_H5P z (1 - μ) v = ell ^ 2 * v ^ 3 - 3 * z * r * v ^ 2 + C * v + D := by
+    dsimp [fs_H5P, ell, r, S, C, D, fsH5C, fsH5D]
+    ring
+  have hv2 : 0 ≤ 1 - v ^ 2 := by nlinarith only [hv0, hv1]
+  have hgood : 0 ≤ μ * ell / 2 + Q → 0 < fs_H5P z (1 - μ) v := by
+    intro hg
+    let root := Real.sqrt (4 - 3 * μ)
+    have hs : root ^ 2 = 4 - 3 * μ := Real.sq_sqrt (by linarith)
+    have hroot := fs_H5_sqrt_lower hm0 hm1
+    have hmargin : 0 ≤ 2 * r * root + D - 3 * z * r := by
+      have ha : 0 ≤ 2 * r * (root - (2 - μ) - μ * (1 - μ) / 4) :=
+        mul_nonneg (by positivity) (by dsimp [root]; linarith only [hroot])
+      have hb : 0 ≤ μ * S * (1 - μ) * (μ * ell / 2 + Q) :=
+        mul_nonneg (by positivity) hg
+      have e : 2 * r * root + D - 3 * z * r =
+          2 * r * (root - (2 - μ) - μ * (1 - μ) / 4) +
+            μ * S * (1 - μ) * (μ * ell / 2 + Q) := by
+        dsimp [r, D, fsH5D, Q, ell, S]
+        ring
+      rw [e]
+      linarith only [ha, hb]
+    have e : fs_H5P z (1 - μ) v =
+        v * (ell * v - μ * S * root) ^ 2 +
+          (C - (4 - 3 * μ) * μ ^ 2 * S ^ 2) * v + D * (1 - v ^ 2) +
+            v ^ 2 * (2 * r * root + D - 3 * z * r) := by
+      rw [heq]
+      dsimp [r]
+      linear_combination -(μ * S) ^ 2 * v * hs
+    rw [e]
+    have h1 : 0 ≤ v * (ell * v - μ * S * root) ^ 2 := by positivity
+    have h2p : 0 < (C - (4 - 3 * μ) * μ ^ 2 * S ^ 2) * v :=
+      mul_pos (by linarith only [hC]) hv0
+    have h3 : 0 ≤ D * (1 - v ^ 2) := mul_nonneg hD.le hv2
+    have h4 : 0 ≤ v ^ 2 * (2 * r * root + D - 3 * z * r) :=
+      mul_nonneg (sq_nonneg v) hmargin
+    linarith only [h1, h2p, h3, h4]
+  by_cases hm16 : 1 / 6 ≤ μ
+  · apply hgood
+    have hQ : -1 / 12 ≤ Q := by
+      have hmSq : (1 - 2 * μ) ^ 2 ≤ 1 := by nlinarith only [hm0, hm1]
+      have e : Q = 3 * (μ + z - 2 + (1 - 2 * μ) / 6) ^ 2 - (1 - 2 * μ) ^ 2 / 12 := by
+        dsimp [Q]
+        ring
+      rw [e]
+      nlinarith only [hmSq, sq_nonneg (μ + z - 2 + (1 - 2 * μ) / 6)]
+    have hmul := mul_nonneg hm0.le (sub_nonneg.mpr hell)
+    linarith only [hQ, hmul, hm16]
+  push Not at hm16
+  by_cases hQ : 0 ≤ Q
+  · exact hgood (by positivity)
+  push Not at hQ
+  have hzlo : (5 - μ) / 3 < z := by
+    by_contra h
+    have h1 : μ + z - 2 ≤ 0 := by linarith
+    have h2q : μ + 3 * z - 5 ≤ 0 := by linarith
+    have := mul_nonneg_of_nonpos_of_nonpos h1 h2q
+    change 0 ≤ Q at this
+    linarith only [this, hQ]
+  have hzhi : z < 2 - μ := by
+    by_contra h
+    have h1 : 0 ≤ μ + z - 2 := by linarith
+    have h2q : 0 ≤ μ + 3 * z - 5 := by linarith
+    have := mul_nonneg h1 h2q
+    change 0 ≤ Q at this
+    linarith only [this, hQ]
+  have hz32 : 3 / 2 < z := by linarith
+  have hz2 : z < 2 := by linarith
+  have hS3 : S < 3 := by dsimp [S]; linarith
+  have hzlam : 1 < z * (1 - μ) := by
+    have h := mul_lt_mul_of_pos_left (show (5 / 6 : ℝ) < 1 - μ by linarith) hz0
+    nlinarith only [h, hz32]
+  have hCfirst : (2 - μ) * μ * S * z * (3 * (z - 1) + μ) < C := by
+    have hterm : 0 < 6 * ell * (z - (1 - μ)) * (z * (1 - μ) - 1) := by positivity
+    dsimp [C, fsH5C, ell, S] at *
+    nlinarith only [hterm]
+  have hcoef : 9 / 4 < (2 - μ) * (3 * (z - 1) + μ) := by
+    have hterm : 0 < (2 - μ) * (3 * (z - 1) + μ - 3 / 2) :=
+      mul_pos h2 (by linarith only [hz32, hm0])
+    nlinarith only [hterm, hm16]
+  let b := z * μ * S
+  have hb0 : 0 < b := by dsimp [b]; positivity
+  have hb1 : b < 1 := by
+    have hzm : z * μ < 1 / 3 := by
+      have h := mul_lt_mul_of_pos_left hm16 hz0
+      nlinarith only [h, hz2]
+    have h := mul_lt_mul_of_pos_left hS3 (show 0 < z * μ by positivity)
+    dsimp [b]
+    nlinarith only [h, hzm]
+  have hCb : 9 / 4 * b < C := by
+    have h := mul_lt_mul_of_pos_right hcoef hb0
+    dsimp [b, S] at *
+    nlinarith only [h, hCfirst]
+  have hbb : b ^ 2 ≤ b := by nlinarith only [hb0, hb1]
+  have hCstrong : 9 / 4 * b ^ 2 < C := by linarith only [hbb, hCb]
+  have e : fs_H5P z (1 - μ) v =
+      v * (ell * v - 3 / 2 * b) ^ 2 + (C - 9 / 4 * b ^ 2) * v + D := by
+    rw [heq]
+    dsimp [b, r]
+    ring
+  rw [e]
+  have h1 : 0 ≤ v * (ell * v - 3 / 2 * b) ^ 2 := by positivity
+  have h2p : 0 < (C - 9 / 4 * b ^ 2) * v := mul_pos (by linarith only [hCstrong]) hv0
+  linarith only [h1, h2p, hD]
+
+/-- **`P > 0`** by AM--GM: the physical order bounds the linear term below,
+and a completed square controls the remaining shape comparison. The argument holds
+for every `0 < v ≤ 1`, including the original physical range `1 - λ ≤ v`. -/
+theorem fs_H5P_pos {z l v : ℝ} (hl0 : 0 < l) (hl1 : l < 1) (_hvm : 1 - l ≤ v) (hv1 : v ≤ 1)
+    (hv0 : 0 < v) (hp : 0 ≤ (1 + l) * z - (3 - l)) : 0 < fs_H5P z l v := by
+  have h := fs_H5P_amgm (μ := 1 - l) (z := z) (v := v) (by linarith) (by linarith) hv0 hv1 (by nlinarith only [hp])
+  simpa only [sub_sub_cancel] using h
 
 /-! ### The hard face: the rational envelope -/
 

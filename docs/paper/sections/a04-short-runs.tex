@@ -3,12 +3,9 @@
 A period of class \cls{M1} is mixed, every maximal run of reverse switches has length two and
 every maximal run of forward switches has length one (\cref{def:classes}). Its cyclic sign word is
 therefore $(--+)^m$: every reverse run is a pair of reverse switches around a centre piece, and
-consecutive pairs are separated by single forward switches. This section proves the following
-theorem.
+consecutive pairs are separated by single forward switches. This section proves \cref{thm:class-M1}.
 
-\begin{theorem}\label{thm:class-M1}
-  No competitive normal vertex period belongs to class \cls{M1}.
-\end{theorem}
+
 
 The theorem uses neither the compact domain nor a lower bound on the number of pieces. Its proof
 compares two ways of counting how far the switch vectors $y_k$ of \cref{def:normal-multiplier}
@@ -113,7 +110,7 @@ the conflict quantitative.
 
 \begin{proposition}\label{prop:m1-angle-gap}
   Let $\gamma^2,r,t,\rho,u,v,E$ be real numbers satisfying \textup{(i)--(iv)} of
-  \cref{lem:m1-centre-data}, and suppose that $\gamma^2\le 97969/529200$. Then
+  \cref{lem:m1-centre-data}, and suppose that $\gamma^2\le 5/27$. Then
   $E<\frac35\sqrt{uv}$; that is, $\cos\varphi<3/10$ for $\cos\varphi=E/(2\sqrt{uv})$.
 \end{proposition}
 
@@ -130,24 +127,20 @@ $\omega(x)=-x-\log(1-x)=\sum_{n\ge2}x^n/n$ for $0\le x<1$.
   \item The centre: $z=4\rho/(1-S)$ lies in $(0,1]$, $\rho=(1-S)z/4$, and
   $E\le(1-S)(1-z/4)+\log z$.
 \end{enumerate}
-If $\cos\varphi\ge3/10$, then $E^2\ge\frac{9}{25}uv$, and the two-variable inequality of
-\cref{lem:m1-core} gives $16K_*(1-\rho)^2<4uv-E^2$ for the cap $K_*=97969/529200$, which
+If $\cos\varphi\ge3/10$, then $E^2\ge\frac{9}{25}uv$, and the symmetric minimum proved in
+\cref{lem:m1-core} gives $16K_*(1-\rho)^2<4uv-E^2$ for the cap $K_*=5/27$, which
 contradicts (iv). \Cref{fig:short-runs-gap} shows the region of $(S,z)$ that survives the
 reductions and the least Casimir compatible with it.
 
 \begin{figure}[htbp]
   \centering\includegraphics[width=\textwidth]{figures/fig-short-runs-gap.pdf}
-  \caption{Left: the reduced variables of the angle gap. The shaded region is the set of
-  $(S,z)$ with $(1-S)(1-z/4)+\log z\ge\frac35\sqrt{3(3+S^2)/16}$, where a centre with
-  $\cos\varphi\ge3/10$ must lie; on it the colour is the least Casimir
-  $f(S,z)=(4Q-E_{\max}^2)/(16(1-\rho)^2)$ allowed by the Gram identity, with
-  $Q=3(3+S^2)/16$, $E_{\max}=(1-S)(1-z/4)+\log z$ and $\rho=(1-S)z/4$. Its minimum is about
-  $0.1863$, attained near $S=0$, and the level set $f=97969/529200\approx0.18513$ of the cap
-  (dashed) stays outside the region. The dotted lines are $S=2/5$, $z=31/50$ and the ends of the
-  four tangent-line intervals of \cref{lem:m1-core}. Right: the average centre angle
-  $(m+1)\pi/(3m)$ forced by the winding identity, for $m\equiv2\pmod3$, against the lower bound
-  $2\pi/5$ for every centre angle. The two meet at $m=5$; only $m=2$ lies above the
-  line.}\label{fig:short-runs-gap}
+  \caption{Left: the pairing constraint $E_{\max}\ge\frac35\sqrt{uv}$ in the reduced
+  $(S,z)$ variables, with $E_{\max}$ the envelope in (c). The colour shows the Gram lower bound
+  $(4uv-E_{\max}^2)/(16(1-\rho)^2)$. Its minimum occurs on the boundary at $S=0$
+  (\cref{lem:m1-symmetric}); the dashed level $5/27$ lies outside the feasible region.
+  Right: the average centre angle $(m+1)\pi/(3m)$ forced by winding, for $m\equiv2\pmod3$,
+  against the lower bound $2\pi/5$ for every centre. They meet at $m=5$; only $m=2$
+  lies above the line.}\label{fig:short-runs-gap}
 \end{figure}
 
 \begin{corollary}\label{cor:m1-angle}
@@ -155,21 +148,11 @@ reductions and the least Casimir compatible with it.
 \end{corollary}
 
 \begin{proof}
-  The Casimir and the first switch norm are positive, so the competitive cap
-  $\gamma^2\le97969/529200$ of \cref{cor:casimir-cap} applies. By \cref{lem:m1-centre-data} and
+  The Casimir and the first switch norm are positive, so the competitive cap in
+  \cref{cor:casimir-cap} gives $\gamma^2<5/27$. By \cref{lem:m1-centre-data} and
   \cref{prop:m1-angle-gap}, $\cos\varphi_c<3/10$. Since $\cos(2\pi/5)=(\sqrt5-1)/4>3/10$, which
   is $\sqrt5>11/5$, and the arccosine decreases, $\varphi_c>2\pi/5$.
 \end{proof}
-
-\begin{remark}\label{rem:m1-route-gap}
-  Another argument for \cref{prop:m1-angle-gap} is given in \cite{Notes}
-  (\texttt{MIXED\_GLOBAL\_SHORT\_RUN\_ANGLE\_EXCLUSION}). At a fixed cosine $c$ it solves the
-  stationarity identity for $\rho$ and follows a path along which the Casimir does not increase,
-  to the symmetric configuration $r=t=1/2$, $u=v=3/4$; there $1-\rho_c+\log(4\rho_c)=3c/2$, and a
-  rational separation at $\rho=17/100$ beats the cap. Both arguments meet at the same extremal
-  configuration: $S=0$ is $u=v=3/4$, and on $S=0$ the boundary of the region in
-  \cref{fig:short-runs-gap} is the equation for $\rho_c$, with $c=3/10$ and $z=4\rho_c$.
-\end{remark}
 
 \subsection{The winding identity}
 
@@ -221,17 +204,6 @@ centres of one period in a window that starts at the seam. Summing the centre fo
 the term $\kappa(b_{\mathrm{out}})$ of each centre cancels the term $\kappa(b_{\mathrm{in}})$ of
 the next, and the last link crosses the seam, where it gains $\pi/3$. What remains is
 $m\cdot\pi/3+\pi/3$.
-
-\begin{remark}\label{rem:m1-route-winding}
-  The identity can also be derived from the universal cover of $\SLtwo$ (\cite{Notes},
-  \texttt{MIXED\_GLOBAL\_PROJECTIVE\_WINDING}). The tangent frame $X(0)^{-1}g(t)X(t)$ has the
-  relative homotopy class of the canonical path from $I$ to $R$; the cyclic product of the factors
-  $T_0(q_k)R^{-\varepsilon_k}$ then lifts to the central element $\widetilde R^{-3\ell}$, where
-  $\sum\varepsilon_k=3\ell+1$. Identify the vectors at the turns, and change the sign of the
-  representative across every centre, so that every centre contributes $\pi-\varphi_c$. The total
-  is $n\pi$ with $n=(N-m-1)/3=(2m-1)/3$, which is the same identity:
-  $m\pi-\sum_j\varphi_{c_j}=(2m-1)\pi/3$.
-\end{remark}
 
 \subsection{Five or more centres}
 
@@ -327,19 +299,207 @@ so the lemma reads $\cost/\sqrt{12}=2\sum_j1/K_j-8\sum_je_{c_j}$.
   \]
   It remains to bound $a$ from above. The equation $D_j=0$ is $(b_j-a)(b'_j-a)=2a^2$, and the
   turn margins exceed $a$ by \cref{prop:run-structure}. By \cref{lem:m1-bc},
-  $b_jb'_j>5.828\,a^2$ and $(a+b_j)(a+b'_j)=2b_jb'_j$. The two centre factors exceed one,
+  $b_jb'_j\ge(1+\sqrt2)^2a^2$ and $(a+b_j)(a+b'_j)=2b_jb'_j$. The two centre factors exceed one,
   that is, $(a+b'_1)(a+b_0)<K$ and $(a+b'_0)(a+b_1)<K$. Multiplying,
-  $K^2>4\,b_0b'_0\,b_1b'_1>4\cdot5.828^2a^4$, so $K>11.656\,a^2$, $a^2<4/10.656$ and
+  $K^2>4\,b_0b'_0\,b_1b'_1\ge4(1+\sqrt2)^4a^4$, so
+  $K>2(1+\sqrt2)^2a^2$ and $a^2<4/(5+4\sqrt2)$. Consequently
   \[
-    \cost=\frac{8\sqrt3}{a^2+4}>\frac{8\sqrt3}{4+4/10.656}>3.127>\Aoct=3.1260\ldots,
+    \cost>\frac{8\sqrt3}{4+4/(5+4\sqrt2)}=\sqrt3(2\sqrt2-1).
   \]
-  so the period is not competitive. With the exact bound $b_jb'_j\ge(3+2\sqrt2)a^2$ from the proof
-  of \cref{lem:m1-bc}, the same computation gives $K>(6+4\sqrt2)a^2$ and
-  $\cost>2\sqrt3(5+4\sqrt2)/(6+4\sqrt2)=2\sqrt6-\sqrt3=3.1669\ldots$.
+  This lower bound exceeds $\Aoct$. Indeed, with $r=\sqrt2$, the midpoint inequality for
+  $x\mapsto1/x$ on $[1,r]$ gives $\log2>4(r-1)/(r+1)=12-8r$, and hence
+  \[
+   (2r-1)\Bigl(\frac{2r-1}{2}-\doct\Bigr)
+   =\log2+2r-\frac72>\frac{17}{2}-6r=\frac{(3-2r)^2}{2}>0.
+  \]
+  Since $\Aoct=2\sqrt3\,\doct$, the period is not competitive.
 \end{proof}
 
 \begin{proof}[Proof of \cref{thm:class-M1}]
   By \cref{lem:m1-pattern} the word is $(--+)^m$ with $m\equiv2\pmod3$. The period is mixed, so its
   Casimir is positive (\cref{prop:ellipticity}), and the competitive cap applies. If $m\ge5$ the
   angle count above is contradictory, and if $m=2$, \cref{prop:m1-two-centre} applies.
+\end{proof}
+
+\subsection{Estimates for class M1}\label{app:short-run-estimates}
+
+This subsection proves the angle gap, \cref{prop:m1-angle-gap}, and the arithmetic of the two-centre
+case. Throughout, $K_*=5/27$ is the competitive cap of \cref{cor:casimir-cap},
+$U(s)=1-s+s^2$, and $\omega(x)=-x-\log(1-x)$ for $0\le x<1$.
+
+\subsubsection{Logarithm bounds}
+
+\begin{lemma}\label{lem:m1-log}
+  \begin{enumerate}[label=\textup{(\arabic*)}]
+    \item For $0<x\le1$, $\frac12(x-x^{-1})\le\log x$.
+    \item If $a,b,c\ge0$, $c<1$ and $a^2+b^2\le c^2$, then $\omega(a)+\omega(b)\le\omega(c)$.
+  \end{enumerate}
+\end{lemma}
+
+\begin{proof}
+  (1) is $y\le\sinh y$ for $y=-\log x\ge0$. (2) Write
+  $\omega(x)=\sum_{n\ge0}x^{n+2}/(n+2)$. Since
+  $a,b\le c$, termwise $a^{n+2}+b^{n+2}\le(a^2+b^2)c^n\le c^{n+2}$.
+\end{proof}
+
+\subsubsection{One reverse switch}
+
+The reverse-switch term $\Psi(r,u)=r-\log r-(1-u)/r$ of the stationarity identity increases with
+$u$ and, at fixed $u$, is largest when the switch bound $u\le U(r)$ is attained.
+
+\begin{lemma}\label{lem:m1-one-switch}
+  Let $0<r<1/2$ and $3/4\le u\le U(r)$, and put $s=\sqrt{4u-3}$. Then $0\le s<1$, $2r\le 1-s$, and
+  \[
+    r-\log r-\frac{1-u}r\le\omega(s)+\log2 .
+  \]
+\end{lemma}
+
+\begin{proof}
+  Put $r'=(1-s)/2$, so that $U(r')=(3+s^2)/4=u$. Since $U$ decreases on $[0,1/2]$ and
+  $U(r')=u\le U(r)$, we have $r\le r'$. The identity
+  \[
+    2r'-1-\Bigl(r-\tfrac12\bigl(\tfrac r{r'}-\tfrac{r'}r\bigr)-\frac{1-U(r')}r\Bigr)
+    =\frac{(r'-r)^2(1-2r')}{2rr'}
+  \]
+  and $1-2r'=s\ge0$ give $r-\frac12(r/r'-r'/r)-(1-u)/r\le 2r'-1=-s$. By
+  \cref{lem:m1-log}(1) with $x=r/r'\le1$, $-\log(r/r')\le-\frac12(r/r'-r'/r)$, so
+  $r-\log r-(1-u)/r\le -s-\log r'$. Finally $-\log r'=-\log(1-s)+\log2$.
+\end{proof}
+
+\subsubsection{Reduction to two variables}
+
+\begin{lemma}\label{lem:m1-reduce}
+  Let $\gamma^2,r,t,\rho,u,v,E$ satisfy \textup{(i)--(iv)} of \cref{lem:m1-centre-data}, with
+  $E>0$. Let $s=\sqrt{4u-3}$, $s'=\sqrt{4v-3}$,
+  $S=\sqrt{s^2+s'^2+s^2s'^2/3}$ and $z=4\rho/(1-S)$. Then $0\le S<1$, $0<z\le1$,
+  \[
+    uv=\frac{3(3+S^2)}{16},\qquad \rho=\frac{(1-S)z}4,
+  \]
+  \[
+    E\le(1-S)\Bigl(1-\frac z4\Bigr)+\log z.
+  \]
+\end{lemma}
+
+\begin{proof}
+  The identity \eqref{eq:m1-stat} splits as
+  $E=1-\rho+\log\rho+\Psi(r,u)+\Psi(t,v)$, and \cref{lem:m1-one-switch} bounds the two last terms
+  by $\omega(s)+\log2$ and $\omega(s')+\log2$, with $2r\le1-s$ and $2t\le1-s'$. Then
+  $4\rho<4rt\le(1-s)(1-s')$. The bounds just obtained give
+  \[
+   0<E\le1-\rho-s-s'+\log\frac{4\rho}{(1-s)(1-s')}<1-\rho-s-s',
+  \]
+  so $s+s'<1$. From $u=(3+s^2)/4$ and
+  $v=(3+s'^2)/4$ one gets $uv=3(3+S^2)/16$. Next,
+  \[
+    (s+s'-ss')^2-S^2=\tfrac23s^2s'^2+2ss'(1-s-s')\ge0,
+  \]
+  so $S\le s+s'-ss'$ and $(1-s)(1-s')\le1-S$; in particular $S<1$ and $4\rho<1-S$, so
+  $0<z<1$. By \cref{lem:m1-log}(2), $\omega(s)+\omega(s')\le\omega(S)$, and therefore
+  \[
+    E\le1-\rho+\log(4\rho)+\omega(S)=1-S-\rho+\log\frac{4\rho}{1-S}
+    =(1-S)\Bigl(1-\frac z4\Bigr)+\log z .
+  \]
+\end{proof}
+
+\subsubsection{The symmetric minimum}
+
+The next lemma locates the minimum before estimating its value.
+
+\begin{lemma}\label{lem:m1-symmetric}
+Let $0<c<1$, $0\le S<1$, $0<\rho\le(1-S)/4$, and put
+\[
+ Q(S)=\frac{3(3+S^2)}{16},\qquad
+ F(S,\rho)=1-S-\rho+\log\frac{4\rho}{1-S}.
+\]
+If $c\sqrt{Q(S)}\le E\le F(S,\rho)$, then
+\[
+ \frac{4Q(S)-E^2}{16(1-\rho)^2}
+ \ge\frac{9(4-c^2)}{256(1-\rho_0)^2},
+\]
+where $\rho_0\in(0,1/4)$ is the unique solution of
+$1-\rho_0+\log(4\rho_0)=3c/4$.
+\end{lemma}
+
+\begin{proof}
+Write $z=4\rho/(1-S)$ and
+$f(S,\rho)=(4Q(S)-F(S,\rho)^2)/(16(1-\rho)^2)$. First fix $S$.
+On the region $F\ge0$, the function $f$ increases with $\rho$. To see this, use
+\[
+ \log z\le\frac{2(z-1)}{z+1},\qquad
+ H=1-S-\rho+\frac{2(z-1)}{z+1}\ge F\ge0.
+\]
+The difference $\log z-2(z-1)/(z+1)$ vanishes at one and has derivative
+$(z-1)^2/[z(z+1)^2]\ge0$, which proves the logarithm inequality. The sign of $f_\rho$ is the sign of
+$4Q-F^2-F(1-\rho)^2/\rho$, which decreases when $F\ge0$ is raised to $H$. At $H$ it equals
+\[
+ \frac{(1-z)\bigl(1-z+S(1+z)\bigr)}{4z(1-S)(1+z)^2}
+ \Bigl((1-S)^2z^2+(S^2+14S+1)z+16\Bigr)\ge0.
+\]
+
+There is therefore a unique $\rho_c(S)$ with $F(S,\rho_c(S))=c\sqrt{Q(S)}$, and lowering
+$\rho$ to this root lowers $f$. Here $F_\rho=1/\rho-1>0$, $F$ tends to $-\infty$ at zero,
+and its value at $(1-S)/4$ is $3(1-S)/4$. The root exists for all $S$ between zero and the
+actual value: its endpoint condition is $3(1-S)/4\ge c\sqrt{Q(S)}$, with a decreasing left
+side and an increasing right side.
+
+On this root curve,
+\[
+ f(S,\rho_c(S))=\frac{(4-c^2)Q(S)}{16(1-\rho_c(S))^2}.
+\]
+Implicit differentiation of $F=c\sqrt Q$ gives
+\[
+ \frac{\dd}{\dd S}\log\frac{Q(S)}{(1-\rho_c(S))^2}
+ =\frac{2S}{(3+S^2)(1-\rho_c(S))^2}
+       \bigl(1-z+\rho_c(S)\log z\bigr)\ge0.
+\]
+Indeed, $\log z\ge(z-1)/z$ and $\rho_c(S)/z=(1-S)/4$, so the last bracket is at least
+$(1-z)(3+S)/4$. Lowering $S$ to zero thus lowers the bound once more. At zero the root is
+$\rho_0$, $Q(0)=9/16$, and the stated inequality follows, since $0<E\le F$ gives
+$(4Q-E^2)/(16(1-\rho)^2)\ge f(S,\rho)$.
+\end{proof}
+
+\begin{lemma}\label{lem:m1-core}
+Let $S\ge0$, $0<z\le1$ and $E>0$ satisfy
+$E\le(1-S)(1-z/4)+\log z$ and $E^2\ge\frac9{25}Q$, where $Q=3(3+S^2)/16$. Then
+\[
+ 16K_*\Bigl(1-\frac{(1-S)z}4\Bigr)^2<4Q-E^2.
+\]
+\end{lemma}
+
+\begin{proof}
+The positive upper bound for $E$ forces $S<1$. Apply \cref{lem:m1-symmetric} with $c=3/5$ and
+$\rho=(1-S)z/4$. It remains to bound the symmetric root. Put $x_0=4\rho_0$. Then
+\[
+ \frac9{20}=1-\frac{x_0}{4}+\log x_0
+ \le1-\frac{x_0}{4}+\frac{2(x_0-1)}{x_0+1},
+\]
+so $5x_0^2-46x_0+29\le0$, and hence $x_0\ge(23-8\sqrt6)/5$. Consequently
+\[
+ \frac{4Q-E^2}{16(1-\rho)^2}
+ \ge\frac{273}{16(131-16\sqrt6)}
+ >\frac{273}{1472}>\frac5{27}=K_*.
+\]
+Here $\sqrt6>39/16$, since $6\cdot16^2>39^2$, gives the first strict comparison;
+the last follows from $273\cdot27-5\cdot1472=11>0$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{prop:m1-angle-gap}]
+  Suppose $E\ge\frac35\sqrt{uv}$. This gives $E>0$ and $E^2\ge9uv/25$, so
+  \cref{lem:m1-reduce} puts $(S,z,E)$ in the hypotheses of
+  \cref{lem:m1-core}, whose conclusion, with $Q=uv$ and $(1-S)z/4=\rho$, reads
+  $16K_*(1-\rho)^2<4uv-E^2=16(1-\rho)^2\gamma^2$. This contradicts $\gamma^2\le K_*$.
+\end{proof}
+
+\subsubsection{The two-centre product bound}
+
+\begin{lemma}\label{lem:m1-bc}
+  If $0<a<b$, $a<c$ and $(b-a)(c-a)=2a^2$, then
+  $bc\ge(1+\sqrt2)^2a^2$ and $(a+b)(a+c)=2bc$.
+\end{lemma}
+
+\begin{proof}
+  With $x=b/a$ and $y=c/a$, $(x-1)(y-1)=2$, so $xy=x+y+1$ and, by the inequality between the
+  arithmetic and geometric means, $x+y-2\ge2\sqrt{(x-1)(y-1)}=2\sqrt2$. Hence
+  $xy\ge(1+\sqrt2)^2$. Expanding, $(a+b)(a+c)=a^2+a(b+c)+bc$, and
+  $bc-a(b+c)-a^2=(b-a)(c-a)-2a^2=0$.
 \end{proof}

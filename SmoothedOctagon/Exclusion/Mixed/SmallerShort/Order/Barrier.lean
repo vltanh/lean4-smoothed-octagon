@@ -22,8 +22,8 @@ sign of the contact inequality decides the sign of `Φ'`, and `ss_first_contact`
 * `ord_order_lower`: `P(q₁) ≤ p₁` for a lower barrier (including the case where the barrier meets
   the diagonal, excluded as in `ss_order_norm`).
 * `ord_order_upper`: `p₁ ≤ P(q₁)` for an upper barrier below the diagonal.
-* `ord_avg_anti`, `ord_eta`, `ord_norm_eq`: secant facts; `ord_lower_alg`, `ord_upper_alg`: the
-  contact inequality from a gap ratio and a contact polynomial.
+* `ord_avg_anti`, `ord_eta`, `ord_norm_eq`: secant facts; `ord_lower_alg` gives the
+  lower contact inequality from a gap ratio and a contact polynomial.
 -/
 
 @[expose] public section
@@ -345,17 +345,6 @@ theorem ord_lower_alg {N W M η ξ B : ℝ} (hgap : N * ξ < (W - N) * η) (hcon
   by_contra h
   push Not at h
   have k3 := mul_le_mul_of_nonneg_left h hWN.le
-  linarith
-
-/-- **The upper contact inequality** from a gap ratio `Zη < N'ξ` and a contact polynomial
-`N'M < BZ`: `ηM < Bξ`. -/
-theorem ord_upper_alg {Np Z M η ξ B : ℝ} (hgap : Z * η < Np * ξ) (hcon : Np * M < B * Z)
-    (hM : 0 < M) (hξ : 0 ≤ ξ) (hZ : 0 < Z) : η * M < B * ξ := by
-  have k1 := mul_lt_mul_of_pos_right hgap hM
-  have k2 := mul_le_mul_of_nonneg_left hcon.le hξ
-  by_contra h
-  push Not at h
-  have k3 := mul_le_mul_of_nonneg_left h hZ.le
   linarith
 
 end SmoothedOctagon

@@ -27,7 +27,7 @@ namespace SmoothedOctagon.Reduction
 open SmoothedPolygons MeasureTheory Set
 
 /-- **Finitely many switches**. Let `(T, u, g, X, Λ₁, Λ_R, λ)` be a Pontryagin extremal with cost at
-most `A_oct` and state in `𝔥**`, satisfying the clearance `‖𝒫(t)‖² ≤ 251² Q(t)²` on `[0, T]`, whose
+most `A_oct` and state in `𝔥**`, satisfying the clearance `‖𝒫(t)‖² ≤ C² Q(t)²` on `[0, T]`, whose
 control has property (E4). Then on `[0, T]` the control is a.e. a concatenation of finitely many
 vertex pieces.
 
@@ -45,11 +45,11 @@ enters through the clearance `hclear`).
 At a tie the sign change comes from the first-order expansion
 `Λ_R(t) = (t - t₀)[X(t₀), A(t₀)] + o(t - t₀)`. -/
 theorem exists_isPiecewiseVertex {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X Λ₁ ΛR : ℝ → Mat2}
-    {lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
+    {C lam : ℝ} (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (_hcost : reinhardtCost T X ≤ octagonCost)
     (hK : ∀ t ∈ Icc 0 T, Cited.HalesVajjha.InCompactDomain (X t))
     (hclear : ∀ t ∈ Icc 0 T,
-      covectorNormSq lam (Λ₁ t) (ΛR t) ≤ 251 ^ 2 * singularGapSq lam (Λ₁ t) (ΛR t))
+      covectorNormSq lam (Λ₁ t) (ΛR t) ≤ C ^ 2 * singularGapSq lam (Λ₁ t) (ΛR t))
     (hedge : EdgeBound T u) :
     ∃ n, IsPiecewiseVertex u 0 T n := by
   apply switch_isPiecewiseVertex_of_local hext.1.1.le

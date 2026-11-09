@@ -23,8 +23,8 @@ The proof is a chain, each link a module of `SmoothedOctagon/Reduction/`:
    (`Reduction.inCompactDomain_of_isReinhardtMinimizer`, `CompactDomain.lean`);
 2. the Pontryagin lift of a global minimizer (`exists_isPontryaginExtremal_of_isReinhardtMinimizer`
    in `SmoothedPolygons`, through the maximum principle of `OptimalControl`);
-3. the singular clearance `‖𝒫(t)‖ ≤ 251 Q(t)` (so `D > 10⁻¹¹` for normalized lifts) and the
-   projective bounds `10⁻⁸ < ‖𝒫(t)‖/‖𝒫(0)‖ < 10⁸` (`SingularClearance.lean`);
+3. the singular clearance `‖𝒫(t)‖ ≤ c_oct Q(t)` (so `Q(t) > 0`) and the
+   projective bounds on each compact star set (`SingularClearance.lean`);
 4. the edge bound (E4) (`EdgeBound.lean`);
 5. finitely many switches (`SwitchCount.lean`);
 6. merging equal neighbours, also across the twisted seam, and rebasing at a genuine switch
@@ -59,7 +59,7 @@ theorem finiteNormalRepresentation {T : ℝ} {u : ℝ → Fin 3 → ℝ} {g X : 
   obtain ⟨Λ₁, ΛR, lam, hext⟩ := exists_isPontryaginExtremal_of_isReinhardtMinimizer hmin
   -- 3–5. the clearance and (E4) give finitely many vertex pieces
   obtain ⟨n, hpw⟩ := Reduction.exists_isPiecewiseVertex hext hcost hK
-    (Reduction.covectorNormSq_le_singularGapSq hext hcost hK)
+    (Reduction.covectorNormSq_le_singularGapSq hext hcost)
     (Reduction.edgeBound_of_isReinhardtMinimizer hmin)
   -- 6. merge and rebase at a genuine switch; the rebased trajectory is a global minimizer
   obtain ⟨s, hs0, hsT, ρ, -⟩ := Reduction.exists_rebase_vertexRepresentation hmin.1.1.1 hpw

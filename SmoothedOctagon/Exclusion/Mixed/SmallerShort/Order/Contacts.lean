@@ -6,20 +6,18 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Basic
 # Smaller-short window: certificates of the order contacts
 
 The logarithm bounds and the polynomial identities behind the contact inequalities of
-`SmallerShort/Order.lean` (the Padé and Chebyshev gaps, the strong lower order, the upper orders
-`5/4` and `9/8` and the rational quadratic order). Every identity is a
+`SmallerShort/Order.lean` (the Padé gap, the strong lower order, the small-shape upper
+order and the rational quadratic order). Every identity is a
 two-variable rational identity checked by `field_simp`/`ring`; every sign is a positive Bernstein
 form, a termwise bound or a one-sign-change row.
 
 ## Main API
 
-* `ord_log_lt_pade3` (strict Padé), `ord_log_gt_cheb` (the Chebyshev bound as a log inequality).
+* `ord_log_lt_pade3` (strict Padé).
 * `ord_bern4_pos`: positivity of a quartic Bernstein form.
 * Strong contact: the quartic `ordSP`, `ord_strong_eq` (the factored contact function),
   `ord_strong_bern` (its
   Bernstein form on `[q_min, 1]`, without `x ≤ 9`).
-* Upper contacts: `ord_up54_eq`, `ord_up54_bern`, `ord_up98_eq`, `ord_up98_bern` (quartics in `q`
-  and their Bernstein forms on `[q_m, 1]`).
 * Small-shape contact: `ord_ut_gaps`, `ord_sec_le_ut`, `ord_K_eq`,
   `ord_K_pos`.
 * Quadratic contact: the rows `ordQ0`, …, `ordQ7` of the table and their signs `ord_row0`, …,
@@ -58,42 +56,6 @@ theorem ord_log_lt_pade3 {z : ℝ} (hz : 1 < z) :
     convert this using 1
     · ring
   have := (h1.div h2 (by positivity)).sub (Real.hasDerivAt_log ht.ne')
-  refine this.congr_deriv ?_
-  field_simp
-  ring
-
-/-- The Chebyshev log bound: for `1 < y ≤ 2θ`,
-`(y - 1)(3y(y + 1) - 2θ(y - 1)²)/(6y²) < log y` (the difference vanishes at `1` and has
-derivative `(y - 1)²(2θy + 4θ - 3y)/(6y³) > 0`). -/
-theorem ord_log_gt_cheb {y θ : ℝ} (hy : 1 < y) (hyθ : y ≤ 2 * θ) :
-    (y - 1) * (3 * y * (y + 1) - 2 * θ * (y - 1) ^ 2) / (6 * y ^ 2) < Real.log y := by
-  have h := ss_lt_of_deriv
-    (f := fun t => Real.log t - (t - 1) * (3 * t * (t + 1) - 2 * θ * (t - 1) ^ 2) / (6 * t ^ 2))
-    (f' := fun t => (t - 1) ^ 2 * (2 * θ * t + 4 * θ - 3 * t) / (6 * t ^ 3)) hy (fun t ht => ?_)
-    (fun t ht => by
-      have h1 : 0 < t - 1 := by linarith [ht.1]
-      have h0 : 0 < t := by linarith [ht.1]
-      have h3 : t * t < 2 * θ * t := mul_lt_mul_of_pos_right (ht.2.trans_le hyθ) h0
-      have h4 : 0 < t * (t - 1) := mul_pos h0 h1
-      have h2 : 0 < 2 * θ * t + 4 * θ - 3 * t := by linarith [ht.2]
-      positivity)
-  · simp only [Real.log_one, sub_self, zero_mul, zero_div] at h
-    linarith
-  have ht : 0 < t := by linarith [ht.1]
-  have h1 : HasDerivAt (fun t : ℝ => (t - 1) * (3 * t * (t + 1) - 2 * θ * (t - 1) ^ 2))
-      ((3 * t * (t + 1) - 2 * θ * (t - 1) ^ 2) + (t - 1) * (6 * t + 3 - 4 * θ * (t - 1))) t := by
-    have hs : HasDerivAt (fun t : ℝ => t - 1) 1 t := (hasDerivAt_id' t).sub_const 1
-    have := hs.mul ((((hasDerivAt_id' t).const_mul 3).mul ((hasDerivAt_id' t).add_const 1)).sub
-      ((hs.pow 2).const_mul (2 * θ)))
-    convert this using 1
-    simp only [Pi.mul_apply, Pi.sub_apply, Pi.pow_apply]
-    push_cast
-    ring
-  have h2 : HasDerivAt (fun t : ℝ => 6 * t ^ 2) (12 * t) t := by
-    have := (hasDerivAt_pow 2 t).const_mul (6 : ℝ)
-    convert this using 1
-    push_cast; ring
-  have := (Real.hasDerivAt_log ht.ne').sub (h1.div h2 (by positivity))
   refine this.congr_deriv ?_
   field_simp
   ring
@@ -156,63 +118,8 @@ theorem ord_strong_bern (x q : ℝ) : (7 * x + 1) ^ 3 * (x - 1) ^ 2 * ordSP x q 
   unfold ordSP
   ring
 
-/-- The upper contact function at `5/4`: `16xF_{5/4}` is a quartic in `q`. -/
-theorem ord_up54_eq {x q : ℝ} (hx : 0 < x) :
-    16 * x * (5 / 4 * q * (3 - (1 / x + 5 / 4 * (1 - q)) + q - 3 * (1 / x + 5 / 4 * (1 - q)) * q) *
-        (x - q) -
-      (3 + (1 / x + 5 / 4 * (1 - q)) - q - 3 * (1 / x + 5 / 4 * (1 - q)) * q) *
-        ((2 * q - (1 / x + 5 / 4 * (1 - q))) * x - q ^ 2)) =
-      -(15 * x * q ^ 4 + (120 * x ^ 2 + 66 * x - 12) * q ^ 3 -
-        (357 * x ^ 2 + 189 * x + 36) * q ^ 2 +
-        (306 * x ^ 2 + 228 * x + 48) * q - 85 * x ^ 2 - 88 * x - 16) := by
-  field_simp
-  ring
-
-/-- The Bernstein form of `F_{5/4}` on `[q_m, 1]`, in
-`T = 9xq - (5x + 4)` and `9x(1 - q)`. -/
-theorem ord_up54_bern (x q : ℝ) : 8748 * 16 * x ^ 3 * (x - 1) ^ 2 *
-      (-(15 * x * q ^ 4 + (120 * x ^ 2 + 66 * x - 12) * q ^ 3 -
-        (357 * x ^ 2 + 189 * x + 36) * q ^ 2 +
-        (306 * x ^ 2 + 228 * x + 48) * q - 85 * x ^ 2 - 88 * x - 16)) =
-      8 * (5 * x + 4) * (7 * x + 2) * (9 * x + 4) * (9 * x * (1 - q)) ^ 4 +
-        4 * (9 * (x + 4) * (142 * x ^ 2 + 61 * x + 4)) * (9 * x * q - (5 * x + 4)) *
-          (9 * x * (1 - q)) ^ 3 +
-        6 * (54 * x * (53 * x ^ 2 + 102 * x + 24)) * (9 * x * q - (5 * x + 4)) ^ 2 *
-          (9 * x * (1 - q)) ^ 2 +
-        4 * (729 * x ^ 2 * (8 * x + 5)) * (9 * x * q - (5 * x + 4)) ^ 3 * (9 * x * (1 - q)) +
-        8748 * x ^ 3 * (9 * x * q - (5 * x + 4)) ^ 4 := by
-  ring
-
-/-- The upper contact function at `9/8`: `64xF_{9/8}` is a quartic in `q`. -/
-theorem ord_up98_eq {x q : ℝ} (hx : 0 < x) :
-    64 * x * (9 / 8 * q * (3 - (1 / x + 9 / 8 * (1 - q)) + q - 3 * (1 / x + 9 / 8 * (1 - q)) * q) *
-        (x - q) -
-      (3 + (1 / x + 9 / 8 * (1 - q)) - q - 3 * (1 / x + 9 / 8 * (1 - q)) * q) *
-        ((2 * q - (1 / x + 9 / 8 * (1 - q))) * x - q ^ 2)) =
-      -(27 * x * q ^ 4 + (432 * x ^ 2 + 262 * x - 24) * q ^ 3 -
-        (1253 * x ^ 2 + 729 * x + 136) * q ^ 2 +
-        (1086 * x ^ 2 + 840 * x + 192) * q - 297 * x ^ 2 - 336 * x - 64) := by
-  field_simp
-  ring
-
-/-- The Bernstein form of `F_{9/8}` on `[q_m, 1]`, in
-`T = 17xq - (9x + 8)` and `17x(1 - q)`. -/
-theorem ord_up98_bern (x q : ℝ) : 2004504 * 64 * x ^ 3 * (x - 1) ^ 2 *
-      (-(27 * x * q ^ 4 + (432 * x ^ 2 + 262 * x - 24) * q ^ 3 -
-        (1253 * x ^ 2 + 729 * x + 136) * q ^ 2 +
-        (1086 * x ^ 2 + 840 * x + 192) * q - 297 * x ^ 2 - 336 * x - 64)) =
-      144 * (9 * x + 8) * (13 * x + 4) * (17 * x + 8) * (17 * x * (1 - q)) ^ 4 +
-        4 * (51 * (-3237 * x ^ 3 + 17062 * x ^ 2 + 7840 * x + 384)) * (17 * x * q - (9 * x + 8)) *
-          (17 * x * (1 - q)) ^ 3 +
-        6 * (578 * x * (67 * x ^ 2 + 1500 * x + 416)) * (17 * x * q - (9 * x + 8)) ^ 2 *
-          (17 * x * (1 - q)) ^ 2 +
-        4 * (14739 * x ^ 2 * (37 * x + 38)) * (17 * x * q - (9 * x + 8)) ^ 3 * (17 * x * (1 - q)) +
-        1002252 * x ^ 3 * (17 * x * q - (9 * x + 8)) ^ 4 := by
-  ring
-
 /-- The two-term `artanh` majorant of the secant against its endpoints:
 `g(p) - ũ` and `ũ - g(q)` in closed form. -/
-
 
 theorem ord_ut_gaps {p q : ℝ} (hp : 0 < p) (hpq : p < q) :
     ss_gB 1 p - (1 + 1 / ((1 + p) * (1 + q)) -
@@ -264,7 +171,6 @@ theorem ord_sec_le_ut {p q : ℝ} (hp : 0 < p) (hpq : p < q) :
 
 /-- The polynomial `K(z, h)` of `ord_K_eq` is positive on the small-shape contact
 domain. -/
-
 
 theorem ord_K_pos {z h : ℝ} (hz : 0 < z) (hz7 : z ≤ 7 / 6) (hh : 0 ≤ h) (hh20 : h ≤ 1 / 20)
     (hhz : h * (z + 3) < z) :

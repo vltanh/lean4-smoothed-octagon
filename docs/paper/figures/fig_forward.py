@@ -2,12 +2,11 @@
 
 Left: the cost N (sqrt3/4) G(a, a) of N equal edges of an all-forward period against a^2, for N = 4
 and N = 7, with the octagon's point and the band 4/3 < a^2 < 20/11 of Lemmas 7.x (small forward
-minimum, threshold). Right: on 11/5 <= nu <= 3, the two vertex bounds phi_A, phi_B of Appendix C.6
-(lower bounds for the Casimir under the norm bounds), against 23/125 and against the competitive
+minimum, threshold). Right: on 11/5 <= nu <= 3, the common lower bound Phi for the two norm-sum vertices
+of the Casimir estimate, against the competitive
 cap (3 A_oct/pi - 3/2)^2/12 allowed by the spectral cost-Casimir bound.
 
-Every fact stated in the caption is checked by an assert. G, e_0 and the vertex bounds are those of
-Section 7 and Appendix C (sections/07-forward.tex, sections/a3-forward-estimates.tex).
+Assertions check special values and plot consistency. The interval bounds are proved in sections/a05-forward.tex, whose G, e_0 and lower curve are used here.
 """
 import math
 import os
@@ -32,19 +31,14 @@ def e0(nu):
     return 1 - K / 8 + 1 / K
 
 
-def phi_A(nu):
-    """K^2 (327/140 - (e0 + s/35)^2)/(16 nu^2), s = min(7/3, (5 nu + 1)/6) (Appendix C.6)."""
+def phi(nu):
+    """The proved common curve after equalizing the two shapes."""
     K = 1 + nu
-    s = np.minimum(7 / 3, (5 * nu + 1) / 6)
-    return K ** 2 * (327 / 140 - (e0(nu) + s / 35) ** 2) / (16 * nu ** 2)
-
-
-def phi_B(nu):
-    """The bound at the vertex B = (1/35 - 1/64, 1/64) (Appendix C.6)."""
-    K = 1 + nu
-    c, b = 1 / 35, 1 / 64
-    s = np.where(nu <= 13 / 5, (c - b) * (2 + 5 * (nu - 1) / 3) + (2 * b - c) * 7 / 3, 7 / 3 * c)
-    return K ** 2 * (4 * (3 / 4 + c - b) * (3 / 4 + b) - (e0(nu) + s) ** 2) / (16 * nu ** 2)
+    shape = np.minimum(7 / 3, (5 * nu + 1) / 6)
+    x = shape / 2 - 1
+    log_floor = 2 * x ** 3 / (3 * (1 + x) * (2 + x))
+    pairing = e0(nu) + shape / 32 - log_floor
+    return K ** 2 * (75 / 32 - pairing ** 2) / (16 * nu ** 2)
 
 
 def checks():
@@ -59,24 +53,32 @@ def checks():
     # The threshold: G(a0, a0) > 23/22 at a0^2 = 20/11, and seven such edges exceed A_oct.
     a0 = math.sqrt(20 / 11)
     assert G(a0, a0) > 23 / 22
-    assert 7 * SQ3 / 4 * G(a0, a0) > 3.1268 > A_OCT
+    assert 7 * SQ3 / 4 * G(a0, a0) > A_OCT
     # Seven equal edges cost more than A_oct for every a^2 >= 20/11 (G(a, a) increases in a).
     ys = np.linspace(20 / 11, 2.4, 400)
     assert np.all(7 * SQ3 / 4 * G(np.sqrt(ys), np.sqrt(ys)) > A_OCT)
-    # The vertex bounds stay above 23/125 on [11/5, 3]; the tightest value is phi_A(13/5).
+    # The common curve lies above the shared rational cap. Sampling checks
+    # the plot; the manuscript proves the interval bound by convexity.
     nus = np.linspace(11 / 5, 3, 2001)
-    assert np.all(phi_A(nus) > 23 / 125) and np.all(phi_B(nus) > 23 / 125)
-    nu = Fraction(13, 5)
+    target = Fraction(9193, 50000)
+    assert np.all(phi(nus) > float(target))
+    # Exact midpoint and completed-square comparison used in that proof.
+    nu = Fraction(5, 2)
     K = 1 + nu
-    e = 1 - K / 8 + 1 / K
-    exact = K ** 2 * (Fraction(327, 140) - (e + Fraction(7, 3) / 35) ** 2) / (16 * nu ** 2)
-    assert exact == Fraction(348293, 1892800) == Fraction(23, 125) + Fraction(89, 9464000)
-    assert abs(min(phi_A(nus)) - float(exact)) < 1e-9
-    # The competitive cap from C >= (pi/3)(kappa + 3/2): gamma^2 <= (3 A_oct/pi - 3/2)^2/12.
+    x = (5 * nu - 11) / 12
+    log_floor = 2 * x ** 3 / (3 * (1 + x) * (2 + x))
+    log_slope = Fraction(5, 18) * (1 + 1 / (1 + x) ** 2 - 8 / (2 + x) ** 2)
+    pairing = 1 - K / 8 + 1 / K + (5 * nu + 1) / 192 - log_floor
+    pairing_slope = -Fraction(19, 192) - 1 / K ** 2 - log_slope
+    weight = K ** 2 / (16 * nu ** 2)
+    weight_slope = -K / (8 * nu ** 3)
+    midpoint = weight * (Fraction(75, 32) - pairing ** 2)
+    slope = weight_slope * (Fraction(75, 32) - pairing ** 2) - 2 * weight * pairing * pairing_slope
+    assert slope < 0 and midpoint - 96 * slope ** 2 > target
+    assert abs(phi(float(nu)) - float(midpoint)) < 1e-12
+    # The cap follows from the spectral cost-Casimir bound.
     cap = (3 * A_OCT / math.pi - 1.5) ** 2 / 12
-    assert cap < 0.18381 < 23 / 125
-    kappa = 3 * 3.1268 / math.pi - 1.5
-    assert kappa < 1.4859 and 1.4859 ** 2 / 12 < 23 / 125
+    assert cap < float(target)
     return a_oct, cap
 
 
@@ -99,29 +101,24 @@ def make(out_dir):
     ax1.annotate('octagon', (a_oct ** 2, A_OCT), xytext=(a_oct ** 2 - 0.36, A_OCT + 1.1),
                  fontsize=8, arrowprops=dict(arrowstyle='-', lw=0.5, color=ps.FAINT))
     ax1.text(1.21, A_OCT + 0.12, r'$A_{\mathrm{oct}}$', fontsize=8, va='bottom')
-    for xv, lab, ha in ((4 / 3, r'$a^2=4/3$', 'right'), (20 / 11, r'$a^2=20/11$', 'left')):
+    for xv, lab in ((4 / 3, r'$4/3$'), (20 / 11, r'$20/11$')):
         ax1.axvline(xv, color=ps.FAINT, lw=0.5, ls=':')
-        ax1.text(xv + (0.02 if ha == 'left' else -0.02), 6.9, lab, fontsize=7.5, ha=ha, va='top')
+        ax1.text(xv + 0.02, 6.9, lab, fontsize=7.5, ha='left', va='top')
     ax1.set_xlim(1.2, 2.4)
     ax1.set_ylim(-0.4, 7.2)
     ax1.set_xlabel(r'$a^2$')
     ax1.set_ylabel(r'$N\,\frac{\sqrt{3}}{4}\,G(a,a)$')
     ax1.legend(loc='lower right', frameon=False, handlelength=1.6)
 
-    # Right: the Casimir bounds, in units of 1e-4 above 23/125.
+    # Right: excess above the exact competitive cap, in units of 1e-4.
     nu = np.linspace(11 / 5, 3, 600)
-    base = 23 / 125
-    ax2.plot(nu, 1e4 * (phi_A(nu) - base), color=ps.ORANGE, label=r'$\phi_A$')
-    ax2.plot(nu, 1e4 * (phi_B(nu) - base), color=ps.PURPLE, label=r'$\phi_B$')
-    ax2.axhline(0, color=ps.INK, lw=0.7)
-    ax2.axhline(1e4 * (cap - base), color=ps.RED, lw=0.9, ls='--')
-    ax2.text(2.21, 0.6, r'$23/125$', fontsize=8, va='bottom')
-    ax2.text(2.21, 1e4 * (cap - base) - 0.6, 'competitive cap', fontsize=8, va='top',
-             color=ps.RED)
+    ax2.plot(nu, 1e4 * (phi(nu) - cap), color=ps.ORANGE, label=r'$\Phi$')
+    ax2.axhline(0, color=ps.RED, lw=0.9, ls='--')
+    ax2.text(2.21, -0.2, 'competitive cap', fontsize=8, va='top', color=ps.RED)
     ax2.set_xlim(11 / 5, 3)
-    ax2.set_ylim(-4.5, 17)
+    ax2.set_ylim(-1.2, 18)
     ax2.set_xlabel(r'$\nu=4/a^2$')
-    ax2.set_ylabel(r'$10^4\,(\gamma^2-23/125)$')
+    ax2.set_ylabel(r'$10^4\,(\gamma^2-\Gamma_{\mathrm{oct}})$')
     ax2.legend(loc='upper center', frameon=False, handlelength=1.6)
 
     ps.save(fig, os.path.join(out_dir, 'fig-forward-window.pdf'))

@@ -12,11 +12,8 @@ def fr(num, cnt): return f"({L(num)}) / ({prod_lean(cnt)})"
 def linform(name, LIn='LI', Lcn='Lc'):
     p=lin[name]
     return f"{fr(*p['R'])} + {fr(*p['cI'])} * {LIn} + {fr(*p['cc'])} * {Lcn}"
-defs=f"""/-- `A₀ = 𝓔_Σ(h = 1)` (SYMMETRIC_SUM_REDUCTION (3), (7)) in the coordinates `a = (z - 1)/(z + 1)`,
-`t = I - 1`, with `LI = log I`, `Lc = log(1 - aI)` kept as atoms. -/
-noncomputable def fs_SA0 (a t LI Lc : ℝ) : ℝ := {linform('A0')}
-
-/-- `A₁` (SYMMETRIC_SUM_REDUCTION (15)): `𝓔_Σ = A₀ + A₁H + z(DH²/(2h) - f(h))`. -/
+# fs_SA0 is supplied by Scalars/SumSym/Constant.lean.
+defs=f"""/-- `A₁` (SYMMETRIC_SUM_REDUCTION (15)): `𝓔_Σ = A₀ + A₁H + z(DH²/(2h) - f(h))`. -/
 noncomputable def fs_SA1 (a t LI Lc : ℝ) : ℝ :=
   -({L(sp.expand(N1:=35*a**5*t**2 + 70*a**5*t + 35*a**5 + 35*a**4*t**2 - 35*a**4 - 70*a**3*t**2 - 210*a**3*t - 105*a**3 - 70*a**2*t**2 + 70*a**2*t + 105*a**2 + 35*a*t**2 + 206*a*t - 4*a + 35*t**2 - 4*t + 4))}) / (70 * (1 - a) ^ 2) -
     ({L(a**3*t**2 + 2*a**3*t + a**3 + a**2*t**2 - a**2 - 3*a*t**2 - 6*a*t - 2*a - t**2)}) / (t * (1 - a)) * LI +

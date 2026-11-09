@@ -12,7 +12,7 @@ The analytic half of the switch count (`Reduction/SwitchCount.lean`).
 
 Main API:
 
-* `switch_singularGapSq_pos`: under the clearance `‖𝒫‖² ≤ 251² Q²`, nontriviality gives `Q(t) > 0`.
+* `switch_singularGapSq_pos`: under the clearance `‖𝒫‖² ≤ C² Q²`, nontriviality gives `Q(t) > 0`.
 * `switch_exists_excluded_vertex`: if the costate is off the singular locus at `t₀` (`Q(t₀) > 0`),
   there are `δ > 0` and vertices `j`, `k` with `H_j < 0` on `(t₀, t₀ + δ)` and `H_k < 0` on
   `(t₀ - δ, t₀)` (within `[0, T]`).
@@ -261,10 +261,10 @@ private theorem eq_zero_of_commutator_eq_zero {X A : Mat2} (hXtr : X.trace = 0)
 
 /-! ### Positivity of the singular gap -/
 
-/-- Under the clearance `‖𝒫‖² ≤ 251² Q²`, the nontriviality of the costate gives `Q > 0`: the
+/-- Under a homogeneous clearance `‖𝒫‖² ≤ C² Q²`, the nontriviality of the costate gives `Q > 0`: the
 costate is off the singular locus. -/
-theorem switch_singularGapSq_pos {lam : ℝ} {Λ₁ ΛR : Mat2} (hnt : lam ≠ 0 ∨ Λ₁ ≠ 0 ∨ ΛR ≠ 0)
-    (hclear : covectorNormSq lam Λ₁ ΛR ≤ 251 ^ 2 * singularGapSq lam Λ₁ ΛR) :
+theorem switch_singularGapSq_pos {C lam : ℝ} {Λ₁ ΛR : Mat2} (hnt : lam ≠ 0 ∨ Λ₁ ≠ 0 ∨ ΛR ≠ 0)
+    (hclear : covectorNormSq lam Λ₁ ΛR ≤ C ^ 2 * singularGapSq lam Λ₁ ΛR) :
     0 < singularGapSq lam Λ₁ ΛR := by
   have hpos : 0 < covectorNormSq lam Λ₁ ΛR := by
     have h1 := frobSq_nonneg' Λ₁
@@ -278,7 +278,10 @@ theorem switch_singularGapSq_pos {lam : ℝ} {Λ₁ ΛR : Mat2} (hnt : lam ≠ 0
       nlinarith [sq_nonneg lam]
     · have := frobSq_pos' h
       nlinarith [sq_nonneg lam]
-  nlinarith
+  by_contra hQ
+  have hmul : C ^ 2 * singularGapSq lam Λ₁ ΛR ≤ 0 :=
+    mul_nonpos_of_nonneg_of_nonpos (sq_nonneg C) (le_of_not_gt hQ)
+  linarith
 
 /-! ### Support of the control -/
 

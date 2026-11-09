@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.LogSecant
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Window.Gap
 
 /-!
 # Case M2, smaller-short side: the strengthened bridge order (S)
@@ -77,55 +77,17 @@ theorem ss_gB_hasDerivAt {s : ℝ} (hs : 0 < s) : HasDerivAt (ss_gB 1) ((s - 1) 
 i.e. `7g(q) + 2g(p) ≤ 9 avg(p, q)`. -/
 theorem ss_gap_ratio {p q : ℝ} (hp : 0 < p) (hpq : p < q) (hq : q ≤ 1) :
     7 * ss_gB 1 q + 2 * ss_gB 1 p ≤ 9 * m2Sec p 1 q := by
-  have hq0 : 0 < q := by linarith
-  have hz : 1 ≤ (q + 1) / (p + 1) := by rw [le_div_iff₀ (by positivity)]; linarith
-  have hlog := ss_log_le_pade3 hz
-  rw [m2Sec_of_ne hpq.ne]
-  have hqp : 0 < q - p := by linarith
-  have k : 1 / (q - p) * Real.log ((q + 1) / (p + 1)) ≤
-      1 / (q - p) * (((q + 1) / (p + 1) - 1) * (((q + 1) / (p + 1)) ^ 2 + 10 * ((q + 1) / (p + 1)) + 1) /
-        (6 * ((q + 1) / (p + 1)) * ((q + 1) / (p + 1) + 1))) :=
-    mul_le_mul_of_nonneg_left hlog (by positivity)
-  have e : 1 / (q - p) * (((q + 1) / (p + 1) - 1) *
-      (((q + 1) / (p + 1)) ^ 2 + 10 * ((q + 1) / (p + 1)) + 1) /
-        (6 * ((q + 1) / (p + 1)) * ((q + 1) / (p + 1) + 1))) =
-      (p ^ 2 + 10 * p * q + 12 * p + q ^ 2 + 12 * q + 12) / (6 * (p + 1) * (q + 1) * (p + q + 2)) := by
-    have : p + 1 ≠ 0 := by positivity
-    have : q + 1 ≠ 0 := by positivity
-    have : p + q + 2 ≠ 0 := by positivity
-    field_simp
-    ring
-  rw [e] at k
-  set R := 3 * (3 - 11 * q) * p ^ 2 + 3 * (q ^ 2 - 10 * q + 17) * p + 3 * (1 - q) * (3 * q + 10)
-    with hRdef
-  have hR : 0 ≤ R := by
-    rcases le_or_gt q (3 / 11) with h | h
-    · have : 0 ≤ 3 - 11 * q := by linarith
-      have : 0 ≤ q ^ 2 - 10 * q + 17 := by nlinarith
-      have : 0 ≤ 1 - q := by linarith
-      positivity
-    · have key : q * R = 3 * (1 - q) * (3 * q + 10) * (q - p) + 30 * (1 - q) * (1 + q) ^ 2 * p +
-          q * (3 * (11 * q - 3)) * p * (q - p) := by rw [hRdef]; ring
-      have : 0 ≤ q * R := by
-        rw [key]
-        have : 0 ≤ 1 - q := by linarith
-        have : 0 ≤ 11 * q - 3 := by linarith
-        positivity
-      exact nonneg_of_mul_nonneg_right (by linarith) hq0
-  have e2 : 9 * (1 + 1 ^ 2 / ((p + 1) * (q + 1)) -
-      (p ^ 2 + 10 * p * q + 12 * p + q ^ 2 + 12 * q + 12) / (6 * (p + 1) * (q + 1) * (p + q + 2))) -
-      7 * ss_gB 1 q - 2 * ss_gB 1 p = (q - p) * R / (6 * (p + 1) ^ 2 * (q + 1) ^ 2 * (p + q + 2)) := by
-    unfold ss_gB
-    have : p + 1 ≠ 0 := by positivity
-    have : q + 1 ≠ 0 := by positivity
-    have : 1 + p ≠ 0 := by positivity
-    have : 1 + q ≠ 0 := by positivity
-    have : p + q + 2 ≠ 0 := by positivity
-    rw [hRdef]
-    field_simp
-    ring
-  have : 0 ≤ (q - p) * R / (6 * (p + 1) ^ 2 * (q + 1) ^ 2 * (p + q + 2)) := by positivity
-  linarith
+  have hupper := ss_gap_ratio_upper hp hpq hq
+  have hright : 0 < m2Sec p 1 q - ss_gB 1 q := sub_pos.mpr (ss_sec_gt_right hp hpq hq)
+  obtain ⟨_, hden⟩ := ss_gap_limit_pos
+  have hlog := ss_log_le_pade3 (z := 2) (by norm_num)
+  norm_num at hlog
+  have hcap : (Real.log 2 - 1 / 2) / (3 / 4 - Real.log 2) ≤ 7 / 2 := by
+    rw [div_le_iff₀ hden]
+    linarith only [hlog]
+  have hbound := lt_of_lt_of_le hupper hcap
+  rw [div_lt_iff₀ hright] at hbound
+  linarith only [hbound]
 
 /-- **The turn-norm gap decreases along the continuation**: for `ℓ < 1 ≤ K`,
 `(K - ℓ)(avg(ℓ, K) - g(K))` is nonincreasing in `K` (its derivative is `-(K - ℓ) g'(K) ≤ 0`). -/

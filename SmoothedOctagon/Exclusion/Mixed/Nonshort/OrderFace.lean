@@ -10,7 +10,7 @@ public import Mathlib.Analysis.Convex.Deriv
 For `0 < t < 2/5`, `x > 1/4`, `k = 2t + x ≥ 1`, `x < 7/3 - (10/3)t`, the exact incoming secant `v`
 and `1 < q ≤ W/k`, `N(k) > 0`. On this face `B = Wk` and `R(q) = α + βq + γ/q - p log q` is
 concave on `[1, W/k]` (`nsr_concave_min`), so it suffices to check the two endpoints: `R(1) > 0`
-from `v < v̄` and an exact identity whose cubic factor is positive (`nsr_order_P7_pos`), and
+from the reciprocal-mean ceiling and a completed square (`nsr_order_one_pos`), and
 `R(W/k) > 0` from the rational relaxations `v < v̄`, `log q < L₊(q)` and the certificate
 `nsrOP_pos_a`, `nsrOP_pos_b`.
 The bound `q ≤ W/k` (from the incoming floor and the swapped secant order) is a hypothesis here.
@@ -82,20 +82,27 @@ theorem nsr_concave_min {α β γ p q0 q1 q : ℝ} (hq0 : 0 < q0) (hp : 0 ≤ p)
   exact hconc.min_le_of_mem_Icc (Set.left_mem_Icc.2 (hq.1.trans hq.2))
     (Set.right_mem_Icc.2 (hq.1.trans hq.2)) hq
 
-/-- The cubic factor of the order-face residual at `q = 1`, positive for `0 < x < 5/2` and every
-`t`. -/
-theorem nsr_order_P7_pos {t x : ℝ} (hx : 0 < x) (hx2 : x < 5 / 2) :
-    0 < t * (3 * t - 1) * x ^ 3 + (18 * t ^ 2 - 15 * t + 5) * x ^ 2
-      + (36 * t ^ 2 - 40 * t + 14) * x + (24 * t ^ 2 - 32 * t + 12) := by
-  have h1 : 0 ≤ (t * (3 * t - 1) + 1 / 12) * x ^ 3 := mul_nonneg (by nlinarith [sq_nonneg (t - 1 / 6)]) (by positivity)
-  have h2 : 0 ≤ (18 * t ^ 2 - 15 * t + 5 - 15 / 8) * x ^ 2 :=
-    mul_nonneg (by nlinarith [sq_nonneg (t - 5 / 12)]) (by positivity)
-  have h3 : 0 ≤ (36 * t ^ 2 - 40 * t + 14 - 26 / 9) * x :=
-    mul_nonneg (by nlinarith [sq_nonneg (t - 5 / 9)]) hx.le
-  have h4 : 0 ≤ 24 * t ^ 2 - 32 * t + 12 - 4 / 3 := by nlinarith [sq_nonneg (t - 2 / 3)]
-  have h5 : 0 ≤ x ^ 2 * (5 / 2 - x) := mul_nonneg (by positivity) (by linarith)
-  have h6 : 0 < x ^ 2 := by positivity
-  nlinarith
+/-- At the factor `q = 1`, the reciprocal-mean ceiling leaves a square and a positive
+term. No duration bound or coefficient estimate is needed. -/
+theorem nsr_order_one_pos {t x v : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x)
+    (hv : v ≤ nsrVJensen t x) : 0 < nsrN t x (2 * t + x) 1 v 0 := by
+  have hc : 0 < 1 - t := by linarith
+  have hW : 0 < 1 + x := by positivity
+  have hD : 0 < x ^ 2 + 6 * x + 6 := by positivity
+  have hceiling : 0 < nsrN t x (2 * t + x) 1 (nsrVJensen t x) 0 := by
+    have e : nsrN t x (2 * t + x) 1 (nsrVJensen t x) 0 =
+        (1 - t) * x ^ 3 / ((1 + x) * (x ^ 2 + 6 * x + 6) ^ 2) *
+          (((x ^ 2 + 6 * x + 6) * t - 3 * x - 4) ^ 2 + 2 * (1 + x) ^ 3) := by
+      unfold nsrN nsrVJensen
+      field_simp
+      ring
+    rw [e]
+    positivity
+  rw [nsrN_sub_v t x (2 * t + x) 1 v (nsrVJensen t x) 0]
+  have hNv := nsrNv_nonpos ht.le hx.le (by norm_num : (1 : ℝ) ≤ 1)
+    (by linarith : 2 * t ≤ 2 * t + x)
+  have := mul_nonneg_of_nonpos_of_nonpos (sub_nonpos.mpr hv) hNv
+  linarith
 
 /-- The concave form of the residual on the face `k = 2t + x` (`B = Wk`, `Z = qk`). -/
 theorem nsr_order_R_form {t x q v L : ℝ} (ht : 0 < t) (hx : 0 < x) (_hk : 0 < 2 * t + x)
@@ -140,27 +147,10 @@ theorem nsr_order_face {t x q v : ℝ} (ht : 0 < t) (ht2 : t < 2 / 5) (hx : 1 / 
     fun z hz => by rw [nsrN_eq_R ht hx0 hk0 hz, hRf z hz.ne']
   -- the endpoint q = 1
   have hR1 : 0 < α + β * 1 + γ / 1 - (t + x) * Real.log 1 := by
-    have e1 : nsrN t x k 1 v 0 = x * ((k + t * (x * (x + 2))) * (1 - v) - 2 * t * (1 - t) * (t + x)) := by
-      rw [hkdef]; unfold nsrN; ring
-    have e2 : x * ((k + t * (x * (x + 2))) * (1 - nsrVbar t x) - 2 * t * (1 - t) * (t + x)) =
-        (1 - t) * x ^ 3 / (3 * (1 + x) * (x + 2) ^ 3) * (t * (3 * t - 1) * x ^ 3
-          + (18 * t ^ 2 - 15 * t + 5) * x ^ 2 + (36 * t ^ 2 - 40 * t + 14) * x
-          + (24 * t ^ 2 - 32 * t + 12)) := by
-      rw [hkdef]; unfold nsrVbar; field_simp; ring
-    have hP7 := nsr_order_P7_pos (t := t) hx0 (by linarith)
-    have hpos : 0 < (1 - t) * x ^ 3 / (3 * (1 + x) * (x + 2) ^ 3) := by
-      have : 0 < 1 - t := by linarith
-      positivity
-    have hkY : 0 < k + t * (x * (x + 2)) := by positivity
     have hN1 : 0 < nsrN t x k 1 v 0 := by
-      rw [e1]
-      have : x * ((k + t * (x * (x + 2))) * (1 - nsrVbar t x) - 2 * t * (1 - t) * (t + x)) <
-          x * ((k + t * (x * (x + 2))) * (1 - v) - 2 * t * (1 - t) * (t + x)) := by
-        apply mul_lt_mul_of_pos_left _ hx0
-        have := mul_lt_mul_of_pos_left (show 1 - nsrVbar t x < 1 - v by linarith) hkY
-        linarith
-      rw [e2] at this
-      linarith [mul_pos hpos hP7]
+      apply nsr_order_one_pos ht (by linarith) hx0
+      rw [hv]
+      exact (nsr_secN_lt_jensen hx0 (by linarith)).le
     have := hNR 1 one_pos
     rw [Real.log_one] at this
     rw [this] at hN1

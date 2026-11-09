@@ -9,13 +9,13 @@ fig-smaller-short.pdf has three panels.
 (b) On that box, the slope eta = (alpha - 1)/delta of the equal-secant locus, for x = 2, 25/12, 13/6:
     it lies between the strong lower order 1 + 4x(x + 1)/(7x + 1) >= 13/5 and the small-shape upper
     order 3 (Lemma "Orders of the bridge" of Section 9).
-(c) The polynomial bound B(u_q; R, T(e), delta) - b* of gate S6 at e = 13/5, over the box
-    1/3 <= R <= 7/19, 0 <= delta <= 1/19; it is positive with a margin of about 3.4e-5, small
-    against b* = 0.00223.
+(c) The natural score gap c*pi/3 + sqrt(3)*B(u_star; R, T(e), delta) - A_oct
+    of gate S6 at e = 13/5, over 1/3 <= R <= 7/19, 0 <= delta <= 1/19.
+    The norm floor comes from a reciprocal integral and its weighted variance.
 
 Every fact the caption states is checked by an assert. The functions are those of Section 9 and
 its appendix: the secant (eq:ss-secant), the slope k_s of the strong order, and the bound B, the
-floor u_q, the bounds Z_U, Z_L and the angle T of gate S6.
+floor u_star, the bounds Z_U, Z_L and the angle T of gate S6.
 """
 import math
 import os
@@ -52,15 +52,15 @@ def ks(x):
     return 4 * (x + 1) / (7 * x + 1)
 
 
-# ---- the polynomial bound of gate S6 ------------------------------------------------------------
+# ---- the integral score bound of gate S6 --------------------------------------------------------
 
-def L6(z):
-    return z / 162 + 161 * z ** 3 / 1458 - 161 * z ** 5 / 7290
+def ell6(z):
+    return z - 161 / (54 * math.sqrt(3)) * math.atan(z / math.sqrt(3))
 
 
-def uq(R, d):
-    return 0.75 + (3 * R * R + 10 * R + 10) / (15 * (2 + R) ** 3) * (
-        R * R - R * (1 + R) * d / 2 + 19 * (1 + R) ** 2 * d * d / 84)
+def u_star(R, d):
+    return 0.75 + (1 + R) * R ** 3 / (6 * (2 * R + (1 + R) * d)) * (
+        (1 + 3 * R / 4) ** -2 + 9 * R * R / (80 * (1 + R) ** 4))
 
 
 def ZU(R, d):
@@ -78,11 +78,12 @@ def T6(R, d, e):
 def B6(R, T, d, u):
     b1 = 1 - u / ((3 + R * R) / 4)
     b2 = 1 - u / ((3 + T * T) / 4)
-    return (L6(R) + L6(T) - (b1 * R + b2 * T) / 2 - (b1 + b2) * ZU(R, d) / 8
+    return (ell6(R) + ell6(T) - (b1 * R + b2 * T) / 2 - (b1 + b2) * ZU(R, d) / 8
             - 161 / 54 * ((3 + R * R) / (3 + T * T) - 1) ** 2 / (8 * ZL(R, d)))
 
 
-BSTAR = 792669623 / 356040000000
+OCTAGON_COST = 2 * math.sqrt(3) * (
+    8 - 4 * math.sqrt(2) - math.log(2)) / (2 * math.sqrt(2) - 1)
 
 
 def make(out_dir):
@@ -154,18 +155,21 @@ def make(out_dir):
               fontsize=7)
     ax.set_title('(b)', loc='left')
 
-    # (c) the S6 bound minus b* at e = 13/5
+    # (c) the S6 score gap at e = 13/5
     ax = axes[2]
     Rs = np.linspace(1 / 3, 7 / 19, 121)
     dd = np.linspace(0, 1 / 19, 121)
     for e in (13 / 5, 3):
-        Z = np.array([[B6(R, T6(R, d, e), d, uq(R, d)) - BSTAR for R in Rs] for d in dd])
-        assert Z.min() > 3e-5, (e, Z.min())
+        Z = np.array([[
+            161 / 54 * math.pi / 3
+            + math.sqrt(3) * B6(R, T6(R, d, e), d, u_star(R, d))
+            - OCTAGON_COST for R in Rs] for d in dd])
+        assert Z.min() > 0, (e, Z.min())
         if e == 13 / 5:
             Zp = Z
     im = ax.pcolormesh(Rs, dd, Zp * 1e3, shading='auto', cmap='Blues')
     cb = fig.colorbar(im, ax=ax, fraction=0.07, pad=0.03)
-    cb.set_label(r'$(\mathcal{B}-b^*)\cdot 10^{3}$', fontsize=7)
+    cb.set_label(r'$(c\pi/3+\sqrt{3}\mathcal{B}-A_{\rm oct})\cdot10^3$', fontsize=7)
     cb.ax.tick_params(labelsize=7)
     ax.set_xticks([1 / 3, 0.35, 7 / 19])
     ax.set_xticklabels([r'$\frac{1}{3}$', '0.35', r'$\frac{7}{19}$'])

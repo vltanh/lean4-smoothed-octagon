@@ -1,13 +1,16 @@
 \section*{Acknowledgments and the use of AI}
 
-The mathematical argument of this paper was drafted by ChatGPT Pro (OpenAI), in the working
-notes~\cite{Notes,LighterProofs}. Claude Opus 5.5 (Anthropic) wrote the Lean formalization, in
-which several steps take shorter routes than the notes, and wrote this manuscript from the
-formalization; the formalization of the book of Hales and Vajjha and of the maximum principle on
-which it builds~\cite{SmoothedPolygonLean,OptimalControlLean,FixedPointLean} was written in the same
-way. No person has checked the proof line by line. Its correctness rests on Lean's kernel, which
-checks every step of the formal proof, and on the faithfulness of the Lean statements of
-\cref{thm:main} to the mathematical ones, which \cref{app:formal-statements} describes.
+The proof in this paper was found and written with AI systems. ChatGPT Pro (OpenAI) drafted the
+mathematical argument. Claude Opus 5.5 (Anthropic) wrote the Lean formalization, in which several
+steps take shorter routes than the draft, and wrote the first version of this manuscript from the
+formalization.
+Codex (OpenAI) refined the paper and its Lean proofs.
+The formalizations of the book
+of Hales and Vajjha and of the maximum principle on which it
+builds~\cite{SmoothedPolygonLean,OptimalControlLean,FixedPointLean} were written in the same way.
+No person has checked the proof line by line. Lean's kernel checks the formal proofs of the main
+theorems; \cref{app:formal-statements} describes their statements, and \cref{app:formal-scalar}
+records where the scalar arguments in this text differ from those of the formalization.
 
 We thank Thomas Hales and Koundinya Vajjha, whose formulation of the problem and whose book this
 proof builds on.

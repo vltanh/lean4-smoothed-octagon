@@ -951,7 +951,8 @@ private theorem ur_face (h0 : H.x < 12 / 5) (hx : 13 / 6 ≤ H.x) :
   have hqh0 : 0 < qh := lt_min hqc0 (by norm_num)
   have hqh7 : qh ≤ 1 / 7 := min_le_right _ _
   -- convexity and the zero-scale end
-  have hA2 := ss_A2_pos (be := H.be) (by linarith) h0.le hal hu34 (by linarith)
+  have hA2 : 0 < ssA2 H.x H.be H.al H.u :=
+    ss_A2_pos (by linarith) (by linarith) hal hu34 (by linarith)
   have halt := ss_phi_convex_max (p := p) (m := 2 - 7 * p / (4 * ssRA H.al H.be))
     (qm := min qh (p / 2)) (by linarith) hA2.le hq0.le
     (le_min (le_min hqc hq7.le) hq2)

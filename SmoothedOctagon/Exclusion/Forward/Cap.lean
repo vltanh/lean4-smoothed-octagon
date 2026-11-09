@@ -1,12 +1,13 @@
 module
 
-public import SmoothedOctagon.Exclusion.Forward.Scalar
+public import SmoothedOctagon.Exclusion.Forward.Log
 public import Mathlib.Analysis.Real.Pi.Bounds
 public import Mathlib.Analysis.Complex.ExponentialBounds
 
 /-!
 # Case F: numerical constants and the competitive Casimir cap
 
+* `ff_octagonCost_lt_sqrt`: `A_oct < 29√3/16`, from the midpoint logarithm bound.
 * `ff_octagonCost_lt`: `A_oct < 3.1268` (`A_oct ≈ 3.126049`).
 * `ff_octagonCost_lt'`: `A_oct < 2501/800`; `ff_octagonCost_gt`: `A_oct > 3.126`.
 * `ff_gam2_cap`: from the spectral bound `C ≥ (π/3)(κ + 3/2)` and `C ≤ A_oct`,
@@ -18,6 +19,38 @@ public import Mathlib.Analysis.Complex.ExponentialBounds
 namespace SmoothedOctagon
 
 open Real
+
+/-- The exact octagon comparison used by the exterior budget. -/
+theorem ff_octagonCost_lt_sqrt : octagonCost < 29 * √3 / 16 := by
+  have h2 : (1 : ℝ) < √2 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
+  have h3 : 0 < √3 := by positivity
+  have hsq2 := Real.sq_sqrt (show (0 : ℝ) ≤ 2 by norm_num)
+  have hmid := ff_log_gt_midpoint h2
+  rw [Real.log_sqrt (by norm_num : (0 : ℝ) ≤ 2)] at hmid
+  have emid : 4 * (√2 - 1) / (√2 + 1) = 12 - 8 * √2 := by
+    field_simp
+    nlinarith only [hsq2]
+  have hlog : 12 - 8 * √2 < Real.log 2 := by
+    rw [← emid, show 4 * (√2 - 1) / (√2 + 1) = 2 * (2 * (√2 - 1) / (√2 + 1)) by ring]
+    linarith only [hmid]
+  have hs12 : √12 = 2 * √3 := by
+    rw [show (12 : ℝ) = 2 ^ 2 * 3 by norm_num, Real.sqrt_mul (by positivity),
+      Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 2)]
+  have hs32 : √32 = 4 * √2 := by
+    rw [show (32 : ℝ) = 4 ^ 2 * 2 by norm_num, Real.sqrt_mul (by positivity),
+      Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 4)]
+  have hs8 : √8 = 2 * √2 := by
+    rw [show (8 : ℝ) = 2 ^ 2 * 2 by norm_num, Real.sqrt_mul (by positivity),
+      Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 2)]
+  have hD : 0 < 2 * √2 - 1 := by linarith
+  have h70 : 70 * √2 < 99 := by nlinarith only [hsq2, Real.sqrt_nonneg 2]
+  rw [octagonCost, octagonDensity, hs12, hs32, hs8, mul_div_assoc', div_lt_iff₀ hD]
+  have hN : 8 - 4 * √2 - Real.log 2 < 4 * (√2 - 1) := by linarith only [hlog]
+  have hfirst := mul_lt_mul_of_pos_left hN (by positivity : 0 < 2 * √3)
+  have hlast : 8 * √3 * (√2 - 1) < 29 * √3 / 16 * (2 * √2 - 1) := by
+    have := mul_lt_mul_of_pos_left h70 h3
+    nlinarith only [this]
+  nlinarith only [hfirst, hlast]
 
 /-- `A_oct = √12 (8 - √32 - log 2)/(√8 - 1) < 3.1268`. -/
 theorem ff_octagonCost_lt : octagonCost < 3.1268 := by

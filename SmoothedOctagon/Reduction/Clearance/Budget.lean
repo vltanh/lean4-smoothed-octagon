@@ -8,20 +8,12 @@ public import Mathlib.Analysis.Complex.ExponentialBounds
 /-!
 # The complete-period budget inequality
 
-For a Pontryagin extremal of cost at most `A_oct`, at every time `t ∈ [0, T]`,
-`|λ| ≤ 100 ‖Λ₁(t) - (3/2)λJ‖_F`. The bound is proved at the initial time by integrating the
-equilibrium inequality against the winding bound `∫(ρ + ρ_R) ≥ 2π/3`, and moved to every time by
-rebasing the period.
+Write `b(c) = (2π-c)/(3(π-c))` and `b_oct = b(A_oct)`. Integrating the equilibrium
+inequality against the winding estimate gives `|λ| ≤ b_oct ‖Λ₁(t)-(3/2)λJ‖_F`.
+Rebasing the period gives this bound at every time.
 
-Main API:
-
-* `clr_octagonCost_lt`: `A_oct < 3.127` (`A_oct ≈ 3.12605`).
-* `clr_budget`: the budget inequality at the initial time of an admissible trajectory with
-  `tr((h⁻¹ M h + (3/2)μJ) Y) ≤ 0`: `μ ≤ 100 ‖M + (3/2)μJ‖_F`.
-* `clr_conservation`: `Λ₁(t) = g(t)⁻¹ Λ₁(0) g(t)` on `[0, T]` (Corollary 6.5.3).
-* `clr_traceForm_le_zero`: `tr((Λ₁ - (3/2)λJ) X) ≤ 0` at every time.
-* `clr_twisted_traceForm_le`: the same inequality along the twisted extension, for `t ≥ 0`.
-* `clr_lam_sq_le`: `λ² ≤ 10⁴ ‖Λ₁(t) - (3/2)λJ‖_F²` at every `t ∈ [0, T]`.
+Main API: `clr_budgetCoeff`, `clr_budgetOct`, `clr_budget`, `clr_abs_lam_le`,
+`clr_lam_sq_le`, and the spatial conservation and twisted equilibrium inequalities.
 -/
 
 @[expose] public section
@@ -55,20 +47,34 @@ theorem clr_octagonCost_lt : octagonCost < 3.127 := by
 
 /-! ### The budget inequality at the initial time -/
 
-/-- **The budget inequality**. Let `(T, u, h, Y)` be admissible with cost at most `A_oct`, `μ`
-real, and `M` a matrix with `tr((h⁻¹ M h + (3/2)μJ) Y) ≤ 0` on `[0, T]` (the equilibrium
-inequality for the costate `Λ₁ = h⁻¹ M h`). Then `μ ≤ 100 ‖M + (3/2)μJ‖_F`.
+/-- The budget coefficient at cost `c < π`. -/
+noncomputable def clr_budgetCoeff (c : ℝ) : ℝ := (2 * π - c) / (3 * (π - c))
 
-Proof: with `A₀ = M + (3/2)μJ` and `V = h Y h⁻¹`, the hypothesis reads
-`3μ ρ_R + tr(A₀ V) ≤ 3μ ρ`, and Cauchy–Schwarz with `‖V‖_F² = 4ρ_R² - 2` gives
-`tr(A₀ V) ≥ -2‖A₀‖ ρ_R`. Integrating, `(3μ - 2‖A₀‖) ∫ρ_R ≤ 3μ ∫ρ`. If `μ > 100 ‖A₀‖`, then
-`3μ - 2‖A₀‖ > (149/50) μ`, and the winding bound `∫ρ_R ≥ 2π/3 - ∫ρ` gives
-`(149/50)(2π/3 - ∫ρ) < 3∫ρ`, which fails because the cost `3∫ρ` is below `3.127`. -/
+/-- The budget coefficient at the octagon cost. -/
+noncomputable def clr_budgetOct : ℝ := clr_budgetCoeff octagonCost
+
+theorem clr_budgetCoeff_mono {c C : ℝ} (h : c ≤ C) (hC : C < π) :
+    clr_budgetCoeff c ≤ clr_budgetCoeff C := by
+  unfold clr_budgetCoeff
+  rw [div_le_div_iff₀ (by linarith) (by linarith)]
+  nlinarith [mul_nonneg Real.pi_pos.le (sub_nonneg.mpr h)]
+
+theorem clr_budgetOct_ge_two_thirds : (2 / 3 : ℝ) ≤ clr_budgetOct := by
+  have hgap : 0 < π - octagonCost := sub_pos.mpr octagonCost_lt_pi
+  have hcost : 0 ≤ octagonCost := by
+    rw [← volume_real_smoothedPolygonDisk_one]
+    exact measureReal_nonneg
+  unfold clr_budgetOct clr_budgetCoeff
+  rw [le_div_iff₀ (by positivity)]
+  nlinarith
+
+/-- Integrating the equilibrium inequality against the winding bound gives the exact
+budget `μ ≤ b_oct ‖M + (3/2)μJ‖_F`. The only cost gap used is `A_oct < π`. -/
 theorem clr_budget {T : ℝ} {u : ℝ → Fin 3 → ℝ} {h Y : ℝ → Mat2}
     (hadm : IsReinhardtAdmissible T u h Y) (hcost : reinhardtCost T Y ≤ octagonCost)
     {M : Mat2} {μ : ℝ}
     (hmax : ∀ s ∈ Icc 0 T, traceForm ((h s)⁻¹ * M * h s + (3 / 2 * μ) • J) (Y s) ≤ 0) :
-    μ ≤ 100 * √(frobSq (M + (3 / 2 * μ) • J)) := by
+    μ ≤ clr_budgetOct * √(frobSq (M + (3 / 2 * μ) • J)) := by
   have hwind := clr_winding hadm
   obtain ⟨hst, -, -, -⟩ := hadm
   have hT : 0 < T := hst.1
@@ -131,22 +137,28 @@ theorem clr_budget {T : ℝ} {u : ℝ → Fin 3 → ℝ} {h Y : ℝ → Mat2}
     congr 1; funext s; simp only [clr_rho]; ring
   set I := ∫ s in (0 : ℝ)..T, clr_rho (Y s)
   set IR := ∫ s in (0 : ℝ)..T, clr_rhoR (h s) (Y s)
-  have hoc := clr_octagonCost_lt
-  have hpi := Real.pi_gt_d6
-  have hI : I < 3.127 / 3 := by linarith
-  by_contra hcon
-  push Not at hcon
-  have hμpos : 0 < μ := by linarith
-  have hK : (149 / 50) * μ < 3 * μ - 2 * a₀ := by linarith
-  have hgap : 0 < 2 * π / 3 - I := by linarith
-  have h1 : (3 * μ - 2 * a₀) * (2 * π / 3 - I) ≤ (3 * μ - 2 * a₀) * IR :=
-    mul_le_mul_of_nonneg_left (by linarith) (by linarith)
-  have h2 : (149 / 50) * μ * (2 * π / 3 - I) < (3 * μ - 2 * a₀) * (2 * π / 3 - I) :=
-    mul_lt_mul_of_pos_right hK hgap
-  have h3 : (149 / 50) * (2 * π / 3 - I) < 3 * I := by
-    have : μ * ((149 / 50) * (2 * π / 3 - I)) < μ * (3 * I) := by nlinarith
-    exact lt_of_mul_lt_mul_left this hμpos.le
-  nlinarith
+  have hgap : 0 < π - octagonCost := sub_pos.mpr octagonCost_lt_pi
+  have hcost0 : 0 ≤ 3 * I := by
+    have hI0 : 0 ≤ I := by
+      apply intervalIntegral.integral_nonneg hT.le
+      intro s hs
+      exact (clr_rho_pos (hstar s hs)).le
+    positivity
+  have hI : 3 * I ≤ octagonCost := by rwa [hcostI] at hcost
+  by_cases hsmall : 3 * μ ≤ 2 * a₀
+  · have hb := clr_budgetOct_ge_two_thirds
+    have := mul_le_mul_of_nonneg_right hb ha₀0
+    dsimp only [a₀, A₀] at *
+    linarith
+  · have hK : 0 < 3 * μ - 2 * a₀ := by linarith
+    have hwind' : 2 * π / 3 - I ≤ IR := by linarith
+    have hmul := mul_le_mul_of_nonneg_left hwind' hK.le
+    have hbase : 3 * μ * (π - 3 * I) ≤ a₀ * (2 * π - 3 * I) := by nlinarith
+    have hμ : μ ≤ clr_budgetCoeff (3 * I) * a₀ := by
+      rw [clr_budgetCoeff, div_mul_eq_mul_div, le_div_iff₀ (by linarith : 0 < 3 * (π - 3 * I))]
+      nlinarith
+    exact hμ.trans (mul_le_mul_of_nonneg_right
+      (clr_budgetCoeff_mono hI octagonCost_lt_pi) ha₀0)
 
 /-! ### Conservation and the equilibrium inequality along an extremal -/
 
@@ -198,13 +210,11 @@ theorem clr_twisted_traceForm_le (hT : 0 < T) {c : ℝ}
   rw [e1, e2, e3, poly_traceForm_conj (R_pow_mul_inv n)]
   exact hle r hr
 
-/-- **The budget inequality at every time**. For a Pontryagin extremal of cost at most `A_oct`,
-`λ² ≤ 10⁴ ‖Λ₁(t) - (3/2)λJ‖_F²` at every `t ∈ [0, T]`: apply `clr_budget` to the period rebased at
-`t` (`ĝ(s) = G(t)⁻¹ G(t + s)`, `X̂(s) = Y(t + s)`, initial costate `Λ₁(t)`), which is admissible
-with the same cost. -/
-theorem clr_lam_sq_le (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
+/-- Rebasing the complete-period budget at each time gives the absolute-value
+budget for the Pontryagin multiplier. -/
+theorem clr_abs_lam_le (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
     (hcost : reinhardtCost T X ≤ octagonCost) :
-    ∀ t ∈ Icc 0 T, lam ^ 2 ≤ 10 ^ 4 * frobSq (Λ₁ t - (3 / 2 * lam) • J) := by
+    ∀ t ∈ Icc 0 T, |lam| ≤ clr_budgetOct * √(frobSq (Λ₁ t - (3 / 2 * lam) • J)) := by
   intro t₀ ht₀
   have hcons := clr_conservation hext
   have htr := clr_traceForm_le_zero hext
@@ -239,9 +249,15 @@ theorem clr_lam_sq_le (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
   have e2 : Λ₁ t₀ + (3 / 2 * -lam) • J = Λ₁ t₀ - (3 / 2 * lam) • J := by
     rw [sub_eq_add_neg, ← neg_smul]; congr 2; ring
   rw [e2] at hb
-  have hf := clr_frobSq_nonneg (Λ₁ t₀ - (3 / 2 * lam) • J)
-  have hs := Real.sq_sqrt hf
-  have hl : 0 ≤ -lam := by linarith
-  nlinarith [Real.sqrt_nonneg (frobSq (Λ₁ t₀ - (3 / 2 * lam) • J))]
+  rw [abs_of_nonpos hlam]
+  exact hb
+
+theorem clr_lam_sq_le (hext : IsPontryaginExtremal T u g X Λ₁ ΛR lam)
+    (hcost : reinhardtCost T X ≤ octagonCost) :
+    ∀ t ∈ Icc 0 T, lam ^ 2 ≤ clr_budgetOct ^ 2 * frobSq (Λ₁ t - (3 / 2 * lam) • J) := by
+  intro t ht
+  have hb := clr_abs_lam_le hext hcost t ht
+  have hs := pow_le_pow_left₀ (abs_nonneg lam) hb 2
+  simpa only [sq_abs, mul_pow, Real.sq_sqrt (clr_frobSq_nonneg _)] using hs
 
 end SmoothedOctagon.Reduction

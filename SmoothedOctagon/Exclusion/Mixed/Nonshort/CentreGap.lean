@@ -9,16 +9,17 @@ public import SmoothedOctagon.Exclusion.Mixed.Comparison
 Lemma 1: raising the incoming norm `u` to the ceiling `U(a/S)` and then the central margin `b`
 to `b* = K/T - a` strictly raises the transported norm; the monotonicity in `b` is proved from
 `log y ≤ y - 1`. Lemma 2: `d² + 2cd > 4`. The incoming secant is below the chord average `V_ch`
-(chord identity), the envelope is increasing in `v`, and if `e = 4 - d² - 2cd ≥ 0` the cleared
-envelope identity puts the envelope at `V_ch` strictly below `g_d(r₀) ≤ g_d(r) ≤ w`,
-`r₀ = Q/W - d`: a contradiction.
+(chord identity), and the envelope is increasing in `v`. The cleared difference between
+`g_d(r₀)` and that envelope is affine in the central scale. Its slope and its value at the
+boundary `r₀ = d` are positive, so it contradicts `g_d(r₀) ≤ g_d(r) ≤ w`.
 
 ## Main API
 
 * `nsr_w_mono_u`: the transported norm is affine increasing in `u`.
 * `nsr_wU_lt_star`: Lemma 1, `w_U(b) < w_U(b*)`.
 * `nsr_sec_lt_chord`: `Sec(a, c, d) < (g_c(a) + g_c(d))/2` when `ad < c²`.
-* `nsr_gap_identity`: the cleared envelope identity.
+* `nsrGapD`, `nsrGapChord`: the normalized norm difference and chord ceiling.
+* `nsr_gap_chord_pos`, `nsr_gap_normalize`: positivity by the affine scale comparison.
 * `nsr_centre_gap'`: Lemma 2, `d² + 2cd > 4`.
 -/
 
@@ -150,23 +151,64 @@ theorem nsr_sec_lt_chord {a c d : ℝ} (ha : 0 < a) (hc : 0 < c) (had : a < d) (
   rw [e] at this
   linarith
 
-/-- **The cleared envelope identity**: with `x = d - a`,
-`e = 4 - d² - 2cd`, `Q²(w_{U,ch} - g_d(r₀)) = -(cx/(2aT²W²))(P₀(x) + e P_e(x))`. -/
-theorem nsr_gap_identity {a c d : ℝ} (ha : 0 < a) (hc : 0 < c) (hd : 0 < d) :
-    let T := a + c
-    let W := c + d
-    let Q := d ^ 2 + 4
-    let x := d - a
-    let Vch := 1 - (a * c / T ^ 2 + c * d / W ^ 2) / 2
-    let r0 := Q / W - d
-    (d ^ 2 + 4) ^ 2 * (nsrWU a (m2bStar a c) c d (m2U (a / (a + m2bStar a c))) Vch - m2g d r0) =
-      -(c * x / (2 * a * T ^ 2 * W ^ 2)) *
-        (2 * a * T ^ 5 * x + 2 * T ^ 3 * (5 * a ^ 2 + 3 * a * c + 2 * c ^ 2) * x ^ 2
-          + 2 * T ^ 2 * (9 * a ^ 2 + 5 * a * c + 2 * c ^ 2) * x ^ 3
-          + T * (2 * a + c) * (7 * a + c) * x ^ 4 + a * (4 * a + 3 * c) * x ^ 5
-          + (4 - d ^ 2 - 2 * c * d) * (T * (2 * a * T ^ 3 + 2 * T ^ 3 * x + 4 * a * T ^ 2 * x
-            + T ^ 2 * x ^ 2 + 6 * a * T * x ^ 2 + 3 * a * x ^ 3))) := by
-  intro T W Q x Vch r0
+/-- The cleared difference between the switching floor and the transported ceiling. -/
+noncomputable def nsrGapD (t x k v : ℝ) : ℝ :=
+  (k + 2 * t * x + x ^ 2) ^ 2 - (t + x) * (1 + x) * (k + 2 * t * x + x ^ 2) +
+    (t + x) ^ 2 * (1 + x) ^ 2 -
+    (k ^ 2 - k * t + t ^ 2 + (k / t * (v - 1 + t ^ 2) + t * (2 - t)) * (x * (x + 2)) +
+      v * (x * (x + 2)) ^ 2)
+
+/-- The mean of the two endpoint switching ceilings. -/
+noncomputable def nsrGapChord (t x : ℝ) : ℝ :=
+  1 - (t * (1 - t) + (1 - t) * (t + x) / (1 + x) ^ 2) / 2
+
+/-- The chord ceiling leaves a positive switching-floor gap. Its cleared difference is
+increasing in the central scale and is already positive where the two margins agree. -/
+theorem nsr_gap_chord_pos {t x k : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x)
+    (htX : t * (x + 2) < 1) (hk : 2 * t + x * (x + 2) ≤ k) :
+    0 < nsrGapD t x k (nsrGapChord t x) := by
+  have hc : 0 < 1 - t := by linarith
+  have hW : 0 < 1 + x := by positivity
+  have hX : 0 < x + 2 := by positivity
+  have hdeficit : 0 < m2U t - nsrGapChord t x := by
+    have e : m2U t - nsrGapChord t x =
+        (1 - t) * x * (1 - t * (x + 2)) / (2 * (1 + x) ^ 2) := by
+      unfold m2U nsrGapChord
+      field_simp
+      ring
+    rw [e]
+    have : 0 < 1 - t * (x + 2) := by linarith
+    positivity
+  have hslope : 0 < (1 - t) * x * (1 + 2 * x) +
+      x * (x + 2) / t * (m2U t - nsrGapChord t x) := by positivity
+  have hboundary : 0 < nsrGapD t x (2 * t + x * (x + 2)) (nsrGapChord t x) := by
+    have e : nsrGapD t x (2 * t + x * (x + 2)) (nsrGapChord t x) =
+        (1 - t) * x ^ 2 / (2 * t * (1 + x) ^ 2) *
+          (x * (x + 2) ^ 2 * (1 + t ^ 2 * (x + 2)) + t * x ^ 3 * (3 * x + 7) +
+            2 * t * (x ^ 2 - x + 1)) := by
+      unfold nsrGapD nsrGapChord
+      field_simp
+      ring
+    rw [e]
+    have : 0 < x ^ 2 - x + 1 := by nlinarith [sq_nonneg (x - 1 / 2)]
+    positivity
+  have e : nsrGapD t x k (nsrGapChord t x) =
+      nsrGapD t x (2 * t + x * (x + 2)) (nsrGapChord t x) +
+        (k - (2 * t + x * (x + 2))) * ((1 - t) * x * (1 + 2 * x) +
+          x * (x + 2) / t * (m2U t - nsrGapChord t x)) := by
+    unfold nsrGapD m2U
+    field_simp
+    ring
+  rw [e]
+  have := mul_nonneg (sub_nonneg.mpr hk) hslope.le
+  linarith
+
+/-- The physical switching-floor gap agrees with the normalized affine comparison. -/
+theorem nsr_gap_normalize {a c d v : ℝ} (ha : 0 < a) (hc : 0 < c) (hd : 0 < d) :
+    (d ^ 2 + 4) ^ 2 * (m2g d ((d ^ 2 + 4) / (c + d) - d) -
+      nsrWU a (m2bStar a c) c d (m2U (a / (a + m2bStar a c))) v) =
+      (a + c) ^ 4 * nsrGapD (a / (a + c)) ((d - a) / (a + c))
+        ((a ^ 2 + 4) / (a + c) ^ 2) v := by
   have hT : 0 < a + c := by linarith
   have hW : 0 < c + d := by linarith
   have hK : 0 < a ^ 2 + 4 := by positivity
@@ -175,9 +217,7 @@ theorem nsr_gap_identity {a c d : ℝ} (ha : 0 < a) (hc : 0 < c) (hd : 0 < d) :
     rw [show (m2bStar a c + a) * (a + c) / (a ^ 2 + 4) = 1 by
       rw [add_comm, hb']; field_simp]
     exact Real.log_one
-  have hr0 : d + r0 = (d ^ 2 + 4) / (c + d) := by simp only [r0, Q, W]; ring
-  simp only [Vch, x, T, W, r0, Q]
-  unfold nsrWU m2wOf m2h m2Stat m2Y
+  unfold nsrWU m2wOf m2h m2Stat m2Y nsrGapD
   rw [hlog]
   rw [show m2bStar a c + a = (a ^ 2 + 4) / (a + c) by rw [add_comm]; exact hb', hb']
   unfold m2g m2U
@@ -250,33 +290,57 @@ theorem nsr_centre_gap' (W : M2Window) : 4 < W.d ^ 2 + 2 * W.c * W.d := by
       nlinarith
     linarith
   have hwge := W.w_ge
-  -- the cleared identity
-  have hid := nsr_gap_identity ha hc hd
-  simp only at hid
-  have hneg : (W.d ^ 2 + 4) ^ 2 * (nsrWU W.a (m2bStar W.a W.c) W.c W.d
-      (m2U (W.a / (W.a + m2bStar W.a W.c))) Vch - m2g W.d r0) < 0 := by
-    rw [hVch, hr0, hid]
-    have hx : 0 < W.d - W.a := by linarith [W.a_lt_d]
-    have he : 0 ≤ 4 - W.d ^ 2 - 2 * W.c * W.d := by linarith
-    have hA : 0 < W.c * (W.d - W.a) / (2 * W.a * (W.a + W.c) ^ 2 * (W.c + W.d) ^ 2) := by positivity
-    have hB : 0 < 2 * W.a * (W.a + W.c) ^ 5 * (W.d - W.a)
-        + 2 * (W.a + W.c) ^ 3 * (5 * W.a ^ 2 + 3 * W.a * W.c + 2 * W.c ^ 2) * (W.d - W.a) ^ 2
-        + 2 * (W.a + W.c) ^ 2 * (9 * W.a ^ 2 + 5 * W.a * W.c + 2 * W.c ^ 2) * (W.d - W.a) ^ 3
-        + (W.a + W.c) * (2 * W.a + W.c) * (7 * W.a + W.c) * (W.d - W.a) ^ 4
-        + W.a * (4 * W.a + 3 * W.c) * (W.d - W.a) ^ 5
-        + (4 - W.d ^ 2 - 2 * W.c * W.d) * ((W.a + W.c) * (2 * W.a * (W.a + W.c) ^ 3
-          + 2 * (W.a + W.c) ^ 3 * (W.d - W.a) + 4 * W.a * (W.a + W.c) ^ 2 * (W.d - W.a)
-          + (W.a + W.c) ^ 2 * (W.d - W.a) ^ 2 + 6 * W.a * (W.a + W.c) * (W.d - W.a) ^ 2
-          + 3 * W.a * (W.d - W.a) ^ 3)) := by positivity
-    have := mul_pos hA hB
+  -- The norm difference is affine in the central scale and positive at the boundary.
+  let t := W.a / (W.a + W.c)
+  let x := (W.d - W.a) / (W.a + W.c)
+  let k := (W.a ^ 2 + 4) / (W.a + W.c) ^ 2
+  have ht : 0 < t := by dsimp [t]; positivity
+  have ht1 : t < 1 := by
+    dsimp [t]
+    rw [div_lt_one hT]
     linarith
-  have hlt : nsrWU W.a (m2bStar W.a W.c) W.c W.d (m2U (W.a / (W.a + m2bStar W.a W.c))) Vch <
-      m2g W.d r0 := by
-    have hQ2 : 0 < (W.d ^ 2 + 4) ^ 2 := by positivity
-    by_contra h
-    push Not at h
-    have := mul_nonneg hQ2.le (sub_nonneg.2 h)
+  have hx : 0 < x := div_pos (sub_pos.mpr W.a_lt_d) hT
+  have htX : t * (x + 2) < 1 := by
+    have e : 1 - t * (x + 2) = (W.c ^ 2 - W.a * W.d) / (W.a + W.c) ^ 2 := by
+      dsimp [t, x]
+      field_simp
+      ring
+    have : 0 < (W.c ^ 2 - W.a * W.d) / (W.a + W.c) ^ 2 :=
+      div_pos (sub_pos.mpr W.logconc) (by positivity)
     linarith
+  have hk : 2 * t + x * (x + 2) ≤ k := by
+    have e : k - (2 * t + x * (x + 2)) =
+        (4 - W.d ^ 2 - 2 * W.c * W.d) / (W.a + W.c) ^ 2 := by
+      dsimp [t, x, k]
+      field_simp
+      ring
+    have : 0 ≤ (4 - W.d ^ 2 - 2 * W.c * W.d) / (W.a + W.c) ^ 2 :=
+      div_nonneg (by linarith) (by positivity)
+    linarith
+  have hchord : Vch = nsrGapChord t x := by
+    have hWnorm : 1 + x = (W.c + W.d) / (W.a + W.c) := by
+      dsimp [x]
+      field_simp
+      ring
+    unfold nsrGapChord
+    rw [hWnorm]
+    dsimp [Vch, t, x]
+    field_simp
+    ring
+  have hD : 0 < nsrGapD t x k Vch := by
+    rw [hchord]
+    exact nsr_gap_chord_pos ht ht1 hx htX hk
+  have hid := nsr_gap_normalize (v := Vch) ha hc hd
+  change (W.d ^ 2 + 4) ^ 2 * (m2g W.d r0 - nsrWU W.a (m2bStar W.a W.c) W.c W.d
+      (m2U (W.a / (W.a + m2bStar W.a W.c))) Vch) =
+      (W.a + W.c) ^ 4 * nsrGapD t x k Vch at hid
+  have hpos : 0 < (W.d ^ 2 + 4) ^ 2 * (m2g W.d r0 - nsrWU W.a (m2bStar W.a W.c) W.c W.d
+      (m2U (W.a / (W.a + m2bStar W.a W.c))) Vch) := by
+    rw [hid]
+    exact mul_pos (pow_pos hT 4) hD
+  have hlt : nsrWU W.a (m2bStar W.a W.c) W.c W.d
+      (m2U (W.a / (W.a + m2bStar W.a W.c))) Vch < m2g W.d r0 :=
+    sub_pos.mp (pos_of_mul_pos_right hpos (sq_nonneg _))
   linarith
 
 end SmoothedOctagon

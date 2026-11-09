@@ -58,7 +58,6 @@ JOBS = {
      Yc=(("(1 + h) / 2 - 3 * j", "7 * (1 + h) / 2 + 7 * j"), ({(0,0):R(1,2),(1,0):R(1,2),(0,1):R(-3)}, {(0,0):R(7,2),(1,0):R(7,2),(0,1):R(7)}))),
  'nsfCQD': dict(pkl='QDelta.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
  'nsfCQC': dict(pkl='QC2.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
- 'nsfCEn': dict(pkl='Ehat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
  'nsfCPn': dict(pkl='Phat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
  'nsfCLRb': dict(pkl='lr_ko.pkl', h0=R(1,3), h1=R(1,2), jlo=0, g=[R(0),R(1)], gstr='h', kind='sym', Yc=R(1)),
 }
@@ -66,14 +65,13 @@ DOC = {
  'nsfCChi': 'the unit-shape residual `N₁` with `v ↦ V₂`, `log q ↦ L₊` for `q ≤ 4W/(7p)`',
  'nsfCQD': 'the discriminant `𝒟²(4C₀C₂ - C₁²)` at `k = 1`, `v = V`)',
  'nsfCQC': 'the leading coefficient `𝒟C₂` at `k = 1`, `v = V`)',
- 'nsfCEn': 'the norm derivative `-2t²p²W³N_v(3/4)`-(8))',
  'nsfCPn': 'the Casimir excess `3125t²p²W⁴Q²(N(V) - 16s²·9193/50000)`-(11))',
  'nsfCLRb': 'the low-ratio residual `Ĝ` at the order shape `k = 2t + x`',
 }
 # the output module and the title of each certificate
 OUT = {
  'nsfCChi': 'SmallGap/ChiSigns.lean', 'nsfCQD': 'EventFactor/DiscriminantSigns.lean',
- 'nsfCQC': 'EventFactor/LeadingSigns.lean', 'nsfCEn': 'SmallGap/NormDerivativeSigns.lean',
+ 'nsfCQC': 'EventFactor/LeadingSigns.lean',
  'nsfCPn': 'SmallGap/CasimirExcessSigns.lean',
  'nsfCLRb': 'LowRatio/OrderShapeSigns.lean',
 }
@@ -81,7 +79,6 @@ TITLE = {
  'nsfCChi': 'the unit-shape residual of the small-gap ratio bound',
  'nsfCQD': 'the sign of the event-factor discriminant',
  'nsfCQC': 'the sign of the event-factor leading coefficient',
- 'nsfCEn': 'the sign of the norm derivative',
  'nsfCPn': 'the sign of the Casimir excess',
  'nsfCLRb': 'the low-ratio residual at the order shape',
 }

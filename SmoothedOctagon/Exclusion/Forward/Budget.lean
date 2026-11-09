@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Forward.Log
+public import SmoothedOctagon.Exclusion.Forward.Budget.Concavity
 public import SmoothedOctagon.Exclusion.Forward.Cap
 public import Mathlib.Analysis.Convex.Deriv
 
@@ -9,8 +9,8 @@ public import Mathlib.Analysis.Convex.Deriv
 
 Four exterior ratios in `[1, U]` with sum at least `(5U + 1)/3` push the cost above `A_oct`. Since
 `G(a, ·)` is concave on `[a, 4/a]`, the excess over three ratios equal to `1` may be concentrated on
-one ratio; the resulting one-variable inequality, after the logarithm bound `L₊`, is a polynomial
-sign on `[11/5, 3]`.
+one ratio. Joint concavity bounds the resulting exterior cost by the chord between its two
+endpoint values on `[11/5, 3]`.
 
 ## Main API
 
@@ -20,10 +20,8 @@ sign on `[11/5, 3]`.
 * `ff_G_concaveOn`: `G(a, ·)` is concave on `[a, 4/a]`.
 * `ff_four_concave`: four ratios in `[1, M]` with sum at least `σ`, `σ - 3 ∈ (1, M]`, for an
   increasing concave function: the sum is at least `3φ(1) + φ(σ - 3)`.
-* `ff_log_div_le`: `log(N/M) ≤ 2(N - M)/(N + M) + (N - M)³/(6NM(N + M))` (the bound `L₊`).
-* `ff_linbud_poly`: a degree-eleven polynomial sign on `[11/5, 3]`, from its twelve positive
-  Bernstein coefficients.
-* `ff_linbud`: the linear budget `2 ḡ(x*) + 5 ḡ(1) > (2501/1384) U`.
+* `ff_budgetCost_strictConcaveOn`: joint strict concavity of the concentrated exterior cost.
+* `ff_budget_linear`: its endpoint chord lies above `(29/16) U`.
 * `ff_budget_g`: the one-variable budget contradiction.
 -/
 
@@ -206,117 +204,96 @@ theorem ff_four_concave {φ : ℝ → ℝ} {M σ x₁ x₂ x₃ x₄ : ℝ} (hmo
   have e : 3 * φ 1 + φ xs = 4 * φ 1 + sl * (xs - 1) := by rw [hsl]; field_simp; ring
   linarith
 
-/-! ### The logarithm bound and the one-variable sign -/
+/-! ### The endpoint chord -/
 
-/-- The bound `L₊`: `log(N/M) ≤ 2(N - M)/(N + M) + (N - M)³/(6NM(N + M))` for `0 < M ≤ N`. -/
-theorem ff_log_div_le {N M : ℝ} (hM : 0 < M) (hMN : M ≤ N) :
-    Real.log (N / M) ≤ 2 * (N - M) / (N + M) + (N - M) ^ 3 / (6 * N * M * (N + M)) := by
-  have hN : 0 < N := by linarith
-  have h := ff_log_le_three (v := N / M) (by rw [le_div_iff₀ hM]; linarith)
-  have e1 : (N / M - 1) / (N / M + 1) = (N - M) / (N + M) := by field_simp
-  rw [e1] at h
-  have e2 : 2 * ((N - M) / (N + M)) + 2 * ((N - M) / (N + M)) ^ 3 / (3 * (1 - ((N - M) / (N + M)) ^ 2)) =
-      2 * (N - M) / (N + M) + (N - M) ^ 3 / (6 * N * M * (N + M)) := by
-    have : (N + M) ^ 2 - (N - M) ^ 2 = 4 * N * M := by ring
-    have h4 : 1 - ((N - M) / (N + M)) ^ 2 = 4 * N * M / (N + M) ^ 2 := by
-      field_simp; linarith
-    rw [h4]; field_simp; ring
-  linarith
+private theorem ff_budgetCost_left : 29 / 16 * (11 / 5) < ff_budgetCost (11 / 5) 1 := by
+  have hl : Real.log (16 / 5) + Real.log (5 / 4) = 2 * Real.log 2 := by
+    rw [← Real.log_mul (by norm_num) (by norm_num),
+      show (16 / 5 : ℝ) * (5 / 4) = 2 ^ 2 by norm_num, Real.log_pow]
+    norm_num
+  have he : ff_budgetCost (11 / 5) 1 = 7 * (4 / 5 - Real.log (5 / 4)) := by
+    unfold ff_budgetCost ff_g2
+    norm_num
+    linarith only [hl]
+  rw [he]
+  linarith only [ff_log_five_fourths_lt]
 
-/-- `L₊(N, M) = 2(N - M)/(N + M) + (N - M)³/(6NM(N + M))`. -/
-noncomputable def ff_Lp (N M : ℝ) : ℝ := 2 * (N - M) / (N + M) + (N - M) ^ 3 / (6 * N * M * (N + M))
+private theorem ff_budgetCost_right : 29 / 16 * 3 < ff_budgetCost 3 (7 / 3) := by
+  have h15 : 0 < √15 := by positivity
+  have h19 : 0 < √19 := by positivity
+  have hl1 : Real.log (5 / 3) < 2 / √15 := by
+    have h := ff_log_lt_sqrt_quotient (v := 5 / 3) (by norm_num)
+    have he : (5 / 3 - 1) / √(5 / 3) = 2 / √15 := by
+      have hs : √(5 / 3) = √15 / 3 := by
+        rw [show (5 / 3 : ℝ) = 15 / 3 ^ 2 by norm_num, Real.sqrt_div (by norm_num),
+          Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 3)]
+      rw [hs]
+      ring
+    rwa [he] at h
+  have hl2 : 49 / 18 * Real.log (25 / 19) < 49 / (15 * √19) := by
+    have h := ff_log_lt_sqrt_quotient (v := 25 / 19) (by norm_num)
+    have he : 49 / 18 * ((25 / 19 - 1) / √(25 / 19)) = 49 / (15 * √19) := by
+      have hs : √(25 / 19) = 5 / √19 := by
+        rw [Real.sqrt_div (by norm_num), show (25 : ℝ) = 5 ^ 2 by norm_num,
+          Real.sqrt_sq (by norm_num : (0 : ℝ) ≤ 5)]
+      rw [hs]
+      field_simp
+      nlinarith only [Real.sq_sqrt (show (0 : ℝ) ≤ 19 by norm_num)]
+    have := mul_lt_mul_of_pos_left h (by norm_num : (0 : ℝ) < 49 / 18)
+    rwa [he] at this
+  have h17 : 2 / √15 < 17 / 32 := by
+    rw [div_lt_iff₀ h15]
+    nlinarith only [Real.sq_sqrt (show (0 : ℝ) ≤ 15 by norm_num), Real.sqrt_nonneg 15]
+  have h34 : 49 / (15 * √19) < 3 / 4 := by
+    rw [div_lt_iff₀ (by positivity : 0 < 15 * √19)]
+    nlinarith only [Real.sq_sqrt (show (0 : ℝ) ≤ 19 by norm_num), Real.sqrt_nonneg 19]
+  have he : ff_budgetCost 3 (7 / 3) =
+      2 * (4 - Real.log (5 / 3) - 49 / 18 * Real.log (25 / 19)) := by
+    have hl3 : Real.log (10 / 3) = Real.log 2 + Real.log (5 / 3) := by
+      rw [← Real.log_mul (by norm_num) (by norm_num)]
+      norm_num
+    have hl4 : Real.log (25 / 19) = 2 * Real.log (10 / 3) - Real.log (76 / 9) := by
+      calc Real.log (25 / 19) = Real.log (((10 / 3 : ℝ) ^ 2) / (76 / 9)) := by norm_num
+        _ = 2 * Real.log (10 / 3) - Real.log (76 / 9) := by
+          rw [Real.log_div (by norm_num) (by norm_num), Real.log_pow]
+          norm_num
+    have hl5 : Real.log 4 = 2 * Real.log 2 := by
+      rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]
+      norm_num
+    unfold ff_budgetCost ff_g2
+    norm_num
+    linarith only [hl3, hl4, hl5]
+  rw [he]
+  linarith only [hl1, hl2, h17, h34]
 
-/-- `g_U(x) = 3x - U - ½ log((1+x)²/(1+U)) - (x²/2) log((1+x)²/(x²+U))`, bounded below through `L₊`
-(both arguments at least one on `x ≥ 1`, `U ≤ 1 + 2x`). -/
-theorem ff_g_ge {U x : ℝ} (hU : 0 < U) (hx : 1 ≤ x) (hUx : U ≤ 1 + 2 * x) :
-    3 * x - U - ff_Lp ((1 + x) ^ 2) (1 + U) / 2 - x ^ 2 / 2 * ff_Lp ((1 + x) ^ 2) (x ^ 2 + U) ≤
-      ff_g2 U 1 x := by
-  have hK : 0 < 1 + U := by linarith
-  have hZ : 0 < x ^ 2 + U := by positivity
-  have h1 := ff_log_div_le (N := (1 + x) ^ 2) hK (by nlinarith)
-  have h2 := ff_log_div_le (N := (1 + x) ^ 2) hZ (by nlinarith)
-  rw [Real.log_div (by positivity) hK.ne', Real.log_pow] at h1
-  rw [Real.log_div (by positivity) hZ.ne', Real.log_pow] at h2
-  unfold ff_g2
-  unfold ff_Lp
-  have hx2 : 0 ≤ x ^ 2 / 2 := by positivity
-  have := mul_le_mul_of_nonneg_left h2 hx2
-  push_cast at h1 this
-  have e : (1 : ℝ) + x = 1 + x := rfl
-  norm_num
-  nlinarith
-
-/-- **The degree-eleven sign** on `[11/5, 3]`: in the Bernstein basis of `U - 11/5`, `3 - U` every
-coefficient is positive. -/
-theorem ff_linbud_poly {U : ℝ} (h1 : 11 / 5 ≤ U) (h2 : U ≤ 3) :
-    0 < -40726562500 * U ^ 11 + 470881062500 * U ^ 10 - 2223832039375 * U ^ 9 +
-      5063584175625 * U ^ 8 - 2598819110385 * U ^ 7 - 17757000919599 * U ^ 6 +
-      58229313234585 * U ^ 5 - 93430842273165 * U ^ 4 + 90677173468785 * U ^ 3 -
-      53349363129905 * U ^ 2 + 17173056495226 * U - 2197733429120 := by
-  have hx : 0 ≤ U - 11 / 5 := by linarith
-  have hy : 0 ≤ 3 - U := by linarith
-  set x := U - 11 / 5 with hxd
-  set y := 3 - U with hyd
-  have hU : U = x + 11 / 5 := by rw [hxd]; ring
-  have hxy : x + y = 4 / 5 := by rw [hxd, hyd]; ring
-  have key : -40726562500 * U ^ 11 + 470881062500 * U ^ 10 - 2223832039375 * U ^ 9 +
-      5063584175625 * U ^ 8 - 2598819110385 * U ^ 7 - 17757000919599 * U ^ 6 +
-      58229313234585 * U ^ 5 - 93430842273165 * U ^ 4 + 90677173468785 * U ^ 3 -
-      53349363129905 * U ^ 2 + 17173056495226 * U - 2197733429120 =
-      21777455728125 / 8 * y ^ 11 + 14129144521228125 / 256 * x * y ^ 10 +
-      484388872829353125 / 1024 * x ^ 2 * y ^ 9 + 1185532503165534375 / 512 * x ^ 3 * y ^ 8 +
-      7447430422594884375 / 1024 * x ^ 4 * y ^ 7 + 1979915197170178125 / 128 * x ^ 5 * y ^ 6 +
-      23297510537460984375 / 1024 * x ^ 6 * y ^ 5 + 11816167567369921875 / 512 * x ^ 7 * y ^ 4 +
-      16077699048884765625 / 1024 * x ^ 8 * y ^ 3 + 107411313603515625 / 16 * x ^ 9 * y ^ 2 +
-      401029963095703125 / 256 * x ^ 10 * y + 8770761083984375 / 64 * x ^ 11 := by
-    rw [hxd, hyd]; ring
-  rw [key]
-  rcases eq_or_lt_of_le hy with hy0 | hy0
-  · rw [← hy0]
-    have hx0 : x = 4 / 5 := by linarith
-    rw [hx0]; norm_num
-  · have : 0 < 21777455728125 / 8 * y ^ 11 := by positivity
-    have : 0 ≤ 14129144521228125 / 256 * x * y ^ 10 + 484388872829353125 / 1024 * x ^ 2 * y ^ 9 +
-      1185532503165534375 / 512 * x ^ 3 * y ^ 8 + 7447430422594884375 / 1024 * x ^ 4 * y ^ 7 +
-      1979915197170178125 / 128 * x ^ 5 * y ^ 6 + 23297510537460984375 / 1024 * x ^ 6 * y ^ 5 +
-      11816167567369921875 / 512 * x ^ 7 * y ^ 4 + 16077699048884765625 / 1024 * x ^ 8 * y ^ 3 +
-      107411313603515625 / 16 * x ^ 9 * y ^ 2 + 401029963095703125 / 256 * x ^ 10 * y +
-      8770761083984375 / 64 * x ^ 11 := by positivity
-    linarith
-
-/-- **The linear budget**: `2 ḡ(x*) + 5 ḡ(1) > (2501/1384) U` on `[11/5, 3]`, `x* = (5U - 8)/3`,
-with `ḡ` the lower bound of `g_U` through `L₊`; clearing the positive denominator gives the
-degree-eleven sign. -/
-theorem ff_linbud {U : ℝ} (h1 : 11 / 5 ≤ U) (h2 : U ≤ 3) :
-    2501 / 1384 * U < 2 * (3 * ((5 * U - 8) / 3) - U - ff_Lp ((1 + (5 * U - 8) / 3) ^ 2) (1 + U) / 2 -
-      ((5 * U - 8) / 3) ^ 2 / 2 * ff_Lp ((1 + (5 * U - 8) / 3) ^ 2) (((5 * U - 8) / 3) ^ 2 + U)) +
-      5 * (3 * 1 - U - ff_Lp ((1 + 1) ^ 2) (1 + U) / 2 - 1 ^ 2 / 2 * ff_Lp ((1 + 1) ^ 2) (1 ^ 2 + U)) := by
-  have hp := ff_linbud_poly h1 h2
-  have hU1 : 0 < U - 1 := by linarith
-  have q1 : 0 < 25 * U ^ 2 - 71 * U + 64 := by nlinarith
-  have q2 : 0 < 25 * U ^ 2 - 41 * U + 34 := by nlinarith
-  have q3 : 0 < 50 * U ^ 2 - 121 * U + 89 := by nlinarith
-  have hden : 0 < 934200 * (U - 1) ^ 2 * (U + 1) * (U + 5) * (25 * U ^ 2 - 71 * U + 64) *
-      (25 * U ^ 2 - 41 * U + 34) * (50 * U ^ 2 - 121 * U + 89) := by positivity
-  rw [← sub_pos]
-  have hx : 0 < 5 * U - 8 := by linarith
-  have key : (2 * (3 * ((5 * U - 8) / 3) - U - ff_Lp ((1 + (5 * U - 8) / 3) ^ 2) (1 + U) / 2 -
-      ((5 * U - 8) / 3) ^ 2 / 2 * ff_Lp ((1 + (5 * U - 8) / 3) ^ 2) (((5 * U - 8) / 3) ^ 2 + U)) +
-      5 * (3 * 1 - U - ff_Lp ((1 + 1) ^ 2) (1 + U) / 2 - 1 ^ 2 / 2 * ff_Lp ((1 + 1) ^ 2) (1 ^ 2 + U)) -
-      2501 / 1384 * U) * (934200 * (U - 1) ^ 2 * (U + 1) * (U + 5) * (25 * U ^ 2 - 71 * U + 64) *
-      (25 * U ^ 2 - 41 * U + 34) * (50 * U ^ 2 - 121 * U + 89)) =
-      -40726562500 * U ^ 11 + 470881062500 * U ^ 10 - 2223832039375 * U ^ 9 +
-      5063584175625 * U ^ 8 - 2598819110385 * U ^ 7 - 17757000919599 * U ^ 6 +
-      58229313234585 * U ^ 5 - 93430842273165 * U ^ 4 + 90677173468785 * U ^ 3 -
-      53349363129905 * U ^ 2 + 17173056495226 * U - 2197733429120 := by
-    unfold ff_Lp
-    have e1 : (0 : ℝ) < 1 + U := by linarith
-    have e2 : (0 : ℝ) < ((5 * U - 8) / 3) ^ 2 + U := by positivity
-    have e3 : (0 : ℝ) < (1 + (5 * U - 8) / 3) ^ 2 := by positivity
-    field_simp
+/-- The chord between the two endpoint costs lies above the linear exterior budget. -/
+theorem ff_budget_linear {U : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U ≤ 3) :
+    29 / 16 * U < ff_budgetCost U ((5 * U - 8) / 3) := by
+  by_cases he : U = 11 / 5
+  · subst U
+    convert ff_budgetCost_left using 1; norm_num
+  have hU' : 11 / 5 < U := lt_of_le_of_ne hU (Ne.symm he)
+  let a := (15 - 5 * U) / 4
+  let b := (5 * U - 11) / 4
+  have ha : 0 ≤ a := by dsimp [a]; linarith only [hU3]
+  have hb : 0 < b := by dsimp [b]; linarith only [hU']
+  have hab : a + b = 1 := by dsimp [a, b]; ring
+  have hc := ff_budgetCost_strictConcaveOn.concaveOn.2
+    (x := ((11 / 5 : ℝ), (1 : ℝ))) (by norm_num)
+    (y := ((3 : ℝ), (7 / 3 : ℝ))) (by norm_num) ha hb.le hab
+  have heq : a • ((11 / 5 : ℝ), (1 : ℝ)) + b • ((3 : ℝ), (7 / 3 : ℝ)) =
+      (U, (5 * U - 8) / 3) := by
+    ext <;> simp only [Prod.fst_add, Prod.snd_add, Prod.smul_fst, Prod.smul_snd,
+      smul_eq_mul, a, b] <;> ring
+  rw [heq] at hc
+  simp only [smul_eq_mul] at hc
+  have hl := mul_le_mul_of_nonneg_left ff_budgetCost_left.le ha
+  have hr := mul_lt_mul_of_pos_left ff_budgetCost_right hb
+  have hlinear : 29 / 16 * U = a * (29 / 16 * (11 / 5)) + b * (29 / 16 * 3) := by
+    dsimp [a, b]
     ring
-  rw [← key] at hp
-  exact pos_of_mul_pos_left hp hden.le
+  rw [hlinear]
+  linarith only [hc, hl, hr]
 
 /-- **The one-variable budget contradiction**: on `11/5 < U < 3`, four ratios in `[1, U]` with sum
 at least `(5U + 1)/3` give `(√3/U){2g(P) + 2g(z) + 2g(w) + 2g(D) - g(1)} > A_oct`, where
@@ -370,17 +347,12 @@ theorem ff_budget_g {U P z w D : ℝ} (hU : 11 / 5 < U) (hU3 : U < 3) (hP : 1 �
       ff_g2 U 1 P + ff_g2 U 1 z + ff_g2 U 1 w + ff_g2 U 1 D := by
     have ha2p : 0 < a ^ 2 := by positivity
     nlinarith
-  -- the rational lower bounds
-  have gs := ff_g_ge (x := (5 * U - 8) / 3) hU0 (by linarith) (by linarith)
-  have g1 := ff_g_ge (x := 1) hU0 le_rfl (by linarith)
-  have hlb := ff_linbud hU.le hU3.le
-  have hs3 : (173 / 100 : ℝ) < √3 := by rw [Real.lt_sqrt (by norm_num)]; norm_num
-  have hA := ff_octagonCost_lt'
-  have hbig : 2501 / 1384 * U < 2 * ff_g2 U 1 P + 2 * ff_g2 U 1 z + 2 * ff_g2 U 1 w +
-      2 * ff_g2 U 1 D - ff_g2 U 1 1 := by linarith
-  rw [div_mul_eq_mul_div, lt_div_iff₀ hU0]
-  have : √3 * (2501 / 1384 * U) ≤ √3 * (2 * ff_g2 U 1 P + 2 * ff_g2 U 1 z + 2 * ff_g2 U 1 w +
-      2 * ff_g2 U 1 D - ff_g2 U 1 1) := mul_le_mul_of_nonneg_left hbig.le (by positivity)
-  nlinarith
+  have hlb := ff_budget_linear hU.le hU3.le
+  unfold ff_budgetCost at hlb
+  have hbig : 29 / 16 * U < 2 * ff_g2 U 1 P + 2 * ff_g2 U 1 z + 2 * ff_g2 U 1 w +
+      2 * ff_g2 U 1 D - ff_g2 U 1 1 := by linarith only [hlb, h4']
+  calc octagonCost < 29 * √3 / 16 := ff_octagonCost_lt_sqrt
+    _ = √3 / U * (29 / 16 * U) := by field_simp
+    _ < _ := mul_lt_mul_of_pos_left hbig (div_pos (by positivity) hU0)
 
 end SmoothedOctagon
