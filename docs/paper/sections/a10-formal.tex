@@ -48,12 +48,11 @@ principle~\cite{Pontryagin1962} with free terminal time, an integral cost and mi
 conditions, by the argument of Agrachev and Sachkov~\cite{AgrachevSachkov2004}, and Filippov's
 theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{FixedPointLean}.
 
-\subsection{The scalar estimates}\label{app:formal-scalar}
+\subsection{Scalar proof replacement status}\label{app:formal-scalar}
 
-\noindent\textit{Replacement status (working draft).}
-Of the 24 groups in the current pass, 15 are complete and committed
-and nine remain. Groups 25--38 are deferred.
-The numbers identify the same groups throughout this list.
+Groups 1--24 are the current scope: 15 are complete and committed,
+one is in progress, and eight are pending. Groups 25--38 are deferred.
+Group numbers stay fixed as their status changes.
 
 \begin{center}
 \begin{tabular}{@{}lrl@{}}
@@ -61,71 +60,75 @@ The numbers identify the same groups throughout this list.
 Status & Count & Group numbers\\
 \midrule
 Complete & 15 & 1, 4--5, 7--8, 13--22\\
-In progress & 0 & ---\\
-Pending & 9 & 2--3, 6, 9--12, 23--24\\
+In progress & 1 & 2\\
+Pending & 8 & 3, 6, 9--12, 23--24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
 \end{center}
 
-\medskip\noindent\textbf{Pending: 9 groups.}
-Each item gives the next proof or integration step.
+\medskip\noindent\textbf{In progress (1).}
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
 \item[2.] \emph{Octagon cost and spectral caps.}
-Integrate the exact cost comparisons, using positive integral remainders for
-$\log2$ and $\arcsin$, through the general, forward and mixed cap arguments.
-Reconcile the paper's general cap $5/27$ with Lean's stronger $97969/529200$,
-whose proof still uses rounded cost and $\pi$ estimates.
-The stronger forward cap is proved by \lean{wire_gam2_cap}; its integral-moment
-proof and the direct comparison with the final smaller-short score remain.
+The logarithm and inverse-sine moments, exact octagon-cost comparisons, and
+general and forward spectral caps compile in Lean.
+Remaining: finish the cover's fixed-constant comparisons, check the updated
+callers and complete the full verification.
+The M1 angle-gap domain belongs to group~3; the final smaller-short endpoint
+comparison and its cost constants belong to group~24.
+\end{enumerate}
 
+\medskip\noindent\textbf{Pending (8).}
+
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
 \item[3.] \emph{M1 symmetric angle gap.}
-Minimize the reduced Gram expression at the symmetric centre and apply one
-logarithm bound, replacing the tangent intervals and coefficient tables.
-Align the domains $\gamma^2\le5/27$ in the paper and
-$\gamma^2\le97969/529200$ in Lean through group~2.
+Prove the angle gap on the paper's full domain $\gamma^2\le5/27$ and update
+both M1 callers; Lean currently uses $\gamma^2\le97969/529200$.
+The proof minimizes the reduced Gram expression at the symmetric centre
+and applies one logarithm bound.
 
 \item[6.] \emph{Forward sum tangent endpoints.}
-Formalize the fixed tangent, paired reciprocal integrals and endpoint signs.
-Align the norm-sum thresholds $1/32$ in the paper and $1/35$ in Lean,
-updating the callers together with group~10.
+Prove the fixed tangent and endpoint signs using paired reciprocal integrals.
+Update the callers with group~10 to use the paper's norm-sum threshold $1/32$;
+Lean currently uses $1/35$.
 
 \item[9.] \emph{Forward asymmetric neighbour.}
 Prove convexity in the neighbour shape after division by the positive row
-multiplier. Control the symmetric-boundary logarithmic chord loss by reciprocal
-tangent remainders and a completed square, replacing the two polynomial endpoint checks.
+multiplier. Bound the boundary logarithmic chord loss by reciprocal tangent
+remainders and a completed square, then update the two endpoint proofs.
 
 \item[10.] \emph{Forward Casimir and central pairing.}
-Minimize the concave Gram numerator over the norm polygon, equalize the shapes
-with their logarithmic correction, and bound the scalar curve by convexity.
-Prove central-pairing positivity from the integral of $f'$.
-Align the conditional lower bounds $9193/50000$ in the paper and $23/125$ in
-Lean with groups~2 and~6.
+Prove the Gram minimum over the norm polygon, the shape-equalization bound
+and convexity of the remaining scalar curve. Prove central-pairing positivity
+from the integral of $f'$.
+Update the callers with groups~2 and~6 to use the paper's conditional lower
+bound $9193/50000$; Lean currently uses $23/125$.
 
 \item[11.] \emph{Mixed norm ceilings and duration.}
-Apply the already formalized stronger logarithm bound to the incoming and central
-bridge-norm ceilings. Formalize the duration comparison by Jensen's inequality.
+Apply the proved logarithm bound to the incoming and central bridge-norm
+ceilings, and prove the duration comparison by Jensen's inequality.
 
 \item[12.] \emph{Mixed transported ceiling for $t<2/5$.}
-Reduce scale and increase the middle margin to reach one boundary. Compare with
-the switching floor using variance, Jensen's inequality and convexity of the
-resulting quadratic minimum.
+Reduce scale and increase the middle margin to reach one boundary.
+Prove the switching-floor comparison using variance, Jensen's inequality
+and convexity of the resulting quadratic minimum.
 
 \item[23.] \emph{S6 norm floor and central-shear envelopes.}
-Formalize the mean-and-variance bound in a reciprocal integral and the curvature
-and initial-slope bounds for the exact central shear. Update the consumers of
-Lean's current quadratic floor together with group~24.
+Prove the reciprocal-integral mean-and-variance bound and the exact central
+shear's curvature and initial-slope bounds. Update the norm-floor callers
+together with group~24.
 
 \item[24.] \emph{S6 final score comparison.}
-Keep the exact fixed-row angles, prove decrease in displacement and concavity in
-the remaining shape ratio at maximal displacement, and reduce to four corners.
-Formalize the corner arithmetic and the direct octagon-cost comparison from
-group~2, replacing the quadratic norm floor, polynomial angle bounds and box signs.
+Use the exact fixed-row angles to prove decrease in displacement, then prove
+concavity in the remaining shape ratio at maximal displacement. Reduce to four
+corners, prove their signs and connect the direct octagon-cost comparison
+from group~2.
+Update the final score callers together with group~23.
 \end{enumerate}
 
-\medskip\noindent\textbf{Complete and committed: 15 groups.}
-Each group below is integrated into the paper and Lean and has passed the full
+\medskip\noindent\textbf{Complete and committed (15).}
+These groups are integrated into the paper and Lean. Each has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
@@ -134,16 +137,14 @@ Symbolic bounds on an arbitrary compact region prove the clearance and budget
 estimates, with the equilibrium, projective and finite-switch arguments.
 
 \item[4.] \emph{M1 two-centre product.}
-The exact product bound $(1+\sqrt2)^2a^2$ and the positive centre factors give
-$a^2<4/(5+4\sqrt2)$ and a period cost greater than $\sqrt3(2\sqrt2-1)$.
-The strict reciprocal midpoint bound for $\log2$ compares this cost directly
-with the octagon cost.
+The exact centre-product bound gives a period cost greater than
+$\sqrt3(2\sqrt2-1)$. A strict reciprocal midpoint bound for $\log2$
+compares this cost directly with the octagon cost.
 
 \item[5.] \emph{Terminal five-piece comparison.}
-A positive integral kernel makes $h'(t)/t$ strictly decreasing, proving strict
-concavity of $h(\sqrt x)$ and the circle bound with equality only at equal
-coordinates. The reciprocal midpoint bound for $\log2$ proves the strict
-density gap on the full five-piece domain.
+An integral kernel proves strict concavity of $h(\sqrt x)$ and the circle
+bound, with equality only at equal coordinates. The reciprocal midpoint
+bound for $\log2$ proves the strict density gap on the full five-piece domain.
 
 \item[7.] \emph{Forward symmetric neighbour value.}
 The endpoint value follows from the analytic boundary comparison.
@@ -177,26 +178,24 @@ The two central floor tests decrease with the norm for every $u\ge3/4$.
 The remaining S4 shape signs are deferred in group~38.
 
 \item[20.] \emph{S5 norm ceiling, duration and shear.}
-The natural global norm ceiling and exact duration tangent reduce the residual
-to two shape endpoint signs. Resolvent derivatives, face tangents and outer-shape
-convexity prove these signs on the full enlarged rectangle.
-The physical theorem gives $q>(15/16)q_c$, $\sqrt3hR_x+(7/2)\nu<0$ and
-$-hR_x>2\nu$, which the continuation caller uses directly.
+The global norm ceiling and exact duration tangent reduce the comparison
+to two shape endpoints. Resolvent derivatives, face tangents and convexity
+prove their signs and supply the continuation bounds directly.
 
 \item[21.] \emph{S6 score continuation.}
 Three explicit loss bounds and a natural central-shear bound prove strict decrease
 along the exact tangent curve. The physical continuation and completion theorems
 accept $-hR_x>2\nu$.
+
 \item[22.] \emph{S6 additional angle and shape concavity.}
-The positive arctangent remainder cancels the square-root error and gives the
-exact central-score bound. The exact score is strictly concave in $T$ on
-$27R/31\le T\le R$; its chord reduces the shape comparison to two endpoints,
-including zero displacement. The norm floor, shear-envelope proofs and final
-endpoint comparisons remain in groups~23--24.
+An arctangent remainder gives the exact central-score bound. Strict concavity
+in $T$ on $27R/31\le T\le R$ reduces the shape comparison to two endpoints,
+including zero displacement. Groups~23--24 cover the remaining norm floor,
+shear envelopes and final endpoint comparisons.
 \end{enumerate}
 
-\medskip\noindent\textbf{Deferred: 14 groups, outside the current pass.}
-The existing Lean proofs remain in use for these groups.
+\medskip\noindent\textbf{Deferred (14): outside the current scope.}
+The existing Lean proofs remain in use.
 
 \begin{enumerate}[start=25,label=\arabic*.,leftmargin=2em,itemsep=3pt]
 \item Mixed reverse unit face beyond the completed $q_1$ case.
