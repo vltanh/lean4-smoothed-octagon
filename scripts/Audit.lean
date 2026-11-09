@@ -125,6 +125,7 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.ClosedForms
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.Defs
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.Endpoints
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.FloorBox
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.Norm
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.PhiDisplacement
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.PhiDisplacement.OtherPartials
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.PhiDisplacement.Partials

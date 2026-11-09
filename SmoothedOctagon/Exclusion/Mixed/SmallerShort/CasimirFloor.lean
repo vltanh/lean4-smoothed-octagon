@@ -5,6 +5,7 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope.CasimirScale
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope.NormEndpoint
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Envelope.CapData
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.Defs
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.Norm
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.CasimirFloor.FloorBox
 
 /-!
@@ -201,175 +202,17 @@ theorem cas_tau2_dec {x δ al u q₁ q₂ : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 
     nlinarith [mul_pos hq0 hA2])
   linarith
 
-/-- `D ≤ S` on the small box. -/
-private theorem cas_D_le_S {x be al : ℝ} (hx : 2 ≤ x) (hal1 : 1 ≤ al) (hal22 : al ≤ 22 / 19)
-    (hxb : x ≤ be) : ssDg x be al ≤ 1 + x := by
-  unfold ssDg
-  have h1 : 2 * x * (x - al) ≤ 2 * be * (x - al) :=
-    mul_le_mul_of_nonneg_right (by linarith) (by linarith)
-  have h2 : al ^ 2 + x - 2 * x ^ 2 + 2 * x * al ≤ 0 := by nlinarith
-  nlinarith
-
-/-- The shape bounds of the small box used by `cas_u_dec`: `3D ≤ Σ ≤ S³ ≤ (19/6)Σ`,
-`19α ≤ 11(α + β)`, `2α(α + β) ≤ Σ ≤ (19/6)α(α + β)`, `Σ = x(x + 2) + α²`. -/
-private theorem cas_shape {x be al : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal1 : 1 ≤ al)
-    (hal22 : al ≤ 22 / 19) (hxb : x ≤ be) (hb130 : be ≤ 130 / 57) (hDS : ssDg x be al ≤ 1 + x) :
-    3 * ssDg x be al ≤ x * (x + 2) + al ^ 2 ∧ x * (x + 2) + al ^ 2 ≤ (1 + x) ^ 3 ∧
-      (1 + x) ^ 3 ≤ 19 / 6 * (x * (x + 2) + al ^ 2) ∧ 19 * al ≤ 11 * (al + be) ∧
-      2 * (al * (al + be)) ≤ x * (x + 2) + al ^ 2 ∧
-      x * (x + 2) + al ^ 2 ≤ (7 / 6 + 2) * (al * (al + be)) := by
-  have hal2 : al ^ 2 ≤ 2 := by nlinarith
-  have hx3 : 8 ≤ x ^ 3 := by
-    have : (2 : ℝ) ^ 3 ≤ x ^ 3 := pow_le_pow_left₀ (by norm_num) hx 3
-    linarith
-  refine ⟨by nlinarith, by nlinarith, ?_, by linarith, ?_, ?_⟩
-  · have h1 : (1 + x) ^ 3 ≤ 19 / 6 * (1 + x) ^ 2 := by nlinarith
-    nlinarith
-  · have : al * be ≤ 22 / 19 * (130 / 57) := mul_le_mul hal22 hb130 (by linarith) (by norm_num)
-    nlinarith
-  · have h1 : x * (x + 2) + al ^ 2 ≤ (1 + x) * (al * (al + be)) := by
-      have : (1 + x) * (al * (al + x)) ≤ (1 + x) * (al * (al + be)) := by
-        apply mul_le_mul_of_nonneg_left _ (by linarith)
-        exact mul_le_mul_of_nonneg_left (by linarith) (by linarith)
-      have : 0 ≤ x * ((al - 1) * (al + 2 + x)) :=
-        mul_nonneg (by linarith) (mul_nonneg (by linarith) (by linarith))
-      nlinarith
-    have : (1 + x) * (al * (al + be)) ≤ (7 / 6 + 2) * (al * (al + be)) :=
-      mul_le_mul_of_nonneg_right (by linarith) (mul_nonneg (by linarith) (by linarith))
-    linarith
-
-/-- The algebraic core of the `u`-increment of `Γ_*` at `q_c` (`s = 1/X`). -/
-private theorem cas_Gqc_alg {x H H' sc d : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hd : 0 ≤ d)
-    (hHH : H = H' + (1 + x) * d) (hH : (1 + x) * H ≤ (x - 1) ^ 2 / 4) (hH'0 : 0 ≤ H')
-    (hsc : sc = 1 / (x * (x + 2))) :
-    (3 - H' ^ 2 - 2 * H' + 2 * H' * (2 * (1 + x) - 1 - H') * sc - H' ^ 2 * sc ^ 2) / 16 -
-      (3 - H ^ 2 - 2 * H + 2 * H * (2 * (1 + x) - 1 - H) * sc - H ^ 2 * sc ^ 2) / 16 ≤ d / 4 := by
-  have hS : 0 < 1 + x := by linarith
-  have hX : 8 ≤ x * (x + 2) := by nlinarith
-  have hsc0 : 0 < sc := by rw [hsc]; positivity
-  have hsc8 : sc ≤ 1 / 8 := by rw [hsc]; exact one_div_le_one_div_of_le (by norm_num) hX
-  have e : (3 - H' ^ 2 - 2 * H' + 2 * H' * (2 * (1 + x) - 1 - H') * sc - H' ^ 2 * sc ^ 2) / 16 -
-      (3 - H ^ 2 - 2 * H + 2 * H * (2 * (1 + x) - 1 - H) * sc - H ^ 2 * sc ^ 2) / 16 =
-      d * ((1 + x) * (H + H') * (1 + sc) ^ 2 + (1 + x) * (2 - 2 * (2 * (1 + x) - 1) * sc)) / 16 := by
-    rw [hHH]; ring
-  rw [e]
-  have e2 : (1 + x) * (2 - 2 * (2 * (1 + x) - 1) * sc) = 2 * (x - 1) * (1 + sc) := by
-    rw [hsc]; field_simp; ring
-  rw [e2]
-  have hb1 : (1 + x) * (H + H') ≤ (x - 1) ^ 2 / 2 := by
-    have : (1 + x) * H' ≤ (1 + x) * H := by
-      apply mul_le_mul_of_nonneg_left _ hS.le; rw [hHH]; nlinarith
-    nlinarith
-  have hHp : 0 ≤ (1 + x) * (H + H') := by
-    have : 0 ≤ H := by rw [hHH]; positivity
-    positivity
-  have hsq : (1 + sc) ^ 2 ≤ 81 / 64 := by nlinarith
-  have h1 : (1 + x) * (H + H') * (1 + sc) ^ 2 ≤ (49 / 72) * (81 / 64) := by
-    calc (1 + x) * (H + H') * (1 + sc) ^ 2 ≤ (x - 1) ^ 2 / 2 * (81 / 64) :=
-          mul_le_mul hb1 hsq (by positivity) (by positivity)
-      _ ≤ (49 / 72) * (81 / 64) := by nlinarith
-  have h2 : 2 * (x - 1) * (1 + sc) ≤ 2 * (7 / 6) * (9 / 8) :=
-    mul_le_mul (by linarith) (by linarith) (by positivity) (by norm_num)
-  have := mul_le_mul_of_nonneg_left (by linarith : (1 + x) * (H + H') * (1 + sc) ^ 2 +
-    2 * (x - 1) * (1 + sc) ≤ 4) hd
-  linarith
-
-/-- The `u`-increment of `Γ_*` at the central scale: `Γ_*(u') - Γ_*(u) ≤ (u' - u)/4`. -/
-private theorem cas_Gqc_inc {x al u u' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hal1 : 1 ≤ al)
-    (hu : 3 / 4 ≤ u) (huu : u ≤ u') (hu' : u' ≤ 31 / 40) :
-    ssGs x al u' (ssQc x al) - ssGs x al u (ssQc x al) ≤ (u' - u) / 4 := by
-  have hS : 0 < 1 + x := by linarith
-  have hx0 : 0 < x := by linarith
-  have hSig : 0 < x * (x + 2) + al ^ 2 := by positivity
-  have hqc' : ssQc x al = al ^ 2 / (x * (x + 2) + al ^ 2) := rfl
-  have hqc1 : ssQc x al < 1 := by rw [hqc', div_lt_one hSig]; nlinarith
-  have hs : ssQc x al / (al ^ 2 * (1 - ssQc x al)) = 1 / (x * (x + 2)) := by
-    rw [hqc']; field_simp; ring
-  rw [env_Gs_s hx0 hal1 hqc1, env_Gs_s hx0 hal1 hqc1, hs]
-  have e : (1 + x) * (m2U (1 / (1 + x)) - 3 / 4) = (x - 1) ^ 2 / (4 * (1 + x)) := by
-    unfold m2U; field_simp; ring
-  have hU : (1 : ℝ) / 40 ≤ m2U (1 / (1 + x)) - 3 / 4 := by
-    have e2 : m2U (1 / (1 + x)) - 3 / 4 = (x - 1) ^ 2 / (4 * (1 + x) ^ 2) := by
-      unfold m2U; field_simp; ring
-    rw [e2, div_le_div_iff₀ (by norm_num) (by positivity)]; nlinarith
-  apply cas_Gqc_alg hx hx2 (by linarith) (by ring) _ (mul_nonneg hS.le (by linarith)) rfl
-  have : (1 + x) * (m2U (1 / (1 + x)) - u) ≤ (x - 1) ^ 2 / (4 * (1 + x)) := by
-    rw [← e]; exact mul_le_mul_of_nonneg_left (by linarith) hS.le
-  have := mul_le_mul_of_nonneg_left this hS.le
-  rw [show (1 + x) * ((x - 1) ^ 2 / (4 * (1 + x))) = (x - 1) ^ 2 / 4 by field_simp] at this
-  exact this
-
-/-- The final sign of the `u`-slopes of `Φ`, `Ψ`:
-`7/4 - R_u < 0` and `7/4 - R_u - (T - 2)w_u < 0`, `R_u = 1/r_A + C(1 - 2z) - 2z(1 - z)`,
-`w_u = z² - zC`. -/
-private theorem cas_u_comb {d rA z C τ' : ℝ} (hd : 0 ≤ d) (hz3 : z ≤ 1 / 3) (hC1 : 1 ≤ C)
-    (hC19 : C ≤ 19 / 6) (hrA : 30 / 11 ≤ rA) (hT0 : 0 ≤ τ') (hT1 : τ' ≤ 7 / 6) :
-    d / 4 - d * (rA + C * (1 - 2 * z) - 2 * z * (1 - z)) / 7 ≤ 0 ∧
-      d / 4 - d * (rA + C * (1 - 2 * z) - 2 * z * (1 - z)) / 7 - τ' * (d * (z ^ 2 - z * C)) / 7 ≤ 0 := by
-  have hRu : 7 / 4 - (rA + C * (1 - 2 * z) - 2 * z * (1 - z)) ≤ 0 := by
-    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ 1 / 3 - z) (by linarith : (0 : ℝ) ≤ C)]
-  have hRu' : 7 / 4 - (rA + C * (1 - 2 * z) - 2 * z * (1 - z)) - τ' * (z ^ 2 - z * C) ≤ 0 := by
-    have h1 : 0 ≤ (1 / 3 - z) * (2 * C + 2 + τ' * C - (2 + τ') * (1 / 3 + z)) := by
-      apply mul_nonneg (by linarith)
-      nlinarith
-    nlinarith
-  constructor
-  · nlinarith [mul_le_mul_of_nonneg_left hRu hd]
-  · nlinarith [mul_le_mul_of_nonneg_left hRu' hd]
-
-/-- **`Φ`, `Ψ` decrease in `u`**: on the box of `cas_tau2_dec`, for `3/4 ≤ u ≤ u' ≤ 31/40`:
-`Φ(u') ≤ Φ(u)` and `Ψ(u') ≤ Ψ(u)`.
-Proof: `Γ_*(u') - Γ_*(u) ≤ (u' - u)/4` at `q_c` (`cas_Gqc_inc`), and
-`R_u = 1/r_A + C(1 - 2z) - 2z(1 - z)` with `1/r_A ≥ 30/11`, `z ≤ 1/3`, `1 ≤ C ≤ 19/6`,
-`0 ≤ T - 2 ≤ 7/6` (`cas_shape`, `cas_u_comb`). -/
-theorem cas_u_dec {x δ al u u' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13 / 6) (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1 / 19)
-    (hal : 13 / 5 * δ ≤ al - 1) (hal' : al - 1 ≤ 3 * δ) (hu : 3 / 4 ≤ u) (huu : u ≤ u')
-    (hu' : u' ≤ 31 / 40) :
-    casPhi x (x * (1 + δ)) al u' ≤ casPhi x (x * (1 + δ)) al u ∧
-      casPsi x (x * (1 + δ)) al u' ≤ casPsi x (x * (1 + δ)) al u := by
-  have hal1 : 1 ≤ al := by linarith
-  have hal22 : al ≤ 22 / 19 := by linarith
-  have hS : 0 < 1 + x := by linarith
-  have hx0 : 0 < x := by linarith
-  have hxb : x ≤ x * (1 + δ) := by nlinarith
-  have hb130 : x * (1 + δ) ≤ 130 / 57 := by nlinarith
-  have hDS := cas_D_le_S hx hal1 hal22 hxb
-  have hG := cas_Gqc_inc hx hx2 hal1 hu huu hu'
-  have hSig : 0 < x * (x + 2) + al ^ 2 := by positivity
-  have hqc' : ssQc x al = al ^ 2 / (x * (x + 2) + al ^ 2) := rfl
-  have hqc0 : 0 < ssQc x al := by rw [hqc']; positivity
-  set be := x * (1 + δ) with hbe
-  set qc := ssQc x al with hqc
-  -- the residual and the outer norm at `q_c` are affine in `u`
-  set z := qc * (ssDg x be al / al ^ 2) with hz
-  set C := (1 + x) * (1 - qc * (1 - 1 / al ^ 2)) with hC
-  have hR : ssRs x be al u' qc 2 - ssRs x be al u qc 2 =
-      (u' - u) * (1 / ssRA al be + C * (1 - 2 * z) - 2 * z * (1 - z)) := by
-    rw [hz, hC]; unfold ssRs ssF ssWs ssELs ssA1 ssA2 ssA3 ssE0; ring
-  have hW : ssWs x be al u' qc - ssWs x be al u qc = (u' - u) * (z ^ 2 - z * C) := by
-    rw [hz, hC]; unfold ssWs ssA1 ssA2 ssE0; ring
-  -- the shape bounds
-  have hzS : z = ssDg x be al / (x * (x + 2) + al ^ 2) := by rw [hz, hqc']; field_simp
-  obtain ⟨b1, b2, b3, b4, b5, b6⟩ := cas_shape hx hx2 hal1 hal22 hxb hb130 hDS
-  have hz3 : z ≤ 1 / 3 := by rw [hzS, div_le_iff₀ hSig]; linarith
-  have hCe : C = (1 + x) ^ 3 / (x * (x + 2) + al ^ 2) := by rw [hC, hqc']; field_simp; ring
-  have hC1 : 1 ≤ C := by rw [hCe, le_div_iff₀ hSig]; linarith
-  have hC19 : C ≤ 19 / 6 := by rw [hCe, div_le_iff₀ hSig]; linarith
-  have hrA : 30 / 11 ≤ 1 / ssRA al be := by
-    unfold ssRA; rw [one_div_div, le_div_iff₀ (by linarith)]; linarith
-  have e : ssRA al be / qc = (x * (x + 2) + al ^ 2) / (al * (al + be)) := by
-    rw [hqc']; unfold ssRA; field_simp
-  have hab : 0 < al * (al + be) := by positivity
-  have hT0 : 0 ≤ ssRA al be / qc - 2 := by
-    rw [e, sub_nonneg, le_div_iff₀ hab]; linarith
-  have hT1 : ssRA al be / qc - 2 ≤ 7 / 6 := by
-    rw [e, sub_le_iff_le_add, div_le_iff₀ hab]; linarith
-  have hfin := cas_u_comb (d := u' - u) (by linarith) hz3 hC1 hC19 hrA hT0 hT1
-  rw [← hR, ← hW] at hfin
-  obtain ⟨h1, h2⟩ := hfin
-  constructor
-  · unfold casPhi; linarith
-  · unfold casPsi casPhi; linarith
+/-- The S4 norm substitution holds for every norm above `3/4`. -/
+theorem cas_u_dec {x δ al u u' : ℝ} (hx : 2 ≤ x) (hx2 : x ≤ 13/6)
+    (hδ : 0 ≤ δ) (hδ2 : δ ≤ 1/19) (hal : 13/5*δ ≤ al-1) (hal' : al-1 ≤ 3*δ)
+    (hu : 3/4 ≤ u) (huu : u ≤ u') :
+    casPhi x (x*(1+δ)) al u' ≤ casPhi x (x*(1+δ)) al u ∧
+      casPsi x (x*(1+δ)) al u' ≤ casPsi x (x*(1+δ)) al u := by
+  have hal1 : 1 ≤ al := by linarith only [hδ,hal]
+  have hal22 : al ≤ 22/19 := by linarith only [hδ2,hal']
+  have hxb : x ≤ x*(1+δ) := by nlinarith only [hx,hδ]
+  have hb130 : x*(1+δ) ≤ 130/57 := by nlinarith only [hx,hx2,hδ,hδ2]
+  exact cas_norm_rect hx hx2 hal1 hal22 hxb hb130 hu huu
 
 /-- **The incoming majorant on the box**: for
 `2 ≤ x ≤ 13/6`, `0 ≤ δ ≤ 1/19`: `ū(x, x(1 + δ)) < 31/40`. -/
@@ -527,7 +370,7 @@ theorem upper_order_casimir_floor (h1 : 2 ≤ H.x) (h2 : H.x ≤ 13 / 6) (h3 : H
       linarith
   -- the duration maximum, then `u ↦ ū` and the floor
   have hdur := env_Rs_dur (x := H.x) (be := H.be) (u := H.u) hqc0 hτ'2 hτ'T
-  have hud := cas_u_dec h1 h2 hδ0 h3 hal1 hal2 hu34 hubar hub31.le
+  have hud := cas_u_dec h1 h2 hδ0 h3 hal1 hal2 hu34 hubar
   have hfl := cas_floor_box h1 h2 hδ0 h3 hal1 hal2
   rw [← hbe] at hud hfl
   unfold casPsi casPhi at hud hfl
