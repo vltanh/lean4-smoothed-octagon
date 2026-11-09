@@ -1,0 +1,180 @@
+\section{Introduction}\label{sec:intro}
+
+A \emph{convex disk} is a compact convex subset of the plane with nonempty interior. For a convex
+disk $K$ let $\delta(K)$ be its greatest packing density: the supremum of the densities of the
+packings of the plane by congruent copies of $K$ (\cref{def:packing-density}). The circular disk
+packs with density $\pi/\sqrt{12}=0.906899\ldots$, and in 1934 Reinhardt~\cite{Reinhardt1934}
+asked which centrally symmetric convex disk packs worst, that is, has the least $\delta(K)$. He
+proposed the \emph{smoothed octagon} $\Koct$: the regular octagon with each corner replaced by an
+arc of the hyperbola that touches the two sides at the corner and is asymptotic to the two
+neighbouring side lines (\cref{def:smoothed-octagon}, \cref{fig:octagon}). Its greatest packing
+density is
+\[
+  \doct=\frac{8-4\sqrt2-\log2}{2\sqrt2-1}=0.902414\ldots .
+\]
+We prove that the smoothed octagon packs worst, and that it is the only worst disk up to affine
+maps.
+
+\begin{theorem}\label{thm:main}
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item The smoothed octagon $\Koct$ is a centrally symmetric convex disk with $\delta(\Koct)=\doct$.
+\item Every centrally symmetric convex disk $K$ satisfies $\delta(K)\ge\doct$.
+\item A centrally symmetric convex disk $K$ satisfies $\delta(K)=\doct$ if and only if
+  $K=A(\Koct)$ for an invertible affine map $A$ of the plane.
+\end{enumerate}
+\end{theorem}
+
+Part~(b) is Reinhardt's conjecture. Part~(a) is due to Reinhardt and to
+Mahler~\cite{Reinhardt1934,Mahler1947c}; we prove it again, in the form in which the rest of the
+proof uses it. Part~(c) says that the minimum is attained only at the octagon; since $\delta$ is
+invariant under invertible affine maps, the \emph{if} direction follows from~(a).
+
+\subsection{History}\label{sec:intro-history}
+
+Minkowski~\cite{Minkowski1904,Minkowski1907} studied the densest lattice packings of a convex
+body and found the critical lattices of a convex disk through its inscribed hexagons; the question
+of the least dense centrally symmetric disk appears in Blaschke's book~\cite{Blaschke1923}, where,
+according to Hales and Vajjha~\cite[\S1.2]{HalesVajjha2024}, it is credited to Courant, who expected
+the circle to be the answer. Reinhardt~\cite{Reinhardt1934} showed that a least dense disk
+exists, that its boundary has no corners, and that every boundary point is the midpoint of a side
+of a circumscribed hexagon of least area. He described the smoothed octagon, which packs worse
+than the circle, and left open which disk is the least dense.
+
+Mahler, unaware of Reinhardt's work, reached the same conjecture in three papers of
+1947~\cite{Mahler1947a,Mahler1947b,Mahler1947c}. He reduced the problem to one in the calculus of
+variations, proved that it has a solution and that the solution is not an ellipse, and expected
+that the boundary of an extreme disk consists of line segments and arcs of
+hyperbolas~\cite[p.~117]{Mahler1947b}; Hales and Vajjha call this Mahler's first conjecture. Among
+centrally symmetric octagons he found the regular octagon to be the worst, and he constructed the
+smoothed octagon and computed its density~\cite[\S12]{Mahler1947c}. Ledermann and
+Mahler~\cite{LedermannMahler1949} named the smoothed octagon, and found that the smoothed decagon
+packs better, ``a result which seems to support Reinhardt's conjecture''.
+
+These authors studied lattice packings. Fejes T\'oth~\cite{FejesToth1950} and
+Rogers~\cite{Rogers1951} proved that for a centrally symmetric convex disk no packing by congruent
+copies, or by translates, is denser than the densest lattice packing (\cref{thm:fejes-toth}), so
+Reinhardt's lattice problem is the problem for all packings; see the surveys of G.~Fejes
+T\'oth~\cite{GFejesToth2017} and of Bezdek and Kuperberg~\cite{BezdekKuperberg2013}. Lower bounds
+for $\delta(K)$ followed: $\sqrt3/2=0.866\ldots$ by Mahler~\cite{Mahler1946}, $0.88$ by
+Ennola~\cite{Ennola1961}, and $0.892656$ by Tammela~\cite{Tammela1970}. Nazarov~\cite{Nazarov1986}
+proved that the smoothed octagon is a local minimum of $\delta$ in the Hausdorff metric.
+
+Hales recast the problem twice. In~\cite{Hales2011} it is a problem of Bolza in the calculus of
+variations: the circle is, up to affine maps, the only solution of the Euler--Lagrange equations,
+it is not a minimizer, and a piecewise analytic minimizer is a smoothed polygon.
+In~\cite{Hales2017} it is an optimal control problem on $\SLtwo$, the problem this paper works
+with (\cref{def:control-problem}). There the smoothed octagon, and more generally the smoothed
+regular $(6k+2)$-gon, is a Pontryagin extremal with bang-bang control, the octagon is a strict
+local minimum, the optimal solution has no singular arcs, and extremals that avoid the singular
+locus switch finitely often. Vajjha's thesis~\cite{Vajjha2022} and the book of Hales and
+Vajjha~\cite{HalesVajjha2024} continue this work. The book confines the state of a global
+minimizer to a compact domain (\cref{thm:compact-domain}), finds the Fuller
+system~\cite{Fuller1963} near the singular locus, and proves Mahler's first conjecture: a global
+minimizer is bang-bang with finitely many switches, so a worst disk is a smoothed polygon. It
+leaves the Reinhardt conjecture open, and notes that a proof that the smoothed $(6k+2)$-gons are
+the only extremals would complete it~\cite[\S1.3]{HalesVajjha2024}; see also~\cite{Barber2024}.
+
+Two related problems have been studied in the same spirit. In three dimensions,
+Kallus~\cite{Kallus2014} proved that the ball is a local pessimum for packing. For convex disks
+that need not be centrally symmetric, F\'ary~\cite{Fary1950} proved that triangles have the least
+lattice packing density, and Kallus~\cite{Kallus2015} proved that the regular heptagon is a local
+minimum of the double-lattice packing density.
+
+\subsection{The control problem}\label{sec:intro-control}
+
+Hales's control problem (\cref{def:control-problem}) has a state $X(t)$ in the upper half-plane,
+viewed as a traceless matrix of determinant~$1$, and a frame $g(t)\in\SLtwo$, driven by a
+measurable control $u(t)$ in a triangle $\UT$; a trajectory is admissible if it closes up after a
+rotation by $\pi/3$, and its cost $\cost(T,X)$ is an integral of the state, equal to the area of the
+disk that the trajectory traces when it comes from a disk (\cref{sec:set-equivalence}). The smoothed
+octagon has a trajectory of cost $\Aoct=\sqrt{12}\,\doct$ (\cref{prop:octagon-trajectory}). We
+prove:
+
+\begin{theorem}\label{thm:control}
+Every admissible trajectory $(T,u,g,X)$ of the control problem satisfies
+$\cost(T,X)\ge\Aoct=\sqrt{12}\,\doct$.
+\end{theorem}
+
+By \cref{thm:equivalence}, \cref{thm:control} is equivalent to \cref{thm:main}(b). It holds for
+every terminal time $T>0$ and every measurable control.
+
+\subsection{Strategy of the proof}\label{sec:strategy}
+
+The proof follows Hales's control formulation and uses the results of Hales and Vajjha. It has
+five steps.
+
+\runin{From disks to minimizers (\cref{sec:setting}).} A worst disk exists, and after a linear
+change of coordinates it is traced by an admissible trajectory whose cost is $\sqrt{12}$ times its
+density. That trajectory is a global minimizer of the control problem, and every global minimizer
+has the same cost (\cref{thm:equivalence}). Its state stays in the compact domain $\hstarstar$ of
+Hales and Vajjha (\cref{thm:compact-domain}).
+
+\runin{A finite normal period (\cref{sec:reduction}).} A global minimizer lifts to a Pontryagin
+extremal (\cref{thm:pmp-lift}). Its costate stays away from the singular locus
+(\cref{prop:clearance}), so its control is bang-bang, takes values at the vertices of $\UT$, and
+switches finitely often in a period (\cref{prop:finite-switches}). Rebasing the period at a switch
+(\cref{lem:word-reduction}) gives a global minimizer whose lift is normal (\cref{thm:normality}).
+The result is a \emph{vertex period}: $N$ pieces, on each of
+which the control sits at one vertex of $\UT$, with explicit one-piece formulas, together with the
+costate of a normal extremal (\cref{thm:finite-normal}).
+
+\runin{Five classes (\cref{sec:periods}).} Each switch moves the control to the next vertex or to
+the previous one, and we call it forward or reverse accordingly. The cyclic word of switch signs
+puts every period in one of five classes (\cref{def:classes}, \cref{prop:partition}). The costate
+gives a normal multiplier whose determinant $\gamma^2$, a Casimir of the motion, is constant on
+the period. A period that costs at most $\Aoct$ has a small Casimir (\cref{prop:cost-casimir},
+\cref{cor:casimir-cap}), and the Casimir of a mixed period is positive
+(\cref{prop:ellipticity}).
+
+\runin{Periods with six or more pieces (\cref{sec:reverse,sec:short-runs,sec:forward,sec:mixed,sec:smaller-short}).}
+Each class is excluded for $N\ge6$ by an estimate on the whole period: classes $\cls{R}$ and
+$\cls{M3}$ by the reverse-four principle and a three-piece log-concavity
+(\cref{thm:class-R,thm:class-M3}); class $\cls{M1}$, whose sign word is $(--+)^m$, by an angle gap
+at each centre and a winding identity (\cref{thm:class-M1}); class $\cls{F}$ by a window at the
+smallest margin and the Casimir cap (\cref{thm:class-F}); and class $\cls{M2}$ by locating the
+smallest margin at a reverse centre and comparing the windows around it with the cost
+(\cref{thm:class-M2,thm:m2-smaller-short}). Together these give \cref{thm:at-most-five}: a
+competitive normal vertex period in $\hstarstar$ has at most five pieces.
+
+\runin{Five or fewer pieces, and equality (\cref{sec:terminal,sec:equality}).} The closure
+condition leaves few words with at most five pieces: four pieces with every switch forward, as for
+the octagon, and five pieces with the word $0\,1\,0\,2\,0$ or with every switch reverse
+(\cref{prop:terminal-words}); the last are excluded by \cref{thm:class-R}. The four-piece periods cost at least $\Aoct$, with
+equality only for the octagon, and the five-piece periods cost more (\cref{thm:terminal}). This
+proves \cref{thm:control} and \cref{thm:main}(b). For the equality case, a worst disk is traced by
+a global minimizer, which by the above is the octagon's trajectory; transporting its six arcs
+shows that the disk is a linear image of the smoothed octagon (\cref{thm:rigidity}). Reinhardt's
+construction and Hales's trajectory give the same disk up to a linear map
+(\cref{prop:reinhardt-construction}), which proves \cref{thm:main}(a) and~(c).
+
+Most of the work is in the fourth step. The obstruction there is that the classes are not excluded
+by any local condition at a switch: each exclusion compares the cost of a whole period, or of a
+window of a few pieces around its smallest margin, with $\Aoct$, through scalar inequalities in a
+few variables. These are collected in \cref{app:reverse-estimates,app:short-run-estimates,app:forward-estimates,app:nonshort-estimates,app:short-estimates,app:terminal-estimates}.
+We prove them by identities, monotonicity and concavity arguments in one variable at a time and
+tangent-line bounds for the logarithm, and a few polynomial signs on boxes by expansion in the
+Bernstein basis of the box; no interval arithmetic is used.
+
+\subsection{Formal verification}\label{sec:intro-formal}
+
+\Cref{thm:main,thm:control} are proved in Lean~4~\cite{Lean4} with Mathlib~\cite{Mathlib20}, in the
+repository~\cite{Companion}, and Lean's kernel checks every step. The three parts of
+\cref{thm:main} are stated in Mathlib's vocabulary in a file that imports only Mathlib, and the
+proof uses only Lean's standard axioms. It builds on formalizations of the book of Hales and
+Vajjha~\cite{SmoothedPolygonLean} and of the Pontryagin maximum
+principle~\cite{OptimalControlLean}, and it is registered in the Palomar
+registry~\cite{Palomar}. \Cref{app:formal} describes what is formalized and how it is checked, and
+lists the Lean declaration that proves each numbered result of the paper. The text of the paper
+does not depend on the formalization: it is a self-contained mathematical proof.
+
+\subsection{Organization}\label{sec:intro-organization}
+
+\Cref{sec:setting} sets up packings, the smoothed octagon and the control problem, and reduces
+\cref{thm:main}(b) to \cref{thm:control}; \cref{tab:notation} at its end lists the notation.
+\Cref{sec:reduction} reduces a global minimizer to a finite normal vertex period, and
+\cref{sec:periods} develops the tools for such periods and states \cref{thm:at-most-five}.
+\Cref{sec:reverse,sec:short-runs,sec:forward,sec:mixed,sec:smaller-short} exclude the five classes
+for six or more pieces, \cref{sec:terminal} treats at most five pieces and proves
+\cref{thm:control}, and \cref{sec:equality} proves the equality case.
+\Cref{app:reverse-estimates,app:short-run-estimates,app:forward-estimates,app:nonshort-estimates,app:short-estimates,app:terminal-estimates}
+hold the scalar estimates, and \cref{app:formal} the formal verification.

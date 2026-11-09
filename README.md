@@ -157,6 +157,13 @@ showed the smoothed octagon is a local minimum (1986). Hales recast the problem 
 (2011, 2017), and Hales and Vajjha studied its Pontryagin extremals in *Packings of Smoothed
 Polygons* (2024). [docs/prior-work.md](docs/prior-work.md) gives the full history with references.
 
+## Paper
+
+[docs/paper/main.pdf](docs/paper/main.pdf) is a draft manuscript, *A proof of the Reinhardt
+conjecture*, that writes the proof as self-contained mathematics; its last appendix describes the
+formalization and lists the Lean declarations behind each numbered result. `make` in
+[docs/paper](docs/paper) rebuilds it.
+
 ## Verification
 
 ```sh
@@ -205,7 +212,7 @@ SmoothedOctagon/
   Defs.lean                    the definitions of the statements, shared with the Challenge
   LowerBound.lean              the assembly
 Cited/HalesVajjha/             Definition 5.0.1 of Hales–Vajjha (the compact domain)
-docs/                          credits, prior work and the figures
+docs/                          credits, prior work, the figures and the paper
 scripts/                       the audit, the definitions check, the figures and the certificate generators
 ```
 

@@ -1,0 +1,282 @@
+\section{The formal verification}\label{app:formal}
+
+The proof of this paper is formalized in Lean~4~\cite{Lean4} with Mathlib~\cite{Mathlib20}, in the
+repository~\cite{Companion}. This appendix says what the formalization states, how it is checked,
+on what it depends, and where its arguments differ from the text, and it lists the Lean
+declarations that prove the numbered results of the paper.
+
+\subsection{The statements}\label{app:formal-statements}
+
+The file \texttt{Palomar/Challenge.lean} imports only Mathlib and states the three parts of
+\cref{thm:main} as the theorems \lean{octagon_density}, \lean{reinhardt} and
+\lean{reinhardt_equality} of the namespace \lean{ReinhardtChallenge}. Its definitions are those of
+\cref{def:packing-density}, which is Definition~2.1.1 of~\cite{HalesVajjha2024}. Points of the
+plane are maps $\{0,1\}\to\R$ and areas are Lebesgue measure. A convex disk is a compact convex set
+with nonempty interior, and a congruent copy of $K$ is its image under a map $x\mapsto Ax+b$ with
+$A$ orthogonal. A packing is a family of convex disks whose members have pairwise disjoint
+interiors. Its density exists when the upper and lower limits, as $r\to\infty$, of the fraction of
+the disk of radius $r$ about the origin that it covers are finite and equal, and $\delta(K)$ is the
+supremum of the densities that exist over the packings by congruent copies of $K$. A disk is
+centrally symmetric when there is a point $c$ with $2c-x\in K$ for every $x\in K$. The smoothed
+octagon is given in Reinhardt's description (\cref{def:smoothed-octagon}): with $d_k(x)$ the signed
+distance from $x$ to the line of the $k$-th side of the regular octagon of inradius~$1$, it is the
+octagon $d_k\ge0$ with the corner between sides $k$ and $k+1$ cut off along the hyperbola
+$d_{k-1}d_{k+2}=\sqrt2/4$. These definitions are copied word for word from the library, so the
+theorems the library proves are the theorems the file states.
+
+\subsection{The check}\label{app:formal-check}
+
+The root module \texttt{SmoothedOctagon.lean} restates the three theorems and proves them with no
+hypothesis. Lean's kernel checks every step, and every theorem depends only on Lean's standard
+axioms \lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}; an audit script checks this
+for each of the 8{,}294 declarations of the library. The Comparator configuration
+\texttt{Palomar/comparator.json} checks that the root module proves the statements of
+\texttt{Palomar/Challenge.lean} with the same definitions. The proof is registered in the Palomar
+registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level high: Palomar's
+verifier checked it with the independent kernels nanoda and con-ron at commit
+\texttt{9ba6bf8} of~\cite{Companion}. Later commits rename and reorganize the library and leave the
+three statements unchanged; the names below are those of the current library. Lean and Mathlib are
+pinned at version \texttt{v4.36.0-rc2}. The library has about 110{,}000 lines in 344 modules, and a
+full build takes about 3.5 CPU-hours.
+
+The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
+the book of Hales and Vajjha~\cite{HalesVajjha2024} that the proof uses, together with the classical
+results behind them: among them Fejes T\'oth's theorem (\cref{thm:fejes-toth}), the theorems of
+Minkowski and Mahler on critical lattices and circumscribed hexagons, the compact domain
+(\cref{thm:compact-domain}) and the lift of a global minimizer to a Pontryagin extremal
+(\cref{thm:pmp-lift}). The second~\cite{OptimalControlLean} proves the Pontryagin maximum
+principle~\cite{Pontryagin1962} with free terminal time, an integral cost and mixed boundary
+conditions, by the argument of Agrachev and Sachkov~\cite{AgrachevSachkov2004}, and Filippov's
+theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{FixedPointLean}.
+
+\subsection{The scalar estimates}\label{app:formal-scalar}
+
+Most scalar inequalities of the paper are proved in Lean as in the text: polynomial identities by
+ring normalization, polynomial inequalities by nonlinear arithmetic with explicit products as
+hints, monotonicity and concavity in one variable by derivatives, and the logarithm by the tangent
+and Pad\'e bounds of the text and Mathlib's bounds for $\log2$ and $\pi$. Some polynomial signs on
+boxes, in class $\cls{F}$ (\cref{sec:forward}) and in the nonshort windows of class $\cls{M2}$
+(\cref{sec:mixed}), are checked by expansion in the Bernstein basis of the box: scripts in
+\texttt{scripts/certificates/} of~\cite{Companion} compute the coefficients, \lean{ring} checks the
+identity between the polynomial and its Bernstein form, and normalization checks the signs of the
+rational coefficients. Neither interval arithmetic nor floating-point computation enters the
+proof.
+
+\subsection{Where the formal proof argues differently}\label{app:formal-routes}
+
+The statements of the paper are those that Lean proves, sometimes in a simpler notation. In a few
+places the text proves an intermediate inequality by a different argument from the Lean proof,
+usually because the hand argument is shorter to read and the formal one shorter to check:
+\begin{itemize}
+\item In class $\cls{F}$, the four quartic signs of the conditional Casimir bound
+  (\cref{lem:fwd-casimir}) have hand arguments in the text; Lean proves them by nonlinear
+  arithmetic with products of Bernstein basis polynomials as hints.
+\item In the nonshort windows of class $\cls{M2}$ (\cref{app:nonshort-estimates}), the text proves
+  the scale strip by monotonicity in $t$ and a comparison at $t_0=13/35$, the low ratio by shape
+  monotonicity, and the bound $\chi>4/7$, the elimination of $q$ and the envelope by concavity
+  arguments; Lean proves the corresponding signs by Bernstein expansion, and the low ratio by
+  concavity in $k$ with Bernstein expansions at both ends.
+\item In class $\cls{M1}$ the text proves the two-centre bound in the exact form
+  $\cost>2\sqrt6-\sqrt3$ (\cref{prop:m1-two-centre}); Lean proves the weaker numerical bound that
+  the argument needs.
+\item In the smaller-short window (\cref{sec:smaller-short}), the text proves the outer face sign
+  of gate~S3 (\cref{prop:ss-face-S3}) on a different domain from the Lean statement; both domains
+  contain the cases that occur.
+\end{itemize}
+The full small-scale exclusion of \cref{rem:m2-low-scale} is not formalized; the proof uses only
+its unit face (\cref{lem:m2-low-unit}).
+
+\subsection{Dictionary}\label{app:formal-dictionary}
+
+\Cref{tab:formal-dictionary} lists, for each numbered result of the paper, the Lean declarations
+that prove it. Names are relative to the namespace \lean{SmoothedOctagon}; the prefixes
+\lean{ReinhardtChallenge} and \lean{SmoothedPolygons} mark the statements of the challenge file and
+the declarations of~\cite{SmoothedPolygonLean}. Several names in a row are the pieces of one
+result.
+
+{\small
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}p{0.71\textwidth}@{}}
+\caption{The Lean declarations behind the numbered results.}\label{tab:formal-dictionary}\\
+\toprule
+Result & Lean declarations\\
+\midrule
+\endfirsthead
+\toprule
+Result & Lean declarations\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+\multicolumn{2}{@{}l}{\emph{Sections~1 and~2}}\\[2pt]
+\cref{thm:control} & \lean{reinhardt_cost}, \lean{controlLowerBound} \\
+\cref{thm:main}(a) & \lean{ReinhardtChallenge.octagon_density}, \lean{smoothedOctagon_spec} \\
+\cref{thm:main}(b) & \lean{ReinhardtChallenge.reinhardt}, \lean{reinhardtConjecture} \\
+\cref{thm:main}(c) & \lean{ReinhardtChallenge.reinhardt_equality}, \lean{reinhardt_equality_trajectory} \\
+\cref{def:packing-density} & \lean{ReinhardtChallenge.greatestPackingDensity} \\
+\cref{def:smoothed-octagon} & \lean{ReinhardtChallenge.smoothedOctagon} \\
+\cref{def:global-minimizer} & \lean{SmoothedPolygons.IsReinhardtMinimizer} \\
+\cref{thm:compact-domain} & \lean{SmoothedPolygons.theorem5_0_2} \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Section~3}}\\[2pt]
+\cref{def:pmp-extremal} & \lean{SmoothedPolygons.IsPontryaginExtremal} \\
+\cref{thm:pmp-lift} & \lean{SmoothedPolygons.exists_isPontryaginExtremal_of_isReinhardtMinimizer} \\
+\cref{lem:vertex-hamiltonians} & \lean{IsPontryaginExtremal.continuousOn_vertexHamiltonian}, \lean{IsPontryaginExtremal.vertexHamiltonian_max_eq_zero} \\
+\cref{red:singular-locus} & \lean{hamiltonian_vertices_equal_iff_reducedCostate_eq_zero}, \lean{hamiltonian_maximizers_in_proper_edge} \\
+\cref{red:winding} & \lean{Reduction.clr_winding}, \lean{Reduction.clr_angular} \\
+\cref{red:equilibrium} & \lean{Reduction.clr_vertex_bounds} \\
+\cref{red:budget} & \lean{Reduction.clr_budget}, \lean{Reduction.clr_lam_sq_le} \\
+\cref{prop:clearance} & \lean{Reduction.covectorNormSq_le_singularGapSq}, \lean{Reduction.switch_singularGapSq_pos} \\
+\cref{prop:edge-bound} & \lean{Reduction.edgeBound_of_isReinhardtMinimizer}, \lean{Reduction.Edge.edge_bangBang} \\
+\cref{red:local-exclusion} & \lean{Reduction.switch_exists_excluded_vertex} \\
+\cref{prop:finite-switches} & \lean{Reduction.exists_isPiecewiseVertex} \\
+\cref{def:vertex-representation} & \lean{VertexRepresentation} \\
+\cref{lem:word-reduction} & \lean{Reduction.exists_rebase_vertexRepresentation}, \lean{Reduction.isReinhardtMinimizer_rebase} \\
+\cref{def:normal-period} & \lean{NormalPeriod}, \lean{NormalPeriod.IsCompetitive}, \lean{NormalPeriod.InCompactDomain}, \lean{NormalPeriod.activeMargin} \\
+\cref{thm:normality} & \lean{Reduction.lam_lt_zero_of_vertexRepresentation}, \lean{Reduction.exists_normal_lift} \\
+\cref{red:abnormal-transport} & \lean{Reduction.gn_piece} \\
+\cref{thm:finite-normal} & \lean{finiteNormalRepresentation}, \lean{Reduction.cost_le_octagonCost} \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Sections~4 and~5, \cref{app:reverse-estimates}}}\\[2pt]
+\cref{lem:one-arc} & \lean{vertexPiece_eq}, \lean{vertexPiece_margin}, \lean{vertexPiece_cost}, \lean{NormalPeriod.piece_margin}, \lean{NormalPeriod.cost_eq_sum} \\
+\cref{lem:per-factors} & \lean{CostateCycle.factor_pp}, \lean{CostateCycle.factor_mp}, \lean{CostateCycle.factor_pm}, \lean{CostateCycle.centre_factor} \\
+\cref{lem:per-signed-action} & \lean{CostateCycle.rawCost_eq}, \lean{CostateCycle.arc_eq}, \lean{NormalPeriod.cost_eq_rawCost} \\
+\cref{lem:tangent-closure} & \lean{NormalPeriod.tangentProduct_N}, \lean{Term.triC_conj_tangentFactor}, \lean{Term.triC_conj_R} \\
+\cref{def:signs} & \lean{VertexRepresentation.IsForward}, \lean{VertexRepresentation.IsReverse}, \lean{VertexRepresentation.IsReverseRun}, \lean{VertexRepresentation.IsForwardRun} \\
+\cref{lem:sign-sum} & \lean{NormalPeriod.ff_N_mod_three} \\
+\cref{def:classes} & \lean{VertexRepresentation.AllReverse}, \lean{VertexRepresentation.AllForward}, \lean{VertexRepresentation.ClassM3}, \lean{VertexRepresentation.ClassM1}, \lean{VertexRepresentation.ClassM2} \\
+\cref{prop:partition} & \lean{VertexRepresentation.partition} \\
+\cref{def:costate-coordinates} & \lean{costateL}, \lean{costateA}, \lean{costateB}, \lean{costateAlpha}, \lean{costateBeta}, \lean{CostateCycle.sig} \\
+\cref{lem:costate-transport} & \lean{margin_mul_hamiltonian}, \lean{costateB_perp}, \lean{vertexPiece_costate}, \lean{NormalPeriod.cut_transport}, \lean{NormalPeriod.sig_le_of_mem}, \lean{NormalPeriod.cut_sig_grow_le}, \lean{NormalPeriod.cut_sig_decr_le}, \lean{CostateCycle.sig_act_succ}, \lean{NormalPeriod.costateCycle} \\
+\cref{def:normal-multiplier} & \lean{NormalPeriod.Ucal}, \lean{CostateCycle.mu}, \lean{NormalPeriod.mu_zero}, \lean{CostateCycle.gam2}, \lean{NormalPeriod.det_Ucal}, \lean{triY}, \lean{CostateCycle.Mloc} \\
+\cref{lem:per-switch-vectors} & \lean{CostateCycle.yv_norm}, \lean{CostateCycle.cross_pp}, \lean{CostateCycle.cross_mm}, \lean{CostateCycle.yv_pair}, \lean{CostateCycle.outv_turn}, \lean{CostateCycle.yv_add_N}, \lean{CostateCycle.pre_N} \\
+\cref{lem:stationarity} & \lean{CostateCycle.stationarity}, \lean{CostateCycle.centre_stat} \\
+\cref{lem:switch-norms} & \lean{CostateCycle.swd_fwd}, \lean{CostateCycle.swd_rev}, \lean{CostateCycle.turn_secant}, \lean{CostateCycle.turn_swd_ge} \\
+\cref{lem:gram} & \lean{CostateCycle.gram_pp}, \lean{CostateCycle.gram_mm} \\
+\cref{prop:ellipticity} & \lean{NormalPeriod.gam2_pos_of_mixed}, \lean{NormalPeriod.wire_gam2_pos_of_allForward} \\
+\cref{prop:cost-casimir} & \lean{NormalPeriod.cost_casimir}, \lean{el_winding} \\
+\cref{cor:casimir-cap} & \lean{NormalPeriod.gam2_le_cap} \\
+\cref{thm:at-most-five} & \lean{period_le_five} \\
+\cref{lem:rev-N} & \lean{cstRevN_neg} \\
+\cref{lem:rev-identities} & \lean{cst_rev4_third_identity}, \lean{cst_rev4_second_identity} \\
+\cref{lem:reverse-four} & \lean{CostateCycle.reverse_four_third}, \lean{CostateCycle.reverse_four_second} \\
+\cref{thm:class-R} & \lean{reverse_exclusion} \\
+\cref{lem:three-arc} & \lean{CostateCycle.three_arc}, \lean{CostateCycle.three_arc_not_min}, \lean{CostateCycle.turn_up}, \lean{CostateCycle.turn_down}, \lean{cst_three_grow}, \lean{cst_three_decr} \\
+\cref{prop:run-structure} & \lean{reverseRun_two_and_centre_min} \\
+\cref{thm:class-M3} & \lean{minimumStructure_exclusion} \\
+\cref{cor:rev-mixed} & \lean{NormalPeriod.rev_run}, \lean{NormalPeriod.centre_min}, \lean{NormalPeriod.swd_ge_of_mixed} \\
+\cref{lem:rev-three-gram} & \lean{el_three_gram} \\
+\cref{lem:rev-cross-signs} & \lean{CostateCycle.cre_pos_pp}, \lean{CostateCycle.cre_neg_mm}, \lean{el_cross_bound} \\
+\cref{lem:rev-pade} & \lean{cst_log_pade}, \lean{cst_zeta_gt}, \lean{cst_eta_lt_zeta} \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Section~6, \cref{app:short-run-estimates}}}\\[2pt]
+\cref{thm:class-M1} & \lean{shortRuns_exclusion} \\
+\cref{lem:m1-pattern} & \lean{VertexRepresentation.m1_pattern} \\
+\cref{lem:m1-centre-data} & \lean{NormalPeriod.m1_centreData}, \lean{m1_CentreData} \\
+\cref{prop:m1-angle-gap} & \lean{m1_angle_gap} \\
+\cref{cor:m1-angle} & \lean{m1_arccos_gt}, \lean{m1_cos_two_pi_div_five} \\
+\cref{prop:m1-winding} & \lean{m1_winding}, \lean{wind_winding_aux}, \lean{wind_polar}, \lean{wind_centre}, \lean{wind_track_range}, \lean{wind_seam} \\
+\cref{lem:m1-recurrence} & \lean{CostateCycle.m1_next_centre}, \lean{CostateCycle.next_centre_local}, \lean{CostateCycle.cross_mm}, \lean{CostateCycle.pre_N} \\
+\cref{lem:m1-euler} & \lean{CostateCycle.euler_sum}, \lean{CostateCycle.rawCost_eq}, \lean{elGa_euler} \\
+\cref{prop:m1-two-centre} & \lean{m1_two_centre}, \lean{m1_two_centre_numeric} \\
+\cref{lem:m1-log} & \lean{ag_log_le_tangent}, \lean{ag_log_le_atanh}, \lean{ag_half_sub_inv_le_log}, \lean{ag_sigma_superadd} \\
+\cref{lem:m1-one-switch} & \lean{ag_phi_le} \\
+\cref{lem:m1-reduce} & steps of the proof of \lean{m1_angle_gap} \\
+\cref{lem:m1-core} & \lean{ag_core} \\
+\cref{lem:m1-bc} & \lean{m1_bc_bound} \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Section~7, \cref{app:forward-estimates}}}\\[2pt]
+\cref{thm:class-F} & \lean{forward_exclusion} \\
+\cref{lem:fwd-count} & \lean{NormalPeriod.ff_N_mod_three} \\
+\cref{lem:fwd-cycle} & \lean{CostateCycle.ff_act_mul_lt}, \lean{CostateCycle.ff_q_eq}, \lean{CostateCycle.ff_rawCost} \\
+\cref{lem:fwd-seven} & \lean{ff_seven_le} \\
+\cref{prop:fwd-window} & \lean{CostateCycle.ff_rows}, \lean{CostateCycle.ff_floors}, \lean{CostateCycle.ff_gram}, \lean{NormalPeriod.ff_gam2_eq}, \lean{ff_Win.toDim} \\
+\cref{prop:fwd-spectral} & \lean{NormalPeriod.ff_cost_casimir}, \lean{NormalPeriod.wire_gam2_pos_of_allForward}, \lean{NormalPeriod.wire_spectral} \\
+\cref{cor:fwd-cap} & \lean{ff_gam2_cap} \\
+\cref{lem:fwd-small} & \lean{ff_Dim.U_lt_three}, \lean{fs_U_lt_three} \\
+\cref{lem:fwd-threshold} & \lean{ff_Dim.eleven_fifths_lt} \\
+\cref{lem:fwd-budget} & \lean{ff_Dim.budget}, \lean{ff_Dim.h_le_c}, \lean{ff_budget_g} \\
+\cref{lem:fwd-neighbour} & \lean{ff_Dim.neighbor}, \lean{ff_resN_neg} \\
+\cref{lem:fwd-norms} & \lean{ff_Dim.norms}, \lean{ff_Dim.norms_nonneg}, \lean{ff_resS_neg}, \lean{ff_resV_neg} \\
+\cref{lem:fwd-casimir} & \lean{ff_casimir_lower} \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Section~8, \cref{app:nonshort-estimates}}}\\[2pt]
+\cref{thm:class-M2} & \lean{nonshort_exclusion} \\
+\cref{lem:m2-casimir} & \lean{NormalPeriod.wire_spectral}, \lean{NormalPeriod.wire_cas_lt}, \lean{NormalPeriod.dens_cas_gt} \\
+\cref{lem:m2-scale} & \lean{m2_centre}, \lean{m2_scale} \\
+\cref{prop:m2-small-forward} & \lean{m2_small_forward_minimum} \\
+\cref{prop:m2-centre} & \lean{m2_min_centre} \\
+\cref{lem:m2-reflection} & \lean{m2_reflect}, \lean{m2_reflect_fwd_iff}, \lean{m2_reflect_classM2} \\
+\cref{prop:m2-window} & \lean{m2_window} \\
+\cref{prop:m2-continuation} & \lean{m2_window}, \lean{M2Window.ForwardNext}, \lean{M2Window.ReverseNext} \\
+\cref{lem:m2-comparison} & \lean{m2_comparison} \\
+\cref{lem:m2-shape} & \lean{nsrN_mono_k}, \lean{nsrA_pos} \\
+\cref{lem:m2-necessary} & \lean{nsr_window_basic}, \lean{nsr_window_N_neg}, \lean{nsr_high_t}, \lean{nsr_scale_lt}, \lean{nsr_scale_k}, \lean{nsr_centre_gap}, \lean{nsr_centre_gap_k}, \lean{nsr_window_dur}, \lean{nsr_window_dur_x}, \lean{nsr_reverse_order}, \lean{nsr_reverse_order_k} \\
+\cref{prop:m2-reverse-core} & \lean{nsr_reverse_core} \\
+\cref{thm:m2-reverse} & \lean{m2_reverse_exclusion} \\
+\cref{prop:m2-forward-steps} & \lean{nsf_low_ratio}, \lean{nsf_small_gap_j}, \lean{nsf_small_gap} \\
+\cref{thm:m2-forward} & \lean{m2_forward_exclusion} \\
+\cref{lem:m2-secants} & \lean{nsr_sec_swap}, \lean{nsr_sec_start}, \lean{nsr_m2F_eq_sec}, \lean{nsr_sec_lt_chord}, \lean{nsr_turn_floor} \\
+\cref{lem:m2-logs} & \lean{nsr_log_one_add_gt}, \lean{nsr_secN_lt_vbar}, \lean{nsr_log_lt_Lp}, \lean{nsr_m2F_gt_Fl}, \lean{nsf_log_gt_G}, \lean{nsf_secN_lt_VG}, \lean{nsf_secN_lt_Vq}, \lean{nsr_t_lt_T} \\
+\cref{lem:m2-relax} & \lean{nsrNv_nonpos}, \lean{nsrNL_nonpos}, \lean{nsr_N_pos_of_relax} \\
+\cref{lem:m2-high-t} & \lean{nsr_high_t'}, \lean{nsr_row_cubic} \\
+\cref{lem:m2-unit-shape} & \lean{nsr_unit_shape}, \lean{nsr_cubic_pos}, \lean{nsrU_signs} \\
+\cref{lem:m2-order-face} & \lean{nsr_order_face}, \lean{nsr_q_le_order}, \lean{nsr_concave_min} \\
+\cref{lem:m2-strip} & \lean{nsr_strip} \\
+\cref{lem:m2-low-unit} & \lean{nsr_low_unit}, \lean{nsr_quartic_pos} \\
+\cref{lem:m2-low-ratio} & \lean{nsf_lowRatio_core}, \lean{nlr_unit_pos} \\
+\cref{lem:m2-large-gap} & \lean{nsf_LGN_core}, \lean{nsf_LGB_core}, \lean{nlt_unit_pos}, \lean{nlt_shape_ge}, \lean{hrl_lower_pos}, \lean{hrs_shape_lt} \\
+\cref{lem:m2-chi} & \lean{nsf_chi_core} \\
+\cref{lem:m2-slope} & \lean{nsf_cas_slope} \\
+\cref{lem:m2-qelim} & \lean{nsf_qelim} \\
+\cref{lem:m2-envelope} & \lean{nsf_envelope} \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Section~9, \cref{app:short-estimates}}}\\[2pt]
+\cref{def:ss-window} & \lean{M2Short} \\
+\cref{prop:ss-extraction} & \lean{m2_short_window} \\
+\eqref{eq:ss-defect} & \lean{NormalPeriod.df_window}, \lean{NormalPeriod.df_defect} \\
+\cref{thm:m2-smaller-short} & \lean{m2_smallerShort_exclusion} \\
+\cref{lem:ss-first} & \lean{M2Short.ss_C_le_B}, \lean{SmallerShortData.u_le_V}, \lean{M2Short.ss_u_le}, \lean{ss_order}, \lean{SmallerShortData.root_zero}, \lean{SmallerShortData.q_le_qc}, \lean{SmallerShortData.q_lt_seventh} \\
+\cref{lem:ss-orders} & \lean{ss_strong_order}, \lean{ss_upper_order_54}, \lean{ss_upper_order_98}, \lean{ss_small_upper_order}, \lean{ss_quad_order}, \lean{SmallerShortData.strong_box} \\
+\cref{prop:ss-S0} & \lean{M2Short.ratio_lt_twelve_fifths}, \lean{SmallerShortData.ratio_lt_twelve_fifths}, \lean{lgr_D_pos}, \lean{lgr_pairing} \\
+\cref{prop:ss-S1} & \lean{M2Short.two_lt_ratio}, \lean{SmallerShortData.two_lt_ratio}, \lean{SmallerShortData.lr_cap_env} \\
+\cref{prop:ss-S2} & \lean{M2Short.ratio_lt_thirteen_sixths}, \lean{SmallerShortData.ratio_lt_thirteen_sixths} \\
+\cref{prop:ss-S3} & \lean{M2Short.displacement_lt}, \lean{SmallerShortData.displacement_lt} \\
+\cref{prop:ss-S4} & \lean{M2Short.upper_order_casimir_floor}, \lean{SmallerShortData.upper_order_casimir_floor}, \lean{SmallerShortData.cas_cap_env} \\
+\cref{prop:ss-S5} & \lean{M2Short.shear_neg}, \lean{SmallerShortData.shear_neg}, \lean{shr_residual_neg}, \lean{shr_shear_sign} \\
+\cref{prop:ss-S6} & \lean{M2Short.octagonCost_lt_completion}, \lean{SmallerShortData.octagonCost_lt_completion}, \lean{SmallerShortData.cost_angle}, \lean{SmallerShortData.cost_continuation}, \lean{cost_Fc_gt}, \lean{cost_constants} \\
+\cref{lem:ss-first-contact} & \lean{ss_first_contact} \\
+\cref{lem:ss-outer-scale} & \lean{ss_rev_centre_scale} \\
+\cref{prop:ss-face-S0} & \lean{lgr_central_tau_two}, \lean{lgr_central_duration}, \lean{lgr_outer_tests} \\
+\cref{prop:ss-face-S1} & \lean{lr_central_face}, \lean{lr_outer_face} \\
+\cref{prop:ss-face-S2} & \lean{ur_central_sign}, \lean{ur_outer_sign_small}, \lean{ur_outer_sign_large} \\
+\cref{prop:ss-face-S3} & \lean{dsp_central_alpha_proof}, \lean{dsp_outer_face_proof} \\
+\cref{prop:ss-face-S4} & \lean{cas_floor_box} \\
+\cref{prop:ss-face-S6} & \lean{cost_B_concave}, \lean{cost_B_endpoint} \\
+\addlinespace
+\multicolumn{2}{@{}l}{\emph{Sections~10 and~11, \cref{app:terminal-estimates}}}\\[2pt]
+\cref{def:term-cycle} & \lean{Term.Cycle}, \lean{Term.Cycle.rawCost}, \lean{Term.rawArc} \\
+\cref{lem:term-cycle} & \lean{NormalPeriod.termCycle}, \lean{NormalPeriod.cost_eq_rawCost} \\
+\cref{prop:terminal-words} & \lean{Term.Cycle.cycle_one_false}, \lean{Term.Cycle.cycle_two_false}, \lean{Term.Cycle.cycle_three_false}, \lean{Term.Cycle.cycle_four_forward}, \lean{Term.Cycle.cycle_five} \\
+\cref{lem:four-closure} & \lean{Term.four_closure} \\
+\cref{lem:four-param} & \lean{Term.Cycle.four_param} \\
+\cref{thm:four-density} & \lean{Term.fourPiece_density_ge}, \lean{Term.fourPiece_density_eq}, \lean{ra_four_density} \\
+\cref{cor:four-equality} & \lean{Term.Cycle.four_rawCost_ge}, \lean{Term.four_equality_data} \\
+\cref{lem:five-closure} & \lean{Term.five_closure}, \lean{Term.Cycle.five_param} \\
+\cref{lem:five-param} & \lean{Term.Cycle.five_param} \\
+\cref{thm:five-density} & \lean{Term.fivePiece_density_gt} \\
+\cref{thm:terminal} & \lean{terminal_cost}, \lean{Term.rawCost_ge_of_le_five} \\
+\cref{prop:terminal-equality} & \lean{terminal_equality}, \lean{Term.four_of_rawCost_eq}, \lean{Term.octagon_identification} \\
+\cref{thm:minimizer-cost} & \lean{minimizer_cost_ge} \\
+\cref{lem:eq-realization} & \lean{eq_worstDisk_minimizer_realization} \\
+\cref{lem:eq-frame-twist} & \lean{eq_frame_twist_of_contact} \\
+\cref{lem:eq-frontier} & \lean{eq_disk_eq_of_frontier_eq} \\
+\cref{thm:rigidity} & \lean{worstDisk_eq_linear_image} \\
+\cref{prop:converse} & \lean{bridge_greatestPackingDensity_linear_image}, \lean{bridge_greatestPackingDensity_translate}, \lean{greatestPackingDensity_linear_image_octagon} \\
+\cref{prop:reinhardt-construction} & \lean{cls_image_octagon}, \lean{cls_exists_affine_iff} \\
+\cref{lem:log-sinh} & \lean{ra_half_sub_inv_le_log} \\
+\cref{lem:four-weight} & \lean{ra_weight_monotoneOn}, \lean{ra_weight_le} \\
+\cref{lem:five-h} & \lean{ra_fiveH_concaveOn}, \lean{ra_fiveH_circle_le} \\
+\cref{lem:five-envelope} & \lean{ra_five_envelope}, \lean{Term.fiveEnvelope} \\
+\cref{lem:five-d} & a private lemma of \lean{Term.fivePiece_density_gt} \\
+\end{longtable}
+}

@@ -1,0 +1,53 @@
+% Notation of the paper. Table 1 of Section 2 lists the symbols and where each is defined.
+% Section files do not define macros of their own; anything not here is written out.
+
+% --- numbers, sets, calculus
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\abs}[1]{\lvert #1\rvert}
+\newcommand{\norm}[1]{\lVert #1\rVert}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}          % trace form <X,Y> = tr(XY)
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\inter}{int}
+\DeclareMathOperator{\area}{area}
+\DeclareMathOperator{\vol}{vol}
+
+% --- packings (Section 2.1)
+\newcommand{\doct}{\delta_{\mathrm{oct}}}          % the octagon's density
+\newcommand{\Aoct}{A_{\mathrm{oct}}}               % sqrt(12) * delta_oct, the octagon's cost
+\newcommand{\Koct}{K_{\mathrm{oct}}}               % Reinhardt's smoothed octagon (the Challenge's)
+\newcommand{\KH}{K_{\mathrm{H}}}                   % the octagon of Hales's trajectory
+
+% --- the control problem (Section 2.3)
+\newcommand{\SLtwo}{\mathrm{SL}_2(\R)}
+\newcommand{\sltwo}{\mathfrak{sl}_2(\R)}
+\newcommand{\hstar}{\mathfrak{h}^{\star}}          % star domain in the upper half-plane
+\newcommand{\hstarstar}{\mathfrak{h}^{\star\star}} % Hales--Vajjha's compact domain
+\newcommand{\UT}{U_{T}}                            % the control simplex
+\newcommand{\ee}{\mathbf{e}}                       % vertices e_0, e_1, e_2 of the simplex
+\newcommand{\cost}{\mathcal{C}}                    % the cost C(T, X)
+\newcommand{\tf}{t_{\mathrm{f}}}                   % the octagon's terminal time
+\newcommand{\tsw}{t_{\mathrm{sw}}}                 % the octagon's switching time
+
+% --- periods (Section 4)
+\newcommand{\cls}[1]{\ensuremath{\mathrm{#1}}}     % the classes R, F, M1, M2, M3
+
+% --- Lean declarations
+% \lean{name} typesets a declaration name (underscores allowed); \leanref{name} cites the formal
+% counterpart of a statement, as in "(Lean: name)". Names are upright even in italic text, are not
+% letter-spaced, and break only after a dot, an underscore, a hyphen or a slash.
+\renewcommand{\UrlFont}{\ttfamily\upshape}
+\Urlmuskip=0mu
+\makeatletter
+\def\UrlBreaks{\do\.\do\_\do\-\do\/}
+\def\UrlBigBreaks{}
+\def\UrlNoBreaks{}
+\makeatother
+\newcommand{\lean}[1]{\textup{\path{#1}}}
+\newcommand{\leanref}[1]{\textup{(Lean:~\path{#1})}}
+
+% --- run-in headings inside a section
+\newcommand{\runin}[1]{\par\medskip\noindent\emph{#1}\enspace}

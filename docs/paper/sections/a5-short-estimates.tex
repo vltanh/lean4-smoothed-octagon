@@ -1,0 +1,511 @@
+\section{Estimates for the smaller-short window}\label{app:short-estimates}
+
+This appendix gives the scalar inequalities behind \cref{sec:smaller-short}, organized by the
+gate that uses them. They are identities between rational functions, and inequalities proved by
+exhibiting a difference as a sum of terms of known sign, by the sign of a derivative on an
+interval, or by monotonicity or convexity in one variable at a time. The face signs of
+\cref{app:ss-faces} are the longest of them. Their proofs follow the hand arguments
+of~\cite{LighterProofs} and, for one endpoint, of~\cite{Notes}; they reduce each sign, one
+variable at a time, to explicit polynomials in one or two variables, mostly of degree at most
+eight, whose coefficients are printed in those notes. We give the reductions and the final signs.
+Throughout, $\operatorname{Sec}$, $g_B$ and $\mathcal U$ are as in \cref{sec:ss-window}, and the
+variables are those of \cref{tab:ss-variables}.
+
+\subsection{Secants and the incoming norm}\label{app:ss-secant}
+
+By \eqref{eq:ss-secant}, $(P_0-A_0)\operatorname{Sec}(A_0,B_0,P_0)$ is the integral of $g_{B_0}$
+over $[A_0,P_0]$, hence additive over adjacent intervals, and by \eqref{eq:ss-g} every secant lies
+in $[3/4,1]$. The function $g_{B_0}$ decreases on $(0,B_0]$ and increases on $[B_0,\infty)$. For
+the bridge norm, \eqref{eq:ss-g} gives
+\begin{equation}\label{eq:ss-u-integral}
+  u-\frac34=\frac{1}{4(\beta-1)}\int_1^\beta\frac{(s-x)^2}{(s+x)^2}\,\dd s .
+\end{equation}
+
+\runin{The central value.} With $z=(x-1)/(x+1)$ one has $2x/(1+x)=1+z$ and
+\[
+  V(x)-\frac34=\operatorname{Sec}(1,x,x)-\frac34=\frac12+\frac z4-\frac{(1+z)\log(1+z)}{2z}.
+\]
+A lower bound for $\log(1+z)$ is therefore an upper bound for $V$. The rational bound
+\[
+  \log(1+w)>\frac{w(43w^3+252w^2+390w+180)}{12(1+w)^2(w^2+10w+15)}\qquad(w>0)
+\]
+holds because the difference vanishes at $w=0$ and has derivative
+$w^6/\bigl((1+w)^3(w^2+10w+15)^2\bigr)>0$. It gives
+$V(x)<V_G(x)=\frac34+\frac{(x-1)^2(71x^2+48x+1)}{96x(x+1)(13x^2+14x+3)}$, and then
+\[
+  \bar V(x)-V_G(x)=\frac{(x-1)^3(11x^2+96x+13)}{96x(x+1)(35x+13)(13x^2+14x+3)}\ge0
+\]
+gives $V\le\bar V=\frac34+\frac{2(x-1)^2}{(x+1)(35x+13)}$. The same bound also follows from
+$\log(1+z)\ge\frac{z}{1+z}\bigl(1+\frac z2-\frac{4z^2}{24+11z}\bigr)$, whose difference has
+derivative $z^3(32-33z)/\bigl(2(1+z)^2(24+11z)^2\bigr)$.
+
+\runin{Ceilings and floors.} Splitting \eqref{eq:ss-u-integral} at $x$, bounding the integral over
+$[1,x]$ by $(x-1)(\bar V-\frac34)$ or by a sharper rational bound, and bounding $(s-x)^2/(s+x)^2$
+on $[x,\beta]$ by a quadratic or linear function of $s-x$, gives the rational ceilings of the
+bridge norm used by the gates:
+\begin{align*}
+  \bar u&=\tfrac34+\tfrac{1}{\beta-1}\Bigl[\tfrac{2(x-1)^3}{(x+1)(35x+13)}
+   +\tfrac{(\beta-x)^3}{48x^2}\Bigr],&
+  \hat u&=\tfrac34+\tfrac{(x-1)^2(\beta+7x-8)}{4(x+1)(35x+13)(\beta-1)},\\
+  u_\ell&=\tfrac34+\tfrac{(x-1)^2(\beta+15x-16)}{8(x+1)(35x+13)(\beta-1)},&
+  u_C&=\tfrac34+\tfrac{680(x-1)^3+3(x+1)^2(\beta-x)}{9600(x+1)^2(\beta-1)},\\
+  u_s&=\tfrac34+\tfrac{1}{\beta-1}\Bigl[\tfrac{17(x-1)^3}{240(x+1)^2}+\tfrac{\beta-x}{1200}\Bigr],&
+  u_O&=\tfrac34+\tfrac{(x-1)^2(x+\beta-2)}{(\beta-1)(x+1)(35x+13)},\\
+  u_{CB}&=\tfrac34+\tfrac{(x-1)(V_G(x)-3/4)+(\beta-x)/5808}{\beta-1},
+\end{align*}
+together with the floor $u_f=\frac34+\frac{(x-1)^2}{28(x+1)^2}$ and the quadratic floor $u_q$ of
+gate S6 (\cref{app:ss-S6}). The ceiling $\bar u$ holds for all $1<x\le\beta$; each of the others
+holds on the shapes where its gate uses it.
+
+\subsection{Orders and the comparison argument}\label{app:ss-orders}
+
+Normalize the shape by $\beta$: put $\ell=1/x$, $p_1=\alpha/\beta$, $q_1=x/\beta$ and
+$\operatorname{avg}(p,q)=\operatorname{Sec}(p,1,q)$, the mean of $g(s)=1-s/(1+s)^2$ over $[p,q]$.
+The equal secants \eqref{eq:ss-equal-secants} read
+$\operatorname{avg}(\ell,1/q_1)=\operatorname{avg}(p_1,q_1)$. An order compares $p_1$ with a
+\emph{barrier} $P(z)$, a differentiable function with $P(1)=\ell$, through the comparison function
+\[
+  \Phi(z)=\operatorname{avg}\bigl(P(z),z\bigr)-\operatorname{avg}(\ell,1/z),\qquad\Phi(1)=0 .
+\]
+Because $\operatorname{avg}$ decreases in its left end, the sign of $\Phi(q_1)$ decides whether
+$p_1$ lies above or below $P(q_1)$.
+
+\begin{lemma}[First contact]\label{lem:ss-first-contact}
+Let $a<1$ and let $\Phi$ be continuous on $[a,1]$ with $\Phi(1)=0$. If $\Phi$ has a negative
+derivative at each of its zeros in $(a,1]$, then $\Phi>0$ on $(a,1)$.
+\end{lemma}
+
+\begin{proof}
+Since $\Phi(1)=0$ and $\Phi'(1)<0$, $\Phi>0$ on some interval $(1-\varepsilon,1)$. If
+$\Phi(z_0)\le0$ for some $z_0\in(a,1)$, then $\Phi$ has a zero in $[z_0,1-\varepsilon]$; let $z^*$
+be the largest one. Then $\Phi>0$ on $(z^*,1)$ and $\Phi(z^*)=0$, so $\Phi'(z^*)\ge0$, a
+contradiction.
+\end{proof}
+
+At a zero of $\Phi$ both averages equal a common value $u$, and differentiation gives
+\begin{multline*}
+  \Phi'(z)\,(z-P(z))\,z\,(x-z)\\
+  =-P'(z)\bigl(g(P(z))-u\bigr)z(x-z)-\bigl(u-g(z)\bigr)\bigl((2z-P(z))x-z^2\bigr).
+\end{multline*}
+So the sign of $\Phi'$ at a contact is that of an expression in which $u$ appears only through
+the two gaps $g(P(z))-u$ and $u-g(z)$. A bound for the ratio of these gaps turns the contact
+condition into a polynomial inequality in $(z,x)$. Two gap ratios are used. The lower one comes
+from a Padé bound for the logarithm. The upper one comes from a Chebyshev bound: with
+$y=(1+q)/(1+p)$ and $\theta=1/(1+p)$, the inequality
+\[
+  \log y>\frac{(y-1)\bigl[3y(y+1)-2\theta(y-1)^2\bigr]}{6y^2}\qquad(1<y\le2\theta)
+\]
+holds because the difference vanishes at $y=1$ and has derivative
+$(y-1)^2(2\theta y+4\theta-3y)/(6y^3)\ge0$. With these, the contact polynomials have Bernstein
+forms on the contact interval with positive coefficients. For example, for the upper order with
+slope $5/4$, with $q=q_m+(1-q_m)v$, $q_m=(5x+4)/(9x)$ and $v\in[0,1]$, the contact expression
+$F_{5/4}$ satisfies
+\[
+  \frac{8748x^4}{(x-1)^2}F_{5/4}=\sum_{i=0}^4\binom4iB_i(x)\,v^i(1-v)^{4-i},
+\]
+with $B_0=8(5x+4)(7x+2)(9x+4)$, $B_1=9(x+4)(142x^2+61x+4)$, $B_2=54x(53x^2+102x+24)$,
+$B_3=729x^2(8x+5)$ and $B_4=8748x^3$, all positive for $x>1$. With \cref{lem:ss-first-contact}
+this gives the orders of \cref{lem:ss-orders}. The strengthened order with slope $2/7$ is simpler:
+there the comparison function is decreasing on the whole interval, by the gap ratio
+$9\operatorname{avg}(p,q)\ge7g(q)+2g(p)$.
+
+\subsection{The outer scale bound}\label{app:ss-scale}
+
+\begin{lemma}[Reverse-centre scale bound]\label{lem:ss-outer-scale}
+At a reverse centre with neighbour ratios $0<r,t<1/2$, scale $0<\rho<rt$, $\rho<3/20$, norms
+$3/4\le u\le\mathcal U(r)$, $3/4\le v\le\mathcal U(t)$ and the stationarity
+$E=1+r+t-\rho+\log\frac{\rho}{rt}-\frac{1-u}{r}-\frac{1-v}{t}$, the inequality
+$(4uv-E^2)/(16(1-\rho)^2)<9193/50000$ implies $\rho<1/7$.
+\end{lemma}
+
+\begin{proof}[Proof sketch]
+Assume $\rho\ge1/7$. Then $E<-1+2r+2t-rt$; the Gram numerator increases in $u$ and $v$, which may
+be lowered to $3/4$; and raising $r$ and $t$ to $1/2$ gives
+\[
+  \frac{4uv-E^2}{16(1-\rho)^2}>G(\rho)=\frac{9/4-B(\rho)^2}{16(1-\rho)^2},\qquad
+  B(\rho)=1-\rho+\log4\rho .
+\]
+$G$ increases on $[1/7,1/4)$, which follows from $\log y<2(y-1)/(y+1)$ and the identity
+\[
+  \frac94-\hat B^2-\frac{\hat B(1-\rho)^2}{\rho}=\frac{(4\rho-1)^2(4\rho^2+\rho+4)}
+  {4\rho(4\rho+1)^2},\qquad\hat B=1-\rho+\frac{2(4\rho-1)}{4\rho+1}.
+\]
+Finally $G(1/7)>9193/50000$ by $\log(7/4)>450606/805255$; the margin is about $1.6\cdot10^{-5}$.
+\end{proof}
+
+Applied at the outer centre $A$, with $r=r_A$, $t=1/\tau$, $\rho=q$, norms $u,w$ and pairing
+$E_L$, the lemma gives $q<1/7$ (\cref{lem:ss-first}(e)).
+
+\subsection{The common moves}\label{app:ss-moves}
+
+This subsection records the formulas behind the moves of \cref{sec:ss-machinery}.
+
+\runin{The scale coefficients.} With $\varepsilon=1-\alpha^{-2}$, $n=(1+x)/\alpha^2$,
+$g=D/\alpha^2$ and $E_0=(1+x)(u-1)+1/(1+x)$, the coefficients of \eqref{eq:ss-scale} are
+\begin{align*}
+  A_1&=2\varepsilon+n+gE_0,\\
+  A_2&=\varepsilon^2+\varepsilon n+n^2+g^2u+g\varepsilon E_0-g\bigl(2(1+x)-1\bigr)/\alpha^2,\\
+  A_3&=2gu+\varepsilon E_0-\bigl(2(1+x)-1\bigr)/\alpha^2.
+\end{align*}
+The two scales are related by $\rho/(1-\rho)=q/(\alpha^2(1-q))$, and $q=q_c$ exactly when
+$\rho=r^2$; also $q_c\le1/7$ if and only if $6\alpha^2\le x(x+2)$.
+
+\runin{The duration tests.} The identity \eqref{eq:ss-duration} is the logarithm bound
+$\log y\le(y-1/y)/2$ at $y=\tau/2$. For the three tests of gate S0, the logarithm
+$\log(\tau/\tau_{\max})$ is bounded by $\log y\le y-1$ and by the tangent
+$\log y\le\frac54y-\frac{11}{9}$ at $y=4/5$ (using $\log\frac54\ge\frac29$), and $1/\tau$ by its
+chord; an affine function of $\tau$ is then at most its larger endpoint value. This gives the
+values $\tau=2$, $8\tau_{\max}/9$ and $\tau_{\max}$, with the logarithm replaced by
+$\frac{5}{2\tau_{\max}}-\frac{11}9$, $-\frac19$ and $0$ respectively.
+
+\subsection{Gates S0 to S4}\label{app:ss-S0-S4}
+
+Apart from the face signs of \cref{app:ss-faces}, these gates use the following inequalities.
+
+\runin{Gate S0.} The positive diagonal is in the proof of \cref{prop:ss-S0}. For the positive
+pairing, the envelope bound for $E$ and the replacements $D\ge D_0$ and
+$u\le u_0=\frac34+\frac{(x-1)^2}{12(x+1)^2}$ give
+$E-2\rho Du\le\Lambda(\rho):=\bigl((1+x)-2\rho D_0\bigr)u_0-(1+x)+\frac1{1+x}+\rho(2x+1)$, affine
+in $\rho\in[0,(1+x)^{-2}]$, with
+\begin{align*}
+  \Lambda(0)&=-\frac{(x-1)(x+5)}{6(1+x)},\\
+  \Lambda\bigl((1+x)^{-2}\bigr)&=-\frac{x^5-13x^4+6x^3+32x^2+37x+9}{6(1+x)^4},
+\end{align*}
+both negative on $1<x\le12/5$. The shape bound $\alpha/\beta<3/4$ for $x\ge12/5$ compares two
+bounds for $u-3/4$: if $\alpha\ge3\beta/4$ then
+$u-\frac34\le\frac{(\beta-\alpha)^2}{4(\beta+\alpha)^2}\le\frac1{196}$, while
+\eqref{eq:ss-u-integral} and the tangent bound $1/y^2\ge1/c^2-2(y-c)/c^3$ give
+$u-\frac34\ge\frac{4(x-1)^3}{(4x-3)(5x+3)^2}$, which increases in $x$ and exceeds $1/196$ at
+$x=12/5$.
+
+\runin{Gate S1.} The combination $\Gamma-\frac{7}{96}R_\tau$ is monotone along the envelope path
+because the ratio of the derivatives of $\Gamma$ and $R_\tau$ along that path is at most $7/96$.
+Along $\tau=2$ the slope of $R^*_2$ in $q$ exceeds one: after completing the square in $\Delta q$
+with $\Delta=D/\alpha^2$, $q\,\dd R^*_2/\dd q$ is bounded below by a quadratic in
+$a=\alpha^{-2}\in(0,1]$ with nonpositive leading coefficient, and its values at $a=0$ and $a=1$
+exceed $1/7\ge q$ by explicit rational functions of $z=x-1$ whose numerators have positive
+coefficients.
+
+\runin{Gate S4.} At the central scale, $\rho(q_c)=(1+x)^{-2}$, and the functions $\Phi$ and $\Psi$
+of \cref{prop:ss-S4} have closed forms. On the small box they decrease in $u$ for
+$3/4\le u\le u'\le31/40$, and $\bar u(x,\beta)<31/40$ there.
+
+\subsection{Gate S5}\label{app:ss-S5}
+
+\runin{Monotonicity in the norm.} At fixed shape, scale and duration the residual
+$\mathcal R(u;p,q)$ is affine in $u$, with
+\[
+  \partial_u\mathcal R=(1+x)+\frac1{r_A}-pg(1+x)+q\bigl\{p\bigl(g^2+g\varepsilon(1+x)\bigr)-2g
+  -\varepsilon(1+x)\bigr\}.
+\]
+This is bilinear in $(p,q)$, so it is positive on $0<q\le1/7$, $0<p\le r_A$ as soon as it is
+positive at the four corners. At each corner it is a polynomial in $\alpha-1$, $x-\alpha$ and
+$\beta-x$ with nonnegative coefficients and a positive term.
+
+\runin{The ceiling.} On the small-shape domain, $u\le\bar V(x)\le u_5=\frac{755}{996}+
+\frac{x-2}{100}$, since with $t=x-2$
+\[
+  u_5-\bar V=\frac{t(8715t^2+4012t+1)}{24900(t+3)(35t+83)}\ge0 .
+\]
+
+\runin{Convexity of the scale quadratic.} With $a=\alpha^{-2}$, $\varepsilon=1-a$,
+$\bar H=(1+x)/4-1/(1+x)$, $\mathcal A=\varepsilon^2+\varepsilon(1+x)a+(1+x)^2a^2$ and
+$\bar K=\varepsilon\bar H+(2x+1)a$, the coefficient $A_2$ at $u=u_5$ is at least
+$\mathcal A-\bar K^2/3$ for every value of $g$, and
+\[
+  \bar K^2-3\mathcal A=\frac{S^4-56S^2+16+2(7S^2-4)z+z^2}{16S^2},
+\]
+with $S=1+x$ and $z=(S-2)^2a$. This is negative, because $z\le(7/6)^2<2$ and $S\ge3$. Hence
+$A_2>0$.
+
+\runin{The residual is negative below $q_b$.} At fixed $p$ the residual $\mathcal R(u_5;p,q)$ is
+affine in $q$, so on $\{0\le q\le\min(q_b,p/2)\}$ its maximum is on $q=0$, $q=q_b$ or $p=2q$. On
+$q=0$ the tangent bound $\log y\le y-1$ makes it affine in $p\in[0,r_A]$, with values below
+$-7/10$ and $-33/190$ at the two ends. On $q=q_b$ the minimum of the two tangent lines
+$\log y\le y-1$ and $\log y<\frac54y-\frac{1223}{1000}$ is convex in $p$ on each side of their
+crossing, so three values of $p$ suffice; on $p=2q$ the bound is a convex quadratic in $q$. These
+values are strictly convex in $\beta$, so it suffices to take the two extreme slopes
+$\beta=x(1+(\alpha-1)/3)$ and $\beta=x(1+5(\alpha-1)/13)$. The six resulting signs are
+polynomials in $t=x-2\in[0,1/6]$ and $c=\alpha-1\in[0,3/19]$ that decrease in $c$ and are
+positive at $c=3/19$ by a coefficient comparison~\cite{Notes}
+(\texttt{MIXED\_SMALLER\_SHORT\_SMALL\_SHAPE\_ROOT\_SHEAR}, (9)--(27)).
+
+\runin{The shear sign.} In \cref{prop:ss-S5},
+\begin{align*}
+  m&=(8x^2+8x-3)\alpha+(3x^2-8x-8)\beta,\qquad W=(\beta x-\alpha)\,m,\\
+  V&=\alpha^2W+3(x^2+x+1)(\alpha^2+\alpha\beta+\beta^2)(2\beta x-x-\alpha\beta)(x-1).
+\end{align*}
+On the small-shape domain $1\le\alpha\le22/19$, $2\le\beta\le130/57$ and $\beta x-\alpha\ge54/19$.
+The factorizations $8x^2+8x-48=8(x-2)(x+3)\ge0$ and $3x^2-8x+4=(x-2)(3x-2)\ge0$ give
+$m\ge45\alpha-12\beta\ge335/19$, so $W>0$; and $2\beta x-x-\alpha\beta-x(2x-\alpha-1)=
+(\beta-x)(2x-\alpha)\ge0$ gives $2\beta x-x-\alpha\beta\ge70/19$, so $V>0$. For the final
+inequality write $x=2+t$, $\beta=x(1+\delta)$ and $\alpha=1+(3-k)\delta$ with $t\in[0,1/6]$,
+$\delta\in[0,1/19]$, $k\in[0,2/5]$. Then $\Pi=29V-30W(x(x+2)+\alpha^2)$ is a polynomial of $98$
+monomials whose part free of $\delta$ is at least $1869+9378t$, and whose $28$ negative monomials
+all contain $\delta$. Bounding these, grouped by powers of $\delta$, by linear functions of $t$ on
+the box gives $\Pi>69+5578t>0$~\cite{Notes}
+(\texttt{MIXED\_SMALLER\_SHORT\_SMALL\_SHAPE\_ROOT\_SHEAR}, (32)--(34)).
+
+\subsection{Gate S6}\label{app:ss-S6}
+
+\runin{The tangent curve.} Fix $\nu\ge0$ and $K>\nu$, and put $\mathcal D=\sqrt{K^2-\nu^2}$ and
+$\tilde h(\delta)=(K\cos\delta-\mathcal D)/\sin\delta$ for $0<\delta<\pi$. Then
+$K\sin\delta+\tilde h\cos\delta=\sqrt{\tilde h^2+\nu^2}$, because
+$(K-\mathcal D\cos\delta)^2-(K\cos\delta-\mathcal D)^2=\nu^2\sin^2\delta$; moreover
+$\tilde h'(\delta)=(\mathcal D\cos\delta-K)/\sin^2\delta<0$, and $\tilde h$ inverts the function
+$\delta(h)$ of \cref{sec:ss-S6}. Along the curve,
+\[
+  \frac{\dd}{\dd\delta}\bigl(-J_0\tilde h(\delta)-c\delta\bigr)
+  =\frac{J_0\sqrt{\tilde h^2+\nu^2}-c\sin\delta}{\sin\delta}.
+\]
+On the small-shape domain this is negative while $-\tilde hR_x\ge\frac52\nu$ and
+$0<-\tilde h<7R_x^2/6$ (the barrier lemma of the notes): its numerator has the sign of a quadratic
+$Q_c(H^2)$ in $H=-\tilde h$, which decreases when the norm deficit $1-u/\mathcal U_1$ is lowered to
+its least value, increases with $\nu$ up to $\frac25HR_x$, and is then an upward quadratic in $H$
+whose value at $H=7R_x^2/6$ is a negative polynomial in $R_x$.
+
+\runin{The polynomial bound.} With $L(z)=\frac{z}{162}+\frac{161z^3}{1458}-\frac{161z^5}{7290}$,
+$b_i=1-u/\mathcal U_i$ and $c=161/54$,
+\[
+  \mathfrak B(u;R,T,\delta)=L(R)+L(T)-\frac{b_1R+b_2T}{2}-\frac{(b_1+b_2)Z_U}{8}
+   -\frac{c\,\nu^2}{8Z_L},
+\]
+where $Z_U=\frac{2R^2(1+R)}{3-R}+\frac{1+2R}{3(1-R)}\delta-\frac32\delta^2$ and
+$Z_L=\frac{2R^2(1+R)}{3-R}\bigl(1+\frac{11}{2}\delta\bigr)$ bound the central shear $-\sqrt3h_c$
+from above and below, and
+\[
+  u_q(R,\delta)=\frac34+\frac{3R^2+10R+10}{15(2+R)^3}\Bigl(R^2-\frac{R(1+R)\delta}{2}
+   +\frac{19(1+R)^2\delta^2}{84}\Bigr)
+\]
+is the quadratic floor of the bridge norm. The coefficients of $L$ come from the Taylor bound
+$\arctan y\le y-y^3/3+y^5/5$ ($y\ge0$), whose difference has derivative $y^6/(1+y^2)$, combined
+with $1-c/3=1/162$, $c/27=161/1458$ and $c/135=161/7290$. Since $\mathfrak B$ is affine in $u$
+with positive slope, $u$ may be lowered to $u_q$. Writing $\alpha=1+e\delta$, $\beta=x(1+\delta)$
+and $x=(1+R)/(1-R)$ gives
+\[
+  T_s=T(R,\delta,e)=\frac{2R+((e+1)R-(e-1))\delta}{2+(e+1-(e-1)R)\delta},
+\]
+and the second derivative of $\mathfrak B$ in $T_s$ is negative on $9/31\le T_s\le7/19$,
+$u\ge3/4$. \Cref{prop:ss-face-S6} bounds $\mathfrak B$ from below.
+
+\subsection{The face signs}\label{app:ss-faces}
+
+The face values are explicit functions of the shape $(x,\alpha,\beta)$, the norm $u$, the scale
+$q$ and the duration $\tau$, built from the scale form \eqref{eq:ss-scale}: $w_*$, $E_{L,*}$ and
+$R^*_\tau$ are evaluated at the given $u$ and $q$, $\Gamma_*$ is the Gram expression at
+$(t_0,\mathcal U(t_0))$, and $T=r_A/q$ is the upper end of the duration interval. Write
+$c_0(x)=\frac{x(7x+1)}{4x^2+11x+1}$ and call
+\[
+  x+\frac{8x(\alpha-1)}{9x+8}\le\beta\le x+c_0(x)(\alpha-1)
+\]
+the \emph{strip}; by \cref{lem:ss-orders} it contains the actual shapes for $1<x\le5$. In every
+case the proof runs in the same order: the norm is raised to its ceiling (the face value is
+monotone in $u$), the duration is removed by \eqref{eq:ss-duration} or by a tangent bound for the
+logarithm, then $\beta$, then the shape $\alpha$ or $1/\alpha$, then $x$, each by the sign of a
+first or second derivative, and the remaining polynomials in one variable are checked on their
+intervals. Numerically, the smallest margins are about $3\cdot10^{-3}$ for gate S0,
+$6\cdot10^{-6}$ for gate S1, $4\cdot10^{-4}$ for gate S2, $2\cdot10^{-4}$ for gate S3,
+$3\cdot10^{-6}$ for gate S4 and $3\cdot10^{-5}$ for gate S6.
+
+\begin{proposition}[Faces of gate S0]\label{prop:ss-face-S0}
+Let $F(\tau,\ell)=(w_*-1)\tau+\frac1\tau+\frac{u-1}{r_A}+r_A+1-q-E_{L,*}+\ell+\frac12(w_*-\frac34)$.
+\begin{enumerate}[label=(\alph*)]
+\item On $12/5\le x\le9$, $1\le\alpha\le(5x+4)/12$, $x\le\beta\le x+c_0(x)(\alpha-1)$, with $q=q_c$
+  and $u=\hat u$, the values $F(2,\frac5{2T}-\frac{11}9)$, $F(\frac{8T}9,-\frac19)$ and $F(T,0)$
+  are negative.
+\item On $12/5\le x\le9$, $(22x+20)/55\le\alpha\le x$,
+  $x+\frac{4x(\alpha-1)}{5x+4}\le\beta\le x+c_0(x)(\alpha-1)$, with $q=1/7$ and $u=\bar u$, the
+  same three values are negative.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+(a) Each test is convex in $\beta$: as a function of $\beta$ it is a quadratic with positive
+leading coefficient plus simple poles with positive residues. So it suffices to take $\beta=x$
+and an enlarged upper face $\beta=x+c_j(\alpha-1)$, with constant slopes $c_j\in\{7/8,1,5/4,3/2\}$
+on the four ranges $[12/5,5/2]$, $[5/2,3]$, $[3,5]$, $[5,9]$ of $x$; these slopes dominate $c_0$
+because $c_0$ increases, with $c_0'=(73x^2+14x+1)/(4x^2+11x+1)^2$. On $\beta=x$ the cleared
+numerators increase in $\alpha$, and at $\alpha=1$ they factor through three polynomials in
+$x-2$ that are positive for $x\ge12/5$. On each upper face the cleared numerator $N_j(x,\alpha)$
+has $\partial_x^2N_j>0$: its expansion in $X=x-z_j$, $A=\alpha-1$ has degree eight, and bounding
+each coefficient of $X^k$ below by discarding positive terms and evaluating negative ones at the
+largest $A$ leaves a polynomial in $X$ that is positive on the range. The values and first
+$x$-derivatives at the lower end of each range are polynomials of degree seven in $\alpha$,
+positive by a second-order Taylor bound around the midpoint of the $\alpha$-interval. Where the
+$\alpha$-range ends on a slanted edge $x=2\alpha-o_j$, a third derivative in $\alpha$ is positive,
+and the values on the edge follow.
+
+(b) Here $\bar u\le\bar V(x)\le u_b:=\frac{x+74}{100}$, by
+$96(4x^2+11x+1)^2-(7x+1)^2(x+1)(35x+13)=-179x^4+5606x^3+11040x^2+1882x+83>0$ on $[0,9]$ and
+$u_b-\bar V=(x-1)(35x^2-152x+213)/\bigl(100(x+1)(35x+13)\bigr)>0$. The shape is split at
+$\alpha=m(x)=(2x+3)/5$. For $m\le\alpha\le x$ use $u_b$; with $\beta=x+c(\alpha-1)$ and
+$3/5\le c\le3/2$, a cubic comparison in $\beta$ leaves twelve polynomials of degree eight whose
+signs follow from one sign change in the shape variable. For $(22x+20)/55\le\alpha\le m$ use the
+sharper ceiling $\bar u\le\hat u$, which follows from
+$75(4x^2+11x+1)^2-(7x+1)^2(x+1)(35x+13)=-515x^4+3758x^3+8331x^2+1420x+62>0$ on $[0,9]$ (its
+derivative divided by $x^2$ decreases, so its minimum is at an endpoint). Each test is then convex
+in $\beta$, and two shape derivatives on five fixed $\beta$-faces reduce every sign to a single
+rational evaluation~\cite{LighterProofs}.
+\end{proof}
+
+\begin{proposition}[Faces of gate S1]\label{prop:ss-face-S1}
+Let $\Phi_\tau=\Gamma_*(q)-\frac7{96}R^*_\tau(q)$.
+\begin{enumerate}[label=(\alph*)]
+\item On $1<x\le2$, $1\le\alpha$, $6\alpha^2\le x(x+2)$, $\beta$ in the strip and $\beta\le\alpha x$,
+  with $q=q_c$ and $3/4\le u\le u_\ell$: $\Phi_\tau>9193/50000$ for $2\le\tau\le T$.
+\item On $1<x\le2$, $1\le\alpha\le x$, $x(x+2)\le6\alpha^2$, $\beta$ in the strip and
+  $\beta\le\alpha x$, with $q=1/7$, $u_f\le u\le\bar V(x)$, and $u\le u_\ell$ when $x\ge3/2$ and
+  $\alpha\le6/5$: $\Phi_\tau>9193/50000$ for $2\le\tau\le T$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+By \eqref{eq:ss-duration} and the bound $\log y\le2z+\frac23z^3$ ($z=\frac{y-1}{y+1}$, $0<y\le1$)
+at $y=2/T$, it suffices to show $F_0>0$ and $F_1>0$, where
+$F_0=\Gamma_*-\frac7{96}\bar R_2-\frac{9193}{50000}$, $F_1=F_0-\frac7{96}(T-2)(w_*-\frac34)$ and
+$\bar R_2$ is $R^*_2$ with that bound for the logarithm.
+
+(a) The cap $6\alpha^2\le x(x+2)$ gives $x\ge\sqrt7-1>8/5$ and $\alpha\le2/\sqrt3<7/6$, and the strip
+lies in $x+\frac12(\alpha-1)\le\beta\le x+\frac{10}{13}(\alpha-1)$, by
+$13x(7x+1)-10(4x^2+11x+1)=(x-2)(51x+5)\le0$. On $u\in[3/4,19/25]$ one has
+$-\frac15<\partial_uF_0\le\partial_uF_1<0$, and along the ceiling $u=u_\ell(x,\beta)$ the total
+$\beta$-derivative of each $F_j$ is less than $-101/318720$; so $u$ may be raised to $u_\ell$ and
+$\beta$ to $\beta_+=x+\frac{10}{13}(\alpha-1)$. For $F_0$ the total $\alpha$-derivative is less
+than $-4553/2589600$ below the cap, so $\alpha$ may be raised to $\sqrt{x(x+2)/6}$, where the
+central and outer formulas coincide and the argument of (b) gives $F_0\ge167/144000000$. For
+$F_1$, raise $u$ to $19/25$; a third derivative shows that the cost part of $F_1$, which enters
+with a negative sign, has no interior maximum in $\alpha\in[1,7/6]$, so $F_1$ is least at
+$\alpha=1$ or $\alpha=7/6$, where it decreases in $x$ and exceeds $1/50000$ at $x=2$.
+
+(b) Three branches cover the domain. For $1<x\le3/2$ both tests exceed $499/884000$: monotonicity
+in $u$ and in $\beta$, then concavity in $1/\alpha$, reduce them to $\alpha=1$ and $\alpha=x$, where
+derivative signs in one variable conclude. For $3/2\le x\le2$ and $6/5\le\alpha\le x$, concavity in
+$1/\alpha$ reduces to $\alpha=6/5$ and $\alpha=x$, with margins $1/2000$, $3/500$ and $1/15000$.
+For $3/2\le x\le2$ and $1\le\alpha\le6/5$, $F_0\ge167/144000000$ after one split at $x=5/3$; for
+$F_1$, concavity in $\beta$ and in $u\in[3/4,19/25]$ reduce to the four constant pairs
+$(\frac{\beta-x}{\alpha-1},u)\in\{\frac12,\frac{10}{13}\}\times\{\frac34,\frac{19}{25}\}$, the
+second derivative in $1/\alpha$ is less than $-11/800$, and the two shape ends give
+$F_1\ge1597/144000000$~\cite{LighterProofs}.
+\end{proof}
+
+\begin{proposition}[Faces of gate S2]\label{prop:ss-face-S2}
+Let $G_\tau=R^*_\tau(q)+\bigl(2-\frac{7\tau}{4T}\bigr)\bigl(w_*-\frac34\bigr)$.
+\begin{enumerate}[label=(\alph*)]
+\item On $13/6\le x\le12/5$, $1\le\alpha$, $6\alpha^2\le x(x+2)$, $\beta$ in the strip, with
+  $q=q_c$ and $u=u_C$: $G_\tau<-1/6000$ for $2\le\tau\le T$.
+\item On $13/6\le x\le12/5$, $\alpha\le x$, $x(x+2)\le6\alpha^2$, $\beta$ in the strip, with
+  $q=1/7$, and $u=u_s$ if $\alpha\le3/2$, $u=\bar V(x)$ if $\alpha\ge3/2$: $G_\tau<0$ for
+  $2\le\tau\le T$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+(a) The domain lies in $1\le\alpha\le4/3$, $x+\frac58(\alpha-1)\le\beta\le\beta_+=
+x+\frac{24x+51}{128}(\alpha-1)$. The function $\log\tau+1/\tau$ is concave on $[2,\infty)$, its
+second derivative being $(2-\tau)/\tau^3$; its tangent at $t(\alpha)=\frac{20}3-4\alpha$
+($\alpha\le7/6$), $t=2$ ($\alpha\ge7/6$) makes the bound for $G_\tau$ affine in $\tau$, so
+$G_\tau\le\max\{F_0,F_1\}$ for two explicit tests. Both increase in $\beta$, so $\beta=\beta_+$;
+both have negative total $x$-derivative (below $-1/250$ and $-1/2000$), so $x=13/6$. There the
+norm is raised to an affine upper bound in $\alpha$, the logarithm is bounded by a quadratic, and
+four polynomials in one variable with nine terms each give $F_0,F_1<-1/6000$.
+
+(b) Here $G'_\tau\le(1-\frac{7}{4T})(w_*-\frac34)$, so $G_\tau\le\max\{H_0,H_1\}$, the values at
+$\tau=2$ and at the end of the affine bound. The domain gives $\alpha\ge\frac{36x+25}{84}>\frac65$,
+by $84^2x(x+2)-6(36x+25)^2=-720x^2+3312x-3750<0$, and $\beta=x+c(\alpha-1)$ with
+$\frac58\le c\le\frac{24x+51}{128}<\frac78$. For $\alpha\le3/2$, each $H_j$ is convex in
+$1/\alpha$ (second derivative greater than $2/5$). At $\alpha=\frac{36x+25}{84}$ it increases in
+$\beta$ and is negative at the largest slope, with margins $1/5000$ and $1/1000$ on $[13/6,9/4]$
+and $[9/4,12/5]$; at $\alpha=3/2$, $u_s\le\bar V$, $H_j$ increases in $u$, and its value at
+$\bar V$ is negative. For $\alpha\ge3/2$ the second derivative in $1/\alpha$ exceeds $1/2$, and the
+values at $\alpha=3/2$ and $\alpha=x$ are negative for every slope~\cite{LighterProofs}.
+\end{proof}
+
+\begin{proposition}[Faces of gate S3]\label{prop:ss-face-S3}
+Put $y=2q/r_A$, $k=5\alpha-1$, $J=\frac{u-1}{r_A}+r_A+1-q-E_{L,*}+\log y$,
+$F_0=J+\bigl(2+\frac{4(4-3y)}k\bigr)(w_*-\frac34)$ and $F_1=J+\bigl(\frac{r_A}q+\frac4k\bigr)
+(w_*-\frac34)$.
+\begin{enumerate}[label=(\alph*)]
+\item On $2\le x\le13/6$, $\frac{15x+511}{475}\le\alpha\le\frac{89}{72}$,
+  $\beta=x+\frac{25x}{15x+36}(\alpha-1)$, with $q=q_c$ and $u=u_{CB}$: $F_0,F_1<0$.
+\item On $2\le x\le13/6$, $\alpha\le x$, $x(x+2)\le6\alpha^2$, $\beta=x+C(\alpha-1)$ with
+  $\frac{8x}{9x+8}\le C\le\frac{115x}{304}$, with $q=1/7$ and $u=u_O$: $F_0,F_1<0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+(a) Along the curve both tests decrease in $\alpha$. Grouping three terms of the
+$\alpha$-derivative, and bounding the norm and the transported quantities by their ranges,
+reduces its sign to the single quadratic inequality
+\[
+  \frac{65452}{825}q^2-\frac{68203}{3750}q+\frac{29299}{30000}<0
+  \qquad(63/500\le q\le1/7),
+\]
+which holds because the quadratic is convex and negative at both ends~\cite{LighterProofs}. So
+both tests are at most their values at $\alpha=\frac{15x+511}{475}$, $\beta=\frac{20x}{19}$. There
+$\log y\le-\frac{40153}{180000}+\frac{2(5y-4)}{5y+4}$ for $0<y\le6/7$, and the tests become
+$-N_i(x-2)$ divided by a positive polynomial, where $N_0$ and $N_1$ have degrees $17$ and $15$ and
+all their coefficients are positive except the linear one~\cite{Notes}
+(\texttt{MIXED\_SMALLER\_SHORT\_DISPLACEMENT\_CENTRAL\_FACE}, (12)). For $N_1$ the quadratic part
+has negative discriminant. For $N_0$, write $c_j$ for its coefficients and $h=x-2\in[0,1/6]$: the
+quadratic part decreases on $[0,1/6]$, since its vertex $-c_1/(2c_2)$ exceeds $1/6$, and it is
+positive at $h=1/10$; on $[1/10,1/6]$ the cubic term $c_3h^3\ge c_3/1000$ exceeds the absolute
+value of the quadratic part at $h=1/6$. So $N_0,N_1>0$.
+
+(b) The multipliers satisfy $n_0,n_1\in[25/8,7/2]$ for $\alpha\le5/4$ and $n_0,n_1\in[5/2,7/2]$ for
+$\alpha\ge5/4$, by elementary quadratic bounds, and the domain gives
+$\alpha\ge\alpha_*=\frac{5(x+1)}{13}$, since $\frac{x(x+2)}6-\alpha_*^2=\frac{19x^2+38x-150}{1014}>0$.
+For a constant $n$ the function $R_n=J+n(w_*-\frac34)$ is affine in $n$ and has second derivative
+greater than $1/4$ in $1/\alpha$. Its values $R_{25/8},R_{7/2}$ at $\alpha_*$, $R_{5/2}$ at
+$\alpha=5/4$ and $R_n$ at $\alpha=x$ are negative for every slope $C$, by polynomial signs in one
+and two variables of degree at most eight~\cite{LighterProofs}. Convexity in $1/\alpha$ and
+affinity in $n$ conclude.
+\end{proof}
+
+\begin{proposition}[Face of gate S4]\label{prop:ss-face-S4}
+On $2\le x\le13/6$, $0\le\delta\le1/19$, $\alpha=1+e\delta$ with $13/5\le e\le3$,
+$\beta=x(1+\delta)$, and $u=\bar u(x,\beta)$, the functions $\Phi$ and $\Psi$ of
+\cref{prop:ss-S4} exceed $1829/10000$.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+Six derivative signs reduce $\Phi$ and $\Psi$ to three points~\cite{LighterProofs}:
+$-\Phi_\delta>27/5000$ on the whole box; $\Psi_e/(x\delta)>0$, extended continuously to
+$\delta=0$ (note $\Psi_e=\delta\Psi_\alpha$); $-\Psi_x>11/14000$ at $e=13/5$; $-\Phi_x>1/1750$ at
+$\delta=1/19$; $-\Phi_e>0$ at $x=13/6$, $\delta=1/19$; and $-\Psi_{\delta\delta}>81/1000$ at
+$x=13/6$, $e=13/5$. Hence $\Phi\ge\Phi(\frac{13}6,\frac1{19},3)$ and
+$\Psi\ge\min\{\Psi(\frac{13}6,0,\frac{13}5),\Psi(\frac{13}6,\frac1{19},\frac{13}5)\}$. Each of
+the three values is a rational number minus $\frac17\log y$, with $y$ equal to
+$\frac{103488}{134749}$, $\frac{12}{19}$ and $\frac{2524608}{3353029}$, and the bound
+$\log y<2(z+z^3/3+z^5/5)$, $z=\frac{y-1}{y+1}<0$, shows that they exceed $1829/10000$ by more than
+$2053/25000000$, $4017/20000000$ and $303/100000000$.
+\end{proof}
+
+\begin{proposition}[Face of gate S6]\label{prop:ss-face-S6}
+For $1/3\le R\le7/19$, $0\le\delta\le1/19$ and $13/5\le e\le3$,
+\[
+  \mathfrak B\bigl(u_q(R,\delta);R,T(R,\delta,e),\delta\bigr)>\frac{113}{50000}>b^* .
+\]
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+By concavity in $T_s$ it suffices to take $e\in\{13/5,3\}$. Put $v=4u_q-3$ and
+$k(a)=\frac a{162}+\frac{161a^3}{1458}-\frac{161a^5}{7290}-\frac{a^3}{2(3+a^2)}$,
+$g(a)=\frac a{2(3+a^2)}$, $p(a)=\frac{a^2}{3+a^2}$, $\bar q(a)=\frac1{3+a^2}$. Since
+$b_i=(a_i^2-v)/(3+a_i^2)$ for $a_1=R$ and $a_2=T_s$, the bound is exactly
+\[
+  \mathfrak B=K+vG-\frac{Z_UP}{8}+\frac{vZ_U\bar Q}{8}-\frac{c\,\nu^2}{8Z_L},
+\]
+with $K=k(R)+k(T_s)$ and similarly $G,P,\bar Q$. In $s=a^2$,
+\[
+  \frac{k''(a)}a=-\frac{322s^4+2415s^3+4347s^2-6534s+6642}{729(s+3)^3},
+\]
+which with $k'<0$ gives $k''<-2/25$ on $[9/31,7/19]$. The derivatives of $g,p,\bar q$, of $v$ (a
+quadratic in $\delta$ with explicit coefficients in $R$), of $T_s$ (fractional linear in $R$) and
+of $Z_U$ have simple explicit signs and bounds. Adding the bounds term by term gives
+$\mathfrak B_{RR}<-\frac{17}{100}+\frac{19}{100}-\frac1{10}+\frac3{50}+\frac1{100}=-\frac1{100}$
+on the whole box, so the minimum in $R$ is at $R=1/3$ or $R=7/19$. On these four curves
+$\mathfrak B$ decreases in $\delta$: an upper bound for the derivative, assembled from the same
+term bounds at the ends of $[0,1/19]$ (split at $1/38$ when $e=3$), is below $-1/1000$. So the
+minimum is at $\delta=1/19$, where the four values exceed $2260000\cdot10^{-9}=113/50000$, while
+$b^*<223/100000$~\cite{LighterProofs}.
+\end{proof}

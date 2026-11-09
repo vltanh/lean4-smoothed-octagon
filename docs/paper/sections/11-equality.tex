@@ -1,0 +1,207 @@
+\section{The equality case}\label{sec:equality}
+
+\Cref{prop:terminal-equality} identifies a period of cost $\Aoct$ with the octagon's trajectory,
+but only after three choices that the proof of the lower bound made along the way: the
+normalization of the disk to Reinhardt's normal position, the rebasing of its trajectory at a
+switch, and a relabeling of the vertices of the control simplex by a power of $R$. To classify the
+disks of density $\doct$ these choices must be undone, and the trajectory to which the terminal
+equality is applied must be the realization of the given disk; another minimizer of the same
+cost would say nothing about it. This section carries the identification back to the disk
+(\cref{sec:equality-rigidity}), proves the converse (\cref{sec:equality-converse}), identifies
+Hales's octagon $\KH$ with Reinhardt's $\Koct$ (\cref{sec:equality-construction}), and completes
+the proof of \cref{thm:main} (\cref{sec:equality-proofs}).
+
+\subsection{Rigidity}\label{sec:equality-rigidity}
+
+Let $s_0,\dots,s_5$ be the sixth roots of unity, so that $Rs_j=s_{j+1}$. The realization of a worst
+disk (\cref{thm:equivalence}) keeps the link between its frame and its boundary.
+
+\begin{lemma}[Realization with its contact link]\label{lem:eq-realization}
+Let $K$ be a worst disk. There are an invertible linear map $e$ of the plane, a balanced pair
+$\sigma$ of $eK$ in circle representation and a global minimizer $(T,u,g,X)$ of the control
+problem such that $eK$ is a worst disk, $\delta(K)=\cost(T,X)/\sqrt{12}$, and for every $j$ and
+every $t\in\R$
+\[
+ \sigma_j(t)=g(t)\,s_j,\qquad \sigma_j(t+T)=\sigma_{j+1}(t).
+\]
+\end{lemma}
+
+The first identity is the definition of the frame of the realization, which is defined on all
+of $\R$; the second is the cyclic shift of the contacts by one sixth of the period. Together they
+force the frame to be twisted on all of $\R$, beyond the period $[0,T]$ on which the control
+problem is posed.
+
+\begin{lemma}[The frame twist]\label{lem:eq-frame-twist}
+If $\sigma_j(t)=g(t)s_j$ and $\sigma_j(t+T)=\sigma_{j+1}(t)$ for all $j$ and $t$, then
+$g(t+T)=g(t)R$ for every $t\in\R$.
+\end{lemma}
+
+\begin{proof}
+$g(t+T)s_j=\sigma_j(t+T)=\sigma_{j+1}(t)=g(t)s_{j+1}=g(t)Rs_j$, and $s_0,s_1$ span the plane.
+\end{proof}
+
+The last ingredient recovers a disk from its boundary.
+
+\begin{lemma}\label{lem:eq-frontier}
+Two compact convex sets with nonempty interior, both symmetric about the origin, that have the
+same frontier are equal.
+\end{lemma}
+
+\begin{proof}
+Let $A,B$ be the two sets. The interior of $B$ is connected, contains the origin, and does not
+meet the common frontier; it is covered by the disjoint open sets $\inter A$ and
+$\R^2\setminus\overline A$, so it lies in $\inter A$, which contains the origin. By symmetry the
+interiors are equal, and a convex body is the closure of its interior.
+\end{proof}
+
+\begin{theorem}[Rigidity]\label{thm:rigidity}
+Every worst disk is the image of the octagon $\KH$ under an invertible linear map of the plane.
+Explicitly, with the notation of the proof, $K=e^{-1}g(s)R^{r}(\KH)$.
+\end{theorem}
+
+\begin{proof}
+Let $K$ be a worst disk, and take $e$, $\sigma$ and $(T,u,g,X)$ as in \cref{lem:eq-realization}.
+By \cref{lem:eq-frame-twist}, $g(t+T)=g(t)R$ on $\R$.
+
+\emph{The cost is $\Aoct$.} Since $K$ is a worst disk and $\delta(\KH)=\doct$
+(\cref{prop:octagon-trajectory}), $\delta(K)\le\doct$, and part~(b) of \cref{thm:main} gives
+$\delta(K)\ge\doct$. Hence $\cost(T,X)=\sqrt{12}\,\delta(K)=\Aoct$.
+
+\emph{The terminal equality.} By \cref{thm:finite-normal}, the minimizer rebased at some
+$s\in[0,T)$ is a normal vertex period $P$ with the same terminal time and cost, whose state stays
+in $\hstarstar$; its frame is $t\mapsto g(s)^{-1}g(s+t)$, because $g$ is already twisted. By
+\cref{thm:at-most-five}, $P$ has at most five pieces, and by \cref{prop:terminal-equality},
+$T=\tf$ and there is $r$ with $R^{-r}g(s)^{-1}g(s+t)R^{r}=g_{\mathrm{oct}}(t)$ for $t\in[0,T]$.
+With $M=g(s)R^r$ this reads
+\[
+ g(s+t)=M\,g_{\mathrm{oct}}(t)\,R^{-r}\qquad(0\le t<T).
+\]
+Both sides satisfy $F(t+T)=F(t)R$: the left side by the twist of $g$, the right side because
+$g_{\mathrm{oct}}(t+\tf)=g_{\mathrm{oct}}(t)R$ and $R$ commutes with $R^{-r}$. Two curves with the
+same twist that agree on $[0,T)$ agree everywhere, so the identity holds for all $t\in\R$.
+
+\emph{The arcs.} Applying it to $s_0$ and using $R^{-r}s_0=s_{-r}$,
+\[
+ \sigma_0(s+t)=M\,g_{\mathrm{oct}}(t)\,s_{-r}=M\,\sigma^{\mathrm{oct}}_{-r}(t)\qquad(t\in\R),
+\]
+where $\sigma^{\mathrm{oct}}_j(t)=g_{\mathrm{oct}}(t)s_j$ are the contact curves of the octagon.
+In a balanced pair each contact curve traces the whole frontier once per period, so the frontier
+of $eK$ is the range of $\sigma_0$, and the frontier of $\KH$ is the range of
+$\sigma^{\mathrm{oct}}_{-r}$. Hence $\partial(eK)=M(\partial\KH)=\partial(M\KH)$. Both $eK$ and
+$M\KH$ are convex disks symmetric about the origin, so $eK=M\KH$ by \cref{lem:eq-frontier}, and
+$K=e^{-1}M(\KH)$.
+\end{proof}
+
+The proof never compares $K$ with a minimizer other than its own realization. It runs the
+reduction of \crefrange{sec:reduction}{sec:terminal} a second time, on that realization, and uses
+the lower bound only to know that its cost is $\Aoct$.
+
+\subsection{The converse}\label{sec:equality-converse}
+
+The converse is the affine invariance of the greatest packing density.
+
+\begin{proposition}[Affine invariance]\label{prop:converse}
+Let $K$ be a convex disk symmetric about the origin, $A$ an invertible linear map of the plane and
+$b$ a vector. Then $\delta(AK)=\delta(K)$ and $\delta(K+b)=\delta(K)$. In particular
+$\delta(A\KH)=\doct$ for every invertible linear map $A$.
+\end{proposition}
+
+\begin{proof}
+A translate, and more generally a congruent copy, of $K$ has the same packings by congruent copies,
+so its greatest packing density is the same. By
+Fejes T\'oth's theorem (\cref{thm:fejes-toth}), $\delta(K)$ is the greatest density
+$\operatorname{area}(K)/\det\Lambda$ of a lattice packing $K+\Lambda$. If $\det A>0$, the
+lattice packings of $K$ and of $AK$ correspond through $\Lambda\mapsto A\Lambda$, and area and
+covolume are both multiplied by $\det A$, so the lattice densities agree. If $\det A<0$, write
+$A=(AF)F$ with the reflection $F(x_0,x_1)=(x_0,-x_1)$: then $FK$ is a congruent copy of $K$, and
+$AF$ preserves orientation. The last statement follows from $\delta(\KH)=\doct$
+(\cref{prop:octagon-trajectory}).
+\end{proof}
+
+\subsection{Reinhardt's construction}\label{sec:equality-construction}
+
+\Cref{thm:main} is stated for Reinhardt's octagon $\Koct$ (\cref{def:smoothed-octagon}), while
+the proof works with $\KH$, the region swept from the origin by the contact curve
+$\sigma^{\mathrm{oct}}_0$ of the octagon's trajectory over one period $[0,6\tf]$. By
+\cref{prop:octagon-trajectory}, $\KH$ is also the convex hull of the six arcs
+$\sigma^{\mathrm{oct}}_j([0,\tf])$. The two octagons differ by a vertical stretch of about $5.5\%$
+(\cref{fig:octagon}).
+
+\begin{proposition}[Reinhardt's octagon is Hales's octagon]\label{prop:reinhardt-construction}
+Let $A=\operatorname{diag}\bigl(1,(2\sqrt2-1)/\sqrt3\bigr)$. Then $A(\KH)=\Koct$.
+\end{proposition}
+
+\begin{proof}
+Write $y_0^2=(2\sqrt2-1)/3$ and $W=\exp(\sqrt3\,y_0 s)$ for $s\in[0,\tsw]$, so that $W$ runs over
+$[1,\sqrt2]$; recall that $\sigma^{\mathrm{oct}}_0(0)=s_0=(1,0)$.
+
+\emph{One eighth of the boundary.} On the first switching interval the octagon's frame
+$g_0(s)$ is the flow of the control $\ee_2$ from $\Phi(0,y_0)$; conjugated by $A$ it acts by
+\[
+ Ag_0(s)A^{-1}=\begin{pmatrix}1&-\frac{W-1}{2\sqrt2-1}\\[0.5ex]
+ 1-W^{-1}&1-\frac{W-2+W^{-1}}{2\sqrt2-1}\end{pmatrix},
+\]
+and $A\,g_0(\tsw)R^{-1}A^{-1}$ is the rotation by $-\pi/4$; both are direct computations from
+the closed form of the flow of $\ee_2$. Since $g_{\mathrm{oct}}(t+\tsw)=g_0(\tsw)R^{-1}\,g_{\mathrm{oct}}(t)\,R$,
+the curve $A\sigma^{\mathrm{oct}}_0$ is, on the first three switching intervals,
+\begin{align*}
+ &(1,\ 1-W^{-1}) &&\text{along side $0$},\\
+ &\Bigl(\sqrt2+1-\tfrac{\sqrt2}{2}(W+W^{-1}),\ 1-\tfrac{\sqrt2}{2W}\Bigr)
+  &&\text{around corner $0$},\\
+ &\Bigl(\sqrt2-\tfrac W2,\ \tfrac W2\Bigr) &&\text{along side $1$}.
+\end{align*}
+The first piece runs from the midpoint $(1,0)$ of side~$0$ to the point $(1,1-\sqrt2/2)$, and the
+third from $(\sqrt2-\tfrac12,\tfrac12)$ to the midpoint $(\sqrt2/2,\sqrt2/2)$ of side~$1$.
+With $d_k$ the distance to the $k$th side line, the middle piece has $d_7=W/2$ and
+$d_2=\sqrt2/(2W)$, so it lies on the hyperbola $d_7d_2=\sqrt2/4$; it starts at
+$(1,1-\sqrt2/2)$ and ends at $(\sqrt2-\tfrac12,\tfrac12)$, the points where the first and the
+third pieces end and start. The control on these three intervals is $\ee_2$, $\ee_0$, $\ee_1$,
+and only the second bends the curve.
+
+\emph{The rest.} Three switching intervals later the frame relation gives
+$\sigma^{\mathrm{oct}}_0(t+3\tsw)=-h^3\sigma^{\mathrm{oct}}_0(t)$ with $h=g_0(\tsw)R^{-1}$, and
+$-Ah^3A^{-1}$ is the rotation by $\pi/4$. Over the period
+$6\tf=24\tsw$ the curve $A\sigma^{\mathrm{oct}}_0$ therefore traces eight rotated copies of the
+three pieces, once around.
+
+\emph{The two inclusions.} Every point $q$ of the three pieces lies in $\Koct$, and $\mu q$ does
+not for $\mu>1$: on the sides this is the inequality $d_k\ge0$, and on the corner it is the
+hyperbola condition, which strictly fails past the arc. Since $\Koct$ is invariant under the
+rotation by $\pi/4$, the same holds for every point $A\sigma^{\mathrm{oct}}_0(t)$. The set $\Koct$ is star-shaped about $0$, so $A\KH\subseteq\Koct$.
+Conversely, a point $p\ne0$ of $\Koct$ is a positive multiple $\lambda q$ of some
+$q=A\sigma^{\mathrm{oct}}_0(t)$, by the intermediate value theorem and
+$\sigma^{\mathrm{oct}}_0(t+3\tf)=-\sigma^{\mathrm{oct}}_0(t)$, and $\lambda\le1$ because
+$\mu q\notin\Koct$ for $\mu>1$. Hence $p\in A\KH$.
+\end{proof}
+
+Each side of $\Koct$ keeps a straight middle part of length $2-\sqrt2$, between the points of
+tangency $(1,\pm(1-\sqrt2/2))$ on side~$0$. The proposition transfers the facts known for $\KH$ to
+$\Koct$; in particular, the affine images of the two octagons are the same sets.
+
+\subsection{Proofs of parts (a) and (c) of \texorpdfstring{\cref{thm:main}}{the main theorem}}\label{sec:equality-proofs}
+
+\begin{proof}[Proof of \cref{thm:main}\textup{(a)}]
+By \cref{prop:reinhardt-construction}, $\Koct=A\KH$. The octagon $\KH$ is a compact convex set
+with nonempty interior, symmetric about the origin, and $\delta(\KH)=\doct$
+(\cref{prop:octagon-trajectory}); these properties pass to its linear image, the density by
+\cref{prop:converse}.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:main}\textup{(c)}]
+Let $K$ be a convex disk with centre $c$. Suppose first that $\delta(K)=\doct$. The translate
+$K-c$ is symmetric about the origin with $\delta(K-c)=\doct$, which by part~(b) is the least
+value; so $K-c$ is a worst disk. By
+\cref{thm:rigidity}, $K-c=L\KH$ for an invertible linear map $L$, and $K$ is the image of $\KH$
+under the affine map $x\mapsto Lx+c$. Conversely, an affine image $A'\KH$, with linear part $L$,
+is the translate $L\KH+A'(0)$, which has density $\doct$ by \cref{prop:converse}. This proves the
+equivalence with $\KH$ in place of $\Koct$, and the affine images of $\KH$ are those of $\Koct$
+by \cref{prop:reinhardt-construction}.
+\end{proof}
+
+In Hales's form, the equality disks are the affine images of the convex hull of the six arcs
+$g(t)s_j$, $t\in[0,\tf]$, of the trajectory $(g,X)$ of the octagon's control from $g(0)=I$ and
+$X(0)=\Phi(0,y_0)$ (\cref{prop:octagon-trajectory}); this hull is a centrally symmetric convex
+disk of area $\Aoct=\sqrt{12}\,\doct$ and greatest packing density $\doct$. The equality data are
+explicit: four
+forward pieces with the word $\ee_2\ee_0\ee_1\ee_2$, every factor equal to $\sqrt2$, every
+duration equal to $\log2/(2\sqrt{2\sqrt2-1})$, and initial state $\Phi(0,y_0)$.

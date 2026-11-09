@@ -1,0 +1,106 @@
+\pdfoutput=1
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[final]{microtype}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{aliascnt}
+\usepackage{xcolor}
+\usepackage[hyphens]{url}
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black,pdftitle={A proof of the Reinhardt conjecture},pdfauthor={The-Anh Vu-Le}]{hyperref}
+\usepackage[capitalize,noabbrev]{cleveref}
+
+\input{macros}
+
+% ---------------------------------------------------------------- theorem environments
+% All environments share one counter (numbered within sections); the alias counters let cleveref
+% recover the type of each label.
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newcommand{\shared}[3]{%
+  \newaliascnt{#1}{theorem}\newtheorem{#1}[#1]{#2}\aliascntresetthe{#1}\crefname{#1}{#2}{#3}}
+\shared{proposition}{Proposition}{Propositions}
+\shared{lemma}{Lemma}{Lemmas}
+\shared{corollary}{Corollary}{Corollaries}
+\theoremstyle{definition}
+\shared{definition}{Definition}{Definitions}
+\theoremstyle{remark}
+\shared{remark}{Remark}{Remarks}
+
+\emergencystretch=1.5em
+\setlist[enumerate]{leftmargin=*,itemsep=2pt,topsep=3pt}
+\setlist[itemize]{leftmargin=*,itemsep=2pt,topsep=3pt}
+\numberwithin{equation}{section}
+
+% ---------------------------------------------------------------- title
+\title{A proof of the Reinhardt conjecture}
+
+\author{The-Anh Vu-Le}
+% Affiliation and e-mail are the author's to fill in before submission:
+\address{Siebel School of Computing and Data Science, University of Illinois
+Urbana-Champaign, Urbana, IL 61801, USA} \email{vltanh@illinois.edu}
+
+\date{November 2026}
+\subjclass[2020]{Primary 52C15, 52A40; Secondary 49K15, 52A10, 68V20}
+\keywords{Reinhardt conjecture, smoothed octagon, packing density, centrally symmetric convex
+disks, lattice packings, optimal control, Pontryagin maximum principle, bang-bang control}
+
+\begin{document}
+
+\begin{abstract}
+  In 1934 Reinhardt conjectured that, among the centrally symmetric convex disks in the plane,
+  the one that packs worst is the smoothed octagon: a regular octagon whose corners are cut off
+  by arcs of hyperbolas, each asymptotic to the two neighbouring side lines. Its greatest packing
+  density is $\doct=(8-4\sqrt2-\log2)/(2\sqrt2-1)=0.902414\ldots$. We prove the conjecture: every
+  centrally symmetric convex disk has greatest packing density at least $\doct$, with equality
+  exactly for the images of the smoothed octagon under invertible affine maps. The proof uses
+  Hales's formulation of the problem as an optimal control problem on $\SLtwo$, and Hales and
+  Vajjha's results on its minimizers. The worst disks correspond to the global minimizers of the
+  control problem. A minimizer lifts to a normal Pontryagin extremal whose control is bang-bang
+  with finitely many switches. Its switching pattern has one of five sign types when it has at
+  least six pieces, and each type is excluded by an estimate on the whole period. The patterns
+  with at most five pieces are compared directly, and the cheapest is the octagon's. The proof is
+  formalized in Lean~4 with Mathlib and checked by Lean's kernel.
+\end{abstract}
+
+\maketitle
+
+\input{sections/01-introduction}
+\input{sections/02-setting}
+\input{sections/03-reduction}
+\input{sections/04-periods}
+\input{sections/05-reverse}
+\input{sections/06-short-runs}
+\input{sections/07-forward}
+\input{sections/08-mixed}
+\input{sections/09-smaller-short}
+\input{sections/10-terminal}
+\input{sections/11-equality}
+
+\appendix
+\crefalias{section}{appendix}
+\crefalias{subsection}{appendix}
+\crefname{appendix}{Appendix}{Appendices}
+\Crefname{appendix}{Appendix}{Appendices}
+\input{sections/a1-reverse-estimates}
+\input{sections/a2-short-run-estimates}
+\input{sections/a3-forward-estimates}
+\input{sections/a4-nonshort-estimates}
+\input{sections/a5-short-estimates}
+\input{sections/a6-terminal-estimates}
+\input{sections/a7-formal}
+
+\input{sections/acknowledgments}
+
+\bibliographystyle{amsplain}
+\bibliography{refs}
+
+\end{document}
