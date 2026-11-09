@@ -122,9 +122,9 @@ noncomputable def ff_r (U z w h : ℝ) : ℝ :=
 noncomputable def ff_L (z h : ℝ) : ℝ :=
   (z - 1) * ((z - 1) + 2 * z * (h - 1)) / (4 * (1 + z) ^ 2) + z * h / (1 + z) * (ff_f h / (h - 1))
 
-/-- The sum residual `𝓔_Σ = r - n/35 - (m - n) L(w, I)`, `I = T²/W`. -/
+/-- The sum residual `𝓔_Σ = r - n/32 - (m - n) L(w, I)`, `I = T²/W`. -/
 noncomputable def ff_resS (U z w h : ℝ) : ℝ :=
-  ff_r U z w h - ff_n U z h / 35 -
+  ff_r U z w h - ff_n U z h / 32 -
     (ff_m U z w h - ff_n U z h) * ff_L w ((1 + w) ^ 2 / (w ^ 2 + U))
 
 /-- The larger-norm residual `𝓔_v = r - n L(z, h) - m/64`. -/
@@ -142,8 +142,7 @@ noncomputable def ff_resN (U z w h : ℝ) : ℝ :=
 with `N ≥ 7`: the five consecutive active margins `(p, b, a, c, d)`, the normal multiplier's
 coordinates `(u, v, E)` in the central prefix frame (`u = 8 d_{-1}`, `v = 8 d_0`, `E = 16 e_0`), the
 three stationarity rows, the two exterior floors, the seven-entry cost bound (with `n = N - 7`
-further copies of `G(a, a)`) and the Casimir cap `γ² ≤ 23/125` (`wire_gam2_cap` gives the sharper
-`γ² < 9193/50000`; the weaker cap suffices). -/
+further copies of `G(a, a)`) and the Casimir cap `γ² ≤ 9193/50000` from the spectral cost comparison. -/
 structure ff_Win where
   a : ℝ
   p : ℝ
@@ -174,7 +173,7 @@ structure ff_Win where
   floorR : ff_F (c / (a + c)) (ff_fac a c d) ≤ v
   cost : ∃ n : ℕ, √3 / 4 * (ff_G a p + ff_G p b + ff_G b a + ff_G a c + ff_G c d + ff_G d a +
     (n + 1) * ff_G a a) ≤ octagonCost
-  cap : (a ^ 2 + 4) ^ 2 * (4 * u * v - E ^ 2) / 256 ≤ 23 / 125
+  cap : (a ^ 2 + 4) ^ 2 * (4 * u * v - E ^ 2) / 256 ≤ 9193 / 50000
 
 /-- **The dimensionless window data**: `U = 4/a²`, `z = b/a`, `w = c/a`, `P = p/a`,
 `D = d/a`, with `h = ff_hd U z P`, `k = ff_hd U w D`, `q = ff_q U z w`. -/
@@ -210,7 +209,7 @@ structure ff_Dim where
   floorR : ff_F (w / (1 + w)) (ff_hd U w D) ≤ v
   cost : ∃ n : ℕ, √3 / 4 * (ff_G a (a * P) + ff_G (a * P) (a * z) + ff_G (a * z) a +
     ff_G a (a * w) + ff_G (a * w) (a * D) + ff_G (a * D) a + (n + 1) * ff_G a a) ≤ octagonCost
-  cap : ff_cas U u v E ≤ 23 / 125
+  cap : ff_cas U u v E ≤ 9193 / 50000
 
 namespace ff_Dim
 

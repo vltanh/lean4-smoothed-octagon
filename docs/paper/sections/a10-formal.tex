@@ -35,7 +35,7 @@ registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level hi
 verifier checked it with the independent kernels nanoda and con-ron at commit
 \texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
 its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 117{,}000 lines in 378 modules, and a
+pinned at version \texttt{v4.36.0-rc2}. The library has about 120{,}000 lines in 387 modules, and a
 full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
@@ -50,8 +50,8 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 
 \subsection{Scalar proof replacement status}\label{app:formal-scalar}
 
-Groups 1--24 are the current scope: 18 are complete and committed,
-three are in progress, and three are pending. Groups 25--38 are deferred.
+Groups 1--24 are the current scope: 20 are complete and committed,
+three are in progress, and one is pending. Groups 25--38 are deferred.
 Group numbers stay fixed as their status changes.
 
 \begin{center}
@@ -59,52 +59,37 @@ Group numbers stay fixed as their status changes.
 \toprule
 Status & Count & Group numbers\\
 \midrule
-Complete & 18 & 1--5, 7--8, 11, 13--22\\
-In progress & 3 & 6, 9--10\\
-Pending & 3 & 12, 23--24\\
+Complete & 20 & 1--8, 10--11, 13--22\\
+In progress & 3 & 9, 12, 23\\
+Pending & 1 & 24\\
 Deferred & 14 & 25--38\\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \medskip\noindent\textbf{In progress (3).}
-The auxiliary lemmas described here compile; integration into the full
-exclusion proofs remains.
 
 \begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
-\item[6.] \emph{Forward sum tangent endpoints.}
-The paired reciprocal integrals, logarithm identity, fixed tangent and original
-row comparison are proved. The full lower endpoint is negative.
-Remaining: prove the upper endpoint signs and update the callers with group~10
-to use the paper's norm-sum threshold $1/32$; Lean currently uses $1/35$.
-
 \item[9.] \emph{Forward asymmetric neighbour.}
-The normalized original row is convex in the neighbour shape, and its
-unit-shape boundary is negative. Remaining: prove convexity in the scale
-parameter on the symmetric boundary, close its endpoint and logarithmic-chord
-comparisons, and update the physical callers.
-
-\item[10.] \emph{Forward Casimir and central pairing.}
-The norm polygon, shape equalization, scalar-curve signs and central-pairing
-positivity from the integral of $f'$ are proved. Remaining: verify and integrate
-the combined proof, and update the callers with groups~2 and~6 to use the
-paper's conditional lower bound $9193/50000$; Lean currently uses $23/125$.
-\end{enumerate}
-
-\medskip\noindent\textbf{Pending (3).}
-
-\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
+The normalized row is convex in the neighbour shape, its unit-shape boundary
+is negative, and subtracting $\log K$ gives a convex function of the scale.
+The logarithmic chord bound is proved. Remaining: prove the two scale
+endpoint comparisons and update the physical callers.
 
 \item[12.] \emph{Mixed transported ceiling for $t<2/5$.}
-Reduce scale and increase the middle margin to reach one boundary.
-Prove the switching-floor comparison using variance, Jensen's inequality
-and convexity of the resulting quadratic minimum.
+Formalize the scale reduction and transport to the middle-margin boundary,
+then the switching-floor comparison through variance, Jensen's inequality
+and the quadratic minimum.
 
 \item[23.] \emph{S6 norm floor and central-shear envelopes.}
-Prove the reciprocal-integral mean-and-variance bound and the exact central
-shear's curvature and initial-slope bounds. Update the norm-floor callers
-together with group~24.
+The reciprocal-integral mean-and-variance norm floor is proved, including
+zero displacement. Remaining: prove the exact central shear's curvature
+and initial-slope bounds, then update the norm-floor callers with group~24.
+\end{enumerate}
 
+\medskip\noindent\textbf{Pending (1).}
+
+\begin{enumerate}[label=\arabic*.,leftmargin=2em,itemsep=5pt]
 \item[24.] \emph{S6 final score comparison.}
 Use the exact fixed-row angles to prove decrease in displacement, then prove
 concavity in the remaining shape ratio at maximal displacement. Reduce to four
@@ -113,7 +98,7 @@ from group~2.
 Update the final score callers together with group~23.
 \end{enumerate}
 
-\newpage\noindent\textbf{Complete and committed (18).}
+\newpage\noindent\textbf{Complete and committed (20).}
 These groups are integrated into the paper and Lean. Each has passed the full
 Lean build, standard-axiom audit, paper check and independent source review.
 
@@ -142,11 +127,21 @@ An integral kernel proves strict concavity of $h(\sqrt x)$ and the circle
 bound, with equality only at equal coordinates. The reciprocal midpoint
 bound for $\log2$ proves the strict density gap on the full five-piece domain.
 
+\item[6.] \emph{Forward sum tangent endpoints.}
+Paired reciprocal integrals and a fixed tangent reduce the sum residual to
+two factor endpoints. Curvature and tangent comparisons prove their signs
+and give $\delta u+\delta v<1/32$ in the physical window.
+
 \item[7.] \emph{Forward symmetric neighbour value.}
 The endpoint value follows from the analytic boundary comparison.
 
 \item[8.] \emph{Forward symmetric neighbour slope.}
 The partial-slope estimate, tangent endpoint and global comparison hold for $h\ge h_0$.
+
+\item[10.] \emph{Forward Casimir and central pairing.}
+Quadratic chords reduce the norm polygon to four vertices. Shape equalization,
+the positive integral correction and reciprocal curvature give the conditional
+lower bound $\gamma^2>9193/50000$ from the paper's norm bounds.
 
 \item[11.] \emph{Mixed norm ceilings and duration.}
 A weighted reciprocal mean gives both incoming and central bridge-norm
@@ -344,9 +339,9 @@ Result & Lean declarations\\
 \cref{lem:fwd-neighbour-symmetric} & \lean{fs_neighborSlope_neg}, \lean{fs_NS_Dval}, \lean{fs_resN_sym_of_floor} \\
 \cref{lem:fwd-neighbour-asymmetric} & New analytic lemma in the text; not separately formalized \\
 \cref{lem:fwd-individual} & \lean{fs_normValue_neg}, \lean{fs_normTangent_neg}, \lean{fs_resV_neg}, \lean{fs_factor_curvature_nonneg} \\
-\cref{lem:fwd-sum} & Constant term: \lean{fs_SA0_bound}, \lean{fs_SA0_neg}; tangent endpoint arguments not separately formalized \\
+\cref{lem:fwd-sum} & \lean{fwdSumPairedLog_le}, \lean{fwdSumResidual32_original_neg}, \lean{fs_resS_neg} \\
 \cref{lem:fwd-norms} & \lean{ff_Dim.norms}, \lean{ff_Dim.norms_nonneg}, \lean{ff_resS_neg}, \lean{ff_resV_neg} \\
-\cref{lem:fwd-casimir} & New analytic bound in the text; compare \lean{ff_casimir_lower} \\
+\cref{lem:fwd-casimir} & \lean{fcNormQ_polygon}, \lean{fc_branch_curve_gt}, \lean{fc_sum_curve_gt}, \lean{ff_casimir_lower} \\
 \addlinespace
 \multicolumn{2}{@{}l}{\emph{\Cref{sec:mixed}}}\\[2pt]
 \cref{thm:class-M2} & \lean{nonshort_exclusion} \\

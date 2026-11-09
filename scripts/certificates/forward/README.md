@@ -16,9 +16,10 @@ convexity arguments and two corner comparisons for the value. The other tangent
 endpoint increases to the geometric boundary; its derivative is concave, with an
 upper edge controlled by concave reciprocal functions.
 
-The constant coefficient of the sum residual in `Scalars/SumSym/Constant.lean`
-uses shape derivatives and the reciprocal logarithm remainder. The sum generators
-retain the two tangent endpoint certificates.
+The sum residual in `Scalars/SumSym/` uses paired reciprocal means, a fixed tangent,
+and curvature at both factor endpoints. The conditional Casimir comparison in
+`Casimir/` uses the norm polygon, shape equalization, reciprocal kernels and a
+midpoint quadratic bound.
 
 The symmetric neighbour value and partial slope in `Scalars/Neighbor/` use
 rational logarithm majorants, positive reciprocal moments, and convexity on the

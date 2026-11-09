@@ -25,12 +25,12 @@ No window `ff_Dim` of an all-forward competitive normal period with `N ≥ 7` ex
    `ff_budget_g` (`Forward/Budget.lean`).
 5. `ff_Dim.neighbor`: `w < 4/3` when `z ≤ w`, from the left row, the floors and the neighbour sign
    `ff_resN_neg` (`Forward/Scalars/Neighbor.lean`).
-6. `ff_Dim.norms`: `δu + δv < 1/35` and `δv < 1/64` when `z ≤ w`, from the centered row
+6. `ff_Dim.norms`: `δu + δv < 1/32` and `δv < 1/64` when `z ≤ w`, from the centered row
    (`ff_r_eq`), the floors (`ff_F_eq_L`, `ff_F_mono`), `m > n` (`ff_m_sub_n_pos`), the reductions
    `ff_resS_le_sym`, `ff_resV_le_sym` (`Forward/Reduce.lean`) and the symmetric signs
    `ff_resS_neg`, `ff_resV_neg` (`Forward/Scalars/SumSym.lean`, `LargerNorm.lean`).
-7. `ff_casimir_lower` (`Forward/Casimir.lean`): the two norm bounds give `γ² > 23/125`,
-   contradicting the cap `γ² ≤ 23/125`.
+7. `ff_casimir_lower` (`Forward/Casimir.lean`): the two norm bounds give `γ² > 9193/50000`,
+   contradicting the cap `γ² ≤ 9193/50000`.
 
 `ff_Win.toDim` converts the physical window to its dimensionless form.
 -/
@@ -49,28 +49,6 @@ theorem ff_F_eq_L {z h : ℝ} (hz : 0 < z) (hh : h ≠ 1) (hh0 : 0 < h) :
   have hh1 : h - 1 ≠ 0 := sub_ne_zero.2 hh
   have hS : 1 + z ≠ 0 := by positivity
   unfold ff_F ff_L ff_f
-  field_simp
-  ring
-
-/-- The centered left row: `αA - B = (3/4)(n + m) + r`. -/
-theorem ff_r_eq {U z w h : ℝ} (hU : 0 < U) (hz : 0 < z) (hw : 0 < w) (hh : 0 < h) :
-    ff_alpha U z h * ff_A U z w - ff_B U z h =
-      3 / 4 * (ff_n U z h + ff_m U z w h) + ff_r U z w h := by
-  have hS : 0 < 1 + z := by linarith
-  have hT : 0 < 1 + w := by linarith
-  have hK : 0 < 1 + U := by linarith
-  have hZ : 0 < z ^ 2 + U := by positivity
-  have h4 : Real.log 4 = 2 * Real.log 2 := by
-    rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]; push_cast; ring
-  unfold ff_alpha ff_A ff_B ff_n ff_m ff_r ff_Phi ff_f ff_q
-  rw [Real.log_div (by positivity) hK.ne', Real.log_mul hS.ne' hT.ne',
-    Real.log_div hS.ne' two_ne_zero, Real.log_div hT.ne' two_ne_zero,
-    Real.log_div four_ne_zero hK.ne', h4]
-  generalize Real.log (1 + z) = l1
-  generalize Real.log (1 + w) = l2
-  generalize Real.log (1 + U) = l3
-  generalize Real.log 2 = l4
-  generalize Real.log h = l5
   field_simp
   ring
 
@@ -182,8 +160,8 @@ theorem ff_resV_le_sym {U z w h : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U < 3) (hz : 1
 
 /-- **The symmetric sum sign**: `𝓔_Σ < 0` on the symmetric domain `1 ≤ z ≤ 4/3`, `1 + 6z/5 ≤ U < 3`,
 `S²/Z ≤ h ≤ S(5U - 2 - 3z)/(3Z)`. Proof (`fs_resS_neg`): the Padé envelope `Ψ(τ)`, `τ = H/h`, is
-concave (`A₀ ≤ 0`); its tangent at the cost endpoint gives two values signed by logarithm bounds and
-Bernstein expansions. -/
+concave (`A₀ ≤ 0`); the fixed tangent at `τ = 1/5` and reciprocal integral bounds give an
+upper function whose two factor endpoints are negative by curvature and tangent comparisons. -/
 theorem ff_resS_neg {U z h : ℝ} (hz : 1 ≤ z) (hz' : z ≤ 4 / 3) (hU : 1 + 6 * z / 5 ≤ U) (hU3 : U < 3)
     (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h)
     (hhu : h ≤ (1 + z) * (5 * U - 2 - 3 * z) / (3 * (z ^ 2 + U))) : ff_resS U z z h < 0 :=
@@ -422,10 +400,10 @@ theorem neighbor (hzw : W.z ≤ W.w) : W.w < 4 / 3 := by
   have := ff_resN_neg hU1.le hU3 W.one_le_z hzw hcon hzw' W.one_lt_h W.h_ge W.h_le (W.h_le_c hbud)
   linarith
 
-/-- **The two norm bounds**: with `z ≤ w`, `δu + δv < 1/35` and `δv < 1/64`. Otherwise the centered
+/-- **The two norm bounds**: with `z ≤ w`, `δu + δv < 1/32` and `δv < 1/64`. Otherwise the centered
 row and the floors make the sum or the larger-norm residual nonnegative, against `ff_resS_neg` and
 `ff_resV_neg` after the reductions to equal neighbours. -/
-theorem norms (hzw : W.z ≤ W.w) : (W.u - 3 / 4) + (W.v - 3 / 4) < 1 / 35 ∧ W.v - 3 / 4 < 1 / 64 := by
+theorem norms (hzw : W.z ≤ W.w) : (W.u - 3 / 4) + (W.v - 3 / 4) < 1 / 32 ∧ W.v - 3 / 4 < 1 / 64 := by
   have hU3 := W.U_lt_three
   have hU1 := W.eleven_fifths_lt
   have hbud := W.budget

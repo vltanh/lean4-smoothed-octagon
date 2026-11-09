@@ -27,6 +27,29 @@ namespace SmoothedOctagon
 
 open Real Set
 
+/-- The centered left row: `αA - B = (3/4)(n + m) + r`. -/
+theorem ff_r_eq {U z w h : ℝ} (hU : 0 < U) (hz : 0 < z) (hw : 0 < w) (hh : 0 < h) :
+    ff_alpha U z h * ff_A U z w - ff_B U z h =
+      3 / 4 * (ff_n U z h + ff_m U z w h) + ff_r U z w h := by
+  have hS : 0 < 1 + z := by linarith
+  have hT : 0 < 1 + w := by linarith
+  have hK : 0 < 1 + U := by linarith
+  have hZ : 0 < z ^ 2 + U := by positivity
+  have h4 : Real.log 4 = 2 * Real.log 2 := by
+    rw [show (4 : ℝ) = 2 ^ 2 by norm_num, Real.log_pow]; push_cast; ring
+  unfold ff_alpha ff_A ff_B ff_n ff_m ff_r ff_Phi ff_f ff_q
+  rw [Real.log_div (by positivity) hK.ne', Real.log_mul hS.ne' hT.ne',
+    Real.log_div hS.ne' two_ne_zero, Real.log_div hT.ne' two_ne_zero,
+    Real.log_div four_ne_zero hK.ne', h4]
+  generalize Real.log (1 + z) = l1
+  generalize Real.log (1 + w) = l2
+  generalize Real.log (1 + U) = l3
+  generalize Real.log 2 = l4
+  generalize Real.log h = l5
+  field_simp
+  ring
+
+
 /-- `f'(h) (h - 1) ≥ f(h)` for `h ≥ 1` (convexity of `f` on `[1, ∞)`, `f(1) = 0`). -/
 theorem ff_f_le_slope {h : ℝ} (hh : 1 ≤ h) : ff_f h ≤ (h - 1) ^ 3 / (2 * h ^ 2) := by
   have key := ff_le_of_deriv (f := fun s ↦ (s - 1) ^ 3 / (2 * s ^ 2) - ff_f s)

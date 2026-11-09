@@ -15,6 +15,10 @@ import all SmoothedOctagon.Exclusion.Forward.Budget
 import all SmoothedOctagon.Exclusion.Forward.Budget.Concavity
 import all SmoothedOctagon.Exclusion.Forward.Cap
 import all SmoothedOctagon.Exclusion.Forward.Casimir
+import all SmoothedOctagon.Exclusion.Forward.Casimir.Branch
+import all SmoothedOctagon.Exclusion.Forward.Casimir.Curvature
+import all SmoothedOctagon.Exclusion.Forward.Casimir.Kernels
+import all SmoothedOctagon.Exclusion.Forward.Casimir.Shape
 import all SmoothedOctagon.Exclusion.Forward.Core
 import all SmoothedOctagon.Exclusion.Forward.Edge
 import all SmoothedOctagon.Exclusion.Forward.Interface
@@ -30,6 +34,11 @@ import all SmoothedOctagon.Exclusion.Forward.Scalars.Neighbor.Value
 import all SmoothedOctagon.Exclusion.Forward.Scalars.SmallMin
 import all SmoothedOctagon.Exclusion.Forward.Scalars.SumSym
 import all SmoothedOctagon.Exclusion.Forward.Scalars.SumSym.Constant
+import all SmoothedOctagon.Exclusion.Forward.Scalars.SumSym.Integrals
+import all SmoothedOctagon.Exclusion.Forward.Scalars.SumSym.Lower
+import all SmoothedOctagon.Exclusion.Forward.Scalars.SumSym.Tangent
+import all SmoothedOctagon.Exclusion.Forward.Scalars.SumSym.Upper.Curvature
+import all SmoothedOctagon.Exclusion.Forward.Scalars.SumSym.Upper.Sign
 import all SmoothedOctagon.Exclusion.Forward.Window
 import all SmoothedOctagon.Exclusion.Forward.Wire
 import all SmoothedOctagon.Exclusion.MinimumStructure

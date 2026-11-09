@@ -48,10 +48,9 @@ theorem ff_octagonCost_lt_sqrt : octagonCost < 29 * √3 / 16 := by
     nlinarith only [this]
   nlinarith only [hfirst, hlast]
 
-/-- The spectral moment cap implies `γ² < 23/125` on the scalar forward domain. -/
+/-- The spectral moment comparison gives the competitive forward Casimir cap. -/
 theorem ff_gam2_cap {x c : ℝ} (hx : 0 < x) (h : π/3*(√x+3/2) ≤ c)
-    (hc : c ≤ octagonCost) : x/12 < 23/125 := by
-  have hcap := octagon_spectral_cap hx h hc
-  linarith only [hcap]
+    (hc : c ≤ octagonCost) : x/12 < 9193/50000 :=
+  octagon_spectral_cap hx h hc
 
 end SmoothedOctagon

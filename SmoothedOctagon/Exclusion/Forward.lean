@@ -17,7 +17,7 @@ Proof: `N ≡ 1 (mod 3)` gives `N ≥ 7` (`NormalPeriod.ff_N_mod_three`). At a g
 * the seven-entry cost bound (`ff_seven_le`, `CostateCycle.ff_rawCost`, `cost_eq_rawCost`),
 * the three stationarity rows, the two exterior floors and the Gram identity of the normal
   multiplier (`Forward/Interface.lean`, from `Period/Elliptic`),
-* the competitive Casimir cap `γ² < 23/125` (`NormalPeriod.ff_cost_casimir`, `ff_gam2_cap`).
+* the competitive Casimir cap `γ² < 9193/50000` (`NormalPeriod.ff_cost_casimir`, `ff_gam2_cap`).
 These form an `ff_Win`, which the scalar argument of `Forward/Core.lean` excludes.
 -/
 
