@@ -1,6 +1,6 @@
 from sympy import *
 t,x,k,q,v,L = symbols('t x k q v L')
-def nhN(t,x,k,q,v,L):
+def nsrN(t,x,k,q,v,L):
     return (-t*(t+x)**2*(1+x)**2
      - t*(2*t**3*x + 5*t**2*x**2 - 2*t**2*x - 2*t**2 + 2*t*x**3 - 6*t*x**2 - 4*t*x - 2*x**3 - x**2)*q
      + t*(5*t**2*x**2 + 2*t**2*x - t**2 + 4*t*x**3 - 2*t*x**2 - 4*t*x + x**4)*q**2

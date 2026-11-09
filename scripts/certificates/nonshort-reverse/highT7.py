@@ -1,8 +1,8 @@
-from nhN import *
+from nsrN import *
 from common import vbar, Lp, Fl, W, X
 import numpy as np, pickle
 y = symbols('y')
-e = 6*(q+1)*W**2*X**3*(nhN(t,x,7*t**2,q,vbar,Lp) - (q-1)*(vbar-Fl))
+e = 6*(q+1)*W**2*X**3*(nsrN(t,x,7*t**2,q,vbar,Lp) - (q-1)*(vbar-Fl))
 e = cancel(e.subs(q,1+y))
 P = Poly(expand(e), y)
 C = [expand(P.coeff_monomial(y**j)) for j in range(P.degree()+1)]

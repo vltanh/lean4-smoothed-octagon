@@ -12,11 +12,11 @@ public import Mathlib.Tactic.LinearCombination
 public import Mathlib.Tactic.Ring
 
 /-!
-# Case M2 by hand: positivity of Bernstein forms
+# Case M2, reverse successor: positivity of Bernstein forms
 
-`nh_bern_pos1`, …, `nh_bern_pos6`: for `a, b ≥ 0` with `a + b > 0` and positive coefficients
+`nsr_bern_pos1`, …, `nsr_bern_pos6`: for `a, b ≥ 0` with `a + b > 0` and positive coefficients
 `c₀, …, c_d`, the Bernstein form `∑ c_j a^j b^(d-j)` is positive. Used by the generated polynomial
-sign certificates of `Hand/Cert*`.
+sign certificates of the `Signs` modules.
 -/
 
 @[expose] public section
@@ -29,7 +29,7 @@ for d in range(1, 15):
     expr = " + ".join(term(j, d) for j in range(d+1))
     rest0 = " + ".join(term(j, d) for j in range(1, d+1))
     restd = " + ".join(term(j, d) for j in range(0, d))
-    out.append(f"""theorem nh_bern_pos{d} {{a b : ℝ}} (ha : 0 ≤ a) (hb : 0 ≤ b) (hab : 0 < a + b) {{{cs} : ℝ}}
+    out.append(f"""theorem nsr_bern_pos{d} {{a b : ℝ}} (ha : 0 ≤ a) (hb : 0 ≤ b) (hab : 0 < a + b) {{{cs} : ℝ}}
     {hs} :
     0 < {expr} := by
   rcases lt_or_ge 0 a with h | h
@@ -42,4 +42,4 @@ for d in range(1, 15):
     linarith
 """)
 out.append("end SmoothedOctagon\n")
-open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Hand/Bern.lean','w').write("\n".join(out))
+open('/home/vltanh/Documents/lean4-reinhardt-conjecture/SmoothedOctagon/Exclusion/Mixed/Nonshort/Reverse/Bernstein.lean','w').write("\n".join(out))

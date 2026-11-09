@@ -1,5 +1,5 @@
-from nhN import *
-N = expand(nhN(t,x,k,q,v,L))
+from nsrN import *
+N = expand(nsrN(t,x,k,q,v,L))
 A = N.coeff(k,1)
 Av = A.coeff(v,1); AL = A.coeff(L,1)
 print('Av', factor(Av)); print('AL', factor(AL))

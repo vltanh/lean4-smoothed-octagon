@@ -22,7 +22,7 @@ theorem {name} (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
   have hR : x ^ 2 + 10 * x + 15 ≠ 0 := by positivity
   have hq1 : q + 1 ≠ 0 := by linarith
   unfold {D}
-  unfold fhComb fhTP fhKt fhHt fhE0 nhN {unfold_extra}
+  unfold nsfComb nsfTP nsfKt nsfHt nsfE0 nsrN {unfold_extra}
   field_simp
   ring
 """
@@ -49,30 +49,30 @@ theorem {name} {args} {hyps} :
 import json
 NUMS = json.load(open(__import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)), 'nums.json')))
 def link3(X, name, kind, al, M, K, doc):
-    """kind 'LR': v = fhVhat, F = 0; kind 'LG': v = fhVG, F = nhFl."""
+    """kind 'LR': v = nsfVhat, F = 0; kind 'LG': v = nsfVG, F = nsrFl."""
     rhs = yform_tx(X)
     D = " ".join(Dnames(X))
     pre = "48 * (q + 1) * (1 + x) * (x ^ 2 + 10 * x + 15)"
     if kind == 'LR':
-        vexpr, Fexpr = "(fhVhat t x q)", "0"
-        hv = f"""  have hv : fhVhat t x q = ({NUMS['Nvh']}) / (12 * (x ^ 2 + 10 * x + 15) * (1 + x) ^ 2 * (q + 1)) := by
-    unfold fhVhat fhVG nhFl; field_simp; ring
+        vexpr, Fexpr = "(nsfVhat t x q)", "0"
+        hv = f"""  have hv : nsfVhat t x q = ({NUMS['Nvh']}) / (12 * (x ^ 2 + 10 * x + 15) * (1 + x) ^ 2 * (q + 1)) := by
+    unfold nsfVhat nsfVG nsrFl; field_simp; ring
 """
-        rws = "rw [fh_comb_dec, hv]\n  unfold nhLp"
-        clear = "fh_clear_LR"
+        rws = "rw [nsf_comb_dec, hv]\n  unfold nsrLp"
+        clear = "nsf_clear_LR"
     else:
-        vexpr, Fexpr = "(fhVG t x)", "(nhFl t x q)"
-        hv = f"""  have hv : fhVG t x = ({NUMS['NVG']}) / (12 * (x ^ 2 + 10 * x + 15) * (1 + x) ^ 2) := by
-    unfold fhVG; field_simp; ring
-  have hF : nhFl t x q = ({NUMS['NFl']}) / (6 * (1 + x) ^ 2 * (q + 1)) := by
-    unfold nhFl; field_simp; ring
+        vexpr, Fexpr = "(nsfVG t x)", "(nsrFl t x q)"
+        hv = f"""  have hv : nsfVG t x = ({NUMS['NVG']}) / (12 * (x ^ 2 + 10 * x + 15) * (1 + x) ^ 2) := by
+    unfold nsfVG; field_simp; ring
+  have hF : nsrFl t x q = ({NUMS['NFl']}) / (6 * (1 + x) ^ 2 * (q + 1)) := by
+    unfold nsrFl; field_simp; ring
 """
-        rws = "rw [fh_comb_dec, hv, hF]\n  unfold nhLp"
-        clear = "fh_clear_LG"
-    extra = "fhAlA fhMA " if 'fhAlA' in al else ""
+        rws = "rw [nsf_comb_dec, hv, hF]\n  unfold nsrLp"
+        clear = "nsf_clear_LG"
+    extra = "nsfAlA nsfMA " if 'nsfAlA' in al else ""
     return f"""/-- {doc} -/
 theorem {name} (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
-    {pre} * fhComb {al} {M} t x {K} q {vexpr} (nhLp q) {Fexpr} =
+    {pre} * nsfComb {al} {M} t x {K} q {vexpr} (nsrLp q) {Fexpr} =
       {rhs} := by
   have hW : (1 + x) ≠ 0 := by linarith
   have hR : x ^ 2 + 10 * x + 15 ≠ 0 := by positivity
@@ -81,6 +81,6 @@ theorem {name} (t x q : ℝ) (hq : 0 < q) (hx : 0 < x) :
   apply mul_left_cancel₀ (mul_ne_zero hW hq.ne')
   rw [{clear} hW hq.ne' hq1 hR]
   unfold {D}
-  unfold {extra}fhComb fhCv fhCL fhTPv fhTP fhKt fhHt fhE0 nhN nhNv nhNL
+  unfold {extra}nsfComb nsfCv nsfCL nsfTPv nsfTP nsfKt nsfHt nsfE0 nsrN nsrNv nsrNL
   ring
 """

@@ -1,7 +1,7 @@
-from nhN import *
+from nsrN import *
 from common import vbar, Lp, Fl, W, X
 import numpy as np
-fN = lambdify((t,x,k,q,v,L), nhN(t,x,k,q,v,L))
+fN = lambdify((t,x,k,q,v,L), nsrN(t,x,k,q,v,L))
 fvb = lambdify((t,x), vbar); fFl = lambdify((t,x,q), Fl); fLp = lambdify(q, Lp)
 for (tt,xx) in [(0.4,0.324),(0.4,0.3)]:
   for kk in [20/3*tt**2, 7*tt**2]:

@@ -209,7 +209,7 @@ def emit_biv_piece(name, expr, s, x, sname, xname, piece, stmt=None, unfold=None
     out.append(f"""theorem {name} ({xname} {sname} : ℝ) (hx0 : {lnum(xlo)} ≤ {xname}) (hx1 : {xname} ≤ {lnum(xhi)})
     (hs0 : {S0s} ≤ {sname}) (hs1 : {sname} ≤ {S1s}) (hgap : (0 : ℝ) < ({S1s}) - ({S0s})) :
     0 < {stmt} := by
-  have hpos := nh_bern_pos{d} (a := {a}) (b := {b}) (by linarith) (by linarith) (hgap.trans_eq (by ring))
+  have hpos := nsr_bern_pos{d} (a := {a}) (b := {b}) (by linarith) (by linarith) (hgap.trans_eq (by ring))
     {gargs}
   have e : {M} * (({S1s}) - ({S0s})) ^ {d} * ({stmt}) = {rhs} := by {('unfold ' + unfold + '; ') if unfold else ''}ring
   have h2 : 0 < {M} * (({S1s}) - ({S0s})) ^ {d} * ({stmt}) := lt_of_lt_of_eq hpos e.symm

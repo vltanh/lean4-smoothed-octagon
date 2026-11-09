@@ -1,7 +1,7 @@
-from nhN import *
+from nsrN import *
 from common import vbar, Lp, Fl, W, X
 import numpy as np
-fN = lambdify((t,x,k,q,v,L), nhN(t,x,k,q,v,L), 'numpy')
+fN = lambdify((t,x,k,q,v,L), nsrN(t,x,k,q,v,L), 'numpy')
 fvb = lambdify((t,x), vbar,'numpy'); fFl = lambdify((t,x,q), Fl,'numpy'); fLp = lambdify(q, Lp,'numpy')
 T_,X_,Y_ = np.meshgrid(np.linspace(0.4,0.5,101), np.linspace(0.12,1/3,101), np.linspace(1e-4,4,401), indexing='ij')
 Tx = (-2*X_**3-X_**2+10*X_+12)/(3*(X_+2)**3)

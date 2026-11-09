@@ -5,7 +5,7 @@ from gen4 import structure, lnum, lemma0g, lemmaI
 from gen5 import plan_all, emit_job, Out, emit_pos_y
 h,j,q,y=sp.symbols('h j q y')
 R=Fr
-LEAN=__import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)), '../../../SmoothedOctagon/Exclusion/Mixed/FwdHand/')
+LEAN=__import__('os').path.join(__import__('os').path.dirname(__import__('os').path.abspath(__file__)), '../../../SmoothedOctagon/Exclusion/Mixed/Nonshort/Forward/')
 
 def poly_hs_pow(base, e):
     r = {(0,0): Fr(1)}
@@ -54,31 +54,53 @@ def build(X, pkl, h0, h1, jlo, g, gstr, kind, Yc=None, zlo=Fr(0), zhi=Fr(1), var
     return out, needI, need0g, yform, cs_plain, D, ny
 
 JOBS = {
- 'fhCChi': dict(pkl='chiN1.pkl', h0=R(6,25), h1=R(1,3), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='zgen',
+ 'nsfCChi': dict(pkl='chiN1.pkl', h0=R(6,25), h1=R(1,3), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='zgen',
      Yc=(("(1 + h) / 2 - 3 * j", "7 * (1 + h) / 2 + 7 * j"), ({(0,0):R(1,2),(1,0):R(1,2),(0,1):R(-3)}, {(0,0):R(7,2),(1,0):R(7,2),(0,1):R(7)}))),
- 'fhCQD': dict(pkl='QDelta.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
- 'fhCQC': dict(pkl='QC2.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
- 'fhCEn': dict(pkl='Ehat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
- 'fhCPn': dict(pkl='Phat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
- 'fhCLRa': dict(pkl='lr_k1.pkl', h0=R(1,3), h1=R(1,2), jlo=0, g=[R(0),R(1)], gstr='h', kind='zpar'),
- 'fhCLRb': dict(pkl='lr_ko.pkl', h0=R(1,3), h1=R(1,2), jlo=0, g=[R(0),R(1)], gstr='h', kind='sym', Yc=R(1)),
- 'fhCLGa': dict(pkl='lgA1.pkl', h0=R(1,4), h1=R(1,3), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
- 'fhCLGb': dict(pkl='lgA2.pkl', h0=R(1,4), h1=R(1,3), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
- 'fhCLGc': dict(pkl='lgB1.pkl', h0=R(1,5), h1=R(1,4), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
- 'fhCLGd': dict(pkl='lgB2.pkl', h0=R(1,5), h1=R(1,4), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
+ 'nsfCQD': dict(pkl='QDelta.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
+ 'nsfCQC': dict(pkl='QC2.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
+ 'nsfCEn': dict(pkl='Ehat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
+ 'nsfCPn': dict(pkl='Phat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
+ 'nsfCLRa': dict(pkl='lr_k1.pkl', h0=R(1,3), h1=R(1,2), jlo=0, g=[R(0),R(1)], gstr='h', kind='zpar'),
+ 'nsfCLRb': dict(pkl='lr_ko.pkl', h0=R(1,3), h1=R(1,2), jlo=0, g=[R(0),R(1)], gstr='h', kind='sym', Yc=R(1)),
+ 'nsfCLGa': dict(pkl='lgA1.pkl', h0=R(1,4), h1=R(1,3), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
+ 'nsfCLGb': dict(pkl='lgA2.pkl', h0=R(1,4), h1=R(1,3), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
+ 'nsfCLGc': dict(pkl='lgB1.pkl', h0=R(1,5), h1=R(1,4), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
+ 'nsfCLGd': dict(pkl='lgB2.pkl', h0=R(1,5), h1=R(1,4), jlo=R(1,30), g=[R(-1,30),R(5,7)], gstr='5 / 7 * h - 1 / 30', kind='zpar'),
 }
 DOC = {
- 'fhCChi': 'the unit-shape residual `N₁` with `v ↦ V₂`, `log q ↦ L₊` for `q ≤ 4W/(7p)` (`MIXED_NONSHORT_SMALL_GAP_CHI_BOUND`)',
- 'fhCQD': 'the discriminant `𝒟²(4C₀C₂ - C₁²)` at `k = 1`, `v = V` (`MIXED_NONSHORT_FORWARD_Q_ELIMINATION` (16))',
- 'fhCQC': 'the leading coefficient `𝒟C₂` at `k = 1`, `v = V` (`MIXED_NONSHORT_FORWARD_Q_ELIMINATION` (15))',
- 'fhCEn': 'the norm derivative `-2t²p²W³N_v(3/4)` (`MIXED_NONSHORT_FORWARD_ENVELOPE_CASIMIR_SIGN` (7)-(8))',
- 'fhCPn': 'the Casimir excess `3125t²p²W⁴Q²(N(V) - 16s²·9193/50000)` (`MIXED_NONSHORT_FORWARD_ENVELOPE_CASIMIR_SIGN` (10)-(11))',
- 'fhCLRa': 'the low-ratio residual `Ĝ` at the unit shape `k = 1` (`MIXED_NONSHORT_LOW_RATIO_HAND_EXCLUSION` (10))',
- 'fhCLRb': 'the low-ratio residual `Ĝ` at the order shape `k = 2t + x`',
- 'fhCLGa': 'the large-gap residual `G` at `k = 1` (`MIXED_NONSHORT_LARGE_GAP_LOW_T_SIGN`)',
- 'fhCLGb': 'the large-gap residual `G` at `k = 1 + j` (`MIXED_NONSHORT_LARGE_GAP_UPPER_SHAPE_SIGN`)',
- 'fhCLGc': 'the high-ratio residual `G₄` at `k = 29t²/4` (`MIXED_NONSHORT_HIGH_RATIO_LARGE_GAP_EXCLUSION` (13))',
- 'fhCLGd': 'the high-ratio residual `G₄` at `k = 1 + j`',
+ 'nsfCChi': 'the unit-shape residual `N₁` with `v ↦ V₂`, `log q ↦ L₊` for `q ≤ 4W/(7p)`',
+ 'nsfCQD': 'the discriminant `𝒟²(4C₀C₂ - C₁²)` at `k = 1`, `v = V`)',
+ 'nsfCQC': 'the leading coefficient `𝒟C₂` at `k = 1`, `v = V`)',
+ 'nsfCEn': 'the norm derivative `-2t²p²W³N_v(3/4)`-(8))',
+ 'nsfCPn': 'the Casimir excess `3125t²p²W⁴Q²(N(V) - 16s²·9193/50000)`-(11))',
+ 'nsfCLRa': 'the low-ratio residual `Ĝ` at the unit shape `k = 1`)',
+ 'nsfCLRb': 'the low-ratio residual `Ĝ` at the order shape `k = 2t + x`',
+ 'nsfCLGa': 'the large-gap residual `G` at `k = 1`',
+ 'nsfCLGb': 'the large-gap residual `G` at `k = 1 + j`',
+ 'nsfCLGc': 'the high-ratio residual `G₄` at `k = 29t²/4`)',
+ 'nsfCLGd': 'the high-ratio residual `G₄` at `k = 1 + j`',
+}
+# the output module and the title of each certificate
+OUT = {
+ 'nsfCChi': 'SmallGap/ChiSigns.lean', 'nsfCQD': 'EventFactor/DiscriminantSigns.lean',
+ 'nsfCQC': 'EventFactor/LeadingSigns.lean', 'nsfCEn': 'SmallGap/NormDerivativeSigns.lean',
+ 'nsfCPn': 'SmallGap/CasimirExcessSigns.lean', 'nsfCLRa': 'LowRatio/UnitShapeSigns.lean',
+ 'nsfCLRb': 'LowRatio/OrderShapeSigns.lean', 'nsfCLGa': 'LargeGap/UnitShapeSigns.lean',
+ 'nsfCLGb': 'LargeGap/UpperShapeSigns.lean', 'nsfCLGc': 'LargeGap/HighRatioSigns.lean',
+ 'nsfCLGd': 'LargeGap/HighRatioUpperSigns.lean',
+}
+TITLE = {
+ 'nsfCChi': 'the unit-shape residual of the small-gap ratio bound',
+ 'nsfCQD': 'the sign of the event-factor discriminant',
+ 'nsfCQC': 'the sign of the event-factor leading coefficient',
+ 'nsfCEn': 'the sign of the norm derivative',
+ 'nsfCPn': 'the sign of the Casimir excess',
+ 'nsfCLRa': 'the low-ratio residual at the unit shape',
+ 'nsfCLRb': 'the low-ratio residual at the order shape',
+ 'nsfCLGa': 'the large-gap residual at the unit shape',
+ 'nsfCLGb': 'the large-gap residual at the upper shape',
+ 'nsfCLGc': 'the high-ratio residual at the scale face',
+ 'nsfCLGd': 'the high-ratio residual at the upper shape',
 }
 if __name__ == '__main__':
     names = sys.argv[1:]

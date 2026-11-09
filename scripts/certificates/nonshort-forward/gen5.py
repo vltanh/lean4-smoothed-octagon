@@ -4,8 +4,8 @@ A polynomial is given as  P = sum_i c_i(h, s) y^i  with  c_i = sum_l D_il(h) s^l
 (univariate Lean definitions D_il).  With multipliers M_i(h, s) (polynomials) the certificate proves
     0 < sum_i (c_i * M_i) * z^i     on  h0 <= h <= h1,  0 <= s <= g(h),  z in [zlo, zhi]
 (numeric pieces), in three levels:
-  * z-level: `fhBernI*` (numeric interval, abstract coefficients);
-  * s-level: `fhBern0g*` (interval [0, g(h)], abstract coefficients E_l(h), Lean definitions);
+  * z-level: `nsfBernI*` (numeric interval, abstract coefficients);
+  * s-level: `nsfBern0g*` (interval [0, g(h)], abstract coefficients E_l(h), Lean definitions);
   * h-level: univariate Bernstein certificates for every coefficient (subdivision), checked by
     `linear_combination`.
 Typical multipliers: M_i = 1 (z = y), M_i = Y(h)^i (z = y/Y), M_i = (h - j)^i (1 + 2j)^(n - i)
@@ -106,7 +106,7 @@ def emit_job(out, X, D, Mstrs, gstr, jlo, h0, h1, plan, needI, need0g, extra_unf
     0 < {zb} := by
   have e : {zb} = {target} := by unfold {Eunf}; ring
   rw [e]
-  exact fhBern0g{md} hs0 hs1 (by linarith) {' '.join(f'({nm} h hh0 hh1)' for nm in leafnames)}
+  exact nsfBern0g{md} hs0 hs1 (by linarith) {' '.join(f'({nm} h hh0 hh1)' for nm in leafnames)}
 """)
             kthms.append(f"{X}_z{pi}_k{k}")
         padded = poly_str(cs, "z")
@@ -162,19 +162,19 @@ def lemma_tr(kind, n, Ys="h"):
     if kind == 'zgen':
         cs = [f"c{i}" for i in range(n+1)]
         zf = zform_sub(poly_str([cM(cs[i], zgen_M(i, n, "a", "b")) for i in range(n+1)], "z"), "(y * (b) / (a))")
-        return f"""theorem fhZgenTr{n} {{a b y {' '.join(cs)} : ℝ}} (ha : a ≠ 0) :
+        return f"""theorem nsfZgenTr{n} {{a b y {' '.join(cs)} : ℝ}} (ha : a ≠ 0) :
     {zf} = (b) ^ ({n} : ℕ) * ({poly_str(cs, 'y')}) := by
   field_simp
 """
     cs = [f"c{i}" for i in range(n+1)]
     if kind == 'sym':
         zf = zform_sub(poly_str([cM(cs[i], sym_M(i, Ys)) for i in range(n+1)], "z"), f"(y / {Ys})")
-        return f"""theorem fhSymTr{n} {{h y {' '.join(cs)} : ℝ}} (hh : {Ys} ≠ 0) :
+        return f"""theorem nsfSymTr{n} {{h y {' '.join(cs)} : ℝ}} (hh : {Ys} ≠ 0) :
     {zf} = {poly_str(cs, 'y')} := by
   field_simp
 """
     zf = zform_sub(poly_str([cM(cs[i], zpar_M(i, n)) for i in range(n+1)], "z"), "(y * (1 + 2 * j) / (h - j))")
-    return f"""theorem fhZparTr{n} {{h j y {' '.join(cs)} : ℝ}} (hh : h - j ≠ 0) :
+    return f"""theorem nsfZparTr{n} {{h j y {' '.join(cs)} : ℝ}} (hh : h - j ≠ 0) :
     {zf} = (1 + 2 * j) ^ ({n} : ℕ) * ({poly_str(cs, 'y')}) := by
   field_simp
 """
@@ -193,7 +193,7 @@ theorem {X}_pos_y (h j y : ℝ) (hh0 : {lnum(h0)} ≤ h) (hh1 : h ≤ {lnum(h1)}
   have hhj : 0 < h - j := by linarith
   have hj2 : 0 < 1 + 2 * j := by linarith
   have hz := {X}_pos h j {zsub} hh0 hh1 hs0 hs1 (by positivity) (by rw [div_le_one hhj]; exact hy1)
-  rw [fhZparTr{ny} hhj.ne'] at hz
+  rw [nsfZparTr{ny} hhj.ne'] at hz
   exact pos_of_mul_pos_right hz (by positivity)
 """)
     elif kind == 'zgen':
@@ -205,7 +205,7 @@ theorem {X}_pos_y (h j y : ℝ) (hh0 : {lnum(h0)} ≤ h) (hh1 : h ≤ {lnum(h1)}
     (hy1 : y * ({Dn}) ≤ {Nm}) :
     0 < {yform} := by
   have hz := {X}_pos h j {zsub} hh0 hh1 hs0 hs1 (by positivity) (by rw [div_le_one hN]; exact hy1)
-  rw [fhZgenTr{ny} hN.ne'] at hz
+  rw [nsfZgenTr{ny} hN.ne'] at hz
   exact pos_of_mul_pos_right hz (by positivity)
 """)
     elif kind == 'sym':
@@ -217,7 +217,7 @@ theorem {X}_pos_y (h j y : ℝ) (hh0 : {lnum(h0)} ≤ h) (hh1 : h ≤ {lnum(h1)}
     0 < {yform} := by
   have hY : 0 < {Ys} := by linarith
   have hz := {X}_pos h j {zsub} hh0 hh1 hs0 hs1 (by positivity) (by rw [div_le_one hY]; exact hy1)
-  rwa [fhSymTr{ny} hY.ne'] at hz
+  rwa [nsfSymTr{ny} hY.ne'] at hz
 """)
     return yform
 

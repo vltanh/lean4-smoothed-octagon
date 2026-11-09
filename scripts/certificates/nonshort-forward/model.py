@@ -2,8 +2,8 @@ import sympy as sp
 t,x,k,q,v,L,y,h,j,z,a,b = sp.symbols('t x k q v L y h j z a b')
 c=1-t; p=t+x; W=1+x; X=x+2; Y=x*(x+2); J=t+Y; R=x**2+10*x+15
 def Bk(k): return k+2*t*x+x**2
-# Lean nhN
-def nhN(t,x,k,q,v,L):
+# Lean nsrN
+def nsrN(t,x,k,q,v,L):
     return (-t * (t + x) ** 2 * (1 + x) ** 2
     - t * (2 * t ** 3 * x + 5 * t ** 2 * x ** 2 - 2 * t ** 2 * x - 2 * t ** 2 + 2 * t * x ** 3
       - 6 * t * x ** 2 - 4 * t * x - 2 * x ** 3 - x ** 2) * q

@@ -4,8 +4,8 @@ A polynomial P(h, j, y) is written as  sum_i ( sum_l D_il(h) s^l ) y^i,  s = j -
 univariate polynomials D_il (Lean definitions).  Positivity on
     h0 <= h <= h1,   0 <= s <= g(h)  (g linear in h),   y in numeric pieces [ylo, yhi]
 is proved in three levels:
-  * y-level: `fhBernI_*` (numeric interval, abstract coefficients c_i = sum_l D_il s^l);
-  * s-level: `fhBern0g*` (interval [0, g], abstract coefficients E_l = sum_i w_ki D_il);
+  * y-level: `nsfBernI_*` (numeric interval, abstract coefficients c_i = sum_l D_il s^l);
+  * s-level: `nsfBern0g*` (interval [0, g], abstract coefficients E_l = sum_i w_ki D_il);
   * h-level: each Bernstein coefficient is a univariate polynomial in h, positive on [h0, h1] by a
     univariate Bernstein certificate (subdivision), checked by `linear_combination`.
 Exponents are written `^ (n : ℕ)` (fast elaboration).  Lean re-checks every identity.
@@ -74,10 +74,10 @@ def lemma0g(n):
     rhs = " + ".join(term(k) for k in range(n+1))
     args = " ".join(f"hb{k}" for k in range(n+1))
     return f"""/-- Bernstein positivity of degree {n} on `[0, g]`, with abstract coefficients. -/
-theorem fhBern0g{n} {{g y {' '.join(cs)} : ℝ}} (h0 : 0 ≤ y) (h1 : y ≤ g) (hg : 0 < g)
+theorem nsfBern0g{n} {{g y {' '.join(cs)} : ℝ}} (h0 : 0 ≤ y) (h1 : y ≤ g) (hg : 0 < g)
     {hyps} :
     0 < {poly} := by
-  have hpos := fhBernPos{n} (a := y) (b := g - y) h0 (by linarith) (by linarith) {args}
+  have hpos := nsfBernPos{n} (a := y) (b := g - y) h0 (by linarith) (by linarith) {args}
   have e : g ^ ({n} : ℕ) * ({poly}) = {rhs} := by ring
   rw [← e] at hpos
   exact pos_of_mul_pos_right hpos (by positivity)
@@ -106,7 +106,7 @@ def lin_str(ws, cs):
 def ivname(n, lo, hi):
     def f(q):
         q = Fr(q); return f"{q.numerator}_{q.denominator}"
-    return f"fhBernI{n}_{f(lo)}_{f(hi)}"
+    return f"nsfBernI{n}_{f(lo)}_{f(hi)}"
 
 def lemmaI(n, lo, hi):
     lo, hi = Fr(lo), Fr(hi)
@@ -127,7 +127,7 @@ def lemmaI(n, lo, hi):
 theorem {ivname(n, lo, hi)} {{y {' '.join(cs)} : ℝ}} (h0 : {lnum(lo)} ≤ y) (h1 : y ≤ {lnum(hi)})
     {hyps} :
     0 < {poly} := by
-  have hpos := fhBernPos{n} (a := {A}) (b := {B}) (by linarith) (by linarith) (by linarith) {args}
+  have hpos := nsfBernPos{n} (a := {A}) (b := {B}) (by linarith) (by linarith) (by linarith) {args}
   have e : ({lnum(hi - lo)} : ℝ) ^ ({n} : ℕ) * ({poly}) = {rhs} := by ring
   rw [← e] at hpos
   exact pos_of_mul_pos_right hpos (by norm_num)
@@ -330,7 +330,7 @@ def emit_job(out, X, D, g, gstr, jlo, h0, h1, plan, needI, need0g):
     0 < {yb} := by
   have e : {yb} = {target} := by unfold {Eunf}; ring
   rw [e]
-  exact fhBern0g{md} hs0 hs1 (by linarith) {' '.join(f'({nm} h hh0 hh1)' for nm in leafnames)}
+  exact nsfBern0g{md} hs0 hs1 (by linarith) {' '.join(f'({nm} h hh0 hh1)' for nm in leafnames)}
 """)
             kthms.append(f"{X}_y{pi}_k{k}")
         unpadded = poly_str([cstr(i, ny) for i in range(ny+1)], "y")
@@ -406,7 +406,7 @@ def lemma_pos(d):
     rest0 = " + ".join(term(j) for j in range(1, d+1))
     restd = " + ".join(term(j) for j in range(0, d))
     return f"""/-- A Bernstein form of degree {d} with positive coefficients is positive. -/
-theorem fhBernPos{d} {{a b : ℝ}} (ha : 0 ≤ a) (hb : 0 ≤ b) (hab : 0 < a + b) {{{cs} : ℝ}}
+theorem nsfBernPos{d} {{a b : ℝ}} (ha : 0 ≤ a) (hb : 0 ≤ b) (hab : 0 < a + b) {{{cs} : ℝ}}
     {hs} :
     0 < {expr} := by
   rcases lt_or_ge 0 a with h | h

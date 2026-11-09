@@ -4,7 +4,7 @@ m,v,z=sp.symbols('m v z')
 exec(open('genH5R.py').read().split("def hom_cert")[0].split("m,v,mu=sp.symbols('m v mu')")[1])
 L=lambda p: lean_poly(p,(m,v))
 txt=f'''
-/-- The cubic `P` of HAND_H5_INTEGRAL_RATIONAL_BOUND (10), with `l = λ`. -/
+/-- The cubic `P` of the rational bound of the integral `H₅`, with `l = λ`. -/
 noncomputable def fs_H5P (z l v : ℝ) : ℝ :=
   (z + l) ^ 2 * v ^ 3 - 3 * z * (1 - l) * (1 + z) * (z + l) * v ^ 2 +
     ((1 + l) * (1 - l) * (1 + z) * z * (3 * (z - 1) + (1 - l)) - 6 * (z + l) * (z - l) * (1 - z * l)) * v +
