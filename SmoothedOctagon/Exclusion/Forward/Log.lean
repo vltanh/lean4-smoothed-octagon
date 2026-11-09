@@ -182,4 +182,32 @@ theorem ff_log_gt_midpoint {v : ℝ} (hv : 1 < v) :
   norm_num at h
   linarith only [h]
 
+/-- The floor increases in the factor: `F_x(r) ≤ F_x(r')` for `1/2 ≤ x`, `1 < r ≤ r'`. -/
+theorem ff_F_mono {x r r' : ℝ} (hx : 1 / 2 ≤ x) (hr : 1 < r) (hrr : r ≤ r') :
+    ff_F x r ≤ ff_F x r' := by
+  refine ff_le_of_deriv (f := ff_F x)
+    (f' := fun s ↦ x ^ 2 - x * ((s - 1 - Real.log s) / (s - 1) ^ 2)) hrr (fun s hs ↦ ?_)
+    (fun s hs ↦ ?_)
+  · have hs1 : 1 < s := lt_of_lt_of_le hr hs.1
+    have hl := Real.hasDerivAt_log (by linarith : s ≠ 0)
+    have h := (((hasDerivAt_id s).const_mul (x ^ 2)).const_add 1).sub
+      ((((hasDerivAt_id s).mul hl).const_mul x).div ((hasDerivAt_id s).sub_const 1)
+        (by simp; linarith))
+    convert h using 1
+    · ext y; simp only [ff_F, id, Pi.sub_apply, Pi.div_apply, Pi.mul_apply]; ring
+    · have : s - 1 ≠ 0 := by linarith
+      simp only [id, Pi.mul_apply]
+      field_simp
+      ring
+  · have hs1 : 1 < s := lt_of_lt_of_le hr hs.1
+    have hlog := ff_log_ge_two hs1.le
+    have hs0 : 0 < s + 1 := by linarith
+    have e : 2 * ((s - 1) / (s + 1)) = 2 * (s - 1) / (s + 1) := by ring
+    rw [e, div_le_iff₀ hs0] at hlog
+    have hb : s - 1 - Real.log s ≤ (s - 1) ^ 2 / 2 := by nlinarith
+    have hq : (s - 1 - Real.log s) / (s - 1) ^ 2 ≤ 1 / 2 := by
+      rw [div_le_iff₀ (by positivity)]; linarith
+    have hx0 : 0 ≤ x := by linarith
+    nlinarith
+
 end SmoothedOctagon

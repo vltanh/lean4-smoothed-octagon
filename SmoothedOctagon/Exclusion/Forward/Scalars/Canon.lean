@@ -16,8 +16,6 @@ canonical form `c₀ + c₁h + c₂h² + c₋/h + (d₀ + d₁h) log h`. Its sec
 * `fs_cf_tangent`: the tangent bound of a concave canonical function.
 * `fs_Phi_sym`: `Φ(U, z, z)` through `log(S²/Z)` and `log(K/Z)`.
 * `fs_f_ge_pade`: `f(h) ≥ (h - 1)³/(3h(h + 1))` for `h ≥ 1`.
-* `fs_log_le_pade`: `log(1 + t) ≤ ((1 + t) - 1/(1 + t))/2 - t³/(3(1 + t)(2 + t))`.
-* `fs_log_div_le_pade`, `fs_log_div_ge`: Padé upper and two-term lower bounds for `log(N/M)`.
 * `fs_log_one_sub_le`: `log(1 - y) ≤ -y - y²/2 - y³/3` for `0 ≤ y < 1`.
 -/
 
@@ -193,38 +191,6 @@ theorem fs_f_ge_pade {h : ℝ} (hh : 1 ≤ h) : (h - 1) ^ 3 / (3 * h * (h + 1)) 
     ring
   · have hs0 : 0 < s := by linarith [hs.1]
     positivity
-
-/-- The Padé bound as an upper bound for `log(1 + t)`, `t ≥ 0`. -/
-theorem fs_log_le_pade {t : ℝ} (ht : 0 ≤ t) :
-    Real.log (1 + t) ≤ ((1 + t) - 1 / (1 + t)) / 2 - t ^ 3 / (3 * (1 + t) * ((1 + t) + 1)) := by
-  have := fs_f_ge_pade (h := 1 + t) (by linarith)
-  unfold ff_f at this
-  rw [show 1 + t - 1 = t by ring, inv_eq_one_div] at this
-  linarith
-
-/-- The Padé upper bound for `log(N/M)`, `0 < M ≤ N`. -/
-theorem fs_log_div_le_pade {N M : ℝ} (hM : 0 < M) (hMN : M ≤ N) :
-    Real.log (N / M) ≤ (N ^ 2 - M ^ 2) / (2 * N * M) - (N - M) ^ 3 / (3 * N * M * (N + M)) := by
-  have hN : 0 < N := by linarith
-  have h := fs_log_le_pade (t := N / M - 1) (by rw [sub_nonneg, le_div_iff₀ hM]; linarith)
-  rw [show 1 + (N / M - 1) = N / M by ring] at h
-  have e : (N / M - 1 / (N / M)) / 2 - (N / M - 1) ^ 3 / (3 * (N / M) * (N / M + 1)) =
-      (N ^ 2 - M ^ 2) / (2 * N * M) - (N - M) ^ 3 / (3 * N * M * (N + M)) := by
-    field_simp
-  linarith
-
-/-- The two-term lower bound for `log(N/M)`, `0 < M ≤ N`: `log(N/M) ≥ 2τ + 2τ³/3`,
-`τ = (N - M)/(N + M)`. -/
-theorem fs_log_div_ge {N M : ℝ} (hM : 0 < M) (hMN : M ≤ N) :
-    2 * (N - M) / (N + M) + 2 * (N - M) ^ 3 / (3 * (N + M) ^ 3) ≤ Real.log (N / M) := by
-  have hN : 0 < N := by linarith
-  have h := ff_log_ge_three (v := N / M) (by rw [le_div_iff₀ hM]; linarith)
-  have e : (N / M - 1) / (N / M + 1) = (N - M) / (N + M) := by field_simp
-  rw [e] at h
-  have e2 : 2 * ((N - M) / (N + M)) + 2 * ((N - M) / (N + M)) ^ 3 / 3 =
-      2 * (N - M) / (N + M) + 2 * (N - M) ^ 3 / (3 * (N + M) ^ 3) := by
-    field_simp
-  linarith
 
 /-- `log(1 - y) ≤ -y - y²/2 - y³/3` for `0 ≤ y < 1`. -/
 theorem fs_log_one_sub_le {y : ℝ} (h0 : 0 ≤ y) (h1 : y < 1) :

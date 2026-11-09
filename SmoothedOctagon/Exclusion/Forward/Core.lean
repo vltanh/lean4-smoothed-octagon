@@ -102,40 +102,13 @@ theorem ff_m_sub_n_pos {U z w h : ℝ} (hU : 0 < U) (hU3 : U < 3) (hz : 1 ≤ z)
     nlinarith
   exact pos_of_mul_pos_right hpos hSZ.le
 
-/-- The floor increases in the factor: `F_x(r) ≤ F_x(r')` for `1/2 ≤ x`, `1 < r ≤ r'`. -/
-theorem ff_F_mono {x r r' : ℝ} (hx : 1 / 2 ≤ x) (hr : 1 < r) (hrr : r ≤ r') :
-    ff_F x r ≤ ff_F x r' := by
-  refine ff_le_of_deriv (f := ff_F x)
-    (f' := fun s ↦ x ^ 2 - x * ((s - 1 - Real.log s) / (s - 1) ^ 2)) hrr (fun s hs ↦ ?_)
-    (fun s hs ↦ ?_)
-  · have hs1 : 1 < s := lt_of_lt_of_le hr hs.1
-    have hl := Real.hasDerivAt_log (by linarith : s ≠ 0)
-    have h := (((hasDerivAt_id s).const_mul (x ^ 2)).const_add 1).sub
-      ((((hasDerivAt_id s).mul hl).const_mul x).div ((hasDerivAt_id s).sub_const 1)
-        (by simp; linarith))
-    convert h using 1
-    · ext y; simp only [ff_F, id, Pi.sub_apply, Pi.div_apply, Pi.mul_apply]; ring
-    · have : s - 1 ≠ 0 := by linarith
-      simp only [id, Pi.mul_apply]
-      field_simp
-      ring
-  · have hs1 : 1 < s := lt_of_lt_of_le hr hs.1
-    have hlog := ff_log_ge_two hs1.le
-    have hs0 : 0 < s + 1 := by linarith
-    have e : 2 * ((s - 1) / (s + 1)) = 2 * (s - 1) / (s + 1) := by ring
-    rw [e, div_le_iff₀ hs0] at hlog
-    have hb : s - 1 - Real.log s ≤ (s - 1) ^ 2 / 2 := by nlinarith
-    have hq : (s - 1 - Real.log s) / (s - 1) ^ 2 ≤ 1 / 2 := by
-      rw [div_le_iff₀ (by positivity)]; linarith
-    have hx0 : 0 ≤ x := by linarith
-    nlinarith
-
 /-! ### The scalar signs -/
 
 /-- **The neighbour sign**: on `11/5 ≤ U < 3`, `1 ≤ z ≤ w`, `w ≥ 4/3`, `z + w ≤ 5(U - 1)/3` and
 `S²/Z ≤ h ≤ min(S/z, h_c)`, `h_c = S(5U - 2 - 3w)/(3Z)`, the neighbour residual is negative. Proof
-(`fs_resN_neg`): after lowering `w`, the residual is concave in `h` and is bounded by its tangent at
-`S²/Z`; the tangent values are signed by Padé/two-term logarithm bounds and Bernstein expansions. -/
+(`fs_resN_neg`): lowering `w` gives the two shape faces. Reciprocal moments and a slope
+comparison handle the symmetric face; shape and scale convexity with reciprocal tangents handle
+the asymmetric face. -/
 theorem ff_resN_neg {U z w h : ℝ} (hU : 11 / 5 ≤ U) (hU3 : U < 3) (hz : 1 ≤ z) (hzw : z ≤ w)
     (hw : 4 / 3 ≤ w) (hzw' : z + w ≤ 5 * (U - 1) / 3) (hh1 : 1 < h)
     (hhl : (1 + z) ^ 2 / (z ^ 2 + U) ≤ h) (hhu : h ≤ (1 + z) / z)
@@ -185,8 +158,8 @@ variable (W : ff_Dim)
 
 /-- **The small forward minimum**: at a forward window whose centre is a minimum of the five
 margins, `a² > 4/3`, i.e. `U < 3`. Proof (`fs_U_lt_three`): the three comparison faces, with the
-rational envelope of the integral bound on the hard face, a difference comparison for lowering the
-larger neighbour and Bernstein signs for `R₀, …, R₃`. -/
+rational envelope of the integral bound on the hard face, lowering the larger neighbour,
+and positive-product and completed-square bounds. -/
 theorem U_lt_three : W.U < 3 := fs_U_lt_three W
 
 theorem U_pos : 0 < W.U := by rw [W.U_eq]; have := W.a_pos; positivity
