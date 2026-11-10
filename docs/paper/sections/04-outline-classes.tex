@@ -1,195 +1,135 @@
 \section{Excluding six or more pieces}\label{sec:outline-classes}
 
-By \cref{prop:partition}, \cref{thm:at-most-five} follows from one theorem for each of the five
-classes. The five exclusions use different mechanisms. The classes $\cls{R}$ and $\cls{M3}$ are
-excluded for every normal vertex period, with no reference to the cost: their obstructions are
-local and come from the maximum principle alone. The classes $\cls{M1}$, $\cls{F}$ and $\cls{M2}$
-are excluded only for competitive periods, through the Casimir cap and estimates over the whole
-period. This section states the five theorems and explains their proofs, which are in
-\cref{sec:reverse,sec:short-runs,sec:forward,sec:mixed,sec:smaller-short}.
+The classification separates the proof into five cases. Two cases are impossible for any normal
+vertex period because of local optimality conditions. The other three require a comparison with
+the octagon's cost. For each case we describe the obstruction and its role in the reduction.
+The calculations are given in five corresponding appendices.
 
-\subsection{Classes R and M3}\label{sec:outline-reverse}
+\subsection{Class R: every switch reverse}\label{sec:outline-reverse}
 
-The two classes whose obstruction is local are an entirely reverse period and a mixed period with
-a maximal reverse run of length other than two. Both exclusions rest on two facts about a few
-consecutive pieces, which hold for every normal vertex period, whatever its cost and its number of
-pieces. The first says that across three reverse switches the active margin of an interior piece
-cannot be a minimum of the four.
-
-\begin{lemma}[Reverse-four principle]\label{lem:reverse-four}
-Let four consecutive pieces $k,\dots,k+3$ of a normal vertex period have three reverse switches
-between them. Then
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item it is not the case that $a_{k+2}\le a_k$, $a_{k+2}\le a_{k+1}$ and $a_{k+2}\le a_{k+3}$;
-\item it is not the case that $a_{k+1}\le a_k$, $a_{k+1}\le a_{k+2}$ and $a_{k+1}\le a_{k+3}$.
-\end{enumerate}
-\end{lemma}
-
-It is proved from two exact linear identities between the switching functions at the three
-switches (\cref{lem:rev-identities}) and the sign of an explicit cost derivative
-(\cref{lem:rev-N}). The second fact says that across two switches that return to the same label,
-the active margins are strictly log-concave; it is read off the explicit switching function on the
-middle piece.
-
-\begin{lemma}[Three-arc log-concavity and turn ordering]\label{lem:three-arc}
-Let $k,k+1,k+2$ be consecutive pieces of a normal vertex period.
-\begin{enumerate}[label=\textup{(\alph*)}]
-\item If $i_{k+2}=i_k$, then $a_ka_{k+2}<a_{k+1}^2$; in particular $a_{k+1}$ is not at most both
-  $a_k$ and $a_{k+2}$.
-\item If the switch $k$ is reverse and the switch $k+1$ forward, then $a_k<a_{k+2}$; if the switch
-  $k$ is forward and the switch $k+1$ reverse, then $a_{k+2}<a_k$.
-\end{enumerate}
-\end{lemma}
-
-An entirely reverse period has a global minimum of its active margins, and the four pieces around
-it have three reverse switches between them; this contradicts \cref{lem:reverse-four}.
+In an entirely reverse period, choose a piece whose active margin is smallest. The pieces on
+either side also belong to the reverse pattern. The local switching conditions rule out a minimum
+in this position: among four pieces joined by three reverse switches, neither interior piece can
+have an active margin at most all the others. This is the \emph{reverse-four principle}
+(\cref{lem:reverse-four}). Applying it at the chosen minimum gives the contradiction.
 
 \begin{theorem}[Class $\cls{R}$]\label{thm:class-R}
 No normal vertex period has every switch reverse.
 \end{theorem}
 
-In a reverse run of a mixed period, the two lemmas leave room for exactly one configuration: a run
-of two switches around a strict minimum.
+The argument uses neither the cost nor the number of pieces. It excludes entirely reverse
+patterns from the final short-period comparison as well. \Cref{sec:reverse} proves the local
+principle and its application to this case.
 
-\begin{proposition}[Run structure]\label{prop:run-structure}
-Let $P$ be a mixed normal vertex period, and let the switches $k,\dots,k+L-1$ form a maximal
-reverse run. Then $L=2$, and the active margin of the centre piece $k+1$ is strictly smaller
-than those of the four pieces around it:
-\[
-  a_{k+1}<a_{k-1},\qquad a_{k+1}<a_k,\qquad a_{k+1}<a_{k+2},\qquad a_{k+1}<a_{k+3}.
-\]
-\end{proposition}
+\subsection{Class M3: reverse runs of the wrong length}\label{sec:outline-mixed-runs}
+
+A mixed period has forward switches on either side of every maximal reverse run. The question is
+how a run can enter and leave this reverse motion. At an entry or an exit, two successive switches
+return to the same label. The active margins $a,b,c$ of the three pieces then satisfy
+$ac<b^2$ (\cref{lem:three-arc}). In particular the middle piece cannot have the smallest of these
+three margins.
+
+This inequality forces the active margins to decrease as the run begins and to increase as it
+ends. A run of one reverse switch would require contradictory orderings at its two ends. A run
+of three or more would have an interior minimum, forbidden by the reverse-four principle. Only
+a run of two reverse switches remains.
 
 \begin{theorem}[Class $\cls{M3}$]\label{thm:class-M3}
 No normal vertex period is mixed with a maximal reverse run of length other than two.
 \end{theorem}
 
-\Cref{thm:class-M3} is the first conclusion of \cref{prop:run-structure}. The second conclusion,
-the strict minimum at every centre, is the input of the remaining mixed classes, and of the proof
-of ellipticity (\cref{prop:ellipticity}). The proofs are in \cref{sec:reverse}, and the identities
-behind them in \cref{app:reverse-estimates}.
+The piece between the two reverse switches is called the \emph{centre}. Its active margin is
+strictly smaller than those of the surrounding pieces (\cref{prop:run-structure}). This strict
+minimum supplies the local configuration for both remaining mixed cases. The argument and its
+consequences for the Casimir are proved in \cref{sec:mixed-runs}.
 
-\subsection{Class M1}\label{sec:outline-short-runs}
+\subsection{Class M1: isolated forward switches}\label{sec:outline-short-runs}
 
-A period of class $\cls{M1}$ is mixed, every maximal run of reverse switches has length two and
-every maximal run of forward switches has length one. Its cyclic sign word is therefore
-$(--+)^m$: every reverse run is a pair of reverse switches around a centre piece, and consecutive
-pairs are separated by single forward switches.
+Here each reverse run has two switches and each forward run has one. The cyclic signs are
+therefore $(--+)^m$, where $m$ is the number of reverse centres. This repeated pattern permits a
+comparison of the turning at individual centres with the turning required over a whole period.
 
 \begin{theorem}\label{thm:class-M1}
-  No competitive normal vertex period belongs to class \cls{M1}.
+No competitive normal vertex period belongs to class $\cls{M1}$.
 \end{theorem}
 
-The theorem uses neither the compact domain nor a lower bound on the number of pieces. Its proof
-compares two ways of counting how far the switch vectors $y_k$ turn in one period, measured in a
-positive definite form $S$ built from the normal multiplier. At a turn the switch vector only
-changes sign, so all the turning happens at the $m$ centres. A whole-period winding identity fixes
-the total turning at exactly $(m+1)\pi/3$, because the frame of a competitive period turns by
-exactly $\pi/3$ (\cref{prop:m1-winding}). A local estimate at each centre, which combines the
-stationarity identity, the Gram identity and the Casimir cap, shows that each centre turns the
-switch vectors by more than $2\pi/5$ (\cref{prop:m1-angle-gap}). The average $(m+1)\pi/(3m)$ is at
-most $2\pi/5$ as soon as $m\ge5$, and the sign sum (\cref{lem:sign-sum}) leaves $m=2$ as the only
-other case. With two centres the recurrence of the switch vectors closes up only in a rigid
-configuration whose cost can be computed exactly, and it exceeds $\Aoct$
-(\cref{prop:m1-two-centre}). The proof is in \cref{sec:short-runs}.
+The costate and frame determine an auxiliary vector at every switch, called a \emph{switch
+vector}. Its direction is measured using a positive definite quadratic form supplied by the
+Casimir. Between centres these vectors only change sign, so their line directions do not change.
+All the turning is concentrated at the centres. The closing conditions fix the total turning as
+$(m+1)\pi/3$ (\cref{prop:m1-winding}). The local switching conditions and the Casimir cap require
+more than $2\pi/5$ at each centre (\cref{prop:m1-angle-gap}).
 
-\subsection{Class F}\label{sec:outline-forward}
+For $m\ge5$, the required total is too small to accommodate these local contributions. The
+closing condition on the labels leaves only $m=2$ as another possibility. In that case the two
+centres must satisfy a rigid relation, and an exact comparison shows that their period costs
+more than $\Aoct$ (\cref{prop:m1-two-centre}). Thus this case is excluded without using the
+compact state domain or a lower bound on the number of pieces. The proof is in
+\cref{sec:short-runs}.
 
-The smoothed octagon's period is entirely forward. No other entirely forward period with six or
-more pieces is competitive.
+\subsection{Class F: every switch forward}\label{sec:outline-forward}
+
+The octagon itself has only forward switches. This case must therefore distinguish its four
+pieces from longer forward periods.
 
 \begin{theorem}[Class F]\label{thm:class-F}
 No competitive normal vertex period with at least six pieces has every switch forward.
 \end{theorem}
 
-The proof plays two consequences of competitiveness against each other. On one side, the spectral
-cost--Casimir inequality gives the sharper cap
-$\gamma^2\le(3\Aoct/\pi-\frac32)^2/12$
-(\cref{prop:fwd-spectral,cor:fwd-cap}). On the other side, $\gamma^2$ can be
-read off at any piece from the two switch norms on either side of it and their cross pairing
-(\cref{lem:gram}), and we read it at a piece of smallest active margin. In an entirely forward
-period $N\equiv1\pmod3$, so a period with $N\ge6$ has at least seven pieces, and its cost is a sum
-of seven or more edge terms that depend only on consecutive active margins. At the octagon's
-margins each edge costs exactly a quarter of $\Aoct$, so seven edges fit into the budget only if
-the smallest margin is markedly smaller than the octagon's. The switching conditions at the five
-pieces around that small margin then hold the two switch norms close to their least possible value
-$3/32$, and with such norms the Gram identity makes $\gamma^2$ slightly larger than
-competitiveness allows. The central pairing retains a positive logarithmic correction; the resulting
-vertex bounds for the Casimir exceed the spectral cap (\cref{fig:forward}). The proof is in \cref{sec:forward}, and its scalar estimates in
-\cref{app:forward-estimates}.
+Closure requires the number of pieces to be $1$ modulo $3$. A forward period with six or more
+pieces consequently has at least seven. Its cost is a sum of terms determined by consecutive
+active margins. If all the margins were as large as the octagon's, these terms would exceed the
+available budget. A competitive period must therefore have a smaller minimum margin.
 
-\subsection{Class M2}\label{sec:outline-mixed}
+At a piece attaining that minimum, the switching conditions restrict the neighbouring data.
+The local formula for the Casimir then forces its value above the upper bound allowed by the
+cost of turning through $\pi/3$. The two bounds are incompatible. This explains the distinction
+between the octagon and longer forward motions: extra pieces force a small margin, and the
+necessary local geometry around that margin is too expensive. \Cref{sec:forward} gives the
+cost estimates and the local comparison.
 
-A period of class $\cls{M2}$ has switches of both signs, every maximal reverse run has exactly two
-switches, and some maximal forward run has at least two. Unlike the other classes, such a period
-has no rigid sign word: the forward runs may have any lengths, the number of reverse runs is
-arbitrary, and the factors are unrelated.
+\subsection{Class M2: longer forward runs}\label{sec:outline-mixed}
+
+The last case is mixed, every reverse run has two switches, and at least one forward run has two
+or more. The forward runs need not have equal lengths, so there is no single repeated pattern
+to which the turning argument for $\cls{M1}$ can be applied. Instead we study a few pieces
+around a smallest active margin.
 
 \begin{theorem}[Class $\cls{M2}$]\label{thm:class-M2}
 Let $P$ be a competitive normal vertex period whose state stays in $\hstarstar$ and which has at
 least six pieces. Then the sign sequence of $P$ is not of class $\cls{M2}$.
 \end{theorem}
 
-The exclusion is therefore local. We look at a window of at most seven consecutive pieces around
-the smallest active margin of the period, read the normal multiplier of the whole period in that
-window, and derive a finite list of scalar necessary conditions, which are then shown to be
-inconsistent. The whole period enters only through three inputs: the compact domain, the Casimir
-cap, and a lower bound on the Casimir obtained from the winding of the switch vectors over the
-period. The first step locates the window.
+The smallest margin occurs at a reverse centre (\cref{prop:m2-centre}). Of the two neighbouring
+pieces, choose the one with the smaller active margin. Reflection and reversal of time allow
+us to place it after the centre. The forward run beginning there has either one switch or at
+least two. These possibilities require different comparisons.
 
-\begin{proposition}[The minimum is a reverse centre]\label{prop:m2-centre}
-Let $P$ be a competitive normal vertex period of class $\cls{M2}$ with at least six pieces. There is
-an index $m$ with $a_m\le a_k$ for every $k$ such that the switches $m-1$ and $m$ are reverse and the
-switches $m-2$ and $m+1$ are forward.
-\end{proposition}
+If the run has at least two switches, a variation of one margin reduces the necessary switching
+inequalities to a simpler boundary configuration. A reverse continuation violates those
+inequalities directly. A forward continuation forces the Casimir above its cost bound. These
+comparisons are proved in \cref{sec:m2-comparison,sec:m2-reverse,sec:m2-forward}.
 
-Of the two turns beside that centre we choose the one with the smaller active margin; after
-reflecting the period and reversing time if necessary, it follows the centre
-(\cref{lem:m2-reflection}). The forward run that starts at this turn has one switch or more.
+If the run has one switch, it forms a short connection between two reverse runs. The proof first
+restricts the possible shape of this connection. It then shows that the closing and switching
+conditions force a definite deformation of the frame across the connection. This deformation is
+measured by a parameter called the \emph{shear}. The cost of the connection together with the
+rest of the period exceeds $\Aoct$. The estimates are organized as seven successive restrictions
+in \cref{sec:smaller-short}.
 
-If it has at least two, the run is \emph{nonshort}, and the switch after the next piece is forward
-or reverse (\cref{prop:m2-window,prop:m2-continuation}). A comparison that moves one margin to a
-boundary value turns the window into one scalar residual $N$ that must be negative
-(\cref{lem:m2-comparison}), together with a short list of necessary bounds
-(\cref{lem:m2-necessary}). A reverse successor contradicts $N<0$ directly (\cref{thm:m2-reverse}).
-A forward successor leaves a small region of parameters on which the Casimir exceeds the cap
-(\cref{thm:m2-forward}). \Cref{sec:mixed} gives this part of the proof, and
-\cref{app:nonshort-estimates} its polynomial inequalities.
-
-If the forward run has a single switch, it is a short bridge between two reverse runs. Its data
-are fixed by six real numbers, and no free continuation of the period is left to compare with. The
-proof works with a fixed list of necessary conditions on those numbers, the \emph{smaller-short
-window} (\cref{def:ss-window}), and shows that the list is inconsistent
-(\cref{thm:m2-smaller-short}). It proceeds through seven steps, which we call gates. Gates S0 to
-S3 confine the shape of the bridge to a small box, gate S4 gives a lower bound for the Casimir,
-gate S5 shows that the bridge is sheared in a definite direction, and gate S6 shows that a bridge
-sheared in that direction costs more, together with the rest of the period, than the octagon.
-\Cref{sec:smaller-short} gives this part of the proof, and \cref{app:short-estimates} its scalar
-estimates.
+Both arguments use local data from at most seven pieces. The complete period enters through
+the cost budget, the compact domain and the turning identities. \Cref{sec:mixed} contains the
+full proof of this case, with separate subsections for the two continuation arguments.
 
 \subsection{Proof of \texorpdfstring{\cref{thm:at-most-five}}{the bound on the number of pieces}}\label{sec:outline-five-proof}
 
 \begin{proof}[Proof of \cref{thm:at-most-five}]
-Suppose $N\ge6$. By \cref{prop:partition} the period is in one of the five classes, and each
-class is excluded by a theorem proved in the following sections:
-\begin{center}
-\begin{tabular}{@{}lll@{}}
-\toprule
-Class & Excluded by & Hypotheses used\\
-\midrule
-$\cls{R}$ & \cref{thm:class-R} & none\\
-$\cls{M3}$ & \cref{thm:class-M3} & none\\
-$\cls{M1}$ & \cref{thm:class-M1} & competitive\\
-$\cls{F}$ & \cref{thm:class-F} & competitive, $N\ge6$\\
-$\cls{M2}$ & \cref{thm:class-M2} & competitive, state in $\hstarstar$, $N\ge6$\\
-\bottomrule
-\end{tabular}
-\end{center}
-Only the classes $\cls{F}$ and $\cls{M2}$ use the bound on the number of pieces.
+Suppose the period has $N\ge6$ pieces. By \cref{prop:partition} it belongs to one of the five
+classes. Classes $\cls{R}$ and $\cls{M3}$ are excluded by
+\cref{thm:class-R,thm:class-M3}. Competitiveness excludes $\cls{M1}$ by \cref{thm:class-M1}.
+The bound $N\ge6$ also excludes $\cls{F}$ by \cref{thm:class-F}. Finally, the compact-domain
+hypothesis allows \cref{thm:class-M2} to exclude $\cls{M2}$. This exhausts the classes.
 \end{proof}
 
-The classes $\cls{R}$ and $\cls{M3}$ are excluded for every normal vertex period, with no
-reference to the cost: their obstructions are local in the period and come from the maximum
-principle alone. The classes $\cls{M1}$, $\cls{F}$ and $\cls{M2}$ are excluded only for
-competitive periods, through the Casimir cap and estimates over the whole period.
-\Cref{sec:outline-terminal} treats the periods with at most five pieces.
+Only the forward case and the last mixed case use the assumption of six or more pieces. We now
+compare the periods left by this reduction.

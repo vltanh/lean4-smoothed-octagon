@@ -84,7 +84,7 @@ In a balanced pair each contact curve traces the whole frontier once per period,
 of $eK$ is the range of $\sigma_0$, and the frontier of $\KH$ is the range of
 $\sigma^{\mathrm{oct}}_{-r}$. Hence $\partial(eK)=M(\partial\KH)=\partial(M\KH)$. Both $eK$ and
 $M\KH$ are convex disks symmetric about the origin, so $eK=M\KH$ by \cref{lem:eq-frontier}, and
-$K=e^{-1}M(\KH)$.
+$K=e^{-1}M(\KH)=e^{-1}g(s)R^r(\KH)$.
 \end{proof}
 
 The proof never compares $K$ with a minimizer other than its own realization. It runs the
@@ -115,6 +115,10 @@ $\sigma^{\mathrm{oct}}_0$ of the octagon's trajectory over one period $[0,6\tf]$
 \cref{prop:octagon-trajectory}, $\KH$ is also the convex hull of the six arcs
 $\sigma^{\mathrm{oct}}_j([0,\tf])$. The two octagons differ by a vertical stretch of about $5.5\%$
 (\cref{fig:octagon}).
+
+\begin{proposition}[Reinhardt's octagon is Hales's octagon]\label{prop:reinhardt-construction}
+Let $A=\operatorname{diag}\bigl(1,(2\sqrt2-1)/\sqrt3\bigr)$. Then $A(\KH)=\Koct$.
+\end{proposition}
 
 \begin{proof}[Proof of \cref{prop:reinhardt-construction}]
 Write $y_0^2=(2\sqrt2-1)/3$ and $W=\exp(\sqrt3\,y_0 s)$ for $s\in[0,\tsw]$, so that $W$ runs over

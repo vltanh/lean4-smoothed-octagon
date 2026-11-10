@@ -1,4 +1,4 @@
-\section{The reduction to finite normal periods}\label{sec:reduction}
+\subsection{Outline of the finite reduction}\label{app:reduction-outline}
 
 \Cref{sec:setting} produced a global minimizer of the control problem whose state stays in the
 compact domain $\hstarstar$. This section shows that, after a change of origin in time, such a
@@ -370,6 +370,23 @@ $[0,T]$.
 
 \subsection{Vertex representations and rebasing}\label{red:rebase}
 
+\begin{definition}[Vertex representation]\label{def:vertex-representation}
+A \emph{vertex representation} of a control $u$ on $[0,T]$ consists of an integer $N\ge1$, a
+strictly increasing sequence $(\tau_k)_{k\in\Z}$ of \emph{switching times} with $\tau_0=0$ and
+$\tau_{k+N}=\tau_k+T$, and \emph{labels} $i_k\in\Z/3$ with $i_{k+N}=i_k+1$ and $i_{k+1}\ne i_k$ for
+every $k\in\Z$, such that for $0\le k<N$ the control equals $\ee_{i_k}$ almost everywhere on
+$(\tau_k,\tau_{k+1})$. The interval $(\tau_k,\tau_{k+1})$ is the
+$k$-th \emph{piece}, and $N$ is the number of pieces of the period.
+\end{definition}
+
+\begin{definition}[Normal period]\label{def:normal-period}
+A \emph{normal period} is a Pontryagin extremal $(T,u,g,X,\Lambda_1,\Lambda_R,\lambda)$ with
+$\lambda=-1$, together with a vertex representation of its control $u$. It is
+\emph{competitive} if $\cost(T,X)\le\Aoct$, and it lies in the
+compact domain if $X(t)\in\hstarstar$ for $t\in[0,T]$. The
+\emph{active margin} of the $k$-th piece is $a_k=p_{i_k}(X(\tau_k))$, with $k$ read modulo $N$.
+\end{definition}
+
 The pieces of \cref{prop:finite-switches} may have equal neighbouring labels, and the cut at $t=0$
 need not be a switch. Both are repaired by extending the trajectory periodically. The \emph{twisted
 extension} of an admissible trajectory $(T,u,g,X)$ is defined for $t\ge0$ by
@@ -480,6 +497,20 @@ The argument does not use the minimality of $(T,u,g,X)$: an abnormal lift of any
 vertex representation contradicts the twisted closing condition.
 
 \subsection{The finite normal representation}\label{red:assembly}
+
+\begin{theorem}[Finite normal representation]\label{thm:finite-normal}
+Let $(T,u,g,X)$ be a global minimizer of the control problem. There are a normal period
+$(T,\hat u,\hat g,\hat X,\Lambda_1,\Lambda_R,-1)$, with a vertex representation of $\hat u$, and a
+time $s\in[0,T)$ such that
+\begin{enumerate}
+\item $\hat g(t)=G(s)^{-1}G(s+t)$ and $\hat X(t)=Y(s+t)$ for $t\in[0,T]$, where $(G,Y)$ is the
+  twisted extension of $(g,X)$;
+\item $\cost(T,\hat X)=\cost(T,X)$, and $(T,\hat u,\hat g,\hat X)$ is a global minimizer;
+\item $\hat X(t)\in\hstarstar$ for every $t\in[0,T]$.
+\end{enumerate}
+In particular the period is competitive,
+$\cost(T,\hat X)\le\Aoct$.
+\end{theorem}
 
 \begin{proof}[Proof of \cref{thm:finite-normal}]
 The state of the minimizer stays in $\hstarstar$ (\cref{thm:compact-domain}), and its cost is at

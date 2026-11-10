@@ -1,132 +1,81 @@
-\section{From minimizers to vertex periods}\label{sec:outline-periods}
+\section{From minimizers to finite switching patterns}\label{sec:outline-periods}
 
-This section and the next two state the steps of the proof of \cref{thm:control} and explain how
-each step is proved; the proofs are in the appendices. This section turns a global minimizer into
-a finite list of numbers, the data of a vertex period, and states the theorem that bounds their
-number. \Cref{sec:outline-classes} proves that theorem, and \cref{sec:outline-terminal} compares
-the remaining periods with the octagon and proves the main theorems.
+An arbitrary admissible control may vary throughout a continuum of choices. The comparison with
+the octagon becomes manageable only after this freedom has been reduced. We first show that a
+minimizer uses finitely many constant vertex controls. We then classify the order in which these
+controls occur. For a minimizer, the exclusions will leave at most five pieces.
 
-\subsection{Finite normal periods}\label{sec:outline-reduction}
+\subsection{Why only finitely many pieces are needed}\label{sec:outline-reduction}
 
-\Cref{sec:setting} produced a global minimizer of the control problem whose state stays in the
-compact domain $\hstarstar$ (\cref{thm:equivalence,thm:compact-domain}). The first step shows that,
-after a change of origin in time, such a minimizer has a control that takes only the three vertex
-values $\ee_0,\ee_1,\ee_2$ of the simplex, switching finitely often in a period, and that it
-carries a Pontryagin lift with cost multiplier $\lambda=-1$.
+The \emph{Pontryagin maximum principle} gives necessary conditions for an optimal control. It
+introduces auxiliary matrix-valued functions, called \emph{costates}, that measure the response of
+the cost to variations of the trajectory. Together with the state and control, they form a
+\emph{Pontryagin extremal} (\cref{def:pmp-extremal}). A scalar multiplier records the contribution
+of the cost. The extremal is \emph{normal} when this multiplier is nonzero; it can then be
+normalized to $-1$.
 
-\begin{definition}[Vertex representation]\label{def:vertex-representation}
-A \emph{vertex representation} of a control $u$ on $[0,T]$ consists of an integer $N\ge1$, a
-strictly increasing sequence $(\tau_k)_{k\in\Z}$ of \emph{switching times} with $\tau_0=0$ and
-$\tau_{k+N}=\tau_k+T$, and \emph{labels} $i_k\in\Z/3$ with $i_{k+N}=i_k+1$ and $i_{k+1}\ne i_k$ for
-every $k\in\Z$, such that for $0\le k<N$ the control equals $\ee_{i_k}$ almost everywhere on
-$(\tau_k,\tau_{k+1})$. The interval $(\tau_k,\tau_{k+1})$ is the
-$k$-th \emph{piece}, and $N$ is the number of pieces of the period.
-\end{definition}
+These necessary conditions do not by themselves give a finite switching description. At certain
+states and costates, called the \emph{singular locus}, they fail to distinguish the available
+controls. Such behaviour can lead to infinitely many switches in finite time. Our first estimate
+uses the bound $\cost\le\Aoct<\pi$ to keep a minimizing extremal away from this locus
+(\cref{prop:clearance}).
 
-A Pontryagin extremal $(T,u,g,X,\Lambda_1,\Lambda_R,\lambda)$ is an admissible trajectory together
-with costates $\Lambda_1,\Lambda_R$ and a cost multiplier $\lambda\le0$ that satisfy the conditions
-of the maximum principle (\cref{def:pmp-extremal}). Its \emph{vertex Hamiltonians} $H_0,H_1,H_2$
-are the Hamiltonian evaluated at the three vertices; they are continuous, at most $0$, and one of
-them vanishes at every time (\cref{lem:vertex-hamiltonians}).
+Away from the singular locus, one of the three vertex controls is locally excluded. The problem
+then reduces locally to an edge of the control triangle. An edge minimizer has at most four
+pieces (\cref{prop:edge-bound}). Covering the time interval by finitely many such neighbourhoods
+gives a finite number of switches. After joining equal neighbouring pieces and choosing a switch
+as the starting time, the minimizer has a \emph{vertex representation}: a finite sequence of
+constant vertex controls with unequal neighbouring labels, including across the closing seam.
+Finally, the closing conditions rule out a zero cost multiplier.
 
-\begin{definition}[Normal period]\label{def:normal-period}
-A \emph{normal period} is a Pontryagin extremal $(T,u,g,X,\Lambda_1,\Lambda_R,\lambda)$ with
-$\lambda=-1$, together with a vertex representation of its control $u$. It is
-\emph{competitive} if $\cost(T,X)\le\Aoct$, and it lies in the
-compact domain if $X(t)\in\hstarstar$ for $t\in[0,T]$. The
-\emph{active margin} of the $k$-th piece is $a_k=p_{i_k}(X(\tau_k))$, with $k$ read modulo $N$.
-\end{definition}
+The resulting object is a \emph{normal vertex period}: an admissible trajectory with a vertex
+representation and a normal Pontryagin extremal. It is \emph{competitive} when its cost is at
+most $\Aoct$. The finite normal representation theorem (\cref{thm:finite-normal}) gives such a
+period for every global minimizer. It has the same cost as the original trajectory and stays in
+$\hstarstar$; only its starting time has changed.
 
-The \emph{twisted extension} $(G,Y)$ of a trajectory continues it to all times through the twist
-by $R$, and restarting it at a time $s$ \emph{rebases} the period (\cref{red:rebase}).
+This reduction preserves the motion of the original disk. That fact will be needed for the
+equality case. The precise representation, including the change of starting time, is proved in
+\cref{sec:reduction}.
 
-\begin{theorem}[Finite normal representation]\label{thm:finite-normal}
-Let $(T,u,g,X)$ be a global minimizer of the control problem. There are a normal period
-$(T,\hat u,\hat g,\hat X,\Lambda_1,\Lambda_R,-1)$, with a vertex representation of $\hat u$, and a
-time $s\in[0,T)$ such that
-\begin{enumerate}
-\item $\hat g(t)=G(s)^{-1}G(s+t)$ and $\hat X(t)=Y(s+t)$ for $t\in[0,T]$, where $(G,Y)$ is the
-  twisted extension of $(g,X)$;
-\item $\cost(T,\hat X)=\cost(T,X)$, and $(T,\hat u,\hat g,\hat X)$ is a global minimizer;
-\item $\hat X(t)\in\hstarstar$ for every $t\in[0,T]$.
-\end{enumerate}
-In particular the period is competitive,
-$\cost(T,\hat X)\le\Aoct$.
-\end{theorem}
+\subsection{What one piece records}\label{sec:outline-pieces}
 
-\Cref{sec:reduction} proves \cref{thm:finite-normal}. The maximum principle gives a lift
-$(\Lambda_1,\Lambda_R,\lambda)$ of the minimizer, possibly abnormal ($\lambda=0$)
-(\cref{thm:pmp-lift}). The danger is the singular locus, where the Hamiltonian does not depend on
-the control and the maximum condition gives no information. Near it Hales and Vajjha find Fuller's
-system~\cite{HalesVajjha2024,Fuller1963}, whose optimal controls switch infinitely often in
-finite time. A budget inequality, which uses only that the cost is at most $\Aoct<\pi$, keeps
-every lift away from the singular locus in proportion to its size (\cref{prop:clearance}). Away
-from the singular locus one vertex is excluded on each side of every time
-(\cref{red:local-exclusion}). On an interval where one vertex is excluded the control runs along
-an edge of the simplex, and an edge minimizer has at most four pieces (\cref{prop:edge-bound}).
-Compactness of $[0,T]$ then gives finitely many pieces (\cref{prop:finite-switches}). Merging
-equal neighbours and restarting the period at a genuine switch gives a vertex representation
-(\cref{lem:word-reduction}), and for a lift of a trajectory with a vertex representation the
-multiplier is nonzero (\cref{thm:normality}).
+Let $N$ be the number of pieces. We write $\tau_k$ for their switching times and
+$i_k\in\mathbb Z/3\mathbb Z$ for their labels, where labels are read cyclically as $0,1,2$.
+The closing condition shifts every label by one after a period, so $i_{k+N}=i_k+1$.
+For the octagon, the four labels are $2,0,1,2$; the next label is $0$, obtained by adding one to
+the first label.
 
-The order of these steps matters. The clearance and the switch count are homogeneous in
-$(\lambda,\Lambda_1,\Lambda_R)$, so they hold for abnormal lifts as well as normal ones. The
-normality argument, on the other hand, reads the costate at the finitely many switching times
-and uses the twisted closing condition of the period. Finiteness is therefore proved first, for an
-arbitrary lift, and normality afterwards.
+The state has three positive coordinates $p_0(X),p_1(X),p_2(X)$, called \emph{margins}, one for
+each vertex control (\cref{lem:margins}). On a piece with label $i$, the coordinate $p_i(X)$ is
+constant. It is the \emph{active margin} of that piece. Write $a_k$ for this constant on piece
+$k$. It measures the scale of the state's motion during that piece. The other two margins, the
+frame and the costate all have explicit evolution formulas.
 
-\subsection{Pieces, signs and classes}\label{sec:outline-pieces}
+A piece can therefore be specified by its starting data and one positive duration. The state
+and frame must close after all the pieces have been composed. In these variables, closure is a
+finite system of equations, and the maximum principle becomes a finite system of inequalities.
+\Cref{sec:periods} derives these formulas. The case arguments below use their consequences rather
+than their full coordinate expressions.
 
-On a piece of constant vertex control, the state, the frame and the costate solve linear
-differential equations with constant coefficients, so everything that happens along the piece is
-given by explicit formulas in a few numbers at its start. Let $P$ be a normal vertex period with
-$N$ pieces, and write $m_k(j)=p_j(X(\tau_k))$ for the margins at the switch $\tau_k$, extended to
-all $k\in\Z$ by $m_{k+N}(j)=m_k(j-1)$. The \emph{active margin} of piece $k$ is $a_k=m_k(i_k)$,
-the margin of its own vertex at its start, and its \emph{factor} is
-$q_k=\exp\bigl(2(\tau_{k+1}-\tau_k)/a_k\bigr)>1$. Along the piece the active margin stays
-constant, and the two other margins move by
-\begin{gather*}
-  m_{k+1}(i_k+1)=\bigl(a_k+m_k(i_k+1)\bigr)q_k-a_k,\\
-  m_{k+1}(i_k-1)=\frac{a_k+m_k(i_k-1)}{q_k}-a_k .
-\end{gather*}
-With $b=m_k(i_k+1)$ and $c=m_k(i_k-1)$, the piece costs
-\[
-  \frac{\sqrt3}{4}\,a_k\Bigl((a_k+b)(q_k-1)+(a_k+c)\bigl(1-q_k^{-1}\bigr)-a_k\log q_k\Bigr),
-\]
-and the cost of the period is the sum over its pieces (\cref{lem:one-arc}). The boundary
-conditions $g(T)=R$ and $X(T)=R^{-1}X(0)R$ become a matrix equation in the factors, the tangent
-closure (\cref{lem:tangent-closure}). A period is thus described by finitely many numbers, related
-by algebraic and logarithmic identities, and the maximum principle becomes a list of sign
-conditions on them (\cref{sec:periods}).
+\subsection{The five switching patterns}\label{sec:outline-signs}
 
-Along a piece the margin of the next label grows and that of the previous label shrinks. Since
-$i_{k+1}\ne i_k$ and there are three labels, a switch either advances the label by one or moves it
-back by one.
-
-\begin{definition}[Signs, runs, turns, centres]\label{def:signs}
-The switch $k$ (from piece $k$ to piece $k+1$) is \emph{forward} if $i_{k+1}=i_k+1$ and
-\emph{reverse} if $i_{k+1}=i_k-1$; its sign is $\varepsilon_k=+1$ or $\varepsilon_k=-1$. A \emph{maximal reverse
-run} of length $L\ge1$ is a block of reverse switches $k,\dots,k+L-1$ preceded and followed by
-forward switches; maximal forward runs are defined in the same way. A forward run of length one
-is \emph{short}. Piece $k$ is a \emph{turn} if $\varepsilon_{k-1}\ne\varepsilon_k$, a \emph{centre} if
-$\varepsilon_{k-1}=\varepsilon_k=-1$, and a \emph{forward same-sign piece} if $\varepsilon_{k-1}=\varepsilon_k=+1$.
-\end{definition}
-
-Since $i_{k+N}=i_k+1$, the signs of a period add up to $1$ modulo $3$ (\cref{lem:sign-sum}). The
-octagon's period has the word $\ee_2\ee_0\ee_1\ee_2$: four pieces and four forward switches,
-counting the one across the twisted seam.
+A switch is \emph{forward} if $i_{k+1}=i_k+1$ and \emph{reverse} if
+$i_{k+1}=i_k-1$. Denote its sign by $+$ or $-$, respectively. These are the only possibilities
+because consecutive labels are unequal. A \emph{run} is a maximal consecutive block of switches
+with the same sign. The signs repeat after a period, so runs are understood cyclically. A period
+is \emph{mixed} if it has both signs.
 
 \begin{definition}[The five classes]\label{def:classes}
 A vertex period is in class
 \begin{itemize}
 \item $\cls{R}$ if every switch is reverse;
 \item $\cls{F}$ if every switch is forward;
-\item $\cls{M3}$ if it is mixed (both signs occur) and some maximal reverse run has length
-  other than two;
-\item $\cls{M1}$ if it is mixed, every maximal reverse run has length two and every maximal
-  forward run has length one, so that the cyclic sign word is $(--+)^m$;
-\item $\cls{M2}$ if it is mixed, every maximal reverse run has length two and some maximal
-  forward run has length at least two.
+\item $\cls{M3}$ if it is mixed and some reverse run has length other than two;
+\item $\cls{M1}$ if it is mixed, every reverse run has length two and every forward run has
+  length one, so its cyclic sign sequence is $(--+)^m$ for some positive integer $m$;
+\item $\cls{M2}$ if it is mixed, every reverse run has length two and some forward run has
+  length at least two.
 \end{itemize}
 \end{definition}
 
@@ -135,50 +84,41 @@ Every vertex representation is in one of the classes $\cls{R}$, $\cls{F}$, $\cls
 $\cls{M1}$, $\cls{M2}$.
 \end{proposition}
 
-\subsection{The Casimir}\label{sec:outline-casimir}
+The classification distinguishes local obstructions from cost comparisons. Reverse runs of the
+wrong length contradict the maximum principle. Once they have been removed, the remaining
+patterns must be tested against the cost of completing a whole period.
 
-The costate $\Lambda_1$ is conjugated along the trajectory, so its determinant is constant. Read
-at the switches in coordinates adapted to the pieces, it gives a traceless $2\times2$ matrix $U$,
-the \emph{normal multiplier}, whose determinant $\gamma^2=\det\Lambda_1(0)/12$ is the
-\emph{Casimir} of the period (\cref{def:normal-multiplier}). Two properties of $\gamma^2$ drive the
-exclusions of the next section. The first is an upper bound. The frame has to turn through the
-angle $\pi/3$ between $g(0)=I$ and $g(T)=R$, and the larger $\gamma^2$ is, the more cost each unit
-of turning requires.
+\subsection{A conserved quantity and the cost budget}\label{sec:outline-casimir}
 
-\begin{proposition}[Cost--Casimir inequality]\label{prop:cost-casimir}
-Let $P$ be a normal vertex period such that $\det\Lambda_1(0)>0$ and the lower left entry of
-$\Lambda_1(0)$ is negative, and let $\kappa=\sqrt{\det\Lambda_1(0)}$. Then
+The costates supply a quantity that links these local and global conditions. For the first
+costate matrix $\Lambda_1(t)$, conjugation along the trajectory preserves its determinant. We
+use the scaled invariant
 \[
-  \cost(T,X)\ge\frac{4\pi\kappa}{2\kappa+3}.
+  \gamma^2=\frac{\det\Lambda_1(0)}{12},
 \]
-\end{proposition}
+called the \emph{Casimir}. The superscript is part of the notation; positivity is a conclusion,
+not an assumption. Every mixed normal period has $\gamma^2>0$ (\cref{prop:ellipticity}).
 
-For a competitive period the left side is at most $\Aoct$, which bounds $\kappa$ and so
-$\gamma^2$. Here $d_0$ is the first switch norm of \cref{lem:switch-norms}.
+The frame must turn through $\pi/3$ in a period. The cost of this turning gives an upper bound
+for the Casimir: every competitive mixed period satisfies
+\[
+  \gamma^2<\frac5{27}.
+\]
+The cost--Casimir inequality and this consequence are proved in
+\cref{prop:cost-casimir,cor:casimir-cap}. The entirely forward case uses a sharper bound of the
+same kind.
 
-\begin{corollary}[Casimir cap]\label{cor:casimir-cap}
-Let $P$ be a competitive normal vertex period ($\cost(T,X)\le\Aoct$) with $\gamma^2>0$ and
-$d_0>0$. Then $\gamma^2<5/27$. In particular this
-holds for every competitive mixed normal vertex period.
-\end{corollary}
+The same invariant can also be computed from the data beside a single piece. Thus a local
+switching pattern can force a value of $\gamma^2$ that the cost budget forbids. This comparison
+is central to two of the case arguments. Another case compares the turning accumulated at
+successive pieces with the turning required by closure.
 
-The second property is positivity.
-
-\begin{proposition}[Ellipticity]\label{prop:ellipticity}
-Every mixed normal vertex period has $\gamma^2>0$.
-\end{proposition}
-
-Its proof uses the structure of the reverse runs of a mixed period, and is given in
-\cref{sec:rev-ellipticity}. The Casimir can also be read off locally: at a centre or a forward
-same-sign piece $k$, the switch norms $d_{k-1},d_k$ on either side of it and their cross pairing
-$e_k$ satisfy $d_{k-1}d_k-e_k^2=\gamma^2/K_k^2$ with $K_k=a_k^2+4$ (\cref{lem:gram}). The
-exclusions of the classes $\cls{F}$ and $\cls{M2}$ compare this local value with the cap.
-
-\subsection{At most five pieces}\label{sec:outline-five}
+\subsection{The bound on the number of pieces}\label{sec:outline-five}
 
 \begin{theorem}[At most five pieces]\label{thm:at-most-five}
 A competitive normal vertex period whose state stays in the compact domain $\hstarstar$ has at
 most five pieces.
 \end{theorem}
 
-\Cref{sec:outline-classes} proves \cref{thm:at-most-five}, one class at a time.
+\Cref{sec:outline-classes} explains the five exclusions that prove this theorem. The consequence
+is a finite comparison with the octagon: only periods with at most five pieces remain.

@@ -62,12 +62,12 @@ disks, lattice packings, optimal control, Pontryagin maximum principle, bang-ban
   density is $\doct=(8-4\sqrt2-\log2)/(2\sqrt2-1)=0.902414\ldots$. We prove the conjecture: every
   centrally symmetric convex disk has greatest packing density at least $\doct$, with equality
   exactly for the images of the smoothed octagon under invertible affine maps. The proof uses
-  Hales's formulation of the problem as an optimal control problem on $\SLtwo$, and Hales and
-  Vajjha's results on its minimizers. The worst disks correspond to the global minimizers of the
-  control problem. A minimizer lifts to a normal Pontryagin extremal whose control is bang-bang
-  with finitely many switches. Its switching pattern has one of five sign types when it has at
-  least six pieces, and each type is excluded by an estimate on the whole period. The patterns
-  with at most five pieces are compared directly, and the cheapest is the octagon's. The proof is
+  Hales's formulation of the problem as an optimal control problem, in which the cost of a
+  trajectory is the area of the associated disk. Building on Hales and Vajjha's results on
+  minimizers, we reduce a least-cost motion to finitely many pieces of constant control. Five
+  cases cover the possible switching patterns, and each case is excluded for a minimizer with
+  six or more pieces. The remaining four- and five-piece motions can be compared exactly; the
+  minimum is attained only by the octagon's motion. The proof is
   accompanied by a formalization of the main theorems in Lean~4 with Mathlib, checked by Lean's
   kernel.
 \end{abstract}
@@ -86,9 +86,11 @@ disks, lattice packings, optimal control, Pontryagin maximum principle, bang-ban
 \crefalias{subsubsection}{appendix}
 \crefname{appendix}{Appendix}{Appendices}
 \Crefname{appendix}{Appendix}{Appendices}
+\input{sections/a00-setup}
 \input{sections/a01-reduction}
 \input{sections/a02-periods}
 \input{sections/a03-reverse}
+\input{sections/a03-mixed-runs}
 \input{sections/a04-short-runs}
 \input{sections/a05-forward}
 \input{sections/a06-mixed}

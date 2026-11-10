@@ -1,0 +1,192 @@
+\section{Class M3: reverse runs of the wrong length}\label{sec:mixed-runs}
+
+This appendix proves \cref{thm:class-M3}. The reverse-four principle of \cref{sec:reverse}
+prevents an interior minimum in a long reverse run. A second local inequality controls the ends
+of a run. Together they force every reverse run in a mixed normal period to have exactly two
+switches. The resulting strict minimum at each centre also gives the positivity of the Casimir,
+proved at the end of the appendix.
+
+\subsection{Three pieces with alternating labels}\label{sec:rev-three}
+
+\begin{lemma}[Three-arc log-concavity and turn ordering]\label{lem:three-arc}
+Let $k,k+1,k+2$ be consecutive pieces of a normal vertex period.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item If $i_{k+2}=i_k$, then $a_ka_{k+2}<a_{k+1}^2$; in particular $a_{k+1}$ is not at most both
+  $a_k$ and $a_{k+2}$.
+\item If the switch $k$ is reverse and the switch $k+1$ forward, then $a_k<a_{k+2}$; if the switch
+  $k$ is forward and the switch $k+1$ reverse, then $a_{k+2}<a_k$.
+\end{enumerate}
+\end{lemma}
+
+When the switch after piece $k$ is followed by a switch back to the label of piece $k$, the
+middle piece is a turn, and its two outer pieces have the same control. The switching function
+of that control vanishes at both ends of the middle piece and is $\le0$ in between. This forces
+a relation between the three active margins.
+
+\begin{proof}[Proof of \cref{lem:three-arc}]
+(b) After a reverse switch the label $i_k$ is the growing label of piece $k+1$, so
+$a_{k+2}=(a_{k+1}+a_k)\,q_{k+1}-a_{k+1}>a_k$ by \cref{lem:one-arc}; after a forward switch it is
+the decreasing label and $a_{k+2}=(a_{k+1}+a_k)/q_{k+1}-a_{k+1}<a_k$.
+
+(a) Write $a=a_{k+1}$ and $q=q_{k+1}$. Suppose first that the switch $k$ is reverse, so that the
+outer label $i=i_k$ is the growing label of the middle piece, with margin $b=a_k$ at its start, and
+$a_{k+2}=(a+b)q-a$. Since
+\[
+  a^2-b\bigl((a+b)q-a\bigr)=(a+b)(a-bq),
+\]
+the claim is $bq<a$. By \cref{lem:costate-transport} and \cref{app:rev-one-arc}, the switching
+function of the label $i$ at the intermediate factor $s\in[1,q]$ is
+\begin{gather*}
+  \chi_i(s)=2s\Bigl(Y(s-1)+\frac{\sqrt3a}{2}F(s)\Bigr),\\
+  F(s)=(a+b)\log s-(a+b)(s-1)+a\frac{(s-1)^2}{s},
+\end{gather*}
+for a number $Y$. It vanishes at $s=1$ and $s=q$ and is $\le0$ in between. The vanishing at $q$
+fixes $Y$, and $\chi_i\le0$ just before $q$ makes the derivative at $q$ nonnegative. Together
+these say $(q-1)F'(q)\ge F(q)$, that is,
+\[
+  (q-1)(2aq-a+bq)\ge(a+b)\,q^2\log q.
+\]
+If $bq\ge a$, this fails: the right side minus the left side equals
+$a\bigl(q^2\log q-(q-1)(2q-1)\bigr)+b\bigl(q^2\log q-q(q-1)\bigr)$; the second bracket is
+positive because $q\log q>q-1$; if the first bracket is negative, replace $a$ by the larger
+$bq$, which leaves $bq^2\bigl((q+1)\log q-2(q-1)\bigr)>0$. So $bq<a$.
+
+If the switch $k$ is forward, the outer label is the decreasing label of the middle piece, with
+margin $c=a_k$, and $a_{k+2}=(a+c)/q-a$. Now $a^2-c\bigl((a+c)/q-a\bigr)=(a+c)(a-c/q)$, and the
+claim is $c<aq$. Here $\chi_i(s)=-(2/s)\bigl(Y(1-s^{-1})+\frac{\sqrt3a}{2}h(s)\bigr)$ with
+$h(s)=(a+c)\log s-a(s-1)-c(1-s^{-1})$, and $h(1)=h'(1)=0$. The sign at the start of the piece
+gives $Y\ge0$. If $aq\le c$, then
+\[
+  h(q)=(c-aq)\bigl(\log q-(1-q^{-1})\bigr)+a\bigl((q+1)\log q-2(q-1)\bigr)>0,
+\]
+so $\chi_i(q)<0$, contradicting $\chi_i(q)=0$.
+\end{proof}
+
+The proof uses one end of the middle piece in each case: the right end when the outer label grows,
+the left end when it decreases. \Cref{fig:reverse-estimates}(a) shows the switching function of
+the growing case for an admissible factor and for one with $bq>a$.
+
+\subsection{Reverse runs}\label{sec:rev-runs}
+
+\begin{proposition}[Run structure]\label{prop:run-structure}
+Let $P$ be a mixed normal vertex period, and let the switches $k,\dots,k+L-1$ form a maximal
+reverse run. Then $L=2$, and the active margin of the centre piece $k+1$ is strictly smaller
+than those of the four pieces around it:
+\[
+  a_{k+1}<a_{k-1},\qquad a_{k+1}<a_k,\qquad a_{k+1}<a_{k+2},\qquad a_{k+1}<a_{k+3}.
+\]
+\end{proposition}
+
+\begin{proof}[Proof of \cref{prop:run-structure}]
+The run is preceded by the forward switch $k-1$ and followed by the forward switch $k+L$.
+
+At the entry, the switches $k-1,k$ are forward then reverse, so $a_{k+1}<a_{k-1}$ by
+\cref{lem:three-arc}(b), and $i_{k+1}=i_{k-1}$. If $a_k\le a_{k+1}$, then $a_k$ would be at most
+both $a_{k-1}$ and $a_{k+1}$, against \cref{lem:three-arc}(a). So $a_{k+1}<a_k$.
+
+At the exit, the switches $k+L-1,k+L$ are reverse then forward, so $a_{k+L-1}<a_{k+L+1}$, and
+\cref{lem:three-arc}(a) on the pieces $k+L-1,k+L,k+L+1$ gives $a_{k+L-1}<a_{k+L}$.
+
+If $L=1$, the entry gives $a_{k+1}<a_k$ and the exit $a_k<a_{k+1}$. If $L\ge3$, let $m$ be a
+piece of $k,\dots,k+L$ with the smallest active margin. It is not $k$, since $a_{k+1}<a_k$, nor
+$k+L$, since $a_{k+L-1}<a_{k+L}$. If $m=k+1$, the pieces $k,\dots,k+3$ have three reverse switches
+and the second one is a weak minimum, against \cref{lem:reverse-four}(b). If
+$k+2\le m\le k+L-1$, the pieces $m-2,\dots,m+1$ have three reverse switches and the third one is a
+weak minimum, against \cref{lem:reverse-four}(a). So $L=2$. The entry and the exit give the first
+three inequalities, and \cref{lem:three-arc}(b) at the switches $k+1,k+2$ gives
+$a_{k+1}<a_{k+3}$.
+\end{proof}
+
+The proof does not use mixedness beyond the existence of the run: a maximal reverse run is
+bounded by forward switches by definition, so a period that has one is mixed.
+
+\begin{proof}[Proof of \cref{thm:class-M3}]
+This is the first conclusion of \cref{prop:run-structure}.
+\end{proof}
+
+In a mixed period every reverse switch therefore belongs to a pattern $+\,-\,-\,+$ of switch
+signs, whose middle piece is a centre, and every centre is a strict local minimum of the active
+margins. The other classes use these facts through the following corollary.
+
+\begin{corollary}[Mixed periods]\label{cor:rev-mixed}
+Let $P$ be a mixed normal vertex period.
+\begin{enumerate}[label=\textup{(\alph*)}]
+\item Every reverse switch $k$ is the first or the second switch of a pattern of signs
+  $+\,-\,-\,+$: either the switches $k-1,k,k+1,k+2$ or the switches $k-2,k-1,k,k+1$ have these
+  signs.
+\item At a centre $k$, $a_k<a_{k-1}$ and $a_k<a_{k+1}$.
+\item Every switch norm satisfies $d_k\ge3/32$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+(a) and (b) restate \cref{prop:run-structure}. For (c), at a forward switch
+$d_k\ge j_k/2\ge3/32$ by \cref{lem:switch-norms}(a). By (a), a reverse switch is the outgoing
+switch of a turn (the piece $k$ after the forward switch $k-1$) or the incoming switch of a turn
+(the piece $k+1$ before the forward switch $k+1$), and \cref{lem:switch-norms}(b) gives
+$d_k\ge3/32$ in both cases.
+\end{proof}
+
+\subsection{Proof of ellipticity}\label{sec:rev-ellipticity}
+
+We prove \cref{prop:ellipticity}: a mixed normal vertex period has $\gamma^2>0$. Suppose
+$\gamma^2\le0$. The idea is to read the switch vectors $y_n$ of \cref{lem:per-switch-vectors}
+projectively, through a coordinate that changes monotonically from one switch to the next.
+Because $y_{N+n}=\pm y_n$, the coordinate returns to its value after one period; but at every
+centre it strictly increases, and nowhere does it decrease.
+
+\begin{lemma}[Three Gram vectors]\label{lem:rev-three-gram}
+Let $S$ be a symmetric $2\times2$ matrix with $\det S\le0$, and let $y,y',y''$ be vectors with
+$y^{\mathsf T}Sy$, $y'^{\mathsf T}Sy'$, $y''^{\mathsf T}Sy''$ all positive. Then
+$(y^{\mathsf T}Sy')(y^{\mathsf T}Sy'')(y'^{\mathsf T}Sy'')>0$.
+\end{lemma}
+
+\begin{proof}
+For two vectors, $(y^{\mathsf T}Sy)(y'^{\mathsf T}Sy')-(y^{\mathsf T}Sy')^2=\det S\cdot\det(y,y')^2\le0$.
+The Gram determinant of three vectors of the plane vanishes:
+$d\,d'\,d''-d\,c^2-d'\,b^2-d''a^2+2abc=0$ in the obvious notation. With the three two-vector
+inequalities, $2abc\ge d\,d'\,d''>0$.
+\end{proof}
+
+\begin{lemma}[Signs of the cross pairings]\label{lem:rev-cross-signs}
+Suppose $\gamma^2\le0$. At a forward same-sign piece $k$, $e_k>0$. At a centre $k$ with
+$a_k<a_{k-1}$, $a_k<a_{k+1}$ and $d_{k-1},d_k\ge3/32$, $e_k<0$.
+\end{lemma}
+
+\begin{proof}
+At a same-sign piece, \cref{lem:stationarity} expresses $e_k$ through $d_{k-1}$, $d_k$ and the
+active margins. At a forward same-sign piece both switches are forward, and the lower bounds
+$d\ge j/2$ of \cref{lem:switch-norms}(a) give $e_k\ge X_k$ with
+\[
+  X_k=\frac1{16}\Bigl(-1+2a\Bigl(\frac1{a+p}+\frac1{a+n}\Bigr)-\frac{a^2}{a^2+4}
+  +\log\frac{(a+p)(a+n)}{a^2+4}\Bigr),
+\]
+$a=a_k$, $p=a_{k-1}$, $n=a_{k+1}$. Here the logarithm is $\log q_k>0$ by
+\cref{lem:per-factors}, and $a^2/(a^2+4)<2a/(a+p)$ because $ap<4$; so $X_k>-1/16$. On the other
+hand $\gamma^2\le0$ and \cref{lem:gram} give $e_k^2\ge d_{k-1}d_k\ge(3/32)^2$, and $3/32>1/16$, so
+$e_k\ge3/32>0$. At a centre the switches are reverse, the upper bounds $d\le j/2$ give
+$e_k\le X_k$, and now the logarithm is $-\log q_k<0$ and $2a/(a+p)+2a/(a+n)<2$ by the strict
+minimum, so $X_k<1/16$ and $e_k\le-3/32$.
+\end{proof}
+
+\begin{proof}[Proof of \cref{prop:ellipticity}]
+Suppose $\gamma^2\le0$. By \cref{cor:rev-mixed}(c) every $d_n=y_n^{\mathsf T}Sy_n$ is at least
+$3/32$. Let $h(v)=y_0^{\mathsf T}Sv$, a nonzero linear form, and let $l$ be the linear form with
+$h(u)l(v)-h(v)l(u)=c\det(u,v)$ for a constant $c>0$. By \cref{lem:rev-three-gram} with
+$y=y_0$, $h(y_n)h(y_m)\,(y_n^{\mathsf T}Sy_m)>0$ for all $n,m$; in particular $h(y_n)\ne0$, and the
+projective coordinate $z_n=l(y_n)/h(y_n)$ is defined, with
+\[
+  z_{n+1}-z_n=\frac{c\,\det(y_n,y_{n+1})}{h(y_n)\,h(y_{n+1})}.
+\]
+By \cref{lem:per-switch-vectors}, at a turn $y_{n+1}=-y_n$ and the increment is $0$. At a forward
+same-sign piece $\det(y_n,y_{n+1})=1/K_{n+1}>0$ and $y_n^{\mathsf T}Sy_{n+1}=e_{n+1}>0$
+(\cref{lem:rev-cross-signs}), so $h(y_n)h(y_{n+1})>0$ and the increment is positive. At a centre
+$\det(y_n,y_{n+1})=-1/K_{n+1}<0$ and $e_{n+1}<0$, using the strict minimum and the bounds
+$d\ge3/32$ of \cref{cor:rev-mixed}; so $h(y_n)h(y_{n+1})<0$ and the increment is again positive.
+A mixed period has a reverse switch, hence a centre (\cref{cor:rev-mixed}(a)), so the increments
+over one period sum to a positive number. But $y_N=\pm y_0$ and $z$ depends only on the line of
+the vector, so the sum is $z_N-z_0=0$.
+\end{proof}
+
+For an entirely forward period every piece is a forward same-sign piece and the same telescoping gives
+$\gamma^2>0$.

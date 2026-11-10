@@ -1,4 +1,4 @@
-\section{Class M2: the minimum at a reverse centre and the nonshort cases}\label{sec:mixed}
+\section{Class M2: longer forward runs}\label{sec:mixed}
 
 A period of class $\cls{M2}$ has switches of both signs, every maximal reverse run has exactly two
 switches, and some maximal forward run has at least two (\cref{def:classes}). Unlike the classes
@@ -31,12 +31,14 @@ necessary bounds (\cref{lem:m2-necessary}).
 leaves a small region of parameters on which the Casimir of the period exceeds the competitive cap
 (\cref{thm:m2-forward}).
 \end{enumerate}
-This section carries out steps (1), (2), (4), (5) and the nonshort half of (3). The polynomial
+The first subsection carries out steps (1), (2), (4), (5) and the nonshort half of (3). The polynomial
 inequalities are collected in \cref{app:nonshort-estimates}. Throughout, $\gamma^2$ is the Casimir of
 \cref{def:normal-multiplier}, and the switch norms and turn secants are those of
 \cref{lem:switch-norms}.
 
-\subsection{Three inputs from the whole period}\label{sec:m2-inputs}
+\subsection{The minimum and the nonshort continuations}\label{app:m2-nonshort}
+
+\subsubsection{Three inputs from the whole period}\label{sec:m2-inputs}
 
 The competitive cap of \cref{cor:casimir-cap} is not quite sharp enough for class $\cls{M2}$. We use
 the spectral form of the cost--Casimir inequality, whose pointwise proof
@@ -112,7 +114,13 @@ low ratio $t\le1/3$, the two large-gap regions $j\ge1/30$, split at $t=3/8$, and
 region, where the Casimir exceeds the cap. The dotted line is $j=\frac57(1-2t)$.}\label{fig:m2-domains}
 \end{figure}
 
-\subsection{The minimum is a reverse centre}\label{sec:m2-centre}
+\subsubsection{The minimum is a reverse centre}\label{sec:m2-centre}
+
+\begin{proposition}[The minimum is a reverse centre]\label{prop:m2-centre}
+Let $P$ be a competitive normal vertex period of class $\cls{M2}$ with at least six pieces. There is
+an index $m$ with $a_m\le a_k$ for every $k$ such that the switches $m-1$ and $m$ are reverse and the
+switches $m-2$ and $m+1$ are forward.
+\end{proposition}
 
 Let $a_m$ be a smallest active margin of the period; the active margins are periodic, so a minimum
 exists. A minimum cannot be at a turn: at three pieces with labels $i,j,i$ the active margins are
@@ -145,7 +153,7 @@ would have a smaller active margin. The period is mixed, so it has a reverse cen
 maximal reverse run, of length two in class $\cls{M2}$, and $m$ is its centre.
 \end{proof}
 
-\subsection{Orientation by reflection}\label{sec:m2-reflection}
+\subsubsection{Orientation by reflection}\label{sec:m2-reflection}
 
 Let $S=\mathrm{diag}(1,-1)$. Reflecting the plane and reversing time is a symmetry of the control
 problem: it maps a normal vertex period to another one with the same cost, and reverses the order of
@@ -176,7 +184,7 @@ when the switch $m+2$ is forward.
 These are consecutive pieces of the period, continued through the twisted seam when necessary; they
 need not be distinct from other pieces named later, and they are not a closed competitor.
 
-\subsection{The nonshort window}\label{sec:m2-window}
+\subsubsection{The nonshort window}\label{sec:m2-window}
 
 \begin{table}[t]
 \centering\small
@@ -266,7 +274,7 @@ switch, written through stationarity, an identity algebraic in
 $x$ that holds for every $x$; (v) from exact transports; (vi) from \cref{lem:m2-casimir}.
 \end{proof}
 
-\subsection{The successor of the forward piece}\label{sec:m2-continuation}
+\subsubsection{The successor of the forward piece}\label{sec:m2-continuation}
 
 The window does not yet contain a contradiction: the root equation \eqref{eq:m2-root} has solutions
 compatible with (i)--(vi). The next actual switch, after the piece $r$, supplies one more condition.
@@ -294,7 +302,7 @@ switches have the norm $\operatorname{Sec}(A,r,d)$, $A\ge a$ by minimality, and 
 three-arc log-concavity. Since $g_r$ decreases on $(0,r)$ and $A<r$, extending the average from
 $[A,d]$ to $[a,d]$ also gives $w\le\operatorname{Sec}(a,r,d)$; we use (b) as stated.
 
-\subsection{The boundary comparison and the residual}\label{sec:m2-comparison}
+\subsubsection{The boundary comparison and the residual}\label{sec:m2-comparison}
 
 The root equation \eqref{eq:m2-root} is affine in the incident norm $u$, with slope
 \begin{equation}\label{eq:m2-Ru}
@@ -361,7 +369,7 @@ $1-(1-t)p/W^2\le v\le U(t)$ and $F_{p/W}(q)\le v$;
 Item (i) restates the window ($k>1$ is $ST<K_a$ with $S\ge T$, and $q<W/p$ is $dr<4$); the
 others are proved in \cref{app:m2-bounds}.
 
-\subsection{The reverse successor}\label{sec:m2-reverse}
+\subsubsection{The reverse successor}\label{sec:m2-reverse}
 
 \begin{proposition}[The scalar reverse exclusion]\label{prop:m2-reverse-core}
 Let $0<t<2/5$, $x>0$, $\max\{1,\,2t+x,\,29t^2/4\}\le k<2t+2x+x^2$, $x<\frac73-\frac{10}3t$,
@@ -397,7 +405,7 @@ By \cref{prop:m2-continuation}(b) and \cref{lem:m2-necessary}, the normalized wi
 hypothesis of \cref{prop:m2-reverse-core}, which gives $N>0$, against \cref{lem:m2-necessary}(ii).
 \end{proof}
 
-\subsection{The forward successor}\label{sec:m2-forward}
+\subsubsection{The forward successor}\label{sec:m2-forward}
 
 When the successor is forward the order bound (vii) fails, and the residual alone does not suffice.
 Two facts replace it. First, the scalar reverse exclusion applies to every window with $k\ge2t+x$,
@@ -476,7 +484,7 @@ argument (\cref{lem:m2-low-unit}), which gives $t>1/4$.
 \end{remark}
 
 
-\subsection{Proof of \texorpdfstring{\cref{thm:class-M2}}{the theorem for class M2}}\label{sec:m2-proof}
+\subsubsection{Proof of \texorpdfstring{\cref{thm:class-M2}}{the theorem for class M2}}\label{sec:m2-proof}
 
 Let $P$ be as in \cref{thm:class-M2}, and take $m$ from \cref{prop:m2-centre}. If $a_{m+1}>a_{m-1}$,
 replace $P$ by its reflection (\cref{lem:m2-reflection}): it is again competitive, of class
