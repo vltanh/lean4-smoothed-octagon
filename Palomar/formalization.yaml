@@ -195,34 +195,6 @@ automation:
     declaration of the library uses only propext, Classical.choice and Quot.sound, and lake
     comparator checks this Challenge/Solution pair with Palomar/comparator.json.
 
-fidelity:
-  divergences: >-
-    (1) The plane is Fin 2 -> R with Lebesgue measure. A convex disk is a compact convex set with
-    nonempty interior, as in Hales and Vajjha. A disk is centrally symmetric if some point c has
-    2c - x in K for every x in K; Hales and Vajjha fix the centre at the origin, so this is the
-    same notion up to translation, which changes no packing density.
-    (2) The greatest packing density is Hales and Vajjha's Definition 2.1.1: the supremum of the
-    densities of the packings of the plane by congruent copies of K (images under an orthogonal
-    map followed by a translation, so reflections are allowed), over the packings whose density,
-    the limit over the disks of radius r about the origin of the covered fraction, exists. For
-    centrally symmetric disks this equals the lattice packing density in which Reinhardt posed the
-    problem (Fejes Toth's theorem, proved in lean4-smoothed-polygon).
-    (3) The smoothed octagon is Reinhardt's description: the regular octagon of inradius 1 with
-    sides on the lines x cos(k pi/4) + y sin(k pi/4) = 1, with the corner between sides k and k+1
-    cut off by the arc of the hyperbola d_(k-1) d_(k+2) = sqrt 2/4, where d_j is the distance to the
-    j-th side line. octagon_density proves that it is a centrally symmetric convex disk of greatest
-    packing density delta_oct; the library proves that it is a linear image of the octagon that
-    Hales defines by its trajectory.
-    (4) The constant is written (8 - 4 sqrt 2 - log 2)/(2 sqrt 2 - 1), equal to the usual
-    (8 - sqrt 32 - ln 2)/(sqrt 8 - 1). In the Challenge's normalisation (inradius 1) the smoothed
-    octagon has area 16 - 8 sqrt 2 - 2 log 2; Hales's octagon, defined by its trajectory, is a
-    linear image of it with area sqrt 12 times the density, and density does not depend on the
-    normalisation.
-    (5) Junk values of Lean's conventions are never reached: the set whose supremum defines the
-    greatest packing density contains 0 (the empty packing) and is bounded by 1, since the covered
-    fraction of every disk is at most 1; so the upper density is finite and the real number it is
-    converted to is its value.
-
 review:
   status: "agent-reviewed"
   reviewers:
