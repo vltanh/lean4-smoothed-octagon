@@ -18,6 +18,11 @@ from Hales and Vajjha's [*Packings of Smoothed Polygons*](https://arxiv.org/abs/
   axiom audit, the figures, the playground and this documentation.
 
 Codex (OpenAI) refined the paper and its Lean proofs.
+This included analytic scalar estimates, Lean source cleanup, and revisions to the paper's
+exposition and appendix structure. It used the
+[formalize-math-paper](https://github.com/vltanh/formalize-math-paper) skill for proof work and the
+humanizer skill for prose editing. Its framework was Codex (OpenAI), based on GPT-6; elapsed time
+and spending were not tracked.
 
 No person has reviewed the proof. Lean's kernel checks every step.
 

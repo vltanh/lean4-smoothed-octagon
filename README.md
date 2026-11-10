@@ -22,9 +22,9 @@ disk, the regular octagon, a smoothed 14-gon (a regular 14-gon with its corners 
 the same way) and the smoothed octagon.*
 
 This repository proves the conjecture, together with its equality case, in Lean 4 with Mathlib.
-The proof was written here by ChatGPT Pro (OpenAI) and Claude Opus 5.5 (Anthropic). No person has
-checked it; Lean's kernel checks every step, and every theorem depends only on Lean's standard
-axioms `propext`, `Classical.choice` and `Quot.sound`.
+The proof was written here by ChatGPT Pro (OpenAI) and Claude Opus 5.5 (Anthropic), with refinements
+by Codex (OpenAI). No person has checked it; Lean's kernel checks every step, and every theorem
+depends only on Lean's standard axioms `propext`, `Classical.choice` and `Quot.sound`.
 
 For an interactive introduction, see the
 [Smoothed Octagon Playground](https://vltanh.me/smoothed-octagon/).
@@ -221,6 +221,7 @@ scripts/                       the audit, the definitions check, the figures and
 The-Anh Vu-Le chose the problem and directed the work. ChatGPT Pro (OpenAI) drafted the argument,
 and Claude Opus 5.5 (Anthropic), in Claude Code, wrote the Lean proof and organized it, with the
 visualizations and this presentation.
+Codex (OpenAI) refined the paper and its Lean proofs.
 The geometric and control-theoretic foundations come from
 [lean4-smoothed-polygon](https://github.com/vltanh/lean4-smoothed-polygon) and
 [lean4-optimal-control](https://github.com/vltanh/lean4-optimal-control). See
