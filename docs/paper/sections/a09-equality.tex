@@ -1,15 +1,12 @@
 \section{The equality case}\label{sec:equality}
 
-\Cref{prop:terminal-equality} identifies a period of cost $\Aoct$ with the octagon's trajectory,
-but only after three choices that the proof of the lower bound made along the way: the
-normalization of the disk to Reinhardt's normal position, the rebasing of its trajectory at a
-switch, and a relabeling of the vertices of the control simplex by a power of $R$. To classify the
-disks of density $\doct$ these choices must be undone, and the trajectory to which the terminal
-equality is applied must be the realization of the given disk; another minimizer of the same
-cost would say nothing about it. This section carries the identification back to the disk
-(\cref{sec:equality-rigidity}), proves the converse (\cref{sec:equality-converse}), identifies
-Hales's octagon $\KH$ with Reinhardt's $\Koct$ (\cref{sec:equality-construction}). These results
-complete the proofs of \cref{thm:main}(a) and~(c) in \cref{sec:equality-proofs}.
+\Cref{prop:terminal-equality} identifies a period of cost $\Aoct$ with the octagon's trajectory
+after placing the disk in Reinhardt's normal position, rebasing at a switch and relabeling the
+control vertices by a power of $R$. To classify disks of density $\doct$, we apply this equality statement to the
+realization of the given disk and reverse these changes. This recovers the disk itself
+(\cref{sec:equality-rigidity}). We then prove the converse (\cref{sec:equality-converse}) and
+identify Hales's octagon $\KH$ with Reinhardt's $\Koct$ (\cref{sec:equality-construction}),
+completing the proofs of \cref{thm:main}(a) and~(c) in \cref{sec:equality-proofs}.
 
 \subsection{Rigidity}\label{sec:equality-rigidity}
 
@@ -87,9 +84,9 @@ $M\KH$ are convex disks symmetric about the origin, so $eK=M\KH$ by \cref{lem:eq
 $K=e^{-1}M(\KH)=e^{-1}g(s)R^r(\KH)$.
 \end{proof}
 
-The proof never compares $K$ with a minimizer other than its own realization. It runs the
-reduction of \crefrange{sec:reduction}{sec:terminal} a second time, on that realization, and uses
-the lower bound only to know that its cost is $\Aoct$.
+The argument follows the realization of $K$ throughout. Repeating the reduction of
+\crefrange{sec:reduction}{sec:terminal} for this trajectory identifies the disk's boundary; the
+lower bound determines its cost as $\Aoct$.
 
 \subsection{The converse}\label{sec:equality-converse}
 

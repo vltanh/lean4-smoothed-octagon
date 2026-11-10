@@ -9,15 +9,15 @@ consecutive pairs are separated by single forward switches. This section proves 
 
 The theorem uses neither the compact domain nor a lower bound on the number of pieces. Its proof
 compares two ways of counting how far the switch vectors $y_k$ of \cref{def:normal-multiplier}
-turn in one period, measured in the positive definite form $S$. At a turn the switch vector only
-changes sign, so all the turning happens at the $m$ centres. A whole-period winding identity fixes
-the total turning at exactly $(m+1)\pi/3$, because the frame of a competitive period turns by
-exactly $\pi/3$. A local estimate at each centre, which combines the stationarity identity, the
-Gram identity and the competitive cap on the Casimir $\gamma^2$, shows that each centre turns the
-switch vectors by more than $2\pi/5$. The average $(m+1)\pi/(3m)$ is at most $2\pi/5$ as soon as
-$m\ge5$, and the word condition leaves $m=2$ as the only other case. With two centres the
-recurrence of the switch vectors closes up only in a rigid configuration whose cost can be computed
-exactly, and it exceeds $\Aoct$.
+turn over one period, measured in the positive definite form $S$. At a turn the switch vector
+changes sign, so the total turning is concentrated at the $m$ centres. A whole-period winding
+identity fixes the total turning at exactly $(m+1)\pi/3$, because the frame of a competitive
+period turns by exactly $\pi/3$. A local estimate at each centre, which combines the stationarity
+identity, the Gram identity and the competitive cap on the Casimir $\gamma^2$, shows that each
+centre turns the switch vectors by more than $2\pi/5$. The average $(m+1)\pi/(3m)$ is at most
+$2\pi/5$ as soon as $m\ge5$, and the word condition leaves $m=2$ as the only other case. With two
+centres the recurrence of the switch vectors closes up only in a rigid configuration whose cost
+can be computed exactly, and it exceeds $\Aoct$.
 
 \subsection{The sign word}
 
@@ -215,8 +215,8 @@ $m\cdot\pi/3+\pi/3$.
 
 \subsection{Two centres}
 
-For $m=2$ the average centre angle is $\pi/2>2\pi/5$, and the angle count gives nothing. The
-argument uses instead the recurrence of the switch vectors and the cost identity. For the centre
+For $m=2$, the average centre angle $\pi/2>2\pi/5$ is consistent with the local angle bound.
+We therefore use the switch-vector recurrence and the cost identity. For the centre
 $c_j$ put $K_j=a_{c_j}^2+4$, write $b_j=a_{c_j+1}$ and $b'_j=a_{c_j+2}$ for the active margins of
 the two turns that follow it, and
 \[
@@ -389,7 +389,7 @@ $u$ and, at fixed $u$, is largest when the switch bound $u\le U(r)$ is attained.
    0<E\le1-\rho-s-s'+\log\frac{4\rho}{(1-s)(1-s')}<1-\rho-s-s',
   \]
   so $s+s'<1$. From $u=(3+s^2)/4$ and
-  $v=(3+s'^2)/4$ one gets $uv=3(3+S^2)/16$. Next,
+  $v=(3+s'^2)/4$ we obtain $uv=3(3+S^2)/16$. Next,
   \[
     (s+s'-ss')^2-S^2=\tfrac23s^2s'^2+2ss'(1-s-s')\ge0,
   \]

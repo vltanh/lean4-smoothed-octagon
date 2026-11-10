@@ -141,10 +141,9 @@ Its \emph{cost} is
 \end{equation}
 \end{definition}
 
-The terminal time $T$ is free, and no regularity of the control beyond measurability is assumed:
-this is the class of trajectories in which a minimizer exists \cite[\S6.1]{HalesVajjha2024}, and
-the comparison of \cref{sec:set-equivalence} must cover all of it. A global minimizer is defined
-accordingly.
+The terminal time $T$ is free, and the control is assumed only to be measurable. A minimizer
+exists in this class \cite[\S6.1]{HalesVajjha2024}; the comparison in \cref{sec:set-equivalence}
+therefore applies to the entire class.
 
 \begin{definition}[Global minimizer]\label{def:global-minimizer}
 A \emph{global minimizer} is an admissible trajectory $(T,u,g,X)$ such that
@@ -152,8 +151,8 @@ $\cost(T,X)\le\cost(T',X')$ for every admissible trajectory $(T',u',g',X')$, wit
 time and any measurable control.
 \end{definition}
 
-The geometry of the problem is best seen in three coordinates on the star states. The first is a
-triple of positive numbers, one for each vertex of the simplex.
+We use three coordinate descriptions of the star states. The first consists of three positive
+numbers, one for each vertex of the simplex.
 
 \begin{lemma}[Margins]\label{lem:margins}
 For a traceless matrix $X$ let $p_i(X)=-\sqrt3\,\ip{Z_{\ee_i}}{X}$, $i\in\Z/3$, be its
@@ -259,9 +258,9 @@ trajectory is a Pontryagin extremal \cite[Thm.~7.5.6]{HalesVajjha2024}.
 On each of the four pieces the factor $\exp(2\tsw/a)$ of \cref{lem:one-arc}, with $a$ the active
 margin, equals $\sqrt2$ (\cref{sec:terminal}). \Cref{fig:contacts} shows the six arcs and the
 contact hexagons, and \cref{fig:halfplane} the state in the upper half-plane. The disk $\KH$ is a
-linear image of $\Koct$, namely $\KH=A^{-1}\Koct$ with $A=\operatorname{diag}\bigl(1,(2\sqrt2-1)/\sqrt3\bigr)$
-(\cref{prop:reinhardt-construction}): Reinhardt's picture compressed vertically by about five per
-cent.
+linear image of $\Koct$, namely $\KH=A^{-1}\Koct$ with
+$A=\operatorname{diag}\bigl(1,(2\sqrt2-1)/\sqrt3\bigr)$ (\cref{prop:reinhardt-construction}). Thus
+Hales's normalization compresses Reinhardt's octagon vertically by about five per cent.
 
 \begin{figure}[htbp]
   \centering\includegraphics[width=\textwidth]{figures/fig-contacts.pdf}
@@ -278,11 +277,10 @@ cent.
 
 \subsubsection{From disks to trajectories and back}\label{sec:set-equivalence}
 
-The reformulation is an equivalence in both directions. One direction realizes a worst disk by an
-admissible trajectory of equal cost. The other builds a balanced disk of equal area from every
-admissible trajectory of cost below $\pi$, whatever its control. The second direction is what makes
-the realization of a worst disk a global minimizer; without it, a cheap trajectory with an
-irregular control could undercut every disk.
+The reformulation requires two comparisons. A worst disk is realized by an admissible trajectory
+of equal cost. Conversely, every admissible trajectory of cost below $\pi$ gives a balanced disk
+of equal area, for any measurable control. This converse ensures that the realization of a worst
+disk minimizes cost even among trajectories with irregular controls.
 
 \begin{proposition}[Realization of a worst disk]\label{prop:realization}
 There are a worst disk $K$, a balanced pair $(K,\sigma)$ in circle representation with period
@@ -303,9 +301,9 @@ simple closed curves that trace the boundary. The disk has a unique supporting l
 boundary point, so its radial parametrization is $C^1$ and regular; reparametrizing by arclength and
 then by the clock that makes $\det(g^{-1}g')=1$ gives a balanced pair in circle representation. The
 contact map $\sigma_j\mapsto\sigma_{j+1}$ is conjugated by this clock to a translation by one sixth
-of the period, which gives $g(t+T)=g(t)R$. The control is read off from the curvatures; where the
+of the period, which gives $g(t+T)=g(t)R$. The curvatures determine the control; where the
 three curvatures do not form a nonzero nonnegative vector, which happens only on a null set, any
-point of the simplex will do. The area formula for balanced disks gives $\cost=\area(K)$, and
+point of the simplex may be chosen. The area formula for balanced disks gives $\cost=\area(K)$, and
 \cref{prop:balanced-density} gives $\delta(K)=\area(K)/\sqrt{12}$. Since $\KH$ is a centrally
 symmetric convex disk with $\delta(\KH)=\doct$, the worst disk has $\area(K)\le\Aoct<\pi$, and by
 \cref{lem:margins}(iii), $3T\le\cost<\pi$.

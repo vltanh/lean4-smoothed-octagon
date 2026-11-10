@@ -6,22 +6,21 @@ shows that no other entirely forward period can be competitive once it has six o
 
 
 
-The proof plays two consequences of competitiveness against each other. On one side, the Casimir
-$\gamma^2$ of the normal multiplier (\cref{def:normal-multiplier}) is a conserved quantity of the
-whole period, and a cost at most $\Aoct$ bounds it from above: the frame has to turn through the
-angle $\pi/3$ between $g(0)=I$ and $g(T)=R$, and the larger $\gamma^2$ is, the more cost each unit
-of turning requires (\cref{prop:fwd-spectral}). On the other side, $\gamma^2$ can be read off at
-any piece from the two switch norms on either side of it and their cross pairing
-(\cref{lem:gram}). We read it at a piece of smallest active margin. In an all-forward period the
-number of pieces satisfies $N\equiv1\pmod 3$, so a period with $N\ge6$ has at least seven pieces,
-and its cost is a sum of seven or more edge terms that depend only on consecutive active margins.
-At the octagon's margins each edge costs exactly a quarter of $\Aoct$; seven edges fit into the
-budget only if the smallest margin is markedly smaller than the octagon's. The switching conditions
-at the five pieces around that small margin (stationarity of the cost, and the requirement that the
-unused vertex not be preferable at the two outer switches) then hold the two switch norms close to
-their least possible value $3/32$. With such norms the Gram identity makes $\gamma^2$ slightly
-larger than competitiveness allows. The comparison retains the positive logarithmic correction in the central pairing;
-the resulting vertex bounds lie above the spectral cap (\cref{fig:forward}).
+The proof compares two bounds for the Casimir $\gamma^2$ of the normal multiplier
+(\cref{def:normal-multiplier}). An upper bound follows from a total cost of at most $\Aoct$: the
+frame must turn through $\pi/3$ between $g(0)=I$ and $g(T)=R$, and the cost per unit of turning
+increases with $\gamma^2$ (\cref{prop:fwd-spectral}). A local formula expresses $\gamma^2$ through
+the switch norms on either side of a piece and their cross pairing (\cref{lem:gram}). We evaluate
+it at a piece of smallest active margin. In an all-forward period the number of pieces satisfies
+$N\equiv1\pmod 3$, so a period with $N\ge6$ has at least seven pieces, and its cost is a sum of
+seven or more edge terms that depend only on consecutive active margins. At the octagon's margins,
+each edge contributes a quarter of $\Aoct$. A seven-edge period within this budget must therefore
+have a strictly smaller minimum margin. The switching conditions at the five pieces around that
+small margin (stationarity of the cost, and the requirement that the unused vertex not be
+preferable at the two outer switches) then hold the two switch norms close to their least possible
+value $3/32$. The Gram identity then forces $\gamma^2$ above the competitive bound. The comparison
+retains the positive logarithmic correction in the central pairing; the resulting vertex bounds
+lie above the spectral cap (\cref{fig:forward}).
 
 We first express the cost through consecutive active margins, then extract the switching
 conditions at a minimum. The scalar exclusion reduces those conditions to three residual signs
@@ -122,18 +121,19 @@ u:=8d_{m-1},\qquad v:=8d_m,\qquad E:=16e_m .
 \]
 (The letter $u$ does not denote the control here.) At a forward switch the switch norm is at least
 $j/2\ge3/32$ (\cref{lem:switch-norms}), so $u,v\ge3/4$; the proof will show that $u$ and $v$ exceed
-$3/4$ only by little.
+$3/4$ by a uniformly small amount.
 
 Three facts about $(u,v,E)$ come from the Pontryagin conditions. First, stationarity
 (\cref{lem:stationarity}) at the piece $m$ gives one linear relation, and at the pieces $m\mp1$,
 after the coordinates of the multiplier are transported across the pieces $m$ and $m+1$
-(\cref{def:normal-multiplier}), two more. Second, at the forward switch from piece $m-2$ into piece
-$m-1$ the vertices of the two pieces tie, and the third vertex, which neither piece uses, may not do
-better (\cref{lem:vertex-hamiltonians}): its switching function is $\chi=-4\sqrt3\,G_L/(p+b)^2\le0$
-for an affine expression $G_L$ in the entries of the multiplier. Read in the frame of the piece
-$m-1$, the inequality $G_L\ge0$ is a lower bound for $u$ in terms of the exterior factor $h$ and the
-ratio $z$; the switch from $m+1$ into $m+2$ gives the same kind of bound for $v$. Third, the Gram
-identity (\cref{lem:gram}) at the doubly forward piece $m$ expresses the Casimir.
+(\cref{def:normal-multiplier}), two more. Second, at the forward switch from piece $m-2$ into
+piece $m-1$, the Hamiltonians of the two active vertices coincide. The third vertex must have no
+larger Hamiltonian (\cref{lem:vertex-hamiltonians}): its switching function is
+$\chi=-4\sqrt3\,G_L/(p+b)^2\le0$ for an affine expression $G_L$ in the entries of the multiplier.
+Read in the frame of the piece $m-1$, the inequality $G_L\ge0$ is a lower bound for $u$ in terms
+of the exterior factor $h$ and the ratio $z$; the switch from $m+1$ into $m+2$ gives the same kind
+of bound for $v$. Third, the Gram identity (\cref{lem:gram}) at the doubly forward piece $m$
+expresses the Casimir.
 
 \begin{proposition}[The window data]\label{prop:fwd-window}
 In the setting above, put
@@ -1136,7 +1136,7 @@ give the small scalar bounds
  4q_4'(k_f)&<72,\qquad3q_3'(k_f)<-36,\qquad
  2q_2'(k_f)<-37,\qquad q_1'(k_f)<-\frac{23}2.
 \end{align*}
-For clarity, the $q_i$ comparisons require only the displayed products:
+The $q_i$ comparisons follow from the displayed products:
 for $i=1,2,3$,
 \[
  q_i'= -\frac{rT_i'+2T_i}{6r^3},\qquad
@@ -1188,11 +1188,11 @@ $\kappa_L=G_{kk}(a_*,0)+\alpha_L-\beta_L$. Elementary partial fractions give
  Z(k):=G_{kk}(a_*,k)=-\frac{625}{63}k+\kappa_L
                          -\frac{\alpha_L}{r^3}+\frac{\beta_L}{r^4}.
 \]
-The needed bounds are deliberately coarse:
+The following bounds suffice:
 \begin{equation}\label{eq:fwd-sigma-upper-laurent-budget}
  \kappa_L>\frac{21}2,\qquad \alpha_L<35,\qquad \beta_L>\frac{45}2.
 \end{equation}
-Here is an explicit original-row evaluation for these comparisons.
+These comparisons follow by direct evaluation of the row.
 Set $p=1+a$, $M=112/3$, $N=125/3$ and
 \[
  A_p=1+2a-(1+2M)a^2,\qquad B_p=-b+2a(M+Na).

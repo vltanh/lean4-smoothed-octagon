@@ -1,30 +1,29 @@
 \subsection{Outline of the finite reduction}\label{app:reduction-outline}
 
-\Cref{sec:setting} produced a global minimizer of the control problem whose state stays in the
-compact domain $\hstarstar$. This section shows that, after a change of origin in time, such a
-minimizer has a control that takes only the three vertex values $\ee_0,\ee_1,\ee_2$, switching
-finitely often in a period, and that it carries a Pontryagin lift with cost multiplier
-$\lambda=-1$. The conclusion is \cref{thm:finite-normal}. Every later section starts from it.
+By \cref{sec:setting}, the control problem has a global minimizer whose state remains in the
+compact domain $\hstarstar$. After a change of time origin, its control takes only the three
+vertex values $\ee_0,\ee_1,\ee_2$ and switches finitely often in a period. We also prove that it
+admits a Pontryagin lift with cost multiplier $\lambda=-1$. These conclusions give
+\cref{thm:finite-normal}, the starting point for the subsequent case analysis.
 
-The steps are the following. The maximum principle gives a lift $(\Lambda_1,\Lambda_R,\lambda)$ of
-the minimizer, possibly abnormal ($\lambda=0$). The danger is the singular locus, where the
-Hamiltonian does not depend on the control and the maximum condition gives no information. Near it
-Hales and Vajjha find Fuller's system~\cite{HalesVajjha2024,Fuller1963}, whose optimal controls
-switch infinitely often in finite time. A budget inequality, which uses only that the cost is at
-most $\Aoct<\pi$, keeps every lift away from the singular locus in proportion to its size
-(\cref{prop:clearance}). Away from the singular locus one vertex is excluded on each side of every
-time (\cref{red:local-exclusion}). On an interval where one vertex is excluded the control runs
-along an edge of the simplex, and an edge minimizer has at most four pieces
-(\cref{prop:edge-bound}). Compactness of $[0,T]$ then gives finitely many pieces
-(\cref{prop:finite-switches}). Merging equal neighbours and restarting the period at a genuine
-switch gives a vertex representation (\cref{lem:word-reduction}), and for a lift of a trajectory
-with a vertex representation the multiplier is nonzero (\cref{thm:normality}).
+The maximum principle gives a lift $(\Lambda_1,\Lambda_R,\lambda)$ of the minimizer, possibly
+abnormal ($\lambda=0$). At the singular locus, the Hamiltonian is independent of the control, so
+the maximum condition imposes no restriction on it. Near this locus Hales and Vajjha find Fuller's
+system~\cite{HalesVajjha2024,Fuller1963}, whose optimal controls switch infinitely often in finite
+time. A budget inequality, which uses only that the cost is at most $\Aoct<\pi$, keeps every lift
+away from the singular locus in proportion to its size (\cref{prop:clearance}). Away from the
+singular locus one vertex is excluded on each side of every time (\cref{red:local-exclusion}). On
+an interval where one vertex is excluded the control runs along an edge of the simplex, and an
+edge minimizer has at most four pieces (\cref{prop:edge-bound}). Compactness of $[0,T]$ then gives
+finitely many pieces (\cref{prop:finite-switches}). Merging equal neighbours and restarting the
+period at a genuine switch gives a vertex representation (\cref{lem:word-reduction}), and for a
+lift of a trajectory with a vertex representation the multiplier is nonzero
+(\cref{thm:normality}).
 
-The order matters. The clearance and the switch count are homogeneous in
-$(\lambda,\Lambda_1,\Lambda_R)$, so they hold for abnormal lifts as well as normal ones. The
-normality argument, on the other hand, reads the costate at the finitely many switching times
-and uses the twisted closing condition of the period. Finiteness is therefore proved first, for an
-arbitrary lift, and normality afterwards.
+The clearance and switch-count estimates are homogeneous in $(\lambda,\Lambda_1,\Lambda_R)$ and
+apply to both abnormal and normal lifts. The normality argument requires the costate values at
+finitely many switching times and uses the twisted closing condition. We therefore prove
+finiteness for an arbitrary lift before establishing normality.
 
 \subsection{Pontryagin extremals}\label{red:extremals}
 
@@ -116,9 +115,9 @@ $\Lambda_R(\tf)=R^{-1}\Lambda_R(0)R$ and every property stated here.}
 \label{fig:red-hamiltonians}
 \end{figure}
 
-\runin{The singular locus.} If the three vertex Hamiltonians are equal at some time, then the maximum
-condition at that time says nothing about the control. Hales and Vajjha's Lemma~8.2.1 identifies
-when this happens.
+\runin{The singular locus.} If the three vertex Hamiltonians are equal at some time, then the
+maximum condition imposes no restriction on the control at that time. Hales and Vajjha's
+Lemma~8.2.1 identifies when this happens.
 
 \begin{lemma}[Singular locus]\label{red:singular-locus}
 Let $X$ be a star state and $\Lambda_R$ traceless with $\ip{\Lambda_R}{X}=0$. Then
@@ -230,9 +229,9 @@ admissible with the same cost, its costate at time $0$ is $\Lambda_1(t)$ by \cre
 and \cref{red:equilibrium} gives the hypothesis with $M=\Lambda_1(t)$ and $\mu=-\lambda$.
 \end{proof}
 
-The gap $\pi-\Aoct>0$ is what makes the budget effective. It bounds the
-multiplier by the distance $\norm{A}$ from $\Lambda_1$ to $\frac32\lambda J$; adding
-$\norm{\Lambda_R}$ gives the clearance.
+The positive gap $\pi-\Aoct>0$ allows the budget inequality to bound the multiplier by the
+distance $\norm{A}$ from $\Lambda_1$ to $\frac32\lambda J$. Adding $\norm{\Lambda_R}$ gives the
+clearance.
 
 Put
 \[
@@ -387,8 +386,9 @@ compact domain if $X(t)\in\hstarstar$ for $t\in[0,T]$. The
 \emph{active margin} of the $k$-th piece is $a_k=p_{i_k}(X(\tau_k))$, with $k$ read modulo $N$.
 \end{definition}
 
-The pieces of \cref{prop:finite-switches} may have equal neighbouring labels, and the cut at $t=0$
-need not be a switch. Both are repaired by extending the trajectory periodically. The \emph{twisted
+The pieces of \cref{prop:finite-switches} may have equal neighbouring labels, and $t=0$ need
+not be a switching time. Extending the trajectory periodically allows us to merge equal
+neighbours and choose a genuine switch as the time origin. The \emph{twisted
 extension} of an admissible trajectory $(T,u,g,X)$ is defined for $t\ge0$ by
 \[
 G(t)=g(t-nT)R^n,\qquad Y(t)=R^{-n}X(t-nT)R^n,\qquad n=\lfloor t/T\rfloor,
@@ -524,8 +524,8 @@ rescales it to $\lambda=-1$, and \cref{thm:compact-domain} applies to the rebase
 well.
 \end{proof}
 
-No costate is transported through the rebasing: the lift of the rebased minimizer is taken afresh,
-which the minimality of the rebased trajectory allows. The theorem keeps the actual minimizer, with
-its own frame and state, only restarted at $s$; the equality case of \cref{sec:equality} needs
-this. From \cref{sec:periods} on, the hatted period is written $(T,u,g,X)$ again, with switching
-times $\tau_k$, labels $i_k$ and active margins $a_k$.
+Minimality allows a new Pontryagin lift of the rebased trajectory, so no costate transport is
+required in rebasing. The frame and state remain those of the original minimizer, restarted at
+$s$. The equality argument in \cref{sec:equality} uses this identification. From
+\cref{sec:periods} on, the hatted period is written $(T,u,g,X)$ again, with switching times
+$\tau_k$, labels $i_k$ and active margins $a_k$.

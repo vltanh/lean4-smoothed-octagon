@@ -3,19 +3,18 @@
 A \emph{convex disk} is a compact convex subset of the plane with nonempty interior. For a convex
 disk $K$ let $\delta(K)$ be its greatest packing density: the supremum of the densities of the
 packings of the plane by congruent copies of $K$ (\cref{def:packing-density}). The circular disk
-packs with density $\pi/\sqrt{12}=0.906899\ldots$, and in 1934 Reinhardt~\cite{Reinhardt1934}
-asked which centrally symmetric convex disk packs worst, that is, has the least $\delta(K)$.
-Here central symmetry means symmetry under reflection through some point of the plane. He
-proposed the \emph{smoothed octagon} $\Koct$: the regular octagon with each corner replaced by an
-arc of the hyperbola that touches the two sides at the corner and is asymptotic to the two
+has greatest packing density $\pi/\sqrt{12}=0.906899\ldots$. A disk is centrally symmetric if
+it is invariant under reflection through a point. In 1934 Reinhardt~\cite{Reinhardt1934} asked
+which centrally symmetric convex disk minimizes $\delta(K)$. He proposed the \emph{smoothed octagon} $\Koct$: the regular octagon with each corner replaced by an
+arc of the hyperbola tangent to the two incident sides and asymptotic to the two
 neighbouring side lines (\cref{def:smoothed-octagon}, \cref{fig:octagon}). Its greatest packing
 density is
 \[
   \doct=\frac{8-4\sqrt2-\log2}{2\sqrt2-1}=0.902414\ldots .
 \]
-We prove that the smoothed octagon packs worst, and that it is the only worst disk up to affine
-maps. An invertible affine map is a map $x\mapsto Lx+b$, where $L$ is an invertible linear
-map and $b$ is a translation vector.
+We prove that the smoothed octagon minimizes the greatest packing density, uniquely up to
+invertible affine maps. Such a map has the form $x\mapsto Lx+b$, where $L$ is an invertible
+linear map and $b$ is a translation vector.
 
 \begin{theorem}\label{thm:main}
 \begin{enumerate}[label=\textup{(\alph*)}]
@@ -26,10 +25,10 @@ map and $b$ is a translation vector.
 \end{enumerate}
 \end{theorem}
 
-Part~(b) is Reinhardt's conjecture. Part~(a) is due to Reinhardt and to
-Mahler~\cite{Reinhardt1934,Mahler1947c}; we prove it again, in the form in which the rest of the
-proof uses it. Part~(c) says that the minimum is attained only at the octagon; since $\delta$ is
-invariant under invertible affine maps, the \emph{if} direction follows from~(a).
+Part~(b) is Reinhardt's conjecture. Part~(a), due to Reinhardt and
+Mahler~\cite{Reinhardt1934,Mahler1947c}, is proved here in the form needed for the subsequent
+argument. Part~(c) gives the uniqueness statement. Since $\delta$ is invariant under invertible
+affine maps, its \emph{if} direction follows from~(a).
 
 \subsection{History}\label{sec:intro-history}
 
@@ -44,22 +43,23 @@ packs worse than the circle, but he left open whether it is the least dense disk
 
 Mahler, unaware of Reinhardt's work, reached the same conjecture in three papers of
 1947~\cite{Mahler1947a,Mahler1947b,Mahler1947c}. He reduced the problem to one in the calculus of
-variations and proved that a solution exists and is not an ellipse. He expected the boundary of
-an extreme disk to consist of line segments and hyperbolic arcs~\cite[p.~117]{Mahler1947b}.
-Hales and Vajjha call this Mahler's first conjecture. Among
-centrally symmetric octagons he found the regular octagon to be the worst, and he constructed the
-smoothed octagon and computed its density~\cite[\S12]{Mahler1947c}. Ledermann and
-Mahler~\cite{LedermannMahler1949} named the smoothed octagon, and found that the smoothed decagon
-packs better, ``a result which seems to support Reinhardt's conjecture''.
+variations and proved that a solution exists and is not an ellipse. He expected the boundary of an
+extreme disk to consist of line segments and hyperbolic arcs~\cite[p.~117]{Mahler1947b}. Hales and
+Vajjha call this Mahler's first conjecture. Mahler also showed that the regular octagon minimizes
+density among centrally symmetric octagons. He constructed the smoothed octagon and computed its
+density~\cite[\S12]{Mahler1947c}. Ledermann and Mahler~\cite{LedermannMahler1949} named the
+smoothed octagon, and found that the smoothed decagon packs better, ``a result which seems to
+support Reinhardt's conjecture''.
 
 These authors studied lattice packings. Fejes T\'oth~\cite{FejesToth1950} and
-Rogers~\cite{Rogers1951} proved that for a centrally symmetric convex disk no packing by congruent
-copies, or by translates, is denser than the densest lattice packing (\cref{thm:fejes-toth}), so
-Reinhardt's lattice problem is the problem for all packings; see the surveys of G.~Fejes
-T\'oth~\cite{GFejesToth2017} and of Bezdek and Kuperberg~\cite{BezdekKuperberg2013}. Lower bounds
-for $\delta(K)$ followed: $\sqrt3/2=0.866\ldots$ by Mahler~\cite{Mahler1946}, $0.88$ by
-Ennola~\cite{Ennola1961}, and $0.892656$ by Tammela~\cite{Tammela1970}. Nazarov~\cite{Nazarov1986}
-proved that the smoothed octagon is a local minimum of $\delta$ in the Hausdorff metric.
+Rogers~\cite{Rogers1951} proved that, for a centrally symmetric convex disk, packings by congruent
+copies and packings by translates have the same greatest density as lattice packings
+(\cref{thm:fejes-toth}). Reinhardt's lattice problem therefore extends to all packings; see the
+surveys of G.~Fejes T\'oth~\cite{GFejesToth2017} and of Bezdek and
+Kuperberg~\cite{BezdekKuperberg2013}. Lower bounds for $\delta(K)$ followed:
+$\sqrt3/2=0.866\ldots$ by Mahler~\cite{Mahler1946}, $0.88$ by Ennola~\cite{Ennola1961}, and
+$0.892656$ by Tammela~\cite{Tammela1970}. Nazarov~\cite{Nazarov1986} proved that the smoothed
+octagon is a local minimum of $\delta$ in the Hausdorff metric.
 
 Hales recast the problem twice. In~\cite{Hales2011} he formulates it as a variational problem
 with an integral cost and prescribed boundary conditions. The corresponding Euler--Lagrange
@@ -77,7 +77,7 @@ It leaves the Reinhardt conjecture open, and notes that a classification of the 
 motions by the smoothed $(6k+2)$-gons would complete it~\cite[\S1.3]{HalesVajjha2024}; see
 also~\cite{Barber2024}.
 
-Two related problems have been studied in the same spirit. In three dimensions,
+Related extremal packing problems have also been studied. In three dimensions,
 Kallus~\cite{Kallus2014} proved that the ball is a local pessimum for packing. For convex disks
 that need not be centrally symmetric, F\'ary~\cite{Fary1950} proved that triangles have the least
 lattice packing density, and Kallus~\cite{Kallus2015} proved that the regular heptagon is a local
@@ -85,23 +85,23 @@ minimum of the double-lattice packing density.
 
 \subsection{The strategy of the lower bound}\label{sec:strategy}
 
-The first reduction replaces an arbitrary packing by a \emph{lattice packing}: translates of
-the disk whose centres are the integer linear combinations of two fixed independent vectors.
-The parallelogram spanned by those vectors is a \emph{lattice cell}. For a centrally symmetric
-convex disk, the theorem of Fejes T\'oth and Rogers says that a densest packing can be chosen in
-this form. Its density is the area of the disk divided by the cell area. An invertible linear
-map changes both areas by the same factor. We may therefore normalize the cell area to
-$\sqrt{12}$ and seek a lower bound for the area of the disk.
+The first reduction concerns \emph{lattice packings}, in which the copies are translates of the
+disk and their centres are the integer linear combinations of two fixed independent vectors. The
+parallelogram spanned by those vectors is a \emph{lattice cell}. For a centrally symmetric convex
+disk, the theorem of Fejes T\'oth and Rogers says that a densest packing can be chosen in this
+form. Its density is the area of the disk divided by the cell area. An invertible linear map
+changes both areas by the same factor. We may therefore normalize the cell area to $\sqrt{12}$ and
+seek a lower bound for the area of the disk.
 
-A disk with the least possible packing density will be called a \emph{worst disk}. Such a disk
-exists. Its densest lattice packings have six boundary contact points that can move continuously
-around the disk while preserving the cell area. The six points form an inscribed hexagon, and
-their motion traces the whole boundary. Hales's control problem describes this motion by
-differential equations. The \emph{control} specifies the allowed curvatures of the contact
-curves, and the \emph{cost} of the motion is the area of the traced disk. An \emph{admissible
-trajectory} is a motion satisfying these equations and the closing conditions: after one period,
-each contact point has reached the starting position of the next one. The precise formulation is
-in \cref{def:control-problem}.
+A \emph{worst disk} is a centrally symmetric convex disk that minimizes the greatest packing
+density. Such a disk exists. Its densest lattice packings admit six boundary contact points that
+move continuously around the disk while preserving the cell area. These points form an inscribed
+hexagon and together trace the entire boundary. Hales's control problem describes this motion by
+differential equations. The \emph{control} specifies the allowed curvatures of the contact curves,
+and the \emph{cost} of the motion is the area of the traced disk. An \emph{admissible trajectory}
+is a motion satisfying these equations and the closing conditions: after one period, each contact
+point has reached the starting position of the next one. The precise formulation is in
+\cref{def:control-problem}.
 
 The smoothed octagon supplies an admissible trajectory of cost
 \[
@@ -116,18 +116,18 @@ Every admissible trajectory of Hales's control problem has cost at least $\Aoct$
 The proof reduces the possible motions in three stages.
 \begin{enumerate}[label=(\arabic*)]
 \item \emph{A minimizer has finitely many pieces.}
-A trajectory of least cost is a \emph{global minimizer}. We show that its control makes only
-finitely many changes, or \emph{switches}, among three distinguished choices, labelled $0$, $1$
-and $2$. Between switches the control is constant, and the differential equations have explicit
-solutions. We call each such interval a \emph{piece}. Thus the motion is described by a finite
-sequence of labels and the lengths of its pieces.
+A trajectory of least cost is a \emph{global minimizer}. Its control switches finitely often
+among three distinguished choices, labelled $0$, $1$ and $2$. Each interval of constant control
+is a \emph{piece}, and a change between consecutive pieces is a \emph{switch}. The equations
+have explicit solutions on each piece, so the motion is determined by a finite sequence of
+labels and durations.
 \item \emph{Six or more pieces are impossible.}
 At each switch the label advances or retreats in the cyclic order $0,1,2$. We call these switches
 \emph{forward} and \emph{reverse}, respectively. A pattern with both directions is called
 \emph{mixed}. The sequences fall into five classes: two with only one direction of switching
 and three mixed classes. We exclude each class for a minimizer with six or more pieces. Some
-patterns contradict the local conditions for optimality. The others require too much cost to
-complete a period. This is the main part of the proof.
+patterns contradict local necessary conditions for optimality; the others force the cost of a
+complete period above the octagon's. These exclusions form the main part of the proof.
 \item \emph{The remaining motions can be compared exactly.}
 With at most five pieces, the closing equations leave a four-piece family and a five-piece
 family. The four-piece family has least cost $\Aoct$, attained only by the octagon's motion.
@@ -142,24 +142,22 @@ The comparison therefore gives
 Every other centrally symmetric convex disk has density at least $\delta(K_0)$, which proves the
 lower bound in \cref{thm:main}(b).
 
-The finite description alone does not bound the number of pieces. The case arguments connect
-local switching conditions to the cost of a complete motion. Their estimates use monotonicity,
-convexity and integral bounds for the logarithm. Some mixed cases also require polynomial sign
-checks, whose details are given in the corresponding appendix.
+The exclusions relate local switching conditions to the cost of a complete period. The estimates
+use monotonicity, convexity and integral bounds for the logarithm. Some mixed cases also require
+polynomial sign checks, detailed in the corresponding appendix.
 
 \subsection{The strategy of the equality case}\label{sec:strategy-equality}
 
-The lower bound compares a worst disk with the octagon. To prove uniqueness, we apply the same
-argument to a given centrally symmetric convex disk $K$ with $\delta(K)=\doct$. After translating
-its centre to the origin, this disk is itself a worst disk. Its associated trajectory is therefore
-a global minimizer of cost $\Aoct$.
+For uniqueness, let $K$ be a centrally symmetric convex disk with $\delta(K)=\doct$. The lower
+bound shows that, after translation of its centre to the origin, this disk is a worst disk. Its
+trajectory is therefore a global minimizer of cost $\Aoct$.
 
 The exclusions leave at most five pieces. The equality statement in the final comparison then
-identifies this trajectory with the octagon's motion, up to a choice of starting point and a cyclic
-permutation of the three control labels. These choices describe the same boundary in different
-ways. Undoing them, and then undoing the initial linear normalization, shows that the given disk
-$K$ is an invertible affine image of the smoothed octagon (\cref{thm:rigidity}). This argument
-follows the trajectory of $K$ throughout, so it identifies every disk attaining equality.
+identifies this trajectory with the octagon's motion, up to a choice of starting point and a
+cyclic permutation of the three control labels. Reversing these changes and the initial linear
+normalization shows that the given disk $K$ is an invertible affine image of the smoothed octagon
+(\cref{thm:rigidity}). The argument applies to the trajectory of $K$ itself and hence to every
+disk attaining equality.
 
 Conversely, invertible affine maps preserve the greatest packing density of centrally symmetric
 convex disks (\cref{prop:converse}). Every affine image of the smoothed octagon consequently has

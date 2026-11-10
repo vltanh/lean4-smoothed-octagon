@@ -42,11 +42,11 @@ cost $\cost/\sqrt{12}$ then changes by $\frac{Z}{4}N(A,B,Z,b,c)$ times the size 
 \end{multline}
 with $\eta(t)=t-1-\log t$ and $\zeta(t)=t\log t-t+1$, both positive for $t>1$. Under the
 minimum hypothesis~\eqref{eq:rev-min} this derivative is negative
-(\cref{lem:rev-N}), so the variation lowers the cost, while the maximum principle says that the
-inserted controls are not better than the active ones and the variation cannot lower the cost to
-first order. We do not construct the variation. Its content is an exact linear identity between
-switching functions at the switches (\cref{lem:rev-identities}), and the maximum principle enters
-only through the signs of these switching functions.
+(\cref{lem:rev-N}). The maximum principle, however, requires the inserted controls to have
+Hamiltonians no larger than those of the active controls, excluding a first-order cost decrease.
+We express this obstruction directly as an exact linear identity between switching functions
+at the switches (\cref{lem:rev-identities}). The proof uses the signs of these functions and
+does not require construction of the variation.
 
 \begin{lemma}[Sign of the cost derivative]\label{lem:rev-N}
 If $b,c>1$, $A,Z>0$ and~\eqref{eq:rev-min} holds, then $N(A,B,Z,b,c)<0$.

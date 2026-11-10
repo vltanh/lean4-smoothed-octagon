@@ -1,9 +1,9 @@
 \section{From packing density to the control problem}\label{sec:setting}
 
-The useful normalization fixes the area of a densest lattice cell. For a worst disk, the contact
-points of these lattice packings then describe a moving hexagon of fixed area. This section
-explains how the motion becomes a control problem and why its cost gives the required packing
-bound. The coordinate formulas and regularity conditions are in \cref{app:setup}.
+Fixing the area of a densest lattice cell reduces the packing problem to an area minimization. For
+a worst disk, the contact points of the corresponding packings form a moving hexagon of constant
+area. Its motion defines a control problem whose cost is the area of the disk. The coordinate
+formulas and regularity conditions are given in \cref{app:setup}.
 
 \subsection{Packing densities}\label{sec:set-packings}
 
@@ -33,24 +33,23 @@ density} $\delta_L(K)$ is the supremum of these values.
 For every centrally symmetric convex disk $K$, $\delta(K)=\delta_L(K)$.
 \end{theorem}
 
-So for centrally symmetric disks the problem is a problem about lattices. A linear map carries
-lattice packings to lattice packings and multiplies areas and determinants by the same factor, so
-$\delta(K)$ is invariant under invertible affine maps (\cref{prop:converse}). The \emph{minimax
-density} $\delta_{\min}$ is the infimum of $\delta(K)$ over all centrally symmetric convex disks,
-and a \emph{worst disk} is a centrally symmetric convex disk, centred at the origin, with
-$\delta(K)=\delta_{\min}$. Worst disks exist, by Blaschke's selection theorem and the continuity of
-$\delta_L$ in the Hausdorff metric (Reinhardt~\cite{Reinhardt1934}, Mahler~\cite{Mahler1947b};
-\cite[\S2.2]{HalesVajjha2024}). In this language the conjecture says that $\delta_{\min}=\doct$ and
-that the worst disks are the linear images of the smoothed octagon.
+It therefore suffices to consider lattice packings of centrally symmetric disks. A linear map
+carries lattice packings to lattice packings and multiplies areas and determinants by the same
+factor, so $\delta(K)$ is invariant under invertible affine maps (\cref{prop:converse}). The
+\emph{minimax density} $\delta_{\min}$ is the infimum of $\delta(K)$ over all centrally symmetric
+convex disks, and a \emph{worst disk} is a centrally symmetric convex disk, centred at the origin,
+with $\delta(K)=\delta_{\min}$. Worst disks exist, by Blaschke's selection theorem and the
+continuity of $\delta_L$ in the Hausdorff metric (Reinhardt~\cite{Reinhardt1934},
+Mahler~\cite{Mahler1947b}; \cite[\S2.2]{HalesVajjha2024}). In this language the conjecture says
+that $\delta_{\min}=\doct$ and that the worst disks are the linear images of the smoothed octagon.
 
 \subsection{A moving hexagon on the boundary}\label{sec:setting-hexagon}
 
-The lattice description gives more than a formula for density. A densest lattice packing can be
-described by six contact points on the boundary of the disk. They occur in opposite pairs and form an
-\emph{affinely regular hexagon}, the image of a regular hexagon under an invertible affine map.
-For a worst disk, Reinhardt's theory supplies a continuous family of such hexagons whose vertices
-sweep out the entire boundary. The family allows us to study the disk through the motion of six
-points.
+A densest lattice packing can be described by six contact points on the boundary of the disk.
+These occur in opposite pairs and form an \emph{affinely regular hexagon}, the image of a regular
+hexagon under an invertible affine map. For a worst disk, Reinhardt's theory supplies a continuous
+family of such hexagons whose vertices trace the entire boundary. This family describes the disk
+through the motion of six points.
 
 Normalize one contact hexagon to the regular hexagon with vertices
 \[
@@ -95,7 +94,7 @@ Let $I$ be the identity matrix and $R$ the rotation through $\pi/3$. The closing
 \[
   g(0)=I,\qquad g(T)=R,\qquad X(T)=R^{-1}X(0)R.
 \]
-The frame and its velocity then fit together when the contact points are relabeled. A solution
+These conditions make the frame and its velocity compatible with relabeling the contact points. A solution
 of the state equations satisfying these conditions is an \emph{admissible trajectory}, written
 $(T,u,g,X)$. The terminal time $T$ is allowed to vary, and the control is only required to be
 measurable. These conditions are stated precisely in \cref{def:control-problem}.
@@ -105,7 +104,7 @@ The \emph{cost} $\cost(T,X)$ is the area integral of the six contact curves
 \[
   \cost(T,X)=\area(K)=\sqrt{12}\,\delta(K).
 \]
-Thus minimizing the cost is the normalized version of finding the worst packing density.
+Cost minimization therefore gives the least packing density in this normalization.
 
 \subsection{The octagon as a reference motion}\label{sec:setting-reference}
 
@@ -117,8 +116,8 @@ $\Aoct=\sqrt{12}\,\doct<\pi$ (\cref{prop:octagon-trajectory}).
 
 We denote the disk in this normalization by $\KH$. The disks $\KH$ and $\Koct$ differ by an
 explicit invertible linear map (\cref{prop:reinhardt-construction}), so they have the same packing
-density. In particular, the octagon supplies a reference cost against which every global minimizer
-can be compared.
+density. The octagon's trajectory consequently provides an upper bound for the cost of every
+global minimizer.
 
 \begin{figure}[htbp]
   \centering\includegraphics[width=\textwidth]{figures/fig-packing.pdf}
@@ -137,18 +136,18 @@ can be compared.
   \label{fig:octagon}
 \end{figure}
 
-\subsection{Why the geometric and control minima agree}\label{sec:setting-equivalence}
+\subsection{Equivalence of the geometric and control minima}\label{sec:setting-equivalence}
 
 A \emph{global minimizer} is an admissible trajectory whose cost is no greater than that of any
 other admissible trajectory, including trajectories with a different terminal time
-(\cref{def:global-minimizer}). To use a cost bound for the packing problem, we must know that a
-worst disk gives such a minimizer. Two geometric comparisons establish this.
+(\cref{def:global-minimizer}). Two geometric comparisons show that the realization of a worst disk
+is a global minimizer.
 
 First, a worst disk can be normalized and parametrized by an admissible trajectory whose cost is
 $\sqrt{12}$ times its density (\cref{prop:realization}). Second, every admissible trajectory of
 cost below $\pi$ traces a balanced disk with the same area (\cref{prop:reverse-comparison}). In
-this second comparison the cost bound ensures that the contact curves go around the boundary
-once, so that they describe a convex disk.
+this second comparison the cost bound ensures that the contact curves traverse the boundary once
+and bound a convex disk.
 
 The octagon costs less than $\pi$. Any trajectory that could improve on the realization of a
 worst disk would therefore also have cost below $\pi$, and would produce a disk with a smaller
@@ -156,8 +155,7 @@ packing density. This contradicts the choice of a worst disk. Its realization is
 global minimizer. The same comparisons prove the equivalence between the lower bound for all
 packing densities and the lower bound for all admissible costs (\cref{thm:equivalence}).
 
-There is also a geometric restriction on the states that need to be considered. Hales and Vajjha
-show that the state of every global minimizer lies in a fixed compact set, denoted $\hstarstar$
-(\cref{thm:compact-domain}). In particular it stays away from the boundary of the allowed state
-domain. This restriction will enter the last mixed case. The next section reduces the control
+Hales and Vajjha also show that the state of every global minimizer lies in a fixed compact set,
+denoted $\hstarstar$ (\cref{thm:compact-domain}). It therefore remains separated from the boundary
+of the allowed state domain. The last mixed case uses this restriction. We next reduce the control
 of a minimizer to a finite sequence of vertex choices.

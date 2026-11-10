@@ -56,20 +56,19 @@ disks, lattice packings, optimal control, Pontryagin maximum principle, bang-ban
 \begin{document}
 
 \begin{abstract}
-  In 1934 Reinhardt conjectured that, among the centrally symmetric convex disks in the plane,
-  the one that packs worst is the smoothed octagon: a regular octagon whose corners are cut off
-  by arcs of hyperbolas, each asymptotic to the two neighbouring side lines. Its greatest packing
-  density is $\doct=(8-4\sqrt2-\log2)/(2\sqrt2-1)=0.902414\ldots$. We prove the conjecture: every
-  centrally symmetric convex disk has greatest packing density at least $\doct$, with equality
-  exactly for the images of the smoothed octagon under invertible affine maps. The proof uses
-  Hales's formulation of the problem as an optimal control problem, in which the cost of a
-  trajectory is the area of the associated disk. Building on Hales and Vajjha's results on
-  minimizers, we reduce a least-cost motion to finitely many pieces of constant control. Five
-  cases cover the possible switching patterns, and each case is excluded for a minimizer with
-  six or more pieces. The remaining four- and five-piece motions can be compared exactly; the
-  minimum is attained only by the octagon's motion. The proof is
-  accompanied by a formalization of the main theorems in Lean~4 with Mathlib, checked by Lean's
-  kernel.
+  In 1934 Reinhardt conjectured that the smoothed octagon minimizes the greatest packing density
+  among centrally symmetric convex disks in the plane. This disk is a regular octagon whose
+  corners are replaced by hyperbolic arcs, each asymptotic to the two neighbouring side lines. Its greatest
+  packing density is $\doct=(8-4\sqrt2-\log2)/(2\sqrt2-1)=0.902414\ldots$. We prove the
+  conjecture: every centrally symmetric convex disk has greatest packing density at least $\doct$,
+  with equality exactly for the images of the smoothed octagon under invertible affine maps. The
+  proof uses Hales's optimal control formulation, in which the cost of a trajectory is the area of
+  the corresponding disk. Using Hales and Vajjha's results on minimizers, we reduce a minimizing
+  trajectory to finitely many pieces of constant control. Five cases cover the possible switching
+  patterns, and each case is excluded for a minimizer with six or more pieces. The remaining four-
+  and five-piece motions can be compared exactly; the minimum is attained only by the octagon's
+  motion. The main theorems are formalized in Lean~4 with Mathlib, and their proofs are checked by
+  Lean's kernel.
 \end{abstract}
 
 \maketitle

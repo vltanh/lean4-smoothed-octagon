@@ -2,20 +2,20 @@
 
 A period of class $\cls{M2}$ has switches of both signs, every maximal reverse run has exactly two
 switches, and some maximal forward run has at least two (\cref{def:classes}). Unlike the classes
-$\cls{R}$, $\cls{F}$ and $\cls{M1}$, such a period has no rigid sign word: the forward runs may have
-any lengths, the number of reverse runs is arbitrary, and the factors are unrelated. The exclusion
-is therefore local. We look at a window of at most seven consecutive pieces around the smallest
-active margin of the period, read the single normal multiplier $U$ of the whole period in that
-window, and derive a finite list of scalar necessary conditions, which are then shown to be
-inconsistent. The whole period enters only through three inputs: the compact domain
-(\cref{thm:compact-domain}), the cap on the Casimir that competitiveness imposes, and a lower bound
-on the Casimir obtained from the winding of the switch vectors over the period.
+$\cls{R}$, $\cls{F}$ and $\cls{M1}$, such a period has no rigid sign word: the forward runs may
+have any lengths, the number of reverse runs is arbitrary, and the factors are unrelated. The
+exclusion uses a window of at most seven consecutive pieces around a smallest active margin.
+Expressing the period's normal multiplier $U$ in this window gives a finite system of scalar
+necessary conditions. We prove that this system is inconsistent. The whole period enters only
+through three inputs: the compact domain (\cref{thm:compact-domain}), the cap on the Casimir that
+competitiveness imposes, and a lower bound on the Casimir obtained from the winding of the switch
+vectors over the period.
 
 We prove \cref{thm:class-M2}.
 
 The proof has five steps.
 \begin{enumerate}[label=(\arabic*)]
-\item A global minimum of the active margins sits at the centre of a reverse run
+\item A global minimum of the active margins occurs at the centre of a reverse run
 (\cref{prop:m2-centre}).
 \item Of the two turns beside that centre, choose the one with the smaller active margin; after
 reflecting the period and reversing time if necessary, it follows the centre
@@ -40,9 +40,9 @@ inequalities are collected in \cref{app:nonshort-estimates}. Throughout, $\gamma
 
 \subsubsection{Three inputs from the whole period}\label{sec:m2-inputs}
 
-The competitive cap of \cref{cor:casimir-cap} is not quite sharp enough for class $\cls{M2}$. We use
-the spectral form of the cost--Casimir inequality, whose pointwise proof
-\eqref{eq:fwd-spectral-pointwise} applies whenever the primary costate is negative elliptic.
+Class $\cls{M2}$ requires a sharper cap than \cref{cor:casimir-cap}. We use the spectral form of
+the cost--Casimir inequality, whose pointwise proof \eqref{eq:fwd-spectral-pointwise} applies
+whenever the primary costate is negative elliptic.
 
 \begin{lemma}[Casimir bounds]\label{lem:m2-casimir}
 Let $P$ be a normal vertex period with cost $\cost$ and primary costate $\Lambda_1$.
@@ -102,7 +102,7 @@ $G$ increases on $[3/20,1/4)$ and $G(3/20)>23/125>9193/50000$, which contradicts
 \begin{figure}[tb]
 \centering
 \includegraphics[width=\textwidth]{figures/fig-mixed-domains.pdf}
-\caption{What the estimates of class $\cls{M2}$ control. (a)~The lower bound
+\caption{Parameter bounds for class $\cls{M2}$. (a)~The lower bound
 $G(\rho)=(9/4-B(\rho)^2)/(16(1-\rho)^2)$ for the Casimir at a reverse centre, with
 $\rho=a^2/(a^2+4)$. It exceeds the cap $23/125$ (dashed) on $[3/20,1/4)$, which proves
 $a^2<12/17$ (\cref{lem:m2-scale}).
@@ -310,9 +310,8 @@ The root equation \eqref{eq:m2-root} is affine in the incident norm $u$, with sl
 \end{equation}
 negative because $Y>0$, $Z>Q/W$, and $dSQ-Z(aK_a+SY)<(Q/W)\{a(ST-K_a)+Sc(a-d)\}<0$. The reverse
 switch $b\to a$ caps $u$ by the ceiling $U(a/S)=g_b(a)$, so the actual data satisfy
-$R_d(U(a/S))\le R_d(u)=0$. Stationarity at $d$ thus asks for an incident norm that is not too large.
-The obstruction we shall exhibit is that, on the necessary domain, it asks for a norm above the
-ceiling.
+$R_d(U(a/S))\le R_d(u)=0$. Stationarity at $d$ thus imposes an upper bound on the incident norm. On the necessary domain,
+we will show that stationarity instead requires the norm to exceed this ceiling.
 
 Before testing this, we remove the margins $b$ and $p$. Keep $a,c,d,r$ and the actual $v$ fixed and
 raise $b$ to $b_*=K_a/T-a$, the value at which the central factor $K_a/(ST)$ equals one. Write

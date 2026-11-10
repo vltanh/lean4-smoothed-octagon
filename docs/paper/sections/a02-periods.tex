@@ -1,15 +1,14 @@
 \section{Vertex periods}\label{sec:periods}
 
-\Cref{thm:finite-normal} turns a global minimizer into a normal vertex period: a normal
-Pontryagin extremal whose control is a vertex of the simplex on each of finitely many pieces
+\Cref{thm:finite-normal} turns a global minimizer into a normal vertex period: a normal Pontryagin
+extremal whose control is a vertex of the simplex on each of finitely many pieces
 (\cref{def:vertex-representation,def:normal-period}). On a piece of constant vertex control the
-state, the frame and the costate solve linear differential equations with constant
-coefficients, so everything that happens along the piece is given by explicit formulas in a few
-numbers at its start. A period is then described by finitely many numbers, related by algebraic
-and logarithmic identities, and the maximum principle becomes a list of sign conditions on
-them. This section collects these formulas and conditions, which the case analysis of
-\cref{sec:reverse,sec:mixed-runs,sec:short-runs,sec:forward,sec:mixed} uses, and states the
-theorem that reduces the problem to periods with at most five pieces.
+state, the frame and the costate solve linear differential equations with constant coefficients.
+Their solutions are explicit functions of the initial data. A period is therefore described by
+finitely many parameters satisfying algebraic and logarithmic identities, together with sign
+conditions imposed by the maximum principle. This section collects these formulas and conditions,
+which the case analysis of \cref{sec:reverse,sec:mixed-runs,sec:short-runs,sec:forward,sec:mixed}
+uses to exclude periods with six or more pieces.
 
 Throughout, $P$ is a normal vertex period with $N$ pieces, switching times $\tau_k$, labels
 $i_k\in\Z/3$ and terminal time $T$, indexed by $k\in\Z$ through the twist
@@ -185,16 +184,16 @@ is \emph{short}. Piece $k$ is a \emph{turn} if $\varepsilon_{k-1}\ne\varepsilon_
 $\varepsilon_{k-1}=\varepsilon_k=-1$, and a \emph{forward same-sign piece} if $\varepsilon_{k-1}=\varepsilon_k=+1$.
 \end{definition}
 
-Neighbouring labels differ, and labels live in $\Z/3$, so each switch either advances the label
-by one or moves it back by one.
+Consecutive labels are distinct elements of $\Z/3$, so each switch changes the label by one in
+either direction.
 
 
 
-The margin of the growing label increases along a piece, so a forward switch hands the control
-to the vertex whose margin has just grown, and a reverse switch hands it to the vertex whose
-margin has just decreased. Both kinds occur in extremals, but they behave differently: runs of
-reverse switches carry the first-order obstructions of \cref{sec:reverse}, while the forward
-switches of \cref{sec:forward} are constrained only through the whole period.
+At a forward switch, the next control is the vertex whose margin increased along the preceding
+piece. At a reverse switch, it is the vertex whose margin decreased. Both kinds occur in
+extremals, but they behave differently: runs of reverse switches carry the first-order
+obstructions of \cref{sec:reverse}, while the forward switches of \cref{sec:forward} are
+constrained only through the whole period.
 
 \begin{lemma}[Sign sum]\label{lem:sign-sum}
 $\sum_{k=0}^{N-1}\varepsilon_k\equiv1\pmod 3$. In particular an entirely forward period has
@@ -288,9 +287,9 @@ linear identity between switching functions at the switches (\cref{sec:reverse})
 
 \subsection{The normal multiplier}\label{sec:per-multiplier}
 
-The primary costate is conserved up to conjugation, $\Lambda_1(t)=g(t)^{-1}\Lambda_1(0)g(t)$, so its determinant is a constant of the motion. Read in
-the moving frame of the state, it gives a matrix whose margins are transported as simply as the
-margins of the state.
+The primary costate is conserved up to conjugation, $\Lambda_1(t)=g(t)^{-1}\Lambda_1(0)g(t)$, so
+its determinant is constant. Its margin coordinates in the moving frame of the state admit
+explicit transport formulas.
 
 \begin{definition}[Normal multiplier]\label{def:normal-multiplier}
 Let $\mathcal U(t)=\frac{1}{\sqrt{12}}X(t)^{-1}\Lambda_1(t)X(t)$. At the switch $k$ put
@@ -409,8 +408,8 @@ to the secant. Since $f'(x)-\frac34=(x-2)^2/(4x^2)\ge0$, every secant slope of $
 $3/4$.
 \end{proof}
 
-The inequalities (a) say that the control just abandoned does not immediately become better
-again.
+The inequalities in (a) prevent the preceding control from immediately having a larger Hamiltonian
+than the new control.
 
 \begin{lemma}[Gram identity]\label{lem:gram}
 At a centre or a forward same-sign piece $k$, $d_{k-1}d_k-e_k^2=\gamma^2/K_k^2$.
@@ -439,11 +438,10 @@ holds for every competitive mixed normal vertex period.
 Every mixed normal vertex period has $\gamma^2>0$.
 \end{proposition}
 
-The Casimir measures how far the period is from the circle. The circular trajectory, with
-$X\equiv J$ and $T=\pi/3$, costs $\pi$, and the bound $4\pi\kappa/(2\kappa+3)$ of
-\cref{prop:cost-casimir} equals $\pi$ at $\kappa=3/2$. The inequality of this subsection says
-that a period of cost below $\pi$ has $\kappa<3/2$, and quantifies how much smaller. It applies only when
-$\Lambda_1$ is elliptic with the right orientation.
+The circular trajectory, with $X\equiv J$ and $T=\pi/3$, has cost $\pi$. The lower bound
+$4\pi\kappa/(2\kappa+3)$ in \cref{prop:cost-casimir} equals $\pi$ at $\kappa=3/2$. Consequently, a
+period of cost below $\pi$ has $\kappa<3/2$, with a quantitative bound determined by its cost.
+This conclusion requires $\Lambda_1$ to be negative elliptic.
 
 
 

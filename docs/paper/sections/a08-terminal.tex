@@ -6,15 +6,14 @@ at most five pieces and shows that it is at least $\Aoct$, with equality only fo
 trajectory. These are the terminal comparison and equality statements used in
 \cref{sec:terminal-proofs} to prove \cref{thm:control} and part~(b) of \cref{thm:main}.
 
-For so few pieces nothing has to be estimated abstractly. The tangent closure
-(\cref{lem:tangent-closure}) is a system of four scalar equations in the factors; with at most
-five factors it either has no solution or determines the factors up to one or two parameters.
-The twist $X(T)=R^{-1}X(0)R$ then determines the initial state, and the cost becomes an explicit
-function of the parameters. The difficulty is that the comparison is sharp. The four-piece
-family contains the octagon, so its minimum must be located exactly, and the five-piece family
-approaches the octagon at the edge of its domain, where one of its factors tends to~$1$ and the
-period degenerates into the octagon's four pieces. Its strict inequality therefore has no margin
-near that edge.
+The tangent closure (\cref{lem:tangent-closure}) gives four scalar equations in the factors. With
+at most five factors, these equations either have no solution or determine the factors up to one
+or two parameters. The twist $X(T)=R^{-1}X(0)R$ then determines the initial state, and the cost
+becomes an explicit function of the parameters. The comparison must be sharp: the four-piece
+family contains the octagon, so its minimum must be located exactly. The five-piece family
+approaches the octagon at the boundary of its domain, where one factor tends to~$1$ and the period
+degenerates to four pieces. The strict cost inequality therefore has no uniform positive margin
+near this boundary.
 
 \subsection{Closed vertex cycles}\label{sec:terminal-cycles}
 
@@ -73,12 +72,12 @@ closure from the switch $\tau_k$ is \cref{lem:tangent-closure} for the period re
 $\tau_k$, conjugated by $C$.
 \end{proof}
 
-So a period beats the octagon exactly when the raw cost of its cycle is below $8\doct$.
+A period has cost below the octagon's exactly when the raw cost of its cycle is below $8\doct$.
 Two operations change a cycle without changing its raw cost: \emph{rebasing}, which shifts all
 indices by a fixed integer, and \emph{relabeling}, which adds $1$ to every label and shifts the
-margins accordingly; rebasing a cycle with $N$ pieces by $r$ replaces its word by the last
-$N-r$ letters followed by the first $r$ letters increased by one. Relabeling at most twice makes
-the first label~$0$.
+margins accordingly; rebasing a cycle with $N$ pieces by $r$ replaces its word by the last $N-r$
+letters followed by the first $r$ letters increased by one. Relabeling at most twice makes the
+first label~$0$.
 
 \subsection{The words of at most five pieces}\label{sec:terminal-words}
 

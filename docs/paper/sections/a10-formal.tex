@@ -1,48 +1,46 @@
 \section{The formal verification}\label{app:formal}
 
-The main theorems are formalized in Lean~4~\cite{Lean4} with Mathlib~\cite{Mathlib20}, in the
-repository~\cite{Companion}. This appendix says what the formalization states, how it is checked,
-and on what it depends, and gives a dictionary between the paper and the Lean declarations.
+The formalization of the main theorems uses Lean~4~\cite{Lean4} and Mathlib~\cite{Mathlib20} and
+is available in the repository~\cite{Companion}. We describe its statements, verification and
+dependencies, then give the correspondence between the paper and the Lean declarations.
 
 \subsection{The statements}\label{app:formal-statements}
 
 The file \texttt{Palomar/Challenge.lean} imports only Mathlib and states the three parts of
 \cref{thm:main} as the theorems \lean{octagon_density}, \lean{reinhardt} and
-\lean{reinhardt_equality} of the namespace \lean{ReinhardtChallenge}. Its definitions are those of
-\cref{def:packing-density}, which is Definition~2.1.1 of~\cite{HalesVajjha2024}. Points of the
-plane are maps $\{0,1\}\to\R$ and areas are Lebesgue measure. A convex disk is a compact convex set
-with nonempty interior, and a congruent copy of $K$ is its image under a map $x\mapsto Ax+b$ with
-$A$ orthogonal. A packing is a family of convex disks whose members have pairwise disjoint
-interiors. Its density exists when the upper and lower limits, as $r\to\infty$, of the fraction of
-the disk of radius $r$ about the origin that it covers are finite and equal, and $\delta(K)$ is the
-supremum of the densities that exist over the packings by congruent copies of $K$. A disk is
-centrally symmetric when there is a point $c$ with $2c-x\in K$ for every $x\in K$. The smoothed
-octagon is given in Reinhardt's description (\cref{def:smoothed-octagon}): with $d_k(x)$ the signed
-distance from $x$ to the line of the $k$-th side of the regular octagon of inradius~$1$, it is the
-octagon $d_k\ge0$ with the corner between sides $k$ and $k+1$ cut off along the hyperbola
-$d_{k-1}d_{k+2}=\sqrt2/4$. These definitions are copied word for word from the library, so the
-theorems the library proves are the theorems the file states.
+\lean{reinhardt_equality} of the namespace \lean{ReinhardtChallenge}. Its packing definitions
+agree with \cref{def:packing-density}, which is Definition~2.1.1 of~\cite{HalesVajjha2024}. Points
+of the plane are maps $\{0,1\}\to\R$ and areas are Lebesgue measure. A convex disk is a compact
+convex set with nonempty interior, and a congruent copy of $K$ is its image under a map $x\mapsto
+Ax+b$ with $A$ orthogonal. A packing is a family of convex disks with pairwise disjoint interiors.
+Its density exists when the upper and lower limits, as $r\to\infty$, of the covered fraction of
+the disk of radius $r$ about the origin are finite and equal. The greatest packing density
+$\delta(K)$ is the supremum over packings by congruent copies of $K$ for which this density
+exists. A disk is centrally symmetric when there is a point $c$ with $2c-x\in K$ for every $x\in
+K$. The smoothed octagon is given in Reinhardt's description (\cref{def:smoothed-octagon}): with
+$d_k(x)$ the signed distance from $x$ to the line of the $k$-th side of the regular octagon of
+inradius~$1$, it is the octagon $d_k\ge0$ with the corner between sides $k$ and $k+1$ cut off
+along the hyperbola $d_{k-1}d_{k+2}=\sqrt2/4$. The definitions are copied verbatim from the
+library, so the library's theorems have precisely the statements given in the challenge file.
 
-\subsection{The check}\label{app:formal-check}
+\subsection{Verification and dependencies}\label{app:formal-check}
 
-The root module \texttt{SmoothedOctagon.lean} restates the three theorems and proves them with no
-hypothesis. Lean's kernel checks every step, and every theorem depends only on Lean's standard
-axioms \lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}; an audit script checks this
-for every declaration of the library. The Comparator configuration
+The three theorems are proved without additional hypotheses in the root module
+\texttt{SmoothedOctagon.lean}. Lean's kernel checks the proofs. Every theorem depends only on the
+standard axioms \lean{propext}, \lean{Classical.choice} and \lean{Quot.sound}, as verified by an
+audit of every declaration in the library. The Comparator configuration
 \texttt{Palomar/comparator.json} checks that the root module proves the statements of
 \texttt{Palomar/Challenge.lean} with the same definitions. The proof is registered in the Palomar
 registry~\cite{Palomar} as \texttt{PALOMAR-2026-11-09-000008}, at trust level high: Palomar's
-verifier checked it with the independent kernels nanoda and con-ron at commit
-\texttt{9ba6bf8} of~\cite{Companion}. The current library retains these three statements; the names below are those of
-its current declarations. Lean and Mathlib are
-pinned at version \texttt{v4.36.0-rc2}. The library has about 125{,}000 lines in 407 modules, and a
-full build takes about 3.5 CPU-hours.
+verifier checked it with the independent kernels nanoda and con-ron at commit \texttt{9ba6bf8}
+of~\cite{Companion}. Lean and Mathlib are pinned at version \texttt{v4.36.0-rc2}. The library has
+about 125{,}000 lines in 407 modules, and a full build takes about 3.5 CPU-hours.
 
 The library depends on two others. The first~\cite{SmoothedPolygonLean} formalizes the parts of
-the book of Hales and Vajjha~\cite{HalesVajjha2024} that the proof uses, together with the classical
-results behind them: among them Fejes T\'oth's theorem (\cref{thm:fejes-toth}), the theorems of
-Minkowski and Mahler on critical lattices and circumscribed hexagons, the compact domain
-(\cref{thm:compact-domain}) and the lift of a global minimizer to a Pontryagin extremal
+the book of Hales and Vajjha~\cite{HalesVajjha2024} that the proof uses, together with the
+classical results on which they depend, including Fejes T\'oth's theorem (\cref{thm:fejes-toth}),
+the theorems of Minkowski and Mahler on critical lattices and circumscribed hexagons, the compact
+domain (\cref{thm:compact-domain}) and the lift of a global minimizer to a Pontryagin extremal
 (\cref{thm:pmp-lift}). The second~\cite{OptimalControlLean} proves the Pontryagin maximum
 principle~\cite{Pontryagin1962} with free terminal time, an integral cost and mixed boundary
 conditions, by the argument of Agrachev and Sachkov~\cite{AgrachevSachkov2004}, and Filippov's
@@ -50,13 +48,12 @@ theorem~\cite{Filippov1962}; Brouwer's fixed-point theorem comes from~\cite{Fixe
 
 \subsection{Dictionary}\label{app:formal-dictionary}
 
-\Cref{tab:formal-dictionary} lists the Lean declarations corresponding to the numbered results
-and constructions of the paper.
-Names are relative to the namespace \lean{SmoothedOctagon}; the prefixes
-\lean{ReinhardtChallenge} and \lean{SmoothedPolygons} mark the statements of the challenge file and
-the declarations of~\cite{SmoothedPolygonLean}. Several names in a row are the pieces of one
-result. The rows are grouped by the appendix that proves the result; \cref{thm:main,thm:control}
-and the definitions of \cref{sec:setting} come first.
+\Cref{tab:formal-dictionary} lists the Lean declarations corresponding to the numbered results and
+constructions of the paper. Names are relative to the namespace \lean{SmoothedOctagon}; the
+prefixes \lean{ReinhardtChallenge} and \lean{SmoothedPolygons} mark the statements of the
+challenge file and the declarations of~\cite{SmoothedPolygonLean}. Multiple declarations in one
+row jointly establish the corresponding result. The rows are grouped by the appendix that proves
+the result; \cref{thm:main,thm:control} and the definitions of \cref{sec:setting} come first.
 
 {\small
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{0.25\textwidth}>{\raggedright\arraybackslash}p{0.71\textwidth}@{}}

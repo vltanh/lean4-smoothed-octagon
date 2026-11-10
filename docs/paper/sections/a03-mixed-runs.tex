@@ -1,4 +1,4 @@
-\section{Class M3: reverse runs of the wrong length}\label{sec:mixed-runs}
+\section{Class M3: reverse runs of length other than two}\label{sec:mixed-runs}
 
 This appendix proves \cref{thm:class-M3}. The reverse-four principle of \cref{sec:reverse}
 prevents an interior minimum in a long reverse run. A second local inequality controls the ends
@@ -130,10 +130,10 @@ $d_k\ge3/32$ in both cases.
 \subsection{Proof of ellipticity}\label{sec:rev-ellipticity}
 
 We prove \cref{prop:ellipticity}: a mixed normal vertex period has $\gamma^2>0$. Suppose
-$\gamma^2\le0$. The idea is to read the switch vectors $y_n$ of \cref{lem:per-switch-vectors}
-projectively, through a coordinate that changes monotonically from one switch to the next.
-Because $y_{N+n}=\pm y_n$, the coordinate returns to its value after one period; but at every
-centre it strictly increases, and nowhere does it decrease.
+$\gamma^2\le0$. We use a projective coordinate on the switch vectors $y_n$ of
+\cref{lem:per-switch-vectors} that changes monotonically from one switch to the next. Because
+$y_{N+n}=\pm y_n$, the coordinate returns to its value after one period; but at every centre it
+strictly increases, and nowhere does it decrease.
 
 \begin{lemma}[Three Gram vectors]\label{lem:rev-three-gram}
 Let $S$ be a symmetric $2\times2$ matrix with $\det S\le0$, and let $y,y',y''$ be vectors with
@@ -144,7 +144,7 @@ $(y^{\mathsf T}Sy')(y^{\mathsf T}Sy'')(y'^{\mathsf T}Sy'')>0$.
 \begin{proof}
 For two vectors, $(y^{\mathsf T}Sy)(y'^{\mathsf T}Sy')-(y^{\mathsf T}Sy')^2=\det S\cdot\det(y,y')^2\le0$.
 The Gram determinant of three vectors of the plane vanishes:
-$d\,d'\,d''-d\,c^2-d'\,b^2-d''a^2+2abc=0$ in the obvious notation. With the three two-vector
+$d\,d'\,d''-d\,c^2-d'\,b^2-d''a^2+2abc=0$ with the quadratic values on the diagonal and the bilinear pairings off the diagonal. With the three two-vector
 inequalities, $2abc\ge d\,d'\,d''>0$.
 \end{proof}
 

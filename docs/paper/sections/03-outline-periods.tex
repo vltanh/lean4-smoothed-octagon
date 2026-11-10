@@ -1,11 +1,11 @@
 \section{From minimizers to finite switching patterns}\label{sec:outline-periods}
 
-An arbitrary admissible control may vary throughout a continuum of choices. The comparison with
-the octagon becomes manageable only after this freedom has been reduced. We first show that a
-minimizer uses finitely many constant vertex controls. We then classify the order in which these
-controls occur. For a minimizer, the exclusions will leave at most five pieces.
+An admissible control may take any value in the control triangle. A global minimizer, however, can
+be represented by finitely many pieces of constant vertex control. We establish this
+representation and classify its switching patterns. Excluding the longer patterns will leave at
+most five pieces.
 
-\subsection{Why only finitely many pieces are needed}\label{sec:outline-reduction}
+\subsection{Finiteness and normality}\label{sec:outline-reduction}
 
 The \emph{Pontryagin maximum principle} gives necessary conditions for an optimal control. It
 introduces auxiliary matrix-valued functions, called \emph{costates}, that measure the response of
@@ -34,11 +34,10 @@ most $\Aoct$. The finite normal representation theorem (\cref{thm:finite-normal}
 period for every global minimizer. It has the same cost as the original trajectory and stays in
 $\hstarstar$; only its starting time has changed.
 
-This reduction preserves the motion of the original disk. That fact will be needed for the
-equality case. The precise representation, including the change of starting time, is proved in
-\cref{sec:reduction}.
+The equality case requires this representation of the original disk's motion, including its change
+of starting time. The precise reduction is proved in \cref{sec:reduction}.
 
-\subsection{What one piece records}\label{sec:outline-pieces}
+\subsection{Data of a single piece}\label{sec:outline-pieces}
 
 Let $N$ be the number of pieces. We write $\tau_k$ for their switching times and
 $i_k\in\mathbb Z/3\mathbb Z$ for their labels, where labels are read cyclically as $0,1,2$.
@@ -52,11 +51,10 @@ constant. It is the \emph{active margin} of that piece. Write $a_k$ for this con
 $k$. It measures the scale of the state's motion during that piece. The other two margins, the
 frame and the costate all have explicit evolution formulas.
 
-A piece can therefore be specified by its starting data and one positive duration. The state
-and frame must close after all the pieces have been composed. In these variables, closure is a
-finite system of equations, and the maximum principle becomes a finite system of inequalities.
-\Cref{sec:periods} derives these formulas. The case arguments below use their consequences rather
-than their full coordinate expressions.
+A piece can therefore be specified by its starting data and one positive duration. The state and
+frame must close after all the pieces have been composed. In these variables, closure is a finite
+system of equations, and the maximum principle becomes a finite system of inequalities.
+\Cref{sec:periods} derives the formulas and their consequences for the case arguments.
 
 \subsection{The five switching patterns}\label{sec:outline-signs}
 
@@ -84,9 +82,8 @@ Every vertex representation is in one of the classes $\cls{R}$, $\cls{F}$, $\cls
 $\cls{M1}$, $\cls{M2}$.
 \end{proposition}
 
-The classification distinguishes local obstructions from cost comparisons. Reverse runs of the
-wrong length contradict the maximum principle. Once they have been removed, the remaining
-patterns must be tested against the cost of completing a whole period.
+In a mixed period, the maximum principle excludes reverse runs whose length differs from two. The
+remaining patterns require comparisons with the cost of a complete period.
 
 \subsection{A conserved quantity and the cost budget}\label{sec:outline-casimir}
 
@@ -96,8 +93,7 @@ use the scaled invariant
 \[
   \gamma^2=\frac{\det\Lambda_1(0)}{12},
 \]
-called the \emph{Casimir}. The superscript is part of the notation; positivity is a conclusion,
-not an assumption. Every mixed normal period has $\gamma^2>0$ (\cref{prop:ellipticity}).
+called the \emph{Casimir}. This notation does not assume positivity. Every mixed normal period has $\gamma^2>0$ (\cref{prop:ellipticity}).
 
 The frame must turn through $\pi/3$ in a period. The cost of this turning gives an upper bound
 for the Casimir: every competitive mixed period satisfies
@@ -108,10 +104,9 @@ The cost--Casimir inequality and this consequence are proved in
 \cref{prop:cost-casimir,cor:casimir-cap}. The entirely forward case uses a sharper bound of the
 same kind.
 
-The same invariant can also be computed from the data beside a single piece. Thus a local
-switching pattern can force a value of $\gamma^2$ that the cost budget forbids. This comparison
-is central to two of the case arguments. Another case compares the turning accumulated at
-successive pieces with the turning required by closure.
+The invariant can also be computed from the data adjacent to a single piece. In two of the case
+arguments, these local data force a value of $\gamma^2$ exceeding the bound imposed by the cost. A
+third case compares the turning accumulated at successive pieces with that required by closure.
 
 \subsection{The bound on the number of pieces}\label{sec:outline-five}
 
@@ -120,5 +115,5 @@ A competitive normal vertex period whose state stays in the compact domain $\hst
 most five pieces.
 \end{theorem}
 
-\Cref{sec:outline-classes} explains the five exclusions that prove this theorem. The consequence
-is a finite comparison with the octagon: only periods with at most five pieces remain.
+\Cref{sec:outline-classes} proves this theorem by excluding the five possible classes of longer
+periods. The remaining periods admit a direct comparison with the octagon.

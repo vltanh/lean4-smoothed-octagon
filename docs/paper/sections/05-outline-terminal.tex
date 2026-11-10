@@ -1,9 +1,8 @@
 \section{The remaining periods and the main theorems}\label{sec:outline-terminal}
 
-The case exclusions leave at most five pieces. With so few pieces, the closing equations can be
-solved directly. We first compare their costs with the octagon's, then translate the result back
-to packing density. The equality statement must also identify the motion itself, so that it can
-recover the disk from which the motion came.
+For periods with at most five pieces, the closing equations can be solved directly. Comparing
+their costs with the octagon's completes the density bound. To classify the disks attaining
+equality, the comparison must also identify their trajectories.
 
 \subsection{The four- and five-piece comparisons}\label{sec:outline-short}
 
@@ -29,9 +28,8 @@ Equality holds only for the octagon's four-piece motion, up to a cyclic relabeli
 controls. \Cref{prop:terminal-equality} states the precise identification of its frame and state.
 The comparisons and the equality statement are proved in \cref{sec:terminal}.
 
-Thus the reduction in the number of pieces has a geometric consequence: every minimizing motion
-traces an affine image of the smoothed octagon. We now use the cost bound first, and then return
-to this identification for the equality case.
+The cost comparison proves the lower bound. Identifying the minimizing trajectory then shows that
+its disk is an affine image of the smoothed octagon.
 
 \subsection{The lower bound}\label{sec:terminal-proofs}
 
@@ -64,16 +62,15 @@ least $\delta(K_0)$. Translation preserves density, so $\delta(K)\ge\doct$.
 
 \subsection{Recovering the disk in the equality case}\label{sec:outline-equality}
 
-The preceding argument bounds the cost of a minimizer. For uniqueness, we retain its geometric
-origin. Start with a given disk of least packing density and apply the finite-period reduction
-to its own realization. The terminal equality statement identifies this motion with the
+Let a disk attain the least packing density. Apply the finite-period reduction to its realization
+as a global minimizer. The terminal equality statement identifies this trajectory with the
 octagon's after a cyclic relabeling.
 
-There are then three choices to undo. The relabeling permutes the six contact curves. The change
-of starting time changes the frame used to describe them. The initial linear normalization
-places the contact hexagon in regular position. Reversing these choices carries the boundary of
-the octagon onto the boundary of the given disk. \Cref{sec:equality-rigidity} gives the details
-and proves the following rigidity statement.
+To recover the given disk, we reverse the choices made in the reduction. The cyclic relabeling
+permutes the six contact curves, and the change of starting time changes their reference frame.
+Reversing the initial linear normalization then carries the octagon's boundary onto the boundary
+of the disk. \Cref{sec:equality-rigidity} gives the details and proves the following rigidity
+statement.
 
 \begin{theorem}[Rigidity]\label{thm:rigidity}
 Every worst disk is the image of the octagon $\KH$ under an invertible linear map of the plane.

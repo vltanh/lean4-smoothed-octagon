@@ -1,9 +1,9 @@
 \section{Excluding six or more pieces}\label{sec:outline-classes}
 
-The classification separates the proof into five cases. Two cases are impossible for any normal
-vertex period because of local optimality conditions. The other three require a comparison with
-the octagon's cost. For each case we describe the obstruction and its role in the reduction.
-The calculations are given in five corresponding appendices.
+The five classes require distinct exclusions. Local necessary conditions for optimality exclude
+two classes for every normal vertex period. The other three require a comparison with the
+octagon's cost. We give the argument for each class; the corresponding appendix contains the
+calculations.
 
 \subsection{Class R: every switch reverse}\label{sec:outline-reverse}
 
@@ -21,13 +21,12 @@ The argument uses neither the cost nor the number of pieces. It excludes entirel
 patterns from the final short-period comparison as well. \Cref{sec:reverse} proves the local
 principle and its application to this case.
 
-\subsection{Class M3: reverse runs of the wrong length}\label{sec:outline-mixed-runs}
+\subsection{Class M3: reverse runs of length other than two}\label{sec:outline-mixed-runs}
 
-A mixed period has forward switches on either side of every maximal reverse run. The question is
-how a run can enter and leave this reverse motion. At an entry or an exit, two successive switches
-return to the same label. The active margins $a,b,c$ of the three pieces then satisfy
-$ac<b^2$ (\cref{lem:three-arc}). In particular the middle piece cannot have the smallest of these
-three margins.
+Every maximal reverse run in a mixed period is preceded and followed by a forward switch. At
+either end, two successive switches return to the same label. The active margins $a,b,c$ of the
+three pieces then satisfy $ac<b^2$ (\cref{lem:three-arc}). In particular the middle piece cannot
+have the smallest of these three margins.
 
 This inequality forces the active margins to decrease as the run begins and to increase as it
 ends. A run of one reverse switch would require contradictory orderings at its two ends. A run
@@ -81,12 +80,11 @@ pieces consequently has at least seven. Its cost is a sum of terms determined by
 active margins. If all the margins were as large as the octagon's, these terms would exceed the
 available budget. A competitive period must therefore have a smaller minimum margin.
 
-At a piece attaining that minimum, the switching conditions restrict the neighbouring data.
-The local formula for the Casimir then forces its value above the upper bound allowed by the
-cost of turning through $\pi/3$. The two bounds are incompatible. This explains the distinction
-between the octagon and longer forward motions: extra pieces force a small margin, and the
-necessary local geometry around that margin is too expensive. \Cref{sec:forward} gives the
-cost estimates and the local comparison.
+At a piece attaining that minimum, the switching conditions restrict the neighbouring data. The
+local formula for the Casimir then forces its value above the upper bound allowed by the cost of
+turning through $\pi/3$. These bounds contradict each other: the additional pieces force a small
+margin whose local switching conditions are incompatible with the available cost.
+\Cref{sec:forward} gives the cost estimates and the local comparison.
 
 \subsection{Class M2: longer forward runs}\label{sec:outline-mixed}
 
@@ -100,10 +98,10 @@ Let $P$ be a competitive normal vertex period whose state stays in $\hstarstar$ 
 least six pieces. Then the sign sequence of $P$ is not of class $\cls{M2}$.
 \end{theorem}
 
-The smallest margin occurs at a reverse centre (\cref{prop:m2-centre}). Of the two neighbouring
-pieces, choose the one with the smaller active margin. Reflection and reversal of time allow
-us to place it after the centre. The forward run beginning there has either one switch or at
-least two. These possibilities require different comparisons.
+A smallest margin occurs at a reverse centre (\cref{prop:m2-centre}). Choose the neighbouring
+piece with the smaller active margin. After reflection and reversal of time, if necessary, this
+piece follows the centre. The forward run beginning there has either one switch or at least two.
+These possibilities require different comparisons.
 
 If the run has at least two switches, a variation of one margin reduces the necessary switching
 inequalities to a simpler boundary configuration. A reverse continuation violates those
@@ -117,8 +115,8 @@ measured by a parameter called the \emph{shear}. The cost of the connection toge
 rest of the period exceeds $\Aoct$. The estimates are organized as seven successive restrictions
 in \cref{sec:smaller-short}.
 
-Both arguments use local data from at most seven pieces. The complete period enters through
-the cost budget, the compact domain and the turning identities. \Cref{sec:mixed} contains the
+Both arguments use local data from at most seven pieces. The restrictions from the complete period
+are its cost bound, the compact domain and the turning identities. \Cref{sec:mixed} contains the
 full proof of this case, with separate subsections for the two continuation arguments.
 
 \subsection{Proof of \texorpdfstring{\cref{thm:at-most-five}}{the bound on the number of pieces}}\label{sec:outline-five-proof}
