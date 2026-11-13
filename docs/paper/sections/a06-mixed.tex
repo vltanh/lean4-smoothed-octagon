@@ -1096,13 +1096,31 @@ $v=\operatorname{Sec}(t,1-t,t+x)$ and $F_{p/W}(q)\le v$, then $N(t,x,\frac{29}4t
 \end{lemma}
 
 \begin{proof}
-Write $P_{29t^2/4}=\sum_jC_j(t,x)y^j$. Each $C_j$ increases in $t$ on the strip:
-$\partial_tC_0\ge44x^2$, $\partial_tC_1\ge99x$, $\partial_tC_2\ge48-\frac{2301}{81}$ and
-$\partial_tC_3\ge64-\frac{167}{729}$. Each $\partial_tC_j$ is a polynomial in $x$ whose coefficients
-are cubics $\sum_ia_it^i$, and on $[\frac{13}{35},\frac{14}{35}]$ such a cubic is at least
-$\sum_{a_i\ge0}a_i(\frac{13}{35})^i+\sum_{a_i<0}a_i(\frac{14}{35})^i$; one coefficient of $\partial_tC_0$
-needs the additional remark that it decreases in $t$. So
-$P_{29t^2/4}(t,x,y)\ge P_{29t_0^2/4}(t_0,x,y)$ with $t_0=\frac{13}{35}$, for every $y\ge0$.
+It suffices to transport the unit-face inequality along the scale curve. Write
+$P_{29t^2/4}=\sum_{j=0}^3C_j(t,x)y^j$ and put $t_0=\frac{13}{35}$. We first check that each
+$C_j$ is nondecreasing in $t$ on the larger rectangle
+$\frac13\le t\le\frac25$, $0\le x\le\frac13$.
+
+Write $\partial_tC_0=x^2D_0$, $\partial_tC_1=xD_1$, $\partial_tC_2=D_2$ and
+$\partial_tC_3=D_3$. The bounds
+\[
+ \frac t3\le t^2\le\frac{2t}5,\qquad
+ \frac t9\le t^3\le\frac{4t}{25}
+\]
+make every coefficient of $D_0$ nonnegative. They also give
+$D_1\ge80+x^4(100-40x-20x^2-4x^3)>0$.
+For $D_2$, the constant term is at least $28$, the coefficients of $x,x^2,x^3$ are nonnegative,
+and all remaining coefficients are at least $-1500$. For $D_3$, the constant term is at least
+$40$, the next four coefficients are nonnegative, and the rest are at least $-200$.
+The finite geometric sum is at most $3/2$ for $0\le x\le1/3$, so
+\[
+ \begin{aligned}
+ D_2&\ge28-1500x^4\sum_{i=0}^5x^i\ge28-\frac{250}{9}>0,\\
+ D_3&\ge40-200x^5\sum_{i=0}^4x^i\ge40-\frac{100}{81}>0.
+ \end{aligned}
+\]
+Consequently $P_{29t^2/4}(t,x,y)\ge P_{29t_0^2/4}(t_0,x,y)$ for every $y\ge0$.
+
 Since $\frac{29}4t^2-2t$ increases, the strip condition gives
 $2x+x^2>\frac{29}4t_0^2-2t_0>\frac9{35}$, so $(t_0,x)$ satisfies the shape inequalities of
 \cref{lem:m2-unit-shape}, whose polynomial part gives $P_1(t_0,x,y)>0$ (no floor is used there). As

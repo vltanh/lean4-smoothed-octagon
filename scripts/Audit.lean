@@ -124,7 +124,7 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.OrderFace
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.OrderFace.Boundary
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.ScaleStrip
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.ScaleStrip.Signs
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.ScaleStrip.Monotonicity
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Signs
 import all SmoothedOctagon.Exclusion.Mixed.OrderBounds
