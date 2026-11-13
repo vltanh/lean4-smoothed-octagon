@@ -133,7 +133,6 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Jensen
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Leading
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Monotonicity
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Remainder
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Signs
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Slope
 import all SmoothedOctagon.Exclusion.Mixed.OrderBounds
 import all SmoothedOctagon.Exclusion.Mixed.PolyDeriv

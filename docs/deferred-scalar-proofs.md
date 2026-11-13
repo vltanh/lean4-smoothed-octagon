@@ -3,7 +3,6 @@
 These tasks concern analytic replacements for scalar proof steps. The existing Lean proofs
 remain in use. Group numbers retain their previous numbering.
 
-25. Integrate the reciprocal-mean unit-face proof with the scale-strip reduction and update the appendix.
 28. Mixed low-scale unit-face signs.
 29. Mixed forward low-ratio unit, order and shape signs, and the low-$t$ reductions.
 30. Mixed forward large-gap and high-ratio face signs, and the fitted derivative bounds.

@@ -33,7 +33,7 @@ def reverse_case(t, x):
     the necessary region."""
     s = 2 * t + 2 * x + x ** 2
     region = (t > 0) & (t < 2 / 5) & (x > 0) & (x < 7 / 3 - 10 / 3 * t) & (s > 1) & (s > 29 / 4 * t ** 2)
-    c1 = (t <= 13 / 35) & (x <= 1 - 2 * t)
+    c1 = (t <= 3 / 8) & (x <= 1 - 2 * t)
     c2 = ~c1 & (2 * t + x >= 1) & (x > 1 / 4)
     case = np.where(c1, 1, np.where(c2, 2, 3))
     return np.where(region, case, 0)
@@ -57,13 +57,13 @@ def check():
     # rho = 3/20 is a^2 = 12/17.
     assert abs(4 * (3 / 20) / (1 - 3 / 20) - 12 / 17) < 1e-15
     # (b) every point of the necessary region is in one of the three cases, and the strip lies in
-    # 13/35 < t < 2/5, x <= 9/35; above x = 1 every point of the region is in the order face.
+    # 3/8 < t < 2/5, x <= 1/4; above x = 1 every point of the region is in the order face.
     T, X = np.meshgrid(np.linspace(1e-4, 0.4 - 1e-4, 1201), np.linspace(1e-4, 2.4, 2401))
     case = reverse_case(T, X)
     assert np.all(np.isin(case, [0, 1, 2, 3]))
     strip = case == 3
     assert strip.any()
-    assert np.all(T[strip] > 13 / 35) and np.all(X[strip] <= 9 / 35 + 1e-12)
+    assert np.all(T[strip] > 3 / 8) and np.all(X[strip] <= 1 / 4 + 1e-12)
     assert np.all(case[(X > 1) & (case > 0)] == 2)
     # (c) the four steps cover the region.
     T2, J2 = np.meshgrid(np.linspace(0.25 + 1e-5, 0.4 - 1e-5, 801), np.linspace(1e-5, 0.5, 801))
@@ -106,8 +106,8 @@ def make(out_dir):
     cmap = ListedColormap(['#f6d7b8', '#d7e6f7', '#cdebd8'])
     ax.pcolormesh(T, X, case, cmap=cmap, vmin=0.5, vmax=3.5, shading='auto', rasterized=True)
     ax.plot(t, 1 - 2 * t, color=ps.INK, lw=0.6)
-    ax.plot(t[t >= 13 / 35], np.full((t >= 13 / 35).sum(), 9 / 35), color=ps.INK, lw=0.6)
-    ax.axvline(13 / 35, color=ps.INK, lw=0.6, ymax=(1 - 26 / 35) / 1.1)
+    ax.plot(t[t >= 3 / 8], np.full((t >= 3 / 8).sum(), 1 / 4), color=ps.INK, lw=0.6)
+    ax.axvline(3 / 8, color=ps.INK, lw=0.6, ymax=(1 - 26 / 35) / 1.1)
     ax.axhline(1 / 4, color=ps.FAINT, lw=0.5, ls=':')
     ax.set_xlim(0, 0.4)
     ax.set_ylim(0, 1.1)

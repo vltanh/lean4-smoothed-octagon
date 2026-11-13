@@ -31,13 +31,13 @@ theorem nsr_reverse_core {t x k q v : ℝ} (ht : 0 < t) (ht2 : t < 2 / 5) (hx : 
   have hL : Real.log q < q - 1 := Real.log_lt_sub_one_of_pos (by linarith) hq.ne'
   have mono : ∀ k', k' ≤ k → nsrN t x k' q v (Real.log q) ≤ nsrN t x k q v (Real.log q) :=
     fun k' hk' => nsrN_mono_k ht (by linarith) hx hq.le hvU hL hk'
-  by_cases h1 : t ≤ 13 / 35 ∧ x ≤ 1 - 2 * t
+  by_cases h1 : t ≤ 3 / 8 ∧ x ≤ 1 - 2 * t
   · exact lt_of_lt_of_le (nsr_unit_shape ht h1.1 hx h1.2 (by linarith) hq hv hF) (mono 1 hk1)
   by_cases h2 : 1 ≤ 2 * t + x ∧ 1 / 4 < x
   · have hqk := nsr_q_le_order ht (by linarith) hx h2.1 hq hqW hv hF
     exact lt_of_lt_of_le (nsr_order_face ht ht2 h2.2 h2.1 hdur hv hq hqk) (mono _ hko)
-  -- the scale strip: `t > 13/35`, `x ≤ 9/35`
-  have ht0 : 13 / 35 < t := by
+  -- the scale strip: `t > 3/8`, `x ≤ 1/4`
+  have ht0 : 3 / 8 < t := by
     by_contra h
     push Not at h
     have hx' : 1 - 2 * t < x := by
@@ -45,10 +45,10 @@ theorem nsr_reverse_core {t x k q v : ℝ} (ht : 0 < t) (ht2 : t < 2 / 5) (hx : 
       push Not at h'
       exact h1 ⟨h, h'⟩
     exact h2 ⟨by linarith, by linarith⟩
-  have hx9 : x ≤ 9 / 35 := by
+  have hxquarter : x ≤ 1 / 4 := by
     by_contra h
     push Not at h
     exact h2 ⟨by linarith, by linarith⟩
-  exact lt_of_lt_of_le (nsr_strip ht0.le ht2.le hx hx9 (by linarith) hq hv hF) (mono _ hks)
+  exact lt_of_lt_of_le (nsr_strip ht0.le ht2.le hx hxquarter (by linarith) hq hv hF) (mono _ hks)
 
 end SmoothedOctagon

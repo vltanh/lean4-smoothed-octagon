@@ -29,7 +29,8 @@ The scalar argument is `nsr_reverse_core` (`Nonshort/Core`), the window-level bo
 (`Nonshort/NecessaryBounds`).
 
 The order face uses positive factorizations in its two order gaps. The scale strip reduces to
-the unit shape by monotonicity; the unit shape uses six polynomial signs (`UnitShape/Signs`).
+the unit shape by monotonicity. On the unit shape, the reciprocal-mean secant ceiling and
+square decompositions reduce the cubic to monotonicity and concavity at the shape boundary.
 The bound `t < 2/5` follows from the incoming floor and
 the same-lift quadratic identity, while `a < 4/5` uses the window's `a² < 12/17` (`ρ < 3/20`)
 and a discriminant form of the turn floor.

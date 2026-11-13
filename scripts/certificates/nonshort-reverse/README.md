@@ -1,6 +1,5 @@
-# Generators of the Bernstein certificates for the reverse successor of case M2
+# Generators for the reverse low-scale region
 
-These Python scripts generated the Lean files
-`SmoothedOctagon/Exclusion/Mixed/Nonshort/{UnitShape,LowScale}/Signs.lean`:
-exact Bernstein coefficients (positivity certificates) for the polynomial sign steps of the
-reverse successor and of the low-scale region, which Lean checks with `ring`. They are kept for reproducibility; Lean does not trust them.
+These Python scripts generate the Bernstein certificates in
+`SmoothedOctagon/Exclusion/Mixed/Nonshort/LowScale/Signs.lean`.
+Lean checks the resulting polynomial identities with `ring`.

@@ -108,7 +108,7 @@ $\rho=a^2/(a^2+4)$. It exceeds the cap $23/125$ (dashed) on $[3/20,1/4)$, which 
 $a^2<12/17$ (\cref{lem:m2-scale}).
 (b)~The parameters $(t,x)$ of the scalar reverse exclusion (\cref{prop:m2-reverse-core}), below
 $x=1.1$, by the face to which $k$ is lowered: the unit shape $k=1$, the order face $k=2t+x$, and
-the scale strip $k=29t^2/4$, which lies in $13/35<t<2/5$, $x\le9/35$. Points above $x=1$ belong to
+the scale strip $k=29t^2/4$, which lies in $3/8<t<2/5$, $x\le1/4$. Points above $x=1$ belong to
 the order face. (c)~The parameters $(t,j)$ of a forward successor, in $1/4<t<2/5$, $0<j<1-2t$: the
 low ratio $t\le1/3$, the two large-gap regions $j\ge1/30$, split at $t=3/8$, and the small-gap
 region, where the Casimir exceeds the cap. The dotted line is $j=\frac57(1-2t)$.}\label{fig:m2-domains}
@@ -380,12 +380,12 @@ Then $N(t,x,k,q,v,\log q)>0$.
 By \cref{lem:m2-shape} it suffices to find a shape $k'\le k$ allowed by the hypotheses with
 $N(k')>0$. There are three exhaustive cases (\cref{fig:m2-domains}(b)).
 \begin{enumerate}[label=(\arabic*)]
-\item If $t\le13/35$ and $x\le1-2t$, lower $k$ to $1$, where $N(1)>0$ (\cref{lem:m2-unit-shape}).
+\item If $t\le3/8$ and $x\le1-2t$, lower $k$ to $1$, where $N(1)>0$ (\cref{lem:m2-unit-shape}).
 \item If $2t+x\ge1$ and $x>1/4$, lower $k$ to the order face $k=2t+x$. The floor and the swapped
 secant order give $q\le(1+x)/(2t+x)$. On this face $N$ is a positive
 multiple of a function $\alpha+\beta q+\gamma/q-p\log q$, concave in $q$, so it suffices to check
 $q=1$ and the upper end, where it is positive (\cref{lem:m2-order-face}).
-\item Otherwise $13/35<t<2/5$ and $x\le9/35$; lower $k$ to the scale face $k=29t^2/4$, where
+\item Otherwise $3/8<t<2/5$ and $x\le1/4$; lower $k$ to the scale face $k=29t^2/4$, where
 $N>0$ (\cref{lem:m2-strip}).\qedhere
 \end{enumerate}
 \end{proof}
@@ -977,63 +977,144 @@ $k\ge2t+x$.
 \subsubsection{The reverse successor}\label{app:m2-reverse-signs}
 
 \begin{lemma}[Unit shape]\label{lem:m2-unit-shape}
-If $0<t\le13/35$, $0<x\le1-2t$, $2t+2x+x^2>1$, $q>1$, $v=\operatorname{Sec}(t,1-t,t+x)$ and
+If $0<t\le3/8$, $0<x\le1-2t$, $2t+2x+x^2>1$, $q>1$, $v=\operatorname{Sec}(t,1-t,t+x)$ and
 $F_{p/W}(q)\le v$, then $N(t,x,1,q,v,\log q)>0$.
 \end{lemma}
 
 \begin{proof}
-By \cref{lem:m2-relax} it suffices that $P_1=C_0+C_1y+C_2y^2+C_3y^3>0$ for $y\ge0$. This holds when
+Use the reciprocal-mean ceiling $V$ of \cref{lem:m2-logs}(d), and put
+$\mathcal D=x^2+6x+6$ and $r=1-2t-x$. The shape inequalities give
 \[
-C_0>0,\qquad J_1=20xC_1+3C_0>0,\qquad J_2=53C_0+20x^2C_2>0,
+ \frac1{10}<x<1,\qquad
+ \max\{0,\tfrac14-x\}\le r\le\min\{xW,1-x\}.
 \]
+For fixed $t,x$, write $q=1+xz$ and define the cubic $f(z)=C+Az+Bz^2+Gz^3$ by
 \[
-J_3=24x^3C_3+12x^2C_2-C_0>0,\qquad J_4=40x^3C_3+30x^2C_2+7C_0>0,
+ x^2f(z)=24(q+1)W^2\mathcal D
+ \left\{N(t,x,1,q,V,L_+)-(q-1)(V-F_\ell)\right\}.
 \]
+The constant coefficient has the positive factorization
 \[
-J_*=24x^3C_3-C_0>0.
+ C=6W(W+r)^2\{xW(x^2+2x+2)+r(x^3+4x^2+8x+6)\}.
 \]
-Indeed, with $z=y/x$ and $B_1=-x^2C_2/C_0$, these give $xC_1/C_0\ge-\frac3{20}$, $B_1\le\frac{53}{20}$
-and $x^3C_3/C_0\ge\max\{\frac1{24},\frac{B_1}2+\frac1{24},\frac{3B_1}4-\frac7{40}\}$. The resulting lower
-bound for $P_1/C_0$ is affine in $B_1$ on each side of $B_1=13/15$, so it suffices to take
-$B_1\in\{0,\frac{13}{15},\frac{53}{20}\}$, that is, to check the cubics $1-\frac3{20}z+\frac1{24}z^3$,
+The quantities that control the cubic are its value at one and three related combinations:
 \[
-1-\tfrac3{20}z-\tfrac{13}{15}z^2+\tfrac{19}{40}z^3=\tfrac{52}{135}+\tfrac{13}{180}(z-\tfrac43)+\tfrac25(z-\tfrac43)^2+\tfrac{19}{40}z(z-\tfrac43)^2,
+ P=f(1),\quad S=A+2C-G,\quad K=3P-S,\quad H=B+4G-C/9.
 \]
-\[
-1-\tfrac3{20}z-\tfrac{53}{20}z^2+\tfrac{29}{16}z^3=\tfrac1{80}-\tfrac1{80}(z-1)+\tfrac{39}{40}(z-1)^2+\tfrac{29}{16}z(z-1)^2,
-\]
-each bounded below by a positive constant on $z\ge0$.
+We first establish
+\begin{equation}\label{eq:m2-unit-boundary-bounds}
+ G>0,\quad P>0,\quad K>0,\quad H\ge0,\quad C+8S>0,\quad S+32P>0.
+\end{equation}
 
-For the six signs put $s=1-2t-x\ge0$. The domain gives $\frac3{25}<x<1$ and
-$\max\{0,\frac9{35}-x\}\le s\le\min\{1-x,x+x^2\}$, and $s=\frac9{35}-x$ is the edge $t=13/35$.
-
-First, $C_0=12W^2X^3N(t,x,1,1,\bar v,0)$.
-Put $c=1-t$ and $V_{\rm mid}=1+c^2/W-2c/X$, so $\bar v<V_{\rm mid}$.
-At $q=1$ the shape derivative decreases in $v$, and
+The order gap reduces these inequalities to boundary estimates.
+The functions $C,P,S,K$ increase in $r$.
+For $P$, write
 \[
- \partial_kN\big|_{v=V_{\rm mid}}=\frac{c^2x^2}{WX}>0,\qquad
- N(t,x,2t+x,1,V_{\rm mid},0)=\frac{c^2x^3(1-tX)}{WX}>0.
+ P=xW\{Wa_0+a_1r+W^2a_2r^2+W^2a_3r^3\}.
 \]
-The last sign follows from $x\le1-2t$:
-$1-tX\ge(1-t)(1-2t)>0$.
-We may therefore lower $k=1$ to $2t+x$ at fixed $\bar v$, and then
-raise $\bar v$ to $V_{\rm mid}$; both comparisons lower $N$.
-The resulting positive value proves $C_0>0$.
+Here $a_1$ has positive coefficients, $a_2\ge0$, and direct expansion gives
+\[
+ 2a_2+3xWa_3
+ =9x^6+84x^5+246x^4+261x^3+46x^2+24(1-x)\ge0.
+\]
+If $a_3<0$, use $r\le xW$ in the derivative; if $a_3\ge0$, all its terms are nonnegative.
+For $S$, its linear and quadratic coefficients in $r$ are at least $72W$ and $72$,
+and its cubic coefficient is at least $-12xW^2$.
+Since $Wr\le1$, this gives
+\[
+ S_r\ge72W-36x>0.
+\]
+The same power bounds, $x^n\le x^m$ for $n\ge m$ and $0\le x\le1$, give
+\[
+ K_r\ge-72+516x+2928x^2+6352x^3+8316x^4+4412x^5>0;
+\]
+the last inequality already follows from $x>1/10$ and its first three terms.
+Consequently the inequalities for $P,C+8S,S+32P,K$ reduce to
+$r=\max\{0,1/4-x\}$.
 
-Next write $J_i/x^2=\sum_{m=0}^3A_{im}(x)s^m$ for $i=1,\dots,4$. The functions $J_1/x^2$ and $J_2/x^2$
-increase in $s$: their $s$-derivatives are bounded below, using $s\le x+x^2$, by polynomials in $x$
-with positive coefficients. So they are smallest at the lower end of $s$, where they are positive:
-on the edge $t=13/35$ by one-variable inequalities on $[\frac3{25},\frac9{35}]$, and at $s=0$ because
-$A_{i0}/(xW^2)$ increases for $x\ge\frac9{35}$ and is positive at $\frac9{35}$. The function $J_3/x^2$ is
-concave in $s$ ($A_{32}+3A_{33}s<0$ on the domain), so it suffices to check the two ends of the
-$s$-interval, again one-variable inequalities. The function $J_4/x^2$ increases in $s$ for
-$x\ge\frac18$: its $s$-derivative, written in the Bernstein basis of $[0,x+x^2]$, has three
-coefficients that are polynomials in $x$ with positive non-constant coefficients and positive at
-$x=\frac18$. For $\frac3{25}<x<\frac18$, one has $A_{40}\ge\frac{7059}{800}$, $A_{41},A_{43}>0$,
-$A_{42}>-217$ and $s\le\frac9{64}$, so $J_4/x^2>4$. Finally $J_*$, a cubic in $s$ written in the
-Bernstein basis of $[0,S]$ with $S=x+x^2$ for $x\le\frac25$ and $S=1-x$ for $x\ge\frac25$, has four
-coefficients bounded below, after dropping positive terms, by $258xW^2$, $675xW^2$, $570xW^2$,
-$94xW^2$ in the first case and by $258xW^2$, $100W$, $46$, $94$ in the second.
+On $r=0$, divide $P$ and $S+32P$ by $xW^2$, and $K$ by $x^2W^2$.
+The resulting polynomials increase for $x\ge1/4$ and are positive at $1/4$.
+For the remaining combination, dropping higher powers gives
+\[
+ C+8S\ge2xW^2(983x^3+1005x^2+258x-138)>0.
+\]
+Indeed, its negative terms of degrees five through eight are at least $-552x^4$;
+combining these with $411x^4+1124x^3$ leaves at least $983x^3$.
+The last cubic increases and is positive at $1/4$.
+On the cap edge $r=1/4-x$, the polynomial $-64P/(xW)$ has positive
+nonconstant coefficients and is negative at $1/4$.
+The polynomials $32(C+8S)$ and $64(S+32P)$ are concave on $[0,1/4]$
+and positive at both endpoints.
+For the former, the positive terms of its second derivative sum to less than $40000$,
+whereas its negative constant term is $-189864$; for the latter, every term of the second
+derivative is negative.
+Finally $64K$ is concave on $[1/10,1/4]$ and positive at both endpoints:
+its second derivative is at most $41856-910872x<0$.
+This proves the four lower-boundary inequalities.
+
+For $H$, expansion in $r$ gives $H_{rr}\le0$ on $0\le r\le xW$.
+To check the sign, the quadratic coefficient is at most a negative quadratic in $x$.
+If the cubic coefficient is positive, bound $r$ by $xW$.
+The resulting upper bound is negative on $[0,1/2]$ using $x^2\le x/2$, $x^3\le x/4$;
+on $[1/2,1]$, use $x^2\le x$ and $x^4\ge x^3/2$ instead.
+It therefore suffices to check the endpoints of the gap interval.
+On $r=0$, the only terms requiring attention in $H/(xW^2)$ are a positive multiple of
+\[
+ 320+132x-428x^2=320(1-x)+24x+428x(1-x)\ge0.
+\]
+On $r=1/4-x$, the polynomial $192H$ increases on $[1/10,1/4]$ and is positive at $1/10$.
+Its derivative is positive because the negative terms of degree at least three have total
+magnitude at most $160000x$, whereas its positive linear term is $227864x$.
+On $r=xW$, the bracket after removing the positive factor is at least $200-192x>0$.
+On $r=1-x$, this edge is active only for $x>2/5$, and
+\[
+ H=\frac83(72x^6+408x^5+912x^4+810x^3+140x^2-91x-6)>0.
+\]
+The last sign follows from $x^3\ge2x^2/5$ and $x^2\ge2x/5$.
+Thus $H\ge0$ throughout the domain.
+
+It remains to check $G$. Write $G=xF(r)$, with
+$F(r)=a+br+cr^2+er^3$ and $Q(r)=a+br+cr^2$.
+For $x\le1/3$, the coefficients satisfy
+$a\ge36W^2$, $b\ge-80W$, $c\ge-16$, $e\ge0$; hence
+\[
+ F(r)\ge W^2(36-80x-16x^2)\ge7W^2>0.
+\]
+For $x\ge1/3$, put $R=1-x$. Expansion gives $a>0$ and
+\[
+ Q(R)\ge-18+303x^2>0,\qquad
+ F(R)=4x(12x^4+59x^3+107x^2+60x-6)>0.
+\]
+On $[1/3,1/2]$, one has $c\le0$ and $e\ge0$, so the concavity of $Q$ proves $F>0$.
+On $[1/2,1]$, one has $b\ge0$.
+If $e\ge0$, interpolate $Q$ using
+$R^2Q(r)=(R^2-r^2)a+r^2Q(R)+bRr(R-r)>0$.
+If $e<0$, use instead
+\[
+ R^2F(r)=(R^2-r^2)a+r^2F(R)+bRr(R-r)-eR^2r^2(R-r)>0.
+\]
+The endpoint values cover $r=0$ as well. This proves \eqref{eq:m2-unit-boundary-bounds}.
+
+We now recover positivity of the cubic. If $S<0$, the last two inequalities imply
+$4CP-S^2>0$. Completing a square gives
+\[
+ 4Cf(z)=\{2C(1-z)+Sz\}^2+(4CP-S^2)z^2+4CGz(1-z)^2>0.
+\]
+At $z=0$, use $f(0)=C>0$.
+If $S\ge0$, use the following identities in the three consecutive ranges:
+\[
+ \begin{aligned}
+ f(z)&=(C+Gz)(1-z)^2+Sz(1-z)+Pz^2,
+       &&0\le z\le1,\\
+ f(z)&=C(z-1)^2+z\{(3-2z)P+(z-1)K+G(z-1)^2\},
+       &&1\le z\le\tfrac32,\\
+ f(z)&=\tfrac C9(z-3)^2+z\{K/2+(z-\tfrac32)H+G(z-2)^2\},
+       &&z\ge\tfrac32.
+ \end{aligned}
+\]
+Every term has the required sign, and $C,P,K>0$ give strictness at the endpoints.
+Finally, \cref{lem:m2-relax}, with $V$ as the incoming ceiling, transfers this positivity to the
+exact secant and logarithm.
 \end{proof}
 
 \begin{lemma}[Order face]\label{lem:m2-order-face}
@@ -1091,43 +1172,49 @@ because $175h^2+43h-14\ge7+\frac{43}{5}-14>0$.
 \end{proof}
 
 \begin{lemma}[Scale strip]\label{lem:m2-strip}
-If $\frac{13}{35}\le t\le\frac25$, $0<x\le\frac9{35}$, $\frac{29}4t^2<2t+2x+x^2$, $q>1$,
+If $\frac38\le t\le\frac25$, $0<x\le\frac14$, $\frac{29}4t^2<2t+2x+x^2$, $q>1$,
 $v=\operatorname{Sec}(t,1-t,t+x)$ and $F_{p/W}(q)\le v$, then $N(t,x,\frac{29}4t^2,q,v,\log q)>0$.
 \end{lemma}
 
 \begin{proof}
-It suffices to transport the unit-face inequality along the scale curve. Write
-$P_{29t^2/4}=\sum_{j=0}^3C_j(t,x)y^j$ and put $t_0=\frac{13}{35}$. We first check that each
-$C_j$ is nondecreasing in $t$ on the larger rectangle
-$\frac13\le t\le\frac25$, $0\le x\le\frac13$.
-
-Write $\partial_tC_0=x^2D_0$, $\partial_tC_1=xD_1$, $\partial_tC_2=D_2$ and
-$\partial_tC_3=D_3$. The bounds
+Use the reciprocal-mean ceiling $V$ and the normalization of \cref{lem:m2-unit-shape},
+with $\mathcal D=x^2+6x+6$.
+Write the cleared residual on $k=29t^2/4$ as $\sum_{j=0}^3C_j(t,x)y^j$, where $y=q-1$,
+and put $t_0=3/8$.
+Each coefficient increases with $t$ on $3/8\le t\le2/5$, $0\le x\le1/4$.
+Indeed, write $\partial_tC_0=x^2D_0$, $\partial_tC_1=xD_1$, and
+$\partial_tC_2=D_2$, $\partial_tC_3=D_3$.
+The elementary bounds
 \[
- \frac t3\le t^2\le\frac{2t}5,\qquad
- \frac t9\le t^3\le\frac{4t}{25}
+ \frac9{64}\le t^2\le\frac4{25},\qquad
+ \frac{27}{512}\le t^3\le\frac8{125}
 \]
-make every coefficient of $D_0$ nonnegative. They also give
-$D_1\ge80+x^4(100-40x-20x^2-4x^3)>0$.
-For $D_2$, the constant term is at least $28$, the coefficients of $x,x^2,x^3$ are nonnegative,
-and all remaining coefficients are at least $-1500$. For $D_3$, the constant term is at least
-$40$, the next four coefficients are nonnegative, and the rest are at least $-200$.
-The finite geometric sum is at most $3/2$ for $0\le x\le1/3$, so
+make every coefficient of $D_0,D_1$ nonnegative.
+For $D_2$, the constant coefficient is at least $120$, the next three are nonnegative,
+and the coefficients of degrees four through eight are at least $-2400$.
+For $D_3$, the corresponding bounds are $160$, four nonnegative coefficients,
+and coefficients of degrees five through eight at least $-400$.
+Since $\sum_{i=0}^4x^i\le4/3$,
 \[
- \begin{aligned}
- D_2&\ge28-1500x^4\sum_{i=0}^5x^i\ge28-\frac{250}{9}>0,\\
- D_3&\ge40-200x^5\sum_{i=0}^4x^i\ge40-\frac{100}{81}>0.
- \end{aligned}
+ D_2\ge120-2400x^4\sum_{i=0}^4x^i>100,\qquad
+ D_3\ge160-400x^5\sum_{i=0}^3x^i>150.
 \]
-Consequently $P_{29t^2/4}(t,x,y)\ge P_{29t_0^2/4}(t_0,x,y)$ for every $y\ge0$.
+Thus the cleared residual is nondecreasing in $t$ for every $y\ge0$.
 
-Since $\frac{29}4t^2-2t$ increases, the strip condition gives
-$2x+x^2>\frac{29}4t_0^2-2t_0>\frac9{35}$, so $(t_0,x)$ satisfies the shape inequalities of
-\cref{lem:m2-unit-shape}, whose polynomial part gives $P_1(t_0,x,y)>0$ (no floor is used there). As
-$P_k$ increases in $k$ at fixed $(t_0,x,q)$ (the coefficient of $k$ is bounded below as in
-\cref{lem:m2-shape}, now with $\bar v<U(t_0)$ and $L_+<q-1$) and $\frac{29}4t_0^2=\frac{4901}{4900}>1$,
-also $P_{29t_0^2/4}(t_0,x,y)>0$. Hence $P_{29t^2/4}>0$, and \cref{lem:m2-relax} at the original
-$(t,x,q)$, where the floor holds, gives $N>0$.
+The function $29t^2/4-2t$ increases on the strip, so its defining inequality gives
+\[
+ 2x+x^2>\frac{29}4t_0^2-2t_0=\frac{69}{256}>\frac14.
+\]
+Hence $(t_0,x)$ satisfies the unit-shape inequalities.
+The polynomial part of \cref{lem:m2-unit-shape} gives strict positivity there at $k=1$.
+Moreover, $V<U(t_0)$ follows from
+\[
+ U(t_0)-V=\frac{(1-t_0)x}{2W\mathcal D}
+ \{Wx(x+4)+\mathcal D(1-2t_0-x)\}>0.
+\]
+Shape monotonicity therefore raises $k$ to $29t_0^2/4=261/256>1$.
+Coefficient monotonicity transports this positive value to the original $t$.
+Apply \cref{lem:m2-relax} at that point, where the control floor holds, to obtain $N>0$.
 \end{proof}
 
 \begin{lemma}[Low-scale unit face]\label{lem:m2-low-unit}
