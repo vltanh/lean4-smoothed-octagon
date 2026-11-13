@@ -2321,11 +2321,9 @@ $c_0(x)=\frac{x(7x+1)}{4x^2+11x+1}$ and call
   x+\frac{8x(\alpha-1)}{9x+8}\le\beta\le x+c_0(x)(\alpha-1)
 \]
 the \emph{strip}; by \cref{lem:ss-orders} it contains the actual shapes for $1<x\le5$. In
-gates S0 to S4 the proof runs in the same order: the norm is raised to its ceiling (the face value is
-monotone in $u$), the duration is removed by \eqref{eq:ss-duration} or by a tangent bound for the
-logarithm, then $\beta$, then the shape $\alpha$ or $1/\alpha$, then $x$, each by the sign of a
-first or second derivative, and the remaining polynomials in one variable are checked on their
-intervals. Gate S6 instead uses the exact-angle score and the integral norm floor of
+gates S0 to S4, first apply the norm ceilings and the duration bounds.
+Monotonicity or convexity reduces most shape variables to endpoints; the resulting polynomial
+signs follow from coefficient bounds. Gate S6 instead uses the exact-angle score and the integral norm floor of
 \cref{app:ss-S6}; its minimization is proved directly below.
 
 \begin{proposition}[Faces of gate S0]\label{prop:ss-face-S0}
@@ -2341,20 +2339,58 @@ Let $F(\tau,\ell)=(w_*-1)\tau+\frac1\tau+\frac{u-1}{r_A}+r_A+1-q-E_{L,*}+\ell+\f
 \end{proposition}
 
 \begin{proof}[Proof sketch]
-(a) Each test is convex in $\beta$: as a function of $\beta$ it is a quadratic with positive
-leading coefficient plus simple poles with positive residues. So it suffices to take $\beta=x$
-and an enlarged upper face $\beta=x+c_j(\alpha-1)$, with constant slopes $c_j\in\{7/8,1,5/4,3/2\}$
-on the four ranges $[12/5,5/2]$, $[5/2,3]$, $[3,5]$, $[5,9]$ of $x$; these slopes dominate $c_0$
-because $c_0$ increases, with $c_0'=(73x^2+14x+1)/(4x^2+11x+1)^2$. On $\beta=x$ the cleared
-numerators increase in $\alpha$, and at $\alpha=1$ they factor through three polynomials in
-$x-2$ that are positive for $x\ge12/5$. On each upper face the cleared numerator $N_j(x,\alpha)$
-has $\partial_x^2N_j>0$: its expansion in $X=x-z_j$, $A=\alpha-1$ has degree eight, and bounding
-each coefficient of $X^k$ below by discarding positive terms and evaluating negative ones at the
-largest $A$ leaves a polynomial in $X$ that is positive on the range. The values and first
-$x$-derivatives at the lower end of each range are polynomials of degree seven in $\alpha$,
-positive by a second-order Taylor bound around the midpoint of the $\alpha$-interval. Where the
-$\alpha$-range ends on a slanted edge $x=2\alpha-o_j$, a third derivative in $\alpha$ is positive,
-and the values on the edge follow.
+(a) The partial-fraction form in $\beta$ gives the chord bound between
+$\beta=x$ and the order boundary
+\[
+ Q=4x^2+11x+1,\qquad
+ \beta_*=x+\frac{x(7x+1)(\alpha-1)}Q.
+\]
+Thus each test is at most the larger of its values at these two endpoints.
+On $\beta=x$, the cleared numerators increase in $\alpha$; at $\alpha=1$
+their expansions in $x-12/5$ have positive coefficients.
+
+For the upper endpoint, write $F_2,F_T,F_8$ for the three tests at
+$\tau=2,T,8T/9$, respectively. Put $B=\alpha+\beta$,
+$K=x^2+2x+\alpha^2$, and $V=4(x+1)(35x+13)(\beta-1)$. The positive
+factors that clear their denominators define
+\[
+ N_2=-72\alpha BK^2VF_2,\qquad
+ N_T=-8\alpha BK^2VF_T,\qquad
+ N_8=-72\alpha BK^2VF_8.
+\]
+Normalize the position of $\alpha$ in its order interval by setting
+\[
+ X=x-\frac{12}5\ge0,\qquad
+ e=\frac{12(\alpha-1)}{5x-8}\in[0,1].
+\]
+Substitution at $\beta_*$ gives
+\[
+ Q^4N_\sigma(x,\alpha,\beta_*)
+   =\sum_{i=0}^{18}c_{\sigma,i}(e)X^i,
+ \qquad \sigma\in\{2,T,8\},
+\]
+where the coefficients have degree at most seven in $e$. All are
+nonnegative on $[0,1]$, and the constant coefficient is positive. To see
+the signs, use $0\le e^j\le1$; for $c_{2,16},c_{2,17},c_{2,18}$,
+retain the linear term and use $e^j\le e$ for $j\ge1$.
+The six coefficients that require a quadratic bound satisfy
+$c_{\sigma,i}(e)\ge Lp(e)$ with the following values:
+\[
+\begin{array}{c c c l}
+ \sigma&i&L&p(e)\\\hline
+ 2&0&10^{12}&\frac52-7e+6e^2\\
+ 2&1&10^{13}&3-6e+5e^2\\
+ 2&2&10^{14}&\frac32-\frac52e+\frac32e^2\\
+ 2&3&10^{14}&5-5e+3e^2\\
+ 8&0&10^{12}&\frac92-10e+\frac{23}4e^2\\
+ 8&1&10^{13}&6-8e+4e^2
+\end{array}
+\]
+These bounds follow by retaining terms through degree two and using
+$e^j\le e^2$ for $j\ge2$ on every negative higher term. Each displayed
+quadratic is positive by completing the square. Hence the three
+$N_\sigma$ are positive at the upper endpoint for every $x\ge12/5$,
+which proves the required signs there. The chord bound concludes (a).
 
 (b) Here $\bar u\le\bar V(x)\le u_b:=\frac{x+74}{100}$, by
 $96(4x^2+11x+1)^2-(7x+1)^2(x+1)(35x+13)=-179x^4+5606x^3+11040x^2+1882x+83>0$ on $[0,9]$ and

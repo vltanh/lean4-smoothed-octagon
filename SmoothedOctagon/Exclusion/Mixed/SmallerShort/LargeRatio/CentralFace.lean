@@ -18,7 +18,7 @@ At the central scale `q = q_c = α²/K`, `K = x² + 2x + α²`, the floor-weight
 is `kη² + lη + m + r/η + s/(η + α + 1)` (`lgr_pf_two`, `lgr_pf_dur`), with `k = (5/2)δ²u_∞/K²` resp.
 `δ²u_∞/(2K²)`, the residue `r = J·A` at `β = 1` and `s = α` resp. `(γK/α)(w_N - 1) + α` at
 `β = -α`. The chord lemma `lgr_chord` then bounds each test by its values at `β = x` and at the
-enlarged upper end (`lgr_cen_two_chord`, `lgr_cen_dur_chord`), once
+upper end (`lgr_cen_two_chord`, `lgr_cen_dur_chord`), once
 * `τ = 2`: `k(x - 1)³ + r ≥ 0` (`lgr_two_res`), from the positive
   polynomial `lgrPhi2f` on the shape domain;
 * `τ = T, 8T/9`: `s ≥ 0` (`lgr_dur_s`: `Q + α²K ≥ 0`, the continued norm at `β = -α`) and
@@ -37,7 +37,7 @@ bound `lgrLow` on three pieces (`lgr_trap_pos`). The cleared numerators `lgrN2`,
 * `lgr_trap_pos`: the coefficient bound on the shape domain.
 * `lgr_cen_two_chord`, `lgr_cen_dur_chord`: the beta reductions.
 * `lgrN2`, `lgrNT`, `lgrN8`, `lgr_G2_neg`, …; on lists `lgrFNc`, `lgr_H2_FN2`, `lgr_H2_FNT`,
-  `lgr_H2_FN8`; the face lemmas `lgr_face_rect`, `lgr_face_slant`.
+  `lgr_H2_FN8`.
 -/
 
 @[expose] public section
@@ -703,51 +703,6 @@ theorem lgr_G8_neg {x a b : ℝ} (hx : 1 < x) (ha : 0 < a) (hb : 1 < b)
     lgr_N8_eq hK.ne' ha.ne' hB.ne' hV.ne']
   apply div_neg_of_neg_of_pos (by linarith)
   positivity
-
-/-! ### Upper faces: convexity in `x` on a rectangle -/
-
-/-- The `X`-derivative is nonnegative on the rectangle once the second derivative is (coefficient
-bound) and the first derivative is positive on the left edge. -/
-theorem lgr_face_d1 (P : List (List ℝ)) {HA W : ℝ} (hcurv : 0 ≤ lgrLow2 HA W (lgrD2 (lgrD2 P)))
-    (hd1 : ∀ A, 0 ≤ A → A ≤ HA → 0 < polyHorner (lgrEval 0 (lgrD2 P)) A) {X A : ℝ} (hA : 0 ≤ A)
-    (hAH : A ≤ HA) (hX : 0 ≤ X) (hXW : X ≤ W) : 0 ≤ lgrH2 (lgrD2 P) X A := by
-  have h2 : ∀ X, 0 ≤ X → X ≤ W → 0 ≤ lgrH2 (lgrD2 (lgrD2 P)) X A :=
-    fun X h1 h2 => hcurv.trans (lgr_low2_le hA hAH h1 h2 _)
-  have h1 : 0 ≤ lgrH2 (lgrD2 P) 0 A := by rw [← lgr_horner_eval]; exact (hd1 A hA hAH).le
-  have := lgr_mono_X (P := lgrD2 P) (A := A) (fun X' h1' h2' => h2 X' h1' (h2'.trans hXW)) hX
-  linarith
-
-/-- **A face on a rectangle**: positive second `X`-derivative, positive first
-derivative and value on the left edge `X = 0`. -/
-theorem lgr_face_rect (P : List (List ℝ)) {HA W : ℝ} (hcurv : 0 ≤ lgrLow2 HA W (lgrD2 (lgrD2 P)))
-    (hd1 : ∀ A, 0 ≤ A → A ≤ HA → 0 < polyHorner (lgrEval 0 (lgrD2 P)) A)
-    (hv : ∀ A, 0 ≤ A → A ≤ HA → 0 < polyHorner (lgrEval 0 P) A) {X A : ℝ} (hA : 0 ≤ A)
-    (hAH : A ≤ HA) (hX : 0 ≤ X) (hXW : X ≤ W) : 0 < lgrH2 P X A := by
-  have h0 : 0 < lgrH2 P 0 A := by rw [← lgr_horner_eval]; exact hv A hA hAH
-  have := lgr_mono_X (P := P) (A := A)
-    (fun X' h1' h2' => lgr_face_d1 P hcurv hd1 hA hAH h1' (h2'.trans hXW)) hX
-  linarith
-
-/-- **A face with a slanted edge**: on `A ≤ T` the left edge, beyond it the line
-`X = αA + β` (to the left of the actual point) carries the sign. -/
-theorem lgr_face_slant (P : List (List ℝ)) {HA W T α β : ℝ}
-    (hcurv : 0 ≤ lgrLow2 HA W (lgrD2 (lgrD2 P)))
-    (hd1 : ∀ A, 0 ≤ A → A ≤ HA → 0 < polyHorner (lgrEval 0 (lgrD2 P)) A)
-    (hv : ∀ A, 0 ≤ A → A ≤ T → 0 < polyHorner (lgrEval 0 P) A)
-    (hs : ∀ A, T ≤ A → A ≤ HA → 0 < polyHorner (lgrSlant α β P) A) {X A : ℝ} (hA : 0 ≤ A)
-    (hAH : A ≤ HA) (hX : 0 ≤ X) (hXW : X ≤ W)
-    (hcase : A ≤ T ∨ (0 ≤ α * A + β ∧ α * A + β ≤ X)) : 0 < lgrH2 P X A := by
-  rcases le_or_gt A T with hT | hT
-  · have h0 : 0 < lgrH2 P 0 A := by rw [← lgr_horner_eval]; exact hv A hA hT
-    have := lgr_mono_X (P := P) (A := A)
-      (fun X' h1' h2' => lgr_face_d1 P hcurv hd1 hA hAH h1' (h2'.trans hXW)) hX
-    linarith
-  · rcases hcase with h | ⟨h1, h2⟩
-    · exact absurd h (not_le.2 hT)
-    have h0 : 0 < lgrH2 P (α * A + β) A := by rw [← lgr_horner_slant]; exact hs A hT.le hAH
-    have := lgr_mono_X (P := P) (A := A)
-      (fun X' h1' h2' => lgr_face_d1 P hcurv hd1 hA hAH (h1.trans h1') (h2'.trans hXW)) h2
-    linarith
 
 /-! ### The cleared numerators on coefficient lists -/
 

@@ -16,7 +16,7 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.OuterFace.
 The face signs `lgr_central_tau_two`, `lgr_central_duration` and `lgr_outer_tests` of the
 large-ratio bound, proved with their exact statements as `*_proof`:
 
-* the central `τ = 2` test: beta convexity, the lower face `β = x` and four upper faces
+* the central `τ = 2` test: beta convexity, the lower face `β = x` and the exact upper boundary
   (`lgr_central_two`, `SmallerShort/LargeRatio/CentralFace/`);
 * the central `τ = T` and `τ = 8T/9` tests, by the same faces (`lgr_central_T`, `lgr_central_8`);
 * the three outer tests at `q = 1/7`: incoming monotonicity and the two majorants
@@ -24,12 +24,10 @@ large-ratio bound, proved with their exact statements as `*_proof`:
   (`SmallerShort/LargeRatio/OuterFace/LargeShape`), beta convexity and five faces on the strip (`SmallerShort/LargeRatio/OuterFace/Strip`,
   `SmallerShort/LargeRatio/OuterFace/`); assembled here (`lgr_outer_T`, `lgr_outer_8`, `lgr_outer_2`).
 
-The expanded numerators are computed inside Lean from their factored formulas by products of
-coefficient lists (`lgrMul2`; never printed), every identity between a factored formula and its
-list is proved generically (`ring` on at most seven atoms) and every sign by the uniform
-coefficient bound `lgrLow` (constant term plus the negative terms at the upper end) evaluated by
-`norm_num`. The only printed polynomials are the twelve `P_{ij}` of the large-shape comparison;
-there is no generated certificate or coefficient table.
+The central upper-boundary signs follow from the expansion in `x - 12/5`
+after normalizing alpha to its order interval. Six quadratic minorants and
+endpoint power bounds give nonnegative coefficients. The outer signs use
+coefficient-list identities and the coefficient bound `lgrLow`.
 
 ## Main API
 
@@ -59,6 +57,17 @@ theorem lgr_central_duration_proof {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x 
   ⟨lgr_central_T hx hx9 hal hal' hxb hb, lgr_central_8 hx hx9 hal hal' hxb hb⟩
 
 /-! ### The outer face -/
+
+/-- The strong-order slope `c₀(x)` is at most a constant `c` where `x(7x + 1) ≤ c(4x² + 11x + 1)`. -/
+theorem lgr_slope_le {x a b c : ℝ} (hx : 0 < x) (ha : 1 ≤ a)
+    (hc : x * (7 * x + 1) ≤ c * (4 * x ^ 2 + 11 * x + 1))
+    (hb : b ≤ x + x * (7 * x + 1) * (a - 1) / (4 * x ^ 2 + 11 * x + 1)) : b ≤ x + c * (a - 1) := by
+  have hR : 0 < 4 * x ^ 2 + 11 * x + 1 := by positivity
+  have : x * (7 * x + 1) * (a - 1) / (4 * x ^ 2 + 11 * x + 1) ≤ c * (a - 1) := by
+    rw [div_le_iff₀ hR]
+    have := mul_le_mul_of_nonneg_right hc (by linarith : (0 : ℝ) ≤ a - 1)
+    nlinarith
+  linarith
 
 /-- The outer domain facts: `α > 1`, `β ≥ x`, `β ≥ x + (3/5)(α - 1)`, `4α ≤ 3β`. -/
 theorem lgr_outer_dom {x a b : ℝ} (hx : 12 / 5 ≤ x) (hal : (22 * x + 20) / 55 ≤ a) (hax : a ≤ x)

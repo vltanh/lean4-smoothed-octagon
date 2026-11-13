@@ -247,13 +247,11 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Jets
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.LowerFace
-import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.MaxDuration1
-import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.MaxDuration2
-import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.NearMaxDuration1
-import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.NearMaxDuration2
-import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.TauTwo1
-import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.TauTwo2
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.Tests
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.UpperBoundary
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.UpperBoundary.Circuit
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.UpperBoundary.Polynomials
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.UpperBoundary.Signs
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.FaceSigns
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.OuterFace
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.OuterFace.LargeShape
