@@ -54,20 +54,16 @@ def build(X, pkl, h0, h1, jlo, g, gstr, kind, Yc=None, zlo=Fr(0), zhi=Fr(1), var
     return out, needI, need0g, yform, cs_plain, D, ny
 
 JOBS = {
- 'nsfCPn': dict(pkl='Phat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
  'nsfCLRb': dict(pkl='lr_ko.pkl', h0=R(1,3), h1=R(1,2), jlo=0, g=[R(0),R(1)], gstr='h', kind='sym', Yc=R(1)),
 }
 DOC = {
- 'nsfCPn': 'the Casimir excess `3125t²p²W⁴Q²(N(V) - 16s²·9193/50000)`-(11))',
  'nsfCLRb': 'the low-ratio residual `Ĝ` at the order shape `k = 2t + x`',
 }
 # the output module and the title of each certificate
 OUT = {
- 'nsfCPn': 'SmallGap/CasimirExcessSigns.lean',
  'nsfCLRb': 'LowRatio/OrderShapeSigns.lean',
 }
 TITLE = {
- 'nsfCPn': 'the sign of the Casimir excess',
  'nsfCLRb': 'the low-ratio residual at the order shape',
 }
 if __name__ == '__main__':

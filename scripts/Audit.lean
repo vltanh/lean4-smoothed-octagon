@@ -76,7 +76,6 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.CentreGap
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Core
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Bernstein
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Bernstein.LowDegree
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.BoundaryRoot
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Casimir
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Clearing
@@ -104,7 +103,7 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.UnitShape
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.ResidualAffine
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Secant
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.CasimirExcessSigns
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.EnvelopeBound
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.Chi
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.ChiConcavity
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.ChiEndpoint

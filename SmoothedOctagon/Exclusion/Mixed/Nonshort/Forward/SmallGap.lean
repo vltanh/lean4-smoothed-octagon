@@ -72,6 +72,10 @@ theorem nsf_gam_wU {t x k q v : ℝ} (ht : 1 / 3 ≤ t) (ht2 : t ≤ 2 / 5) (hj0
       ((k + 2 * t * x + x ^ 2) * (nsfh1 t x k v + v - nsfg t x)) ^ 2 :=
     pow_lt_pow_left₀ hHdup hHdpos.le (by norm_num)
   have henv := nsf_envelope ht ht2 hj0.le hj1 hk1 hk2 hv34 hvV
+  have himbalance : (1 - 2 * t) ^ 2 ≤ 1 / 9 := by
+    have h0 : 0 ≤ 1 - 2 * t := by linarith only [ht2]
+    have h1 : 1 - 2 * t ≤ 1 / 3 := by linarith only [ht]
+    nlinarith only [h0, h1, sq_nonneg (1 - 2 * t - 1 / 3)]
   have hkt : 0 < k - t ^ 2 := by nlinarith
   have hs : 0 < 16 * (k - t ^ 2) ^ 2 := by positivity
   unfold nsfGam

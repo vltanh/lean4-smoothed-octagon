@@ -1433,7 +1433,7 @@ and the square $(2Ay+18\rho-L)^2$. This proves the required strict inequality.
 \begin{lemma}[The envelope Casimir]\label{lem:m2-envelope}
 On $\frac13\le t\le\frac25$, $0\le j\le\frac1{30}$, $1\le k\le\frac{31}{30}$, $\frac34\le v\le V$,
 \[
-\mathcal G=\frac{B^2\{4vw_U-(\phi(1)+v-g)^2\}}{16(k-t^2)^2}>\frac{9193}{50000},
+\mathcal G=\frac{B^2\{4vw_U-(\phi(1)+v-g)^2\}}{16(k-t^2)^2}>\frac3{16}-\frac{(1-2t)^2}{32},
 \]
 where $\phi(1)=\alpha_U+\beta_U+(Wv-c+p^2/W)/p-p^2/B$.
 \end{lemma}
@@ -1527,17 +1527,82 @@ Consequently
  \end{split}
 \]
 Together with concavity this proves that $\mathcal N$ decreases on $[3/4,V]$.
-It remains to show $\mathcal N(V)>16(k-t^2)^2\cdot9193/50000$.
-Put $t=2/5-A$, $x=1/5+2A+j$ and $k=1+Z$ on
-$0\le A\le1/15$, $0\le j,Z\le1/30$.
-The cleared difference is concave
-in $A$ by domination of its positive second-derivative terms, and positive on the edges
-$A=0$ and $A=1/15$ by collecting negative coefficients against positive ones.
+It remains to bound the envelope at $v=V$.
+At the balanced limit $t=1/2$, $x=0$, $v=3/4$, the envelope has value $3/16$.
+We measure its decrease by the order imbalance $h=1-2t$ and prove
+\[
+ \frac{\mathcal N(V)}{16(k-t^2)^2}>\frac3{16}-\frac{h^2}{32}.
+\]
+Put $u=k-1$, so $0\le u\le1/2$, and write $t=(1-h)/2$, $x=h+j$.
+With $D=x^2+6x+6$, clear the positive denominator and set
+\[
+ P(h,j,u)=t^2p^2W^4D^2
+ \left\{\mathcal N(V)-16(k-t^2)^2\left(\frac3{16}-\frac{h^2}{32}\right)\right\}.
+\]
+This is a quadratic in the shape increment $u$.
+Write it as $P_0+uP_1+u^2P_2$, where the $P_i$ are polynomials in $(h,j)$,
+and put $P_m=P_1+P_2/2$.
+The two shape polynomials $P_1$ and $P_m$ are nonnegative for $j\ge0$ and
+$0\le h\le1/3$. For their coefficients in $j$, first factor out powers of $h$,
+$1+h$ and $1-h$. In each remaining factor, keep the constant, linear and quadratic
+terms in $h$, and absorb each unfavorable higher power using
+\[
+ h^n\le\frac{h^2}{3^{n-2}}\qquad(n\ge3).
+\]
+The resulting quadratic lower bounds are nonnegative on $[0,1/3]$: discard
+nonnegative quadratic terms, replace each negative quadratic term using $h^2\le h/3$,
+and check the resulting linear expression at the two endpoints. Thus
+\[
+ P=P_0+u\{(1-2u)P_1+2uP_m\}\ge P_0.
+\]
+
+On the unit face, the terms of degree at least three in $j$ are nonnegative
+by the same power estimate. The first three coefficients give
+\[
+ P_0\ge\frac{h^2(h+1)^6}{512}g(h)
+       +\frac{h(h+1)^5}{128}f(h)j
+       +\frac{(h+1)^4}{256}b(h)j^2,
+\]
+where $b(h)$ is $256/(h+1)^4$ times the coefficient of $j^2$ in $P_0$, and
+\begin{align*}
+ g(h)={}&h^{10}-18h^9-223h^8-940h^7-1425h^6+54h^5\\
+        &\quad+1607h^4+224h^3-1044h^2-216h+180,\\
+ f(h)={}&h^{11}-76h^{10}-747h^9-2942h^8-4457h^7-238h^6\\
+        &\quad+4727h^5+1622h^4-2312h^3-858h^2+324h+36.
+\end{align*}
+These two coefficients are controlled by concavity.
+For $0\le h\le1/3$, charging the higher powers to $h$ gives
+\[
+ g'''(h)\ge1344+10000h>0,\qquad g''(1/3)<0.
+\]
+Thus $g''<0$ throughout the interval, and the endpoint values $g(0)=180$,
+$g(1/3)>16$ give $g\ge16$.
+Similarly,
+\[
+ f''(h)\le-1716+3200h<0,
+ \qquad f(0)=36,\qquad f(1/3)>-1,
+\]
+so $f\ge-1$.
+The quadratic coefficient satisfies, by the higher-power estimate above,
+\[
+ b(h)\ge144+1116h-5200h^2\ge-64.
+\]
+Finally, on $1/5\le h\le1/3$,
+$(1+h)^6\ge8/3$, $(1+h)^5\le8$ and $(1+h)^4\le4$.
+Consequently
+\[
+ P_0\ge\frac{h^2}{12}-\frac{hj}{16}-j^2>\frac{h^2}{24}>0,
+\]
+where the last comparison uses $j\le1/30\le h/6$.
+This proves the endpoint bound and hence the asserted envelope inequality.
 \end{proof}
 
 \runin{The small gap.} By \cref{lem:m2-chi}, the hypotheses of \cref{lem:m2-slope} hold, so
 $\gamma^2=\Gamma(w)>\Gamma(w_U)$. At $w_U$ the diagonal divided by $B$ is
 $\phi(q)=\log q+\alpha_Uq+\beta_U/q+(Wv-c+p^2/W)/p-p^2/B$, and \cref{lem:m2-qelim} with the floor
 gives $0<\phi(q)\le\phi(1)+F_\eta(q)-U(\eta)\le\phi(1)+v-g$; positivity comes from
-\cref{lem:m2-slope}, and $U(\eta)=g$. Hence $\Gamma(w_U)\ge\mathcal G>9193/50000$ by
-\cref{lem:m2-envelope}, which is the last step of \cref{prop:m2-forward-steps}.
+\cref{lem:m2-slope}, and $U(\eta)=g$. Since $0\le1-2t\le1/3$,
+\[
+ \Gamma(w_U)\ge\mathcal G>\frac3{16}-\frac1{288}>\frac{9193}{50000}
+\]
+by \cref{lem:m2-envelope}, which is the last step of \cref{prop:m2-forward-steps}.

@@ -1,23 +1,24 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.NormDerivative
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.CasimirExcessSigns
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.EnvelopeBound
 
 /-!
 # Case M2, forward successor: the envelope Casimir sign
 
 On `1/3 ≤ t ≤ 2/5`, `0 ≤ j ≤ 1/30`,
 `1 ≤ k ≤ 31/30` and `3/4 ≤ v ≤ V`,
-`𝒢 = B²{4vw_U - [h₁ + v - g]²}/(16s²) > 9193/50000` (`nsf_envelope`).
+`𝒢 = B²{4vw_U - [h₁ + v - g]²}/(16s²) > 3/16 - (1 - 2t)²/32` (`nsf_envelope`).
 
 `N(v) = B²{4vw_U - [h₁ + v - g]²} = 4v(K₀ + vP_v) - (D₀ + D'v)²` (`nsf_Nen_eq`) is a quadratic in `v`
 with `N'' = 2(4P_v - D'²) < 0` (`nsf_Nen_concave`, arithmetic-geometric mean) and `N'(3/4) < 0`
 (`nsf_norm_derivative_neg`, the transported-norm floor and geometric ratios), so `N(v) ≥ N(V)`.
-The endpoint `N(V) > 16s²·9193/50000` is checked by the remaining certificate `nsfCPn_pos`.
+At the endpoint, the order imbalance controls the loss from `3/16`
+(`nsf_envelope_imbalance`).
 
 ## Main API
 
-* `nsf_Nen_eq`, `nsf_Nen_concave`, `nsf_Pn_link`, `nsf_envelope`.
+* `nsf_Nen_eq`, `nsf_Nen_concave`, `nsf_envelope`.
 * The envelope data and derivative sign are in `SmallGap/NormDerivative`.
 -/
 
@@ -49,35 +50,6 @@ theorem nsf_Nen_eq {t x k v : ℝ} (ht : 0 < t) (hx : 0 < x) (hk : 0 < k) :
   unfold nsfNen
   ring
 
-/-- The cleared Casimir excess at `v = V` is the certificate polynomial `nsfCPn`. -/
-theorem nsf_Pn_link (t x k : ℝ) (ht : 0 < t) (hx : 0 < x) :
-    3125 * t ^ 2 * (t + x) ^ 2 * (1 + x) ^ 4 * (x ^ 2 + 6 * x + 6) ^ 2 * (nsfNen t x k (nsfVq t x) - 16 * (k - t ^ 2) ^ 2 * (9193 / 50000)) =
-      (nsfCPnD0_0 (2 / 5 - t) + nsfCPnD0_1 (2 / 5 - t) * (2 * t + x - 1) + nsfCPnD0_2 (2 / 5 - t) * (2 * t + x - 1) ^ (2 : ℕ) + nsfCPnD0_3 (2 / 5 - t) * (2 * t + x - 1) ^ (3 : ℕ) + nsfCPnD0_4 (2 / 5 - t) * (2 * t + x - 1) ^ (4 : ℕ) + nsfCPnD0_5 (2 / 5 - t) * (2 * t + x - 1) ^ (5 : ℕ) + nsfCPnD0_6 (2 / 5 - t) * (2 * t + x - 1) ^ (6 : ℕ) + nsfCPnD0_7 (2 / 5 - t) * (2 * t + x - 1) ^ (7 : ℕ) + nsfCPnD0_8 (2 / 5 - t) * (2 * t + x - 1) ^ (8 : ℕ) + nsfCPnD0_9 (2 / 5 - t) * (2 * t + x - 1) ^ (9 : ℕ) + nsfCPnD0_10 (2 / 5 - t) * (2 * t + x - 1) ^ (10 : ℕ) + nsfCPnD0_11 (2 / 5 - t) * (2 * t + x - 1) ^ (11 : ℕ) + nsfCPnD0_12 (2 / 5 - t) * (2 * t + x - 1) ^ (12 : ℕ) + nsfCPnD0_13 (2 / 5 - t) * (2 * t + x - 1) ^ (13 : ℕ)) + (nsfCPnD1_0 (2 / 5 - t) + nsfCPnD1_1 (2 / 5 - t) * (2 * t + x - 1) + nsfCPnD1_2 (2 / 5 - t) * (2 * t + x - 1) ^ (2 : ℕ) + nsfCPnD1_3 (2 / 5 - t) * (2 * t + x - 1) ^ (3 : ℕ) + nsfCPnD1_4 (2 / 5 - t) * (2 * t + x - 1) ^ (4 : ℕ) + nsfCPnD1_5 (2 / 5 - t) * (2 * t + x - 1) ^ (5 : ℕ) + nsfCPnD1_6 (2 / 5 - t) * (2 * t + x - 1) ^ (6 : ℕ) + nsfCPnD1_7 (2 / 5 - t) * (2 * t + x - 1) ^ (7 : ℕ) + nsfCPnD1_8 (2 / 5 - t) * (2 * t + x - 1) ^ (8 : ℕ) + nsfCPnD1_9 (2 / 5 - t) * (2 * t + x - 1) ^ (9 : ℕ) + nsfCPnD1_10 (2 / 5 - t) * (2 * t + x - 1) ^ (10 : ℕ) + nsfCPnD1_11 (2 / 5 - t) * (2 * t + x - 1) ^ (11 : ℕ) + nsfCPnD1_12 (2 / 5 - t) * (2 * t + x - 1) ^ (12 : ℕ) + nsfCPnD1_13 (2 / 5 - t) * (2 * t + x - 1) ^ (13 : ℕ)) * (k - 1) + (nsfCPnD2_0 (2 / 5 - t) + nsfCPnD2_1 (2 / 5 - t) * (2 * t + x - 1) + nsfCPnD2_2 (2 / 5 - t) * (2 * t + x - 1) ^ (2 : ℕ) + nsfCPnD2_3 (2 / 5 - t) * (2 * t + x - 1) ^ (3 : ℕ) + nsfCPnD2_4 (2 / 5 - t) * (2 * t + x - 1) ^ (4 : ℕ) + nsfCPnD2_5 (2 / 5 - t) * (2 * t + x - 1) ^ (5 : ℕ) + nsfCPnD2_6 (2 / 5 - t) * (2 * t + x - 1) ^ (6 : ℕ) + nsfCPnD2_7 (2 / 5 - t) * (2 * t + x - 1) ^ (7 : ℕ) + nsfCPnD2_8 (2 / 5 - t) * (2 * t + x - 1) ^ (8 : ℕ) + nsfCPnD2_9 (2 / 5 - t) * (2 * t + x - 1) ^ (9 : ℕ) + nsfCPnD2_10 (2 / 5 - t) * (2 * t + x - 1) ^ (10 : ℕ) + nsfCPnD2_11 (2 / 5 - t) * (2 * t + x - 1) ^ (11 : ℕ) + nsfCPnD2_12 (2 / 5 - t) * (2 * t + x - 1) ^ (12 : ℕ) + nsfCPnD2_13 (2 / 5 - t) * (2 * t + x - 1) ^ (13 : ℕ)) * (k - 1) ^ (2 : ℕ) := by
-  have hW : (1 + x) ≠ 0 := by linarith
-  have hp : t + x ≠ 0 := by linarith
-  have ht' : t ≠ 0 := by linarith
-  have hQ : x ^ 2 + 6 * x + 6 ≠ 0 := by positivity
-  have hNV : (1 + x) * (x ^ 2 + 6 * x + 6) * nsfVq t x = 6 + 9 * x + 5 * x ^ (2 : ℕ) + x ^ (3 : ℕ) - 6 * t - 3 * t * x + t * x ^ (2 : ℕ) + 6 * t ^ (2 : ℕ) + 6 * t ^ (2 : ℕ) * x + t ^ (2 : ℕ) * x ^ (2 : ℕ) := by
-    unfold nsfVq; field_simp; ring
-  have hNK : t * nsfK0 t x k = -2 * x * k - x ^ (2 : ℕ) * k + t * k ^ (2 : ℕ) - t ^ (2 : ℕ) * k + 4 * t ^ (2 : ℕ) * x + 2 * t ^ (2 : ℕ) * x * k + 2 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + t ^ (2 : ℕ) * x ^ (2 : ℕ) * k + t ^ (3 : ℕ) - 2 * t ^ (3 : ℕ) * x - t ^ (3 : ℕ) * x ^ (2 : ℕ) := by
-    unfold nsfK0; field_simp; ring
-  have hNP : t * nsfPv t x k = 2 * x * k + x ^ (2 : ℕ) * k + 4 * t * x ^ (2 : ℕ) + 4 * t * x ^ (3 : ℕ) + t * x ^ (4 : ℕ) := by
-    unfold nsfPv; field_simp; ring
-  have hND0 : t * (t + x) * (1 + x) ^ 2 * nsfD0 t x k = -2 * x * k - 3 * x ^ (2 : ℕ) * k - x ^ (3 : ℕ) * k - t * k - 3 * t * x * k - 3 * t * x ^ (2 : ℕ) * k - t * x ^ (3 : ℕ) - 2 * t * x ^ (3 : ℕ) * k - t * x ^ (4 : ℕ) - t * x ^ (5 : ℕ) - t ^ (2 : ℕ) * k + 4 * t ^ (2 : ℕ) * x + t ^ (2 : ℕ) * x * k + 3 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + t ^ (2 : ℕ) * x ^ (3 : ℕ) * k - 4 * t ^ (2 : ℕ) * x ^ (4 : ℕ) + 2 * t ^ (3 : ℕ) + 2 * t ^ (3 : ℕ) * k - t ^ (3 : ℕ) * x - t ^ (3 : ℕ) * x * k - 6 * t ^ (3 : ℕ) * x ^ (3 : ℕ) - t ^ (4 : ℕ) - t ^ (4 : ℕ) * k + 2 * t ^ (4 : ℕ) * x - 4 * t ^ (4 : ℕ) * x ^ (2 : ℕ) - 2 * t ^ (5 : ℕ) * x := by
-    unfold nsfD0 nsfK0 nsfg; field_simp; ring
-  have hNDp : t * (t + x) * (1 + x) * nsfDp t x k = 2 * x * k + x ^ (2 : ℕ) * k + t * k + 3 * t * x * k + 5 * t * x ^ (2 : ℕ) + 2 * t * x ^ (2 : ℕ) * k + 7 * t * x ^ (3 : ℕ) + 3 * t * x ^ (4 : ℕ) + t ^ (2 : ℕ) * k + 2 * t ^ (2 : ℕ) * x + t ^ (2 : ℕ) * x * k + 7 * t ^ (2 : ℕ) * x ^ (2 : ℕ) + 5 * t ^ (2 : ℕ) * x ^ (3 : ℕ) + 2 * t ^ (3 : ℕ) * x + 2 * t ^ (3 : ℕ) * x ^ (2 : ℕ) := by
-    unfold nsfDp nsfPv; field_simp; ring
-  have e : 3125 * t ^ 2 * (t + x) ^ 2 * (1 + x) ^ 4 * (x ^ 2 + 6 * x + 6) ^ 2 * (nsfNen t x k (nsfVq t x) - 16 * (k - t ^ 2) ^ 2 * (9193 / 50000)) =
-      3125 * (4 * ((1 + x) * (x ^ 2 + 6 * x + 6) * nsfVq t x) * (t * nsfK0 t x k) * (t * (t + x) ^ 2 * (1 + x) ^ 3 * (x ^ 2 + 6 * x + 6))
-        + 4 * ((1 + x) * (x ^ 2 + 6 * x + 6) * nsfVq t x) ^ 2 * (t * nsfPv t x k) * (t * (t + x) ^ 2 * (1 + x) ^ 2)
-        - ((x ^ 2 + 6 * x + 6) * (t * (t + x) * (1 + x) ^ 2 * nsfD0 t x k)
-          + (t * (t + x) * (1 + x) * nsfDp t x k) * ((1 + x) * (x ^ 2 + 6 * x + 6) * nsfVq t x)) ^ 2)
-      - 3125 * t ^ 2 * (t + x) ^ 2 * (1 + x) ^ 4 * (x ^ 2 + 6 * x + 6) ^ 2 * (16 * (k - t ^ 2) ^ 2 * (9193 / 50000)) := by
-    unfold nsfNen; ring
-  rw [e, hNV, hNK, hNP, hND0, hNDp]
-  unfold nsfCPnD0_0 nsfCPnD0_1 nsfCPnD0_2 nsfCPnD0_3 nsfCPnD0_4 nsfCPnD0_5 nsfCPnD0_6 nsfCPnD0_7 nsfCPnD0_8 nsfCPnD0_9 nsfCPnD0_10 nsfCPnD0_11 nsfCPnD0_12 nsfCPnD0_13 nsfCPnD1_0 nsfCPnD1_1 nsfCPnD1_2 nsfCPnD1_3 nsfCPnD1_4 nsfCPnD1_5 nsfCPnD1_6 nsfCPnD1_7 nsfCPnD1_8 nsfCPnD1_9 nsfCPnD1_10 nsfCPnD1_11 nsfCPnD1_12 nsfCPnD1_13 nsfCPnD2_0 nsfCPnD2_1 nsfCPnD2_2 nsfCPnD2_3 nsfCPnD2_4 nsfCPnD2_5 nsfCPnD2_6 nsfCPnD2_7 nsfCPnD2_8 nsfCPnD2_9 nsfCPnD2_10 nsfCPnD2_11 nsfCPnD2_12 nsfCPnD2_13
-  ring
-
 /-- **Concavity in the incoming norm**: `4P_v < D'²` (arithmetic-geometric mean, `B > p²`). -/
 theorem nsf_Nen_concave {t x k : ℝ} (ht : 0 < t) (hx : 0 < x) (hk : t ^ 2 < k) :
     4 * nsfPv t x k < nsfDp t x k ^ 2 := by
@@ -102,27 +74,21 @@ theorem nsf_Nen_concave {t x k : ℝ} (ht : 0 < t) (hx : 0 < x) (hk : t ^ 2 < k)
   rw [hDp]
   nlinarith [sq_nonneg (a - b), mul_lt_mul_of_pos_left hab (by positivity : (0 : ℝ) < b)]
 
-/-- **The envelope Casimir sign**: `𝒢 > 9193/50000` for `1/3 ≤ t ≤ 2/5`, `0 ≤ j ≤ 1/30`,
+/-- **The envelope Casimir bound**: `𝒢 > 3/16 - (1 - 2t)²/32` for `1/3 ≤ t ≤ 2/5`, `0 ≤ j ≤ 1/30`,
 `1 ≤ k ≤ 31/30` and `3/4 ≤ v ≤ V`. -/
 theorem nsf_envelope {t x k v : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj0 : 0 ≤ 2 * t + x - 1)
     (hj1 : 2 * t + x - 1 ≤ 1 / 30) (hk0 : 1 ≤ k) (hk1 : k ≤ 31 / 30) (hv0 : 3 / 4 ≤ v)
     (hvV : v ≤ nsfVq t x) :
-    9193 / 50000 < (k + 2 * t * x + x ^ 2) ^ 2 *
+    3 / 16 - (1 - 2 * t) ^ 2 / 32 < (k + 2 * t * x + x ^ 2) ^ 2 *
       (4 * v * nsfwU t x k v - (nsfh1 t x k v + v - nsfg t x) ^ 2) / (16 * (k - t ^ 2) ^ 2) := by
   have ht : 0 < t := by linarith
   have hx : 0 < x := by linarith
   have hk : 0 < k := by linarith
   have hkt : t ^ 2 < k := by nlinarith
   rw [nsf_Nen_eq ht hx hk]
-  -- `N'(3/4) < 0` and `N(V) > 16s² · cap`
   have hE := nsf_norm_derivative_neg ht0 ht1 hj0 hj1 hk0 hk1
-  have hP : 16 * (k - t ^ 2) ^ 2 * (9193 / 50000) < nsfNen t x k (nsfVq t x) := by
-    have h := nsfCPn_pos (2 / 5 - t) (2 * t + x - 1) (k - 1) (by linarith) (by linarith) hj0 hj1
-      (by linarith) (by linarith)
-    rw [← nsf_Pn_link t x k ht hx] at h
-    have : 0 < nsfNen t x k (nsfVq t x) - 16 * (k - t ^ 2) ^ 2 * (9193 / 50000) :=
-      pos_of_mul_pos_right h (by positivity)
-    linarith
+  have hP := nsf_envelope_imbalance ht0 ht1 hj0 hj1 hk0
+    (show k ≤ 3 / 2 by linarith only [hk1])
   -- concavity: `N(v) ≥ N(V)`
   have hc := nsf_Nen_concave ht hx hkt
   have e : nsfNen t x k v - nsfNen t x k (nsfVq t x) = (nsfVq t x - v) *
@@ -137,7 +103,6 @@ theorem nsf_envelope {t x k v : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj
     linarith
   have hkt' : 0 < k - t ^ 2 := by linarith
   have hs : 0 < 16 * (k - t ^ 2) ^ 2 := by positivity
-  rw [lt_div_iff₀ hs]
-  linarith
+  exact hP.trans_le (div_le_div_of_nonneg_right hN hs.le)
 
 end SmoothedOctagon
