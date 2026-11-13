@@ -54,27 +54,19 @@ def build(X, pkl, h0, h1, jlo, g, gstr, kind, Yc=None, zlo=Fr(0), zhi=Fr(1), var
     return out, needI, need0g, yform, cs_plain, D, ny
 
 JOBS = {
- 'nsfCQD': dict(pkl='QDelta.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
- 'nsfCQC': dict(pkl='QC2.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
  'nsfCPn': dict(pkl='Phat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
  'nsfCLRb': dict(pkl='lr_ko.pkl', h0=R(1,3), h1=R(1,2), jlo=0, g=[R(0),R(1)], gstr='h', kind='sym', Yc=R(1)),
 }
 DOC = {
- 'nsfCQD': 'the discriminant `𝒟²(4C₀C₂ - C₁²)` at `k = 1`, `v = V`)',
- 'nsfCQC': 'the leading coefficient `𝒟C₂` at `k = 1`, `v = V`)',
  'nsfCPn': 'the Casimir excess `3125t²p²W⁴Q²(N(V) - 16s²·9193/50000)`-(11))',
  'nsfCLRb': 'the low-ratio residual `Ĝ` at the order shape `k = 2t + x`',
 }
 # the output module and the title of each certificate
 OUT = {
- 'nsfCQD': 'EventFactor/DiscriminantSigns.lean',
- 'nsfCQC': 'EventFactor/LeadingSigns.lean',
  'nsfCPn': 'SmallGap/CasimirExcessSigns.lean',
  'nsfCLRb': 'LowRatio/OrderShapeSigns.lean',
 }
 TITLE = {
- 'nsfCQD': 'the sign of the event-factor discriminant',
- 'nsfCQC': 'the sign of the event-factor leading coefficient',
  'nsfCPn': 'the sign of the Casimir excess',
  'nsfCLRb': 'the low-ratio residual at the order shape',
 }

@@ -2,26 +2,19 @@ module
 
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Casimir
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Secant
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.EventFactor.LeadingSigns
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.EventFactor.DiscriminantSigns
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.EventFactor.Barrier
 
 /-!
 # Case M2, forward successor: elimination of the event factor
 
-With `η = p/W`, `α = B(w_U - 1)/(pW)`, `β = pW/B`, the
-diagonal on the stationary line at `w_U`, divided by `B`, is `h(q) = log q + αq + β/q + d`; on
-`1/3 ≤ t ≤ 2/5`, `0 ≤ j ≤ 1/30`, `k ≥ 1`, `v ≤ min(1, V)`:
-`h(q) - h(1) < F_η(q) - g` for `q > 1` (`nsf_qelim`).
+With `η = p/W`, `α = B(w_U - 1)/(pW)` and `β = pW/B`, the event comparison
+reduces to a quadratic in `y = q - 1`. Shape and norm monotonicity lower its
+coefficients to unit shape and the reciprocal-mean secant ceiling.
 
-The logarithm bound `L₊` leaves `y/(6(y + 1)(y + 2))·(C₀ + C₁y + C₂y²)` (`nsf_qelim_id`); the `Cᵢ`
-increase with `k` and decrease with `v` (`α(k, v) - α(1, V) ≤ β(k) - β(1) ≤ 0`), and at `k = 1`,
-`v = V` the quadratic is positive since `C₂ > 0` and `4C₀C₂ > C₁²` (certificates `nsfCQC_pos`,
-`nsfCQD_pos`).
-
-## Main API
-
-* `nsfEta`, `nsfAq`, `nsfBq`, `nsfQC0`, `nsfQC1`, `nsfQC2`; `nsf_qelim_id`; `nsf_QC_link`, `nsf_QD_link`.
-* `nsf_qelim_quad`: `C₀ + C₁y + C₂y² > 0` for `y ≥ 0`; `nsf_qelim`: **the factor elimination**.
+Write `ρ = η² - η/2 - α + β - 1` for the boundary gap and
+`L = 12β - 6 - 2η` for the displacement. The gap inequality
+`L² < 10(12 + L)ρ` controls the only possibly negative coefficient;
+completing a square then proves the quadratic positive.
 -/
 
 @[expose] public section
@@ -59,34 +52,6 @@ theorem nsf_qelim_id (η α β y : ℝ) (hy : 0 < y) :
   field_simp
   ring
 
-/-- The cleared leading coefficient `𝒟C₂(1, V)` is the certificate polynomial `nsfCQC`. -/
-theorem nsf_QC_link (t x : ℝ) (ht : 0 < t) (hx : 0 < x) :
-    (t * (t + x) * (1 + x) ^ 2 * (x ^ 2 + 6 * x + 6) * (1 + 2 * t * x + x ^ 2)) * nsfQC2 (nsfEta t x) (nsfAq t x 1 (nsfVq t x)) (nsfBq t x 1) =
-      (nsfCQCD0_0 (2 / 5 - t) + nsfCQCD0_1 (2 / 5 - t) * (2 * t + x - 1) + nsfCQCD0_2 (2 / 5 - t) * (2 * t + x - 1) ^ (2 : ℕ) + nsfCQCD0_3 (2 / 5 - t) * (2 * t + x - 1) ^ (3 : ℕ) + nsfCQCD0_4 (2 / 5 - t) * (2 * t + x - 1) ^ (4 : ℕ) + nsfCQCD0_5 (2 / 5 - t) * (2 * t + x - 1) ^ (5 : ℕ) + nsfCQCD0_6 (2 / 5 - t) * (2 * t + x - 1) ^ (6 : ℕ) + nsfCQCD0_7 (2 / 5 - t) * (2 * t + x - 1) ^ (7 : ℕ)) := by
-  have hW : (1 + x) ≠ 0 := by linarith
-  have hp : t + x ≠ 0 := by linarith
-  have hQ : x ^ 2 + 6 * x + 6 ≠ 0 := by positivity
-  have hB : 1 + 2 * t * x + x ^ 2 ≠ 0 := by positivity
-  have ht' : t ≠ 0 := by linarith
-  unfold nsfCQCD0_0 nsfCQCD0_1 nsfCQCD0_2 nsfCQCD0_3 nsfCQCD0_4 nsfCQCD0_5 nsfCQCD0_6 nsfCQCD0_7
-  unfold nsfQC2 nsfEta nsfAq nsfwU nsfVq
-  field_simp
-  ring
-
-/-- The cleared discriminant `𝒟²(4C₀C₂ - C₁²)(1, V)` is the certificate polynomial `nsfCQD`. -/
-theorem nsf_QD_link (t x : ℝ) (ht : 0 < t) (hx : 0 < x) :
-    (t * (t + x) * (1 + x) ^ 2 * (x ^ 2 + 6 * x + 6) * (1 + 2 * t * x + x ^ 2)) ^ 2 * (4 * nsfQC0 (nsfEta t x) (nsfAq t x 1 (nsfVq t x)) (nsfBq t x 1) * nsfQC2 (nsfEta t x) (nsfAq t x 1 (nsfVq t x)) (nsfBq t x 1) - nsfQC1 (nsfEta t x) (nsfAq t x 1 (nsfVq t x)) (nsfBq t x 1) ^ 2) =
-      (nsfCQDD0_0 (2 / 5 - t) + nsfCQDD0_1 (2 / 5 - t) * (2 * t + x - 1) + nsfCQDD0_2 (2 / 5 - t) * (2 * t + x - 1) ^ (2 : ℕ) + nsfCQDD0_3 (2 / 5 - t) * (2 * t + x - 1) ^ (3 : ℕ) + nsfCQDD0_4 (2 / 5 - t) * (2 * t + x - 1) ^ (4 : ℕ) + nsfCQDD0_5 (2 / 5 - t) * (2 * t + x - 1) ^ (5 : ℕ) + nsfCQDD0_6 (2 / 5 - t) * (2 * t + x - 1) ^ (6 : ℕ) + nsfCQDD0_7 (2 / 5 - t) * (2 * t + x - 1) ^ (7 : ℕ) + nsfCQDD0_8 (2 / 5 - t) * (2 * t + x - 1) ^ (8 : ℕ) + nsfCQDD0_9 (2 / 5 - t) * (2 * t + x - 1) ^ (9 : ℕ) + nsfCQDD0_10 (2 / 5 - t) * (2 * t + x - 1) ^ (10 : ℕ) + nsfCQDD0_11 (2 / 5 - t) * (2 * t + x - 1) ^ (11 : ℕ) + nsfCQDD0_12 (2 / 5 - t) * (2 * t + x - 1) ^ (12 : ℕ) + nsfCQDD0_13 (2 / 5 - t) * (2 * t + x - 1) ^ (13 : ℕ) + nsfCQDD0_14 (2 / 5 - t) * (2 * t + x - 1) ^ (14 : ℕ)) := by
-  have hW : (1 + x) ≠ 0 := by linarith
-  have hp : t + x ≠ 0 := by linarith
-  have hQ : x ^ 2 + 6 * x + 6 ≠ 0 := by positivity
-  have hB : 1 + 2 * t * x + x ^ 2 ≠ 0 := by positivity
-  have ht' : t ≠ 0 := by linarith
-  unfold nsfCQDD0_0 nsfCQDD0_1 nsfCQDD0_2 nsfCQDD0_3 nsfCQDD0_4 nsfCQDD0_5 nsfCQDD0_6 nsfCQDD0_7 nsfCQDD0_8 nsfCQDD0_9 nsfCQDD0_10 nsfCQDD0_11 nsfCQDD0_12 nsfCQDD0_13 nsfCQDD0_14
-  unfold nsfQC0 nsfQC1 nsfQC2 nsfEta nsfAq nsfBq nsfwU nsfVq
-  field_simp
-  ring
-
 /-- `α(k, v) - α(1, v) ≤ β(k) - β(1)` for `k ≥ 1`, `v ≤ 1`. -/
 theorem nsf_Aq_sub_le {t x k v : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x) (hk : 1 ≤ k) (hv : v ≤ 1) :
     nsfAq t x k v - nsfAq t x 1 v ≤ nsfBq t x k - nsfBq t x 1 := by
@@ -96,19 +61,19 @@ theorem nsf_Aq_sub_le {t x k v : ℝ} (ht : 0 < t) (ht1 : t < 1) (hx : 0 < x) (h
   have hW : 0 < 1 + x := by linarith
   have e : nsfAq t x k v - nsfAq t x 1 v - (nsfBq t x k - nsfBq t x 1) =
       x * (k - 1) * (t - 1) * (2 * t ^ 2 * x ^ 2 + 2 * t ^ 2 * x + 2 * t ^ 2 + t * x ^ 3 + 2 * t * x ^ 2
-        + 3 * t * x + (1 - v) * (x ^ 3 + 2 * x ^ 2)) /
+         + 3 * t * x + (1 - v) * (x ^ 3 + 2 * x ^ 2)) /
         (t * (t + x) * (1 + x) * (k + 2 * t * x + x ^ 2) * (1 + 2 * t * x + x ^ 2)) := by
     unfold nsfAq nsfBq nsfwU
     field_simp
     ring
   have hS : 0 ≤ 2 * t ^ 2 * x ^ 2 + 2 * t ^ 2 * x + 2 * t ^ 2 + t * x ^ 3 + 2 * t * x ^ 2
-      + 3 * t * x + (1 - v) * (x ^ 3 + 2 * x ^ 2) := by
+       + 3 * t * x + (1 - v) * (x ^ 3 + 2 * x ^ 2) := by
     have : 0 ≤ (1 - v) * (x ^ 3 + 2 * x ^ 2) := mul_nonneg (by linarith) (by positivity)
     have : 0 ≤ 2 * t ^ 2 * x ^ 2 + 2 * t ^ 2 * x + 2 * t ^ 2 + t * x ^ 3 + 2 * t * x ^ 2 + 3 * t * x := by
       positivity
     linarith
   have : x * (k - 1) * (t - 1) * (2 * t ^ 2 * x ^ 2 + 2 * t ^ 2 * x + 2 * t ^ 2 + t * x ^ 3 + 2 * t * x ^ 2
-        + 3 * t * x + (1 - v) * (x ^ 3 + 2 * x ^ 2)) /
+         + 3 * t * x + (1 - v) * (x ^ 3 + 2 * x ^ 2)) /
         (t * (t + x) * (1 + x) * (k + 2 * t * x + x ^ 2) * (1 + 2 * t * x + x ^ 2)) ≤ 0 := by
     apply div_nonpos_of_nonpos_of_nonneg _ (by positivity)
     have h1 : 0 ≤ x * (k - 1) := mul_nonneg hx.le (by linarith)
@@ -136,15 +101,113 @@ theorem nsf_Aq_mono_v {t x v V : ℝ} (ht : 0 < t) (hx : 0 < x) (hv : v ≤ V) :
     apply div_nonneg (mul_nonneg (by linarith) (by positivity)) (by positivity)
   linarith
 
+/-- The geometric ratios stay in a fixed interval on the small-gap strip. -/
+private theorem nsf_event_unit_bounds {t x : ℝ} (ht : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5)
+    (hj : 0 ≤ 2 * t + x - 1) (hj1 : 2 * t + x - 1 ≤ 1 / 30) :
+    1 / 2 ≤ nsfEta t x ∧ nsfEta t x ≤ 31 / 60 ∧
+      3 / 5 ≤ nsfBq t x 1 ∧ nsfBq t x 1 ≤ 7 / 10 := by
+  let h := 1 - 2 * t
+  let j := 2 * t + x - 1
+  have hh : 1 / 5 ≤ h := by dsimp [h]; linarith only [ht1]
+  have hh1 : h ≤ 1 / 3 := by dsimp [h]; linarith only [ht]
+  have hh0 : 0 ≤ h := by linarith only [hh]
+  have hj0 : 0 ≤ j := hj
+  have hx : 0 < x := by linarith only [ht1, hj]
+  have ht0 : 0 < t := by linarith only [ht]
+  have hW : 0 < 1 + x := by positivity
+  have hB : 0 < 1 + 2 * t * x + x ^ 2 := by positivity
+  constructor
+  · unfold nsfEta
+    rw [le_div_iff₀ hW]
+    linarith only [hj]
+  constructor
+  · unfold nsfEta
+    rw [div_le_iff₀ hW]
+    linarith only [hj1, hx]
+  constructor
+  · have heq : nsfBq t x 1 - (1 + h) / 2 = j * (2 + (h + j) * (1 - h)) / (2 * (1 + 2 * t * x + x ^ 2)) := by
+      dsimp [h, j, nsfBq]
+      field_simp
+      ring
+    have hs : 0 ≤ 1 - h := by linarith only [hh1]
+    have hgap : 0 ≤ nsfBq t x 1 - (1 + h) / 2 := by rw [heq]; positivity
+    linarith only [hgap, hh]
+  · have hh2 : h ^ 2 ≤ 1 / 9 := by nlinarith only [hh0, hh1, sq_nonneg (h - 1 / 3)]
+    have hj2 : j ^ 2 ≤ 1 / 900 := by
+      have := pow_le_pow_left₀ hj0 hj1 2
+      norm_num at this
+      exact this
+    have hhj : h * j ≤ 1 / 90 := by
+      have := mul_le_mul hh1 hj1 hj0 (by norm_num : (0 : ℝ) ≤ 1 / 3)
+      nlinarith only [this]
+    have heq : 7 * (1 + 2 * t * x + x ^ 2) - 10 * (t + x) * (1 + x) = 2 - 5 * h ^ 2 - 3 * h - 8 * h * j - 3 * j ^ 2 - 8 * j := by
+      dsimp [h, j]; ring
+    unfold nsfBq
+    rw [div_le_iff₀ hB]
+    have hpos : 0 ≤ 7 * (1 + 2 * t * x + x ^ 2) - 10 * (t + x) * (1 + x) := by
+      rw [heq]
+      linarith only [hh2, hh1, hhj, hj2, hj1]
+    linarith only [hpos]
+
+/-- Clearing the boundary-gap inequality uses only one secant denominator. -/
+private theorem nsf_event_unit_gap {t x : ℝ} (ht : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5)
+    (hj : 0 ≤ 2 * t + x - 1) (hj1 : 2 * t + x - 1 ≤ 1 / 30) :
+    (12 * nsfBq t x 1 - 6 - 2 * nsfEta t x) ^ 2 <
+      10 * (12 + (12 * nsfBq t x 1 - 6 - 2 * nsfEta t x)) *
+        (nsfEta t x ^ 2 - nsfEta t x / 2 - nsfAq t x 1 (nsfVq t x) + nsfBq t x 1 - 1) := by
+  have ht0 : 0 < t := by linarith only [ht]
+  have hx : 0 < x := by linarith only [ht1, hj]
+  have hp : 0 < t + x := by positivity
+  have hW : 0 < 1 + x := by positivity
+  have hB : 0 < 1 + 2 * t * x + x ^ 2 := by positivity
+  have hD : 0 < x ^ 2 + 6 * x + 6 := by positivity
+  have hP := nsfEventBarrier_pos (h := 1 - 2 * t) (j := 2 * t + x - 1)
+    (by linarith only [ht1]) (by linarith only [ht]) hj hj1
+  have heq : nsfEventBarrier (1 - 2 * t) (2 * t + x - 1) =
+      8 * t * (t + x) * (1 + x) ^ 3 * (1 + 2 * t * x + x ^ 2) ^ 2 * (x ^ 2 + 6 * x + 6) *
+      (10 * (12 + (12 * nsfBq t x 1 - 6 - 2 * nsfEta t x)) *
+        (nsfEta t x ^ 2 - nsfEta t x / 2 - nsfAq t x 1 (nsfVq t x) + nsfBq t x 1 - 1)
+        -(12 * nsfBq t x 1 - 6 - 2 * nsfEta t x) ^ 2) := by
+    unfold nsfEventBarrier nsfBq nsfEta nsfAq nsfwU nsfVq
+    field_simp
+    ring
+  rw [heq] at hP
+  have := pos_of_mul_pos_right hP (by positivity :
+    0 ≤ 8 * t * (t + x) * (1 + x) ^ 3 * (1 + 2 * t * x + x ^ 2) ^ 2 * (x ^ 2 + 6 * x + 6))
+  linarith only [this]
+
+/-- A boundary gap dominates the only possibly negative coefficient. -/
+private theorem event_gap_quad_pos {ρ L ε y : ℝ} (hL : 0 ≤ L) (hL1 : L ≤ 7 / 5)
+    (hε : 0 ≤ ε) (hgap : L ^ 2 < 10 * (12 + L) * ρ) (hy : 0 ≤ y) :
+    0 < 12 * ρ + (18 * ρ - L) * y + ((5 - L) / 2 + ε + 6 * ρ) * y ^ 2 := by
+  have hρ : 0 < ρ := by
+    by_contra hc
+    push Not at hc
+    have hm := mul_nonpos_of_nonneg_of_nonpos (show 0 ≤ 10 * (12 + L) by linarith only [hL]) hc
+    nlinarith only [hgap, hm, sq_nonneg L]
+  have hC : 0 < (5 - L) / 2 + ε + 6 * ρ := by linarith only [hL1, hε, hρ]
+  by_cases hlinear : 0 ≤ 18 * ρ - L
+  · positivity
+  · have hdelta : 0 < 4 * (12 * ρ) * ((5 - L) / 2 + ε + 6 * ρ) - (18 * ρ - L) ^ 2 := by
+      have hrem : 0 ≤ 2 * ρ * (L - 18 * ρ) := mul_nonneg (by positivity) (by linarith only [hlinear])
+      have heps : 0 ≤ 48 * ε * ρ := by positivity
+      nlinarith only [hgap, hrem, heps]
+    have heq : 4 * ((5 - L) / 2 + ε + 6 * ρ) * (12 * ρ + (18 * ρ - L) * y + ((5 - L) / 2 + ε + 6 * ρ) * y ^ 2) =
+        (2 * ((5 - L) / 2 + ε + 6 * ρ) * y + (18 * ρ - L)) ^ 2 +
+        (4 * (12 * ρ) * ((5 - L) / 2 + ε + 6 * ρ) - (18 * ρ - L) ^ 2) := by ring
+    have hpos : 0 < 4 * ((5 - L) / 2 + ε + 6 * ρ) * (12 * ρ + (18 * ρ - L) * y + ((5 - L) / 2 + ε + 6 * ρ) * y ^ 2) := by
+      rw [heq]
+      positivity
+    exact pos_of_mul_pos_right hpos (by linarith only [hC])
+
 /-- **The event-factor quadratic is positive**: `C₀ + C₁y + C₂y² > 0` for `y ≥ 0`. -/
 theorem nsf_qelim_quad {t x k v y : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj0 : 0 ≤ 2 * t + x - 1)
     (hj1 : 2 * t + x - 1 ≤ 1 / 30) (hk : 1 ≤ k) (hv1 : v ≤ 1) (hvV : v ≤ nsfVq t x) (hy : 0 ≤ y) :
     0 < nsfQC0 (nsfEta t x) (nsfAq t x k v) (nsfBq t x k) + nsfQC1 (nsfEta t x) (nsfAq t x k v) (nsfBq t x k) * y
-      + nsfQC2 (nsfEta t x) (nsfAq t x k v) (nsfBq t x k) * y ^ 2 := by
-  have ht : 0 < t := by linarith
-  have hx : 0 < x := by linarith
-  -- the coefficients decrease to `k = 1`, `v = V`
-  have hd1 := nsf_Aq_sub_le ht (by linarith) hx hk hv1
+       + nsfQC2 (nsfEta t x) (nsfAq t x k v) (nsfBq t x k) * y ^ 2 := by
+  have ht : 0 < t := by linarith only [ht0]
+  have hx : 0 < x := by linarith only [ht1, hj0]
+  have hd1 := nsf_Aq_sub_le ht (by linarith only [ht1]) hx hk hv1
   have hd2 := nsf_Bq_le ht hx hk
   have hd3 := nsf_Aq_mono_v (t := t) ht hx hvV
   set η := nsfEta t x
@@ -152,29 +215,25 @@ theorem nsf_qelim_quad {t x k v y : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5)
   set α1 := nsfAq t x 1 (nsfVq t x)
   set β := nsfBq t x k
   set β1 := nsfBq t x 1
-  have c0 : nsfQC0 η α1 β1 ≤ nsfQC0 η α β := by unfold nsfQC0; linarith
-  have c1 : nsfQC1 η α1 β1 ≤ nsfQC1 η α β := by unfold nsfQC1; linarith
-  have c2 : nsfQC2 η α1 β1 ≤ nsfQC2 η α β := by unfold nsfQC2; linarith
-  -- the certificates at `k = 1`, `v = V`
-  have hD : 0 < t * (t + x) * (1 + x) ^ 2 * (x ^ 2 + 6 * x + 6) * (1 + 2 * t * x + x ^ 2) := by positivity
-  have hC2 : 0 < nsfQC2 η α1 β1 := by
-    have h := nsfCQC_pos (2 / 5 - t) (2 * t + x - 1) 0 (by linarith) (by linarith) hj0 hj1 le_rfl
-      (by norm_num)
-    rw [← nsf_QC_link t x ht hx] at h
-    exact pos_of_mul_pos_right h hD.le
-  have hΔ : 0 < 4 * nsfQC0 η α1 β1 * nsfQC2 η α1 β1 - nsfQC1 η α1 β1 ^ 2 := by
-    have h := nsfCQD_pos (2 / 5 - t) (2 * t + x - 1) 0 (by linarith) (by linarith) hj0 hj1 le_rfl
-      (by norm_num)
-    rw [← nsf_QD_link t x ht hx] at h
-    exact pos_of_mul_pos_right h (by positivity)
-  have hq1 : 0 < nsfQC0 η α1 β1 + nsfQC1 η α1 β1 * y + nsfQC2 η α1 β1 * y ^ 2 := by
-    have : 4 * nsfQC2 η α1 β1 * (nsfQC0 η α1 β1 + nsfQC1 η α1 β1 * y + nsfQC2 η α1 β1 * y ^ 2) =
-        (2 * nsfQC2 η α1 β1 * y + nsfQC1 η α1 β1) ^ 2 + (4 * nsfQC0 η α1 β1 * nsfQC2 η α1 β1 - nsfQC1 η α1 β1 ^ 2) := by
-      ring
-    have h4 : 0 < 4 * nsfQC2 η α1 β1 * (nsfQC0 η α1 β1 + nsfQC1 η α1 β1 * y + nsfQC2 η α1 β1 * y ^ 2) := by
-      rw [this]; positivity
-    exact pos_of_mul_pos_right h4 (by linarith)
-  nlinarith [mul_le_mul_of_nonneg_right c1 hy, mul_le_mul_of_nonneg_right c2 (sq_nonneg y)]
+  have c0 : nsfQC0 η α1 β1 ≤ nsfQC0 η α β := by unfold nsfQC0; linarith only [hd1, hd2, hd3]
+  have c1 : nsfQC1 η α1 β1 ≤ nsfQC1 η α β := by unfold nsfQC1; linarith only [hd1, hd2, hd3]
+  have c2 : nsfQC2 η α1 β1 ≤ nsfQC2 η α β := by unfold nsfQC2; linarith only [hd1, hd2, hd3]
+  obtain ⟨hη, hη1, hβ, hβ1⟩ := nsf_event_unit_bounds ht0 ht1 hj0 hj1
+  let ρ := η ^ 2 - η / 2 - α1 + β1 - 1
+  let L := 12 * β1 - 6 - 2 * η
+  let ε := η - 1 / 2
+  have hL : 0 ≤ L := by dsimp [L, η, β1]; linarith only [hη1, hβ]
+  have hL1 : L ≤ 7 / 5 := by dsimp [L, η, β1]; linarith only [hη, hβ1]
+  have hε : 0 ≤ ε := by dsimp [ε, η]; linarith only [hη]
+  have hgap : L ^ 2 < 10 * (12 + L) * ρ := nsf_event_unit_gap ht0 ht1 hj0 hj1
+  have hunit := event_gap_quad_pos hL hL1 hε hgap hy
+  have hid : 12 * ρ + (18 * ρ - L) * y + ((5 - L) / 2 + ε + 6 * ρ) * y ^ 2 =
+      nsfQC0 η α1 β1 + nsfQC1 η α1 β1 * y + nsfQC2 η α1 β1 * y ^ 2 := by
+    dsimp [ρ, L, ε, nsfQC0, nsfQC1, nsfQC2]
+    ring
+  rw [hid] at hunit
+  nlinarith only [hunit, c0, mul_le_mul_of_nonneg_right c1 hy,
+    mul_le_mul_of_nonneg_right c2 (sq_nonneg y)]
 
 /-- **The factor elimination**: for `q > 1`,
 `h(q) - h(1) < F_η(q) - g`, `h(q) - h(1) = log q + α(q - 1) + β(1/q - 1)`, `g = 1 - η + η²`. -/
