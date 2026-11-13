@@ -88,6 +88,7 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.Bounds
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.Shape
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.UnitShape
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.UnitShape.BaseQuadratic
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.UnitShape.Coefficients
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Circuit
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Curvature
