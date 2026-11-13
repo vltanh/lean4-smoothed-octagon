@@ -1899,13 +1899,49 @@ Together with $z^2,z^3,z^4\le z\le1$, this yields $L(1/3,z)>10000$.
 Finally, $f(h)=P(h,1/30)$ satisfies $f'''\le0$, $f'(1/4)>0$ and
 $f(1/4),f(1/3)>50$. The same endpoint argument gives $P(h,j)\ge50$, proving $S>0$ on this face.
 
-For $\frac38\le t<\frac25$, take $\alpha=4$, $M=1$ and $v\mapsto v_G$.
-The residual increases in $k$ on $(\frac{29}4t^2,o)$, by the
-same midpoint argument with endpoint value $2tq^2(d_0'+d_1'y+d_2'y^2+d_3'y^3)$, a positive cubic.
-At $k=\frac{29}4t^2$, let $S(h,j,y)$ be the residual after the positive denominator clearing
-$24(q+1)W(17x+76)$, with $v=V_L$ and the same logarithm and norm substitutions.
-The inequalities $-S_{hh}>0$ and $-S_h>0$ at $h=1/5$ give
-$S(h,j,y)\ge S(1/4,j,y)$.
+For $\frac38\le t<\frac25$, take $\alpha=4$ and $M=1$.
+After replacing the logarithm and floor by $L_+$ and $F_\ell$, write
+$G(k,v)=4qW^2\mathcal H$ and put $k_0=29t^2/4$.
+The coefficient of $v$ is negative, so $G(k,v_G)\ge G(k,V_L)$.
+The same midpoint argument shows that $G(k,v_G)$ increases with $k$ below $o$.
+At $(k,v,L)=(o,U(t),y)$ the shape derivative is
+\[
+ 2tq^2(d_0'+d_1'y+d_2'y^2+d_3'y^3).
+\]
+Its cubic is positive because $d_0'>0$, $d_2'\le0$, $d_3'\ge0$ and
+\[
+ 4d_1'+d_2'\ge-\frac{16}{25}+\frac{224}{25}x
+             \ge\frac{144}{125}>1.
+\]
+For the last inequality, group by powers of $x$: the coefficients of degrees two through four
+are nonnegative on the given interval of $t$.
+Since $0\le y\le1/4$, this gives $d_1'+d_2'y\ge d_1'+d_2'/4>1/4$.
+It remains to prove positivity at the lower shape. With $t=(1-h)/2$, $x=h+j$ and $q=1+y$, define
+\[
+ S(h,j,y)=24(q+1)W(17x+76)\,G(k_0,V_L).
+\]
+To see why the terminal scale controls its sign, put $R=-S_h$ and enlarge the domain to
+\[
+ \frac15\le h\le\frac14,\qquad \frac1{30}\le j\le\frac15,
+ \qquad 0\le y\le\frac14.
+\]
+The derivatives of $R$ satisfy
+\[
+ R_h\ge30000-5000y^6>0,\qquad R_j\ge10000-30000y^6>0.
+\]
+Consequently $R$ increases in both variables, and
+\[
+ R(h,j,y)\ge R(1/5,1/30,y)\ge500.
+\]
+For the derivative bounds, the duration coefficients of degrees one through five are nonnegative;
+the constant and sixth-degree coefficients have the displayed lower bounds.
+These coefficient estimates follow by writing $h=1/5+u$ and $j=1/30+z$, with
+$0\le u\le1/20$ and $0\le z\le1/6$.
+Each positive monomial may be discarded, while a negative monomial is bounded below by
+its coefficient times $(1/20)^a(1/6)^b$, where $a,b$ are its degrees in $u,z$.
+At the corner, the only negative duration coefficient has degree six; the comparison
+$y^6\le y^5/4$ absorbs it into the positive fifth-degree term and gives the floor $500$.
+Since $S_h\le-500$, we have $S(h,j,y)\ge S(1/4,j,y)$.
 
 On this terminal face, write
 \[

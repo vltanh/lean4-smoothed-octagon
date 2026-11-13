@@ -2,35 +2,23 @@ module
 
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Clearing
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape.TerminalFace
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape.Derivatives
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape.Scale
 
 /-!
-# Case M2, forward successor: the high-ratio lower-shape sign
+# The high-ratio lower-shape sign
 
-On the high-ratio large-gap domain the combined residual at the lower shape `k₀ = 29t²/4`, with
-`v_G`, `L₊`, `F_ℓ`, is positive; `nsf_LGB_core` uses this sign.
+At the lower shape `k₀ = 29t²/4`, the cleared residual is positive.
+The incoming majorant `V_L ≥ V_G` gives a polynomial residual `S`.
+Its negative scale derivative increases with scale and order gap, and its
+corner value is at least `500`. Hence `S` decreases with scale and its
+minimum lies on the terminal face `h = 1/4`, where `S ≥ 1`.
+The negative incoming-norm coefficient transfers positivity back to `V_G`.
 
-With the incoming majorant `V_L ≥ V_G` (`hrl_VG_le_VL`), the cleared residual is the circuit
-`S = 24(q + 1)WD · nsfComb 4 1 t x k₀ q V_L L₊ F_ℓ` (`hrl_link`). Along `t = (1 - h)/2`, `x = h + j`
-at fixed `j, y`: `-∂_h²S = ∑ Rᵢ yⁱ > 0` (`hrl_R_pos`) and `-∂_hS = ∑ Bᵢ yⁱ > 0` at `h = 1/5`
-(`hrl_B_pos`), so `S(h) ≥ S(1/4)` (`hrl_h_reduce`); at `h = 1/4` the terminal face gives
-`S ≥ 1` (`hrl_face`). Since the `v`-coefficient is negative,
-`V_G ≤ V_L` transfers the sign to the original residual (`hrl_lower_pos`).
-
-The `h`-derivatives are taken of the `y`-coefficients `S₀, …, S₆` of the expanded circuit
-(`hrlSt0`, …, each a bivariate polynomial of at most 62 monomials after `t = (1 - h)/2`,
-`x = h + j`); the `x`-monotonicity of `R₀` and the univariate signs are proved in
-`Nonshort/Forward/HighRatio/LowerShape/Derivatives`.
-
-## Main API
-
-* `hrlS`, `hrlVL`, `hrl_link`, `hrl_VG_le_VL`, `hrl_S_split`.
-* `hrl_R_pos`, `hrl_B_pos`, `hrl_h_reduce`.
-* `hrl_lower_pos`: **the lower-shape residual is positive.**
+`hrlS` defines the cleared residual, `hrl_scale_link` identifies its duration
+coefficients, and `hrl_lower_pos` gives the sign used by the large-gap exclusion.
 -/
 
 @[expose] public section
-
 namespace SmoothedOctagon
 
 /-! ### The circuit
@@ -200,252 +188,84 @@ theorem hrl_S_split (t x y : ℝ) :
   rw [e0, e1, e2, e3, e4, e5, e6]
   ring
 
-/-- The coefficients in `h` of `S_0((1 - h)/2, h + j)`. -/
-noncomputable def hrlL0 (j : ℝ) : List ℝ :=
-  [(-(9633 / 16) * j + (534545 / 64) * j ^ (2 : ℕ) + (694217 / 64) * j ^ (3 : ℕ) - 1034 * j ^ (4 : ℕ) - (9491 / 2) * j ^ (5 : ℕ) - 1632 * j ^ (6 : ℕ)), (-(9633 / 16) + (589721 / 32) * j + (1741463 / 64) * j ^ (2 : ℕ) - (252333 / 8) * j ^ (3 : ℕ) - (123021 / 2) * j ^ (4 : ℕ) - 28773 * j ^ (5 : ℕ) - 1632 * j ^ (6 : ℕ)), ((644897 / 64) + (266431 / 64) * j - (8425347 / 64) * j ^ (2 : ℕ) - (14945183 / 64) * j ^ (3 : ℕ) - 120150 * j ^ (4 : ℕ) + 768 * j ^ (5 : ℕ) + 1632 * j ^ (6 : ℕ)), (-(780815 / 64) - (5318119 / 32) * j - (22997917 / 64) * j ^ (2 : ℕ) - (1538827 / 8) * j ^ (3 : ℕ) + 66103 * j ^ (4 : ℕ) + 28773 * j ^ (5 : ℕ) + 1632 * j ^ (6 : ℕ)), (-(4163379 / 64) - (14641257 / 64) * j - (5775837 / 64) * j ^ (2 : ℕ) + (15943051 / 64) * j ^ (3 : ℕ) + 121184 * j ^ (4 : ℕ) + (7955 / 2) * j ^ (5 : ℕ)), (-(2955563 / 64) + (1217727 / 32) * j + (23459493 / 64) * j ^ (2 : ℕ) + 225499 * j ^ (3 : ℕ) - (9185 / 2) * j ^ (4 : ℕ)), ((1853251 / 64) + (15331501 / 64) * j + (13843791 / 64) * j ^ (2 : ℕ) - (1589429 / 64) * j ^ (3 : ℕ)), ((3738067 / 64) + (3417103 / 32) * j - (2025887 / 64) * j ^ (2 : ℕ)), ((1403599 / 64) - (1105279 / 64) * j), (-(224789 / 64))]
-
-/-- The coefficients in `h` of `∂_h S_0((1 - h)/2, h + j)`. -/
-noncomputable def hrlLd0 (j : ℝ) : List ℝ :=
-  [(-(9633 / 16) + (589721 / 32) * j + (1741463 / 64) * j ^ (2 : ℕ) - (252333 / 8) * j ^ (3 : ℕ) - (123021 / 2) * j ^ (4 : ℕ) - 28773 * j ^ (5 : ℕ) - 1632 * j ^ (6 : ℕ)), ((644897 / 32) + (266431 / 32) * j - (8425347 / 32) * j ^ (2 : ℕ) - (14945183 / 32) * j ^ (3 : ℕ) - 240300 * j ^ (4 : ℕ) + 1536 * j ^ (5 : ℕ) + 3264 * j ^ (6 : ℕ)), (-(2342445 / 64) - (15954357 / 32) * j - (68993751 / 64) * j ^ (2 : ℕ) - (4616481 / 8) * j ^ (3 : ℕ) + 198309 * j ^ (4 : ℕ) + 86319 * j ^ (5 : ℕ) + 4896 * j ^ (6 : ℕ)), (-(4163379 / 16) - (14641257 / 16) * j - (5775837 / 16) * j ^ (2 : ℕ) + (15943051 / 16) * j ^ (3 : ℕ) + 484736 * j ^ (4 : ℕ) + 15910 * j ^ (5 : ℕ)), (-(14777815 / 64) + (6088635 / 32) * j + (117297465 / 64) * j ^ (2 : ℕ) + 1127495 * j ^ (3 : ℕ) - (45925 / 2) * j ^ (4 : ℕ)), ((5559753 / 32) + (45994503 / 32) * j + (41531373 / 32) * j ^ (2 : ℕ) - (4768287 / 32) * j ^ (3 : ℕ)), ((26166469 / 64) + (23919721 / 32) * j - (14181209 / 64) * j ^ (2 : ℕ)), ((1403599 / 8) - (1105279 / 8) * j), (-(2023101 / 64))]
-
-/-- The coefficients in `h` of `S_1((1 - h)/2, h + j)`. -/
-noncomputable def hrlL1 (j : ℝ) : List ℝ :=
-  [(-(9633 / 16) + (427887 / 64) * j + (8917035 / 128) * j ^ (2 : ℕ) + (9554733 / 128) * j ^ (3 : ℕ) - (1044035 / 32) * j ^ (4 : ℕ) - 74124 * j ^ (5 : ℕ) - 30076 * j ^ (6 : ℕ) - 1688 * j ^ (7 : ℕ)), ((615303 / 64) + (9720477 / 64) * j + (15627823 / 128) * j ^ (2 : ℕ) - (14070629 / 32) * j ^ (3 : ℕ) - (22484489 / 32) * j ^ (4 : ℕ) - 338393 * j ^ (5 : ℕ) - 37472 * j ^ (6 : ℕ) - 1632 * j ^ (7 : ℕ)), ((7660695 / 128) - (19306591 / 128) * j - (181173553 / 128) * j ^ (2 : ℕ) - (283487151 / 128) * j ^ (3 : ℕ) - (18443327 / 16) * j ^ (4 : ℕ) - 63668 * j ^ (5 : ℕ) + 24568 * j ^ (6 : ℕ) + 1688 * j ^ (7 : ℕ)), (-(19402433 / 128) - (91053599 / 64) * j - (352956301 / 128) * j ^ (2 : ℕ) - (10944133 / 8) * j ^ (3 : ℕ) + (8677223 / 16) * j ^ (4 : ℕ) + 341096 * j ^ (5 : ℕ) + 37472 * j ^ (6 : ℕ) + 1632 * j ^ (7 : ℕ)), (-(58369293 / 128) - (177039883 / 128) * j - (21258687 / 128) * j ^ (2 : ℕ) + (265788591 / 128) * j ^ (3 : ℕ) + (38721393 / 32) * j ^ (4 : ℕ) + 137792 * j ^ (5 : ℕ) + 5508 * j ^ (6 : ℕ)), (-(24819673 / 128) + (41555627 / 64) * j + (358322093 / 128) * j ^ (2 : ℕ) + (62256393 / 32) * j ^ (3 : ℕ) + (5640043 / 32) * j ^ (4 : ℕ) - 2703 * j ^ (5 : ℕ)), ((36962357 / 128) + (211687475 / 128) * j + (204834757 / 128) * j ^ (2 : ℕ) + (2619027 / 128) * j ^ (3 : ℕ) - 39015 * j ^ (4 : ℕ)), ((46167037 / 128) + (42082071 / 64) * j - (18539087 / 128) * j ^ (2 : ℕ) - 75990 * j ^ (3 : ℕ)), ((13776073 / 128) - (15615399 / 128) * j - 69258 * j ^ (2 : ℕ)), (-(3960433 / 128) - 31467 * j), (-5763)]
-
-/-- The coefficients in `h` of `∂_h S_1((1 - h)/2, h + j)`. -/
-noncomputable def hrlLd1 (j : ℝ) : List ℝ :=
-  [((615303 / 64) + (9720477 / 64) * j + (15627823 / 128) * j ^ (2 : ℕ) - (14070629 / 32) * j ^ (3 : ℕ) - (22484489 / 32) * j ^ (4 : ℕ) - 338393 * j ^ (5 : ℕ) - 37472 * j ^ (6 : ℕ) - 1632 * j ^ (7 : ℕ)), ((7660695 / 64) - (19306591 / 64) * j - (181173553 / 64) * j ^ (2 : ℕ) - (283487151 / 64) * j ^ (3 : ℕ) - (18443327 / 8) * j ^ (4 : ℕ) - 127336 * j ^ (5 : ℕ) + 49136 * j ^ (6 : ℕ) + 3376 * j ^ (7 : ℕ)), (-(58207299 / 128) - (273160797 / 64) * j - (1058868903 / 128) * j ^ (2 : ℕ) - (32832399 / 8) * j ^ (3 : ℕ) + (26031669 / 16) * j ^ (4 : ℕ) + 1023288 * j ^ (5 : ℕ) + 112416 * j ^ (6 : ℕ) + 4896 * j ^ (7 : ℕ)), (-(58369293 / 32) - (177039883 / 32) * j - (21258687 / 32) * j ^ (2 : ℕ) + (265788591 / 32) * j ^ (3 : ℕ) + (38721393 / 8) * j ^ (4 : ℕ) + 551168 * j ^ (5 : ℕ) + 22032 * j ^ (6 : ℕ)), (-(124098365 / 128) + (207778135 / 64) * j + (1791610465 / 128) * j ^ (2 : ℕ) + (311281965 / 32) * j ^ (3 : ℕ) + (28200215 / 32) * j ^ (4 : ℕ) - 13515 * j ^ (5 : ℕ)), ((110887071 / 64) + (635062425 / 64) * j + (614504271 / 64) * j ^ (2 : ℕ) + (7857081 / 64) * j ^ (3 : ℕ) - 234090 * j ^ (4 : ℕ)), ((323169259 / 128) + (294574497 / 64) * j - (129773609 / 128) * j ^ (2 : ℕ) - 531930 * j ^ (3 : ℕ)), ((13776073 / 16) - (15615399 / 16) * j - 554064 * j ^ (2 : ℕ)), (-(35643897 / 128) - 283203 * j), (-57630)]
-
-/-- The coefficients in `h` of `S_2((1 - h)/2, h + j)`. -/
-noncomputable def hrlL2 (j : ℝ) : List ℝ :=
-  [((23351 / 32) + (875817 / 128) * j + (6074177 / 128) * j ^ (2 : ℕ) - (7803529 / 64) * j ^ (3 : ℕ) - (30530035 / 64) * j ^ (4 : ℕ) - (2017357 / 4) * j ^ (5 : ℕ) - 228270 * j ^ (6 : ℕ) - 42448 * j ^ (7 : ℕ) - 3264 * j ^ (8 : ℕ)), ((3304321 / 128) + (7240679 / 32) * j - (603017 / 2) * j ^ (2 : ℕ) - (130514435 / 64) * j ^ (3 : ℕ) - (164116321 / 64) * j ^ (4 : ℕ) - (2472413 / 2) * j ^ (5 : ℕ) - 173912 * j ^ (6 : ℕ) + 8064 * j ^ (7 : ℕ) + 3264 * j ^ (8 : ℕ)), ((8238399 / 128) - (112261651 / 128) * j - (549017555 / 128) * j ^ (2 : ℕ) - (187530639 / 32) * j ^ (3 : ℕ) - (89040911 / 32) * j ^ (4 : ℕ) + 29393 * j ^ (5 : ℕ) + 219396 * j ^ (6 : ℕ) + 31120 * j ^ (7 : ℕ)), (-(60641557 / 128) - (6916773 / 2) * j - (184870325 / 32) * j ^ (2 : ℕ) - (65390591 / 32) * j ^ (3 : ℕ) + (65116847 / 32) * j ^ (4 : ℕ) + (2511887 / 2) * j ^ (5 : ℕ) + 173912 * j ^ (6 : ℕ) + 3264 * j ^ (7 : ℕ)), (-(119393961 / 128) - (282494549 / 128) * j + (141471275 / 128) * j ^ (2 : ℕ) + (353299475 / 64) * j ^ (3 : ℕ) + (211736865 / 64) * j ^ (4 : ℕ) + (1899785 / 4) * j ^ (5 : ℕ) + 8874 * j ^ (6 : ℕ)), (-(18469443 / 128) + (66940125 / 32) * j + (25277417 / 4) * j ^ (2 : ℕ) + (291205521 / 64) * j ^ (3 : ℕ) + (38472627 / 64) * j ^ (4 : ℕ) - 19737 * j ^ (5 : ℕ)), ((90148901 / 128) + (426441079 / 128) * j + (429500519 / 128) * j ^ (2 : ℕ) + (3716193 / 16) * j ^ (3 : ℕ) - 117555 * j ^ (4 : ℕ)), ((84284993 / 128) + (9986715 / 8) * j - (6627587 / 32) * j ^ (2 : ℕ) - 209610 * j ^ (3 : ℕ)), ((23352297 / 128) - (3671335 / 16) * j - 185436 * j ^ (2 : ℕ)), (-(3989045 / 64) - 83181 * j), (-15147)]
-
-/-- The coefficients in `h` of `∂_h S_2((1 - h)/2, h + j)`. -/
-noncomputable def hrlLd2 (j : ℝ) : List ℝ :=
-  [((3304321 / 128) + (7240679 / 32) * j - (603017 / 2) * j ^ (2 : ℕ) - (130514435 / 64) * j ^ (3 : ℕ) - (164116321 / 64) * j ^ (4 : ℕ) - (2472413 / 2) * j ^ (5 : ℕ) - 173912 * j ^ (6 : ℕ) + 8064 * j ^ (7 : ℕ) + 3264 * j ^ (8 : ℕ)), ((8238399 / 64) - (112261651 / 64) * j - (549017555 / 64) * j ^ (2 : ℕ) - (187530639 / 16) * j ^ (3 : ℕ) - (89040911 / 16) * j ^ (4 : ℕ) + 58786 * j ^ (5 : ℕ) + 438792 * j ^ (6 : ℕ) + 62240 * j ^ (7 : ℕ)), (-(181924671 / 128) - (20750319 / 2) * j - (554610975 / 32) * j ^ (2 : ℕ) - (196171773 / 32) * j ^ (3 : ℕ) + (195350541 / 32) * j ^ (4 : ℕ) + (7535661 / 2) * j ^ (5 : ℕ) + 521736 * j ^ (6 : ℕ) + 9792 * j ^ (7 : ℕ)), (-(119393961 / 32) - (282494549 / 32) * j + (141471275 / 32) * j ^ (2 : ℕ) + (353299475 / 16) * j ^ (3 : ℕ) + (211736865 / 16) * j ^ (4 : ℕ) + 1899785 * j ^ (5 : ℕ) + 35496 * j ^ (6 : ℕ)), (-(92347215 / 128) + (334700625 / 32) * j + (126387085 / 4) * j ^ (2 : ℕ) + (1456027605 / 64) * j ^ (3 : ℕ) + (192363135 / 64) * j ^ (4 : ℕ) - 98685 * j ^ (5 : ℕ)), ((270446703 / 64) + (1279323237 / 64) * j + (1288501557 / 64) * j ^ (2 : ℕ) + (11148579 / 8) * j ^ (3 : ℕ) - 705330 * j ^ (4 : ℕ)), ((589994951 / 128) + (69907005 / 8) * j - (46393109 / 32) * j ^ (2 : ℕ) - 1467270 * j ^ (3 : ℕ)), ((23352297 / 16) - (3671335 / 2) * j - 1483488 * j ^ (2 : ℕ)), (-(35901405 / 64) - 748629 * j), (-151470)]
-
-/-- The coefficients in `h` of `S_3((1 - h)/2, h + j)`. -/
-noncomputable def hrlL3 (j : ℝ) : List ℝ :=
-  [(-6707 - (1109683 / 16) * j - (14087377 / 64) * j ^ (2 : ℕ) - (39505745 / 64) * j ^ (3 : ℕ) - (16721291 / 16) * j ^ (4 : ℕ) - (14878117 / 16) * j ^ (5 : ℕ) - 432077 * j ^ (6 : ℕ) - 97476 * j ^ (7 : ℕ) - 8704 * j ^ (8 : ℕ)), ((150549 / 16) + (2621395 / 32) * j - (50919519 / 64) * j ^ (2 : ℕ) - (11276755 / 4) * j ^ (3 : ℕ) - (51826443 / 16) * j ^ (4 : ℕ) - (12692117 / 8) * j ^ (5 : ℕ) - 250237 * j ^ (6 : ℕ) + 27760 * j ^ (7 : ℕ) + 8704 * j ^ (8 : ℕ)), ((1458007 / 64) - (74785871 / 64) * j - (301245949 / 64) * j ^ (2 : ℕ) - (376356689 / 64) * j ^ (3 : ℕ) - (20595821 / 8) * j ^ (4 : ℕ) + (496723 / 2) * j ^ (5 : ℕ) + 406849 * j ^ (6 : ℕ) + 67268 * j ^ (7 : ℕ)), (-(34213633 / 64) - (107153013 / 32) * j - (305281331 / 64) * j ^ (2 : ℕ) - (7370295 / 8) * j ^ (3 : ℕ) + (20751941 / 8) * j ^ (4 : ℕ) + (13347691 / 8) * j ^ (5 : ℕ) + 268937 * j ^ (6 : ℕ) + 2448 * j ^ (7 : ℕ)), (-(50893809 / 64) - (79665811 / 64) * j + (136453677 / 64) * j ^ (2 : ℕ) + (359878861 / 64) * j ^ (3 : ℕ) + (57454273 / 16) * j ^ (4 : ℕ) + (9865933 / 16) * j ^ (5 : ℕ) + 6528 * j ^ (6 : ℕ)), ((6978951 / 64) + (73753881 / 32) * j + (358075875 / 64) * j ^ (2 : ℕ) + (34891737 / 8) * j ^ (3 : ℕ) + (12362561 / 16) * j ^ (4 : ℕ) - (68187 / 4) * j ^ (5 : ℕ)), ((41440301 / 64) + (168144963 / 64) * j + (189945729 / 64) * j ^ (2 : ℕ) + (28218069 / 64) * j ^ (3 : ℕ) - (389895 / 4) * j ^ (4 : ℕ)), ((29604261 / 64) + (33593793 / 32) * j - (778833 / 64) * j ^ (2 : ℕ) - (349095 / 2) * j ^ (3 : ℕ)), ((9635549 / 64) - (8137365 / 64) * j - (311559 / 2) * j ^ (2 : ℕ)), (-(2590847 / 64) - (282183 / 4) * j), (-(51867 / 4))]
-
-/-- The coefficients in `h` of `∂_h S_3((1 - h)/2, h + j)`. -/
-noncomputable def hrlLd3 (j : ℝ) : List ℝ :=
-  [((150549 / 16) + (2621395 / 32) * j - (50919519 / 64) * j ^ (2 : ℕ) - (11276755 / 4) * j ^ (3 : ℕ) - (51826443 / 16) * j ^ (4 : ℕ) - (12692117 / 8) * j ^ (5 : ℕ) - 250237 * j ^ (6 : ℕ) + 27760 * j ^ (7 : ℕ) + 8704 * j ^ (8 : ℕ)), ((1458007 / 32) - (74785871 / 32) * j - (301245949 / 32) * j ^ (2 : ℕ) - (376356689 / 32) * j ^ (3 : ℕ) - (20595821 / 4) * j ^ (4 : ℕ) + 496723 * j ^ (5 : ℕ) + 813698 * j ^ (6 : ℕ) + 134536 * j ^ (7 : ℕ)), (-(102640899 / 64) - (321459039 / 32) * j - (915843993 / 64) * j ^ (2 : ℕ) - (22110885 / 8) * j ^ (3 : ℕ) + (62255823 / 8) * j ^ (4 : ℕ) + (40043073 / 8) * j ^ (5 : ℕ) + 806811 * j ^ (6 : ℕ) + 7344 * j ^ (7 : ℕ)), (-(50893809 / 16) - (79665811 / 16) * j + (136453677 / 16) * j ^ (2 : ℕ) + (359878861 / 16) * j ^ (3 : ℕ) + (57454273 / 4) * j ^ (4 : ℕ) + (9865933 / 4) * j ^ (5 : ℕ) + 26112 * j ^ (6 : ℕ)), ((34894755 / 64) + (368769405 / 32) * j + (1790379375 / 64) * j ^ (2 : ℕ) + (174458685 / 8) * j ^ (3 : ℕ) + (61812805 / 16) * j ^ (4 : ℕ) - (340935 / 4) * j ^ (5 : ℕ)), ((124320903 / 32) + (504434889 / 32) * j + (569837187 / 32) * j ^ (2 : ℕ) + (84654207 / 32) * j ^ (3 : ℕ) - (1169685 / 2) * j ^ (4 : ℕ)), ((207229827 / 64) + (235156551 / 32) * j - (5451831 / 64) * j ^ (2 : ℕ) - (2443665 / 2) * j ^ (3 : ℕ)), ((9635549 / 8) - (8137365 / 8) * j - 1246236 * j ^ (2 : ℕ)), (-(23317623 / 64) - (2539647 / 4) * j), (-(259335 / 2))]
-
-/-- The coefficients in `h` of `S_4((1 - h)/2, h + j)`. -/
-noncomputable def hrlL4 (j : ℝ) : List ℝ :=
-  [(-(273391 / 16) - (8408989 / 64) * j - (11777565 / 32) * j ^ (2 : ℕ) - (44120903 / 64) * j ^ (3 : ℕ) - (28111505 / 32) * j ^ (4 : ℕ) - (5543219 / 8) * j ^ (5 : ℕ) - (642213 / 2) * j ^ (6 : ℕ) - 79221 * j ^ (7 : ℕ) - 7616 * j ^ (8 : ℕ)), (-(1049301 / 64) - (925251 / 32) * j - (32191919 / 64) * j ^ (2 : ℕ) - (46746225 / 32) * j ^ (3 : ℕ) - (51401875 / 32) * j ^ (4 : ℕ) - (3265235 / 4) * j ^ (5 : ℕ) - (286801 / 2) * j ^ (6 : ℕ) + 25820 * j ^ (7 : ℕ) + 7616 * j ^ (8 : ℕ)), ((105261 / 4) - (7804927 / 16) * j - (62772651 / 32) * j ^ (2 : ℕ) - (145525201 / 64) * j ^ (3 : ℕ) - (14812813 / 16) * j ^ (4 : ℕ) + 206349 * j ^ (5 : ℕ) + (568637 / 2) * j ^ (6 : ℕ) + 52789 * j ^ (7 : ℕ)), (-(3741897 / 16) - (42855909 / 32) * j - (96424843 / 64) * j ^ (2 : ℕ) + (463475 / 16) * j ^ (3 : ℕ) + (20053597 / 16) * j ^ (4 : ℕ) + (3762805 / 4) * j ^ (5 : ℕ) + (356501 / 2) * j ^ (6 : ℕ) + 612 * j ^ (7 : ℕ)), (-(2381247 / 8) - (3906427 / 32) * j + (37617417 / 32) * j ^ (2 : ℕ) + (142597119 / 64) * j ^ (3 : ℕ) + (54962731 / 32) * j ^ (4 : ℕ) + (2924827 / 8) * j ^ (5 : ℕ) + 1938 * j ^ (6 : ℕ)), ((5037133 / 32) + (30745479 / 32) * j + (120019755 / 64) * j ^ (2 : ℕ) + (59735195 / 32) * j ^ (3 : ℕ) + (14864681 / 32) * j ^ (4 : ℕ) - (6885 / 2) * j ^ (5 : ℕ)), ((895381 / 4) + (11608003 / 16) * j + (38357535 / 32) * j ^ (2 : ℕ) + (22268985 / 64) * j ^ (3 : ℕ) - (49725 / 2) * j ^ (4 : ℕ)), ((1527203 / 16) + (13703985 / 32) * j + (8597007 / 64) * j ^ (2 : ℕ) - 47685 * j ^ (3 : ℕ)), ((1096557 / 16) + (1009539 / 64) * j - 44523 * j ^ (2 : ℕ)), (-(166189 / 64) - (41769 / 2) * j), (-(7905 / 2))]
-
-/-- The coefficients in `h` of `∂_h S_4((1 - h)/2, h + j)`. -/
-noncomputable def hrlLd4 (j : ℝ) : List ℝ :=
-  [(-(1049301 / 64) - (925251 / 32) * j - (32191919 / 64) * j ^ (2 : ℕ) - (46746225 / 32) * j ^ (3 : ℕ) - (51401875 / 32) * j ^ (4 : ℕ) - (3265235 / 4) * j ^ (5 : ℕ) - (286801 / 2) * j ^ (6 : ℕ) + 25820 * j ^ (7 : ℕ) + 7616 * j ^ (8 : ℕ)), ((105261 / 2) - (7804927 / 8) * j - (62772651 / 16) * j ^ (2 : ℕ) - (145525201 / 32) * j ^ (3 : ℕ) - (14812813 / 8) * j ^ (4 : ℕ) + 412698 * j ^ (5 : ℕ) + 568637 * j ^ (6 : ℕ) + 105578 * j ^ (7 : ℕ)), (-(11225691 / 16) - (128567727 / 32) * j - (289274529 / 64) * j ^ (2 : ℕ) + (1390425 / 16) * j ^ (3 : ℕ) + (60160791 / 16) * j ^ (4 : ℕ) + (11288415 / 4) * j ^ (5 : ℕ) + (1069503 / 2) * j ^ (6 : ℕ) + 1836 * j ^ (7 : ℕ)), (-(2381247 / 2) - (3906427 / 8) * j + (37617417 / 8) * j ^ (2 : ℕ) + (142597119 / 16) * j ^ (3 : ℕ) + (54962731 / 8) * j ^ (4 : ℕ) + (2924827 / 2) * j ^ (5 : ℕ) + 7752 * j ^ (6 : ℕ)), ((25185665 / 32) + (153727395 / 32) * j + (600098775 / 64) * j ^ (2 : ℕ) + (298675975 / 32) * j ^ (3 : ℕ) + (74323405 / 32) * j ^ (4 : ℕ) - (34425 / 2) * j ^ (5 : ℕ)), ((2686143 / 2) + (34824009 / 8) * j + (115072605 / 16) * j ^ (2 : ℕ) + (66806955 / 32) * j ^ (3 : ℕ) - 149175 * j ^ (4 : ℕ)), ((10690421 / 16) + (95927895 / 32) * j + (60179049 / 64) * j ^ (2 : ℕ) - 333795 * j ^ (3 : ℕ)), ((1096557 / 2) + (1009539 / 8) * j - 356184 * j ^ (2 : ℕ)), (-(1495701 / 64) - (375921 / 2) * j), (-39525)]
-
-/-- The coefficients in `h` of `S_5((1 - h)/2, h + j)`. -/
-noncomputable def hrlL5 (j : ℝ) : List ℝ :=
-  [(-(164331 / 16) - (4450647 / 64) * j - (22415433 / 128) * j ^ (2 : ℕ) - (34926835 / 128) * j ^ (3 : ℕ) - (9347655 / 32) * j ^ (4 : ℕ) - (3315481 / 16) * j ^ (5 : ℕ) - 93884 * j ^ (6 : ℕ) - 24306 * j ^ (7 : ℕ) - 2448 * j ^ (8 : ℕ)), (-(617967 / 64) - (337707 / 64) * j - (9830937 / 128) * j ^ (2 : ℕ) - (8012271 / 32) * j ^ (3 : ℕ) - (8890945 / 32) * j ^ (4 : ℕ) - (1223625 / 8) * j ^ (5 : ℕ) - 31088 * j ^ (6 : ℕ) + 8496 * j ^ (7 : ℕ) + 2448 * j ^ (8 : ℕ)), ((3074571 / 128) - (4290003 / 128) * j - (34356837 / 128) * j ^ (2 : ℕ) - (35005015 / 128) * j ^ (3 : ℕ) - (1584975 / 16) * j ^ (4 : ℕ) + (100371 / 2) * j ^ (5 : ℕ) + 75932 * j ^ (6 : ℕ) + 15810 * j ^ (7 : ℕ)), (-(5084749 / 128) - (14303343 / 64) * j - (16599077 / 128) * j ^ (2 : ℕ) + (153167 / 2) * j ^ (3 : ℕ) + (3205215 / 16) * j ^ (4 : ℕ) + (1717287 / 8) * j ^ (5 : ℕ) + 48938 * j ^ (6 : ℕ)), (-(6752961 / 128) + (10031057 / 128) * j + (29336709 / 128) * j ^ (2 : ℕ) + (34186015 / 128) * j ^ (3 : ℕ) + (10997805 / 32) * j ^ (4 : ℕ) + (1521313 / 16) * j ^ (5 : ℕ) + 102 * j ^ (6 : ℕ)), ((7673771 / 128) + (9165771 / 64) * j + (17697141 / 128) * j ^ (2 : ℕ) + (10924639 / 32) * j ^ (3 : ℕ) + (4010515 / 32) * j ^ (4 : ℕ) + (969 / 4) * j ^ (5 : ℕ)), ((2765985 / 128) - (29097 / 128) * j + (27713001 / 128) * j ^ (2 : ℕ) + (14505835 / 128) * j ^ (3 : ℕ) - (1275 / 4) * j ^ (4 : ℕ)), (-(1890103 / 128) + (5554431 / 64) * j + (8732873 / 128) * j ^ (2 : ℕ) - (3315 / 2) * j ^ (3 : ℕ)), ((2261325 / 128) + (3189337 / 128) * j - (4335 / 2) * j ^ (2 : ℕ)), ((537015 / 128) - (4947 / 4) * j), (-(1071 / 4))]
-
-/-- The coefficients in `h` of `∂_h S_5((1 - h)/2, h + j)`. -/
-noncomputable def hrlLd5 (j : ℝ) : List ℝ :=
-  [(-(617967 / 64) - (337707 / 64) * j - (9830937 / 128) * j ^ (2 : ℕ) - (8012271 / 32) * j ^ (3 : ℕ) - (8890945 / 32) * j ^ (4 : ℕ) - (1223625 / 8) * j ^ (5 : ℕ) - 31088 * j ^ (6 : ℕ) + 8496 * j ^ (7 : ℕ) + 2448 * j ^ (8 : ℕ)), ((3074571 / 64) - (4290003 / 64) * j - (34356837 / 64) * j ^ (2 : ℕ) - (35005015 / 64) * j ^ (3 : ℕ) - (1584975 / 8) * j ^ (4 : ℕ) + 100371 * j ^ (5 : ℕ) + 151864 * j ^ (6 : ℕ) + 31620 * j ^ (7 : ℕ)), (-(15254247 / 128) - (42910029 / 64) * j - (49797231 / 128) * j ^ (2 : ℕ) + (459501 / 2) * j ^ (3 : ℕ) + (9615645 / 16) * j ^ (4 : ℕ) + (5151861 / 8) * j ^ (5 : ℕ) + 146814 * j ^ (6 : ℕ)), (-(6752961 / 32) + (10031057 / 32) * j + (29336709 / 32) * j ^ (2 : ℕ) + (34186015 / 32) * j ^ (3 : ℕ) + (10997805 / 8) * j ^ (4 : ℕ) + (1521313 / 4) * j ^ (5 : ℕ) + 408 * j ^ (6 : ℕ)), ((38368855 / 128) + (45828855 / 64) * j + (88485705 / 128) * j ^ (2 : ℕ) + (54623195 / 32) * j ^ (3 : ℕ) + (20052575 / 32) * j ^ (4 : ℕ) + (4845 / 4) * j ^ (5 : ℕ)), ((8297955 / 64) - (87291 / 64) * j + (83139003 / 64) * j ^ (2 : ℕ) + (43517505 / 64) * j ^ (3 : ℕ) - (3825 / 2) * j ^ (4 : ℕ)), (-(13230721 / 128) + (38881017 / 64) * j + (61130111 / 128) * j ^ (2 : ℕ) - (23205 / 2) * j ^ (3 : ℕ)), ((2261325 / 16) + (3189337 / 16) * j - 17340 * j ^ (2 : ℕ)), ((4833135 / 128) - (44523 / 4) * j), (-(5355 / 2))]
-
-/-- The coefficients in `h` of `S_6((1 - h)/2, h + j)`. -/
-noncomputable def hrlL6 (j : ℝ) : List ℝ :=
-  [(-(39121 / 32) - (903759 / 128) * j - (1686511 / 128) * j ^ (2 : ℕ) - (896109 / 64) * j ^ (3 : ℕ) - (672619 / 64) * j ^ (4 : ℕ) - (21411 / 4) * j ^ (5 : ℕ) - 2015 * j ^ (6 : ℕ) - 576 * j ^ (7 : ℕ) - 68 * j ^ (8 : ℕ)), ((70409 / 128) + (402863 / 32) * j + (425425 / 16) * j ^ (2 : ℕ) + (1463285 / 64) * j ^ (3 : ℕ) + (951847 / 64) * j ^ (4 : ℕ) + (11645 / 2) * j ^ (5 : ℕ) + 595 * j ^ (6 : ℕ) + 236 * j ^ (7 : ℕ) + 68 * j ^ (8 : ℕ)), ((774383 / 128) + (1048509 / 128) * j - (1028555 / 128) * j ^ (2 : ℕ) - (27715 / 32) * j ^ (3 : ℕ) + (64137 / 32) * j ^ (4 : ℕ) - 3229 * j ^ (5 : ℕ) + 315 * j ^ (6 : ℕ) + 340 * j ^ (7 : ℕ)), (-(664789 / 128) - 26934 * j - (184877 / 32) * j ^ (2 : ℕ) + (123973 / 32) * j ^ (3 : ℕ) - (369529 / 32) * j ^ (4 : ℕ) + (155 / 2) * j ^ (5 : ℕ) + 1105 * j ^ (6 : ℕ)), (-(847089 / 128) + (2104755 / 128) * j + (2445003 / 128) * j ^ (2 : ℕ) - (1187497 / 64) * j ^ (3 : ℕ) + (34345 / 64) * j ^ (4 : ℕ) + (10727 / 4) * j ^ (5 : ℕ)), ((1259781 / 128) + (365649 / 32) * j - (411603 / 16) * j ^ (2 : ℕ) + (58769 / 64) * j ^ (3 : ℕ) + (297211 / 64) * j ^ (4 : ℕ)), ((68389 / 128) - (2568153 / 128) * j + (270063 / 128) * j ^ (2 : ℕ) + (92259 / 16) * j ^ (3 : ℕ)), (-(735407 / 128) + 2918 * j + (157233 / 32) * j ^ (2 : ℕ)), ((160801 / 128) + (39831 / 16) * j), ((35003 / 64))]
-
-/-- The coefficients in `h` of `∂_h S_6((1 - h)/2, h + j)`. -/
-noncomputable def hrlLd6 (j : ℝ) : List ℝ :=
-  [((70409 / 128) + (402863 / 32) * j + (425425 / 16) * j ^ (2 : ℕ) + (1463285 / 64) * j ^ (3 : ℕ) + (951847 / 64) * j ^ (4 : ℕ) + (11645 / 2) * j ^ (5 : ℕ) + 595 * j ^ (6 : ℕ) + 236 * j ^ (7 : ℕ) + 68 * j ^ (8 : ℕ)), ((774383 / 64) + (1048509 / 64) * j - (1028555 / 64) * j ^ (2 : ℕ) - (27715 / 16) * j ^ (3 : ℕ) + (64137 / 16) * j ^ (4 : ℕ) - 6458 * j ^ (5 : ℕ) + 630 * j ^ (6 : ℕ) + 680 * j ^ (7 : ℕ)), (-(1994367 / 128) - 80802 * j - (554631 / 32) * j ^ (2 : ℕ) + (371919 / 32) * j ^ (3 : ℕ) - (1108587 / 32) * j ^ (4 : ℕ) + (465 / 2) * j ^ (5 : ℕ) + 3315 * j ^ (6 : ℕ)), (-(847089 / 32) + (2104755 / 32) * j + (2445003 / 32) * j ^ (2 : ℕ) - (1187497 / 16) * j ^ (3 : ℕ) + (34345 / 16) * j ^ (4 : ℕ) + 10727 * j ^ (5 : ℕ)), ((6298905 / 128) + (1828245 / 32) * j - (2058015 / 16) * j ^ (2 : ℕ) + (293845 / 64) * j ^ (3 : ℕ) + (1486055 / 64) * j ^ (4 : ℕ)), ((205167 / 64) - (7704459 / 64) * j + (810189 / 64) * j ^ (2 : ℕ) + (276777 / 8) * j ^ (3 : ℕ)), (-(5147849 / 128) + 20426 * j + (1100631 / 32) * j ^ (2 : ℕ)), ((160801 / 16) + (39831 / 2) * j), ((315027 / 64))]
-
-theorem hrl_St_h0 (h j : ℝ) : hrlSt0 ((1 - h) / 2) (h + j) = polyHorner (hrlL0 j) h := by
-  simp only [hrlL0, polyHorner]; unfold hrlSt0; ring
-
-theorem hrl_L_d0 (j s : ℝ) : HasDerivAt (polyHorner (hrlL0 j)) (polyHorner (hrlLd0 j) s) s := by
-  have H := poly_hasDerivAt_horner (hrlL0 j) s
-  have e : polyHornerD (hrlL0 j) s = polyHorner (hrlLd0 j) s := by
-    simp only [hrlL0, hrlLd0, polyHornerD, polyHorner]; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_d0 (j s : ℝ) :
-    HasDerivAt (polyHorner (hrlLd0 j)) (-hrlR0 ((1 - s) / 2) (s + j)) s := by
-  have H := poly_hasDerivAt_horner (hrlLd0 j) s
-  have e : polyHornerD (hrlLd0 j) s = -hrlR0 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd0, polyHornerD, polyHorner]; unfold hrlR0; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_fifth0 (j : ℝ) : polyHorner (hrlLd0 j) (1 / 5) = -hrlBb0 (1 / 5 + j) := by
-  simp only [hrlLd0, polyHorner]; unfold hrlBb0; ring
-
 theorem hrl_St_face0 (x : ℝ) : hrlSt0 (3 / 8) x = hrlCF0 x := by
   unfold hrlSt0 hrlCF0; ring
-
-theorem hrl_St_h1 (h j : ℝ) : hrlSt1 ((1 - h) / 2) (h + j) = polyHorner (hrlL1 j) h := by
-  simp only [hrlL1, polyHorner]; unfold hrlSt1; ring
-
-theorem hrl_L_d1 (j s : ℝ) : HasDerivAt (polyHorner (hrlL1 j)) (polyHorner (hrlLd1 j) s) s := by
-  have H := poly_hasDerivAt_horner (hrlL1 j) s
-  have e : polyHornerD (hrlL1 j) s = polyHorner (hrlLd1 j) s := by
-    simp only [hrlL1, hrlLd1, polyHornerD, polyHorner]; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_d1 (j s : ℝ) :
-    HasDerivAt (polyHorner (hrlLd1 j)) (-hrlR1 ((1 - s) / 2) (s + j)) s := by
-  have H := poly_hasDerivAt_horner (hrlLd1 j) s
-  have e : polyHornerD (hrlLd1 j) s = -hrlR1 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd1, polyHornerD, polyHorner]; unfold hrlR1; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_fifth1 (j : ℝ) : polyHorner (hrlLd1 j) (1 / 5) = -hrlBb1 (1 / 5 + j) := by
-  simp only [hrlLd1, polyHorner]; unfold hrlBb1; ring
 
 theorem hrl_St_face1 (x : ℝ) : hrlSt1 (3 / 8) x = hrlCF1 x := by
   unfold hrlSt1 hrlCF1; ring
 
-theorem hrl_St_h2 (h j : ℝ) : hrlSt2 ((1 - h) / 2) (h + j) = polyHorner (hrlL2 j) h := by
-  simp only [hrlL2, polyHorner]; unfold hrlSt2; ring
-
-theorem hrl_L_d2 (j s : ℝ) : HasDerivAt (polyHorner (hrlL2 j)) (polyHorner (hrlLd2 j) s) s := by
-  have H := poly_hasDerivAt_horner (hrlL2 j) s
-  have e : polyHornerD (hrlL2 j) s = polyHorner (hrlLd2 j) s := by
-    simp only [hrlL2, hrlLd2, polyHornerD, polyHorner]; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_d2 (j s : ℝ) :
-    HasDerivAt (polyHorner (hrlLd2 j)) (-hrlR2 ((1 - s) / 2) (s + j)) s := by
-  have H := poly_hasDerivAt_horner (hrlLd2 j) s
-  have e : polyHornerD (hrlLd2 j) s = -hrlR2 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd2, polyHornerD, polyHorner]; unfold hrlR2; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_fifth2 (j : ℝ) : polyHorner (hrlLd2 j) (1 / 5) = -hrlBb2 (1 / 5 + j) := by
-  simp only [hrlLd2, polyHorner]; unfold hrlBb2; ring
-
 theorem hrl_St_face2 (x : ℝ) : hrlSt2 (3 / 8) x = hrlCF2 x := by
   unfold hrlSt2 hrlCF2; ring
-
-theorem hrl_St_h3 (h j : ℝ) : hrlSt3 ((1 - h) / 2) (h + j) = polyHorner (hrlL3 j) h := by
-  simp only [hrlL3, polyHorner]; unfold hrlSt3; ring
-
-theorem hrl_L_d3 (j s : ℝ) : HasDerivAt (polyHorner (hrlL3 j)) (polyHorner (hrlLd3 j) s) s := by
-  have H := poly_hasDerivAt_horner (hrlL3 j) s
-  have e : polyHornerD (hrlL3 j) s = polyHorner (hrlLd3 j) s := by
-    simp only [hrlL3, hrlLd3, polyHornerD, polyHorner]; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_d3 (j s : ℝ) :
-    HasDerivAt (polyHorner (hrlLd3 j)) (-hrlR3 ((1 - s) / 2) (s + j)) s := by
-  have H := poly_hasDerivAt_horner (hrlLd3 j) s
-  have e : polyHornerD (hrlLd3 j) s = -hrlR3 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd3, polyHornerD, polyHorner]; unfold hrlR3; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_fifth3 (j : ℝ) : polyHorner (hrlLd3 j) (1 / 5) = -hrlBb3 (1 / 5 + j) := by
-  simp only [hrlLd3, polyHorner]; unfold hrlBb3; ring
 
 theorem hrl_St_face3 (x : ℝ) : hrlSt3 (3 / 8) x = hrlCF3 x := by
   unfold hrlSt3 hrlCF3; ring
 
-theorem hrl_St_h4 (h j : ℝ) : hrlSt4 ((1 - h) / 2) (h + j) = polyHorner (hrlL4 j) h := by
-  simp only [hrlL4, polyHorner]; unfold hrlSt4; ring
-
-theorem hrl_L_d4 (j s : ℝ) : HasDerivAt (polyHorner (hrlL4 j)) (polyHorner (hrlLd4 j) s) s := by
-  have H := poly_hasDerivAt_horner (hrlL4 j) s
-  have e : polyHornerD (hrlL4 j) s = polyHorner (hrlLd4 j) s := by
-    simp only [hrlL4, hrlLd4, polyHornerD, polyHorner]; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_d4 (j s : ℝ) :
-    HasDerivAt (polyHorner (hrlLd4 j)) (-hrlR4 ((1 - s) / 2) (s + j)) s := by
-  have H := poly_hasDerivAt_horner (hrlLd4 j) s
-  have e : polyHornerD (hrlLd4 j) s = -hrlR4 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd4, polyHornerD, polyHorner]; unfold hrlR4; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_fifth4 (j : ℝ) : polyHorner (hrlLd4 j) (1 / 5) = -hrlBb4 (1 / 5 + j) := by
-  simp only [hrlLd4, polyHorner]; unfold hrlBb4; ring
-
 theorem hrl_St_face4 (x : ℝ) : hrlSt4 (3 / 8) x = hrlCF4 x := by
   unfold hrlSt4 hrlCF4; ring
-
-theorem hrl_St_h5 (h j : ℝ) : hrlSt5 ((1 - h) / 2) (h + j) = polyHorner (hrlL5 j) h := by
-  simp only [hrlL5, polyHorner]; unfold hrlSt5; ring
-
-theorem hrl_L_d5 (j s : ℝ) : HasDerivAt (polyHorner (hrlL5 j)) (polyHorner (hrlLd5 j) s) s := by
-  have H := poly_hasDerivAt_horner (hrlL5 j) s
-  have e : polyHornerD (hrlL5 j) s = polyHorner (hrlLd5 j) s := by
-    simp only [hrlL5, hrlLd5, polyHornerD, polyHorner]; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_d5 (j s : ℝ) :
-    HasDerivAt (polyHorner (hrlLd5 j)) (-hrlR5 ((1 - s) / 2) (s + j)) s := by
-  have H := poly_hasDerivAt_horner (hrlLd5 j) s
-  have e : polyHornerD (hrlLd5 j) s = -hrlR5 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd5, polyHornerD, polyHorner]; unfold hrlR5; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_fifth5 (j : ℝ) : polyHorner (hrlLd5 j) (1 / 5) = -hrlBb5 (1 / 5 + j) := by
-  simp only [hrlLd5, polyHorner]; unfold hrlBb5; ring
 
 theorem hrl_St_face5 (x : ℝ) : hrlSt5 (3 / 8) x = hrlCF5 x := by
   unfold hrlSt5 hrlCF5; ring
 
-theorem hrl_St_h6 (h j : ℝ) : hrlSt6 ((1 - h) / 2) (h + j) = polyHorner (hrlL6 j) h := by
-  simp only [hrlL6, polyHorner]; unfold hrlSt6; ring
-
-theorem hrl_L_d6 (j s : ℝ) : HasDerivAt (polyHorner (hrlL6 j)) (polyHorner (hrlLd6 j) s) s := by
-  have H := poly_hasDerivAt_horner (hrlL6 j) s
-  have e : polyHornerD (hrlL6 j) s = polyHorner (hrlLd6 j) s := by
-    simp only [hrlL6, hrlLd6, polyHornerD, polyHorner]; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_d6 (j s : ℝ) :
-    HasDerivAt (polyHorner (hrlLd6 j)) (-hrlR6 ((1 - s) / 2) (s + j)) s := by
-  have H := poly_hasDerivAt_horner (hrlLd6 j) s
-  have e : polyHornerD (hrlLd6 j) s = -hrlR6 ((1 - s) / 2) (s + j) := by
-    simp only [hrlLd6, polyHornerD, polyHorner]; unfold hrlR6; ring
-  rw [e] at H; exact H
-
-theorem hrl_Ld_fifth6 (j : ℝ) : polyHorner (hrlLd6 j) (1 / 5) = -hrlBb6 (1 / 5 + j) := by
-  simp only [hrlLd6, polyHorner]; unfold hrlBb6; ring
-
 theorem hrl_St_face6 (x : ℝ) : hrlSt6 (3 / 8) x = hrlCF6 x := by
   unfold hrlSt6 hrlCF6; ring
 
-/-! ### The reduction in `h` -/
+private theorem scale_row0_link (h j : ℝ) :
+    128 * hrlSt0 ((1 - h) / 2) (h + j) = HighRatioScale.row0 h j := by
+  unfold hrlSt0 HighRatioScale.row0
+  ring
 
-/-- **`S` decreases in `h`** at fixed `j, y`, so `S(h, j, y) ≥ S(1/4, j, y)`: `∂_hS` is
-decreasing on `[1/5, 1/4]` (`hrl_R_pos`) and negative at `h = 1/5` (`hrl_B_pos`). -/
-theorem hrl_h_reduce {h j y : ℝ} (h1 : 1 / 5 ≤ h) (h2 : h ≤ 1 / 4) (hj0 : 1 / 30 ≤ j)
-    (hj1 : j ≤ 5 / 28) (hy0 : 0 ≤ y) (hy1 : y ≤ 1 / 4) :
-    polyHorner (hrlL0 j) (1 / 4) + polyHorner (hrlL1 j) (1 / 4) * y + polyHorner (hrlL2 j) (1 / 4) * y ^ (2 : ℕ) + polyHorner (hrlL3 j) (1 / 4) * y ^ (3 : ℕ) + polyHorner (hrlL4 j) (1 / 4) * y ^ (4 : ℕ) + polyHorner (hrlL5 j) (1 / 4) * y ^ (5 : ℕ) + polyHorner (hrlL6 j) (1 / 4) * y ^ (6 : ℕ) ≤ polyHorner (hrlL0 j) h + polyHorner (hrlL1 j) h * y + polyHorner (hrlL2 j) h * y ^ (2 : ℕ) + polyHorner (hrlL3 j) h * y ^ (3 : ℕ) + polyHorner (hrlL4 j) h * y ^ (4 : ℕ) + polyHorner (hrlL5 j) h * y ^ (5 : ℕ) + polyHorner (hrlL6 j) h * y ^ (6 : ℕ) := by
-  have dG : ∀ s, HasDerivAt (fun s => polyHorner (hrlL0 j) s + polyHorner (hrlL1 j) s * y + polyHorner (hrlL2 j) s * y ^ (2 : ℕ) + polyHorner (hrlL3 j) s * y ^ (3 : ℕ) + polyHorner (hrlL4 j) s * y ^ (4 : ℕ) + polyHorner (hrlL5 j) s * y ^ (5 : ℕ) + polyHorner (hrlL6 j) s * y ^ (6 : ℕ)) (polyHorner (hrlLd0 j) s + polyHorner (hrlLd1 j) s * y + polyHorner (hrlLd2 j) s * y ^ (2 : ℕ) + polyHorner (hrlLd3 j) s * y ^ (3 : ℕ) + polyHorner (hrlLd4 j) s * y ^ (4 : ℕ) + polyHorner (hrlLd5 j) s * y ^ (5 : ℕ) + polyHorner (hrlLd6 j) s * y ^ (6 : ℕ)) s := fun s =>
-    (((((((hrl_L_d0 j s).add ((hrl_L_d1 j s).mul_const y)).add ((hrl_L_d2 j s).mul_const (y ^ (2 : ℕ)))).add
-      ((hrl_L_d3 j s).mul_const (y ^ (3 : ℕ)))).add ((hrl_L_d4 j s).mul_const (y ^ (4 : ℕ)))).add
-      ((hrl_L_d5 j s).mul_const (y ^ (5 : ℕ)))).add ((hrl_L_d6 j s).mul_const (y ^ (6 : ℕ))))
-  have dG1 : ∀ s, HasDerivAt (fun s => polyHorner (hrlLd0 j) s + polyHorner (hrlLd1 j) s * y + polyHorner (hrlLd2 j) s * y ^ (2 : ℕ) + polyHorner (hrlLd3 j) s * y ^ (3 : ℕ) + polyHorner (hrlLd4 j) s * y ^ (4 : ℕ) + polyHorner (hrlLd5 j) s * y ^ (5 : ℕ) + polyHorner (hrlLd6 j) s * y ^ (6 : ℕ))
-      (-(hrlR0 ((1 - s) / 2) (s + j) + hrlR1 ((1 - s) / 2) (s + j) * y
-        + hrlR2 ((1 - s) / 2) (s + j) * y ^ (2 : ℕ) + hrlR3 ((1 - s) / 2) (s + j) * y ^ (3 : ℕ)
-        + hrlR4 ((1 - s) / 2) (s + j) * y ^ (4 : ℕ) + hrlR5 ((1 - s) / 2) (s + j) * y ^ (5 : ℕ)
-        + hrlR6 ((1 - s) / 2) (s + j) * y ^ (6 : ℕ))) s := fun s =>
-    ((((((((hrl_Ld_d0 j s).add ((hrl_Ld_d1 j s).mul_const y)).add ((hrl_Ld_d2 j s).mul_const (y ^ (2 : ℕ)))).add
-      ((hrl_Ld_d3 j s).mul_const (y ^ (3 : ℕ)))).add ((hrl_Ld_d4 j s).mul_const (y ^ (4 : ℕ)))).add
-      ((hrl_Ld_d5 j s).mul_const (y ^ (5 : ℕ)))).add ((hrl_Ld_d6 j s).mul_const (y ^ (6 : ℕ)))).congr_deriv (by ring))
-  have neg2 : ∀ s, 1 / 5 ≤ s → s ≤ 1 / 4 →
-      -(hrlR0 ((1 - s) / 2) (s + j) + hrlR1 ((1 - s) / 2) (s + j) * y
-        + hrlR2 ((1 - s) / 2) (s + j) * y ^ (2 : ℕ) + hrlR3 ((1 - s) / 2) (s + j) * y ^ (3 : ℕ)
-        + hrlR4 ((1 - s) / 2) (s + j) * y ^ (4 : ℕ) + hrlR5 ((1 - s) / 2) (s + j) * y ^ (5 : ℕ)
-        + hrlR6 ((1 - s) / 2) (s + j) * y ^ (6 : ℕ)) ≤ 0 := fun s s1 s2 => by
-    have := hrl_R_pos (t := (1 - s) / 2) (x := s + j) (by linarith) (by linarith) (by linarith)
-      (by linarith) hy0 hy1
-    linarith
-  have g1 : polyHorner (hrlLd0 j) (1 / 5) + polyHorner (hrlLd1 j) (1 / 5) * y + polyHorner (hrlLd2 j) (1 / 5) * y ^ (2 : ℕ) + polyHorner (hrlLd3 j) (1 / 5) * y ^ (3 : ℕ) + polyHorner (hrlLd4 j) (1 / 5) * y ^ (4 : ℕ) + polyHorner (hrlLd5 j) (1 / 5) * y ^ (5 : ℕ) + polyHorner (hrlLd6 j) (1 / 5) * y ^ (6 : ℕ) < 0 := by
-    rw [hrl_Ld_fifth0, hrl_Ld_fifth1, hrl_Ld_fifth2, hrl_Ld_fifth3, hrl_Ld_fifth4, hrl_Ld_fifth5,
-      hrl_Ld_fifth6]
-    have := hrl_B_pos (x := 1 / 5 + j) (by linarith) (by linarith) hy0 hy1
-    linarith
-  have neg1 : ∀ s, 1 / 5 ≤ s → s ≤ 1 / 4 → polyHorner (hrlLd0 j) s + polyHorner (hrlLd1 j) s * y + polyHorner (hrlLd2 j) s * y ^ (2 : ℕ) + polyHorner (hrlLd3 j) s * y ^ (3 : ℕ) + polyHorner (hrlLd4 j) s * y ^ (4 : ℕ) + polyHorner (hrlLd5 j) s * y ^ (5 : ℕ) + polyHorner (hrlLd6 j) s * y ^ (6 : ℕ) ≤ 0 := fun s s1 s2 => by
-    have := poly_anti dG1 neg2 le_rfl s1 s2
-    linarith
-  exact poly_anti dG neg1 h1 h2 le_rfl
+private theorem scale_row1_link (h j : ℝ) :
+    128 * hrlSt1 ((1 - h) / 2) (h + j) = HighRatioScale.row1 h j := by
+  unfold hrlSt1 HighRatioScale.row1
+  ring
+
+private theorem scale_row2_link (h j : ℝ) :
+    128 * hrlSt2 ((1 - h) / 2) (h + j) = HighRatioScale.row2 h j := by
+  unfold hrlSt2 HighRatioScale.row2
+  ring
+
+private theorem scale_row3_link (h j : ℝ) :
+    128 * hrlSt3 ((1 - h) / 2) (h + j) = HighRatioScale.row3 h j := by
+  unfold hrlSt3 HighRatioScale.row3
+  ring
+
+private theorem scale_row4_link (h j : ℝ) :
+    128 * hrlSt4 ((1 - h) / 2) (h + j) = HighRatioScale.row4 h j := by
+  unfold hrlSt4 HighRatioScale.row4
+  ring
+
+private theorem scale_row5_link (h j : ℝ) :
+    128 * hrlSt5 ((1 - h) / 2) (h + j) = HighRatioScale.row5 h j := by
+  unfold hrlSt5 HighRatioScale.row5
+  ring
+
+private theorem scale_row6_link (h j : ℝ) :
+    128 * hrlSt6 ((1 - h) / 2) (h + j) = HighRatioScale.row6 h j := by
+  unfold hrlSt6 HighRatioScale.row6
+  ring
+
+theorem hrl_scale_link (h j y : ℝ) :
+    128 * hrlS ((1 - h) / 2) (h + j) (1 + y) = HighRatioScale.value h j y := by
+  rw [hrl_S_split]
+  unfold HighRatioScale.value
+  linear_combination scale_row0_link h j + y * scale_row1_link h j +
+    y ^ 2 * scale_row2_link h j + y ^ 3 * scale_row3_link h j +
+    y ^ 4 * scale_row4_link h j + y ^ 5 * scale_row5_link h j + y ^ 6 * scale_row6_link h j
+
+theorem hrl_h_reduce {h j y : ℝ} (h0 : 1 / 5 ≤ h) (h1 : h ≤ 1 / 4)
+    (j0 : 1 / 30 ≤ j) (j1 : j ≤ 5 / 28) (y0 : 0 ≤ y) (y1 : y ≤ 1 / 4) :
+    hrlS (3 / 8) (1 / 4 + j) (1 + y) ≤ hrlS ((1 - h) / 2) (h + j) (1 + y) := by
+  have he0 := hrl_scale_link (1 / 4) j y
+  have he1 := hrl_scale_link h j y
+  have hm := HighRatioScale.scale_reduce h0 h1 j0 (by linarith only [j1]) y0 y1
+  norm_num only at he0
+  linarith only [he0, he1, hm]
+
+private theorem hrl_face_link (x y : ℝ) : hrlS (3 / 8) x (1 + y) = hrlP x y := by
+  rw [hrl_S_split, hrl_St_face0, hrl_St_face1, hrl_St_face2, hrl_St_face3, hrl_St_face4,
+    hrl_St_face5, hrl_St_face6]
+  unfold hrlP
+  ring
 
 /-- **The high-ratio lower-shape sign**: on the high-ratio
 large-gap domain, the combined residual at `k₀ = 29t²/4` with `v_G`, `L₊`, `F_ℓ` is positive. The
@@ -460,24 +280,16 @@ theorem hrl_lower_pos {t x q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj : 
   have hy : (q - 1) * (1 + 2 * (2 * t + x - 1)) ≤ (1 - 2 * t) - (2 * t + x - 1) := by nlinarith
   have hy1 : q - 1 ≤ 1 / 4 := by nlinarith
   have hS : 0 < hrlS t x q := by
-    have e1 : hrlS t x q = hrlS t x (1 + (q - 1)) := by ring_nf
-    have split := hrl_S_split t x (q - 1)
-    have eh : ∀ i : ℕ, True := fun _ => trivial
-    have ht : t = (1 - (1 - 2 * t)) / 2 := by ring
-    have hxx : x = (1 - 2 * t) + (2 * t + x - 1) := by ring
-    rw [e1, split]
-    rw [ht, hxx, hrl_St_h0, hrl_St_h1, hrl_St_h2, hrl_St_h3, hrl_St_h4, hrl_St_h5, hrl_St_h6]
-    have red := hrl_h_reduce (h := 1 - 2 * t) (j := 2 * t + x - 1) (y := q - 1) (by linarith)
-      (by linarith) hj (by linarith) (by linarith) hy1
-    rw [← hrl_St_h0, ← hrl_St_h1, ← hrl_St_h2, ← hrl_St_h3, ← hrl_St_h4, ← hrl_St_h5,
-      ← hrl_St_h6] at red
-    norm_num only at red
-    rw [hrl_St_face0, hrl_St_face1, hrl_St_face2, hrl_St_face3, hrl_St_face4, hrl_St_face5,
-      hrl_St_face6] at red
-    have face := hrl_face (x := 1 / 4 + (2 * t + x - 1)) (y := q - 1) (by linarith) (by linarith)
-      (by linarith) (by nlinarith)
-    unfold hrlP at face
-    linarith
+    have red := hrl_h_reduce (h := 1 - 2 * t) (j := 2 * t + x - 1) (y := q - 1)
+      (by linarith only [ht1]) (by linarith only [ht0]) hj
+      (by linarith only [ht0, hjh]) (by linarith only [hq]) hy1
+    have he : hrlS ((1 - (1 - 2 * t)) / 2) (1 - 2 * t + (2 * t + x - 1)) (1 + (q - 1)) =
+        hrlS t x q := by congr 1 <;> ring
+    rw [he, hrl_face_link] at red
+    have face := hrl_face (x := 1 / 4 + (2 * t + x - 1)) (y := q - 1)
+      (by linarith only [hj]) (by linarith only [ht0, hjh])
+      (by linarith only [hq]) (by nlinarith only [hy, ht0])
+    linarith only [red, face]
   rw [← hrl_link t x q hq0 hx] at hS
   have hL : 0 < nsfComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (hrlVL t x) (nsrLp q) (nsrFl t x q) :=
     pos_of_mul_pos_right hS (by positivity)

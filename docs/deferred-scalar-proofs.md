@@ -3,7 +3,6 @@
 These tasks concern analytic replacements for scalar proof steps. The existing Lean proofs
 remain in use. Group numbers retain their previous numbering.
 
-30. Mixed forward high-ratio scale reduction: replace the fitted derivative bounds.
 34. S0 central and outer shape signs and auxiliary ceilings.
 35. S1 central and outer Casimir face signs.
 36. S2 central and outer ratio face signs.

@@ -80,7 +80,9 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Clearing
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.EventFactor
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.EventFactor.Barrier
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape.Derivatives
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape.Scale
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape.Scale.Bounds
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape.Scale.Polynomial
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape.TerminalFace
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.Shape
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LargeGap
