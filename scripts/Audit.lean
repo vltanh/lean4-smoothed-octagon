@@ -101,7 +101,11 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Monomials
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Monotone
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.OuterFace
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Scale.Duration
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Scale.InitialSlope
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Scale.Polynomial
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Scale.Slope
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Scale.SlopeBounds
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Scale.SlopeData
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Scale.SlopePolynomial
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Scale.Zero
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Shape

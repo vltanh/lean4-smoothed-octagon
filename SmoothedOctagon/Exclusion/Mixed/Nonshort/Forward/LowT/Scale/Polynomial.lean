@@ -211,4 +211,16 @@ theorem duration_third (h j y : ℝ) :
     Polynomial.derivative_pow]
   ring
 
+theorem boundary_eq (h j : ℝ) (hd : 1 + 2 * j ≠ 0) :
+    (1 + 2 * j) ^ 6 * value h j ((h - j) / (1 + 2 * j)) = boundary h j := by
+  norm_num [value, boundary, Fin.sum_univ_succ]
+  field_simp
+
+theorem boundaryDerivative_eq (h j : ℝ) (hd : 1 + 2 * j ≠ 0) :
+    (1 + 2 * j) ^ 5 * (durationPolynomial h j).derivative.eval ((h - j) / (1 + 2 * j)) =
+      boundaryDerivative h j := by
+  norm_num [durationPolynomial, boundaryDerivative, Fin.sum_univ_succ,
+    Polynomial.derivative_mul, Polynomial.derivative_pow]
+  field_simp
+
 end SmoothedOctagon.LowTScale
