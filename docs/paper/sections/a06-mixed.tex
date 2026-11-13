@@ -1575,8 +1575,8 @@ The $v$-coefficient of $\mathcal H$ is negative. We may therefore replace $v$ by
  \qquad T_L=\frac{912-401x}{24(17x+76)},
 \]
 which exceeds $v_G$, and replace $\log q$ by $L_+$ and $F$ by $F_\ell$.
-The resulting residual remains negative. We show that it is positive by first
-lowering the shape to $k=1$ and then treating that boundary.
+The resulting residual remains negative. Write $G(k)=4qW^2\mathcal H$ for this
+relaxed residual. We show that $G>0$ by first lowering the shape to $k=1$ and then treating that boundary.
 
 For the shape comparison, write
 \[
@@ -1584,7 +1584,7 @@ For the shape comparison, write
            \left(\frac12-\frac{7x}{24}-t\right),
  \qquad L_b=y-\frac5{12}y^2.
 \]
-The derivative at the midpoint of two shapes is affine in $v$, $\log q$ and $k$,
+The derivative of the cleared residual at the midpoint of two shapes is affine in $v$, $\log q$ and $k$,
 with nonpositive coefficients. Since $V_L<V_b$ and $L_+\le L_b$, it suffices to
 check this derivative at $(k,v,L)=(o,V_b,L_b)$.
 Its value is $q^2Q(t,x,y)/(12W)$, where $Q=\sum_{i=0}^4Q_i(t,x)y^i$.
@@ -1626,11 +1626,95 @@ $E(h,j)\ge f(h)\ge1$.
 This proves $Q(t,x,b)>0$. Concavity between $y=0$ and $y=b$ now gives $Q>0$
 throughout the duration interval. The residual consequently increases with $k$.
 
-At $k=1$, a positive multiple $S$ of the residual is a polynomial in $(h,j,y)$.
+At $k=1$, the positive multiple
+\[
+ S(h,j,y)=24(q+1)W(17x+76)G(1)
+\]
+is a polynomial in $(h,j,y)$, with $t=(1-h)/2$, $x=h+j$ and $q=1+y$.
 It increases with $h$ at fixed $(j,y)$: a cubic Taylor bound from
 $\partial_h^4S\ge500000$ and two derivative signs at $h=\frac14$ give $\partial_hS>0$.
 It therefore suffices to check the three faces $h=\frac14$, $j=\frac57h$ and $y=b$.
-On these faces, shifted monomial bounds give $S>0$.
+
+On the initial face, write
+\[
+ P_x(y)=1536S(1/4,x-1/4,y)=\sum_{i=0}^6 C_i(x)y^i,
+ \qquad \frac{17}{60}\le x\le\frac37.
+\]
+Here $0\le y\le b=(1-2x)/(1+4x)\le13/64$.
+The coefficient estimates
+\[
+ C_4\ge0,\qquad C_5\ge-144000000x,\qquad C_6\ge-6100000x
+\]
+absorb the last three terms into the cubic, giving
+\[
+ P_x(y)\ge C_0+C_1y+C_2y^2+B y^3,
+ \qquad B=C_3-6000000x\ge0.
+\]
+The further bounds are
+\[
+ B+4C_2\ge-250000,\qquad C_1\ge C_2/4,\qquad C_0>0.
+\]
+If $C_2\ge0$, these inequalities already prove $P_x(y)>0$.
+If $C_2<0$, use the square identity
+\[
+ (1-6y)^2(1+12y)=1-108y^2+432y^3
+\]
+to obtain
+\begin{align*}
+ C_2y^2+B y^3
+ &=\frac{C_2}{108}-\frac{C_2}{108}(1-6y)^2(1+12y)+(B+4C_2)y^3\\
+ &\ge\frac{C_2}{108}-250000y^3.
+\end{align*}
+Thus only an affine function of the duration remains to be bounded below.
+
+Put
+\[
+ R_0=C_0+C_2/108,\qquad
+ Q_b=(1+4x)R_0+(1-2x)C_1.
+\]
+Quadratic Taylor bounds give $R_0\ge23000$ throughout the initial face and
+$Q_b\ge7500$ for $x\le1/3$.
+For $x\ge1/3$, one has $C_1\ge-125000$ and $b\le1/7$.
+Consequently the affine function $L(y)=R_0+C_1y$ satisfies
+\[
+ L(0)\ge23000,\qquad
+ L(b)\ge
+ \begin{cases}
+  7500/(1+4x)>3000,&x\le1/3,\\
+  23000-125000/7>3000,&x\ge1/3.
+ \end{cases}
+\]
+It follows that $L(y)\ge3000$ on $[0,b]$.
+Since $250000(13/64)^3<2500$, we obtain $P_x(y)>500$ in the case $C_2<0$.
+This proves positivity on the initial face.
+
+The three Taylor estimates used here have the form
+\[
+ f(x)\ge f(a)+f'(a)(x-a)+c(x-a)^2,
+\]
+with
+\[
+\begin{array}{c|c|c|c}
+ f&a&|x-a|\text{ at most}&c\\ \hline
+ C_0&2/5&1/8&4\cdot10^6\\
+ R_0&3/8&1/10&5\cdot10^6\\
+ Q_b&7/24&1/24&20\cdot10^6
+\end{array}
+\]
+and the last line restricted to $x\le1/3$.
+They follow by expanding at $a$ and bounding each higher power by
+$|x-a|^{n+2}\le r^n(x-a)^2$, where $r$ is the indicated radius.
+At the three expansion points,
+\begin{align*}
+ C_0(2/5)&>25000,& |C_0'(2/5)|&<540000,\\
+ R_0(3/8)&>24000,& |R_0'(3/8)|&<80000,\\
+ Q_b(7/24)&>7900,& |Q_b'(7/24)|&<120000.
+\end{align*}
+Completing the square gives the stated floors.
+The other coefficient estimates use $0\le x-17/60\le3/20$ and the power comparison
+$z^{m+1}\le3z^m/20$. The lower bound for $C_1$ on $x\ge1/3$ uses
+$0\le x-1/3\le1/10$. The bound for $C_6+6100000x$ follows from concavity and its two endpoint values.
+On the outer and maximum-duration faces, shifted monomial bounds give $S>0$ as well.
 
 For $\frac38\le t<\frac25$, take $\alpha=4$, $M=1$ and $v\mapsto v_G$.
 The residual increases in $k$ on $(\frac{29}4t^2,o)$, by the
