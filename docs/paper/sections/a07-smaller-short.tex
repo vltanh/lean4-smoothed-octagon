@@ -2613,6 +2613,41 @@ $F_1$, concavity in $\beta$ and in $u\in[3/4,19/25]$ reduce to the four constant
 $(\frac{\beta-x}{\alpha-1},u)\in\{\frac12,\frac{10}{13}\}\times\{\frac34,\frac{19}{25}\}$, the
 second derivative in $1/\alpha$ is less than $-11/800$, and the two shape ends give
 $F_1\ge1597/144000000$.
+To justify the last beta-concavity step, put
+\begin{gather*}
+ S=x+1,\qquad K=6\alpha^2+1,\qquad D_0=(\alpha+1)(2x+1-\alpha),\\
+ J=K\left(S(u-1)+\frac1S\right)+2S-1.
+\end{gather*}
+The coefficient governing the reciprocal beta term is
+\[
+ w_0=\frac{K^2-SK+S^2+uD_0^2-D_0J}{49\alpha^4}.
+\]
+It decreases in $u$, so raise $u$ to $19/25$. At that norm, write
+$1225S w_0=c_0+c_1r+c_2r^2+c_3r^3+c_4r^4$, where $r=1/\alpha\ge5/6$.
+The nonconstant coefficients are
+\begin{align*}
+ c_1&=4x(18x^2+17x-76),&
+ c_2&=x(148x^2+74x-207)+42,\\
+ c_3&=2x(32x^2+51x-6),&
+ c_4&=x(13x^2+32x-6).
+\end{align*}
+For $x\ge3/2$, we have $c_2,c_3,c_4\ge0$ and
+\[
+ c_1+\frac53c_2
+ =\frac{956}3x\left(x^2-\frac94\right)
+   +\frac{574}3x^2+68x+70>0.
+\]
+Thus the linear and quadratic terms increase together from $r=5/6$:
+\[
+ c_1\left(r-\frac56\right)+c_2\left(r^2-\frac{25}{36}\right)
+ =\left(r-\frac56\right)\left[c_1+c_2\left(r+\frac56\right)\right]\ge0.
+\]
+The cubic and quartic increments are nonnegative separately. At $r=5/6$,
+the divided difference in $x$ has a positive quadratic numerator, so
+$w_0(x,6/5,19/25)\ge w_0(3/2,6/5,19/25)>8/9$.
+Hence $w_0>8/9>6/7$ throughout this small-shape branch, which gives the
+required concavity in $\beta$.
+
 \end{proof}
 
 \begin{proposition}[Faces of gate S2]\label{prop:ss-face-S2}

@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.Shapes
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Norm
 
 /-!
 # Smaller-short window, lower ratio, outer face, small shapes: the test `F₁`
@@ -8,8 +8,8 @@ public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.
 On `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `6α² ≥ x(x + 2)`,
 `1/2 ≤ C ≤ 10/13`, `3/4 ≤ u ≤ 19/25`:
 
-* `w₀ > 6/7` (its value at `u = 19/25` minus `6/7` has a positive numerator, and `w₀` decreases
-  in `u`), so `β ↦ F₁` is concave and `C ∈ {1/2, 10/13}`;
+* `w₀ > 8/9` by the norm comparison and the two shape/ratio increments
+  (`SmallShape/Norm`), so `β ↦ F₁` is concave and `C ∈ {1/2, 10/13}`;
 * norm concavity gives `u ∈ {3/4, 19/25}`;
 * the reciprocal-shape curvature is at most `5b₃ + 2b₂ + 21/800 < 0` on `r ∈ [5/6, 1]`
   (residue `Q < 0`), so `α` is `6/5` or the lower shape `α_*(x) = 1` (`x ≤ 5/3`),
@@ -29,32 +29,6 @@ termwise.
 namespace SmoothedOctagon
 
 open Set Real
-
-/-- `N(3/2 + z, 6/5 - c)/1225`, where `w₀(x, α, 19/25) - 6/7 = N/(1225α⁴(x + 1))`. -/
-noncomputable def lrPwN (c z : ℝ) : ℝ :=
-  -36 / 1225 * c ^ 4 * z ^ 2 - 311 / 1225 * c ^ 4 * z - 23 / 70 * c ^ 4 - 72 / 1225 * c ^ 3 * z ^ 3 - 1096 / 6125 * c ^ 3 * z ^ 2 + 5534 / 6125 * c ^ 3 * z + 1992 / 1225 * c ^ 3 + 2036 / 6125 * c ^ 2 * z ^ 3 + 6572 / 4375 * c ^ 2 * z ^ 2 - 7086 / 30625 * c ^ 2 * z - 32961 / 12250 * c ^ 2 - 2608 / 4375 * c * z ^ 3 - 451326 / 153125 * c * z ^ 2 - 334686 / 153125 * c * z + 82989 / 61250 * c + 7631 / 21875 * z ^ 3 + 2783533 / 1531250 * z ^ 2 + 6328071 / 3062500 * z + 253971 / 1225000
-
-theorem lrPwN_pos {c z : ℝ} (hc0 : 0 ≤ c) (hc1 : c ≤ (1 / 5 : ℝ)) (hz0 : 0 ≤ z) (hz1 : z ≤ (1 / 2 : ℝ)) :
-    (0 : ℝ) < lrPwN c z := by
-  unfold lrPwN
-  nlinarith [(by positivity : (0 : ℝ) ≤ z),
-    (by positivity : (0 : ℝ) ≤ z ^ 2),
-    (by positivity : (0 : ℝ) ≤ z ^ 3),
-    mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ z),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ c),
-    mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ z ^ 2),
-    mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ z ^ 3),
-    mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ c),
-    mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ c * z),
-    (by positivity : (0 : ℝ) ≤ c ^ 2 * z ^ 2),
-    (by positivity : (0 : ℝ) ≤ c ^ 2 * z ^ 3),
-    (by positivity : (0 : ℝ) ≤ c ^ 3),
-    (by positivity : (0 : ℝ) ≤ c ^ 3 * z),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ c ^ 3 * z),
-    mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ c ^ 2 * z ^ 3),
-    mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ c ^ 3),
-    mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ c ^ 3 * z),
-    mul_le_mul_of_nonneg_left hc1 (by positivity : (0 : ℝ) ≤ c ^ 3 * z ^ 2)]
 
 theorem lro_B_Q_hf_num {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ (1 / 2 : ℝ)) :
     (0 : ℝ) < -z ^ 6 - 125 / 24 * z ^ 5 - 191 / 48 * z ^ 4 + 641 / 48 * z ^ 3 + 2425 / 96 * z ^ 2 + 727 / 48 * z + 1237 / 384 := by
@@ -820,22 +794,10 @@ theorem lro_B_T1_v {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (5 / 3 : ℝ
   linarith
 
 /-- `w₀ > 6/7` on the small shapes. -/
-theorem lro_B_w0 {x a u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 ≤ a) (ha2 : a ≤ 6 / 5)
+theorem lro_B_w0 {x a u : ℝ} (hx : 3 / 2 ≤ x) (_hx2 : x ≤ 2) (ha1 : 1 ≤ a) (ha2 : a ≤ 6 / 5)
     (hu : u ≤ 19 / 25) : 6 / 7 < lrow0 x a u := by
-  have ha0 : 0 < a := by linarith
-  have hx0 : 0 < x := by linarith
-  have h1 := lro_w0_diff' (u := u) (u' := 19 / 25) hx0 ha0
-  have hid : lrow0 x a (19 / 25) - 6 / 7 = lrPwN (6 / 5 - a) (x - 3 / 2) / (a ^ 4 * (x + 1)) := by
-    simp only [lrow0, lroM, lroJ, lroK, ssE0, lroD0, lrPwN]
-    field_simp
-    ring
-  have hP := lrPwN_pos (c := 6 / 5 - a) (z := x - 3 / 2) (by linarith) (by linarith) (by linarith)
-    (by linarith)
-  obtain ⟨hD0, hD1⟩ := lro_KS_D0 ha1 (by linarith : a ≤ x)
-  have h2 : 0 ≤ (19 / 25 - u) * lroD0 x a * (lroK a * (1 + x) - lroD0 x a) / (49 * a ^ 4) :=
-    div_nonneg (mul_nonneg (mul_nonneg (by linarith) hD0.le) (by linarith)) (by positivity)
-  have h3 : 0 < lrPwN (6 / 5 - a) (x - 3 / 2) / (a ^ 4 * (x + 1)) := div_pos hP (by positivity)
-  linarith
+  have h := lro_small_shape_w0 hx ha1 ha2 hu
+  linarith only [h]
 
 /-- **Reciprocal-shape concavity of `F₁` on the small shapes**. -/
 theorem lro_B_recip {x a aS C u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (haS1 : 1 ≤ aS) (haS : aS ≤ a)
