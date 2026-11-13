@@ -1,6 +1,6 @@
 module
 
-public import Mathlib.Analysis.Calculus.Deriv.Polynomial
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Analysis
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Horner
 
 /-!
@@ -103,37 +103,6 @@ private theorem gap_deriv_eval (h j : ℝ) : (gapPoly h).derivative.eval j = gap
     Polynomial.derivative_mul, Polynomial.derivative_pow]
   ring
 
-/-- A concave derivative that starts nonnegative permits an interior maximum,
-but no interior minimum below both endpoint values. -/
-private theorem endpoint_floor {p : Polynomial ℝ} {a b m x : ℝ}
-    (hx0 : a ≤ x) (hx1 : x ≤ b)
-    (h3 : ∀ s, a ≤ s → s ≤ b → p.derivative.derivative.derivative.eval s ≤ 0)
-    (hda : 0 ≤ p.derivative.eval a) (ha : m ≤ p.eval a) (hb : m ≤ p.eval b) :
-    m ≤ p.eval x := by
-  have anti2 {s t : ℝ} (hs : a ≤ s) (hst : s ≤ t) (ht : t ≤ b) :
-      p.derivative.derivative.eval t ≤ p.derivative.derivative.eval s :=
-    poly_anti (fun v => p.derivative.derivative.hasDerivAt v) h3 hs hst ht
-  have stays {s t : ℝ} (hs : a ≤ s) (hst : s ≤ t) (ht : t ≤ b)
-      (hneg : p.derivative.eval s < 0) : p.derivative.eval t ≤ 0 := by
-    have sd : p.derivative.derivative.eval s < 0 := by
-      by_contra hc
-      have hp : 0 ≤ p.derivative.derivative.eval s := le_of_not_gt hc
-      have hm := poly_mono (fun v => p.derivative.hasDerivAt v) (a := a) (b := s)
-        (fun v hv0 hvs => hp.trans (anti2 hv0 hvs (hst.trans ht))) le_rfl hs le_rfl
-      linarith only [hm, hda, hneg]
-    have hm := poly_anti (fun v => p.derivative.hasDerivAt v) (a := s) (b := t)
-      (fun v hsv hvt => (anti2 hs hsv (hvt.trans ht)).trans sd.le) le_rfl hst le_rfl
-    exact hm.trans hneg.le
-  by_cases hc : ∃ s, a ≤ s ∧ s ≤ x ∧ p.derivative.eval s < 0
-  · obtain ⟨s, hs, hsx, hneg⟩ := hc
-    have hm := poly_anti (fun v => p.hasDerivAt v) (a := x) (b := b)
-      (fun v hxv hvb => stays hs (hsx.trans hxv) hvb hneg) le_rfl hx1 le_rfl
-    exact hb.trans hm
-  · push Not at hc
-    have hm := poly_mono (fun v => p.hasDerivAt v) (a := a) (b := x)
-      (fun v hav hvx => hc v hav hvx) le_rfl hx0 le_rfl
-    exact ha.trans hm
-
 private theorem slope_first_left {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ 1) :
     0 ≤ (slopePoly z).derivative.eval (1 / 28) := by
   have lo (n : ℕ) : 0 ≤ z ^ n := pow_nonneg hz0 n
@@ -217,7 +186,7 @@ private theorem slope_right_floor {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ 1) :
 
 private theorem slope_nonneg {h z : ℝ} (h0 : 1 / 28 ≤ h) (h1 : h ≤ 1 / 21)
     (hz0 : 0 ≤ z) (hz1 : z ≤ 1) : 0 ≤ boundarySlope h z := by
-  have hf := endpoint_floor (p := slopePoly z) (m := 10000) h0 h1
+  have hf := LowT.polynomial_floor_of_concave_derivative (p := slopePoly z) (m := 10000) h0 h1
     (fun v hv0 hv1 => slope_third_nonpos hv0 hv1 hz0 hz1)
     (slope_first_left hz0 hz1)
     (by rw [slope_eval]; linarith only [slope_left_floor hz0 hz1])
@@ -263,7 +232,7 @@ private theorem base_third_nonpos {h : ℝ} (h0 : 1 / 4 ≤ h) :
 
 private theorem base_floor {h : ℝ} (h0 : 1 / 4 ≤ h) (h1 : h ≤ 1 / 3) :
     50 ≤ face h (1 / 30) := by
-  have hf := endpoint_floor (p := basePoly) (m := 50) h0 h1
+  have hf := LowT.polynomial_floor_of_concave_derivative (p := basePoly) (m := 50) h0 h1
     (fun v hv0 _ => base_third_nonpos hv0)
     (by norm_num [basePoly, face, evaluate, nltPqL, Polynomial.derivative_mul, Polynomial.derivative_pow])
     (by norm_num [basePoly, face, evaluate, nltPqL])
