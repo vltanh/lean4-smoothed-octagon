@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Faces
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.OuterFace
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.MaxDuration
 public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Monotone
 
@@ -51,10 +51,8 @@ theorem nlt_S_pos {h j y : ℝ} (h1 : 1 / 4 ≤ h) (h2 : h ≤ 1 / 3) (j1 : 1 / 
   · rcases le_total (j + (1 + 2 * j) * y) (7 / 5 * j) with cc | cc
     · -- the outer face `h₀ = 7j/5`
       have m := mono (7 / 5 * j) cb (by linarith) le_rfl cc
-      have hy2 : y ≤ 2 / 31 := by
-        by_contra hc; push Not at hc
-        nlinarith [mul_pos (sub_pos.2 hc) (by linarith : (0 : ℝ) < 1 + 2 * j)]
-      have face := nlt_face_outer (x := 7 / 5 * j + j) (y := y) (by linarith) (by linarith) hy0 hy2
+      have face := nlt_face_outer (x := 7 / 5 * j + j) (y := y)
+        (by linarith) (by linarith) hy0 (by nlinarith only [cc])
       have e : (12 - 7 * (7 / 5 * j + j)) / 24 = (1 - 7 / 5 * j) / 2 := by ring
       rw [e, nlt_St_h0, nlt_St_h1, nlt_St_h2, nlt_St_h3, nlt_St_h4, nlt_St_h5, nlt_St_h6] at face
       linarith

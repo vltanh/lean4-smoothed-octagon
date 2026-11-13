@@ -92,13 +92,13 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.UnitShape.B
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.UnitShape.Coefficients
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Circuit
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Curvature
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Faces
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Horner
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.InitialDerivative
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.InitialFace
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.MaxDuration
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Monomials
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Monotone
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.OuterFace
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Shape
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.ShapeBoundary
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.UnitShape
