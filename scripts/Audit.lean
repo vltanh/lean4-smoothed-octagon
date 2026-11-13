@@ -69,6 +69,7 @@ import all SmoothedOctagon.Exclusion.Mixed.Extract.WindowAlg
 import all SmoothedOctagon.Exclusion.Mixed.Extraction
 import all SmoothedOctagon.Exclusion.Mixed.Frames
 import all SmoothedOctagon.Exclusion.Mixed.Horner
+import all SmoothedOctagon.Exclusion.Mixed.Horner.DividedDifference
 import all SmoothedOctagon.Exclusion.Mixed.Interface
 import all SmoothedOctagon.Exclusion.Mixed.Location
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort
@@ -293,6 +294,10 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.Rec
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.Shapes
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallRatio
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallRatio.NormBeta
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Curvature
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Curvature.Corner
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Curvature.Displacement
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Curvature.Norm
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Norm
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Terminal
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Terminal.Calculus
