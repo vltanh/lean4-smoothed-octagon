@@ -125,7 +125,16 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.ScaleStrip
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.ScaleStrip.Monotonicity
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Boundary
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Bounds
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Coordinates
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Cubic
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Jensen
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Leading
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Monotonicity
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Remainder
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Signs
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.UnitShape.Slope
 import all SmoothedOctagon.Exclusion.Mixed.OrderBounds
 import all SmoothedOctagon.Exclusion.Mixed.PolyDeriv
 import all SmoothedOctagon.Exclusion.Mixed.Reflection
