@@ -236,9 +236,7 @@ theorem nsf_window_quarter (W : M2Window) : 1 / 4 < W.nt := by
   have ho := nsf_window_order W
   by_contra h
   push Not at h
-  have hT := nsf_window_T W
-  have hN1 := nsr_low_unit ht h (by linarith) (by linarith [nsr_window_dur_x W]) (by linarith) hT.le
-    hq hv hF
+  have hN1 := nsr_low_unit ht h (by linarith) (by linarith) hq hv hF
   have hL : Real.log W.nq < W.nq - 1 := Real.log_lt_sub_one_of_pos (by linarith) hq.ne'
   have := nsrN_mono_k (k := 1) (k' := W.nk) ht (by linarith) hx hq.le hvU hL hk1.le
   linarith [nsr_window_N_neg W]

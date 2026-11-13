@@ -98,4 +98,49 @@ theorem nsr_low_t_three_eighths {t x k v : ℝ} (ht1 : t < 1 / 2)
   norm_num at hhalf
   linarith only [hhalf, ht0]
 
+/-- `T` is decreasing: for `0 ≤ x_a ≤ x`, `N(x)(x_a + 2)³ ≤ N(x_a)(x + 2)³`,
+`N(z) = -2z³ - z² + 10z + 12`. -/
+theorem nsr_T_anti {xa x t : ℝ} (ha : 0 ≤ xa) (hax : xa ≤ x) (ht : 0 ≤ t)
+    (hT : 3 * (x + 2) ^ 3 * t ≤ -2 * x ^ 3 - x ^ 2 + 10 * x + 12) :
+    3 * (xa + 2) ^ 3 * t ≤ -2 * xa ^ 3 - xa ^ 2 + 10 * xa + 12 := by
+  have hx : 0 ≤ x := le_trans ha hax
+  have hQ : 0 ≤ (x - xa) * (11 * xa ^ 2 * x ^ 2 + 34 * xa ^ 2 * x + 28 * xa ^ 2 + 34 * xa * x ^ 2
+      + 100 * xa * x + 80 * xa + 28 * x ^ 2 + 80 * x + 64) := mul_nonneg (by linarith) (by positivity)
+  have e : (-2 * xa ^ 3 - xa ^ 2 + 10 * xa + 12) * (x + 2) ^ 3 -
+      (-2 * x ^ 3 - x ^ 2 + 10 * x + 12) * (xa + 2) ^ 3 =
+      (x - xa) * (11 * xa ^ 2 * x ^ 2 + 34 * xa ^ 2 * x + 28 * xa ^ 2 + 34 * xa * x ^ 2
+      + 100 * xa * x + 80 * xa + 28 * x ^ 2 + 80 * x + 64) := by ring
+  have h1 : 3 * (x + 2) ^ 3 * t * (xa + 2) ^ 3 ≤ (-2 * x ^ 3 - x ^ 2 + 10 * x + 12) * (xa + 2) ^ 3 :=
+    mul_le_mul_of_nonneg_right hT (by positivity)
+  have h2 : 3 * (xa + 2) ^ 3 * t * (x + 2) ^ 3 ≤ (-2 * xa ^ 3 - xa ^ 2 + 10 * xa + 12) * (x + 2) ^ 3 := by
+    nlinarith
+  have hx3 : 0 < (x + 2) ^ 3 := by positivity
+  nlinarith
+
+
+/-- `v̄ - g = (1 - t)x(N(x) - 3X³t)/(3W²X³)`, `N(x) = -2x³ - x² + 10x + 12`. -/
+theorem nsr_vbar_sub_g {t x : ℝ} (hx : 0 < x) :
+    (nsrVbar t x - (1 - (1 - t) * (t + x) / (1 + x) ^ 2)) * (3 * (1 + x) ^ 2 * (x + 2) ^ 3) =
+      (1 - t) * x * (-2 * x ^ 3 - x ^ 2 + 10 * x + 12 - 3 * (x + 2) ^ 3 * t) := by
+  have h1 : (1 + x) ≠ 0 := by positivity
+  have h2 : (x + 2) ≠ 0 := by positivity
+  unfold nsrVbar
+  field_simp
+  ring
+
+/-- **The secant ceiling**: `v ≥ g_c(d)` and `v < v̄` give `t < T(x)`, i.e.
+`3(x + 2)³t < -2x³ - x² + 10x + 12`. -/
+theorem nsr_t_lt_T {t x v : ℝ} (ht1 : t < 1) (hx : 0 < x) (hv : v = nsrSecN t x)
+    (hg : 1 - (1 - t) * (t + x) / (1 + x) ^ 2 ≤ v) :
+    3 * (x + 2) ^ 3 * t < -2 * x ^ 3 - x ^ 2 + 10 * x + 12 := by
+  have hvb := nsr_secN_lt_vbar hx ht1
+  rw [← hv] at hvb
+  have e := nsr_vbar_sub_g (t := t) hx
+  have h1 : 0 < (nsrVbar t x - (1 - (1 - t) * (t + x) / (1 + x) ^ 2)) * (3 * (1 + x) ^ 2 * (x + 2) ^ 3) :=
+    mul_pos (by linarith) (by positivity)
+  rw [e] at h1
+  have h2 : 0 < (1 - t) * x := mul_pos (by linarith) hx
+  have := pos_of_mul_pos_right h1 h2.le
+  linarith
+
 end SmoothedOctagon

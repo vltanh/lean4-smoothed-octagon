@@ -118,13 +118,13 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.HighRatio.Secant
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.HighRatio.Transport
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Boundary
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Clearing
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Feasibility
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.High
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Incoming
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Margins
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Polynomial
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Quartic
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Signs
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Transport
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Unit
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.NecessaryBounds

@@ -477,9 +477,13 @@ with such a Casimir costs more than $\Aoct$.
 
 \begin{remark}[Small scale]\label{rem:m2-low-scale}
 The same methods exclude every window with $a\le\frac12$, whatever the sign of the successor:
-then $k\ge17t^2$, and
-$N$ can be lowered to $k=1$ or to $k=2t+\frac12$. The proof above needs only the unit face of that
-argument (\cref{lem:m2-low-unit}), which gives $t>1/4$.
+then $k\ge17t^2$. The reciprocal-mean ceiling and the endpoint norm floor give
+$t(x^2+6x+6)<3+x-x^2$. This forces $t<3/8$: otherwise the scale inequality
+and the centre gap give $x>1/2$, while the decreasing quotient
+$(3+x-x^2)/(x^2+6x+6)$ is at most $13/37<3/8$ there.
+If $k\ge2t+x$, the reverse exclusion applies. Otherwise,
+$N$ can be lowered to $k=1$ or to $k=2t+\frac12$, and \cref{lem:m2-low-unit} applies.
+The proof above uses the unit face of that argument to give $t>1/4$.
 \end{remark}
 
 
@@ -1217,27 +1221,203 @@ Coefficient monotonicity transports this positive value to the original $t$.
 Apply \cref{lem:m2-relax} at that point, where the control floor holds, to obtain $N>0$.
 \end{proof}
 
-\begin{lemma}[Low-scale unit face]\label{lem:m2-low-unit}
-If $0<t\le\frac14$, $\frac12<x\le\frac73$, $x\ge1-2t$, $t\le T(x)$, $q>1$,
-$v=\operatorname{Sec}(t,1-t,t+x)$ and $F_{p/W}(q)\le v$, then $N(t,x,1,q,v,\log q)>0$.
+\begin{lemma}[Low-scale faces]\label{lem:m2-low-unit}
+Let $q>1$, $v=\operatorname{Sec}(t,1-t,t+x)$ and $F_{p/W}(q)\le v$.
+Then $N(t,x,k,q,v,\log q)>0$ on either of the following faces:
+\begin{enumerate}
+\item $k=1$, $0<t\le1/4$, $x\ge1/2$ and $2t+x\ge1$;
+\item $k=2t+1/2$, $1/4\le t\le3/8$ and $x\ge1/2$.
+\end{enumerate}
 \end{lemma}
 
 \begin{proof}
-With $I_0=1+tx+tW(1-2t)$, $I_1=X+txX^2$ and $\mathcal A=xq(I_0+I_1y)=-N_v$, one has
-$N>N(\bar v,L_+)-\mathcal A(\bar v-F_\ell)$, and
-$Q=6(q+1)W^2\{N(\bar v,L_+)-\mathcal A(\bar v-F_\ell)\}$ is a quartic $P_0+P_1y+\dots+P_4y^4$. It is
-positive for $y\ge0$ when $P_0>0$, $P_1+2P_0>0$, $P_2+48P_0>0$, $P_3+4P_2>0$, $P_3-P_0>0$ and
-$P_4-P_0>0$; the extreme cases reduce to
-$1-2y-\frac14y^2+y^3+y^4=\frac4{81}+\frac5{27}(y-\frac23)+(\frac{29}{12}+\frac73y+y^2)(y-\frac23)^2$ and
-$1-2y-48y^2+192y^3=\frac29-2(y-\frac16)+(16+192y)(y-\frac16)^2$, both positive. The first four signs
-factor as $4(1-t)x^2F_0/X^3$, $2(1-t)xF_1/X^3$, $F_2/X^3$, $F_3/X^3$ with polynomials $F_i(t,x)$, and
-$-\partial_tF_i$ is smallest at $t=\frac14$ and positive there (in the variables $1-4t$ and $2x-1$ its
-coefficients are nonnegative after absorbing a few negative terms), so
-$F_i(t,x)\ge F_i(\frac14,x)+(\frac14-t)(-\partial_tF_i(\frac14,x))$. For $\frac12\le x\le1$ the values
-$F_i(\frac14,x)$ are positive one-variable polynomials. For $1\le x\le\frac73$, where
-$t<T(x)<\frac14$, the tangent value at $t=T(x)$ is a positive multiple of an explicit polynomial
-$h_i(x)$, positive on $[1,\frac73]$ after charging its few negative high-degree terms to positive
-lower ones. The comparisons $P_3>P_0$ and $P_4>P_0$ are proved in the same way.
+Put $\mathcal D=x^2+6x+6$, $V=1+c^2/W-3cX/\mathcal D$ and
+$T_J(x)=(3+x-x^2)/\mathcal D$. The reciprocal-mean estimate gives $v<V$.
+On both faces $\eta=p/W\ge1/2$, and the incoming floor satisfies
+\[
+ F_\ell-g=\eta(\eta-\tfrac12)y+
+             \frac{\eta y^2}{3(q+1)}>0,
+ \qquad g=1-\frac{cp}{W^2},\quad y=q-1.
+\]
+Hence $g<v<V$. The identity
+\[
+ V-g=\frac{cx}{W^2\mathcal D}
+       \{3+x-x^2-t\mathcal D\}
+\]
+gives $t<T_J(x)$ and $x<7/3$. Moreover, $T_J$ decreases, since for $0\le a\le x$
+\[
+ (3+a-a^2)\mathcal D(x)-(3+x-x^2)\mathcal D(a)
+ =(x-a)(7ax+9a+9x+12)\ge0.
+\]
+For the second face this also gives $x<1$, because $T_J(1)=3/13<1/4$.
+
+\runin{A quartic bound.}
+For $y\ge0$, a quartic $a+by+cy^2+dy^3+ey^4$ is positive whenever
+\[
+ a>0,\quad b,d,e\ge0,\quad c+54a\ge0,\quad d+4c\ge0.
+\]
+Only $c<0$ needs an argument. Set $A=-c\le54a$; then $d\ge4A$ and
+\[
+ (1-6y)^2(1+12y)=1-108y^2+432y^3\ge0
+\]
+gives $a-Ay^2+4Ay^3\ge a-A/108\ge a/2>0$.
+Thus the cubic tail absorbs the negative quadratic term.
+
+\runin{The unit face.}
+The relaxation in \cref{lem:m2-relax}, with the full weight $-N_v$, reduces the claim to
+\[
+ Q=12(q+1)W^2\mathcal D
+       \{N(t,x,1,q,V,L_+)-(-N_v)(V-F_\ell)\}
+   =\sum_{i=0}^4U_i(t,x)y^i>0.
+\]
+Write $\delta=1/4-t\ge0$ and $\sigma=3+x-x^2-t\mathcal D\ge0$.
+The first two coefficients have the positive prefactors
+\[
+ U_0=24x^2(1-t)^2F_0,\qquad U_1=12x(1-t)F_1,
+\]
+and expansion in these two gaps gives
+\begin{align*}
+ F_0={}&\frac{E_0}{32}+\frac{(2x^2+2x-1)\sigma}{8}\\
+       &+\frac{(6x^4+2x^3+9x^2+26x+6)\delta}{8}
+       +2(x^3+7x^2+12x+6)\delta^2,\\
+ F_1={}&\frac{E_1}{32}+\frac{J\delta}{8}
+                 +\frac92x^3\sigma+\delta^2R,
+\end{align*}
+where
+\begin{align*}
+ E_0={}&2x^4-6x^3+23x^2+34x-18,\\
+ E_1={}&8x^6+86x^5-169x^4-69x^3+274x^2-126x+12,\\
+ J={}&-16x^6-16x^5+37x^4+381x^3+362x^2-90x+12.
+\end{align*}
+Here $E_0>0$: as $x\le3$, its negative cubic term is at least $-18x^2$, and
+$5x^2+34x-18\ge1/4$ for $x\ge1/2$.
+For $1/2\le x\le1$, put $z=2x-1$. Then
+\[
+ 16E_1=18+105z+8z(1-z)(27+43z)+76z^4+55z^5+2z^6>0.
+\]
+For $x\ge1$, the expansion of $E_1$ in $z=x-1$ is
+$16+17z+33z^2+275z^3+381z^4+134z^5+8z^6>0$.
+The bounds $x^2\le6$, $x^3\le13$ give
+\[
+ J\ge37x^4+77x^3+362x^2-90x+12>0,
+\]
+where $x^2\ge x/2$ absorbs the remaining negative term.
+Finally, with $h=1-4t\in[0,1]$ and $z=2x-1\ge0$,
+\begin{align*}
+ 32R={}&1898-111h+(254h+5127)z+(220h+4556)z^2\\
+       &+(50h+1896)z^3+(3h+424)z^4+49z^5+2z^6\ge0.
+\end{align*}
+Thus $U_0,U_1>0$.
+
+For the two remaining margins put
+$M_2=U_2+54U_0$ and $M_3=U_3+4U_2$.
+Their tangent lines at $t=1/4$ are supporting lines:
+\[
+ M_i(t,x)=M_i(\tfrac14,x)+\frac{\delta S_i(z)}{256}
+                  +\frac{\delta^2R_i(h,z)}{64},\qquad i=2,3,
+\]
+where
+\begin{align*}
+ S_2={}&-21z^7+1259z^6+16439z^5+172227z^4\\
+          &+767969z^3+1307705z^2+930525z+231417,\\
+ S_3={}&-20z^8-675z^7-5533z^6-4059z^5+134647z^4\\
+          &+577447z^3+835953z^2+471735z+65961.
+\end{align*}
+Both slopes are nonnegative for $0\le z\le11/3$.
+For $S_2$, combine its first two terms as $z^6(1259-21z)$.
+For $S_3$, charge the negative powers to $z^4$, using
+\[
+ 20z^4+675z^3+5533z^2+4059z\le128000<134647.
+\]
+The coefficients of $R_2(h,z)$ are nonnegative.
+For $R_3$, the only negative terms are
+$-h^2(7326+11208z+4056z^2+36z^3)$.
+They are absorbed by the corresponding linear terms
+$h(25167+51141z+85739z^2+76069z^3)$, since $h^2\le h$;
+all other terms are nonnegative. Therefore $R_2,R_3\ge0$.
+
+It remains to bound the supporting lines. If $1/2\le x\le1$, then $0\le z\le1$,
+and expansion at $t=1/4$ gives
+\begin{align*}
+ 1024M_2(\tfrac14,x)&\ge11772+(319839-154710)z^2>0,\\
+ 1024M_3(\tfrac14,x)&\ge14823+(63675-37542)z^3>0.
+\end{align*}
+For the first inequality the negative terms have degrees four through seven,
+so each is charged to $z^2$; for the second they have degrees four and five
+and are charged to $z^3$.
+If $1\le x\le7/3$, use $t\le T_J(x)$ and $S_i\ge0$ to obtain
+\[
+ M_i(t,x)\ge M_i(\tfrac14,x)
+        +(\tfrac14-T_J(x))S_i(2x-1)/256
+        =\frac{Q_i(x)}{32\mathcal D},
+\]
+where
+\begin{align*}
+ Q_2={}&-456x^9+5672x^8-19485x^7+134298x^6+403631x^5\\
+       &+61620x^4-258996x^3-40752x^2-900x+864,\\
+ Q_3={}&-640x^{10}-8232x^9-10728x^8+66548x^7+224929x^6\\
+       &+153453x^5-150756x^4-134888x^3+27492x^2+4884x+4752.
+\end{align*}
+In $Q_2$, group the highest terms as
+$x^8(5672-456x)+x^6(134298-19485x)\ge0$.
+Since $x\ge1$, charge the three remaining negative terms to $x^5$ to get
+$Q_2\ge102983x^5+61620x^4+864>0$.
+For $Q_3$, use $x\le5/2$ to bound
+\[
+ 66548-10728x-8232x^2-640x^3\ge-24000.
+\]
+Thus its terms of degrees seven through ten are at least $-60000x^6$.
+Charging its two remaining negative terms to $x^5$ gives
+$Q_3\ge32738x^5+27492x^2+4884x+4752>0$.
+This proves $M_2,M_3>0$.
+
+The cubic coefficient has a direct square completion. Write
+$U_3/2=A_0+tA_1+t^2A_2$, where
+\[
+ A_0=x^2(11x^4+104x^3+231x^2+78x-90)>0
+\]
+for $x\ge1/2$, and
+\begin{align*}
+ A_1={}&10x^8+88x^7+6x^2(5x^2-6)^2+28x^4(x-1)^2\\
+       &+2x^5+188x^3+168x^2+24x(2x-1)\ge0.
+\end{align*}
+Using $t\le1/4$ and $t^2\le1/16$ in $A_2$ gives
+\[
+ A_2\ge41x^7+430x^6+1357x^5+1668x^4
+                 +506x^3-130x^2+181x+21>0,
+\]
+since $506x^3\ge253x^2$.
+The leading coefficient is
+\[
+ U_4=2x(t+x)X(6t+5x-1)\mathcal D(tx^2+2tx+1)>0.
+\]
+The quartic bound now proves $Q>0$ on the unit face.
+
+\runin{Transport to the second face.}
+Use the same normalization and write its coefficients as $H_i$.
+At $t=1/4$, $k=1$, so $H_i=U_i$ for every $i$.
+The first two coefficients factor as
+$H_0=12x^2(1-t)G_0$ and $H_1=6xG_1$; at the common boundary,
+$G_0=3F_0/2$ and $G_1=3F_1/2$.
+Each of $G_0,G_1,H_2+54H_0,H_3+4H_2,H_3$ increases with $t$.
+To see this, put $r=t-1/4\in[0,1/8]$ and $z=2x-1\in[0,1]$ in their derivatives.
+The derivative of $G_0$ has constant coefficient at least $69/8$, nonnegative
+coefficients of $z,z^2$, and coefficients of $z^3,z^4$ at least $-3/16,-1/16$.
+It is therefore at least $67/8$.
+For $H_2+54H_0$, the constant coefficient is at least $800$;
+the coefficients of $z,z^2,z^3,z^7$ are nonnegative, and the three others
+are at least $-40$, giving a derivative at least $680$.
+The other three derivatives have nonnegative coefficients after using $r^2\le1/64$.
+
+The projected boundary is feasible, because
+$\mathcal D/4\le t\mathcal D\le3+x-x^2$.
+The unit-face estimates therefore supply all five inequalities at $t=1/4$,
+and monotone transport preserves them.
+Finally,
+\[
+ H_4=x(t+x)X(6t+5x-1)\mathcal D(2tx^2+4tx+4t+1)>0.
+\]
+The same quartic bound and relaxation prove the second claim.
 \end{proof}
 
 \subsubsection{The forward successor}\label{app:m2-forward-signs}
