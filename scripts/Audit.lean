@@ -107,7 +107,8 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Secant
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.CasimirExcessSigns
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.Chi
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.ChiSigns
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.ChiConcavity
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.ChiEndpoint
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.EnvelopeCasimir
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SmallGap.NormDerivative
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.SwappedSecant

@@ -20,7 +20,7 @@ namespace SmoothedOctagon
 
 """ + "\n".join([lemma_pos(2), lemma_pos(3), lemma0g(7), lemmaI(2, Fr(0), Fr(1,30)), lemmaI(3, Fr(0), Fr(1)), lemma_tr('zgen', 3)]) + "\nend SmoothedOctagon\n"
 open(LEAN + 'Bernstein/LowDegree.lean', 'w').write(s.replace('\\\\n', '\\n'))
-for X in ['nsfCChi','nsfCQD','nsfCQC','nsfCPn']:
+for X in ['nsfCQD','nsfCQC','nsfCPn']:
     n = write_cert(X)
     p = LEAN + OUT[X]
     t = open(p).read().replace('public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Bernstein\n', 'public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Bernstein.LowDegree\n')

@@ -54,15 +54,12 @@ def build(X, pkl, h0, h1, jlo, g, gstr, kind, Yc=None, zlo=Fr(0), zhi=Fr(1), var
     return out, needI, need0g, yform, cs_plain, D, ny
 
 JOBS = {
- 'nsfCChi': dict(pkl='chiN1.pkl', h0=R(6,25), h1=R(1,3), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='zgen',
-     Yc=(("(1 + h) / 2 - 3 * j", "7 * (1 + h) / 2 + 7 * j"), ({(0,0):R(1,2),(1,0):R(1,2),(0,1):R(-3)}, {(0,0):R(7,2),(1,0):R(7,2),(0,1):R(7)}))),
  'nsfCQD': dict(pkl='QDelta.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
  'nsfCQC': dict(pkl='QC2.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=1),
  'nsfCPn': dict(pkl='Phat.pkl', h0=R(0), h1=R(1,15), jlo=0, g=[R(1,30)], gstr='1 / 30', kind='one', vars3=('A','J','Z'), zlo=0, zhi=R(1,30)),
  'nsfCLRb': dict(pkl='lr_ko.pkl', h0=R(1,3), h1=R(1,2), jlo=0, g=[R(0),R(1)], gstr='h', kind='sym', Yc=R(1)),
 }
 DOC = {
- 'nsfCChi': 'the unit-shape residual `N₁` with `v ↦ V₂`, `log q ↦ L₊` for `q ≤ 4W/(7p)`',
  'nsfCQD': 'the discriminant `𝒟²(4C₀C₂ - C₁²)` at `k = 1`, `v = V`)',
  'nsfCQC': 'the leading coefficient `𝒟C₂` at `k = 1`, `v = V`)',
  'nsfCPn': 'the Casimir excess `3125t²p²W⁴Q²(N(V) - 16s²·9193/50000)`-(11))',
@@ -70,13 +67,12 @@ DOC = {
 }
 # the output module and the title of each certificate
 OUT = {
- 'nsfCChi': 'SmallGap/ChiSigns.lean', 'nsfCQD': 'EventFactor/DiscriminantSigns.lean',
+ 'nsfCQD': 'EventFactor/DiscriminantSigns.lean',
  'nsfCQC': 'EventFactor/LeadingSigns.lean',
  'nsfCPn': 'SmallGap/CasimirExcessSigns.lean',
  'nsfCLRb': 'LowRatio/OrderShapeSigns.lean',
 }
 TITLE = {
- 'nsfCChi': 'the unit-shape residual of the small-gap ratio bound',
  'nsfCQD': 'the sign of the event-factor discriminant',
  'nsfCQC': 'the sign of the event-factor leading coefficient',
  'nsfCPn': 'the sign of the Casimir excess',

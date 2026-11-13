@@ -7,7 +7,6 @@ remain in use. Group numbers retain their previous numbering.
 28. Mixed low-scale unit-face signs.
 29. Mixed forward low-ratio unit, order and shape signs, and the low-$t$ reductions.
 30. Mixed forward large-gap and high-ratio face signs, and the fitted derivative bounds.
-31. Mixed $\chi$-cutoff endpoint signs.
 32. Mixed event-factor elimination: leading terms and discriminants.
 33. Mixed envelope Casimir endpoint at the norm ceiling.
 34. S0 central and outer shape signs and auxiliary ceilings.

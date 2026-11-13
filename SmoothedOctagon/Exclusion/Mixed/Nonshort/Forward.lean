@@ -15,12 +15,12 @@ the normalized coordinates `t = a/T`, `x = (d - a)/T`, `k = K/T²`, `q = WZ/Q`, 
 * `Nonshort/Forward/LargeGap`: `j < 1/30`;
 * `Nonshort/Forward/SmallGap`: the actual Casimir exceeds `9193/50000`, contradicting the cap.
 
-The polynomial signs are Bernstein certificates (the `*Signs` modules, generators in
+The remaining polynomial signs use Bernstein certificates (the `*Signs` modules, generators in
 `scripts/certificates/nonshort-forward/`), checked by `ring`. The inputs are fields of `M2Window` and the
 boundary comparison `m2_comparison`.
 
 The shape monotonicity steps use concavity in `k` with certificates at both shape endpoints; the
-small-gap `χ` bound uses one certificate on the whole `q` interval.
+small-gap `χ` bound follows from concavity in `q` and two elementary endpoint estimates.
 -/
 
 @[expose] public section
