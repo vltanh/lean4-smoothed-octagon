@@ -2731,7 +2731,53 @@ This follows by division of the displayed partial fractions.
 The ratio comparison and the value at the corner therefore give
 $\mathcal M\le\mathcal M(3/2,4/5,3/4)<-1/24$.
 
-For the required endpoint pairs, $b_3,b_4\le0$ and $Q<0$.
+The residue also has a uniform sign. At the pole $r=-v$, where
+$v=(1+C)/(x-C)$, the transport polynomial becomes
+\[
+ D=(v-1)((2x+1)v+1),
+\]
+and the quartic that defines the residue has value
+\[
+ W=36+(12-6S)v^2+(S^2-S+1)v^4+uD^2-D(6E_0+J_2v^2),
+\]
+where $E_0=S(u-1)+1/S$ and $J_2=E_0+2S-1$.
+Polynomial division gives $Q=(119/4-W)/96$.
+On the enlarged interval $1/2\le C\le4/5$, we have $1\le v\le3$.
+Set $q=v-1\in[0,2]$. Since
+\[
+ W_u=D\bigl(xq^2-7S\bigr)\le0,
+\]
+it suffices to bound $W$ from below at $u=19/25$.
+At that norm, write
+\[
+ S\left(W-\frac{119}4\right)=\sum_{j=0}^4d_jq^j.
+\]
+Expansion gives
+\begin{align*}
+ d_0&=\frac S4(4x^2-20x+53)\ge18,&
+ d_1&=\frac{14S(2x-3)(3x-2)}{25}\ge0,\\
+ d_2&=\frac{34x^3-40x^2-207x+42}{25}\ge-11,&
+ d_3&=-\frac{2x(2x-3)(3x-2)}{25}\ge-1,\\
+ d_4&=\frac{x(13x^2+32x-6)}{25}\ge4.
+\end{align*}
+For $d_0$, use $(2-x)(3-x)\ge0$ and $S\ge5/2$.
+The bounds for $d_3,d_4$ follow by comparing their positive factors with
+the ratio endpoints. The remaining quadratic coefficient satisfies
+\[
+ 25(d_2+11)=34t^3+13t^2+\frac52t
+                  +100\left(t-\frac12\right)^2+\frac{25}4\ge0,
+ \qquad t=x-\frac32.
+\]
+These coefficient bounds leave a sum of squares:
+\begin{align*}
+ S\left(W-\frac{119}4\right)
+ &\ge18-11q^2-q^3+4q^4\\
+ &=4+\frac72(q^2-2)^2+\frac52q^2+\frac12q^2(q-1)^2\ge4.
+\end{align*}
+Thus $Q<0$ throughout this rectangle for $u\le19/25$.
+
+On the required intervals $1/2\le C\le10/13$ and $3/4\le u\le19/25$,
+the remaining polynomial coefficients satisfy $b_3,b_4\le0$.
 Also $Z/e\ge11/6$ and $Z\le1+x\le3$, so $0<2Z/7\le1$.
 On this interval $\ell''(y)\ge-1/y^2$.
 Consequently

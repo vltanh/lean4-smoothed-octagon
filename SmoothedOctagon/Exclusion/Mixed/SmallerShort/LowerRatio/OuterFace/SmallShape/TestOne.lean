@@ -2,6 +2,7 @@ module
 
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Terminal
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Curvature
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.Residue
 
 /-!
 # Smaller-short window, lower ratio, outer face, small shapes: the test `F₁`
@@ -18,7 +19,7 @@ On `3/2 ≤ x ≤ 2`, `1 ≤ α ≤ 6/5`, `6α² ≥ x(x + 2)`,
 * the terminal curves are positive.
 
 The terminal curves use a decreasing derivative numerator and endpoint comparison
-(`SmallShape/Terminal`). The uniform curvature comparison is in `SmallShape/Curvature`; the residue signs are proved below.
+(`SmallShape/Terminal`). The uniform comparisons are in `SmallShape/Curvature` and `OuterFace/Residue`.
 
 ## Main API
 
@@ -30,43 +31,6 @@ The terminal curves use a decreasing derivative numerator and endpoint compariso
 namespace SmoothedOctagon
 
 open Set Real
-
-theorem lro_B_Q_hf_num {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ (1 / 2 : ℝ)) :
-    (0 : ℝ) < -z ^ 6 - 125 / 24 * z ^ 5 - 191 / 48 * z ^ 4 + 641 / 48 * z ^ 3 + 2425 / 96 * z ^ 2 + 727 / 48 * z + 1237 / 384 := by
-  nlinarith [(by positivity : (0 : ℝ) ≤ z),
-    (by positivity : (0 : ℝ) ≤ z ^ 2),
-    (by positivity : (0 : ℝ) ≤ z ^ 3),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 3),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 4),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 5)]
-
-theorem lro_B_Q_hf_id {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (_h1 : x ≤ (2 : ℝ)) :
-    (0 : ℝ) - lrQ1 x (1 / 2) (3 / 4) = (-(x - (3 / 2 : ℝ)) ^ 6 - 125 / 24 * (x - (3 / 2 : ℝ)) ^ 5 - 191 / 48 * (x - (3 / 2 : ℝ)) ^ 4 + 641 / 48 * (x - (3 / 2 : ℝ)) ^ 3 + 2425 / 96 * (x - (3 / 2 : ℝ)) ^ 2 + 727 / 48 * (x - (3 / 2 : ℝ)) + 1237 / 384) / ((x + 1) * (2 * x - 1) ^ 4) := by
-  simp only [lrQ1, lrq0, lrq1, lrq2, lrq3, lrW0, lrW1, lrW2, lrW3, lrW4, lrd0, lrd1, lrd2, lrJ2, ssE0]
-  have hd0 : x + 1 ≠ 0 := by nlinarith
-  have hd1 : x * 1 + 1 ≠ 0 := by nlinarith
-  have hd2 : 1 + x * 1 ≠ 0 := by nlinarith
-  have hd3 : 1 + 1 * x ≠ 0 := by nlinarith
-  have hd4 : x + 1 ≠ 0 := by nlinarith
-  have hd5 : 2 * x - 1 ≠ 0 := by nlinarith
-  have hd6 : x * 2 - 1 ≠ 0 := by nlinarith
-  have hd7 : -1 + x * 2 ≠ 0 := by nlinarith
-  have hd8 : -1 + 2 * x ≠ 0 := by nlinarith
-  have hd9 : x - 1 / 2 ≠ 0 := by nlinarith
-  field_simp
-  ring
-
-theorem lro_B_Q_hf {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ)) :
-    lrQ1 x (1 / 2) (3 / 4) < (0 : ℝ) := by
-  have hid := lro_B_Q_hf_id h0 h1
-  have hn := lro_B_Q_hf_num (z := x - (3 / 2 : ℝ)) (by linarith) (by linarith)
-  have hP0 : 0 < x + 1 := by nlinarith
-  have hP1 : 0 < 2 * x - 1 := by nlinarith
-  have hD : 0 < (x + 1) * (2 * x - 1) ^ 4 := (mul_pos hP0 (pow_pos hP1 4))
-  have : 0 < (0 : ℝ) - lrQ1 x (1 / 2) (3 / 4) := by
-    rw [hid]; exact div_pos (by linarith) hD
-  linarith
-
 
 theorem lro_B_T65_hf {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ)) :
     (0 : ℝ) < lroF1 x (6 / 5) (x + 1 / 2 * (6 / 5 - 1)) (3 / 4) := by
@@ -87,43 +51,6 @@ theorem lro_B_T13_hf {x : ℝ} (h0 : (5 / 3 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ))
   rw [LowerRatioTerminal.face_test .line (Or.inl rfl) (by linarith), he] at h
   exact lt_trans (by norm_num : (0 : ℝ) < 1 / 80000) h
 
-theorem lro_B_Q_hv_num {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ (1 / 2 : ℝ)) :
-    (0 : ℝ) < -24 / 25 * z ^ 6 - 2911 / 600 * z ^ 5 - 3391 / 1200 * z ^ 4 + 1433 / 96 * z ^ 3 + 124249 / 4800 * z ^ 2 + 141811 / 9600 * z + 11411 / 3840 := by
-  nlinarith [(by positivity : (0 : ℝ) ≤ z),
-    (by positivity : (0 : ℝ) ≤ z ^ 2),
-    (by positivity : (0 : ℝ) ≤ z ^ 3),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 3),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 4),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 5)]
-
-theorem lro_B_Q_hv_id {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (_h1 : x ≤ (2 : ℝ)) :
-    (0 : ℝ) - lrQ1 x (1 / 2) (19 / 25) = (-24 / 25 * (x - (3 / 2 : ℝ)) ^ 6 - 2911 / 600 * (x - (3 / 2 : ℝ)) ^ 5 - 3391 / 1200 * (x - (3 / 2 : ℝ)) ^ 4 + 1433 / 96 * (x - (3 / 2 : ℝ)) ^ 3 + 124249 / 4800 * (x - (3 / 2 : ℝ)) ^ 2 + 141811 / 9600 * (x - (3 / 2 : ℝ)) + 11411 / 3840) / ((x + 1) * (2 * x - 1) ^ 4) := by
-  simp only [lrQ1, lrq0, lrq1, lrq2, lrq3, lrW0, lrW1, lrW2, lrW3, lrW4, lrd0, lrd1, lrd2, lrJ2, ssE0]
-  have hd0 : x + 1 ≠ 0 := by nlinarith
-  have hd1 : x * 1 + 1 ≠ 0 := by nlinarith
-  have hd2 : 1 + x * 1 ≠ 0 := by nlinarith
-  have hd3 : 1 + 1 * x ≠ 0 := by nlinarith
-  have hd4 : x + 1 ≠ 0 := by nlinarith
-  have hd5 : 2 * x - 1 ≠ 0 := by nlinarith
-  have hd6 : x * 2 - 1 ≠ 0 := by nlinarith
-  have hd7 : -1 + x * 2 ≠ 0 := by nlinarith
-  have hd8 : -1 + 2 * x ≠ 0 := by nlinarith
-  have hd9 : x - 1 / 2 ≠ 0 := by nlinarith
-  field_simp
-  ring
-
-theorem lro_B_Q_hv {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ)) :
-    lrQ1 x (1 / 2) (19 / 25) < (0 : ℝ) := by
-  have hid := lro_B_Q_hv_id h0 h1
-  have hn := lro_B_Q_hv_num (z := x - (3 / 2 : ℝ)) (by linarith) (by linarith)
-  have hP0 : 0 < x + 1 := by nlinarith
-  have hP1 : 0 < 2 * x - 1 := by nlinarith
-  have hD : 0 < (x + 1) * (2 * x - 1) ^ 4 := (mul_pos hP0 (pow_pos hP1 4))
-  have : 0 < (0 : ℝ) - lrQ1 x (1 / 2) (19 / 25) := by
-    rw [hid]; exact div_pos (by linarith) hD
-  linarith
-
-
 theorem lro_B_T65_hv {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ)) :
     (0 : ℝ) < lroF1 x (6 / 5) (x + 1 / 2 * (6 / 5 - 1)) (19 / 25) := by
   have h := LowerRatioTerminal.lower_bound .fixed (C := 1 / 2) (u := 19 / 25)
@@ -143,43 +70,6 @@ theorem lro_B_T13_hv {x : ℝ} (h0 : (5 / 3 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ))
   rw [LowerRatioTerminal.face_test .line (Or.inl rfl) (by linarith), he] at h
   exact lt_trans (by norm_num : (0 : ℝ) < 1 / 80000) h
 
-theorem lro_B_Q_tf_num {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ (1 / 2 : ℝ)) :
-    (0 : ℝ) < -129623 / 64 * z ^ 6 - 1538407 / 192 * z ^ 5 + 2999659 / 768 * z ^ 4 + 4363537 / 128 * z ^ 3 + 92864897 / 3072 * z ^ 2 + 7044843 / 1024 * z + 24226009 / 12288 := by
-  nlinarith [(by positivity : (0 : ℝ) ≤ z),
-    (by positivity : (0 : ℝ) ≤ z ^ 2),
-    (by positivity : (0 : ℝ) ≤ z ^ 3),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 3),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 4),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 5)]
-
-theorem lro_B_Q_tf_id {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (_h1 : x ≤ (2 : ℝ)) :
-    (0 : ℝ) - lrQ1 x (10 / 13) (3 / 4) = (-129623 / 64 * (x - (3 / 2 : ℝ)) ^ 6 - 1538407 / 192 * (x - (3 / 2 : ℝ)) ^ 5 + 2999659 / 768 * (x - (3 / 2 : ℝ)) ^ 4 + 4363537 / 128 * (x - (3 / 2 : ℝ)) ^ 3 + 92864897 / 3072 * (x - (3 / 2 : ℝ)) ^ 2 + 7044843 / 1024 * (x - (3 / 2 : ℝ)) + 24226009 / 12288) / ((x + 1) * (13 * x - 10) ^ 4) := by
-  simp only [lrQ1, lrq0, lrq1, lrq2, lrq3, lrW0, lrW1, lrW2, lrW3, lrW4, lrd0, lrd1, lrd2, lrJ2, ssE0]
-  have hd0 : x + 1 ≠ 0 := by nlinarith
-  have hd1 : x * 1 + 1 ≠ 0 := by nlinarith
-  have hd2 : 1 + x * 1 ≠ 0 := by nlinarith
-  have hd3 : 1 + 1 * x ≠ 0 := by nlinarith
-  have hd4 : x + 1 ≠ 0 := by nlinarith
-  have hd5 : 13 * x - 10 ≠ 0 := by nlinarith
-  have hd6 : x * 13 - 10 ≠ 0 := by nlinarith
-  have hd7 : -10 + x * 13 ≠ 0 := by nlinarith
-  have hd8 : -10 + 13 * x ≠ 0 := by nlinarith
-  have hd9 : x - 10 / 13 ≠ 0 := by nlinarith
-  field_simp
-  ring
-
-theorem lro_B_Q_tf {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ)) :
-    lrQ1 x (10 / 13) (3 / 4) < (0 : ℝ) := by
-  have hid := lro_B_Q_tf_id h0 h1
-  have hn := lro_B_Q_tf_num (z := x - (3 / 2 : ℝ)) (by linarith) (by linarith)
-  have hP0 : 0 < x + 1 := by nlinarith
-  have hP1 : 0 < 13 * x - 10 := by nlinarith
-  have hD : 0 < (x + 1) * (13 * x - 10) ^ 4 := (mul_pos hP0 (pow_pos hP1 4))
-  have : 0 < (0 : ℝ) - lrQ1 x (10 / 13) (3 / 4) := by
-    rw [hid]; exact div_pos (by linarith) hD
-  linarith
-
-
 theorem lro_B_T65_tf {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ)) :
     (0 : ℝ) < lroF1 x (6 / 5) (x + 10 / 13 * (6 / 5 - 1)) (3 / 4) := by
   have h := LowerRatioTerminal.lower_bound .fixed (C := 10 / 13) (u := 3 / 4)
@@ -198,43 +88,6 @@ theorem lro_B_T13_tf {x : ℝ} (h0 : (5 / 3 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ))
     ring
   rw [LowerRatioTerminal.face_test .line (Or.inr rfl) (by linarith), he] at h
   exact lt_trans (by norm_num : (0 : ℝ) < 1 / 80000) h
-
-theorem lro_B_Q_tv_num {z : ℝ} (hz0 : 0 ≤ z) (hz1 : z ≤ (1 / 2 : ℝ)) :
-    (0 : ℝ) < -388869 / 200 * z ^ 6 - 14155271 / 1920 * z ^ 5 + 35447607 / 6400 * z ^ 4 + 674848373 / 19200 * z ^ 3 + 368892567 / 12800 * z ^ 2 + 765004441 / 153600 * z + 92497301 / 61440 := by
-  nlinarith [(by positivity : (0 : ℝ) ≤ z),
-    (by positivity : (0 : ℝ) ≤ z ^ 2),
-    (by positivity : (0 : ℝ) ≤ z ^ 3),
-    (by positivity : (0 : ℝ) ≤ z ^ 4),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 4),
-    mul_le_mul_of_nonneg_left hz1 (by positivity : (0 : ℝ) ≤ z ^ 5)]
-
-theorem lro_B_Q_tv_id {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (_h1 : x ≤ (2 : ℝ)) :
-    (0 : ℝ) - lrQ1 x (10 / 13) (19 / 25) = (-388869 / 200 * (x - (3 / 2 : ℝ)) ^ 6 - 14155271 / 1920 * (x - (3 / 2 : ℝ)) ^ 5 + 35447607 / 6400 * (x - (3 / 2 : ℝ)) ^ 4 + 674848373 / 19200 * (x - (3 / 2 : ℝ)) ^ 3 + 368892567 / 12800 * (x - (3 / 2 : ℝ)) ^ 2 + 765004441 / 153600 * (x - (3 / 2 : ℝ)) + 92497301 / 61440) / ((x + 1) * (13 * x - 10) ^ 4) := by
-  simp only [lrQ1, lrq0, lrq1, lrq2, lrq3, lrW0, lrW1, lrW2, lrW3, lrW4, lrd0, lrd1, lrd2, lrJ2, ssE0]
-  have hd0 : x + 1 ≠ 0 := by nlinarith
-  have hd1 : x * 1 + 1 ≠ 0 := by nlinarith
-  have hd2 : 1 + x * 1 ≠ 0 := by nlinarith
-  have hd3 : 1 + 1 * x ≠ 0 := by nlinarith
-  have hd4 : x + 1 ≠ 0 := by nlinarith
-  have hd5 : 13 * x - 10 ≠ 0 := by nlinarith
-  have hd6 : x * 13 - 10 ≠ 0 := by nlinarith
-  have hd7 : -10 + x * 13 ≠ 0 := by nlinarith
-  have hd8 : -10 + 13 * x ≠ 0 := by nlinarith
-  have hd9 : x - 10 / 13 ≠ 0 := by nlinarith
-  field_simp
-  ring
-
-theorem lro_B_Q_tv {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ)) :
-    lrQ1 x (10 / 13) (19 / 25) < (0 : ℝ) := by
-  have hid := lro_B_Q_tv_id h0 h1
-  have hn := lro_B_Q_tv_num (z := x - (3 / 2 : ℝ)) (by linarith) (by linarith)
-  have hP0 : 0 < x + 1 := by nlinarith
-  have hP1 : 0 < 13 * x - 10 := by nlinarith
-  have hD : 0 < (x + 1) * (13 * x - 10) ^ 4 := (mul_pos hP0 (pow_pos hP1 4))
-  have : 0 < (0 : ℝ) - lrQ1 x (10 / 13) (19 / 25) := by
-    rw [hid]; exact div_pos (by linarith) hD
-  linarith
-
 
 theorem lro_B_T65_tv {x : ℝ} (h0 : (3 / 2 : ℝ) ≤ x) (h1 : x ≤ (2 : ℝ)) :
     (0 : ℝ) < lroF1 x (6 / 5) (x + 10 / 13 * (6 / 5 - 1)) (19 / 25) := by
@@ -281,11 +134,11 @@ theorem lro_B_w0 {x a u : ℝ} (hx : 3 / 2 ≤ x) (_hx2 : x ≤ 2) (ha1 : 1 ≤ 
 
 /-- **Reciprocal-shape concavity of `F₁` on the small shapes**. -/
 theorem lro_B_recip {x a aS C u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (haS1 : 1 ≤ aS) (haS : aS ≤ a)
-    (ha2 : a ≤ 6 / 5) (hC0 : 1 / 2 ≤ C) (hC1 : C ≤ 10 / 13) (hu0 : 3 / 4 ≤ u) (hu1 : u ≤ 19 / 25)
-    (hQ : lrQ1 x C u < 0) :
+    (ha2 : a ≤ 6 / 5) (hC0 : 1 / 2 ≤ C) (hC1 : C ≤ 10 / 13) (hu0 : 3 / 4 ≤ u) (hu1 : u ≤ 19 / 25) :
     min (lroF1 x aS (x + C * (aS - 1)) u) (lroF1 x (6 / 5) (x + C * (6 / 5 - 1)) u) ≤
       lroF1 x a (x + C * (a - 1)) u := by
   have hM := lro_small_shape_curvature hx hx2 hC0 (by linarith) hu0
+  have hQ := lro_residue_neg hx hx2 hC0 (by linarith) hu1
   have hx0 : 0 < x := by linarith
   have hb3 := lro_b3_nonpos hx hx2 hC1 (by linarith) hu1
   have hb4 := lrg4_nonpos (u := u) hx0
@@ -356,16 +209,14 @@ theorem lro_B_F1 {x a b C u : ℝ} (hx : 3 / 2 ≤ x) (hx2 : x ≤ 2) (ha1 : 1 �
     have hu1' : u' ≤ 19 / 25 := by rcases hu' with rfl | rfl <;> norm_num
     have hC0' : 1 / 2 ≤ C' := by rcases hC' with rfl | rfl <;> norm_num
     have hC1' : C' ≤ 10 / 13 := by rcases hC' with rfl | rfl <;> norm_num
-    have key : lrQ1 x C' u' < 0 ∧
-        0 < lroF1 x (6 / 5) (x + C' * (6 / 5 - 1)) u' := by
+    have hterminal : 0 < lroF1 x (6 / 5) (x + C' * (6 / 5 - 1)) u' := by
       rcases hC' with rfl | rfl <;> rcases hu' with rfl | rfl
-      · exact ⟨lro_B_Q_hf hx hx2, lro_B_T65_hf hx hx2⟩
-      · exact ⟨lro_B_Q_hv hx hx2, lro_B_T65_hv hx hx2⟩
-      · exact ⟨lro_B_Q_tf hx hx2, lro_B_T65_tf hx hx2⟩
-      · exact ⟨lro_B_Q_tv hx hx2, lro_B_T65_tv hx hx2⟩
-    obtain ⟨hQ, t2⟩ := key
-    have := lro_B_recip hx hx2 haS1 haS ha2 hC0' hC1' hu0' hu1' hQ
-    exact lt_of_lt_of_le (lt_min (hlow C' u' hC' hu') t2) this
+      · exact lro_B_T65_hf hx hx2
+      · exact lro_B_T65_hv hx hx2
+      · exact lro_B_T65_tf hx hx2
+      · exact lro_B_T65_tv hx hx2
+    have := lro_B_recip hx hx2 haS1 haS ha2 hC0' hC1' hu0' hu1'
+    exact lt_of_lt_of_le (lt_min (hlow C' u' hC' hu') hterminal) this
   have hbeta : ∀ u', (u' = 3 / 4 ∨ u' = 19 / 25) → 0 < lroF1 x a b u' := by
     intro u' hu'
     have hu1' : u' ≤ 19 / 25 := by rcases hu' with rfl | rfl <;> norm_num

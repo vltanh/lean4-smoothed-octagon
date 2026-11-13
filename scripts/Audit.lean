@@ -291,6 +291,7 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.Lar
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.PathDerivative
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.RationalForms
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.ReciprocalShape
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.Residue
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.Shapes
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallRatio
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallRatio.NormBeta
