@@ -4,7 +4,6 @@ These tasks concern analytic replacements for scalar proof steps. The existing L
 remain in use. Group numbers retain their previous numbering.
 
 25. Mixed reverse unit-face signs beyond the $q_1$ case.
-26. Mixed reverse order-face signs beyond the $q_1$ square, especially the boundary $q=W/k$.
 27. Mixed scale-strip signs.
 28. Mixed low-scale unit-face signs.
 29. Mixed forward low-ratio unit, order and shape signs, and the low-$t$ reductions.

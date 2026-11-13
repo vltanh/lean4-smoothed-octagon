@@ -1,7 +1,7 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.WindowData
-public import SmoothedOctagon.Exclusion.Mixed.Nonshort.OrderFace.Signs
+public import SmoothedOctagon.Exclusion.Mixed.Nonshort.OrderFace.Boundary
 public import Mathlib.Analysis.Convex.Deriv
 
 /-!
@@ -11,8 +11,8 @@ For `0 < t < 2/5`, `x > 1/4`, `k = 2t + x ≥ 1`, `x < 7/3 - (10/3)t`, the exact
 and `1 < q ≤ W/k`, `N(k) > 0`. On this face `B = Wk` and `R(q) = α + βq + γ/q - p log q` is
 concave on `[1, W/k]` (`nsr_concave_min`), so it suffices to check the two endpoints: `R(1) > 0`
 from the reciprocal-mean ceiling and a completed square (`nsr_order_one_pos`), and
-`R(W/k) > 0` from the rational relaxations `v < v̄`, `log q < L₊(q)` and the certificate
-`nsrOP_pos_a`, `nsrOP_pos_b`.
+`R(W/k) > 0` from the rational relaxations `v < v̄`, `log q < L₊(q)` and the positive
+factorizations in the two order gaps (`nsrOP_pos`).
 The bound `q ≤ W/k` (from the incoming floor and the swapped secant order) is a hypothesis here.
 
 ## Main API
@@ -161,16 +161,14 @@ theorem nsr_order_face {t x q v : ℝ} (ht : 0 < t) (ht2 : t < 2 / 5) (hx : 1 / 
   have hq1 : 1 < (1 + x) / k := by rw [lt_div_iff₀ hk0]; linarith
   have hR2 : 0 < α + β * ((1 + x) / k) + γ / ((1 + x) / k) - (t + x) * Real.log ((1 + x) / k) := by
     have hq10 : 0 < (1 + x) / k := by positivity
-    have hcert : 0 < nsrOP (1 - 2 * t) (2 * t + x - 1) := by
-      rcases le_total (1 - 2 * t) (1 / 4) with h1 | h1
-      · exact nsrOP_pos_a _ _ (by linarith) h1 (by linarith) (by linarith) (by linarith)
-      · exact nsrOP_pos_b _ _ h1 (by linarith) (by linarith) (by linarith) (by linarith)
+    have hboundary : 0 < nsrOP (1 - 2 * t) (2 * t + x - 1) :=
+      nsrOP_pos (by linarith) (by linarith) (by linarith) (by linarith) (by linarith)
     have eP : 24 * k ^ 3 * (1 + x + k) * (x + 2) ^ 3 *
         nsrN t x k ((1 + x) / k) (nsrVbar t x) (nsrLp ((1 + x) / k)) =
         (k + 2 * t * x + x ^ 2) * nsrOP (1 - 2 * t) (2 * t + x - 1) := by
       rw [hkdef]; unfold nsrN nsrVbar nsrLp nsrOP; field_simp; ring
     have hNb : 0 < nsrN t x k ((1 + x) / k) (nsrVbar t x) (nsrLp ((1 + x) / k)) := by
-      have h1 : 0 < (k + 2 * t * x + x ^ 2) * nsrOP (1 - 2 * t) (2 * t + x - 1) := mul_pos hBk hcert
+      have h1 : 0 < (k + 2 * t * x + x ^ 2) * nsrOP (1 - 2 * t) (2 * t + x - 1) := mul_pos hBk hboundary
       rw [← eP] at h1
       exact pos_of_mul_pos_right h1 (by positivity)
     have hN := nsr_N_pos_of_relax (t := t) (x := x) (k := k) (q := (1 + x) / k) (v := v)

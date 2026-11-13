@@ -121,7 +121,7 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.LowScale.Signs
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.NecessaryBounds
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.OrderFace
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.OrderFace.Signs
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.OrderFace.Boundary
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Reverse
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.ScaleStrip
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.ScaleStrip.Signs

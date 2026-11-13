@@ -28,11 +28,10 @@ The scalar argument is `nsr_reverse_core` (`Nonshort/Core`), the window-level bo
 `WindowData`, `OrderBounds`, `CentreGap`, `CentralScale` and `HighRatio`
 (`Nonshort/NecessaryBounds`).
 
-The polynomial signs of the unit shape, the order face and the high-ratio exclusion are proved by
-Bernstein certificates checked by `ring` (the `Signs` modules); the scale strip is closed by
-the six unit-shape signs at `k = 29t²/4` directly; `t < 2/5` uses row bounds on `C₁, C₂, C₃` on the
-whole rectangle; `a < 4/5` uses the window's `a² < 12/17` (`ρ < 3/20`) and a discriminant form of
-the turn floor.
+The order face uses positive factorizations in its two order gaps. The unit shape and scale strip
+use six polynomial signs (the `Signs` modules); `t < 2/5` follows from the incoming floor and
+the same-lift quadratic identity, while `a < 4/5` uses the window's `a² < 12/17` (`ρ < 3/20`)
+and a discriminant form of the turn floor.
 -/
 @[expose] public section
 
