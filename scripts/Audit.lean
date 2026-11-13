@@ -266,6 +266,7 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.OuterFace.Str
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.OuterFace.Strip.Coordinates
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.OuterFace.Strip.Residues
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.OuterFace.Strip.Tests
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.SignChange
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.SignTools
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.CentralFace

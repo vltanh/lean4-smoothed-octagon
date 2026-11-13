@@ -2453,11 +2453,68 @@ its negativity throughout the order interval, proving (a).
  =x^3(5606-179x)+11040x^2+1882x+83>0
 \]
 on $[0,9]$, and
-$u_b-\bar V=(x-1)(35x^2-152x+213)/\bigl(100(x+1)(35x+13)\bigr)>0$. The shape is split at
-$\alpha=m(x)=(2x+3)/5$. For $m\le\alpha\le x$ use $u_b$; with $\beta=x+c(\alpha-1)$ and
-$3/5\le c\le3/2$, a cubic comparison in $\beta$ leaves twelve polynomials of degree eight whose
-signs follow from one sign change in the shape variable. For $(22x+20)/55\le\alpha\le m$ use the
-sharper ceiling $\bar u\le\hat u$, which follows from
+$u_b-\bar V=(x-1)(35x^2-152x+213)/\bigl(100(x+1)(35x+13)\bigr)>0$.
+Split the shape interval at $m(x)=(2x+3)/5$.
+
+For $m\le\alpha\le x$, raise $u$ to $u_b$ and put
+\[
+ p=x+\frac35(\alpha-1),\qquad q=x+\frac32(\alpha-1).
+\]
+The order interval lies in $[p,q]$, since
+$4x/(5x+4)\ge3/5$ and $c_0(x)\le3/2$.
+Set $(c_2,c_T,c_8)=(3528,392,7056)$ and, at $u=u_b$, define
+\[
+ f_\sigma(\beta)=-100c_\sigma\alpha^4SB F_\sigma,
+ \qquad \sigma\in\{2,T,8\}.
+\]
+Each $f_\sigma$ is cubic in $\beta$. Define its four control values by
+\begin{align*}
+ C_{\sigma0}&=f_\sigma(p),&
+ C_{\sigma1}&=f_\sigma(p)+\frac{q-p}3 f_\sigma'(p),\\
+ C_{\sigma2}&=f_\sigma(q)-\frac{q-p}3 f_\sigma'(q),&
+ C_{\sigma3}&=f_\sigma(q).
+\end{align*}
+Here the prime denotes differentiation in $\beta$. For
+$s=(\beta-p)/(q-p)\in[0,1]$, the cubic identity is
+\[
+ f_\sigma(\beta)=(1-s)^3C_{\sigma0}
+ +3s(1-s)^2C_{\sigma1}
+ +3s^2(1-s)C_{\sigma2}+s^3C_{\sigma3}.
+\]
+It therefore suffices to prove the four control values positive.
+
+The sign argument uses two successive comparisons of powers. If
+$P(z)=\sum_i a_i z^i$, with $a_i\ge0$ for $i<n$ and $a_i\le0$
+for $i>n$, then
+\[
+ P(L)z^n\le P(z)L^n,\qquad 0\le z\le L.
+\]
+Indeed, each term satisfies this inequality; the term of degree $n$
+cancels. Thus $P(0)>0$ and $P(L)>0$ imply positivity on $[0,L]$.
+
+Put $A=\alpha-m(x)$, $Y=x-12/5$ and $A_m=3(Y+7/5)/5$.
+Then $0\le A\le A_m$ and $0\le Y\le33/5$. Expand
+$C_{\sigma j}=\sum_{k=0}^5 a_{\sigma j k}(Y)A^k$.
+The coefficient signs have the preceding form with the following indices:
+\[
+\begin{array}{c|c}
+ (\sigma,j)&n\\\hline
+ (T,0),(T,1),(T,2),(T,3),(8,0),(8,1),(8,2)&3\\
+ (8,3),(2,1),(2,2),(2,3)&4\\
+ (2,0)&5
+\end{array}
+\]
+To verify these signs, expand $a_{\sigma j k}(Y)$ for $k<n$,
+$-a_{\sigma j k}(Y)$ for $k>n$, and $C_{\sigma j}(A_m,Y)$.
+Each resulting polynomial has nonnegative lower coefficients and
+nonpositive higher coefficients, and positive values at $Y=0,33/5$;
+one of them has only positive coefficients. These statements follow
+by expansion of the displayed control values. The power comparison
+first proves their positivity in $Y$, then proves $C_{\sigma j}>0$
+in $A$. The cubic identity now gives $f_\sigma>0$ and hence $F_\sigma<0$.
+
+For $(22x+20)/55\le\alpha\le m$, use the sharper ceiling
+$\bar u\le\hat u$, which follows from
 \[
  75Q^2-(7x+1)^2SM
  =515x^3(9-x)+x^2(8331-877x)+1420x+62>0
@@ -2472,7 +2529,7 @@ On the outer strip, normalize alpha by
 Use the beta endpoints $\beta_-=x+\frac35(\alpha-1)$ and $\beta_*$.
 The first lies below the permitted beta interval. For the tests at $u=\hat u$,
 write $\widetilde N_\sigma=-c_\sigma\alpha^4SVBF_\sigma$,
-where $(c_2,c_T,c_8)=(3528,392,7056)$. These are polynomial numerators, and
+with the constants $c_\sigma$ defined above. These are polynomial numerators, and
 \begin{align*}
  \widetilde N_\sigma(x,\alpha,\beta_-)
    &=\sum_{i=0}^{10}d^o_{\sigma,i}(e)X^i,\\

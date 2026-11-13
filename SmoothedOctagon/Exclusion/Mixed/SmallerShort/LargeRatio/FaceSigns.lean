@@ -21,7 +21,7 @@ large-ratio bound, proved with their exact statements as `*_proof`:
 The central upper-boundary signs follow from the expansion in `x - 12/5`
 after normalizing alpha to its order interval. Six quadratic minorants and
 endpoint power bounds give nonnegative coefficients. The outer strip signs use the same power bounds; the large-shape comparison
-uses coefficient-list identities and the coefficient bound `lgrLow`.
+uses the cubic control identity and successive sign-change comparisons in shape and ratio.
 
 ## Main API
 

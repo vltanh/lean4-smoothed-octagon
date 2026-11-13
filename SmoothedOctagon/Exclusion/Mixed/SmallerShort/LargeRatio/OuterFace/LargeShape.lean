@@ -1,19 +1,22 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.OuterFace
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.SignChange
 
 /-!
 # Smaller-short window, large ratio: the outer face, large shapes
 
 For `(2x + 3)/5 ≤ α ≤ x` the incoming norm is raised to `u_b = (x + 74)/100`; then each cleared
 numerator (`lgrNoT`, `lgrNo8`, `lgrNo2` at `U = x + 74`, `V = 100`) is a cubic in `β`, computed in
-Lean from its factored formula (`lgrFLT`, …; never printed). On
+Lean from its factored formula (`lgrFLT`, …). On
 `β ∈ [x + (3/5)(α - 1), x + (3/2)(α - 1)]` the four-term cubic identity (`lgr_cubic_pos`,
 `lgr_cubic_list`) reduces its sign to four coefficients
 `C_j = κ s_j P_j(α - (2x + 3)/5, x - 2)` (`lgrPT0_eq`, …, the twelve printed `P_{ij}`, verified
 against the Lean definitions), and each `P_{ij}` is positive by one sign change in `A`
 (`lgr_sc2`, `lgr_sc3`, `lgr_sc4`), its coefficient signs and its value at `A = 3(X + 1)/5`
-on `2/5 ≤ X ≤ 7` by the coefficient bound after a Taylor shift on at most three fixed pieces.
+on `2/5 ≤ X ≤ 7` by a second sign-change comparison in `Y = X - 2/5`.
+Every required univariate polynomial has nonnegative lower coefficients,
+nonpositive higher coefficients, and positive values at `Y = 0, 33/5`.
 
 ## Main API
 
@@ -106,14 +109,6 @@ theorem lgr_sc_core {A Am pA pAm : ℝ} {n : ℕ} (hA : 0 ≤ A) (hAm : A ≤ Am
     have : 0 < pAm * A ^ n := by positivity
     have : 0 < pA * Am ^ n := by linarith
     exact pos_of_mul_pos_left this (by positivity)
-
-/-- Negativity on an interval from a cover of the negated polynomial. -/
-theorem lgr_neg_of_cov (cs : List ℝ) (e p : ℝ) (r : List ℝ) (h : lgrCov (lgrSmul (-1) cs) e (p :: r)) :
-    ∀ X, p ≤ X → X ≤ e → polyHorner cs X < 0 := by
-  intro X h1 h2
-  have := lgr_cov_pos _ e p r h X h1 h2
-  rw [lgr_horner_smul] at this
-  linarith
 
 theorem lgr_pow_mono {A Am : ℝ} (hA : 0 ≤ A) (hAm : A ≤ Am) (n : ℕ) : A ^ n ≤ Am ^ n :=
   pow_le_pow_left₀ hA hAm n
@@ -250,12 +245,24 @@ theorem lgrPT0_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrPT0 A X := by
   simp only [lgrPT0]
   apply lgr_sc2 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 3
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{T1}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -278,12 +285,24 @@ theorem lgrPT1_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrPT1 A X := by
   simp only [lgrPT1]
   apply lgr_sc2 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 3
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{T2}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -306,12 +325,24 @@ theorem lgrPT2_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrPT2 A X := by
   simp only [lgrPT2]
   apply lgr_sc2 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 3
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{T3}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -334,12 +365,24 @@ theorem lgrPT3_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrPT3 A X := by
   simp only [lgrPT3]
   apply lgr_sc2 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 3
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- **The large shapes, `T` test**: the cleared numerator at `u = u_b` is positive for
 `(2x + 3)/5 ≤ α ≤ x` and `x + (3/5)(α - 1) ≤ β ≤ x + (3/2)(α - 1)`. -/
@@ -393,12 +436,24 @@ theorem lgrP80_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrP80 A X := by
   simp only [lgrP80]
   apply lgr_sc2 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 3
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{81}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -421,12 +476,24 @@ theorem lgrP81_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrP81 A X := by
   simp only [lgrP81]
   apply lgr_sc2 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 3
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{82}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -449,12 +516,24 @@ theorem lgrP82_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrP82 A X := by
   simp only [lgrP82]
   apply lgr_sc2 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 3
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{83}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -477,12 +556,24 @@ theorem lgrP83_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrP83 A X := by
   simp only [lgrP83]
   apply lgr_sc3 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 4
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- **The large shapes, `8` test**: the cleared numerator at `u = u_b` is positive for
 `(2x + 3)/5 ≤ α ≤ x` and `x + (3/5)(α - 1) ≤ β ≤ x + (3/2)(α - 1)`. -/
@@ -536,12 +627,24 @@ theorem lgrP20_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrP20 A X := by
   simp only [lgrP20]
   apply lgr_sc4 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 4
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{21}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -564,12 +667,24 @@ theorem lgrP21_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrP21 A X := by
   simp only [lgrP21]
   apply lgr_sc3 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 4
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 3
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{22}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -592,12 +707,24 @@ theorem lgrP22_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrP22 A X := by
   simp only [lgrP22]
   apply lgr_sc3 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 3
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{23}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -620,12 +747,24 @@ theorem lgrP23_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
     (hAm : A ≤ 3 / 5 * X + 3 / 5) : 0 < lgrH2 lgrP23 A X := by
   simp only [lgrP23]
   apply lgr_sc3 hX hX7 hA hAm
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_neg_of_cov _ 7 (2 / 5) [(37 / 10)] (by norm_num [lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
-    (lgr_cov_pos _ 7 (2 / 5) [(41 / 20), (37 / 10)] (by norm_num [lgrSlant, lgrCov, lgrShift, lgrAdd, lgrSmul, lgrLow, lgrNeg]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 6
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 5
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 3
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.negative_after_shift _ 2
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
+    (OneSignChange.positive_after_shift _ 7
+      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+        Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- **The large shapes, `2` test**: the cleared numerator at `u = u_b` is positive for
 `(2x + 3)/5 ≤ α ≤ x` and `x + (3/5)(α - 1) ≤ β ≤ x + (3/2)(α - 1)`. -/
