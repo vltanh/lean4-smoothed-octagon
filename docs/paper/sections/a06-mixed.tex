@@ -1440,11 +1440,38 @@ $\mathcal H_v<-\frac{17}{12}xq(I_0+I_1y)$, from $Je^2\le\frac{10}3$ and $WD/x\le
 $\mathcal H_{\log q}=(7-Je^2)N_L<0$. So a window with a forward successor and $t\le\frac13$, which
 lies in the domain (with $q<W/(1+2j)\le W/o$), has $\widehat G\le\mathcal H(v,\log q)<0$.
 
-The three-term secant majorant $v_3=1+c^2/W-(2c/X)(1+x^2/(3X^2)+x^4/(5X^4))$ satisfies
-$v_3-v_G=cx^6(31x^2+82x+46)/(60W^2X^5(x^2+10x+15))>0$, and $v_3+\rho(v_3-F_\ell)<U(t)$ (using
-$F_\ell-g=\eta(\eta-\frac12)y+\eta y^2/(3(y+2))\ge0$ with $\eta=p/W\ge\frac12$, and $\rho<2$); so
-$\hat v<U(t)$. Also $\mathcal H_{kv}<0$ and $\mathcal H_{k,\log q}<0$, so
-$\widehat G_k>\mathcal H_k(U(t),y)$, which decreases in $k$. At $k=o$,
+The effective norm stays below the endpoint ceiling. Put
+\[
+ V_2=g+\frac{cx}{W^2}\left(\frac12-\frac x3+\frac{x^2}{12}-t\right).
+\]
+Then $V_2-v_G=cx^4(x+6)/(12W^2(x^2+10x+15))\ge0$.
+Since $\eta=p/W\ge1/2$, the incoming floor gives $F_\ell\ge g$.
+The event ceiling yields $q-1\le1-2t$ and
+$\rho=3(q+2t+x-1)/4\le3/2$. As $v_G-F_\ell\ge0$,
+\[
+ \hat v\le\frac52V_2-\frac32g<U(t).
+\]
+The strict inequality follows from the positive gap
+\begin{align*}
+ U(t)-\left(\frac52V_2-\frac32g\right)
+ =\frac{cx}{W^2}\bigl\{&\frac1{72}
+ +(\tfrac13-t)(\tfrac{13}{12}-2t)\\
+ &+(\tfrac58-t)(2t+x-1)+\tfrac5{24}x(1-x)\bigr\}>0.
+\end{align*}
+Each term records a boundary gap of the low-ratio domain.
+
+The shape derivative decreases with the incoming norm, logarithm and shape.
+For its norm slope, put $E=7W^2-Jq^2$ and $D=qJ-pW$.
+The bounds above give $E\ge11W^2/3$ and $0\le D\le9x/4$, while
+$(1-t)W-Xq\le-1$ and $W^2-Yq^2\le1$.
+Consequently the norm slope of the cleared shape derivative, divided by $4q^2$, is at most
+\[
+ xE\{(1-t)W-Xq\}+D(W^2-Yq^2)
+ \le-\frac{11}3x+\frac94x<0.
+\]
+Its logarithm and shape slopes are nonpositive as well.
+It therefore suffices to bound the shape derivative at $v=U(t)$, $\log q=y$ and $k=o$.
+At $k=o$,
 \[
 \mathcal H_k(U(t),y)\big|_{k=o}=\frac{tq}{2W^2}(d_0+d_1y+d_2y^2+d_3y^3),
 \]

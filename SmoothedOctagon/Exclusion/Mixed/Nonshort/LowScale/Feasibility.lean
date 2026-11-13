@@ -58,9 +58,9 @@ theorem nsr_jensen_T_anti {a x t : ℝ} (ha : 0 ≤ a) (hax : a ≤ x)
     nlinarith only [hmul, he, hp]
   exact le_of_mul_le_mul_right hres (by positivity)
 
-/-- Above the order boundary, the control floor is strictly above the endpoint norm floor. -/
-theorem nsr_floor_gt_g {t x q : ℝ} (hx : 0 < x) (ho : 1 ≤ 2 * t + x) (hq : 1 < q) :
-    1 - (1 - t) * (t + x) / (1 + x) ^ 2 < m2F ((t + x) / (1 + x)) q := by
+/-- Above the order boundary, the rational control floor exceeds the endpoint norm floor. -/
+theorem nsr_Fl_gt_g {t x q : ℝ} (hx : 0 < x) (ho : 1 ≤ 2 * t + x) (hq : 1 < q) :
+    1 - (1 - t) * (t + x) / (1 + x) ^ 2 < nsrFl t x q := by
   have hW : 0 < 1 + x := by positivity
   have hp : 0 < t + x := by linarith only [ho, hx]
   have hη : 1 / 2 ≤ (t + x) / (1 + x) := (le_div_iff₀ hW).mpr (by linarith only [ho])
@@ -76,8 +76,13 @@ theorem nsr_floor_gt_g {t x q : ℝ} (hx : 0 < x) (ho : 1 ≤ 2 * t + x) (hq : 1
   have hgap : 0 < nsrFl t x q - (1 - (1 - t) * (t + x) / (1 + x) ^ 2) := by
     rw [he]
     positivity
-  have hF := nsr_m2F_gt_Fl hq hp hW
-  linarith only [hgap, hF]
+  linarith only [hgap]
+
+/-- The control floor is also strictly above the endpoint norm floor. -/
+theorem nsr_floor_gt_g {t x q : ℝ} (hx : 0 < x) (ho : 1 ≤ 2 * t + x) (hq : 1 < q) :
+    1 - (1 - t) * (t + x) / (1 + x) ^ 2 < m2F ((t + x) / (1 + x)) q := by
+  have hp : 0 < t + x := by linarith only [ho, hx]
+  exact (nsr_Fl_gt_g hx ho hq).trans (nsr_m2F_gt_Fl hq hp (by linarith only [hx]))
 
 /-- The low-scale region stays below the natural cutoff `3/8`. -/
 theorem nsr_low_t_three_eighths {t x k v : ℝ} (ht1 : t < 1 / 2)

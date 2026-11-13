@@ -71,11 +71,9 @@ import all SmoothedOctagon.Exclusion.Mixed.Frames
 import all SmoothedOctagon.Exclusion.Mixed.Interface
 import all SmoothedOctagon.Exclusion.Mixed.Location
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Bernstein
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.CentreGap
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Core
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Bernstein
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.BoundaryRoot
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Casimir
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Clearing
@@ -87,7 +85,8 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.LowerShape
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.HighRatio.Shape
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LargeGap
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio
-import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.OrderShapeSigns
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.Bounds
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.Shape
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.UnitShape
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.UnitShape.Coefficients
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Circuit
