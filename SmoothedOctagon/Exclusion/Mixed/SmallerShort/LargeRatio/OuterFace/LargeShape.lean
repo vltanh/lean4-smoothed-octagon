@@ -220,7 +220,7 @@ noncomputable def lgrFLT (x a : ℝ) : List (List ℝ) :=
 
 theorem lgrFLT_link (x a b : ℝ) :
     lgrNoT (x + 1) a (a + b) (x + 74) 100 (ssDg x b a) = lgrH2 (lgrFLT x a) b 0 := by
-  obtain ⟨-, -, -, -, -, h6⟩ := lgr_H2_atoms [[x]] [[a]] [[0], [1]] b 0
+  have h6 := lgr_H2_cD [[x]] [[a]] [[0], [1]] b 0
   unfold lgrFLT
   rw [lgr_H2_NoTL, h6]
   simp [lgrH2, polyHorner, lgrAdd2, lgrAdd]
@@ -363,7 +363,7 @@ noncomputable def lgrFL8 (x a : ℝ) : List (List ℝ) :=
 
 theorem lgrFL8_link (x a b : ℝ) :
     lgrNo8 (x + 1) a (a + b) (x + 74) 100 (ssDg x b a) = lgrH2 (lgrFL8 x a) b 0 := by
-  obtain ⟨-, -, -, -, -, h6⟩ := lgr_H2_atoms [[x]] [[a]] [[0], [1]] b 0
+  have h6 := lgr_H2_cD [[x]] [[a]] [[0], [1]] b 0
   unfold lgrFL8
   rw [lgr_H2_No8L, h6]
   simp [lgrH2, polyHorner, lgrAdd2, lgrAdd]
@@ -506,7 +506,7 @@ noncomputable def lgrFL2 (x a : ℝ) : List (List ℝ) :=
 
 theorem lgrFL2_link (x a b : ℝ) :
     lgrNo2 (x + 1) a (a + b) (x + 74) 100 (ssDg x b a) = lgrH2 (lgrFL2 x a) b 0 := by
-  obtain ⟨-, -, -, -, -, h6⟩ := lgr_H2_atoms [[x]] [[a]] [[0], [1]] b 0
+  have h6 := lgr_H2_cD [[x]] [[a]] [[0], [1]] b 0
   unfold lgrFL2
   rw [lgr_H2_No2L, h6]
   simp [lgrH2, polyHorner, lgrAdd2, lgrAdd]

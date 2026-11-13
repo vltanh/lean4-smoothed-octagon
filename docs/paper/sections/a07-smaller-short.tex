@@ -2463,9 +2463,59 @@ sharper ceiling $\bar u\le\hat u$, which follows from
  =515x^3(9-x)+x^2(8331-877x)+1420x+62>0
 \]
 on $[0,9]$. The central cap also satisfies $(5x+4)/12\le m$ on this interval,
-so this ceiling comparison applies to (a) as well. Each outer test is then convex
-in $\beta$, and two shape derivatives on five fixed $\beta$-faces reduce every sign to a single
-rational evaluation.
+so this ceiling comparison applies to (a) as well.
+
+On the outer strip, normalize alpha by
+\[
+ e=\frac{55\alpha-22x-20}{13}\in[0,1],\qquad X=x-\frac{12}5\ge0.
+\]
+Use the beta endpoints $\beta_-=x+\frac35(\alpha-1)$ and $\beta_*$.
+The first lies below the permitted beta interval. For the tests at $u=\hat u$,
+write $\widetilde N_\sigma=-c_\sigma\alpha^4SVBF_\sigma$,
+where $(c_2,c_T,c_8)=(3528,392,7056)$. These are polynomial numerators, and
+\begin{align*}
+ \widetilde N_\sigma(x,\alpha,\beta_-)
+   &=\sum_{i=0}^{10}d^o_{\sigma,i}(e)X^i,\\
+ Q^4\widetilde N_\sigma(x,\alpha,\beta_*)
+   &=\sum_{i=0}^{18}c^o_{\sigma,i}(e)X^i.
+\end{align*}
+Each coefficient has degree at most six in $e$ and a positive lower bound
+obtained from $0\le e^j\le1$. Hence both endpoint tests are negative for
+every $x\ge12/5$.
+
+For the chord bound, use the partial-fraction form from (a) and set
+$J=7(x-1)^3/(4SM)$. The three residue bounds are
+\[
+ r_T\ge-\frac52J,\qquad r_8\ge r_T,\qquad r_2\ge0,
+ \qquad s_T\ge\frac{x^2}3,\quad s_8\ge\frac{8x^2}{27},\quad s_2=\alpha.
+\]
+To verify them, the expressions
+\[
+ Q_T=98\alpha^4\left(\frac{r_T}{J}+\frac52\right),\qquad
+ Q_2=98\alpha^4\frac{r_2}{J},\qquad
+ Q_s=84\alpha^3SM\left(s_T-\frac{x^2}3\right)
+\]
+are polynomials in $x,\alpha$. The expansions of $Q_2,Q_s$ in $X$ have
+positive coefficients on $0\le e\le1$. For $Q_T$, the coefficient bounds give
+\[
+ Q_T>300+X^3\left(17-X-\frac{X^2}5\right)
+     \ge300+\frac{X^3}5>0,
+ \qquad 0\le X\le\frac{33}5<7.
+\]
+The relations $r_8\ge r_T$ and $s_8=\frac89s_T+\frac19\alpha$
+follow directly from the partial fractions.
+
+Since $c_0(x)\le3/2$ and $\alpha\le m$, the upper endpoint satisfies
+$\beta_*+\alpha\le2x$. Thus the possible negative pole at $\beta=1$
+is compensated by the positive pole at $\beta=-\alpha$:
+\[
+ -\frac{5J}{2(x-1)^3}+\frac{8x^2}{27(2x)^3}
+ =-\frac{35}{8SM}+\frac1{27x}\ge0.
+\]
+Here $SM\ge120x$, since
+$SM-120x=35X^2+96X+209/5>0$. Both duration tests therefore satisfy the
+chord bound; the $\tau=2$ test has nonnegative residues already.
+Their negative endpoint values prove the strip signs and complete (b).
 \end{proof}
 
 \begin{proposition}[Faces of gate S1]\label{prop:ss-face-S1}

@@ -1,6 +1,7 @@
 module
 
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.OuterFace
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.OuterFace.Strip.Residues
 
 /-!
 # Smaller-short window, large ratio: the outer face, beta convexity on the strip
@@ -14,9 +15,10 @@ On the strip
 `k + min(r, 0)/(β₀ - 1)³ + s/B₁³ ≥ 0` (`lgr_strip_hk`) of `lgr_chord2`, with
 `β - 1 ≥ x - 1` and `B ≤ 2x` on the strip (`lgr_strip_chord_T`, `_8`, `_2`).
 
-The three residue signs are proved by the coefficient bound on the strip coordinates
-`X = x - 12/5`, `A = α - (22x + 20)/55` (`lgrQTf`, `lgrQ2f`, `lgrSRf`, their lists computed in
-Lean; one split at `x = 57/10`), and `R_T > x²/3` directly at the continued value `û(-α)`.
+The residue signs use the normalized strip coordinate `e = (55α-22x-20)/13`.
+Two polynomials have nonnegative coefficients in `X = x - 12/5`.
+The duration residue is bounded below by `300 + X³(17-X-X²/5)`,
+which is positive for `0 ≤ X ≤ 7` (`Strip/Residues`).
 
 ## Main API
 
@@ -201,123 +203,6 @@ theorem lgr_O2s_pf {x a b : ℝ} (hx : 1 < x) (ha : 0 < a) (hb : 1 < b) :
 
 /-! ### The residue signs on the strip -/
 
-/-- `98α⁴(U_T + 5/2) = (14αc + c²)(c² - Q₀) + 98α³c - 14α²(2c² - Q₀) + 245α⁴`, `c = α + 1`,
-`Q₀ = M₀S`. -/
-noncomputable def lgrQTf (x a : ℝ) : ℝ :=
-  (14 * a * (a + 1) + (a + 1) ^ 2) * ((a + 1) ^ 2 - (6 * a ^ 2 + 1) * (x + 1)) + 98 * a ^ 3 * (a + 1) -
-    14 * a ^ 2 * (2 * (a + 1) ^ 2 - (6 * a ^ 2 + 1) * (x + 1)) + 245 * a ^ 4
-
-/-- `98α⁴U₂ = 5c²(c² - Q₀) + 98α³c - 14α²(2c² - Q₀)`. -/
-noncomputable def lgrQ2f (x a : ℝ) : ℝ :=
-  5 * (a + 1) ^ 2 * ((a + 1) ^ 2 - (6 * a ^ 2 + 1) * (x + 1)) + 98 * a ^ 3 * (a + 1) -
-    14 * a ^ 2 * (2 * (a + 1) ^ 2 - (6 * a ^ 2 + 1) * (x + 1))
-
-/-- `84α³SM(R_T - x²/3)` at the continued value `û(-α)`: `3·4SM·Q + 84α⁴SM - 28α³SMx²`, the
-continued norm `4SM·Q` cleared with `U_I = 4SMu_∞`, `J_J = 4SMJ`, `P₀' = 4SM·P₀`. -/
-noncomputable def lgrSRf (x a : ℝ) : ℝ :=
-  let S := x + 1
-  let F4 := 4 * (x + 1) * (35 * x + 13)
-  let UI := 3 * (x + 1) * (35 * x + 13) + (x - 1) ^ 2
-  let JJ := 7 * (x - 1) ^ 3
-  let c := a + 1
-  let δ := 2 * (a - x)
-  let M0 := 6 * a ^ 2 + 1
-  let Q0 := M0 * S
-  let P0 := 4 * (35 * x + 13) * (M0 * (1 - S ^ 2) + (2 * S - 1) * S)
-  let C0 := M0 ^ 2 - M0 * S + S ^ 2
-  3 * (UI * δ ^ 2 * c ^ 2 - c * (UI * δ * (2 * c ^ 2 - Q0) + JJ * δ ^ 2 - δ * P0) +
-      (F4 * C0 - c ^ 2 * P0 + UI * c ^ 2 * (c ^ 2 - Q0) + JJ * δ * (2 * c ^ 2 - Q0)) -
-      F4 * (49 * a ^ 4) - JJ * c * (c ^ 2 - Q0)) +
-    84 * a ^ 4 * (x + 1) * (35 * x + 13) - 28 * a ^ 3 * (x + 1) * (35 * x + 13) * x ^ 2
-
-/-- `lgrQTf` on coefficient lists. -/
-noncomputable def lgrQTL (x a : List (List ℝ)) : List (List ℝ) :=
-  let c := lgrAdd2 a [[1]]
-  let c2 := lgrMul2 c c
-  let Q0 := lgrMul2 (lgrAdd2 (lgrSmul2 6 (lgrMul2 a a)) [[1]]) (lgrAdd2 x [[1]])
-  let a2 := lgrMul2 a a
-  lgrAdd2 (lgrMul2 (lgrAdd2 (lgrSmul2 14 (lgrMul2 a c)) c2) (lgrAdd2 c2 (lgrSmul2 (-1) Q0)))
-    (lgrAdd2 (lgrSmul2 98 (lgrMul2 (lgrMul2 a2 a) c))
-      (lgrAdd2 (lgrSmul2 (-14) (lgrMul2 a2 (lgrAdd2 (lgrSmul2 2 c2) (lgrSmul2 (-1) Q0))))
-        (lgrSmul2 245 (lgrMul2 a2 a2))))
-
-/-- `lgrQ2f` on coefficient lists. -/
-noncomputable def lgrQ2L (x a : List (List ℝ)) : List (List ℝ) :=
-  let c := lgrAdd2 a [[1]]
-  let c2 := lgrMul2 c c
-  let Q0 := lgrMul2 (lgrAdd2 (lgrSmul2 6 (lgrMul2 a a)) [[1]]) (lgrAdd2 x [[1]])
-  let a2 := lgrMul2 a a
-  lgrAdd2 (lgrSmul2 5 (lgrMul2 c2 (lgrAdd2 c2 (lgrSmul2 (-1) Q0))))
-    (lgrAdd2 (lgrSmul2 98 (lgrMul2 (lgrMul2 a2 a) c))
-      (lgrSmul2 (-14) (lgrMul2 a2 (lgrAdd2 (lgrSmul2 2 c2) (lgrSmul2 (-1) Q0)))))
-
-/-- `lgrSRf` on coefficient lists. -/
-noncomputable def lgrSRL (x a : List (List ℝ)) : List (List ℝ) :=
-  let S := lgrAdd2 x [[1]]
-  let M := lgrAdd2 (lgrSmul2 35 x) [[13]]
-  let SM := lgrMul2 S M
-  let F4 := lgrSmul2 4 SM
-  let xm := lgrAdd2 x [[-1]]
-  let UI := lgrAdd2 (lgrSmul2 3 SM) (lgrMul2 xm xm)
-  let JJ := lgrSmul2 7 (lgrMul2 (lgrMul2 xm xm) xm)
-  let c := lgrAdd2 a [[1]]
-  let c2 := lgrMul2 c c
-  let δ := lgrSmul2 2 (lgrAdd2 a (lgrSmul2 (-1) x))
-  let δ2 := lgrMul2 δ δ
-  let a2 := lgrMul2 a a
-  let M0 := lgrAdd2 (lgrSmul2 6 a2) [[1]]
-  let Q0 := lgrMul2 M0 S
-  let S2 := lgrMul2 S S
-  let P0 := lgrSmul2 4 (lgrMul2 M (lgrAdd2 (lgrMul2 M0 (lgrAdd2 [[1]] (lgrSmul2 (-1) S2)))
-    (lgrMul2 (lgrAdd2 (lgrSmul2 2 S) [[-1]]) S)))
-  let C0 := lgrAdd2 (lgrMul2 M0 M0) (lgrAdd2 (lgrSmul2 (-1) (lgrMul2 M0 S)) S2)
-  let E2 := lgrAdd2 (lgrSmul2 2 c2) (lgrSmul2 (-1) Q0)
-  let E1 := lgrAdd2 c2 (lgrSmul2 (-1) Q0)
-  lgrAdd2 (lgrSmul2 3 (lgrAdd2 (lgrMul2 (lgrMul2 UI δ2) c2)
-      (lgrAdd2 (lgrSmul2 (-1) (lgrMul2 c (lgrAdd2 (lgrMul2 (lgrMul2 UI δ) E2)
-        (lgrAdd2 (lgrMul2 JJ δ2) (lgrSmul2 (-1) (lgrMul2 δ P0))))))
-      (lgrAdd2 (lgrAdd2 (lgrMul2 F4 C0) (lgrAdd2 (lgrSmul2 (-1) (lgrMul2 c2 P0))
-          (lgrAdd2 (lgrMul2 (lgrMul2 UI c2) E1) (lgrMul2 (lgrMul2 JJ δ) E2))))
-        (lgrAdd2 (lgrSmul2 (-49) (lgrMul2 F4 (lgrMul2 a2 a2)))
-          (lgrSmul2 (-1) (lgrMul2 (lgrMul2 JJ c) E1)))))))
-    (lgrAdd2 (lgrSmul2 84 (lgrMul2 (lgrMul2 a2 a2) SM))
-      (lgrSmul2 (-28) (lgrMul2 (lgrMul2 (lgrMul2 a2 a) SM) (lgrMul2 x x))))
-
-theorem lgr_H2_QTL (x a : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrQTL x a) X A = lgrQTf (lgrH2 x X A) (lgrH2 a X A) := by
-  unfold lgrQTL lgrQTf
-  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
-  ring
-
-theorem lgr_H2_Q2L (x a : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrQ2L x a) X A = lgrQ2f (lgrH2 x X A) (lgrH2 a X A) := by
-  unfold lgrQ2L lgrQ2f
-  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
-  ring
-
-theorem lgr_H2_SRL (x a : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrSRL x a) X A = lgrSRf (lgrH2 x X A) (lgrH2 a X A) := by
-  unfold lgrSRL lgrSRf
-  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
-  ring
-
-/-- The strip coordinates `X = x - 12/5`, `A = α - (22x + 20)/55`. -/
-theorem lgr_H2_strip (x a : ℝ) :
-    lgrH2 [[12 / 5], [1]] (x - 12 / 5) (a - (22 * x + 20) / 55) = x ∧
-      lgrH2 [[364 / 275, 1], [2 / 5]] (x - 12 / 5) (a - (22 * x + 20) / 55) = a := by
-  refine ⟨by simp [lgrH2, polyHorner], by simp [lgrH2, polyHorner]; ring⟩
-
-/-- Positivity of a formula on the strip from its list by the bivariate cover. -/
-theorem lgr_strip_pos {f : ℝ → ℝ → ℝ} {L : List (List ℝ) → List (List ℝ) → List (List ℝ)}
-    (hL : ∀ x a X A, lgrH2 (L x a) X A = f (lgrH2 x X A) (lgrH2 a X A)) (r : List ℝ)
-    (hc : lgrCov2 (L [[12 / 5], [1]] [[364 / 275, 1], [2 / 5]]) (13 / 55) (33 / 5) (0 :: r))
-    {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : (22 * x + 20) / 55 ≤ a)
-    (ham : a ≤ (2 * x + 3) / 5) : 0 < f x a := by
-  have e := hL [[12 / 5], [1]] [[364 / 275, 1], [2 / 5]] (x - 12 / 5) (a - (22 * x + 20) / 55)
-  rw [(lgr_H2_strip x a).1, (lgr_H2_strip x a).2] at e
-  rw [← e]
-  exact lgr_cov2_pos _ _ _ 0 r hc _ _ (by linarith) (by linarith) (by linarith) (by linarith)
-
 theorem lgr_strip_rT {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : (22 * x + 20) / 55 ≤ a)
     (ham : a ≤ (2 * x + 3) / 5) : -(5 / 2) * lgrJ x ≤ lgrord x a 7 := by
   have hx1 : 0 < x - 1 := by linarith
@@ -327,13 +212,12 @@ theorem lgr_strip_rT {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : (22 *
     unfold lgrord lgroWr lgroLr lgroQ0 lgrJ lgrQTf
     field_simp
     ring
-  have hP := lgr_strip_pos lgr_H2_QTL [33 / 10] (by norm_num [lgrQTL, lgrMul2, lgrMul, lgrSmul2,
-    lgrCov2, lgrLow2, lgrShift2, lgrAdd2, lgrAdd, lgrSmul, lgrLow, lgrNeg]) hx hx9 ha ham
+  have hP := S0Outer.Residues.QT_pos hx hx9 ha ham
   have hJ : 0 ≤ lgrJ x := lgr_J_nonneg (by linarith)
   have : 0 ≤ lgrJ x * lgrQTf x a / (98 * a ^ 4) := by positivity
   linarith
 
-theorem lgr_strip_r2 {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : (22 * x + 20) / 55 ≤ a)
+theorem lgr_strip_r2 {x a : ℝ} (hx : 12 / 5 ≤ x) (_hx9 : x ≤ 9) (ha : (22 * x + 20) / 55 ≤ a)
     (ham : a ≤ (2 * x + 3) / 5) : 0 ≤ lgror2 x a := by
   have hx1 : 0 < x - 1 := by linarith
   have ha0 : 0 < a := by linarith
@@ -341,12 +225,11 @@ theorem lgr_strip_r2 {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : (22 *
     unfold lgror2 lgroWr lgroLr lgroQ0 lgrJ lgrQ2f
     field_simp
     ring
-  have hP := lgr_strip_pos lgr_H2_Q2L [] (by norm_num [lgrQ2L, lgrMul2, lgrMul, lgrSmul2,
-    lgrCov2, lgrLow2, lgrShift2, lgrAdd2, lgrAdd, lgrSmul, lgrLow, lgrNeg]) hx hx9 ha ham
+  have hP := S0Outer.Residues.Q2_pos hx ha ham
   have hJ : 0 ≤ lgrJ x := lgr_J_nonneg (by linarith)
   rw [e]; positivity
 
-theorem lgr_strip_sT {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : (22 * x + 20) / 55 ≤ a)
+theorem lgr_strip_sT {x a : ℝ} (hx : 12 / 5 ≤ x) (_hx9 : x ≤ 9) (ha : (22 * x + 20) / 55 ≤ a)
     (ham : a ≤ (2 * x + 3) / 5) : x ^ 2 / 3 ≤ lgrosd x a 7 := by
   have hx1 : 0 < x - 1 := by linarith
   have ha0 : 0 < a := by linarith
@@ -355,8 +238,7 @@ theorem lgr_strip_sT {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : (22 *
     unfold lgrosd lgroQd lgrWk lgroWl lgroWm lgroWr lgroQ0 lgroP0 lgroC0 lgrui lgrJ lgrSRf
     field_simp
     ring
-  have hP := lgr_strip_pos lgr_H2_SRL [] (by norm_num [lgrSRL, lgrMul2, lgrMul, lgrSmul2,
-    lgrCov2, lgrLow2, lgrShift2, lgrAdd2, lgrAdd, lgrSmul, lgrLow, lgrNeg]) hx hx9 ha ham
+  have hP := S0Outer.Residues.SR_pos hx ha ham
   have : 0 ≤ lgrSRf x a / (84 * a ^ 3 * (x + 1) * (35 * x + 13)) := by positivity
   linarith
 
@@ -490,53 +372,5 @@ theorem lgr_strip_chord_2 {x a b b₁ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
   have hk : 0 ≤ lgrok2 x a := by unfold lgrok2 lgrWk lgrui; positivity
   have : 0 < b₁ - 1 - -(a + 1) := by linarith
   positivity
-
-/-! ### Strip faces -/
-
-theorem lgr_horner_zero (l : List ℝ) : polyHorner l 0 = lgrLow 0 l := by
-  cases l with
-  | nil => simp [polyHorner, lgrLow]
-  | cons c p => simp [polyHorner, lgrLow]
-
-/-- **A strip face**: a positive `A`-derivative on the rectangle `0 ≤ X ≤ W`,
-`0 ≤ A ≤ 13/55` (`A = α - α_f(x)`) and a positive value on the lower edge `A = 0` (`α = α_f(x)`)
-give positivity. -/
-theorem lgr_strip_face (P : List (List ℝ)) {W : ℝ} (hd : 0 < lgrLow2 (13 / 55) W (P.map lgrD))
-    (hv : ∀ X, 0 ≤ X → X ≤ W → 0 < polyHorner (P.map (lgrLow 0)) X) {X A : ℝ} (hX : 0 ≤ X)
-    (hXW : X ≤ W) (hA : 0 ≤ A) (hA' : A ≤ 13 / 55) : 0 < lgrH2 P X A := by
-  have h0 : lgrH2 P X 0 = polyHorner (P.map (lgrLow 0)) X := by
-    unfold lgrH2; congr 1; exact List.map_congr_left (fun l _ => lgr_horner_zero l)
-  have hm := lgr_mono_A (P := P) (X := X) (A₁ := 0) (A₂ := A)
-    (fun A'' h1 h2 => (hd.le.trans (lgr_low2_le h1 (h2.trans hA') hX hXW _))) hA
-  have := hv X hX hXW
-  linarith
-
-/-- **An outer face numerator on lists** (`u = û`), from lists for `x`, `α`, `β`. -/
-noncomputable def lgrFNo (e₁ e₂ e₃ e₄ c₁ c₂ c₃ : ℝ) (x a b : List (List ℝ)) : List (List ℝ) :=
-  lgrNoL e₁ e₂ e₃ e₄ c₁ c₂ c₃ (lgrcS x) a (lgrAdd2 a b) (lgrcU x b) (lgrcV x b) (lgrcD x a b)
-
-theorem lgr_H2_FNoT (x a b : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrFNo 56 4 56 392 336 (-189) 2352 x a b) X A =
-      lgrNoT (lgrH2 x X A + 1) (lgrH2 a X A) (lgrH2 a X A + lgrH2 b X A)
-        (lgrUc (lgrH2 x X A) (lgrH2 b X A)) (lgrVc (lgrH2 x X A) (lgrH2 b X A))
-        (ssDg (lgrH2 x X A) (lgrH2 b X A) (lgrH2 a X A)) := by
-  obtain ⟨h1, -, h3, h4, h5, h6⟩ := lgr_H2_atoms x a b X A
-  unfold lgrFNo; rw [lgr_H2_NoTL, h1, h3, h4, h5, h6]
-
-theorem lgr_H2_FNo8 (x a b : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrFNo 1008 72 896 7056 5922 (-2618) 36848 x a b) X A =
-      lgrNo8 (lgrH2 x X A + 1) (lgrH2 a X A) (lgrH2 a X A + lgrH2 b X A)
-        (lgrUc (lgrH2 x X A) (lgrH2 b X A)) (lgrVc (lgrH2 x X A) (lgrH2 b X A))
-        (ssDg (lgrH2 x X A) (lgrH2 b X A) (lgrH2 a X A)) := by
-  obtain ⟨h1, -, h3, h4, h5, h6⟩ := lgr_H2_atoms x a b X A
-  unfold lgrFNo; rw [lgr_H2_No8L, h1, h3, h4, h5, h6]
-
-theorem lgr_H2_FNo2 (x a b : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrFNo 504 180 0 3528 2268 7903 (-3528) x a b) X A =
-      lgrNo2 (lgrH2 x X A + 1) (lgrH2 a X A) (lgrH2 a X A + lgrH2 b X A)
-        (lgrUc (lgrH2 x X A) (lgrH2 b X A)) (lgrVc (lgrH2 x X A) (lgrH2 b X A))
-        (ssDg (lgrH2 x X A) (lgrH2 b X A) (lgrH2 a X A)) := by
-  obtain ⟨h1, -, h3, h4, h5, h6⟩ := lgr_H2_atoms x a b X A
-  unfold lgrFNo; rw [lgr_H2_No2L, h1, h3, h4, h5, h6]
 
 end SmoothedOctagon

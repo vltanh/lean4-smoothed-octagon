@@ -21,22 +21,21 @@ At the outer scale `q = 1/7` the floor-weighted face value is
   `lgr_chord2` lets the pole at `β = -α` absorb the negative residue at `β = 1`, from
   `U_T > -5/2`, `U₂ > 0` and `R_T > x²/3` (`lgr_strip_chord_T`, …).
 
-The residue signs `U_T > -5/2`, `U₂ > 0` are proved by the uniform coefficient bound (`lgrCov2`) on
-the strip
-coordinates `X = x - 12/5`, `A = α - α_f(x)`, and `R_T > x²/3` directly at `u = û(-α)`.
+The residue signs follow from normalized strip polynomials and one
+power-tail estimate (`OuterFace/Strip/Residues`).
 
 ## Main API
 
 * `lgrGo`, `lgr_out_F`, `lgrOT`, `lgrO8`, `lgrO2`.
 * `lgr_OT_mono`, `lgr_O8_mono`, `lgr_O2_mono`; `lgr_ubar_le_ub`, `lgro_ubar_le_uhat`.
-* `lgr_chord2`, `lgrCov2`, `lgr_cov2_pos`.
+* `lgr_chord2`.
 -/
 
 @[expose] public section
 
 namespace SmoothedOctagon
 
-/-! ### Tools: a chord bound with two compensating poles, and the bivariate cover -/
+/-! ### A chord bound with two compensating poles -/
 
 /-- **The chord bound, second form**: for `f(y) = k y² + l y + m + r/(y - p) + s/(y - q)` on
 `[b₀, b₁]` with both poles left of `b₀`, `s ≥ 0` and `k + min(r, 0)/(b₀ - p)³ + s/(b₁ - q)³ ≥ 0`,
@@ -99,33 +98,6 @@ theorem lgr_chord2 {k l m r s p q b₀ b₁ y : ℝ} (hp : p < b₀) (hq : q < b
     have e2 : (y - b₀) * F1 ≤ (y - b₀) * max F0 F1 := mul_le_mul_of_nonneg_left hM1 (by linarith)
     nlinarith
   exact le_of_mul_le_mul_left h2 hw
-
-/-- **The bivariate cover**: `lgrCov2 P H_A e [p₀, …, pₙ]` asks the bivariate coefficient bound on
-each outer piece `[pᵢ, pᵢ₊₁]` (`pₙ₊₁ = e`) after an outer Taylor shift, inner `0 ≤ A ≤ H_A`. -/
-def lgrCov2 (P : List (List ℝ)) (HA e : ℝ) : List ℝ → Prop
-  | [] => True
-  | [p] => 0 < lgrLow2 HA (e - p) (lgrShift2 p P)
-  | p :: q :: r => 0 < lgrLow2 HA (q - p) (lgrShift2 p P) ∧ lgrCov2 P HA e (q :: r)
-
-theorem lgr_cov2_pos (P : List (List ℝ)) (HA e : ℝ) :
-    ∀ (p : ℝ) (r : List ℝ), lgrCov2 P HA e (p :: r) →
-      ∀ X A, p ≤ X → X ≤ e → 0 ≤ A → A ≤ HA → 0 < lgrH2 P X A := by
-  have one : ∀ p q X A, 0 < lgrLow2 HA (q - p) (lgrShift2 p P) → p ≤ X → X ≤ q → 0 ≤ A →
-      A ≤ HA → 0 < lgrH2 P X A := by
-    intro p q X A h h1 h2 h3 h4
-    have e : lgrH2 P X A = lgrH2 (lgrShift2 p P) (X - p) A := by
-      rw [lgr_H2_shift2]; congr 1; ring
-    rw [e]
-    exact h.trans_le (lgr_low2_le h3 h4 (by linarith) (by linarith) _)
-  intro p r
-  induction r generalizing p with
-  | nil => intro h X A h1 h2 h3 h4; exact one p e X A h h1 h2 h3 h4
-  | cons q r ih =>
-    intro h X A h1 h2 h3 h4
-    obtain ⟨hq, hr⟩ := h
-    rcases le_total X q with hXq | hXq
-    · exact one p q X A hq h1 hXq h3 h4
-    · exact ih q hr X A hXq h2 h3 h4
 
 /-! ### The outer face value -/
 
@@ -357,6 +329,17 @@ theorem lgro_ubar_le_uhat {x a b : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9)
       (x - 1 + 1 / 8 * (b - x)) / (b - 1) := by
     unfold ssUhat; ring
   rw [e]; exact h
+
+/-- `D = α² + 2αβ + 1 + 2x - 2βx`. -/
+noncomputable def lgrcD (x a b : List (List ℝ)) : List (List ℝ) :=
+  lgrAdd2 (lgrMul2 a a) (lgrAdd2 (lgrSmul2 2 (lgrMul2 a b)) (lgrAdd2 [[1]]
+    (lgrAdd2 (lgrSmul2 2 x) (lgrSmul2 (-2) (lgrMul2 b x)))))
+
+theorem lgr_H2_cD (x a b : List (List ℝ)) (X A : ℝ) :
+    lgrH2 (lgrcD x a b) X A = ssDg (lgrH2 x X A) (lgrH2 b X A) (lgrH2 a X A) := by
+  unfold lgrcD ssDg
+  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
+  ring
 
 /-! ### The cleared outer numerators -/
 

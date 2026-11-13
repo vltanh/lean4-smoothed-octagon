@@ -29,15 +29,14 @@ upper end (`lgr_cen_two_chord`, `lgr_cen_dur_chord`), once
 The two residue-polynomial signs use the normalized order coordinates
 `X = x - 12/5`, `a = 1 + e(5x-8)/12`, with `0 ≤ e ≤ 1`
 (`CentralFace/Convexity`). Their coefficients in `X` are nonnegative.
-The cleared numerators `lgrN2`, `lgrNT`, `lgrN8` also have coefficient-list
-forms for the outer-face comparisons.
+The cleared numerators `lgrN2`, `lgrNT`, `lgrN8` connect the rational tests
+to the polynomial boundary signs.
 
 ## Main API
 
 * `lgrWn`, `lgrLn`, `lgrGc`, `lgr_cen_F`; `lgrUc`, `lgrVc` (`û = U/V`).
 * `lgr_cen_two_chord`, `lgr_cen_dur_chord`: the beta reductions.
-* `lgrN2`, `lgrNT`, `lgrN8`, `lgr_G2_neg`, …; on lists `lgrFNc`, `lgr_H2_FN2`, `lgr_H2_FNT`,
-  `lgr_H2_FN8`.
+* `lgrN2`, `lgrNT`, `lgrN8`, `lgr_G2_neg`, `lgr_GT_neg`, `lgr_G8_neg`.
 -/
 
 @[expose] public section
@@ -196,10 +195,6 @@ theorem lgr_pf_dur {S K a c ui J D1 δ η γ ℓ : ℝ} (hK : K ≠ 0) (ha : a �
 
 
 /-! ### The residue polynomial for the tau-two test -/
-
-theorem lgr_H2_base (l : ℝ) (x a : ℝ) :
-    lgrH2 [[l], [1]] (x - l) (a - 1) = x ∧ lgrH2 [[1, 1]] (x - l) (a - 1) = a := by
-  constructor <;> simp [lgrH2, polyHorner]
 
 theorem lgr_Phi2_pos {x a : ℝ} (hx : 12 / 5 ≤ x) (_hx9 : x ≤ 9) (ha : 1 ≤ a)
     (ha' : a ≤ (5 * x + 4) / 12) : 0 < lgrPhi2f x a := by
@@ -601,153 +596,5 @@ theorem lgr_G8_neg {x a b : ℝ} (hx : 1 < x) (ha : 0 < a) (hb : 1 < b)
     lgr_N8_eq hK.ne' ha.ne' hB.ne' hV.ne']
   apply div_neg_of_neg_of_pos (by linarith)
   positivity
-
-/-! ### The cleared numerators on coefficient lists -/
-
-/-- `lgrWN` on lists. -/
-noncomputable def lgrWNL (S U V D : List (List ℝ)) : List (List ℝ) :=
-  lgrAdd2 (lgrMul2 (lgrMul2 (lgrMul2 S S) (lgrAdd2 (lgrMul2 S S) (lgrAdd2 (lgrSmul2 (-1) S) [[1]]))) V)
-    (lgrAdd2 (lgrMul2 (lgrMul2 D D) U)
-      (lgrSmul2 (-1) (lgrMul2 D (lgrAdd2 (lgrMul2 (lgrMul2 (lgrMul2 S S) S) (lgrAdd2 U (lgrSmul2 (-1) V)))
-        (lgrMul2 (lgrAdd2 (lgrSmul2 3 S) [[-1]]) V)))))
-
-/-- `lgrLN` on lists. -/
-noncomputable def lgrLNL (S U V D : List (List ℝ)) : List (List ℝ) :=
-  lgrAdd2 (lgrSmul2 2 (lgrMul2 D U))
-    (lgrSmul2 (-1) (lgrAdd2 (lgrMul2 (lgrMul2 (lgrMul2 S S) S) (lgrAdd2 U (lgrSmul2 (-1) V)))
-      (lgrMul2 (lgrAdd2 (lgrSmul2 3 S) [[-1]]) V)))
-
-theorem lgr_H2_WNL (S U V D : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrWNL S U V D) X A =
-      lgrWN (lgrH2 S X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) := by
-  unfold lgrWNL lgrWN
-  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
-  ring
-
-theorem lgr_H2_LNL (S U V D : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrLNL S U V D) X A =
-      lgrLN (lgrH2 S X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) := by
-  unfold lgrLNL lgrLN
-  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
-  ring
-
-/-- The `V`-bracket of a cleared numerator, `c₁B²K² + c₂α²B²K + c₃αBK² + c₄α³BK + c₅K³ + c₆α²K²`,
-on lists. -/
-noncomputable def lgrBrL (c₁ c₂ c₃ c₄ c₅ c₆ : ℝ) (K a B : List (List ℝ)) : List (List ℝ) :=
-  let B2 := lgrMul2 B B
-  let K2 := lgrMul2 K K
-  let a2 := lgrMul2 a a
-  lgrAdd2 (lgrSmul2 c₁ (lgrMul2 B2 K2)) (lgrAdd2 (lgrSmul2 c₂ (lgrMul2 (lgrMul2 a2 B2) K))
-    (lgrAdd2 (lgrSmul2 c₃ (lgrMul2 (lgrMul2 a B) K2)) (lgrAdd2 (lgrSmul2 c₄ (lgrMul2 (lgrMul2 (lgrMul2 a2 a) B) K))
-      (lgrAdd2 (lgrSmul2 c₅ (lgrMul2 K2 K)) (lgrSmul2 c₆ (lgrMul2 a2 K2))))))
-
-/-- A cleared central numerator on lists:
-`e₁αBK·L - (e₂αB + e₃K)W - e₄B²K²U + V·bracket` (`lgrN2`, `lgrNT`, `lgrN8`). -/
-noncomputable def lgrNcL (e₁ e₂ e₃ e₄ c₁ c₂ c₃ c₄ c₅ c₆ : ℝ) (S K a B U V D : List (List ℝ)) :
-    List (List ℝ) :=
-  lgrAdd2 (lgrSmul2 e₁ (lgrMul2 (lgrMul2 (lgrMul2 a B) K) (lgrLNL S U V D)))
-    (lgrAdd2 (lgrSmul2 (-1) (lgrMul2 (lgrAdd2 (lgrSmul2 e₂ (lgrMul2 a B)) (lgrSmul2 e₃ K)) (lgrWNL S U V D)))
-      (lgrAdd2 (lgrSmul2 (-e₄) (lgrMul2 (lgrMul2 (lgrMul2 B B) (lgrMul2 K K)) U))
-        (lgrMul2 V (lgrBrL c₁ c₂ c₃ c₄ c₅ c₆ K a B))))
-
-theorem lgr_H2_NcL (e₁ e₂ e₃ e₄ c₁ c₂ c₃ c₄ c₅ c₆ : ℝ) (S K a B U V D : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrNcL e₁ e₂ e₃ e₄ c₁ c₂ c₃ c₄ c₅ c₆ S K a B U V D) X A =
-      e₁ * lgrH2 a X A * lgrH2 B X A * lgrH2 K X A *
-          lgrLN (lgrH2 S X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) -
-        (e₂ * lgrH2 a X A * lgrH2 B X A + e₃ * lgrH2 K X A) *
-          lgrWN (lgrH2 S X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) -
-        e₄ * lgrH2 B X A ^ 2 * lgrH2 K X A ^ 2 * lgrH2 U X A +
-        lgrH2 V X A * (c₁ * lgrH2 B X A ^ 2 * lgrH2 K X A ^ 2 +
-          c₂ * lgrH2 a X A ^ 2 * lgrH2 B X A ^ 2 * lgrH2 K X A +
-          c₃ * lgrH2 a X A * lgrH2 B X A * lgrH2 K X A ^ 2 +
-          c₄ * lgrH2 a X A ^ 3 * lgrH2 B X A * lgrH2 K X A + c₅ * lgrH2 K X A ^ 3 +
-          c₆ * lgrH2 a X A ^ 2 * lgrH2 K X A ^ 2) := by
-  unfold lgrNcL lgrBrL
-  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_WNL, lgr_H2_LNL]
-  generalize lgrWN (lgrH2 S X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) = W
-  generalize lgrLN (lgrH2 S X A) (lgrH2 U X A) (lgrH2 V X A) (lgrH2 D X A) = L
-  ring
-
-/-- The central atoms on lists, from lists for `x`, `α`, `β`: `S = x + 1`. -/
-noncomputable def lgrcS (x : List (List ℝ)) : List (List ℝ) := lgrAdd2 x [[1]]
-/-- `SM = (x + 1)(35x + 13)`. -/
-noncomputable def lgrcSM (x : List (List ℝ)) : List (List ℝ) :=
-  lgrMul2 (lgrcS x) (lgrAdd2 (lgrSmul2 35 x) [[13]])
-/-- `K = x² + 2x + α²`. -/
-noncomputable def lgrcK (x a : List (List ℝ)) : List (List ℝ) :=
-  lgrAdd2 (lgrMul2 x x) (lgrAdd2 (lgrSmul2 2 x) (lgrMul2 a a))
-/-- `U = 3SM(β - 1) + (x - 1)²(β + 7x - 8)`. -/
-noncomputable def lgrcU (x b : List (List ℝ)) : List (List ℝ) :=
-  lgrAdd2 (lgrSmul2 3 (lgrMul2 (lgrcSM x) (lgrAdd2 b [[-1]])))
-    (lgrMul2 (lgrMul2 (lgrAdd2 x [[-1]]) (lgrAdd2 x [[-1]])) (lgrAdd2 b (lgrAdd2 (lgrSmul2 7 x) [[-8]])))
-/-- `V = 4SM(β - 1)`. -/
-noncomputable def lgrcV (x b : List (List ℝ)) : List (List ℝ) :=
-  lgrSmul2 4 (lgrMul2 (lgrcSM x) (lgrAdd2 b [[-1]]))
-/-- `D = α² + 2αβ + 1 + 2x - 2βx`. -/
-noncomputable def lgrcD (x a b : List (List ℝ)) : List (List ℝ) :=
-  lgrAdd2 (lgrMul2 a a) (lgrAdd2 (lgrSmul2 2 (lgrMul2 a b)) (lgrAdd2 [[1]]
-    (lgrAdd2 (lgrSmul2 2 x) (lgrSmul2 (-2) (lgrMul2 b x)))))
-
-/-- **A central face numerator on lists** with coefficients `e`, `c` (computed from the factored
-formula, never printed). -/
-noncomputable def lgrFNc (e₁ e₂ e₃ e₄ c₁ c₂ c₃ c₄ c₅ c₆ : ℝ) (x a b : List (List ℝ)) :
-    List (List ℝ) :=
-  lgrNcL e₁ e₂ e₃ e₄ c₁ c₂ c₃ c₄ c₅ c₆ (lgrcS x) (lgrcK x a) a (lgrAdd2 a b) (lgrcU x b) (lgrcV x b)
-    (lgrcD x a b)
-
-theorem lgr_H2_atoms (x a b : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrcS x) X A = lgrH2 x X A + 1 ∧
-    lgrH2 (lgrcK x a) X A = lgrH2 x X A ^ 2 + 2 * lgrH2 x X A + lgrH2 a X A ^ 2 ∧
-    lgrH2 (lgrAdd2 a b) X A = lgrH2 a X A + lgrH2 b X A ∧
-    lgrH2 (lgrcU x b) X A = lgrUc (lgrH2 x X A) (lgrH2 b X A) ∧
-    lgrH2 (lgrcV x b) X A = lgrVc (lgrH2 x X A) (lgrH2 b X A) ∧
-    lgrH2 (lgrcD x a b) X A = ssDg (lgrH2 x X A) (lgrH2 b X A) (lgrH2 a X A) := by
-  unfold lgrcU lgrcV lgrcD lgrcK lgrcSM lgrcS lgrUc lgrVc ssDg
-  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
-  refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;> (try trivial) <;> ring
-
-theorem lgr_H2_FN2 (x a b : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrFNc 72 180 0 72 72 (-180) 151 72 0 (-72) x a b) X A =
-      lgrN2 (lgrH2 x X A + 1) (lgrH2 x X A ^ 2 + 2 * lgrH2 x X A + lgrH2 a X A ^ 2) (lgrH2 a X A)
-        (lgrH2 a X A + lgrH2 b X A) (lgrUc (lgrH2 x X A) (lgrH2 b X A))
-        (lgrVc (lgrH2 x X A) (lgrH2 b X A)) (ssDg (lgrH2 x X A) (lgrH2 b X A) (lgrH2 a X A)) := by
-  obtain ⟨h1, h2, h3, h4, h5, h6⟩ := lgr_H2_atoms x a b X A
-  unfold lgrFNc
-  rw [lgr_H2_NcL, h1, h2, h3, h4, h5, h6]
-  unfold lgrN2
-  generalize lgrWN _ _ _ _ = W
-  generalize lgrLN _ _ _ _ = L
-  ring
-
-theorem lgr_H2_FNT (x a b : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrFNc 8 4 8 8 8 (-8) (-5) 8 8 (-8) x a b) X A =
-      lgrNT (lgrH2 x X A + 1) (lgrH2 x X A ^ 2 + 2 * lgrH2 x X A + lgrH2 a X A ^ 2) (lgrH2 a X A)
-        (lgrH2 a X A + lgrH2 b X A) (lgrUc (lgrH2 x X A) (lgrH2 b X A))
-        (lgrVc (lgrH2 x X A) (lgrH2 b X A)) (ssDg (lgrH2 x X A) (lgrH2 b X A) (lgrH2 a X A)) := by
-  obtain ⟨h1, h2, h3, h4, h5, h6⟩ := lgr_H2_atoms x a b X A
-  unfold lgrFNc
-  rw [lgr_H2_NcL, h1, h2, h3, h4, h5, h6]
-  unfold lgrNT
-  generalize lgrWN _ _ _ _ = W
-  generalize lgrLN _ _ _ _ = L
-  ring
-
-theorem lgr_H2_FN8 (x a b : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrFNc 72 36 64 72 72 (-81) (-37) 72 64 (-72) x a b) X A =
-      lgrN8 (lgrH2 x X A + 1) (lgrH2 x X A ^ 2 + 2 * lgrH2 x X A + lgrH2 a X A ^ 2) (lgrH2 a X A)
-        (lgrH2 a X A + lgrH2 b X A) (lgrUc (lgrH2 x X A) (lgrH2 b X A))
-        (lgrVc (lgrH2 x X A) (lgrH2 b X A)) (ssDg (lgrH2 x X A) (lgrH2 b X A) (lgrH2 a X A)) := by
-  obtain ⟨h1, h2, h3, h4, h5, h6⟩ := lgr_H2_atoms x a b X A
-  unfold lgrFNc
-  rw [lgr_H2_NcL, h1, h2, h3, h4, h5, h6]
-  unfold lgrN8
-  generalize lgrWN _ _ _ _ = W
-  generalize lgrLN _ _ _ _ = L
-  ring
-
-/-- The list for `x + c(α - 1) = l + X + cA` in `X = x - l`, `A = α - 1`. -/
-theorem lgr_H2_lin (l c x a : ℝ) :
-    lgrH2 [[l, c], [1]] (x - l) (a - 1) = x + c * (a - 1) := by
-  simp [lgrH2, polyHorner]; ring
 
 end SmoothedOctagon
