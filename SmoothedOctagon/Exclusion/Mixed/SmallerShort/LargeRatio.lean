@@ -142,68 +142,13 @@ theorem lgr_face_alpha {x al : ℝ} (hx : 0 < x) (hal : 0 ≤ al) :
     nlinarith [mul_le_mul hc.le hc.le hal (by positivity)]
 
 /-- **`ū ≤ û` on the central face domain**: for `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12`,
-`x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`, `ū(x, β) ≤ û(x, β)` (`P_t(x) > 0`). -/
+`x ≤ β ≤ x + x(7x + 1)(α - 1)/(4x² + 11x + 1)`, `ū(x, β) ≤ û(x, β)`. -/
 theorem lgr_ubar_le_uhat {x al be : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (_hal : 1 ≤ al)
     (hal' : al ≤ (5 * x + 4) / 12) (hxb : x ≤ be)
     (hb : be ≤ x + x * (7 * x + 1) * (al - 1) / (4 * x ^ 2 + 11 * x + 1)) :
     ssUbar x be ≤ ssUhat x be := by
-  have hx0 : 0 < x := by linarith
-  have hb1 : 0 < be - 1 := by linarith
-  have hR : 0 < 4 * x ^ 2 + 11 * x + 1 := by positivity
-  have e : ssUhat x be - ssUbar x be = (be - x) * (12 * x ^ 2 * (x - 1) ^ 2 -
-      (be - x) ^ 2 * ((1 + x) * (35 * x + 13))) /
-      (48 * x ^ 2 * ((1 + x) * (35 * x + 13)) * (be - 1)) := by
-    unfold ssUhat ssUbar
-    field_simp
-    ring
-  -- `β - x ≤ B₀ = x(7x + 1)(5x - 8)/(12R)`
-  have hB : be - x ≤ x * (7 * x + 1) * (5 * x - 8) / (12 * (4 * x ^ 2 + 11 * x + 1)) := by
-    have h1 : x * (7 * x + 1) * (al - 1) ≤ x * (7 * x + 1) * ((5 * x - 8) / 12) :=
-      mul_le_mul_of_nonneg_left (by linarith) (by positivity)
-    have h2 := div_le_div_of_nonneg_right h1 hR.le
-    rw [show x * (7 * x + 1) * ((5 * x - 8) / 12) / (4 * x ^ 2 + 11 * x + 1) =
-      x * (7 * x + 1) * (5 * x - 8) / (12 * (4 * x ^ 2 + 11 * x + 1)) by field_simp] at h2
-    linarith
-  -- `P_t(x) > 0`
-  have hbr : 0 < x ^ 2 * (162918 - 15227 * x) - 335862 := by
-    rcases le_total x 4 with h4 | h4
-    · have h1 : (144 / 25 : ℝ) ≤ x ^ 2 := by
-        have := pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 12 / 5) hx 2; norm_num at this ⊢; linarith
-      have := mul_le_mul h1 (by linarith : (102010 : ℝ) ≤ 162918 - 15227 * x) (by norm_num)
-        (by positivity)
-      linarith
-    · have h1 : (16 : ℝ) ≤ x ^ 2 := by
-        have := pow_le_pow_left₀ (by norm_num : (0 : ℝ) ≤ 4) h4 2; norm_num at this ⊢; linarith
-      have := mul_le_mul h1 (by linarith : (25875 : ℝ) ≤ 162918 - 15227 * x) (by norm_num)
-        (by positivity)
-      linarith
-  have hPt : (7 * x + 1) ^ 2 * (5 * x - 8) ^ 2 * ((1 + x) * (35 * x + 13)) ≤
-      1728 * (x - 1) ^ 2 * (4 * x ^ 2 + 11 * x + 1) ^ 2 := by
-    have e1 : 1728 * (x - 1) ^ 2 * (4 * x ^ 2 + 11 * x + 1) ^ 2 -
-        (7 * x + 1) ^ 2 * (5 * x - 8) ^ 2 * ((1 + x) * (35 * x + 13)) =
-        x ^ 3 * (x ^ 2 * (162918 - 15227 * x) - 335862) + 30432 * x ^ 4 + 80667 * x ^ 2 +
-          20880 * x + 896 := by ring
-    have := mul_pos (pow_pos hx0 3) hbr
-    have : 0 ≤ 30432 * x ^ 4 + 80667 * x ^ 2 + 20880 * x + 896 := by positivity
-    linarith
-  have hsq : (be - x) ^ 2 * ((1 + x) * (35 * x + 13)) ≤ 12 * x ^ 2 * (x - 1) ^ 2 := by
-    have hB0 : 0 ≤ be - x := by linarith
-    have h2 : (be - x) ^ 2 ≤ (x * (7 * x + 1) * (5 * x - 8) / (12 * (4 * x ^ 2 + 11 * x
-        + 1))) ^ 2 :=
-      pow_le_pow_left₀ hB0 hB 2
-    have h3 : (x * (7 * x + 1) * (5 * x - 8) / (12 * (4 * x ^ 2 + 11 * x + 1))) ^ 2 *
-        ((1 + x) * (35 * x + 13)) ≤ 12 * x ^ 2 * (x - 1) ^ 2 := by
-      rw [div_pow, div_mul_eq_mul_div, div_le_iff₀ (by positivity)]
-      have := mul_le_mul_of_nonneg_left hPt (by positivity : (0 : ℝ) ≤ x ^ 2)
-      linarith
-    have := mul_le_mul_of_nonneg_right h2 (by positivity : (0 : ℝ) ≤ (1 + x) * (35 * x + 13))
-    linarith
-  have : 0 ≤ ssUhat x be - ssUbar x be := by
-    rw [e]
-    apply div_nonneg
-    · exact mul_nonneg (by linarith) (by linarith)
-    · positivity
-  linarith
+  apply lgro_ubar_le_uhat hx hx9 _ hxb hb
+  linarith only [hal', hx9]
 
 /-- **The positive diagonal** (from `D ≥ αD₀`): for `1 < x ≤ 12/5`, `1 ≤ α ≤ x ≤ β ≤ αx`,
 `D ≥ D₀ = 2 + 4x - 2x² ≥ 2/25`. -/

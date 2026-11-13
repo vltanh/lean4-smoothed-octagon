@@ -3,7 +3,7 @@
 These tasks concern analytic replacements for scalar proof steps. The existing Lean proofs
 remain in use. Group numbers retain their previous numbering.
 
-34. S0: central lower-face signs and beta convexity; outer shape signs and auxiliary ceilings.
+34. S0 outer shape and residue signs.
 35. S1 central and outer Casimir face signs.
 36. S2 central and outer ratio face signs.
 37. S3 central and outer displacement face signs.

@@ -2339,20 +2339,16 @@ Let $F(\tau,\ell)=(w_*-1)\tau+\frac1\tau+\frac{u-1}{r_A}+r_A+1-q-E_{L,*}+\ell+\f
 \end{proposition}
 
 \begin{proof}[Proof sketch]
-(a) The partial-fraction form in $\beta$ gives the chord bound between
-$\beta=x$ and the order boundary
+(a) We prove the signs at the two order boundaries and then use convexity
+in $\beta$. Write $F_2,F_T,F_8$ for the tests at $\tau=2,T,8T/9$,
+respectively, and put
 \[
  Q=4x^2+11x+1,\qquad
  \beta_*=x+\frac{x(7x+1)(\alpha-1)}Q.
 \]
-Thus each test is at most the larger of its values at these two endpoints.
-On $\beta=x$, the cleared numerators increase in $\alpha$; at $\alpha=1$
-their expansions in $x-12/5$ have positive coefficients.
-
-For the upper endpoint, write $F_2,F_T,F_8$ for the three tests at
-$\tau=2,T,8T/9$, respectively. Put $B=\alpha+\beta$,
-$K=x^2+2x+\alpha^2$, and $V=4(x+1)(35x+13)(\beta-1)$. The positive
-factors that clear their denominators define
+Let $S=x+1$, $M=35x+13$, $B=\alpha+\beta$,
+$K=x^2+2x+\alpha^2$, and $V=4SM(\beta-1)$. Clearing the positive
+denominators gives the polynomials
 \[
  N_2=-72\alpha BK^2VF_2,\qquad
  N_T=-8\alpha BK^2VF_T,\qquad
@@ -2363,18 +2359,36 @@ Normalize the position of $\alpha$ in its order interval by setting
  X=x-\frac{12}5\ge0,\qquad
  e=\frac{12(\alpha-1)}{5x-8}\in[0,1].
 \]
-Substitution at $\beta_*$ gives
+
+At the lower boundary,
+\[
+ N_\sigma(x,\alpha,x)=\sum_{i=0}^{10}d_{\sigma,i}(e)X^i,
+ \qquad \sigma\in\{2,T,8\}.
+\]
+The coefficients have degree at most six in $e$. For $N_T$ and $N_8$,
+the bounds $0\le e^j\le1$ give positive coefficients. The same bounds
+apply to $d_{2,i}$ for $2\le i\le8$. In the first two coefficients of
+$N_2$, charge negative terms of degree at least three to $e^2$; the
+remaining constant, linear, and quadratic coefficients are positive.
+For the last two coefficients, use $e^j\le e$ on negative higher terms.
+Thus all $d_{\sigma,i}$ are nonnegative, and
+\[
+ d_{2,0}>4\cdot10^5,\qquad
+ d_{T,0}>8\cdot10^4,\qquad
+ d_{8,0}>5\cdot10^5.
+\]
+This proves the lower-boundary signs for every $x\ge12/5$.
+
+At the upper boundary, substitution gives
 \[
  Q^4N_\sigma(x,\alpha,\beta_*)
-   =\sum_{i=0}^{18}c_{\sigma,i}(e)X^i,
- \qquad \sigma\in\{2,T,8\},
+   =\sum_{i=0}^{18}c_{\sigma,i}(e)X^i.
 \]
-where the coefficients have degree at most seven in $e$. All are
-nonnegative on $[0,1]$, and the constant coefficient is positive. To see
-the signs, use $0\le e^j\le1$; for $c_{2,16},c_{2,17},c_{2,18}$,
-retain the linear term and use $e^j\le e$ for $j\ge1$.
-The six coefficients that require a quadratic bound satisfy
-$c_{\sigma,i}(e)\ge Lp(e)$ with the following values:
+These coefficients have degree at most seven in $e$. Again they are
+nonnegative, with positive constant coefficients. Use $0\le e^j\le1$
+except for $c_{2,16},c_{2,17},c_{2,18}$, where $e^j\le e$ gives an
+affine lower bound, and the following six coefficients, where
+$c_{\sigma,i}(e)\ge Lp(e)$:
 \[
 \begin{array}{c c c l}
  \sigma&i&L&p(e)\\\hline
@@ -2386,21 +2400,70 @@ $c_{\sigma,i}(e)\ge Lp(e)$ with the following values:
  8&1&10^{13}&6-8e+4e^2
 \end{array}
 \]
-These bounds follow by retaining terms through degree two and using
-$e^j\le e^2$ for $j\ge2$ on every negative higher term. Each displayed
-quadratic is positive by completing the square. Hence the three
-$N_\sigma$ are positive at the upper endpoint for every $x\ge12/5$,
-which proves the required signs there. The chord bound concludes (a).
+Retain terms through degree two and use $e^j\le e^2$ on negative
+higher terms to obtain these bounds. Completing the square proves each
+displayed quadratic positive. Hence the three upper-boundary signs also
+hold for every $x\ge12/5$.
+
+It remains to justify the chord bound. With $\eta=\beta-1$, each test has
+the form
+\[
+ k\eta^2+l\eta+m+\frac r\eta+\frac s{\eta+\alpha+1}.
+\]
+Here $k\ge0$. If $s\ge0$ and $k(x-1)^3+r\ge0$, the second derivative
+is nonnegative for $\eta\ge x-1$. For $F_2$, write these coefficients as
+$k_2,r_2,s_2$; for the duration tests at $\tau=\gamma T$, write them as
+$k_d,r_\gamma,s_\gamma$, with $\gamma=1$ or $8/9$.
+We have $s_2=\alpha$ and
+$s_\gamma=\gamma s_1+(1-\gamma)\alpha$. The cleared expressions
+\[
+ P_2=\frac{4SM\alpha K^2}{(x-1)^3}\bigl(k_2(x-1)^3+r_2\bigr),
+ \qquad P_s=4SM\alpha K s_1
+\]
+are polynomials in $x,\alpha$. Their expansions in $X$ have degrees six
+and seven, respectively, with nonnegative coefficients. Their constant
+coefficients exceed $16000$ and $76000$. For $P_2$, use $e^j\le e$ in
+degrees three through six in $X$ and bound the resulting affine functions
+at $e=0,1$; the other signs follow from $0\le e^j\le1$.
+
+For the duration residue, put $h=x-\alpha$. On $x\le9$,
+\[
+ K\le\frac{25}2\alpha h,\qquad
+ S(\alpha+1)^2\le\frac{45}2h^2,\qquad M\ge28S.
+\]
+The first inequality follows from concavity of
+$25\alpha x-27\alpha^2-2x^2-4x$ on $1\le\alpha\le5x/9$:
+its endpoint values are $(2x-3)(9-x)$ and $32x^2/9-4x$.
+For the second, use $h\ge4x/9$ and
+$360x^2-(x+1)(5x+9)^2=(9-x)(25x^2-20x-9)\ge0$.
+Collecting the nonnegative terms in the residue numerator gives
+\begin{align*}
+ \frac{4SM\alpha K^2}{(x-1)^3}
+   \bigl(k_d(x-1)^3+r_\gamma\bigr)
+ &\ge6\alpha SMh^2-7KS^2h-\frac72\alpha(\alpha+1)^2S^3\\
+ &\ge\left(168-\frac{175}2-\frac{315}4\right)\alpha S^2h^2
+   =\frac74\alpha S^2h^2>0.
+\end{align*}
+Thus every test is convex in $\beta$. Its negative endpoint values imply
+its negativity throughout the order interval, proving (a).
 
 (b) Here $\bar u\le\bar V(x)\le u_b:=\frac{x+74}{100}$, by
-$96(4x^2+11x+1)^2-(7x+1)^2(x+1)(35x+13)=-179x^4+5606x^3+11040x^2+1882x+83>0$ on $[0,9]$ and
+\[
+ 96Q^2-(7x+1)^2SM
+ =x^3(5606-179x)+11040x^2+1882x+83>0
+\]
+on $[0,9]$, and
 $u_b-\bar V=(x-1)(35x^2-152x+213)/\bigl(100(x+1)(35x+13)\bigr)>0$. The shape is split at
 $\alpha=m(x)=(2x+3)/5$. For $m\le\alpha\le x$ use $u_b$; with $\beta=x+c(\alpha-1)$ and
 $3/5\le c\le3/2$, a cubic comparison in $\beta$ leaves twelve polynomials of degree eight whose
 signs follow from one sign change in the shape variable. For $(22x+20)/55\le\alpha\le m$ use the
 sharper ceiling $\bar u\le\hat u$, which follows from
-$75(4x^2+11x+1)^2-(7x+1)^2(x+1)(35x+13)=-515x^4+3758x^3+8331x^2+1420x+62>0$ on $[0,9]$ (its
-derivative divided by $x^2$ decreases, so its minimum is at an endpoint). Each test is then convex
+\[
+ 75Q^2-(7x+1)^2SM
+ =515x^3(9-x)+x^2(8331-877x)+1420x+62>0
+\]
+on $[0,9]$. The central cap also satisfies $(5x+4)/12\le m$ on this interval,
+so this ceiling comparison applies to (a) as well. Each outer test is then convex
 in $\beta$, and two shape derivatives on five fixed $\beta$-faces reduce every sign to a single
 rational evaluation.
 \end{proof}

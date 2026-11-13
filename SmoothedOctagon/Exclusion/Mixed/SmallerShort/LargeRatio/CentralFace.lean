@@ -2,6 +2,7 @@ module
 
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.Basic
 public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.SignTools
+public import SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.Convexity
 
 /-!
 # Smaller-short window, large ratio: the central face, forms and beta convexity
@@ -25,16 +26,15 @@ upper end (`lgr_cen_two_chord`, `lgr_cen_dur_chord`), once
   `k(x - 1)³ + r ≥ (x - 1)³h²/(64K²)`-type bound (`lgr_dur_res`, from `K ≤ (25/2)αh`,
   `S(α + 1)² ≤ (45/2)h²`, `M ≥ 28S`).
 
-Polynomial signs on the shape domain `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12` use the coefficient
-bound `lgrLow` on three pieces (`lgr_trap_pos`). The cleared numerators `lgrN2`,
-`lgrNT`, `lgrN8` are also given on coefficient lists (`lgrNcL`,
-`lgrFNc`), so that each face polynomial is computed inside Lean from the factored formula
-(`lgr_H2_FN2`, …: `ring` on at most seven atoms), never printed.
+The two residue-polynomial signs use the normalized order coordinates
+`X = x - 12/5`, `a = 1 + e(5x-8)/12`, with `0 ≤ e ≤ 1`
+(`CentralFace/Convexity`). Their coefficients in `X` are nonnegative.
+The cleared numerators `lgrN2`, `lgrNT`, `lgrN8` also have coefficient-list
+forms for the outer-face comparisons.
 
 ## Main API
 
 * `lgrWn`, `lgrLn`, `lgrGc`, `lgr_cen_F`; `lgrUc`, `lgrVc` (`û = U/V`).
-* `lgr_trap_pos`: the coefficient bound on the shape domain.
 * `lgr_cen_two_chord`, `lgr_cen_dur_chord`: the beta reductions.
 * `lgrN2`, `lgrNT`, `lgrN8`, `lgr_G2_neg`, …; on lists `lgrFNc`, `lgr_H2_FN2`, `lgr_H2_FNT`,
   `lgr_H2_FN8`.
@@ -195,74 +195,15 @@ theorem lgr_pf_dur {S K a c ui J D1 δ η γ ℓ : ℝ} (hK : K ≠ 0) (ha : a �
   ring
 
 
-/-! ### Polynomial signs on the shape domain -/
-
-/-- **The coefficient bound on the shape domain** `12/5 ≤ x ≤ 9`, `1 ≤ α ≤ (5x + 4)/12`, for a
-bivariate list in `X = x - 12/5`, `A = α - 1`: on `α ≤ 7/6` and on `7/6 ≤ α ≤ 4/3` (every
-coefficient of `X` bounded on the `A`-interval, then positive constant and nonnegative higher
-coefficients), and on `α ≥ 4/3` in the coordinates `A' = α - 4/3 ≤ 11/4`, `Y = x - (12α - 4)/5 ≥ 0`. -/
-theorem lgr_trap_pos (P : List (List ℝ)) (h1 : lgrPosL (P.map (lgrLow (1 / 6))))
-    (h2 : lgrPosL ((P.map (lgrShift (1 / 6))).map (lgrLow (1 / 6))))
-    (h3 : lgrPosL ((lgrShear (12 / 5) (P.map (lgrShift (1 / 3)))).map (lgrLow (11 / 4))))
-    {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a) (ha' : a ≤ (5 * x + 4) / 12) :
-    0 < lgrH2 P (x - 12 / 5) (a - 1) := by
-  rcases le_or_gt a (7 / 6) with h76 | h76
-  · exact lgr_pos_unb (by linarith) (by linarith) (by linarith) P h1
-  rcases le_or_gt a (4 / 3) with h43 | h43
-  · have e : lgrH2 P (x - 12 / 5) (a - 1) =
-        lgrH2 (P.map (lgrShift (1 / 6))) (x - 12 / 5) (a - 7 / 6) := by
-      rw [lgr_H2_shift_inner]; congr 1; ring
-    rw [e]
-    exact lgr_pos_unb (by linarith) (by linarith) (by linarith) _ h2
-  · have e : lgrH2 P (x - 12 / 5) (a - 1) =
-        lgrH2 (lgrShear (12 / 5) (P.map (lgrShift (1 / 3)))) (x - (12 * a - 4) / 5) (a - 4 / 3) := by
-      rw [lgr_H2_shear, lgr_H2_shift_inner]; congr 1 <;> ring
-    rw [e]
-    exact lgr_pos_unb (by linarith) (by linarith) (by linarith) _ h3
-
-/-- The `τ = 2` residue polynomial `Φ₂ = 4SMK²α(k(x - 1)³ + r)/(x - 1)³`:
-`30αSMh² + 10αh²(x - 1)² + 7((5/2)αc²(c² - S³) + cK² - αK(2c² - S³))`, `h = x - α`, `c = α + 1`
-(the residue factor `A*` of `lgrr2`, cleared). -/
-noncomputable def lgrPhi2f (x a : ℝ) : ℝ :=
-  30 * a * (x + 1) * (35 * x + 13) * (x - a) ^ 2 + 10 * a * (x - a) ^ 2 * (x - 1) ^ 2 +
-    7 * (5 / 2 * a * (a + 1) ^ 2 * ((a + 1) ^ 2 - (x + 1) ^ 3) +
-      (a + 1) * (x ^ 2 + 2 * x + a ^ 2) ^ 2 - a * (x ^ 2 + 2 * x + a ^ 2) * (2 * (a + 1) ^ 2 - (x + 1) ^ 3))
-
-/-- `Φ₂` on coefficient lists (computed from the formula, never printed). -/
-noncomputable def lgrPhi2L (x a : List (List ℝ)) : List (List ℝ) :=
-  let S := lgrAdd2 x [[1]]
-  let M := lgrAdd2 (lgrSmul2 35 x) [[13]]
-  let h := lgrAdd2 x (lgrSmul2 (-1) a)
-  let c := lgrAdd2 a [[1]]
-  let K := lgrAdd2 (lgrMul2 x x) (lgrAdd2 (lgrSmul2 2 x) (lgrMul2 a a))
-  let xm := lgrAdd2 x [[-1]]
-  let c2 := lgrMul2 c c
-  let S3 := lgrMul2 (lgrMul2 S S) S
-  lgrAdd2 (lgrSmul2 30 (lgrMul2 (lgrMul2 (lgrMul2 a S) M) (lgrMul2 h h)))
-    (lgrAdd2 (lgrSmul2 10 (lgrMul2 (lgrMul2 a (lgrMul2 h h)) (lgrMul2 xm xm)))
-      (lgrSmul2 7 (lgrAdd2 (lgrSmul2 (5 / 2) (lgrMul2 (lgrMul2 a c2) (lgrAdd2 c2 (lgrSmul2 (-1) S3))))
-        (lgrAdd2 (lgrMul2 c (lgrMul2 K K))
-          (lgrSmul2 (-1) (lgrMul2 (lgrMul2 a K) (lgrAdd2 (lgrSmul2 2 c2) (lgrSmul2 (-1) S3))))))))
-
-theorem lgr_H2_Phi2L (x a : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrPhi2L x a) X A = lgrPhi2f (lgrH2 x X A) (lgrH2 a X A) := by
-  unfold lgrPhi2L lgrPhi2f
-  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
-  ring
+/-! ### The residue polynomial for the tau-two test -/
 
 theorem lgr_H2_base (l : ℝ) (x a : ℝ) :
     lgrH2 [[l], [1]] (x - l) (a - 1) = x ∧ lgrH2 [[1, 1]] (x - l) (a - 1) = a := by
   constructor <;> simp [lgrH2, polyHorner]
 
-theorem lgr_Phi2_pos {x a : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
+theorem lgr_Phi2_pos {x a : ℝ} (hx : 12 / 5 ≤ x) (_hx9 : x ≤ 9) (ha : 1 ≤ a)
     (ha' : a ≤ (5 * x + 4) / 12) : 0 < lgrPhi2f x a := by
-  obtain ⟨e1, e2⟩ := lgr_H2_base (12 / 5) x a
-  have e := lgr_H2_Phi2L [[12 / 5], [1]] [[1, 1]] (x - 12 / 5) (a - 1)
-  rw [e1, e2] at e
-  rw [← e]
-  apply lgr_trap_pos _ _ _ _ hx hx9 ha ha' <;>
-    norm_num [lgrPhi2L, lgrMul2, lgrMul, lgrSmul2, lgrPosL, lgrLow, lgrNeg, lgrShift, lgrShear,
-      lgrAdd, lgrAdd2, lgrSmul]
+  exact S0Central.Convexity.phi_pos hx ha ha'
 
 /-! ### Beta convexity of the `τ = 2` test -/
 
@@ -403,56 +344,8 @@ theorem lgr_G8_pf {x a b : ℝ} (hx : 1 < x) (ha : 0 < a) (hb : 1 < b) :
   congr 1
   ring
 
-/-- `4SM(Q + α²K)` cleared: with `U_I = 3SM + (x - 1)² = 4SMu_∞`,
-`J_J = 7(x - 1)³ = 4SMJ`, `E₀' = S³(U_I - 4SM) + 4SM(3S - 1)`, `c = α + 1`, `δ = 2(α - x)`. -/
-noncomputable def lgrQnf (x a : ℝ) : ℝ :=
-  let S := x + 1
-  let F4 := 4 * (x + 1) * (35 * x + 13)
-  let UI := 3 * (x + 1) * (35 * x + 13) + (x - 1) ^ 2
-  let JJ := 7 * (x - 1) ^ 3
-  let c := a + 1
-  let δ := 2 * (a - x)
-  let K := x ^ 2 + 2 * x + a ^ 2
-  let E0 := S ^ 3 * (UI - F4) + F4 * (3 * S - 1)
-  UI * δ ^ 2 * c ^ 2 - c * (2 * c ^ 2 * δ * UI + JJ * δ ^ 2 - δ * E0) +
-    (F4 * (S ^ 2 * (S ^ 2 - S + 1)) + (c ^ 2) ^ 2 * UI + 2 * JJ * c ^ 2 * δ - c ^ 2 * E0 -
-      S ^ 3 * JJ * δ) - F4 * K ^ 2 - JJ * c * (c ^ 2 - S ^ 3) + F4 * a ^ 2 * K
-
-/-- `lgrQnf` on coefficient lists. -/
-noncomputable def lgrQnL (x a : List (List ℝ)) : List (List ℝ) :=
-  let S := lgrAdd2 x [[1]]
-  let SM := lgrMul2 S (lgrAdd2 (lgrSmul2 35 x) [[13]])
-  let F4 := lgrSmul2 4 SM
-  let xm := lgrAdd2 x [[-1]]
-  let UI := lgrAdd2 (lgrSmul2 3 SM) (lgrMul2 xm xm)
-  let JJ := lgrSmul2 7 (lgrMul2 (lgrMul2 xm xm) xm)
-  let c := lgrAdd2 a [[1]]
-  let c2 := lgrMul2 c c
-  let δ := lgrSmul2 2 (lgrAdd2 a (lgrSmul2 (-1) x))
-  let δ2 := lgrMul2 δ δ
-  let K := lgrAdd2 (lgrMul2 x x) (lgrAdd2 (lgrSmul2 2 x) (lgrMul2 a a))
-  let S2 := lgrMul2 S S
-  let S3 := lgrMul2 S2 S
-  let E0 := lgrAdd2 (lgrMul2 S3 (lgrAdd2 UI (lgrSmul2 (-1) F4)))
-    (lgrMul2 F4 (lgrAdd2 (lgrSmul2 3 S) [[-1]]))
-  lgrAdd2 (lgrMul2 (lgrMul2 UI δ2) c2)
-    (lgrAdd2 (lgrSmul2 (-1) (lgrMul2 c (lgrAdd2 (lgrSmul2 2 (lgrMul2 (lgrMul2 c2 δ) UI))
-      (lgrAdd2 (lgrMul2 JJ δ2) (lgrSmul2 (-1) (lgrMul2 δ E0))))))
-    (lgrAdd2 (lgrAdd2 (lgrMul2 F4 (lgrMul2 S2 (lgrAdd2 S2 (lgrAdd2 (lgrSmul2 (-1) S) [[1]]))))
-      (lgrAdd2 (lgrMul2 (lgrMul2 c2 c2) UI) (lgrAdd2 (lgrSmul2 2 (lgrMul2 (lgrMul2 JJ c2) δ))
-        (lgrAdd2 (lgrSmul2 (-1) (lgrMul2 c2 E0)) (lgrSmul2 (-1) (lgrMul2 (lgrMul2 S3 JJ) δ))))))
-    (lgrAdd2 (lgrSmul2 (-1) (lgrMul2 F4 (lgrMul2 K K)))
-      (lgrAdd2 (lgrSmul2 (-1) (lgrMul2 (lgrMul2 JJ c) (lgrAdd2 c2 (lgrSmul2 (-1) S3))))
-        (lgrMul2 (lgrMul2 F4 (lgrMul2 a a)) K)))))
-
-theorem lgr_H2_QnL (x a : List (List ℝ)) (X A : ℝ) :
-    lgrH2 (lgrQnL x a) X A = lgrQnf (lgrH2 x X A) (lgrH2 a X A) := by
-  unfold lgrQnL lgrQnf
-  simp only [lgr_H2_add2, lgr_H2_mul2, lgr_H2_smul2, lgr_H2_single, polyHorner]
-  ring
-
 /-- **The residue at `β = -α` is nonnegative** for `0 < γ ≤ 1`. -/
-theorem lgr_dur_s {x a γ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤ a)
+theorem lgr_dur_s {x a γ : ℝ} (hx : 12 / 5 ≤ x) (_hx9 : x ≤ 9) (ha : 1 ≤ a)
     (ha' : a ≤ (5 * x + 4) / 12) (hγ : 0 < γ) (hγ1 : γ ≤ 1) : 0 ≤ lgrsd x a γ := by
   have ha0 : 0 < a := by linarith
   have hK : 0 < x ^ 2 + 2 * x + a ^ 2 := by positivity
@@ -461,14 +354,7 @@ theorem lgr_dur_s {x a γ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 ≤
     unfold lgrQx lgrQd lgrWk lgrWl lgrWm lgrWr lgre0 lgrui lgrJ lgrQnf
     field_simp
     ring
-  have hpos : 0 < lgrQnf x a := by
-    obtain ⟨e1, e2⟩ := lgr_H2_base (12 / 5) x a
-    have e := lgr_H2_QnL [[12 / 5], [1]] [[1, 1]] (x - 12 / 5) (a - 1)
-    rw [e1, e2] at e
-    rw [← e]
-    apply lgr_trap_pos _ _ _ _ hx hx9 ha ha' <;>
-      norm_num [lgrQnL, lgrMul2, lgrMul, lgrSmul2, lgrPosL, lgrLow, lgrNeg, lgrShift, lgrShear,
-        lgrAdd, lgrAdd2, lgrSmul]
+  have hpos : 0 < lgrQnf x a := S0Central.Convexity.continuation_pos hx ha ha'
   have hQ0 : 0 ≤ lgrQx x a + a ^ 2 * (x ^ 2 + 2 * x + a ^ 2) := by
     rw [hQ]; have : 0 < (x + 1) * (35 * x + 13) := by nlinarith
     positivity
@@ -492,15 +378,27 @@ theorem lgr_dur_res {x a γ : ℝ} (hx : 12 / 5 ≤ x) (hx9 : x ≤ 9) (ha : 1 �
   have ha59 : a ≤ 5 * x / 9 := by linarith
   have hh : 4 * x / 9 ≤ x - a := by linarith
   have hh0 : 0 < x - a := by linarith
-  -- `2K ≤ 25αh`
+  -- The concave quadratic `25ax - 27a² - 2x² - 4x` is nonnegative
+  -- at both ends of `1 ≤ a ≤ 5x/9`, and therefore throughout the interval.
   have hB1 : 2 * (x ^ 2 + 2 * x + a ^ 2) ≤ 25 * a * (x - a) := by
-    nlinarith [mul_nonneg (by linarith : (0 : ℝ) ≤ a - 1) (by linarith : (0 : ℝ) ≤ 5 * x / 9 - a),
-      mul_nonneg (by linarith : (0 : ℝ) ≤ 2 * x - 3) (by linarith : (0 : ℝ) ≤ 9 - x),
-      mul_nonneg (mul_nonneg (by linarith : (0 : ℝ) ≤ a - 1) (by linarith : (0 : ℝ) ≤ 5 * x / 9 - a))
-        (by linarith : (0 : ℝ) ≤ 5 * x / 9 - 1),
-      mul_nonneg (by linarith : (0 : ℝ) ≤ 5 * x / 9 - a)
-        (mul_nonneg (by linarith : (0 : ℝ) ≤ 2 * x - 3) (by linarith : (0 : ℝ) ≤ 9 - x)),
-      mul_nonneg (by linarith : (0 : ℝ) ≤ a - 1) (by nlinarith : (0 : ℝ) ≤ 32 / 9 * x ^ 2 - 4 * x)]
+    let b := 5 * x / 9
+    have hb : 0 < b - 1 := by dsimp only [b]; linarith only [hx]
+    have hba : 0 ≤ b - a := by dsimp only [b]; linarith only [ha59]
+    have ha1 : 0 ≤ a - 1 := sub_nonneg.mpr ha
+    have hleft : 0 ≤ (2 * x - 3) * (9 - x) :=
+      mul_nonneg (by linarith only [hx]) (by linarith only [hx9])
+    have hright : 0 ≤ 32 / 9 * x ^ 2 - 4 * x := by nlinarith only [hx]
+    have hsum : 0 ≤ (b - a) * ((2 * x - 3) * (9 - x)) +
+        (a - 1) * (32 / 9 * x ^ 2 - 4 * x) +
+        27 * (b - 1) * (a - 1) * (b - a) := by positivity
+    have hid : (b - a) * ((2 * x - 3) * (9 - x)) +
+        (a - 1) * (32 / 9 * x ^ 2 - 4 * x) +
+        27 * (b - 1) * (a - 1) * (b - a) =
+        (b - 1) * (25 * a * (x - a) - 2 * (x ^ 2 + 2 * x + a ^ 2)) := by
+      dsimp only [b]
+      ring
+    rw [hid] at hsum
+    exact sub_nonneg.mp ((mul_nonneg_iff_of_pos_left hb).mp hsum)
   -- `S(α + 1)² ≤ (45/2)h²`
   have hB2 : 2 * (x + 1) * (a + 1) ^ 2 ≤ 45 * (x - a) ^ 2 := by
     have h1 : (a + 1) ^ 2 ≤ (5 * x / 9 + 1) ^ 2 := by nlinarith

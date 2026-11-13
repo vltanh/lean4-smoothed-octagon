@@ -246,7 +246,10 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Interface
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.Jets
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.Convexity
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.Coordinates
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.LowerFace
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.LowerFace.Polynomials
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.Tests
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.UpperBoundary
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LargeRatio.CentralFace.UpperBoundary.Circuit
