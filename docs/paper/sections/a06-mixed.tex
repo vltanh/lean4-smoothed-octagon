@@ -1567,16 +1567,70 @@ Suppose $j\ge\frac1{30}$. By \cref{lem:m2-low-ratio}, $t>\frac13$; \cref{lem:m2-
 $v\ge g$ gives $t<T_G(x)$, hence $x<\frac35$ and $7x<12h$, that is, $j<\frac57h$.
 
 For $\frac13\le t\le\frac38$, take
-$\alpha=\frac72-10y\ge\frac{11}{16}$ and $M=8j+8y-\frac16\ge\frac1{10}$. The $v$-coefficient of $\mathcal H$
-is negative, so $v\mapsto V_L$ (a rational majorant of $v$), $\log q\mapsto L_+$ and $F\mapsto F_\ell$
-keep $\mathcal H<0$. The resulting residual increases in $k$ on $[1,o]$: it is quadratic in $k$,
-its shape derivative at the midpoint of two shapes is affine in $v$, $\log q$ and $k$ with
-nonpositive slopes, and at the extreme values it equals $q^2S/(12W)$ with a quartic $S$ in $y$ that
-is concave in $y$ and positive at both ends. At $k=1$ a positive multiple $S$ of the residual, a
-polynomial in $(h,j,y)$, increases in $h$ at fixed $(j,y)$: a cubic Taylor bound from
-$\partial_h^4S\ge500000$ and two derivative signs at $h=\frac14$ give $\partial_hS>0$. So it suffices to
-check the three faces $h=\frac14$, $j=\frac57h$ and the largest $y$, where $S>0$ by termwise monomial
-bounds after a shift of the variable.
+$\alpha=\frac72-10y\ge\frac{11}{16}$ and
+$M=8j+8y-\frac16\ge\frac1{10}$.
+The $v$-coefficient of $\mathcal H$ is negative. We may therefore replace $v$ by
+\[
+ V_L=1-\frac{cp}{W^2}+\frac{cx}{W^2}(T_L-t),
+ \qquad T_L=\frac{912-401x}{24(17x+76)},
+\]
+which exceeds $v_G$, and replace $\log q$ by $L_+$ and $F$ by $F_\ell$.
+The resulting residual remains negative. We show that it is positive by first
+lowering the shape to $k=1$ and then treating that boundary.
+
+For the shape comparison, write
+\[
+ V_b=1-\frac{cp}{W^2}+\frac{cx}{W^2}
+           \left(\frac12-\frac{7x}{24}-t\right),
+ \qquad L_b=y-\frac5{12}y^2.
+\]
+The derivative at the midpoint of two shapes is affine in $v$, $\log q$ and $k$,
+with nonpositive coefficients. Since $V_L<V_b$ and $L_+\le L_b$, it suffices to
+check this derivative at $(k,v,L)=(o,V_b,L_b)$.
+Its value is $q^2Q(t,x,y)/(12W)$, where $Q=\sum_{i=0}^4Q_i(t,x)y^i$.
+The constant coefficient is
+\begin{align*}
+ \frac{Q_0}{xc}={}&24th+(84-60t-72t^2)x+(133-129t-14t^2)x^2\\
+                 &+(49+14t)x^3+49tx^4>0.
+\end{align*}
+For the quadratic coefficient, grouping by powers of $x$ gives
+$Q_2\le90t^2-240tx<0$, using $2t\le3x$.
+The last two coefficients factor as
+\begin{align*}
+ Q_3&=-8tW^2(5t^2+30tx^2+62tx+25t+27x^3+54x^2+25x)<0,\\
+ Q_4&=-20tpW^2J<0.
+\end{align*}
+Thus $Q$ is concave in $y\ge0$.
+
+It remains to check the exact swap boundary
+$b=(h-j)/(1+2j)$, since the duration constraint gives $0\le y\le b$.
+Define the polynomial $E(h,j)$ by clearing the positive factors:
+\[
+ 4(1+2j)^4 Q\left(\frac{1-h}{2},h+j,b\right)
+       =(1+h+j)^2E(h,j).
+\]
+On $1/4\le h\le1/3$ and $0\le j\le1/4$, endpoint bounds for the powers of $h$ give
+\begin{align*}
+ E_j\ge{}&120+2200j+6900j^2-3600j^3\\
+         &\quad-47000j^4-65000j^5-23000j^6\\
+    \ge{}&120+2200j+1900j^2>0.
+\end{align*}
+The second inequality uses $j^{m+1}\le j^m/4$ to absorb the last four terms.
+Hence it suffices to set $j=1/30$.
+For $f(h)=E(h,1/30)$ and $u=h-1/4\in[0,1/12]$, the same power comparison gives
+\[
+ -f''(1/4+u)\ge1500+17000u+36000u^2>0.
+\]
+So $f$ is concave. Its two endpoint values are at least $1$, and therefore
+$E(h,j)\ge f(h)\ge1$.
+This proves $Q(t,x,b)>0$. Concavity between $y=0$ and $y=b$ now gives $Q>0$
+throughout the duration interval. The residual consequently increases with $k$.
+
+At $k=1$, a positive multiple $S$ of the residual is a polynomial in $(h,j,y)$.
+It increases with $h$ at fixed $(j,y)$: a cubic Taylor bound from
+$\partial_h^4S\ge500000$ and two derivative signs at $h=\frac14$ give $\partial_hS>0$.
+It therefore suffices to check the three faces $h=\frac14$, $j=\frac57h$ and $y=b$.
+On these faces, shifted monomial bounds give $S>0$.
 
 For $\frac38\le t<\frac25$, take $\alpha=4$, $M=1$ and $v\mapsto v_G$.
 The residual increases in $k$ on $(\frac{29}4t^2,o)$, by the

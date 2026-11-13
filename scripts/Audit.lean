@@ -99,6 +99,7 @@ import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.MaxDuration
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Monomials
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Monotone
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.Shape
+import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.ShapeBoundary
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowT.UnitShape
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.ResidualAffine
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Secant
