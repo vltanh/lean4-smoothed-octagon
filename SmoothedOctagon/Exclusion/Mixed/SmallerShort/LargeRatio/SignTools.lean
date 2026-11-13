@@ -1,6 +1,6 @@
 module
 
-public import SmoothedOctagon.Exclusion.Mixed.PolyDeriv
+public import SmoothedOctagon.Exclusion.Mixed.Horner
 public import Mathlib.Tactic.Positivity
 public import Mathlib.Tactic.Linarith
 public import Mathlib.Tactic.FieldSimp
@@ -84,42 +84,22 @@ theorem lgr_chord {k l m r s p q b₀ b₁ y : ℝ} (hp : p < b₀) (hq : q < b�
 /-! ### Coefficient lists -/
 
 /-- Coefficientwise sum of two coefficient lists. -/
-noncomputable def lgrAdd : List ℝ → List ℝ → List ℝ
-  | [], q => q
-  | c :: p, [] => c :: p
-  | c :: p, d :: q => (c + d) :: lgrAdd p q
+noncomputable abbrev lgrAdd := Horner.add
 
 theorem lgr_horner_add (p q : List ℝ) (s : ℝ) :
-    polyHorner (lgrAdd p q) s = polyHorner p s + polyHorner q s := by
-  induction p generalizing q with
-  | nil => simp [lgrAdd, polyHorner]
-  | cons c p ih =>
-    cases q with
-    | nil => simp [lgrAdd, polyHorner]
-    | cons d q => simp only [lgrAdd, polyHorner, ih]; ring
+    polyHorner (lgrAdd p q) s = polyHorner p s + polyHorner q s := Horner.eval_add p q s
 
 /-- Scalar multiple of a coefficient list. -/
-noncomputable def lgrSmul (m : ℝ) : List ℝ → List ℝ
-  | [] => []
-  | c :: p => (m * c) :: lgrSmul m p
+noncomputable abbrev lgrSmul := Horner.smul
 
 theorem lgr_horner_smul (m : ℝ) (p : List ℝ) (s : ℝ) :
-    polyHorner (lgrSmul m p) s = m * polyHorner p s := by
-  induction p with
-  | nil => simp [lgrSmul, polyHorner]
-  | cons c p ih => simp only [lgrSmul, polyHorner, ih]; ring
+    polyHorner (lgrSmul m p) s = m * polyHorner p s := Horner.eval_smul m p s
 
-/-- **Taylor shift**: `polyHorner (lgrShift m p) t = polyHorner p (m + t)`. -/
-noncomputable def lgrShift (m : ℝ) : List ℝ → List ℝ
-  | [] => []
-  | c :: p => lgrAdd [c] (lgrAdd (lgrSmul m (lgrShift m p)) (0 :: lgrShift m p))
+/-- Translation of a coefficient list. -/
+noncomputable abbrev lgrShift := Horner.shift
 
 theorem lgr_horner_shift (m : ℝ) (p : List ℝ) (t : ℝ) :
-    polyHorner (lgrShift m p) t = polyHorner p (m + t) := by
-  induction p with
-  | nil => simp [lgrShift, polyHorner]
-  | cons c p ih =>
-    simp only [lgrShift, lgr_horner_add, lgr_horner_smul, polyHorner, ih]; ring
+    polyHorner (lgrShift m p) t = polyHorner p (m + t) := Horner.eval_shift m p t
 
 /-! ### Bivariate coefficient lists -/
 
@@ -190,15 +170,10 @@ theorem lgr_H2_single (l : List ℝ) (X A : ℝ) : lgrH2 [l] X A = polyHorner l 
 /-! ### Products of coefficient lists -/
 
 /-- Product of coefficient lists. -/
-noncomputable def lgrMul : List ℝ → List ℝ → List ℝ
-  | [], _ => []
-  | c :: p, q => lgrAdd (lgrSmul c q) (0 :: lgrMul p q)
+noncomputable abbrev lgrMul := Horner.mul
 
 theorem lgr_horner_mul (p q : List ℝ) (s : ℝ) :
-    polyHorner (lgrMul p q) s = polyHorner p s * polyHorner q s := by
-  induction p with
-  | nil => simp [lgrMul, polyHorner]
-  | cons c p ih => simp only [lgrMul, lgr_horner_add, lgr_horner_smul, polyHorner, ih]; ring
+    polyHorner (lgrMul p q) s = polyHorner p s * polyHorner q s := Horner.eval_mul p q s
 
 /-- Scalar multiple of a bivariate list. -/
 noncomputable def lgrSmul2 (m : ℝ) (P : List (List ℝ)) : List (List ℝ) := P.map (lgrSmul m)

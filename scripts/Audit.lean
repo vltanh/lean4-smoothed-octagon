@@ -68,6 +68,7 @@ import all SmoothedOctagon.Exclusion.Mixed.Extract.Transport
 import all SmoothedOctagon.Exclusion.Mixed.Extract.WindowAlg
 import all SmoothedOctagon.Exclusion.Mixed.Extraction
 import all SmoothedOctagon.Exclusion.Mixed.Frames
+import all SmoothedOctagon.Exclusion.Mixed.Horner
 import all SmoothedOctagon.Exclusion.Mixed.Interface
 import all SmoothedOctagon.Exclusion.Mixed.Location
 import all SmoothedOctagon.Exclusion.Mixed.Nonshort
@@ -293,6 +294,11 @@ import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.Sha
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallRatio
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallRatio.NormBeta
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Norm
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Terminal
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Terminal.Calculus
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Terminal.Cases
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Terminal.Polynomial
+import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.Terminal.Signs
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.TestOne
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.TestZero1
 import all SmoothedOctagon.Exclusion.Mixed.SmallerShort.LowerRatio.OuterFace.SmallShape.TestZero2

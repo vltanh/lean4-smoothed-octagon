@@ -218,11 +218,11 @@ theorem lgrFLT_link (x a b : ℝ) :
   have h6 := lgr_H2_cD [[x]] [[a]] [[0], [1]] b 0
   unfold lgrFLT
   rw [lgr_H2_NoTL, h6]
-  simp [lgrH2, polyHorner, lgrAdd2, lgrAdd]
+  simp [lgrH2, polyHorner, lgrAdd2, lgrAdd, Horner.add]
 
 /-- The large-shape numerator of the `T` test is a cubic in `β`. -/
 theorem lgrFLT_len (x a : ℝ) : (lgrFLT x a).length ≤ 4 := by
-  simp [lgrFLT, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul]
+  simp [lgrFLT, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul]
 
 /-- `P_{T0}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -237,7 +237,7 @@ noncomputable def lgrPT0 : List (List ℝ) :=
 theorem lgrPT0_eq (x a : ℝ) :
     lgrH2 (lgrFLT x a) (x + (3 / 5) * (a - 1)) 0 =
       (4 / 125) * lgrH2 lgrPT0 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFLT, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrH2, List.map, polyHorner, lgrPT0]
+  simp only [lgrFLT, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrH2, List.map, polyHorner, lgrPT0]
   ring
 
 /-- **`P_{T0} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -246,22 +246,22 @@ theorem lgrPT0_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrPT0]
   apply lgr_sc2 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 3
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{T1}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
@@ -277,7 +277,7 @@ noncomputable def lgrPT1 : List (List ℝ) :=
 theorem lgrPT1_eq (x a : ℝ) :
     lgrH2 (lgrFLT x a) (x + (3 / 5) * (a - 1)) 0 + ((x + (3 / 2) * (a - 1)) - (x + (3 / 5) * (a - 1))) / 3 * lgrH2 (lgrD2 (lgrFLT x a)) (x + (3 / 5) * (a - 1)) 0 =
       (2 / 25) * lgrH2 lgrPT1 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFLT, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrD2, lgrH2, List.map, polyHorner, lgrPT1]
+  simp only [lgrFLT, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrD2, lgrH2, List.map, polyHorner, lgrPT1]
   ring
 
 /-- **`P_{T1} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -286,22 +286,22 @@ theorem lgrPT1_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrPT1]
   apply lgr_sc2 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 3
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{T2}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
@@ -317,7 +317,7 @@ noncomputable def lgrPT2 : List (List ℝ) :=
 theorem lgrPT2_eq (x a : ℝ) :
     lgrH2 (lgrFLT x a) (x + (3 / 2) * (a - 1)) 0 - ((x + (3 / 2) * (a - 1)) - (x + (3 / 5) * (a - 1))) / 3 * lgrH2 (lgrD2 (lgrFLT x a)) (x + (3 / 2) * (a - 1)) 0 =
       (2 / 5) * lgrH2 lgrPT2 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFLT, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrD2, lgrH2, List.map, polyHorner, lgrPT2]
+  simp only [lgrFLT, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrD2, lgrH2, List.map, polyHorner, lgrPT2]
   ring
 
 /-- **`P_{T2} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -326,22 +326,22 @@ theorem lgrPT2_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrPT2]
   apply lgr_sc2 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 3
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{T3}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
@@ -357,7 +357,7 @@ noncomputable def lgrPT3 : List (List ℝ) :=
 theorem lgrPT3_eq (x a : ℝ) :
     lgrH2 (lgrFLT x a) (x + (3 / 2) * (a - 1)) 0 =
       2 * lgrH2 lgrPT3 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFLT, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrH2, List.map, polyHorner, lgrPT3]
+  simp only [lgrFLT, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrH2, List.map, polyHorner, lgrPT3]
   ring
 
 /-- **`P_{T3} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -366,22 +366,22 @@ theorem lgrPT3_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrPT3]
   apply lgr_sc2 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 3
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- **The large shapes, `T` test**: the cleared numerator at `u = u_b` is positive for
@@ -409,11 +409,11 @@ theorem lgrFL8_link (x a b : ℝ) :
   have h6 := lgr_H2_cD [[x]] [[a]] [[0], [1]] b 0
   unfold lgrFL8
   rw [lgr_H2_No8L, h6]
-  simp [lgrH2, polyHorner, lgrAdd2, lgrAdd]
+  simp [lgrH2, polyHorner, lgrAdd2, lgrAdd, Horner.add]
 
 /-- The large-shape numerator of the `8` test is a cubic in `β`. -/
 theorem lgrFL8_len (x a : ℝ) : (lgrFL8 x a).length ≤ 4 := by
-  simp [lgrFL8, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul]
+  simp [lgrFL8, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul]
 
 /-- `P_{80}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -428,7 +428,7 @@ noncomputable def lgrP80 : List (List ℝ) :=
 theorem lgrP80_eq (x a : ℝ) :
     lgrH2 (lgrFL8 x a) (x + (3 / 5) * (a - 1)) 0 =
       (8 / 125) * lgrH2 lgrP80 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFL8, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrH2, List.map, polyHorner, lgrP80]
+  simp only [lgrFL8, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrH2, List.map, polyHorner, lgrP80]
   ring
 
 /-- **`P_{80} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -437,22 +437,22 @@ theorem lgrP80_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrP80]
   apply lgr_sc2 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 3
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{81}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
@@ -468,7 +468,7 @@ noncomputable def lgrP81 : List (List ℝ) :=
 theorem lgrP81_eq (x a : ℝ) :
     lgrH2 (lgrFL8 x a) (x + (3 / 5) * (a - 1)) 0 + ((x + (3 / 2) * (a - 1)) - (x + (3 / 5) * (a - 1))) / 3 * lgrH2 (lgrD2 (lgrFL8 x a)) (x + (3 / 5) * (a - 1)) 0 =
       (4 / 25) * lgrH2 lgrP81 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFL8, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrD2, lgrH2, List.map, polyHorner, lgrP81]
+  simp only [lgrFL8, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrD2, lgrH2, List.map, polyHorner, lgrP81]
   ring
 
 /-- **`P_{81} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -477,22 +477,22 @@ theorem lgrP81_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrP81]
   apply lgr_sc2 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 3
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{82}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
@@ -508,7 +508,7 @@ noncomputable def lgrP82 : List (List ℝ) :=
 theorem lgrP82_eq (x a : ℝ) :
     lgrH2 (lgrFL8 x a) (x + (3 / 2) * (a - 1)) 0 - ((x + (3 / 2) * (a - 1)) - (x + (3 / 5) * (a - 1))) / 3 * lgrH2 (lgrD2 (lgrFL8 x a)) (x + (3 / 2) * (a - 1)) 0 =
       (2 / 5) * lgrH2 lgrP82 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFL8, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrD2, lgrH2, List.map, polyHorner, lgrP82]
+  simp only [lgrFL8, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrD2, lgrH2, List.map, polyHorner, lgrP82]
   ring
 
 /-- **`P_{82} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -517,22 +517,22 @@ theorem lgrP82_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrP82]
   apply lgr_sc2 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 3
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{83}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
@@ -548,7 +548,7 @@ noncomputable def lgrP83 : List (List ℝ) :=
 theorem lgrP83_eq (x a : ℝ) :
     lgrH2 (lgrFL8 x a) (x + (3 / 2) * (a - 1)) 0 =
       2 * lgrH2 lgrP83 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFL8, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrH2, List.map, polyHorner, lgrP83]
+  simp only [lgrFL8, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrH2, List.map, polyHorner, lgrP83]
   ring
 
 /-- **`P_{83} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -557,22 +557,22 @@ theorem lgrP83_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrP83]
   apply lgr_sc3 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 4
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- **The large shapes, `8` test**: the cleared numerator at `u = u_b` is positive for
@@ -600,11 +600,11 @@ theorem lgrFL2_link (x a b : ℝ) :
   have h6 := lgr_H2_cD [[x]] [[a]] [[0], [1]] b 0
   unfold lgrFL2
   rw [lgr_H2_No2L, h6]
-  simp [lgrH2, polyHorner, lgrAdd2, lgrAdd]
+  simp [lgrH2, polyHorner, lgrAdd2, lgrAdd, Horner.add]
 
 /-- The large-shape numerator of the `2` test is a cubic in `β`. -/
 theorem lgrFL2_len (x a : ℝ) : (lgrFL2 x a).length ≤ 4 := by
-  simp [lgrFL2, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul]
+  simp [lgrFL2, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul]
 
 /-- `P_{20}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
 coefficients polynomials in `X = x - 2`. -/
@@ -619,7 +619,7 @@ noncomputable def lgrP20 : List (List ℝ) :=
 theorem lgrP20_eq (x a : ℝ) :
     lgrH2 (lgrFL2 x a) (x + (3 / 5) * (a - 1)) 0 =
       (4 / 25) * lgrH2 lgrP20 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFL2, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrH2, List.map, polyHorner, lgrP20]
+  simp only [lgrFL2, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrH2, List.map, polyHorner, lgrP20]
   ring
 
 /-- **`P_{20} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -628,22 +628,22 @@ theorem lgrP20_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrP20]
   apply lgr_sc4 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 4
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{21}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
@@ -659,7 +659,7 @@ noncomputable def lgrP21 : List (List ℝ) :=
 theorem lgrP21_eq (x a : ℝ) :
     lgrH2 (lgrFL2 x a) (x + (3 / 5) * (a - 1)) 0 + ((x + (3 / 2) * (a - 1)) - (x + (3 / 5) * (a - 1))) / 3 * lgrH2 (lgrD2 (lgrFL2 x a)) (x + (3 / 5) * (a - 1)) 0 =
       (2 / 25) * lgrH2 lgrP21 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFL2, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrD2, lgrH2, List.map, polyHorner, lgrP21]
+  simp only [lgrFL2, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrD2, lgrH2, List.map, polyHorner, lgrP21]
   ring
 
 /-- **`P_{21} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -668,22 +668,22 @@ theorem lgrP21_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrP21]
   apply lgr_sc3 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 4
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 3
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{22}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
@@ -699,7 +699,7 @@ noncomputable def lgrP22 : List (List ℝ) :=
 theorem lgrP22_eq (x a : ℝ) :
     lgrH2 (lgrFL2 x a) (x + (3 / 2) * (a - 1)) 0 - ((x + (3 / 2) * (a - 1)) - (x + (3 / 5) * (a - 1))) / 3 * lgrH2 (lgrD2 (lgrFL2 x a)) (x + (3 / 2) * (a - 1)) 0 =
       (2 / 5) * lgrH2 lgrP22 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFL2, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrD2, lgrH2, List.map, polyHorner, lgrP22]
+  simp only [lgrFL2, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrD2, lgrH2, List.map, polyHorner, lgrP22]
   ring
 
 /-- **`P_{22} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -708,22 +708,22 @@ theorem lgrP22_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrP22]
   apply lgr_sc3 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 3
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- `P_{23}(A, X)`, grouped by powers of `A = α - (2x + 3)/5`, with
@@ -739,7 +739,7 @@ noncomputable def lgrP23 : List (List ℝ) :=
 theorem lgrP23_eq (x a : ℝ) :
     lgrH2 (lgrFL2 x a) (x + (3 / 2) * (a - 1)) 0 =
       2 * lgrH2 lgrP23 (a - (2 * x + 3) / 5) (x - 2) := by
-  simp only [lgrFL2, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, lgrSmul2, lgrAdd2, lgrAdd, lgrSmul, lgrH2, List.map, polyHorner, lgrP23]
+  simp only [lgrFL2, lgrNoL, lgrWoNL, lgrLoNL, lgrcD, lgrMul2, lgrMul, Horner.mul, lgrSmul2, lgrAdd2, lgrAdd, Horner.add, lgrSmul, Horner.smul, lgrH2, List.map, polyHorner, lgrP23]
   ring
 
 /-- **`P_{23} > 0`** on `2/5 ≤ X ≤ 7`, `0 ≤ A ≤ 3(X + 1)/5` (one sign change in `A`). -/
@@ -748,22 +748,22 @@ theorem lgrP23_pos {X A : ℝ} (hX : 2 / 5 ≤ X) (hX7 : X ≤ 7) (hA : 0 ≤ A)
   simp only [lgrP23]
   apply lgr_sc3 hX hX7 hA hAm
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 6
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 5
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 3
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.negative_after_shift _ 2
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner]))
     (OneSignChange.positive_after_shift _ 7
-      (by norm_num [OneSignChange.Conditions, lgrShift, lgrAdd, lgrSmul, Nat.forall_lt_succ_right,
+      (by norm_num [OneSignChange.Conditions, lgrShift, Horner.shift, lgrAdd, Horner.add, lgrSmul, Horner.smul, Nat.forall_lt_succ_right,
         Nat.le_one_iff_eq_zero_or_eq_one, List.getD, polyHorner, lgrSlant]))
 
 /-- **The large shapes, `2` test**: the cleared numerator at `u = u_b` is positive for
