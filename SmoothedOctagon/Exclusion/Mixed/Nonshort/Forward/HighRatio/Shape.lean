@@ -8,8 +8,8 @@ public import SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.Secant
 
 On the high-ratio large-gap domain (`3/8 ≤ t < 2/5`, `j = 2t + x - 1 ≥ 1/30`, `7x < 12h`, `1 ≤ q`,
 `q(1 + 2j) ≤ 1 + x`) the combined residual `nsfComb 4 1 … (nsfVG t x) (nsrLp q) (nsrFl t x q)`
-increases in the shape `k` on `[1, 1 + j]`. The caller `nsf_LGB_core` then needs only its lower
-shape endpoint `k = 29t²/4`.
+increases in the shape `k` below `1 + j`. More generally, the comparison holds for any
+`v ≤ U(t)` and `L ≤ q - 1`. The caller `nsf_LGB_core` uses the endpoint `k = 29t²/4`.
 
 The residual is quadratic in `k`, so `F(k) - F(k₀) = (k - k₀) ∂_kF((k + k₀)/2)` exactly
 (`hrs_comb_sub_k`). The shape derivative `∂_kF = hrsK` is affine in `v`, `L` and `k`
@@ -26,6 +26,7 @@ integrated through the exact midpoint identity of a quadratic.
 
 * `hrsTk`, `hrsK`: `∂_k` of the transport brace and of `nsfComb`; `hrs_comb_sub_k`.
 * `hrsKv`, `hrsKL`, `hrsKk`, `hrs_K_dec`; `hrs_K_end`: the endpoint value.
+* `hrs_shape_lt_of_bounds`: the comparison for any `v ≤ U(t)` and `L ≤ q - 1`.
 * `hrs_shape_lt`: **`nsfComb(29t²/4) < nsfComb(k)`** for `29t²/4 < k < 2t + x` on the high-ratio
   large-gap domain (given the caller's bounds `Je² ≤ 17/16`, `qJ - pW ≤ 41x/24`).
 -/
@@ -272,16 +273,16 @@ theorem hrs_Kv_neg {t x q : ℝ} (ht0 : 1 / 3 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1
   unfold hrsKv
   nlinarith
 
-/-- **The shape increases the high-ratio residual** (the shape derivative integrated on
-`[29t²/4, k]` by the midpoint identity): on the
-high-ratio large-gap domain, `nsfComb 4 1` at the shape `k` exceeds its value at `k₀ = 29t²/4`. -/
-theorem hrs_shape_lt {t x k q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
-    (hjh : 7 * x < 12 * (1 - 2 * t)) (hks : 29 / 4 * t ^ (2 : ℕ) < k) (hko : k < 2 * t + x)
-    (hq : 1 ≤ q) (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x)
+/-- The high-ratio residual strictly increases below the order boundary whenever
+`v ≤ U(t)` and `L ≤ q - 1`. The incoming norm and logarithm need no special form. -/
+theorem hrs_shape_lt_of_bounds {M t x k k₀ q v L F : ℝ}
+    (ht0 : 3 / 8 ≤ t) (ht1 : t ≤ 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
+    (hks : k₀ < k) (hko : k ≤ 2 * t + x) (hq : 1 ≤ q)
+    (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x)
+    (hv : v ≤ 1 - t + t ^ (2 : ℕ)) (hL : L ≤ q - 1)
     (hJ : (t + x * (x + 2)) * q ^ 2 ≤ 17 / 16 * (1 + x) ^ 2)
     (hWD : q * (t + x * (x + 2)) - (t + x) * (1 + x) ≤ 41 / 24 * x) :
-    nsfComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (nsfVG t x) (nsrLp q) (nsrFl t x q) <
-      nsfComb 4 1 t x k q (nsfVG t x) (nsrLp q) (nsrFl t x q) := by
+    nsfComb 4 M t x k₀ q v L F < nsfComb 4 M t x k q v L F := by
   have hx : 1 / 5 ≤ x := by linarith
   have hx0 : 0 < x := by linarith
   have hq0 : 0 < q := by linarith
@@ -295,18 +296,18 @@ theorem hrs_shape_lt {t x k q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj :
     have h2 := mul_le_mul_of_nonneg_right hq (by positivity : (0 : ℝ) ≤ t + x * (x + 2))
     linarith
   -- the midpoint derivative is positive
-  set m := (k + 29 / 4 * t ^ (2 : ℕ)) / 2 with hm
+  set m := (k + k₀) / 2 with hm
   have hmk : m ≤ 2 * t + x := by rw [hm]; linarith
-  have hdec := hrs_K_dec 4 t x m (2 * t + x) q (nsfVG t x) (1 - t + t ^ (2 : ℕ)) (nsrLp q) (q - 1)
+  have hdec := hrs_K_dec 4 t x m (2 * t + x) q v (1 - t + t ^ (2 : ℕ)) L (q - 1)
   rw [hrs_K_end] at hdec
   have p0 : 0 < 2 * t * q ^ (2 : ℕ) * (hrsd0 t x + hrsd1 t x * (q - 1)
       + hrsd2 t x * (q - 1) ^ (2 : ℕ) + hrsd3 t x * (q - 1) ^ (3 : ℕ)) :=
-    mul_pos (by positivity) (hrs_cubic_pos ht0 ht1.le hx (by linarith) hy1)
-  have p1 : 0 < (nsfVG t x - (1 - t + t ^ (2 : ℕ))) * hrsKv 4 t x q :=
-    mul_pos_of_neg_of_neg (by linarith [hrs_VG_lt_U ht0 ht1.le hx hjh])
-      (hrs_Kv_neg (by linarith) ht1.le hj hq hJ hWD)
-  have p2 : 0 ≤ (nsrLp q - (q - 1)) * hrsKL 4 t x q := by
-    apply mul_nonneg_of_nonpos_of_nonpos (by linarith [hrs_Lp_le hq])
+    mul_pos (by positivity) (hrs_cubic_pos ht0 ht1 hx (by linarith) hy1)
+  have p1 : 0 ≤ (v - (1 - t + t ^ (2 : ℕ))) * hrsKv 4 t x q :=
+    mul_nonneg_of_nonpos_of_nonpos (by linarith only [hv])
+      (hrs_Kv_neg (by linarith only [ht0]) ht1 hj hq hJ hWD).le
+  have p2 : 0 ≤ (L - (q - 1)) * hrsKL 4 t x q := by
+    apply mul_nonneg_of_nonpos_of_nonpos (by linarith only [hL])
     unfold hrsKL
     apply mul_nonpos_of_nonneg_of_nonpos
     · apply mul_nonneg (by positivity); linarith [sq_nonneg (1 + x)]
@@ -318,11 +319,22 @@ theorem hrs_shape_lt {t x k q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj :
     apply mul_nonpos_of_nonneg_of_nonpos hD0
     have : 0 ≤ 2 * t * q ^ (4 : ℕ) := by positivity
     linarith
-  have hK : 0 < hrsK 4 t x m q (nsfVG t x) (nsrLp q) := by linarith
-  have e := hrs_comb_sub_k 4 1 t x q (nsfVG t x) (nsrLp q) (nsrFl t x q) k (29 / 4 * t ^ (2 : ℕ))
+  have hK : 0 < hrsK 4 t x m q v L := by linarith
+  have e := hrs_comb_sub_k 4 M t x q v L F k k₀
   rw [← hm] at e
-  have : 0 < (k - 29 / 4 * t ^ (2 : ℕ)) * hrsK 4 t x m q (nsfVG t x) (nsrLp q) :=
+  have : 0 < (k - k₀) * hrsK 4 t x m q v L :=
     mul_pos (by linarith) hK
   linarith
+
+/-- The high-ratio shape comparison at the incoming secant bound. -/
+theorem hrs_shape_lt {t x k q : ℝ} (ht0 : 3 / 8 ≤ t) (ht1 : t < 2 / 5) (hj : 1 / 30 ≤ 2 * t + x - 1)
+    (hjh : 7 * x < 12 * (1 - 2 * t)) (hks : 29 / 4 * t ^ (2 : ℕ) < k) (hko : k < 2 * t + x)
+    (hq : 1 ≤ q) (hqs : q * (4 * t + 2 * x - 1) ≤ 1 + x)
+    (hJ : (t + x * (x + 2)) * q ^ 2 ≤ 17 / 16 * (1 + x) ^ 2)
+    (hWD : q * (t + x * (x + 2)) - (t + x) * (1 + x) ≤ 41 / 24 * x) :
+    nsfComb 4 1 t x (29 / 4 * t ^ (2 : ℕ)) q (nsfVG t x) (nsrLp q) (nsrFl t x q) <
+      nsfComb 4 1 t x k q (nsfVG t x) (nsrLp q) (nsrFl t x q) :=
+  hrs_shape_lt_of_bounds ht0 ht1.le hj hks hko.le hq hqs
+    (hrs_VG_lt_U ht0 ht1.le (by linarith only [ht1, hj]) hjh).le (hrs_Lp_le hq) hJ hWD
 
 end SmoothedOctagon

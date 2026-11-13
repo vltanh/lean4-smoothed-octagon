@@ -14,7 +14,7 @@ With the incoming majorant `V_L ≥ V_G` (`hrl_VG_le_VL`), the cleared residual 
 `S = 24(q + 1)WD · nsfComb 4 1 t x k₀ q V_L L₊ F_ℓ` (`hrl_link`). Along `t = (1 - h)/2`, `x = h + j`
 at fixed `j, y`: `-∂_h²S = ∑ Rᵢ yⁱ > 0` (`hrl_R_pos`) and `-∂_hS = ∑ Bᵢ yⁱ > 0` at `h = 1/5`
 (`hrl_B_pos`), so `S(h) ≥ S(1/4)` (`hrl_h_reduce`); at `h = 1/4` the terminal face gives
-`S ≥ 13/4` (`hrl_face`). Since the `v`-coefficient is negative,
+`S ≥ 1` (`hrl_face`). Since the `v`-coefficient is negative,
 `V_G ≤ V_L` transfers the sign to the original residual (`hrl_lower_pos`).
 
 The `h`-derivatives are taken of the `y`-coefficients `S₀, …, S₆` of the expanded circuit

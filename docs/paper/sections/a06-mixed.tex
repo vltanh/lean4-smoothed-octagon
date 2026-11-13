@@ -1902,10 +1902,39 @@ $f(1/4),f(1/3)>50$. The same endpoint argument gives $P(h,j)\ge50$, proving $S>0
 For $\frac38\le t<\frac25$, take $\alpha=4$, $M=1$ and $v\mapsto v_G$.
 The residual increases in $k$ on $(\frac{29}4t^2,o)$, by the
 same midpoint argument with endpoint value $2tq^2(d_0'+d_1'y+d_2'y^2+d_3'y^3)$, a positive cubic.
-At $k=\frac{29}4t^2$ a positive multiple $S$ satisfies $-\partial_h^2S>0$, and $-\partial_hS>0$ at
-$h=\frac15$, which reduces the sign to $h=\frac14$; there $S$ is concave in $y$, and along the remaining
-line a ninth-derivative bound and exact values at the ends give $S\ge\frac{13}4$. In both cases
-$\mathcal H>0$, a contradiction.
+At $k=\frac{29}4t^2$, let $S(h,j,y)$ be the residual after the positive denominator clearing
+$24(q+1)W(17x+76)$, with $v=V_L$ and the same logarithm and norm substitutions.
+The inequalities $-S_{hh}>0$ and $-S_h>0$ at $h=1/5$ give
+$S(h,j,y)\ge S(1/4,j,y)$.
+
+On this terminal face, write
+\[
+ P(x,y)=S(1/4,x-1/4,y)=\sum_{i=0}^6 C_i(x)y^i,
+ \qquad \frac{17}{60}\le x\le\frac37.
+\]
+The duration constraint is $0\le y\le b(x)$, where
+$b(x)=(1-2x)/(1+4x)$.
+For $i\ge2$, $C_i(x)\le0$, so $P$ is concave in $y$.
+It therefore suffices to bound $P(x,0)$ and $P(x,b(x))$ below by $1$.
+The first is $C_0(x)$, a concave function whose two endpoint values exceed $1$.
+For the second, remove the denominator and the positive factor $(1+x)^2$:
+\[
+ (1+4x)^6P(x,b(x))=(1+x)^2H(x).
+\]
+Here $H$ is a polynomial of degree twelve. Its derivative is concave, and
+\[
+ H'''(x)\le0,\qquad H'(17/60)>0,\qquad
+ H(17/60),H(3/7)>1000.
+\]
+The endpoint principle above gives $H(x)\ge1000$ throughout the interval.
+Since $1+4x\le3$ and $(1+x)^2\ge1$, it follows that
+\[
+ P(x,b(x))\ge\frac{1000}{3^6}>1.
+\]
+All derivative signs used on this face follow directly from expansion at $x=17/60$:
+the polynomials $-C_i$ for $i\ge2$, $-C_0''$ and $-H'''$ have nonnegative coefficients
+in powers of $x-17/60$. Concavity in duration now gives $P(x,y)\ge1$.
+Thus $\mathcal H>0$ in both ranges of $t$, a contradiction.
 \end{proof}
 
 \begin{lemma}[The ratio $\chi$]\label{lem:m2-chi}
