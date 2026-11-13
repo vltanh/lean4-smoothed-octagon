@@ -80,4 +80,3 @@ theorem boundary_curvature_ceiling {h j : ℝ} (h0 : 1 / 4 ≤ h) (h1 : h ≤ 1 
   linarith only [he, quartic_ceiling hj0 hj1]
 
 end SmoothedOctagon.LowTScale
-
