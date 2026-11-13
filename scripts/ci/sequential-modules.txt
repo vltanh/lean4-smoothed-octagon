@@ -1,5 +1,4 @@
 # Modules that CI builds one at a time before the parallel build, because each needs several GB of
 # memory (measured with /usr/bin/time; the GitHub runner has 16 GB and 4 cores).
-SmoothedOctagon.Exclusion.Mixed.Nonshort.Forward.LowRatio.OrderShapeSigns
 SmoothedOctagon.Exclusion.Forward.Scalars.Neighbor
 SmoothedOctagon.Exclusion.Forward.Scalars.SumSym

@@ -44,8 +44,8 @@ theorem slope_jet0_ceiling {j : ℝ} (hj0 : 1 / 30 ≤ j) (hj1 : j ≤ 1 / 4) :
     norm_num [slopeJet_zero, slopeHorner, slopeCoefficients]
   exact hm.trans hb
 
-private theorem first_quadratic {v : ℝ} (hv0 : -(1 / 9) ≤ v) (hv1 : v ≤ 1 / 9) :
-    (slopeJet 1).eval (1 / 7 + v) ≤ -750000 := by
+private theorem first_quadratic_upper {v : ℝ} (hv0 : -(1 / 9) ≤ v) (hv1 : v ≤ 1 / 9) :
+    (slopeJet 1).eval (1 / 7 + v) ≤ -975000 + 4620000 * |v| - 24000000 * v ^ 2 := by
   have ha : |v| ≤ 1 / 9 := abs_le.mpr ⟨hv0, hv1⟩
   have rem (n : ℕ) : |v ^ (n + 2)| ≤ (1 / 9 : ℝ) ^ n * v ^ 2 := by
     rw [pow_add, abs_mul, abs_pow, abs_of_nonneg (sq_nonneg v)]
@@ -58,7 +58,13 @@ private theorem first_quadratic {v : ℝ} (hv0 : -(1 / 9) ≤ v) (hv1 : v ≤ 1 
   ring_nf
   nlinarith only [lo 1, hi 1, lo 2, hi 2, lo 3, hi 3, lo 4, hi 4, lo 5, hi 5,
     lo 6, hi 6, lo 7, hi 7, lo 8, hi 8, lo 9, hi 9, lo 10, hi 10, lo 11, hi 11,
-    sq_nonneg (v + 3 / 32), hv0]
+    neg_le_abs v, abs_nonneg v]
+
+private theorem first_quadratic {v : ℝ} (hv0 : -(1 / 9) ≤ v) (hv1 : v ≤ 1 / 9) :
+    (slopeJet 1).eval (1 / 7 + v) ≤ -750000 := by
+  have hq := first_quadratic_upper hv0 hv1
+  have ha : |v| ≤ 1 / 9 := abs_le.mpr ⟨hv0, hv1⟩
+  nlinarith only [hq, ha, sq_nonneg (|v| - 3 / 32), sq_abs v]
 
 theorem slope_jet1_ceiling {j : ℝ} (hj0 : 1 / 30 ≤ j) (hj1 : j ≤ 1 / 4) :
     (slopeJet 1).eval j ≤ -750000 := by
